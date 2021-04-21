@@ -20,6 +20,15 @@
   flex-wrap: wrap;
 }
 
+.flex-wrap > .lotto-wrapper {
+  display: flex;
+}
+
+.flex-wrap > .lotto-wrapper > .lotto-detail {
+  font-size: 1.25rem;
+  margin-left: 12px;
+}
+
 .flex-wrap-reverse {
   flex-wrap: wrap-reverse;
 }

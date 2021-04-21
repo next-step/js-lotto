@@ -28,6 +28,7 @@
 }
 
 .modal-close {
+  padding: 0;
   margin: 20px;
   width: 20px;
   position: absolute;
