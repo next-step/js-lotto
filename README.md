@@ -49,19 +49,19 @@ npm install -g live-server
 live-server 폴더명
 ```
 
-<br>
+<br/>
 
 ## 👏 Contributing
 
 만약 미션 수행 중에 개선사항이 보인다면, 언제든 자유롭게 PR을 보내주세요.
 
-<br>
+<br/>
 
 ## 🐞 Bug Report
 
 버그를 발견한다면, [Issues](https://github.com/next-step/js-lotto/issues)에 등록해주세요.
 
-<br>
+<br/>
 
 ## 📝 License
 
