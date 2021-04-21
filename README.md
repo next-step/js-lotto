@@ -1,7 +1,7 @@
 <p align="middle" >
   <img width="200px;" src="./src/images/lotto_ball.png"/>
 </p>
-<h2 align="middle">level1 - 행운의 로또</h2>
+<h2 align="middle">행운의 로또</h2>
 <p align="middle">자바스크립트로 구현 하는 로또 어플리케이션</p>
 <p align="middle">
   <img src="https://img.shields.io/badge/version-1.0.0-blue?style=flat-square" alt="template version"/>
@@ -31,14 +31,6 @@
 - [ ] 로또 당첨 금액은 고정되어 있는 것으로 가정한다.
 - [ ] 다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.
 
-
-### 🎯🎯🎯 step3 수동 구매
-
-- [ ] 소비자는 수동 구매(스스로 구매 번호를 입력)를 할 수 있어야 한다.
-  - 수동 구매를 위한 input UI는 스스로 구현한다.
-- [ ] 수동 구매 후 남는 금액이 있다면 자동으로 구매할 수 있어야 한다.
-- [ ] 위 기능들이 정상적으로 동작하는지 Cypress를 이용해 테스트한다.
-
 <br>
 
 ## ⚙️ Before Started
@@ -67,10 +59,10 @@ live-server 폴더명
 
 ## 🐞 Bug Report
 
-버그를 발견한다면, [Issues](https://github.com/woowacourse/javascript-lotto/issues)에 등록해주세요.
+버그를 발견한다면, [Issues](https://github.com/next-step/js-lotto/issues)에 등록해주세요.
 
 <br>
 
 ## 📝 License
 
-This project is [MIT](https://github.com/woowacourse/javascript-lotto/blob/main/LICENSE) licensed.
+This project is [MIT](https://github.com/next-step/js-lotto/blob/main/LICENSE) licensed.
