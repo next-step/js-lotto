@@ -25,12 +25,19 @@ class LottoController {
         this.inputLottoNumsView.hide();
     }
 
-    attachEvent() {
-        this.inputPriceView.on('submitPrice', ({ detail: price }) => this.buyLottos(price));
+    renderPurchaseResult() {
+        this.purchasedLottosView.show().renderLottos(this.lottoModel.lottos);
+        this.inputLottoNumsView.show();
     }
 
-    buyLottos(price) {
+    attachEvent() {
+        this.inputPriceView.on('submitPrice', ({ detail: price }) => this.purchaseLottos(price));
+    }
+
+    purchaseLottos(price) {
+        this.lottoModel.purchasedPrice = price;
         this.lottoModel.lottos = price;
+        this.renderPurchaseResult();
     }
 }
 

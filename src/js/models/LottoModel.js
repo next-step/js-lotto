@@ -2,7 +2,16 @@ import { generateLottoNumber } from '../utils.js';
 
 class LottoModel {
     constructor() {
+        this.purchasedPrice = 0;
         this.lottos = [];
+    }
+
+    get purchasedPrice() {
+        return _purchasedPrice;
+    }
+
+    set purchasedPrice(price) {
+        this._purchasedPrice = price;
     }
 
     get lottos() {
