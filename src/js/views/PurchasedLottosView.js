@@ -15,6 +15,7 @@ class PurchasedLottosView extends View {
     reset() {
         getEl('#lotto-switch').checked = false;
         this.hideLottoDetails();
+        return this;
     }
 
     changeSwitchHandler({ target: { checked } }) {
@@ -35,7 +36,6 @@ class PurchasedLottosView extends View {
     renderLottos(lottos) {
         getEl('#total-purchased', this.targetEl).innerText = lottos.length;
         getEl('#lotto-icons', this.targetEl).innerHTML = lottos.map(lotto => lottoTemplate(lotto)).join('');
-        return this;
     }
 }
 

@@ -25,7 +25,7 @@ class LottoController {
     }
 
     renderPurchaseResult() {
-        this.purchasedLottosView.show().renderLottos(this.lottoModel.lottos).reset();
+        this.purchasedLottosView.show().reset().renderLottos(this.lottoModel.lottos);
         this.inputLottoNumsView.show();
     }
 

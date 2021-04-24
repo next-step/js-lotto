@@ -14,6 +14,7 @@ class InputPriceView extends View {
     reset() {
         this.targetEl.reset();
         getEl('#input-price', this.target).focus();
+        return this;
     }
 
     inputPriceHandler(e) {
