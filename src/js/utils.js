@@ -1,4 +1,5 @@
 export const getEl = (selector, parent = document) => parent.querySelector(selector);
+export const getEls = (selector, parent = document) => parent.querySelectorAll(selector);
 
 export const generateLottoNumber = () => {
     const MAX_SIZE = 6;
