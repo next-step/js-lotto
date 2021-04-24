@@ -12,3 +12,20 @@ export const generateLottoNumber = () => {
 
     return [...numbers];
 };
+
+export const checkLottos = (lottos, lottoNums) => {
+    const map = new Map();
+    const [bonusNum] = lottoNums.splice(6, 1);
+    lottos.forEach(lotto => {
+        let matcingCount = lottoNums.reduce((count, num) => {
+            if (lotto.includes(num)) count++;
+            return count;
+        }, 0);
+
+        if (matcingCount < 3) return;
+        if (matcingCount === 5 && lotto.includes(bonusNum)) matcingCount = 5.5;
+        let value = map.get(matcingCount) ?? 0;
+        map.set(matcingCount, ++value);
+    });
+    return map;
+};

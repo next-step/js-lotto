@@ -1,9 +1,16 @@
-import { generateLottoNumber } from '../utils.js';
+import { generateLottoNumber, checkLottos } from '../utils.js';
 
 class LottoModel {
     constructor() {
         this.purchasedPrice = 0;
         this.lottos = [];
+        this.winLottos = null;
+    }
+
+    reset() {
+        this.purchasedPrice = 0;
+        this.lottos = [];
+        this.winLottos = null;
     }
 
     get purchasedPrice() {
@@ -21,6 +28,15 @@ class LottoModel {
     set lottos(price) {
         const count = price / 1000;
         this._lottos = Array.from({ length: count }, () => generateLottoNumber());
+    }
+
+    get winLottos() {
+        return _winLottos;
+    }
+
+    set winLottos(lottoNums) {
+        if (!lottoNums) return;
+        this._winLottos = checkLottos(this.lottos, lottoNums);
     }
 }
 

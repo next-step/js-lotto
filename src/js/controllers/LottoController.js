@@ -22,6 +22,7 @@ class LottoController {
         this.inputPriceView.reset();
         this.purchasedLottosView.hide().reset();
         this.inputLottoNumsView.hide().reset();
+        this.lottoModel.reset();
     }
 
     renderPurchaseResult() {
@@ -40,9 +41,8 @@ class LottoController {
         this.renderPurchaseResult();
     }
 
-    inputLottoNums(nums) {
-        console.log(this.lottoModel.lottos);
-        console.log(nums);
+    inputLottoNums(lottoNums) {
+        this.lottoModel.winLottos = lottoNums;
     }
 }
 
