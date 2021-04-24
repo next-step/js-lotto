@@ -41,6 +41,7 @@ class LottoController {
     }
 
     inputLottoNums(nums) {
+        console.log(this.lottoModel.lottos);
         console.log(nums);
     }
 }
