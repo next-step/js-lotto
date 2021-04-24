@@ -1,4 +1,5 @@
 import { getEl, checkLottos, calcEarningRate } from '../utils.js';
+
 import InputPriceView from '../views/InputPriceView.js';
 import PurchasedLottosView from '../views/PurchasedLottosView.js';
 import InputLottoNumsView from '../views/InputLottoNumsView.js';

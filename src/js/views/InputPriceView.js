@@ -1,5 +1,6 @@
-import View from './View.js';
 import { getEl } from '../utils.js';
+
+import View from './View.js';
 
 class InputPriceView extends View {
     constructor(targetEl) {

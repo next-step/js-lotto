@@ -1,5 +1,6 @@
-import View from './View.js';
 import { getEl, getEls } from '../utils.js';
+
+import View from './View.js';
 
 class InputLottoNumsView extends View {
     constructor(targetEl) {

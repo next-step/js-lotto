@@ -16,6 +16,7 @@ export const generateLottoNum = () => {
 export const checkLottos = (lottos, lottoNums) => {
     const map = new Map();
     const [bonusNum] = lottoNums.splice(6, 1);
+
     lottos.forEach(lotto => {
         let matcingCount = lottoNums.reduce((count, num) => {
             if (lotto.includes(num)) count++;
@@ -27,6 +28,7 @@ export const checkLottos = (lottos, lottoNums) => {
         let value = map.get(matcingCount) ?? 0;
         map.set(matcingCount + '', ++value);
     });
+
     return map;
 };
 
@@ -37,11 +39,11 @@ export const calcEarningRate = (purchasedPrice, winLottos) => {
         '5': 1500000,
         '5.5': 30000000,
         '6': 2000000000,
-    }
+    };
 
     const totalPrizeMoney = [...winLottos].reduce((money, winLotto) => {
-        const [grade, count] = winLotto;
-        return money + prizeMoney[grade] * count;
+        const [matchingCount, count] = winLotto;
+        return money + prizeMoney[matchingCount] * count;
     }, 0) - purchasedPrice;
 
     return (totalPrizeMoney / purchasedPrice) * 100;

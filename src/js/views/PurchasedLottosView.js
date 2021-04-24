@@ -1,6 +1,7 @@
-import View from './View.js';
 import { getEl, getEls } from '../utils.js';
 import { lottoTemplate } from '../templates.js';
+
+import View from './View.js';
 
 class PurchasedLottosView extends View {
     constructor(targetEl) {
