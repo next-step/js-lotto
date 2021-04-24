@@ -21,7 +21,7 @@ class LottoController {
     reset() {
         this.inputPriceView.reset();
         this.purchasedLottosView.hide().reset();
-        this.inputLottoNumsView.hide();
+        this.inputLottoNumsView.hide().reset();
     }
 
     renderPurchaseResult() {
@@ -30,13 +30,18 @@ class LottoController {
     }
 
     attachEvent() {
-        this.inputPriceView.on('submitPrice', ({ detail: price }) => this.purchaseLottos(price));
+        this.inputPriceView.on('submitPrice', ({ detail: price }) => this.inputPrice(price));
+        this.inputLottoNumsView.on('submitLottoNums', ({ detail: nums }) => this.inputLottoNums(nums));
     }
 
-    purchaseLottos(price) {
+    inputPrice(price) {
         this.lottoModel.purchasedPrice = price;
         this.lottoModel.lottos = price;
         this.renderPurchaseResult();
+    }
+
+    inputLottoNums(nums) {
+        console.log(nums);
     }
 }
 
