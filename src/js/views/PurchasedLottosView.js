@@ -34,8 +34,8 @@ class PurchasedLottosView extends View {
     }
 
     renderLottos(lottos) {
-        getEl('#total-purchased', this.targetEl).innerText = lottos.length;
-        getEl('#lotto-icons', this.targetEl).innerHTML = lottos.map(lotto => lottoTemplate(lotto)).join('');
+        getEl('#total-purchased').innerText = lottos.length;
+        getEl('#lotto-icons').innerHTML = lottos.map(lotto => lottoTemplate(lotto)).join('');
     }
 }
 
