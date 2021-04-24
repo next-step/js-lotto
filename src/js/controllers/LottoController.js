@@ -1,5 +1,4 @@
 import { getEl } from '../utils.js';
-
 import InputPriceView from '../views/InputPriceView.js';
 import PurchasedLottosView from '../views/PurchasedLottosView.js';
 import InputLottoNumsView from '../views/InputLottoNumsView.js';
@@ -21,12 +20,12 @@ class LottoController {
 
     reset() {
         this.inputPriceView.reset();
-        this.purchasedLottosView.hide();
+        this.purchasedLottosView.hide().reset();
         this.inputLottoNumsView.hide();
     }
 
     renderPurchaseResult() {
-        this.purchasedLottosView.show().renderLottos(this.lottoModel.lottos);
+        this.purchasedLottosView.show().renderLottos(this.lottoModel.lottos).reset();
         this.inputLottoNumsView.show();
     }
 

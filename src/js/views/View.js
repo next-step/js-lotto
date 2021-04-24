@@ -3,6 +3,10 @@ class View {
         this.targetEl = targetEl;
     }
 
+    init() { }
+
+    reset() { }
+
     show() {
         this.targetEl.style.display = "block";
         return this;

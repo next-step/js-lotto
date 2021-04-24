@@ -12,19 +12,30 @@ class PurchasedLottosView extends View {
         getEl('#lotto-switch').addEventListener('change', this.changeSwitchHandler.bind(this));
     }
 
+    reset() {
+        getEl('#lotto-switch').checked = false;
+        this.showLottoIcons();
+    }
+
     changeSwitchHandler({ target: { checked } }) {
-        if (checked) {
-            getEl('#lotto-icons').classList.add('flex-col');
-            getEls('.lotto-detail').forEach(el => el.style.display = 'inline');
-        } else {
-            getEl('#lotto-icons').classList.remove('flex-col');
-            getEls('.lotto-detail').forEach(el => el.style.display = 'none');
-        }
+        if (checked) return this.showLottoDetails();
+        this.showLottoIcons();
+    }
+
+    showLottoIcons() {
+        getEl('#lotto-icons').classList.remove('flex-col');
+        getEls('.lotto-detail').forEach(el => el.style.display = 'none');
+    }
+
+    showLottoDetails() {
+        getEl('#lotto-icons').classList.add('flex-col');
+        getEls('.lotto-detail').forEach(el => el.style.display = 'inline');
     }
 
     renderLottos(lottos) {
         getEl('#total-purchased', this.targetEl).innerText = lottos.length;
         getEl('#lotto-icons', this.targetEl).innerHTML = lottos.map(lotto => lottoTemplate(lotto)).join('');
+        return this;
     }
 }
 
