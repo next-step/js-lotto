@@ -5,12 +5,13 @@ export let lottoTickets = [];
 
 export const resetLottoTicket = () => {
   lottoTickets = [];
-}
+};
 
 export const addTicketSection = (amount, reset) => {
-  $topDiv.insertAdjacentHTML("beforeend", TEMPLATE.TICKET_SEC);
+  if ($(".lotto-section") == null)
+    $topDiv.insertAdjacentHTML("beforeend", TEMPLATE.TICKET_SEC);
   let $lotto_section = $(".lotto-section");
-  if (reset){
+  if (reset) {
     $lotto_section.removeChild($("#amount-display"));
     $lotto_section.removeChild($("#ticket-display"));
     resetLottoTicket();
@@ -26,7 +27,7 @@ const addTicketInnerTemplate = ($lotto_section, amount) => {
   const inner_template = TEMPLATE.TICKET_INNER(amount, ticketDOMs);
   $lotto_section.insertAdjacentHTML("beforeend", inner_template);
   addTicketDisplaySwitch();
-}
+};
 
 const makeLOTTO = () => {
   let ary = [];
@@ -58,5 +59,3 @@ const addTicketDisplaySwitch = () => {
     });
   });
 };
-
-
