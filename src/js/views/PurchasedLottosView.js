@@ -14,22 +14,22 @@ class PurchasedLottosView extends View {
 
     reset() {
         getEl('#lotto-switch').checked = false;
-        this.showLottoIcons();
+        this.hideLottoDetails();
     }
 
     changeSwitchHandler({ target: { checked } }) {
         if (checked) return this.showLottoDetails();
-        this.showLottoIcons();
-    }
-
-    showLottoIcons() {
-        getEl('#lotto-icons').classList.remove('flex-col');
-        getEls('.lotto-detail').forEach(el => el.style.display = 'none');
+        this.hideLottoDetails();
     }
 
     showLottoDetails() {
         getEl('#lotto-icons').classList.add('flex-col');
         getEls('.lotto-detail').forEach(el => el.style.display = 'inline');
+    }
+
+    hideLottoDetails() {
+        getEl('#lotto-icons').classList.remove('flex-col');
+        getEls('.lotto-detail').forEach(el => el.style.display = 'none');
     }
 
     renderLottos(lottos) {
