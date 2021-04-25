@@ -1,7 +1,7 @@
 export const getEl = (selector, parent = document) => parent.querySelector(selector);
 export const getEls = (selector, parent = document) => parent.querySelectorAll(selector);
 
-export const generateLottoNum = () => {
+export const generateLottoNums = () => {
     const MAX_SIZE = 6;
     const numbers = new Set();
 
@@ -25,8 +25,8 @@ export const checkLottos = (lottos, lottoNums) => {
 
         if (matcingCount < 3) return;
         if (matcingCount === 5 && lotto.includes(bonusNum)) matcingCount = 5.5;
-        let value = map.get(matcingCount) ?? 0;
-        map.set(matcingCount + '', ++value);
+        let prizeCount = map.get(matcingCount) ?? 0;
+        map.set(matcingCount + '', ++prizeCount);
     });
 
     return map;

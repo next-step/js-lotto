@@ -1,4 +1,4 @@
-import { generateLottoNum } from '../utils.js';
+import { generateLottoNums } from '../utils.js';
 
 class LottoModel {
     constructor() {
@@ -22,7 +22,7 @@ class LottoModel {
 
     set lottos(price) {
         const count = price / 1000;
-        this._lottos = Array.from({ length: count }, () => generateLottoNum());
+        this._lottos = Array.from({ length: count }, () => generateLottoNums());
     }
 
     get winLottos() {
