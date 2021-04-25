@@ -1,4 +1,5 @@
 import { getEl, getEls } from '../utils.js';
+import { CUSTOM_EVENT } from '../constants.js';
 
 import View from './View.js';
 
@@ -39,7 +40,7 @@ class ResultModalView extends View {
     }
 
     restartClickHandler() {
-        this.emit('restartLottoGame');
+        this.emit(CUSTOM_EVENT.RESTART_GAME);
     }
 }
 

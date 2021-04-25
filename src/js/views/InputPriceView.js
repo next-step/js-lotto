@@ -1,4 +1,5 @@
 import { getEl } from '../utils.js';
+import { NUMBERS, CUSTOM_EVENT, MESSAGES } from '../constants.js';
 
 import View from './View.js';
 
@@ -21,11 +22,11 @@ class InputPriceView extends View {
     inputPriceHandler(e) {
         e.preventDefault();
         const purchasedPrice = e.target.elements.price.value;
-        if (purchasedPrice % 1000) {
-            alert('로또 구입 금액을 1,000원 단위로 입력해 주세요.');
+        if (purchasedPrice % NUMBERS.UNIT) {
+            alert(MESSAGES.INVALID_PRICE);
             return this.reset();
         }
-        this.emit('submitPurchasedPrice', purchasedPrice);
+        this.emit(CUSTOM_EVENT.SUBMIT_PRICE, purchasedPrice);
     }
 }
 

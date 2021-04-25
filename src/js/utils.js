@@ -1,12 +1,13 @@
+import { NUMBERS } from './constants.js';
+
 export const getEl = (selector, parent = document) => parent.querySelector(selector);
 export const getEls = (selector, parent = document) => parent.querySelectorAll(selector);
 
 export const generateLottoNums = () => {
-    const MAX_SIZE = 6;
     const numbers = new Set();
 
-    while (numbers.size < MAX_SIZE) {
-        const number = Math.floor(Math.random() * 45) + 1;
+    while (numbers.size < NUMBERS.LOTTO_SIZE) {
+        const number = Math.floor(Math.random() * NUMBERS.MAX_LOTTO_NUM) + NUMBERS.MIN_LOTTO_NUM;
         numbers.add(number);
     }
 
@@ -15,7 +16,7 @@ export const generateLottoNums = () => {
 
 export const checkLottos = (lottos, lottoNums) => {
     const map = new Map();
-    const [bonusNum] = lottoNums.splice(6, 1);
+    const [bonusNum] = lottoNums.splice(NUMBERS.LOTTO_SIZE, 1);
 
     lottos.forEach(lotto => {
         let matcingCount = lottoNums.reduce((count, num) => {

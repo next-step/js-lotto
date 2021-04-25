@@ -1,4 +1,5 @@
 import { getEl, checkLottos, calcEarningRate } from '../utils.js';
+import { CUSTOM_EVENT } from '../constants.js';
 
 import InputPriceView from '../views/InputPriceView.js';
 import PurchasedLottosView from '../views/PurchasedLottosView.js';
@@ -40,9 +41,9 @@ class LottoController {
     }
 
     attachEvent() {
-        this.inputPriceView.on('submitPurchasedPrice', ({ detail: price }) => this.inputPrice(price));
-        this.inputLottoNumsView.on('submitLottoNums', ({ detail: nums }) => this.inputLottoNums(nums));
-        this.resultModalView.on('restartLottoGame', this.reset.bind(this));
+        this.inputPriceView.on(CUSTOM_EVENT.SUBMIT_PRICE, ({ detail: price }) => this.inputPrice(price));
+        this.inputLottoNumsView.on(CUSTOM_EVENT.SUBMIT_NUMS, ({ detail: nums }) => this.inputLottoNums(nums));
+        this.resultModalView.on(CUSTOM_EVENT.RESTART_GAME, this.reset.bind(this));
     }
 
     inputPrice(price) {
