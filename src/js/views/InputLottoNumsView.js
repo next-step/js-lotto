@@ -29,7 +29,6 @@ class InputLottoNumsView extends View {
         getEl(`.winning-number[data-index-num="${nextIndexNum}"]`).focus();
     }
 
-
     inputLottoNumsHnadler(e) {
         e.preventDefault();
         const lottoNums = new Set();
