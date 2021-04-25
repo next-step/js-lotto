@@ -1,4 +1,5 @@
 import { checkLottos, calcEarningRate } from '../../src/js/utils.js';
+import { NUMBERS, MESSAGES } from '../../src/js/constants.js';
 
 describe("js-lotto", () => {
     beforeEach(() => {
@@ -8,7 +9,7 @@ describe("js-lotto", () => {
     const inputPrice = ({ purchasedPrice }) => {
         cy.get('#input-price').type(purchasedPrice);
         cy.get('#input-price-form').submit();
-        return purchasedPrice / 1000;
+        return purchasedPrice / NUMBERS.UNIT;
     };
 
     const inputLottoNums = ({ lottoNums }) => {
@@ -43,6 +44,11 @@ describe("js-lotto", () => {
 
     it("구입할 금액을 입력한다.", () => {
         inputPrice({ purchasedPrice: 10000 });
+    });
+
+    it("구입할 금액은 1,000 단위로 입력할 수 있다.", () => {
+        inputPrice({ purchasedPrice: 11111 });
+        cy.on("window:alert", (txt) => expect(txt).to.contains(MESSAGES.INVALID_PRICE));
     });
 
     it("입력한 금액만큼 로또를 발급한다.", () => {
