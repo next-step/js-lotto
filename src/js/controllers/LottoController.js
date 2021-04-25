@@ -41,12 +41,12 @@ class LottoController {
     }
 
     attachEvent() {
-        this.inputPriceView.on(CUSTOM_EVENT.SUBMIT_PRICE, ({ detail: price }) => this.inputPrice(price));
+        this.inputPriceView.on(CUSTOM_EVENT.SUBMIT_PRICE, ({ detail: price }) => this.inputPurchasedPrice(price));
         this.inputLottoNumsView.on(CUSTOM_EVENT.SUBMIT_NUMS, ({ detail: nums }) => this.inputLottoNums(nums));
         this.resultModalView.on(CUSTOM_EVENT.RESTART_GAME, this.reset.bind(this));
     }
 
-    inputPrice(price) {
+    inputPurchasedPrice(price) {
         this.lottoModel.purchasedPrice = price;
         this.lottoModel.lottos = price;
         this.renderPurchasedLottos();
