@@ -29,7 +29,7 @@ class LottoController {
         this.resultModalView.reset();
     }
 
-    renderPurchaseResult() {
+    renderPurchasedLottos() {
         const { lottos } = this.lottoModel;
         this.purchasedLottosView.show().reset().renderLottos(lottos);
         this.inputLottoNumsView.show();
@@ -49,7 +49,7 @@ class LottoController {
     inputPrice(price) {
         this.lottoModel.purchasedPrice = price;
         this.lottoModel.lottos = price;
-        this.renderPurchaseResult();
+        this.renderPurchasedLottos();
     }
 
     inputLottoNums(lottoNums) {
