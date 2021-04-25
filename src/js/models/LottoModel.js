@@ -21,8 +21,8 @@ class LottoModel {
         return this._lottos;
     }
 
-    set lottos(price) {
-        const count = price / NUMBERS.UNIT;
+    set lottos(purchasedPrice) {
+        const count = purchasedPrice / NUMBERS.UNIT;
         this._lottos = Array.from({ length: count }, () => generateLottoNums());
     }
 

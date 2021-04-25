@@ -46,9 +46,9 @@ class LottoController {
         this.resultModalView.on(CUSTOM_EVENT.RESTART_GAME, this.reset.bind(this));
     }
 
-    inputPurchasedPrice(price) {
-        this.lottoModel.purchasedPrice = price;
-        this.lottoModel.lottos = price;
+    inputPurchasedPrice(purchasedPrice) {
+        this.lottoModel.purchasedPrice = purchasedPrice;
+        this.lottoModel.lottos = purchasedPrice;
         this.renderPurchasedLottos();
     }
 
