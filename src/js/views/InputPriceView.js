@@ -20,7 +20,12 @@ class InputPriceView extends View {
 
     inputPriceHandler(e) {
         e.preventDefault();
-        this.emit('submitPurchasedPrice', e.target.elements.price.value);
+        const purchasedPrice = e.target.elements.price.value;
+        if (purchasedPrice % 1000) {
+            alert('로또 구입 금액을 1,000원 단위로 입력해 주세요.');
+            return this.reset();
+        }
+        this.emit('submitPurchasedPrice', purchasedPrice);
     }
 }
 
