@@ -40,9 +40,9 @@ class LottoController {
     }
 
     attachEvent() {
-        this.inputPriceView.on('submitPrice', ({ detail: price }) => this.inputPrice(price));
-        this.inputLottoNumsView.on('submitNums', ({ detail: nums }) => this.inputLottoNums(nums));
-        this.resultModalView.on('restart', this.reset.bind(this));
+        this.inputPriceView.on('submitPurchasedPrice', ({ detail: price }) => this.inputPrice(price));
+        this.inputLottoNumsView.on('submitLottoNums', ({ detail: nums }) => this.inputLottoNums(nums));
+        this.resultModalView.on('restartLottoGame', this.reset.bind(this));
     }
 
     inputPrice(price) {

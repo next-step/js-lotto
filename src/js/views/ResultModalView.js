@@ -39,7 +39,7 @@ class ResultModalView extends View {
     }
 
     restartClickHandler() {
-        this.emit('restart');
+        this.emit('restartLottoGame');
     }
 }
 

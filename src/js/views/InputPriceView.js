@@ -20,7 +20,7 @@ class InputPriceView extends View {
 
     inputPriceHandler(e) {
         e.preventDefault();
-        this.emit('submitPrice', e.target.elements.price.value);
+        this.emit('submitPurchasedPrice', e.target.elements.price.value);
     }
 }
 

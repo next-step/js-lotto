@@ -33,7 +33,7 @@ class InputLottoNumsView extends View {
         const lottoNums = new Set();
         this.inputEls.forEach(el => lottoNums.add(+el.value));
         if (lottoNums.size < 7) return alert('로또 번호에는 중복된 숫자를 입력할 수 없습니다.');
-        this.emit('submitNums', [...lottoNums]);
+        this.emit('submitLottoNums', [...lottoNums]);
     }
 }
 
