@@ -22,9 +22,9 @@
             <button type="button" class="btn btn-cyan">확인</button>
           </div>
         </form>
-        <section id="purchased-lottos" class="mt-9">
+        <section id="purchased-lottos" class="mt-9" hidden>
           <div class="d-flex">
-            <label class="flex-auto my-0">총 5개를 구매하였습니다.</label>
+            <label class="flex-auto my-0">총 <span id="total-purchased"> 5 </span>개를 구매하였습니다.</label>
             <div class="flex-auto d-flex justify-end pr-1">
               <label class="switch">
                 <input id="lotto-switch" type="checkbox" class="lotto-numbers-toggle-button" />
@@ -32,15 +32,8 @@
               </label>
             </div>
           </div>
-          <div class="d-flex flex-wrap">
-            <span class="mx-1 text-4xl">🎟️ </span>
-            <span class="mx-1 text-4xl">🎟️ </span>
-            <span class="mx-1 text-4xl">🎟️ </span>
-            <span class="mx-1 text-4xl">🎟️ </span>
-            <span class="mx-1 text-4xl">🎟️ </span>
-          </div>
         </section>
-        <form class="mt-9">
+        <form class="mt-9" hidden>
           <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
           <div class="d-flex">
             <div>
