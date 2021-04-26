@@ -9,6 +9,6 @@ const shuffleArray = (array) => {
   return array
 }
 
-export const getTicker = () => {
+export const getTicket = () => {
   return shuffleArray(NumberArr).slice(0, 6)
 }
