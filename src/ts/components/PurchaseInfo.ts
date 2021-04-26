@@ -40,6 +40,11 @@ export default class PurchaseInfo extends Component<
     this.render();
   }
 
+  getLottos(): Lotto[] {
+    const lottos = this.state?.lottos ?? [];
+    return [...lottos];
+  }
+
   getInnerHTML() {
     const lottosHTML = this.state!.lottos!.map(
       (lotto) => `

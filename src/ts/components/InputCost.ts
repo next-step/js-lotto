@@ -35,7 +35,7 @@ export default class InputCost extends Component<
 
       const cost: number = +$input.value;
       if (!isValidCost(cost)) {
-        alert(AlertMsg.InvalidCost);
+        window.alert(AlertMsg.InvalidCost);
         return;
       }
       this.setState({ cost });

@@ -3,11 +3,13 @@ import { $, id2Query } from "../common/dom";
 import { getRandomLottoNumbers } from "../common/utils";
 import Component from "../core/Component";
 import InputCost from "./InputCost";
+import InputLotto from "./InputLotto";
 import PurchaseInfo from "./PurchaseInfo";
 
 export default class App extends Component {
   private inputCostComp?: InputCost;
   private purchaseInfoComp?: PurchaseInfo;
+  private inputLotto?: InputLotto;
   constructor($target: HTMLElement) {
     super($target);
   }
@@ -20,15 +22,26 @@ export default class App extends Component {
     this.purchaseInfoComp?.setState({ lottos });
   }
 
+  submitLotto(winningNumbers: number[], bonusNumber: number) {
+    console.log(winningNumbers, bonusNumber);
+    const lottos = this.purchaseInfoComp!.getLottos();
+  }
+
   componentDidMount() {
     this.inputCostComp = new InputCost(
       $(id2Query(Id.inputCost), this.$target),
       { submitCost: (cost: number) => this.submitCost(cost) }
     );
+
     this.purchaseInfoComp = new PurchaseInfo(
       $(id2Query(Id.purchaseInfo), this.$target),
       {}
     );
+
+    this.inputLotto = new InputLotto($(id2Query(Id.inputLotto), this.$target), {
+      submitLotto: (winningNumbers: number[], bonusNumber: number) =>
+        this.submitLotto(winningNumbers, bonusNumber),
+    });
   }
 
   getInnerHTML() {

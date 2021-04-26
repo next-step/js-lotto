@@ -21,3 +21,7 @@ export function getRandomLottoNumbers(): number[] {
   shuffle(LottoTable);
   return LottoTable.slice(0, LOTTO.LEN);
 }
+
+export function hasDuplicateNumber(numbers: number[]): boolean {
+  return Array.from(new Set<number>(numbers)).length !== numbers.length;
+}
