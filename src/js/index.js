@@ -4,6 +4,8 @@ let value = [];
 let winningNumber = [];
 let bonusNumber;
 
+let threeSameNum=0,fourSameNum=0,fiveSameNum=0,fiveBonusSameNum=0,sixSameNum=0;
+
 class Lotte{
   constructor(){
     this.start();
@@ -11,6 +13,12 @@ class Lotte{
     this.winningNumber = [];
     this.bonusNumber = -Infinity;
     this.value = value;
+    this.beforeNums = [];
+    this.beforeBonusNum = -Infinity;
+    this.myLotteNums  = [];
+    this.myLotteBonusNum = -Infinity;
+    this.num = 0;
+    this.compareBonus= false;
   }
   start(){
     document.body.innerHTML = app;
@@ -37,7 +45,7 @@ class Lotte{
     $('#app').insertAdjacentHTML('beforeend',inputLastWeekNumber)
     $('#seeNum').addEventListener('click',()=>{this.displayNum(this.isOpen)});
     $('.open-result-modal-button').addEventListener('click',()=>{this.clickResult()});
-    $('#app').insertAdjacentHTML('beforeend',winStatics)
+
   }
 
   displayNum(isOpen){
@@ -105,12 +113,50 @@ class Lotte{
 
   displayResult(){
     if(this.winningNumber.length === 6 && this.bonusNumber !== -Infinity) {
+      this.fillResultLotte();
       $('.modal').classList.add('open');
       $('.modal-close').addEventListener('click', () => {
         $('.modal').classList.remove('open');
         this.winningNumber = [];
       })
     }
+  }
+
+  fillResultLotte(){
+    $All('.winning-number').forEach(dom=>this.beforeNums.push(dom.value));
+
+    this.beforeBonusNum = $('.bonus-number').value;
+
+    $All('#lotteNumber').forEach((Dom)=>{
+      this.myLotteNums = Dom.innerHTML.split(',');
+      this.myLotteNums.forEach((val)=>{
+        if(this.beforeNums.indexOf(val) > -1){
+          this.num++;
+        }
+      })
+      if(this.myLotteNums.indexOf(this.beforeBonusNum) > -1){
+        this.compareBonus = true;
+      }
+      console.log(this.num);
+      switch(this.num){
+        case 3 : threeSameNum++;
+                break;
+        case 4 : fourSameNum++;
+          break;
+        case 5 : fiveSameNum++;
+          break;
+        case 6 : sixSameNum++;
+          break;
+      }
+      if(this.num ===5 && this.compareBonus === true){
+        fiveSameNum--;
+        fiveBonusSameNum++;
+      }
+      this.compareBonus = false;
+      this.num = 0;
+    });
+    $('#app').insertAdjacentHTML('beforeend',winStatics(threeSameNum,fourSameNum,fiveSameNum,fiveBonusSameNum,sixSameNum))
+
   }
 }
 

@@ -76,14 +76,14 @@ const inputLastWeekNumber = `<form class="mt-9">
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
-                    value="5"
+                    value="6"
                   />
                 </div>
               </div>
               <div class="bonus-number-container flex-grow">
                 <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
                 <div class="d-flex justify-center">
-                  <input type="number" class="bonus-number text-center" />
+                  <input type="number" class="bonus-number text-center"                   value="7"/>
                 </div>
               </div>
             </div>
@@ -102,7 +102,7 @@ const alertMessage ={
   numInTheThousands : '천의자리만 가능하다'
 }
 
-const winStatics = ` <div class="modal">
+const winStatics =(three,four,five,fiveBonus,six)=> ` <div class="modal">
         <div class="modal-inner p-10">
           <div class="modal-close">
             <svg viewbox="0 0 40 40">
@@ -124,27 +124,27 @@ const winStatics = ` <div class="modal">
                 <tr class="text-center">
                   <td class="p-3">3개</td>
                   <td class="p-3">5,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">${three}개</td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">4개</td>
                   <td class="p-3">50,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">${four}개</td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">5개</td>
                   <td class="p-3">1,500,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">${five}개</td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">5개 + 보너스볼</td>
                   <td class="p-3">30,000,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">${fiveBonus}개</td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">6개</td>
                   <td class="p-3">2,000,000,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">${six}개</td>
                 </tr>
               </tbody>
             </table>
