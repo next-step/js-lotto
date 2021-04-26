@@ -7,15 +7,25 @@ class LottoResultPanel {
     this.restart = restart
   }
 
-  makeResultData = (matchNumList) => {
-    return matchNumList.reduce((acc, cur) => {
+  getEarningRate = (ticketNum, profit) => {
+    return (profit / (ticketNum * 1000)) * 100
+  }
+
+  makeResultData = (ticketNum, matchNumList) => {
+    const resultData = matchNumList.reduce((acc, cur) => {
+      if (cur < 3) return acc
       if (!acc[MatchNumberOrder[cur]]) {
-        acc[MatchNumberOrder[cur]] = 1
+        acc[MatchNumberOrder[cur].label] = 1
+        acc['profit'] += MatchNumberOrder[cur].price
       } else {
-        acc[MatchNumberOrder[cur]] += 1
+        acc[MatchNumberOrder[cur].label] += 1
+        acc['profit'] += MatchNumberOrder[cur].price
       }
       return acc
-    }, {})
+    }, { profit: 0 })
+
+    resultData.earningRate = this.getEarningRate(ticketNum, resultData.profit)
+    return resultData
   }
 
   handleClick = ({ target, currentTarget }) => {
@@ -31,7 +41,7 @@ class LottoResultPanel {
   showModal = (ticketNum, matchNumList) => {
     const model = createEl('div', 'modal open')
     model.addEventListener('click', this.handleClick)
-    const resultData = this.makeResultData(matchNumList)
+    const resultData = this.makeResultData(ticketNum, matchNumList)
     model.insertAdjacentHTML('beforeend', TEMPLATE.INPUT_LAST_NUMBER1(resultData))
 
     this.parent.append(model)

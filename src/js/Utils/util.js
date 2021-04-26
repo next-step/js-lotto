@@ -7,10 +7,25 @@ export const createEl = (tag, classList = '') => {
   return el
 }
 export const MatchNumberOrder = {
-  3: 'fifth',
-  4: 'fourth',
-  5: 'third',
-  6: 'first',
-  7: 'second'
+  3: {
+    label: 'fifth',
+    price: 5000
+  },
+  4: {
+    label: 'fourth',
+    price: 50000
+  },
+  5: {
+    label: 'third',
+    price: 1500000
+  },
+  6: {
+    label: 'first',
+    price: 2000000000
+  },
+  7: {
+    label: 'second',
+    price: 30000000
+  }
 }
 
