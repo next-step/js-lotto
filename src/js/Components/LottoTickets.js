@@ -39,7 +39,7 @@ class LottoTickets {
   }
 
   makeLottoList = () => {
-    const $lottoList = createEl('ul', 'd-flex flex-wrap')
+    const $lottoList = createEl('ul', 'd-flex flex-wrap tickets')
     this.makeTickets()
 
     this.tickets.forEach(ticket => {
@@ -70,7 +70,7 @@ class LottoTickets {
   }
 
   makeLastWeekNumInput = () => {
-    const lastWeekNumForm = createEl('form', 'mt-1')
+    const lastWeekNumForm = createEl('form', 'mt-1 last-week-number')
     lastWeekNumForm.addEventListener('submit', this.handleSubmit)
     lastWeekNumForm.insertAdjacentHTML('beforeend', TEMPLATE.INPUT_LAST_NUMBER())
 

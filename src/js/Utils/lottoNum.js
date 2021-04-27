@@ -9,6 +9,6 @@ const shuffleArray = (array) => {
   return array
 }
 
-export const getTicket = () => {
-  return shuffleArray(NumberArr).slice(0, 6)
+export const getTicket = (lastIndex = 6) => {
+  return shuffleArray(NumberArr).slice(0, lastIndex)
 }

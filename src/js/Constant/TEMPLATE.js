@@ -4,7 +4,7 @@ export const TEMPLATE = {
             <label class="mb-2 d-inline-block"
               >구입할 금액을 입력해주세요.
             </label>
-            <div class="d-flex">
+            <div class="d-flex input-money">
               <input
                 type="number"
                 class="w-100 mr-2 pl-2"
@@ -168,7 +168,7 @@ export const TEMPLATE = {
               </tbody>
             </table>
           </div>
-          <p class="text-center font-bold">당신의 총 수익률은 ${earningRate}%입니다.</p>
+          <p class="text-center font-bold earning-rate">당신의 총 수익률은 ${earningRate}%입니다.</p>
           <div class="d-flex justify-center mt-5">
             <button type="button" class="btn btn-cyan restart">다시 시작하기</button>
           </div>
