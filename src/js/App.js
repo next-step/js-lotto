@@ -1,15 +1,18 @@
 import SETTINGS from './settings.js';
-import { $ } from './utils.js';
+import { $, log } from './utils.js';
 
 import {
   PriceForm,
   PurchaseDetails,
   WinningForm,
   WinningResult,
+  Modal,
 } from './component/index.js';
 
-const App = (({ ID }) => {
+const App = (({ ID, KLASS }) => {
   return $el => {
+    const state = { isOpen: true };
+
     const render = $el => {
       $el.innerHTML = `
         <div class="d-flex justify-center mt-5">
@@ -21,22 +24,18 @@ const App = (({ ID }) => {
           </div>
         </div>
 
-        <div class="modal">
-          <div class="modal-inner p-10">
-            <div class="modal-close">
-              <svg viewbox="0 0 40 40">
-                <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
-              </svg>
-            </div>
-            <div id="${ID.WINNING_RESULT}"></div>
-          </div>
-        </div>
+        <div id="${ID.WINNING_RESULT}" class="${KLASS.MODAL}"></div>
       `;
 
       PriceForm($.id(ID.PRICE_FORM, $el));
       PurchaseDetails($.id(ID.PURCHASE_DETAILS, $el));
       WinningForm($.id(ID.WINNING_FORM, $el));
-      WinningResult($.id(ID.WINNING_RESULT, $el));
+      Modal(
+        $.id(ID.WINNING_RESULT, $el),
+        state.isOpen,
+        _ => log('clicked'),
+        WinningResult,
+      );
     };
 
     render($el);
