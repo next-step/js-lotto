@@ -8,6 +8,7 @@ class LottoResultPanel {
   }
 
   getEarningRate = (ticketNum, profit) => {
+
     return (profit / (ticketNum * 1000)) * 100
   }
 
@@ -17,13 +18,13 @@ class LottoResultPanel {
       if (!acc[MatchNumberOrder[cur]]) {
         acc[MatchNumberOrder[cur].label] = 1
         acc['profit'] += MatchNumberOrder[cur].price
-      } else {
+      } else if (acc[MatchNumberOrder[cur]]) {
         acc[MatchNumberOrder[cur].label] += 1
         acc['profit'] += MatchNumberOrder[cur].price
       }
       return acc
     }, { profit: 0 })
-
+    debugger;
     resultData.earningRate = this.getEarningRate(ticketNum, resultData.profit)
     return resultData
   }

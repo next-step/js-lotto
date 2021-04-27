@@ -19,13 +19,13 @@ export const MatchNumberOrder = {
     label: 'third',
     price: 1500000
   },
+  5.5: {
+    label: 'second',
+    price: 30000000
+  },
   6: {
     label: 'first',
     price: 2000000000
   },
-  7: {
-    label: 'second',
-    price: 30000000
-  }
 }
 

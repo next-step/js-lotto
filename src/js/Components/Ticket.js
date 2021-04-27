@@ -27,7 +27,7 @@ class Ticket {
 
     if (matchNumCount === 5) {
       if (set.has(bonusNum)) {
-        matchNumCount += 2
+        matchNumCount += 0.5
       }
     }
     return matchNumCount

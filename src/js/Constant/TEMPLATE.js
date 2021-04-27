@@ -168,7 +168,7 @@ export const TEMPLATE = {
               </tbody>
             </table>
           </div>
-          <p class="text-center font-bold earning-rate">당신의 총 수익률은 ${earningRate}%입니다.</p>
+          <p class="text-center font-bold earning-rate">당신의 총 수익률은 <span class="profit">${earningRate}</span>%입니다.</p>
           <div class="d-flex justify-center mt-5">
             <button type="button" class="btn btn-cyan restart">다시 시작하기</button>
           </div>
