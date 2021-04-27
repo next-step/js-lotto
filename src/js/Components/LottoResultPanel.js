@@ -8,8 +8,7 @@ class LottoResultPanel {
   }
 
   getEarningRate = (ticketNum, profit) => {
-
-    return (profit / (ticketNum * 1000)) * 100
+    return ((profit / (ticketNum * 1000)) - 1) * 100
   }
 
   makeResultData = (ticketNum, matchNumList) => {
