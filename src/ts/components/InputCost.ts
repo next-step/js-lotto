@@ -1,11 +1,12 @@
-import { AlertMsg, ClassName } from "../common/constants";
+import { AlertMsg, ClassName, LottoConfig } from "../common/constants";
 import { $, class2Query } from "../common/dom";
 import { isValidCost } from "../common/validator";
 import Component from "../core/Component";
 
 const defaultState: InputCostState = {
-  minCost: 1000,
-  maxCost: 100000,
+  cost: undefined,
+  minCost: LottoConfig.Price,
+  maxCost: LottoConfig.Price * 1000,
 };
 
 export default class InputCost extends Component<
@@ -18,6 +19,10 @@ export default class InputCost extends Component<
     state: InputCostState = defaultState
   ) {
     super($target, props, state);
+  }
+
+  reset() {
+    this.setState(defaultState);
   }
 
   componentInit() {

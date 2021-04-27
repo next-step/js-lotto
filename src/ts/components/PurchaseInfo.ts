@@ -1,17 +1,23 @@
 import { ClassName } from "../common/constants";
 import { $$, class2Query } from "../common/dom";
+import { Lotto } from "../common/interfaces";
 import Component from "../core/Component";
 
 const defaultState: PurchaseInfoState = {
   lottos: [],
+  canShow: false,
 };
 
 export default class PurchaseInfo extends Component<
   PurchaseInfoProps,
   PurchaseInfoState
 > {
-  constructor($target: HTMLElement, props: PurchaseInfoProps) {
-    super($target, props, defaultState);
+  constructor($target: HTMLElement) {
+    super($target, {}, defaultState);
+  }
+
+  reset() {
+    this.setState(defaultState);
   }
 
   componentInit() {
@@ -46,6 +52,10 @@ export default class PurchaseInfo extends Component<
   }
 
   getInnerHTML() {
+    if (!this.state?.canShow) {
+      return ``;
+    }
+
     const lottosHTML = this.state!.lottos!.map(
       (lotto) => `
           <li class="mx-1 text-4xl d-flex"">
@@ -81,8 +91,5 @@ interface PurchaseInfoProps {}
 
 interface PurchaseInfoState {
   lottos?: Lotto[];
-}
-
-interface Lotto {
-  numbers: number[];
+  canShow?: boolean;
 }

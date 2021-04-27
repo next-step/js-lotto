@@ -1,3 +1,5 @@
+import { LottoConfig } from "./constants";
+
 export function isValidCost(cost: number) {
-  return cost % 1000 === 0;
+  return cost % LottoConfig.Price === 0;
 }

@@ -13,6 +13,10 @@ export const ClassName = Object.freeze({
   lottoDetail: "lotto-detail",
   winningNumber: "winning-number",
   bonusNumber: "bonus-number",
+  restartBtn: "restart-btn",
+  open: "open",
+  closeX: "close-x",
+  modalInner: "modal-inner",
 });
 
 export const AlertMsg = Object.freeze({
@@ -20,8 +24,19 @@ export const AlertMsg = Object.freeze({
   DuplicateNumber: "로또 번호에는 중복된 숫자를 입력할 수 없습니다.",
 });
 
-export const LOTTO = Object.freeze({
+export const LottoConfig = Object.freeze({
   MIN_NUM: 1,
   MAX_NUM: 45,
   LEN: 6,
+  Price: 1000,
 });
+
+export const RewardByMatchCnt = Object.freeze([
+  [0, 0],
+  [0, 0],
+  [0, 0],
+  [5000, 5000],
+  [50000, 50000],
+  [1500000, 30000000],
+  [2000000000, 2000000000],
+]);

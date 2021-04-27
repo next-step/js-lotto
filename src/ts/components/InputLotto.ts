@@ -1,12 +1,28 @@
-import { AlertMsg, ClassName, LOTTO } from "../common/constants";
+import { AlertMsg, ClassName, LottoConfig } from "../common/constants";
 import { $, $$, class2Query } from "../common/dom";
+import { WinningLotto } from "../common/interfaces";
 import { hasDuplicateNumber } from "../common/utils";
 import Component from "../core/Component";
 
-export default class InputLotto extends Component<InputLottoProps> {
+const defaultState: InputLottoState = {
+  canShow: false,
+};
+export default class InputLotto extends Component<
+  InputLottoProps,
+  InputLottoState
+> {
   constructor($target: HTMLElement, props: InputLottoProps) {
-    super($target, props);
+    super($target, props, defaultState);
     this.bindEvents();
+  }
+
+  reset() {
+    this.setState(defaultState);
+  }
+
+  setState(nextState: InputLottoState) {
+    this.state = { ...this.state, ...nextState };
+    this.render();
   }
 
   bindEvents() {
@@ -22,20 +38,24 @@ export default class InputLotto extends Component<InputLottoProps> {
         this.$target
       ) as HTMLInputElement;
 
-      const bonusNumber = +$bonusNum.value;
+      const bonus = +$bonusNum.value;
 
-      if (hasDuplicateNumber([...winningNumbers, bonusNumber])) {
+      if (hasDuplicateNumber([...winningNumbers, bonus])) {
         window.alert(AlertMsg.DuplicateNumber);
         return;
       }
-      this.props?.submitLotto(winningNumbers, bonusNumber);
+      this.props?.submitLotto({ numbers: winningNumbers, bonus });
     };
 
     this.$target.addEventListener("submit", onSubmit);
   }
 
   getInnerHTML() {
-    const lottoInputHTML = Array(LOTTO.LEN)
+    if (!this.state?.canShow) {
+      return ``;
+    }
+
+    const lottoInputHTML = Array(LottoConfig.LEN)
       .fill(null)
       .map(
         (_, idx) => `
@@ -43,14 +63,14 @@ export default class InputLotto extends Component<InputLottoProps> {
               type="number"
               class="${ClassName.winningNumber} mx-1 text-center"
               data-index-num="${idx}"
-              required min="${LOTTO.MIN_NUM}" max="${LOTTO.MAX_NUM}"
+              required min="${LottoConfig.MIN_NUM}" max="${LottoConfig.MAX_NUM}"
             />
       `
       )
       .join("");
     return `
             <label class="flex-auto d-inline-block mb-3">
-                지난 주 당첨번호 ${LOTTO.LEN}개와 보너스 넘버 1개를 입력해주세요.
+                지난 주 당첨번호 ${LottoConfig.LEN}개와 보너스 넘버 1개를 입력해주세요.
             </label>
             <div class="d-flex">
               <div>
@@ -64,8 +84,8 @@ export default class InputLotto extends Component<InputLottoProps> {
                 <div class="d-flex justify-center">
                   <input type="number" 
                     class="${ClassName.bonusNumber} text-center" 
-                    data-index-num="${LOTTO.LEN}"
-                    required min="${LOTTO.MIN_NUM}" max="${LOTTO.MAX_NUM}"
+                    data-index-num="${LottoConfig.LEN}"
+                    required min="${LottoConfig.MIN_NUM}" max="${LottoConfig.MAX_NUM}"
                   />
                 </div>
               </div>
@@ -80,5 +100,9 @@ export default class InputLotto extends Component<InputLottoProps> {
 }
 
 interface InputLottoProps {
-  submitLotto(winningNumbers: number[], bonusNumber: number): void;
+  submitLotto(winningLotto: WinningLotto): void;
+}
+
+interface InputLottoState {
+  canShow: boolean;
 }
