@@ -9,8 +9,6 @@ let winNumber = {
   sixSameNum : 0
 }
 
-let threeSameNum=0,fourSameNum=0,fiveSameNum=0,fiveBonusSameNum=0,sixSameNum=0;
-
 class Lotte{
   constructor(){
     this.start();
@@ -180,24 +178,3 @@ class Lotte{
 }
 
 new Lotte();
-
-
-/*
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
-
-const onModalShow = () => {
-  $modal.classList.add('open')
-}
-
-const onModalClose = () => {
-  $modal.classList.remove('open')
-}
-
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
-*/
