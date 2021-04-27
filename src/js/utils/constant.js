@@ -95,14 +95,7 @@ const inputLastWeekNumber = `<form class="mt-9">
             </button>
           </form>`
 
-const alertMessage ={
-  winningOverNum : '당첨번호 값은 1이상 45이하이어야한다.',
-  bonusOverNum : '보너스번호 값은 1이상 45이하이어야한다.',
-  duplicationNum : '중복된 숫자는 불가능하다.',
-  numInTheThousands : '천의자리만 가능하다'
-}
-
-const winStatics =(three,four,five,fiveBonus,six,earning)=> ` <div class="modal">
+const winStatics =(winNumber,earning)=> ` <div class="modal">
         <div class="modal-inner p-10">
           <div class="modal-close">
             <svg viewbox="0 0 40 40">
@@ -124,27 +117,27 @@ const winStatics =(three,four,five,fiveBonus,six,earning)=> ` <div class="modal"
                 <tr class="text-center">
                   <td class="p-3">3개</td>
                   <td class="p-3">5,000</td>
-                  <td class="p-3">${three}개</td>
+                  <td class="p-3">${winNumber.threeSameNum}개</td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">4개</td>
                   <td class="p-3">50,000</td>
-                  <td class="p-3">${four}개</td>
+                  <td class="p-3">${winNumber.fourSameNum}개</td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">5개</td>
                   <td class="p-3">1,500,000</td>
-                  <td class="p-3">${five}개</td>
+                  <td class="p-3">${winNumber.fiveSameNum}개</td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">5개 + 보너스볼</td>
                   <td class="p-3">30,000,000</td>
-                  <td class="p-3">${fiveBonus}개</td>
+                  <td class="p-3">${winNumber.fiveBonusSameNum}개</td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">6개</td>
                   <td class="p-3">2,000,000,000</td>
-                  <td class="p-3">${six}개</td>
+                  <td class="p-3">${winNumber.sixSameNum}개</td>
                 </tr>
               </tbody>
             </table>
@@ -155,5 +148,13 @@ const winStatics =(three,four,five,fiveBonus,six,earning)=> ` <div class="modal"
           </div>
         </div>
       </div>`
+
+const alertMessage ={
+  winningOverNum : '당첨번호 값은 1이상 45이하이어야한다.',
+  bonusOverNum : '보너스번호 값은 1이상 45이하이어야한다.',
+  duplicationNum : '중복된 숫자는 불가능하다.',
+  numInTheThousands : '천의자리만 가능하다'
+}
+
 
 export {$,$All,app,lotteImage,appBuySection,inputLastWeekNumber,alertMessage,winStatics}

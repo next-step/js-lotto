@@ -1,23 +1,29 @@
 import  {$,$All,app,lotteImage,appBuySection,inputLastWeekNumber,alertMessage,winStatics} from './utils/constant.js'
+import {calculateEarning} from "./utils/function.js";
 
-let value = [];
-let winningNumber = [];
-let bonusNumber;
+let winNumber = {
+  threeSameNum : 0,
+  fourSameNum : 0,
+  fiveSameNum : 0,
+  fiveBonusSameNum : 0,
+  sixSameNum : 0
+}
 
 let threeSameNum=0,fourSameNum=0,fiveSameNum=0,fiveBonusSameNum=0,sixSameNum=0;
 
 class Lotte{
   constructor(){
     this.start();
-    this.isOpen = true;
-    this.winningNumber = [];
+    this.isNumberOpen = true;
+    this.winningNumberArr = [];
+
+    this.myLotteNumberArr = [];
     this.bonusNumber = -Infinity;
-    this.value = value;
-    this.beforeNums = [];
+    this.beforeNumberArr = [];
     this.beforeBonusNum = -Infinity;
-    this.myLotteNums  = [];
-    this.myLotteBonusNum = -Infinity;
-    this.num = 0;
+
+    this.myLotteNumsFromDom  = [];
+    this.correctNum = 0;
     this.compareBonus= false;
     this.randomValue = 0;
     this.earning = 0;
@@ -39,17 +45,18 @@ class Lotte{
     $('.mt-5').insertAdjacentHTML('afterend',appBuySection(payment/1000));
     for(let i=0;i<payment/1000;i++) {
       for(let j=0;j<6;j++){
-        this.randomValue = Math.round(Math.random()*45+1);
-        if(this.value.indexOf(this.randomValue) > -1)
+        this.randomValue = Math.floor(Math.random()*45);
+        if(this.myLotteNumberArr.indexOf(this.randomValue) > -1)
           j--;
         else
-          this.value.push(this.randomValue);
+          this.myLotteNumberArr.push(this.randomValue);
       }
-      $('#lotteImageTitle').insertAdjacentHTML('afterend', lotteImage(...this.value));
-      this.value = [];
+      $('#lotteImageTitle').insertAdjacentHTML('afterend', lotteImage(...this.myLotteNumberArr));
+      this.myLotteNumberArr = [];
+
     }
     $('#app').insertAdjacentHTML('beforeend',inputLastWeekNumber)
-    $('#seeNum').addEventListener('click',()=>{this.displayNum(this.isOpen)});
+    $('#seeNum').addEventListener('click',()=>{this.displayNum(this.isNumberOpen)});
     $('.open-result-modal-button').addEventListener('click',()=>{this.clickResult()});
 
   }
@@ -62,7 +69,7 @@ class Lotte{
       $All('#lotteNumber').forEach((dom) => {
         dom.style.display = 'inline'
       })
-      this.isOpen=false;
+      this.isNumberOpen=false;
     }
     else{
       $All('#lotteImage').forEach((dom) => {
@@ -71,7 +78,7 @@ class Lotte{
       $All('#lotteNumber').forEach((dom) => {
         dom.style.display = 'none'
       })
-      this.isOpen=true;
+      this.isNumberOpen=true;
     }
   }
 
@@ -89,16 +96,16 @@ class Lotte{
     for(let i=0;i<$All('.winning-number').length;i++){
       if($All('.winning-number')[i].value < 1 || $All('.winning-number')[i].value > 45) {
         alert(alertMessage.winningOverNum);
-        this.winningNumber = [];
+        this.winningNumberArr = [];
         break;
       }
-      else if(this.winningNumber.indexOf($All('.winning-number')[i].value) > -1){
+      else if(this.winningNumberArr.indexOf($All('.winning-number')[i].value) > -1){
         alert(alertMessage.duplicationNum);
-        this.winningNumber = [];
+        this.winningNumberArr = [];
         break;
       }
       else{
-        this.winningNumber.push($All('.winning-number')[i].value)
+        this.winningNumberArr.push($All('.winning-number')[i].value)
       }
     }
   }
@@ -106,11 +113,11 @@ class Lotte{
   checkBonusNum(){
     if($('.bonus-number').value < 1 || $('.bonus-number').value>45) {
       alert(alertMessage.bonusOverNum);
-      this.winningNumber = [];
+      this.winningNumberArr = [];
     }
-    else if(this.winningNumber.indexOf($('.bonus-number').value) > -1){
+    else if(this.winningNumberArr.indexOf($('.bonus-number').value) > -1){
       alert(alertMessage.duplicationNum);
-      this.winningNumber = [];
+      this.winningNumberArr = [];
     }
     else {
       this.bonusNumber = ($('.bonus-number').value);
@@ -118,54 +125,57 @@ class Lotte{
   }
 
   displayResult(){
-    if(this.winningNumber.length === 6 && this.bonusNumber !== -Infinity) {
+    if(this.winningNumberArr.length === 6 && this.bonusNumber !== -Infinity) {
       this.fillResultLotte();
       $('.modal').classList.add('open');
       $('.modal-close').addEventListener('click', () => {
         $('.modal').classList.remove('open');
-        this.winningNumber = [];
-        threeSameNum=0,fourSameNum=0,fiveSameNum=0,fiveBonusSameNum=0,sixSameNum=0;
+        this.winningNumberArr = [];
+        this.beforeNumberArr = [];
+        for(let val in winNumber) {
+          winNumber[val] = 0;
+        }
+
         $('.modal').remove();
       })
     }
   }
 
   fillResultLotte(){
-    $All('.winning-number').forEach(dom=>this.beforeNums.push(dom.value));
+    $All('.winning-number').forEach(dom=>this.beforeNumberArr.push(dom.value));
 
     this.beforeBonusNum = $('.bonus-number').value;
 
     $All('#lotteNumber').forEach((Dom)=>{
-      this.myLotteNums = Dom.innerHTML.split(',');
-      this.myLotteNums.forEach((val)=>{
-        if(this.beforeNums.indexOf(val) > -1){
-          this.num++;
+      this.myLotteNumsFromDom = Dom.innerHTML.split(',');
+      this.myLotteNumsFromDom.forEach((val)=>{
+        if(this.beforeNumberArr.indexOf(val) > -1){
+          this.correctNum++;
         }
       })
-      if(this.myLotteNums.indexOf(this.beforeBonusNum) > -1){
+      if(this.myLotteNumsFromDom.indexOf(this.beforeBonusNum) > -1){
         this.compareBonus = true;
       }
-      switch(this.num){
-        case 3 : threeSameNum++;
+      switch(this.correctNum){
+        case 3 : winNumber.threeSameNum++;
                 break;
-        case 4 : fourSameNum++;
+        case 4 : winNumber.fourSameNum++;
           break;
-        case 5 : fiveSameNum++;
+        case 5 : winNumber.fiveSameNum++;
           break;
-        case 6 : sixSameNum++;
+        case 6 : winNumber.sixSameNum++;
           break;
       }
-      if(this.num ===5 && this.compareBonus === true){
-        fiveSameNum--;
-        fiveBonusSameNum++;
+      if(this.correctNum ===5 && this.compareBonus === true){
+        winNumber.fiveSameNum--;
+        winNumber.fiveBonusSameNum++;
       }
       this.compareBonus = false;
-      this.num = 0;
+      this.correctNum = 0;
     });
 
-    this.earning = Math.round((threeSameNum * 5000 + fourSameNum * 50000 + fiveSameNum * 1500000 + fiveBonusSameNum * 30000000 + sixSameNum * 2000000000 - Number($('.pl-2').value)) / Number($('.pl-2').value) *1000);
-
-    $('#app').insertAdjacentHTML('beforeend',winStatics(threeSameNum,fourSameNum,fiveSameNum,fiveBonusSameNum,sixSameNum,this.earning))
+    this.earning = calculateEarning(winNumber);
+    $('#app').insertAdjacentHTML('beforeend',winStatics(winNumber,this.earning))
   }
 }
 
