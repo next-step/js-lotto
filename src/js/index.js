@@ -19,6 +19,8 @@ class Lotte{
     this.myLotteBonusNum = -Infinity;
     this.num = 0;
     this.compareBonus= false;
+    this.randomValue = 0;
+    this.earning = 0;
   }
   start(){
     document.body.innerHTML = app;
@@ -37,7 +39,11 @@ class Lotte{
     $('.mt-5').insertAdjacentHTML('afterend',appBuySection(payment/1000));
     for(let i=0;i<payment/1000;i++) {
       for(let j=0;j<6;j++){
-        this.value.push(Math.round(Math.random()*45+1));
+        this.randomValue = Math.round(Math.random()*45+1);
+        if(this.value.indexOf(this.randomValue) > -1)
+          j--;
+        else
+          this.value.push(this.randomValue);
       }
       $('#lotteImageTitle').insertAdjacentHTML('afterend', lotteImage(...this.value));
       this.value = [];
@@ -118,6 +124,8 @@ class Lotte{
       $('.modal-close').addEventListener('click', () => {
         $('.modal').classList.remove('open');
         this.winningNumber = [];
+        threeSameNum=0,fourSameNum=0,fiveSameNum=0,fiveBonusSameNum=0,sixSameNum=0;
+        $('.modal').remove();
       })
     }
   }
@@ -137,7 +145,6 @@ class Lotte{
       if(this.myLotteNums.indexOf(this.beforeBonusNum) > -1){
         this.compareBonus = true;
       }
-      console.log(this.num);
       switch(this.num){
         case 3 : threeSameNum++;
                 break;
@@ -155,8 +162,10 @@ class Lotte{
       this.compareBonus = false;
       this.num = 0;
     });
-    $('#app').insertAdjacentHTML('beforeend',winStatics(threeSameNum,fourSameNum,fiveSameNum,fiveBonusSameNum,sixSameNum))
 
+    this.earning = Math.round((threeSameNum * 5000 + fourSameNum * 50000 + fiveSameNum * 1500000 + fiveBonusSameNum * 30000000 + sixSameNum * 2000000000 - Number($('.pl-2').value)) / Number($('.pl-2').value) *1000);
+
+    $('#app').insertAdjacentHTML('beforeend',winStatics(threeSameNum,fourSameNum,fiveSameNum,fiveBonusSameNum,sixSameNum,this.earning))
   }
 }
 

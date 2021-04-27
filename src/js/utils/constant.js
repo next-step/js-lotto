@@ -102,7 +102,7 @@ const alertMessage ={
   numInTheThousands : '천의자리만 가능하다'
 }
 
-const winStatics =(three,four,five,fiveBonus,six)=> ` <div class="modal">
+const winStatics =(three,four,five,fiveBonus,six,earning)=> ` <div class="modal">
         <div class="modal-inner p-10">
           <div class="modal-close">
             <svg viewbox="0 0 40 40">
@@ -149,7 +149,7 @@ const winStatics =(three,four,five,fiveBonus,six)=> ` <div class="modal">
               </tbody>
             </table>
           </div>
-          <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+          <p class="text-center font-bold">당신의 총 수익률은 ${earning}%입니다.</p>
           <div class="d-flex justify-center mt-5">
             <button type="button" class="btn btn-cyan">다시 시작하기</button>
           </div>
