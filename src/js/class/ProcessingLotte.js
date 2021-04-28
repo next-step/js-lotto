@@ -9,6 +9,13 @@ class ProcessingLotte extends ResultLotte{
 
   clickBuyBtn(payment){
     $('.mt-5').insertAdjacentHTML('afterend',appBuySection(payment/1000));
+    this.addLotteImageDom(payment);
+    $('#app').insertAdjacentHTML('beforeend',inputLastWeekNumber)
+    $('#seeNum').addEventListener('click',()=>{this.displayNum(this.isNumberOpen)});
+    $('.open-result-modal-button').addEventListener('click',()=>{this.clickResult()});
+  }
+
+  addLotteImageDom(payment){
     for(let i=0;i<payment/1000;i++) {
       for(let j=0;j<6;j++){
         this.randomValue = Math.floor(Math.random()*45)+1;
@@ -19,11 +26,7 @@ class ProcessingLotte extends ResultLotte{
       }
       $('#lotteImageTitle').insertAdjacentHTML('afterend', lotteImage(...this.myLotteNumberArr));
       this.myLotteNumberArr = [];
-
     }
-    $('#app').insertAdjacentHTML('beforeend',inputLastWeekNumber)
-    $('#seeNum').addEventListener('click',()=>{this.displayNum(this.isNumberOpen)});
-    $('.open-result-modal-button').addEventListener('click',()=>{this.clickResult()});
   }
 
   displayNum(isOpen){

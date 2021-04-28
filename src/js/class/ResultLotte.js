@@ -23,7 +23,6 @@ class ResultLotte{
         for(let val in winNumber) {
           winNumber[val] = 0;
         }
-
         $('.modal').remove();
       })
     }

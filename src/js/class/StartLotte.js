@@ -23,14 +23,17 @@ class StartLotte extends ProcessingLotte{
   start(){
     document.body.innerHTML = app;
     $('#payBtn').addEventListener('click',()=>{
-      const payment =  Number($('.pl-2').value);
-      if(payment % 1000 !== 0){
-        alert(alertMessage.numInTheThousands);
-      }
-      else{
-        this.clickBuyBtn(payment);
-      }
+     this.checkPayment();
     })
+  }
+  checkPayment(){
+    const payment =  Number($('.pl-2').value);
+    if(payment % 1000 !== 0){
+      alert(alertMessage.numInTheThousands);
+    }
+    else{
+      this.clickBuyBtn(payment);
+    }
   }
 }
 
