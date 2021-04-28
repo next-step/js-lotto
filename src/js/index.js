@@ -1,10 +1,8 @@
 import SETTINGS from './settings.js';
-import { $, warn } from './utils.js';
+import { $ } from './lib/utils.js';
 
 import App from './App.js';
+import { subscribe, dispatch } from './store.js';
 
-try {
-  App($.id(SETTINGS.ID.APP));
-} catch (e) {
-  warn(e);
-}
+subscribe(_ => App($.id(SETTINGS.ID.APP)));
+dispatch();

@@ -12,6 +12,7 @@ export default freeze({
     MODAL: 'modal',
     MODAL_OPEN: 'open',
     MODAL_CLOSE: 'modal-close',
+    OPEN_MODAL_BUTTON: 'open-result-modal-button',
   }),
   EVENT: freeze({
     CLICK: 'click',

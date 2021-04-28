@@ -1,5 +1,5 @@
 import SETTINGS from './settings.js';
-import { $, log } from './utils.js';
+import { $ } from './lib/utils.js';
 
 import {
   PriceForm,
@@ -8,10 +8,11 @@ import {
   WinningResult,
   Modal,
 } from './component/index.js';
+import { getState, actionCreator } from './store.js';
 
 const App = (({ ID, KLASS }) => {
   return $el => {
-    const state = { isOpen: true };
+    const { isModalOpen } = getState();
 
     const render = $el => {
       $el.innerHTML = `
@@ -32,8 +33,8 @@ const App = (({ ID, KLASS }) => {
       WinningForm($.id(ID.WINNING_FORM, $el));
       Modal(
         $.id(ID.WINNING_RESULT, $el),
-        state.isOpen,
-        _ => log('clicked'),
+        isModalOpen,
+        actionCreator.closeModal,
         WinningResult,
       );
     };

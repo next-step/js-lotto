@@ -1,8 +1,16 @@
+import { $ } from '../lib/utils.js';
 import SETTINGS from '../settings.js';
 
-const WinningForm = (_ => {
+import { actionCreator } from '../store.js';
+
+const WinningForm = (({ KLASS, EVENT }) => {
   return $el => {
-    const bindEvent = $el => {};
+    const bindEvent = $el => {
+      $.klass(KLASS.OPEN_MODAL_BUTTON, $el).addEventListener(
+        EVENT.CLICK,
+        actionCreator.openModal,
+      );
+    };
 
     const render = $el => {
       $el.innerHTML = `
@@ -48,7 +56,7 @@ const WinningForm = (_ => {
         </div>
         <button
           type="button"
-          class="open-result-modal-button mt-5 btn btn-cyan w-100"
+          class="${KLASS.OPEN_MODAL_BUTTON} mt-5 btn btn-cyan w-100"
         >
           결과 확인하기
         </button>

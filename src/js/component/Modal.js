@@ -1,5 +1,5 @@
 import SETTINGS from '../settings.js';
-import { $, uuidV4 } from '../utils.js';
+import { $, uuidV4 } from '../lib/utils.js';
 
 const Modal = (({ KLASS, EVENT }) => {
   return ($el, isOpen, onClose, InnerComponent) => {
