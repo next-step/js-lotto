@@ -14,7 +14,7 @@ export class Lottos {
 
   setState({ price }) {
     const numOfLotto = Math.floor(price / PRICE_PER_LOTTO);
-    this.lottos = Array.from({ length: numOfLotto }, () => Lottos.generateLotto());
+    this.lottos = Array.from({ length: numOfLotto }, Lottos.generateLotto);
     this.render();
   }
 
