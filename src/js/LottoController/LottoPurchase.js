@@ -32,8 +32,6 @@ export const onLottoPurchase = () => {
     }
 
     if ($lottoIcons.classList.contains('flex-col')) onToggle();
-
-    console.log(LOTTO_NUMBER_LIST);
 };
 
 const showPurchasedLotto = () => {

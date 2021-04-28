@@ -7,11 +7,9 @@ export const prizeCounter = () => {
     for (let i = 0; i < totalPurchasedLotto; i++) {
         let count = 0;
         const lottoNumbers = LOTTO_NUMBER_LIST[i];
-        console.log(lottoNumbers);
 
         lottoNumbers.map((number) => {
             if (WINNING_NUMBER_LIST.includes(number)) {
-                console.log(number);
                 count += 1;
             }
         });
@@ -29,8 +27,6 @@ export const prizeCounter = () => {
 export const showPrizeCount = () => {
     const list = ['3', '4', '5', '5PLUS', '6'];
     let i = 0;
-
-    console.log(PRIZE);
 
     $matchCounts.forEach((matchCount) => {
         matchCount.innerText = PRIZE[list[i]];

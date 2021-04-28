@@ -11,7 +11,6 @@ export const onModalClose = () => {
 };
 
 export const onModalOpen = () => {
-    // 객체 초기화
     ['3', '4', '5', '5PLUS', '6'].map((match) => {
         PRIZE[match] = 0;
     });
