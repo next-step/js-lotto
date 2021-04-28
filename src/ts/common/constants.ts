@@ -10,6 +10,7 @@ export const ClassName = Object.freeze({
   input: "input",
   lottoNumbersToggle: "lotto-numbers-toggle",
   displayNone: "d-none",
+  lottoItem: "lotto-item",
   lottoDetail: "lotto-detail",
   winningNumber: "winning-number",
   bonusNumber: "bonus-number",
@@ -17,6 +18,7 @@ export const ClassName = Object.freeze({
   open: "open",
   closeX: "close-x",
   modalInner: "modal-inner",
+  btn: "btn",
 });
 
 export const AlertMsg = Object.freeze({

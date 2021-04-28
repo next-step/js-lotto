@@ -58,7 +58,7 @@ export default class PurchaseInfo extends Component<
 
     const lottosHTML = this.state!.lottos!.map(
       (lotto) => `
-          <li class="mx-1 text-4xl d-flex"">
+          <li class="mx-1 text-4xl d-flex ${ClassName.lottoItem}">
               <span>🎟️ </span>
               <span class="ml-2 font-xl
               ${ClassName.displayNone} 
