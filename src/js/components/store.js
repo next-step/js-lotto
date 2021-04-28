@@ -5,8 +5,13 @@ class LottoStore {
     this.lottoList = [];
   }
 
-  addLotto(lottoNumber) {
-    this.lottoList.push(lottoNumber);
+  addLotto(lottoNumbers) {
+    const lotto = {
+      numbers: [],
+      rank: 'noRank',
+    };
+    lotto.numbers = lottoNumbers;
+    this.lottoList.push(lotto);
   }
 
   getLottoList() {

@@ -10,7 +10,6 @@ class LottoPurchasedList {
     this.$lottoPurcasedList = $('#lotto-purchased-list');
     this.$toggleButton = $('.lotto-numbers-toggle-button');
     this.$toggleButton.addEventListener('click', this.onClickToggleButton);
-    this.lottos = [];
   }
 
   init(numberOfLotto) {
@@ -21,20 +20,20 @@ class LottoPurchasedList {
 
   createLottoList(numberOfLotto) {
     for (let i = 0; i < numberOfLotto; i++) {
-      const lotto = [];
+      const lottoNumbers = [];
       for (let j = 0; j < 6; j++) {
         const number = Math.floor(Math.random() * 45);
-        lotto.push(number);
+        lottoNumbers.push(number);
       }
-      lottoStore.addLotto(lotto);
+      lottoStore.addLotto(lottoNumbers);
     }
   }
 
   renderLottoList() {
     const lottoList = lottoStore.getLottoList();
-    lottoList.forEach(item => {
-      const lotto = item.join(', ');
-      this.$lottoPurcasedList.innerHTML += template.lotto(lotto);
+    lottoList.forEach(lotto => {
+      const numbers = lotto.numbers.join(', ');
+      this.$lottoPurcasedList.innerHTML += template.lotto(numbers);
     });
   }
 
