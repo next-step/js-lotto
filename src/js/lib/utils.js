@@ -36,3 +36,5 @@ export const uuidV4 = _ =>
   ).join('');
 
 export const floor = num => Math.floor(num);
+
+export const timeout = (...args) => setTimeout(...args);

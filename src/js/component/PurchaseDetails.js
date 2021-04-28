@@ -1,5 +1,5 @@
 import SETTINGS from '../settings.js';
-import { $ } from '../lib/utils.js';
+import { $, timeout } from '../lib/utils.js';
 
 import { getState, actionCreator } from '../store.js';
 
@@ -11,7 +11,7 @@ const PurchaseDetails = (({ KLASS, EVENT, CONSTANT, DELIMITER }) => {
       const $input = $.klass(KLASS.NUMBERS_TOGGLE_BUTTON, $el);
       $input.addEventListener(EVENT.CLICK, _ => {
         $input.checked = !isDetailsShow;
-        setTimeout(actionCreator.toggleDetails, 100);
+        timeout(actionCreator.toggleDetails, 100);
       });
     };
 
