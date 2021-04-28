@@ -22,11 +22,19 @@ class LottoPurchasedList {
     for (let i = 0; i < numberOfLotto; i++) {
       const lottoNumbers = [];
       for (let j = 0; j < 6; j++) {
-        const number = Math.floor(Math.random() * 45);
+        const number = this.getRandomNumber(lottoNumbers);
         lottoNumbers.push(number);
       }
       lottoStore.addLotto(lottoNumbers);
     }
+  }
+
+  getRandomNumber(checkArr) {
+    let number = 0;
+    do {
+      number = Math.floor(Math.random() * (45 - 1) + 1);
+    } while (checkArr.includes(number));
+    return number;
   }
 
   renderLottoList() {
