@@ -1,5 +1,5 @@
-const $ = (selector) => document.querySelector(selector)
-const $All = (selector) => document.querySelectorAll(selector)
+const $ = (selector) => document.querySelector(selector);
+const $All = (selector) => document.querySelectorAll(selector);
 
 const app = `<div id="app" class="p-3">
       <div class="d-flex justify-center mt-5">
@@ -20,10 +20,9 @@ const app = `<div id="app" class="p-3">
           </form>
         </div>
       </div>
-</div>`
+</div>`;
 
-
-const appBuySection = (num)=>`
+const appBuySection = (num) => `
           <section class="mt-9">
             <div class="d-flex">
               <label class="flex-auto my-0">총 ${num}개를 구매하였습니다.</label>
@@ -36,9 +35,10 @@ const appBuySection = (num)=>`
             </div>
             <div class="d-flex flex-wrap" id="lotteImageTitle">
             </div>
-          </section>`
+          </section>`;
 
-const lotteImage = (n1,n2,n3,n4,n5,n6)=> `<span class="mx-1 text-4xl" id="lotteImage">🎟️ <span id="lotteNumber" style="display:none">${n1},${n2},${n3},${n4},${n5},${n6}</span> </span>`
+const lotteImage = (n1, n2, n3, n4, n5, n6) =>
+  `<span class="mx-1 text-4xl" id="lotteImage">🎟️ <span id="lotteNumber" style="display:none">${n1},${n2},${n3},${n4},${n5},${n6}</span> </span>`;
 
 const inputLastWeekNumber = `<form class="mt-9">
             <label class="flex-auto d-inline-block mb-3"
@@ -87,9 +87,9 @@ const inputLastWeekNumber = `<form class="mt-9">
             >
               결과 확인하기
             </button>
-          </form>`
+          </form>`;
 
-const winStatics =(winNumber,earning)=> ` <div class="modal">
+const winStatics = (winNumber, earning) => ` <div class="modal">
         <div class="modal-inner p-10">
           <div class="modal-close">
             <svg viewbox="0 0 40 40">
@@ -141,9 +141,14 @@ const winStatics =(winNumber,earning)=> ` <div class="modal">
             <button type="button" id="modal-restart" class="btn btn-cyan">다시 시작하기</button>
           </div>
         </div>
-      </div>`
+      </div>`;
 
-
-
-
-export {$,$All,app,lotteImage,appBuySection,inputLastWeekNumber,winStatics}
+export {
+  $,
+  $All,
+  app,
+  lotteImage,
+  appBuySection,
+  inputLastWeekNumber,
+  winStatics,
+};
