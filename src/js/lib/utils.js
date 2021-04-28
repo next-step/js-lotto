@@ -38,3 +38,5 @@ export const uuidV4 = _ =>
 export const floor = num => Math.floor(num);
 
 export const timeout = (...args) => setTimeout(...args);
+
+export const freeze = obj => Object.freeze(obj);

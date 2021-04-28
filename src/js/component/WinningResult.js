@@ -1,8 +1,16 @@
 import SETTINGS from '../settings.js';
+import { $ } from '../lib/utils.js';
 
-const WinningResult = (_ => {
+import { actionCreator } from '../store.js';
+
+const WinningResult = (({ TAG, EVENT }) => {
   return $el => {
-    const bindEvent = $el => {};
+    const bindEvent = $el => {
+      $(TAG.BUTTON, $el).addEventListener(
+        EVENT.CLICK,
+        actionCreator.resetState,
+      );
+    };
 
     const render = $el => {
       $el.innerHTML = `

@@ -1,5 +1,5 @@
-import { $, warn } from '../lib/utils.js';
 import SETTINGS from '../settings.js';
+import { $, warn } from '../lib/utils.js';
 
 import { getState, actionCreator } from '../store.js';
 
