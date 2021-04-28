@@ -1,10 +1,12 @@
 import SETTINGS from '../settings.js';
 import { $ } from '../lib/utils.js';
 
-import { actionCreator } from '../store.js';
+import { getState, actionCreator } from '../store.js';
 
 const WinningResult = (({ TAG, EVENT }) => {
   return $el => {
+    const { resultTable, earningsRate } = getState();
+
     const bindEvent = $el => {
       $(TAG.BUTTON, $el).addEventListener(
         EVENT.CLICK,
@@ -28,32 +30,32 @@ const WinningResult = (({ TAG, EVENT }) => {
               <tr class="text-center">
                 <td class="p-3">3개</td>
                 <td class="p-3">5,000</td>
-                <td class="p-3">n개</td>
+                <td class="p-3">${resultTable[4][1]}개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">4개</td>
                 <td class="p-3">50,000</td>
-                <td class="p-3">n개</td>
+                <td class="p-3">${resultTable[3][1]}개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">5개</td>
                 <td class="p-3">1,500,000</td>
-                <td class="p-3">n개</td>
+                <td class="p-3">${resultTable[2][1]}개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">5개 + 보너스볼</td>
                 <td class="p-3">30,000,000</td>
-                <td class="p-3">n개</td>
+                <td class="p-3">${resultTable[1][1]}개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">6개</td>
                 <td class="p-3">2,000,000,000</td>
-                <td class="p-3">n개</td>
+                <td class="p-3">${resultTable[0][1]}개</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+        <p class="text-center font-bold">당신의 총 수익률은 ${earningsRate}%입니다.</p>
         <div class="d-flex justify-center mt-5">
           <button type="button" class="btn btn-cyan">다시 시작하기</button>
         </div>

@@ -5,9 +5,11 @@ import { err, floor, random, freeze } from './lib/utils.js';
 const initState = freeze({
   money: '',
   lottos: [],
+  isDetailsShow: false,
   winningLotto: [],
   bonusNumber: null,
-  isDetailsShow: false,
+  resultTable: null,
+  earningsRate: null,
   isModalOpen: false,
 });
 
@@ -29,10 +31,15 @@ const actionTable = freeze({
     ...state,
     isDetailsShow: !state.isDetailsShow,
   }),
-  [ACTION_TYPE.CHECK_RESULT]: ({ winningLotto, bonusNumber }, state) => ({
+  [ACTION_TYPE.CHECK_RESULT]: (
+    { winningLotto, bonusNumber, resultTable, earningsRate },
+    state,
+  ) => ({
     ...state,
     winningLotto,
     bonusNumber,
+    resultTable,
+    earningsRate,
     isModalOpen: true,
   }),
   [ACTION_TYPE.TOGGLE_MODAL]: (_, state) => ({
@@ -65,6 +72,7 @@ export const actionCreator = (({ CONSTANT, MESSAGE }) =>
     },
     toggleDetails: _ => dispatch({ type: ACTION_TYPE.TOGGLE_DETAILS }),
     checkResult: (winningLotto, bonusNumber) => {
+      [winningLotto, bonusNumber] = [winningLotto.map(Number), +bonusNumber];
       const { LOTTO_MIN, LOTTO_MAX, LOTTO_SIZE } = CONSTANT;
       const validationTarget = [...winningLotto, bonusNumber];
       if (validationTarget.some(num => num < LOTTO_MIN || num > LOTTO_MAX))
@@ -72,7 +80,51 @@ export const actionCreator = (({ CONSTANT, MESSAGE }) =>
       if (new Set(validationTarget).size < LOTTO_SIZE + 1)
         err(MESSAGE.DUPLICATED);
 
-      dispatch({ type: ACTION_TYPE.CHECK_RESULT, winningLotto, bonusNumber });
+      const { money, lottos } = getState();
+      const resultTable = [
+        [2_000_000_000, 0],
+        [30_000_000_0, 0],
+        [1_500_000, 0],
+        [50_000, 0],
+        [5_000, 0],
+      ];
+
+      const checkLotto = lotto => {
+        let rank;
+        const counter = new Set([...lotto, ...winningLotto]);
+        switch (counter.size) {
+          case 6:
+            rank = 0;
+            break;
+          case 7:
+            rank = lotto.includes(bonusNumber) ? 1 : 2;
+            break;
+          case 8:
+            rank = 3;
+            break;
+          case 9:
+            rank = 4;
+            break;
+          default:
+        }
+        if (rank) resultTable[rank][1]++;
+      };
+      lottos.forEach(checkLotto);
+
+      const earnings = resultTable.reduce(
+        (acc, [prize, cnt]) => acc + prize * cnt,
+        0,
+      );
+      const earningsRate = (((earnings - money) / money) * 100).toFixed(
+        CONSTANT.DECIMAL_POINT,
+      );
+      dispatch({
+        type: ACTION_TYPE.CHECK_RESULT,
+        winningLotto,
+        bonusNumber,
+        resultTable,
+        earningsRate,
+      });
     },
     toggleModal: _ => dispatch({ type: ACTION_TYPE.TOGGLE_MODAL }),
     resetState: _ => dispatch({ type: ACTION_TYPE.RESET_STATE }),

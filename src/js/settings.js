@@ -44,6 +44,7 @@ export default freeze({
     LOTTO_MIN: 1,
     LOTTO_MAX: 45,
     EMPTY_STRING: '',
+    DECIMAL_POINT: 2,
   }),
   DELIMITER: freeze({
     LOTTO_NUMBER: ', ',
