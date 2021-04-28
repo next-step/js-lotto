@@ -12,7 +12,7 @@ import { getState, actionCreator } from './store.js';
 
 const App = (({ ID, KLASS }) => {
   return $el => {
-    const { isModalOpen } = getState();
+    const { lottos, isModalOpen } = getState();
 
     const render = $el => {
       $el.innerHTML = `
@@ -29,14 +29,17 @@ const App = (({ ID, KLASS }) => {
       `;
 
       PriceForm($.id(ID.PRICE_FORM, $el));
-      PurchaseDetails($.id(ID.PURCHASE_DETAILS, $el));
-      WinningForm($.id(ID.WINNING_FORM, $el));
-      Modal(
-        $.id(ID.WINNING_RESULT, $el),
-        isModalOpen,
-        actionCreator.closeModal,
-        WinningResult,
-      );
+
+      if (lottos.length) {
+        PurchaseDetails($.id(ID.PURCHASE_DETAILS, $el));
+        WinningForm($.id(ID.WINNING_FORM, $el));
+        Modal(
+          $.id(ID.WINNING_RESULT, $el),
+          isModalOpen,
+          actionCreator.closeModal,
+          WinningResult,
+        );
+      }
     };
 
     render($el);

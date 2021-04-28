@@ -34,3 +34,5 @@ export const uuidV4 = _ =>
       ? delimiter
       : hexadecimals[random(hexadecimals.length)],
   ).join('');
+
+export const floor = num => Math.floor(num);
