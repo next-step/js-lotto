@@ -1,7 +1,7 @@
 import Lotto from "./lotto.js";
 import LottoMaker from "./lottoMaker.js";
 
-export default function LottoStore() {
+export function LottoStore() {
   const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
   const lottoMaker = new LottoMaker(shuffle);
 
@@ -14,4 +14,4 @@ export default function LottoStore() {
   };
 }
 
-const LOTTO_PRICE = 1_000;
+export const LOTTO_PRICE = 1_000;

@@ -1,4 +1,4 @@
-import LottoStore from "../domain/lottoStore.js";
+import { LottoStore } from "../domain/lottoStore.js";
 import LottoBuyInput from "./lottoBuyInput.js";
 import LottoView from "./lottoView.js";
 
