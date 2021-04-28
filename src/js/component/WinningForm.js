@@ -8,7 +8,7 @@ const WinningForm = (({ KLASS, EVENT }) => {
     const bindEvent = $el => {
       $.klass(KLASS.OPEN_MODAL_BUTTON, $el).addEventListener(
         EVENT.CLICK,
-        actionCreator.openModal,
+        actionCreator.toggleModal,
       );
     };
 

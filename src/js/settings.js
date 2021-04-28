@@ -13,6 +13,11 @@ export default freeze({
     MODAL_OPEN: 'open',
     MODAL_CLOSE: 'modal-close',
     OPEN_MODAL_BUTTON: 'open-result-modal-button',
+    NUMBERS_TOGGLE_BUTTON: 'lotto-numbers-toggle-button',
+    FLEX_COL: 'flex-col',
+    LOTTO_WRAPPER: 'lotto-wrapper',
+    LOTTO_DETAIL: 'lotto-detail',
+    DUMMY: '',
   }),
   TAG: freeze({
     INPUT: 'input',
@@ -34,5 +39,10 @@ export default freeze({
     LOTTO_SIZE: 6,
     LOTTO_MIN: 1,
     LOTTO_MAX: 45,
+    EMPTY_STRING: '',
+  }),
+  DELIMITER: freeze({
+    LOTTO_NUMBER: ', ',
+    EMPTY_STRING: '',
   }),
 });

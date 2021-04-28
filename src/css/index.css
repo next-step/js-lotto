@@ -22,3 +22,16 @@ body {
   width: 30px;
   height: 36px;
 }
+
+ul {
+  padding: 0;
+}
+
+.lotto-wrapper {
+  display: flex;
+}
+
+.lotto-detail {
+  font-size: 1.25rem;
+  margin-left: 12px;
+}

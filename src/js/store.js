@@ -5,13 +5,14 @@ import { err, floor, random } from './lib/utils.js';
 const initState = {
   money: '',
   lottos: [],
+  isDetailsShow: false,
   isModalOpen: false,
 };
 
 export const ACTION_TYPE = {
   BUY_LOTTOS: 'BUY_LOTTOS',
-  OPEN_MODAL: 'OPEN_MODAL',
-  CLOSE_MODAL: 'CLOSE_MODAL',
+  TOGGLE_DETAILS: 'TOGGLE_DETAILS',
+  TOGGLE_MODAL: 'TOGGLE_MODAL',
 };
 
 const actionTable = {
@@ -20,8 +21,14 @@ const actionTable = {
     money,
     lottos,
   }),
-  [ACTION_TYPE.OPEN_MODAL]: (_, state) => ({ ...state, isModalOpen: true }),
-  [ACTION_TYPE.CLOSE_MODAL]: (_, state) => ({ ...state, isModalOpen: false }),
+  [ACTION_TYPE.TOGGLE_DETAILS]: (_, state) => ({
+    ...state,
+    isDetailsShow: !state.isDetailsShow,
+  }),
+  [ACTION_TYPE.TOGGLE_MODAL]: (_, state) => ({
+    ...state,
+    isModalOpen: !state.isModalOpen,
+  }),
 };
 
 const reducer = (action, state = initState) =>
@@ -44,6 +51,6 @@ export const actionCreator = (({ CONSTANT, MESSAGE }) => ({
     });
     dispatch({ type: ACTION_TYPE.BUY_LOTTOS, money, lottos });
   },
-  openModal: _ => dispatch({ type: ACTION_TYPE.OPEN_MODAL }),
-  closeModal: _ => dispatch({ type: ACTION_TYPE.CLOSE_MODAL }),
+  toggleDetails: _ => dispatch({ type: ACTION_TYPE.TOGGLE_DETAILS }),
+  toggleModal: _ => dispatch({ type: ACTION_TYPE.TOGGLE_MODAL }),
 }))(SETTINGS);

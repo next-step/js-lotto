@@ -16,9 +16,9 @@ const App = (({ ID, KLASS }) => {
 
     const render = $el => {
       $el.innerHTML = `
+        <h1 class="text-center">🎱 행운의 로또</h1>
         <div class="d-flex justify-center mt-5">
           <div class="w-100">
-            <h1 class="text-center">🎱 행운의 로또</h1>
             <form id="${ID.PRICE_FORM}" class="mt-5"></form>
             <section id="${ID.PURCHASE_DETAILS}" class="mt-9"></section>
             <form id="${ID.WINNING_FORM}" class="mt-9"></form>
@@ -36,7 +36,7 @@ const App = (({ ID, KLASS }) => {
         Modal(
           $.id(ID.WINNING_RESULT, $el),
           isModalOpen,
-          actionCreator.closeModal,
+          actionCreator.toggleModal,
           WinningResult,
         );
       }
