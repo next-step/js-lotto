@@ -19,6 +19,14 @@ class StartLotte extends ProcessingLotte{
     this.compareBonus= false;
     this.randomValue = 0;
     this.earning = 0;
+
+    this.winNumber =  {
+      threeSameNum : 0,
+      fourSameNum : 0,
+      fiveSameNum : 0,
+      fiveBonusSameNum : 0,
+      sixSameNum : 0
+    }
   }
   start(){
     document.body.innerHTML = app;
@@ -30,6 +38,9 @@ class StartLotte extends ProcessingLotte{
     const payment =  Number($('.pl-2').value);
     if(payment % 1000 !== 0){
       alert(alertMessage.numInTheThousands);
+    }
+    else if(payment ===0){
+      alert(alertMessage.numIsZero)
     }
     else{
       this.clickBuyBtn(payment);

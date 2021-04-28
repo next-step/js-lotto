@@ -1,27 +1,26 @@
 import {$, $All, winStatics} from "../utils/constant.js";
 import {calculateEarning} from "../utils/function.js";
+import {Render} from "./render.js";
 
-let winNumber = {
-  threeSameNum : 0,
-  fourSameNum : 0,
-  fiveSameNum : 0,
-  fiveBonusSameNum : 0,
-  sixSameNum : 0
-}
 
-class ResultLotte{
-  constructor(){}
+class ResultLotte extends Render{
+  constructor(){
+    super();
+  }
 
   displayResult(){
     if(this.winningNumberArr.length === 6 && this.bonusNumber !== -Infinity) {
       this.fillResultLotte();
       $('.modal').classList.add('open');
+      $('#modal-restart').addEventListener('click',()=>{
+       this.render();
+      })
       $('.modal-close').addEventListener('click', () => {
         $('.modal').classList.remove('open');
         this.winningNumberArr = [];
         this.beforeNumberArr = [];
-        for(let val in winNumber) {
-          winNumber[val] = 0;
+        for(let val in this.winNumber) {
+          this.winNumber[val] = 0;
         }
         $('.modal').remove();
       })
@@ -44,25 +43,25 @@ class ResultLotte{
         this.compareBonus = true;
       }
       switch(this.correctNum){
-        case 3 : winNumber.threeSameNum++;
+        case 3 : this.winNumber.threeSameNum++;
           break;
-        case 4 : winNumber.fourSameNum++;
+        case 4 : this.winNumber.fourSameNum++;
           break;
-        case 5 : winNumber.fiveSameNum++;
+        case 5 : this.winNumber.fiveSameNum++;
           break;
-        case 6 : winNumber.sixSameNum++;
+        case 6 : this.winNumber.sixSameNum++;
           break;
       }
       if(this.correctNum ===5 && this.compareBonus === true){
-        winNumber.fiveSameNum--;
-        winNumber.fiveBonusSameNum++;
+        this.winNumber.fiveSameNum--;
+        this.winNumber.fiveBonusSameNum++;
       }
       this.compareBonus = false;
       this.correctNum = 0;
     });
 
-    this.earning = calculateEarning(winNumber);
-    $('#app').insertAdjacentHTML('beforeend',winStatics(winNumber,this.earning))
+    this.earning = calculateEarning(this.winNumber);
+    $('#app').insertAdjacentHTML('beforeend',winStatics(this.winNumber,this.earning))
   }
 }
 

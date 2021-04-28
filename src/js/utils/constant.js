@@ -51,32 +51,26 @@ const inputLastWeekNumber = `<form class="mt-9">
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
-                    value="1"
                   />
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
-                    value="2"
                   />
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
-                    value="3"
                   />
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
-                    value="4"
                   />
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
-                    value="5"
                   />
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
-                    value="6"
                   />
                 </div>
               </div>
@@ -144,7 +138,7 @@ const winStatics =(winNumber,earning)=> ` <div class="modal">
           </div>
           <p class="text-center font-bold">당신의 총 수익률은 ${earning}%입니다.</p>
           <div class="d-flex justify-center mt-5">
-            <button type="button" class="btn btn-cyan">다시 시작하기</button>
+            <button type="button" id="modal-restart" class="btn btn-cyan">다시 시작하기</button>
           </div>
         </div>
       </div>`
