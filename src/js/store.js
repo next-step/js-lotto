@@ -107,7 +107,7 @@ export const actionCreator = (({ CONSTANT, MESSAGE }) =>
             break;
           default:
         }
-        if (rank) resultTable[rank][1]++;
+        if (typeof rank !== typeof undefined) resultTable[rank][1]++;
       };
       lottos.forEach(checkLotto);
 
