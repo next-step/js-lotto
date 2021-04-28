@@ -5,8 +5,3 @@ export const lottoIconTemplate = (lottoNumberList) => {
                 <span class="lotto-detail" style="display: none;">${lottoNumbers}</span>
             </li>`;
 };
-
-export const switchTemplate = () => {
-    return `<input id="lotto-switch" type="checkbox" class="lotto-numbers-toggle-button" />
-            <span class="text-base font-normal">번호보기</span>`;
-};
