@@ -5,6 +5,8 @@ import { err, floor, random } from './lib/utils.js';
 const initState = {
   money: '',
   lottos: [],
+  winningLotto: [],
+  bonusNumber: null,
   isDetailsShow: false,
   isModalOpen: false,
 };
@@ -12,6 +14,7 @@ const initState = {
 export const ACTION_TYPE = {
   BUY_LOTTOS: 'BUY_LOTTOS',
   TOGGLE_DETAILS: 'TOGGLE_DETAILS',
+  CHECK_RESULT: 'CHECK_RESULT',
   TOGGLE_MODAL: 'TOGGLE_MODAL',
 };
 
@@ -24,6 +27,12 @@ const actionTable = {
   [ACTION_TYPE.TOGGLE_DETAILS]: (_, state) => ({
     ...state,
     isDetailsShow: !state.isDetailsShow,
+  }),
+  [ACTION_TYPE.CHECK_RESULT]: ({ winningLotto, bonusNumber }, state) => ({
+    ...state,
+    winningLotto,
+    bonusNumber,
+    isModalOpen: true,
   }),
   [ACTION_TYPE.TOGGLE_MODAL]: (_, state) => ({
     ...state,
@@ -52,5 +61,15 @@ export const actionCreator = (({ CONSTANT, MESSAGE }) => ({
     dispatch({ type: ACTION_TYPE.BUY_LOTTOS, money, lottos });
   },
   toggleDetails: _ => dispatch({ type: ACTION_TYPE.TOGGLE_DETAILS }),
+  checkResult: (winningLotto, bonusNumber) => {
+    const { LOTTO_MIN, LOTTO_MAX, LOTTO_SIZE } = CONSTANT;
+    const validationTarget = [...winningLotto, bonusNumber];
+    if (validationTarget.some(num => num < LOTTO_MIN || num > LOTTO_MAX))
+      err(MESSAGE.OUT_OF_RANGE);
+    if (new Set(validationTarget).size < LOTTO_SIZE + 1)
+      err(MESSAGE.DUPLICATED);
+
+    dispatch({ type: ACTION_TYPE.CHECK_RESULT, winningLotto, bonusNumber });
+  },
   toggleModal: _ => dispatch({ type: ACTION_TYPE.TOGGLE_MODAL }),
 }))(SETTINGS);
