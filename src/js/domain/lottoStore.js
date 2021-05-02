@@ -1,5 +1,5 @@
 import Lotto from "./lotto.js";
-import LottoMaker from "./lottoMaker.js";
+import { LottoMaker } from "./lottoMaker.js";
 
 export function LottoStore() {
   const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);

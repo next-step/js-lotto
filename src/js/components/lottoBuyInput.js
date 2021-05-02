@@ -7,7 +7,7 @@ export default function LottoBuyInput(app) {
   const $input = $(BUY_SELECTOR.FORM);
 
   const onKeyHandler = (event) => {
-    if (!isKey(event, "Enter")) return;
+    if (!isKey(event, "Enter") || !event.target.checkValidity()) return;
     event.preventDefault();
     onClickHandler();
   };

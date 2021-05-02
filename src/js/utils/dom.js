@@ -9,6 +9,7 @@ export const $removeClass = (target, selector) =>
   target.classList.remove(selector);
 export const $attr = (target, selector, attribute) =>
   target.setAttribute(selector, attribute);
+export const $next = (target) => target.nextElementSibling;
 
 export const BUY_SELECTOR = {
   FORM: "#input-price-form",
@@ -22,4 +23,9 @@ export const VIEW_SELECTOR = {
   TOTAL: "#total-purchased",
   SWITCH: "#lotto-switch",
   LOTTO_DETAIL: ".lotto-detail",
+};
+
+export const WINNING_SELECTOR = {
+  FORM: "#input-lotto-nums",
+  BUTTON: ".open-result-modal-button",
 };
