@@ -8,10 +8,10 @@ export function getRandomInt(min: number, max: number): number {
 }
 
 export function shuffle(arr: any[]) {
-  for (let i = 0; i < arr.length; i++) {
-    const j = getRandomInt(0, arr.length - 1);
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
+arr.map((_, i) => {
+  const j = getRandomInt(0, arr.length - 1);
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+})
 }
 
 const LottoTable: number[] = Array(
