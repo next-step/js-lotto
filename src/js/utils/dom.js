@@ -28,13 +28,17 @@ export const VIEW_SELECTOR = {
 export const WINNING_SELECTOR = {
   FORM: "#input-lotto-nums",
   BUTTON: ".open-result-modal-button",
+  INPUT: "input[type=number]",
 };
 
 export const MODAL_SELECTOR = {
+  MODAL: ".modal",
+  MODAL_CLOSE: ".modal-close",
   FIRST: "#first-num",
   SECOND: "#second-num",
   THIRD: "#third-num",
   FOURTH: "#fourth-num",
   FIFTH: "#fifth-num",
   YIELD: "#yield",
+  RESTART: "#restart",
 };

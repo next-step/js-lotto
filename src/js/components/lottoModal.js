@@ -1,8 +1,9 @@
 import { $, MODAL_SELECTOR } from "../utils/dom.js";
 
 export default function LottoModal() {
-  const $modalClose = $(".modal-close");
-  const $modal = $(".modal");
+  const $modal = $(MODAL_SELECTOR.MODAL);
+  const $modalClose = $(MODAL_SELECTOR.MODAL_CLOSE);
+  const $restart = $(MODAL_SELECTOR.RESTART);
 
   this.open = (results, yieldResult) => {
     Object.entries(results).forEach(([key, value]) => {
@@ -16,5 +17,8 @@ export default function LottoModal() {
     $modal.classList.remove("open");
   };
 
+  const onRestart = () => location.reload();
+
   $modalClose.addEventListener("click", onModalClose);
+  $restart.addEventListener("click", onRestart);
 }
