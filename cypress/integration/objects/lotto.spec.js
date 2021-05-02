@@ -1,7 +1,7 @@
 import Lotto from "../../../src/js/domain/lotto.js";
-import LottoMaker from "../../../src/js/domain/lottoMaker.js";
-import LottoStore from "../../../src/js/domain/lottoStore.js";
-import Winnning from "../../../src/js/domain/winning.js";
+import { LottoMaker } from "../../../src/js/domain/lottoMaker.js";
+import { LottoStore, LOTTO_PRICE } from "../../../src/js/domain/lottoStore.js";
+import { PRIZE, Winnning } from "../../../src/js/domain/winning.js";
 import WinningLotto from "../../../src/js/domain/winningLotto.js";
 
 const LOTTO_SIZE = 6;
@@ -39,7 +39,7 @@ describe("로또를 구매한다", () => {
     cy.wrap(lottoStore)
       .invoke("buyLotto", buyNum)
       .its("length")
-      .should("eq", buyNum / 1_000);
+      .should("eq", buyNum / LOTTO_PRICE);
   });
 
   it("");
@@ -61,6 +61,7 @@ describe("총 당첨자를 확인한다", () => {
   const fifthLotto = new Lotto([3, 4, 5, 7, 8, 9]);
   const secondLotto = new Lotto([2, 3, 4, 5, 6, 7]);
   const thirdLotto = new Lotto([2, 3, 4, 5, 6, 8]);
+  const noMatchLotto = new Lotto([10, 11, 12, 13, 14, 15]);
   const winningResults = ["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH"];
 
   beforeEach("당첨결과 초기화", () => {
@@ -89,5 +90,15 @@ describe("총 당첨자를 확인한다", () => {
     cy.wrap(winning).invoke("match", winningLotto, thirdLotto);
     cy.wrap(winning).invoke("showResult").its("SECOND").should("eq", 0);
     cy.wrap(winning).invoke("showResult").its("THIRD").should("eq", 1);
+  });
+
+  it("수익률을 계산한다", () => {
+    const lottos = [thirdLotto, secondLotto, fifthLotto, noMatchLotto];
+    const buyPrice = lottos.length * LOTTO_PRICE;
+    const result = PRIZE.THIRD + PRIZE.SECOND + PRIZE.FIFTH;
+    cy.wrap(winning).invoke("matchAll", winningLotto, lottos);
+    cy.wrap(winning)
+      .invoke("yields")
+      .should("eq", Math.floor((result - buyPrice / buyPrice) * 100));
   });
 });

@@ -23,7 +23,7 @@ export default function LottoWinningInput(app) {
       .filter((e) => e.value)
       .map((e) => e.value);
     if (checkOverlap(values)) return;
-    app.makeWinning(values.reverse());
+    app.win(values.reverse());
   };
 
   $input.addEventListener("keydown", onKeyHandler);

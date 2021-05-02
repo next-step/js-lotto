@@ -29,3 +29,12 @@ export const WINNING_SELECTOR = {
   FORM: "#input-lotto-nums",
   BUTTON: ".open-result-modal-button",
 };
+
+export const MODAL_SELECTOR = {
+  FIRST: "#first-num",
+  SECOND: "#second-num",
+  THIRD: "#third-num",
+  FOURTH: "#fourth-num",
+  FIFTH: "#fifth-num",
+  YIELD: "#yield",
+};
