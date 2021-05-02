@@ -2,12 +2,13 @@
   <img width="200px;" src="./src/images/lotto_ball.png"/>
 </p>
 <h2 align="middle">행운의 로또</h2>
-<p align="middle">자바스크립트로 구현 하는 로또 어플리케이션</p>
+<p align="middle">TS로 구현 하는 로또 어플리케이션</p>
 <p align="middle">
   <img src="https://img.shields.io/badge/version-1.0.0-blue?style=flat-square" alt="template version"/>
   <img src="https://img.shields.io/badge/language-html-red.svg?style=flat-square"/>
   <img src="https://img.shields.io/badge/language-css-blue.svg?style=flat-square"/>
   <img src="https://img.shields.io/badge/language-js-yellow.svg?style=flat-square"/>
+  <img src="https://img.shields.io/badge/language-ts-blue.svg?style=flat-square"/>
   <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"/>
 </p>
 
@@ -33,6 +34,11 @@
 - [x] 결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.
 - [x] 로또 당첨 금액은 고정되어 있는 것으로 가정한다.
 - [x] 다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.
+
+### 🎯🎯🎯 step3 테스트 & 배포
+
+- [ ] 위 기능들이 정상적으로 동작하는지 Cypress를 이용해 테스트한다.
+- [ ] 실행 가능한 페이지에 접근할 수 있도록 github page 기능을 이용하고, 해당 링크를 PR과 README에 작성한다.
 
 <br>
 
