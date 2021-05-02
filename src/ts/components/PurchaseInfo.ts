@@ -28,17 +28,22 @@ export default class PurchaseInfo extends Component<
     const onChange = (e: Event) => {
       const $eventTarget = e.target as HTMLElement;
       if ($eventTarget.matches(class2Query(ClassName.lottoNumbersToggle))) {
-        const $toggle = $eventTarget as HTMLInputElement;
-        $$(class2Query(ClassName.lottoDetail)).forEach(($lottoDetail) => {
-          if ($toggle.checked) {
-            $lottoDetail.classList.remove(ClassName.displayNone);
-          } else {
-            $lottoDetail.classList.add(ClassName.displayNone);
-          }
-        });
+        this.onChangeToggle($eventTarget as HTMLInputElement);
       }
     };
     this.$target.addEventListener("change", onChange);
+  }
+
+  onChangeToggle($toggle: HTMLInputElement) {
+    $$(class2Query(ClassName.lottoDetail), this.$target).forEach(
+      ($lottoDetail) => {
+        if ($toggle.checked) {
+          $lottoDetail.classList.remove(ClassName.displayNone);
+        } else {
+          $lottoDetail.classList.add(ClassName.displayNone);
+        }
+      }
+    );
   }
 
   setState(nextState: PurchaseInfoState) {
@@ -74,7 +79,7 @@ export default class PurchaseInfo extends Component<
             총 ${this.state!.lottos!.length}개를 구매하였습니다.
           </label>
           <div class="flex-auto d-flex justify-end pr-1">
-            <label class="switch">
+            <label class="${ClassName.switch}">
               <input type="checkbox" class="${ClassName.lottoNumbersToggle}"/>
               <span class="text-base font-normal">번호보기</span>
             </label>

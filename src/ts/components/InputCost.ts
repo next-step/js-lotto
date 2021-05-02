@@ -5,8 +5,8 @@ import Component from "../core/Component";
 
 const defaultState: InputCostState = {
   cost: undefined,
-  minCost: LottoConfig.Price,
-  maxCost: LottoConfig.Price * 1000,
+  minCost: LottoConfig.PRICE,
+  maxCost: LottoConfig.PRICE * 1000,
 };
 
 export default class InputCost extends Component<

@@ -9,6 +9,7 @@ export const Id = Object.freeze({
 export const ClassName = Object.freeze({
   input: "input",
   lottoNumbersToggle: "lotto-numbers-toggle",
+  switch: "switch",
   displayNone: "d-none",
   lottoItem: "lotto-item",
   lottoDetail: "lotto-detail",
@@ -30,7 +31,7 @@ export const LottoConfig = Object.freeze({
   MIN_NUM: 1,
   MAX_NUM: 45,
   LEN: 6,
-  Price: 1000,
+  PRICE: 1000,
 });
 
 export const RewardByMatchCnt = Object.freeze([

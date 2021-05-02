@@ -25,7 +25,7 @@ export default class App extends Component {
   }
 
   submitCost(cost: number) {
-    const lottos = Array.from(Array(cost / LottoConfig.Price), () => ({
+    const lottos = Array.from(Array(cost / LottoConfig.PRICE), () => ({
       numbers: getRandomLottoNumbers(),
     }));
 

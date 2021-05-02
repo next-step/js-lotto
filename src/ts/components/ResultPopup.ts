@@ -39,9 +39,10 @@ export default class ResultPopup extends Component<
       const $eventTarget = e.target as HTMLElement;
       if ($eventTarget.matches(class2Query(ClassName.restartBtn))) {
         this.props?.restart();
-      } else if ($eventTarget.matches(class2Query(ClassName.closeX))) {
-        this.hide();
-      } else if (!$eventTarget.closest(class2Query(ClassName.modalInner))) {
+      } else if (
+        $eventTarget.matches(class2Query(ClassName.closeX)) ||
+        !$eventTarget.closest(class2Query(ClassName.modalInner))
+      ) {
         this.hide();
       }
     };
@@ -67,7 +68,7 @@ export default class ResultPopup extends Component<
     });
 
     const roi = calcROI(
-      this.state!.lottos!.length * LottoConfig.Price,
+      this.state!.lottos!.length * LottoConfig.PRICE,
       totalReward
     );
 
