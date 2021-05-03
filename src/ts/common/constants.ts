@@ -20,6 +20,7 @@ export const ClassName = Object.freeze({
   closeX: "close-x",
   modalInner: "modal-inner",
   btn: "btn",
+  roi: "roi",
 });
 
 export const AlertMsg = Object.freeze({

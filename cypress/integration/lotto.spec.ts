@@ -7,6 +7,8 @@ import {
   LottoConfig,
 } from "../../src/ts/common/constants";
 import { class2Query, id2Query } from "../../src/ts/common/dom";
+import { WinningLotto } from "../../src/ts/common/interfaces";
+import { calcReward, calcROI } from "../../src/ts/common/utils";
 
 context("lotto", () => {
   let alertStub;
@@ -30,7 +32,7 @@ context("lotto", () => {
       .click();
   };
 
-  const purchasedCnt = 5;
+  const purchasedCnt = 50;
 
   const inputLottoNumbers = (winningNumbers: number[], bonus?: number) => {
     cy.get(id2Query(Id.inputLotto))
@@ -49,6 +51,11 @@ context("lotto", () => {
     cy.get(id2Query(Id.inputLotto))
       .find("input:invalid")
       .should("have.length", invalidInputCnt);
+  };
+
+  const testWinningLotto: WinningLotto = {
+    numbers: [1, 2, 3, 4, 5, 6],
+    bonus: 7,
   };
 
   describe("Input Cost", () => {
@@ -96,7 +103,7 @@ context("lotto", () => {
       );
     });
 
-    it("should not be visible lotto detail when toggle on", () => {
+    it("should be visible lotto detail when toggle on", () => {
       cy.get(class2Query(ClassName.switch)).click();
       cy.get(class2Query(ClassName.lottoDetail)).should(
         "have.not.class",
@@ -137,7 +144,7 @@ context("lotto", () => {
 
     it("should input lotto numbers", () => {
       validateLottoInput(7);
-      inputLottoNumbers([1, 2, 3, 4, 5, 6], 7);
+      inputLottoNumbers(testWinningLotto.numbers, testWinningLotto.bonus);
       validateLottoInput(0);
       cy.get(id2Query(Id.inputLotto))
         .find(class2Query(ClassName.btn))
@@ -150,13 +157,50 @@ context("lotto", () => {
     beforeEach(() => {
       typeCost(LottoConfig.PRICE * purchasedCnt);
       clickCostBtn();
+      inputLottoNumbers(testWinningLotto.numbers, testWinningLotto.bonus);
     });
 
     it("should show Purchase Info", () => {
-      inputLottoNumbers([1, 2, 3, 4, 5, 6], 7);
       cy.get(id2Query(Id.resultPopup)).should("not.be.visible");
       cy.get(id2Query(Id.inputLotto)).find(class2Query(ClassName.btn)).click();
       cy.get(id2Query(Id.resultPopup)).should("be.visible");
+    });
+
+    it("should show ROI", () => {
+      cy.get(id2Query(Id.inputLotto)).find(class2Query(ClassName.btn)).click();
+      let totalReward = 0;
+      cy.get(class2Query(ClassName.lottoDetail))
+        .each(($lottoDetail) => {
+          const numbers = $lottoDetail
+            .text()
+            .split(",")
+            .map((lottoNumber) => +lottoNumber.trim());
+          totalReward += calcReward({ numbers }, testWinningLotto);
+        })
+        .then(() => {
+          const roi = calcROI(purchasedCnt * LottoConfig.PRICE, totalReward);
+          cy.get(class2Query(ClassName.roi)).then(($roi) =>
+            expect(`당신의 총 수익률은 ${roi}%입니다.`, $roi.text().trim())
+          );
+        });
+    });
+
+    it("should reset when restart button is clicked", () => {
+      cy.get(id2Query(Id.inputLotto)).find(class2Query(ClassName.btn)).click();
+      cy.get(id2Query(Id.resultPopup))
+        .find(class2Query(ClassName.restartBtn))
+        .click();
+
+      cy.get(id2Query(Id.inputCost)).should("be.visible");
+      cy.get(id2Query(Id.inputLotto)).should("not.be.visible");
+      cy.get(id2Query(Id.purchaseInfo)).should("not.be.visible");
+      cy.get(id2Query(Id.resultPopup)).should("not.be.visible");
+
+      cy.get(id2Query(Id.inputCost))
+        .find(class2Query(ClassName.input))
+        .then(($inputCost) => {
+          expect($inputCost.val(), undefined);
+        });
     });
   });
 });

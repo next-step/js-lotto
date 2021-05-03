@@ -120,7 +120,7 @@ export default class ResultPopup extends Component<
               </tbody>
             </table>
           </div>
-          <p class="text-center font-bold">
+          <p class="text-center font-bold ${ClassName.roi}">
             당신의 총 수익률은 ${roi ?? 0}%입니다.
           </p>
           <div class="d-flex justify-center mt-5">
