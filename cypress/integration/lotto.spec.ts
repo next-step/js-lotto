@@ -84,6 +84,20 @@ context("lotto", () => {
         ClassName.displayNone
       );
     });
+
+    it("should fail if a lotto number is less than 1 or over 45", () => {
+      cy.get("input:invalid").should("have.length", 7);
+      cy.get(class2Query(ClassName.winningNumber)).first().type("0");
+      cy.get("input:invalid").should("have.length", 7);
+      cy.get(class2Query(ClassName.winningNumber)).first().next().type("46");
+      cy.get("input:invalid").should("have.length", 7);
+    });
+
+    it("should fail if lotto numbers have duplication ", () => {
+      cy.get(class2Query(ClassName.winningNumber)).each(($input) => {});
+    });
+
+    // it("should input lotto numbers", () => {});
   });
 
   describe("Purchase Info", () => {});
