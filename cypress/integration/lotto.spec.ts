@@ -6,7 +6,7 @@ import {
   AlertMsg,
   LottoConfig,
 } from "../../src/ts/common/constants";
-import { $, $$, class2Query, id2Query } from "../../src/ts/common/dom";
+import { class2Query, id2Query } from "../../src/ts/common/dom";
 
 context("lotto", () => {
   let alertStub;
@@ -28,6 +28,27 @@ context("lotto", () => {
       .get(id2Query(Id.inputCost))
       .find(class2Query(ClassName.btn))
       .click();
+  };
+
+  const purchasedCnt = 5;
+
+  const inputLottoNumbers = (winningNumbers: number[], bonus?: number) => {
+    cy.get(id2Query(Id.inputLotto))
+      .find(class2Query(ClassName.winningNumber))
+      .each(($input, i) => {
+        if (i < winningNumbers.length) {
+          cy.wrap($input).type(`${winningNumbers[i]}`);
+        }
+      });
+    if (typeof bonus === "number") {
+      cy.get(class2Query(ClassName.bonusNumber)).type(`${bonus}`);
+    }
+  };
+
+  const validateLottoInput = (invalidInputCnt: number) => {
+    cy.get(id2Query(Id.inputLotto))
+      .find("input:invalid")
+      .should("have.length", invalidInputCnt);
   };
 
   describe("Input Cost", () => {
@@ -55,9 +76,7 @@ context("lotto", () => {
     });
   });
 
-  describe("Input Lotto", () => {
-    const purchasedCnt = 5;
-
+  describe("Purchase Info", () => {
     beforeEach(() => {
       typeCost(LottoConfig.PRICE * purchasedCnt);
       clickCostBtn();
@@ -84,23 +103,60 @@ context("lotto", () => {
         ClassName.displayNone
       );
     });
+  });
 
-    it("should fail if a lotto number is less than 1 or over 45", () => {
-      cy.get("input:invalid").should("have.length", 7);
-      cy.get(class2Query(ClassName.winningNumber)).first().type("0");
-      cy.get("input:invalid").should("have.length", 7);
-      cy.get(class2Query(ClassName.winningNumber)).first().next().type("46");
-      cy.get("input:invalid").should("have.length", 7);
+  describe("Input Lotto", () => {
+    beforeEach(() => {
+      typeCost(LottoConfig.PRICE * purchasedCnt);
+      clickCostBtn();
+    });
+
+    it("should fail if a lotto number is smaller than 1", () => {
+      validateLottoInput(7);
+      inputLottoNumbers([0]);
+      validateLottoInput(7);
+    });
+
+    it("should fail if a lotto number is bigger than 45", () => {
+      validateLottoInput(7);
+      inputLottoNumbers([46]);
+      validateLottoInput(7);
     });
 
     it("should fail if lotto numbers have duplication ", () => {
-      cy.get(class2Query(ClassName.winningNumber)).each(($input) => {});
+      validateLottoInput(7);
+      inputLottoNumbers([1, 2, 3, 4, 5, 6], 6);
+      validateLottoInput(0);
+      cy.get(id2Query(Id.inputLotto))
+        .find(class2Query(ClassName.btn))
+        .click()
+        .then(() =>
+          expect(alertStub).to.be.calledWith(AlertMsg.DuplicateNumber)
+        );
     });
 
-    // it("should input lotto numbers", () => {});
+    it("should input lotto numbers", () => {
+      validateLottoInput(7);
+      inputLottoNumbers([1, 2, 3, 4, 5, 6], 7);
+      validateLottoInput(0);
+      cy.get(id2Query(Id.inputLotto))
+        .find(class2Query(ClassName.btn))
+        .click()
+        .then(() => expect(alertStub).have.not.been.called);
+    });
   });
 
-  describe("Purchase Info", () => {});
+  describe("Result Popup", () => {
+    beforeEach(() => {
+      typeCost(LottoConfig.PRICE * purchasedCnt);
+      clickCostBtn();
+    });
 
-  describe("Result Popup", () => {});
+    it("should show Purchase Info", () => {
+      inputLottoNumbers([1, 2, 3, 4, 5, 6], 7);
+      cy.get(id2Query(Id.resultPopup)).should("not.be.visible");
+      cy.get(id2Query(Id.inputLotto)).find(class2Query(ClassName.btn)).click();
+      cy.get(id2Query(Id.resultPopup)).should("be.visible");
+    });
+  });
 });

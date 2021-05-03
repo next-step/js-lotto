@@ -29,8 +29,9 @@ export default class InputLotto extends Component<
     const onSubmit = (e: Event) => {
       e.preventDefault();
 
-      const winningNumbers = Array.from(
-        $$(class2Query(ClassName.winningNumber), this.$target)
+      const winningNumbers = $$(
+        class2Query(ClassName.winningNumber),
+        this.$target
       ).map(($winningNum) => +($winningNum as HTMLInputElement).value);
 
       const $bonusNum = $(

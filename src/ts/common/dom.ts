@@ -2,8 +2,11 @@ export function $(query: string, target?: HTMLElement): HTMLElement {
   return (target ?? document).querySelector(query) as HTMLElement;
 }
 
-export function $$(query: string, target?: HTMLElement) {
-  return (target ?? document).querySelectorAll<HTMLElement>(query);
+export function $$(query: string, target?: HTMLElement): HTMLElement[] {
+  return Array.from(
+    (target ?? document).querySelectorAll<HTMLElement>(query),
+    ($el) => $el
+  );
 }
 
 export function id2Query(id: string) {
