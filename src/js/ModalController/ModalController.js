@@ -11,7 +11,7 @@ export const onModalClose = () => {
 };
 
 export const onModalOpen = () => {
-    ['3', '4', '5', '5PLUS', '6'].map((match) => {
+    ['3', '4', '5', '5+bonus', '6'].map((match) => {
         PRIZE[match] = 0;
     });
     $modal.classList += ' open';

@@ -5,11 +5,14 @@ export const MIN_PURCHASE_PRICE = 1000;
 export const MAX_PURCHASE_PRICE = 100000;
 export const LOTTO_PRICE = 1000;
 
+export const FLEX_COL = 'flex-col';
+
+const KEY = '5+bonus';
 export const PRIZE = {
     3: 0,
     4: 0,
     5: 0,
-    '5PLUS': 0,
+    [KEY]: 0,
     6: 0,
 };
 
@@ -17,7 +20,7 @@ export const PRIZE_MONEY = {
     3: 5000,
     4: 40000,
     5: 1500000,
-    '5PLUS': 30000000,
+    [KEY]: 30000000,
     6: 2000000000,
 };
 

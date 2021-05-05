@@ -1,5 +1,5 @@
 import {lottoIconTemplate} from '../utils/templates.js';
-import {MIN_WINNING_NUMBER, MAX_WINNING_NUMBER, LOTTO_PRICE} from '../utils/constants.js';
+import {MIN_WINNING_NUMBER, MAX_WINNING_NUMBER, LOTTO_PRICE, FLEX_COL} from '../utils/constants.js';
 import {onToggle} from './ToggleController.js';
 import {$inputPrice, $purchasedLottos, $inputLottoNums, $totalPurchased, $lottoIcons} from '../utils/doms.js';
 import {checkInputPrice} from '../utils/validations.js';
@@ -31,7 +31,7 @@ export const onLottoPurchase = () => {
         $lottoIcons.insertAdjacentHTML('afterbegin', lottoIconTemplate(lottoNumberList));
     }
 
-    if ($lottoIcons.classList.contains('flex-col')) onToggle();
+    if ($lottoIcons.classList.contains(FLEX_COL)) onToggle();
 };
 
 const showPurchasedLotto = () => {
