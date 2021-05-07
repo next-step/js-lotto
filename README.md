@@ -13,7 +13,7 @@
 </p>
 
 <p align="middle">
-  <a href="https://next-step.github.io/js-lotto/">🖥️ 데모 링크</a>
+  <a href="https://lsw1164.github.io/js-lotto/">🖥️ 데모 링크</a>
 </p>
 
 ## 🔥 Projects!
@@ -37,8 +37,8 @@
 
 ### 🎯🎯🎯 step3 테스트 & 배포
 
-- [ ] 위 기능들이 정상적으로 동작하는지 Cypress를 이용해 테스트한다.
-- [ ] 실행 가능한 페이지에 접근할 수 있도록 github page 기능을 이용하고, 해당 링크를 PR과 README에 작성한다.
+- [x] 위 기능들이 정상적으로 동작하는지 Cypress를 이용해 테스트한다.
+- [x] 실행 가능한 페이지에 접근할 수 있도록 github page 기능을 이용하고, 해당 링크를 PR과 README에 작성한다.
 
 <br>
 
@@ -52,6 +52,14 @@ npm install
 
 ```
 npm start
+```
+
+<br/>
+
+## ✔ Test with cypress
+
+```
+npm test
 ```
 
 <br/>
