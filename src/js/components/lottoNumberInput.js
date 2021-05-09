@@ -18,7 +18,6 @@ class LottoNumberInput {
   }
 
   onClickModalButton = () => {
-    console.log('onClickModalButton');
     this.renderResultModal && this.renderResultModal();
   };
 }

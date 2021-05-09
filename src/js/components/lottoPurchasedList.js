@@ -3,6 +3,10 @@
 import { $, $$ } from '../utils/dom.js';
 import { template } from '../utils/templates.js';
 import { lottoStore } from './store.js';
+import {
+  NUMBER_OF_LOTTO_NUMBERS,
+  NUMBER_FOR_ADJUST_RANDOM,
+} from '../utils/constants.js';
 
 class LottoPurchasedList {
   constructor() {
@@ -32,7 +36,10 @@ class LottoPurchasedList {
   getRandomNumber(checkArr) {
     let number = 0;
     do {
-      number = Math.floor(Math.random() * (45 - 1) + 1);
+      number = Math.floor(
+        Math.random() * (NUMBER_OF_LOTTO_NUMBERS - NUMBER_FOR_ADJUST_RANDOM) +
+          NUMBER_FOR_ADJUST_RANDOM
+      );
     } while (checkArr.includes(number));
     return number;
   }

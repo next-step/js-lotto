@@ -3,6 +3,7 @@
 import { $ } from '../utils/dom.js';
 import { isEmpty, isValidPrice } from '../utils/validator.js';
 import { message } from '../utils/messages.js';
+import { UNIT } from '../utils/constants.js';
 
 class LottoPriceInput {
   constructor() {
@@ -26,7 +27,8 @@ class LottoPriceInput {
       alert(message.PRICE_UNIT);
       return;
     }
-    const numberOfLotto = this.$lottoPriceInput.value / 1000;
+
+    const numberOfLotto = this.$lottoPriceInput.value / UNIT;
     this.renderLottoList && this.renderLottoList(numberOfLotto);
     this.$lottoPriceInput.readOnly = true;
   };
