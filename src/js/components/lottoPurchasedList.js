@@ -5,6 +5,7 @@ import { template } from '../utils/templates.js';
 import { lottoStore } from './store.js';
 import {
   NUMBER_OF_LOTTO_NUMBERS,
+  LOTTO_NUMBERS,
   NUMBER_FOR_ADJUST_RANDOM,
 } from '../utils/constants.js';
 
@@ -25,7 +26,7 @@ class LottoPurchasedList {
   createLottoList(numberOfLotto) {
     for (let i = 0; i < numberOfLotto; i++) {
       const lottoNumbers = [];
-      for (let j = 0; j < 6; j++) {
+      for (let j = 0; j < NUMBER_OF_LOTTO_NUMBERS; j++) {
         const number = this.getRandomNumber(lottoNumbers);
         lottoNumbers.push(number);
       }
@@ -37,7 +38,7 @@ class LottoPurchasedList {
     let number = 0;
     do {
       number = Math.floor(
-        Math.random() * (NUMBER_OF_LOTTO_NUMBERS - NUMBER_FOR_ADJUST_RANDOM) +
+        Math.random() * (LOTTO_NUMBERS - NUMBER_FOR_ADJUST_RANDOM) +
           NUMBER_FOR_ADJUST_RANDOM
       );
     } while (checkArr.includes(number));
