@@ -47,6 +47,7 @@ class LottoResultModal {
   }
 
   renderProfitRate(lottoResult) {
+    let profit = 0;
     const cost = Number($('#lotto-price-input').value.trim());
     const profitOfRank = {
       first: 2000000000,
@@ -55,12 +56,13 @@ class LottoResultModal {
       fourth: 50000,
       fifth: 5000,
     };
-    let profit = 0;
+
     for (let rank in lottoResult) {
       if (lottoResult[rank] >= 1) {
         profit += profitOfRank[rank] * lottoResult[rank];
       }
     }
+
     const profitRate = (profit / cost) * 100;
     this.$profitRateText.innerText = `당신의 총 수익률은 ${profitRate}%입니다.`;
   }

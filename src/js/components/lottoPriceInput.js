@@ -2,6 +2,7 @@
 
 import { $ } from '../utils/dom.js';
 import { isEmpty, isValidPrice } from '../utils/validator.js';
+import { message } from '../utils/messages.js';
 
 class LottoPriceInput {
   constructor() {
@@ -18,11 +19,11 @@ class LottoPriceInput {
   handlePriceSubmit = event => {
     if (!(event.key === 'Enter' || event.target.matches('.btn'))) return;
     if (isEmpty(this.$lottoPriceInput)) {
-      alert('금액을 입력해주세요.');
+      alert(message.PRICE_INPUT);
       return;
     }
     if (!isValidPrice(this.$lottoPriceInput)) {
-      alert('천원단위로 입력해주세요.');
+      alert(message.PRICE_UNIT);
       return;
     }
     const numberOfLotto = this.$lottoPriceInput.value / 1000;
