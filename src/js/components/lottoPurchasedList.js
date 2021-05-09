@@ -4,9 +4,9 @@ import { $, $$ } from '../utils/dom.js';
 import { template } from '../utils/templates.js';
 import { lottoStore } from './store.js';
 import {
-  NUMBER_OF_LOTTO_NUMBERS,
-  LOTTO_NUMBERS,
-  NUMBER_FOR_ADJUST_RANDOM,
+  START_NUMBER,
+  LAST_NUMBER,
+  LOTTO_NUMBER_UNIT,
 } from '../utils/constants.js';
 
 class LottoPurchasedList {
@@ -24,25 +24,23 @@ class LottoPurchasedList {
   }
 
   createLottoList(numberOfLotto) {
-    for (let i = 0; i < numberOfLotto; i++) {
-      const lottoNumbers = [];
-      for (let j = 0; j < NUMBER_OF_LOTTO_NUMBERS; j++) {
-        const number = this.getRandomNumber(lottoNumbers);
-        lottoNumbers.push(number);
-      }
-      lottoStore.addLotto(lottoNumbers);
-    }
+    [...Array(numberOfLotto)].forEach(() => {
+      const lottoNumberList = this.getRandomNumberList(LOTTO_NUMBER_UNIT);
+      lottoStore.addLotto(lottoNumberList);
+    });
   }
 
-  getRandomNumber(checkArr) {
-    let number = 0;
-    do {
-      number = Math.floor(
-        Math.random() * (LOTTO_NUMBERS - NUMBER_FOR_ADJUST_RANDOM) +
-          NUMBER_FOR_ADJUST_RANDOM
-      );
-    } while (checkArr.includes(number));
-    return number;
+  getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  getRandomNumberList(numberOfRandom) {
+    let randomNumbers = [];
+    while (randomNumbers.length < numberOfRandom) {
+      const radomNumber = this.getRandomNumber(START_NUMBER, LAST_NUMBER);
+      if (!randomNumbers.includes(radomNumber)) randomNumbers.push(radomNumber);
+    }
+    return randomNumbers;
   }
 
   renderLottoList() {
