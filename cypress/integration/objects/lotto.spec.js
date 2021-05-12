@@ -99,6 +99,6 @@ describe("총 당첨자를 확인한다", () => {
     cy.wrap(winning).invoke("matchAll", winningLotto, lottos);
     cy.wrap(winning)
       .invoke("yields")
-      .should("eq", Math.floor((result - buyPrice / buyPrice) * 100));
+      .should("eq", Math.floor(((result - buyPrice) / buyPrice) * 100));
   });
 });
