@@ -11,7 +11,6 @@ import {
 
 export default function LottoView(app) {
   const $view = $(VIEW_SELECTOR.SECTION);
-  $hidden($view);
   let onView = VIEW_CHANGE.ON();
 
   this.render = (lottos) => {

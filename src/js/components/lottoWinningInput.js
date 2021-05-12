@@ -10,7 +10,6 @@ import { LOTTO_SIZE } from "../domain/lottoMaker.js";
 
 export default function LottoWinningInput(app) {
   const $input = $(WINNING_SELECTOR.FORM);
-  $hidden($input);
   const $button = $(WINNING_SELECTOR.BUTTON);
 
   this.render = () => $show($input);

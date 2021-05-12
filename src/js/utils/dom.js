@@ -10,8 +10,6 @@ export const $removeClass = (target, selector) =>
 export const $attr = (target, selector, attribute) =>
   target.setAttribute(selector, attribute);
 export const $next = (target) => target.nextElementSibling;
-export const $hidden = (target) =>
-  target.setAttribute("style", "display: none;");
 export const $show = (target) =>
   target.setAttribute("style", "display: block;");
 
