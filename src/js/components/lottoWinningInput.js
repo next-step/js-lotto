@@ -1,12 +1,26 @@
-import { $, $all, $next, WINNING_SELECTOR } from "../utils/dom.js";
+import {
+  $,
+  $all,
+  $hidden,
+  $next,
+  $show,
+  WINNING_SELECTOR,
+} from "../utils/dom.js";
 import { LOTTO_SIZE } from "../domain/lottoMaker.js";
 
 export default function LottoWinningInput(app) {
   const $input = $(WINNING_SELECTOR.FORM);
+  $hidden($input);
   const $button = $(WINNING_SELECTOR.BUTTON);
 
+  this.render = () => $show($input);
+
   const onKeyHandler = (event) => {
-    if (event.target.value.length >= 2 && event.key !== "Backspace") {
+    if (
+      event.target.value.length >= 2 &&
+      event.key !== "Backspace" &&
+      event.key !== "Tab"
+    ) {
       $next(event.target)
         ? $next(event.target).focus()
         : $(".bonus-number").focus();

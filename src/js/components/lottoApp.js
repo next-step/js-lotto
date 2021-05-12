@@ -12,11 +12,12 @@ export default function LottoApp() {
   const lottoModal = new LottoModal(this);
   const winning = new Winnning();
   new LottoBuyInput(this);
-  new LottoWinningInput(this);
+  const winningInput = new LottoWinningInput(this);
 
   this.buy = (price) => {
     this.lottos = lottoStore.buyLotto(price);
     lottoView.render(this.lottos);
+    winningInput.render();
   };
 
   this.win = ([bonus, ...numbers]) => {

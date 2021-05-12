@@ -13,14 +13,20 @@ export function Winnning() {
     yieldMatcing.PRIZE += PRIZE[rank_with_bonus];
   };
   this.matchAll = (winningLotto, lottos) => {
+    reset();
     yieldMatcing.BUY = lottos.length * LOTTO_PRICE;
     lottos.forEach((lotto) => this.match(winningLotto, lotto));
   };
 
   this.yields = () =>
     Math.floor(
-      (yieldMatcing.PRIZE - yieldMatcing.BUY / yieldMatcing.BUY) * YIELD_PERCENT
+      ((yieldMatcing.PRIZE - yieldMatcing.BUY) / yieldMatcing.BUY) *
+        YIELD_PERCENT
     );
+  const reset = () => {
+    yieldMatcing.BUY = 0;
+    yieldMatcing.PRIZE = 0;
+  };
 }
 
 const MATCH = {

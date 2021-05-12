@@ -5,13 +5,17 @@ import {
   VIEW_SELECTOR,
   $attr,
   $removeClass,
+  $hidden,
+  $show,
 } from "../utils/dom.js";
 
 export default function LottoView(app) {
   const $view = $(VIEW_SELECTOR.SECTION);
+  $hidden($view);
   let onView = VIEW_CHANGE.ON();
 
   this.render = (lottos) => {
+    $show($view);
     const $lottos = $(VIEW_SELECTOR.LOTTOS, $view);
     const templates = lottos.map((lotto) => LottoTemplate(lotto));
     $lottos.innerHTML = templates.join("\n");
