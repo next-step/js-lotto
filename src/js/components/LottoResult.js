@@ -1,5 +1,5 @@
 import { $$ } from "../utils/dom.js";
-import { SELECTORS } from "../utils/constants.js";
+import { SELECTORS, ERROR_MESSAGES } from "../utils/constants.js";
 
 // 지난주 당첨결과를 입력하는 컴포넌트
 
@@ -16,6 +16,10 @@ function LottoResult({ $target, onSubmitResult }) {
     const winningNumbers = Array.from(
       $$(SELECTORS.LOTTO_WINNING_INPUT, this.$target)
     ).map((input) => +input.value);
+    if (new Set(winningNumbers).size < 6) {
+      alert(ERROR_MESSAGES.DUPLICATED_NUMBER);
+      return;
+    }
     this.onSubmitResult(winningNumbers);
   };
   this.bindEvents();

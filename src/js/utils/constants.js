@@ -13,4 +13,5 @@ export const SELECTORS = {
 
 export const ERROR_MESSAGES = {
   INVALID_MONEY: "로또는 1000원단위로 구매 가능해요.",
+  DUPLICATED_NUMBER: "로또는 중복될 수 없어요.",
 };
