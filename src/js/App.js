@@ -5,11 +5,14 @@ import autoGenerator from "./utils/autoGenerator.js";
 import BuyLotto from "./components/BuyLotto.js";
 import LottoList from "./components/LottoList.js";
 import VisibleToggle from "./components/VisibleToggle.js";
+import LottoResult from "./components/LottoResult.js";
+import AnalyzeModal from "./components/AnalyzeModal.js";
 
 function App() {
   this.state = {
     lottoCount: 0,
     lottoList: [],
+    winningNumbers: [],
     isVisible: false,
     isModalOpen: false,
   };
@@ -25,6 +28,14 @@ function App() {
     });
     this.VisibleToggle = new VisibleToggle({
       onVisibleToggle: this.onVisibleToggle,
+    });
+    this.LottoResult = new LottoResult({
+      $target: this.$lottoConfirm,
+      onSubmitResult: this.onSubmitResult,
+    });
+    this.AnalyzeModal = new AnalyzeModal({
+      initialState: this.state,
+      modalCloseHandler: this.modalCloseHandler,
     });
   };
 
@@ -57,10 +68,29 @@ function App() {
     this.setState(nextState);
   };
 
+  this.onSubmitResult = (winningNumbers) => {
+    const nextState = {
+      ...this.state,
+      winningNumbers,
+      isModalOpen: true,
+    };
+    this.setState(nextState);
+  };
+
+  this.modalCloseHandler = () => {
+    const nextState = {
+      ...this.state,
+      isModalOpen: false,
+    };
+    this.setState(nextState);
+  };
+
   this.setState = (nextState) => {
     this.state = nextState;
     this.LottoList.setState(nextState);
+    this.AnalyzeModal.setState(nextState);
   };
+
   this.init();
 }
 

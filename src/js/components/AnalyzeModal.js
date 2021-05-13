@@ -1,25 +1,27 @@
-// 구매한 로또와 지난주 당첨 결과를 분석해주는 컴포넌트 (모달)
-function AnalyzeModal() {}
+import { SELECTORS } from "../utils/constants.js";
+import { $ } from "../utils/dom.js";
+
+function AnalyzeModal({ initialState, modalCloseHandler }) {
+  this.state = initialState;
+  this.modalCloseHandler = modalCloseHandler;
+  this.$target = $(SELECTORS.MODAL);
+  this.$closeModalBtn = $(SELECTORS.MODAL_CLOSE);
+
+  this.setState = (nextState) => {
+    this.state = nextState;
+    this.render();
+  };
+
+  this.bindEvent = () => {
+    this.$closeModalBtn.addEventListener("click", this.modalCloseHandler);
+  };
+
+  this.render = () => {
+    if (this.state.isModalOpen) this.$target.classList.add("open");
+    else this.$target.classList.remove("open");
+  };
+  this.render();
+  this.bindEvent();
+}
 
 export default AnalyzeModal;
-
-/**
- * const $showResultButton = document.querySelector(".open-result-modal-button");
-const $modalClose = document.querySelector(".modal-close");
-const $modal = document.querySelector(".modal");
-const $lottoNumbersToggleButton = document.querySelector(
-  ".lotto-numbers-toggle-button"
-);
-
-const onModalShow = () => {
-  $modal.classList.add("open");
-};
-
-const onModalClose = () => {
-  $modal.classList.remove("open");
-};
-
-$showResultButton.addEventListener("click", onModalShow);
-$modalClose.addEventListener("click", onModalClose);
-
- */
