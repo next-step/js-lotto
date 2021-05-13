@@ -19,6 +19,7 @@ function App() {
 
   this.$lottoListSection = $(SELECTORS.LOTTO_SECTION);
   this.$lottoConfirm = $(SELECTORS.LOTTO_CONFIRM);
+  this.$lottoReset = $(SELECTORS.LOTTO_RESET);
 
   this.init = () => {
     this.BuyLotto = new BuyLotto({ onClickBuy: this.onClickBuy });
@@ -37,6 +38,7 @@ function App() {
       initialState: this.state,
       modalCloseHandler: this.modalCloseHandler,
     });
+    this.$lottoReset.addEventListener("click", () => location.reload());
   };
 
   this.onClickBuy = (money) => {

@@ -9,6 +9,9 @@ export const SELECTORS = {
   LOTTO_WINNING_INPUT: ".winning-number",
   MODAL: ".modal",
   MODAL_CLOSE: ".modal-close",
+  LOTTO_RESULT: ".lotto-result",
+  PROFIT: "#profit",
+  LOTTO_RESET: "#lotto-reset",
 };
 
 export const ERROR_MESSAGES = {

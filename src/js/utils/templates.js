@@ -14,9 +14,21 @@ const lottoDetailView = (isVisible, lottoNumbers) => {
   `;
 };
 
+export const resultTable = ({ title, price, number }) =>
+  `<tr class="text-center">
+<td class="p-3">${title}</td>
+<td class="p-3">${price}</td>
+<td class="p-3">${number}개</td>
+</tr>`;
+
 export const lottoListView = (isVisible, lottoList) => {
   const list = lottoList
     .map((lotto) => lottoDetailView(isVisible, lotto.join(", ")))
     .join("\n");
+  return list;
+};
+
+export const lottoResultView = (result) => {
+  const list = result.map((value) => resultTable(value)).join("\n");
   return list;
 };
