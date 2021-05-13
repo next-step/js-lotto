@@ -12,7 +12,6 @@ function LottoList({ $target, initialState }) {
 
   this.setState = (nextState) => {
     this.state = nextState;
-    console.log(this.state);
     this.render();
   };
   this.render = () => {

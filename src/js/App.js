@@ -49,7 +49,6 @@ function App() {
   };
 
   this.onVisibleToggle = () => {
-    console.log(this.state);
     const isVisible = !this.state.isVisible;
     const nextState = {
       ...this.state,
