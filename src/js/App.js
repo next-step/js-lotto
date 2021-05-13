@@ -4,6 +4,7 @@ import { $ } from "./utils/dom.js";
 import autoGenerator from "./utils/autoGenerator.js";
 import BuyLotto from "./components/BuyLotto.js";
 import LottoList from "./components/LottoList.js";
+import VisibleToggle from "./components/VisibleToggle.js";
 
 function App() {
   this.state = {
@@ -21,6 +22,9 @@ function App() {
     this.LottoList = new LottoList({
       $target: this.$lottoListSection,
       initialState: this.state,
+    });
+    this.VisibleToggle = new VisibleToggle({
+      onVisibleToggle: this.onVisibleToggle,
     });
   };
 
@@ -44,7 +48,18 @@ function App() {
     this.$lottoConfirm.style = "display:block";
   };
 
+  this.onVisibleToggle = () => {
+    console.log(this.state);
+    const isVisible = !this.state.isVisible;
+    const nextState = {
+      ...this.state,
+      isVisible,
+    };
+    this.setState(nextState);
+  };
+
   this.setState = (nextState) => {
+    this.state = nextState;
     this.LottoList.setState(nextState);
   };
   this.init();

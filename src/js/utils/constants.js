@@ -5,6 +5,7 @@ export const SELECTORS = {
   LOTTO_CONFIRM: "#lotto-confirm",
   LOTTO_ICONS: "#lotto-icons",
   LOTTO_DESC: "#lotto-description",
+  LOTTO_TOGGLE: ".lotto-numbers-toggle-button",
 };
 
 export const CLASS_NAMES = {};

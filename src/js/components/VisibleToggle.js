@@ -1,8 +1,15 @@
-// 번호보기 토글 버튼 컴포넌트
+import { $ } from "../utils/dom.js";
+import { SELECTORS } from "../utils/constants.js";
 
-function VisibleToggle({ initialState, onToggleVisible }) {
-  this.state = initialState;
-  this.onToggleVisible = onToggleVisible;
+function VisibleToggle({ onVisibleToggle }) {
+  this.$target = $(SELECTORS.LOTTO_TOGGLE);
+  this.onVisibleToggle = onVisibleToggle;
+
+  this.bindEvents = () => {
+    this.$target.addEventListener("change", this.onVisibleToggle);
+  };
+
+  this.bindEvents();
 }
 
 export default VisibleToggle;
