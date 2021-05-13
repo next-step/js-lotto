@@ -3,6 +3,8 @@ export const SELECTORS = {
   LOTTO_INPUT: "#lotto-input",
   LOTTO_SECTION: "#lotto-section",
   LOTTO_CONFIRM: "#lotto-confirm",
+  LOTTO_ICONS: "#lotto-icons",
+  LOTTO_DESC: "#lotto-description",
 };
 
 export const CLASS_NAMES = {};

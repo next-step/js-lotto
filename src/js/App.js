@@ -3,6 +3,7 @@ import { SELECTORS, ERROR_MESSAGES } from "./utils/constants.js";
 import { $ } from "./utils/dom.js";
 import autoGenerator from "./utils/autoGenerator.js";
 import BuyLotto from "./components/BuyLotto.js";
+import LottoList from "./components/LottoList.js";
 
 function App() {
   this.state = {
@@ -17,6 +18,10 @@ function App() {
 
   this.init = () => {
     this.BuyLotto = new BuyLotto({ onClickBuy: this.onClickBuy });
+    this.LottoList = new LottoList({
+      $target: this.$lottoListSection,
+      initialState: this.state,
+    });
   };
 
   this.onClickBuy = (money) => {
@@ -39,7 +44,9 @@ function App() {
     this.$lottoConfirm.style = "display:block";
   };
 
-  this.setState = (nextState) => {};
+  this.setState = (nextState) => {
+    this.LottoList.setState(nextState);
+  };
   this.init();
 }
 
