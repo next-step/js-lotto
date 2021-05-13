@@ -1,5 +1,6 @@
 import { lottoInputValidator } from "./utils/validators.js";
-import { ERROR_MESSAGES } from "./utils/constants.js";
+import { SELECTORS, ERROR_MESSAGES } from "./utils/constants.js";
+import { $ } from "./utils/dom.js";
 import autoGenerator from "./utils/autoGenerator.js";
 import BuyLotto from "./components/BuyLotto.js";
 
@@ -10,6 +11,9 @@ function App() {
     isVisible: false,
     isModalOpen: false,
   };
+
+  this.$lottoListSection = $(SELECTORS.LOTTO_SECTION);
+  this.$lottoConfirm = $(SELECTORS.LOTTO_CONFIRM);
 
   this.init = () => {
     this.BuyLotto = new BuyLotto({ onClickBuy: this.onClickBuy });
@@ -31,6 +35,8 @@ function App() {
       lottoList,
     };
     this.setState(nextState);
+    this.$lottoListSection.style = "display:block";
+    this.$lottoConfirm.style = "display:block";
   };
 
   this.setState = (nextState) => {};

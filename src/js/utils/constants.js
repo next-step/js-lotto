@@ -1,6 +1,8 @@
 export const SELECTORS = {
-  LOTTO_FORM: ".mt-5",
+  LOTTO_FORM: "#lotto-form",
   LOTTO_INPUT: "#lotto-input",
+  LOTTO_SECTION: "#lotto-section",
+  LOTTO_CONFIRM: "#lotto-confirm",
 };
 
 export const CLASS_NAMES = {};
