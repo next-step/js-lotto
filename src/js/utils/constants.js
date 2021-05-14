@@ -12,6 +12,7 @@ export const SELECTORS = {
   LOTTO_RESULT: ".lotto-result",
   PROFIT: "#profit",
   LOTTO_RESET: "#lotto-reset",
+  BONUS_NUMBER: ".bonus-number",
 };
 
 export const ERROR_MESSAGES = {
