@@ -10,20 +10,20 @@ class LottoResultPanel {
   getEarningRate = (ticketNum, profit) => {
     return ((profit / (ticketNum * 1000)) - 1) * 100
   }
+  setProfitData = (acc, cur) => {
+    if (cur < 3) return acc
+    if (!acc[MatchNumberOrder[cur]]) {
+      acc[MatchNumberOrder[cur].label] = 1
+      acc['profit'] += MatchNumberOrder[cur].price
+    } else if (acc[MatchNumberOrder[cur]]) {
+      acc[MatchNumberOrder[cur].label] += 1
+      acc['profit'] += MatchNumberOrder[cur].price
+    }
+    return acc
+  }
 
   makeResultData = (ticketNum, matchNumList) => {
-    const resultData = matchNumList.reduce((acc, cur) => {
-      if (cur < 3) return acc
-      if (!acc[MatchNumberOrder[cur]]) {
-        acc[MatchNumberOrder[cur].label] = 1
-        acc['profit'] += MatchNumberOrder[cur].price
-      } else if (acc[MatchNumberOrder[cur]]) {
-        acc[MatchNumberOrder[cur].label] += 1
-        acc['profit'] += MatchNumberOrder[cur].price
-      }
-      return acc
-    }, { profit: 0 })
-    debugger;
+    const resultData = matchNumList.reduce(this.setProfitData, { profit: 0 })
     resultData.earningRate = this.getEarningRate(ticketNum, resultData.profit)
     return resultData
   }

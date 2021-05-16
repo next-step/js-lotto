@@ -4,12 +4,11 @@ import { ALERT_MESSAGE } from '../Constant/Language.js'
 
 class LottoBuyPanel {
   constructor (showTickets) {
-    this.money = 0
     this.ticketNum = 0
     this.showTickets = showTickets
   }
 
-  showBuyTicketPanel = () => {
+  show = () => {
     const lottoBuyPanel = createEl('form', 'mt-1')
     lottoBuyPanel.insertAdjacentHTML('beforeend', TEMPLATE.INPUT_MONEY())
 
@@ -36,8 +35,7 @@ class LottoBuyPanel {
   }
 
   changeToTicket = (money = 0) => {
-    this.money = money
-    this.ticketNum = this.money / 1000
+    this.ticketNum = money / 1000
   }
 
 }

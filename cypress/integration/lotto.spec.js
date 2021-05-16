@@ -6,13 +6,15 @@ describe('js-lotto', () => {
 
   getTicket()
 
+  const LOTTO_PRICE = 1000
+
   const inputMoney = (money) => {
     cy.get('.input-money').find('input').type(money)
     cy.get('.input-money').find('.btn').click()
   }
 
   const checkTickets = (money) => {
-    const len = money / 1000
+    const len = money / LOTTO_PRICE
     cy.get('.tickets').find('li').its('length').should('eq', len)
   }
 

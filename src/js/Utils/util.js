@@ -29,3 +29,5 @@ export const MatchNumberOrder = {
   },
 }
 
+export const LOTTO_PRICE = 1000
+

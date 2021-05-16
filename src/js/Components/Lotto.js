@@ -15,7 +15,7 @@ class Lotto {
   }
 
   showBuyPanel = () => {
-    this.$parent.appendChild(this.BuyPannel.showBuyTicketPanel())
+    this.$parent.appendChild(this.BuyPannel.show())
   }
 
   showTickets = () => {
