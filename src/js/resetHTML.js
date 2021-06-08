@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="kr">
-  <head>
-    <meta charset="UTF-8" />
-    <title>🎱 행운의 로또</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="./src/css/index.css" />
-  </head>
-  <body>
-    <div id="app" class="p-3">
-      <div class="d-flex justify-center mt-5">
+const resetHTML = `
+<div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="title text-center">🎱 행운의 로또</h1>
           <div class="input mt-5">
@@ -33,7 +24,6 @@
           </div>
         </div>
       </div>
-
       <div class="modal">
         <div class="modal-inner p-10">
           <div class="modal-close">
@@ -41,7 +31,6 @@
               <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
             </svg>
           </div>
-
           <h2 class="text-center">🏆 당첨 통계 🏆</h2>
           <div class="d-flex justify-center">
             <table class="result-table border-collapse border border-black">
@@ -87,7 +76,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <script type="module" src="./src/js/index.js"></script>
-  </body>
-</html>
+`  
+
+export {resetHTML}
