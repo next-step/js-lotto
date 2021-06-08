@@ -1,17 +1,8 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+import SETTINGS from './settings.js';
+import { $ } from './lib/utils.js';
 
-const onModalShow = () => {
-  $modal.classList.add('open')
-}
+import App from './App.js';
+import { subscribe, dispatch } from './store.js';
 
-const onModalClose = () => {
-  $modal.classList.remove('open')
-}
-
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+subscribe(_ => App($.id(SETTINGS.ID.APP)));
+dispatch();
