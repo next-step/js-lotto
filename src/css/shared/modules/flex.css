@@ -1,4 +1,5 @@
 /* Flex Direction */
+
 .flex-row {
   flex-direction: row;
 }
@@ -16,6 +17,7 @@
 }
 
 /* Flex Wrap */
+
 .flex-wrap {
   flex-wrap: wrap;
 }
@@ -29,6 +31,7 @@
 }
 
 /* Flex */
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -46,6 +49,7 @@
 }
 
 /* Flex Grow */
+
 .flex-grow-0 {
   flex-grow: 0;
 }
@@ -55,6 +59,7 @@
 }
 
 /* Flex Shrink */
+
 .flex-shrink-0 {
   flex-shrink: 0;
 }
@@ -64,6 +69,7 @@
 }
 
 /* Order */
+
 .order-1 {
   order: 1;
 }
@@ -122,4 +128,18 @@
 
 .order-none {
   order: 0;
+}
+
+.flex-wrap {
+  padding-inline-start: 0;
+}
+
+.flex-wrap>.lotto-wrapper {
+  display: flex;
+  padding-inline-start: 0;
+}
+
+.flex-wrap>.lotto-wrapper>.lotto-detail {
+  font-size: 1.25rem;
+  margin-left: 12px;
 }

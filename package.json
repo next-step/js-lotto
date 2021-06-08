@@ -1,9 +1,23 @@
 {
-  "name": "racingcar",
+  "name": "js-lotto",
   "version": "1.0.0",
+  "description": "<p align=\"middle\" >\r   <img width=\"200px;\" src=\"./src/images/lotto_ball.png\"/>\r </p>\r <h2 align=\"middle\">행운의 로또</h2>\r <p align=\"middle\">자바스크립트로 구현 하는 로또 어플리케이션</p>\r <p align=\"middle\">\r   <img src=\"https://img.shields.io/badge/version-1.0.0-blue?style=flat-square\" alt=\"template version\"/>\r   <img src=\"https://img.shields.io/badge/language-html-red.svg?style=flat-square\"/>\r   <img src=\"https://img.shields.io/badge/language-css-blue.svg?style=flat-square\"/>\r   <img src=\"https://img.shields.io/badge/language-js-yellow.svg?style=flat-square\"/>\r   <img src=\"https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square\"/>\r </p>",
   "main": "index.js",
-  "license": "MIT",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seungdeng17/js-lotto.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seungdeng17/js-lotto/issues"
+  },
+  "homepage": "https://github.com/seungdeng17/js-lotto#readme",
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^7.1.0"
   }
 }
