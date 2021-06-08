@@ -12,6 +12,10 @@
 }
 
 /* Layout - Display */
+.d-none {
+  display: none;
+}
+
 .d-flex {
   display: flex;
 }
