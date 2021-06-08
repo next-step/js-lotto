@@ -8,6 +8,13 @@ body {
   font-size: 16px;
 }
 
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
 #app {
   max-width: 400px;
   margin: 0 auto;
@@ -21,4 +28,20 @@ body {
 .bonus-number {
   width: 30px;
   height: 36px;
+}
+
+.card-number {
+  font-size: 16px;
+}
+
+.card-area .card-number {
+  display: none;
+}
+
+.card-area.show-number .card-number {
+  display: block;
+}
+
+.card-area.show-number .card-list {
+  flex-direction: column;
 }
