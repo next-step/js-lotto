@@ -1,17 +1,26 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+import { Form } from './Form.js';
+import { Lottos } from './Lottos.js';
 
-const onModalShow = () => {
-  $modal.classList.add('open')
-}
+// const $showResultButton = document.querySelector('.open-result-modal-button');
+// const $modalClose = document.querySelector('.modal-close');
+// const $modal = document.querySelector('.modal');
+// const $lottoNumbersToggleButton = document.querySelector(
+//   '.lotto-numbers-toggle-button',
+// );
 
-const onModalClose = () => {
-  $modal.classList.remove('open')
-}
+// const onModalShow = () => {
+//   $modal.classList.add('open');
+// };
 
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+// const onModalClose = () => {
+//   $modal.classList.remove('open');
+// };
+
+// $showResultButton.addEventListener('click', onModalShow);
+// $modalClose.addEventListener('click', onModalClose);
+
+const lottos = new Lottos();
+
+const form = new Form({
+  onSubmit: (price) => lottos.setState({ price }),
+});
