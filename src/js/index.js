@@ -1,17 +1,16 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+import { $ } from "./dom.js";
+import { restartLottoGame } from "./restartLottoGame.js";
+import { onModalClose } from "./controlModal.js";
+import { getMoneyAmount } from "./getMoneyAmount.js";
 
-const onModalShow = () => {
-  $modal.classList.add('open')
-}
+const $modalClose = $(".modal-close");
+const $restartBtn = $(".btn-restart");
+const $getMoneyForm = $("form.mt-5");
 
-const onModalClose = () => {
-  $modal.classList.remove('open')
-}
+const init = () => {
+  $getMoneyForm.addEventListener("click", getMoneyAmount);
+  $modalClose.addEventListener("click", onModalClose);
+  $restartBtn.addEventListener("click", restartLottoGame);
+};
 
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+init();
