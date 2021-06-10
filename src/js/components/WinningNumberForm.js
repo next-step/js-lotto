@@ -1,44 +1,45 @@
-import { $on, $$ } from "../utils/helpers.js";
+import { $on, $$, $show, $hide } from "../utils/helpers.js";
+import Component from './Component.js';
 
-const initialState = {}
+WinningNumberForm.prototype = new Component();
+WinningNumberForm.prototype.constructor = Component;
 
-// function WinningNumberForm($root, { isLottosExist }) {
-function WinningNumberForm($root, props, onSubmit) {
+function WinningNumberForm($root, { state, onSubmit }) {
   this.$form = $root;
   this.$inputs = $$('input', $root);
-  this.props = props;
+  this.state = state;
   this.onSubmit = onSubmit;
-
-  this.setState = (nextState) => {
-    this.state = nextState;
-    this.render();
-  }
-
-  this.updateProps = (props) => {
-    const keys = Object.keys(this.props);
-    keys && keys.map((key) => {
-      if (!props[key]) return;
-      this.props[key] = props[key];
-    })
-    this.render();
+  
+  const checkValidOfWinningNumber = (winningNumber) => {
+    // TODO: 중복검사
+    const set = new Set(winningNumber);
+    let message = '';
+    if (set.size !== winningNumber.length) {
+      message = '중복된 값 노노노';
+    } else if (!winningNumber.every((num) => num > 0 || num <= 45)) {
+      message = '0 부터 45까지의 수만 괜찮음';
+    }
+    if (message) {
+      alert(message)
+      return false;
+    }
+    return true;
   }
 
   this.render = () => {
-    if (!this.props.isLottosExist) {
-      return this.$form.classList.add('hidden');
-    } 
-    this.$form.classList.remove('hidden');
+    this.state.lottos.length ? $show(this.$form) : $hide(this.$form);
+    [...this.$inputs].map(($input) => $input.value = '')
   }
 
-  this.handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const nums = [...this.$inputs].map((input) => parseInt(input.value));
-    this.onSubmit(nums);
+    const winningNumber = [...this.$inputs].map((input) => parseInt(input.value));
+    if (!checkValidOfWinningNumber(winningNumber)) return;
+    this.onSubmit(winningNumber);
   }
 
   // NOTE: Construction
-  $on(this.$form, 'submit', this.handleSubmit);
-  this.setState(initialState);
+  $on(this.$form, 'submit', handleSubmit);
 }
 
 export default WinningNumberForm;

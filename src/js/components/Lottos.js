@@ -7,11 +7,15 @@ import {
   $show,
 } from '../utils/helpers.js';
 import Lotto from './Lotto.js';
+import Component from './Component.js';
 
 const initialState = {
   lottos: [],
   isShowNumber: false,
 };
+
+Lottos.prototype = new Component();
+Lottos.prototype.constructor = Component;
 
 function Lottos($root, { state }) {
   this.$root = $root;
@@ -19,15 +23,11 @@ function Lottos($root, { state }) {
   this.$checkBox = $('input', $root);
   this.state = state;
 
-  this.setState = (nextState) => {
-    this.state = nextState;
-    this.render();
-  };
-
-  this.mountComponents = () => {
+  const mountComponents = () => {
+    this.$lottoIcons.innerHTML = '';
     this.components = this.state.lottos.map(
       (lotto, index) =>
-        new Lotto($('#lotto-icons'), {
+        new Lotto(this.$lottoIcons, {
           state: {
             id: index,
             lotto,
@@ -36,29 +36,25 @@ function Lottos($root, { state }) {
         })
     );
   };
+  
+  const handleCheckBox = () => {
+    this.state.isShowNumber = !this.state.isShowNumber;
+    this.state.isShowNumber ? $addClass(this.$lottoIcons, 'flex-col') : $removeClass(this.$lottoIcons, 'flex-col');
+    this.components.map((component) => component.setState({...component, isShowNumber: this.state.isShowNumber }))
+  };
 
   this.render = () => {
-    if (!this.state.lottos) return $hide(this.$root);
-    $show(this.$root);
-    if (this.state.isShowNumber) {
-      $addClass(this.$lottoIcons, 'flex-col');
-    } else {
-      $removeClass(this.$lottoIcons, 'flex-col');
+    this.state.isShowNumber = this.$checkBox.checked ? true : false;
+    if (!this.state.lottos.length) {
+      $hide(this.$root);
+      return;
     }
-    this.mountComponents();
-
-    // if (!this.state.isComponentsMounted) this.mountComponents();
+    $show(this.$root);
+    mountComponents();
   };
-
-  this.handleCheckBox = () => {
-    // this.setState({ ...this.state, isShowNumber: !this.state.isShowNumber });
-  };
-
-  // TODO: checkBox에 대한 이벤트를 등록해야한다.
-  $on(this.$checkBox, 'change', this.handleCheckBox);
-
+  
   // NOTE: Construction
-  // this.setState({ ...this.state });
+  $on(this.$checkBox, 'change', handleCheckBox);
 }
 
 export default Lottos;
