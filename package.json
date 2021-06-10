@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "live-server": "live-server .",
+    "test": "cypress run --spec cypress/integration/*"
+  },
   "devDependencies": {
     "cypress": "^6.3.0"
   }
