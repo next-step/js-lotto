@@ -39,6 +39,7 @@ function Modal($root, { props, onRetry }) {
     $removeClass(this.$root, 'open');
   };
 
+  // purchased
   this.render = () => {
     if (this.props.numberOfWinner) {
       this.$tableContainer.innerHTML = '';
@@ -51,6 +52,7 @@ function Modal($root, { props, onRetry }) {
     !this.props.isModalHidden && this.$root.classList.add('open');
   };
 
+  // NOTE: Construction
   $on(this.$closeBtn, 'click', handleCloseModal);
   $on(this.$retryBtn, 'click', handleRetry);
 }

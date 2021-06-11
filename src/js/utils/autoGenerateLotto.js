@@ -14,4 +14,8 @@ function getLottoNum() {
   return lotto;
 }
 
-export default getLottoNum;
+const autoGenerateLotto = (purchasedPrice) => {
+  return [...Array(purchasedPrice / 1000).keys()].map(() => getLottoNum());
+};
+
+export default autoGenerateLotto;

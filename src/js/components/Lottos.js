@@ -38,20 +38,14 @@ function Lottos($root, { props }) {
   };
 
   const handleCheckBox = () => {
-    this.state.isShowNumber = !this.state.isShowNumber;
-    this.state.isShowNumber
+    const isShowNumber = this.$checkBox.checked ? true : false;
+    isShowNumber
       ? $addClass(this.$lottoIcons, 'flex-col')
       : $removeClass(this.$lottoIcons, 'flex-col');
-    this.children.map((component) =>
-      component.setState({
-        ...component,
-        isShowNumber: this.state.isShowNumber,
-      })
-    );
+    this.setState({ ...this.state, isShowNumber });
   };
 
   this.render = () => {
-    this.state.isShowNumber = this.$checkBox.checked ? true : false;
     if (!this.props.lottos.length) {
       $hide(this.$root);
       return;
@@ -61,6 +55,13 @@ function Lottos($root, { props }) {
   };
 
   // NOTE: Construction
+  const init = () => {
+    this.setState({
+      ...this.state,
+      isShowNumber: this.$checkBox.checked ? true : false,
+    });
+  };
+  init();
   $on(this.$checkBox, 'change', handleCheckBox);
 }
 

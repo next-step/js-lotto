@@ -4,9 +4,10 @@ import Component from './Component.js';
 PriceForm.prototype = new Component();
 PriceForm.prototype.constructor = Component;
 
-function PriceForm($root, { onSubmit }) {
+function PriceForm($root, { props, onSubmit }) {
   this.$form = $root;
   this.$input = $('input', $root);
+  this.props = props;
   this.onSubmit = onSubmit;
 
   const validCheckOf = (value) => value && value % 1000 === 0;
@@ -20,8 +21,12 @@ function PriceForm($root, { onSubmit }) {
     this.onSubmit(value);
   };
 
-  this.init = () => {
-    this.$input.value = '';
+  this.render = () => {
+    if (!this.props.purchasedPrice) {
+      this.$input.value = '';
+    } else {
+      this.$input.value = this.props.purchasedPrice;
+    }
   };
 
   $on(this.$form, 'submit', handleSubmit);

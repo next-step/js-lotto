@@ -11,22 +11,24 @@ function Lotto($root, { props }) {
   this.state = initialState;
   this.props = props;
 
-  const createElement = () => {
-    this.$lotto = document.createElement('li');
-    this.$lotto.dataset.id = this.props.id;
-    this.$lotto.innerHTML = lottoTemplate(this.props.lotto);
-  };
-
   this.render = () => {
     this.props.isShowNumber
       ? (this.$lotto.lastElementChild.style.display = 'inline-block')
       : (this.$lotto.lastElementChild.style.display = 'none');
   };
 
+  const init = () => {
+    this.$lotto = document.createElement('li');
+    this.$lotto.dataset.id = this.props.id;
+    this.$lotto.innerHTML = lottoTemplate(this.props.lotto);
+    this.props.isShowNumber
+      ? (this.$lotto.lastElementChild.style.display = 'inline-block')
+      : (this.$lotto.lastElementChild.style.display = 'none');
+    this.$root.appendChild(this.$lotto);
+  };
+
   // NOTE: Construction
-  createElement();
-  this.render();
-  this.$root.appendChild(this.$lotto);
+  init();
 }
 
 export default Lotto;

@@ -19,7 +19,7 @@ function WinningNumberForm($root, { props, onSubmit }) {
     let message = '';
     if (set.size !== winningNumber.length) {
       message = '중복된 값 노노노';
-    } else if (!winningNumber.every((num) => num > 0 || num <= 45)) {
+    } else if (!winningNumber.every((num) => num > 0 && num <= 45)) {
       message = '0 부터 45까지의 수만 괜찮음';
     }
     if (message) {
