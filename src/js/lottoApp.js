@@ -4,8 +4,37 @@ import {LottoNumbers} from './components/LottoNumbers.js';
 import {LottoResult} from './components/LottoResult.js';
 
 export function LottoApp($el) {
+    /**
+     * @typedef State
+     * @type {Object}
+     * @property {Number} amount
+     * @property {} lottoNumbers
+     */
+    let state = {
+        amount: 0,
+        lottoNumbers: [],
+    };
+
+    /**
+     * @param {State} nextState
+     */
+    const setState = (nextState) => {
+        state = {
+            ...state,
+            ...nextState,
+        };
+        console.log('state: ', state);
+        render();
+    };
+
+    const setAmount = (amount) => {
+        setState({amount});
+    };
 
     const render = () => {
+        const {amount, lottoNumbers} = state;
+        const isReadyGame = lottoNumbers.length > 0;
+
         $el.innerHTML = `
 			<div class="p-3">
 				<div class="d-flex justify-center mt-5">
@@ -73,9 +102,9 @@ export function LottoApp($el) {
 			</div>
         `;
 
-        new AmountForm($({selector: '[data-component="amountForm"]', parent: $el}));
-        new LottoNumbers($({selector: '[data-component="lottoNumbers"]', parent: $el}));
-        new LottoResult($({selector: '[data-component="lottoResult"]', parent: $el}));
+        new AmountForm($({selector: '[data-component="amountForm"]', parent: $el}), {setAmount});
+        amount && new LottoNumbers($({selector: '[data-component="lottoNumbers"]', parent: $el}));
+        isReadyGame && new LottoResult($({selector: '[data-component="lottoResult"]', parent: $el}));
     };
 
     render();
