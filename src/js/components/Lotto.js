@@ -22,6 +22,7 @@ function Lotto($root, { state }) {
  
   // NOTE: Construction
   createElement();
+  this.render();
   this.$root.appendChild(this.$lotto);
 }
 

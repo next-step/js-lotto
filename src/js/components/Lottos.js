@@ -25,7 +25,8 @@ function Lottos($root, { state }) {
 
   const mountComponents = () => {
     this.$lottoIcons.innerHTML = '';
-    this.components = this.state.lottos.map(
+    // NOTE: 지금 이거 배열인데 나중에 통일성위해 컴포넌트로 바꿔야할듯?
+    this.children = this.state.lottos.map(
       (lotto, index) =>
         new Lotto(this.$lottoIcons, {
           state: {
@@ -40,7 +41,7 @@ function Lottos($root, { state }) {
   const handleCheckBox = () => {
     this.state.isShowNumber = !this.state.isShowNumber;
     this.state.isShowNumber ? $addClass(this.$lottoIcons, 'flex-col') : $removeClass(this.$lottoIcons, 'flex-col');
-    this.components.map((component) => component.setState({...component, isShowNumber: this.state.isShowNumber }))
+    this.children.map((component) => component.setState({...component, isShowNumber: this.state.isShowNumber }))
   };
 
   this.render = () => {

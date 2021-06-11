@@ -1,4 +1,5 @@
 import { $ } from './utils/helpers.js';
+import Component from './components/Component.js';
 import PriceForm from './components/PriceForm.js';
 import Lottos from './components/Lottos.js';
 import WinningNumberForm from './components/WinningNumberForm.js';
@@ -21,17 +22,12 @@ const initialState = {
   },
 };
 
+App.prototype = new Component();
+App.prototype.constructor = Component
+
 function App($root) {
   this.$root = $root;
   this.state = { ...initialState };
-  this.components = {};
-
-  this.setState = (nextState) => {
-    this.state = nextState;
-    Object.values(this.components).map((component) => {
-      component.setState({ ...this.state });
-    })
-  }  
 
   this.handleSubmitPurchase = (purchasedPrice) => {
     const lottos = [...Array(purchasedPrice / 1000).keys()].map(() => getLottoNum());
@@ -41,19 +37,22 @@ function App($root) {
   this.handleSubmitResult = (winningNumber) => {
     const numberOfWinner = calculateWinner(this.state.lottos, winningNumber);
     this.state.numberOfWinner = numberOfWinner;
-    this.components.Modal.setState({ ...this.state, isModalHidden: false });
+    this.children.Modal.setState({ ...this.state, isModalHidden: false });
   };
 
   this.handleRetry = () => {
     this.setState({ ...initialState })
-    this.components.PriceForm.init();
+    this.children.PriceForm.init();
   }
 
   // NOTE: Construction
-  this.components = {
+  this.children = {
     PriceForm: new PriceForm($('#price-form'), { onSubmit: this.handleSubmitPurchase }),
+    // NOTE: lottos, isShowNumber(직접 수정함)
     Lottos: new Lottos($('#lottos'), {  state: this.state }),
+    // NOTE: lottos, 
     WinningNumberForm: new WinningNumberForm($('#winning-number'), { state: this.state, onSubmit: this.handleSubmitResult}),
+    // NOTE: numberOfWinner, purchasedPrice, isModalHidden
     Modal: new Modal($('#modal'), { state: this.state, onRetry: this.handleRetry })
   }
 }
