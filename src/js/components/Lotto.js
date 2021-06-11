@@ -4,22 +4,25 @@ import Component from './Component.js';
 Lotto.prototype = new Component();
 Lotto.prototype.constructor = Component;
 
-function Lotto($root, { state }) {
+const initialState = {};
+
+function Lotto($root, { props }) {
   this.$root = $root;
-  this.state = state;
+  this.state = initialState;
+  this.props = props;
 
   const createElement = () => {
     this.$lotto = document.createElement('li');
-    this.$lotto.dataset.id = this.state.id;
-    this.$lotto.innerHTML = lottoTemplate(this.state.lotto);
-  }
+    this.$lotto.dataset.id = this.props.id;
+    this.$lotto.innerHTML = lottoTemplate(this.props.lotto);
+  };
 
   this.render = () => {
-    this.state.isShowNumber ? 
-    this.$lotto.lastElementChild.style.display = 'inline-block' :
-    this.$lotto.lastElementChild.style.display = 'none';
-  }
- 
+    this.props.isShowNumber
+      ? (this.$lotto.lastElementChild.style.display = 'inline-block')
+      : (this.$lotto.lastElementChild.style.display = 'none');
+  };
+
   // NOTE: Construction
   createElement();
   this.render();

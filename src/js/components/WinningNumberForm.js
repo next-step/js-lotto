@@ -1,15 +1,18 @@
-import { $on, $$, $show, $hide } from "../utils/helpers.js";
+import { $on, $$, $show, $hide } from '../utils/helpers.js';
 import Component from './Component.js';
 
 WinningNumberForm.prototype = new Component();
 WinningNumberForm.prototype.constructor = Component;
 
-function WinningNumberForm($root, { state, onSubmit }) {
+const initialState = {};
+
+function WinningNumberForm($root, { props, onSubmit }) {
   this.$form = $root;
   this.$inputs = $$('input', $root);
-  this.state = state;
+  this.state = initialState;
+  this.props = props;
   this.onSubmit = onSubmit;
-  
+
   const checkValidOfWinningNumber = (winningNumber) => {
     // TODO: 중복검사
     const set = new Set(winningNumber);
@@ -20,23 +23,25 @@ function WinningNumberForm($root, { state, onSubmit }) {
       message = '0 부터 45까지의 수만 괜찮음';
     }
     if (message) {
-      alert(message)
+      alert(message);
       return false;
     }
     return true;
-  }
+  };
 
   this.render = () => {
-    this.state.lottos.length ? $show(this.$form) : $hide(this.$form);
-    [...this.$inputs].map(($input) => $input.value = '')
-  }
+    this.props.lottos.length ? $show(this.$form) : $hide(this.$form);
+    [...this.$inputs].map(($input) => ($input.value = ''));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const winningNumber = [...this.$inputs].map((input) => parseInt(input.value));
+    const winningNumber = [...this.$inputs].map((input) =>
+      parseInt(input.value)
+    );
     if (!checkValidOfWinningNumber(winningNumber)) return;
     this.onSubmit(winningNumber);
-  }
+  };
 
   // NOTE: Construction
   $on(this.$form, 'submit', handleSubmit);
