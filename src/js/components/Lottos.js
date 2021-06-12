@@ -23,7 +23,7 @@ function Lottos($root, { props }) {
   this.state = { ...initialState };
   this.props = props;
 
-  const mountComponents = () => {
+  const renderLotto = () => {
     this.$lottoIcons.innerHTML = '';
     this.children = this.props.lottos.map(
       (lotto, index) =>
@@ -51,7 +51,7 @@ function Lottos($root, { props }) {
       return;
     }
     $show(this.$root);
-    mountComponents();
+    renderLotto();
   };
 
   // NOTE: Construction
