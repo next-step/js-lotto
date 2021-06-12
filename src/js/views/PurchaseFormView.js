@@ -4,13 +4,13 @@ import { $, $$ } from '../utils/utils.js';
 export default class PurchaseFormView extends View {
   constructor(el) {
     super(el);
-    this.purchaseFormInput = $('#purchase-form-input');
+    this.$purchaseFormInput = $('#purchase-form-input');
     this.bindEvents();
     return this;
   }
 
   init() {
-    this.purchaseFormInput.value = '';
+    this.$purchaseFormInput.value = '';
   }
 
   bindEvents() {
