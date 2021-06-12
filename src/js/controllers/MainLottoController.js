@@ -1,8 +1,10 @@
-import { $, $$ } from '../utils/utils.js';
+import { $, $$, isVaildMoney } from '../utils/utils.js';
+import LottoModel from '../models/LottoModel.js';
 import PurchaseFormView from '../views/PurchaseFormView.js';
 import LottoSectionView from '../views/LottoSectionView.js';
 import LottoNumberFormView from '../views/LottoNumberFormView.js';
 import ResultModalView from '../views/ResultModalView.js';
+import { LOTTO, ALERT } from '../utils/constants.js';
 
 export default class MainLottoController {
   constructor() {
@@ -10,12 +12,34 @@ export default class MainLottoController {
     this.lottoSectionView = new LottoSectionView($('#lotto-section'));
     this.lottoNumberFormView = new LottoNumberFormView($('#lotto-number-form'));
     this.resultModalView = new ResultModalView($('#result-modal'));
+    this.lottoModel = new LottoModel();
     this.render();
   }
 
-  render() {
+  init() {
     this.purchaseFormView.show();
     this.lottoSectionView.hide();
     this.lottoNumberFormView.hide();
+  }
+
+  render() {
+    this.init();
+    this.bindEvents();
+  }
+
+  bindEvents() {
+    this.purchaseFormView.on('@submitMoney', ({ detail: moneyData }) => {
+      this.setLottos(moneyData.get(LOTTO.MONEY));
+    });
+  }
+
+  setLottos(price) {
+    if (isVaildMoney(price)) {
+      this.purchaseFormView.init();
+      alert(ALERT.INVAILD_MONEY);
+      return;
+    }
+    this.lottoModel.lottos = price;
+    this.lottoSectionView.show();
   }
 }
