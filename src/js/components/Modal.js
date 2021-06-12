@@ -7,7 +7,7 @@ Modal.prototype.constructor = Component;
 
 const initialState = {};
 
-function Modal($root, { props, onRetry }) {
+function Modal($root, { props, onRetry, onClose }) {
   this.$root = $root;
   this.$tableContainer = $('.table-container', $root);
   this.$retryBtn = $('.retry-btn', $root);
@@ -16,6 +16,7 @@ function Modal($root, { props, onRetry }) {
   this.state = initialState;
   this.props = props;
   this.onRetry = onRetry;
+  this.onClose = onClose;
 
   const calculateYield = () => {
     let totalReward = 0;
@@ -37,6 +38,7 @@ function Modal($root, { props, onRetry }) {
 
   const handleCloseModal = () => {
     $removeClass(this.$root, 'open');
+    this.onClose();
   };
 
   // purchased

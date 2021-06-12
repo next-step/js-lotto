@@ -45,6 +45,10 @@ function App($root) {
     });
   };
 
+  this.handleCloseModal = () => {
+    this.setState({ ...this.state, isModalHidden: true });
+  };
+
   this.handleRetry = () => {
     this.setState({ ...initialState });
   };
@@ -69,6 +73,7 @@ function App($root) {
           isModalHidden: state.isModalHidden,
         },
         onRetry: this.handleRetry,
+        onClose: this.handleCloseModal,
       }),
     ];
   };
