@@ -28,7 +28,7 @@ function App($root) {
   this.$root = $root;
   this.state = { ...initialState };
 
-  this.handleSubmitPurchase = (purchasedPrice) => {
+  const handleSubmitPurchase = (purchasedPrice) => {
     this.setState({
       ...this.state,
       lottos: autoGenerateLotto(purchasedPrice),
@@ -37,7 +37,7 @@ function App($root) {
     });
   };
 
-  this.handleSubmitResult = (winningNumber) => {
+  const handleSubmitResult = (winningNumber) => {
     this.setState({
       ...this.state,
       isModalHidden: false,
@@ -45,11 +45,11 @@ function App($root) {
     });
   };
 
-  this.handleCloseModal = () => {
+  const handleCloseModal = () => {
     this.setState({ ...this.state, isModalHidden: true });
   };
 
-  this.handleRetry = () => {
+  const handleRetry = () => {
     this.setState({ ...initialState });
   };
 
@@ -59,12 +59,12 @@ function App($root) {
     this.children = [
       new PriceForm($('#price-form'), {
         props: { purchasedPrice: state.purchasedPrice },
-        onSubmit: this.handleSubmitPurchase,
+        onSubmit: handleSubmitPurchase,
       }),
       new Lottos($('#lottos'), { props: { lottos: state.lottos } }),
       new WinningNumberForm($('#winning-number'), {
         props: { lottos: state.lottos },
-        onSubmit: this.handleSubmitResult,
+        onSubmit: handleSubmitResult,
       }),
       new Modal($('#modal'), {
         props: {
@@ -72,8 +72,8 @@ function App($root) {
           purchasedPrice: state.purchasedPrice,
           isModalHidden: state.isModalHidden,
         },
-        onRetry: this.handleRetry,
-        onClose: this.handleCloseModal,
+        onRetry: handleRetry,
+        onClose: handleCloseModal,
       }),
     ];
   };

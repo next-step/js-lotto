@@ -41,7 +41,6 @@ function Modal($root, { props, onRetry, onClose }) {
     this.onClose();
   };
 
-  // purchased
   this.render = () => {
     if (this.props.numberOfWinner) {
       this.$tableContainer.innerHTML = '';
