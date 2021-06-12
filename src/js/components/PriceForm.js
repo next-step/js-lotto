@@ -22,11 +22,7 @@ function PriceForm($root, { props, onSubmit }) {
   };
 
   this.render = () => {
-    if (!this.props.purchasedPrice) {
-      this.$input.value = '';
-    } else {
-      this.$input.value = this.props.purchasedPrice;
-    }
+    this.$input.value = this.props.purchasedPrice || '';
   };
 
   $on(this.$form, 'submit', handleSubmit);
