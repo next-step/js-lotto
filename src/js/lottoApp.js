@@ -11,7 +11,7 @@ export function LottoApp($el) {
      * @property {} lottoNumbers
      */
     let state = {
-        amount: 0,
+        amount: null,
         lottoNumbers: [],
     };
 
@@ -23,7 +23,6 @@ export function LottoApp($el) {
             ...state,
             ...nextState,
         };
-        console.log('state: ', state);
         render();
     };
 
@@ -102,7 +101,7 @@ export function LottoApp($el) {
 			</div>
         `;
 
-        new AmountForm($({selector: '[data-component="amountForm"]', parent: $el}), {setAmount});
+        new AmountForm($({selector: '[data-component="amountForm"]', parent: $el}), {amount, setAmount});
         amount && new LottoNumbers($({selector: '[data-component="lottoNumbers"]', parent: $el}));
         isReadyGame && new LottoResult($({selector: '[data-component="lottoResult"]', parent: $el}));
     };
