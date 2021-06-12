@@ -8,12 +8,15 @@ import {pickLottoNumbers} from './utils/ticketing.js';
 export function LottoApp($el) {
     /**
      * @type {Object}
-     * @property {Number} amount
-     * @property {[[Number]]} lottoNumbers
+     * @property {Number} amount - 구매금액
+     * @property {[[Number]]} lottoNumbers - 추첨번호[]
+     * @property {[Number]} winningNumber - 당첨번호
      */
     let state = {
         amount: null,
-        lottoNumbers: [],
+        lottoNumbers: [[]],
+        winningNumber: [null, null, null, null, null, null],
+        bonusNumber: null,
     };
 
     const setState = (nextState) => {
@@ -32,9 +35,20 @@ export function LottoApp($el) {
         });
     };
 
+    /**
+     * lotto 결과확인
+     * @param winningNumber
+     * @param bonusNumber
+     */
+    const checkResult = ({winningNumber, bonusNumber}) => {
+        setState({
+            winningNumber,
+            bonusNumber,
+        });
+    };
+
     const render = () => {
-        const {amount, lottoNumbers} = state;
-        const isReadyGame = lottoNumbers.length > 0;
+        const {amount, lottoNumbers, winningNumber, bonusNumber} = state;
 
         $el.innerHTML = `
 			<div class="p-3">
@@ -105,7 +119,7 @@ export function LottoApp($el) {
 
         new AmountForm($({selector: '[data-component="amountForm"]', parent: $el}), {amount, setAmount});
         amount && new LottoNumbers($({selector: '[data-component="lottoNumbers"]', parent: $el}), {lottoNumbers});
-        isReadyGame && new LottoResult($({selector: '[data-component="lottoResult"]', parent: $el}));
+        amount && new LottoResult($({selector: '[data-component="lottoResult"]', parent: $el}), {winningNumber, bonusNumber, checkResult});
     };
 
     render();
