@@ -13,6 +13,8 @@ const setAliase = () => {
   cy.getAndSetAliase('#winning-number button', 'wfBtn');
 
   cy.getAndSetAliase('#modal', 'mo');
+  cy.getAndSetAliase('#modal .close-x', 'moClose');
+  cy.getAndSetAliase('#modal .retry-btn', 'moRetry');
 }
 
 export default setAliase;

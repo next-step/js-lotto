@@ -6,7 +6,6 @@ describe('기본 동작 테스트', () => {
     cy.visit('/')
     setAliase();
   })
-
   context(`${VALID_PRICE}원의 로또를 구입`, () => {
     beforeEach(() => {
       cy.typeToTarget('@pfInput', VALID_PRICE).type('{enter}')
@@ -108,6 +107,32 @@ describe('기본 동작 테스트', () => {
       })
       cy.clickTarget('@wfBtn')
       cy.get('tbody').find('tr').eq(3).children().last().should('have.text', '1');
+    });
+  })
+  
+  context('모달창이 켜진 상태', () => {
+    beforeEach(() => {
+      cy.typeToTarget('@pfInput', VALID_PRICE).type('{enter}')
+      cy.clickTarget('@tog')
+      cy.get('@lottoList').find('.lotto-detail').each(($lotto) => {
+        let num = 1;
+        cy.get('@wfInputs').each(($input, index) => {
+          $input.val(num++);
+        })
+      })
+      cy.clickTarget('@wfBtn')
+    })
+    it('x버튼을 누르면 모달창이 없어져야한다.', () => {
+      cy.clickTarget('@moClose');
+      cy.get('@mo').should('have.not.class', 'open');
+    });
+    it('다시 시작하기 버튼을 누르면 화면이 초기화면으로 돌아가야한다.', () => {
+      cy.clickTarget('@moRetry');
+      cy.get('@pf').should('have.not.class', 'hidden')
+      cy.get('@pfInput').should('have.value', '')
+      cy.get('@lottos').should('have.class', 'hidden')
+      cy.get('@wf').should('have.class', 'hidden')
+      cy.get('@mo').should('have.not.class', 'open')
     });
   })
 })
