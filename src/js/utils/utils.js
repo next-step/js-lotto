@@ -7,4 +7,8 @@ const isVaildMoney = (price) => {
   return price % LOTTO.UNIT;
 };
 
-export { $, $$, isVaildMoney };
+const getRandomNumber = (min, max) => {
+  return Math.floor(Math.random() * (max - min) + min);
+};
+
+export { $, $$, isVaildMoney, getRandomNumber };

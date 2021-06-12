@@ -1,6 +1,9 @@
 const LOTTO = {
   MONEY: 'money',
   UNIT: 1000,
+  COUNTS: 6,
+  MAX_VALUE: 45,
+  MIN_VALUE: 1,
 };
 
 const ALERT = {
