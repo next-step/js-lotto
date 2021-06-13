@@ -29,7 +29,7 @@ export default function LottoArea(app) {
       count--;
     }
     app.lotto = lottos;
-    showLotto(this.toggle);
+    showLotto(false);
   };
 
   const showLotto = toggleState => {

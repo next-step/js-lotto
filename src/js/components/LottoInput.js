@@ -17,6 +17,7 @@ export default function LottoInput(app) {
   const setPrice = price => {
     const lottoCount = price / 1000;
     app.setLottoArea(lottoCount);
+    app.setLottoResultArea();
   };
 
   addEvent({ el: priceButton, type: 'click', callback: getPrice });

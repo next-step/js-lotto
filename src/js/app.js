@@ -1,5 +1,6 @@
 import LottoInput from './components/LottoInput.js';
 import LottoArea from './components/LottoArea.js';
+import LottoResult from './components/LottoResult.js';
 
 export default function App(container) {
   this.container = container;
@@ -8,11 +9,15 @@ export default function App(container) {
 
   new LottoInput(this);
   const lottoArea = new LottoArea(this);
+  const lottoResult = new LottoResult(this);
 
   this.setLottoArea = lottoCount => {
     this.lottoCount = lottoCount;
     lottoArea.setLottoCount(lottoCount);
     lottoArea.setLotto(lottoCount);
-    console.log(this.lotto);
+  };
+
+  this.setLottoResultArea = () => {
+    lottoResult.setLottoResult();
   };
 }
