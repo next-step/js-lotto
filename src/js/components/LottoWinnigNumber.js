@@ -8,7 +8,7 @@
  */
 import {MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER} from '../consts/lottoConsts.js';
 
-export function LottoResult($el, props) {
+export function LottoWinnigNumber($el, props) {
 
     const bindEvents = () => {
         $el.addEventListener('submit', event => {
