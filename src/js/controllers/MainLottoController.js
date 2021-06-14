@@ -1,4 +1,4 @@
-import { $, $$, isVaildMoney } from '../utils/utils.js';
+import { $, isVaildMoney, isValidLotto } from '../utils/utils.js';
 import LottoModel from '../models/LottoModel.js';
 import PurchaseFormView from '../views/PurchaseFormView.js';
 import LottoSectionView from '../views/LottoSectionView.js';
@@ -31,6 +31,10 @@ export default class MainLottoController {
     this.purchaseFormView.on('@submitMoney', ({ detail: moneyData }) => {
       this.setLottos(moneyData.get(LOTTO.MONEY));
     });
+
+    this.lottoNumberFormView.on('@submitLottoNumbers', ({ detail: lottoNumbers }) => {
+      this.setWinningLottoNumber(lottoNumbers);
+    });
   }
 
   setLottos(price) {
@@ -40,6 +44,16 @@ export default class MainLottoController {
       return;
     }
     this.lottoModel.lottos = price;
-    this.lottoSectionView.show();
+    this.lottoSectionView.show().render(this.lottoModel.lottos);
+    this.lottoNumberFormView.show();
+  }
+
+  setWinningLottoNumber(lottos) {
+    if (!isValidLotto(lottos)) {
+      alert(ALERT.DUPLICATED_NUMBER);
+      return;
+    }
+
+    this.resultModalView.show();
   }
 }

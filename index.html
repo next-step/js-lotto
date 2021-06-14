@@ -29,22 +29,8 @@
             </div>
           </form>
           <section id="lotto-section" class="mt-9">
-            <div class="d-flex">
-              <label class="flex-auto my-0">총 5개를 구매하였습니다.</label>
-              <div class="flex-auto d-flex justify-end pr-1">
-                <label class="switch">
-                  <input id="lotto-number-switch" type="checkbox" class="lotto-numbers-toggle-button" />
-                  <span class="text-base font-normal">번호보기</span>
-                </label>
-              </div>
-            </div>
-            <div id="lottos" class="d-flex flex-wrap">
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-            </div>
+            <div id="lotto-information" class="d-flex"></div>
+            <div id="lotto-wrapper" class="d-flex flex-wrap flex-col"></div>
           </section>
           <form id="lotto-number-form" class="mt-9">
             <label class="flex-auto d-inline-block mb-3"
@@ -57,32 +43,50 @@
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
-                    data-input="1"
+                    name="one"
+                    min=1
+                    max=45
+                    required
                   />
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
-                    data-input="2"
+                    name="two"
+                    min=1
+                    max=45
+                    required
                   />
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
-                    data-input="3"
+                    name="three"
+                    min=1
+                    max=45
+                    required
                   />
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
-                    data-input="4"
+                    name="four"
+                    min=1
+                    max=45
+                    required
                   />
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
-                    data-input="5"
+                    name="five"
+                    min=1
+                    max=45
+                    required
                   />
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
-                    data-input="6"
+                    name="six"
+                    min=1
+                    max=45
+                    required
                   />
                 </div>
               </div>
@@ -92,13 +96,16 @@
                   <input 
                     type="number" 
                     class="bonus-number text-center" 
-                    data-input="7"
+                    name="bonus"
+                    min=1
+                    max=45
+                    required
                   />
                 </div>
               </div>
             </div>
             <button
-              type="button"
+              type="submit"
               class="open-result-modal-button mt-5 btn btn-cyan w-100"
             >
               결과 확인하기
