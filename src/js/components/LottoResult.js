@@ -60,8 +60,10 @@ export default function LottoResult(app) {
   const validateWinningNumber = () => {
     const numberSet = new Set([
       ...this.numbers.map(number => number.number),
-      bonusNumber.value,
+      bonusNumber.valueAsNumber,
     ]);
+
+    console.log(numberSet);
 
     if (numberSet.size < 7) {
       window.alert(MESSAGE.NUMBER_CANNOT_BE_DUPLICATED);
