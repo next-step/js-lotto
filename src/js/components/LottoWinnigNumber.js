@@ -36,7 +36,7 @@ export function LottoWinnigNumber($el, props) {
         });
 
         $el.innerHTML = `
-            <form class="mt-9">
+            <form class="mt-9" data-test="winning-number-form">
                 <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
                 <div class="d-flex">
                     <div>
@@ -52,7 +52,7 @@ export function LottoWinnigNumber($el, props) {
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="open-result-modal-button mt-5 btn btn-cyan w-100">
+                <button type="submit" class="open-result-modal-button mt-5 btn btn-cyan w-100" data-test="winning-number-submit-button">
                     결과 확인하기
                 </button>
             </form>

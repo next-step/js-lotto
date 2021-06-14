@@ -82,9 +82,9 @@ export function LottoResultModal($el, props) {
         const winningAmountRate = getWinningAmountRate({lottoResult});
 
         $el.innerHTML = `
-            <div class="modal open">
+            <div class="modal open" data-test="result-modal-wrapper">
                 <div class="modal-inner p-10">
-                    <button type="button" class="modal-close" aria-label="close-button" data-action="closeModal">
+                    <button type="button" class="modal-close" aria-label="close-button" data-action="closeModal" data-test="result-modal-close-button">
                         <svg viewbox="0 0 40 40">
                             <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30"/>
                         </svg>
@@ -130,7 +130,7 @@ export function LottoResultModal($el, props) {
                     </div>
                     <p class="text-center font-bold">당신의 총 수익률은 ${winningAmountRate}%입니다.</p>
                     <div class="d-flex justify-center mt-5">
-                        <button type="button" class="btn btn-cyan" data-action="restartLotto">다시 시작하기</button>
+                        <button type="button" class="btn btn-cyan" data-action="restartLotto" data-test="result-modal-restart-button">다시 시작하기</button>
                     </div>
                 </div>
             </div>
