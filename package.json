@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "live-server": "live-server .",
-    "test": "cypress run --spec cypress/integration/*"
+    "test": "cypress run --spec cypress/integration/lotto-buy.spec.js,cypress/integration/lotto-result.spec.js"
   },
   "devDependencies": {
     "cypress": "^6.3.0"

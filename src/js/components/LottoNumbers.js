@@ -43,9 +43,9 @@ export function LottoNumbers($el, props) {
         const lottoCount = lottoNumbers.length;
         const ticketsView = lottoNumbers.map(lottoNumber => {
             return `
-                <li class="mx-1 text-4xl lotto-wrapper">
+                <li class="mx-1 text-4xl lotto-wrapper" data-test="lotto-item-wrapper">
                     <span class="lotto-icon">🎟️ </span>
-                    <span class="lotto-detail" style="display: ${showDetailNumbers ? 'inline' : 'none'}">${lottoNumber.join(', ')}</span>
+                    <span class="lotto-detail" style="display: ${showDetailNumbers ? 'inline' : 'none'}" data-test="lotto-item-number">${lottoNumber.join(', ')}</span>
                 </li>
             `;
         });
@@ -53,10 +53,10 @@ export function LottoNumbers($el, props) {
         $el.innerHTML = `
             <div class="mt-9">
                 <div class="d-flex">
-                    <label class="flex-auto my-0">총 ${lottoCount}개를 구매하였습니다.</label>
+                    <label class="flex-auto my-0" data-test="lotto-count-message">총 ${lottoCount}개를 구매하였습니다.</label>
                     <div class="flex-auto d-flex justify-end pr-1">
-                        <label class="switch">
-                            <input type="checkbox" class="lotto-numbers-toggle-button" data-action="toggleNumbersView" ${showDetailNumbers ? 'checked' : ''}/>
+                        <label class="switch" data-test="toggle-number-switch">
+                            <input type="checkbox" class="lotto-numbers-toggle-button" data-action="toggleNumbersView" ${showDetailNumbers ? 'checked' : ''} />
                             <span class="text-base font-normal">번호보기</span>
                         </label>
                     </div>
