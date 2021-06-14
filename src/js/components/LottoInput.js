@@ -6,7 +6,8 @@ export default function LottoInput(app) {
   const priceInput = $({ target: priceForm, selector: '.price-input' });
   const priceButton = $({ target: priceForm, selector: '.price-button' });
 
-  const getPrice = () => {
+  const getPrice = e => {
+    e.preventDefault();
     const price = priceInput.value;
     if (price % 1000) return window.alert(MESSAGE.PRICE_HAS_REMAINDER);
     if (price < 1000) return window.alert(MESSAGE.PRICE_UNDER_MINIMUM);
@@ -18,7 +19,18 @@ export default function LottoInput(app) {
     const lottoCount = price / 1000;
     app.setLottoArea(lottoCount);
     app.setLottoResultArea();
+    showLotto();
   };
 
-  addEvent({ el: priceButton, type: 'click', callback: getPrice });
+  const showLotto = () => {
+    const lottoArea = $({ target: app.container, selector: '.lotto-area' });
+    const resultForm = $({
+      target: app.container,
+      selector: '.lotto-result-form',
+    });
+    lottoArea.hidden = false;
+    resultForm.hidden = false;
+  };
+
+  addEvent({ el: priceForm, type: 'submit', callback: getPrice });
 }

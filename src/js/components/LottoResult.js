@@ -139,6 +139,13 @@ export default function LottoResult(app) {
     this.result = [];
     app.lottoCount = 0;
     app.lotto = [];
+
+    bonusNumber.value = '';
+    const priceInput = $({ target: app.container, selector: '.price-input' });
+    const lottoArea = $({ target: app.container, selector: '.lotto-area' });
+    lottoResultArea.hidden = true;
+    lottoArea.hidden = true;
+    priceInput.value = '';
     onModalClose();
   };
 
