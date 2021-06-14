@@ -6,7 +6,6 @@ export default class PurchaseFormView extends View {
     super(el);
     this.$purchaseFormInput = $('#purchase-form-input');
     this.bindEvents();
-    return this;
   }
 
   init() {

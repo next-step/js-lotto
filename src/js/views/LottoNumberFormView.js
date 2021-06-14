@@ -1,9 +1,18 @@
 import View from './View.js';
+import { $, $$ } from '../utils/utils.js';
 
 export default class LottoNumberFormView extends View {
   constructor(el) {
     super(el);
     this.bindEvents();
+  }
+
+  init() {
+    $('.bonus-number').value = '';
+
+    $$('.winning-number').forEach((inputElement) => {
+      inputElement.value = '';
+    });
   }
 
   bindEvents() {

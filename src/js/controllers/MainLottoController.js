@@ -17,9 +17,9 @@ export default class MainLottoController {
   }
 
   init() {
-    this.purchaseFormView.show();
+    this.purchaseFormView.show().init();
     this.lottoSectionView.hide();
-    this.lottoNumberFormView.hide();
+    this.lottoNumberFormView.hide().init();
   }
 
   render() {
@@ -35,6 +35,14 @@ export default class MainLottoController {
     this.lottoNumberFormView.on('@submitLottoNumbers', ({ detail: lottoNumbers }) => {
       this.setWinningLottoNumber(lottoNumbers);
     });
+
+    this.resultModalView.on('@resetLotto', () => {
+      this.resetLotto();
+    });
+  }
+
+  resetLotto() {
+    this.init();
   }
 
   setLottos(price) {
@@ -54,6 +62,6 @@ export default class MainLottoController {
       return;
     }
 
-    this.resultModalView.show();
+    this.resultModalView.openModal();
   }
 }
