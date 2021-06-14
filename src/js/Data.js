@@ -1,14 +1,10 @@
 function get6RandomNumber() {
 	const randoms = [];
 	for (let i = 0; i < 6; i++) {
-<<<<<<< HEAD
 		const random = Math.floor(Math.random() * 45) + 1;
 		if (randoms.find((num) => num === random) === undefined) {
 			randoms.push(random);
 		}
-=======
-		randoms.push(Math.floor(Math.random() * 45) + 1);
->>>>>>> 9fcfc8cf387404394479346d467f55b1972ec599
 	}
 	return randoms;
 }
