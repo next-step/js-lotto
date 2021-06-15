@@ -4,6 +4,7 @@ import PurchaseFormView from '../views/PurchaseFormView.js';
 import LottoSectionView from '../views/LottoSectionView.js';
 import LottoNumberFormView from '../views/LottoNumberFormView.js';
 import ResultModalView from '../views/ResultModalView.js';
+import WinnerLottoController from './WinnerLottoController.js';
 import { LOTTO, ALERT } from '../utils/constants.js';
 
 export default class MainLottoController {
@@ -13,6 +14,7 @@ export default class MainLottoController {
     this.lottoNumberFormView = new LottoNumberFormView($('#lotto-number-form'));
     this.resultModalView = new ResultModalView($('#result-modal'));
     this.lottoModel = new LottoModel();
+    this.winningLottoController = new WinnerLottoController();
     this.render();
   }
 
@@ -62,6 +64,10 @@ export default class MainLottoController {
       return;
     }
 
-    this.resultModalView.openModal();
+    const rankHash = this.winningLottoController.setLottos({
+      winningNumbers: lottos,
+      lottos: this.lottoModel.lottos,
+    });
+    this.resultModalView.openModal(rankHash, this.lottoModel.lottos.length);
   }
 }
