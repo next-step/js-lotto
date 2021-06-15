@@ -55,22 +55,22 @@ function App($root) {
 
   // NOTE: Construction
   const init = () => {
-    const state = { ...this.state };
+    const { lottos, numberOfWinner, purchasedPrice, isModalHidden } = { ...this.state };
     this.children = [
       new PriceForm($('#price-form'), {
-        props: { purchasedPrice: state.purchasedPrice },
+        props: { purchasedPrice },
         onSubmit: handleSubmitPurchase,
       }),
-      new Lottos($('#lottos'), { props: { lottos: state.lottos } }),
+      new Lottos($('#lottos'), { props: { lottos } }),
       new WinningNumberForm($('#winning-number'), {
-        props: { lottos: state.lottos },
+        props: { lottos },
         onSubmit: handleSubmitResult,
       }),
       new Modal($('#modal'), {
         props: {
-          numberOfWinner: state.numberOfWinner,
-          purchasedPrice: state.purchasedPrice,
-          isModalHidden: state.isModalHidden,
+          numberOfWinner,
+          purchasedPrice,
+          isModalHidden,
         },
         onRetry: handleRetry,
         onClose: handleCloseModal,
