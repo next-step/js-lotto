@@ -17,6 +17,13 @@ export default class Data {
 		this.winningNumbers = [];
 	}
 
+	init() {
+		this.payment = 0;
+		this.ticketNumber = 0;
+		this.ticketValues = [];
+		this.winningNumbers = [];
+	}
+
 	getPayment() {
 		return this.payment;
 	}
