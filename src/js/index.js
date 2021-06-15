@@ -1,10 +1,10 @@
-import Payment from "./Payment.js";
-import Data from './Data.js';
+import LottoModel from './model/LottoModel.js';
+import LottoController from './controller/LottoController.js';
 
 class App {
 	constructor() {
-		this.data = new Data();
-		new Payment(this.data);
+		this.model = new LottoModel();
+		this.controller = new LottoController(this.model);
 	}
 }
 
