@@ -1,5 +1,5 @@
 import View from './View.js';
-import { $ } from '../utils/utils.js';
+import { $, setLocaleString } from '../utils/utils.js';
 import { PRICE } from '../utils/constants.js';
 
 export default class ResultModalView extends View {
@@ -8,23 +8,11 @@ export default class ResultModalView extends View {
     this.bindEvents();
   }
 
-  openModal(lottoRank, lottoCount) {
+  openModal(priceInfo, lottoYield) {
     this.onModalShow();
-    this.lottoPurchaseMoney = lottoCount * 1000;
-    this.totalPriceMoney = 0;
-    $('#result-table-body').innerHTML = this.renderWinnerPrice(lottoRank);
-    this.renderTotalPrice();
+    $('#result-table-body').innerHTML = this.renderWinnerPrice(priceInfo);
+    $('#total-price').innerHTML = this.renderTotalYield(lottoYield);
   }
-
-  // renderTotalPrice() {
-  //   console.log(this.totalPriceMoney);
-  //   console.log(this.lottoPurchaseMoney);
-  //   const percent = Math.floor((this.totalPriceMoney - this.lottoPurchaseMoney) / 100);
-  //   console.log(percent);
-  //   return `
-  //     당신의 총 수익률은 ${percent}%입니다.
-  //   `;
-  // }
 
   bindEvents() {
     $('.modal-close').addEventListener('click', () => this.onModalClose());
@@ -52,15 +40,17 @@ export default class ResultModalView extends View {
     this.emit('@resetLotto');
   }
 
-  renderWinnerPrice(lottos) {
-    return [...Object.keys(lottos)].reverse().reduce((html, rank) => {
-      const { match, money } = PRICE.find((priceInfo) => priceInfo.rank === Number(rank));
-      const count = lottos[rank];
-      this.totalPriceMoney = this.totalPriceMoney + count * money;
+  renderTotalYield(lottoYield) {
+    return `당신의 총 수익률은 ${lottoYield}%입니다.`;
+  }
+
+  renderWinnerPrice(priceInfo) {
+    return [...priceInfo].reduce((html, rankInfo) => {
+      const { match, money, count } = rankInfo;
       return (html += `
         <tr class="text-center">
-          <td class="p-3">${match}개</td>
-          <td class="p-3">${money}</td>
+          <td class="p-3">${match}</td>
+          <td class="p-3">${setLocaleString(money)}</td>
           <td class="p-3">${count}개</td>
         </tr>
       `);

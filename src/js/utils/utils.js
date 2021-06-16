@@ -1,4 +1,4 @@
-import { LOTTO } from './constants.js';
+import { LOTTO, LOCALE } from './constants.js';
 
 const $ = (el) => document.querySelector(el);
 const $$ = (el) => document.querySelectorAll(el);
@@ -24,4 +24,8 @@ const setToString = (value) => {
   return [...value].join(', ');
 };
 
-export { $, $$, isVaildMoney, isValidLotto, getRandomNumber, setToString };
+const setLocaleString = (money) => {
+  return money.toLocaleString(LOCALE);
+};
+
+export { $, $$, isVaildMoney, isValidLotto, getRandomNumber, setToString, setLocaleString };

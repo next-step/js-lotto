@@ -5,7 +5,7 @@ import LottoSectionView from '../views/LottoSectionView.js';
 import LottoNumberFormView from '../views/LottoNumberFormView.js';
 import ResultModalView from '../views/ResultModalView.js';
 import WinnerLottoController from './WinnerLottoController.js';
-import { LOTTO, ALERT } from '../utils/constants.js';
+import { LOTTO, ALERT, PRICE } from '../utils/constants.js';
 
 export default class MainLottoController {
   constructor() {
@@ -15,6 +15,7 @@ export default class MainLottoController {
     this.resultModalView = new ResultModalView($('#result-modal'));
     this.lottoModel = new LottoModel();
     this.winningLottoController = new WinnerLottoController();
+    this._totalPriceMoney = 0;
     this.render();
   }
 
@@ -58,6 +59,27 @@ export default class MainLottoController {
     this.lottoNumberFormView.show();
   }
 
+  setTotalPurchaseMoney() {
+    return this.lottoModel.lottos.length * 1000;
+  }
+
+  setLottoYield(totalPurchaseMoney) {
+    return Math.floor((this._totalPriceMoney - totalPurchaseMoney) / 100);
+  }
+
+  setLottoRank(lottoRank) {
+    return [...Object.keys(lottoRank)].reverse().map((rank) => {
+      const { match, money } = PRICE.find((priceInfo) => priceInfo.rank === Number(rank));
+      const count = lottoRank[rank];
+      this.totalPriceMoney = this.totalPriceMoney + count * money;
+      return {
+        match: money === LOTTO.BONUS_PRICE ? LOTTO.BONUS_RANK : `${match}개`,
+        money,
+        count,
+      };
+    });
+  }
+
   setWinningLottoNumber(lottos) {
     if (!isValidLotto(lottos)) {
       alert(ALERT.DUPLICATED_NUMBER);
@@ -68,6 +90,9 @@ export default class MainLottoController {
       winningNumbers: lottos,
       lottos: this.lottoModel.lottos,
     });
-    this.resultModalView.openModal(rankHash, this.lottoModel.lottos.length);
+    const priceInfo = this.setLottoRank(rankHash);
+    const totalPurchaseMoney = this.setTotalPurchaseMoney();
+    const lottoYield = this.setLottoYield(totalPurchaseMoney);
+    this.resultModalView.openModal(priceInfo, lottoYield);
   }
 }

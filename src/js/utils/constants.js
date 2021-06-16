@@ -4,6 +4,8 @@ const LOTTO = {
   COUNTS: 6,
   MAX_VALUE: 45,
   MIN_VALUE: 1,
+  BONUS_PRICE: 30000000,
+  BONUS_RANK: '5개 + 보너스 볼',
 };
 
 const LOTTO_INDEX = {
@@ -49,4 +51,6 @@ const ALERT = {
   DUPLICATED_NUMBER: '중복된 숫자가 존재합니다.',
 };
 
-export { LOTTO, LOTTO_INDEX, ALERT, PRICE };
+const LOCALE = 'ko-KR';
+
+export { LOTTO, LOTTO_INDEX, ALERT, PRICE, LOCALE };
