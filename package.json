@@ -1,9 +1,27 @@
 {
-  "name": "racingcar",
+  "name": "lotto",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^6.3.0"
-  }
+    "babel-eslint": "^10.1.0",
+    "cypress": "^6.3.0",
+    "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "2.3.2"
+  },
+  "description": "<p align=\"middle\" >   <img width=\"200px;\" src=\"./src/images/lotto_ball.png\"/> </p> <h2 align=\"middle\">행운의 로또</h2> <p align=\"middle\">자바스크립트로 구현 하는 로또 어플리케이션</p> <p align=\"middle\">   <img src=\"https://img.shields.io/badge/version-1.0.0-blue?style=flat-square\" alt=\"template version\"/>   <img src=\"https://img.shields.io/badge/language-html-red.svg?style=flat-square\"/>   <img src=\"https://img.shields.io/badge/language-css-blue.svg?style=flat-square\"/>   <img src=\"https://img.shields.io/badge/language-js-yellow.svg?style=flat-square\"/>   <img src=\"https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square\"/> </p>",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seows2/js-lotto.git"
+  },
+  "author": "seows2",
+  "bugs": {
+    "url": "https://github.com/seows2/js-lotto/issues"
+  },
+  "homepage": "https://github.com/seows2/js-lotto#readme"
 }
