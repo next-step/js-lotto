@@ -1,3 +1,5 @@
+import { VALUE } from './Constans.js';
+
 export const qs = (selector, scope = document) => {
   if (!selector) throw 'no selector';
 
@@ -30,4 +32,8 @@ export const delegate = (target, eventName, selector, handler) => {
 export const emit = (target, eventName, detail) => {
   const evnet = new CustomEvent(eventName, { detail });
   target.dispatchEvent(evnet);
+};
+
+export const getRandomNum = () => {
+  return Math.floor(Math.random() * VALUE.LOTTO.LOTTO_MAX_NUM) + 1;
 };

@@ -1,3 +1,5 @@
-const storage = {};
+const storage = {
+  lottos: [],
+};
 
 export default storage;
