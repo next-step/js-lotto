@@ -1,7 +1,18 @@
 import { VALUE } from './Constans.js';
 
 export const isVaildPrice = (price) => {
-  return (
-    price >= VALUE.LOTTO.MIN_LOTTO_PRICE && price <= VALUE.LOTTO.MAX_LOTTO_PRICE
-  );
+  return price >= VALUE.LOTTO_MIN_PRICE && price <= VALUE.LOTTO_MAX_PRICE;
+};
+
+export const isVaildNums = (nums) => {
+  for (const num of nums) {
+    if (num < VALUE.LOTTO_MIN_NUM || num > VALUE.LOTTO_MAX_NUM) {
+      return false;
+    }
+  }
+  return true;
+};
+
+export const isUniqueNum = (nums) => {
+  return new Set(nums).size === VALUE.LOTTO_ALL_NUMBER_COUNT;
 };

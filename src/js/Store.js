@@ -6,10 +6,11 @@ export default class Store {
     this.storage = storage;
 
     this.isDetail = false;
+    this.isModal = false;
   }
 
   setLotto(price) {
-    const numberOfLotto = Math.floor(price / VALUE.LOTTO.LOTTO_UNIT);
+    const numberOfLotto = Math.floor(price / VALUE.LOTTO_UNIT);
     this.storage.lottos = Array.from(
       { length: numberOfLotto },
       () => new Lotto()
@@ -21,5 +22,9 @@ export default class Store {
 
   toggleSwitch() {
     return (this.isDetail = !this.isDetail);
+  }
+
+  toggleModal() {
+    return (this.isModal = !this.isModal);
   }
 }

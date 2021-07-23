@@ -35,5 +35,5 @@ export const emit = (target, eventName, detail) => {
 };
 
 export const getRandomNum = () => {
-  return Math.floor(Math.random() * VALUE.LOTTO.LOTTO_MAX_NUM) + 1;
+  return Math.floor(Math.random() * VALUE.LOTTO_MAX_NUM) + 1;
 };

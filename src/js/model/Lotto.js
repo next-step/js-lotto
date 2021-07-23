@@ -8,7 +8,7 @@ class Lotto {
   }
 
   initNumbers() {
-    while (this.numbers.size < VALUE.LOTTO.LOTTO_COUNT) {
+    while (this.numbers.size < VALUE.LOTTO_COUNT) {
       this.numbers.add(getRandomNum());
     }
   }

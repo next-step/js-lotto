@@ -1,7 +1,7 @@
 import { delegate, qs } from '../util/helper.js';
 import View from './View.js';
 
-export default class PurchaseSection extends View {
+export default class PurchaseSectionView extends View {
   constructor() {
     super(qs('#purchase-section'));
     this.template = new Template();
@@ -19,7 +19,7 @@ export default class PurchaseSection extends View {
     this.emit('@change');
   }
 
-  show(lottos = [], isDetail = false) {
+  show(lottos, isDetail) {
     this.element.innerHTML =
       lottos.length > 0 && this.template.getList(lottos, isDetail);
     super.show();
@@ -27,7 +27,7 @@ export default class PurchaseSection extends View {
 }
 
 class Template {
-  getList(lottos = [], isDetail) {
+  getList(lottos = [], isDetail = false) {
     return `
     <div class="d-flex">
       <label class="flex-auto my-0">
