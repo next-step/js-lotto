@@ -1,21 +1,27 @@
-import { qs } from '../util/helper.js';
+import { LOTTO_PRICES } from '../util/Constans.js';
+import { delegate, qs } from '../util/helper.js';
 import View from './View.js';
 
 export default class ResultModalView extends View {
   constructor() {
     super(qs('#modal'));
     this.template = new Template();
-    console.log(this.element);
+
+    this.bindEvent();
   }
 
-  show() {
+  bindEvent() {
+    delegate(this.element, 'click', 'svg', () => this.handleClick());
+    delegate(this.element, 'click', '.close-x', () => this.handleClick());
+  }
+
+  handleClick() {
+    this.emit('@closeModal');
+  }
+
+  toggleModal() {
     this.element.innerHTML = this.template.getModal();
-    this.element.classList.add('open');
-  }
-
-  hide() {
-    this.element.innerHTML = '';
-    this.element.classList.remove('open');
+    this.element.classList.toggle('open');
   }
 }
 
@@ -23,7 +29,7 @@ class Template {
   getModal() {
     return `
     <div class="modal-inner p-10">
-    <div class="modal-close">
+    <div class="modal-close" id="modal-close">
       <svg viewbox="0 0 40 40">
         <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
       </svg>
@@ -40,31 +46,7 @@ class Template {
           </tr>
         </thead>
         <tbody>
-          <tr class="text-center">
-            <td class="p-3">3개</td>
-            <td class="p-3">5,000</td>
-            <td class="p-3">n개</td>
-          </tr>
-          <tr class="text-center">
-            <td class="p-3">4개</td>
-            <td class="p-3">50,000</td>
-            <td class="p-3">n개</td>
-          </tr>
-          <tr class="text-center">
-            <td class="p-3">5개</td>
-            <td class="p-3">1,500,000</td>
-            <td class="p-3">n개</td>
-          </tr>
-          <tr class="text-center">
-            <td class="p-3">5개 + 보너스볼</td>
-            <td class="p-3">30,000,000</td>
-            <td class="p-3">n개</td>
-          </tr>
-          <tr class="text-center">
-            <td class="p-3">6개</td>
-            <td class="p-3">2,000,000,000</td>
-            <td class="p-3">n개</td>
-          </tr>
+          ${LOTTO_PRICES.map(this._getItem).join('')}
         </tbody>
       </table>
     </div>
@@ -73,8 +55,17 @@ class Template {
       <button type="button" class="btn btn-cyan">다시 시작하기</button>
     </div>
     </div> 
-      
-      `;
+    `;
+  }
+
+  _getItem({ matchNumberCount, price }) {
+    return `
+      <tr class="text-center">
+          <td class="p-3">${matchNumberCount}개</td>
+          <td class="p-3">${price.toLocaleString()}</td>
+          <td class="p-3">n개</td>
+      </tr>
+    `;
   }
 }
 

@@ -6,7 +6,8 @@ export default class Controller {
     store,
     {
       purchaseFormView,
-      purchaseSectionView,
+      purchaseSectionInfoView,
+      purchaseSectionDetailView,
       recentLottoFormView,
       resultModalView,
     }
@@ -14,7 +15,8 @@ export default class Controller {
     this.store = store;
 
     this.purchaseFormView = purchaseFormView;
-    this.purchaseSectionView = purchaseSectionView;
+    this.purchaseSectionInfoView = purchaseSectionInfoView;
+    this.purchaseSectionDetailView = purchaseSectionDetailView;
     this.recentLottoFormView = recentLottoFormView;
     this.resultModalView = resultModalView;
 
@@ -27,30 +29,28 @@ export default class Controller {
       this.purchaseLottos(event.detail.purchasePrice)
     );
 
-    this.purchaseSectionView.on('@change', () => this.toggleSwitch());
+    this.purchaseSectionInfoView.on('@change', () => this.toggleSwitch());
 
     this.recentLottoFormView
       .on('@submit', (event) => this.checkLotto(event.detail.lottoNums))
       .on('@input', (event) => this.changeFocus(event.detail.target));
+
+    this.resultModalView.on('@closeModal', () => this.toggleModal());
   }
 
   render() {
-    if (this.store.isModal) {
-      this.resultModalView.show();
-    } else {
-      this.resultModalView.hide();
-    }
-
     if (this.store.getLottos().length > 0) {
-      this.purchaseSectionView.show(
+      this.purchaseSectionInfoView.show(this.store.getLottos());
+      this.purchaseSectionDetailView.show(
         this.store.getLottos(),
         this.store.isDetail
       );
       this.recentLottoFormView.show();
-    } else {
-      this.purchaseSectionView.hide();
-      this.recentLottoFormView.hide();
     }
+  }
+
+  toggleModal() {
+    this.resultModalView.toggleModal();
   }
 
   changeFocus(target) {
@@ -58,9 +58,19 @@ export default class Controller {
     this.recentLottoFormView.changeFocus(target);
   }
 
+  renderDetail() {
+    this.purchaseSectionDetailView.show(
+      this.store.getLottos(),
+      this.store.isDetail
+    );
+  }
+  renderModal() {
+    this.resultModalView.toggleModal();
+  }
+
   toggleSwitch() {
     this.store.toggleSwitch();
-    this.render();
+    this.renderDetail();
   }
 
   checkLotto(lottoNums) {
@@ -70,8 +80,7 @@ export default class Controller {
     if (!isUniqueNum(lottoNums)) {
       return alert(ERR_MESSAGE.WINNER_NUMBER.DUPLICATE_NUMS);
     }
-    this.store.toggleModal();
-    this.render();
+    this.renderModal();
   }
 
   purchaseLottos(price) {

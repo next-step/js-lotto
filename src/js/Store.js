@@ -6,7 +6,6 @@ export default class Store {
     this.storage = storage;
 
     this.isDetail = false;
-    this.isModal = false;
   }
 
   setLotto(price) {
@@ -22,9 +21,5 @@ export default class Store {
 
   toggleSwitch() {
     return (this.isDetail = !this.isDetail);
-  }
-
-  toggleModal() {
-    return (this.isModal = !this.isModal);
   }
 }

@@ -7,20 +7,19 @@ export default class RecentLottoFormView extends View {
     super(qs('#input-lotto-nums'));
     this.template = new Template();
     this.inputElements = [];
+
+    this.bindEvent();
   }
 
   show() {
     this.element.innerHTML = this.template.getList();
-
-    this.bindEvent();
+    if (!this.inputElements.length) {
+      this.inputElements = qsAll('[type=number]', this.element);
+    }
     super.show();
   }
 
   bindEvent() {
-    if (!this.inputElements.length) {
-      this.inputElements = qsAll('[type=number]', this.element);
-    }
-
     on(this.element, 'submit', (event) => this.handleSubmit(event));
     on(this.element, 'input', (event) => this.handleInput(event));
   }

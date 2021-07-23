@@ -19,4 +19,25 @@ export const ERR_MESSAGE = {
   },
 };
 
-export const WINNER_INFOS = {};
+export const LOTTO_PRICES = [
+  {
+    matchNumberCount: 3,
+    price: 5000,
+  },
+  {
+    matchNumberCount: 4,
+    price: 50000,
+  },
+  {
+    matchNumberCount: 5,
+    price: 1500000,
+  },
+  {
+    matchNumberCount: 5,
+    price: 30000000,
+  },
+  {
+    matchNumberCount: 6,
+    price: 2000000000,
+  },
+];
