@@ -7,6 +7,14 @@ export const VALUE = {
   LOTTO_UNIT: 1000,
   LOTTO_MIN_NUM: 1,
   LOTTO_MAX_NUM: 45,
+  WINNER_COUNT: 5,
+  COUNT: {
+    MATCH_COUNT_THREE_IDX: 0,
+    MATCH_COUNT_FOUR_IDX: 1,
+    MATCH_COUNT_FIVE_IDX: 2,
+    MATCH_COUNT_SIX_IDX: 4,
+    BONUS_IDX: 3,
+  },
 };
 
 export const ERR_MESSAGE = {

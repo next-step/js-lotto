@@ -13,20 +13,25 @@ export default class ResultModalView extends View {
   bindEvent() {
     delegate(this.element, 'click', 'svg', () => this.handleClick());
     delegate(this.element, 'click', '.close-x', () => this.handleClick());
+    delegate(this.element, 'click', '#reset-btn', () => this.handleReset());
   }
 
   handleClick() {
     this.emit('@closeModal');
   }
 
-  toggleModal() {
-    this.element.innerHTML = this.template.getModal();
+  handleReset() {
+    this.emit('@reset');
+  }
+
+  toggleModal(winnerInfo) {
+    this.element.innerHTML = winnerInfo && this.template.getModal(winnerInfo);
     this.element.classList.toggle('open');
   }
 }
 
 class Template {
-  getModal() {
+  getModal({ winnerCount, profitRate }) {
     return `
     <div class="modal-inner p-10">
     <div class="modal-close" id="modal-close">
@@ -46,24 +51,30 @@ class Template {
           </tr>
         </thead>
         <tbody>
-          ${LOTTO_PRICES.map(this._getItem).join('')}
+          ${LOTTO_PRICES.map((lottoPrice, idx) =>
+            this._getItem(lottoPrice, winnerCount, idx)
+          ).join('')}
         </tbody>
       </table>
     </div>
-    <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+    <p class="text-center font-bold">당신의 총 수익률은 ${profitRate} %입니다.</p>
     <div class="d-flex justify-center mt-5">
-      <button type="button" class="btn btn-cyan">다시 시작하기</button>
+      <button type="button" class="btn btn-cyan" id="reset-btn">다시 시작하기</button>
     </div>
     </div> 
     `;
   }
 
-  _getItem({ matchNumberCount, price }) {
+  _getItem({ matchNumberCount, price }, winnerCount, idx) {
     return `
       <tr class="text-center">
-          <td class="p-3">${matchNumberCount}개</td>
+          <td class="p-3">${
+            idx === 3
+              ? `${matchNumberCount}개 + 보너스볼`
+              : `${matchNumberCount}개`
+          }</td>
           <td class="p-3">${price.toLocaleString()}</td>
-          <td class="p-3">n개</td>
+          <td class="p-3">${winnerCount[idx]}개</td>
       </tr>
     `;
   }

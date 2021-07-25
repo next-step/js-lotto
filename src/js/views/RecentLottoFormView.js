@@ -27,9 +27,9 @@ export default class RecentLottoFormView extends View {
   handleSubmit(event) {
     event.preventDefault();
 
-    const lottoNums = this.inputElements.map(({ value }) => +value);
+    const winnerNum = this.inputElements.map(({ value }) => +value);
 
-    this.emit('@submit', { lottoNums });
+    this.emit('@submit', { winnerNum });
   }
 
   changeFocus(target) {

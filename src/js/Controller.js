@@ -1,4 +1,5 @@
 import { ERR_MESSAGE } from './util/Constans.js';
+import { getProfitRate, getWinnerInfo, matchNums } from './util/lottoUtil.js';
 import { isUniqueNum, isVaildNums, isVaildPrice } from './util/validator.js';
 
 export default class Controller {
@@ -32,10 +33,18 @@ export default class Controller {
     this.purchaseSectionInfoView.on('@change', () => this.toggleSwitch());
 
     this.recentLottoFormView
-      .on('@submit', (event) => this.checkLotto(event.detail.lottoNums))
+      .on('@submit', (event) => this.checkLotto(event.detail.winnerNum))
       .on('@input', (event) => this.changeFocus(event.detail.target));
 
-    this.resultModalView.on('@closeModal', () => this.toggleModal());
+    this.resultModalView
+      .on('@closeModal', () => this.toggleModal())
+      .on('@reset', () => this.handleReset());
+  }
+
+  handleReset() {
+    this.store.reset();
+    this.toggleModal(null);
+    this.render();
   }
 
   render() {
@@ -46,11 +55,16 @@ export default class Controller {
         this.store.isDetail
       );
       this.recentLottoFormView.show();
+    } else {
+      this.purchaseSectionInfoView.hide();
+      this.purchaseSectionDetailView.hide();
+      this.recentLottoFormView.hide();
+      this.purchaseFormView.resetInputPrice();
     }
   }
 
-  toggleModal() {
-    this.resultModalView.toggleModal();
+  toggleModal(winnerInfo) {
+    this.resultModalView.toggleModal(winnerInfo);
   }
 
   changeFocus(target) {
@@ -64,8 +78,12 @@ export default class Controller {
       this.store.isDetail
     );
   }
-  renderModal() {
-    this.resultModalView.toggleModal();
+  renderModal(lottos) {
+    const { winnerCount, totalPrice } = getWinnerInfo(lottos);
+    const purcahsePrice = this.store.getPurchasePrice();
+    const profitRate = getProfitRate(totalPrice, purcahsePrice);
+
+    this.toggleModal({ winnerCount, profitRate });
   }
 
   toggleSwitch() {
@@ -73,14 +91,18 @@ export default class Controller {
     this.renderDetail();
   }
 
-  checkLotto(lottoNums) {
-    if (!isVaildNums(lottoNums)) {
+  checkLotto(winnerNum) {
+    if (!isVaildNums(winnerNum)) {
       return alert(ERR_MESSAGE.WINNER_NUMBER.INVAILD_NUMS);
     }
-    if (!isUniqueNum(lottoNums)) {
+    if (!isUniqueNum(winnerNum)) {
       return alert(ERR_MESSAGE.WINNER_NUMBER.DUPLICATE_NUMS);
     }
-    this.renderModal();
+    this.store.getLottos().forEach((lotto) => {
+      const matchInfo = matchNums(lotto.getNumbers(), winnerNum);
+      this.store.setMatchInfo(lotto, matchInfo);
+    });
+    this.renderModal(this.store.getLottos());
   }
 
   purchaseLottos(price) {
@@ -88,7 +110,7 @@ export default class Controller {
       alert(ERR_MESSAGE.LOTTO.INVAILD_PRICE);
       return this.purchaseFormView.resetInputPrice();
     }
-
+    this.store.setPurchasePrice(price);
     this.store.setLotto(price);
     this.render();
   }
