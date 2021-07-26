@@ -1,4 +1,4 @@
-import { KEY } from "../constants.js";
+import { KEY, INIT_STATE } from "../constants.js";
 import { $, createEl } from "../util.js";
 
 const WinnerInput = ({ useEffect }) => {
@@ -6,6 +6,10 @@ const WinnerInput = ({ useEffect }) => {
 
   useEffect(
     (get, set) => {
+      if (get(KEY.LOTTO_LIST).length === 0) {
+        return (element.innerHTML = null);
+      }
+
       element.innerHTML = `<form class="mt-9" id='winningForm'>
       <label class="flex-auto d-inline-block mb-3"
         >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
@@ -76,9 +80,9 @@ const WinnerInput = ({ useEffect }) => {
       const $form = $.get("#winningForm", element);
       $form.addEventListener("submit", (e) => {
         e.preventDefault();
-        console.log($inputs);
         set({
           [KEY.WINNING_NUMBER]: [...$inputs].map(($input) => $input.value),
+          [KEY.SHOWING_RESULT]: true,
         });
       });
     },

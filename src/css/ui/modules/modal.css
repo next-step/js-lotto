@@ -1,6 +1,4 @@
 .modal {
-  opacity: 0;
-  visibility: hidden;
   display: flex;
   position: fixed;
   top: 0;

@@ -26,6 +26,10 @@ const LottoList = ({ useEffect }) => {
 
   useEffect(
     (get, set) => {
+      if (get(KEY.LOTTO_LIST).length === 0) {
+        return (self.element.innerHTML = null);
+      }
+
       self.element.innerHTML = `<section class="mt-9">
     <div class="d-flex">
       <label class="flex-auto my-0">총 ${

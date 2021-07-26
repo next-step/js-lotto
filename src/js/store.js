@@ -19,7 +19,6 @@ const store = (initState) => {
         state[key].subscribe.forEach((fn) => fn(getState, setState));
       }
     }
-    console.log(state);
   };
 
   const useEffect = (cb, keys) => {
