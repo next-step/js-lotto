@@ -49,3 +49,13 @@ export const LOTTO_PRICES = [
     price: 2000000000,
   },
 ];
+
+export const TEST = {
+  LOW_PRICE: 10,
+  HIGH_PRICE: 9999999,
+  PROPER_PRICE: 10000,
+  ONE_TICKET: 1000,
+  AMOUNT_LOTTO: (PROPER_PRICE) => Math.floor(PROPER_PRICE / VALUE.LOTTO_UNIT),
+  WINNER_NUMS: [22, 26, 31, 37, 41, 42, 24],
+  DUPLICATE_WINNER_NUMS: [1, 2, 3, 1, 2, 3, 1],
+};

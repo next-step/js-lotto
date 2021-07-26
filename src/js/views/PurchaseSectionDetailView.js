@@ -17,12 +17,12 @@ class Template {
   getList(lottos = [], isDetail = false) {
     return isDetail
       ? `
-      <div class="d-flex flex-wrap flex-col">
+      <div id="lotto-lists" class="d-flex flex-wrap flex-col">
         ${lottos.map(this._getDetailItem).join('')}
       </div>
     `
       : `
-      <div class="d-flex flex-wrap">
+      <div id="lotto-lists" class="d-flex flex-wrap">
         ${lottos.map(this._getItem).join('')}
       </div>
     `;
@@ -30,14 +30,18 @@ class Template {
 
   _getItem() {
     return `
-      <span class="mx-1 text-4xl">🎟️ </span>
+      <div>
+        <span class="mx-1 text-4xl">🎟️ </span>
+      </div>
     `;
   }
   _getDetailItem(lotto) {
     return `
       <div>
         <span class="mx-1 text-4xl">🎟️ </span>
-        <span class="mx-1 text-xl">${lotto.getNumbers().join(', ')}</span>
+        <span id="lotto-num" class="mx-1 text-xl">${lotto
+          .getNumbers()
+          .join(', ')}</span>
       </div>
     `;
   }

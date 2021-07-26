@@ -50,7 +50,7 @@ class Template {
       ${VALUE.LOTTO_COUNT}개와 보너스 넘버 
       ${VALUE.LOTTO_BONUS_COUNT}개를 입력해주세요.
       </label>
-      <div class="d-flex">
+      <div id="winner-num-input-wrapper"class="d-flex">
         <div>
           <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
           ${this._getInputbox().repeat(VALUE.LOTTO_COUNT)}
@@ -65,6 +65,7 @@ class Template {
       <button
         type="submit"
         class="open-result-modal-button mt-5 btn btn-cyan w-100"
+        id="winner-num-submitBtn"
       >
       결과 확인하기
       </button> 

@@ -42,7 +42,7 @@ class Template {
     
     <h2 class="text-center">🏆 당첨 통계 🏆</h2>
     <div class="d-flex justify-center">
-      <table class="result-table border-collapse border border-black">
+      <table class="result-table border-collapse border border-black" id="modal-table">
         <thead>
           <tr class="text-center">
             <th class="p-3">일치 갯수</th>
@@ -57,7 +57,7 @@ class Template {
         </tbody>
       </table>
     </div>
-    <p class="text-center font-bold">당신의 총 수익률은 ${profitRate} %입니다.</p>
+    <p class="text-center font-bold" id="modal-profit-rate">당신의 총 수익률은 ${profitRate} %입니다.</p>
     <div class="d-flex justify-center mt-5">
       <button type="button" class="btn btn-cyan" id="reset-btn">다시 시작하기</button>
     </div>
@@ -73,8 +73,8 @@ class Template {
               ? `${matchNumberCount}개 + 보너스볼`
               : `${matchNumberCount}개`
           }</td>
-          <td class="p-3">${price.toLocaleString()}</td>
-          <td class="p-3">${winnerCount[idx]}개</td>
+          <td class="p-3" id="modal-price">${price.toLocaleString()}</td>
+          <td class="p-3" id="modal-count">${winnerCount[idx]}개</td>
       </tr>
     `;
   }
