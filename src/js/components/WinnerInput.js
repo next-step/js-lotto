@@ -76,7 +76,10 @@ const WinnerInput = ({ useEffect }) => {
       const $form = $.get("#winningForm", element);
       $form.addEventListener("submit", (e) => {
         e.preventDefault();
-        console.log(e);
+        console.log($inputs);
+        set({
+          [KEY.WINNING_NUMBER]: [...$inputs].map(($input) => $input.value),
+        });
       });
     },
     [KEY.LOTTO_LIST, KEY.WINNING_NUMBER, KEY.SHOWING_RESULT]
