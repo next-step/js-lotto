@@ -16,4 +16,4 @@ module.exports = {
     'class-methods-use-this': 0,
     'no-param-reassign': 0,
   },
-};
+}
