@@ -1,5 +1,5 @@
-import { KEY, INIT_STATE } from "../constants.js";
-import { $, createEl } from "../util.js";
+import { KEY } from "../constants.js";
+import { $, createEl, calcResult } from "../util.js";
 
 const WinnerInput = ({ useEffect }) => {
   const element = createEl.div();
@@ -81,12 +81,15 @@ const WinnerInput = ({ useEffect }) => {
       $form.addEventListener("submit", (e) => {
         e.preventDefault();
         set({
-          [KEY.WINNING_NUMBER]: [...$inputs].map(($input) => $input.value),
+          [KEY.RESULT]: calcResult(
+            get(KEY.LOTTO_LIST),
+            [...$inputs].map(($input) => $input.value)
+          ),
           [KEY.SHOWING_RESULT]: true,
         });
       });
     },
-    [KEY.LOTTO_LIST, KEY.WINNING_NUMBER, KEY.SHOWING_RESULT]
+    [KEY.LOTTO_LIST, KEY.SHOWING_RESULT]
   );
 
   return element;
