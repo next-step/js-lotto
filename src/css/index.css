@@ -13,6 +13,11 @@ body {
   margin: 0 auto;
 }
 
+ul {
+  list-style:none;
+  padding-left: 0;
+}
+
 .winning-number {
   width: 30px;
   height: 36px;
@@ -21,4 +26,8 @@ body {
 .bonus-number {
   width: 30px;
   height: 36px;
+}
+
+.hidden {
+  display: none;
 }
