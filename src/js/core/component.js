@@ -1,15 +1,16 @@
 const style = '<link rel="stylesheet" href="./src/css/index.css" />'
 
 export class Component extends HTMLElement {
-  constructor({ template = '', data = {}, methods = {} }) {
+  constructor({ template = '', data = {}, methods = {}, mounted }) {
     super()
 
     this.data = { ...data }
     this.methods = { ...methods }
     this.watcher = {}
+    this.mounted = mounted
 
     // create DOM
-    this.root = this.attachShadow({ mode: 'closed' })
+    this.root = this.attachShadow({ mode: 'open' })
     this.root.innerHTML = `${template}${style}`
 
     this.defineProperties()
@@ -46,6 +47,9 @@ export class Component extends HTMLElement {
           this.dispatchEvent(event)
         },
       },
+      mounted: {
+        value: this.mounted,
+      },
     })
   }
 
@@ -58,25 +62,45 @@ export class Component extends HTMLElement {
     elements.forEach((el) => {
       const attributes = el.getAttributeNames()
       attributes.forEach((attr) => {
-        if (attr.startsWith('@')) this.bindEvents({ el, attr })
-        if (attr.startsWith('data-model-')) this.bindModels({ el, attr })
+        if (attr.startsWith('@')) this.bindEvent({ el, attr })
+        if (attr.startsWith('data-attr-')) this.bindAttribute({ el, attr })
+        if (attr.startsWith('data-prop-')) this.bindProperty({ el, attr })
       })
     })
+
+    Object.keys(this.data).forEach((key) => {
+      const value = this.data[key]
+      this.watcher[key].forEach((listener) => {
+        listener(value, value)
+      })
+    })
+
+    if (this.mounted) this.mounted()
   }
 
-  bindEvents({ el, attr }) {
+  bindEvent({ el, attr }) {
     const event = attr.slice(1)
     const handler = el.getAttribute(attr)
 
     el.addEventListener(event, this.methods[handler].bind(this))
   }
 
-  bindModels({ el, attr }) {
+  bindAttribute({ el, attr }) {
     const prop = el.getAttribute(attr)
     const [attributeName] = attr.split('-').slice(-1)
 
     this.watcher[prop].push((nextValue) => {
-      el[attributeName] = nextValue
+      el.setAttribute(attributeName, nextValue)
+    })
+  }
+
+  bindProperty({ el, attr }) {
+    const prop = el.getAttribute(attr)
+    const [propertyName] = attr.split('-').slice(-1)
+
+    this.watcher[prop].push((nextValue) => {
+      console.log(el, propertyName, nextValue)
+      el[propertyName] = nextValue
     })
   }
 }

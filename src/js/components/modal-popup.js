@@ -1,7 +1,7 @@
 import { Component } from '../core/component.js'
 
 const template = `
-  <div class="modal">
+  <div class="modal" data-cy="modal-popup">
     <div class="modal-inner p-10">
       <div class="modal-close">
         <svg viewbox="0 0 40 40">
