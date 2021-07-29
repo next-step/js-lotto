@@ -17,19 +17,20 @@ export default class LottoInput extends Component {
           name="purchase"
           type="number"
           value="${purchaseMoney ? purchaseMoney : ""}"
-          class="input-purchaseMoney w-100 mr-2 pl-2"
+          class="input-purchase w-100 mr-2 pl-2"
           placeholder="구입 금액"
           required min="1000"
           max="100000"
+          data-cy="input-purchase"
         />
-        <button type="submit" class="btn btn-cyan btn-purchaseMoney">확인</button>
+        <button type="submit" class="btn btn-cyan btn-purchase" data-cy="btn-purchase">확인</button>
       </div>`;
   };
   mount = () => {
     this.$app.addEventListener("submit", (e) => {
       e.preventDefault();
       const purchase = e.target.elements["purchase"];
-      if (Number(purchase.value) % 10 !== 0) {
+      if (Number(purchase.value) % 1000 !== 0 || !purchase.value) {
         alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
         purchase.value = "";
         return;

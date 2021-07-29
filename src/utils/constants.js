@@ -1,3 +1,7 @@
+export const MESSAGES = {
+  PURCHASE: "로또 구입 금액을 1,000원 단위로 입력해 주세요.",
+};
+
 export const MAX = 45;
 export const MATCH = {
   matched: [],
