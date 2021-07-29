@@ -11,21 +11,21 @@
       <div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
-          <form class="mt-5">
-            <label class="mb-2 d-inline-block"
+          <form class="lotto-input mt-5">
+            <!-- <label class="mb-2 d-inline-block"
               >구입할 금액을 입력해주세요.
             </label>
             <div class="d-flex">
               <input
                 type="number"
-                class="w-100 mr-2 pl-2"
+                class="input-purchaseMoney w-100 mr-2 pl-2"
                 placeholder="구입 금액"
               />
-              <button type="button" class="btn btn-cyan">확인</button>
-            </div>
+              <button type="button" class="btn btn-cyan btn-purchaseMoney">확인</button>
+            </div> -->
           </form>
-          <section class="mt-9">
-            <div class="d-flex">
+          <section class="lotto-tickets mt-9">
+            <!-- <div class="d-flex">
               <label class="flex-auto my-0">총 5개를 구매하였습니다.</label>
               <div class="flex-auto d-flex justify-end pr-1">
                 <label class="switch">
@@ -40,10 +40,10 @@
               <span class="mx-1 text-4xl">🎟️ </span>
               <span class="mx-1 text-4xl">🎟️ </span>
               <span class="mx-1 text-4xl">🎟️ </span>
-            </div>
+            </div> -->
           </section>
-          <form class="mt-9">
-            <label class="flex-auto d-inline-block mb-3"
+          <form class="lotto-win mt-9">
+            <!-- <label class="flex-auto d-inline-block mb-3"
               >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >
             <div class="d-flex">
@@ -88,7 +88,7 @@
               class="open-result-modal-button mt-5 btn btn-cyan w-100"
             >
               결과 확인하기
-            </button>
+            </button> -->
           </form>
         </div>
       </div>
@@ -142,11 +142,13 @@
           </div>
           <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
           <div class="d-flex justify-center mt-5">
-            <button type="button" class="btn btn-cyan">다시 시작하기</button>
+            <button type="button" class="btn-restart btn btn-cyan">
+              다시 시작하기
+            </button>
           </div>
         </div>
       </div>
     </div>
-    <script type="module" src="./src/js/index.js"></script>
+    <script type="module" src="./src/index.js"></script>
   </body>
 </html>
