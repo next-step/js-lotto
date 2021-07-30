@@ -22,8 +22,8 @@ export default class LottoInput extends Component {
           required min="1000"
           max="100000"
           data-cy="input-purchase"
-        />
-        <button type="submit" class="btn btn-cyan btn-purchase" data-cy="btn-purchase">확인</button>
+      />
+      <button type="submit" class="btn btn-cyan btn-purchase" data-cy="btn-purchase">확인</button>
       </div>`;
   };
   mount = () => {

@@ -1,5 +1,6 @@
 import { $, $all } from "../../utils/selectors.js";
 import Component from "../component.js";
+import { inputTemplate } from "./template.js";
 
 export default class LottoWinningNumber extends Component {
   constructor(app, props) {
@@ -18,48 +19,15 @@ export default class LottoWinningNumber extends Component {
       <div>
         <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
         <div>
-          <input
-            name="win-num"
-            value="${winningNums.length ? winningNums[0] : ""}"
-            type="number"
-            class="winning-number mx-1 text-center"
-          />
-          <input
-            name="win-num"
-            value="${winningNums.length ? winningNums[1] : ""}"
-            type="number"
-            class="winning-number mx-1 text-center"
-          />
-          <input
-            name="win-num"
-            value="${winningNums.length ? winningNums[2] : ""}"
-            type="number"
-            class="winning-number mx-1 text-center"
-          />
-          <input
-            name="win-num"
-            value="${winningNums.length ? winningNums[3] : ""}"
-            type="number"
-            class="winning-number mx-1 text-center"
-            />
-            <input
-            name="win-num"
-            value="${winningNums.length ? winningNums[4] : ""}"
-            type="number"
-            class="winning-number mx-1 text-center"
-          />
-          <input
-            name="win-num"
-            value="${winningNums.length ? winningNums[5] : ""}"
-            type="number"
-            class="winning-number mx-1 text-center"
-          />
+          ${winningNums.map(inputTemplate).join("")}
         </div>
       </div>
       <div class="bonus-number-container flex-grow">
         <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
         <div class="d-flex justify-center">
-          <input name="bonus-num" value="${bonusNum ? bonusNum : ""}" type="number" class="bonus-number text-center" />
+          <input name="bonus-num" value="${
+            bonusNum ? bonusNum : ""
+          }" type="number" class="bonus-number text-center" max="45" data-cy="input-bonus-num"/>
         </div>
       </div>
     </div>
@@ -76,6 +44,7 @@ export default class LottoWinningNumber extends Component {
       e.preventDefault();
       const bonusNum = e.target.elements["bonus-num"].value;
       const winningNums = Array.prototype.map.call(e.target.elements["win-num"], (winNum) => Number(winNum.value));
+      
       this.props.setState({
         type: "UPDATE_LOTTO_RESULT",
         data: { winningNums, bonusNum },

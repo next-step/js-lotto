@@ -12,10 +12,10 @@ export default class LottoTickets extends Component {
     if (purchaseMoney === 0) return "";
     return `
     <div class="d-flex">
-      <label class="flex-auto my-0">총 5개를 구매하였습니다.</label>
+      <label class="flex-auto my-0" data-cy="lotto-total">총 5개를 구매하였습니다.</label>
       <div class="flex-auto d-flex justify-end pr-1">
         <label class="switch">
-          <input type="checkbox" class="lotto-numbers-toggle-button" ${toggle && "checked"}/>
+          <input type="checkbox" class="lotto-numbers-toggle-button" ${toggle && "checked"} data-cy="toggle-lotto"/>
           <span class="text-base font-normal">번호보기</span>
         </label>
       </div>
@@ -24,10 +24,10 @@ export default class LottoTickets extends Component {
         ${lottos
           .map((lotto) => {
             return `<span class="mx-1 text-4xl lotto-wrapper">
-                        <span class="lotto-icon">🎟️</span>
+                        <span class="lotto-icon" data-cy="lotto-icon">🎟️</span>
                         <span class="lotto-detail" ${
                           !toggle ? `style="display: none"` : `style="display: inline"`
-                        }>${lotto.join(", ")}</span>
+                        } data-cy="lotto-detail">${lotto.join(", ")}</span>
                     </span>`;
           })
           .join("")}

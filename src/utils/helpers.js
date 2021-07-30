@@ -21,7 +21,7 @@ const updateLottos = (prevState, purchaseMoney) => {
   const totalLottos = purchaseMoney / 1000;
   const lottos = new Array(totalLottos).fill([]).map(() => {
     const lotto = new Set();
-    while (lotto.size < 7) {
+    while (lotto.size < 6) {
       lotto.add(Math.floor(Math.random() * MAX) + 1);
     }
     return [...lotto];

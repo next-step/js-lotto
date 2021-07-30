@@ -21,7 +21,7 @@ export const PRIZE = {
 
 export const INITIAL_STATE = {
   lottos: [],
-  winningNums: [],
+  winningNums: [0, 0, 0, 0, 0, 0],
   bonusNum: 0,
   result: PRIZE,
   purchaseMoney: 0,
