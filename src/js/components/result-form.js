@@ -51,6 +51,7 @@ const template = `
     <button
       type="button"
       class="open-result-modal-button mt-5 btn btn-cyan w-100"
+      data-cy="result-btn"
     >
       결과 확인하기
     </button>

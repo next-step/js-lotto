@@ -14,6 +14,7 @@ export class Component extends HTMLElement {
     this.root.innerHTML = `${template}${style}`
 
     this.defineProperties()
+    this.bind()
   }
 
   defineProperties() {
@@ -50,6 +51,9 @@ export class Component extends HTMLElement {
       mounted: {
         value: this.mounted,
       },
+      ref: {
+        value: {},
+      },
     })
   }
 
@@ -57,17 +61,6 @@ export class Component extends HTMLElement {
    * Mounted
    */
   connectedCallback() {
-    const elements = this.root.querySelectorAll('*')
-
-    elements.forEach((el) => {
-      const attributes = el.getAttributeNames()
-      attributes.forEach((attr) => {
-        if (attr.startsWith('@')) this.bindEvent({ el, attr })
-        if (attr.startsWith('data-attr-')) this.bindAttribute({ el, attr })
-        if (attr.startsWith('data-prop-')) this.bindProperty({ el, attr })
-      })
-    })
-
     Object.keys(this.data).forEach((key) => {
       const value = this.data[key]
       this.watcher[key].forEach((listener) => {
@@ -76,6 +69,19 @@ export class Component extends HTMLElement {
     })
 
     if (this.mounted) this.mounted()
+  }
+
+  bind() {
+    const elements = this.root.querySelectorAll('*')
+
+    elements.forEach((el) => {
+      const attributes = el.getAttributeNames()
+      attributes.forEach((attr) => {
+        if (attr.startsWith('@')) this.bindEvent({ el, attr })
+        if (attr.startsWith('data-attr-')) this.bindAttribute({ el, attr })
+        if (attr === 'data-ref') this.bindRef({ el, attr })
+      })
+    })
   }
 
   bindEvent({ el, attr }) {
@@ -94,13 +100,8 @@ export class Component extends HTMLElement {
     })
   }
 
-  bindProperty({ el, attr }) {
-    const prop = el.getAttribute(attr)
-    const [propertyName] = attr.split('-').slice(-1)
-
-    this.watcher[prop].push((nextValue) => {
-      console.log(el, propertyName, nextValue)
-      el[propertyName] = nextValue
-    })
+  bindRef({ el, attr }) {
+    const refName = el.getAttribute(attr)
+    this.ref[refName] = el
   }
 }
