@@ -123,12 +123,12 @@ describe('로또를 구매한 이후', () => {
   describe('당첨번호에 중복된 숫자를 입력하면', () => {
     it('에러 메세지를 알림창으로 띄워야 한다', () => {
       const stub = addStubOnAlert()
-      const message = '로또 구입 금액을 1,000원 단위로 입력해 주세요.'
+      const message = '로또 번호에는 중복된 숫자를 입력할 수 없습니다.'
       const winningNums = [1, 2, 3, 4, 5, 5]
       const bonusNum = 6
 
       cy.get('[data-cy="winning-number"]').each((el, idx) => {
-        cy.wrap(el).type(winningNums[idx], { forc: true })
+        cy.wrap(el).type(winningNums[idx], { force: true })
       })
       cy.get('[data-cy="bonus-number"]').type(bonusNum, { force: true })
       cy.get('[data-cy="result-btn"]')
@@ -141,20 +141,84 @@ describe('로또를 구매한 이후', () => {
 
   describe('당첨번호와 보너스 번호를 입력하고 결과 확인버튼을 누르면', () => {
     it('당첨 통계 모달창을 보여줘야 한다', () => {
-      const winningNums = [1, 2, 3, 4, 5, 5]
-      const bonusNum = 6
+      const winningNums = [11, 12, 13, 14, 15, 16]
+      const bonusNum = 45
 
       cy.get('[data-cy="winning-number"]').each((el, idx) => {
         cy.wrap(el).type(winningNums[idx], { force: true })
       })
       cy.get('[data-cy="bonus-number"]').type(bonusNum, { force: true })
-      cy.get('[data-cy="result-btn"]')
+      cy.get('[data-cy="result-btn"]').click({ force: true })
+      cy.get('[data-cy="modal-popup"]').should('be.visible')
     })
   })
 })
 
 describe('당첨 통계 모달이 표시되었을 때', () => {
-  it('띄워진 모달창에는 올바른 당첨 갯수, 수익률을 표시해야 한다', () => {})
+  const winningNums = [11, 12, 13, 14, 15, 16]
+  const bonusNum = 45
+
+  beforeEach(() => {
+    cy.visit('/')
+    cy.get('[data-cy="order-input"]').type('3000', { force: true })
+    cy.get('[data-cy="order-btn"]').click({ force: true })
+    cy.get('[data-cy="winning-number"]').each((el, idx) => {
+      cy.wrap(el).type(winningNums[idx], { force: true })
+    })
+    cy.get('[data-cy="bonus-number"]').type(bonusNum, { force: true })
+    cy.get('[data-cy="result-btn"]').click({ force: true })
+  })
+
+  it('띄워진 모달창에는 올바른 당첨 갯수, 수익률을 표시해야 한다', () => {
+    const result = {
+      1: { count: 0, prize: 2_000_000_000 },
+      2: { count: 0, prize: 30_000_000 },
+      3: { count: 0, prize: 1_500_000 },
+      4: { count: 0, prize: 50_000 },
+      5: { count: 0, prize: 5_000 },
+    }
+
+    cy.log('당첨 번호 : ', winningNums.toString())
+    cy.log('보너스 번호 : ', bonusNum)
+
+    cy.get('[data-cy="lotto-ticket"]')
+      .each(([el]) => {
+        cy.log('로또 티켓 : ', el.data.nums.toString())
+        const count = el.data.nums.filter((n) => winningNums.includes(n)).length
+        const bonus = el.data.nums.includes(bonusNum)
+        let rank = 0
+
+        if (count === 6) {
+          rank = 1
+        } else if (count === 5 && bonus) {
+          rank = 2
+        } else if (count === 5) {
+          rank = 3
+        } else if (count === 4) {
+          rank = 4
+        } else if (count === 3) {
+          rank = 5
+        }
+
+        if (!rank) return
+
+        result[rank].count += 1
+      })
+      .then(() => {
+        cy.get('[data-cy="result-1"]').should('have.text', `${result[1].count}개`)
+        cy.get('[data-cy="result-2"]').should('have.text', `${result[2].count}개`)
+        cy.get('[data-cy="result-3"]').should('have.text', `${result[3].count}개`)
+        cy.get('[data-cy="result-4"]').should('have.text', `${result[4].count}개`)
+        cy.get('[data-cy="result-5"]').should('have.text', `${result[5].count}개`)
+
+        cy.get('[data-cy="earning-rate"]').should(
+          'have.text',
+          `당신의 총 수익률은 ${Object.values(result)
+            .map(({ count, prize }) => count * prize)
+            .reduce((acc, cur) => acc + cur, 0)}%입니다.`,
+        )
+      })
+  })
 
   describe('다시 시작하기 버튼을 클릭하면', () => {
     it('초기 상태로 돌아가야 한다', () => {})

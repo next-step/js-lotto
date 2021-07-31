@@ -1,7 +1,12 @@
 import { Component } from '../core/component.js'
 
 const template = `
-  <form class="mt-9" data-cy="result-form">
+  <form 
+    class="mt-9" 
+    data-cy="result-form" 
+    @submit="handleSubmit" 
+    data-ref="form"
+  >
     <label class="flex-auto d-inline-block mb-3"
       >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
     >
@@ -72,7 +77,22 @@ class ResultForm extends Component {
       methods: {
         handleChangeVisible: (visible) => {
           const isVisible = visible === 'true'
-          this.root.querySelector('form').style.visibility = isVisible ? 'visible' : 'hidden'
+          this.ref.form.style.visibility = isVisible ? 'visible' : 'hidden'
+        },
+        handleSubmit: (e) => {
+          e.preventDefault()
+          const nums = Array.from(e.target.querySelectorAll('.winning-number')).map((el) => +el.value)
+          const bonus = +e.target.querySelector('.bonus-number').value
+
+          if (this.methods.isDuplicated([...nums, bonus])) {
+            window.alert('로또 번호에는 중복된 숫자를 입력할 수 없습니다.')
+            return
+          }
+
+          this.emit('check', { nums, bonus })
+        },
+        isDuplicated(numbers) {
+          return new Set(numbers).size < 7
         },
       },
     })

@@ -43,10 +43,11 @@ class LottoTicket extends Component {
             this.methods.hideNums()
           }
         },
-        check: (winningNums) => {
-          return (
-            winningNums.length === this.data.nums && winningNums.every((num) => this.data.nums.includes(num))
-          )
+        check: ({ nums, bonus }) => {
+          return {
+            count: this.data.nums.filter((n) => nums.includes(n)).length,
+            bouns: this.data.nums.includes(bonus),
+          }
         },
       },
       mounted() {

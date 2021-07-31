@@ -45,7 +45,12 @@ class TicketSection extends Component {
         handleToggle: ({ target: { checked } }) => {
           this.root
             .querySelectorAll('lotto-ticket')
-            .forEach(($el) => $el.setAttribute('visible', checked.toString()))
+            .forEach(($ticket) => $ticket.setAttribute('visible', checked.toString()))
+        },
+        checkResult: ({ nums, bonus }) => {
+          return Array.from(this.root.querySelectorAll('lotto-ticket')).map(($ticket) =>
+            $ticket.methods.check({ nums, bonus }),
+          )
         },
       },
     })
