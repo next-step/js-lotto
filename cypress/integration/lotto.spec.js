@@ -113,7 +113,7 @@ describe('로또를 구매한 이후', () => {
 
   describe('당첨번호를 입력하지 않고 결과 확인버튼을 누르면', () => {
     it('유효성 검사에서 에러가 발생해야 한다', () => {
-      cy.get('[data-cy="result-section"]').within(() => {
+      cy.get('[data-cy="result-form"]').within(() => {
         cy.get('[data-cy="result-btn"]').click({ forc: true })
         cy.get('input:invalid').should('have.length', 7)
       })
