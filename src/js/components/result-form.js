@@ -13,43 +13,50 @@ const template = `
             type="number"
             class="winning-number mx-1 text-center"
             data-cy="winning-number"
+            required
           />
           <input
             type="number"
             class="winning-number mx-1 text-center"
             data-cy="winning-number"
+            required
           />
           <input
             type="number"
             class="winning-number mx-1 text-center"
-            data-cy="winning-number"
+            data-cy="winning-number"required
           />
           <input
             type="number"
             class="winning-number mx-1 text-center"
-            data-cy="winning-number"
+            data-cy="winning-number"required
           />
           <input
             type="number"
             class="winning-number mx-1 text-center"
-            data-cy="winning-number"
+            data-cy="winning-number"required
           />
           <input
             type="number"
             class="winning-number mx-1 text-center"
-            data-cy="winning-number"
+            data-cy="winning-number"required
           />
         </div>
       </div>
       <div class="bonus-number-container flex-grow">
         <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
         <div class="d-flex justify-center">
-          <input type="number" class="bonus-number text-center" data-cy="bonus-number" />
+          <input 
+            type="number" 
+            class="bonus-number text-center" 
+            data-cy="bonus-number" 
+            required 
+          />
         </div>
       </div>
     </div>
     <button
-      type="button"
+      type="submit"
       class="open-result-modal-button mt-5 btn btn-cyan w-100"
       data-cy="result-btn"
     >
