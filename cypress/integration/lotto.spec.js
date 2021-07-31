@@ -111,24 +111,45 @@ describe('로또를 구매한 이후', () => {
     })
   })
 
-  describe('당첨번호를 전부 입력하지 않고 결과 확인버튼을 누르면', () => {
-    it('유효성 검사에서 에러가 발생해야 한다', () => {})
-  })
-
-  describe('보너스 번호를 입력하지 않고 확인버튼을 누르면', () => {
-    it('유효성 검사에서 에러가 발생해야 한다', () => {})
-  })
-
-  describe('당첨번호에 숫자를 입력하지 않으면', () => {
-    it('유효성 검사에서 에러가 발생해야 한다', () => {})
+  describe('당첨번호를 입력하지 않고 결과 확인버튼을 누르면', () => {
+    it('유효성 검사에서 에러가 발생해야 한다', () => {
+      cy.get('[data-cy="result-section"]').within(() => {
+        cy.get('[data-cy="result-btn"]').click({ forc: true })
+        cy.get('input:invalid').should('have.length', 7)
+      })
+    })
   })
 
   describe('당첨번호에 중복된 숫자를 입력하면', () => {
-    it('에러 메세지를 알림창으로 띄워야 한다', () => {})
+    it('에러 메세지를 알림창으로 띄워야 한다', () => {
+      const stub = addStubOnAlert()
+      const message = '로또 구입 금액을 1,000원 단위로 입력해 주세요.'
+      const winningNums = [1, 2, 3, 4, 5, 5]
+      const bonusNum = 6
+
+      cy.get('[data-cy="winning-number"]').each((el, idx) => {
+        cy.wrap(el).type(winningNums[idx], { forc: true })
+      })
+      cy.get('[data-cy="bonus-number"]').type(bonusNum, { force: true })
+      cy.get('[data-cy="result-btn"]')
+        .click({ force: true })
+        .then(() => {
+          shouldStubToBeCalledWith(stub, message)
+        })
+    })
   })
 
   describe('당첨번호와 보너스 번호를 입력하고 결과 확인버튼을 누르면', () => {
-    it('당첨 통계 모달창을 보여줘야 한다', () => {})
+    it('당첨 통계 모달창을 보여줘야 한다', () => {
+      const winningNums = [1, 2, 3, 4, 5, 5]
+      const bonusNum = 6
+
+      cy.get('[data-cy="winning-number"]').each((el, idx) => {
+        cy.wrap(el).type(winningNums[idx], { force: true })
+      })
+      cy.get('[data-cy="bonus-number"]').type(bonusNum, { force: true })
+      cy.get('[data-cy="result-btn"]')
+    })
   })
 })
 
