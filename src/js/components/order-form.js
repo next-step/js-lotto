@@ -12,7 +12,7 @@ const template = `
         max="10000"
         class="w-100 mr-2 pl-2"
         placeholder="구입 금액"
-        data-attr-value="price"
+        data-prop-value="price"
         @input="changePrice"
         data-cy="order-input" />
       <button 
@@ -55,6 +55,9 @@ class OrderForm extends Component {
           const isMultipleOf1000 = amount % 1000 === 0
 
           return !(isSmallerThanMin || isLagerThanMax || !isMultipleOf1000)
+        },
+        clear: () => {
+          this.data.price = ''
         },
       },
     })

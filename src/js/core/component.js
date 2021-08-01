@@ -79,6 +79,7 @@ export class Component extends HTMLElement {
       attributes.forEach((attr) => {
         if (attr.startsWith('@')) this.bindEvent({ el, attr })
         if (attr.startsWith('data-attr-')) this.bindAttribute({ el, attr })
+        if (attr.startsWith('data-prop-')) this.bindProperty({ el, attr })
         if (attr === 'data-ref') this.bindRef({ el, attr })
       })
     })
@@ -97,6 +98,15 @@ export class Component extends HTMLElement {
 
     this.watcher[prop].push((nextValue) => {
       el.setAttribute(attributeName, nextValue)
+    })
+  }
+
+  bindProperty({ el, attr }) {
+    const prop = el.getAttribute(attr)
+    const [propertyName] = attr.split('-').slice(-1)
+
+    this.watcher[prop].push((nextValue) => {
+      el[propertyName] = nextValue
     })
   }
 

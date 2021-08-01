@@ -5,7 +5,7 @@ const template = `
     <div class="d-flex justify-center mt-5">
       <div class="w-100">
         <h1 class="text-center">🎱 행운의 로또</h1>
-        <order-form @buy="handleBuyLotto"></order-form>
+        <order-form @buy="handleBuyLotto" data-ref="orderForm"></order-form>
         <ticket-section 
           data-attr-num="lottoNum" 
           data-attr-visible="isTicketSectionVisible"
@@ -15,6 +15,7 @@ const template = `
         <result-form
           data-attr-visible="isResultFormVisible"
           @check="handleCheckResult"
+          data-ref="resultForm"
         >
         </result-form>
       </div>
@@ -22,6 +23,7 @@ const template = `
     <!-- modal -->
     <modal-popup data-ref="modal"
       data-attr-visible="isModalVisible"
+      @reset="handleReset"
     >
     </modal-popup>
   </div>
@@ -84,6 +86,14 @@ class LottoApp extends Component {
             return 5
           }
           return 0
+        },
+        handleReset() {
+          this.data.isTicketSectionVisible = false
+          this.data.isResultFormVisible = false
+          this.data.isModalVisible = false
+          console.log(this)
+          this.ref.orderForm.methods.clear()
+          this.ref.resultForm.methods.clear()
         },
       },
     })

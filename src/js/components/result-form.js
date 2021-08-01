@@ -94,6 +94,12 @@ class ResultForm extends Component {
         isDuplicated(numbers) {
           return new Set(numbers).size < 7
         },
+        clear: () => {
+          this.root.querySelectorAll('.winning-number').forEach((el) => {
+            el.value = ''
+          })
+          this.root.querySelector('.bonus-number').value = ''
+        },
       },
     })
   }

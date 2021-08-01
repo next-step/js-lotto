@@ -50,7 +50,14 @@ const template = `
       </div>
       <p class="text-center font-bold earning-rate" data-cy="earning-rate" data-ref="earningRate">당신의 총 수익률은 %입니다.</p>
       <div class="d-flex justify-center mt-5">
-        <button type="button" class="btn btn-cyan">다시 시작하기</button>
+        <button 
+          type="button" 
+          class="btn btn-cyan" 
+          @click="handleClickResetBtn"
+          data-cy="reset"
+        >
+          다시 시작하기
+        </button>
       </div>
     </div>
   </div>
@@ -71,6 +78,9 @@ class ModalPopup extends Component {
             el.textContent = `${prize[5 - idx].count}개`
           })
           this.ref.earningRate.textContent = `당신의 총 수익률은 ${earningRate}%입니다.`
+        },
+        handleClickResetBtn: () => {
+          this.emit('reset')
         },
       },
     })
