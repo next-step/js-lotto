@@ -17,15 +17,6 @@ function shouldStubToBeCalledWith(stub, message) {
   expect(stub.getCall(0)).to.be.calledWith(message)
 }
 
-// 로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.
-// 로또 1장의 가격은 1,000원이다.
-// 소비자는 자동 구매를 할 수 있어야 한다.
-
-// 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
-// 결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.
-// 로또 당첨 금액은 고정되어 있는 것으로 가정한다.
-// 다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.
-
 describe('처음 페이지가 로드되면', () => {
   beforeEach(() => {
     cy.visit('/')
@@ -66,6 +57,9 @@ describe('처음 페이지가 로드되면', () => {
     })
   })
 
+  // 로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.
+  // 로또 1장의 가격은 1,000원이다.
+  // 소비자는 자동 구매를 할 수 있어야 한다.
   describe('구입 금액을 입력하고 확인 버튼을 누르면', () => {
     beforeEach(() => {
       cy.get('[data-cy="order-input"]').type('4000', { force: true })
@@ -76,6 +70,7 @@ describe('처음 페이지가 로드되면', () => {
       cy.get('[data-cy="ticket-section"]').should('be.visible')
       cy.get('[data-cy="ticket"]').should('have.length', 4)
     })
+
     it('결과 폼을 표시해야 한다', () => {
       cy.get('[data-cy="result-form"]').should('be.visible')
     })
@@ -97,13 +92,15 @@ describe('로또를 구매한 이후', () => {
     cy.get('[data-cy="bonus-number"]').should('not.be.disabled').and('be.visible')
   })
 
+  // 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
   describe('번호보기를 토글하면', () => {
     it('각 로또의 번호를 표시하거나 숨길 수 있어야 한다', () => {
       cy.get('[data-cy="number-toggle"').as('toggle').check({ force: true })
       cy.get('[data-cy="lotto-ticket"]').each((el) => {
         cy.wrap(el).within(() => {
+          const ticketNums = el[0].data.nums.join(',')
           cy.get('[data-cy="ticket"]').should('have.length', 1)
-          cy.get('[data-cy="ticket-nums"]').should('be.visible').and('have.text', el[0].data.nums.join(','))
+          cy.get('[data-cy="ticket-nums"]').should('be.visible').and('have.text', ticketNums)
         })
       })
       cy.get('@toggle').uncheck({ force: true })
@@ -154,6 +151,8 @@ describe('로또를 구매한 이후', () => {
   })
 })
 
+// 결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.
+// 로또 당첨 금액은 고정되어 있는 것으로 가정한다.
 describe('당첨 통계 모달이 표시되었을 때', () => {
   const winningNums = [11, 12, 13, 14, 15, 16]
   const bonusNum = 45
@@ -181,6 +180,7 @@ describe('당첨 통계 모달이 표시되었을 때', () => {
     cy.log('당첨 번호 : ', winningNums.toString())
     cy.log('보너스 번호 : ', bonusNum)
 
+    // 로또 결과 계산
     cy.get('[data-cy="lotto-ticket"]')
       .each(([el]) => {
         cy.log('로또 티켓 : ', el.data.nums.toString())
@@ -205,22 +205,27 @@ describe('당첨 통계 모달이 표시되었을 때', () => {
         result[rank].count += 1
       })
       .then(() => {
-        cy.get('[data-cy="result-1"]').should('have.text', `${result[1].count}개`)
-        cy.get('[data-cy="result-2"]').should('have.text', `${result[2].count}개`)
-        cy.get('[data-cy="result-3"]').should('have.text', `${result[3].count}개`)
-        cy.get('[data-cy="result-4"]').should('have.text', `${result[4].count}개`)
-        cy.get('[data-cy="result-5"]').should('have.text', `${result[5].count}개`)
+        // 계산 결과와 모달 팝업의 정보가 일치하는지 테스트
+        const earningRate = Object.values(result)
+          .map(({ count, prize }) => count * prize)
+          .reduce((acc, cur) => acc + cur, 0)
 
-        cy.get('[data-cy="earning-rate"]').should(
-          'have.text',
-          `당신의 총 수익률은 ${Object.values(result)
-            .map(({ count, prize }) => count * prize)
-            .reduce((acc, cur) => acc + cur, 0)}%입니다.`,
-        )
+        ;[1, 2, 3, 4, 5].forEach((n) => {
+          cy.get(`[data-cy="result-${n}"]`).should('have.text', `${result[n].count}개`)
+        })
+
+        cy.get('[data-cy="earning-rate"]').should('have.text', `당신의 총 수익률은 ${earningRate}%입니다.`)
       })
   })
 
+  // 다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.
   describe('다시 시작하기 버튼을 클릭하면', () => {
-    it('초기 상태로 돌아가야 한다', () => {})
+    it('초기 상태로 돌아가야 한다', () => {
+      cy.get('[data-cy="reset"]').click({ force: true })
+      cy.get('[data-cy="order-form"]').should('be.visible')
+      cy.get('[data-cy="ticket-section"]').should('not.be.visible')
+      cy.get('[data-cy="result-form"]').should('not.be.visible')
+      cy.get('[data-cy="modal-popup"]').should('not.be.visible')
+    })
   })
 })
