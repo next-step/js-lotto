@@ -1,9 +1,15 @@
 {
-  "name": "racingcar",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "devDependencies": {
-    "cypress": "^6.3.0"
-  }
+	"name": "racingcar",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"devDependencies": {
+		"@testing-library/cypress": "^8.0.0",
+		"cypress": "^8.1.0"
+	},
+	"scripts": {
+		"cy:open": "yarn run cypress open"
+	},
+	"repository": "https://github.com/SINHOLEE/js-lotto",
+	"author": "sinholee <dltlsgh5@gmail.com>"
 }
