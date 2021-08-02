@@ -21,7 +21,7 @@ const store = (initState) => {
     }
   };
 
-  const useEffect = (cb, keys) => {
+  const subscribe = (cb, keys) => {
     for (let key of keys) {
       state[key].subscribe.push(cb);
     }
@@ -30,7 +30,7 @@ const store = (initState) => {
   return {
     getState,
     setState,
-    useEffect,
+    subscribe,
   };
 };
 

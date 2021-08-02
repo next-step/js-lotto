@@ -10,9 +10,8 @@
   z-index: 2;
 }
 
-.modal.open {
-  opacity: 1;
-  visibility: visible;
+.modal.close {
+  visibility: hidden;
 }
 
 .modal-inner {

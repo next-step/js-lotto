@@ -7,6 +7,16 @@ export const createEl = {
   div: () => document.createElement("div"),
 };
 
+export const printLotto = (lotto) => {
+  const element =
+    "<div class='d-flex items-center w-100'>" +
+    '<span class="mx-1 text-4xl">🎟️ </span>' +
+    lotto.map((num) => `<span>${num}, </span>`).join("") +
+    "</div>";
+
+  return element;
+};
+
 const makeLotto = () => {
   const lotto = [];
 

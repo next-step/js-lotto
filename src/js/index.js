@@ -1,3 +1,1 @@
-import App from "./App.js";
-
-App();
+import "./eventListener.js";
