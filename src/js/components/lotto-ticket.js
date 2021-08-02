@@ -29,19 +29,8 @@ class LottoTicket extends Component {
           this.data.nums = [...nums]
           this.ref.nums.textContent = this.data.nums.join(',')
         },
-        showNums: () => {
-          this.ref.nums.style.display = 'inline'
-        },
-        hideNums: () => {
-          this.ref.nums.style.display = 'none'
-        },
-        handleChangeVisible: (visible) => {
-          const isVisible = visible === 'true'
-          if (isVisible) {
-            this.methods.showNums()
-          } else {
-            this.methods.hideNums()
-          }
+        handleChangeVisible: (isVisible) => {
+          this.ref.nums.style.display = isVisible ? 'inline' : 'none'
         },
         check: ({ nums, bonus }) => {
           return {
@@ -52,22 +41,13 @@ class LottoTicket extends Component {
       },
       mounted() {
         this.methods.pickNums()
-        this.methods.hideNums()
+      },
+      watcher: {
+        visible(isVisible) {
+          this.methods.handleChangeVisible(isVisible)
+        },
       },
     })
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    switch (name) {
-      case 'visible':
-        this.methods.handleChangeVisible(newValue)
-        break
-      default:
-    }
-  }
-
-  static get observedAttributes() {
-    return ['visible']
   }
 }
 

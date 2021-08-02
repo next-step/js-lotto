@@ -1,4 +1,6 @@
 import { Component } from '../core/component.js'
+import { Message } from '../constants/message.js'
+import { $$ } from '../utils/index.js'
 
 const template = `
   <div class="modal" data-cy="modal-popup" data-ref="modal">
@@ -68,35 +70,26 @@ class ModalPopup extends Component {
     super({
       template,
       methods: {
-        handleChangeVisible: (visible) => {
-          const isVisible = visible === 'true'
+        handleChangeVisible: (isVisible) => {
           this.ref.modal.style.opacity = isVisible ? 1 : 0
           this.ref.modal.style.visibility = isVisible ? 'visible' : 'hidden'
         },
         updateResult: (prize, earningRate) => {
-          this.root.querySelectorAll('.win-num').forEach((el, idx) => {
+          $$('.win-num', this.root).forEach((el, idx) => {
             el.textContent = `${prize[5 - idx].count}개`
           })
-          this.ref.earningRate.textContent = `당신의 총 수익률은 ${earningRate}%입니다.`
+          this.ref.earningRate.textContent = Message.TOTAL_EARNING_RATE(earningRate)
         },
         handleClickResetBtn: () => {
           this.emit('reset')
         },
       },
+      watcher: {
+        visible(isVisible) {
+          this.methods.handleChangeVisible(isVisible)
+        },
+      },
     })
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    switch (name) {
-      case 'visible':
-        this.methods.handleChangeVisible(newValue)
-        break
-      default:
-    }
-  }
-
-  static get observedAttributes() {
-    return ['visible']
   }
 }
 

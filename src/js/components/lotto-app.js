@@ -1,3 +1,4 @@
+import { Prize } from '../constants/prize.js'
 import { Component } from '../core/component.js'
 
 const template = `
@@ -7,22 +8,22 @@ const template = `
         <h1 class="text-center">🎱 행운의 로또</h1>
         <order-form @buy="handleBuyLotto" data-ref="orderForm"></order-form>
         <ticket-section 
-          data-attr-num="lottoNum" 
-          data-attr-visible="isTicketSectionVisible"
+          data-prop-num="lottoNum" 
+          data-prop-visible="isTicketSectionVisible"
           data-ref="ticketSection"
         >
         </ticket-section>
         <result-form
-          data-attr-visible="isResultFormVisible"
+          data-prop-visible="isResultFormVisible"
           @check="handleCheckResult"
           data-ref="resultForm"
         >
         </result-form>
       </div>
     </div>
-    <!-- modal -->
-    <modal-popup data-ref="modal"
-      data-attr-visible="isModalVisible"
+    <modal-popup 
+      data-ref="modal"
+      data-prop-visible="isModalVisible"
       @reset="handleReset"
     >
     </modal-popup>
@@ -40,19 +41,28 @@ class LottoApp extends Component {
         isModalVisible: false,
       },
       methods: {
-        handleBuyLotto({ detail }) {
+        handleBuyLotto: ({ detail }) => {
           this.data.lottoNum = detail / 1000
           this.data.isTicketSectionVisible = true
           this.data.isResultFormVisible = true
         },
-        handleCheckResult({ detail: { nums, bonus } }) {
+        handleCheckResult: ({ detail: { nums, bonus } }) => {
           const result = this.ref.ticketSection.methods.checkResult({ nums, bonus })
+          const prize = this.methods.getPrize(result)
+          const earningRate = this.methods.getEarningRate(prize)
+
+          // update modal
+          this.ref.modal.methods.updateResult(prize, earningRate)
+          // show modal
+          this.data.isModalVisible = true
+        },
+        getPrize: (result) => {
           const prize = {
-            1: { count: 0, prize: 2_000_000_000 },
-            2: { count: 0, prize: 30_000_000 },
-            3: { count: 0, prize: 1_500_000 },
-            4: { count: 0, prize: 50_000 },
-            5: { count: 0, prize: 5_000 },
+            1: { count: 0, prize: Prize['1st'] },
+            2: { count: 0, prize: Prize['2nd'] },
+            3: { count: 0, prize: Prize['3rd'] },
+            4: { count: 0, prize: Prize['4th'] },
+            5: { count: 0, prize: Prize['5th'] },
           }
 
           result.forEach((res) => {
@@ -61,15 +71,9 @@ class LottoApp extends Component {
             prize[rank].count += 1
           })
 
-          const totalPrize = Object.values(prize).reduce((acc, { count, prize: p }) => acc + count * p, 0)
-          const earningRate = (totalPrize / (this.data.lottoNum * 1000)) * 100
-
-          // update modal
-          this.ref.modal.methods.updateResult(prize, earningRate)
-          // show modal
-          this.data.isModalVisible = true
+          return prize
         },
-        getRank({ count, bonus }) {
+        getRank: ({ count, bonus }) => {
           if (count === 6) {
             return 1
           }
@@ -87,11 +91,18 @@ class LottoApp extends Component {
           }
           return 0
         },
-        handleReset() {
+        getEarningRate: (prizeResult) => {
+          const totalAmount = this.data.lottoNum * 1000
+          const totalPrize = Object.values(prizeResult)
+            .map(({ count, prize }) => count * prize)
+            .reduce((total, p) => total + p, 0)
+
+          return (totalPrize / totalAmount) * 100
+        },
+        handleReset: () => {
           this.data.isTicketSectionVisible = false
           this.data.isResultFormVisible = false
           this.data.isModalVisible = false
-          console.log(this)
           this.ref.orderForm.methods.clear()
           this.ref.resultForm.methods.clear()
         },

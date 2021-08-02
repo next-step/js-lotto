@@ -1,4 +1,6 @@
 import { Component } from '../core/component.js'
+import { Message } from '../constants/message.js'
+import { $, $$ } from '../utils/index.js'
 
 const template = `
   <form 
@@ -75,17 +77,17 @@ class ResultForm extends Component {
     super({
       template,
       methods: {
-        handleChangeVisible: (visible) => {
-          const isVisible = visible === 'true'
+        handleChangeVisible: (isVisible) => {
           this.ref.form.style.visibility = isVisible ? 'visible' : 'hidden'
         },
         handleSubmit: (e) => {
           e.preventDefault()
-          const nums = Array.from(e.target.querySelectorAll('.winning-number')).map((el) => +el.value)
-          const bonus = +e.target.querySelector('.bonus-number').value
+          const $winningNumbers = Array.from($$('.winning-number', e.target))
+          const nums = $winningNumbers.map((el) => +el.value)
+          const bonus = +$('.bonus-number', e.target).value
 
           if (this.methods.isDuplicated([...nums, bonus])) {
-            window.alert('로또 번호에는 중복된 숫자를 입력할 수 없습니다.')
+            window.alert(Message.DUPLICATED_NUMBER)
             return
           }
 
@@ -95,26 +97,18 @@ class ResultForm extends Component {
           return new Set(numbers).size < 7
         },
         clear: () => {
-          this.root.querySelectorAll('.winning-number').forEach((el) => {
+          $$('.winning-number', this.root).forEach((el) => {
             el.value = ''
           })
-          this.root.querySelector('.bonus-number').value = ''
+          $('.bonus-number', this.root).value = ''
+        },
+      },
+      watcher: {
+        visible(isVisible) {
+          this.methods.handleChangeVisible(isVisible)
         },
       },
     })
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    switch (name) {
-      case 'visible':
-        this.methods.handleChangeVisible(newValue)
-        break
-      default:
-    }
-  }
-
-  static get observedAttributes() {
-    return ['visible']
   }
 }
 

@@ -1,4 +1,5 @@
 import { Component } from '../core/component.js'
+import { Message } from '../constants/message.js'
 
 const template = `
   <form class="mt-5" data-cy="order-form" @submit="buyLotto">
@@ -34,22 +35,22 @@ class OrderForm extends Component {
         price: '',
       },
       methods: {
-        changePrice({ target: { value } }) {
+        changePrice: ({ target: { value } }) => {
           this.data.price = value
         },
-        buyLotto(e) {
+        buyLotto: (e) => {
           e.preventDefault()
           const price = +this.data.price
           const isValidPrice = this.methods.validateAmount(price)
 
           if (!isValidPrice) {
-            window.alert('로또 구입 금액을 1,000원 단위로 입력해 주세요.')
+            window.alert(Message.INVALID_AMOUNT)
             return
           }
 
           this.emit('buy', price)
         },
-        validateAmount(amount) {
+        validateAmount: (amount) => {
           const isSmallerThanMin = amount < 1000
           const isLagerThanMax = amount > 10000
           const isMultipleOf1000 = amount % 1000 === 0

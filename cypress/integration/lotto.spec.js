@@ -1,3 +1,6 @@
+import { Message } from '../../src/js/constants/message'
+import { Prize } from '../../src/js/constants/prize'
+
 /**
  * alert 테스트를 위한 stub 생성 및 이벤트 등록
  *
@@ -46,7 +49,7 @@ describe('처음 페이지가 로드되면', () => {
   describe('구입 금액이 1000원 단위가 아닐 때 확인 버튼을 누르면', () => {
     it('에러 메세지를 알림창으로 띄워야 한다', () => {
       const stub = addStubOnAlert()
-      const message = '로또 구입 금액을 1,000원 단위로 입력해 주세요.'
+      const message = Message.INVALID_AMOUNT
 
       cy.get('[data-cy="order-input"]').type('2500', { force: true })
       cy.get('[data-cy="order-btn"]')
@@ -120,7 +123,7 @@ describe('로또를 구매한 이후', () => {
   describe('당첨번호에 중복된 숫자를 입력하면', () => {
     it('에러 메세지를 알림창으로 띄워야 한다', () => {
       const stub = addStubOnAlert()
-      const message = '로또 번호에는 중복된 숫자를 입력할 수 없습니다.'
+      const message = Message.DUPLICATED_NUMBER
       const winningNums = [1, 2, 3, 4, 5, 5]
       const bonusNum = 6
 
@@ -170,11 +173,11 @@ describe('당첨 통계 모달이 표시되었을 때', () => {
 
   it('띄워진 모달창에는 올바른 당첨 갯수, 수익률을 표시해야 한다', () => {
     const result = {
-      1: { count: 0, prize: 2_000_000_000 },
-      2: { count: 0, prize: 30_000_000 },
-      3: { count: 0, prize: 1_500_000 },
-      4: { count: 0, prize: 50_000 },
-      5: { count: 0, prize: 5_000 },
+      1: { count: 0, prize: Prize['1st'] },
+      2: { count: 0, prize: Prize['2nd'] },
+      3: { count: 0, prize: Prize['3rd'] },
+      4: { count: 0, prize: Prize['4th'] },
+      5: { count: 0, prize: Prize['5th'] },
     }
 
     cy.log('당첨 번호 : ', winningNums.toString())
@@ -206,15 +209,16 @@ describe('당첨 통계 모달이 표시되었을 때', () => {
       })
       .then(() => {
         // 계산 결과와 모달 팝업의 정보가 일치하는지 테스트
-        const earningRate = Object.values(result)
+        const totalPrize = Object.values(result)
           .map(({ count, prize }) => count * prize)
           .reduce((acc, cur) => acc + cur, 0)
+        const earningRate = (totalPrize / 3000) * 100
 
         ;[1, 2, 3, 4, 5].forEach((n) => {
           cy.get(`[data-cy="result-${n}"]`).should('have.text', `${result[n].count}개`)
         })
 
-        cy.get('[data-cy="earning-rate"]').should('have.text', `당신의 총 수익률은 ${earningRate}%입니다.`)
+        cy.get('[data-cy="earning-rate"]').should('have.text', Message.TOTAL_EARNING_RATE(earningRate))
       })
   })
 

@@ -1,4 +1,6 @@
+import { Message } from '../constants/message.js'
 import { Component } from '../core/component.js'
+import { $$ } from '../utils/index.js'
 
 const ticketTemplate = `
   <lotto-ticket data-cy="lotto-ticket"></lotto-ticket>
@@ -35,41 +37,32 @@ class TicketSection extends Component {
       methods: {
         handleChangeNum: (num) => {
           const ticketCount = +num
-          this.ref.message.textContent = `총 ${ticketCount}개를 구매하였습니다.`
+          this.ref.message.textContent = Message.TICKET_COUNT(ticketCount)
           this.ref.tickets.innerHTML = ticketTemplate.repeat(ticketCount)
         },
-        handleChangeVisible: (visible) => {
-          const isVisible = visible === 'true'
+        handleChangeVisible: (isVisible) => {
           this.ref.section.style.visibility = isVisible ? 'visible' : 'hidden'
         },
         handleToggle: ({ target: { checked } }) => {
-          this.root
-            .querySelectorAll('lotto-ticket')
-            .forEach(($ticket) => $ticket.setAttribute('visible', checked.toString()))
+          $$('lotto-ticket', this.root).forEach(($ticket) => {
+            $ticket.visible = checked
+          })
         },
         checkResult: ({ nums, bonus }) => {
-          return Array.from(this.root.querySelectorAll('lotto-ticket')).map(($ticket) =>
-            $ticket.methods.check({ nums, bonus }),
-          )
+          return Array.from($$('lotto-ticket', this.root)).map(($ticket) => {
+            return $ticket.methods.check({ nums, bonus })
+          })
+        },
+      },
+      watcher: {
+        visible(isVisible) {
+          this.methods.handleChangeVisible(isVisible)
+        },
+        num(ticketNum) {
+          this.methods.handleChangeNum(ticketNum)
         },
       },
     })
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    switch (name) {
-      case 'num':
-        this.methods.handleChangeNum(newValue)
-        break
-      case 'visible':
-        this.methods.handleChangeVisible(newValue)
-        break
-      default:
-    }
-  }
-
-  static get observedAttributes() {
-    return ['num', 'visible']
   }
 }
 
