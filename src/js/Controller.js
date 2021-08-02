@@ -1,6 +1,11 @@
 import { ERR_MESSAGE } from './util/Constans.js';
 import { getProfitRate, getWinnerInfo, matchNums } from './util/lottoUtil.js';
-import { isUniqueNum, isVaildNums, isVaildPrice } from './util/validator.js';
+import {
+  isUniqueNum,
+  isVaildNums,
+  isPriceWhthinRange,
+  isVaildPrice,
+} from './util/validator.js';
 
 export default class Controller {
   constructor(
@@ -106,8 +111,12 @@ export default class Controller {
   }
 
   purchaseLottos(price) {
+    if (!isPriceWhthinRange(price)) {
+      alert(ERR_MESSAGE.LOTTO.INVAILD_PRICE_RANGE);
+      return this.purchaseFormView.resetInputPrice();
+    }
     if (!isVaildPrice(price)) {
-      alert(ERR_MESSAGE.LOTTO.INVAILD_PRICE);
+      alert(ERR_MESSAGE.LOTTO.INVAILD_PRICE_UNITS);
       return this.purchaseFormView.resetInputPrice();
     }
     this.store.setPurchasePrice(price);

@@ -1,7 +1,11 @@
 import { VALUE } from './Constans.js';
 
-export const isVaildPrice = (price) => {
+export const isPriceWhthinRange = (price) => {
   return price >= VALUE.LOTTO_MIN_PRICE && price <= VALUE.LOTTO_MAX_PRICE;
+};
+
+export const isVaildPrice = (price) => {
+  return price % 1000 === 0 ? true : false;
 };
 
 export const isVaildNums = (nums) => {

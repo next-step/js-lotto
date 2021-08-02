@@ -19,7 +19,8 @@ export const VALUE = {
 
 export const ERR_MESSAGE = {
   LOTTO: {
-    INVAILD_PRICE: `${VALUE.LOTTO_MIN_PRICE} ~ ${VALUE.LOTTO_MAX_PRICE} 사이의 값만 입력 가능합니다.`,
+    INVAILD_PRICE_RANGE: `${VALUE.LOTTO_MIN_PRICE} ~ ${VALUE.LOTTO_MAX_PRICE} 사이의 값만 입력 가능합니다.`,
+    INVAILD_PRICE_UNITS: `로또는 ${VALUE.LOTTO_UNIT}원 단위로 구매할 수 있습니다.`,
   },
   WINNER_NUMBER: {
     INVAILD_NUMS: `${VALUE.LOTTO_MIN_NUM} ~ ${VALUE.LOTTO_MAX_NUM} 사이의 값만 입력 가능합니다.`,
@@ -54,6 +55,7 @@ export const TEST = {
   LOW_PRICE: 10,
   HIGH_PRICE: 9999999,
   PROPER_PRICE: 10000,
+  INVAILD_PRICE: 1234,
   ONE_TICKET: 1000,
   AMOUNT_LOTTO: (PROPER_PRICE) => Math.floor(PROPER_PRICE / VALUE.LOTTO_UNIT),
   WINNER_NUMS: [22, 26, 31, 37, 41, 42, 24],

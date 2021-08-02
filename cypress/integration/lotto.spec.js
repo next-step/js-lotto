@@ -48,19 +48,27 @@ describe('로또 동작 테스트', () => {
       );
     });
 
-    it(`최소 금액(1000원) 이하인 ${TEST.LOW_PRICE}원의 로또를 구입시 오류(INVAILD_PRICE) 발생`, () => {
+    it(`최소 금액(1000원) 이하인 ${TEST.LOW_PRICE}원의 로또를 구입시 오류(INVAILD_PRICE_RANGE) 발생`, () => {
       cy.get('@purchaseInput').type(TEST.LOW_PRICE).type('{enter}');
       cy.get('@windowAlert').should(
         'be.calledWith',
-        ERR_MESSAGE.LOTTO.INVAILD_PRICE
+        ERR_MESSAGE.LOTTO.INVAILD_PRICE_RANGE
       );
     });
 
-    it(`최대 금액(100000원) 이상인 ${TEST.HIGH_PRICE}원의 로또를 구입시 오류(INVAILD_PRICE) 발생`, () => {
+    it(`최대 금액(100000원) 이상인 ${TEST.HIGH_PRICE}원의 로또를 구입시 오류(INVAILD_PRICE_RANGE) 발생`, () => {
       cy.get('@purchaseInput').type(TEST.HIGH_PRICE).type('{enter}');
       cy.get('@windowAlert').should(
         'be.calledWith',
-        ERR_MESSAGE.LOTTO.INVAILD_PRICE
+        ERR_MESSAGE.LOTTO.INVAILD_PRICE_RANGE
+      );
+    });
+
+    it(`${VALUE.LOTTO_UNIT}원 단위가 아닌 ${TEST.INVAILD_PRICE}원의 로또를 구입시 오류(INVAILD_PRICE_UNITS) 발생`, () => {
+      cy.get('@purchaseInput').type(TEST.INVAILD_PRICE).type('{enter}');
+      cy.get('@windowAlert').should(
+        'be.calledWith',
+        ERR_MESSAGE.LOTTO.INVAILD_PRICE_UNITS
       );
     });
   });
