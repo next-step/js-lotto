@@ -1,4 +1,4 @@
-import { App } from './app.js'
+import { App } from './App.js'
 import { replaceSelectorToDOM } from './utils/dom.js'
 
 const app = new App()

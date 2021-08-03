@@ -1,3 +1,9 @@
+# Github Pages URL
+
+- [https://choibumsu.github.io/js-lotto/](https://choibumsu.github.io/js-lotto/)
+
+---
+
 <p align="middle" >
   <img width="200px;" src="./src/images/lotto_ball.png"/>
 </p>
@@ -27,7 +33,6 @@
 - [ ] 로또 1장의 가격은 1,000원이다.
 - [ ] 소비자는 **자동 구매**를 할 수 있어야 한다.
 - [ ] 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
-
 
 ### 🎯🎯 step2 당첨 결과 기능
 
