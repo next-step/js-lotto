@@ -133,11 +133,7 @@ describe("test", () => {
     beforeEach(() => {
       cy.visit("/");
 
-      cy.get("#moneyInput")
-        .type("10000{Enter}")
-        .then(() => {
-          cy.get("#lottoSection").should("not.have.class", "d-none");
-        });
+      cy.get("#moneyInput").type("10000{Enter}");
 
       cy.get(".winning-number")
         .then(($inputs) => {
@@ -146,10 +142,7 @@ describe("test", () => {
           });
         })
         .first()
-        .type("{Enter}")
-        .then(() => {
-          cy.get("#resultModal").should("not.have.class", "close");
-        });
+        .type("{Enter}");
     });
 
     it("모달 종료 테스트", () => {
