@@ -1,9 +1,12 @@
 {
-  "name": "racingcar",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "devDependencies": {
-    "cypress": "^6.3.0"
-  }
+	"name": "racingcar",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"scripts": {
+		"cypress:open": "./node_modules/.bin/cypress open"
+	},
+	"devDependencies": {
+		"cypress": "^6.3.0"
+	}
 }

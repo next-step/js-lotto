@@ -3,22 +3,50 @@
 
 html,
 body {
-  margin: 0;
-  height: 100%;
-  font-size: 16px;
+	margin: 0;
+	height: 100%;
+	font-size: 16px;
+}
+
+ul,
+li {
+	list-style: none;
+}
+
+* {
+	margin: 0;
+	padding: 0;
 }
 
 #app {
-  max-width: 400px;
-  margin: 0 auto;
+	max-width: 400px;
+	margin: 0 auto;
 }
 
 .winning-number {
-  width: 30px;
-  height: 36px;
+	width: 30px;
+	height: 36px;
 }
 
 .bonus-number {
-  width: 30px;
-  height: 36px;
+	width: 30px;
+	height: 36px;
+}
+
+.dp-none {
+	display: none !important;
+}
+
+li.lotto {
+	display: flex;
+	align-items: center;
+}
+
+li.lotto .icon {
+	line-height: normal;
+}
+
+.lotto-numbers {
+	font-size: 1.25rem;
+	margin-left: 12px;
 }
