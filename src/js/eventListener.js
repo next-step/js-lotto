@@ -1,5 +1,5 @@
 import createStore from "./store.js";
-import { INIT_STATE, KEY } from "./constants.js";
+import { INIT_STATE, KEY, ERROR_MESSAGE } from "./constants.js";
 import { $, printLotto, createLottoList, calcResult } from "./util.js";
 
 const { getState, setState, subscribe } = createStore(INIT_STATE);
@@ -27,10 +27,10 @@ $MoneyInput.addEventListener("change", (e) =>
 $MoneyInput.addEventListener("invalid", (e) => {
   const { validity } = e.target;
   if (validity.rangeUnderflow) {
-    e.target.setCustomValidity("값은 1000 이상이어야 합니다.");
+    e.target.setCustomValidity(ERROR_MESSAGE.MONEY_UNDER_FLOW);
   }
   if (validity.rangeOverflow) {
-    e.target.setCustomValidity("값은 100000 이하여야 합니다.");
+    e.target.setCustomValidity(ERROR_MESSAGE.MONEY_OVER_FLOW);
   }
   e.target.setCustomValidity("");
 });
@@ -49,17 +49,15 @@ $ShowNumberSwitch.addEventListener("click", () => {
 });
 
 $WinningNumberInputs.forEach(($WinningNumberInput) => {
-  $WinningNumberInput.setAttribute("min", "1");
-  $WinningNumberInput.setAttribute("max", "45");
-  $WinningNumberInput.required = true;
-
   $WinningNumberInput.addEventListener("invalid", (e) => {
     const { validity } = e.target;
     if (validity.rangeUnderflow) {
-      return e.target.setCustomValidity("값은 1 이상이어야 합니다.");
+      return e.target.setCustomValidity(
+        ERROR_MESSAGE.WINNING_NUMBER_UNDER_FLOW
+      );
     }
     if (validity.rangeOverflow) {
-      return e.target.setCustomValidity("값은 45 이하여야 합니다.");
+      return e.target.setCustomValidity(ERROR_MESSAGE.WINNING_NUMBER_OVER_FLOW);
     }
     return e.target.setCustomValidity("");
   });
@@ -96,7 +94,7 @@ subscribe(
         .map((lotto) =>
           get(KEY.SHOWING_NUMBER)
             ? printLotto(lotto)
-            : '<span class="mx-1 text-4xl">🎟️ </span>'
+            : '<span class="mx-1 text-4xl">🎟️</span>'
         )
         .join("");
 
