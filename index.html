@@ -11,7 +11,7 @@
       <div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
-          <form class="lotto-input mt-5">
+          <form class="lotto-input mt-5" data-cy="lotto-input">
             <!-- <label class="mb-2 d-inline-block"
               >구입할 금액을 입력해주세요.
             </label>
@@ -93,8 +93,8 @@
         </div>
       </div>
 
-      <div class="modal">
-        <div class="modal-inner p-10">
+      <div class="modal" data-cy="result-modal">
+        <!-- <div class="modal-inner p-10">
           <div class="modal-close">
             <svg viewbox="0 0 40 40">
               <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
@@ -144,7 +144,7 @@
           <div class="d-flex justify-center mt-5">
             <button type="button" class="btn-restart btn btn-cyan">다시 시작하기</button>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <script type="module" src="./src/index.js"></script>

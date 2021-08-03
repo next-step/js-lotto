@@ -34,6 +34,7 @@ export default class LottoWinningNumber extends Component {
     <button
       type="submit"
       class="open-result-modal-button mt-5 btn btn-cyan w-100"
+      data-cy="button-submit"
     >
       결과 확인하기
     </button>

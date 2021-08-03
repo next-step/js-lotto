@@ -41,35 +41,34 @@ export default class LottoResultModal extends Component {
           <tr class="text-center">
             <td class="p-3">3개</td>
             <td class="p-3">5,000</td>
-            <td class="p-3">${result["3"][0]}개</td>
+            <td class="p-3" data-cy="result-num">${result["3"][0]}개</td>
           </tr>
           <tr class="text-center">
             <td class="p-3">4개</td>
             <td class="p-3">50,000</td>
-            <td class="p-3">${result["4"][0]}개</td>
+            <td class="p-3" data-cy="result-num">${result["4"][0]}개</td>
           </tr>
           <tr class="text-center">
             <td class="p-3">5개</td>
             <td class="p-3">1,500,000</td>
-            <td class="p-3">${result["5"][0]}개</td>
+            <td class="p-3" data-cy="result-num">${result["5"][0]}개</td>
           </tr>
           <tr class="text-center">
             <td class="p-3">5개 + 보너스볼</td>
             <td class="p-3">30,000,000</td>
-            <td class="p-3">${result["5a"][0]}개</td>
+            <td class="p-3" data-cy="result-num">${result["5a"][0]}개</td>
           </tr>
           <tr class="text-center">
             <td class="p-3">6개</td>
             <td class="p-3">2,000,000,000</td>
-            <td class="p-3">${result["6"][0]}개</td>
+            <td class="p-3" data-cy="result-num">${result["6"][0]}개</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="text-center font-bold">당신의 총 수익률은 
-    ${earningRatio}%입니다.</p>
+    <p class="text-center font-bold" data-cy="result-earning">당신의 총 수익률은 ${earningRatio}%입니다.</p>
     <div class="d-flex justify-center mt-5">
-      <button type="button" class="btn-restart btn btn-cyan">다시 시작하기</button>
+      <button type="button" class="btn-restart btn btn-cyan" data-cy="result-reset-btn">다시 시작하기</button>
     </div>
   </div>`;
   };
