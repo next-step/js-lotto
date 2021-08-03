@@ -1,14 +1,5 @@
-// 🎯 step1 구입 기능
-//  로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.
-//  로또 1장의 가격은 1,000원이다.
-//  소비자는 자동 구매를 할 수 있어야 한다.
-//  복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
-// 🎯🎯 step2 당첨 결과 기능
-//  결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.
-//  로또 당첨 금액은 고정되어 있는 것으로 가정한다.
-//  다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.
-
-import { MESSAGES } from "../../src/utils/constants";
+import { MOCK, PRIZE } from "../support/constants.js";
+import { MESSAGES } from "../../src/utils/constants.js";
 
 describe("🎱 행운의 로또", () => {
   before(() => {
@@ -107,6 +98,47 @@ describe("로또 용지 화면 표시", () => {
       cy.get("@lottoDetail").each(($el) => {
         cy.wrap($el.text().split(",")).should("have.length", 6);
       });
+    });
+  });
+});
+
+/**
+ * 당첨 결과 기능
+ * - 결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.
+ * - 다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.
+ */
+
+describe("당첨 결과 기능", () => {
+  beforeEach(() => {
+    cy.visit("/");
+    cy.mockMathRandom(MOCK.LOTTOS);
+    cy.get("[data-cy=btn-purchase]").as("btnPurchase");
+    cy.get("[data-cy=input-purchase]").type(MOCK.PURCHASE);
+    cy.get("[data-cy=btn-purchase]").click();
+    cy.get("[data-cy=toggle-lotto]").eq(0).check({ force: true });
+    cy.get("[data-cy=input-win-num]").each(($el, i) => {
+      cy.wrap($el).type(MOCK.WIN_NUMS[i]);
+    });
+    cy.get("[data-cy=input-bonus-num]").type(7);
+    cy.get("[data-cy=button-submit").click();
+  });
+
+  describe("결과 확인하기 버튼을 누르면", () => {
+    it("당첨 통계, 수익률을 모달로 확인할 수 있다.", () => {
+      cy.get("[data-cy=result-modal]").should("be.visible");
+      MOCK.STATICS.forEach((win, i) => {
+        cy.get("[data-cy=result-num]").eq(i).should("have.text", `${win[0]}개`);
+      });
+      cy.get("[data-cy=result-earning]").should("have.text", `당신의 총 수익률은 ${PRIZE}%입니다.`);
+    });
+  });
+  describe("다시 시작하기 버튼을 누르면", () => {
+    it("초기화 되서 다시 구매를 시작할 수 있다.", () => {
+      cy.get("[data-cy=result-reset-btn]").click();
+      cy.get("[data-cy=lotto-input]").should("be.visible");
+      cy.get("[data-cy=section-lotto-tickets]").should("be.not.visible");
+      cy.get("[data-cy=lotto-win]").should("be.not.visible");
+      cy.get("[data-cy=result-modal]").should("be.not.visible");
     });
   });
 });
