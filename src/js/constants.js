@@ -44,22 +44,27 @@ const TEXT_COMPONENTS = {
 		},
 		ROWS_LABELS: [
 			{
+				WINNING_PLACE: 1,
 				NUMBER_OF_MATCHES: '6개',
 				WINNING_AMOUNT: '2,000,000,000',
 			},
 			{
+				WINNING_PLACE: 2,
 				NUMBER_OF_MATCHES: '5개 + 보너스볼',
 				WINNING_AMOUNT: '30,000,000',
 			},
 			{
+				WINNING_PLACE: 3,
 				NUMBER_OF_MATCHES: '5개',
 				WINNING_AMOUNT: '1,500,000',
 			},
 			{
+				WINNING_PLACE: 4,
 				NUMBER_OF_MATCHES: '4개',
 				WINNING_AMOUNT: '50,000',
 			},
 			{
+				WINNING_PLACE: 5,
 				NUMBER_OF_MATCHES: '3개',
 				WINNING_AMOUNT: '5,000',
 			},

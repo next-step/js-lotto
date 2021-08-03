@@ -218,7 +218,7 @@ function sixthWinnngNumberInput() {
 	return _getByAriaLabel('6');
 }
 function bonusWinnngNumberInput() {
-	return _getByAriaLabel('bounus');
+	return _getByAriaLabel('bonus');
 }
 
 function lottoDetails() {

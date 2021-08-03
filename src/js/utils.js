@@ -9,3 +9,11 @@ export function deepFreeze(obj) {
 	});
 	return Object.freeze(obj);
 }
+
+export function qs($target = document, selector) {
+	return $target.querySelector(selector);
+}
+
+export function qsa($target = document, selector) {
+	return $target.querySelectorAll(selector);
+}
