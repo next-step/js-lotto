@@ -12,37 +12,48 @@
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
           <form class="mt-5">
-            <label class="mb-2 d-inline-block"
-              >구입할 금액을 입력해주세요.
+            <label class="mb-2 d-inline-block">
+              구입할 금액을 입력해주세요.
             </label>
             <div class="d-flex">
               <input
+                id="inputPrice"
                 type="number"
                 class="w-100 mr-2 pl-2"
                 placeholder="구입 금액"
+                required
+                min="1000"
+                max="100000"
               />
-              <button type="button" class="btn btn-cyan">확인</button>
+              <button id="inputPriceBtn" type="button" class="btn btn-cyan">확인</button>
             </div>
           </form>
-          <section class="mt-9">
+          <section id="purchasedLottoSection" class="mt-9">
             <div class="d-flex">
-              <label class="flex-auto my-0">총 5개를 구매하였습니다.</label>
+              <label id="purchasedLottoText" class="flex-auto my-0">총 5개를 구매하였습니다.</label>
               <div class="flex-auto d-flex justify-end pr-1">
-                <label class="switch">
+                <label id="toggleSwitch" class="switch">
                   <input type="checkbox" class="lotto-numbers-toggle-button" />
                   <span class="text-base font-normal">번호보기</span>
                 </label>
               </div>
             </div>
-            <div class="d-flex flex-wrap">
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
+            <div id="lottoWrapper" class="d-flex flex-wrap">
+              <div class="d-flex items-center">
+                <span class="mx-1 text-4xl">🎟️ </span>
+                <span class="lotto-detail" style="display: none;">19, 11, 14, 2, 37, 40</span>
+              </div>
+              <div class="d-flex items-center">
+                <span class="mx-1 text-4xl">🎟️ </span>
+                <span class="lotto-detail" style="display: none;">19, 11, 14, 2, 37, 40</span>
+              </div>
+              <div class="d-flex items-center">
+                <span class="mx-1 text-4xl">🎟️ </span>
+                <span class="lotto-detail" style="display: none;">19, 11, 14, 2, 37, 40</span>
+              </div>
             </div>
           </section>
-          <form class="mt-9">
+          <form id="inputLottoForm" class="mt-9">
             <label class="flex-auto d-inline-block mb-3"
               >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >
@@ -51,35 +62,66 @@
                 <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
                 <div>
                   <input
+                    data-lotto-number="1"
                     type="number"
                     class="winning-number mx-1 text-center"
+                    required
+                    min="1"
+                    max="45"
                   />
                   <input
+                    data-lotto-number="2"
                     type="number"
                     class="winning-number mx-1 text-center"
+                    required
+                    min="1"
+                    max="45"
                   />
                   <input
+                    data-lotto-number="3"
                     type="number"
                     class="winning-number mx-1 text-center"
+                    required
+                    min="1"
+                    max="45"
                   />
                   <input
+                    data-lotto-number="4"
                     type="number"
                     class="winning-number mx-1 text-center"
+                    required
+                    min="1"
+                    max="45"
                   />
                   <input
+                    data-lotto-number="5"
                     type="number"
                     class="winning-number mx-1 text-center"
+                    required
+                    min="1"
+                    max="45"
                   />
                   <input
+                    data-lotto-number="6"
                     type="number"
                     class="winning-number mx-1 text-center"
+                    required
+                    min="1"
+                    max="45"
                   />
                 </div>
               </div>
               <div class="bonus-number-container flex-grow">
                 <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
                 <div class="d-flex justify-center">
-                  <input type="number" class="bonus-number text-center" />
+                  <input 
+                    data-lotto-number="7"
+                    type="number" 
+                    class="bonus-number text-center" 
+                    required
+                    min="1"
+                    max="45"
+                  />
                 </div>
               </div>
             </div>
