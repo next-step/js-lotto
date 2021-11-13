@@ -5,7 +5,7 @@
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
-    "test:jest": "jest --watch"
+    "jest": "jest --watch"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
