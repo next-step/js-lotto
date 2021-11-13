@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "test:jest": "jest"
+  },
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^6.3.0",
+    "jest": "^27.3.1"
   }
 }
