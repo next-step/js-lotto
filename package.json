@@ -1,13 +1,19 @@
 {
   "name": "racingcar",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test:jest": "jest"
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test:jest": "jest --watch"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@parcel/babel-preset-env": "^2.0.1",
+    "babel-jest": "^27.3.1",
     "cypress": "^6.3.0",
-    "jest": "^27.3.1"
+    "jest": "^27.3.1",
+    "parcel": "^2.0.1"
   }
 }
