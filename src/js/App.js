@@ -94,4 +94,9 @@ function handlePurchaseLotto(lottoNumbers) {
   $('#' + ElementId.purchasedLottoViewer).innerHTML = `${lottoNumbers
     .map((lottoNumber) => template(lottoNumber))
     .join('')}`
+
+  console.log($('#' + ElementId.purchasedLottoAmountLabel))
+  $(
+    '#' + ElementId.purchasedLottoAmountLabel
+  ).innerText = `총 ${lottoNumbers.length}개를 구매하였습니다.`
 }

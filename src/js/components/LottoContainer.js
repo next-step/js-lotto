@@ -22,7 +22,7 @@ export default class LottoContainer extends Component {
             </form>
             <section class="mt-9 ${ClassName.displayNone}" id="${ElementId.purchasedLotto}">
                 <div class="d-flex">
-                <label class="flex-auto my-0" id="${ElementId.purchasedLottoAmountLabel}">총 5개를 구매하였습니다.</label>
+                <label class="flex-auto my-0" id="${ElementId.purchasedLottoAmountLabel}"></label>
                 <div class="flex-auto d-flex justify-end pr-1">
                     <label class="switch">
                     <input type="checkbox" class="lotto-numbers-toggle-button" data-event="${EventType.toggleMyLotto}" />
