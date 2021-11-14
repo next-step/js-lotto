@@ -6,6 +6,8 @@
   "scripts": {
     "start": "parcel -p 3000 ./index.html",
     "build": "parcel build index.html",
+    "cypress": "cypress open",
+    "cypress:cli": "cypress run",
     "jest": "jest --watch"
   },
   "devDependencies": {

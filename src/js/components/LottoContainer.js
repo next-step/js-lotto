@@ -3,6 +3,7 @@ import ElementId from '../constants/ElementId'
 import EventType from '../constants/EventType'
 import Name from '../constants/Name'
 import ClassName from '../constants/ClassName'
+import CypressDom from '../constants/CypressDom'
 
 export default class LottoContainer extends Component {
   template() {
@@ -16,16 +17,17 @@ export default class LottoContainer extends Component {
                         type="number"
                         class="w-100 mr-2 pl-2"
                         placeholder="구입 금액"
+                        data-test-element="${CypressDom.purchaseInput}"
                     />
-                    <button type="button" class="btn btn-cyan" data-event="${EventType.purchase}">확인</button>
+                    <button type="button" class="btn btn-cyan" data-event="${EventType.purchase}" data-test-element="${CypressDom.purchaseButton}">확인</button>
                 </div>
             </form>
             <section class="mt-9 ${ClassName.displayNone}" id="${ElementId.purchasedLotto}">
                 <div class="d-flex">
-                <label class="flex-auto my-0" id="${ElementId.purchasedLottoAmountLabel}"></label>
+                <label class="flex-auto my-0" id="${ElementId.purchasedLottoAmountLabel}" data-test-element="${CypressDom.lottoCountLabel}"></label>
                 <div class="flex-auto d-flex justify-end pr-1">
                     <label class="switch">
-                    <input type="checkbox" class="lotto-numbers-toggle-button" data-event="${EventType.toggleMyLotto}" />
+                    <input type="checkbox" class="lotto-numbers-toggle-button" data-event="${EventType.toggleMyLotto}" data-test-element="${CypressDom.toggleButton}" />
                     <span class="text-base font-normal">번호보기</span>
                     </label>
                 </div>

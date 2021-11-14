@@ -1,5 +1,6 @@
 import LottoContainer from './components/LottoContainer'
 import ClassName from './constants/ClassName'
+import CypressDom from './constants/CypressDom'
 import ElementId from './constants/ElementId'
 import Event from './constants/Event'
 import EventType from './constants/EventType'
@@ -84,9 +85,9 @@ function handlePurchaseLotto(lottoNumbers) {
     return `
       <li class="mx-1 text-4xl lotto-wrapper">
       <span class="lotto-icon">🎟️ </span>
-      <span class="lotto-detail" style="display: none;">${numbers.reduce(
-        (a, b) => a + ', ' + b
-      )}</span>
+      <span class="lotto-detail" style="display: none;" data-test-element="${
+        CypressDom.lottoDetail
+      }"">${numbers.reduce((a, b) => a + ', ' + b)}</span>
       </li>
     `
   }
@@ -95,8 +96,10 @@ function handlePurchaseLotto(lottoNumbers) {
     .map((lottoNumber) => template(lottoNumber))
     .join('')}`
 
-  console.log($('#' + ElementId.purchasedLottoAmountLabel))
   $(
     '#' + ElementId.purchasedLottoAmountLabel
   ).innerText = `총 ${lottoNumbers.length}개를 구매하였습니다.`
+
+  $('#' + ElementId.purchasedLottoAmountLabel).dataset.count =
+    lottoNumbers.length
 }
