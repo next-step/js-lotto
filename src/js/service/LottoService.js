@@ -17,8 +17,6 @@ export default class LottoService {
   }
 
   generatorLottoNumber(fixed) {
-    const id = this.#purchasedLottos.length + 1
-
     this.#purchasedLottos.push(this.getLottoNumbers(fixed))
   }
 
