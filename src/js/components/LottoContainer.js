@@ -30,7 +30,7 @@ export default class LottoContainer extends Component {
                     </label>
                 </div>
                 </div>
-                <div class="d-flex flex-wrap" id="${ElementId.purchasedLottoViewer}">
+                <div class="d-flex flex-wrap" id="${ElementId.purchasedLottoViewer}" data-visible="hidden">
                 <span class="mx-1 text-4xl">🎟️ </span>
                 <span class="mx-1 text-4xl">🎟️ </span>
                 <span class="mx-1 text-4xl">🎟️ </span>

@@ -12,37 +12,6 @@ const clickEventMapper = {
   [EventType.toggleMyLotto]: () => onToggleMyLottoNumber(),
 }
 
-function onLottoPurchase(lottoService) {
-  console.log('I buy Lotto!')
-
-  const money = Number($('#' + ElementId.purchaseInput).value)
-
-  if (money === 0 || money % 1000 !== 0) {
-    alert('1000원 단위로 입력해주세요.')
-    return
-  }
-
-  const lottoAmount = money / 1000
-
-  lottoService.autoPurchase(lottoAmount)
-
-  document
-    .getElementById(ElementId.purchasedLotto)
-    .classList.remove(ClassName.displayNone)
-
-  document
-    .getElementById(ElementId.lottoAnswerInput)
-    .classList.remove(ClassName.displayNone)
-}
-
-function onCheckMyLottoResult() {
-  console.log('Check my Lotto Result!')
-}
-
-function onToggleMyLottoNumber() {
-  console.log('toggle my lotto status!')
-}
-
 export default class App {
   #rootContainer
   #lottoService
@@ -66,4 +35,63 @@ export default class App {
       clickEventMapper[clickEvent](this.#lottoService)
     })
   }
+}
+
+function onLottoPurchase(lottoService) {
+  console.log('I buy Lotto!')
+
+  const money = Number($('#' + ElementId.purchaseInput).value)
+
+  if (money === 0 || money % lottoService.lottoPrice !== 0) {
+    alert(lottoService.lottoPrice + '원 단위로 입력해주세요.')
+    return
+  }
+
+  const lottoAmount = money / lottoService.lottoPrice
+
+  lottoService.autoPurchase(lottoAmount)
+
+  setLottoViewVisible()
+
+  handlePurchaseLotto(lottoService.myLottos)
+}
+
+function onCheckMyLottoResult() {
+  console.log('Check my Lotto Result!')
+}
+
+function onToggleMyLottoNumber() {
+  const viewer = $('#' + ElementId.purchasedLottoViewer)
+
+  const isVisible = viewer.dataset.visible === 'visible' ? true : false
+  console.log(isVisible)
+  const details = document.querySelectorAll('.lotto-detail')
+
+  details.forEach((detail) => {
+    detail.style.display = isVisible ? 'none' : ''
+  })
+
+  viewer.dataset.visible = isVisible ? 'hidden' : 'visible'
+}
+
+function setLottoViewVisible() {
+  $('#' + ElementId.purchasedLotto).classList.remove(ClassName.displayNone)
+  $('#' + ElementId.lottoAnswerInput).classList.remove(ClassName.displayNone)
+}
+
+function handlePurchaseLotto(lottoNumbers) {
+  const template = (numbers) => {
+    return `
+      <li class="mx-1 text-4xl lotto-wrapper">
+      <span class="lotto-icon">🎟️ </span>
+      <span class="lotto-detail" style="display: none;">${numbers.reduce(
+        (a, b) => a + ', ' + b
+      )}</span>
+      </li>
+    `
+  }
+
+  $('#' + ElementId.purchasedLottoViewer).innerHTML = `${lottoNumbers
+    .map((lottoNumber) => template(lottoNumber))
+    .join('')}`
 }
