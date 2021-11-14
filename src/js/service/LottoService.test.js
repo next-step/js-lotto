@@ -23,13 +23,9 @@ describe('로또 서비스 로직의 테스트를 진행한다.', () => {
     expect(lottoService.myLottos[0].base).toStrictEqual(
       mockLottoNumbers[0].slice(0, 6)
     )
-    expect(lottoService.myLottos[0].bonus).toBe(mockLottoNumbers[0][6])
 
     expect(lottoService.myLottos[1].base).toStrictEqual(
       mockLottoNumbers[1].slice(0, 6)
     )
-    expect(lottoService.myLottos[1].bonus).toBe(mockLottoNumbers[1][6])
-
-    console.log(lottoService.myLottos)
   })
 })
