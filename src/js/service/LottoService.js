@@ -19,12 +19,12 @@ export default class LottoService {
   generatorLottoNumber(fixed) {
     const id = this.#purchasedLottos.length + 1
 
-    this.#purchasedLottos.push({ id, ...this.getLottoNumbers(fixed) })
+    this.#purchasedLottos.push(this.getLottoNumbers(fixed))
   }
 
   getLottoNumbers(fixed) {
     if (fixed) {
-      return { base: fixed.slice(0, 6), bonus: fixed[6] }
+      return fixed.slice(0, 6)
     }
 
     const lottoNumberSet = new Set()
@@ -39,9 +39,7 @@ export default class LottoService {
       }
     }
 
-    const numbers = Array.from(lottoNumberSet)
-
-    return { base: numbers.slice(0, 6), bonus: numbers[6] }
+    return Array.from(lottoNumberSet)
   }
 
   get myLottos() {
