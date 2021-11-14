@@ -1,0 +1,96 @@
+import { $ } from '../utils/utils.js';
+import View from './View.js';
+
+export default class WinningNumberFormSection extends View {
+  constructor(el) {
+    super(el);
+  }
+
+  render() {
+    this.$target.innerHTML = `
+      <form id="winningNumberForm" class="mt-9">
+        <label class="flex-auto d-inline-block mb-3"
+          >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
+        >
+        <div class="d-flex">
+          <div>
+            <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
+            <div>
+              <input
+                data-lotto-number="1"
+                type="number"
+                class="winning-number mx-1 text-center"
+                required
+                min="1"
+                max="45"
+              />
+              <input
+                data-lotto-number="2"
+                type="number"
+                class="winning-number mx-1 text-center"
+                required
+                min="1"
+                max="45"
+              />
+              <input
+                data-lotto-number="3"
+                type="number"
+                class="winning-number mx-1 text-center"
+                required
+                min="1"
+                max="45"
+              />
+              <input
+                data-lotto-number="4"
+                type="number"
+                class="winning-number mx-1 text-center"
+                required
+                min="1"
+                max="45"
+              />
+              <input
+                data-lotto-number="5"
+                type="number"
+                class="winning-number mx-1 text-center"
+                required
+                min="1"
+                max="45"
+              />
+              <input
+                data-lotto-number="6"
+                type="number"
+                class="winning-number mx-1 text-center"
+                required
+                min="1"
+                max="45"
+              />
+            </div>
+          </div>
+          <div class="bonus-number-container flex-grow">
+            <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
+            <div class="d-flex justify-center">
+              <input 
+                data-lotto-number="7"
+                type="number" 
+                class="bonus-number text-center" 
+                required
+                min="1"
+                max="45"
+              />
+            </div>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="open-result-modal-button mt-5 btn btn-cyan w-100"
+        >
+          결과 확인하기
+        </button>
+      </form>
+    `;
+    this.winningNumberForm = $('#winningNumberForm');
+    this.bindEvents();
+  }
+
+  bindEvents() {}
+}
