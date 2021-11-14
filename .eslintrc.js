@@ -1,12 +1,15 @@
 module.exports = {
   plugins: ['prettier'],
-  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+  extends: ['eslint:recommended'],
   parserOptions: {
     ecmaVersion: 6,
-    sourceType: 'module',
+    sourceType: 'module'
   },
   env: {
     browser: false,
-    node: true,
+    node: true
   },
+  rules: {
+    'comma-dangle': ['error', 'never']
+  }
 };
