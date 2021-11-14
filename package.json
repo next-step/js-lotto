@@ -2,8 +2,9 @@
   "name": "racingcar",
   "version": "1.0.0",
   "license": "MIT",
+  "source": "index.html",
   "scripts": {
-    "start": "parcel index.html",
+    "start": "parcel -p 3000 ./index.html",
     "build": "parcel build index.html",
     "jest": "jest --watch"
   },
