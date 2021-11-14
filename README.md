@@ -12,7 +12,7 @@
 </p>
 
 <p align="middle">
-  <a href="https://next-step.github.io/js-lotto/">🖥️ 데모 링크</a>
+  <a href="https://eungyucho.github.io/js-lotto/">🖥️ 데모 링크</a>
 </p>
 
 ## 🔥 Projects!
@@ -27,7 +27,6 @@
 - [ ] 로또 1장의 가격은 1,000원이다.
 - [ ] 소비자는 **자동 구매**를 할 수 있어야 한다.
 - [ ] 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
-
 
 ### 🎯🎯 step2 당첨 결과 기능
 

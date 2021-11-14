@@ -5,4 +5,5 @@ export default Object.freeze({
   purchasedLotto: 'purchased-lotto',
   purchasedLottoAmountLabel: 'purchased-lotto-amount-label',
   purchasedLottoViewer: 'purchased-lotto-viewer',
+  benefitRateLabel: 'benefit-rate-label',
 })

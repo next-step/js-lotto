@@ -4,6 +4,7 @@ import EventType from '../constants/EventType'
 import Name from '../constants/Name'
 import ClassName from '../constants/ClassName'
 import CypressDom from '../constants/CypressDom'
+import lottoConfig from '../config/lotto.config'
 
 export default class LottoContainer extends Component {
   template() {
@@ -44,46 +45,41 @@ export default class LottoContainer extends Component {
             <label class="flex-auto d-inline-block mb-3"
                 >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >
-            <div class="d-flex">
+            <div class="d-flex" onsubmit="event.preventDefault(); document.querySelector('button[data-event=CHECK_MY_LOTTO_RESULT]').click(); return false;">
                 <div>
                 <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
                 <div>
                     <input
                     name="${Name.baseLottoNumbers}"
                     type="number"
-                    class="winning-number mx-1 text-center"
-                    />
+                    class="winning-number mx-1 text-center"/>
                     <input
                     name="${Name.baseLottoNumbers}"
                     type="number"
-                    class="winning-number mx-1 text-center"
-                    />
+                    class="winning-number mx-1 text-center"/>
                     <input
                     name="${Name.baseLottoNumbers}"
                     type="number"
-                    class="winning-number mx-1 text-center"
-                    />
+                    class="winning-number mx-1 text-center"/>
                     <input
                     name="${Name.baseLottoNumbers}"
                     type="number"
-                    class="winning-number mx-1 text-center"
-                    />
+                    class="winning-number mx-1 text-center"/>
                     <input
                     name="${Name.baseLottoNumbers}"
                     type="number"
-                    class="winning-number mx-1 text-center"
-                    />
+                    class="winning-number mx-1 text-center"/>
                     <input
                     name="${Name.baseLottoNumbers}"
                     type="number"
-                    class="winning-number mx-1 text-center"
-                    />
+                    class="winning-number mx-1 text-center"/>
                 </div>
                 </div>
                 <div class="bonus-number-container flex-grow">
                 <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
                 <div class="d-flex justify-center">
-                    <input type="number" class="bonus-number text-center" ${Name.bonusLottoNumber} />
+                    <input type="number" class="bonus-number text-center" name="${Name.bonusLottoNumber}"
+                     />
                 </div>
                 </div>
             </div>

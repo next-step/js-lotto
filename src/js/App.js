@@ -1,15 +1,18 @@
 import LottoContainer from './components/LottoContainer'
+import lottoConfig from './config/lotto.config'
 import ClassName from './constants/ClassName'
 import CypressDom from './constants/CypressDom'
 import ElementId from './constants/ElementId'
 import Event from './constants/Event'
 import EventType from './constants/EventType'
+import Name from './constants/Name'
 import LottoService from './service/LottoService'
 import { $ } from './utils/dom'
 
 const clickEventMapper = {
   [EventType.purchase]: (lottoService) => onLottoPurchase(lottoService),
-  [EventType.checkMyLottoResult]: () => onCheckMyLottoResult(),
+  [EventType.checkMyLottoResult]: (lottoService) =>
+    onCheckMyLottoResult(lottoService),
   [EventType.toggleMyLotto]: () => onToggleMyLottoNumber(),
 }
 
@@ -57,8 +60,59 @@ function onLottoPurchase(lottoService) {
   handlePurchaseLotto(lottoService.myLottos)
 }
 
-function onCheckMyLottoResult() {
+function onCheckMyLottoResult(lottoService) {
   console.log('Check my Lotto Result!')
+
+  const LottoAnswer = $('#' + ElementId.lottoAnswerInput)
+
+  const answer = new FormData(LottoAnswer)
+
+  const base = answer
+    .getAll(Name.baseLottoNumbers)
+    .map((number) => Number(number))
+
+  const bonus = Number(answer.get(Name.bonusLottoNumber))
+
+  if (!validationLottoAnswer(base, bonus)) {
+    return
+  }
+
+  lottoService.lottoAnswer = { base, bonus }
+  const rate = lottoService.calcLottoBenefitRate()
+
+  $(
+    '#' + ElementId.benefitRateLabel
+  ).innerText = `당신의 총 수익률은 ${rate}%입니다.`
+
+  $('.modal').classList.add('open')
+}
+
+function validationLottoAnswer(base, bonus) {
+  const numberSet = new Set()
+
+  if (!validLottoNumber(bonus)) {
+    return false
+  }
+
+  numberSet.add(bonus)
+
+  for (const baseNumber of base) {
+    if (!validLottoNumber(baseNumber) || numberSet.has(baseNumber)) {
+      return false
+    }
+
+    numberSet.add(baseNumber)
+  }
+
+  return true
+}
+
+function validLottoNumber(number) {
+  if (number <= 0 || number > lottoConfig.maxLottoNumber) {
+    return false
+  }
+
+  return true
 }
 
 function onToggleMyLottoNumber() {
