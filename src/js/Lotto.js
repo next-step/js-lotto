@@ -1,15 +1,19 @@
 import {AmountForm} from './components/AmountForm.js';
+import {autoGenerateLottoNumbers} from './lottoUtils.js';
+import {PRICE_PER_TICKET} from './consts.js';
 import {Tickets} from './components/Tickets.js';
 
 export function Lotto($el) {
 
     const state = {
         amount: null,
+        tickets: [],
     };
 
     function purchaseTickets(amount) {
         state.amount = amount;
-        console.log(state);
+        state.tickets = autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
+        new Tickets($el.querySelector('[data-component="tickets"]'), state.tickets);
     };
 
     function render() {
@@ -19,7 +23,7 @@ export function Lotto($el) {
                   <h1 class="text-center">🎱 행운의 로또</h1>
                   <div data-component="amount-form"></div>
                   <div data-component="tickets"></div>
-                  <form class="mt-9">
+                  <form class="mt-9" style="display: none;">
                     <label class="flex-auto d-inline-block mb-3"
                       >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
                     >
@@ -125,7 +129,6 @@ export function Lotto($el) {
         `;
 
         new AmountForm($el.querySelector('[data-component="amount-form"]'), purchaseTickets);
-        new Tickets($el.querySelector('[data-component="tickets"]'));
     }
 
     render();
