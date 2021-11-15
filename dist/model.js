@@ -80,11 +80,7 @@ class LottoModel {
         return {
             winningList: res,
             earningRate: (100 *
-                (Object.entries(GRADES).reduce((p, [g, { winPrice }]) => {
-                    console.log({ winPrice, winning: res[g], res: winPrice * res[g] });
-                    return p + winPrice * res[g];
-                }, 0) -
-                    amount * UNIT_PRICE)) /
+                (Object.entries(GRADES).reduce((p, [g, { winPrice }]) => p + winPrice * res[g], 0) - amount * UNIT_PRICE)) /
                 (amount * UNIT_PRICE),
         };
     }

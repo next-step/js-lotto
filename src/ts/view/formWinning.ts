@@ -3,6 +3,7 @@ import View from './index.js'
 
 export default class FormWinning extends View {
   $form
+  $inputs
   constructor() {
     super()
     this.$form = el('<form id="formWinning" class="mt-9">') as HTMLFormElement
@@ -30,20 +31,18 @@ export default class FormWinning extends View {
         '<button type="submit" class="open-result-modal-button mt-5 btn btn-cyan w-100">결과 확인하기</button>',
       ]),
     ])
-  }
-  getInputs() {
-    return Array.from(this.$form.elements).filter(el => el.localName === 'input') as HTMLInputElement[]
+    this.$inputs = Array.from(this.$form.querySelectorAll('input[type="number"]')) as HTMLInputElement[]
   }
   onSubmit = (e: FormDataEvent) => {
     e.preventDefault()
-    this.emit('submit@formWinning', { winningNumbers: this.getInputs().map(el => el.value) })
+    this.emit('submit@formWinning', { winningNumbers: this.$inputs.map(el => el.value) })
   }
   reset() {
-    this.getInputs().forEach(el => {
+    this.$inputs.forEach(el => {
       el.value = ''
     })
   }
   focus() {
-    ;(this.$form.elements[0] as HTMLInputElement).focus()
+    this.$inputs[0].focus()
   }
 }
