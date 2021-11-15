@@ -5,6 +5,7 @@ import CypressDom from './constants/CypressDom'
 import ElementId from './constants/ElementId'
 import Event from './constants/Event'
 import EventType from './constants/EventType'
+import Message from './constants/Message'
 import Name from './constants/Name'
 import LottoService from './service/LottoService'
 import { $ } from './utils/dom'
@@ -66,6 +67,11 @@ function onLottoPurchase(lottoService) {
 
   const lottoAmount = money / lottoService.lottoPrice
 
+  if (lottoAmount > lottoConfig.maxMyLottoLimit) {
+    alert(Message.myLottoLimitError)
+    $('#' + ElementId.purchaseInput).value = ''
+    return
+  }
   lottoService.autoPurchase(lottoAmount)
 
   setLottoVisible(true)
@@ -121,7 +127,7 @@ function validateLottoAnswer(base, bonus) {
 
   for (const baseNumber of base) {
     if (!IsValidLottoNumber(baseNumber) || numberSet.has(baseNumber)) {
-      return { error: true, message: '중복된 로또 번호가 있습니다.' }
+      return { error: true, message: Message.duplicatedLottoNumberError }
     }
 
     numberSet.add(baseNumber)

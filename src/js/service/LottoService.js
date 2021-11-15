@@ -30,6 +30,8 @@ export default class LottoService {
   }
 
   autoPurchase(count, fixedValues) {
+    this.initService()
+
     for (let i = 0; i < count; i += 1) {
       this.generateLottoNumber(fixedValues ? fixedValues[i] : null)
     }
