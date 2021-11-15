@@ -88,7 +88,10 @@ function onCheckMyLottoResult(lottoService) {
 
   const bonus = Number(answer.get(Name.bonusLottoNumber))
 
-  if (!validationLottoAnswer(base, bonus)) {
+  const lottoValidation = validationLottoAnswer(base, bonus)
+
+  if (lottoValidation.error) {
+    alert(lottoValidation.message)
     return
   }
 
@@ -106,20 +109,23 @@ function validationLottoAnswer(base, bonus) {
   const numberSet = new Set()
 
   if (!validLottoNumber(bonus)) {
-    return false
+    return {
+      error: true,
+      message: `로또 번호는 1번부터 ${lottoConfig.maxLottoNumber}까지 입력 할 수 있습니다.`,
+    }
   }
 
   numberSet.add(bonus)
 
   for (const baseNumber of base) {
     if (!validLottoNumber(baseNumber) || numberSet.has(baseNumber)) {
-      return false
+      return { error: true, message: '중복된 로또 번호가 있습니다.' }
     }
 
     numberSet.add(baseNumber)
   }
 
-  return true
+  return { error: false }
 }
 
 function validLottoNumber(number) {
