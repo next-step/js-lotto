@@ -96,11 +96,19 @@ function onCheckMyLottoResult(lottoService) {
   }
 
   lottoService.lottoAnswer = { base, bonus }
-  const rate = lottoService.calcLottoBenefitRate()
+  const benefitResult = lottoService.calcLottoBenefit()
+
+  console.log(benefitResult.rank)
+
+  document.querySelectorAll('td[data-rank-label]').forEach((node) => {
+    const count = benefitResult.rank[Number(node.dataset.rankLabel)] || 0
+
+    node.innerText = count + '개'
+  })
 
   $(
     '#' + ElementId.benefitRateLabel
-  ).innerText = `당신의 총 수익률은 ${rate}%입니다.`
+  ).innerText = `당신의 총 수익률은 ${benefitResult.benefitRate}%입니다.`
 
   $('.modal').classList.add('open')
 }

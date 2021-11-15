@@ -1,11 +1,14 @@
 import lottoConfig from '../config/lotto.config'
 import lottoReward from '../config/lotto.reward'
+import lottoRewardKey from '../constants/LottoRewardKey'
 import { getRandomArbitrary } from '../utils/landom'
 
 const rewardMapper = {
-  3: lottoReward.fifth,
-  4: lottoReward.fourth,
-  6: lottoReward.fisrt,
+  [lottoRewardKey.FIFTH]: lottoReward.fifth,
+  [lottoRewardKey.FOURTH]: lottoReward.fourth,
+  [lottoRewardKey.THIRD]: lottoReward.third,
+  [lottoRewardKey.SECOND]: lottoReward.second,
+  [lottoRewardKey.FIRST]: lottoReward.fisrt,
 }
 
 export default class LottoService {
@@ -56,8 +59,8 @@ export default class LottoService {
     return Array.from(lottoNumberSet)
   }
 
-  calcLottoBenefitRate() {
-    let benefit = 0
+  calcLottoBenefit() {
+    const benefitMap = new Map()
 
     this.#purchasedLottos.forEach((purchasedLotto) => {
       const lottoSet = new Set()
@@ -74,23 +77,39 @@ export default class LottoService {
       })
 
       if (matches === 5) {
-        const reward = purchasedLotto.includes(this.#lottoAnswer.bonus)
-          ? lottoReward.second
-          : lottoReward.third
-
-        benefit += reward
+        if (purchasedLotto.includes(this.#lottoAnswer.bonus)) {
+          benefitMap.set(
+            lottoRewardKey.SECOND,
+            (benefitMap.get(lottoRewardKey.SECOND) || 0) + 1
+          )
+          return
+        }
       }
 
       if (!rewardMapper[matches]) {
         return
       }
 
-      benefit += rewardMapper[matches]
+      benefitMap.set(matches, (benefitMap.get(matches) || 0) + 1)
     })
 
-    return Math.floor(
-      (benefit / (this.#purchasedLottos.length * lottoConfig.price)) * 100 - 100
-    )
+    let benefit = 0
+    const rank = {}
+
+    benefitMap.forEach((count, matches) => {
+      console.log(matches, count, rewardMapper)
+      benefit += rewardMapper[matches] * count
+
+      rank[matches] = count
+    })
+
+    return {
+      benefitRate: Math.floor(
+        (benefit / (this.#purchasedLottos.length * lottoConfig.price)) * 100 -
+          100
+      ),
+      rank,
+    }
   }
 
   set lottoAnswer(answer) {
