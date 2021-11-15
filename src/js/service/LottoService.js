@@ -1,7 +1,7 @@
 import lottoConfig from '../config/lotto.config'
 import lottoReward from '../config/lotto.reward'
 import lottoRewardKey from '../constants/LottoRewardKey'
-import { getRandomArbitrary } from '../utils/landom'
+import { getRandomNumber } from '../utils/random'
 
 const rewardMapper = {
   [lottoRewardKey.FIFTH]: lottoReward.fifth,
@@ -17,10 +17,10 @@ export default class LottoService {
   #lottoAnswer
 
   constructor() {
-    this.setInit()
+    this.initService()
   }
 
-  setInit() {
+  initService() {
     this.#lottoPrice = lottoConfig.price || 1000
     this.#purchasedLottos = []
     this.#lottoAnswer = {
@@ -31,11 +31,11 @@ export default class LottoService {
 
   autoPurchase(count, fixedValues) {
     for (let i = 0; i < count; i += 1) {
-      this.generatorLottoNumber(fixedValues ? fixedValues[i] : null)
+      this.generateLottoNumber(fixedValues ? fixedValues[i] : null)
     }
   }
 
-  generatorLottoNumber(fixed) {
+  generateLottoNumber(fixed) {
     this.#purchasedLottos.push(this.getLottoNumbers(fixed))
   }
 
@@ -48,7 +48,7 @@ export default class LottoService {
 
     while (lottoNumberSet.size !== lottoConfig.lottoNumberCount - 1) {
       const randomValue = Math.floor(
-        getRandomArbitrary(1, lottoConfig.maxLottoNumber + 1)
+        getRandomNumber(1, lottoConfig.maxLottoNumber + 1)
       )
 
       if (!lottoNumberSet.has(randomValue)) {

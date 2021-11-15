@@ -68,7 +68,7 @@ function onLottoPurchase(lottoService) {
 
   lottoService.autoPurchase(lottoAmount)
 
-  setLottoViewVisible(true)
+  setLottoVisible(true)
 
   handlePurchaseLotto(lottoService.myLottos)
 }
@@ -84,7 +84,7 @@ function onCheckMyLottoResult(lottoService) {
 
   const bonus = Number(answer.get(Name.bonusLottoNumber))
 
-  const lottoValidation = validationLottoAnswer(base, bonus)
+  const lottoValidation = validateLottoAnswer(base, bonus)
 
   if (lottoValidation.error) {
     alert(lottoValidation.message)
@@ -107,10 +107,10 @@ function onCheckMyLottoResult(lottoService) {
   $('.modal').classList.add('open')
 }
 
-function validationLottoAnswer(base, bonus) {
+function validateLottoAnswer(base, bonus) {
   const numberSet = new Set()
 
-  if (!validLottoNumber(bonus)) {
+  if (!IsValidLottoNumber(bonus)) {
     return {
       error: true,
       message: `로또 번호는 1번부터 ${lottoConfig.maxLottoNumber}까지 입력 할 수 있습니다.`,
@@ -120,7 +120,7 @@ function validationLottoAnswer(base, bonus) {
   numberSet.add(bonus)
 
   for (const baseNumber of base) {
-    if (!validLottoNumber(baseNumber) || numberSet.has(baseNumber)) {
+    if (!IsValidLottoNumber(baseNumber) || numberSet.has(baseNumber)) {
       return { error: true, message: '중복된 로또 번호가 있습니다.' }
     }
 
@@ -130,7 +130,7 @@ function validationLottoAnswer(base, bonus) {
   return { error: false }
 }
 
-function validLottoNumber(number) {
+function IsValidLottoNumber(number) {
   if (number <= 0 || number > lottoConfig.maxLottoNumber) {
     return false
   }
@@ -153,7 +153,7 @@ function toggleLottoVisible(visible) {
 }
 
 function resetGame(lottoService) {
-  lottoService.setInit()
+  lottoService.initService()
   resetUI()
 }
 
@@ -163,7 +163,7 @@ function resetUI() {
   const purchaseButton = $('#' + ElementId.purchaseInput)
   const isVisible = toggleButton.checked
 
-  setLottoViewVisible(false)
+  setLottoVisible(false)
 
   modal.classList.remove('open')
   purchaseButton.value = ''
@@ -188,7 +188,7 @@ function resetUI() {
   }
 }
 
-function setLottoViewVisible(visible) {
+function setLottoVisible(visible) {
   if (visible) {
     $('#' + ElementId.purchasedLotto).classList.remove(ClassName.displayNone)
     $('#' + ElementId.lottoAnswerInput).classList.remove(ClassName.displayNone)
