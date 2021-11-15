@@ -97,7 +97,6 @@ export default class LottoService {
     const rank = {}
 
     benefitMap.forEach((count, matches) => {
-      console.log(matches, count, rewardMapper)
       benefit += rewardMapper[matches] * count
 
       rank[matches] = count

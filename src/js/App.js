@@ -33,13 +33,10 @@ export default class App {
     this.#rootContainer.addEventListener(Event.onClick, (event) => {
       const clickEvent = event.target.dataset.event
 
-      console.log(event)
-
       if (!clickEvent) {
         return
       }
 
-      console.log('on')
       clickEventMapper[clickEvent](this.#lottoService)
     })
 
@@ -79,7 +76,6 @@ function onLottoPurchase(lottoService) {
 function onCheckMyLottoResult(lottoService) {
   const LottoAnswer = $('#' + ElementId.lottoAnswerInput)
 
-  console.log('on2')
   const answer = new FormData(LottoAnswer)
 
   const base = answer
@@ -97,8 +93,6 @@ function onCheckMyLottoResult(lottoService) {
 
   lottoService.lottoAnswer = { base, bonus }
   const benefitResult = lottoService.calcLottoBenefit()
-
-  console.log(benefitResult.rank)
 
   document.querySelectorAll('td[data-rank-label]').forEach((node) => {
     const count = benefitResult.rank[Number(node.dataset.rankLabel)] || 0
