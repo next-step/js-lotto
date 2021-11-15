@@ -20,5 +20,11 @@ export default class FormPrice extends View {
         this.emit('submit@FormPrice', { price: this.$input.value || 0 });
         this.$input.value = '';
     };
+    focus = () => {
+        this.$input.focus();
+    };
+    connectedCallback() {
+        this.$input.focus();
+    }
 }
 //# sourceMappingURL=formPrice.js.map

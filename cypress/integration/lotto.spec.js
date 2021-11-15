@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { ErrorMsgs } from '../../dist/constants.js'
+import { ErrorMsgs, UNIT_PRICE } from '../../dist/constants.js'
 before(() => {
   cy.visit('http://localhost:3000/')
 })
@@ -14,21 +14,21 @@ describe('lotto', () => {
       cy.get('form-price form').submit()
       cy.on('window.alert', text => expect(text).to.be(ErrorMsgs))
     })
-    it('1000원 이하 입력시 에러', () => {
-      cy.inputPrice(500)
+    it(`${UNIT_PRICE}원 이하 입력시 에러`, () => {
+      cy.inputPrice(UNIT_PRICE / 2)
       cy.on('window.alert', text => expect(text).to.be(ErrorMsgs))
     })
   })
   describe('입력값에 따른 정상동작', () => {
-    it('1000원 초과 입력시 구매한 로또 수량 및 아이콘 표시', () => {
-      cy.inputPrice(3000)
+    it(`${UNIT_PRICE}원 초과 입력시 구매한 로또 수량 및 아이콘 표시`, () => {
+      cy.inputPrice(UNIT_PRICE * 3)
       cy.get('purchased-info').should('be.visible')
       cy.get('form-winning').should('be.visible')
       cy.pickedItems().should('have.length', 3)
       cy.get('label[data-cy="amount-label"]').contains(3)
     })
-    it('100원단위 이하는 버림한다.', () => {
-      cy.inputPrice(7700)
+    it('단위금액 이하는 버림한다.', () => {
+      cy.inputPrice(UNIT_PRICE * 7.7)
       cy.pickedItems().should('have.length', 7)
       cy.get('label[data-cy="amount-label"]').contains(7)
     })
