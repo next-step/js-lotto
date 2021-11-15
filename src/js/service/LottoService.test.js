@@ -1,4 +1,3 @@
-import lottoConfig from '../config/lotto.config.js'
 import LottoService from './LottoService.js'
 
 const mockLottoNumbers = [
@@ -32,5 +31,11 @@ describe('로또 서비스 로직의 테스트를 진행한다.', () => {
     lottoService.lottoAnswer = mockLottoAnswer
 
     expect(typeof lottoService.calcLottoBenefitRate()).toBe('number')
+  })
+
+  it('게임을 다시 시작하면 로또의 개수가 초기화된다', () => {
+    expect(lottoService.myLottos.length).toBe(2)
+    lottoService.setInit()
+    expect(lottoService.myLottos.length).toBe(0)
   })
 })
