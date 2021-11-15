@@ -34,8 +34,6 @@ export default class LottoService {
 
   generatorLottoNumber(fixed) {
     this.#purchasedLottos.push(this.getLottoNumbers(fixed))
-
-    console.log(this.#purchasedLottos)
   }
 
   getLottoNumbers(fixed) {
@@ -90,7 +88,6 @@ export default class LottoService {
       benefit += rewardMapper[matches]
     })
 
-    console.log('benefit:', benefit)
     return Math.floor(
       (benefit / (this.#purchasedLottos.length * lottoConfig.price)) * 100 - 100
     )

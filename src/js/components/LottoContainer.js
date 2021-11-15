@@ -28,18 +28,12 @@ export default class LottoContainer extends Component {
                 <label class="flex-auto my-0" id="${ElementId.purchasedLottoAmountLabel}" data-test-element="${CypressDom.lottoCountLabel}"></label>
                 <div class="flex-auto d-flex justify-end pr-1">
                     <label class="switch">
-                    <input type="checkbox" class="lotto-numbers-toggle-button" data-event="${EventType.toggleMyLotto}" data-test-element="${CypressDom.toggleButton}" />
+                    <input type="checkbox" class="lotto-numbers-toggle-button" data-event="${EventType.toggleMyLotto}" id="${ElementId.toggleButton}" data-test-element="${CypressDom.toggleButton}" />
                     <span class="text-base font-normal">번호보기</span>
                     </label>
                 </div>
                 </div>
-                <div class="d-flex flex-wrap" id="${ElementId.purchasedLottoViewer}" data-visible="hidden">
-                <span class="mx-1 text-4xl">🎟️ </span>
-                <span class="mx-1 text-4xl">🎟️ </span>
-                <span class="mx-1 text-4xl">🎟️ </span>
-                <span class="mx-1 text-4xl">🎟️ </span>
-                <span class="mx-1 text-4xl">🎟️ </span>
-                </div>
+                <div class="d-flex flex-wrap" id="${ElementId.purchasedLottoViewer}"></div>
             </section>
             <form class="mt-9 ${ClassName.displayNone}" id="${ElementId.lottoAnswerInput}">
             <label class="flex-auto d-inline-block mb-3"

@@ -14,6 +14,7 @@ const clickEventMapper = {
   [EventType.checkMyLottoResult]: (lottoService) =>
     onCheckMyLottoResult(lottoService),
   [EventType.toggleMyLotto]: () => onToggleMyLottoNumber(),
+  [EventType.resetGame]: (lottoService) => resetGame(lottoService),
 }
 
 export default class App {
@@ -32,7 +33,24 @@ export default class App {
     this.#rootContainer.addEventListener(Event.onClick, (event) => {
       const clickEvent = event.target.dataset.event
 
+      console.log(event)
+
       if (!clickEvent) {
+        return
+      }
+
+      console.log('on')
+      clickEventMapper[clickEvent](this.#lottoService)
+    })
+
+    $('.modal').addEventListener(Event.onClick, (event) => {
+      const clickEvent = event.target.dataset.event
+
+      if (!clickEvent) {
+        return
+      }
+
+      if (clickEvent !== EventType.resetGame) {
         return
       }
 
@@ -42,8 +60,6 @@ export default class App {
 }
 
 function onLottoPurchase(lottoService) {
-  console.log('I buy Lotto!')
-
   const money = Number($('#' + ElementId.purchaseInput).value)
 
   if (money === 0 || money % lottoService.lottoPrice !== 0) {
@@ -55,16 +71,15 @@ function onLottoPurchase(lottoService) {
 
   lottoService.autoPurchase(lottoAmount)
 
-  setLottoViewVisible()
+  setLottoViewVisible(true)
 
   handlePurchaseLotto(lottoService.myLottos)
 }
 
 function onCheckMyLottoResult(lottoService) {
-  console.log('Check my Lotto Result!')
-
   const LottoAnswer = $('#' + ElementId.lottoAnswerInput)
 
+  console.log('on2')
   const answer = new FormData(LottoAnswer)
 
   const base = answer
@@ -116,22 +131,64 @@ function validLottoNumber(number) {
 }
 
 function onToggleMyLottoNumber() {
-  const viewer = $('#' + ElementId.purchasedLottoViewer)
+  const isVisible = $('#' + ElementId.toggleButton).checked
 
-  const isVisible = viewer.dataset.visible === 'visible' ? true : false
-  console.log(isVisible)
+  toggleLottoVisible(isVisible)
+}
+
+function toggleLottoVisible(visible) {
   const details = document.querySelectorAll('.lotto-detail')
 
   details.forEach((detail) => {
-    detail.style.display = isVisible ? 'none' : ''
+    detail.style.display = visible ? '' : 'none'
   })
-
-  viewer.dataset.visible = isVisible ? 'hidden' : 'visible'
 }
 
-function setLottoViewVisible() {
-  $('#' + ElementId.purchasedLotto).classList.remove(ClassName.displayNone)
-  $('#' + ElementId.lottoAnswerInput).classList.remove(ClassName.displayNone)
+function resetGame(lottoService) {
+  lottoService.setInit()
+  resetUI()
+}
+
+function resetUI() {
+  const modal = document.querySelector('.modal')
+  const toggleButton = $('#' + ElementId.toggleButton)
+  const purchaseButton = $('#' + ElementId.purchaseInput)
+  const isVisible = toggleButton.checked
+
+  setLottoViewVisible(false)
+
+  modal.classList.remove('open')
+  purchaseButton.value = ''
+  purchaseButton.focus()
+
+  document
+    .getElementsByName(Name.baseLottoNumbers)
+    .forEach((el) => (el.value = ''))
+  document
+    .getElementsByName(Name.bonusLottoNumber)
+    .forEach((el) => (el.value = ''))
+
+  $(
+    '#' + ElementId.purchasedLottoAmountLabel
+  ).innerText = `총 0개를 구매하였습니다.`
+
+  $('#' + ElementId.purchasedLottoViewer).innerHTML = ''
+
+  if (toggleButton.checked) {
+    toggleLottoVisible(isVisible)
+    toggleButton.checked = false
+  }
+}
+
+function setLottoViewVisible(visible) {
+  if (visible) {
+    $('#' + ElementId.purchasedLotto).classList.remove(ClassName.displayNone)
+    $('#' + ElementId.lottoAnswerInput).classList.remove(ClassName.displayNone)
+    return
+  }
+
+  $('#' + ElementId.purchasedLotto).classList.add(ClassName.displayNone)
+  $('#' + ElementId.lottoAnswerInput).classList.add(ClassName.displayNone)
 }
 
 function handlePurchaseLotto(lottoNumbers) {

@@ -4,6 +4,6 @@ export default Object.freeze({
   purchaseInput: 'purchase-input',
   purchasedLotto: 'purchased-lotto',
   purchasedLottoAmountLabel: 'purchased-lotto-amount-label',
-  purchasedLottoViewer: 'purchased-lotto-viewer',
   benefitRateLabel: 'benefit-rate-label',
+  toggleButton: 'TOGGLE_BUTTON',
 })
