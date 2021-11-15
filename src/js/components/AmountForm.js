@@ -1,4 +1,19 @@
-export function AmountForm($el) {
+import {MIN_PURCHASE_AMOUNT, PRICE_PER_TICKET} from '../consts.js';
+
+export function AmountForm($el, purchaseTickets) {
+
+    function onSubmitAmount(event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const amount = Number(formData.get('amount'));
+        if (!amount || amount % PRICE_PER_TICKET > 0) {
+            alert('로또 구입 금액을 1,000원 단위로 입력해 주세요.');
+            return;
+        }
+
+        purchaseTickets(amount);
+    }
 
     function render() {
         $el.innerHTML = `
@@ -11,11 +26,16 @@ export function AmountForm($el) {
                     type="number"
                     class="w-100 mr-2 pl-2"
                     placeholder="구입 금액"
+                    name="amount"
+                    min="${MIN_PURCHASE_AMOUNT}"
                   />
-                  <button type="button" class="btn btn-cyan">확인</button>
+                  <button type="submit" class="btn btn-cyan">확인</button>
                 </div>
             </form>
         `;
+
+        $el.querySelector('form')
+           .addEventListener('submit', onSubmitAmount);
     }
 
     render();
