@@ -28,6 +28,15 @@
   flex-wrap: nowrap;
 }
 
+/* Flex justify */
+.align-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
 /* Flex */
 .flex-1 {
   flex: 1 1 0%;

@@ -28,6 +28,14 @@
   display: inline-block;
 }
 
+.d-inline-flex {
+  display: inline-flex;
+}
+
+.d-none {
+  display: none;
+}
+
 /* Layout - Top / Right / Bottom / Left */
 
 .mt-2 {
