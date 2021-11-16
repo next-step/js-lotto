@@ -1,4 +1,4 @@
-import {$} from '../utils/document.js';
+import {$, replaceRender} from '../utils/document.js';
 
 export const Tickets = ($el, tickets) => {
 
@@ -10,32 +10,6 @@ export const Tickets = ($el, tickets) => {
         state.isShowNumbers = !state.isShowNumbers;
         renderLottoNumbers($('[data-component="lotto-numbers"]', $el));
     };
-
-    function render() {
-        const ticketsWrap = document.createElement('div');
-        ticketsWrap.setAttribute('data-component', $el.getAttribute('data-component'));
-        ticketsWrap.insertAdjacentHTML('beforeend', `
-            <section class="mt-9">
-                <div class="d-flex">
-                    <label class="flex-auto my-0" data-test="tickets-count">총 ${tickets.length}개를 구매하였습니다.</label>
-                    <div class="flex-auto d-flex justify-end pr-1">
-                        <label class="switch" data-test="number-detail-switch">
-                            <input type="checkbox" class="lotto-numbers-toggle-button" data-test="amount-input"/>
-                            <span class="text-base font-normal">번호보기</span>
-                        </label>
-                    </div>
-                </div>
-                <div data-component="lotto-numbers"><div>
-            </section>
-        `);
-        $('.switch', ticketsWrap)
-            .addEventListener('change', switchShowNumbers);
-
-        renderLottoNumbers($('[data-component="lotto-numbers"]', ticketsWrap));
-
-        $el.replaceWith(ticketsWrap);
-        $el = ticketsWrap;
-    }
 
     function renderLottoNumbers($lottoNumbers) {
         const {isShowNumbers} = state;
@@ -51,16 +25,37 @@ export const Tickets = ($el, tickets) => {
             `;
         });
 
-        const lottoNumbersWrap = document.createElement('div');
-        lottoNumbersWrap.setAttribute('data-component', $lottoNumbers.getAttribute('data-component'));
-        lottoNumbersWrap.insertAdjacentHTML('beforeend', `
-            <ul id="lotto-icons" class="${lottoNumbersWrapClassNames.join(' ')}">
-                ${lottoNumbers.join('')}
-            </ul>
-        `);
-
-        $lottoNumbers.replaceWith(lottoNumbersWrap);
+        replaceRender({
+            $originEl: $lottoNumbers,
+            replaceHTML: `
+                <ul id="lotto-icons" class="${lottoNumbersWrapClassNames.join(' ')}">
+                    ${lottoNumbers.join('')}
+                </ul>
+            `,
+        });
     }
 
-    render();
+    $el = replaceRender({
+        $originEl: $el,
+        replaceHTML: `
+            <section class="mt-9">
+                <div class="d-flex">
+                    <label class="flex-auto my-0" data-test="tickets-count">총 ${tickets.length}개를 구매하였습니다.</label>
+                    <div class="flex-auto d-flex justify-end pr-1">
+                        <label class="switch" data-test="number-detail-switch">
+                            <input type="checkbox" class="lotto-numbers-toggle-button" data-test="amount-input"/>
+                            <span class="text-base font-normal">번호보기</span>
+                        </label>
+                    </div>
+                </div>
+                <div data-component="lotto-numbers"><div>
+            </section>
+        `,
+        bindEvents: [
+            ($el) => $('.switch', $el)
+                .addEventListener('change', switchShowNumbers),
+        ],
+    });
+
+    renderLottoNumbers($('[data-component="lotto-numbers"]', $el));
 };

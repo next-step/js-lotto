@@ -1,5 +1,5 @@
 import {MIN_PURCHASE_AMOUNT, PRICE_PER_TICKET} from '../consts.js';
-import {$} from '../utils/document.js';
+import {$, replaceRender} from '../utils/document.js';
 
 export const AmountForm = ($el, purchaseTickets) => {
 
@@ -16,25 +16,29 @@ export const AmountForm = ($el, purchaseTickets) => {
         purchaseTickets(amount);
     }
 
-    $el.insertAdjacentHTML('beforeend', `
-        <form class="mt-5" data-test="amount-form">
-            <label class="mb-2 d-inline-block">
-                구입할 금액을 입력해주세요.
-            </label>
-            <div class="d-flex">
-                <input
-                    type="number"
-                    class="w-100 mr-2 pl-2"
-                    placeholder="구입 금액"
-                    name="amount"
-                    min="${MIN_PURCHASE_AMOUNT}"
-                    data-test="amount-input"
-                />
-                <button type="submit" class="btn btn-cyan">확인</button>
-            </div>
-        </form>
-    `);
-
-    $('form', $el)
-        .addEventListener('submit', onSubmitAmount);
+    replaceRender({
+        $originEl: $el,
+        replaceHTML: `
+            <form class="mt-5" data-test="amount-form">
+                <label class="mb-2 d-inline-block">
+                    구입할 금액을 입력해주세요.
+                </label>
+                <div class="d-flex">
+                    <input
+                        type="number"
+                        class="w-100 mr-2 pl-2"
+                        placeholder="구입 금액"
+                        name="amount"
+                        min="${MIN_PURCHASE_AMOUNT}"
+                        data-test="amount-input"
+                    />
+                    <button type="submit" class="btn btn-cyan">확인</button>
+                </div>
+            </form>
+        `,
+        bindEvents: [
+            ($el) => $('form', $el)
+                .addEventListener('submit', onSubmitAmount),
+        ],
+    });
 };
