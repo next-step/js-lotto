@@ -3,7 +3,8 @@ import LottoTickets from "./components/LottoTickets/index.js";
 import LottoWinningNumber from "./components/LottoWinningNumber/index.js";
 import LottoResultModal from "./components/LottoResultModal/LottoResultModal.js";
 
-import { MAX, LOTTOS_ACTION, LOTTOS_STATE, LOTTOS_RESULT } from "./utils/constants.js";
+import { LOTTOS_ACTION, LOTTOS_STATE, LOTTOS_RESULT, LOTTO_MIN, LOTTO_MAX } from "./utils/constants.js";
+import { shuffle } from "./utils/helpers.js";
 
 export default class App {
   constructor(store, initialState) {
@@ -73,15 +74,7 @@ export default class App {
   };
 
   updateLottos = (prevState, purchaseMoney) => {
-    const totalLottos = purchaseMoney / 1000;
-    const lottos = new Array(totalLottos).fill([]).map(() => {
-      const lotto = new Set();
-      while (lotto.size < 6) {
-        lotto.add(Math.floor(Math.random() * MAX) + 1);
-      }
-      return [...lotto];
-    });
-
+    const lottos = new Array(purchaseMoney / 1000).fill([]).map(() => shuffle(LOTTO_MIN, LOTTO_MAX, 6));
     return [
       {
         ...prevState,
