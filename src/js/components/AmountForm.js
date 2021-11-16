@@ -18,19 +18,19 @@ export const AmountForm = ($el, purchaseTickets) => {
     function render() {
         $el.innerHTML = `
             <form class="mt-5" data-test="amount-form">
-                <label class="mb-2 d-inline-block"
-                  >구입할 금액을 입력해주세요.
+                <label class="mb-2 d-inline-block">
+                    구입할 금액을 입력해주세요.
                 </label>
                 <div class="d-flex">
-                  <input
-                    type="number"
-                    class="w-100 mr-2 pl-2"
-                    placeholder="구입 금액"
-                    name="amount"
-                    min="${MIN_PURCHASE_AMOUNT}"
-                    data-test="amount-input"
-                  />
-                  <button type="submit" class="btn btn-cyan">확인</button>
+                    <input
+                        type="number"
+                        class="w-100 mr-2 pl-2"
+                        placeholder="구입 금액"
+                        name="amount"
+                        min="${MIN_PURCHASE_AMOUNT}"
+                        data-test="amount-input"
+                    />
+                    <button type="submit" class="btn btn-cyan">확인</button>
                 </div>
             </form>
         `;
