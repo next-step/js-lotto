@@ -1,5 +1,6 @@
 import {MIN_PURCHASE_AMOUNT, PRICE_PER_TICKET} from '../consts.js';
 import {$, replaceRender} from '../utils/element.js';
+import ModalService from '../services/ModalService.js';
 
 /**
  * @param $el
@@ -8,13 +9,13 @@ import {$, replaceRender} from '../utils/element.js';
  */
 export const AmountForm = ($el, props) => {
 
-    function onSubmitAmount(event) {
+    async function onSubmitAmount(event) {
         event.preventDefault();
 
         const formData = new FormData(event.target);
         const amount = Number(formData.get('amount'));
         if (!amount || amount % PRICE_PER_TICKET > 0) {
-            alert('로또 구입 금액을 1,000원 단위로 입력해 주세요.');
+            await ModalService.alert('로또 구입 금액을 1,000원 단위로 입력해 주세요.');
             return;
         }
 
