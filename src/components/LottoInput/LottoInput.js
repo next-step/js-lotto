@@ -1,5 +1,5 @@
-import { $ } from "../../utils/selectors.js";
 import Component from "../component.js";
+import { LOTTOS_ACTION } from "../../utils/constants.js";
 
 export default class LottoInput extends Component {
   constructor(app, props) {
@@ -35,7 +35,7 @@ export default class LottoInput extends Component {
         purchase.value = "";
         return;
       }
-      this.props.setState({ type: "UPDATE_LOTTOS", data: purchase.value });
+      this.props.setState({ type: LOTTOS_ACTION.UPDATE, data: purchase.value });
     });
   };
 }

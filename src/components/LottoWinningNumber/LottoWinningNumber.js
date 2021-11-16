@@ -1,6 +1,6 @@
-import { $, $all } from "../../utils/selectors.js";
 import Component from "../component.js";
 import { inputTemplate } from "./template.js";
+import { LOTTOS_ACTION } from "../../utils/constants.js";
 
 export default class LottoWinningNumber extends Component {
   constructor(app, props) {
@@ -47,7 +47,7 @@ export default class LottoWinningNumber extends Component {
       const winningNums = Array.prototype.map.call(e.target.elements["win-num"], (winNum) => Number(winNum.value));
       
       this.props.setState({
-        type: "UPDATE_LOTTO_RESULT",
+        type: LOTTOS_ACTION.SHOW_RESULT,
         data: { winningNums, bonusNum },
       });
     });

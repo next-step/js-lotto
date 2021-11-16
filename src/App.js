@@ -3,7 +3,7 @@ import LottoTickets from "./components/LottoTickets/index.js";
 import LottoWinningNumber from "./components/LottoWinningNumber/index.js";
 import LottoResultModal from "./components/LottoResultModal/LottoResultModal.js";
 
-import { MAX } from "./utils/constants.js";
+import { MAX, LOTTOS_ACTION } from "./utils/constants.js";
 
 export default class App {
   constructor(store, initialState) {
@@ -57,15 +57,15 @@ export default class App {
 
   buildNewState = (prevState, { type, data }) => {
     switch (type) {
-      case "UPDATE_LOTTOS":
+      case LOTTOS_ACTION.UPDATE:
         return this.updateLottos(prevState, data);
-      case "TOGGLE_LOTTO_DISPLAY":
+      case LOTTOS_ACTION.TOGGLE:
         return this.updateToggleDisplay(prevState, data);
-      case "UPDATE_LOTTO_RESULT":
+      case LOTTOS_ACTION.SHOW_RESULT:
         return this.updateLottoResult(prevState, data);
-      case "CLOSE_MODAL":
+      case LOTTOS_ACTION.CLOSE_MODAL:
         return this.closeResultModal(prevState);
-      case "RESTART":
+      case LOTTOS_ACTION.RESTART:
         return this.restart();
       default:
         prevState;

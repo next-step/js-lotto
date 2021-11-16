@@ -1,5 +1,5 @@
-import { $, $all } from "../../utils/selectors.js";
 import Component from "../component.js";
+import { LOTTOS_ACTION } from "../../utils/constants.js";
 
 export default class LottoResultModal extends Component {
   constructor(app, props) {
@@ -10,10 +10,10 @@ export default class LottoResultModal extends Component {
   mount = () => {
     this.$app.addEventListener("click", (e) => {
       if (e.target.closest(".btn-restart")) {
-        this.props.setState({ type: "RESTART" });
+        this.props.setState({ type: LOTTOS_ACTION.RESTART });
       }
       if (e.target.closest(".modal-close")) {
-        this.props.setState({ type: "CLOSE_MODAL" });
+        this.props.setState({ type: LOTTOS_ACTION.CLOSE_MODAL });
       }
     });
   };

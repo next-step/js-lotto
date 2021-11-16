@@ -1,5 +1,5 @@
-import { $ } from "../../utils/selectors.js";
 import Component from "../component.js";
+import { LOTTOS_ACTION } from "../../utils/constants.js";
 
 export default class LottoTickets extends Component {
   constructor(app, props) {
@@ -37,7 +37,7 @@ export default class LottoTickets extends Component {
     this.$app.addEventListener("change", (e) => {
       if (e.target.className === "lotto-numbers-toggle-button") {
         this.props.setState({
-          type: "TOGGLE_LOTTO_DISPLAY",
+          type: LOTTOS_ACTION.TOGGLE,
           data: e.target.checked,
         });
       }
