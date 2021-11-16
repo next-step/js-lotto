@@ -44,26 +44,32 @@ export default class LottoContainer extends Component {
                 <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
                 <div>
                     <input
+                    data-test-element="${CypressDom.baseLottoInput}"
                     name="${Name.baseLottoNumbers}"
                     type="number"
                     class="winning-number mx-1 text-center"/>
                     <input
+                    data-test-element="${CypressDom.baseLottoInput}"
                     name="${Name.baseLottoNumbers}"
                     type="number"
                     class="winning-number mx-1 text-center"/>
                     <input
+                    data-test-element="${CypressDom.baseLottoInput}"
                     name="${Name.baseLottoNumbers}"
                     type="number"
                     class="winning-number mx-1 text-center"/>
                     <input
+                    data-test-element="${CypressDom.baseLottoInput}"
                     name="${Name.baseLottoNumbers}"
                     type="number"
                     class="winning-number mx-1 text-center"/>
                     <input
+                    data-test-element="${CypressDom.baseLottoInput}"
                     name="${Name.baseLottoNumbers}"
                     type="number"
                     class="winning-number mx-1 text-center"/>
                     <input
+                    data-test-element="${CypressDom.baseLottoInput}"
                     name="${Name.baseLottoNumbers}"
                     type="number"
                     class="winning-number mx-1 text-center"/>
@@ -72,7 +78,8 @@ export default class LottoContainer extends Component {
                 <div class="bonus-number-container flex-grow">
                 <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
                 <div class="d-flex justify-center">
-                    <input type="number" class="bonus-number text-center" name="${Name.bonusLottoNumber}"
+                    <input type="number" class="bonus-number text-center" 
+                    data-test-element="${CypressDom.bonusLottoInput}" name="${Name.bonusLottoNumber}"
                      />
                 </div>
                 </div>
@@ -81,8 +88,9 @@ export default class LottoContainer extends Component {
                 type="button"
                 class="open-result-modal-button mt-5 btn btn-cyan w-100"
                 data-event="${EventType.checkMyLottoResult}"
+                data-test-element="${CypressDom.benefitRateButton}"
             >
-                결과 확인하기
+                결과 확인하기!
             </button>
             </form>
         `
