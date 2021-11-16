@@ -3,7 +3,7 @@ import LottoTickets from "./components/LottoTickets/index.js";
 import LottoWinningNumber from "./components/LottoWinningNumber/index.js";
 import LottoResultModal from "./components/LottoResultModal/LottoResultModal.js";
 
-import { MAX, LOTTOS_ACTION } from "./utils/constants.js";
+import { MAX, LOTTOS_ACTION, LOTTOS_STATE, LOTTOS_RESULT } from "./utils/constants.js";
 
 export default class App {
   constructor(store, initialState) {
@@ -99,16 +99,7 @@ export default class App {
   updateLottoResult = (prevState, { winningNums, bonusNum }) => {
     const { lottos, purchaseMoney } = prevState;
     let prizeMoney = 0;
-    let result = {
-      0: [0, 0],
-      1: [0, 0],
-      2: [0, 0],
-      3: [0, 5000],
-      4: [0, 50000],
-      5: [0, 150000],
-      "5a": [0, 30000000],
-      6: [0, 2000000000],
-    };
+    let result = { ...LOTTOS_RESULT };
 
     lottos.forEach((lotto) => {
       // prettier-ignore
@@ -147,28 +138,6 @@ export default class App {
     return [{ ...prevState, showResultModal: false, toggle: false }, ["lottoResultModal"]];
   };
   restart = () => {
-    return [
-      {
-        lottos: [],
-        winningNums: [0, 0, 0, 0, 0, 0],
-        bonusNum: 0,
-        result: {
-          0: [0, 0],
-          1: [0, 0],
-          2: [0, 0],
-          3: [0, 5000],
-          4: [0, 50000],
-          5: [0, 150000],
-          "5a": [0, 30000000],
-          6: [0, 2000000000],
-        },
-        purchaseMoney: 0,
-        toggle: false,
-        showResultModal: false,
-        prizeMoney: 0,
-        earningRatio: 0,
-      },
-      ["lottoInput", "lottoTicket", "lottoWinningNumber", "lottoResultModal"],
-    ];
+    return [LOTTOS_STATE, ["lottoInput", "lottoTicket", "lottoWinningNumber", "lottoResultModal"]];
   };
 }
