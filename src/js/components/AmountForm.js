@@ -1,6 +1,6 @@
 import {MIN_PURCHASE_AMOUNT, PRICE_PER_TICKET} from '../consts.js';
 
-export function AmountForm($el, purchaseTickets) {
+export const AmountForm = ($el, purchaseTickets) => {
 
     function onSubmitAmount(event) {
         event.preventDefault();
@@ -40,4 +40,4 @@ export function AmountForm($el, purchaseTickets) {
     }
 
     render();
-}
+};

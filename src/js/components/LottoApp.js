@@ -1,9 +1,9 @@
-import {AmountForm} from './components/AmountForm.js';
-import {autoGenerateLottoNumbers} from './lottoUtils.js';
-import {PRICE_PER_TICKET} from './consts.js';
-import {Tickets} from './components/Tickets.js';
+import {AmountForm} from './AmountForm.js';
+import {autoGenerateLottoNumbers} from '../lottoUtils.js';
+import {PRICE_PER_TICKET} from '../consts.js';
+import {Tickets} from './Tickets.js';
 
-export function Lotto($el) {
+export const LottoApp = ($el) => {
 
     const state = {
         amount: null,
@@ -13,7 +13,7 @@ export function Lotto($el) {
     function purchaseTickets(amount) {
         state.amount = amount;
         state.tickets = autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
-        new Tickets($el.querySelector('[data-component="tickets"]'), state.tickets);
+        Tickets($el.querySelector('[data-component="tickets"]'), state.tickets);
     };
 
     function render() {
@@ -128,8 +128,8 @@ export function Lotto($el) {
       </div> 
         `;
 
-        new AmountForm($el.querySelector('[data-component="amount-form"]'), purchaseTickets);
+        AmountForm($el.querySelector('[data-component="amount-form"]'), purchaseTickets);
     }
 
     render();
-}
+};

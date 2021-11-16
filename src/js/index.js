@@ -1,3 +1,3 @@
-import {Lotto} from './Lotto.js';
+import {LottoApp} from './components/LottoApp.js';
 
-new Lotto(document.querySelector('#app'));
+LottoApp(document.querySelector('#app'));

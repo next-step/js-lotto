@@ -1,4 +1,4 @@
-export function Tickets($el, tickets) {
+export const Tickets = ($el, tickets) => {
 
     const state = {
         isShowNumbers: false,
@@ -52,4 +52,4 @@ export function Tickets($el, tickets) {
     }
 
     render();
-}
+};
