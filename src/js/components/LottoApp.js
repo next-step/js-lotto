@@ -6,6 +6,9 @@ import {$, replaceRender} from '../utils/document.js';
 
 export const LottoApp = ($el) => {
 
+    /**
+     * @type {{amount: number | null, tickets: Ticket[]}}
+     */
     const state = {
         amount: null,
         tickets: [],
@@ -14,7 +17,7 @@ export const LottoApp = ($el) => {
     function purchaseTickets(amount) {
         state.amount = amount;
         state.tickets = autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
-        Tickets($('[data-component="tickets"]', $el), state.tickets);
+        Tickets($('[data-component="tickets"]', $el), {tickets: state.tickets});
     };
 
     $el = replaceRender({
@@ -128,5 +131,5 @@ export const LottoApp = ($el) => {
         `,
     });
 
-    AmountForm($('[data-component="amount-form"]', $el), purchaseTickets);
+    AmountForm($('[data-component="amount-form"]', $el), {purchaseTickets});
 };

@@ -1,7 +1,12 @@
 import {MIN_PURCHASE_AMOUNT, PRICE_PER_TICKET} from '../consts.js';
 import {$, replaceRender} from '../utils/document.js';
 
-export const AmountForm = ($el, purchaseTickets) => {
+/**
+ * @param $el
+ * @param props
+ * @param {function} props.purchaseTickets
+ */
+export const AmountForm = ($el, props) => {
 
     function onSubmitAmount(event) {
         event.preventDefault();
@@ -13,7 +18,7 @@ export const AmountForm = ($el, purchaseTickets) => {
             return;
         }
 
-        purchaseTickets(amount);
+        props.purchaseTickets(amount);
     }
 
     replaceRender({

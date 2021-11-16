@@ -1,6 +1,17 @@
 import {$, replaceRender} from '../utils/document.js';
 
-export const Tickets = ($el, tickets) => {
+/**
+ * @typedef {object} Ticket
+ * @property {number[]} normalNumbers
+ * @property {number} bonusNumber
+ */
+
+/**
+ * @param $el
+ * @param props
+ * @param {Ticket[]} props.tickets
+ */
+export const Tickets = ($el, props) => {
 
     const state = {
         isShowNumbers: false,
@@ -16,7 +27,7 @@ export const Tickets = ($el, tickets) => {
         const lottoNumbersWrapClassNames = ['d-flex', 'flex-wrap', isShowNumbers && 'flex-col'];
         const lottoDetailClassNames = ['lotto-detail', isShowNumbers ? 'd-inline' : 'd-none'];
 
-        const lottoNumbers = tickets.map(({normalNumbers}) => {
+        const lottoNumbers = props.tickets.map(({normalNumbers}) => {
             return `
                 <li class="mx-1 text-4xl lotto-wrapper" data-test="lotto-number">
                     <span class="lotto-icon">🎟️ </span>
@@ -40,7 +51,7 @@ export const Tickets = ($el, tickets) => {
         replaceHTML: `
             <section class="mt-9">
                 <div class="d-flex">
-                    <label class="flex-auto my-0" data-test="tickets-count">총 ${tickets.length}개를 구매하였습니다.</label>
+                    <label class="flex-auto my-0" data-test="tickets-count">총 ${props.tickets.length}개를 구매하였습니다.</label>
                     <div class="flex-auto d-flex justify-end pr-1">
                         <label class="switch" data-test="number-detail-switch">
                             <input type="checkbox" class="lotto-numbers-toggle-button" data-test="amount-input"/>

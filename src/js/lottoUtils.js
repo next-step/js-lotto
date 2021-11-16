@@ -2,6 +2,10 @@ const MIN_NUMBER = 1;
 const MAX_NUMBER = 45;
 const COUNT_NUMBERS_PER_TICKET = 7;
 
+/**
+ * @param count
+ * @return {Ticket[]}
+ */
 export function autoGenerateLottoNumbers(count) {
     return Array(count)
         .fill(null)
