@@ -2,6 +2,7 @@ import {AmountForm} from './AmountForm.js';
 import {autoGenerateLottoNumbers} from '../lottoUtils.js';
 import {PRICE_PER_TICKET} from '../consts.js';
 import {Tickets} from './Tickets.js';
+import {$} from '../utils/document.js';
 
 export const LottoApp = ($el) => {
 
@@ -13,7 +14,7 @@ export const LottoApp = ($el) => {
     function purchaseTickets(amount) {
         state.amount = amount;
         state.tickets = autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
-        Tickets($el.querySelector('[data-component="tickets"]'), state.tickets);
+        Tickets($('[data-component="tickets"]', $el), state.tickets);
     };
 
     $el.insertAdjacentHTML('beforeend', `
@@ -124,5 +125,5 @@ export const LottoApp = ($el) => {
         </div> 
     `);
 
-    AmountForm($el.querySelector('[data-component="amount-form"]'), purchaseTickets);
+    AmountForm($('[data-component="amount-form"]', $el), purchaseTickets);
 };

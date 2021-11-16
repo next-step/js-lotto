@@ -1,3 +1,5 @@
+import {$} from '../utils/document.js';
+
 export const Tickets = ($el, tickets) => {
 
     const state = {
@@ -6,7 +8,7 @@ export const Tickets = ($el, tickets) => {
 
     function switchShowNumbers() {
         state.isShowNumbers = !state.isShowNumbers;
-        renderLottoNumbers($el.querySelector('[data-component="lotto-numbers"]'));
+        renderLottoNumbers($('[data-component="lotto-numbers"]', $el));
     };
 
     function render() {
@@ -26,10 +28,10 @@ export const Tickets = ($el, tickets) => {
                 <div data-component="lotto-numbers"><div>
             </section>
         `);
-        ticketsWrap.querySelector('.switch')
-                   .addEventListener('change', switchShowNumbers);
+        $('.switch', ticketsWrap)
+            .addEventListener('change', switchShowNumbers);
 
-        renderLottoNumbers(ticketsWrap.querySelector('[data-component="lotto-numbers"]'));
+        renderLottoNumbers($('[data-component="lotto-numbers"]', ticketsWrap));
 
         $el.replaceWith(ticketsWrap);
         $el = ticketsWrap;

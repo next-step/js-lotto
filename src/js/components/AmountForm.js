@@ -1,4 +1,5 @@
 import {MIN_PURCHASE_AMOUNT, PRICE_PER_TICKET} from '../consts.js';
+import {$} from '../utils/document.js';
 
 export const AmountForm = ($el, purchaseTickets) => {
 
@@ -34,6 +35,6 @@ export const AmountForm = ($el, purchaseTickets) => {
         </form>
     `);
 
-    $el.querySelector('form')
-       .addEventListener('submit', onSubmitAmount);
+    $('form', $el)
+        .addEventListener('submit', onSubmitAmount);
 };
