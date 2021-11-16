@@ -1,3 +1,5 @@
+import {getRandomNumber} from '../utils/math.js';
+
 const MIN_NUMBER = 1;
 const MAX_NUMBER = 45;
 const COUNT_NUMBERS_PER_TICKET = 7;
@@ -6,7 +8,7 @@ const COUNT_NUMBERS_PER_TICKET = 7;
  * @param count
  * @return {Ticket[]}
  */
-export function autoGenerateLottoNumbers(count) {
+function autoGenerateLottoNumbers(count) {
     return Array(count)
         .fill(null)
         .map(_ => {
@@ -27,6 +29,6 @@ function makeNonDuplicatedRandomNumbers(count, min, max) {
     return [...numbers];
 }
 
-function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+export default {
+    autoGenerateLottoNumbers,
+};

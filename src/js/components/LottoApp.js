@@ -1,8 +1,8 @@
 import {AmountForm} from './AmountForm.js';
-import {autoGenerateLottoNumbers} from '../lottoUtils.js';
+import LottoService from '../services/LottoService.js';
 import {PRICE_PER_TICKET} from '../consts.js';
 import {Tickets} from './Tickets.js';
-import {$, replaceRender} from '../utils/document.js';
+import {$, replaceRender} from '../utils/element.js';
 
 export const LottoApp = ($el) => {
 
@@ -16,7 +16,7 @@ export const LottoApp = ($el) => {
 
     function purchaseTickets(amount) {
         state.amount = amount;
-        state.tickets = autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
+        state.tickets = LottoService.autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
         Tickets($('[data-component="tickets"]', $el), {tickets: state.tickets});
     };
 

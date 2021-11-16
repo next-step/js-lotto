@@ -1,5 +1,5 @@
 import {MIN_PURCHASE_AMOUNT, PRICE_PER_TICKET} from '../consts.js';
-import {$, replaceRender} from '../utils/document.js';
+import {$, replaceRender} from '../utils/element.js';
 
 /**
  * @param $el

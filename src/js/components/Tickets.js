@@ -1,4 +1,4 @@
-import {$, replaceRender} from '../utils/document.js';
+import {$, replaceRender} from '../utils/element.js';
 
 /**
  * @typedef {object} Ticket
