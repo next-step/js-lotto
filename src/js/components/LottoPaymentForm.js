@@ -10,6 +10,7 @@ class LottoPaymentForm {
 
   init() {
     this.$paymentForm.addEventListener("submit", this.onPaymentSubmit.bind(this));
+    this.$paymentForm.elements[this.paymentInputName].addEventListener("keyup", this.onPaymentChange.bind(this));
   }
 
   onPaymentSubmit(event) {
@@ -28,6 +29,10 @@ class LottoPaymentForm {
     lottoStore.setState(LOTTO_STORE_KEY.LOTTO_NUMBERS, lottoNumbers);
 
     event.target.reset();
+  }
+
+  onPaymentChange({ target }) {
+    target.value = target.value.replaceAll(/[^0-9]/g, "");
   }
 }
 
