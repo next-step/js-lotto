@@ -1,7 +1,7 @@
 const $ = (selector) => document.querySelector(selector);
 
 function App() {
-  const lottoTicketsList = [];
+  let lottoTicketsList = [];
   let IsLottoNumberVisible = false;
 
   const isValidPrice = (price) => {
@@ -141,6 +141,7 @@ function App() {
     if (!isValidPrice(purchasePrice)) {
       return;
     }
+    lottoTicketsList = [];
 
     const purchaseAmounts = Math.floor(purchasePrice / 1000);
     generateLottoNumbers(purchaseAmounts);
