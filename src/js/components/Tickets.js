@@ -6,11 +6,13 @@ export const Tickets = ($el, tickets) => {
 
     function switchShowNumbers() {
         state.isShowNumbers = !state.isShowNumbers;
-        renderLottoNumbers();
+        renderLottoNumbers($el.querySelector('[data-component="lotto-numbers"]'));
     };
 
     function render() {
-        $el.innerHTML = `
+        const ticketsWrap = document.createElement('div');
+        ticketsWrap.setAttribute('data-component', $el.getAttribute('data-component'));
+        ticketsWrap.insertAdjacentHTML('beforeend', `
             <section class="mt-9">
                 <div class="d-flex">
                     <label class="flex-auto my-0" data-test="tickets-count">총 ${tickets.length}개를 구매하였습니다.</label>
@@ -23,14 +25,17 @@ export const Tickets = ($el, tickets) => {
                 </div>
                 <div data-component="lotto-numbers"><div>
             </section>
-        `;
-        renderLottoNumbers();
+        `);
+        ticketsWrap.querySelector('.switch')
+                   .addEventListener('change', switchShowNumbers);
 
-        $el.querySelector('.switch')
-           .addEventListener('change', switchShowNumbers);
+        renderLottoNumbers(ticketsWrap.querySelector('[data-component="lotto-numbers"]'));
+
+        $el.replaceWith(ticketsWrap);
+        $el = ticketsWrap;
     }
 
-    function renderLottoNumbers() {
+    function renderLottoNumbers($lottoNumbers) {
         const {isShowNumbers} = state;
         const lottoNumbersWrapClassNames = ['d-flex', 'flex-wrap', isShowNumbers && 'flex-col'];
         const lottoDetailClassNames = ['lotto-detail', isShowNumbers ? 'd-inline' : 'd-none'];
@@ -44,11 +49,15 @@ export const Tickets = ($el, tickets) => {
             `;
         });
 
-        $el.querySelector('[data-component="lotto-numbers"]').innerHTML = `
+        const lottoNumbersWrap = document.createElement('div');
+        lottoNumbersWrap.setAttribute('data-component', $lottoNumbers.getAttribute('data-component'));
+        lottoNumbersWrap.insertAdjacentHTML('beforeend', `
             <ul id="lotto-icons" class="${lottoNumbersWrapClassNames.join(' ')}">
                 ${lottoNumbers.join('')}
             </ul>
-        `;
+        `);
+
+        $lottoNumbers.replaceWith(lottoNumbersWrap);
     }
 
     render();
