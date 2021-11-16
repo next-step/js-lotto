@@ -4,7 +4,7 @@ export const MESSAGES = {
 
 export const MAX = 45;
 
-export const INITIAL_STATE = {
+export const LOTTOS_STATE = {
   lottos: [],
   winningNums: [0, 0, 0, 0, 0, 0],
   bonusNum: 0,
