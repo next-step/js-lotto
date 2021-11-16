@@ -14,22 +14,34 @@ export default class App {
 
   init = () => {
     this.store.registerObserver(
-      new LottoInput(".lotto-input", {
-        getState: this.getState,
-        setState: this.setState,
-      }),
-      new LottoTickets(".lotto-tickets", {
-        getState: this.getState,
-        setState: this.setState,
-      }),
-      new LottoWinningNumber(".lotto-win", {
-        getState: this.getState,
-        setState: this.setState,
-      }),
-      new LottoResultModal(".modal", {
-        getState: this.getState,
-        setState: this.setState,
-      })
+      {
+        key: "lottoInput",
+        component: new LottoInput(".lotto-input", {
+          getState: this.getState,
+          setState: this.setState,
+        }),
+      },
+      {
+        key: "lottoTicket",
+        component: new LottoTickets(".lotto-tickets", {
+          getState: this.getState,
+          setState: this.setState,
+        }),
+      },
+      {
+        key: "lottoWinningNumber",
+        component: new LottoWinningNumber(".lotto-win", {
+          getState: this.getState,
+          setState: this.setState,
+        }),
+      },
+      {
+        key: "lottoResultModal",
+        component: new LottoResultModal(".modal", {
+          getState: this.getState,
+          setState: this.setState,
+        }),
+      }
     );
   };
 
@@ -38,9 +50,9 @@ export default class App {
   };
 
   setState = (message) => {
-    const newState = this.buildNewState(this.state, message);
+    const [newState, keys] = this.buildNewState(this.state, message);
     this.state = newState;
-    this.store.notifyObservers();
+    this.store.notifyObservers(keys);
   };
 
   buildNewState = (prevState, { type, data }) => {
@@ -70,15 +82,18 @@ export default class App {
       return [...lotto];
     });
 
-    return {
-      ...prevState,
-      lottos,
-      purchaseMoney,
-    };
+    return [
+      {
+        ...prevState,
+        lottos,
+        purchaseMoney,
+      },
+      ["lottoTicket", "lottoWinningNumber"],
+    ];
   };
 
   updateToggleDisplay = (prevState, checked) => {
-    return { ...prevState, toggle: checked };
+    return [{ ...prevState, toggle: checked }, ["lottoTicket"]];
   };
 
   updateLottoResult = (prevState, { winningNums, bonusNum }) => {
@@ -114,39 +129,46 @@ export default class App {
 
     const earningRatio = prizeMoney / Number(purchaseMoney) > 0 ? (prizeMoney / Number(purchaseMoney)) * 100 : 0;
 
-    return {
-      ...prevState,
-      result,
-      winningNums,
-      bonusNum,
-      showResultModal: true,
-      prizeMoney,
-      earningRatio,
-    };
+    return [
+      {
+        ...prevState,
+        result,
+        winningNums,
+        bonusNum,
+        showResultModal: true,
+        prizeMoney,
+        earningRatio,
+      },
+      ["lottoResultModal"],
+    ];
   };
+
   closeResultModal = (prevState) => {
-    return { ...prevState, showResultModal: false, toggle: false };
+    return [{ ...prevState, showResultModal: false, toggle: false }, ["lottoResultModal"]];
   };
   restart = () => {
-    return {
-      lottos: [],
-      winningNums: [0, 0, 0, 0, 0, 0],
-      bonusNum: 0,
-      result: {
-        0: [0, 0],
-        1: [0, 0],
-        2: [0, 0],
-        3: [0, 5000],
-        4: [0, 50000],
-        5: [0, 150000],
-        "5a": [0, 30000000],
-        6: [0, 2000000000],
+    return [
+      {
+        lottos: [],
+        winningNums: [0, 0, 0, 0, 0, 0],
+        bonusNum: 0,
+        result: {
+          0: [0, 0],
+          1: [0, 0],
+          2: [0, 0],
+          3: [0, 5000],
+          4: [0, 50000],
+          5: [0, 150000],
+          "5a": [0, 30000000],
+          6: [0, 2000000000],
+        },
+        purchaseMoney: 0,
+        toggle: false,
+        showResultModal: false,
+        prizeMoney: 0,
+        earningRatio: 0,
       },
-      purchaseMoney: 0,
-      toggle: false,
-      showResultModal: false,
-      prizeMoney: 0,
-      earningRatio: 0,
-    };
+      ["lottoInput", "lottoTicket", "lottoWinningNumber", "lottoResultModal"],
+    ];
   };
 }
