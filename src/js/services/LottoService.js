@@ -1,5 +1,3 @@
-import {getRandomNumber} from '../utils/math.js';
-
 const MIN_NUMBER = 1;
 const MAX_NUMBER = 45;
 const COUNT_NUMBERS_PER_TICKET = 7;
@@ -21,12 +19,14 @@ function autoGenerateLottoNumbers(count) {
 }
 
 function makeNonDuplicatedRandomNumbers(count, min, max) {
-    const numbers = new Set();
-    while (numbers.size !== count) {
-        numbers.add(getRandomNumber(min, max));
-    }
+    const numbers = Array.from({length: max - min + 1}, (_, i) => (min + i));
+    shuffle(numbers);
 
-    return [...numbers];
+    return numbers.slice(0, count);
+}
+
+function shuffle(numbers) {
+    numbers.sort(() => Math.random() - 0.5);
 }
 
 export default {
