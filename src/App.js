@@ -91,27 +91,8 @@ export default class App {
 
   updateLottoResult = (prevState, { winningNums, bonusNum }) => {
     const { lottos, purchaseMoney } = prevState;
-    let prizeMoney = 0;
-    let result = { ...LOTTOS_RESULT };
-
-    lottos.forEach((lotto) => {
-      // prettier-ignore
-      const _lotto = lotto.reduce((prev, num) => {
-        if (winningNums.includes(num)) return { ...prev, matched: [...prev.matched, num] }
-        if (bonusNum.includes(num)) return { ...prev, bonus: num }
-        return prev
-      }, { matched: [], bonus: 0});
-
-      const { matched, bonus } = _lotto;
-      const key = matched.length === 5 && bonus !== 0 ? "5a" : matched.length + 1 > 6 ? 6 : matched.length + 1;
-      result[key][0] += 1;
-    });
-
-    for (let [_, p] of Object.entries(result)) {
-      prizeMoney += p[0] * p[1];
-    }
-
-    const earningRatio = prizeMoney / Number(purchaseMoney) > 0 ? (prizeMoney / Number(purchaseMoney)) * 100 : 0;
+    const result = this.getResult({ ...LOTTOS_RESULT }, lottos, winningNums, bonusNum);
+    const prizeMoney = this.getPrizeMoney(result);
 
     return [
       {
@@ -121,7 +102,7 @@ export default class App {
         bonusNum,
         showResultModal: true,
         prizeMoney,
-        earningRatio,
+        earningRatio: this.getEarningRatio(prizeMoney, purchaseMoney),
       },
       ["lottoResultModal"],
     ];
@@ -130,7 +111,44 @@ export default class App {
   closeResultModal = (prevState) => {
     return [{ ...prevState, showResultModal: false, toggle: false }, ["lottoResultModal"]];
   };
+
   restart = () => {
     return [LOTTOS_STATE, ["lottoInput", "lottoTicket", "lottoWinningNumber", "lottoResultModal"]];
+  };
+
+  getPrizeMoney = (lottoResult) => {
+    let prizeMoney = 0;
+    for (let [_, p] of Object.entries(lottoResult)) {
+      prizeMoney += p[0] * p[1];
+    }
+    return prizeMoney;
+  };
+
+  getEarningRatio = (prize, purchase) => (prize / Number(purchase) > 0 ? (prize / Number(purchase)) * 100 : 0);
+
+  getResult = (lottoResult, lottos, winningNums, bonusNum) => {
+    lottos.forEach((lotto) => {
+      const _lotto = lotto.reduce(
+        (prev, num) => {
+          if (winningNums.includes(num)) {
+            return { ...prev, matched: [...prev.matched, num] };
+          }
+          if (bonusNum.includes(num)) {
+            return { ...prev, bonus: num };
+          }
+          return prev;
+        },
+        { matched: [], bonus: 0 }
+      );
+
+      const { matched, bonus } = _lotto;
+      //prettier-ignore
+      const key = matched.length === 5 && bonus !== 0 ? "5a" 
+                                                      : matched.length + 1 > 6 
+                                                      ? 6 
+                                                      : matched.length + 1;
+      lottoResult[key][0] += 1;
+    });
+    return lottoResult;
   };
 }
