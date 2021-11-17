@@ -1,4 +1,5 @@
-import {$, replaceRender} from '../utils/element.js';
+import {$} from '../utils/element.js';
+import RenderService from '../services/RenderService.js';
 
 /**
  * @typedef {object} Ticket
@@ -36,9 +37,9 @@ export const Tickets = ($el, props) => {
             `;
         });
 
-        replaceRender({
-            $originEl: $lottoNumbers,
-            replaceHTML: `
+        RenderService.render({
+            $el: $lottoNumbers,
+            template: `
                 <ul id="lotto-icons" class="${lottoNumbersWrapClassNames.join(' ')}">
                     ${lottoNumbers.join('')}
                 </ul>
@@ -46,9 +47,9 @@ export const Tickets = ($el, props) => {
         });
     }
 
-    $el = replaceRender({
-        $originEl: $el,
-        replaceHTML: `
+    $el = RenderService.render({
+        $el: $el,
+        template: `
             <section class="mt-9">
                 <div class="d-flex">
                     <label class="flex-auto my-0" data-test="tickets-count">총 ${props.tickets.length}개를 구매하였습니다.</label>
@@ -62,9 +63,12 @@ export const Tickets = ($el, props) => {
                 <div data-component="lotto-numbers"><div>
             </section>
         `,
-        bindEvents: [
-            ($el) => $('.switch', $el)
-                .addEventListener('change', switchShowNumbers),
+        eventListenerModels: [
+            {
+                selector: '.switch',
+                eventType: 'change',
+                callback: switchShowNumbers
+            },
         ],
     });
 

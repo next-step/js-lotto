@@ -1,6 +1,6 @@
 import {MIN_PURCHASE_AMOUNT, PRICE_PER_TICKET} from '../consts.js';
-import {$, replaceRender} from '../utils/element.js';
 import ModalService from '../services/ModalService.js';
+import RenderService from '../services/RenderService.js';
 
 /**
  * @param $el
@@ -22,9 +22,9 @@ export const AmountForm = ($el, props) => {
         props.purchaseTickets(amount);
     }
 
-    replaceRender({
-        $originEl: $el,
-        replaceHTML: `
+    RenderService.render({
+        $el: $el,
+        template: `
             <form class="mt-5" data-test="amount-form">
                 <label class="mb-2 d-inline-block">
                     구입할 금액을 입력해주세요.
@@ -42,9 +42,12 @@ export const AmountForm = ($el, props) => {
                 </div>
             </form>
         `,
-        bindEvents: [
-            ($el) => $('form', $el)
-                .addEventListener('submit', onSubmitAmount),
+        eventListenerModels: [
+            {
+                selector: 'form',
+                eventType: 'submit',
+                callback: onSubmitAmount,
+            },
         ],
     });
 };

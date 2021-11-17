@@ -2,7 +2,8 @@ import {AmountForm} from './AmountForm.js';
 import LottoService from '../services/LottoService.js';
 import {PRICE_PER_TICKET} from '../consts.js';
 import {Tickets} from './Tickets.js';
-import {$, replaceRender} from '../utils/element.js';
+import {$} from '../utils/element.js';
+import RenderService from '../services/RenderService.js';
 
 export const LottoApp = ($el) => {
 
@@ -20,9 +21,9 @@ export const LottoApp = ($el) => {
         Tickets($('[data-component="tickets"]', $el), {tickets: state.tickets});
     };
 
-    $el = replaceRender({
-        $originEl: $el,
-        replaceHTML: `
+    $el = RenderService.render({
+        $el: $el,
+        template: `
             <div class="d-flex justify-center mt-5">
                 <div class="w-100">
                     <h1 class="text-center">🎱 행운의 로또</h1>
