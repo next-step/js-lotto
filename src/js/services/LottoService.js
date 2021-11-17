@@ -20,13 +20,11 @@ function autoGenerateLottoNumbers(count) {
 
 function makeNonDuplicatedRandomNumbers(count, min, max) {
     const numbers = Array.from({length: max - min + 1}, (_, i) => (min + i));
-    shuffle(numbers);
-
-    return numbers.slice(0, count);
+    return shuffle(numbers).slice(0, count);
 }
 
 function shuffle(numbers) {
-    numbers.sort(() => Math.random() - 0.5);
+    return numbers.slice().sort(() => Math.random() - 0.5);
 }
 
 export default {
