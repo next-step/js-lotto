@@ -1,5 +1,8 @@
 Cypress.Commands.add("purchaseLotto", (number) => {
-  cy.get(".purchase__form").find("input").type(number).type("{Enter}");
+  cy.get("[data-cy=purchase-form]")
+    .find("[data-cy=purchase-price-input]")
+    .type(number)
+    .type("{Enter}");
 });
 
 Cypress.Commands.add("clickNumbersToggleBtn", (selector) => {
