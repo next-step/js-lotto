@@ -1,4 +1,4 @@
-import Component from "../component.js";
+import Component from "../Component.js";
 import { LOTTOS_ACTION } from "../../utils/constants.js";
 
 export default class LottoResultModal extends Component {

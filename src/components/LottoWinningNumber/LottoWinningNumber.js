@@ -1,4 +1,4 @@
-import Component from "../component.js";
+import Component from "../Component.js";
 import { inputTemplate } from "./template.js";
 import { LOTTOS_ACTION } from "../../utils/constants.js";
 
