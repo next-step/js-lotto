@@ -44,11 +44,6 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
       cy.alertMessageToBeEqual(lottoPrice + '원 단위로 입력해주세요.')
       cy.purchaseLotto(purchasePrice + 5)
     })
-
-    it('로또를 지정한 개수 이상 구매하면 경고창을 띄워준다.', () => {
-      cy.alertMessageToBeEqual(Message.myLottoLimitError)
-      cy.purchaseLotto(lottoPrice * (lottoConfig.maxMyLottoLimit + 1))
-    })
   })
 
   context('2단계', () => {
@@ -58,6 +53,11 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
       cy.typeResultLottoNumber([1, 2, 3, 4, 5, 6, 7])
       cy.getBenefitRate()
       cy.resultShouldBeContainBenefitTemplateText()
+    })
+
+    it('로또를 지정한 개수 이상 구매하면 경고창을 띄워준다.', () => {
+      cy.alertMessageToBeEqual(Message.myLottoLimitError)
+      cy.purchaseLotto(lottoPrice * (lottoConfig.maxMyLottoLimit + 1))
     })
 
     it('입력한 로또 번호가 지정된 범위를 넘어가면 경고창을 띄워준다.', () => {
@@ -75,7 +75,7 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
       cy.getBenefitRate()
     })
 
-    it('입력한 로또 번호가 지정된 범위를 넘어가면 경고창을 띄워준다.', () => {
+    it('입력한 로또 번호가 중복된 번호가 있으면 경고창을 띄워준다.', () => {
       cy.purchaseLotto(purchasePrice)
       cy.typeResultLottoNumber([1, 2, 3, 4, 5, 6, 6])
       cy.alertMessageToBeEqual(Message.lottoNumberDuplicateError)
