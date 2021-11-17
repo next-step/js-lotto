@@ -12,7 +12,7 @@ export default class LottoTickets extends Component {
     if (purchaseMoney === 0) return "";
     return `
     <div class="d-flex">
-      <label class="flex-auto my-0" data-cy="lotto-total">총 5개를 구매하였습니다.</label>
+      <label class="flex-auto my-0" data-cy="lotto-total">총 ${lottos.length}개를 구매하였습니다.</label>
       <div class="flex-auto d-flex justify-end pr-1">
         <label class="switch">
           <input type="checkbox" class="lotto-numbers-toggle-button" ${toggle && "checked"} data-cy="toggle-lotto"/>
