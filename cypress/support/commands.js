@@ -1,7 +1,9 @@
 import CypressDom from '../../src/js/constants/CypressDom'
 
 Cypress.Commands.add('purchaseLotto', (money) => {
-  cy.get(`input[data-test-element="${CypressDom.purchaseInput}"]`).type(money)
+  cy.get(`input[data-test-element="${CypressDom.purchaseInput}"]`).type(money, {
+    force: true,
+  })
   cy.get(`button[data-test-element="${CypressDom.purchaseButton}"]`).click()
 })
 
@@ -29,14 +31,15 @@ Cypress.Commands.add('typeResultLottoNumber', (numbers) => {
   numbers.forEach((number, index) => {
     if (index === numbers.length - 1) {
       cy.get(`input[data-test-element="${CypressDom.bonusLottoInput}"]`).type(
-        number
+        number,
+        { force: true }
       )
       return
     }
 
     cy.get(`input[data-test-element="${CypressDom.baseLottoInput}"]`)
       .eq(index)
-      .type(number)
+      .type(number, { force: true })
   })
 })
 
@@ -92,4 +95,10 @@ Cypress.Commands.add('lottoInputShouldBeNull', () => {
   cy.get(`input[data-test-element="${CypressDom.bonusLottoInput}"]`)
     .invoke('val')
     .should('eq', '')
+})
+
+Cypress.Commands.add('alertMessageToBeEqual', (text) => {
+  cy.on('window:alert', (txt) => {
+    expect(text).to.equal(txt)
+  })
 })

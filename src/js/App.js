@@ -119,7 +119,7 @@ function validateLottoAnswer(base, bonus) {
   if (!IsValidLottoNumber(bonus)) {
     return {
       error: true,
-      message: `로또 번호는 1번부터 ${lottoConfig.maxLottoNumber}까지 입력 할 수 있습니다.`,
+      message: Message.lottoNumberOutOfRangeError,
     }
   }
 
@@ -127,7 +127,7 @@ function validateLottoAnswer(base, bonus) {
 
   for (const baseNumber of base) {
     if (!IsValidLottoNumber(baseNumber) || numberSet.has(baseNumber)) {
-      return { error: true, message: Message.duplicatedLottoNumberError }
+      return { error: true, message: Message.lottoNumberDuplicateError }
     }
 
     numberSet.add(baseNumber)

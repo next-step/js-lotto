@@ -12,11 +12,13 @@
  * clickResetButton: 다시 시작하기 버튼을 눌러 게임을 다시 시작합니다.
  * lottoInputShouldBeNull: 로또에 입력하는 input이 모두 초기화되었는지 확인합니다.
  */
+import lottoConfig from '../../src/js/config/lotto.config'
+import Message from '../../src/js/constants/Message'
 
 const LIVE_SERVER_URL = 'http://127.0.0.1:3000/'
 
 describe('로또의 미션의 요구조건을 만족한다.', () => {
-  const lottoPrice = 1000
+  const lottoPrice = lottoConfig.price
   const purchasePrice = 3000
 
   beforeEach(() => {
@@ -38,11 +40,13 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
     })
 
     it('로또의 금액이 나눠떨어지지 않으면 경고창을 표시한다.', () => {
+      cy.alertMessageToBeEqual(lottoPrice + '원 단위로 입력해주세요.')
       cy.purchaseLotto(purchasePrice + 5)
+    })
 
-      cy.on('window:alert', (txt) => {
-        expect(txt).to.contains(lottoPrice + '원 단위로 입력해주세요.')
-      })
+    it('로또를 지정한 개수 이상 구매하면 경고창을 띄워준다.', () => {
+      cy.alertMessageToBeEqual(Message.myLottoLimitError)
+      cy.purchaseLotto(lottoPrice * (lottoConfig.maxMyLottoLimit + 1))
     })
   })
 
@@ -53,6 +57,28 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
       cy.typeResultLottoNumber([1, 2, 3, 4, 5, 6, 7])
       cy.getBenefitRate()
       cy.resultShouldBeContainBenefitTemplateText()
+    })
+
+    it('입력한 로또 번호가 지정된 범위를 넘어가면 경고창을 띄워준다.', () => {
+      cy.purchaseLotto(purchasePrice)
+      cy.typeResultLottoNumber([
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        lottoConfig.maxLottoNumber + 1,
+      ])
+      cy.alertMessageToBeEqual(Message.lottoNumberOutOfRangeError)
+      cy.getBenefitRate()
+    })
+
+    it('입력한 로또 번호가 지정된 범위를 넘어가면 경고창을 띄워준다.', () => {
+      cy.purchaseLotto(purchasePrice)
+      cy.typeResultLottoNumber([1, 2, 3, 4, 5, 6, 6])
+      cy.alertMessageToBeEqual(Message.lottoNumberDuplicateError)
+      cy.getBenefitRate()
     })
 
     it('다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.', () => {
