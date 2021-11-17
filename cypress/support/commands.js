@@ -79,12 +79,6 @@ Cypress.Commands.add('clickResetButton', () => {
   })
 })
 
-Cypress.Commands.add('resultBenefitRateLabelShouldbe', (benefitRate) => {
-  cy.get(
-    `p[data-test-element="${CypressDom.resultLottoBenefitRateLabel}"]`
-  ).contains(`당신의 총 수익률은 ${benefitRate}%입니다.`)
-})
-
 Cypress.Commands.add('lottoInputShouldBeNull', () => {
   cy.get(`input[data-test-element="${CypressDom.purchaseInput}"]`)
     .invoke('val')

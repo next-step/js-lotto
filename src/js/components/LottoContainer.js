@@ -4,7 +4,6 @@ import EventType from '../constants/EventType'
 import Name from '../constants/Name'
 import ClassName from '../constants/ClassName'
 import CypressDom from '../constants/CypressDom'
-import lottoConfig from '../config/lotto.config'
 
 export default class LottoContainer extends Component {
   template() {

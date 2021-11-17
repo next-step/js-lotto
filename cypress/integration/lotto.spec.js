@@ -11,6 +11,7 @@
  * resultShouldBeContainBenefitTemplateText: 결과를 보여주는 모달의 텍스트 템플릿이 잘 들어갔는지 확인합니다.
  * clickResetButton: 다시 시작하기 버튼을 눌러 게임을 다시 시작합니다.
  * lottoInputShouldBeNull: 로또에 입력하는 input이 모두 초기화되었는지 확인합니다.
+ * alertMessageToBeEqual: '인자로 받은 텍스트가 경고창으로 나오는 텍스트와 같은지 확인합니다.'
  */
 import lottoConfig from '../../src/js/config/lotto.config'
 import Message from '../../src/js/constants/Message'
