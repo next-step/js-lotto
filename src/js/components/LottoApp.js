@@ -21,8 +21,8 @@ export const LottoApp = ($el) => {
         Tickets($('[data-component="tickets"]', $el), {tickets: state.tickets});
     };
 
-    $el = RenderService.render({
-        $el: $el,
+    RenderService.render({
+        $el,
         template: `
             <div class="d-flex justify-center mt-5">
                 <div class="w-100">

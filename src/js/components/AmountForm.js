@@ -23,7 +23,7 @@ export const AmountForm = ($el, props) => {
     }
 
     RenderService.render({
-        $el: $el,
+        $el,
         template: `
             <form class="mt-5" data-test="amount-form">
                 <label class="mb-2 d-inline-block">

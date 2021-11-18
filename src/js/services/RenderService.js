@@ -12,17 +12,15 @@
  */
 const render = ({$el, template, eventListenerModels = []}) => {
 
-    const $newEl = $el.cloneNode(false);
-    $newEl.insertAdjacentHTML('beforeend', template);
+    const $temp = document.createElement('template');
+    $temp.insertAdjacentHTML('beforeend', template);
+
+    $el.replaceChildren(...$temp.children);
 
     eventListenerModels.forEach(({selector, eventType, callback}) => {
-        const eventBindingEl = selector ? $newEl.querySelector(selector) : $newEl;
+        const eventBindingEl = selector ? $el.querySelector(selector) : $el;
         eventBindingEl.addEventListener(eventType, event => callback(event));
     });
-
-    $el.replaceWith($newEl);
-
-    return $newEl;
 };
 
 export default {

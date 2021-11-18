@@ -47,8 +47,8 @@ export const Tickets = ($el, props) => {
         });
     }
 
-    $el = RenderService.render({
-        $el: $el,
+    RenderService.render({
+        $el,
         template: `
             <section class="mt-9">
                 <div class="d-flex">
