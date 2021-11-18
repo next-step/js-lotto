@@ -21,6 +21,7 @@ export default class LottoModel {
     const autoLottos = Array.from({ length: lottoCount }, () =>
       this.getRandomLottoNumbers()
     );
+    this.#price = Number(price);
     this.#lottos = autoLottos;
   }
 

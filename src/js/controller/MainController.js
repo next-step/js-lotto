@@ -3,15 +3,18 @@ import { getFormDataValue } from '../utils/utils.js';
 import {
   PurchaseFormSection,
   PurchasedLottoSection,
-  WinningNumberFormSection
+  WinningNumberFormSection,
+  ResultModalSection
 } from '../view/index.js';
 import LottoModel from '../model/LottoModel.js';
+import WinningPrizeModel from '../model/WinningPrizeModel.js';
 
 export default class MainController {
   constructor({
     purchaseFormSection,
     purchasedLottoSection,
-    winningNumberFormSection
+    winningNumberFormSection,
+    resultModalSection
   }) {
     this.purchaseFormSection = new PurchaseFormSection(purchaseFormSection);
     this.purchasedLottoSection = new PurchasedLottoSection(
@@ -20,6 +23,8 @@ export default class MainController {
     this.winningNumberFormSection = new WinningNumberFormSection(
       winningNumberFormSection
     );
+    this.resultModalSection = new ResultModalSection(resultModalSection);
+    this.winningPrizeModel = new WinningPrizeModel();
     this.lottoModel = new LottoModel();
     this.init();
     this.bindEvents();
@@ -34,9 +39,26 @@ export default class MainController {
   bindEvents() {
     this.purchaseFormSection.on('@submitPrice', ({ detail }) => {
       const price = getFormDataValue(detail, 'price');
-      this.setAutoLottoNumbers(price);
+      if (!this.setAutoLottoNumbers(price)) return;
       this.purchasedLottoSection.show().render(this.lottoModel.lottos);
       this.winningNumberFormSection.show().render();
+    });
+
+    this.winningNumberFormSection.on('@submitWinningNumber', ({ detail }) => {
+      this.winningPrizeModel.setLottoInfo(this.lottoModel.lottos, {
+        ...detail
+      });
+      this.resultModalSection.render({
+        winningPrizeInfo: this.winningPrizeModel.winningPrizeInfo,
+        totalPrizeMoney: this.winningPrizeModel.totalPrizeMoney,
+        price: this.lottoModel.price
+      });
+    });
+
+    this.resultModalSection.on('@clickResetBtn', () => {
+      console.log('reset');
+      this.init();
+      this.resultModalSection.hide().hideModal();
     });
   }
 
@@ -48,9 +70,10 @@ export default class MainController {
     if (this.isInvalidPrice(price)) {
       this.init();
       alert(ALERT.CHECK_UNIT);
-      return;
+      return false;
     }
 
     this.lottoModel.setAutoLottos(price);
+    return true;
   }
 }

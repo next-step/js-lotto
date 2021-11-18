@@ -14,3 +14,7 @@ export const showElement = (el) => {
 export const hideElement = (el) => {
   el.style.display = 'none';
 };
+
+export const setCommaThusandUnit = (money) => {
+  return money.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
+};

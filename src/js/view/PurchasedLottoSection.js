@@ -12,6 +12,7 @@ export default class PurchasedLottoSection extends View {
   render(lottos) {
     this.renderPurchasedLottoText(lottos.length);
     this.renderLottos(lottos);
+    this.resetLottoDetail();
     this.bindEvents();
   }
 
@@ -42,6 +43,12 @@ export default class PurchasedLottoSection extends View {
       `;
       })
       .join('');
+  }
+
+  resetLottoDetail() {
+    this.$lottoWrapper.classList.remove('flex-col');
+    this.$toggleSwitch.checked = false;
+    $$('.lotto-detail').forEach((el) => hideElement(el));
   }
 
   renderLottoDetail(toggleFlag) {
