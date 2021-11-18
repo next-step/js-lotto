@@ -1,9 +1,18 @@
 {
-  "name": "racingcar",
+  "name": "js-lotto",
   "version": "1.0.0",
   "main": "index.js",
+  "repository": "https://github.com/roy-jung/js-lotto.git",
+  "author": "roy-jung <power4ce@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^9.0.0",
+    "tsc-watch": "^4.5.0",
+    "typescript": "^4.4.4"
+  },
+  "scripts": {
+    "start": "tsc-watch",
+    "build": "rm -rf dist && tsc",
+    "test": "cypress open"
   }
 }
