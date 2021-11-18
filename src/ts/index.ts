@@ -6,11 +6,6 @@ import PurchasedInfoClass from './view/purchasedInfo.js'
 import FormWinningClass from './view/formWinning.js'
 import ModalStatsClass from './view/modalStats.js'
 
-customElements.define('form-price', FormPriceClass)
-customElements.define('purchased-info', PurchasedInfoClass)
-customElements.define('form-winning', FormWinningClass)
-customElements.define('modal-stats', ModalStatsClass)
-
 export default class App extends View {
   tag = '[View - App]'
   $formPriceView
@@ -50,4 +45,8 @@ export default class App extends View {
   }
 }
 
+customElements.define('form-price', FormPriceClass)
+customElements.define('purchased-info', PurchasedInfoClass)
+customElements.define('form-winning', FormWinningClass)
+customElements.define('modal-stats', ModalStatsClass)
 customElements.define('lotto-app', App)

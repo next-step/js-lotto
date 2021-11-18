@@ -1,9 +1,9 @@
-import { ErrorMsgs, UNIT_PRICE, GRADES } from './constants.js';
+import { ErrorMsgs, UNIT_PRICE, GRADES, MAX_NUM, MIN_NUM, NUMBERS_PER_LOTTO, } from './constants.js';
 const arrayGen = (size, mapper) => [...Array(size)].map(mapper);
-const numbers = arrayGen(45, (_, i) => i + 1);
-const buildRandomLotto = () => {
-    const cloneNumbers = [...numbers];
-    return arrayGen(6, () => cloneNumbers.splice(Math.floor(Math.random() * cloneNumbers.length), 1)[0]);
+const ALL_NUMBERS = arrayGen(MAX_NUM, (_, i) => i + 1);
+const generateRandomLotto = () => {
+    const cloneNumbers = [...ALL_NUMBERS];
+    return arrayGen(NUMBERS_PER_LOTTO, () => cloneNumbers.splice(Math.floor(Math.random() * cloneNumbers.length), 1)[0]);
 };
 class LottoModel {
     #data = {
@@ -13,7 +13,7 @@ class LottoModel {
     #isLottoValid(item, validLength) {
         if (item.length !== validLength || [...new Set(item)].length !== item.length)
             throw Error(ErrorMsgs.DUPLICATED);
-        if (item.some(n => n < 1 || n > 45))
+        if (item.some(n => n < MIN_NUM || n > MAX_NUM))
             throw Error(ErrorMsgs.OUT_OF_RANGE);
         return true;
     }
@@ -25,33 +25,29 @@ class LottoModel {
         return amount;
     }
     setLottoItem(index, item) {
-        if (!this.#isLottoValid(item, 6))
+        if (!this.#isLottoValid(item, NUMBERS_PER_LOTTO))
             return;
         this.#data.list[index] = item;
         return item;
     }
     setLottoItemRandom(index) {
-        const item = buildRandomLotto();
-        if (!this.#isLottoValid(item, 6))
-            return;
-        this.#data.list[index] = item;
-        return item;
+        return this.setLottoItem(index, generateRandomLotto());
     }
     setAllLottoRandom(price) {
         const amount = this.setPrice(price);
-        const list = arrayGen(amount, buildRandomLotto);
+        const list = arrayGen(amount, generateRandomLotto);
         this.#data.list = list;
         return list;
     }
     getWinList(numbers) {
         const amount = this.#data.list.length;
         const winningNumbers = [...numbers];
-        if (!this.#isLottoValid(winningNumbers, 7))
+        if (!this.#isLottoValid(winningNumbers, NUMBERS_PER_LOTTO + 1))
             return false;
         const bonusNumber = winningNumbers.pop();
         const res = this.#data.list.reduce((p, c) => {
             const matched = winningNumbers.filter(num => c.includes(+num)) || [];
-            const bonusMatched = matched.length === 5 && c.includes(+bonusNumber);
+            const bonusMatched = matched.length === NUMBERS_PER_LOTTO - 1 && c.includes(+bonusNumber);
             switch (matched.length) {
                 case 3:
                     p.g5 += 1;

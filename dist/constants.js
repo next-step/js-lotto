@@ -1,8 +1,11 @@
 export const UNIT_PRICE = 1_000;
+export const MIN_NUM = 1;
+export const MAX_NUM = 45;
+export const NUMBERS_PER_LOTTO = 6;
 export const ErrorMsgs = {
     MIN_PRICE: `최소가격은 ${UNIT_PRICE}원입니다.`,
     DUPLICATED: '중복된 숫자가 있습니다.',
-    OUT_OF_RANGE: '1부터 45 사이의 정수만 입력 가능합니다.',
+    OUT_OF_RANGE: `${MIN_NUM}부터 ${MAX_NUM} 사이의 정수만 입력 가능합니다.`,
 };
 export const GRADES = {
     g5: {

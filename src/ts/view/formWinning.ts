@@ -1,3 +1,4 @@
+import { MAX_NUM, MIN_NUM, NUMBERS_PER_LOTTO } from '../constants.js'
 import el from '../dom.js'
 import View from './index.js'
 
@@ -16,7 +17,9 @@ export default class FormWinning extends View {
             '<h4 class="mt-0 mb-3 text-center">당첨 번호</h4>',
             el(
               '<div>',
-              Array(6).fill('<input type="number" class="winning-number mx-1 text-center" required min="1" max="45">'),
+              Array(NUMBERS_PER_LOTTO).fill(
+                `<input type="number" class="winning-number mx-1 text-center" required min="${MIN_NUM}" max="${MAX_NUM}">`,
+              ),
             ),
           ]),
           `

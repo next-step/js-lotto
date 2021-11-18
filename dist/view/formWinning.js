@@ -1,3 +1,4 @@
+import { MAX_NUM, MIN_NUM } from '../constants.js';
 import el from '../dom.js';
 import View from './index.js';
 export default class FormWinning extends View {
@@ -13,13 +14,13 @@ export default class FormWinning extends View {
                 el('<div class="d-flex">', [
                     el('<div>', [
                         '<h4 class="mt-0 mb-3 text-center">당첨 번호</h4>',
-                        el('<div>', [...new Array(6)].map((_, i) => `<input name="input-${i}" type="number" class="winning-number mx-1 text-center" required min="1" max="45">`)),
+                        el('<div>', Array(6).fill(`<input type="number" class="winning-number mx-1 text-center" required min="${MIN_NUM}" max="${MAX_NUM}">`)),
                     ]),
                     `
             <div class="bonus-number-container flex-grow">
               <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
               <div class="d-flex justify-center">
-                <input name="input-bonus" type="number" class="bonus-number text-center" />
+                <input type="number" class="bonus-number text-center" />
               </div>
             </div>
           `,
