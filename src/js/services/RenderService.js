@@ -1,3 +1,5 @@
+import {$} from '../utils/element.js';
+
 /**
  * @typedef {object} EventListenerModel
  * @property {string=} selector
@@ -6,14 +8,26 @@
  */
 
 /**
+ * @typedef {object} ChildComponentModel
+ * @property {string} selector
+ * @property {object} props
+ * @property {function} componentFn
+ */
+
+/**
  * @param {HTMLElement} $el
  * @param {string} template
  * @param {EventListenerModel[]} eventListenerModels
+ * @param {ChildComponentModel[]} childComponentModels
  */
-const render = ({$el, template, eventListenerModels = []}) => {
+const render = ({$el, template, eventListenerModels = [], childComponentModels = []}) => {
 
     const $temp = document.createElement('template');
     $temp.insertAdjacentHTML('beforeend', template);
+
+    childComponentModels.forEach(({selector, props = {}, componentFn}) => {
+        componentFn($(selector, $temp), props);
+    });
 
     $el.replaceChildren(...$temp.children);
 

@@ -130,7 +130,12 @@ export const LottoApp = ($el) => {
                 </div>
             </div> 
         `,
+        childComponentModels: [
+            {
+                selector: '[data-component="amount-form"]',
+                props: {purchaseTickets},
+                componentFn: AmountForm,
+            }
+        ],
     });
-
-    AmountForm($('[data-component="amount-form"]', $el), {purchaseTickets});
 };
