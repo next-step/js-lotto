@@ -4,6 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^6.3.0",
+    "eslint": "^8.2.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "2.4.1"
+  },
+  "scripts": {
+    "test:e2e": "cypress run --spec 'cypress/integration/lotto/*' --config video=false",
+    "serve": "live-server ."
   }
 }
