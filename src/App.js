@@ -4,7 +4,7 @@ import LottoWinningNumber from "./components/LottoWinningNumber/index.js";
 import LottoResultModal from "./components/LottoResultModal/LottoResultModal.js";
 
 import { LOTTOS_ACTION, LOTTOS_STATE, LOTTOS_RESULT, LOTTO_MIN, LOTTO_MAX } from "./utils/constants.js";
-import { shuffle } from "./utils/helpers.js";
+import { createRandomLotto } from "./utils/helpers.js";
 
 export default class App {
   constructor(store, initialState) {
@@ -74,7 +74,7 @@ export default class App {
   };
 
   updateLottos = (prevState, purchaseMoney) => {
-    const lottos = new Array(purchaseMoney / 1000).fill([]).map(() => shuffle(LOTTO_MIN, LOTTO_MAX, 6));
+    const lottos = new Array(purchaseMoney / 1000).fill([]).map(() => createRandomLotto(LOTTO_MIN, LOTTO_MAX, 6));
     return [
       {
         ...prevState,
