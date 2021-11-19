@@ -75,8 +75,12 @@ function onLottoPurchase(lottoService) {
   if (lottoAmount > lottoConfig.maxMyLottoLimit) {
     alert(MY_LOTTO_LIMIT_ERROR)
     $('#' + ElementId.purchaseInput).value = ''
+    lottoService.initService()
+    resetUI()
     return
   }
+
+  resetUI()
   lottoService.autoPurchase(lottoAmount)
 
   setLottoVisible(true)
