@@ -3,10 +3,6 @@ import el from '../dom.js'
 import { Entry } from '../constants.js'
 
 export default class PurchasedInfo extends View {
-  $amountLabel
-  $toggle
-  $ul
-
   static template = `
   <section class="mt-9">
     <div class="d-flex">
@@ -21,6 +17,10 @@ export default class PurchasedInfo extends View {
     <ul class="d-flex flex-wrap picked-list" data-cy="picked-list"></ul>
   </section>
   `
+
+  $amountLabel
+  $toggle
+  $ul
 
   constructor() {
     super()

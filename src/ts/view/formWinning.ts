@@ -3,9 +3,6 @@ import el from '../dom.js'
 import View from './index.js'
 
 export default class FormWinning extends View {
-  $form
-  $inputs
-
   static template = `
   <form id="formWinning" class="mt-9">
     <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
@@ -30,6 +27,9 @@ export default class FormWinning extends View {
     <button type="submit" class="open-result-modal-button mt-5 btn btn-cyan w-100">결과 확인하기</button>
   </form>
   `
+
+  $form
+  $inputs
 
   constructor() {
     super()

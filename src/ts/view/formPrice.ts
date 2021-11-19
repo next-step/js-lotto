@@ -2,9 +2,6 @@ import el from '../dom.js'
 import View from './index.js'
 
 export default class FormPrice extends View {
-  $input
-  $form
-
   static template = `
   <form class="mt-5">
     <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.</label>
@@ -14,6 +11,9 @@ export default class FormPrice extends View {
     </div>
   </form>
   `
+
+  $input
+  $form
 
   constructor() {
     super()

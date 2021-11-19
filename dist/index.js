@@ -6,36 +6,31 @@ import PurchasedInfoClass from './view/purchasedInfo.js';
 import FormWinningClass from './view/formWinning.js';
 import ModalStatsClass from './view/modalStats.js';
 export default class App extends View {
-    tag = '[View - App]';
+    static template = `
+  <div id="app" class="p-3">
+    <div class="d-flex justify-center mt-5">
+      <div class="w-100">
+        <h1 class="text-center">🎱 행운의 로또</h1>
+        <form-price></form-price>
+        <purchased-info></purchased-info>
+        <form-winning></form-winning>
+      </div>
+    </div>
+    <modal-stats></modal-stats>
+  </div>
+  `;
     $formPriceView;
     $purchasedInfoView;
     $formWinningView;
     $modalStatsView;
     constructor() {
         super();
-        const [FormPrice, PurchasedInfo, FormWinning, ModalStats] = [
-            customElements.get('form-price'),
-            customElements.get('purchased-info'),
-            customElements.get('form-winning'),
-            customElements.get('modal-stats'),
-        ];
-        this.$formPriceView = new FormPrice();
-        this.$purchasedInfoView = new PurchasedInfo();
-        this.$formWinningView = new FormWinning();
-        this.$modalStatsView = new ModalStats();
-        el(this, [
-            el('<div id="app" class="p-3">', [
-                el('<div class="d-flex justify-center mt-5">', [
-                    el('<div class="w-100">', [
-                        '<h1 class="text-center">🎱 행운의 로또</h1>',
-                        this.$formPriceView,
-                        this.$purchasedInfoView,
-                        this.$formWinningView,
-                    ]),
-                ]),
-                this.$modalStatsView,
-            ]),
-        ]);
+        const $app = el(App.template);
+        this.$formPriceView = $app.querySelector('form-price');
+        this.$purchasedInfoView = $app.querySelector('purchased-info');
+        this.$formWinningView = $app.querySelector('form-winning');
+        this.$modalStatsView = $app.querySelector('modal-stats');
+        el(this, [$app]);
         new Controller(this);
     }
 }

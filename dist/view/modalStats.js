@@ -2,11 +2,6 @@ import { GRADES } from '../constants.js';
 import el from '../dom.js';
 import View from './index.js';
 export default class ModalStats extends View {
-    $modal;
-    $close;
-    $tbody;
-    $earning;
-    $reset;
     static template = `
   <div class="modal">
     <div class="modal-inner p-10">
@@ -33,6 +28,11 @@ export default class ModalStats extends View {
     </div>
   </div>
   `;
+    $modal;
+    $close;
+    $tbody;
+    $earning;
+    $reset;
     constructor() {
         super();
         this.$modal = el(ModalStats.template);

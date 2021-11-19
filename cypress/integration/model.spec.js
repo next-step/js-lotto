@@ -1,6 +1,6 @@
 // @ts-nocheck
 import model from '../../dist/model.js'
-import { ErrorMsgs } from '../../dist/constants.js'
+import { ErrorMsgs, UNIT_PRICE } from '../../dist/constants.js'
 
 describe('lotto model unit test', () => {
   describe('isValid', () => {
@@ -16,14 +16,14 @@ describe('lotto model unit test', () => {
   })
 
   describe('setPrice', () => {
-    it('setPrice(500) => throw Error(MIN_PRICE)', () => {
-      expect(model.setPrice.bind(model, 500)).to.throw(ErrorMsgs.MIN_PRICE)
+    it(`setPrice(${UNIT_PRICE * 0.5}) => throw Error(MIN_PRICE)`, () => {
+      expect(model.setPrice.bind(model, UNIT_PRICE * 0.5)).to.throw(ErrorMsgs.MIN_PRICE)
     })
-    it('setPrice(1500) => 1', () => {
-      expect(model.setPrice(1500)).to.eq(1)
+    it(`setPrice(${UNIT_PRICE * 1.5}) => 1`, () => {
+      expect(model.setPrice(UNIT_PRICE * 1.5)).to.eq(1)
     })
-    it('setPrice(4321) => 4', () => {
-      expect(model.setPrice(4321)).to.eq(4)
+    it(`setPrice(${UNIT_PRICE * 4.321}) => 4`, () => {
+      expect(model.setPrice(UNIT_PRICE * 4.321)).to.eq(4)
     })
   })
 
@@ -37,14 +37,11 @@ describe('lotto model unit test', () => {
   })
 
   describe('setAllLottoRandom', () => {
-    it('입력값이 3500이면 3개의 랜덤 로또 생성', () => {
-      expect(model.setAllLottoRandom(3500)).to.have.lengthOf(3)
+    it(`입력값이 ${UNIT_PRICE * 3.5}이면 3개의 랜덤 로또 생성`, () => {
+      expect(model.setAllLottoRandom(UNIT_PRICE * 3.5)).to.have.lengthOf(3)
     })
-    it('입력값이 4200이면 4개의 랜덤 로또 생성', () => {
-      expect(model.setAllLottoRandom(4200)).to.have.lengthOf(4)
-    })
-    it('입력값이 500이면 에러', () => {
-      expect(model.setAllLottoRandom.bind(model, 500)).to.throw(ErrorMsgs.MIN_PRICE)
+    it(`입력값이 ${UNIT_PRICE * 4.2}이면 4개의 랜덤 로또 생성`, () => {
+      expect(model.setAllLottoRandom(UNIT_PRICE * 4.2)).to.have.lengthOf(4)
     })
   })
 
