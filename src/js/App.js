@@ -1,8 +1,17 @@
 import LottoContainer from './components/LottoContainer'
 import lottoConfig from './config/lotto.config'
 import ClassName from './constants/ClassName'
-import CypressDom from './constants/CypressDom'
-import ElementId from './constants/ElementId'
+import { CY_LOTTO_DETAIL } from './constants/CypressDom'
+import ElementId, {
+  LUCKY_LOTTO_CONTAINER,
+  PURCHASE_INPUT,
+  PURCHAED_LOTTO_AMOUNT_LABEL,
+  LOTTO_ANSWER_INPUT,
+  TOGGLE_BUTTON,
+  PURCHASED_LOTTO_VIEWER,
+  PURCHASED_LOTTO,
+  BENEFIT_RATE_LABEL,
+} from './constants/ElementId'
 import Event from './constants/Event'
 import EventType from './constants/EventType'
 import {
@@ -28,7 +37,7 @@ export default class App {
   #lottoService
 
   constructor() {
-    this.#rootContainer = $('#' + ElementId.luckyLottoContainer)
+    this.#rootContainer = $('#' + LUCKY_LOTTO_CONTAINER)
     this.#lottoService = new LottoService()
     new LottoContainer(this.#rootContainer)
 
@@ -63,7 +72,7 @@ export default class App {
 }
 
 function onLottoPurchase(lottoService) {
-  const money = Number($('#' + ElementId.purchaseInput).value)
+  const money = Number($('#' + PURCHASE_INPUT).value)
 
   if (money === 0 || money % lottoService.lottoPrice !== 0) {
     alert(lottoService.lottoPrice + '원 단위로 입력해주세요.')
@@ -74,7 +83,7 @@ function onLottoPurchase(lottoService) {
 
   if (lottoAmount > lottoConfig.maxMyLottoLimit) {
     alert(MY_LOTTO_LIMIT_ERROR)
-    $('#' + ElementId.purchaseInput).value = ''
+    $('#' + PURCHASE_INPUT).value = ''
     lottoService.initService()
     resetUI()
     return
@@ -89,7 +98,7 @@ function onLottoPurchase(lottoService) {
 }
 
 function onCheckMyLottoResult(lottoService) {
-  const LottoAnswer = $('#' + ElementId.lottoAnswerInput)
+  const LottoAnswer = $('#' + LOTTO_ANSWER_INPUT)
 
   const answer = new FormData(LottoAnswer)
 
@@ -115,7 +124,7 @@ function onCheckMyLottoResult(lottoService) {
   })
 
   $(
-    '#' + ElementId.benefitRateLabel
+    '#' + BENEFIT_RATE_LABEL
   ).innerText = `당신의 총 수익률은 ${benefitResult.benefitRate}%입니다.`
 
   $('.modal').classList.add('open')
@@ -192,7 +201,7 @@ function IsValidLottoNumber(number) {
 }
 
 function onToggleMyLottoNumber() {
-  const isVisible = $('#' + ElementId.toggleButton).checked
+  const isVisible = $('#' + TOGGLE_BUTTON).checked
 
   toggleLottoVisible(isVisible)
 }
@@ -212,8 +221,8 @@ function resetGame(lottoService) {
 
 function resetUI() {
   const modal = document.querySelector('.modal')
-  const toggleButton = $('#' + ElementId.toggleButton)
-  const purchaseButton = $('#' + ElementId.purchaseInput)
+  const toggleButton = $('#' + TOGGLE_BUTTON)
+  const purchaseButton = $('#' + PURCHASE_INPUT)
   const isVisible = toggleButton.checked
 
   setLottoVisible(false)
@@ -229,11 +238,9 @@ function resetUI() {
     .getElementsByName(BONUS_LOTTO_NUMBER)
     .forEach((el) => (el.value = ''))
 
-  $(
-    '#' + ElementId.purchasedLottoAmountLabel
-  ).innerText = `총 0개를 구매하였습니다.`
+  $('#' + PURCHAED_LOTTO_AMOUNT_LABEL).innerText = `총 0개를 구매하였습니다.`
 
-  $('#' + ElementId.purchasedLottoViewer).innerHTML = ''
+  $('#' + PURCHASED_LOTTO_VIEWER).innerHTML = ''
 
   if (toggleButton.checked) {
     toggleLottoVisible(isVisible)
@@ -243,13 +250,13 @@ function resetUI() {
 
 function setLottoVisible(visible) {
   if (visible) {
-    $('#' + ElementId.purchasedLotto).classList.remove(ClassName.displayNone)
-    $('#' + ElementId.lottoAnswerInput).classList.remove(ClassName.displayNone)
+    $('#' + PURCHASED_LOTTO).classList.remove(ClassName.displayNone)
+    $('#' + LOTTO_ANSWER_INPUT).classList.remove(ClassName.displayNone)
     return
   }
 
-  $('#' + ElementId.purchasedLotto).classList.add(ClassName.displayNone)
-  $('#' + ElementId.lottoAnswerInput).classList.add(ClassName.displayNone)
+  $('#' + PURCHASED_LOTTO).classList.add(ClassName.displayNone)
+  $('#' + LOTTO_ANSWER_INPUT).classList.add(ClassName.displayNone)
 }
 
 function handlePurchaseLotto(lottoNumbers) {
@@ -257,21 +264,20 @@ function handlePurchaseLotto(lottoNumbers) {
     return `
       <li class="mx-1 text-4xl lotto-wrapper">
       <span class="lotto-icon">🎟️ </span>
-      <span class="lotto-detail" style="display: none;" data-test-element="${
-        CypressDom.lottoDetail
-      }"">${numbers.reduce((a, b) => a + ', ' + b)}</span>
+      <span class="lotto-detail" style="display: none;" data-test-element="${CY_LOTTO_DETAIL}"">${numbers.reduce(
+      (a, b) => a + ', ' + b
+    )}</span>
       </li>
     `
   }
 
-  $('#' + ElementId.purchasedLottoViewer).innerHTML = `${lottoNumbers
+  $('#' + PURCHASED_LOTTO_VIEWER).innerHTML = `${lottoNumbers
     .map((lottoNumber) => template(lottoNumber))
     .join('')}`
 
   $(
-    '#' + ElementId.purchasedLottoAmountLabel
+    '#' + PURCHAED_LOTTO_AMOUNT_LABEL
   ).innerText = `총 ${lottoNumbers.length}개를 구매하였습니다.`
 
-  $('#' + ElementId.purchasedLottoAmountLabel).dataset.count =
-    lottoNumbers.length
+  $('#' + PURCHAED_LOTTO_AMOUNT_LABEL).dataset.count = lottoNumbers.length
 }
