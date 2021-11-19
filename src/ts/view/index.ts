@@ -1,4 +1,4 @@
-import { AnyObj } from '../constants'
+import { AnyObj } from '../constants.js'
 
 const eventErrorCatcher = (handler: any) => (e: CustomEvent) => {
   try {
