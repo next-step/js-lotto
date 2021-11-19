@@ -9,7 +9,7 @@ import ElementId, {
 } from '../constants/ElementId'
 import EventType from '../constants/EventType'
 import { BASE_LOTTO_NUMBERS, BONUS_LOTTO_NUMBER } from '../constants/DomName'
-import ClassName from '../constants/ClassName'
+import ClassName, { DISPLAY_NONE } from '../constants/ClassName'
 import {
   CY_BASE_LOTTO_INPUT,
   CY_BENEFIT_RATE_BUTTON,
@@ -37,7 +37,7 @@ export default class LottoContainer extends Component {
                     <button type="button" class="btn btn-cyan" data-event="${EventType.purchase}" data-test-element="${CY_PURCHASE_BUTTON}">확인</button>
                 </div>
             </form>
-            <section class="mt-9 ${ClassName.displayNone}" id="${PURCHASED_LOTTO}">
+            <section class="mt-9 ${DISPLAY_NONE}" id="${PURCHASED_LOTTO}">
                 <div class="d-flex">
                 <label class="flex-auto my-0" id="${PURCHAED_LOTTO_AMOUNT_LABEL}" data-test-element="${CY_LOTTO_COUNT_LABEL}"></label>
                 <div class="flex-auto d-flex justify-end pr-1">
@@ -49,7 +49,7 @@ export default class LottoContainer extends Component {
                 </div>
                 <div class="d-flex flex-wrap" id="${PURCHASED_LOTTO_VIEWER}"></div>
             </section>
-            <form class="mt-9 ${ClassName.displayNone}" id="${LOTTO_ANSWER_INPUT}">
+            <form class="mt-9 ${DISPLAY_NONE}" id="${LOTTO_ANSWER_INPUT}">
             <label class="flex-auto d-inline-block mb-3"
                 >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >

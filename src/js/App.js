@@ -1,6 +1,6 @@
 import LottoContainer from './components/LottoContainer'
 import lottoConfig from './config/lotto.config'
-import ClassName from './constants/ClassName'
+import ClassName, { DISPLAY_NONE } from './constants/ClassName'
 import { CY_LOTTO_DETAIL } from './constants/CypressDom'
 import ElementId, {
   LUCKY_LOTTO_CONTAINER,
@@ -250,13 +250,13 @@ function resetUI() {
 
 function setLottoVisible(visible) {
   if (visible) {
-    $('#' + PURCHASED_LOTTO).classList.remove(ClassName.displayNone)
-    $('#' + LOTTO_ANSWER_INPUT).classList.remove(ClassName.displayNone)
+    $('#' + PURCHASED_LOTTO).classList.remove(DISPLAY_NONE)
+    $('#' + LOTTO_ANSWER_INPUT).classList.remove(DISPLAY_NONE)
     return
   }
 
-  $('#' + PURCHASED_LOTTO).classList.add(ClassName.displayNone)
-  $('#' + LOTTO_ANSWER_INPUT).classList.add(ClassName.displayNone)
+  $('#' + PURCHASED_LOTTO).classList.add(DISPLAY_NONE)
+  $('#' + LOTTO_ANSWER_INPUT).classList.add(DISPLAY_NONE)
 }
 
 function handlePurchaseLotto(lottoNumbers) {
