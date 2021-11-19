@@ -28,13 +28,13 @@ export default class PurchaseInfo extends Component<
     const onChange = (e: Event) => {
       const $eventTarget = e.target as HTMLElement;
       if ($eventTarget.matches(class2Query(ClassName.lottoNumbersToggle))) {
-        this.onChangeToggle($eventTarget as HTMLInputElement);
+        this.toggleLottoDetails($eventTarget as HTMLInputElement);
       }
     };
     this.$target.addEventListener("change", onChange);
   }
 
-  onChangeToggle($toggle: HTMLInputElement) {
+  toggleLottoDetails($toggle: HTMLInputElement) {
     $$(class2Query(ClassName.lottoDetail), this.$target).forEach(
       ($lottoDetail) => {
         if ($toggle.checked) {
