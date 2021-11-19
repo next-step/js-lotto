@@ -1,3 +1,3 @@
-export default Object.freeze({
-  displayNone: 'd-none',
+export const { DISPLAY_NONE } = Object.freeze({
+  DISPLAY_NONE: 'd-none',
 })

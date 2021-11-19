@@ -1,12 +1,26 @@
 import LottoContainer from './components/LottoContainer'
 import lottoConfig from './config/lotto.config'
-import ClassName from './constants/ClassName'
-import CypressDom from './constants/CypressDom'
-import ElementId from './constants/ElementId'
+import ClassName, { DISPLAY_NONE } from './constants/ClassName'
+import { CY_LOTTO_DETAIL } from './constants/CypressDom'
+import ElementId, {
+  LUCKY_LOTTO_CONTAINER,
+  PURCHASE_INPUT,
+  PURCHAED_LOTTO_AMOUNT_LABEL,
+  LOTTO_ANSWER_INPUT,
+  TOGGLE_BUTTON,
+  PURCHASED_LOTTO_VIEWER,
+  PURCHASED_LOTTO,
+  BENEFIT_RATE_LABEL,
+} from './constants/ElementId'
 import Event from './constants/Event'
 import EventType from './constants/EventType'
-import Message from './constants/Message'
-import Name from './constants/Name'
+import {
+  LOTTO_NUMBER_DUPLICATED_ERROR,
+  LOTTO_NUMBER_EMPTY_ERROR,
+  LOTTO_NUMBER_OUT_OF_RANGE_ERROR,
+  MY_LOTTO_LIMIT_ERROR,
+} from './constants/Message'
+import { BASE_LOTTO_NUMBERS, BONUS_LOTTO_NUMBER } from './constants/DomName'
 import LottoService from './service/LottoService'
 import { $ } from './utils/dom'
 
@@ -23,7 +37,7 @@ export default class App {
   #lottoService
 
   constructor() {
-    this.#rootContainer = $('#' + ElementId.luckyLottoContainer)
+    this.#rootContainer = $('#' + LUCKY_LOTTO_CONTAINER)
     this.#lottoService = new LottoService()
     new LottoContainer(this.#rootContainer)
 
@@ -58,7 +72,7 @@ export default class App {
 }
 
 function onLottoPurchase(lottoService) {
-  const money = Number($('#' + ElementId.purchaseInput).value)
+  const money = Number($('#' + PURCHASE_INPUT).value)
 
   if (money === 0 || money % lottoService.lottoPrice !== 0) {
     alert(lottoService.lottoPrice + '원 단위로 입력해주세요.')
@@ -68,10 +82,14 @@ function onLottoPurchase(lottoService) {
   const lottoAmount = money / lottoService.lottoPrice
 
   if (lottoAmount > lottoConfig.maxMyLottoLimit) {
-    alert(Message.myLottoLimitError)
-    $('#' + ElementId.purchaseInput).value = ''
+    alert(MY_LOTTO_LIMIT_ERROR)
+    $('#' + PURCHASE_INPUT).value = ''
+    lottoService.initService()
+    resetUI()
     return
   }
+
+  resetUI()
   lottoService.autoPurchase(lottoAmount)
 
   setLottoVisible(true)
@@ -80,18 +98,17 @@ function onLottoPurchase(lottoService) {
 }
 
 function onCheckMyLottoResult(lottoService) {
-  const LottoAnswer = $('#' + ElementId.lottoAnswerInput)
+  const LottoAnswer = $('#' + LOTTO_ANSWER_INPUT)
 
   const answer = new FormData(LottoAnswer)
 
-  const base = answer
-    .getAll(Name.baseLottoNumbers)
-    .map((number) => Number(number))
+  const base = answer.getAll(BASE_LOTTO_NUMBERS).map((number) => Number(number))
 
-  const bonus = Number(answer.get(Name.bonusLottoNumber))
+  const bonus = Number(answer.get(BONUS_LOTTO_NUMBER))
 
   const lottoValidation = validateLottoAnswer(base, bonus)
 
+  console.log(lottoValidation)
   if (lottoValidation.error) {
     alert(lottoValidation.message)
     return
@@ -107,45 +124,84 @@ function onCheckMyLottoResult(lottoService) {
   })
 
   $(
-    '#' + ElementId.benefitRateLabel
+    '#' + BENEFIT_RATE_LABEL
   ).innerText = `당신의 총 수익률은 ${benefitResult.benefitRate}%입니다.`
 
   $('.modal').classList.add('open')
 }
 
-function validateLottoAnswer(base, bonus) {
-  const numberSet = new Set()
-
+function isLottoNumberOutOfRange(base, bonus) {
   if (!IsValidLottoNumber(bonus)) {
-    return {
-      error: true,
-      message: `로또 번호는 1번부터 ${lottoConfig.maxLottoNumber}까지 입력 할 수 있습니다.`,
+    return true
+  }
+
+  for (const baseNumber of base) {
+    if (!IsValidLottoNumber(baseNumber)) {
+      return true
     }
   }
+
+  return false
+}
+
+function isLottoNumberDuplicated(base, bonus) {
+  const lottoLength = base.length + 1
+  const numberSet = new Set()
 
   numberSet.add(bonus)
 
   for (const baseNumber of base) {
-    if (!IsValidLottoNumber(baseNumber) || numberSet.has(baseNumber)) {
-      return { error: true, message: Message.duplicatedLottoNumberError }
-    }
-
     numberSet.add(baseNumber)
+  }
+
+  console.log(base)
+  console.log(lottoLength)
+  console.log(numberSet)
+  console.log(numberSet.size !== lottoLength)
+
+  return numberSet.size !== lottoLength
+}
+
+function isLottoNumberEmpty(base, bonus) {
+  if (!bonus) {
+    return true
+  }
+
+  for (const baseNumber of base) {
+    if (!baseNumber) {
+      return true
+    }
+  }
+
+  return false
+}
+
+function validateLottoAnswer(base, bonus) {
+  if (isLottoNumberEmpty(base, bonus)) {
+    return { error: true, message: LOTTO_NUMBER_EMPTY_ERROR }
+  }
+
+  if (isLottoNumberOutOfRange(base, bonus)) {
+    return { error: true, message: LOTTO_NUMBER_OUT_OF_RANGE_ERROR }
+  }
+
+  if (isLottoNumberDuplicated(base, bonus)) {
+    return { error: true, message: LOTTO_NUMBER_DUPLICATED_ERROR }
   }
 
   return { error: false }
 }
 
 function IsValidLottoNumber(number) {
-  if (number <= 0 || number > lottoConfig.maxLottoNumber) {
-    return false
+  if (number >= 0 && number < lottoConfig.maxLottoNumber) {
+    return true
   }
 
-  return true
+  return false
 }
 
 function onToggleMyLottoNumber() {
-  const isVisible = $('#' + ElementId.toggleButton).checked
+  const isVisible = $('#' + TOGGLE_BUTTON).checked
 
   toggleLottoVisible(isVisible)
 }
@@ -165,8 +221,8 @@ function resetGame(lottoService) {
 
 function resetUI() {
   const modal = document.querySelector('.modal')
-  const toggleButton = $('#' + ElementId.toggleButton)
-  const purchaseButton = $('#' + ElementId.purchaseInput)
+  const toggleButton = $('#' + TOGGLE_BUTTON)
+  const purchaseButton = $('#' + PURCHASE_INPUT)
   const isVisible = toggleButton.checked
 
   setLottoVisible(false)
@@ -176,17 +232,15 @@ function resetUI() {
   purchaseButton.focus()
 
   document
-    .getElementsByName(Name.baseLottoNumbers)
+    .getElementsByName(BASE_LOTTO_NUMBERS)
     .forEach((el) => (el.value = ''))
   document
-    .getElementsByName(Name.bonusLottoNumber)
+    .getElementsByName(BONUS_LOTTO_NUMBER)
     .forEach((el) => (el.value = ''))
 
-  $(
-    '#' + ElementId.purchasedLottoAmountLabel
-  ).innerText = `총 0개를 구매하였습니다.`
+  $('#' + PURCHAED_LOTTO_AMOUNT_LABEL).innerText = `총 0개를 구매하였습니다.`
 
-  $('#' + ElementId.purchasedLottoViewer).innerHTML = ''
+  $('#' + PURCHASED_LOTTO_VIEWER).innerHTML = ''
 
   if (toggleButton.checked) {
     toggleLottoVisible(isVisible)
@@ -196,13 +250,13 @@ function resetUI() {
 
 function setLottoVisible(visible) {
   if (visible) {
-    $('#' + ElementId.purchasedLotto).classList.remove(ClassName.displayNone)
-    $('#' + ElementId.lottoAnswerInput).classList.remove(ClassName.displayNone)
+    $('#' + PURCHASED_LOTTO).classList.remove(DISPLAY_NONE)
+    $('#' + LOTTO_ANSWER_INPUT).classList.remove(DISPLAY_NONE)
     return
   }
 
-  $('#' + ElementId.purchasedLotto).classList.add(ClassName.displayNone)
-  $('#' + ElementId.lottoAnswerInput).classList.add(ClassName.displayNone)
+  $('#' + PURCHASED_LOTTO).classList.add(DISPLAY_NONE)
+  $('#' + LOTTO_ANSWER_INPUT).classList.add(DISPLAY_NONE)
 }
 
 function handlePurchaseLotto(lottoNumbers) {
@@ -210,21 +264,20 @@ function handlePurchaseLotto(lottoNumbers) {
     return `
       <li class="mx-1 text-4xl lotto-wrapper">
       <span class="lotto-icon">🎟️ </span>
-      <span class="lotto-detail" style="display: none;" data-test-element="${
-        CypressDom.lottoDetail
-      }"">${numbers.reduce((a, b) => a + ', ' + b)}</span>
+      <span class="lotto-detail" style="display: none;" data-test-element="${CY_LOTTO_DETAIL}"">${numbers.reduce(
+      (a, b) => a + ', ' + b
+    )}</span>
       </li>
     `
   }
 
-  $('#' + ElementId.purchasedLottoViewer).innerHTML = `${lottoNumbers
+  $('#' + PURCHASED_LOTTO_VIEWER).innerHTML = `${lottoNumbers
     .map((lottoNumber) => template(lottoNumber))
     .join('')}`
 
   $(
-    '#' + ElementId.purchasedLottoAmountLabel
+    '#' + PURCHAED_LOTTO_AMOUNT_LABEL
   ).innerText = `총 ${lottoNumbers.length}개를 구매하였습니다.`
 
-  $('#' + ElementId.purchasedLottoAmountLabel).dataset.count =
-    lottoNumbers.length
+  $('#' + PURCHAED_LOTTO_AMOUNT_LABEL).dataset.count = lottoNumbers.length
 }
