@@ -14,7 +14,11 @@
  * alertMessageToBeEqual: '인자로 받은 텍스트가 경고창으로 나오는 텍스트와 같은지 확인합니다.'
  */
 import lottoConfig from '../../src/js/config/lotto.config'
-import Message from '../../src/js/constants/Message'
+import {
+  MY_LOTTO_LIMIT_ERROR,
+  LOTTO_NUMBER_OUT_OF_RANGE_ERROR,
+  LOTTO_NUMBER_DUPLICATED_ERROR,
+} from '../../src/js/constants/Message'
 
 const LIVE_SERVER_URL = 'http://127.0.0.1:3000/'
 
@@ -56,7 +60,7 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
     })
 
     it('로또를 지정한 개수 이상 구매하면 경고창을 띄워준다.', () => {
-      cy.alertMessageToBeEqual(Message.myLottoLimitError)
+      cy.alertMessageToBeEqual(MY_LOTTO_LIMIT_ERROR)
       cy.purchaseLotto(lottoPrice * (lottoConfig.maxMyLottoLimit + 1))
     })
 
@@ -71,14 +75,14 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
         6,
         lottoConfig.maxLottoNumber + 1,
       ])
-      cy.alertMessageToBeEqual(Message.lottoNumberOutOfRangeError)
+      cy.alertMessageToBeEqual(LOTTO_NUMBER_OUT_OF_RANGE_ERROR)
       cy.getBenefitRate()
     })
 
     it('입력한 로또 번호가 중복된 번호가 있으면 경고창을 띄워준다.', () => {
       cy.purchaseLotto(purchasePrice)
       cy.typeResultLottoNumber([1, 2, 3, 4, 5, 6, 6])
-      cy.alertMessageToBeEqual(Message.lottoNumberDuplicateError)
+      cy.alertMessageToBeEqual(LOTTO_NUMBER_DUPLICATED_ERROR)
       cy.getBenefitRate()
     })
 

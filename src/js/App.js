@@ -5,7 +5,12 @@ import CypressDom from './constants/CypressDom'
 import ElementId from './constants/ElementId'
 import Event from './constants/Event'
 import EventType from './constants/EventType'
-import Message from './constants/Message'
+import {
+  LOTTO_NUMBER_DUPLICATED_ERROR,
+  LOTTO_NUMBER_EMPTY_ERROR,
+  LOTTO_NUMBER_OUT_OF_RANGE_ERROR,
+  MY_LOTTO_LIMIT_ERROR,
+} from './constants/Message'
 import { BASE_LOTTO_NUMBERS, BONUS_LOTTO_NUMBER } from './constants/DomName'
 import LottoService from './service/LottoService'
 import { $ } from './utils/dom'
@@ -68,7 +73,7 @@ function onLottoPurchase(lottoService) {
   const lottoAmount = money / lottoService.lottoPrice
 
   if (lottoAmount > lottoConfig.maxMyLottoLimit) {
-    alert(Message.myLottoLimitError)
+    alert(MY_LOTTO_LIMIT_ERROR)
     $('#' + ElementId.purchaseInput).value = ''
     return
   }
@@ -90,6 +95,7 @@ function onCheckMyLottoResult(lottoService) {
 
   const lottoValidation = validateLottoAnswer(base, bonus)
 
+  console.log(lottoValidation)
   if (lottoValidation.error) {
     alert(lottoValidation.message)
     return
@@ -111,35 +117,74 @@ function onCheckMyLottoResult(lottoService) {
   $('.modal').classList.add('open')
 }
 
-function validateLottoAnswer(base, bonus) {
-  const numberSet = new Set()
-
+function isLottoNumberOutOfRange(base, bonus) {
   if (!IsValidLottoNumber(bonus)) {
-    return {
-      error: true,
-      message: Message.lottoNumberOutOfRangeError,
+    return true
+  }
+
+  for (const baseNumber of base) {
+    if (!IsValidLottoNumber(baseNumber)) {
+      return true
     }
   }
+
+  return false
+}
+
+function isLottoNumberDuplicated(base, bonus) {
+  const lottoLength = base.length + 1
+  const numberSet = new Set()
 
   numberSet.add(bonus)
 
   for (const baseNumber of base) {
-    if (!IsValidLottoNumber(baseNumber) || numberSet.has(baseNumber)) {
-      return { error: true, message: Message.lottoNumberDuplicateError }
-    }
-
     numberSet.add(baseNumber)
+  }
+
+  console.log(base)
+  console.log(lottoLength)
+  console.log(numberSet)
+  console.log(numberSet.size !== lottoLength)
+
+  return numberSet.size !== lottoLength
+}
+
+function isLottoNumberEmpty(base, bonus) {
+  if (!bonus) {
+    return true
+  }
+
+  for (const baseNumber of base) {
+    if (!baseNumber) {
+      return true
+    }
+  }
+
+  return false
+}
+
+function validateLottoAnswer(base, bonus) {
+  if (isLottoNumberEmpty(base, bonus)) {
+    return { error: true, message: LOTTO_NUMBER_EMPTY_ERROR }
+  }
+
+  if (isLottoNumberOutOfRange(base, bonus)) {
+    return { error: true, message: LOTTO_NUMBER_OUT_OF_RANGE_ERROR }
+  }
+
+  if (isLottoNumberDuplicated(base, bonus)) {
+    return { error: true, message: LOTTO_NUMBER_DUPLICATED_ERROR }
   }
 
   return { error: false }
 }
 
 function IsValidLottoNumber(number) {
-  if (number <= 0 || number > lottoConfig.maxLottoNumber) {
-    return false
+  if (number >= 0 && number < lottoConfig.maxLottoNumber) {
+    return true
   }
 
-  return true
+  return false
 }
 
 function onToggleMyLottoNumber() {
