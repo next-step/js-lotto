@@ -1,4 +1,4 @@
-import { ErrorMsgs, UNIT_PRICE, GRADES, MAX_NUM, MIN_NUM, NUMBERS_PER_LOTTO, } from './constants.js';
+import { ErrorMsgs, UNIT_PRICE, GRADES, MAX_NUM, MIN_NUM, NUMBERS_PER_LOTTO } from './constants.js';
 const arrayGen = (size, mapper) => [...Array(size)].map(mapper);
 const ALL_NUMBERS = arrayGen(MAX_NUM, (_, i) => i + 1);
 const generateRandomLotto = () => {
@@ -10,7 +10,7 @@ class LottoModel {
         amount: 0,
         list: [],
     };
-    #isLottoValid(item, validLength) {
+    isValid(item, validLength) {
         if (item.length !== validLength || [...new Set(item)].length !== item.length)
             throw Error(ErrorMsgs.DUPLICATED);
         if (item.some(n => n < MIN_NUM || n > MAX_NUM))
@@ -22,16 +22,15 @@ class LottoModel {
             throw Error(ErrorMsgs.MIN_PRICE);
         const amount = Math.floor(price / UNIT_PRICE);
         this.#data.amount = amount;
+        this.#data.list = [];
         return amount;
     }
-    setLottoItem(index, item) {
-        if (!this.#isLottoValid(item, NUMBERS_PER_LOTTO))
+    setEntry(index, item, isRandom = false) {
+        const entry = isRandom ? generateRandomLotto() : item;
+        if (!this.isValid(entry, NUMBERS_PER_LOTTO))
             return;
-        this.#data.list[index] = item;
-        return item;
-    }
-    setLottoItemRandom(index) {
-        return this.setLottoItem(index, generateRandomLotto());
+        this.#data.list[index] = entry;
+        return entry;
     }
     setAllLottoRandom(price) {
         const amount = this.setPrice(price);
@@ -42,7 +41,7 @@ class LottoModel {
     getWinList(numbers) {
         const amount = this.#data.list.length;
         const winningNumbers = [...numbers];
-        if (!this.#isLottoValid(winningNumbers, NUMBERS_PER_LOTTO + 1))
+        if (!this.isValid(winningNumbers, NUMBERS_PER_LOTTO + 1))
             return false;
         const bonusNumber = winningNumbers.pop();
         const res = this.#data.list.reduce((p, c) => {

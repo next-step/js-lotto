@@ -1,13 +1,4 @@
-import {
-  ErrorMsgs,
-  UNIT_PRICE,
-  GRADES,
-  LottoSet,
-  WinningList,
-  MAX_NUM,
-  MIN_NUM,
-  NUMBERS_PER_LOTTO,
-} from './constants.js'
+import { ErrorMsgs, UNIT_PRICE, GRADES, Entry, WinningList, MAX_NUM, MIN_NUM, NUMBERS_PER_LOTTO } from './constants.js'
 
 const arrayGen = (size: number, mapper: (v: any, k: number) => any) => [...Array(size)].map(mapper)
 const ALL_NUMBERS = arrayGen(MAX_NUM, (_, i) => i + 1) as number[]
@@ -17,19 +8,19 @@ const generateRandomLotto = () => {
   return arrayGen(
     NUMBERS_PER_LOTTO,
     () => cloneNumbers.splice(Math.floor(Math.random() * cloneNumbers.length), 1)[0],
-  ) as LottoSet
+  ) as Entry
 }
 
 class LottoModel {
   #data: {
     amount: number
-    list: LottoSet[]
+    list: Entry[]
   } = {
     amount: 0,
     list: [],
   }
 
-  #isLottoValid(item: number[], validLength: number) {
+  isValid(item: number[], validLength: number) {
     if (item.length !== validLength || [...new Set(item)].length !== item.length) throw Error(ErrorMsgs.DUPLICATED)
     if (item.some(n => n < MIN_NUM || n > MAX_NUM)) throw Error(ErrorMsgs.OUT_OF_RANGE)
     return true
@@ -38,15 +29,14 @@ class LottoModel {
     if (price < UNIT_PRICE) throw Error(ErrorMsgs.MIN_PRICE)
     const amount = Math.floor(price / UNIT_PRICE)
     this.#data.amount = amount
+    this.#data.list = []
     return amount
   }
-  setLottoItem(index: number, item: LottoSet) {
-    if (!this.#isLottoValid(item, NUMBERS_PER_LOTTO)) return
-    this.#data.list[index] = item
-    return item
-  }
-  setLottoItemRandom(index: number) {
-    return this.setLottoItem(index, generateRandomLotto())
+  setEntry(index: number, item: Entry, isRandom: boolean = false) {
+    const entry = isRandom ? generateRandomLotto() : item
+    if (!this.isValid(entry, NUMBERS_PER_LOTTO)) return
+    this.#data.list[index] = entry
+    return entry
   }
   setAllLottoRandom(price: number) {
     const amount = this.setPrice(price)
@@ -57,7 +47,7 @@ class LottoModel {
   getWinList(numbers: number[]) {
     const amount = this.#data.list.length
     const winningNumbers = [...numbers]
-    if (!this.#isLottoValid(winningNumbers, NUMBERS_PER_LOTTO + 1)) return false
+    if (!this.isValid(winningNumbers, NUMBERS_PER_LOTTO + 1)) return false
     const bonusNumber = winningNumbers.pop() as number
 
     const res: WinningList = this.#data.list.reduce(
@@ -89,6 +79,7 @@ class LottoModel {
         g1: 0,
       },
     )
+
     return {
       winningList: res,
       earningRate:

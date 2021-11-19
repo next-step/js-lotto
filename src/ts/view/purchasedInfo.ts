@@ -1,34 +1,36 @@
 import View from './index.js'
 import el from '../dom.js'
-import { LottoSet } from '../constants.js'
+import { Entry } from '../constants.js'
 
 export default class PurchasedInfo extends View {
   $amountLabel
   $toggle
   $ul
 
+  static template = `
+  <section class="mt-9">
+    <div class="d-flex">
+      <label class="flex-auto my-0 amount-label" data-cy="amount-label">총 5개를 구매하였습니다.</label>
+      <div class="flex-auto d-flex justify-end pr-1">
+        <label class="switch">
+          <input type="checkbox" class="lotto-numbers-toggle-button" data-cy="toggle-button">
+          <span class="text-base font-normal">번호보기</span>
+        </label>
+      </div>
+    </div>
+    <ul class="d-flex flex-wrap picked-list" data-cy="picked-list"></ul>
+  </section>
+  `
+
   constructor() {
     super()
-    this.$amountLabel = el(
-      '<label class="flex-auto my-0" data-cy="amount-label">총 5개를 구매하였습니다.</label>',
-    ) as HTMLLabelElement
-    this.$toggle = el(
-      '<input type="checkbox" class="lotto-numbers-toggle-button" data-cy="toggle-button">',
-    ) as HTMLInputElement
-    this.$ul = el('<ul class="d-flex flex-wrap picked-list" data-cy="picked-list"></ul>') as HTMLUListElement
+    const $content = el(PurchasedInfo.template)
+    this.$ul = $content.querySelector('.picked-list') as HTMLUListElement
+    this.$amountLabel = $content.querySelector('.amount-label') as HTMLLabelElement
+    this.$toggle = $content.querySelector('.lotto-numbers-toggle-button') as HTMLInputElement
     this.$toggle.addEventListener('change', this.onToggle)
 
-    el(this, [
-      el('<section class="mt-9">', [
-        el('<div class="d-flex">', [
-          this.$amountLabel,
-          el('<div class="flex-auto d-flex justify-end pr-1">', [
-            el('<label class="switch">', [this.$toggle, '<span class="text-base font-normal">번호보기</span>']),
-          ]),
-        ]),
-        this.$ul,
-      ]),
-    ])
+    el(this, [$content])
   }
 
   onToggle = () => {
@@ -36,7 +38,7 @@ export default class PurchasedInfo extends View {
     this.classList[checked ? 'add' : 'remove']('showDetail')
   }
 
-  onPurchased(data: LottoSet[]) {
+  onPurchased(data: Entry[]) {
     el(
       this.$ul,
       data.map(d =>

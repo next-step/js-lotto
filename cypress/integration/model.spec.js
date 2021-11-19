@@ -3,6 +3,39 @@ import model from '../../dist/model.js'
 import { ErrorMsgs } from '../../dist/constants.js'
 
 describe('lotto model unit test', () => {
+  describe('isValid', () => {
+    it('[5, 10, 20, 30, 40, 45, 24] => 정상', () => {
+      expect(model.isValid([5, 10, 20, 30, 40, 45, 24], 7)).to.be.true
+    })
+    it('[55, 10, 20, 30, 40, 45, 24] => 에러(55 범위 초과)', () => {
+      expect(model.isValid.bind(model, [55, 10, 20, 30, 40, 45, 24], 7)).to.throw(ErrorMsgs.OUT_OF_RANGE)
+    })
+    it('[20, 10, 20, 30, 40, 45, 24] => 에러(20 중복)', () => {
+      expect(model.isValid.bind(model, [20, 10, 20, 30, 40, 45, 24], 7)).to.throw(ErrorMsgs.DUPLICATED)
+    })
+  })
+
+  describe('setPrice', () => {
+    it('setPrice(500) => throw Error(MIN_PRICE)', () => {
+      expect(model.setPrice.bind(model, 500)).to.throw(ErrorMsgs.MIN_PRICE)
+    })
+    it('setPrice(1500) => 1', () => {
+      expect(model.setPrice(1500)).to.eq(1)
+    })
+    it('setPrice(4321) => 4', () => {
+      expect(model.setPrice(4321)).to.eq(4)
+    })
+  })
+
+  describe('setEntry', () => {
+    it('setEntry(0, [1, 2, 3, 4, 5, 6]) => [1, 2, 3, 4, 5, 6]', () => {
+      expect(model.setEntry(0, [1, 2, 3, 4, 5, 6])).to.deep.equal([1, 2, 3, 4, 5, 6])
+    })
+    it('setEntry(0, [0, 0, 0, 0, 0, 0], true) => 랜덤생성', () => {
+      expect(model.setEntry(0, [0, 0, 0, 0, 0, 0], true)).to.be.a('array')
+    })
+  })
+
   describe('setAllLottoRandom', () => {
     it('입력값이 3500이면 3개의 랜덤 로또 생성', () => {
       expect(model.setAllLottoRandom(3500)).to.have.lengthOf(3)
@@ -14,21 +47,12 @@ describe('lotto model unit test', () => {
       expect(model.setAllLottoRandom.bind(model, 500)).to.throw(ErrorMsgs.MIN_PRICE)
     })
   })
-  describe('checkIsValid', () => {
-    it('[5, 10, 20, 30, 40, 45, 24] => 정상', () => {
-      expect(model.checkIsValid([5, 10, 20, 30, 40, 45, 24])).to.be.true
-    })
-    it('[55, 10, 20, 30, 40, 45, 24] => 에러(55 범위 초과)', () => {
-      expect(model.checkIsValid.bind(model, [55, 10, 20, 30, 40, 45, 24])).to.throw(ErrorMsgs.OUT_OF_RANGE)
-    })
-    it('[20, 10, 20, 30, 40, 45, 24] => 에러(20 중복)', () => {
-      expect(model.checkIsValid.bind(model, [20, 10, 20, 30, 40, 45, 24])).to.throw(ErrorMsgs.DUPLICATED)
-    })
-  })
+
   describe('getWinList - 사용자 입력값이 [[1, 2, 3, 4, 5, 6]]일 때', () => {
     const matchKeys = ['g5', 'g4', 'g3', 'g2', 'g1']
     beforeEach(() => {
-      model.setPicked([1, 2, 3, 4, 5, 6])
+      model.setPrice(1000)
+      model.setEntry(0, [1, 2, 3, 4, 5, 6])
     })
     it('당첨번호 [1, 2, 7, 8, 9, 10, 11] => 2개 일치 => 당첨X / -100%', () => {
       const { winningList, earningRate } = model.getWinList([1, 2, 7, 8, 9, 10, 11])

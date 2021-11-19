@@ -1,7 +1,7 @@
 export type AnyObj = { [key: string]: any }
 export type StrObj = { [key: string]: string }
 export type Elem = HTMLElement | string
-export type LottoSet = [number, number, number, number, number, number]
+export type Entry = [number, number, number, number, number, number]
 export type WinningList = { [key: keyof typeof GRADES]: number }
 export type GRADE = {
   matchCount: number
@@ -23,25 +23,25 @@ export const ErrorMsgs = {
 export const GRADES: {
   [key: string]: GRADE
 } = {
-  g1: {
-    matchCount: 6,
-    winPrice: 2_000_000_000,
+  g5: {
+    matchCount: 3,
+    winPrice: 5_000,
+  },
+  g4: {
+    matchCount: 4,
+    winPrice: 50_000,
+  },
+  g3: {
+    matchCount: 5,
+    winPrice: 1_500_000,
   },
   g2: {
     matchCount: 5,
     bonusMatched: true,
     winPrice: 30_000_000,
   },
-  g3: {
-    matchCount: 5,
-    winPrice: 1_500_000,
-  },
-  g4: {
-    matchCount: 4,
-    winPrice: 50_000,
-  },
-  g5: {
-    matchCount: 3,
-    winPrice: 5_000,
+  g1: {
+    matchCount: 6,
+    winPrice: 2_000_000_000,
   },
 }
