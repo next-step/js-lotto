@@ -1,7 +1,7 @@
 import Component from '../core/Component'
 import ElementId from '../constants/ElementId'
 import EventType from '../constants/EventType'
-import Name from '../constants/Name'
+import { BASE_LOTTO_NUMBERS, BONUS_LOTTO_NUMBER } from '../constants/DomName'
 import ClassName from '../constants/ClassName'
 import CypressDom from '../constants/CypressDom'
 
@@ -44,32 +44,32 @@ export default class LottoContainer extends Component {
                 <div>
                     <input
                     data-test-element="${CypressDom.baseLottoInput}"
-                    name="${Name.baseLottoNumbers}"
+                    name="${BASE_LOTTO_NUMBERS}"
                     type="number"
                     class="winning-number mx-1 text-center"/>
                     <input
                     data-test-element="${CypressDom.baseLottoInput}"
-                    name="${Name.baseLottoNumbers}"
+                    name="${BASE_LOTTO_NUMBERS}"
                     type="number"
                     class="winning-number mx-1 text-center"/>
                     <input
                     data-test-element="${CypressDom.baseLottoInput}"
-                    name="${Name.baseLottoNumbers}"
+                    name="${BASE_LOTTO_NUMBERS}"
                     type="number"
                     class="winning-number mx-1 text-center"/>
                     <input
                     data-test-element="${CypressDom.baseLottoInput}"
-                    name="${Name.baseLottoNumbers}"
+                    name="${BASE_LOTTO_NUMBERS}"
                     type="number"
                     class="winning-number mx-1 text-center"/>
                     <input
                     data-test-element="${CypressDom.baseLottoInput}"
-                    name="${Name.baseLottoNumbers}"
+                    name="${BASE_LOTTO_NUMBERS}"
                     type="number"
                     class="winning-number mx-1 text-center"/>
                     <input
                     data-test-element="${CypressDom.baseLottoInput}"
-                    name="${Name.baseLottoNumbers}"
+                    name="${BASE_LOTTO_NUMBERS}"
                     type="number"
                     class="winning-number mx-1 text-center"/>
                 </div>
@@ -78,7 +78,7 @@ export default class LottoContainer extends Component {
                 <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
                 <div class="d-flex justify-center">
                     <input type="number" class="bonus-number text-center" 
-                    data-test-element="${CypressDom.bonusLottoInput}" name="${Name.bonusLottoNumber}"
+                    data-test-element="${CypressDom.bonusLottoInput}" name="${BONUS_LOTTO_NUMBER}"
                      />
                 </div>
                 </div>

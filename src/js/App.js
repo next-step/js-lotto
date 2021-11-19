@@ -6,7 +6,7 @@ import ElementId from './constants/ElementId'
 import Event from './constants/Event'
 import EventType from './constants/EventType'
 import Message from './constants/Message'
-import Name from './constants/Name'
+import { BASE_LOTTO_NUMBERS, BONUS_LOTTO_NUMBER } from './constants/DomName'
 import LottoService from './service/LottoService'
 import { $ } from './utils/dom'
 
@@ -84,11 +84,9 @@ function onCheckMyLottoResult(lottoService) {
 
   const answer = new FormData(LottoAnswer)
 
-  const base = answer
-    .getAll(Name.baseLottoNumbers)
-    .map((number) => Number(number))
+  const base = answer.getAll(BASE_LOTTO_NUMBERS).map((number) => Number(number))
 
-  const bonus = Number(answer.get(Name.bonusLottoNumber))
+  const bonus = Number(answer.get(BONUS_LOTTO_NUMBER))
 
   const lottoValidation = validateLottoAnswer(base, bonus)
 
@@ -176,10 +174,10 @@ function resetUI() {
   purchaseButton.focus()
 
   document
-    .getElementsByName(Name.baseLottoNumbers)
+    .getElementsByName(BASE_LOTTO_NUMBERS)
     .forEach((el) => (el.value = ''))
   document
-    .getElementsByName(Name.bonusLottoNumber)
+    .getElementsByName(BONUS_LOTTO_NUMBER)
     .forEach((el) => (el.value = ''))
 
   $(
