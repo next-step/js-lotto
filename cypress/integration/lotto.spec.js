@@ -9,14 +9,11 @@ before(() => {
 });
 
 describe('lotto 구입 기능 구현', () => {
-  beforeEach(() => {
-    cy.get('#price').clear();
-  });
-
   context(
     '로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.',
     () => {
       beforeEach(() => {
+        cy.get('#price').clear();
         cy.inputValue('#price', PRICE).type('{enter}');
       });
 
@@ -57,12 +54,9 @@ describe('lotto 구입 기능 구현', () => {
   context(
     '복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.',
     () => {
-      before(() => {
+      it('토글 버튼 클릭시 복권 영역이 세로 정렬된다.', () => {
         cy.inputValue('#price', PRICE).type('{enter}');
         cy.clickButton('.switch');
-      });
-
-      it('토글 버튼 클릭시 복권 영역이 세로 정렬된다.', () => {
         cy.checkClassName('#lottoWrapper', 'flex-col');
       });
 
@@ -73,4 +67,58 @@ describe('lotto 구입 기능 구현', () => {
       });
     }
   );
+
+  context('당첨번호를 입력', () => {
+    beforeEach(() => {
+      cy.get('#price').clear();
+      cy.inputValue('#price', PRICE).type('{enter}');
+    });
+
+    it('당첨번호에 중복이 있다면 alert 발생', () => {
+      const alertStub = cy.stub();
+      cy.on('window:alert', alertStub);
+      [1, 1, 1, 1, 1, 1, 1].forEach((lottoNumber, index) => {
+        cy.inputValue(`input[data-lotto-number="${index}"]`, lottoNumber);
+      });
+
+      cy.clickButton('.open-result-modal-button').then(() => {
+        expect(alertStub.getCall(0)).to.be.calledWith(ALERT.DUPLICATED);
+      });
+    });
+
+    it('당첨 안내 modal 생성', () => {
+      [1, 2, 3, 4, 5, 6, 7].forEach((lottoNumber, index) => {
+        cy.get(`input[data-lotto-number="${index}"]`).clear();
+        cy.inputValue(`input[data-lotto-number="${index}"]`, lottoNumber);
+      });
+
+      cy.clickButton('.open-result-modal-button');
+      cy.checkClassName('#resultModalSection', 'open');
+
+      cy.clickButton('#modalClose');
+      cy.checkClassName('#resultModalSection', 'open', false);
+    });
+  });
+
+  context('로또 초기화', () => {
+    beforeEach(() => {
+      cy.get('#price').clear();
+      cy.inputValue('#price', PRICE).type('{enter}');
+    });
+
+    it('당첨 안내 modal 생성', () => {
+      [1, 2, 3, 4, 5, 6, 7].forEach((lottoNumber, index) => {
+        cy.get(`input[data-lotto-number="${index}"]`).clear();
+        cy.inputValue(`input[data-lotto-number="${index}"]`, lottoNumber);
+      });
+
+      cy.clickButton('.open-result-modal-button').then(() => {
+        cy.checkClassName('#resultModalSection', 'open');
+      });
+
+      cy.clickButton('#resetBtn');
+      cy.checkCss('#purchasedLottoSection', 'display', 'none');
+      cy.checkCss('#winningNumberFormSection', 'display', 'none');
+    });
+  });
 });
