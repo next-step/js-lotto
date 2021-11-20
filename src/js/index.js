@@ -4,25 +4,13 @@ import {
   updateLottoAmounts,
   addWinningNumberInput,
 } from "../utils/renderer.js";
+import { winningResult } from "./winningResult.js";
+
+function activateResult(arr) {
+  winningResult(arr);
+}
 
 function App() {
-  function activateModal() {
-    const $showResultButton = $(".open-result-modal-button");
-    const $modalClose = $(".modal-close");
-    const $modal = $(".modal");
-
-    const onModalShow = () => {
-      $modal.classList.add("open");
-    };
-
-    const onModalClose = () => {
-      $modal.classList.remove("open");
-    };
-
-    $showResultButton.addEventListener("click", onModalShow);
-    $modalClose.addEventListener("click", onModalClose);
-  }
-
   let lottoTicketsList = [];
   let IsLottoNumberVisible = false;
 
@@ -81,7 +69,7 @@ function App() {
     addWinningNumberInput(".winning-number-form");
     IsLottoNumberVisible = true;
 
-    activateModal();
+    activateResult(lottoTicketsList);
   };
 
   $(".purchase__form").addEventListener("submit", (e) => {
