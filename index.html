@@ -12,6 +12,31 @@
         <div class="w-100" id="lucky-lotto-container"></div>
       </div>
 
+      <div class="manual-lotto-modal d-none" id="MANUAL_LOTTO_MODAL">
+        <div class="modal_body">
+          <div class="d-flex justify-end">
+            <button
+              type="button"
+              class="btn btn-cyan mr-3"
+              id="MANUAL_PURCHASE_CONFIRM_BUTTON"
+              data-event="RESET_GAME"
+              data-test-element="CY_RESET_GAME_BUTTON"
+            >
+              구매
+            </button>
+            <button
+              type="button"
+              class="btn btn-red"
+              id="MANUAL_PURCHASE_CANCLE_BUTTON"
+              data-event="RESET_GAME"
+              data-test-element="CY_RESET_GAME_BUTTON"
+            >
+              구매 취소
+            </button>
+          </div>
+          <div id="MANUAL_LOTTO_CONTAINER" class="mt-5"></div>
+        </div>
+      </div>
       <div class="modal">
         <div class="modal-inner p-10">
           <div class="modal-close">
@@ -34,65 +59,34 @@
                 <tr class="text-center">
                   <td class="p-3">3개</td>
                   <td class="p-3">5,000</td>
-                  <td
-                    class="p-3"
-                    data-rank-label="3"
-                    data-test-element="CY_RESULT_LOTTO_RANK_LABEL"
-                  ></td>
+                  <td class="p-3" data-rank-label="3" data-test-element="CY_RESULT_LOTTO_RANK_LABEL"></td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">4개</td>
                   <td class="p-3">50,000</td>
-                  <td
-                    class="p-3"
-                    data-rank-label="4"
-                    data-test-element="CY_RESULT_LOTTO_RANK_LABEL"
-                  ></td>
+                  <td class="p-3" data-rank-label="4" data-test-element="CY_RESULT_LOTTO_RANK_LABEL"></td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">5개</td>
                   <td class="p-3">1,500,000</td>
-                  <td
-                    class="p-3"
-                    data-rank-label="5"
-                    data-test-element="CY_RESULT_LOTTO_RANK_LABEL"
-                  ></td>
+                  <td class="p-3" data-rank-label="5" data-test-element="CY_RESULT_LOTTO_RANK_LABEL"></td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">5개 + 보너스볼</td>
                   <td class="p-3">30,000,000</td>
-                  <td
-                    class="p-3"
-                    data-rank-label="55"
-                    data-test-element="CY_RESULT_LOTTO_RANK_LABEL"
-                  ></td>
+                  <td class="p-3" data-rank-label="55" data-test-element="CY_RESULT_LOTTO_RANK_LABEL"></td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">6개</td>
                   <td class="p-3">2,000,000,000</td>
-                  <td
-                    class="p-3"
-                    data-rank-label="6"
-                    data-test-element="CY_RESULT_LOTTO_RANK_LABEL"
-                  ></td>
+                  <td class="p-3" data-rank-label="6" data-test-element="CY_RESULT_LOTTO_RANK_LABEL"></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p
-            class="text-center font-bold"
-            id="benefit-rate-label"
-            data-test-element="CY_RESULT_LOTTO_BENEFIT_RATE_LABEL"
-          ></p>
+          <p class="text-center font-bold" id="benefit-rate-label" data-test-element="CY_RESULT_LOTTO_BENEFIT_RATE_LABEL"></p>
           <div class="d-flex justify-center mt-5">
-            <button
-              type="button"
-              class="btn btn-cyan"
-              data-event="RESET_GAME"
-              data-test-element="CY_RESET_GAME_BUTTON"
-            >
-              다시 시작하기
-            </button>
+            <button type="button" class="btn btn-cyan" data-event="RESET_GAME" data-test-element="CY_RESET_GAME_BUTTON">다시 시작하기</button>
           </div>
         </div>
       </div>
