@@ -7,6 +7,7 @@ export const {
   PURCHASED_LOTTO,
   TOGGLE_BUTTON,
   PURCHASED_LOTTO_VIEWER,
+  TOGGLE_PURCHASE_MODE_BUTTON,
 } = Object.freeze({
   LUCKY_LOTTO_CONTAINER: 'lucky-lotto-container',
   LOTTO_ANSWER_INPUT: 'lotto-answer-input',
@@ -16,4 +17,5 @@ export const {
   PURCHASED_LOTTO_VIEWER: 'purchased-lotto-viewer',
   BENEFIT_RATE_LABEL: 'benefit-rate-label',
   TOGGLE_BUTTON: 'TOGGLE_BUTTON',
+  TOGGLE_PURCHASE_MODE_BUTTON: 'TOGGLE_PURCHASE_PURCHASE_MODE_BUTTON',
 })

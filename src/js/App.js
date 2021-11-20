@@ -14,22 +14,17 @@ import ElementId, {
 } from './constants/ElementId'
 import Event from './constants/Event'
 import EventType from './constants/EventType'
-import {
-  LOTTO_NUMBER_DUPLICATED_ERROR,
-  LOTTO_NUMBER_EMPTY_ERROR,
-  LOTTO_NUMBER_OUT_OF_RANGE_ERROR,
-  MY_LOTTO_LIMIT_ERROR,
-} from './constants/Message'
+import { LOTTO_NUMBER_DUPLICATED_ERROR, LOTTO_NUMBER_EMPTY_ERROR, LOTTO_NUMBER_OUT_OF_RANGE_ERROR, MY_LOTTO_LIMIT_ERROR } from './constants/Message'
 import { BASE_LOTTO_NUMBERS, BONUS_LOTTO_NUMBER } from './constants/DomName'
 import LottoService from './service/LottoService'
 import { $ } from './utils/dom'
 
 const clickEventMapper = {
   [EventType.purchase]: (lottoService) => onLottoPurchase(lottoService),
-  [EventType.checkMyLottoResult]: (lottoService) =>
-    onCheckMyLottoResult(lottoService),
+  [EventType.checkMyLottoResult]: (lottoService) => onCheckMyLottoResult(lottoService),
   [EventType.toggleMyLotto]: () => onToggleMyLottoNumber(),
   [EventType.resetGame]: (lottoService) => resetGame(lottoService),
+  [EventType.toggleLottoPurchaseMode]: (lottoService) => toggleLottoPurchaseMode(lottoService),
 }
 
 export default class App {
@@ -70,6 +65,8 @@ export default class App {
     })
   }
 }
+
+function toggleLottoPurchaseMode(lottoService) {}
 
 function onLottoPurchase(lottoService) {
   const money = Number($('#' + PURCHASE_INPUT).value)
@@ -123,9 +120,7 @@ function onCheckMyLottoResult(lottoService) {
     node.innerText = count + '개'
   })
 
-  $(
-    '#' + BENEFIT_RATE_LABEL
-  ).innerText = `당신의 총 수익률은 ${benefitResult.benefitRate}%입니다.`
+  $('#' + BENEFIT_RATE_LABEL).innerText = `당신의 총 수익률은 ${benefitResult.benefitRate}%입니다.`
 
   $('.modal').classList.add('open')
 }
@@ -231,12 +226,8 @@ function resetUI() {
   purchaseButton.value = ''
   purchaseButton.focus()
 
-  document
-    .getElementsByName(BASE_LOTTO_NUMBERS)
-    .forEach((el) => (el.value = ''))
-  document
-    .getElementsByName(BONUS_LOTTO_NUMBER)
-    .forEach((el) => (el.value = ''))
+  document.getElementsByName(BASE_LOTTO_NUMBERS).forEach((el) => (el.value = ''))
+  document.getElementsByName(BONUS_LOTTO_NUMBER).forEach((el) => (el.value = ''))
 
   $('#' + PURCHAED_LOTTO_AMOUNT_LABEL).innerText = `총 0개를 구매하였습니다.`
 
@@ -264,20 +255,14 @@ function handlePurchaseLotto(lottoNumbers) {
     return `
       <li class="mx-1 text-4xl lotto-wrapper">
       <span class="lotto-icon">🎟️ </span>
-      <span class="lotto-detail" style="display: none;" data-test-element="${CY_LOTTO_DETAIL}"">${numbers.reduce(
-      (a, b) => a + ', ' + b
-    )}</span>
+      <span class="lotto-detail" style="display: none;" data-test-element="${CY_LOTTO_DETAIL}"">${numbers.reduce((a, b) => a + ', ' + b)}</span>
       </li>
     `
   }
 
-  $('#' + PURCHASED_LOTTO_VIEWER).innerHTML = `${lottoNumbers
-    .map((lottoNumber) => template(lottoNumber))
-    .join('')}`
+  $('#' + PURCHASED_LOTTO_VIEWER).innerHTML = `${lottoNumbers.map((lottoNumber) => template(lottoNumber)).join('')}`
 
-  $(
-    '#' + PURCHAED_LOTTO_AMOUNT_LABEL
-  ).innerText = `총 ${lottoNumbers.length}개를 구매하였습니다.`
+  $('#' + PURCHAED_LOTTO_AMOUNT_LABEL).innerText = `총 ${lottoNumbers.length}개를 구매하였습니다.`
 
   $('#' + PURCHAED_LOTTO_AMOUNT_LABEL).dataset.count = lottoNumbers.length
 }

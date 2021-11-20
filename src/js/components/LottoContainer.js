@@ -6,10 +6,11 @@ import ElementId, {
   PURCHASED_LOTTO_VIEWER,
   PURCHASED_LOTTO,
   PURCHAED_LOTTO_AMOUNT_LABEL,
+  TOGGLE_PURCHASE_MODE_BUTTON,
 } from '../constants/ElementId'
 import EventType from '../constants/EventType'
 import { BASE_LOTTO_NUMBERS, BONUS_LOTTO_NUMBER } from '../constants/DomName'
-import ClassName, { DISPLAY_NONE } from '../constants/ClassName'
+import { DISPLAY_NONE } from '../constants/ClassName'
 import {
   CY_BASE_LOTTO_INPUT,
   CY_BENEFIT_RATE_BUTTON,
@@ -18,6 +19,7 @@ import {
   CY_PURCHASE_BUTTON,
   CY_PURHCASE_INPUT,
   CY_TOGGLE_BUTTON,
+  CY_TOGGLE_PURCHASE_MODE_BUTTON,
 } from '../constants/CypressDom'
 
 export default class LottoContainer extends Component {
@@ -25,7 +27,13 @@ export default class LottoContainer extends Component {
     return `
             <h1 class="text-center">🎱 행운의 로또</h1>
             <form class="mt-5" onsubmit="document.querySelector('button[data-event=PURCHASE]').click(); return false;">
-                <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.</label>
+                <div class="d-flex justify-between">
+                    <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.</label>
+                    <label class="switch">
+                    <input type="checkbox" class="lotto-numbers-toggle-button" data-event="${EventType.toggleLottoPurchaseMode}" id="${TOGGLE_PURCHASE_MODE_BUTTON}" data-test-element="${CY_TOGGLE_PURCHASE_MODE_BUTTON}" />
+                    <span class="text-base font-normal">수동 구매하기</span>
+                    </label>
+                </div>
                 <div class="d-flex">
                     <input
                         id="${PURCHASE_INPUT}"
