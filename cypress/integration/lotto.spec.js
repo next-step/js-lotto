@@ -106,7 +106,7 @@ describe('lotto 구입 기능 구현', () => {
       cy.inputValue('#price', PRICE).type('{enter}');
     });
 
-    it('당첨 안내 modal 생성', () => {
+    it('당첨 안내 modal 생성 후 초기화', () => {
       [1, 2, 3, 4, 5, 6, 7].forEach((lottoNumber, index) => {
         cy.get(`input[data-lotto-number="${index}"]`).clear();
         cy.inputValue(`input[data-lotto-number="${index}"]`, lottoNumber);
