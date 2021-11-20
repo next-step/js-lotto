@@ -23,6 +23,7 @@ export default class MainController {
     this.winningNumberFormSection = new WinningNumberFormSection(
       winningNumberFormSection
     );
+    
     this.resultModalSection = new ResultModalSection(resultModalSection);
     this.winningPrizeModel = new WinningPrizeModel();
     this.lottoModel = new LottoModel();
