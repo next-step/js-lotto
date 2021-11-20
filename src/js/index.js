@@ -6,6 +6,23 @@ import {
 } from "../utils/renderer.js";
 
 function App() {
+  function activateModal() {
+    const $showResultButton = $(".open-result-modal-button");
+    const $modalClose = $(".modal-close");
+    const $modal = $(".modal");
+
+    const onModalShow = () => {
+      $modal.classList.add("open");
+    };
+
+    const onModalClose = () => {
+      $modal.classList.remove("open");
+    };
+
+    $showResultButton.addEventListener("click", onModalShow);
+    $modalClose.addEventListener("click", onModalClose);
+  }
+
   let lottoTicketsList = [];
   let IsLottoNumberVisible = false;
 
@@ -63,6 +80,8 @@ function App() {
     updateLottoTickets(purchaseAmounts);
     addWinningNumberInput(".winning-number-form");
     IsLottoNumberVisible = true;
+
+    activateModal();
   };
 
   $(".purchase__form").addEventListener("submit", (e) => {
