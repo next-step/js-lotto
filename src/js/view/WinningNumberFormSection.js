@@ -25,6 +25,7 @@ export default class WinningNumberFormSection extends View {
                 required
                 min="1"
                 max="45"
+                data-lotto-number="0"
               />
               <input
                 type="number"
@@ -32,6 +33,7 @@ export default class WinningNumberFormSection extends View {
                 required
                 min="1"
                 max="45"
+                data-lotto-number="1"
               />
               <input
                 type="number"
@@ -39,6 +41,7 @@ export default class WinningNumberFormSection extends View {
                 required
                 min="1"
                 max="45"
+                data-lotto-number="2"
               />
               <input
                 type="number"
@@ -46,6 +49,7 @@ export default class WinningNumberFormSection extends View {
                 required
                 min="1"
                 max="45"
+                data-lotto-number="3"
               />
               <input
                 type="number"
@@ -53,6 +57,7 @@ export default class WinningNumberFormSection extends View {
                 required
                 min="1"
                 max="45"
+                data-lotto-number="4"
               />
               <input
                 type="number"
@@ -60,6 +65,7 @@ export default class WinningNumberFormSection extends View {
                 required
                 min="1"
                 max="45"
+                data-lotto-number="5"
               />
             </div>
           </div>
@@ -72,6 +78,7 @@ export default class WinningNumberFormSection extends View {
                 required
                 min="1"
                 max="45"
+                data-lotto-number="6"
               />
             </div>
           </div>
