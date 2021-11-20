@@ -1,9 +1,12 @@
 {
-  "name": "racingcar",
+  "name": "js-lotto",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "로또 STEP1",
+  "main": "src/js/index.js",
+  "repository": "https://guymoon.github.io/js-lotto/",
+  "author": "guymoon <gmoon.cho@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^8.7.0"
   }
 }
