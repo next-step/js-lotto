@@ -9,5 +9,6 @@ describe('로또 게임', () => {
     cy.get('.js-payment-input').type(5000);
     cy.get('.js-confirm-button').click();
     cy.get('.js-lotto-count').should('have.text', '5');
+    cy.get('.js-lotto-ticket').should('have.length', 5);
   });
 });

@@ -1,15 +1,26 @@
-const $showResultButton = document.querySelector('.open-result-modal-button');
-const $modalClose = document.querySelector('.modal-close');
-const $modal = document.querySelector('.modal');
-// const $lottoNumbersToggleButton = document.querySelector('.lotto-numbers-toggle-button');
+const $paymentForm = document.querySelector('.js-payment-form');
+const $lottoCount = document.querySelector('.js-lotto-count');
+const $lottoContainer = document.querySelector('.js-lotto-container');
 
-const onModalShow = () => {
-  $modal.classList.add('open');
+const LOTTO_PRICE = 1000;
+
+const lottoTemplate = '<span class="mx-1 text-4xl js-lotto-ticket">🎟️ </span>';
+
+const getAmount = (price) => Math.floor(price / LOTTO_PRICE);
+
+const buyLotto = (price) => {
+  const amount = getAmount(price);
+
+  $lottoCount.textContent = amount;
+  $lottoContainer.innerHTML = lottoTemplate.repeat(amount);
 };
 
-const onModalClose = () => {
-  $modal.classList.remove('open');
+const handlePayment = (event) => {
+  event.preventDefault();
+
+  const price = event.target.elements['price'].value;
+
+  buyLotto(price);
 };
 
-$showResultButton.addEventListener('click', onModalShow);
-$modalClose.addEventListener('click', onModalClose);
+$paymentForm.addEventListener('submit', handlePayment);
