@@ -22,3 +22,12 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.lotto-number-hidden {
+  display: flex;
+  flex-direction: row;
+}
+
+.lotto-number-hidden .js-lotto-numbers {
+  display: none;
+}
