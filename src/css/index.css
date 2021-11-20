@@ -22,3 +22,51 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-wrap > .lotto-wrapper {
+  display: flex;
+}
+
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+}
+
+ul {
+  padding: 0;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+
+#lottoDetail {
+  margin-left: 8px;
+  font-size: 1.3rem;
+}
+
+
