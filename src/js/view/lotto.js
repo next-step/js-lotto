@@ -2,8 +2,8 @@ import SELECTOR from '../constant/selector.js';
 import { $ } from '../util/querySelector.js';
 
 const lottoTemplate = (lottoNumbers = []) => `
-  <div>
-    <span class="mx-1 text-4xl js-lotto-ticket">🎟️ </span>
+  <div class="js-lotto-ticket">
+    <span class="mx-1 text-4xl">🎟️ </span>
     <span class="js-lotto-numbers">${lottoNumbers.join(', ')}</span>
   </div>
 `;
