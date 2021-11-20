@@ -2,7 +2,7 @@ import { getLottoAmount, issueLottos } from '../service/lotto.js';
 import {
   setBriefMode,
   setDetailMode,
-  updateLottoContainer,
+  updateLottoTicketView,
   updateLottoCount,
 } from '../view/lotto.js';
 
@@ -11,7 +11,7 @@ const buyLotto = (price) => {
   const lottos = issueLottos(lottoAmount);
 
   updateLottoCount(lottoAmount);
-  updateLottoContainer(lottos);
+  updateLottoTicketView(lottos);
 };
 
 export const handlePayment = (event) => {

@@ -12,7 +12,7 @@ export const updateLottoCount = (amount = 0) => {
   $(SELECTOR.LOTTO_COUNT).textContent = amount;
 };
 
-export const updateLottoContainer = (lottos = []) => {
+export const updateLottoTicketView = (lottos = []) => {
   $(SELECTOR.LOTTO_CONTAINER).innerHTML = lottos.map(lottoTemplate).join('');
 };
 
