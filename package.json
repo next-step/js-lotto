@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "main": "src/js/index.js",
   "license": "MIT",
+  "scripts": {
+    "test": "cypress open"
+  },
   "devDependencies": {
     "cypress": "^9.0.0",
     "eslint": "^8.2.0",
