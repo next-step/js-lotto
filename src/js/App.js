@@ -21,7 +21,8 @@ import {
   LOTTO_NUMBER_EMPTY_ERROR,
   LOTTO_NUMBER_OUT_OF_RANGE_ERROR,
   MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR,
-  MANUAL_LOTTO_NUMBER_VALIDATION_ERROR,
+  MANUAL_LOTTO_NUMBER_EMPTY_ERROR,
+  MANUAL_LOTTO_NUMBER_RANGE_ERROR,
   MANUAL_PURCHASE_AMOUNT_MESSAGE,
   MANUAL_PURCHASE_PROMPT_NUMBER_OUT_OF_RANGE_ERROR,
   MANUAL_PURCHASE_PROMPT_VALIDATION_ERROR,
@@ -40,6 +41,8 @@ const clickEventMapper = {
   [EventType.manualPurchaseCancle]: (lottoService) => cancleManualPurhcase(lottoService),
   [EventType.manualPurchaseConfirm]: (lottoService) => confirmManualPurchase(lottoService),
 }
+
+const MANUAL_PURCHASE_MESSAGES = [MANUAL_LOTTO_NUMBER_EMPTY_ERROR, MANUAL_LOTTO_NUMBER_RANGE_ERROR, MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR]
 export default class App {
   #rootContainer
   #lottoService
@@ -106,7 +109,7 @@ function confirmManualPurchase(lottoService) {
   } catch (error) {
     const message = error.message
 
-    if (message !== MANUAL_LOTTO_NUMBER_VALIDATION_ERROR || message !== MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR) {
+    if (MANUAL_PURCHASE_MESSAGES.includes(message)) {
       alert(message)
     }
   }
@@ -324,8 +327,11 @@ function getManualLottoNumbers() {
     container.querySelectorAll('.' + MANUAL_LOTTO_NUMBER).forEach((lottoInput) => {
       const lottoNumber = Number(lottoInput.value)
 
+      if (!lottoInput.value) {
+        throw new Error(MANUAL_LOTTO_NUMBER_EMPTY_ERROR)
+      }
       if (lottoNumber <= 0 || lottoNumber > lottoConfig.maxLottoNumber) {
-        throw new Error(MANUAL_LOTTO_NUMBER_VALIDATION_ERROR)
+        throw new Error(MANUAL_LOTTO_NUMBER_RANGE_ERROR)
       }
 
       if (lottoNumbers.has(lottoNumber)) {

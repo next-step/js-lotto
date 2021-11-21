@@ -20,8 +20,9 @@ import {
   LOTTO_NUMBER_DUPLICATED_ERROR,
   MANUAL_PURCHASE_PROMPT_VALIDATION_ERROR,
   MANUAL_PURCHASE_PROMPT_NUMBER_OUT_OF_RANGE_ERROR,
-  MANUAL_LOTTO_NUMBER_VALIDATION_ERROR,
   MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR,
+  MANUAL_LOTTO_NUMBER_EMPTY_ERROR,
+  MANUAL_LOTTO_NUMBER_RANGE_ERROR,
 } from '../../src/js/constants/Message'
 
 const LIVE_SERVER_URL = 'http://127.0.0.1:3000/'
@@ -106,18 +107,30 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
     })
 
     it('수동구매 시 입력창이 비어있을 시 에러를 표시한다.', () => {
+      const emptyInputExistLottoNumbers = [[1, 2, 3, 4, 5]]
       cy.clickToggleManualButton()
-      cy.alertMessageWillBeEqual(MANUAL_LOTTO_NUMBER_VALIDATION_ERROR)
+      cy.alertMessageWillBeEqual(MANUAL_LOTTO_NUMBER_EMPTY_ERROR)
       cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: 1 })
-      cy.typeManualLottoInputs([[1, 2, 3, 4, 5]])
+      cy.typeManualLottoInputs(invalidLottoNumbers)
+      cy.clickManualPurchaseButton()
+    })
+
+    it('수동구매 시 범위를 벗어난 입력창이 있을시 에러를 표시한다.', () => {
+      const outOfRangeExistLottoNumbers = [[1, 2, 3, 4, 5, lottoConfig.maxLottoNumber + 1]]
+      cy.clickToggleManualButton()
+      cy.alertMessageWillBeEqual(MANUAL_LOTTO_NUMBER_RANGE_ERROR)
+      cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: 1 })
+      cy.typeManualLottoInputs(outOfRangeExistLottoNumbers)
       cy.clickManualPurchaseButton()
     })
 
     it('수동구매 시 중복된 숫자가 있을 시 에러를 표시한다.', () => {
+      const duplicatedLottoNumbers = [[1, 2, 3, 4, 4, 5]]
+
       cy.clickToggleManualButton()
       cy.alertMessageWillBeEqual(MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR)
       cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: 1 })
-      cy.typeManualLottoInputs([[1, 2, 3, 4, 4, 5]])
+      cy.typeManualLottoInputs(duplicatedLottoNumbers)
       cy.clickManualPurchaseButton()
     })
 
@@ -128,12 +141,14 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
       ]
 
       cy.clickToggleManualButton()
-      cy.alertMessageWillBeEqual(MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR)
       cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: manualLottoNumbers.length })
+
       cy.typeManualLottoInputs(manualLottoNumbers)
       cy.clickManualPurchaseButton()
+
       cy.checkLottoDetailDisplay(false)
       cy.clickToggleButton()
+
       cy.checkManualLottoNumberPurchased(manualLottoNumbers)
       cy.lottoLengthShouldBeEqual(purchasePrice / lottoPrice)
     })
