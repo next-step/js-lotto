@@ -1,6 +1,6 @@
 import { $ } from "../utils/selector.js";
 
-export const lottoResultCount = {
+export let lottoResultCount = {
   "rank-5": 0,
   "rank-4": 0,
   "rank-3": 0,
@@ -13,21 +13,14 @@ export const lottoResult = {
   rate: 0,
 };
 
-const onModalShow = () => {
-  $(".modal").classList.add("open");
-};
-const onModalClose = () => {
-  $(".modal").classList.remove("open");
-};
-
-export const activateModal = () => {
-  $(".open-result-modal-button").addEventListener("click", onModalShow);
-  $(".modal-close").addEventListener("click", onModalClose);
-};
-
 export const countSameNumbers = (purchaseNumbers, winningSet, bonusNumber) => {
-  console.log(`🏆 ${[...winningSet]}`);
-  console.log(`🙏 ${bonusNumber}`);
+  lottoResultCount = {
+    "rank-5": 0,
+    "rank-4": 0,
+    "rank-3": 0,
+    "rank-2": 0,
+    "rank-1": 0,
+  };
   purchaseNumbers.map((purchaseNumber) => {
     console.log(purchaseNumber);
     let count = 0;
@@ -49,7 +42,7 @@ export const countSameNumbers = (purchaseNumbers, winningSet, bonusNumber) => {
       lottoResultCount["rank-5"] += 1;
     } else if (count === 4) {
       lottoResultCount["rank-4"] += 1;
-    } else if (count === 5) {
+    } else if (count === 5 && !isBonus) {
       lottoResultCount["rank-3"] += 1;
     } else if (count === 5 && isBonus) {
       lottoResultCount["rank-2"] += 1;
@@ -57,7 +50,6 @@ export const countSameNumbers = (purchaseNumbers, winningSet, bonusNumber) => {
       lottoResultCount["rank-1"] += 1;
     }
   });
-  console.log(lottoResultCount);
 };
 
 export const calculateResult = (size) => {
@@ -111,6 +103,8 @@ export const getWinningNumbers = (arr) => {
     isOutOfRange = true;
   }
 
+  const winningSet = new Set(numberList);
+
   if (isEmptyNumber) {
     alert("당첨 번호를 모두 입력해주세요");
     return;
@@ -120,16 +114,11 @@ export const getWinningNumbers = (arr) => {
   } else if (isOutOfRange) {
     alert("번호는 1부터 99까지 입력해야합니다.");
     return;
-  }
-
-  const winningSet = new Set(numberList);
-
-  if (winningSet.size !== numberList.length) {
+  } else if (winningSet.size !== numberList.length) {
     alert("중복된 당첨번호가 있습니다.");
     isDuplicatedNumber = true;
     return;
   }
-
   if (
     !isEmptyNumber &&
     !isEmptyBonusNumber &&
@@ -139,11 +128,19 @@ export const getWinningNumbers = (arr) => {
     countSameNumbers(arr, winningSet, bonusNumber.value);
     calculateResult(arr.length);
     updateResult();
-    activateModal();
+    onModalShow();
   }
+};
+
+const onModalShow = () => {
+  $(".modal").classList.add("open");
+};
+export const onModalClose = () => {
+  $(".modal").classList.remove("open");
 };
 
 export const winningResult = (arr) => {
   const $showResultButton = $(".open-result-modal-button");
   $showResultButton.addEventListener("click", () => getWinningNumbers(arr));
+  $(".modal-close").addEventListener("click", onModalClose);
 };

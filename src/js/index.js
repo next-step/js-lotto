@@ -4,7 +4,7 @@ import {
   updateLottoAmounts,
   addWinningNumberInput,
 } from "../utils/renderer.js";
-import { winningResult } from "./winningResult.js";
+import { winningResult, onModalClose } from "./winningResult.js";
 
 function activateResult(arr) {
   winningResult(arr);
@@ -56,7 +56,6 @@ function App() {
   const purchaseNewLottos = () => {
     const purchasePrice = $(".purchase__price-input").value;
 
-    // 입력금액 유효성 검사
     if (!isValidPrice(purchasePrice)) {
       return;
     }
@@ -90,6 +89,12 @@ function App() {
     if (e.target.classList.contains("lotto-numbers-toggle-btn")) {
       IsLottoNumberVisible ? showLottoNumbers() : hideLottoNumbers();
     }
+  });
+
+  $(".restart-btn").addEventListener("click", (e) => {
+    onModalClose();
+    return;
+    // console.log("sibal");
   });
 }
 
