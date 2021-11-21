@@ -26,39 +26,46 @@ export const addWinningNumberInput = (selector) => {
             <input
               type="number"
               class="winning-number mx-1 text-center"
+              data-cy="winning-number-1"
             />
             <input
               type="number"
               class="winning-number mx-1 text-center"
+              data-cy="winning-number-2"
             />
             <input
               type="number"
               class="winning-number mx-1 text-center"
+              data-cy="winning-number-3"
             />
             <input
               type="number"
               class="winning-number mx-1 text-center"
+              data-cy="winning-number-4"
             />
             <input
               type="number"
               class="winning-number mx-1 text-center"
+              data-cy="winning-number-5"
             />
             <input
               type="number"
               class="winning-number mx-1 text-center"
+              data-cy="winning-number-6"
             />
           </div>
         </div>
         <div class="bonus-number-container flex-grow">
           <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
           <div class="d-flex justify-center">
-            <input type="number" class="bonus-number text-center" />
+            <input type="number" class="bonus-number text-center" data-cy="bonus-number"/>
           </div>
         </div>
       </div>
       <button
         type="button"
         class="open-result-modal-button mt-5 btn btn-cyan w-100"
+        data-cy="result-modal-btn"
       >
         결과 확인하기
       </button>

@@ -1,4 +1,5 @@
 import { $ } from "../utils/selector.js";
+import { ERROR_MESSAGE } from "../utils/constants.js";
 
 export let lottoResultCount = {
   "rank-5": 0,
@@ -106,16 +107,16 @@ export const getWinningNumbers = (arr) => {
   const winningSet = new Set(numberList);
 
   if (isEmptyNumber) {
-    alert("당첨 번호를 모두 입력해주세요");
+    alert(ERROR_MESSAGE.EMPTY_WINNING_NUMBER);
     return;
   } else if (isEmptyBonusNumber) {
-    alert("보너스 번호를 입력해주세요");
+    alert(ERROR_MESSAGE.EMPTY_BONUS_NUMBER);
     return;
   } else if (isOutOfRange) {
-    alert("번호는 1부터 99까지 입력해야합니다.");
+    alert(ERROR_MESSAGE.WINNING_NUMBER_RANGE);
     return;
   } else if (winningSet.size !== numberList.length) {
-    alert("중복된 당첨번호가 있습니다.");
+    alert(ERROR_MESSAGE.DUPLICATED_WINNING_NUMBER);
     isDuplicatedNumber = true;
     return;
   }
