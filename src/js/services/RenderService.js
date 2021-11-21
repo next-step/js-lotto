@@ -8,32 +8,32 @@ import {$} from '../utils/element.js';
  */
 
 /**
- * @typedef {object} ChildComponentModel
+ * @typedef {object} ChildComponent
  * @property {string} selector
  * @property {object} props
- * @property {function} componentFn
+ * @property {function} renderComponent
  */
 
 /**
  * @param {HTMLElement} $el
  * @param {string} template
  * @param {EventListenerModel[]} eventListenerModels
- * @param {ChildComponentModel[]} childComponentModels
+ * @param {ChildComponent[]} childComponents
  */
-const render = ({$el, template, eventListenerModels = [], childComponentModels = []}) => {
+const render = ({$el, template, eventListenerModels = [], childComponents = []}) => {
 
     const $temp = document.createElement('template');
     $temp.insertAdjacentHTML('beforeend', template);
 
-    childComponentModels.forEach(({selector, props = {}, componentFn}) => {
-        componentFn($(selector, $temp), props);
+    childComponents.forEach(({selector, props = {}, renderComponent}) => {
+        renderComponent($(selector, $temp), props);
     });
 
     $el.replaceChildren(...$temp.children);
 
     eventListenerModels.forEach(({selector, eventType, callback}) => {
         const eventBindingEl = selector ? $el.querySelector(selector) : $el;
-        eventBindingEl.addEventListener(eventType, event => callback(event));
+        eventBindingEl.addEventListener(eventType, callback);
     });
 };
 
