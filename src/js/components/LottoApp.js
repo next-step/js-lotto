@@ -20,8 +20,15 @@ export const LottoApp = ($el) => {
         state.amount = amount;
         state.tickets = LottoService.autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
         Tickets($('[data-component="tickets"]', $el), {tickets: state.tickets});
-        WinningNumbersForm($('[data-component="winning-numbers-form"]', $el), {});
-    };
+        WinningNumbersForm($('[data-component="winning-numbers-form"]', $el), {pickWinningNumbers});
+    }
+
+    /**
+     * @param {WinningNumbers} winingNumbers
+     */
+    function pickWinningNumbers(winingNumbers) {
+        console.log(winingNumbers);
+    }
 
     RenderService.render({
         $el,

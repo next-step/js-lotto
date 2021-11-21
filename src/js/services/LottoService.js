@@ -1,6 +1,6 @@
-const MIN_NUMBER = 1;
-const MAX_NUMBER = 45;
-const COUNT_NUMBERS_PER_TICKET = 6;
+export const MIN_LOTTO_NUMBER = 1;
+export const MAX_LOTTO_NUMBER = 45;
+export const COUNT_LOTTO_NUMBERS_PER_TICKET = 6;
 
 /**
  * @param count
@@ -10,7 +10,7 @@ function autoGenerateLottoNumbers(count) {
     return Array(count)
         .fill(null)
         .map(_ => {
-            const randomNumbers = makeNonDuplicatedRandomNumbers(COUNT_NUMBERS_PER_TICKET, MIN_NUMBER, MAX_NUMBER);
+            const randomNumbers = makeNonDuplicatedRandomNumbers(COUNT_LOTTO_NUMBERS_PER_TICKET, MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER);
             return {
                 normalNumbers: randomNumbers.slice(0, randomNumbers.length),
             };
