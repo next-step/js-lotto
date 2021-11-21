@@ -93,7 +93,7 @@ Cypress.Commands.add('lottoInputShouldBeNull', () => {
   cy.get(`input[data-test-element="${CY_BONUS_LOTTO_INPUT}"]`).invoke('val').should('eq', '')
 })
 
-Cypress.Commands.add('alertMessageToBeEqual', (text) => {
+Cypress.Commands.add('alertMessageWillBeEqual', (text) => {
   cy.on('window:alert', (txt) => {
     expect(text).to.equal(txt)
   })
