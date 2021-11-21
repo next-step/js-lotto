@@ -30,6 +30,7 @@ const LIVE_SERVER_URL = 'http://127.0.0.1:3000/'
 describe('로또의 미션의 요구조건을 만족한다.', () => {
   const lottoPrice = lottoConfig.price
   const purchasePrice = 3000
+  const validLottoResult = [1, 2, 3, 4, 5, 6, 7]
 
   beforeEach(() => {
     cy.visit(LIVE_SERVER_URL)
@@ -59,33 +60,39 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
     it('결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.', () => {
       cy.resultShouldBeNull()
       cy.autoPurchaseLotto(purchasePrice)
-      cy.typeResultLottoNumber([1, 2, 3, 4, 5, 6, 7])
+      cy.typeResultLottoNumber(validLottoResult)
       cy.getBenefitRate()
       cy.resultShouldBeContainBenefitTemplateText()
     })
 
     it('로또를 지정한 개수 이상 구매하면 경고창을 띄워준다.', () => {
+      const limitOverPrice = lottoPrice * (lottoConfig.maxMyLottoLimit + 1)
+
       cy.alertMessageWillBeEqual(MY_LOTTO_LIMIT_ERROR)
-      cy.autoPurchaseLotto(lottoPrice * (lottoConfig.maxMyLottoLimit + 1))
+      cy.autoPurchaseLotto(limitOverPrice)
     })
 
     it('입력한 로또 번호가 지정된 범위를 넘어가면 경고창을 띄워준다.', () => {
+      const outOfRangeLottoResultNumbers = [1, 2, 3, 4, 5, 6, lottoConfig.maxLottoNumber + 1]
+
       cy.autoPurchaseLotto(purchasePrice)
-      cy.typeResultLottoNumber([1, 2, 3, 4, 5, 6, lottoConfig.maxLottoNumber + 1])
+      cy.typeResultLottoNumber(outOfRangeLottoResultNumbers)
       cy.alertMessageWillBeEqual(LOTTO_NUMBER_OUT_OF_RANGE_ERROR)
       cy.getBenefitRate()
     })
 
     it('입력한 로또 번호가 중복된 번호가 있으면 경고창을 띄워준다.', () => {
+      const duplicatedLottoNumbers = [1, 2, 3, 4, 5, 6, 6]
+
       cy.autoPurchaseLotto(purchasePrice)
-      cy.typeResultLottoNumber([1, 2, 3, 4, 5, 6, 6])
+      cy.typeResultLottoNumber(duplicatedLottoNumbers)
       cy.alertMessageWillBeEqual(LOTTO_NUMBER_DUPLICATED_ERROR)
       cy.getBenefitRate()
     })
 
     it('다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.', () => {
       cy.autoPurchaseLotto(purchasePrice)
-      cy.typeResultLottoNumber([1, 2, 3, 4, 5, 6, 7])
+      cy.typeResultLottoNumber(validLottoResult)
       cy.getBenefitRate()
       cy.clickResetButton()
       cy.lottoInputShouldBeNull()
@@ -100,14 +107,17 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
     })
 
     it('수동구매 입력창에 구매한 로또보다 많이 입력할 시 에러를 표시한다.', () => {
+      const purchaseOverAmount = 4
+
       cy.clickToggleManualButton()
       cy.alertMessageWillBeEqual(MANUAL_PURCHASE_PROMPT_NUMBER_OUT_OF_RANGE_ERROR + purchasePrice / lottoPrice + ')')
-      cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: 4 })
+      cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: purchaseOverAmount })
       cy.clickManualPurchaseButton()
     })
 
     it('수동구매 시 입력창이 비어있을 시 에러를 표시한다.', () => {
       const emptyInputExistLottoNumbers = [[1, 2, 3, 4, 5]]
+
       cy.clickToggleManualButton()
       cy.alertMessageWillBeEqual(MANUAL_LOTTO_NUMBER_EMPTY_ERROR)
       cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: 1 })
@@ -117,6 +127,7 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
 
     it('수동구매 시 범위를 벗어난 입력창이 있을시 에러를 표시한다.', () => {
       const outOfRangeExistLottoNumbers = [[1, 2, 3, 4, 5, lottoConfig.maxLottoNumber + 1]]
+
       cy.clickToggleManualButton()
       cy.alertMessageWillBeEqual(MANUAL_LOTTO_NUMBER_RANGE_ERROR)
       cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: 1 })
