@@ -1,6 +1,6 @@
 import RenderService from '../services/RenderService.js';
 import {$, $$} from '../utils/element.js';
-import {COUNT_LOTTO_NUMBERS_PER_TICKET, MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER} from '../services/LottoService.js';
+import LottoService, {COUNT_LOTTO_NUMBERS_PER_TICKET, MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER} from '../services/LottoService.js';
 
 /**
  * @typedef {Object} WinningNumbers
@@ -19,14 +19,16 @@ export const WinningNumbersForm = ($el, props) => {
     function onSubmitWinningNumbers(event) {
         event.preventDefault();
 
-        const normalNumberTexts = [...$$('[data-winning-number="normal"]', event.target)].map(({value}) => value);
-        const bonusNumberText = $('[data-winning-number="bonus"]', event.target).value;
+        const normalNumbers = [...$$('[data-winning-number="normal"]', event.target)].map(({value}) => value);
+        const bonusNumber = $('[data-winning-number="bonus"]', event.target).value;
 
-        //todo validate winningNumbers
+        if (!LottoService.validateWinningNumber({normalNumbers, bonusNumber})) {
+            return;
+        }
 
         props.pickWinningNumbers({
-            normalNumbers: normalNumberTexts.map(Number),
-            bonusNumber: Number(bonusNumberText),
+            normalNumbers: normalNumbers.map(Number),
+            bonusNumber: Number(bonusNumber),
         });
     }
 
