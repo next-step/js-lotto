@@ -71,6 +71,21 @@ function App() {
     activateResult(lottoTicketsList);
   };
 
+  const resetLotto = () => {
+    while ($(".lotto__menu").hasChildNodes()) {
+      $(".lotto__menu").removeChild($(".lotto__menu").firstChild);
+    }
+    while ($(".lotto__tickets").hasChildNodes()) {
+      $(".lotto__tickets").removeChild($(".lotto__tickets").firstChild);
+    }
+    while ($(".winning-number-form").hasChildNodes()) {
+      $(".winning-number-form").removeChild(
+        $(".winning-number-form").firstChild
+      );
+    }
+    $(".purchase__price-input").value = "";
+  };
+
   $(".purchase__form").addEventListener("submit", (e) => {
     e.preventDefault();
   });
@@ -93,8 +108,7 @@ function App() {
 
   $(".restart-btn").addEventListener("click", (e) => {
     onModalClose();
-    return;
-    // console.log("sibal");
+    resetLotto();
   });
 }
 
