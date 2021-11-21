@@ -22,8 +22,8 @@ export const countSameNumbers = (purchaseNumbers, winningSet, bonusNumber) => {
     "rank-2": 0,
     "rank-1": 0,
   };
+
   purchaseNumbers.map((purchaseNumber) => {
-    console.log(purchaseNumber);
     let count = 0;
     let isBonus = false;
 
@@ -75,7 +75,7 @@ export const updateResult = () => {
   ).innerText = `당신의 총 수익률은 ${lottoResult.rate}%입니다.`;
 };
 
-export const getWinningNumbers = (arr) => {
+export const getWinningNumbers = (lottoTicketsList) => {
   const numberList = [];
   const winningNumbers = document.querySelectorAll(".winning-number");
   const bonusNumber = $(".bonus-number");
@@ -126,8 +126,8 @@ export const getWinningNumbers = (arr) => {
     !isDuplicatedNumber &&
     !isOutOfRange
   ) {
-    countSameNumbers(arr, winningSet, bonusNumber.value);
-    calculateResult(arr.length);
+    countSameNumbers(lottoTicketsList, winningSet, bonusNumber.value);
+    calculateResult(lottoTicketsList.length);
     updateResult();
     onModalShow();
   }
@@ -140,8 +140,10 @@ export const onModalClose = () => {
   $(".modal").classList.remove("open");
 };
 
-export const winningResult = (arr) => {
+export const winningResult = (lottoTicketsList) => {
   const $showResultButton = $(".open-result-modal-button");
-  $showResultButton.addEventListener("click", () => getWinningNumbers(arr));
+  $showResultButton.addEventListener("click", () =>
+    getWinningNumbers(lottoTicketsList)
+  );
   $(".modal-close").addEventListener("click", onModalClose);
 };
