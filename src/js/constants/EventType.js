@@ -4,4 +4,6 @@ export default Object.freeze({
   toggleLottoPurchaseMode: 'TOGGLE_LOTTO_PURCHASE_MODE',
   checkMyLottoResult: 'CHECK_MY_LOTTO_RESULT',
   resetGame: 'RESET_GAME',
+  manualPurchaseCancle: 'MANUAL_PURCHASE_CNACLE',
+  manualPurchaseConfirm: 'MANUAL_PURCHASE_CONFIRM',
 })

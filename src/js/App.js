@@ -1,6 +1,6 @@
 import LottoContainer from './components/LottoContainer'
 import lottoConfig from './config/lotto.config'
-import { DISPLAY_NONE, MANUAL_LOTTO_NUMBERS, MANUAL_LOTTO_NUMBER_CONTAINNER } from './constants/ClassName'
+import { DISPLAY_NONE, MANUAL_LOTTO_NUMBER, MANUAL_LOTTO_NUMBER_CONTAINNER } from './constants/ClassName'
 import { CY_LOTTO_DETAIL } from './constants/CypressDom'
 import {
   LUCKY_LOTTO_CONTAINER,
@@ -20,6 +20,8 @@ import {
   LOTTO_NUMBER_DUPLICATED_ERROR,
   LOTTO_NUMBER_EMPTY_ERROR,
   LOTTO_NUMBER_OUT_OF_RANGE_ERROR,
+  MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR,
+  MANUAL_LOTTO_NUMBER_VALIDATION_ERROR,
   MANUAL_PURCHASE_AMOUNT_MESSAGE,
   MANUAL_PURCHASE_PROMPT_NUMBER_OUT_OF_RANGE_ERROR,
   MANUAL_PURCHASE_PROMPT_VALIDATION_ERROR,
@@ -35,8 +37,9 @@ const clickEventMapper = {
   [EventType.toggleMyLotto]: () => onToggleMyLottoNumber(),
   [EventType.resetGame]: (lottoService) => resetGame(lottoService),
   [EventType.toggleLottoPurchaseMode]: (lottoService) => toggleLottoPurchaseMode(lottoService),
+  [EventType.manualPurchaseCancle]: (lottoService) => cancleManualPurhcase(lottoService),
+  [EventType.manualPurchaseConfirm]: (lottoService) => confirmManualPurchase(lottoService),
 }
-
 export default class App {
   #rootContainer
   #lottoService
@@ -74,11 +77,39 @@ export default class App {
 
       clickEventMapper[clickEvent](this.#lottoService)
     })
+
+    $('#' + MANUAL_LOTTO_MODAL).addEventListener(Event.onClick, (event) => {
+      const clickEvent = event.target.dataset.event
+
+      if (!clickEvent) {
+        return
+      }
+
+      clickEventMapper[clickEvent](this.#lottoService)
+    })
   }
 }
 
-function toggleLottoPurchaseMode(lottoService) {
-  lottoService.changePurchaseMode()
+function confirmManualPurchase(lottoService) {
+  try {
+    const manualLottos = getManualLottoNumbers()
+
+    const { success, message } = lottoService.manualPurchase(manualLottos)
+
+    if (!success) {
+      alert(message)
+    }
+
+    setLottoVisible(true)
+    handlePurchaseLotto(lottoService.myLottos)
+    setManualPurchaseModalVisible(false)
+  } catch (error) {
+    const message = error.message
+
+    if (message !== MANUAL_LOTTO_NUMBER_VALIDATION_ERROR || message !== MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR) {
+      alert(message)
+    }
+  }
 }
 
 function onLottoPurchase(lottoService) {
@@ -121,8 +152,8 @@ function onLottoPurchase(lottoService) {
     return
   }
 
-  setManualLottoInput(answer)
-
+  lottoService.manualPurchaseInfo = { manualPurchaseAmount: answer, totalPurchaseAmount: lottoAmount }
+  setManualPurchaseModal(answer)
   return
 }
 
@@ -282,18 +313,52 @@ function setLottoVisible(visible) {
   $('#' + LOTTO_ANSWER_INPUT).classList.add(DISPLAY_NONE)
 }
 
-function setManualLottoInput(amount) {
-  $('#' + MANUAL_LOTTO_MODAL).classList.remove(DISPLAY_NONE)
-  $('#' + MANUAL_LOTTO_CONTAINER).innerHTML = ''
+function setManualPurchaseModalVisible(visible) {
+  if (visible) {
+    $('#' + MANUAL_LOTTO_MODAL).classList.remove(DISPLAY_NONE)
+    $('#' + MANUAL_LOTTO_CONTAINER).innerHTML = ''
+    return
+  }
+  $('#' + MANUAL_LOTTO_MODAL).classList.add(DISPLAY_NONE)
+}
+
+function getManualLottoNumbers() {
+  const manualLottoNumbers = []
+
+  document.querySelectorAll('.' + MANUAL_LOTTO_NUMBER_CONTAINNER).forEach((container) => {
+    const lottoNumbers = new Set()
+    container.querySelectorAll('.' + MANUAL_LOTTO_NUMBER).forEach((lottoInput) => {
+      const lottoNumber = Number(lottoInput.value)
+
+      if (lottoNumber <= 0 || lottoNumber > lottoConfig.maxLottoNumber) {
+        throw new Error(MANUAL_LOTTO_NUMBER_VALIDATION_ERROR)
+      }
+
+      if (lottoNumbers.has(lottoNumber)) {
+        throw new Error(MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR)
+      }
+
+      lottoNumbers.add(lottoNumber)
+      if (lottoNumbers.size === 6) {
+        manualLottoNumbers.push([...lottoNumbers])
+      }
+    })
+  })
+
+  return manualLottoNumbers
+}
+
+function setManualPurchaseModal(amount) {
+  setManualPurchaseModalVisible(true)
 
   const template = `
     <div class="${MANUAL_LOTTO_NUMBER_CONTAINNER} mt-5">
-      <input class="${MANUAL_LOTTO_NUMBERS} winning-number mx-1 text-center" type="number" />
-      <input class="${MANUAL_LOTTO_NUMBERS} winning-number mx-1 text-center" type="number" />
-      <input class="${MANUAL_LOTTO_NUMBERS} winning-number mx-1 text-center" type="number" />
-      <input class="${MANUAL_LOTTO_NUMBERS} winning-number mx-1 text-center" type="number" />
-      <input class="${MANUAL_LOTTO_NUMBERS} winning-number mx-1 text-center" type="number" />
-      <input class="${MANUAL_LOTTO_NUMBERS} winning-number mx-1 text-center" type="number" />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" />
     </div>
   `
 
@@ -315,4 +380,12 @@ function handlePurchaseLotto(lottoNumbers) {
   $('#' + PURCHAED_LOTTO_AMOUNT_LABEL).innerText = `총 ${lottoNumbers.length}개를 구매하였습니다.`
 
   $('#' + PURCHAED_LOTTO_AMOUNT_LABEL).dataset.count = lottoNumbers.length
+}
+
+function cancleManualPurhcase() {
+  setManualPurchaseModalVisible(false)
+}
+
+function toggleLottoPurchaseMode(lottoService) {
+  lottoService.changePurchaseMode()
 }

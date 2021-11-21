@@ -1,6 +1,7 @@
 import lottoConfig from '../config/lotto.config'
 import lottoReward from '../config/lotto.reward'
 import lottoRewardKey from '../constants/LottoRewardKey'
+import { MANUAL_LOTTO_AMOUNT_INCORRECT_ERROR } from '../constants/Message'
 import { getRandomNumber } from '../utils/random'
 
 const rewardMapper = {
@@ -21,6 +22,7 @@ export default class LottoService {
   #lottoPrice
   #lottoAnswer
   #purchaseMode
+  #manualPurchaseInfo
 
   constructor() {
     this.#purchaseMode = PURCHASE_MODE.AUTO
@@ -34,22 +36,34 @@ export default class LottoService {
       base: [],
       bonus: 0,
     }
+    this.#manualPurchaseInfo = {
+      manualPurchaseAmount: 0,
+      totalPurchaseAmount: 0,
+    }
+  }
+
+  manualPurchase(manualLottos) {
+    console.log(manualLottos, this.#manualPurchaseInfo)
+    if (manualLottos.length !== this.#manualPurchaseInfo.manualPurchaseAmount) {
+      return { success: false, message: MANUAL_LOTTO_AMOUNT_INCORRECT_ERROR }
+    }
+
+    this.#purchasedLottos = manualLottos
+
+    const autoPurchaseAmount = this.#manualPurchaseInfo.totalPurchaseAmount - this.#manualPurchaseInfo.manualPurchaseAmount
+    for (let i = 0; i < autoPurchaseAmount; i += 1) {
+      this.generateLottoNumber()
+    }
+
+    return { success: true }
   }
 
   autoPurchase(count, fixedValues) {
     this.initService()
 
-    if (this.isPurcaseModeAuto()) {
-      for (let i = 0; i < count; i += 1) {
-        this.generateLottoNumber(fixedValues ? fixedValues[i] : null)
-      }
-
-      return true
+    for (let i = 0; i < count; i += 1) {
+      this.generateLottoNumber(fixedValues ? fixedValues[i] : null)
     }
-
-    alert('dkslsepdyd!')
-
-    return false
   }
 
   generateLottoNumber(fixed) {
@@ -126,6 +140,13 @@ export default class LottoService {
 
   changePurchaseMode() {
     this.#purchaseMode = this.isPurcaseModeAuto() ? PURCHASE_MODE.MANUAL : PURCHASE_MODE.AUTO
+  }
+
+  set manualPurchaseInfo({ manualPurchaseAmount, totalPurchaseAmount }) {
+    this.#manualPurchaseInfo = {
+      manualPurchaseAmount,
+      totalPurchaseAmount,
+    }
   }
 
   set lottoAnswer(answer) {
