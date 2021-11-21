@@ -111,7 +111,7 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
       cy.clickToggleManualButton()
       cy.alertMessageWillBeEqual(MANUAL_LOTTO_NUMBER_EMPTY_ERROR)
       cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: 1 })
-      cy.typeManualLottoInputs(invalidLottoNumbers)
+      cy.typeManualLottoInputs(emptyInputExistLottoNumbers)
       cy.clickManualPurchaseButton()
     })
 
