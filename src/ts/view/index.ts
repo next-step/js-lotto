@@ -1,6 +1,6 @@
 import { AnyObj } from '../constants.js'
 
-const eventErrorCatcher = (handler: any) => (e: Event) => {
+const eventErrorCatcher = (handler: any) => (e: CustomEvent) => {
   try {
     handler(e)
   } catch (err) {
@@ -12,7 +12,7 @@ const eventErrorCatcher = (handler: any) => (e: Event) => {
 export default class View extends HTMLElement {
   #events = new Map()
 
-  on(eventType: string, handler: (e: Event) => any) {
+  on(eventType: string, handler: (e: CustomEvent) => any) {
     let cb = this.#events.get(handler)
     if (!cb) {
       cb = eventErrorCatcher(handler)
@@ -21,7 +21,7 @@ export default class View extends HTMLElement {
     this.addEventListener(eventType, cb)
     return this
   }
-  off(eventType: string, handler: (e: Event) => any) {
+  off(eventType: string, handler: (e: CustomEvent) => any) {
     const cb = this.#events.get(handler)
     this.removeEventListener(eventType, cb)
     return this
