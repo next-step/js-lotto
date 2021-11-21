@@ -19,3 +19,6 @@ export const ERROR_MESSAGE = {
 export const LOTTO_PRICE = 1000;
 export const LOTTO_LENGTH = 7;
 export const LOTTO_MAX_NUMBER = 45;
+export const WINNING_NUMBERS_LENGTH = 7;
+export const MAX_LOTTO_NUMBER = 45;
+export const MIN_LOTTO_NUMBER = 0;
