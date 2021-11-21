@@ -17,10 +17,7 @@ export default class Model {
   }
 
   setLottos() {
-    for (let i = 0; i < this.data.amount; i++) {
-      this.data.lottos.push(this.createOneLotto());
-    }
-    return this.data.lottos;
+    this.data.lottos = Array.from(Array(this.data.amount)).map(x => this.createOneLotto());
   }
 
   createOneLotto() {
