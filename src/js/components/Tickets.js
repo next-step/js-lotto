@@ -4,7 +4,6 @@ import RenderService from '../services/RenderService.js';
 /**
  * @typedef {object} Ticket
  * @property {number[]} normalNumbers
- * @property {number} bonusNumber
  */
 
 /**
