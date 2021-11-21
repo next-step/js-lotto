@@ -3,21 +3,15 @@ import { ErrorMsgs, UNIT_PRICE, GRADES, Entry, WinningList, MAX_NUM, MIN_NUM, NU
 const arrayGen = (size: number, mapper: (v: any, k: number) => any) => [...Array(size)].map(mapper)
 const ALL_NUMBERS = arrayGen(MAX_NUM, (_, i) => i + 1) as number[]
 
-const generateRandomLotto = () => {
-  const cloneNumbers = [...ALL_NUMBERS]
-  return arrayGen(
-    NUMBERS_PER_LOTTO,
-    () => cloneNumbers.splice(Math.floor(Math.random() * cloneNumbers.length), 1)[0],
-  ) as Entry
-}
-
 class LottoModel {
   #data: {
     amount: number
     list: Entry[]
+    randomEntries: boolean[]
   } = {
     amount: 0,
     list: [],
+    randomEntries: [],
   }
 
   isValid(item: number[], validLength: number) {
@@ -25,24 +19,45 @@ class LottoModel {
     if (item.some(n => n < MIN_NUM || n > MAX_NUM)) throw Error(ErrorMsgs.OUT_OF_RANGE)
     return true
   }
+  reset() {
+    this.#data = {
+      amount: 0,
+      list: [],
+      randomEntries: [],
+    }
+  }
   setPrice(price: number) {
     if (price < UNIT_PRICE) throw Error(ErrorMsgs.MIN_PRICE)
     const amount = Math.floor(price / UNIT_PRICE)
     this.#data.amount = amount
     this.#data.list = []
+    this.toggleRandomEntries(false)
     return amount
   }
-  setEntry(index: number, item: Entry, isRandom: boolean = false) {
-    const entry = isRandom ? generateRandomLotto() : item
-    if (!this.isValid(entry, NUMBERS_PER_LOTTO)) return
-    this.#data.list[index] = entry
-    return entry
+  generateRandomEntry(values: Entry) {
+    const selectedValues = values.filter(v => v > 0)
+    const cloneNumbers = [...ALL_NUMBERS].filter(v => !selectedValues.includes(v))
+    const randomResult = arrayGen(
+      NUMBERS_PER_LOTTO - selectedValues.length,
+      () => cloneNumbers.splice(Math.floor(Math.random() * cloneNumbers.length), 1)[0],
+    )
+    return values.map(v => v || randomResult.pop()) as Entry
   }
-  setAllLottoRandom(price: number) {
-    const amount = this.setPrice(price)
-    const list = arrayGen(amount, generateRandomLotto)
-    this.#data.list = list
-    return list
+  toggleRandomEntry(index: number, checked: boolean) {
+    this.#data.randomEntries[index] = checked
+  }
+  toggleRandomEntries(checked: boolean) {
+    this.#data.randomEntries = [...new Array(this.#data.amount)].fill(checked)
+  }
+  get isEntriesAllRandom() {
+    return this.#data.randomEntries.length === this.#data.amount && this.#data.randomEntries.every(e => !!e)
+  }
+  setEntry(index: number, values: Entry, isRandom: boolean = false) {
+    this.toggleRandomEntry(index, isRandom)
+    const res = isRandom ? this.generateRandomEntry(values) : values
+    if (!this.isValid(res, NUMBERS_PER_LOTTO)) return
+    this.#data.list[index] = res
+    return res
   }
   getWinList(numbers: number[]) {
     const amount = this.#data.list.length

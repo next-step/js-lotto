@@ -1,14 +1,11 @@
 import { ErrorMsgs, UNIT_PRICE, GRADES, MAX_NUM, MIN_NUM, NUMBERS_PER_LOTTO } from './constants.js';
 const arrayGen = (size, mapper) => [...Array(size)].map(mapper);
 const ALL_NUMBERS = arrayGen(MAX_NUM, (_, i) => i + 1);
-const generateRandomLotto = () => {
-    const cloneNumbers = [...ALL_NUMBERS];
-    return arrayGen(NUMBERS_PER_LOTTO, () => cloneNumbers.splice(Math.floor(Math.random() * cloneNumbers.length), 1)[0]);
-};
 class LottoModel {
     #data = {
         amount: 0,
         list: [],
+        randomEntries: [],
     };
     isValid(item, validLength) {
         if (item.length !== validLength || [...new Set(item)].length !== item.length)
@@ -17,26 +14,44 @@ class LottoModel {
             throw Error(ErrorMsgs.OUT_OF_RANGE);
         return true;
     }
+    reset() {
+        this.#data = {
+            amount: 0,
+            list: [],
+            randomEntries: [],
+        };
+    }
     setPrice(price) {
         if (price < UNIT_PRICE)
             throw Error(ErrorMsgs.MIN_PRICE);
         const amount = Math.floor(price / UNIT_PRICE);
         this.#data.amount = amount;
         this.#data.list = [];
+        this.toggleRandomEntries(false);
         return amount;
     }
-    setEntry(index, item, isRandom = false) {
-        const entry = isRandom ? generateRandomLotto() : item;
-        if (!this.isValid(entry, NUMBERS_PER_LOTTO))
-            return;
-        this.#data.list[index] = entry;
-        return entry;
+    generateRandomEntry(values) {
+        const selectedValues = values.filter(v => v > 0);
+        const cloneNumbers = [...ALL_NUMBERS].filter(v => !selectedValues.includes(v));
+        const randomResult = arrayGen(NUMBERS_PER_LOTTO - selectedValues.length, () => cloneNumbers.splice(Math.floor(Math.random() * cloneNumbers.length), 1)[0]);
+        return values.map(v => v || randomResult.pop());
     }
-    setAllLottoRandom(price) {
-        const amount = this.setPrice(price);
-        const list = arrayGen(amount, generateRandomLotto);
-        this.#data.list = list;
-        return list;
+    toggleRandomEntry(index, checked) {
+        this.#data.randomEntries[index] = checked;
+    }
+    toggleRandomEntries(checked) {
+        this.#data.randomEntries = [...new Array(this.#data.amount)].fill(checked);
+    }
+    get isEntriesAllRandom() {
+        return this.#data.randomEntries.length === this.#data.amount && this.#data.randomEntries.every(e => !!e);
+    }
+    setEntry(index, values, isRandom = false) {
+        this.toggleRandomEntry(index, isRandom);
+        const res = isRandom ? this.generateRandomEntry(values) : values;
+        if (!this.isValid(res, NUMBERS_PER_LOTTO))
+            return;
+        this.#data.list[index] = res;
+        return res;
     }
     getWinList(numbers) {
         const amount = this.#data.list.length;

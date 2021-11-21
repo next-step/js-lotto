@@ -28,16 +28,28 @@ ul {
   height: 36px;
 }
 
+form-details input[type='checkbox'] {
+  width: 15px;
+  height: 15px;
+  vertical-align: text-bottom;
+}
+
 .picked-list {
   margin: 0;
 }
 .picked-item {
-  height: 54px;
-  line-height: 54px;
+  height: 24px;
+  line-height: 30px;
+  margin: 15px 0;
+  display: grid;
+  grid-template-columns: 105px repeat(6, 2fr);
+  column-gap: 3px;
 }
 .picked-item .icon {
-  display: inline-block;
-  vertical-align: text-top;
+  width: 30px;
+  height: 30px;
+  line-height: 36px;
+  font-size: 24px;
 }
 
 .picked-item .numbers {

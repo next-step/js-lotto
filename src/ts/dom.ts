@@ -14,7 +14,8 @@ const el = (parent: Elem, children: Elem[] = []): HTMLElement => {
   if (children.length) {
     const frag = document.createDocumentFragment()
     children.forEach(elem => {
-      frag.appendChild(createElem(elem))
+      if (elem instanceof String && !elem.startsWith('<')) frag.append(elem)
+      else frag.appendChild(createElem(elem))
     })
     parentElem.replaceChildren(frag)
   }

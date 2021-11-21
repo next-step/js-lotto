@@ -27,21 +27,46 @@ describe('lotto model unit test', () => {
     })
   })
 
+  describe('generateRandomEntry', () => {
+    it('0이 들어간 위치에만 랜덤을 지정한다.', () => {
+      const res = model.generateRandomEntry([1, 2, 0, 3, 0, 4])
+      expect(res[0]).to.eq(1)
+      expect(res[1]).to.eq(2)
+      expect(res[2]).to.be.within(5, 45)
+      expect(res[3]).to.eq(3)
+      expect(res[4]).to.be.within(5, 45)
+      expect(res[5]).to.eq(4)
+      expect(new Set(res).size).to.eq(res.length)
+    })
+  })
+
+  describe('isEntriesAllRandom', () => {
+    it('toggleRandomEntry - 항목별 랜덤체크에 대한 전체랜덤여부 테스트', () => {
+      model.setPrice(3 * UNIT_PRICE)
+      model.toggleRandomEntry(0, true)
+      expect(model.isEntriesAllRandom).to.be.false
+      model.toggleRandomEntry(1, true)
+      expect(model.isEntriesAllRandom).to.be.false
+      model.toggleRandomEntry(2, true)
+      expect(model.isEntriesAllRandom).to.be.true
+      model.toggleRandomEntry(1, false)
+      expect(model.isEntriesAllRandom).to.be.false
+    })
+    it('toggleRandomEntries - 전체랜덤토글에 의한 전체랜덤여부 테스트', () => {
+      model.setPrice(3 * UNIT_PRICE)
+      model.toggleRandomEntries(true)
+      expect(model.isEntriesAllRandom).to.be.true
+      model.toggleRandomEntries(false)
+      expect(model.isEntriesAllRandom).to.be.false
+    })
+  })
+
   describe('setEntry', () => {
     it('setEntry(0, [1, 2, 3, 4, 5, 6]) => [1, 2, 3, 4, 5, 6]', () => {
       expect(model.setEntry(0, [1, 2, 3, 4, 5, 6])).to.deep.equal([1, 2, 3, 4, 5, 6])
     })
     it('setEntry(0, [0, 0, 0, 0, 0, 0], true) => 랜덤생성', () => {
       expect(model.setEntry(0, [0, 0, 0, 0, 0, 0], true)).to.be.a('array')
-    })
-  })
-
-  describe('setAllLottoRandom', () => {
-    it(`입력값이 ${UNIT_PRICE * 3.5}이면 3개의 랜덤 로또 생성`, () => {
-      expect(model.setAllLottoRandom(UNIT_PRICE * 3.5)).to.have.lengthOf(3)
-    })
-    it(`입력값이 ${UNIT_PRICE * 4.2}이면 4개의 랜덤 로또 생성`, () => {
-      expect(model.setAllLottoRandom(UNIT_PRICE * 4.2)).to.have.lengthOf(4)
     })
   })
 
