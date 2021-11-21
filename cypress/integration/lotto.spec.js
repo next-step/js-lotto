@@ -27,6 +27,7 @@ describe("js-lotto", () => {
   });
 
   context("구매액에 맞게 로또가 발급되는지 확인", () => {
+
     beforeEach(() => {
       cy.get("[data-cy=purchase-price-input]").clear();
     });
@@ -47,9 +48,11 @@ describe("js-lotto", () => {
 
   context("번호보기 토글기능 확인", () => {
     beforeEach(() => {
+
       cy.get("[data-cy=purchase-price-input]").clear();
       cy.purchaseLotto(5000);
     });
+
 
     it("토글버튼 클릭시 로또 번호가 보인다.", () => {
       cy.get("[data-cy=lotto-numbers-toggle-btn]").check({ force: true });
@@ -57,6 +60,7 @@ describe("js-lotto", () => {
         cy.wrap(el).should("have.class", "d-flex");
       });
     });
+
 
     it("토글버튼이 활성화된 채로 버튼 클릭시 로또 번호가 숨겨진다", () => {
       cy.get("[data-cy=lotto-numbers-toggle-btn]").uncheck();
