@@ -103,7 +103,7 @@ Cypress.Commands.add('alertMessageWillBeEqual', (text) => {
 })
 
 // 3단계
-Cypress.Commands.add('toggleManualButton', () => {
+Cypress.Commands.add('clickToggleManualButton', () => {
   cy.get(`input[data-test-element="${CY_TOGGLE_PURCHASE_MODE_BUTTON}"]`).click({
     force: true,
   })

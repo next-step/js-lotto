@@ -93,20 +93,20 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
 
   context('3단계', () => {
     it('수동구매 입력창에 문자를 입력할 시 에러를 표시한다.', () => {
-      cy.toggleManualButton()
+      cy.clickToggleManualButton()
       cy.alertMessageWillBeEqual(MANUAL_PURCHASE_PROMPT_VALIDATION_ERROR)
       cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: '잘못된 입력' })
     })
 
     it('수동구매 입력창에 구매한 로또보다 많이 입력할 시 에러를 표시한다.', () => {
-      cy.toggleManualButton()
+      cy.clickToggleManualButton()
       cy.alertMessageWillBeEqual(MANUAL_PURCHASE_PROMPT_NUMBER_OUT_OF_RANGE_ERROR + purchasePrice / lottoPrice + ')')
       cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: 4 })
       cy.clickManualPurchaseButton()
     })
 
     it('수동구매 시 입력창이 비어있을 시 에러를 표시한다.', () => {
-      cy.toggleManualButton()
+      cy.clickToggleManualButton()
       cy.alertMessageWillBeEqual(MANUAL_LOTTO_NUMBER_VALIDATION_ERROR)
       cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: 1 })
       cy.typeManualLottoInputs([[1, 2, 3, 4, 5]])
@@ -114,7 +114,7 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
     })
 
     it('수동구매 시 중복된 숫자가 있을 시 에러를 표시한다.', () => {
-      cy.toggleManualButton()
+      cy.clickToggleManualButton()
       cy.alertMessageWillBeEqual(MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR)
       cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: 1 })
       cy.typeManualLottoInputs([[1, 2, 3, 4, 4, 5]])
@@ -127,7 +127,7 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
         [7, 8, 9, 10, 11, 12],
       ]
 
-      cy.toggleManualButton()
+      cy.clickToggleManualButton()
       cy.alertMessageWillBeEqual(MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR)
       cy.manualPurchaseLotto({ money: purchasePrice, manualPurchaseAmount: manualLottoNumbers.length })
       cy.typeManualLottoInputs(manualLottoNumbers)
