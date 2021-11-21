@@ -333,10 +333,9 @@ function getManualLottoNumbers() {
       }
 
       lottoNumbers.add(lottoNumber)
-      if (lottoNumbers.size === 6) {
-        manualLottoNumbers.push([...lottoNumbers])
-      }
     })
+
+    manualLottoNumbers.push([...lottoNumbers])
   })
 
   return manualLottoNumbers
