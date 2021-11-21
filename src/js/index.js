@@ -5,5 +5,6 @@ new MainController({
   purchaseFormSection: $('#purchaseFormSection'),
   purchasedLottoSection: $('#purchasedLottoSection'),
   winningNumberFormSection: $('#winningNumberFormSection'),
-  resultModalSection: $('#resultModalSection')
+  resultModalSection: $('#resultModalSection'),
+  manualLottoFormSection: $('#manualLottoFormSection')
 });

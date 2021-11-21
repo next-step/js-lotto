@@ -16,13 +16,22 @@ export default class LottoModel {
     return this.#lottos;
   }
 
+  setLottos(lottos) {
+    this.#lottos = [...this.#lottos, ...lottos];
+    console.log(this.#lottos);
+  }
+
+  setManualLotto(lotto) {
+    this.setLottos([lotto]);
+  }
+
   setAutoLottos(price) {
     const lottoCount = price / PRICE_UNIT;
     const autoLottos = Array.from({ length: lottoCount }, () =>
       this.getRandomLottoNumbers()
     );
     this.#price = Number(price);
-    this.#lottos = autoLottos;
+    this.setLottos(autoLottos);
   }
 
   get price() {

@@ -4,17 +4,21 @@ import {
   PurchaseFormSection,
   PurchasedLottoSection,
   WinningNumberFormSection,
-  ResultModalSection
+  ResultModalSection,
+  ManualLottoFormSection
 } from '../view/index.js';
 import LottoModel from '../model/LottoModel.js';
 import WinningPrizeModel from '../model/WinningPrizeModel.js';
+
+const { PRICE_UNIT } = LOTTO_INFO;
 
 export default class MainController {
   constructor({
     purchaseFormSection,
     purchasedLottoSection,
     winningNumberFormSection,
-    resultModalSection
+    resultModalSection,
+    manualLottoFormSection
   }) {
     this.purchaseFormSection = new PurchaseFormSection(purchaseFormSection);
     this.purchasedLottoSection = new PurchasedLottoSection(
@@ -24,6 +28,9 @@ export default class MainController {
       winningNumberFormSection
     );
     this.resultModalSection = new ResultModalSection(resultModalSection);
+    this.manualLottoFormSection = new ManualLottoFormSection(
+      manualLottoFormSection
+    );
     this.winningPrizeModel = new WinningPrizeModel();
     this.lottoModel = new LottoModel();
     this.init();
@@ -34,14 +41,18 @@ export default class MainController {
     this.purchaseFormSection.init();
     this.purchasedLottoSection.hide();
     this.winningNumberFormSection.hide();
+    this.manualLottoFormSection.hide();
   }
 
   bindEvents() {
     this.purchaseFormSection.on('@submitPrice', ({ detail }) => {
       const price = getFormDataValue(detail, 'price');
-      if (!this.setAutoLottoNumbers(price)) return;
-      this.purchasedLottoSection.show().render(this.lottoModel.lottos);
-      this.winningNumberFormSection.show().render();
+      if (!this.setPrice(price)) return;
+      // this.purchasedLottoSection.show().render(this.lottoModel.lottos);
+      // this.winningNumberFormSection.show().render();
+      this.manualLottoFormSection
+        .show()
+        .renderRemainPrice(this.lottoModel.price);
     });
 
     this.winningNumberFormSection.on('@submitWinningNumber', ({ detail }) => {
@@ -56,9 +67,27 @@ export default class MainController {
     });
 
     this.resultModalSection.on('@clickResetBtn', () => {
-      console.log('reset');
       this.init();
       this.resultModalSection.hide().hideModal();
+    });
+
+    this.manualLottoFormSection.on('@submitManualNumber', ({ detail }) => {
+      this.lottoModel.setManualLotto(detail.manualLottoNumbers);
+      this.setPrice(this.lottoModel.price - PRICE_UNIT);
+      this.manualLottoFormSection.renderRemainPrice(this.lottoModel.price);
+      if (Number(this.lottoModel.price) === 0) {
+        this.manualLottoFormSection.disableBtn('#submitManualLottoBtn');
+        alert('마지막 수동 구매입니다. 더이상 구매할 수 없습니다.');
+        return;
+      }
+    });
+
+    this.manualLottoFormSection.on('@clickAutoNumber', () => {
+      this.lottoModel.setAutoLottos(this.lottoModel.price);
+      this.setPrice(0);
+      this.manualLottoFormSection.renderRemainPrice(0);
+      this.purchasedLottoSection.show().render(this.lottoModel.lottos);
+      this.winningNumberFormSection.show().render();
     });
   }
 
@@ -66,14 +95,25 @@ export default class MainController {
     return !!(price % LOTTO_INFO.PRICE_UNIT);
   }
 
-  setAutoLottoNumbers(price) {
+  setPrice(price) {
+    console.log(price);
     if (this.isInvalidPrice(price)) {
       this.init();
       alert(ALERT.CHECK_UNIT);
       return false;
     }
-
-    this.lottoModel.setAutoLottos(price);
+    this.lottoModel.setPrice(price);
     return true;
   }
+
+  // setAutoLottoNumbers(price) {
+  //   if (this.isInvalidPrice(price)) {
+  //     this.init();
+  //     alert(ALERT.CHECK_UNIT);
+  //     return false;
+  //   }
+
+  //   this.lottoModel.setAutoLottos(price);
+  //   return true;
+  // }
 }
