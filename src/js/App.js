@@ -1,7 +1,7 @@
 import LottoContainer from './components/LottoContainer'
 import lottoConfig from './config/lotto.config'
 import { DISPLAY_NONE, MANUAL_LOTTO_NUMBER, MANUAL_LOTTO_NUMBER_CONTAINNER } from './constants/ClassName'
-import { CY_LOTTO_DETAIL } from './constants/CypressDom'
+import { CY_LOTTO_DETAIL, CY_MANUAL_LOTTO_INPUT } from './constants/CypressDom'
 import {
   LUCKY_LOTTO_CONTAINER,
   PURCHASE_INPUT,
@@ -347,12 +347,12 @@ function setManualPurchaseModal(amount) {
 
   const template = `
     <div class="${MANUAL_LOTTO_NUMBER_CONTAINNER} mt-5">
-      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" />
-      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" />
-      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" />
-      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" />
-      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" />
-      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" data-test-element="${CY_MANUAL_LOTTO_INPUT}"  />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" data-test-element="${CY_MANUAL_LOTTO_INPUT}"  />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" data-test-element="${CY_MANUAL_LOTTO_INPUT}"  />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" data-test-element="${CY_MANUAL_LOTTO_INPUT}"  />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" data-test-element="${CY_MANUAL_LOTTO_INPUT}"  />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" data-test-element="${CY_MANUAL_LOTTO_INPUT}"  />
     </div>
   `
 

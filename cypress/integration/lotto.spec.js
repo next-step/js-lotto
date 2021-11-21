@@ -14,7 +14,15 @@
  * alertMessageToBeEqual: '인자로 받은 텍스트가 경고창으로 나오는 텍스트와 같은지 확인합니다.'
  */
 import lottoConfig from '../../src/js/config/lotto.config'
-import { MY_LOTTO_LIMIT_ERROR, LOTTO_NUMBER_OUT_OF_RANGE_ERROR, LOTTO_NUMBER_DUPLICATED_ERROR } from '../../src/js/constants/Message'
+import {
+  MY_LOTTO_LIMIT_ERROR,
+  LOTTO_NUMBER_OUT_OF_RANGE_ERROR,
+  LOTTO_NUMBER_DUPLICATED_ERROR,
+  MANUAL_PURCHASE_PROMPT_VALIDATION_ERROR,
+  MANUAL_PURCHASE_PROMPT_NUMBER_OUT_OF_RANGE_ERROR,
+  MANUAL_LOTTO_NUMBER_VALIDATION_ERROR,
+  MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR,
+} from '../../src/js/constants/Message'
 
 const LIVE_SERVER_URL = 'http://127.0.0.1:3000/'
 
@@ -80,6 +88,54 @@ describe('로또의 미션의 요구조건을 만족한다.', () => {
       cy.getBenefitRate()
       cy.clickResetButton()
       cy.lottoInputShouldBeNull()
+    })
+  })
+
+  context('3단계', () => {
+    it('수동구매 입력창에 문자를 입력할 시 에러를 표시한다.', () => {
+      cy.toggleManualButton()
+      cy.alertMessageToBeEqual(MANUAL_PURCHASE_PROMPT_VALIDATION_ERROR)
+      cy.purchaseLotto(purchasePrice, 'ㅇㅇㅇ')
+    })
+
+    it('수동구매 입력창에 구매한 로또보다 많이 입력할 시 에러를 표시한다.', () => {
+      cy.toggleManualButton()
+      cy.alertMessageToBeEqual(MANUAL_PURCHASE_PROMPT_NUMBER_OUT_OF_RANGE_ERROR + purchasePrice / lottoPrice + ')')
+      cy.purchaseLotto(purchasePrice, '4')
+      cy.clickManualPurchaseButton()
+    })
+
+    it('수동구매 시 입력창이 비어있을 시 에러를 표시한다.', () => {
+      cy.toggleManualButton()
+      cy.alertMessageToBeEqual(MANUAL_LOTTO_NUMBER_VALIDATION_ERROR)
+      cy.purchaseLotto(purchasePrice, '1')
+      cy.typeManualLottoInputs([[1, 2, 3, 4, 5]])
+      cy.clickManualPurchaseButton()
+    })
+
+    it('수동구매 시 중복된 숫자가 있을 시 에러를 표시한다.', () => {
+      cy.toggleManualButton()
+      cy.alertMessageToBeEqual(MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR)
+      cy.purchaseLotto(purchasePrice, '1')
+      cy.typeManualLottoInputs([[1, 2, 3, 4, 4, 5]])
+      cy.clickManualPurchaseButton()
+    })
+
+    it('수동 구매한 로또 번호가 구매한 로또에 포함되어 있고 나머지 로또는 자동구매를 실행한다', () => {
+      const manualLottoNumbers = [
+        [1, 2, 3, 4, 5, 6],
+        [7, 8, 9, 10, 11, 12],
+      ]
+
+      cy.toggleManualButton()
+      cy.alertMessageToBeEqual(MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR)
+      cy.purchaseLotto(purchasePrice, manualLottoNumbers.length)
+      cy.typeManualLottoInputs(manualLottoNumbers)
+      cy.clickManualPurchaseButton()
+      cy.checkLottoDetailDisplay(false)
+      cy.clickToggleButton()
+      cy.checkManualLottoNumberPurchased(manualLottoNumbers)
+      cy.lottoLengthShouldBeEqual(purchasePrice / lottoPrice)
     })
   })
 })
