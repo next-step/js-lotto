@@ -18,15 +18,17 @@
             <div class="d-flex">
               <input
                 type="number"
-                class="w-100 mr-2 pl-2"
+                class="w-100 mr-2 pl-2 price"
                 placeholder="구입 금액"
               />
-              <button type="button" class="btn btn-cyan">확인</button>
+              <button type="button" class="btn btn-cyan submit">확인</button>
             </div>
           </form>
           <section class="mt-9">
             <div class="d-flex">
-              <label class="flex-auto my-0">총 5개를 구매하였습니다.</label>
+              <label class="flex-auto my-0 total">
+                총 0개를 구매하였습니다.
+              </label>
               <div class="flex-auto d-flex justify-end pr-1">
                 <label class="switch">
                   <input type="checkbox" class="lotto-numbers-toggle-button" />
@@ -34,13 +36,7 @@
                 </label>
               </div>
             </div>
-            <div class="d-flex flex-wrap">
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-            </div>
+            <div class="lotto-container d-flex flex-wrap"></div>
           </section>
           <form class="mt-9">
             <label class="flex-auto d-inline-block mb-3"
