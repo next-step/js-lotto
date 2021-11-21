@@ -168,7 +168,6 @@ function onCheckMyLottoResult(lottoService) {
 
   const lottoValidation = validateLottoAnswer(base, bonus)
 
-  console.log(lottoValidation)
   if (lottoValidation.error) {
     alert(lottoValidation.message)
     return
@@ -211,11 +210,6 @@ function isLottoNumberDuplicated(base, bonus) {
   for (const baseNumber of base) {
     numberSet.add(baseNumber)
   }
-
-  console.log(base)
-  console.log(lottoLength)
-  console.log(numberSet)
-  console.log(numberSet.size !== lottoLength)
 
   return numberSet.size !== lottoLength
 }

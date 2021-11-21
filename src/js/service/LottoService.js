@@ -43,7 +43,6 @@ export default class LottoService {
   }
 
   manualPurchase(manualLottos) {
-    console.log(manualLottos, this.#manualPurchaseInfo)
     if (manualLottos.length !== this.#manualPurchaseInfo.manualPurchaseAmount) {
       return { success: false, message: MANUAL_LOTTO_AMOUNT_INCORRECT_ERROR }
     }
