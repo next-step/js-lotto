@@ -15,15 +15,18 @@ import {
   CY_TOGGLE_PURCHASE_MODE_BUTTON,
 } from '../../src/js/constants/CypressDom'
 
-Cypress.Commands.add('purchaseLotto', (money, manualPurchaseAmount) => {
+Cypress.Commands.add('autoPurchaseLotto', (money) => {
   cy.get(`input[data-test-element="${CY_PURHCASE_INPUT}"]`).type(money, {
     force: true,
   })
 
-  if (!manualPurchaseAmount) {
-    cy.get(`button[data-test-element="${CY_PURCHASE_BUTTON}"]`).click()
-    return
-  }
+  cy.get(`button[data-test-element="${CY_PURCHASE_BUTTON}"]`).click()
+})
+
+Cypress.Commands.add('manualPurchaseLotto', ({ money, manualPurchaseAmount = 0 }) => {
+  cy.get(`input[data-test-element="${CY_PURHCASE_INPUT}"]`).type(money, {
+    force: true,
+  })
 
   cy.window().then((p) => {
     cy.stub(p, 'prompt').returns(manualPurchaseAmount)
