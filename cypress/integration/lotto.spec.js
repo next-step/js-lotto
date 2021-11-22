@@ -9,7 +9,7 @@ describe("js-lotto", () => {
     cy.get(".price").clear();
   });
 
-  context("로또 구입", () => {
+  context("로또 테스트", () => {
     beforeEach(() => {
       cy.get(".price").type(CYPRESS_TEST.TOTAL_PRICE);
       cy.get(".submit").click();
@@ -29,6 +29,17 @@ describe("js-lotto", () => {
         "length",
         Math.floor(CYPRESS_TEST.TOTAL_PRICE / LOTTO.PRICE)
       );
+    });
+    it("당첨 번호를 입력하고 결과 확인하기 버튼을 누르면 모달창이 출력된다.", () => {
+      cy.winningNumbers(CYPRESS_TEST.WINNING_NUMBER);
+      cy.bonusNumber(CYPRESS_TEST.BONUS_NUMBER);
+      cy.get(".open-result-modal-button").click();
+      cy.get(".modal").should("be.visible");
+    });
+
+    it("X 버튼을 클릭하면 모달 창이 닫힌다.", () => {
+      cy.get(".modal-close").click();
+      cy.get(".modal").should("not.be.visible");
     });
   });
 });
