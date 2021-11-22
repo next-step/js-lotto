@@ -30,7 +30,6 @@ describe("js-lotto", () => {
         Math.floor(CYPRESS_TEST.TOTAL_PRICE / LOTTO.PRICE)
       );
     });
-
     it("당첨 번호를 입력하고 결과 확인하기 버튼을 누르면 모달창이 출력된다.", () => {
       cy.winningNumbers(CYPRESS_TEST.WINNING_NUMBER);
       cy.bonusNumber(CYPRESS_TEST.BONUS_NUMBER);

@@ -1,6 +1,7 @@
 import { getRandomNumber } from "./utils/index.js";
 import { LOTTO } from "./constants/index.js";
 
+
 class LottoApp {
   constructor() {
     this.lottos = [];
@@ -40,7 +41,6 @@ class LottoApp {
 
   onToggleButton() {
     const toggleStatus = document.querySelector(".lotto-numbers-toggle-button").classList.toggle("button");
-
     toggleStatus ? this.showLottoNumbers() : this.hideLottoNumers();
   }
 
