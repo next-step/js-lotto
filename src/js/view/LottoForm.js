@@ -24,7 +24,6 @@ export default class LottoForm extends View {
   bindOnClickGetResultButton(handler) {
     this.$getResultButton.addEventListener('click', (event) => {
       event.preventDefault();
-      console.log(this.$winningNumbers);
       handler(
         [...this.$winningNumbers].map($input => Number($input.value)),
         this.$bonusNumber.value,

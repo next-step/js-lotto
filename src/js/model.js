@@ -23,8 +23,6 @@ export default class Model {
         [PRIZE_TITLE.FIFTH]: 0,
       }
     };
-
-    console.log(this.data.result);;
   }
 
   setAmount(money) {

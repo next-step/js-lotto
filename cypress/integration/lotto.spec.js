@@ -66,7 +66,6 @@ describe('lotto-step1-2', () => {
 
 
     it("당첨번호를 모두 입력하지 않을시 에러 발생", () => {
-      console.log(DOM_ID.WINNING_NUMBERS);
       cy.typeWinningNumbers([1, 2, 3, 4]);
       cy.typeBonusNumber(5);
       cy.clickElements(DOM_ID.GET_RESULT_BUTTON);
