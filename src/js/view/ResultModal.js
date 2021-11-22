@@ -25,7 +25,7 @@ export default class ResultModal extends View {
   }
 
   updateModal(result) {
-    Object.values(result).forEach((count, index) => {
+    Object.values(result).reverse().forEach((count, index) => {
       this.$resultCountList[index].innerText = `${count}개`;
     });
   }
