@@ -16,3 +16,13 @@
 .btn.btn-cyan:hover {
   background-color: #018c9e !important;
 }
+
+.btn-red {
+  color: rgb(228, 228, 228);
+  background-color: #df4f2b !important;
+  border-color: #df4f2b !important;
+}
+
+.btn.btn-red:hover {
+  background-color: #be370e !important;
+}

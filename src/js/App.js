@@ -1,8 +1,8 @@
 import LottoContainer from './components/LottoContainer'
 import lottoConfig from './config/lotto.config'
-import ClassName, { DISPLAY_NONE } from './constants/ClassName'
-import { CY_LOTTO_DETAIL } from './constants/CypressDom'
-import ElementId, {
+import { DISPLAY_NONE, MANUAL_LOTTO_NUMBER, MANUAL_LOTTO_NUMBER_CONTAINNER } from './constants/ClassName'
+import { CY_LOTTO_DETAIL, CY_MANUAL_LOTTO_INPUT } from './constants/CypressDom'
+import {
   LUCKY_LOTTO_CONTAINER,
   PURCHASE_INPUT,
   PURCHAED_LOTTO_AMOUNT_LABEL,
@@ -11,6 +11,8 @@ import ElementId, {
   PURCHASED_LOTTO_VIEWER,
   PURCHASED_LOTTO,
   BENEFIT_RATE_LABEL,
+  MANUAL_LOTTO_CONTAINER,
+  MANUAL_LOTTO_MODAL,
 } from './constants/ElementId'
 import Event from './constants/Event'
 import EventType from './constants/EventType'
@@ -18,6 +20,12 @@ import {
   LOTTO_NUMBER_DUPLICATED_ERROR,
   LOTTO_NUMBER_EMPTY_ERROR,
   LOTTO_NUMBER_OUT_OF_RANGE_ERROR,
+  MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR,
+  MANUAL_LOTTO_NUMBER_EMPTY_ERROR,
+  MANUAL_LOTTO_NUMBER_RANGE_ERROR,
+  MANUAL_PURCHASE_AMOUNT_MESSAGE,
+  MANUAL_PURCHASE_PROMPT_NUMBER_OUT_OF_RANGE_ERROR,
+  MANUAL_PURCHASE_PROMPT_VALIDATION_ERROR,
   MY_LOTTO_LIMIT_ERROR,
 } from './constants/Message'
 import { BASE_LOTTO_NUMBERS, BONUS_LOTTO_NUMBER } from './constants/DomName'
@@ -26,12 +34,15 @@ import { $ } from './utils/dom'
 
 const clickEventMapper = {
   [EventType.purchase]: (lottoService) => onLottoPurchase(lottoService),
-  [EventType.checkMyLottoResult]: (lottoService) =>
-    onCheckMyLottoResult(lottoService),
+  [EventType.checkMyLottoResult]: (lottoService) => onCheckMyLottoResult(lottoService),
   [EventType.toggleMyLotto]: () => onToggleMyLottoNumber(),
   [EventType.resetGame]: (lottoService) => resetGame(lottoService),
+  [EventType.toggleLottoPurchaseMode]: (lottoService) => toggleLottoPurchaseMode(lottoService),
+  [EventType.manualPurchaseCancle]: (lottoService) => cancleManualPurhcase(lottoService),
+  [EventType.manualPurchaseConfirm]: (lottoService) => confirmManualPurchase(lottoService),
 }
 
+const MANUAL_PURCHASE_MESSAGES = [MANUAL_LOTTO_NUMBER_EMPTY_ERROR, MANUAL_LOTTO_NUMBER_RANGE_ERROR, MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR]
 export default class App {
   #rootContainer
   #lottoService
@@ -41,6 +52,7 @@ export default class App {
     this.#lottoService = new LottoService()
     new LottoContainer(this.#rootContainer)
 
+    this.#lottoService.lottoAnswer
     this.setEvent()
   }
 
@@ -68,6 +80,38 @@ export default class App {
 
       clickEventMapper[clickEvent](this.#lottoService)
     })
+
+    $('#' + MANUAL_LOTTO_MODAL).addEventListener(Event.onClick, (event) => {
+      const clickEvent = event.target.dataset.event
+
+      if (!clickEvent) {
+        return
+      }
+
+      clickEventMapper[clickEvent](this.#lottoService)
+    })
+  }
+}
+
+function confirmManualPurchase(lottoService) {
+  try {
+    const manualLottos = getManualLottoNumbers()
+
+    const { success, message } = lottoService.manualPurchase(manualLottos)
+
+    if (!success) {
+      alert(message)
+    }
+
+    setLottoVisible(true)
+    handlePurchaseLotto(lottoService.myLottos)
+    setManualPurchaseModalVisible(false)
+  } catch (error) {
+    const message = error.message
+
+    if (MANUAL_PURCHASE_MESSAGES.includes(message)) {
+      alert(message)
+    }
   }
 }
 
@@ -90,11 +134,30 @@ function onLottoPurchase(lottoService) {
   }
 
   resetUI()
-  lottoService.autoPurchase(lottoAmount)
 
-  setLottoVisible(true)
+  if (lottoService.isPurcaseModeAuto()) {
+    lottoService.autoPurchase(lottoAmount)
 
-  handlePurchaseLotto(lottoService.myLottos)
+    setLottoVisible(true)
+    handlePurchaseLotto(lottoService.myLottos)
+    return
+  }
+
+  const answer = Number(prompt(MANUAL_PURCHASE_AMOUNT_MESSAGE + ` (최대 ${lottoAmount}개)`))
+
+  if (isNaN(answer)) {
+    alert(MANUAL_PURCHASE_PROMPT_VALIDATION_ERROR)
+    return
+  }
+
+  if (answer < 1 || answer > lottoAmount) {
+    alert(MANUAL_PURCHASE_PROMPT_NUMBER_OUT_OF_RANGE_ERROR + lottoAmount + ')')
+    return
+  }
+
+  lottoService.manualPurchaseInfo = { manualPurchaseAmount: answer, totalPurchaseAmount: lottoAmount }
+  setManualPurchaseModal(answer)
+  return
 }
 
 function onCheckMyLottoResult(lottoService) {
@@ -108,7 +171,6 @@ function onCheckMyLottoResult(lottoService) {
 
   const lottoValidation = validateLottoAnswer(base, bonus)
 
-  console.log(lottoValidation)
   if (lottoValidation.error) {
     alert(lottoValidation.message)
     return
@@ -123,9 +185,7 @@ function onCheckMyLottoResult(lottoService) {
     node.innerText = count + '개'
   })
 
-  $(
-    '#' + BENEFIT_RATE_LABEL
-  ).innerText = `당신의 총 수익률은 ${benefitResult.benefitRate}%입니다.`
+  $('#' + BENEFIT_RATE_LABEL).innerText = `당신의 총 수익률은 ${benefitResult.benefitRate}%입니다.`
 
   $('.modal').classList.add('open')
 }
@@ -153,11 +213,6 @@ function isLottoNumberDuplicated(base, bonus) {
   for (const baseNumber of base) {
     numberSet.add(baseNumber)
   }
-
-  console.log(base)
-  console.log(lottoLength)
-  console.log(numberSet)
-  console.log(numberSet.size !== lottoLength)
 
   return numberSet.size !== lottoLength
 }
@@ -231,12 +286,8 @@ function resetUI() {
   purchaseButton.value = ''
   purchaseButton.focus()
 
-  document
-    .getElementsByName(BASE_LOTTO_NUMBERS)
-    .forEach((el) => (el.value = ''))
-  document
-    .getElementsByName(BONUS_LOTTO_NUMBER)
-    .forEach((el) => (el.value = ''))
+  document.getElementsByName(BASE_LOTTO_NUMBERS).forEach((el) => (el.value = ''))
+  document.getElementsByName(BONUS_LOTTO_NUMBER).forEach((el) => (el.value = ''))
 
   $('#' + PURCHAED_LOTTO_AMOUNT_LABEL).innerText = `총 0개를 구매하였습니다.`
 
@@ -259,25 +310,81 @@ function setLottoVisible(visible) {
   $('#' + LOTTO_ANSWER_INPUT).classList.add(DISPLAY_NONE)
 }
 
+function setManualPurchaseModalVisible(visible) {
+  if (visible) {
+    $('#' + MANUAL_LOTTO_MODAL).classList.remove(DISPLAY_NONE)
+    $('#' + MANUAL_LOTTO_CONTAINER).innerHTML = ''
+    return
+  }
+  $('#' + MANUAL_LOTTO_MODAL).classList.add(DISPLAY_NONE)
+}
+
+function getManualLottoNumbers() {
+  const manualLottoNumbers = []
+
+  document.querySelectorAll('.' + MANUAL_LOTTO_NUMBER_CONTAINNER).forEach((container) => {
+    const lottoNumbers = new Set()
+    container.querySelectorAll('.' + MANUAL_LOTTO_NUMBER).forEach((lottoInput) => {
+      const lottoNumber = Number(lottoInput.value)
+
+      if (!lottoInput.value) {
+        throw new Error(MANUAL_LOTTO_NUMBER_EMPTY_ERROR)
+      }
+      if (lottoNumber <= 0 || lottoNumber > lottoConfig.maxLottoNumber) {
+        throw new Error(MANUAL_LOTTO_NUMBER_RANGE_ERROR)
+      }
+
+      if (lottoNumbers.has(lottoNumber)) {
+        throw new Error(MANUAL_LOTTO_NUMBER_DUPLICATED_ERROR)
+      }
+
+      lottoNumbers.add(lottoNumber)
+    })
+
+    manualLottoNumbers.push([...lottoNumbers])
+  })
+
+  return manualLottoNumbers
+}
+
+function setManualPurchaseModal(amount) {
+  setManualPurchaseModalVisible(true)
+
+  const template = `
+    <div class="${MANUAL_LOTTO_NUMBER_CONTAINNER} mt-5">
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" data-test-element="${CY_MANUAL_LOTTO_INPUT}"  />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" data-test-element="${CY_MANUAL_LOTTO_INPUT}"  />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" data-test-element="${CY_MANUAL_LOTTO_INPUT}"  />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" data-test-element="${CY_MANUAL_LOTTO_INPUT}"  />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" data-test-element="${CY_MANUAL_LOTTO_INPUT}"  />
+      <input class="${MANUAL_LOTTO_NUMBER} winning-number mx-1 text-center" type="number" data-test-element="${CY_MANUAL_LOTTO_INPUT}"  />
+    </div>
+  `
+
+  $('#' + MANUAL_LOTTO_CONTAINER).innerHTML = new Array(amount).fill(template).join('')
+}
+
 function handlePurchaseLotto(lottoNumbers) {
   const template = (numbers) => {
     return `
       <li class="mx-1 text-4xl lotto-wrapper">
       <span class="lotto-icon">🎟️ </span>
-      <span class="lotto-detail" style="display: none;" data-test-element="${CY_LOTTO_DETAIL}"">${numbers.reduce(
-      (a, b) => a + ', ' + b
-    )}</span>
+      <span class="lotto-detail" style="display: none;" data-test-element="${CY_LOTTO_DETAIL}"">${numbers.reduce((a, b) => a + ', ' + b)}</span>
       </li>
     `
   }
 
-  $('#' + PURCHASED_LOTTO_VIEWER).innerHTML = `${lottoNumbers
-    .map((lottoNumber) => template(lottoNumber))
-    .join('')}`
+  $('#' + PURCHASED_LOTTO_VIEWER).innerHTML = `${lottoNumbers.map((lottoNumber) => template(lottoNumber)).join('')}`
 
-  $(
-    '#' + PURCHAED_LOTTO_AMOUNT_LABEL
-  ).innerText = `총 ${lottoNumbers.length}개를 구매하였습니다.`
+  $('#' + PURCHAED_LOTTO_AMOUNT_LABEL).innerText = `총 ${lottoNumbers.length}개를 구매하였습니다.`
 
   $('#' + PURCHAED_LOTTO_AMOUNT_LABEL).dataset.count = lottoNumbers.length
+}
+
+function cancleManualPurhcase() {
+  setManualPurchaseModalVisible(false)
+}
+
+function toggleLottoPurchaseMode(lottoService) {
+  lottoService.changePurchaseMode()
 }
