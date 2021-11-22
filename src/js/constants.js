@@ -14,6 +14,7 @@ export const DOM_ID = {
   WINNING_NUMBERS: '#resultInputContainer input',
   BONUS_NUMBER: '#bonusNumber',
   PROFIT_MESSAGE: '#profitMessage',
+  LOTTO_ICON: '.lotto-icon',
 };
 
 export const ERROR_MESSAGE = {
