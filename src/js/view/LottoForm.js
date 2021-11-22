@@ -11,6 +11,15 @@ export default class LottoForm extends View {
     this.$bonusNumber = $(DOM_ID.BONUS_NUMBER);
   }
 
+  hide() {
+    this.$lottoInputForm.style.display = 'none';
+  }
+
+  clearInput() {
+    this.$winningNumbers.forEach($number => $number.value = '');
+    this.$bonusNumber.value = '';
+  }
+
   checkLottoNumber(winningNumbers, bonusNumber) {
     const uniqueWinningNumbers = [...new Set(winningNumbers), bonusNumber];
     uniqueWinningNumbers.forEach((number) => {

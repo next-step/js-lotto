@@ -1,5 +1,5 @@
 import {
-  ERROR_MESSAGE,
+  ERROR_MESSAGE, PRIZE_TITLE,
 } from "./constants.js";
 import LottoForm from "./view/LottoForm.js";
 import LottoInfo from "./view/LottoInfo.js";
@@ -20,13 +20,14 @@ export default class Controller {
     this.PriceForm.bindOnClickPurchaseButton(this.onClickPurchaseButton);
     this.LottoForm.bindOnClickGetResultButton(this.onClickResultButton);
     this.ResultModal.bindOnClickBlackout(this.onClickBlackout);
+    this.ResultModal.bindOnClickRetryButton(this.onClickRetryButton);
+    this.ResultModal.bindOnClickCancelButton(this.onClickCancelButton);
   }
 
   onClickPurchaseButton = (event) => {
     event.preventDefault();
     const price = this.PriceForm.$moneyInput.value;
     if (price.length === 0) throw Error(ERROR_MESSAGE.NO_INPUT);
-
     this.model.setAmount(Number(price));
     this.model.setLottos();
 
@@ -52,9 +53,25 @@ export default class Controller {
     this.ResultModal.updateModal(this.model.data.result);
   };
 
+  onClickRetryButton = ($retryButton) => {
+    this.ResultModal.hide();
+    this.PriceForm.clearInput();
+    this.LottoForm.clearInput()
+    this.model.init();
+    this.LottoForm.hide();
+    this.LottoInfo.hide();
+  };
+
   onClickBlackout = (event, $resultModal) => {
-    if (event.target === $resultModal
-      && $resultModal.classList.contains('open')) this.ResultModal.hide();
+    if (event.target === $resultModal && $resultModal.classList.contains('open')) {
+      this.ResultModal.hide();
+      this.model.initResult();
+    }
+  };
+
+  onClickCancelButton = () => {
+    this.ResultModal.hide();
+    this.model.initResult();
   };
 }
 

@@ -10,23 +10,32 @@ import {countSameNumbers} from "./utils.js";
 
 export default class Model {
   constructor() {
+    this.init();
+  }
+
+  init() {
     this.data = {
       amount: 0,
       totalPrize: 0,
       profit: 0,
       lottos: [],
-      result: {
-        [PRIZE_TITLE.FIRST]: 0,
-        [PRIZE_TITLE.SECOND]: 0,
-        [PRIZE_TITLE.THIRD]: 0,
-        [PRIZE_TITLE.FOURTH]: 0,
-        [PRIZE_TITLE.FIFTH]: 0,
-      }
     };
+    this.initResult();
+  }
+
+  initResult() {
+    this.data.result = {
+      [PRIZE_TITLE.FIRST]: 0,
+      [PRIZE_TITLE.SECOND]: 0,
+      [PRIZE_TITLE.THIRD]: 0,
+      [PRIZE_TITLE.FOURTH]: 0,
+      [PRIZE_TITLE.FIFTH]: 0,
+    };
+    this.data.totalPrize = 0;
   }
 
   setAmount(money) {
-    if (money % LOTTO_PRICE !== 0) throw Error(ERROR_MESSAGE.UNIT_PRICE)
+    if (money % LOTTO_PRICE !== 0) throw Error(ERROR_MESSAGE.UNIT_PRICE);
     if (money < LOTTO_PRICE) throw Error(ERROR_MESSAGE.MIN_PRICE);
     this.data.amount = Math.floor(money / LOTTO_PRICE);
     return this.data.amount;

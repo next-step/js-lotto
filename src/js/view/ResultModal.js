@@ -8,6 +8,8 @@ export default class ResultModal extends View {
     this.$resultModal = $(DOM_ID.RESULT_MODAL);
     this.$resultCountList = $$(DOM_ID.RESULT_COUNT_LIST);
     this.$profitMessage = $(DOM_ID.PROFIT_MESSAGE);
+    this.$retryButton = $(DOM_ID.RETRY_BUTTON);
+    this.$cancelButton = $(DOM_ID.CANCEL_BUTTON);
   }
 
   show() {
@@ -24,9 +26,24 @@ export default class ResultModal extends View {
     });
   }
 
+  bindOnClickRetryButton(handler) {
+    this.$retryButton.addEventListener('click', () => {
+      handler();
+    });
+  }
+
+  bindOnClickCancelButton(handler) {
+    this.$cancelButton.addEventListener('click', () => {
+      handler();
+    });
+  }
+
   updateModal(result) {
     Object.values(result).reverse().forEach((count, index) => {
       this.$resultCountList[index].innerText = `${count}개`;
     });
   }
+
+
+
 };

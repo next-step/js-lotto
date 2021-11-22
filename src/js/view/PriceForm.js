@@ -10,6 +10,10 @@ export default class PriceForm extends View {
     this.$purchaseMessage = $(DOM_ID.PURCHASE_MESSAGE);
   }
 
+  clearInput() {
+    this.$moneyInput.value = '';
+  }
+
   updatePurchaseMessage(amount) {
     this.$purchaseMessage.innerHTML = `총 ${amount}개를 구매하였습니다.`;
   }
