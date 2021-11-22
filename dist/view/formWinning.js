@@ -2,7 +2,7 @@ import { MAX_NUM, MIN_NUM, NUMBERS_PER_LOTTO } from '../constants.js';
 import el from '../dom.js';
 import View from './index.js';
 export default class FormWinning extends View {
-    static template = `
+    static #template = `
   <form id="formWinning" class="mt-9">
     <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
     <div class="d-flex">
@@ -28,7 +28,7 @@ export default class FormWinning extends View {
     $inputs;
     constructor() {
         super();
-        this.$form = el(FormWinning.template);
+        this.$form = el(FormWinning.#template);
         this.$form.addEventListener('submit', this.onSubmit);
         this.$inputs = Array.from(this.$form.querySelectorAll('input[type="number"]'));
         el(this, [el(this.$form)]);

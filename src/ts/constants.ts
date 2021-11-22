@@ -1,3 +1,7 @@
+import FormDetailEntryClass from './view/formDetails/formDetailEntry.js'
+
+export type FormDetailEntryView = HTMLElement & FormDetailEntryClass
+
 export type AnyObj = { [key: string]: any }
 export type StrObj = { [key: string]: string }
 export type Elem = HTMLElement | string
