@@ -71,7 +71,7 @@ export default class Model {
   }
 
   setProfit() {
-    this.data.profit = Math.floor(((this.data.totalPrize - (this.data.amount * LOTTO_PRICE)) / (this.data.amount * LOTTO_PRICE)) * 100);
+    this.data.profit =((this.data.totalPrize - (this.data.amount * LOTTO_PRICE)) / (this.data.amount * LOTTO_PRICE)) * 100;
   }
 
   setProfitMessage($profitMessage) {
