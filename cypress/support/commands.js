@@ -1,25 +1,35 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import {DOM_ID} from "../../src/js/constants";
+
+Cypress.Commands.add("clickElements", (selector) => {
+  cy.get(selector).click();
+});
+
+Cypress.Commands.add("typeWinningNumbers", (numbers) => {
+  numbers.forEach((number, index) => {
+    cy.get(`#input-${index+1}`).type(number);
+  });
+});
+
+Cypress.Commands.add("typeBonusNumber", (number) => {
+  cy.get(DOM_ID.BONUS_NUMBER).type(number);
+});
+
+
+Cypress.Commands.add('typeMoneyAndSubmit', (money) => {
+  cy.get(DOM_ID.MONEY_INPUT).type(money);
+  cy.get(DOM_ID.PURCHASE_BUTTON).click();
+});
+
+Cypress.Commands.add('checkChildLength', (selector, childLength) => {
+  cy.get(selector).children().should('have.length', childLength);
+});
+
+Cypress.Commands.add('checkEqualityText', (selector, text) => {
+  cy.get(selector).invoke('text').should('eq', text);
+});
+
+Cypress.Commands.add('typeText', (selector, text) => {
+  cy.get(selector)
+  .type(text);
+});
+
