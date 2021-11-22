@@ -101,7 +101,7 @@ describe('lotto-step1-2', () => {
     });
   });
 
-  describe('당천번호를 입력하면 결과를 확인 할 수 있다.', () => {
+  describe('당첨 번호를 입력하면 결과를 확인 할 수 있다.', () => {
     beforeEach(() => {
       cy.typeMoneyAndSubmit(10000);
       cy.typeWinningNumbers([1, 2, 3, 4, 5, 6]);
@@ -116,6 +116,31 @@ describe('lotto-step1-2', () => {
 
     it("확인버튼을 누르지 않으면 결과를 확인 할 수 없다.", () => {
       cy.get(DOM_ID.RESULT_MODAL).should('not.be.visible');
+    });
+  });
+
+  describe('결과 확인 모달에서 다시하기 버튼, 모달 밖 영역, 취소 버튼을 누를 수 있다.', () => {
+
+    beforeEach(() => {
+      cy.typeMoneyAndSubmit(10000);
+      cy.typeWinningNumbers([1, 2, 3, 4, 5, 6]);
+      cy.typeBonusNumber(7);
+      cy.clickElements(DOM_ID.GET_RESULT_BUTTON);
+    });
+
+    it('다시 하기 버튼을 누르면 초기 화면으로 돌아간다(결과도 모두 초기화).', () => {
+      cy.clickElements(DOM_ID.RETRY_BUTTON);
+      [DOM_ID.RESULT_MODAL, DOM_ID.LOTTO_INFO_SECTION, DOM_ID.LOTTO_LIST].forEach($view => {
+        cy.get($view).should('not.be.visible');
+      });
+    });
+
+    it('모달 밖 영역을 클릭하면 모달이 사라진다(결과는 유지).', () => {
+      cy.clickElements(DOM_ID.CANCEL_BUTTON);
+      cy.get(DOM_ID.RESULT_MODAL).should('not.be.visible');
+      [DOM_ID.LOTTO_INFO_SECTION, DOM_ID.LOTTO_LIST].forEach($view => {
+        cy.get($view).should('be.visible');
+      });
     });
   });
 });
