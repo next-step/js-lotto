@@ -16,3 +16,12 @@
 .btn.btn-cyan:hover {
   background-color: #018c9e !important;
 }
+
+.btn-green {
+  background-color: #a2d674 !important;
+  border-color: #a2d674 !important;
+}
+
+.btn-green:hover {
+  background-color: #82ac5d !important;
+}
