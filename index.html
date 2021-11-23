@@ -47,28 +47,34 @@
         <div class="d-flex">
           <div>
             <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
-            <div>
+            <div id="resultInputContainer">
               <input
+                      id="input-1"
                       type="number"
                       class="winning-number mx-1 text-center"
               />
               <input
+                      id="input-2"
                       type="number"
                       class="winning-number mx-1 text-center"
               />
               <input
+                      id="input-3"
                       type="number"
                       class="winning-number mx-1 text-center"
               />
               <input
+                      id="input-4"
                       type="number"
                       class="winning-number mx-1 text-center"
               />
               <input
+                      id="input-5"
                       type="number"
                       class="winning-number mx-1 text-center"
               />
               <input
+                      id="input-6"
                       type="number"
                       class="winning-number mx-1 text-center"
               />
@@ -77,11 +83,12 @@
           <div class="bonus-number-container flex-grow">
             <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
             <div class="d-flex justify-center">
-              <input type="number" class="bonus-number text-center" />
+              <input id="bonusNumber" type="number" class="bonus-number text-center" />
             </div>
           </div>
         </div>
         <button
+                id="getResultButton"
                 type="button"
                 class="open-result-modal-button mt-5 btn btn-cyan w-100"
         >
@@ -94,7 +101,7 @@
   <div class="modal">
     <div class="modal-inner p-10">
       <div class="modal-close">
-        <svg viewbox="0 0 40 40">
+        <svg id='cancelButton' viewbox="0 0 40 40">
           <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
         </svg>
       </div>
@@ -113,34 +120,34 @@
           <tr class="text-center">
             <td class="p-3">3개</td>
             <td class="p-3">5,000</td>
-            <td class="p-3">n개</td>
+            <td class="p-3 count">n개</td>
           </tr>
           <tr class="text-center">
             <td class="p-3">4개</td>
             <td class="p-3">50,000</td>
-            <td class="p-3">n개</td>
+            <td class="p-3 count">n개</td>
           </tr>
           <tr class="text-center">
             <td class="p-3">5개</td>
             <td class="p-3">1,500,000</td>
-            <td class="p-3">n개</td>
+            <td class="p-3 count">n개</td>
           </tr>
           <tr class="text-center">
             <td class="p-3">5개 + 보너스볼</td>
             <td class="p-3">30,000,000</td>
-            <td class="p-3">n개</td>
+            <td class="p-3 count">n개</td>
           </tr>
           <tr class="text-center">
             <td class="p-3">6개</td>
             <td class="p-3">2,000,000,000</td>
-            <td class="p-3">n개</td>
+            <td class="p-3 count">n개</td>
           </tr>
           </tbody>
         </table>
       </div>
-      <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+      <p id="profitMessage" class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
       <div class="d-flex justify-center mt-5">
-        <button type="button" class="btn btn-cyan">다시 시작하기</button>
+        <button id="retryButton" type="button" class="btn btn-cyan">다시 시작하기</button>
       </div>
     </div>
   </div>

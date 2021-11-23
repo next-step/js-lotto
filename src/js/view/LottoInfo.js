@@ -12,6 +12,10 @@ export default class LottoInfo extends View {
     this.$$lottoDetail = $$(DOM_ID.LOTTO_DETAIL);
   }
 
+  hide() {
+    this.$lottoInfoSection.style.display = 'none';
+  }
+
   updateLottoList(lottos) {
     el(this.$lottoList,
       lottos.map(lotto =>

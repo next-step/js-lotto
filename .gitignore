@@ -102,3 +102,47 @@ dist
 
 # TernJS port file
 .tern-port
+
+<<<<<<< HEAD
+.DS_Store
+node_modules
+yarn-error.log
+=======
+
+>>>>>>> eddc430edf60081dbe0b4c5a0ea4c0fa421cf39c
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+
+# electron
+/dist
+
+# editor
+*.swp
+electron-builder.yml
+.eslintcache
+
+# Webstorm project files
+.idea
+.idea/*.xml
+*.iml
+out
+gen
+build
+rebel.xml
