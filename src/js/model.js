@@ -42,7 +42,7 @@ export default class Model {
   }
 
   setLottos() {
-    this.data.lottos = Array.from(Array(this.data.amount)).map(x => this.createOneLotto());
+    this.data.lottos = [...Array(this.data.amount)].map(x => this.createOneLotto());
   }
 
   createOneLotto() {
