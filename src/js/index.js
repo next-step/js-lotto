@@ -12,14 +12,16 @@ const lottoTemplate = (lottoNumbers = []) => `
   </div>
 `;
 
+
 const getAmount = (price) => Math.floor(price / LOTTO_PRICE);
+
 
 const getLottoNumber = () => Math.floor(Math.random() * 45) + 1;
 
 // 로또 한 장을 발행한다.
-const issueLotto = () => {
+const setLotto = () => {
   const lottoNumbers = [];
-
+  
   for (let i = 0; i < 6; i++) {
     const lottoNumber = getLottoNumber();
     lottoNumbers.push(lottoNumber);
@@ -28,42 +30,44 @@ const issueLotto = () => {
 };
 
 // 로또를 전달받은 개수만큼 발행한다.
-const issueLottos = (amount) => {
+const setLottos = (amount) => {
   const lottos = [];
 
   for (let i = 0; i < amount; i++) {
-    const lotto = issueLotto();
+    const lotto = setLotto();
     lottos.push(lotto);
   }
 
   return lottos;
 };
 
+const handlePayment = (event) => {
+  event.preventDefault();
+
+  const price = event.target.elements['price'].value;
+  
+  if(price < 1000) {
+    alert('1000원 이상 구매 가능합니다!')
+    return;
+  }
+
+  buyLotto(price);
+};
+
 const buyLotto = (price) => {
   const amount = getAmount(price);
-
-  const lottos = issueLottos(amount);
+  const lottos = setLottos(amount);
 
   $lottoCount.textContent = amount;
   $lottoContainer.innerHTML = lottos.map(lottoTemplate).join('');
 };
 
-const handlePayment = (event) => {
-  event.preventDefault();
-
-  const price = event.target.elements['price'].value;
-
-  buyLotto(price);
-};
 
 $paymentForm.addEventListener('submit', handlePayment);
 
 $lottoToggle.addEventListener('change', (event) => {
   const lottoNumberHidden = 'lotto-number-hidden';
 
-  if (event.target.checked) {
-    $lottoContainer.classList.remove(lottoNumberHidden);
-  } else {
-    $lottoContainer.classList.add(lottoNumberHidden);
-  }
+  event.target.checked == true ? $lottoContainer.classList.remove(lottoNumberHidden) :  $lottoContainer.classList.add(lottoNumberHidden);
+  
 });
