@@ -7,12 +7,13 @@ export default class PurchasedLottoSection extends View {
     this.$purchasedLottoText = $('#purchasedLottoText');
     this.$toggleSwitch = $('#toggleSwitch');
     this.$lottoWrapper = $('#lottoWrapper');
+    this.bindEvents();
   }
 
   render(lottos) {
     this.renderPurchasedLottoText(lottos.length);
     this.renderLottos(lottos);
-    this.bindEvents();
+    this.resetLottoDetail();
   }
 
   bindEvents() {
@@ -44,7 +45,15 @@ export default class PurchasedLottoSection extends View {
       .join('');
   }
 
+  resetLottoDetail() {
+    this.$lottoWrapper.classList.remove('flex-col');
+    this.$toggleSwitch.checked = false;
+    $$('.lotto-detail').forEach((el) => hideElement(el));
+  }
+
   renderLottoDetail(toggleFlag) {
+    console.log(toggleFlag);
+    console.log(this.$lottoWrapper.classList);
     this.$lottoWrapper.classList.toggle('flex-col');
 
     $$('.lotto-detail').forEach((el) =>
