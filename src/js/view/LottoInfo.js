@@ -1,7 +1,7 @@
 import View from "./view.js";
+import el from "../dom.js";
 import {$, $$} from "../utils.js";
 import {DOM_ID} from "../constants.js";
-import el from "../dom.js";
 
 export default class LottoInfo extends View {
   constructor() {

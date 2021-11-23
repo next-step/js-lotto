@@ -1,10 +1,12 @@
 import {
-  ERROR_MESSAGE, PRIZE_TITLE,
+  ERROR_MESSAGE, PROMPT_MESSAGE_SELF_AMOUNT,
 } from "./constants.js";
 import LottoForm from "./view/LottoForm.js";
 import LottoInfo from "./view/LottoInfo.js";
 import PriceForm from "./view/PriceForm.js";
 import ResultModal from "./view/ResultModal.js";
+import SelfLottoForm from "./view/SelfLottoForm.js";
+import {checkNumber} from "./utils.js";
 
 export default class Controller {
   constructor(model, view) {
@@ -15,6 +17,7 @@ export default class Controller {
     this.LottoInfo = new LottoInfo();
     this.PriceForm = new PriceForm();
     this.ResultModal = new ResultModal();
+    this.SelfLottoForm = new SelfLottoForm();
 
     this.LottoInfo.bindOnClickToggleButton(this.onClickToggleButton);
     this.PriceForm.bindOnClickPurchaseButton(this.onClickPurchaseButton);
@@ -22,6 +25,7 @@ export default class Controller {
     this.ResultModal.bindOnClickBlackout(this.onClickBlackout);
     this.ResultModal.bindOnClickRetryButton(this.onClickRetryButton);
     this.ResultModal.bindOnClickCancelButton(this.onClickCancelButton);
+    this.SelfLottoForm.bindOnClickSelfGenerateButton(this.onClickSelfGenerateButton)
   }
 
   onClickPurchaseButton = (event) => {
@@ -29,13 +33,9 @@ export default class Controller {
     const price = this.PriceForm.$moneyInput.value;
     if (price.length === 0) throw Error(ERROR_MESSAGE.NO_INPUT);
     this.model.setAmount(Number(price));
-    this.model.setLottos();
-
-    this.PriceForm.updatePurchaseMessage(this.model.data.amount);
-    this.LottoInfo.updateLottoList(this.model.data.lottos);
-
-    this.view.show(this.LottoForm.$lottoInputForm);
-    this.view.show(this.LottoInfo.$lottoInfoSection);
+    const selfGeneratedAmount = window.prompt(PROMPT_MESSAGE_SELF_AMOUNT)
+    this.SelfLottoForm.createSelfLottoForm(selfGeneratedAmount);
+    this.model.setAutoLottos(this.model.data.amount - selfGeneratedAmount);
   };
 
   onClickToggleButton = () => {
@@ -72,6 +72,30 @@ export default class Controller {
   onClickCancelButton = () => {
     this.ResultModal.hide();
     this.model.initResult();
+  };
+
+  onClickSelfGenerateButton = () => {
+    this.SelfLottoForm.$selfLottoInputContainer.forEach($oneLottoList => {
+
+      let oneSelfLottoValues = [];
+
+      $oneLottoList.querySelectorAll('input').forEach($lottoInput => {
+        const lottoNumber = $lottoInput.value;
+
+        checkNumber(lottoNumber);
+
+        if (oneSelfLottoValues.includes(lottoNumber)) throw ERROR_MESSAGE.DUPLICATED_NUMBER;
+        oneSelfLottoValues.push(Number(lottoNumber));
+      });
+
+      this.model.data.lottos.push(oneSelfLottoValues);
+    });
+
+    this.PriceForm.updatePurchaseMessage(this.model.data.amount);
+    this.LottoInfo.updateLottoList(this.model.data.lottos);
+
+    this.view.show(this.LottoForm.$lottoInputForm);
+    this.view.show(this.LottoInfo.$lottoInfoSection);
   };
 }
 

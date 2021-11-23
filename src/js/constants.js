@@ -17,6 +17,10 @@ export const DOM_ID = {
   LOTTO_ICON: '.lotto-icon',
   RETRY_BUTTON: '#retryButton',
   CANCEL_BUTTON: '#cancelButton',
+  SELF_LOTTO_LIST: '#selfLottoList',
+  SELF_LOTTO_INPUT: '#selfLottoList input',
+  AUTO_GENERATE_BUTTON: '#autoGenerateButton',
+  SELF_LOTTO_INPUT_CONTAINER: '#selfLottoInputContainer',
 };
 
 export const ERROR_MESSAGE = {
@@ -45,6 +49,8 @@ export const PRIZE = {
   FIFTH: 5000,
 }
 
+
+export const PROMPT_MESSAGE_SELF_AMOUNT = '수동으로 구입 할 로또의 개수를 입력하세요.'
 export const LOTTO_PRICE = 1000;
 export const LOTTO_LENGTH = 6;
 export const LOTTO_MAX_NUMBER = 45;

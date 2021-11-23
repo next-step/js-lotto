@@ -1,4 +1,4 @@
-import {LOTTO_LENGTH} from "./constants.js";
+import {ERROR_MESSAGE, LOTTO_LENGTH, MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER} from "./constants.js";
 
 export const $ = (selector, el = document) => el.querySelector(selector);
 
@@ -13,3 +13,9 @@ export const countSameNumbers = (arr1, arr2) => {
   }
   return result;
 };
+
+export const checkNumber = (number) => {
+  if (number === '') throw Error(ERROR_MESSAGE.NONE_VALUE);
+  if (number > MAX_LOTTO_NUMBER) throw Error(ERROR_MESSAGE.MAX_NUMBER);
+  if (number < MIN_LOTTO_NUMBER) throw Error(ERROR_MESSAGE.MIN_NUMBER);
+}
