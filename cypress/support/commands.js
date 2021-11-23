@@ -26,3 +26,8 @@
 Cypress.Commands.add('getBySel', (selector, ...args) => {
     return cy.get(`[data-test=${selector}]`, ...args);
 });
+
+Cypress.Commands.add('purchaseTickets', (amount) => {
+    cy.getBySel('amount-input').type(amount);
+    return cy.getBySel('amount-form').submit();
+})
