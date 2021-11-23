@@ -31,11 +31,14 @@ export const LottoApp = ($el) => {
     }
 
     /**
-     * @param {WinningNumbers} winingNumbers
+     * @param {WinningNumbers} winningNumbers
      */
-    function pickWinningNumbers(winingNumbers) {
-        console.log(winingNumbers);
-        LottoResultModal($('[data-component="lotto-result-modal"]', $el), {restartLotto});
+    function pickWinningNumbers(winningNumbers) {
+        LottoResultModal($('[data-component="lotto-result-modal"]', $el), {
+            tickets: state.tickets,
+            winningNumbers,
+            restartLotto,
+        });
     }
 
     function render() {
