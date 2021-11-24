@@ -1,4 +1,10 @@
-import { ERROR_MESSAGE } from "./constants.js";
+import {
+  ERROR_MESSAGE,
+  MIN_PURCHASE_PRICE,
+  MAX_PURCHASE_PRICE,
+  MIN_LOTTO_NUMBER,
+  MAX_LOTTO_NUMBER,
+} from "./constants.js";
 
 export const isValidPrice = (price) => {
   if (price === "") {
@@ -6,12 +12,12 @@ export const isValidPrice = (price) => {
     return false;
   }
 
-  if (price < 1000 || 100000 < price) {
+  if (price < MIN_PURCHASE_PRICE || MAX_PURCHASE_PRICE < price) {
     alert(ERROR_MESSAGE.OUT_OF_AMOUNT_RANGE);
     return false;
   }
 
-  if (price % 1000 !== 0) {
+  if (price % MIN_PURCHASE_PRICE !== 0) {
     alert(ERROR_MESSAGE.NOT_IN_UNITS_OF);
     return false;
   }
@@ -26,7 +32,7 @@ export const isValidWinningNumber = (numberList, bonusNumber, winningSet) => {
       return false;
     }
 
-    if (number < 1 || 99 < number) {
+    if (number < MIN_LOTTO_NUMBER || MAX_LOTTO_NUMBER < number) {
       alert(ERROR_MESSAGE.WINNING_NUMBER_RANGE);
       return false;
     }
@@ -37,7 +43,10 @@ export const isValidWinningNumber = (numberList, bonusNumber, winningSet) => {
     return false;
   }
 
-  if (bonusNumber.value < 1 || 99 < bonusNumber.value) {
+  if (
+    bonusNumber.value < MIN_LOTTO_NUMBER ||
+    MAX_LOTTO_NUMBER < bonusNumber.value
+  ) {
     alert(ERROR_MESSAGE.WINNING_NUMBER_RANGE);
     return false;
   }
@@ -56,7 +65,7 @@ export const generateRandomNumber = (min, max) => {
 
 export const generateRandomNumbers = () => {
   const newLottoNumbers = Array.from({ length: 6 }, () => {
-    return generateRandomNumber(1, 99);
+    return generateRandomNumber(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER);
   });
 
   return newLottoNumbers;

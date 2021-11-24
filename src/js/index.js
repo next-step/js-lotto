@@ -7,6 +7,7 @@ import {
   resetLotto,
 } from "../utils/renderer.js";
 import { handleLottoResult, onModalClose } from "./winningResult.js";
+import { LOTTO_PRICE } from "../utils/constants.js";
 
 function App() {
   let lottoTicketsList = [];
@@ -40,7 +41,7 @@ function App() {
     }
     lottoTicketsList = [];
 
-    const purchaseAmounts = Math.floor(purchasePrice / 1000);
+    const purchaseAmounts = Math.floor(purchasePrice / LOTTO_PRICE);
     lottoTicketsList = generateLottoNumbers(purchaseAmounts);
     updateLottoAmounts(".lotto__menu", purchaseAmounts);
     updateLottoTickets(purchaseAmounts, lottoTicketsList);
@@ -83,6 +84,8 @@ function App() {
   - [ ] 수동구매 개수에 맞게 번호 입력창을 띄운다. 6개씩
     - [ ] 숫자가 중복되면 에러처리
     - [ ] 범위를 벗어난 숫자를 입력하면 에러처리
+  - [ ] 입력한 숫자에 맞게 로또 티켓 정보를 렌더링한다.
+  - [ ] 남은 금액은 자동구매처리
   */
 }
 

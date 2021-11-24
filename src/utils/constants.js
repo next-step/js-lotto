@@ -18,3 +18,6 @@ export const WINNING_PRICE = {
 
 export const MIN_LOTTO_NUMBER = 1;
 export const MAX_LOTTO_NUMBER = 99;
+export const LOTTO_PRICE = 1000;
+export const MIN_PURCHASE_PRICE = 1000;
+export const MAX_PURCHASE_PRICE = 100000;
