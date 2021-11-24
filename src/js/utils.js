@@ -22,3 +22,5 @@ export const checkNumber = (number) => {
   if (number < MIN_LOTTO_NUMBER) throw Error(ERROR_MESSAGE.MIN_NUMBER);
 };
 
+export const show = ($target) => { $target.style.display = ''; };
+export const hide = ($target) => { $target.style.display = 'none'; };

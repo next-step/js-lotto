@@ -13,11 +13,11 @@ export default class ResultModal extends View {
     this.$cancelButton = $(DOM_ID.CANCEL_BUTTON);
   }
 
-  show() {
+  openModal() {
     this.$resultModal.classList.add('open');
   }
 
-  hide() {
+  closeModal() {
     this.$resultModal.classList.remove('open');
   }
 

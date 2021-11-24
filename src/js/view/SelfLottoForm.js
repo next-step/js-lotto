@@ -1,6 +1,6 @@
 import { DOM_ID, LOTTO_LENGTH } from '../constants.js';
 import el from '../dom.js';
-import { $, $$ } from '../utils.js';
+import { $, $$, hide } from '../utils.js';
 
 import View from './view.js';
 
@@ -11,6 +11,8 @@ export default class SelfLottoForm extends View {
     this.$autoGenerateButton = $(DOM_ID.GENERATE_BUTTON);
     this.$selfLottoInputContainer = $$(DOM_ID.SELF_LOTTO_INPUT_CONTAINER);
     this.$amountMessage = $(DOM_ID.AMOUNT_MESSAGE);
+
+    hide(this.$selfLottoList);
   }
 
   createSelfLottoForm(amount) {
@@ -45,9 +47,5 @@ export default class SelfLottoForm extends View {
       if (this.$selfLottoList.firstChild === this.$autoGenerateButton) return;
       this.$selfLottoList.removeChild(this.$selfLottoList.firstChild);
     }
-  }
-
-  show() {
-    this.$selfLottoList.style.display = 'block';
   }
 }

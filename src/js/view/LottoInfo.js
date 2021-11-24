@@ -1,6 +1,6 @@
 import { DOM_ID } from '../constants.js';
 import el from '../dom.js';
-import { $, $$ } from '../utils.js';
+import { $, $$, hide } from '../utils.js';
 
 import View from './view.js';
 
@@ -11,14 +11,8 @@ export default class LottoInfo extends View {
     this.$lottoList = $(DOM_ID.LOTTO_LIST);
     this.$toggleButton = $(DOM_ID.TOGGLE_BUTTON);
     this.$$lottoDetail = $$(DOM_ID.LOTTO_DETAIL);
-  }
 
-  hide() {
-    this.$lottoInfoSection.style.display = 'none';
-  }
-
-  show() {
-    this.$lottoInfoSection.style.display = 'block';
+    hide(this.$lottoInfoSection);
   }
 
   updateLottoList(lottos) {
@@ -26,7 +20,7 @@ export default class LottoInfo extends View {
       this.$lottoList,
       lottos.map((lotto) => el('<li class="mx-1 text-4xl lotto-wrapper">', [
         '<span class=\'lotto-icon\'>🎟️</span>',
-        `<span id='lottoDetail' class="lotto-detail" style="display: none;">${lotto}</span>`,
+        `<span id='lottoDetail' class="lotto-detail" style="display: none">${lotto}</span>`,
       ])),
     );
     this.$$lottoDetail = $$(DOM_ID.LOTTO_DETAIL);

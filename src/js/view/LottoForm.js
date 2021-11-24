@@ -1,5 +1,7 @@
 import { DOM_ID, ERROR_MESSAGE, WINNING_NUMBERS_LENGTH } from '../constants.js';
-import { $, $$, checkNumber } from '../utils.js';
+import {
+  $, $$, checkNumber, hide,
+} from '../utils.js';
 
 import View from './view.js';
 
@@ -10,14 +12,8 @@ export default class LottoForm extends View {
     this.$getResultButton = $(DOM_ID.GET_RESULT_BUTTON);
     this.$winningNumbers = $$(DOM_ID.WINNING_NUMBERS);
     this.$bonusNumber = $(DOM_ID.BONUS_NUMBER);
-  }
 
-  hide() {
-    this.$lottoInputForm.style.display = 'none';
-  }
-
-  show() {
-    this.$lottoInputForm.style.display = 'block';
+    hide(this.$lottoInputForm);
   }
 
   clearInput() {
