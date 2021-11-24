@@ -34,6 +34,8 @@ export default class Controller {
     const selfGeneratedAmount = window.prompt(PROMPT_MESSAGE_SELF_AMOUNT);
     this.SelfLottoForm.createSelfLottoForm(selfGeneratedAmount);
     this.model.setAutoLottos(this.model.data.amount - selfGeneratedAmount);
+    showElement(this.SelfLottoForm.$selfLottoList);
+    showElement(this.SelfLottoForm.$selfLottoList);
   };
 
   onClickToggleButton = () => {
@@ -52,12 +54,13 @@ export default class Controller {
   };
 
   onClickRetryButton = () => {
-    this.ResultModal.hide();
+    this.model.init();
+    this.SelfLottoForm.init();
     this.PriceForm.clearInput();
     this.LottoForm.clearInput();
-    this.model.init();
     this.LottoForm.hide();
     this.LottoInfo.hide();
+    this.ResultModal.hide();
   };
 
   onClickBlackout = (event, $resultModal) => {
@@ -75,7 +78,6 @@ export default class Controller {
   onClickSelfGenerateButton = () => {
     this.SelfLottoForm.$selfLottoInputContainer.forEach(($oneLottoList) => {
       const oneSelfLottoValues = [];
-
       $oneLottoList.querySelectorAll('input').forEach(($lottoInput) => {
         const lottoNumber = $lottoInput.value;
 
@@ -84,14 +86,13 @@ export default class Controller {
         if (oneSelfLottoValues.includes(lottoNumber)) throw ERROR_MESSAGE.DUPLICATED_NUMBER;
         oneSelfLottoValues.push(Number(lottoNumber));
       });
-
       this.model.data.lottos.push(oneSelfLottoValues);
     });
 
     this.PriceForm.updatePurchaseMessage(this.model.data.amount);
     this.LottoInfo.updateLottoList(this.model.data.lottos);
 
-    this.view.show(this.LottoForm.$lottoInputForm);
-    this.view.show(this.LottoInfo.$lottoInfoSection);
+    this.LottoForm.show();
+    this.LottoInfo.show();
   };
 }

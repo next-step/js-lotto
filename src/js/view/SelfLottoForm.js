@@ -9,7 +9,6 @@ export default class SelfLottoForm extends View {
     super();
     this.$selfLottoList = $(DOM_ID.SELF_LOTTO_LIST);
     this.$autoGenerateButton = $(DOM_ID.AUTO_GENERATE_BUTTON);
-    this.$selfLottoInput = $$(DOM_ID.SELF_LOTTO_INPUT);
     this.$selfLottoInputContainer = $$(DOM_ID.SELF_LOTTO_INPUT_CONTAINER);
   }
 
@@ -26,14 +25,20 @@ export default class SelfLottoForm extends View {
     this.updateLottoInputDom();
   }
 
-  bindOnClickSelfGenerateButton(hander) {
+  bindOnClickSelfGenerateButton(handler) {
     this.$autoGenerateButton.addEventListener('click', () => {
-      hander();
+      handler();
     });
   }
 
   updateLottoInputDom() {
-    this.$selfLottoInput = $$(DOM_ID.SELF_LOTTO_INPUT);
     this.$selfLottoInputContainer = $$(DOM_ID.SELF_LOTTO_INPUT_CONTAINER);
+  }
+
+  init() {
+    while (this.$selfLottoList.firstChild) {
+      if (this.$selfLottoList.firstChild === this.$autoGenerateButton) return;
+      this.$selfLottoList.removeChild(this.$selfLottoList.firstChild);
+    }
   }
 }

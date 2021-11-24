@@ -17,6 +17,10 @@ export default class LottoInfo extends View {
     this.$lottoInfoSection.style.display = 'none';
   }
 
+  show() {
+    this.$lottoInfoSection.style.display = 'block';
+  }
+
   updateLottoList(lottos) {
     el(
       this.$lottoList,

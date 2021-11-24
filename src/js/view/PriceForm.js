@@ -12,7 +12,7 @@ export default class PriceForm extends View {
   }
 
   clearInput() {
-    this.$moneyInput.value = '';
+    this.$priceForm.reset();
   }
 
   updatePurchaseMessage(amount) {

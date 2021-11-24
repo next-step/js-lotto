@@ -8,19 +8,20 @@ export default class LottoForm extends View {
     super();
     this.$lottoInputForm = $(DOM_ID.LOTTO_INPUT_FORM);
     this.$getResultButton = $(DOM_ID.GET_RESULT_BUTTON);
-    this.$winningNumbers = $$(DOM_ID.WINNING_NUMBERS); // .value
+    this.$winningNumbers = $$(DOM_ID.WINNING_NUMBERS);
     this.$bonusNumber = $(DOM_ID.BONUS_NUMBER);
-
-    console.log('s');
   }
 
   hide() {
     this.$lottoInputForm.style.display = 'none';
   }
 
+  show() {
+    this.$lottoInputForm.style.display = 'block';
+  }
+
   clearInput() {
-    this.$winningNumbers.forEach(($number) => $number.value = '');
-    this.$bonusNumber.value = '';
+    this.$lottoInputForm.reset();
   }
 
   checkLottoNumber(winningNumbers, bonusNumber) {
