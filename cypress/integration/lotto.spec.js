@@ -1,4 +1,8 @@
-import { LOTTO, CYPRESS_TEST } from "../../src/js/constants/index.js";
+import {
+  LOTTO,
+  CYPRESS_TEST,
+  CONFIRM_MESSAGE,
+} from "../../src/js/constants/index.js";
 
 before(() => {
   cy.visit("http://localhost:5500");
@@ -9,10 +13,11 @@ describe("js-lotto", () => {
     cy.get(".price").clear();
   });
 
-  context("로또 테스트", () => {
+  context("로또 자동구매 테스트", () => {
     beforeEach(() => {
       cy.get(".price").type(CYPRESS_TEST.TOTAL_PRICE);
       cy.get(".submit").click();
+      cy.on("window:confirm", () => false);
     });
 
     it("금액 입력 시 구매 갯수 text가 출력된다.", () => {

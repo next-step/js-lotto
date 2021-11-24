@@ -1,5 +1,5 @@
 import { getRandomNumber } from "./utils/index.js";
-import { LOTTO } from "./constants/index.js";
+import { LOTTO, CONFIRM_MESSAGE } from "./constants/index.js";
 
 class LottoApp {
   constructor() {
@@ -9,13 +9,14 @@ class LottoApp {
     this.bonusNumber = "";
     this.lottoResult = [];
     this.totalRevenue = "";
+    this.isValidatedWinnerNumbers = false;
   }
 
   init() {
     document.querySelector(".price").addEventListener("change", (e) => this.onChangePrice(e));
     document.querySelector(".submit").addEventListener("click", () => this.onSubmitPrice());
+    document.querySelector(".by-hand-submit").addEventListener("click", () => this.onByHandSubmit());
     document.querySelector(".lotto-numbers-toggle-button").addEventListener("change", () => this.onToggleButton());
-    document.querySelector(".winning-number-form").addEventListener("change", (e) => this.onChangeWinningNumbers(e));
     document.querySelector(".open-result-modal-button").addEventListener("click", () => this.onClickLottoResult());
     document.querySelector(".modal-close").addEventListener("click", () => this.hideModal());
     document.querySelector(".init").addEventListener("click", () => this.reset());
@@ -25,9 +26,28 @@ class LottoApp {
     this.price = e.target.value || "";
   }
 
-  onSubmitPrice() {
+  onByHandSubmit() {
+    const byHandNumber = new FormData(document.querySelector(".by-hand-form")).getAll("by-hand-number");
+
+    this.lottos = [...byHandNumber];
+
     this.calurateLottoNumbers();
     this.renderLottosNumbers();
+
+    document.querySelector(".by-hand-form").reset();
+    document.querySelector(".by-hand-form").classList.add("hide");
+  }
+
+  onSubmitPrice() {
+    if (window.confirm(CONFIRM_MESSAGE)) {
+      document.querySelector(".by-hand-form").classList.remove("hide");
+    } else {
+      document.querySelector(".by-hand-form").classList.add("hide");
+      this.calurateLottoNumbers();
+      this.renderLottosNumbers();
+    }
+
+    document.querySelector(".price").value = "";
   }
 
   showLottoNumbers() {
@@ -39,51 +59,50 @@ class LottoApp {
   }
 
   onToggleButton() {
-    const toggleStatus = document.querySelector(".lotto-numbers-toggle-button").classList.toggle("button");
+    const toggleStatus = document.querySelector(".lotto-numbers-toggle-button").classList.toggle("toggle");
 
     toggleStatus ? this.showLottoNumbers() : this.hideLottoNumers();
   }
 
   calurateLottoNumbers() {
-    this.lottos = Array.from({ length: Math.floor(this.price / LOTTO.PRICE) }, (lotto) => {
-      lotto = new Set();
+    if (this.lottos.length) {
+      const temp = this.lottos;
 
-      while (lotto.size < LOTTO.COUNT) {
-        lotto.add(getRandomNumber(LOTTO.MIN, LOTTO.MAX));
-      }
-      return [...lotto];
-    });
+      this.lottos = Array.from({ length: Math.floor((this.price - LOTTO.PRICE) / LOTTO.PRICE) }, (lotto) => {
+        lotto = new Set();
+
+        while (lotto.size < LOTTO.COUNT) {
+          lotto.add(getRandomNumber(LOTTO.MIN, LOTTO.MAX));
+        }
+        return [...lotto];
+      });
+
+      this.lottos.unshift(temp);
+    } else {
+      this.lottos = Array.from({ length: Math.floor(this.price / LOTTO.PRICE) }, (lotto) => {
+        lotto = new Set();
+
+        while (lotto.size < LOTTO.COUNT) {
+          lotto.add(getRandomNumber(LOTTO.MIN, LOTTO.MAX));
+        }
+        return [...lotto];
+      });
+    }
   }
 
   renderLottosNumbers() {
-    document.querySelector(".lotto-container").innerHTML = this.lottos.map((lotto) => {
-      return `
+    document.querySelector(".lotto-container").innerHTML = this.lottos
+      .map((lotto) => {
+        return `
         <div class="d-flex">
-          <span class="mx-1 text-4xl">🎟️ </span>
-          <span class="mx-1 text-base lotto-number hide">${lotto.join(", ")}</span>
+          <span class="mx-1 text-4xl">🎟️</span>
+          <span class="mx-1 text-base lotto-number hide">${lotto}</span>
         </div>
       `;
-    });
+      })
+      .join("");
 
     document.querySelector(".total").textContent = `총 ${this.lottos.length}개를 구매하였습니다.`;
-  }
-
-  onChangeWinningNumbers(e) {
-    e.preventDefault();
-
-    if (e.target.classList.contains("winning-number")) {
-      if (this.winningNumbers.includes(e.target.value)) {
-        e.target.value = "";
-
-        return;
-      }
-
-      this.winningNumbers.push(e.target.value);
-    }
-
-    if (e.target.classList.contains("bonus-number")) {
-      this.bonusNumber = e.target.value;
-    }
   }
 
   calurateLottoResult() {
@@ -165,12 +184,25 @@ class LottoApp {
     }%입니다.`;
   }
 
-  onClickLottoResult() {
-    if (this.winningNumbers.length !== 6 && !this.bonusNumber) return;
+  validateWinnigNumbers() {
+    this.winningNumbers = new FormData(document.querySelector(".winning-number-form")).getAll("winning-number");
+    this.bonusNumber = new FormData(document.querySelector(".winning-number-form")).get("bonus-number");
 
-    this.showModal();
-    this.calurateLottoResult();
-    this.renderLottoResult();
+    const isCorrectWinnigNumbers = new Set(this.winningNumbers).size === 6;
+    const isCorrectBonusNumbers = this.bonusNumber && !this.winningNumbers.includes(this.bonusNumber);
+
+    if (isCorrectWinnigNumbers && isCorrectBonusNumbers) this.isValidatedWinnerNumbers = true;
+    else this.isValidatedWinnerNumbers = false;
+  }
+
+  onClickLottoResult() {
+    this.validateWinnigNumbers();
+
+    if (this.isValidatedWinnerNumbers) {
+      this.showModal();
+      this.calurateLottoResult();
+      this.renderLottoResult();
+    }
   }
 
   showModal() {
@@ -181,6 +213,11 @@ class LottoApp {
     document.querySelector(".modal").classList.remove("open");
   }
 
+  resetInput() {
+    document.querySelector(".winning-number-form").reset();
+    document.querySelector(".price").value = "";
+  }
+
   reset() {
     this.lottos = [];
     this.price = "";
@@ -188,9 +225,11 @@ class LottoApp {
     this.bonusNumber = "";
     this.lottoResult = [];
     this.totalRevenue = "";
+    this.isValidatedWinnerNumbers = false;
 
     this.renderLottosNumbers();
     this.renderLottoResult();
+    this.resetInput();
     this.hideModal();
   }
 }
