@@ -14,6 +14,26 @@ export const updateLottoAmounts = (selector, amounts) => {
     `;
 };
 
+export const updateLottoTickets = (amounts, lottoTicketsList) => {
+  const newLottoTickets = new Array(amounts).fill(undefined).map(
+    (_, idx) => `
+      <div class="d-flex items-center">
+        <span class="mx-1 text-4xl lotto-tickets-img">🎟️ </span>
+        <span class="lotto-tickets-numbers d-none">
+          ${lottoTicketsList[idx].join(", ")}
+        </span>
+      </div>`
+  );
+  $(".lotto__tickets").innerHTML = newLottoTickets.join("");
+};
+
+export const resetLotto = () => {
+  $(".lotto__menu").innerHTML = "";
+  $(".lotto__tickets").innerHTML = "";
+  $(".winning-number-form").innerHTML = "";
+  $(".purchase__price-input").value = "";
+};
+
 export const addWinningNumberInput = (selector) => {
   $(selector).innerHTML = `
     <label class="flex-auto d-inline-block mb-3"
@@ -70,4 +90,15 @@ export const addWinningNumberInput = (selector) => {
         결과 확인하기
       </button>
     `;
+};
+
+export const updateResult = (lottoResultCount, lottoResult) => {
+  $(".rank-5").innerText = `${lottoResultCount["rank-5"]}개`;
+  $(".rank-4").innerText = `${lottoResultCount["rank-4"]}개`;
+  $(".rank-3").innerText = `${lottoResultCount["rank-3"]}개`;
+  $(".rank-2").innerText = `${lottoResultCount["rank-2"]}개`;
+  $(".rank-1").innerText = `${lottoResultCount["rank-1"]}개`;
+  $(
+    ".winning-rate"
+  ).innerText = `당신의 총 수익률은 ${lottoResult.rate}%입니다.`;
 };

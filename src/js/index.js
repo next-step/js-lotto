@@ -1,14 +1,12 @@
 import { $ } from "../utils/selector.js";
-import { isValidPrice, generateRandomNumbers } from "../utils/utilFunc.js";
+import { isValidPrice, generateLottoNumbers } from "../utils/utilFunc.js";
 import {
   updateLottoAmounts,
   addWinningNumberInput,
+  updateLottoTickets,
+  resetLotto,
 } from "../utils/renderer.js";
-import { winningResult, onModalClose } from "./winningResult.js";
-
-function activateResult(arr) {
-  winningResult(arr);
-}
+import { handleLottoResult, onModalClose } from "./winningResult.js";
 
 function App() {
   let lottoTicketsList = [];
@@ -34,25 +32,6 @@ function App() {
     IsLottoNumberVisible = true;
   };
 
-  const generateLottoNumbers = (amounts) => {
-    Array.from({ length: amounts }, () =>
-      lottoTicketsList.push(generateRandomNumbers())
-    );
-  };
-
-  const updateLottoTickets = (amounts) => {
-    const newLottoTickets = new Array(amounts).fill(undefined).map(
-      (_, idx) => `
-        <div class="d-flex items-center">
-          <span class="mx-1 text-4xl lotto-tickets-img">🎟️ </span>
-          <span class="lotto-tickets-numbers d-none">
-            ${lottoTicketsList[idx].join(", ")}
-          </span>
-        </div>`
-    );
-    $(".lotto__tickets").innerHTML = newLottoTickets.join("");
-  };
-
   const purchaseNewLottos = () => {
     const purchasePrice = $(".purchase__price-input").value;
 
@@ -62,28 +41,13 @@ function App() {
     lottoTicketsList = [];
 
     const purchaseAmounts = Math.floor(purchasePrice / 1000);
-    generateLottoNumbers(purchaseAmounts);
+    lottoTicketsList = generateLottoNumbers(purchaseAmounts);
     updateLottoAmounts(".lotto__menu", purchaseAmounts);
-    updateLottoTickets(purchaseAmounts);
+    updateLottoTickets(purchaseAmounts, lottoTicketsList);
     addWinningNumberInput(".winning-number-form");
     IsLottoNumberVisible = true;
 
-    activateResult(lottoTicketsList);
-  };
-
-  const resetLotto = () => {
-    while ($(".lotto__menu").hasChildNodes()) {
-      $(".lotto__menu").removeChild($(".lotto__menu").firstChild);
-    }
-    while ($(".lotto__tickets").hasChildNodes()) {
-      $(".lotto__tickets").removeChild($(".lotto__tickets").firstChild);
-    }
-    while ($(".winning-number-form").hasChildNodes()) {
-      $(".winning-number-form").removeChild(
-        $(".winning-number-form").firstChild
-      );
-    }
-    $(".purchase__price-input").value = "";
+    handleLottoResult(lottoTicketsList);
   };
 
   $(".purchase__form").addEventListener("submit", (e) => {

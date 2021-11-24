@@ -15,9 +15,16 @@ describe("js-lotto", () => {
       cy.checkAlertMessage(ERROR_MESSAGE.EMPTY_PRICE);
     });
 
-    it("천원 미만이거나 십만원 초과 금액을 입력했을 때 에러", () => {
-      cy.purchaseLotto(200);
-      cy.checkAlertMessage(ERROR_MESSAGE.OUT_OF_AMOUNT_RANGE);
+    describe("천원 미만이거나 십만원 초과 금액을 입력했을 때 에러", () => {
+      it("천원 미만 금액을 입력했을 때 에러", () => {
+        cy.purchaseLotto(200);
+        cy.checkAlertMessage(ERROR_MESSAGE.OUT_OF_AMOUNT_RANGE);
+      });
+
+      it("십만원 초과 금액을 입력했을 때 에러", () => {
+        cy.purchaseLotto(200000);
+        cy.checkAlertMessage(ERROR_MESSAGE.OUT_OF_AMOUNT_RANGE);
+      });
     });
 
     it("금액이 천원 단위가 아니면 에러", () => {
@@ -27,7 +34,6 @@ describe("js-lotto", () => {
   });
 
   context("구매액에 맞게 로또가 발급되는지 확인", () => {
-
     beforeEach(() => {
       cy.get("[data-cy=purchase-price-input]").clear();
     });
@@ -48,11 +54,9 @@ describe("js-lotto", () => {
 
   context("번호보기 토글기능 확인", () => {
     beforeEach(() => {
-
       cy.get("[data-cy=purchase-price-input]").clear();
       cy.purchaseLotto(5000);
     });
-
 
     it("토글버튼 클릭시 로또 번호가 보인다.", () => {
       cy.get("[data-cy=lotto-numbers-toggle-btn]").check({ force: true });
@@ -60,7 +64,6 @@ describe("js-lotto", () => {
         cy.wrap(el).should("have.class", "d-flex");
       });
     });
-
 
     it("토글버튼이 활성화된 채로 버튼 클릭시 로또 번호가 숨겨진다", () => {
       cy.get("[data-cy=lotto-numbers-toggle-btn]").uncheck();

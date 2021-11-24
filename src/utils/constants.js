@@ -7,3 +7,11 @@ export const ERROR_MESSAGE = {
   WINNING_NUMBER_RANGE: "1~99 사이의 숫자를 입력해주세요.",
   DUPLICATED_WINNING_NUMBER: "중복된 당첨번호가 있습니다.",
 };
+
+export const WINNING_PRICE = {
+  RANK_5: 5000,
+  RANK_4: 50000,
+  RANK_3: 1500000,
+  RANK_2: 30000000,
+  RANK_1: 2000000000,
+};

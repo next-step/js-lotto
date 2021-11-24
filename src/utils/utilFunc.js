@@ -19,6 +19,37 @@ export const isValidPrice = (price) => {
   return true;
 };
 
+export const isValidWinningNumber = (numberList, bonusNumber, winningSet) => {
+  numberList.forEach((number) => {
+    if (number === "") {
+      alert(ERROR_MESSAGE.EMPTY_WINNING_NUMBER);
+      return false;
+    }
+
+    if (number < 1 || 99 < number) {
+      alert(ERROR_MESSAGE.WINNING_NUMBER_RANGE);
+      return false;
+    }
+  });
+
+  if (bonusNumber.value === "") {
+    alert(ERROR_MESSAGE.EMPTY_BONUS_NUMBER);
+    return false;
+  }
+
+  if (bonusNumber.value < 1 || 99 < bonusNumber.value) {
+    alert(ERROR_MESSAGE.WINNING_NUMBER_RANGE);
+    return false;
+  }
+
+  if (winningSet.size !== numberList.length) {
+    alert(ERROR_MESSAGE.DUPLICATED_WINNING_NUMBER);
+    return false;
+  }
+
+  return true;
+};
+
 export const generateRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min);
 };
@@ -29,4 +60,13 @@ export const generateRandomNumbers = () => {
   });
 
   return newLottoNumbers;
+};
+
+export const generateLottoNumbers = (amounts) => {
+  let lottoTicketsList = [];
+  Array.from({ length: amounts }, () =>
+    lottoTicketsList.push(generateRandomNumbers())
+  );
+
+  return lottoTicketsList;
 };
