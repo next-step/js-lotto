@@ -15,7 +15,7 @@ export const updateLottoAmounts = (selector, amounts) => {
 };
 
 export const updateLottoTickets = (amounts, lottoTicketsList) => {
-  const newLottoTickets = new Array(amounts).fill(undefined).map(
+  const newLottoTickets = [...new Array(amounts)].map(
     (_, idx) => `
       <div class="d-flex items-center">
         <span class="mx-1 text-4xl lotto-tickets-img">🎟️ </span>

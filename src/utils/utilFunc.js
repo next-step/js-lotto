@@ -63,10 +63,9 @@ export const generateRandomNumbers = () => {
 };
 
 export const generateLottoNumbers = (amounts) => {
-  let lottoTicketsList = [];
-  Array.from({ length: amounts }, () =>
-    lottoTicketsList.push(generateRandomNumbers())
-  );
+  const lottoTicketsList = [...new Array(amounts)].map(() => {
+    return generateRandomNumbers();
+  });
 
   return lottoTicketsList;
 };

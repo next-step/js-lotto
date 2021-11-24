@@ -106,6 +106,7 @@ export const getLottoResult = (lottoTicketsList) => {
 const onModalShow = () => {
   $(".modal").classList.add("open");
 };
+
 export const onModalClose = () => {
   $(".modal").classList.remove("open");
 };
