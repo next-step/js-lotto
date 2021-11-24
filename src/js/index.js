@@ -1,9 +1,12 @@
 import { $ } from "../utils/selector.js";
-import { isValidPrice, generateRandomNumbers } from "../utils/utilFunc.js";
+import { isValidPrice, generateLottoNumbers } from "../utils/utilFunc.js";
 import {
   updateLottoAmounts,
   addWinningNumberInput,
+  updateLottoTickets,
+  resetLotto,
 } from "../utils/renderer.js";
+import { handleLottoResult, onModalClose } from "./winningResult.js";
 
 function App() {
   let lottoTicketsList = [];
@@ -29,40 +32,22 @@ function App() {
     IsLottoNumberVisible = true;
   };
 
-  const generateLottoNumbers = (amounts) => {
-    Array.from({ length: amounts }, () =>
-      lottoTicketsList.push(generateRandomNumbers())
-    );
-  };
-
-  const updateLottoTickets = (amounts) => {
-    const newLottoTickets = new Array(amounts).fill(undefined).map(
-      (_, idx) => `
-        <div class="d-flex items-center">
-          <span class="mx-1 text-4xl lotto-tickets-img">🎟️ </span>
-          <span class="lotto-tickets-numbers d-none">
-            ${lottoTicketsList[idx].join(", ")}
-          </span>
-        </div>`
-    );
-    $(".lotto__tickets").innerHTML = newLottoTickets.join("");
-  };
-
   const purchaseNewLottos = () => {
     const purchasePrice = $(".purchase__price-input").value;
 
-    // 입력금액 유효성 검사
     if (!isValidPrice(purchasePrice)) {
       return;
     }
     lottoTicketsList = [];
 
     const purchaseAmounts = Math.floor(purchasePrice / 1000);
-    generateLottoNumbers(purchaseAmounts);
+    lottoTicketsList = generateLottoNumbers(purchaseAmounts);
     updateLottoAmounts(".lotto__menu", purchaseAmounts);
-    updateLottoTickets(purchaseAmounts);
+    updateLottoTickets(purchaseAmounts, lottoTicketsList);
     addWinningNumberInput(".winning-number-form");
     IsLottoNumberVisible = true;
+
+    handleLottoResult(lottoTicketsList);
   };
 
   $(".purchase__form").addEventListener("submit", (e) => {
@@ -83,6 +68,11 @@ function App() {
     if (e.target.classList.contains("lotto-numbers-toggle-btn")) {
       IsLottoNumberVisible ? showLottoNumbers() : hideLottoNumbers();
     }
+  });
+
+  $(".restart-btn").addEventListener("click", (e) => {
+    onModalClose();
+    resetLotto();
   });
 }
 
