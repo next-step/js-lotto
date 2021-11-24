@@ -1,6 +1,7 @@
-import View from "./view.js";
-import {$, $$} from "../utils.js";
-import {DOM_ID} from "../constants.js";
+import { DOM_ID } from '../constants.js';
+import { $ } from '../utils.js';
+
+import View from './view.js';
 
 export default class PriceForm extends View {
   constructor() {
@@ -19,9 +20,9 @@ export default class PriceForm extends View {
   }
 
   bindOnClickPurchaseButton(handler) {
-    this.$priceForm.addEventListener('submit', event => {
+    this.$priceForm.addEventListener('submit', (event) => {
       event.preventDefault();
       handler(event);
     });
   }
-};
+}

@@ -7,6 +7,13 @@
   "author": "guymoon <gmoon.cho@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^8.7.0"
-  }
+    "cypress": "^8.7.0",
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3"
+  },
+  "scripts": {
+    "lint": "eslint -c .eslintrc.js 'src/**/*.js*'"
+  },
+  "dependencies": {}
 }

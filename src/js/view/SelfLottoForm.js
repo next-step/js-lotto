@@ -1,7 +1,8 @@
-import View from "./view.js";
-import el from "../dom.js";
-import {$, $$} from "../utils.js";
-import {DOM_ID, LOTTO_LENGTH} from "../constants.js";
+import { DOM_ID, LOTTO_LENGTH } from '../constants.js';
+import el from '../dom.js';
+import { $, $$ } from '../utils.js';
+
+import View from './view.js';
 
 export default class SelfLottoForm extends View {
   constructor() {
@@ -13,11 +14,14 @@ export default class SelfLottoForm extends View {
   }
 
   createSelfLottoForm(amount) {
-    for (let i = 0; i < amount; i++) {
-      this.$selfLottoList.insertAdjacentElement('afterbegin',
-        el('<div id="selfLottoInputContainer">',
-          Array.from({length: LOTTO_LENGTH}, _ =>
-            `<input type="number" class="self-number mx-1 text-center"/>`)));
+    for (let i = 0; i < amount; i += 1) {
+      this.$selfLottoList.insertAdjacentElement(
+        'afterbegin',
+        el(
+          '<div id="selfLottoInputContainer">',
+          Array.from({ length: LOTTO_LENGTH }, () => '<input type="number" class="self-number mx-1 text-center"/>'),
+        ),
+      );
     }
     this.updateLottoInputDom();
   }

@@ -1,6 +1,7 @@
-import View from "./view.js";
-import {$, $$} from "../utils.js";
-import {DOM_ID} from "../constants.js";
+import { DOM_ID } from '../constants.js';
+import { $, $$ } from '../utils.js';
+
+import View from './view.js';
 
 export default class ResultModal extends View {
   constructor() {
@@ -21,7 +22,7 @@ export default class ResultModal extends View {
   }
 
   bindOnClickBlackout(handler) {
-    addEventListener('click', (event) => {
+    document.addEventListener('click', (event) => {
       handler(event, this.$resultModal);
     });
   }
@@ -43,7 +44,4 @@ export default class ResultModal extends View {
       this.$resultCountList[index].innerText = `${count}개`;
     });
   }
-
-
-
-};
+}

@@ -7,7 +7,7 @@ export const DOM_ID = {
   LOTTO_LIST: '#lottoList',
   LOTTO_DETAIL: '#lottoDetail',
   LOTTO_INPUT_FORM: '#lottoInputForm',
-  LOTTO_INFO_SECTION: "#lottoInputSection",
+  LOTTO_INFO_SECTION: '#lottoInputSection',
   RESULT_MODAL: '.modal',
   RESULT_COUNT_LIST: '.modal tr .count',
   GET_RESULT_BUTTON: '#getResultButton',
@@ -39,7 +39,7 @@ export const PRIZE_TITLE = {
   THIRD: 'third',
   FOURTH: 'fourth',
   FIFTH: 'fifth',
-}
+};
 
 export const PRIZE = {
   FIRST: 2000000000,
@@ -47,10 +47,9 @@ export const PRIZE = {
   THIRD: 1500000,
   FOURTH: 50000,
   FIFTH: 5000,
-}
+};
 
-
-export const PROMPT_MESSAGE_SELF_AMOUNT = '수동으로 구입 할 로또의 개수를 입력하세요.'
+export const PROMPT_MESSAGE_SELF_AMOUNT = '수동으로 구입 할 로또의 개수를 입력하세요.';
 export const LOTTO_PRICE = 1000;
 export const LOTTO_LENGTH = 6;
 export const LOTTO_MAX_NUMBER = 45;

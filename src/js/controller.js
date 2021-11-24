@@ -1,12 +1,10 @@
-import {
-  ERROR_MESSAGE, PROMPT_MESSAGE_SELF_AMOUNT,
-} from "./constants.js";
-import LottoForm from "./view/LottoForm.js";
-import LottoInfo from "./view/LottoInfo.js";
-import PriceForm from "./view/PriceForm.js";
-import ResultModal from "./view/ResultModal.js";
-import SelfLottoForm from "./view/SelfLottoForm.js";
-import {checkNumber} from "./utils.js";
+import { ERROR_MESSAGE, PROMPT_MESSAGE_SELF_AMOUNT } from './constants.js';
+import { checkNumber } from './utils.js';
+import LottoForm from './view/LottoForm.js';
+import LottoInfo from './view/LottoInfo.js';
+import PriceForm from './view/PriceForm.js';
+import ResultModal from './view/ResultModal.js';
+import SelfLottoForm from './view/SelfLottoForm.js';
 
 export default class Controller {
   constructor(model, view) {
@@ -25,7 +23,7 @@ export default class Controller {
     this.ResultModal.bindOnClickBlackout(this.onClickBlackout);
     this.ResultModal.bindOnClickRetryButton(this.onClickRetryButton);
     this.ResultModal.bindOnClickCancelButton(this.onClickCancelButton);
-    this.SelfLottoForm.bindOnClickSelfGenerateButton(this.onClickSelfGenerateButton)
+    this.SelfLottoForm.bindOnClickSelfGenerateButton(this.onClickSelfGenerateButton);
   }
 
   onClickPurchaseButton = (event) => {
@@ -33,13 +31,13 @@ export default class Controller {
     const price = this.PriceForm.$moneyInput.value;
     if (price.length === 0) throw Error(ERROR_MESSAGE.NO_INPUT);
     this.model.setAmount(Number(price));
-    const selfGeneratedAmount = window.prompt(PROMPT_MESSAGE_SELF_AMOUNT)
+    const selfGeneratedAmount = window.prompt(PROMPT_MESSAGE_SELF_AMOUNT);
     this.SelfLottoForm.createSelfLottoForm(selfGeneratedAmount);
     this.model.setAutoLottos(this.model.data.amount - selfGeneratedAmount);
   };
 
   onClickToggleButton = () => {
-    this.LottoInfo.$$lottoDetail.forEach(item => {
+    this.LottoInfo.$$lottoDetail.forEach((item) => {
       item.style.display = item.style.display === 'none' ? 'inline' : 'none';
     });
   };
@@ -53,10 +51,10 @@ export default class Controller {
     this.ResultModal.updateModal(this.model.data.result);
   };
 
-  onClickRetryButton = ($retryButton) => {
+  onClickRetryButton = () => {
     this.ResultModal.hide();
     this.PriceForm.clearInput();
-    this.LottoForm.clearInput()
+    this.LottoForm.clearInput();
     this.model.init();
     this.LottoForm.hide();
     this.LottoInfo.hide();
@@ -75,11 +73,10 @@ export default class Controller {
   };
 
   onClickSelfGenerateButton = () => {
-    this.SelfLottoForm.$selfLottoInputContainer.forEach($oneLottoList => {
+    this.SelfLottoForm.$selfLottoInputContainer.forEach(($oneLottoList) => {
+      const oneSelfLottoValues = [];
 
-      let oneSelfLottoValues = [];
-
-      $oneLottoList.querySelectorAll('input').forEach($lottoInput => {
+      $oneLottoList.querySelectorAll('input').forEach(($lottoInput) => {
         const lottoNumber = $lottoInput.value;
 
         checkNumber(lottoNumber);
@@ -98,4 +95,3 @@ export default class Controller {
     this.view.show(this.LottoInfo.$lottoInfoSection);
   };
 }
-

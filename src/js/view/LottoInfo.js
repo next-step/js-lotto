@@ -1,7 +1,8 @@
-import View from "./view.js";
-import el from "../dom.js";
-import {$, $$} from "../utils.js";
-import {DOM_ID} from "../constants.js";
+import { DOM_ID } from '../constants.js';
+import el from '../dom.js';
+import { $, $$ } from '../utils.js';
+
+import View from './view.js';
 
 export default class LottoInfo extends View {
   constructor() {
@@ -17,20 +18,19 @@ export default class LottoInfo extends View {
   }
 
   updateLottoList(lottos) {
-    el(this.$lottoList,
-      lottos.map(lotto =>
-        el(`<li class="mx-1 text-4xl lotto-wrapper">`, [
-          `<span class='lotto-icon'>🎟️</span>`,
-          `<span id='lottoDetail' class="lotto-detail" style="display: none;">${lotto}</span>`
-        ])
-      ),
+    el(
+      this.$lottoList,
+      lottos.map((lotto) => el('<li class="mx-1 text-4xl lotto-wrapper">', [
+        '<span class=\'lotto-icon\'>🎟️</span>',
+        `<span id='lottoDetail' class="lotto-detail" style="display: none;">${lotto}</span>`,
+      ])),
     );
     this.$$lottoDetail = $$(DOM_ID.LOTTO_DETAIL);
   }
 
   bindOnClickToggleButton(handler) {
-    this.$toggleButton.addEventListener('click', event => {
+    this.$toggleButton.addEventListener('click', (event) => {
       handler(event);
     });
   }
-};
+}
