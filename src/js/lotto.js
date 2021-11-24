@@ -1,6 +1,6 @@
 const initialState = {
   lottoCnt: 0,
-  lottoNumerList: [],
+  lottoNumberList: [],
   isChecked: false,
 };
 
@@ -41,15 +41,52 @@ export default class Lotto {
 
   onClickToggleBtn(e) {
     //번호보기버튼 스위치
-    this.clearBoard();
-
     const isChecked = e.target.checked;
     if (isChecked) {
-      console.log("번호 보여주자!");
       this.state.isChecked = true;
+      this.showLottoNumber();
+      this.$renderLotto.classList.add("flex-col");
       return;
     }
     this.state.isChecked = false;
+    this.renderLotto();
+    this.$renderLotto.classList.remove("flex-col");
+  }
+
+  showLottoNumber() {
+    this.clearBoard();
+    const htmlTemp = this.makeLottoNumberTemp();
+
+    this.$renderLotto.innerHTML = htmlTemp;
+  }
+
+  makeLottoNumberTemp() {
+    //로또숫자를 보여주는 템플릿을 만드는 함수
+
+    const makeNumberString = (numberArr) => {
+      //숫자 템플릿을 만드는 함수 ex) '1, 31, 4, 27, 44, 2'
+      let numberString = "";
+      const maxIdx = 5;
+      numberArr.forEach((number, idx) => {
+        if (idx === maxIdx) numberString += number;
+        else numberString += `${number},`;
+      });
+      return numberString;
+    };
+
+    let temp = "";
+    const lottoCnt = this.state.lottoCnt; //로또갯수
+    for (let i = 0; i < lottoCnt; i++) {
+      const numberString = makeNumberString(this.state.lottoNumberList[i]);
+      temp += `
+      <li class="mx-1 text-4xl lotto-wrapper">
+        <span class="lotto-icon">🎟️ </span>
+        <span class="lotto-detail" style="display: inline;">${numberString}</span>
+      </li>
+    `;
+    }
+
+    return temp;
   }
 
   onConfirmBtnClick() {
@@ -64,12 +101,12 @@ export default class Lotto {
 
   setLottoNum() {
     //state에 로또숫자들을 저장시키는 함수
-    this.state.lottoNumerList = []; //초기화
+    this.clearLottoNumber();
 
     const cnt = this.state.lottoCnt;
     for (let i = 0; i < cnt; i++) {
       const autoNumArr = this.makeAutoLottoNum();
-      this.state.lottoNumerList.push(autoNumArr);
+      this.state.lottoNumberList.push(autoNumArr);
     }
   }
 
@@ -87,13 +124,18 @@ export default class Lotto {
     return result;
   }
 
+  clearLottoNumber() {
+    //state lottoNumber 초기화
+    this.state.lottoNumberList = [];
+  }
+
   clearBoard() {
     //보드를 모두 지워주는 함수
     this.$renderLotto.innerHTML = "";
   }
 
   renderLotto() {
-    // <span class="mx-1 text-4xl">🎟️ </span>
+    // 렌더링 해야 할 html :  <span class="mx-1 text-4xl">🎟️ </span>
     this.clearBoard();
 
     const cnt = this.state.lottoCnt;
