@@ -5,8 +5,6 @@ import Component from "../core/Component";
 
 const defaultState: InputCostState = {
   cost: undefined,
-  minCost: LottoConfig.PRICE,
-  maxCost: LottoConfig.PRICE * 1000,
 };
 
 export default class InputCost extends Component<
@@ -66,7 +64,7 @@ export default class InputCost extends Component<
               class="w-100 mr-2 pl-2 ${ClassName.input}"
               placeholder="구입 금액"
               required
-              min="${this.state!.minCost}" max="${this.state!.maxCost}"
+              min="${LottoConfig.MIN_COST}" max="${LottoConfig.MAX_COST}"
               ${this.state?.cost ? `value=${this.state.cost}` : ""}
             />
             <button type="submit" class="btn btn-cyan">확인</button>
@@ -81,6 +79,4 @@ interface InputCostProps {
 
 interface InputCostState {
   cost?: number;
-  minCost?: number;
-  maxCost?: number;
 }

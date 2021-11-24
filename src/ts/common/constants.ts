@@ -33,6 +33,8 @@ export const LottoConfig = Object.freeze({
   MAX_NUM: 45,
   LEN: 6,
   PRICE: 1000,
+  MIN_COST: 1000,
+  MAX_COST: 1000000,
 });
 
 export const RewardByMatchCnt = Object.freeze([
