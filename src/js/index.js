@@ -17,6 +17,7 @@ class LottoApp {
     document.querySelector(".submit").addEventListener("click", () => this.onSubmitPrice());
     document.querySelector(".by-hand-submit").addEventListener("click", () => this.onByHandSubmit());
     document.querySelector(".lotto-numbers-toggle-button").addEventListener("change", () => this.onToggleButton());
+    document.querySelector(".winning-number-form").addEventListener("change", (e) => this.onChangeWinningNumbers(e));
     document.querySelector(".open-result-modal-button").addEventListener("click", () => this.onClickLottoResult());
     document.querySelector(".modal-close").addEventListener("click", () => this.hideModal());
     document.querySelector(".init").addEventListener("click", () => this.reset());
@@ -230,6 +231,7 @@ class LottoApp {
     this.renderLottosNumbers();
     this.renderLottoResult();
     this.resetInput();
+
     this.hideModal();
   }
 }
