@@ -15,3 +15,6 @@ export const WINNING_PRICE = {
   RANK_2: 30000000,
   RANK_1: 2000000000,
 };
+
+export const MIN_LOTTO_NUMBER = 1;
+export const MAX_LOTTO_NUMBER = 99;
