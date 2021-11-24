@@ -1,19 +1,18 @@
-import {DOM_ID} from "../../src/js/constants";
+import { DOM_ID } from '../../src/js/constants';
 
-Cypress.Commands.add("clickElements", (selector) => {
+Cypress.Commands.add('clickElements', (selector) => {
   cy.get(selector).click();
 });
 
-Cypress.Commands.add("typeWinningNumbers", (numbers) => {
+Cypress.Commands.add('typeWinningNumbers', (numbers) => {
   numbers.forEach((number, index) => {
-    cy.get(`#input-${index+1}`).type(number);
+    cy.get(`#input-${index + 1}`).type(number);
   });
 });
 
-Cypress.Commands.add("typeBonusNumber", (number) => {
+Cypress.Commands.add('typeBonusNumber', (number) => {
   cy.get(DOM_ID.BONUS_NUMBER).type(number);
 });
-
 
 Cypress.Commands.add('typeMoneyAndSubmit', (money) => {
   cy.get(DOM_ID.MONEY_INPUT).type(money);
@@ -30,6 +29,18 @@ Cypress.Commands.add('checkEqualityText', (selector, text) => {
 
 Cypress.Commands.add('typeText', (selector, text) => {
   cy.get(selector)
-  .type(text);
+    .type(text);
+});
+Cypress.Commands.add('typeSelfGeneratedAmount', (amount) => {
+  cy.window().then((p) => {
+    cy.stub(p, 'prompt').returns(amount)
+  })});
+
+Cypress.Commands.add('typeSelfLottoNumber', (numbers) => {
+  cy.get(DOM_ID.SELF_LOTTO_LIST).children().each(($el, index, $list) => {
+    $el.children().each((index, $input) => {
+      cy.wrap($input).type(numbers[index]);
+    });
+  });
 });
 
