@@ -1,7 +1,5 @@
 ## 🔥 Projects!
 
-<a href="https://austinpark420.github.io/js-lotto/">데모 링크</a>
-
 ### 🎯 step1
 
 - [x] 로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.
