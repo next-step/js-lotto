@@ -149,7 +149,7 @@ describe('step3 - 수동으로 로또를 구매 할 수 있다', () => {
 
   it('수동으로 로또를 구매 할 수 있다.', () => {
     cy.typeSelfLottoNumber([1, 2, 3, 4, 5, 6]);
-    cy.clickElements(DOM_ID.AUTO_GENERATE_BUTTON);
+    cy.clickElements(DOM_ID.GENERATE_BUTTON);
     cy.typeWinningNumbers([1, 2, 3, 4, 5, 6]);
     cy.typeBonusNumber(7);
     cy.clickElements(DOM_ID.GET_RESULT_BUTTON);

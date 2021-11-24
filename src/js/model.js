@@ -50,7 +50,6 @@ export default class Model {
   }
 
   setResult(winningNumbers, bonusNumber) {
-    console.log(this.data.lottos);
     this.data.lottos.forEach((lotto) => {
       switch (countSameNumbers(lotto, winningNumbers)) {
         case 6:

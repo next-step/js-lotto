@@ -31,7 +31,12 @@ export default class Controller {
     const price = this.PriceForm.$moneyInput.value;
     if (price.length === 0) throw Error(ERROR_MESSAGE.NO_INPUT);
     this.model.setAmount(Number(price));
+
     const selfGeneratedAmount = window.prompt(PROMPT_MESSAGE_SELF_AMOUNT);
+    if (selfGeneratedAmount > this.model.data.amount) throw ERROR_MESSAGE.MAX_LOTTO_AMOUNT;
+    if (selfGeneratedAmount < 0) throw ERROR_MESSAGE.MIN_LOTTO_AMOUNT;
+
+    this.SelfLottoForm.updateAmountMessgae(this.model.data.amount - selfGeneratedAmount, selfGeneratedAmount);
     this.SelfLottoForm.createSelfLottoForm(selfGeneratedAmount);
     this.model.setAutoLottos(this.model.data.amount - selfGeneratedAmount);
     this.SelfLottoForm.show();

@@ -21,3 +21,4 @@ export const checkNumber = (number) => {
   if (number > MAX_LOTTO_NUMBER) throw Error(ERROR_MESSAGE.MAX_NUMBER);
   if (number < MIN_LOTTO_NUMBER) throw Error(ERROR_MESSAGE.MIN_NUMBER);
 };
+

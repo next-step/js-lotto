@@ -19,8 +19,9 @@ export const DOM_ID = {
   CANCEL_BUTTON: '#cancelButton',
   SELF_LOTTO_LIST: '#selfLottoList',
   SELF_LOTTO_INPUT: '#selfLottoList input',
-  AUTO_GENERATE_BUTTON: '#autoGenerateButton',
+  GENERATE_BUTTON: '#autoGenerateButton',
   SELF_LOTTO_INPUT_CONTAINER: '#selfLottoInputContainer',
+  AMOUNT_MESSAGE: '#amountMessage',
 };
 
 export const ERROR_MESSAGE = {
@@ -31,6 +32,8 @@ export const ERROR_MESSAGE = {
   MIN_NUMBER: '로또 번호는 0 이상이어야 합니다.',
   DUPLICATED_NUMBER: '중복되지 않게 로또 번호를 입력하세요.',
   NONE_VALUE: '보너스 번호를 포함한 7개의 숫자를 입력하세요.',
+  MAX_LOTTO_AMOUNT: '최대 수동 구매 개수를 초과했습니다. 금액에 맞는 수를 입력해주세요.',
+  MIN_LOTTO_AMOUNT: '최소 수동 구매 개수는 0개 입니다.',
 };
 
 export const PRIZE_TITLE = {

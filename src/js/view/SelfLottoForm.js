@@ -8,8 +8,9 @@ export default class SelfLottoForm extends View {
   constructor() {
     super();
     this.$selfLottoList = $(DOM_ID.SELF_LOTTO_LIST);
-    this.$autoGenerateButton = $(DOM_ID.AUTO_GENERATE_BUTTON);
+    this.$autoGenerateButton = $(DOM_ID.GENERATE_BUTTON);
     this.$selfLottoInputContainer = $$(DOM_ID.SELF_LOTTO_INPUT_CONTAINER);
+    this.$amountMessage = $(DOM_ID.AMOUNT_MESSAGE);
   }
 
   createSelfLottoForm(amount) {
@@ -33,6 +34,10 @@ export default class SelfLottoForm extends View {
 
   updateLottoInputDom() {
     this.$selfLottoInputContainer = $$(DOM_ID.SELF_LOTTO_INPUT_CONTAINER);
+  }
+
+  updateAmountMessgae(autoAmount, selfAmount) {
+    this.$amountMessage.textContent = `${selfAmount}개를 수동으로 구매하고, 남은 금액으로 ${autoAmount}개를 자동 구매합니다.`;
   }
 
   init() {
