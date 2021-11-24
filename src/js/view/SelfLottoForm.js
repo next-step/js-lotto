@@ -41,4 +41,8 @@ export default class SelfLottoForm extends View {
       this.$selfLottoList.removeChild(this.$selfLottoList.firstChild);
     }
   }
+
+  show() {
+    this.$selfLottoList.style.display = 'block';
+  }
 }

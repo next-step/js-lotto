@@ -34,8 +34,7 @@ export default class Controller {
     const selfGeneratedAmount = window.prompt(PROMPT_MESSAGE_SELF_AMOUNT);
     this.SelfLottoForm.createSelfLottoForm(selfGeneratedAmount);
     this.model.setAutoLottos(this.model.data.amount - selfGeneratedAmount);
-    showElement(this.SelfLottoForm.$selfLottoList);
-    showElement(this.SelfLottoForm.$selfLottoList);
+    this.SelfLottoForm.show();
   };
 
   onClickToggleButton = () => {
