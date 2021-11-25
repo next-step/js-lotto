@@ -10,7 +10,23 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
+
+import * as SELECTOR from "../../src/js/constants/selector";
+Cypress.Commands.add("typeInput", (type) => {
+  cy.get(SELECTOR.PAYMENT).type(type);
+});
+
+Cypress.Commands.add("clickConfirmBtn", () => {
+  cy.get(SELECTOR.CONFIRM_BTN).click();
+});
+
+Cypress.Commands.add("clickToggleBtn", () => {
+  cy.get(SELECTOR.LOTTO_NUMBER_SWITCH).click({ force: true });
+});
+
+Cypress.Commands.add("clearInput", () => {
+  cy.get(SELECTOR.PAYMENT).clear();
+});
 //
 //
 // -- This is a child command --
