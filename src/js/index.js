@@ -1,11 +1,9 @@
 import Lotto from "./lotto.js";
+import * as SELECTOR from "./constants/selector.js";
 
-const $showResultButton = document.querySelector(".open-result-modal-button");
-const $modalClose = document.querySelector(".modal-close");
-const $modal = document.querySelector(".modal");
-const $lottoNumbersToggleButton = document.querySelector(
-  ".lotto-numbers-toggle-button"
-);
+const $showResultButton = document.querySelector(SELECTOR.SHOW_RESULT_BUTTON);
+const $modalClose = document.querySelector(SELECTOR.MODAL_CLOSE);
+const $modal = document.querySelector(SELECTOR.MODAL);
 
 const onModalShow = () => {
   $modal.classList.add("open");
@@ -19,12 +17,12 @@ $showResultButton.addEventListener("click", onModalShow);
 $modalClose.addEventListener("click", onModalClose);
 
 const lotto = new Lotto({
-  $paymentForm: document.querySelector("#js-payment-form"),
-  $payment: document.querySelector("#js-payment"),
-  $confirmBtn: document.querySelector("#js-purchase-button"),
-  $lottoNumbersToggleButton,
-  $renderLotto: document.querySelector("#js-render-lotto"),
-  $lottoCnt: document.querySelector("#js-lotto-count"),
+  $paymentForm: document.querySelector(SELECTOR.PAYMENT_FORM),
+  $payment: document.querySelector(SELECTOR.PAYMENT),
+  $confirmBtn: document.querySelector(SELECTOR.CONFIRM_BTN),
+  $lottoNumberSwitch: document.querySelector(SELECTOR.LOTTO_NUMBER_SWITCH),
+  $lottoBoard: document.querySelector(SELECTOR.LOTTO_BOARD),
+  $lottoCnt: document.querySelector(SELECTOR.LOTTO_CNT),
 });
 
 lotto.bindEvents();
