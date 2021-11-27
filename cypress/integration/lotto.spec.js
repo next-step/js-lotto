@@ -19,26 +19,11 @@ describe('lotto 구입 기능 구현', () => {
 
       it('금액 입력 시 수동 로또 번호 입력 form이 생성된다.', () => {
         cy.checkCss('#manualLottoFormSection', 'display', 'block');
-        // cy.checkCss('#purchasedLottoSection', 'display', 'block');
-        // cy.checkCss('#winningNumberFormSection', 'display', 'block');
       });
 
       it('금액 입력 시 남은 금액이 출력된다.', () => {
         cy.get('#remainPrice').should('have.text', `${PRICE}원`);
       });
-      // it('금액 입력 시 구매 갯수 text가 출력된다.', () => {
-      //   cy.get('#purchasedLottoText').should(
-      //     'have.text',
-      //     `총 ${PRICE / LOTTO_INFO.PRICE_UNIT}개를 구매하였습니다.`
-      //   );
-      // });
-
-      // it('금액 입력 시 구매 갯수 만큼의 lotto가 출력된다.', () => {
-      //   cy.get('#lottoWrapper div').should(
-      //     'have.length',
-      //     PRICE / LOTTO_INFO.PRICE_UNIT
-      //   );
-      // });
     }
   );
 

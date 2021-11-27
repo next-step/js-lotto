@@ -115,7 +115,6 @@ export default class MainController {
     });
 
     this.resultModalSection.on('@clickResetBtn', () => {
-      console.log('reset');
       this.init();
       this.resultModalSection.hide().hideModal();
     });
@@ -134,15 +133,4 @@ export default class MainController {
     this.lottoModel.setPrice(price);
     return true;
   }
-
-  // setAutoLottoNumbers(price) {
-  //   if (this.isInvalidPrice(price)) {
-  //     this.init();
-  //     alert(ALERT.CHECK_UNIT);
-  //     return false;
-  //   }
-
-  //   this.lottoModel.setAutoLottos(price);
-  //   return true;
-  // }
 }

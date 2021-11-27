@@ -52,8 +52,6 @@ export default class PurchasedLottoSection extends View {
   }
 
   renderLottoDetail(toggleFlag) {
-    console.log(toggleFlag);
-    console.log(this.$lottoWrapper.classList);
     this.$lottoWrapper.classList.toggle('flex-col');
 
     $$('.lotto-detail').forEach((el) =>
