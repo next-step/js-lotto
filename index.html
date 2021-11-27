@@ -43,7 +43,7 @@
                 placeholder="티켓의 수"
               />
               <button
-                type="button"
+                type="submit"
                 class="btn btn-cyan manual-purchase__confirm-btn"
               >
                 구매
@@ -53,6 +53,10 @@
           <form class="mt-9 manual-number-form"></form>
           <section class="mt-9 lotto__menu-wrapper">
             <div class="d-flex lotto__menu"></div>
+            <div
+              class="d-flex flex-wrap manual-lotto__tickets"
+              data-cy="manual-lotto-tickets"
+            ></div>
             <div
               class="d-flex flex-wrap lotto__tickets"
               data-cy="lotto-tickets"

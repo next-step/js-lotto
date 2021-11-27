@@ -27,11 +27,31 @@ export const updateLottoTickets = (amounts, lottoTicketsList) => {
   $(".lotto__tickets").innerHTML = newLottoTickets.join("");
 };
 
+export const updateManualLottoTickets = (amounts, lottoTicketsList) => {
+  const template = (idx) =>
+    `
+    <div class="d-flex items-center">
+        <span class="mx-1 text-4xl lotto-tickets-img">🎟️ </span>
+        <span class="lotto-tickets-numbers d-none">
+          ${lottoTicketsList[idx].join(", ")}
+        </span>
+      </div>
+    `;
+
+  let newLottoTickets = "";
+  for (let i = 0; i < amounts; i++) {
+    newLottoTickets += template(i);
+  }
+  $(".manual-lotto__tickets").innerHTML = newLottoTickets;
+};
+
 export const resetLotto = () => {
   $(".lotto__menu").innerHTML = "";
   $(".lotto__tickets").innerHTML = "";
   $(".winning-number-form").innerHTML = "";
+  $(".manual-number-form").innerHTML = "";
   $(".purchase__price-input").value = "";
+  $(".manual-purchase__price-input").value = "";
 };
 
 export const resetManualLotto = () => {

@@ -4,6 +4,7 @@ import {
   MAX_PURCHASE_PRICE,
   MIN_LOTTO_NUMBER,
   MAX_LOTTO_NUMBER,
+  LOTTO_PRICE,
 } from "./constants.js";
 
 export const isValidPrice = (price) => {
@@ -19,6 +20,44 @@ export const isValidPrice = (price) => {
 
   if (price % MIN_PURCHASE_PRICE !== 0) {
     alert(ERROR_MESSAGE.NOT_IN_UNITS_OF);
+    return false;
+  }
+
+  return true;
+};
+
+export const isValidPurchaseAmount = (amount, purchasePrice) => {
+  if (amount === "") {
+    alert("수동으로 구매할 티켓의 수를 입력해주세요.");
+    return false;
+  }
+
+  if (purchasePrice < amount * LOTTO_PRICE) {
+    alert("구입 금액보다 티켓의 수가 더 많습니다.");
+    return false;
+  }
+
+  return true;
+};
+
+export const isValidPurchaseNumber = (manualNumberList) => {
+  const manualNumberSet = new Set(manualNumberList);
+  let stopFlag = false;
+
+  manualNumberList.forEach((number) => {
+    if (number < MIN_LOTTO_NUMBER || MAX_LOTTO_NUMBER < number) {
+      alert(ERROR_MESSAGE.WINNING_NUMBER_RANGE);
+      stopFlag = true;
+      return false;
+    }
+  });
+
+  if (stopFlag) {
+    return false;
+  }
+
+  if (manualNumberSet.size !== manualNumberList.length) {
+    alert(ERROR_MESSAGE.DUPLICATED_LOTTO_NUMBER);
     return false;
   }
 
