@@ -23,3 +23,15 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add("inputPrice", (price) => {
+  cy.get('#LottoForm input[type="number"]').type(price);
+  cy.get("#LottoForm form").submit();
+});
+
+Cypress.Commands.add("checkToggle", () => {
+  cy.get(".lotto-numbers-toggle-button").check({ force: true });
+});
+
+Cypress.Commands.add("unCheckToggle", () => {
+  cy.get(".lotto-numbers-toggle-button").uncheck({ force: true });
+});
