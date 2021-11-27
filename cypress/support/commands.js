@@ -9,6 +9,13 @@ Cypress.Commands.add("purchaseLotto", (number) => {
     .type("{Enter}");
 });
 
+Cypress.Commands.add("purchaseManualLotto", (amount) => {
+  cy.get("[data-cy=manual-purchase-form]")
+    .find("[data-cy=manual-purchase-price-input]")
+    .type(amount)
+    .type("{Enter}");
+});
+
 Cypress.Commands.add("clickNumbersToggleBtn", (selector) => {
   cy.get(selector).click();
 });
