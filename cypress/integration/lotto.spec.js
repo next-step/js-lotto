@@ -142,4 +142,21 @@ describe("js-lotto", () => {
       cy.get(".winning-number-form").children().should("have.length", 0);
     });
   });
+
+  context("수동구매 기능 확인", () => {
+    beforeEach(() => {
+      cy.get("[data-cy=purchase-price-input]").clear();
+      cy.get("[data-cy=manual-purchase-price-input]").clear();
+    });
+
+    it("수동 구매 티켓 수에 맞게 입력 폼 출력", () => {
+      cy.get("[data-cy=purchase-form]")
+        .find("[data-cy=purchase-price-input]")
+        .type(2000);
+      cy.purchaseManualLotto(1);
+      cy.get(".manual-number-form")
+        .children(".manual-numbers")
+        .should("have.length", 1);
+    });
+  });
 });

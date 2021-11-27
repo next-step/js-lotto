@@ -63,7 +63,7 @@ export const resetManualLotto = () => {
 export const addManualNumberInput = (selector, amounts) => {
   const template = (idx) => `
     <div>
-      <div class="manual-${idx + 1}">
+      <div class="manual-${idx + 1} manual-numbers">
         <span>${idx + 1}번째</span>
         <input
           type="number"
