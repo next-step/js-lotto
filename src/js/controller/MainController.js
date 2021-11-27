@@ -102,6 +102,23 @@ export default class MainController {
       this.purchasedLottoSection.show().render(this.lottoModel.lottos);
       this.winningNumberFormSection.show().render();
     });
+
+    this.winningNumberFormSection.on('@submitWinningNumber', ({ detail }) => {
+      this.winningPrizeModel.setLottoInfo(this.lottoModel.lottos, {
+        ...detail
+      });
+      this.resultModalSection.render({
+        winningPrizeInfo: this.winningPrizeModel.winningPrizeInfo,
+        totalPrizeMoney: this.winningPrizeModel.totalPrizeMoney,
+        price: this.lottoModel.price
+      });
+    });
+
+    this.resultModalSection.on('@clickResetBtn', () => {
+      console.log('reset');
+      this.init();
+      this.resultModalSection.hide().hideModal();
+    });
   }
 
   isInvalidPrice(price) {
