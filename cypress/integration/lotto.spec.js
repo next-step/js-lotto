@@ -1,4 +1,4 @@
-const BASE_URL = 'http://127.0.0.1:5500';
+const BASE_URL = 'http://127.0.0.1:5501';
 
 beforeEach(() => {
   cy.visit(BASE_URL);
