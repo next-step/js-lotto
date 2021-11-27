@@ -6,7 +6,6 @@ export const ERROR_MESSAGE = {
   EMPTY_BONUS_NUMBER: "보너스 번호를 입력해주세요.",
   WINNING_NUMBER_RANGE: "1~99 사이의 숫자를 입력해주세요.",
   DUPLICATED_WINNING_NUMBER: "중복된 당첨번호가 있습니다.",
-  DUPLICATED_LOTTO_NUMBER: "입력한 번호 중 중복이 있습니다.",
 };
 
 export const WINNING_PRICE = {
