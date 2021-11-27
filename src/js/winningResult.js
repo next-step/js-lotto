@@ -1,5 +1,5 @@
 import { $ } from "../utils/selector.js";
-import { WINNING_PRICE } from "../utils/constants.js";
+import { WINNING_PRICE, LOTTO_PRICE } from "../utils/constants.js";
 import { isValidWinningNumber } from "../utils/utilFunc.js";
 import { updateResult } from "../utils/renderer.js";
 
@@ -80,7 +80,7 @@ export const calculateResult = (size) => {
   lottoResult["final-price"] +=
     lottoResultCount["rank-1"] * WINNING_PRICE.RANK_1;
 
-  const buyPrice = size * 1000;
+  const buyPrice = size * LOTTO_PRICE;
   lottoResult.rate = ((lottoResult["final-price"] - buyPrice) / buyPrice) * 100;
 };
 
