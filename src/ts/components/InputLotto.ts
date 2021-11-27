@@ -45,7 +45,7 @@ export default class InputLotto extends Component<
         window.alert(AlertMsg.DuplicateNumber);
         return;
       }
-      this.props?.submitLotto({ numbers: winningNumbers, bonus });
+      this.props?.submitWinningLotto({ numbers: winningNumbers, bonus });
     };
 
     this.$target.addEventListener("submit", onSubmit);
@@ -101,7 +101,7 @@ export default class InputLotto extends Component<
 }
 
 interface InputLottoProps {
-  submitLotto(winningLotto: WinningLotto): void;
+  submitWinningLotto(winningLotto: WinningLotto): void;
 }
 
 interface InputLottoState {
