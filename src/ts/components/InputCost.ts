@@ -5,6 +5,7 @@ import Component from "../core/Component";
 
 const defaultState: InputCostState = {
   cost: undefined,
+  disabled: false,
 };
 
 export default class InputCost extends Component<
@@ -41,7 +42,7 @@ export default class InputCost extends Component<
         window.alert(AlertMsg.InvalidCost);
         return;
       }
-      this.setState({ cost });
+      this.setState({ cost, disabled: true });
       this.props?.submitCost(cost);
     };
 
@@ -64,10 +65,15 @@ export default class InputCost extends Component<
               class="w-100 mr-2 pl-2 ${ClassName.input}"
               placeholder="구입 금액"
               required
+              ${this.state?.disabled ? "disabled" : ""}
               min="${LottoConfig.MIN_COST}" max="${LottoConfig.MAX_COST}"
               ${this.state?.cost ? `value=${this.state.cost}` : ""}
             />
-            <button type="submit" class="btn btn-cyan">확인</button>
+            <button 
+              ${this.state?.disabled ? "disabled" : ""}
+              type="submit" 
+              class="btn btn-cyan">확인
+            </button>
           </div>
     `;
   }
@@ -79,4 +85,5 @@ interface InputCostProps {
 
 interface InputCostState {
   cost?: number;
+  disabled?: boolean;
 }
