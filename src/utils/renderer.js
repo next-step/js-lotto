@@ -34,6 +34,70 @@ export const resetLotto = () => {
   $(".purchase__price-input").value = "";
 };
 
+export const resetManualLotto = () => {
+  $(".lotto__menu").innerHTML = "";
+  $(".lotto__tickets").innerHTML = "";
+  $(".winning-number-form").innerHTML = "";
+};
+
+export const addManualNumberInput = (selector, amounts) => {
+  const template = (idx) => `
+    <div>
+      <div class="manual-${idx + 1}">
+        <span>${idx + 1}번째</span>
+        <input
+          type="number"
+          class="manual-number mx-1 text-center"
+          data-cy="manual-number-1"
+        />
+        <input
+          type="number"
+          class="manual-number mx-1 text-center"
+          data-cy="manual-number-2"
+        />
+        <input
+          type="number"
+          class="manual-number mx-1 text-center"
+          data-cy="manual-number-3"
+        />
+        <input
+          type="number"
+          class="manual-number mx-1 text-center"
+          data-cy="manual-number-4"
+        />
+        <input
+          type="number"
+          class="manual-number mx-1 text-center"
+          data-cy="manual-number-5"
+        />
+        <input
+          type="number"
+          class="manual-number mx-1 text-center"
+          data-cy="manual-number-6"
+        />
+      </div>
+    </div>`;
+
+  // Array.map이 안먹힌다..
+  let newManualNumberInputs = [];
+  for (let i = 0; i < amounts; i++) {
+    newManualNumberInputs.push(template(i));
+  }
+  $(selector).innerHTML = `
+    <label class="flex-auto d-inline-block mb-3">로또 번호를 입력해주세요.</label>
+    <div class="d-flex flex-col">
+    ${newManualNumberInputs.join("")}
+    </div>
+    <button
+      type="button"
+      class="manual-purchase-btn mt-5 btn btn-green w-100"
+      data-cy="manual-purchase-btn"
+    >
+      로또 발급
+    </button>
+  `;
+};
+
 export const addWinningNumberInput = (selector) => {
   $(selector).innerHTML = `
     <label class="flex-auto d-inline-block mb-3"
