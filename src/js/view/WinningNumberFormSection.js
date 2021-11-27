@@ -84,6 +84,7 @@ export default class WinningNumberFormSection extends View {
           </div>
         </div>
         <button
+          id="openResultModalBtn"
           type="submit"
           class="open-result-modal-button mt-5 btn btn-cyan w-100"
         >

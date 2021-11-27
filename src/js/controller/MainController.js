@@ -44,12 +44,21 @@ export default class MainController {
     this.manualLottoFormSection.hide();
   }
 
+  resetView() {
+    this.purchasedLottoSection.hide();
+    this.winningNumberFormSection.hide();
+    this.manualLottoFormSection.hide();
+  }
+
   bindEvents() {
     this.purchaseFormSection.on('@submitPrice', ({ detail }) => {
+      this.resetView();
+      this.lottoModel.resetLottos();
       const price = getFormDataValue(detail, 'price');
       if (!this.setPrice(price)) return;
       // this.purchasedLottoSection.show().render(this.lottoModel.lottos);
       // this.winningNumberFormSection.show().render();
+      this.lottoModel.setOriginalPrice(price);
       this.manualLottoFormSection
         .show()
         .renderRemainPrice(this.lottoModel.price);
@@ -62,7 +71,7 @@ export default class MainController {
       this.resultModalSection.render({
         winningPrizeInfo: this.winningPrizeModel.winningPrizeInfo,
         totalPrizeMoney: this.winningPrizeModel.totalPrizeMoney,
-        price: this.lottoModel.price
+        price: this.lottoModel.originalPrice
       });
     });
 
@@ -72,17 +81,21 @@ export default class MainController {
     });
 
     this.manualLottoFormSection.on('@submitManualNumber', ({ detail }) => {
+      if (!this.lottoModel.price) {
+        alert(ALERT.PURCHASE_LIMIT);
+        return;
+      }
       this.lottoModel.setManualLotto(detail.manualLottoNumbers);
       this.setPrice(this.lottoModel.price - PRICE_UNIT);
       this.manualLottoFormSection.renderRemainPrice(this.lottoModel.price);
-      if (Number(this.lottoModel.price) === 0) {
-        this.manualLottoFormSection.disableBtn('#submitManualLottoBtn');
-        alert('마지막 수동 구매입니다. 더이상 구매할 수 없습니다.');
-        return;
-      }
+      this.purchasedLottoSection.show().render(this.lottoModel.lottos);
     });
 
     this.manualLottoFormSection.on('@clickAutoNumber', () => {
+      if (!this.lottoModel.price) {
+        alert(ALERT.PURCHASE_LIMIT);
+        return;
+      }
       this.lottoModel.setAutoLottos(this.lottoModel.price);
       this.setPrice(0);
       this.manualLottoFormSection.renderRemainPrice(0);
@@ -96,7 +109,6 @@ export default class MainController {
   }
 
   setPrice(price) {
-    console.log(price);
     if (this.isInvalidPrice(price)) {
       this.init();
       alert(ALERT.CHECK_UNIT);

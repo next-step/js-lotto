@@ -10,7 +10,6 @@ export default class ResultModalSection extends View {
   }
 
   render({ winningPrizeInfo, totalPrizeMoney, price }) {
-    console.log(price);
     this.renderModal({ winningPrizeInfo, totalPrizeMoney, price });
     this.showModal();
     this.bindEvents();
@@ -64,7 +63,6 @@ export default class ResultModalSection extends View {
   }
 
   setPrizeYield(totalPrizeMoney, price) {
-    console.log(totalPrizeMoney, price);
     return ((totalPrizeMoney - price) / price) * 100;
   }
 

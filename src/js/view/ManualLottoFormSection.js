@@ -84,7 +84,7 @@ export default class ManualLottoFormSection extends View {
       <button
         id="autoPurchaseBtn"
         type="button"
-        class="open-result-modal-button mt-5 btn btn-cyan w-100"
+        class="mt-5 btn btn-cyan w-100"
       >
         자동 구매 및 결과 보기
       </button>
@@ -123,7 +123,6 @@ export default class ManualLottoFormSection extends View {
 
   onClickAutoLottoNumbers() {
     this.emit('@clickAutoNumber');
-    this.disableBtn('#autoPurchaseBtn');
   }
 
   resetManualNumberForm() {
@@ -131,9 +130,5 @@ export default class ManualLottoFormSection extends View {
       el.value = '';
     });
     $('[data-manual-number="0"]').focus();
-  }
-
-  disableBtn(selector) {
-    $(selector, this.$target).disabled = 'disabled';
   }
 }

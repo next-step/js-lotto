@@ -6,8 +6,10 @@ const { PRICE_UNIT, LOTTO_COUNT, MIN, MAX } = LOTTO_INFO;
 export default class LottoModel {
   #lottos;
   #price;
+  #originalPrice;
 
   constructor() {
+    this.#originalPrice = 0;
     this.#price = 0;
     this.#lottos = [];
   }
@@ -16,13 +18,24 @@ export default class LottoModel {
     return this.#lottos;
   }
 
+  get originalPrice() {
+    return this.#originalPrice;
+  }
+
+  resetLottos() {
+    this.#lottos = [];
+  }
+
   setLottos(lottos) {
     this.#lottos = [...this.#lottos, ...lottos];
-    console.log(this.#lottos);
   }
 
   setManualLotto(lotto) {
     this.setLottos([lotto]);
+  }
+
+  setOriginalPrice(price) {
+    this.#originalPrice = price;
   }
 
   setAutoLottos(price) {
