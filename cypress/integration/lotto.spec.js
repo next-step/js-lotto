@@ -26,13 +26,21 @@ describe("JS 로또", function () {
     });
   });
 
-  it("복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.", () => {
+  it("토글이 켜져있으면, 로또숫자를 볼 수 있어야 한다.", () => {
     cy.typeInput(3000);
     cy.clickConfirmBtn();
-    cy.clickToggleBtn();
-    cy.get(SELECTOR.LOTTO_BOARD)
-      .children()
-      .children()
-      .should("have.class", "lotto-detail");
+    cy.checkToggleBtn();
+    cy.get(".lotto-detail").should("exist");
   });
+  // cy.get(CLASS_NAME.LOTTO_NUMBER_TOGGLE_BUTTON).check({ force: true });
+  // cy.get(CLASS_NAME.LOTTO_NUMBER_TOGGLE_BUTTON).uncheck();
+
+  it("토글이 꺼져있으면, 로또숫자를 볼 수 없다.", () => {
+    cy.typeInput(3000);
+    cy.clickConfirmBtn();
+    cy.uncheckToggleBtn();
+    cy.get(".lotto-detail").should("not.exist");
+  });
+
+  it("", () => {});
 });
