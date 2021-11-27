@@ -1,17 +1,27 @@
 import { $ } from "../utils/selector.js";
-import { isValidPrice, generateLottoNumbers } from "../utils/utilFunc.js";
+import {
+  isValidPrice,
+  isValidPurchaseAmount,
+  isValidPurchaseNumber,
+  generateLottoNumbers,
+} from "../utils/utilFunc.js";
 import {
   updateLottoAmounts,
   addWinningNumberInput,
+  addManualNumberInput,
   updateLottoTickets,
   resetLotto,
+  resetManualLotto,
 } from "../utils/renderer.js";
 import { handleLottoResult, onModalClose } from "./winningResult.js";
 import { LOTTO_PRICE } from "../utils/constants.js";
 
 function App() {
   let lottoTicketsList = [];
+  let manualLottoNumberList = [];
   let IsLottoNumberVisible = false;
+  let IsManualLotto = false;
+  let manualLottoCount = 0;
 
   const showLottoNumbers = () => {
     $(".lotto__tickets")
@@ -39,12 +49,19 @@ function App() {
     if (!isValidPrice(purchasePrice)) {
       return;
     }
+
     lottoTicketsList = [];
 
-    const purchaseAmounts = Math.floor(purchasePrice / LOTTO_PRICE);
+    const count = Math.floor(purchasePrice / LOTTO_PRICE);
+    let purchaseAmounts = IsManualLotto ? count - manualLottoCount : count;
     lottoTicketsList = generateLottoNumbers(purchaseAmounts);
+
+    if (IsManualLotto) {
+      lottoTicketsList = lottoTicketsList.concat(manualLottoNumberList);
+    }
+
     updateLottoAmounts(".lotto__menu", purchaseAmounts);
-    updateLottoTickets(purchaseAmounts, lottoTicketsList);
+    updateLottoTickets(count, lottoTicketsList);
     addWinningNumberInput(".winning-number-form");
     IsLottoNumberVisible = true;
 
@@ -76,17 +93,44 @@ function App() {
     resetLotto();
   });
 
-  /*
-  수동구매 기능
-  - [ ] 구입할 금액과 수동으로 구입할 로또의 개수를 입력 받는다.
-    - [ ] 금액에 비해 로또 개수가 클 시 에러처리
-    - [ ] 티켓의 수에 숫자가 아닌 것을 입력하면 에러처리
-  - [ ] 수동구매 개수에 맞게 번호 입력창을 띄운다. 6개씩
-    - [ ] 숫자가 중복되면 에러처리
-    - [ ] 범위를 벗어난 숫자를 입력하면 에러처리
-  - [ ] 입력한 숫자에 맞게 로또 티켓 정보를 렌더링한다.
-  - [ ] 남은 금액은 자동구매처리
-  */
+  const issueManualLotto = () => {
+    const manualNumbers = document.querySelectorAll(".manual-number");
+    let manualNumberList = [];
+
+    manualNumbers.forEach((number) => {
+      manualNumberList.push(Number(number.value));
+    });
+
+    if (isValidPurchaseNumber(manualNumberList)) {
+      manualLottoNumberList = [];
+      for (let i = 0; i < manualNumberList.length / 6; i++) {
+        manualLottoNumberList[i] = manualNumberList.slice(i * 6, i * 6 + 6);
+      }
+    }
+    purchaseNewLottos();
+  };
+
+  $(".manual-purchase__form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const purchasePrice = $(".purchase__price-input").value;
+    manualLottoCount = $(".manual-purchase__price-input").value;
+    IsManualLotto = true;
+
+    if (!isValidPrice(purchasePrice)) {
+      return;
+    }
+
+    if (!isValidPurchaseAmount(manualLottoCount, purchasePrice)) {
+      return;
+    }
+
+    resetManualLotto();
+    addManualNumberInput(".manual-number-form", manualLottoCount);
+
+    $(".manual-purchase-btn").addEventListener("click", (e) => {
+      issueManualLotto();
+    });
+  });
 }
 
 App();
