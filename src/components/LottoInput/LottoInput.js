@@ -24,7 +24,8 @@ export default class LottoInput extends Component {
           data-cy="input-purchase"
       />
       <button type="submit" class="btn btn-cyan btn-purchase" data-cy="btn-purchase">확인</button>
-      </div>`;
+      </div>
+      `;
   };
   mount = () => {
     this.$app.addEventListener("submit", (e) => {

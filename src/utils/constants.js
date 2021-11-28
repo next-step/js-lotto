@@ -18,6 +18,7 @@ export const LOTTOS_RESULT = {
 
 export const LOTTOS_STATE = {
   lottos: [],
+  manualTicket: 0,
   winningNums: [0, 0, 0, 0, 0, 0],
   bonusNum: 0,
   result: LOTTOS_RESULT,
@@ -29,6 +30,8 @@ export const LOTTOS_STATE = {
 };
 export const LOTTOS_ACTION = {
   BUY_LOTTOS: "BUY_LOTTOS",
+  BUY_MANUAL_LOTTOS: "BUY_MANUAL_LOTTOS",
+  SET_LOTTO_MANUAL_TICKET: "SET_LOTTO_MANUAL_TICKET_NUMBER",
   TOGGLE_LOTTO_DISPLAY: "TOGGLE_LOTTO_DISPLAY",
   SHOW_LOTTO_RESULT: "SHOW_LOTTO_RESULT",
   CLOSE_MODAL: "CLOSE_MODAL",
