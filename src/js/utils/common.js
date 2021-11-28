@@ -5,7 +5,7 @@ export const selector = (selector, dom = document) => {
 };
 
 export const selectorAll = (selector, dom = document) => {
-  return dom.queryselectorAll(selector);
+  return dom.querySelectorAll(selector);
 };
 
 export const computedAmount = (purchaseAmount) => {
@@ -13,14 +13,30 @@ export const computedAmount = (purchaseAmount) => {
 };
 
 export const getRandomNumbers = (min, max) => {
-  return Math.floor(Math.random() * (max - min)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export const getLottoNumberList = () => {
-  const newLottoNumbers = new Set(new Array(6).fill(0).map(() => getRandomNumbers(1, 45)));
+export const getLottoNumberList = (listSize = 6) => {
+  const newLottoSet = new Set();
+  const lottoNumberArray = Array.from(new Array(45), (_, i) => i + 1);
 
-  while (newLottoNumbers.size < 6) {
-    newLottoNumbers.add(getRandomNumbers(1, 45));
+  while (newLottoSet.size < listSize) {
+    newLottoSet.add(lottoNumberArray.splice(getRandomNumbers(1, lottoNumberArray.length) - 1, 1).pop())
   }
-  return [...newLottoNumbers];
+  return [...newLottoSet];
+}
+
+export const hasDuplicateNumber = (arr) => {
+  const setList = new Set();
+
+  for (const item of arr) {
+    if (setList.has(item)) return true;
+    setList.add(item);
+  }
+
+  return false;
+}
+
+export const numberWithCommas = (number) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

@@ -5,14 +5,20 @@ class PurchaseAmountFormView extends View {
   tag = "PurchaseAmountFormView";
   constructor() {
     super();
+    this.$inputPurchaseAmount = selector("#InputPurchaseAmount");
   }
 
   bindEvent() {
     this.on('submit', e => {
       e.preventDefault();
 
-      this.emit("submit.updateAmount", { price: selector("#InputPurchaseAmount").value });
+      this.emit("submit.updateAmount", { price: this.$inputPurchaseAmount.value });
     });
+  }
+
+  initValue() {
+    this.$inputPurchaseAmount.value = null;
+    return this;
   }
 }
 
