@@ -37,7 +37,7 @@ export default class LottoTickets extends Component {
     this.$app.addEventListener("change", (e) => {
       if (e.target.className === "lotto-numbers-toggle-button") {
         this.props.setState({
-          type: LOTTOS_ACTION.TOGGLE,
+          type: LOTTOS_ACTION.TOGGLE_LOTTO_DISPLAY,
           data: e.target.checked,
         });
       }

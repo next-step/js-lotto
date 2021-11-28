@@ -35,7 +35,7 @@ export default class LottoInput extends Component {
         purchase.value = "";
         return;
       }
-      this.props.setState({ type: LOTTOS_ACTION.UPDATE, data: purchase.value });
+      this.props.setState({ type: LOTTOS_ACTION.BUY_LOTTOS, data: purchase.value });
     });
   };
 }

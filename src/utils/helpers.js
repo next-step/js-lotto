@@ -5,3 +5,7 @@ export const createRandomLotto = (min, max) => {
   }
   return [...lotto];
 };
+
+export const cloneDeep = (target) => {
+  return JSON.parse(JSON.stringify(target))
+}

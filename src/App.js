@@ -4,7 +4,7 @@ import LottoWinningNumber from "./components/LottoWinningNumber/index.js";
 import LottoResultModal from "./components/LottoResultModal/LottoResultModal.js";
 
 import { LOTTOS_ACTION, LOTTOS_STATE, LOTTOS_RESULT, LOTTO_MIN, LOTTO_MAX } from "./utils/constants.js";
-import { createRandomLotto } from "./utils/helpers.js";
+import { cloneDeep, createRandomLotto } from "./utils/helpers.js";
 
 export default class App {
   constructor(store, initialState) {
@@ -58,11 +58,11 @@ export default class App {
 
   buildNewState = (prevState, { type, data }) => {
     switch (type) {
-      case LOTTOS_ACTION.UPDATE:
-        return this.updateLottos(prevState, data);
-      case LOTTOS_ACTION.TOGGLE:
-        return this.updateToggleDisplay(prevState, data);
-      case LOTTOS_ACTION.SHOW_RESULT:
+      case LOTTOS_ACTION.BUY_LOTTOS:
+        return this.buyLottos(prevState, data);
+      case LOTTOS_ACTION.TOGGLE_LOTTO_DISPLAY:
+        return this.toggleLottoDispaly(prevState, data);
+      case LOTTOS_ACTION.SHOW_LOTTO_RESULT:
         return this.updateLottoResult(prevState, data);
       case LOTTOS_ACTION.CLOSE_MODAL:
         return this.closeResultModal(prevState);
@@ -73,7 +73,7 @@ export default class App {
     }
   };
 
-  updateLottos = (prevState, purchaseMoney) => {
+  buyLottos = (prevState, purchaseMoney) => {
     const lottos = new Array(purchaseMoney / 1000).fill([]).map(() => createRandomLotto(LOTTO_MIN, LOTTO_MAX, 6));
     return [
       {
@@ -85,13 +85,13 @@ export default class App {
     ];
   };
 
-  updateToggleDisplay = (prevState, checked) => {
+  toggleLottoDispaly = (prevState, checked) => {
     return [{ ...prevState, toggle: checked }, ["lottoTicket"]];
   };
 
   updateLottoResult = (prevState, { winningNums, bonusNum }) => {
     const { lottos, purchaseMoney } = prevState;
-    const result = this.getResult({ ...LOTTOS_RESULT }, lottos, winningNums, bonusNum);
+    const result = this.getResult(cloneDeep(LOTTOS_RESULT), lottos, winningNums, bonusNum);
     const prizeMoney = this.getPrizeMoney(result);
 
     return [
@@ -143,10 +143,9 @@ export default class App {
 
       const { matched, bonus } = _lotto;
       //prettier-ignore
+
       const key = matched.length === 5 && bonus !== 0 ? "5a" 
-                                                      : matched.length + 1 > 6 
-                                                      ? 6 
-                                                      : matched.length + 1;
+                                                      : matched.length
       lottoResult[key][0] += 1;
     });
     return lottoResult;

@@ -3,7 +3,7 @@ export const MESSAGES = {
 };
 
 export const LOTTO_MAX = 45;
-export const LOTTO_MIN = 1
+export const LOTTO_MIN = 1;
 
 export const LOTTOS_RESULT = {
   0: [0, 0],
@@ -28,9 +28,9 @@ export const LOTTOS_STATE = {
   earningRatio: 0,
 };
 export const LOTTOS_ACTION = {
-  UPDATE: "UPDATE_LOTTOS",
-  TOGGLE: "TOGGLE_LOTTO_DISPLAY",
-  SHOW_RESULT: "SHOW_LOTTO_RESULT",
+  BUY_LOTTOS: "BUY_LOTTOS",
+  TOGGLE_LOTTO_DISPLAY: "TOGGLE_LOTTO_DISPLAY",
+  SHOW_LOTTO_RESULT: "SHOW_LOTTO_RESULT",
   CLOSE_MODAL: "CLOSE_MODAL",
   RESTART: "RESTART",
 };

@@ -45,9 +45,9 @@ export default class LottoWinningNumber extends Component {
       e.preventDefault();
       const bonusNum = e.target.elements["bonus-num"].value;
       const winningNums = Array.prototype.map.call(e.target.elements["win-num"], (winNum) => Number(winNum.value));
-      
+
       this.props.setState({
-        type: LOTTOS_ACTION.SHOW_RESULT,
+        type: LOTTOS_ACTION.SHOW_LOTTO_RESULT,
         data: { winningNums, bonusNum },
       });
     });
