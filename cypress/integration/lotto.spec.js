@@ -53,11 +53,11 @@ describe("로또 구매 금액 입력 기능", () => {
   });
 });
 
-/**
- * 로또 용지 화면 표시
- * - 소비자는 자동 구매를 할 수 있어야 한다.
- * - 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
- */
+// /**
+//  * 로또 용지 화면 표시
+//  * - 소비자는 자동 구매를 할 수 있어야 한다.
+//  * - 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
+//  */
 
 describe("로또 용지 화면 표시", () => {
   const purchase = 5000;
@@ -102,11 +102,11 @@ describe("로또 용지 화면 표시", () => {
   });
 });
 
-/**
- * 당첨 결과 기능
- * - 결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.
- * - 다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.
- */
+// /**
+//  * 당첨 결과 기능
+//  * - 결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.
+//  * - 다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.
+//  */
 
 describe("당첨 결과 기능", () => {
   beforeEach(() => {
@@ -140,5 +140,50 @@ describe("당첨 결과 기능", () => {
       cy.get("[data-cy=lotto-win]").should("be.not.visible");
       cy.get("[data-cy=result-modal]").should("be.not.visible");
     });
+  });
+});
+
+/**
+ * 로또 수동 구매 기능
+ * - 수동 구매 입력 버튼을 누르면 수동 구매 입력 창이 나와야 한다.
+ * - 수동 구매 입력 후 로또 구매가 이루어져야 한다.
+ */
+
+describe("로또 수동 구매 기능", () => {
+  const purchase = 5000;
+  const total = purchase / 1000;
+  beforeEach(() => {
+    cy.visit("/");
+    cy.get("[data-cy=input-purchase]").as("inputPurchase");
+    cy.get("[data-cy=manual-purchase]").as("manualPurchase");
+    cy.get("[data-cy=btn-manual-purchase]").as("btnManualPurchase");
+  });
+  it("수동 구매 입력 버튼을 누르면 수동 구매 입력 창이 나와야 한다.", () => {
+    cy.get("@inputPurchase").should("be.visible");
+    cy.get("@inputPurchase").type(purchase).should("have.value", purchase);
+    cy.get("@manualPurchase").should("be.visible");
+    cy.get("@manualPurchase").type("3").should("have.value", "3");
+    cy.get("@btnManualPurchase")
+      .should("be.visible")
+      .click()
+      .then(() => {
+        cy.get("[data-cy=lotto-manual-tickets]").should("be.visible");
+      });
+  });
+  it("수동 구매 입력 후 로또 구매가 이루어져야 한다.", () => {
+    cy.get("@inputPurchase").type(purchase).should("have.value", purchase);
+    cy.get("@manualPurchase").type("3").should("have.value", "3");
+    cy.get("@btnManualPurchase")
+      .click()
+      .then(() => {
+        cy.get("[data-cy=manual-number]").each(($el, i) => {
+          cy.wrap($el).type(MOCK.MANUAL_LOTTO[i]);
+        });
+      });
+    cy.get("[data-cy=btn-manual-tickets]").click();
+    cy.get("[data-cy=section-lotto-tickets]").should("be.visible");
+    cy.get("[data-cy=lotto-win]").should("be.visible");
+    cy.get("[data-cy=lotto-icon]").should("have.length", total);
+    cy.get("[data-cy=toggle-lotto]").eq(0).check({ force: true });
   });
 });

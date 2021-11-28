@@ -18,7 +18,7 @@ export default class LottoManualInput extends Component {
           type="number"
           class="input-manual-purchase w-100 mr-2 pl-2"
           placeholder="티켓의 수"
-          data-cy="input-manual-purchase"
+          data-cy="manual-purchase"
       />
       <button type="submit" class="btn btn-cyan manual-purchase" data-cy="btn-manual-purchase">확인</button>
       </div>`;

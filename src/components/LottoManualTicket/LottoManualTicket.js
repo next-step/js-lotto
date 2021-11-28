@@ -21,7 +21,7 @@ export default class LottoManualTicket extends Component {
       1~45 사이의 로또 번호를 차례대로 입력해주세요
     </label>
     <div class="d-flex">
-      <div>
+      <div data-cy="lotto-manual-tickets">
         <h4 class="mt-0 mb-3 text-center">로또 번호</h4>
         ${Array.from({ length: manualTicket }).map(manualTicketInputTemplate).join("")}
       </div>
