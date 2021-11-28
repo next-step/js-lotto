@@ -32,23 +32,17 @@ context("lotto", () => {
       .click();
   };
 
-  const purchasedCnt = 50;
-
-  const inputLottoNumbers = (winningNumbers: number[], bonus?: number) => {
-    cy.get(id2Query(Id.inputLotto))
-      .find(class2Query(ClassName.winningNumber))
-      .each(($input, i) => {
-        if (i < winningNumbers.length) {
-          cy.wrap($input).type(`${winningNumbers[i]}`);
-        }
-      });
-    if (typeof bonus === "number") {
-      cy.get(class2Query(ClassName.bonusNumber)).type(`${bonus}`);
-    }
+  const clickAutoSelectBtn = () => {
+    return cy
+      .get(id2Query(Id.inputManualLotto))
+      .find(class2Query(ClassName.autoSelectBtn))
+      .click();
   };
 
-  const validateLottoInput = (invalidInputCnt: number) => {
-    cy.get(id2Query(Id.inputLotto))
+  const purchasedCnt = 50;
+
+  const validateInput = (id: string, invalidInputCnt: number) => {
+    cy.get(id2Query(id))
       .find("input:invalid")
       .should("have.length", invalidInputCnt);
   };
@@ -62,31 +56,95 @@ context("lotto", () => {
     it("should fail if cost is lower than Price", () => {
       typeCost(LottoConfig.PRICE - 1);
       clickCostBtn().then(() => {
-        cy.get(id2Query(Id.purchaseInfo)).should("not.be.visible");
-        cy.get(id2Query(Id.inputLotto)).should("not.be.visible");
+        cy.get(id2Query(Id.inputManualLotto)).should("not.be.visible");
       });
     });
     it("should fail if cost is not a multiple of Price", () => {
       typeCost(LottoConfig.PRICE + 1);
       clickCostBtn().then(() => {
-        cy.get(id2Query(Id.purchaseInfo)).should("not.be.visible");
-        cy.get(id2Query(Id.inputLotto)).should("not.be.visible");
+        cy.get(id2Query(Id.inputManualLotto)).should("not.be.visible");
         expect(alertStub).to.be.calledWith(AlertMsg.InvalidCost);
       });
     });
     it("should input cost", () => {
       typeCost(LottoConfig.PRICE * 5);
-      clickCostBtn().then(() => {
-        cy.get(id2Query(Id.purchaseInfo)).should("be.visible");
-        cy.get(id2Query(Id.inputLotto)).should("be.visible");
-      });
+      clickCostBtn().then(() =>
+        cy.get(id2Query(Id.inputManualLotto)).should("be.visible")
+      );
+    });
+  });
+
+  describe("Input Manual Lotto", () => {
+    const inputManualLottoNumbers = (numbers: number[]) => {
+      cy.get(id2Query(Id.inputManualLotto))
+        .find(class2Query(ClassName.manualNumber))
+        .each(($input, i) => {
+          if (i < numbers.length) {
+            cy.wrap($input).type(`${numbers[i]}`);
+          }
+        });
+    };
+
+    beforeEach(() => {
+      typeCost(LottoConfig.PRICE * 1);
+      clickCostBtn();
+    });
+
+    it("should fail if a manual number is smaller than 1", () => {
+      validateInput(Id.inputManualLotto, 6);
+      inputManualLottoNumbers([0]);
+      validateInput(Id.inputManualLotto, 6);
+    });
+
+    it("should fail if a manual number is bigger than 45", () => {
+      validateInput(Id.inputManualLotto, 6);
+      inputManualLottoNumbers([46]);
+      validateInput(Id.inputManualLotto, 6);
+    });
+
+    it("should fail if manual numbers have duplication ", () => {
+      validateInput(Id.inputManualLotto, 6);
+      inputManualLottoNumbers([1, 2, 3, 4, 5, 5]);
+      validateInput(Id.inputManualLotto, 0);
+      cy.get(id2Query(Id.inputManualLotto))
+        .find(class2Query(ClassName.manualSelectBtn))
+        .click()
+        .then(() =>
+          expect(alertStub).to.be.calledWith(AlertMsg.DuplicateNumber)
+        );
+    });
+
+    it("should input manual lotto", () => {
+      validateInput(Id.inputManualLotto, 6);
+      inputManualLottoNumbers([1, 2, 3, 4, 5, 6]);
+      validateInput(Id.inputManualLotto, 0);
+      cy.get(id2Query(Id.inputManualLotto))
+        .find(class2Query(ClassName.manualSelectBtn))
+        .click()
+        .then(() => expect(alertStub).have.not.been.called);
+    });
+
+    it("should be able to check manual lotto number", () => {
+      const manualLottoNumbers = [1, 2, 3, 4, 5, 6];
+      inputManualLottoNumbers(manualLottoNumbers);
+      cy.get(id2Query(Id.inputManualLotto))
+        .find(class2Query(ClassName.manualSelectBtn))
+        .click();
+      cy.get(class2Query(ClassName.switch)).click();
+      cy.get(class2Query(ClassName.lottoDetail)).should(
+        "include.text",
+        manualLottoNumbers.join(", ")
+      );
     });
   });
 
   describe("Purchase Info", () => {
     beforeEach(() => {
       typeCost(LottoConfig.PRICE * purchasedCnt);
-      clickCostBtn();
+      clickCostBtn().then(() =>
+        cy.get(id2Query(Id.inputManualLotto)).should("be.visible")
+      );
+      clickAutoSelectBtn();
     });
 
     it("should be visible purchased lottos", () => {
@@ -112,28 +170,42 @@ context("lotto", () => {
     });
   });
 
+  const inputLottoNumbers = (winningNumbers: number[], bonus?: number) => {
+    cy.get(id2Query(Id.inputLotto))
+      .find(class2Query(ClassName.winningNumber))
+      .each(($input, i) => {
+        if (i < winningNumbers.length) {
+          cy.wrap($input).type(`${winningNumbers[i]}`);
+        }
+      });
+    if (typeof bonus === "number") {
+      cy.get(class2Query(ClassName.bonusNumber)).type(`${bonus}`);
+    }
+  };
+
   describe("Input Lotto", () => {
     beforeEach(() => {
       typeCost(LottoConfig.PRICE * purchasedCnt);
       clickCostBtn();
+      clickAutoSelectBtn();
     });
 
     it("should fail if a lotto number is smaller than 1", () => {
-      validateLottoInput(7);
+      validateInput(Id.inputLotto, 7);
       inputLottoNumbers([0]);
-      validateLottoInput(7);
+      validateInput(Id.inputLotto, 7);
     });
 
     it("should fail if a lotto number is bigger than 45", () => {
-      validateLottoInput(7);
+      validateInput(Id.inputLotto, 7);
       inputLottoNumbers([46]);
-      validateLottoInput(7);
+      validateInput(Id.inputLotto, 7);
     });
 
     it("should fail if lotto numbers have duplication ", () => {
-      validateLottoInput(7);
+      validateInput(Id.inputLotto, 7);
       inputLottoNumbers([1, 2, 3, 4, 5, 6], 6);
-      validateLottoInput(0);
+      validateInput(Id.inputLotto, 0);
       cy.get(id2Query(Id.inputLotto))
         .find(class2Query(ClassName.btn))
         .click()
@@ -143,9 +215,9 @@ context("lotto", () => {
     });
 
     it("should input lotto numbers", () => {
-      validateLottoInput(7);
+      validateInput(Id.inputLotto, 7);
       inputLottoNumbers(testWinningLotto.numbers, testWinningLotto.bonus);
-      validateLottoInput(0);
+      validateInput(Id.inputLotto, 0);
       cy.get(id2Query(Id.inputLotto))
         .find(class2Query(ClassName.btn))
         .click()
@@ -157,6 +229,7 @@ context("lotto", () => {
     beforeEach(() => {
       typeCost(LottoConfig.PRICE * purchasedCnt);
       clickCostBtn();
+      clickAutoSelectBtn();
       inputLottoNumbers(testWinningLotto.numbers, testWinningLotto.bonus);
     });
 
