@@ -38,3 +38,11 @@ Cypress.Commands.add("mockMathRandom", (values) => {
     window.Math.random = mockMathRandom(values);
   });
 });
+Cypress.Commands.add("lottoNumsShouldGreaterThan0AndLowerThan46", ($el) => {
+  $el
+    .text()
+    .split(",")
+    .forEach((num) => {
+      cy.wrap(Number(num)).should("be.gt", 0).should("be.lt", 46);
+    });
+});

@@ -84,14 +84,7 @@ describe("로또 용지 화면 표시", () => {
   describe("복권 번호보기 토글 버튼을 클릭하면", () => {
     it("당첨 번호는 1이상 45이하 숫자여야 한다.", () => {
       cy.get("@toggleLotto").eq(0).check({ force: true });
-      cy.get("@lottoDetail").each(($el) => {
-        $el
-          .text()
-          .split(",")
-          .forEach((num) => {
-            cy.wrap(Number(num)).should("be.gt", 0).should("be.lt", 46);
-          });
-      });
+      cy.get("@lottoDetail").each(cy.lottoNumsShouldGreaterThan0AndLowerThan46);
     });
     it("로또 숫자만큼 당첨 번호가 보여야 한다.", () => {
       cy.get("@toggleLotto").eq(0).check({ force: true });
