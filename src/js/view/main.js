@@ -16,6 +16,17 @@ export const updateLottoTicketView = (lottos = []) => {
   $(SELECTOR.LOTTO_CONTAINER).innerHTML = lottos.map(lottoTemplate).join('');
 };
 
+export const resetMainView = () => {
+  updateLottoCount();
+  updateLottoTicketView();
+  $(SELECTOR.PAYMENT_FORM).reset();
+  $(SELECTOR.ANSWER_FORM).reset();
+};
+
+export const focusPaymentInput = () => {
+  $(SELECTOR.PAYMENT_INPUT).focus();
+};
+
 const lottoNumberHidden = 'lotto-number-hidden';
 
 export const setBriefMode = () => {

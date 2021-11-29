@@ -1,11 +1,6 @@
 import SELECTOR from './constant/selector.js';
-import {
-  handleLottoDetailToggle,
-  handlePayment,
-  handleAnswer,
-  handleModalClose,
-  handleModalCloseOuter,
-} from './eventHandler/lotto.js';
+import { handleAnswer, handleModalClose, handleModalCloseOuter } from './eventHandler/answer.js';
+import { handleLottoDetailToggle, handlePayment } from './eventHandler/payment.js';
 import { $ } from './util/querySelector.js';
 
 const bindEvents = () => {
