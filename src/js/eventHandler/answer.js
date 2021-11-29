@@ -1,3 +1,4 @@
+import ERROR_MESSAGE from '../constant/errorMessage.js';
 import { ANSWER_INPUT_NAMES } from '../constant/lotto.js';
 import lottoManager from '../model/lotto.js';
 import { isAnswerValid } from '../service/lotto.js';
@@ -17,12 +18,12 @@ export const handleAnswer = (event) => {
   const answer = filterAnswer(event.target.elements);
 
   if (!lottoManager.lottos.length) {
-    alert('로또를 구매하지 않았습니다. 로또를 구매한 후 결과를 확인해 주세요.');
+    alert(ERROR_MESSAGE.EMPTY_LOTTO);
     return;
   }
 
   if (!isAnswerValid(answer)) {
-    alert('정상적이지 않은 입력입니다. 정상적으로 입력해주세요.');
+    alert(ERROR_MESSAGE.INVALID_ANSWER_INPUT);
     return;
   }
 
@@ -31,14 +32,10 @@ export const handleAnswer = (event) => {
   openModal();
 };
 
-const reset = () => {
+export const handleModalClose = () => {
   lottoManager.resetAll();
   resetMainView();
   focusPaymentInput();
-};
-
-export const handleModalClose = () => {
-  reset();
   closeModal();
 };
 
