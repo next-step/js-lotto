@@ -7,6 +7,7 @@ const SELECTOR = {
   CONFIRM_BUTTON: '.js-confirm-button',
   LOTTO_TICKET: '.js-lotto-ticket',
   LOTTO_DETAIL: '.js-lotto-numbers',
+  ANSWER_FORM: '.js-answer-form',
 };
 
 export default SELECTOR;

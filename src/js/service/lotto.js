@@ -6,10 +6,8 @@ import {
 } from '../constant/lotto.js';
 import { getRandomNumber } from '../util/random.js';
 
-const getLottoNumber = () => getRandomNumber(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER);
+const generateLottoNumber = () => getRandomNumber(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER);
 
-const issueLotto = () => [...Array(LOTTO_NUMBER_COUNT)].map(getLottoNumber);
-
-export const issueLottos = (amount) => [...Array(amount)].map(issueLotto);
+export const issueLotto = () => [...Array(LOTTO_NUMBER_COUNT)].map(generateLottoNumber);
 
 export const getLottoAmount = (price) => Math.floor(price / LOTTO_PRICE);
