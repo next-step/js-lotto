@@ -12,6 +12,9 @@ export default class Lotto {
     $confirmBtn,
     $lottoBoard,
     $lottoCnt,
+    $modal,
+    $modalClose,
+    $showResultButton,
   }) {
     this.$paymentForm = $paymentForm;
     this.$payment = $payment;
@@ -19,6 +22,9 @@ export default class Lotto {
     this.$confirmBtn = $confirmBtn;
     this.$lottoBoard = $lottoBoard;
     this.$lottoCnt = $lottoCnt;
+    this.$modal = $modal;
+    this.$modalClose = $modalClose;
+    this.$showResultButton = $showResultButton;
     this.state = initialState;
   }
 
@@ -37,6 +43,11 @@ export default class Lotto {
       "click",
       this.onClickToggleBtn.bind(this)
     );
+    this.$showResultButton.addEventListener(
+      "click",
+      this.onModalShow.bind(this)
+    );
+    this.$modalClose.addEventListener("click", this.onModalClose.bind(this));
   }
 
   makeLottoNumberTemp() {
@@ -124,6 +135,14 @@ export default class Lotto {
     //보드를 모두 지워주는 함수
     this.$lottoBoard.innerHTML = "";
   }
+
+  onModalShow = () => {
+    this.$modal.classList.add("open");
+  };
+
+  onModalClose = () => {
+    this.$modal.classList.remove("open");
+  };
 
   showLottoNumber() {
     this.clearBoard();
