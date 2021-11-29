@@ -29,17 +29,14 @@ export default class WinningPrizeModel {
     this.lottos = lottos;
     this.winningLottoNumbers = winningLottoNumbers;
     this.bonusNumber = bonusNumber;
-    this.#winningPrizeInfo = this.setWinningPrizeInfo();
-    this.#totalPrizeMoney = this.setTotalPrizeMoney();
+    this.#winningPrizeInfo = this.setWinningPrizeInfo(this.lottos);
+    this.#totalPrizeMoney = this.setTotalPrizeMoney(this.#winningPrizeInfo);
   }
 
-  setTotalPrizeMoney() {
-    return Object.entries(this.#winningPrizeInfo).reduce(
-      (total, [key, value]) => {
-        return LOTTO_PRIZE_INFO[Number(key)].prize * value + total;
-      },
-      0
-    );
+  setTotalPrizeMoney(lottoInfo) {
+    return Object.entries(lottoInfo).reduce((total, [key, value]) => {
+      return LOTTO_PRIZE_INFO[Number(key)].prize * value + total;
+    }, 0);
   }
 
   intersectionLotto(pivot, comparison) {
@@ -62,8 +59,8 @@ export default class WinningPrizeModel {
     });
   }
 
-  setWinningPrizeInfo() {
-    const winningLottoCount = this.setWinningLottoCount(this.lottos);
+  setWinningPrizeInfo(lottos) {
+    const winningLottoCount = this.setWinningLottoCount(lottos);
 
     return winningLottoCount.reduce(
       (prizeInfo, { count, bonus }) => {

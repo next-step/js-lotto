@@ -18,3 +18,6 @@ export const hideElement = (el) => {
 export const setCommaThusandUnit = (money) => {
   return money.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
 };
+
+export const isDuplicatedNumber = (lottos, size = 7) =>
+  new Set([...lottos]).size < size;

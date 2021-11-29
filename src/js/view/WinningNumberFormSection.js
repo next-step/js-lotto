@@ -21,7 +21,7 @@ export default class WinningNumberFormSection extends View {
             <div>
               <input
                 type="number"
-                class="winning-number mx-1 text-center"
+                class="winning-lotto-number winning-number mx-1 text-center"
                 required
                 min="1"
                 max="45"
@@ -29,7 +29,7 @@ export default class WinningNumberFormSection extends View {
               />
               <input
                 type="number"
-                class="winning-number mx-1 text-center"
+                class="winning-lotto-number winning-number mx-1 text-center"
                 required
                 min="1"
                 max="45"
@@ -37,7 +37,7 @@ export default class WinningNumberFormSection extends View {
               />
               <input
                 type="number"
-                class="winning-number mx-1 text-center"
+                class="winning-lotto-number winning-number mx-1 text-center"
                 required
                 min="1"
                 max="45"
@@ -45,7 +45,7 @@ export default class WinningNumberFormSection extends View {
               />
               <input
                 type="number"
-                class="winning-number mx-1 text-center"
+                class="winning-lotto-number winning-number mx-1 text-center"
                 required
                 min="1"
                 max="45"
@@ -53,7 +53,7 @@ export default class WinningNumberFormSection extends View {
               />
               <input
                 type="number"
-                class="winning-number mx-1 text-center"
+                class="winning-lotto-number winning-number mx-1 text-center"
                 required
                 min="1"
                 max="45"
@@ -61,7 +61,7 @@ export default class WinningNumberFormSection extends View {
               />
               <input
                 type="number"
-                class="winning-number mx-1 text-center"
+                class="winning-lotto-number winning-number mx-1 text-center"
                 required
                 min="1"
                 max="45"
@@ -74,7 +74,7 @@ export default class WinningNumberFormSection extends View {
             <div class="d-flex justify-center">
               <input 
                 type="number" 
-                class="bonus-number text-center" 
+                class="winning-bonus-number bonus-number text-center" 
                 required
                 min="1"
                 max="45"
@@ -84,6 +84,7 @@ export default class WinningNumberFormSection extends View {
           </div>
         </div>
         <button
+          id="openResultModalBtn"
           type="submit"
           class="open-result-modal-button mt-5 btn btn-cyan w-100"
         >
@@ -104,10 +105,10 @@ export default class WinningNumberFormSection extends View {
 
   onSubmitWinningLottoNumbers(e) {
     e.preventDefault();
-    const winningLottoNumbers = [...$$('.winning-number')].map(({ value }) =>
-      Number(value)
+    const winningLottoNumbers = [...$$('.winning-lotto-number')].map(
+      ({ value }) => Number(value)
     );
-    const bonusNumber = Number($('.bonus-number').value);
+    const bonusNumber = Number($('.winning-bonus-number').value);
 
     if (isDuplicatedNumber([...winningLottoNumbers, bonusNumber])) {
       alert(ALERT.DUPLICATED);

@@ -7,7 +7,8 @@ export const LOTTO_INFO = {
 
 export const ALERT = {
   CHECK_UNIT: '로또 구입 금액을 1,000원 단위로 입력해 주세요.',
-  DUPLICATED: '중복된 숫자가 존재합니다.'
+  DUPLICATED: '중복된 숫자가 존재합니다.',
+  PURCHASE_LIMIT: '더 이상 구매할 수 없습니다.'
 };
 
 export const LOTTO_PRIZE_INFO = {
