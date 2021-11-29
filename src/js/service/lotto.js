@@ -13,10 +13,12 @@ export const issueLotto = () => [...Array(LOTTO_NUMBER_COUNT)].map(generateLotto
 export const getLottoAmount = (price) => Math.floor(price / LOTTO_PRICE);
 
 export const isAnswerValid = (answer) => {
+  const answerValues = Object.values(answer);
+
   return (
-    Object.values(answer).every(
+    answerValues.every(
       (inputNumber) =>
-        inputNumber || inputNumber >= MIN_LOTTO_NUMBER || inputNumber <= MAX_LOTTO_NUMBER
-    ) || [...new Set(answer)].length === answer.length
+        inputNumber && inputNumber >= MIN_LOTTO_NUMBER && inputNumber <= MAX_LOTTO_NUMBER
+    ) && [...new Set(answerValues)].length === answerValues.length
   );
 };

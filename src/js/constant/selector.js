@@ -11,6 +11,7 @@ const SELECTOR = {
   MODAL: '.modal',
   MODAL_CLOSE: '.js-modal-close',
   RESTART_BUTTON: '.js-restart-button',
+  ANSWER_SUBMIT: '.js-answer-submit',
   RESULT: {
     FIRST: '.js-result-first',
     SECOND: '.js-result-second',
