@@ -4,8 +4,19 @@
 html,
 body {
   margin: 0;
+  padding: 0;
   height: 100%;
   font-size: 16px;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 #app {
@@ -21,4 +32,29 @@ body {
 .bonus-number {
   width: 30px;
   height: 36px;
+}
+
+.hide {
+  display: none;
+}
+
+.lotto-wrapper {
+  display: flex;
+}
+
+.lotto-detail {
+  margin-left: 12px;
+  font-size: 1.25rem;
+}
+
+.hide-details .lotto-detail {
+  display: none;
+}
+
+.purchased-lotto-list > .flex-wrap {
+  flex-direction: column;
+}
+
+.hide-details > .flex-wrap {
+  flex-direction: row;
 }

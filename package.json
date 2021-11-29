@@ -1,8 +1,13 @@
 {
-  "name": "racingcar",
+  "name": "js-lotto",
   "version": "1.0.0",
   "main": "index.js",
+  "repository": "https://github.com/glassyi/js-lotto.git",
+  "author": "glassyi <glassyi@naver.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "cypress open"
+  },
   "devDependencies": {
     "cypress": "^6.3.0"
   }
