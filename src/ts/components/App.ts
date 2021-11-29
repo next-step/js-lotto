@@ -1,15 +1,16 @@
 import { Id, LottoConfig } from "../common/constants";
 import { $, id2Query } from "../common/dom";
 import { Lotto, WinningLotto } from "../common/interfaces";
-import { getRandomLottoNumbers } from "../common/utils";
 import Component from "../core/Component";
 import InputCost from "./InputCost";
 import InputLotto from "./InputLotto";
+import InputManualLotto from "./InputManualLotto";
 import PurchaseInfo from "./PurchaseInfo";
 import ResultPopup from "./ResultPopup";
 
 export default class App extends Component {
   private inputCostComp?: InputCost;
+  private inputManualLottoComp?: InputManualLotto;
   private purchaseInfoComp?: PurchaseInfo;
   private inputLottoComp?: InputLotto;
   private resultPopupComp?: ResultPopup;
@@ -19,21 +20,25 @@ export default class App extends Component {
 
   restart() {
     this.inputCostComp?.reset();
+    this.inputManualLottoComp?.reset();
     this.purchaseInfoComp?.reset();
     this.inputLottoComp?.reset();
     this.resultPopupComp?.reset();
   }
 
   submitCost(cost: number) {
-    const lottos = Array.from(Array(cost / LottoConfig.PRICE), () => ({
-      numbers: getRandomLottoNumbers(),
-    }));
+    const leftSelectCnt = Math.floor(cost / LottoConfig.PRICE);
+    this.inputManualLottoComp?.setState({ leftSelectCnt });
+    this.inputManualLottoComp?.show();
+  }
 
+  submitUserLottoList(lottos: Lotto[]) {
+    this.inputManualLottoComp?.hide();
     this.purchaseInfoComp?.setState({ canShow: true, lottos });
     this.inputLottoComp?.setState({ canShow: true });
   }
 
-  submitLotto(winningLotto: WinningLotto) {
+  submitWinningLotto(winningLotto: WinningLotto) {
     const lottos: Lotto[] = this.purchaseInfoComp!.getLottos();
     this.resultPopupComp?.setState({ winningLotto, lottos });
     this.resultPopupComp?.show();
@@ -45,6 +50,14 @@ export default class App extends Component {
       { submitCost: (cost: number) => this.submitCost(cost) }
     );
 
+    this.inputManualLottoComp = new InputManualLotto(
+      $(id2Query(Id.inputManualLotto), this.$target),
+      {
+        submitUserLottoList: (lottoList: Lotto[]) =>
+          this.submitUserLottoList(lottoList),
+      }
+    );
+
     this.purchaseInfoComp = new PurchaseInfo(
       $(id2Query(Id.purchaseInfo), this.$target)
     );
@@ -52,8 +65,8 @@ export default class App extends Component {
     this.inputLottoComp = new InputLotto(
       $(id2Query(Id.inputLotto), this.$target),
       {
-        submitLotto: (winningLotto: WinningLotto) =>
-          this.submitLotto(winningLotto),
+        submitWinningLotto: (winningLotto: WinningLotto) =>
+          this.submitWinningLotto(winningLotto),
       }
     );
 
@@ -68,6 +81,7 @@ export default class App extends Component {
       <div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
+          <div id="${Id.inputManualLotto}" class="modal"></div>
           <form id="${Id.inputCost}"class="mt-5"></form>
           <section id="${Id.purchaseInfo}" class="mt-9"></section>
           <form id="${Id.inputLotto}" class="mt-9"></form>

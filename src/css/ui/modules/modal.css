@@ -53,4 +53,14 @@ svg {
     height: 90%;
     box-sizing: border-box;
   }
+  .manual-lotto-modal-inner {
+    height: fit-content;
+  }
+}
+
+.manual-lotto-box {
+  min-height: 40px;
+  background-color: #97cad1;
+  padding: 8px;
+  box-sizing: border-box;
 }
