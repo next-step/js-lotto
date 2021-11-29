@@ -11,3 +11,10 @@ const generateLottoNumber = () => getRandomNumber(MIN_LOTTO_NUMBER, MAX_LOTTO_NU
 export const issueLotto = () => [...Array(LOTTO_NUMBER_COUNT)].map(generateLottoNumber);
 
 export const getLottoAmount = (price) => Math.floor(price / LOTTO_PRICE);
+
+export const isAnswerValid = (answer) => {
+  return Object.values(answer).every(
+    (inputNumber) =>
+      inputNumber || inputNumber >= MIN_LOTTO_NUMBER || inputNumber <= MAX_LOTTO_NUMBER
+  );
+};

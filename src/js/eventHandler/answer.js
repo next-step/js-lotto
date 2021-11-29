@@ -1,13 +1,8 @@
 import { ANSWER_INPUT_NAMES } from '../constant/lotto.js';
 import lottoManager from '../model/lotto.js';
+import { isAnswerValid } from '../service/lotto.js';
 import { focusPaymentInput, resetMainView } from '../view/main.js';
 import { closeModal, openModal, updateResultView } from '../view/resultModal.js';
-
-const isLottoEmpty = () => !lottoManager.lottos.length;
-
-const isAnswerValid = (answer) => {
-  return Object.values(answer).every((inputNumber) => inputNumber || inputNumber >= 1);
-};
 
 const filterAnswer = (elements) =>
   Object.fromEntries(
@@ -21,13 +16,13 @@ export const handleAnswer = (event) => {
 
   const answer = filterAnswer(event.target.elements);
 
-  if (isLottoEmpty()) {
+  if (!lottoManager.lottos.length) {
     alert('로또를 구매하지 않았습니다. 로또를 구매한 후 결과를 확인해 주세요.');
     return;
   }
 
   if (!isAnswerValid(answer)) {
-    alert('빈 칸이 있습니다. 모두 입력 해주세요.');
+    alert('정상적이지 않은 입력입니다. 정상적으로 입력해주세요.');
     return;
   }
 
