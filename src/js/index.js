@@ -14,6 +14,7 @@ const lotto = new Lotto({
   $profitRateText: document.querySelector(SELECTOR.PROFIT_RATE_TEXT),
   $modalClose: document.querySelector(SELECTOR.MODAL_CLOSE),
   $modal: document.querySelector(SELECTOR.MODAL),
+  $resetBtn: document.querySelector(SELECTOR.RESET_BUTTON),
   $resultBoard: document.querySelector(SELECTOR.RESULT_BOARD),
 });
 

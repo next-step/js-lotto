@@ -49,6 +49,7 @@ export default class Lotto {
     $winningNumbers,
     $bonusNumber,
     $profitRateText,
+    $resetBtn,
     $resultBoard,
   }) {
     this.$paymentForm = $paymentForm;
@@ -64,6 +65,7 @@ export default class Lotto {
     this.$winningNumbers = $winningNumbers;
     this.$bonusNumber = $bonusNumber;
     this.$profitRateText = $profitRateText;
+    this.$resetBtn = $resetBtn;
     this.state = initialState;
   }
 
@@ -84,6 +86,7 @@ export default class Lotto {
     );
     this.$resultButton.addEventListener("click", this.onModalShow.bind(this));
     this.$modalClose.addEventListener("click", this.onModalClose.bind(this));
+    this.$resetBtn.addEventListener("click", this.onClickResetBtn.bind(this));
   }
 
   makeNumberString(numberArr) {
@@ -255,6 +258,10 @@ export default class Lotto {
     this.showLotto();
   }
 
+  onClickResetBtn() {
+    location.reload();
+  }
+
   onModalShow = () => {
     this.$modal.classList.add("open");
     this.setLottoOfficialResult();
@@ -296,7 +303,8 @@ export default class Lotto {
   }
 
   showProfitRate() {
-    this.$profitRateText.innerText = `당신의 총 수익률은 ${this.state.profitRate}%입니다.`;
+    if (this.state.profitRate)
+      this.$profitRateText.innerText = `당신의 총 수익률은 ${this.state.profitRate}%입니다.`;
   }
 
   clearLottoNumber() {

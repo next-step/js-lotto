@@ -12,3 +12,4 @@ export const LOTTO_CNT = "#js-lotto-count";
 export const WINNING_NUMBERS = ".winning-number";
 export const BONUS_NUMBER = ".bonus-number";
 export const PROFIT_RATE_TEXT = "#js-profit-rate";
+export const RESET_BUTTON = "#js-reset-btn";
