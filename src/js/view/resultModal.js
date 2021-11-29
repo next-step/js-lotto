@@ -1,12 +1,13 @@
+import SELECTOR from '../constant/selector.js';
 import lottoManager from '../model/lotto.js';
 
-const $modal = document.querySelector('.modal');
-const $first = document.querySelector('.js-result-first');
-const $second = document.querySelector('.js-result-second');
-const $third = document.querySelector('.js-result-third');
-const $fourth = document.querySelector('.js-result-fourth');
-const $fifth = document.querySelector('.js-result-fifth');
-const $profitPercentage = document.querySelector('.js-result-profit-percentage');
+const $modal = document.querySelector(SELECTOR.MODAL);
+const $first = document.querySelector(SELECTOR.RESULT.FIRST);
+const $second = document.querySelector(SELECTOR.RESULT.SECOND);
+const $third = document.querySelector(SELECTOR.RESULT.THIRD);
+const $fourth = document.querySelector(SELECTOR.RESULT.FOURTH);
+const $fifth = document.querySelector(SELECTOR.RESULT.FIFTH);
+const $profitPercentage = document.querySelector(SELECTOR.RESULT.PROFIT_PERCENTAGE);
 
 export const openModal = () => {
   $modal.classList.add('open');

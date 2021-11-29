@@ -7,9 +7,9 @@ const bindEvents = () => {
   $(SELECTOR.PAYMENT_FORM).addEventListener('submit', handlePayment);
   $(SELECTOR.TOGGLE).addEventListener('change', handleLottoDetailToggle);
   $(SELECTOR.ANSWER_FORM).addEventListener('submit', handleAnswer);
-  $('.modal').addEventListener('click', handleModalCloseOuter);
-  $('.js-modal-close').addEventListener('click', handleModalClose);
-  $('.js-restart-button').addEventListener('click', handleModalClose);
+  $(SELECTOR.MODAL).addEventListener('click', handleModalCloseOuter);
+  $(SELECTOR.MODAL_CLOSE).addEventListener('click', handleModalClose);
+  $(SELECTOR.RESTART_BUTTON).addEventListener('click', handleModalClose);
 };
 
 bindEvents();
