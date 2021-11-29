@@ -8,9 +8,12 @@ const lotto = new Lotto({
   $lottoNumberSwitch: document.querySelector(SELECTOR.LOTTO_NUMBER_SWITCH),
   $lottoBoard: document.querySelector(SELECTOR.LOTTO_BOARD),
   $lottoCnt: document.querySelector(SELECTOR.LOTTO_CNT),
-  $showResultButton: document.querySelector(SELECTOR.SHOW_RESULT_BUTTON),
+  $resultButton: document.querySelector(SELECTOR.RESULT_BUTTON),
+  $winningNumbers: document.querySelectorAll(SELECTOR.WINNING_NUMBERS),
+  $bonusNumber: document.querySelector(SELECTOR.BONUS_NUMBER),
   $modalClose: document.querySelector(SELECTOR.MODAL_CLOSE),
   $modal: document.querySelector(SELECTOR.MODAL),
+  $resultBoard: document.querySelector(SELECTOR.RESULT_BOARD),
 });
 
 lotto.bindEvents();

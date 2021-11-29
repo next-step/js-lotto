@@ -1,6 +1,35 @@
 const initialState = {
   lottoCnt: 0,
   lottoNumberList: [],
+  winningNumberList: [],
+  bonusNumber: null,
+  matchNumberList: [
+    {
+      name: "3개",
+      amout: "5,000",
+      cnt: 0,
+    },
+    {
+      name: "4개",
+      amout: "50,000",
+      cnt: 0,
+    },
+    {
+      name: "5개",
+      amout: "1,500,000",
+      cnt: 0,
+    },
+    {
+      name: "5개 + 보너스볼",
+      amout: "30,000,000",
+      cnt: 0,
+    },
+    {
+      name: "6개",
+      amout: "2,000,000,000",
+      cnt: 0,
+    },
+  ],
   isChecked: false,
 };
 
@@ -14,7 +43,10 @@ export default class Lotto {
     $lottoCnt,
     $modal,
     $modalClose,
-    $showResultButton,
+    $resultButton,
+    $winningNumbers,
+    $bonusNumber,
+    $resultBoard,
   }) {
     this.$paymentForm = $paymentForm;
     this.$payment = $payment;
@@ -24,7 +56,10 @@ export default class Lotto {
     this.$lottoCnt = $lottoCnt;
     this.$modal = $modal;
     this.$modalClose = $modalClose;
-    this.$showResultButton = $showResultButton;
+    this.$resultButton = $resultButton;
+    this.$resultBoard = $resultBoard;
+    this.$winningNumbers = $winningNumbers;
+    this.$bonusNumber = $bonusNumber;
     this.state = initialState;
   }
 
@@ -43,27 +78,8 @@ export default class Lotto {
       "click",
       this.onClickToggleBtn.bind(this)
     );
-    this.$showResultButton.addEventListener(
-      "click",
-      this.onModalShow.bind(this)
-    );
+    this.$resultButton.addEventListener("click", this.onModalShow.bind(this));
     this.$modalClose.addEventListener("click", this.onModalClose.bind(this));
-  }
-
-  makeLottoNumberTemp() {
-    //로또숫자를 보여주는 템플릿을 만드는 함수
-    let temp = "";
-    const lottoCnt = this.state.lottoCnt; //로또갯수
-    for (let i = 0; i < lottoCnt; i++) {
-      const numberString = this.makeNumberString(this.state.lottoNumberList[i]);
-      temp += `
-      <li class="mx-1 text-4xl lotto-wrapper">
-        <span class="lotto-icon">🎟️ </span>
-        <span class="lotto-detail" style="display: inline;">${numberString}</span>
-      </li>
-    `;
-    }
-    return temp;
   }
 
   makeNumberString(numberArr) {
@@ -91,8 +107,38 @@ export default class Lotto {
     return result;
   }
 
+  makeLottoNumberTemp() {
+    //로또숫자를 보여주는 템플릿을 만드는 함수
+    let temp = "";
+    const lottoCnt = this.state.lottoCnt; //로또갯수
+    for (let i = 0; i < lottoCnt; i++) {
+      const numberString = this.makeNumberString(this.state.lottoNumberList[i]);
+      temp += `
+      <li class="mx-1 text-4xl lotto-wrapper">
+        <span class="lotto-icon">🎟️ </span>
+        <span class="lotto-detail" style="display: inline;">${numberString}</span>
+      </li>
+    `;
+    }
+    return temp;
+  }
+
+  makeResultTemp() {
+    console.log(this.state.matchNumberList);
+    const basicTemp = this.state.matchNumberList.reduce(
+      (prev, cur) =>
+        (prev += `<tr class="text-center">
+        <td class="p-3">${cur.name}</td>
+        <td class="p-3">${cur.amout}</td>
+        <td class="p-3">${cur.cnt}개</td>
+        </tr>`),
+      ""
+    );
+    return basicTemp;
+  }
+
   setLottoNum() {
-    //state에 로또숫자들을 저장시키는 함수
+    //state에 로또숫자들을 state에 저장시키는 함수
     this.clearLottoNumber();
 
     const cnt = this.state.lottoCnt;
@@ -100,6 +146,66 @@ export default class Lotto {
       const autoNumArr = this.makeAutoLottoNum();
       this.state.lottoNumberList.push(autoNumArr);
     }
+  }
+
+  setLottoOfficialResult() {
+    //로또당첨정보를 state에 주입하는 함수
+    let winningNumbers = [];
+    for (let i of this.$winningNumbers) {
+      winningNumbers.push(Number(i.value));
+    }
+    this.state.winningNumberList = winningNumbers;
+    this.state.bonusNumber = Number(this.$bonusNumber.value);
+    this.setLottoResult();
+  }
+
+  setLottoResult() {
+    //당첨번호정보와 구입한 로또번호를 비교한 값을 state에 주입하는 함수
+
+    this.clearMatchNumberList();
+    this.state.lottoNumberList.forEach((numbers) => {
+      const isMatchBonus = numbers.includes(this.state.bonusNumber);
+      const matchWinningNumberCnt = this.state.winningNumberList.reduce(
+        (prev, cur) => {
+          numbers.includes(cur) && prev++;
+          return prev;
+        },
+        0
+      );
+      console.log(matchWinningNumberCnt);
+      switch (matchWinningNumberCnt) {
+        case 6:
+          this.state.matchNumberList = this.state.matchNumberList.map((ele) =>
+            ele.name === "6개" ? { ...ele, cnt: ele.cnt + 1 } : ele
+          );
+          break;
+        case 5:
+          this.state.matchNumberList = isMatchBonus
+            ? this.state.matchNumberList.map((ele) =>
+                ele.name === "5개 + 보너스볼"
+                  ? { ...ele, cnt: ele.cnt + 1 }
+                  : ele
+              )
+            : this.state.matchNumberList.map((ele) =>
+                ele.name === "5개" ? { ...ele, cnt: ele.cnt + 1 } : ele
+              );
+          break;
+        case 4:
+          this.state.matchNumberList = this.state.matchNumberList.map((ele) =>
+            ele.name === "4개" ? { ...ele, cnt: ele.cnt + 1 } : ele
+          );
+          break;
+        case 3:
+          this.state.matchNumberList = this.state.matchNumberList.map((ele) =>
+            ele.name === "3개" ? { ...ele, cnt: ele.cnt + 1 } : ele
+          );
+          break;
+        default:
+          this.state.matchNumberList = this.state.matchNumberList;
+      }
+    });
+
+    this.showResult();
   }
 
   onClickToggleBtn(e) {
@@ -126,18 +232,9 @@ export default class Lotto {
     this.showLotto();
   }
 
-  clearLottoNumber() {
-    //state lottoNumber 초기화
-    this.state.lottoNumberList = [];
-  }
-
-  clearBoard() {
-    //보드를 모두 지워주는 함수
-    this.$lottoBoard.innerHTML = "";
-  }
-
   onModalShow = () => {
     this.$modal.classList.add("open");
+    this.setLottoOfficialResult();
   };
 
   onModalClose = () => {
@@ -168,5 +265,50 @@ export default class Lotto {
     //로또를 구입한 갯수 렌더링
     const cntTemp = `총 ${cnt}개를 구매하였습니다.`;
     this.$lottoCnt.innerText = cntTemp;
+  }
+
+  showResult() {
+    const temp = this.makeResultTemp();
+    this.$resultBoard.innerHTML = temp;
+  }
+
+  clearLottoNumber() {
+    //state lottoNumber 초기화
+    this.state.lottoNumberList = [];
+  }
+
+  clearBoard() {
+    //보드를 모두 지워주는 함수
+    this.$lottoBoard.innerHTML = "";
+  }
+
+  clearMatchNumberList() {
+    this.state.matchNumberList = [
+      {
+        name: "3개",
+        amout: "5,000",
+        cnt: 0,
+      },
+      {
+        name: "4개",
+        amout: "50,000",
+        cnt: 0,
+      },
+      {
+        name: "5개",
+        amout: "1,500,000",
+        cnt: 0,
+      },
+      {
+        name: "5개 + 보너스볼",
+        amout: "30,000,000",
+        cnt: 0,
+      },
+      {
+        name: "6개",
+        amout: "2,000,000,000",
+        cnt: 0,
+      },
+    ];
   }
 }
