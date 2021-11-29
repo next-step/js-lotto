@@ -6,31 +6,33 @@ const initialState = {
   matchNumberList: [
     {
       name: "3개",
-      amout: "5,000",
+      amount: 5000,
       cnt: 0,
     },
     {
       name: "4개",
-      amout: "50,000",
+      amount: 50000,
       cnt: 0,
     },
     {
       name: "5개",
-      amout: "1,500,000",
+      amount: 1500000,
       cnt: 0,
     },
     {
       name: "5개 + 보너스볼",
-      amout: "30,000,000",
+      amount: 30000000,
       cnt: 0,
     },
     {
       name: "6개",
-      amout: "2,000,000,000",
+      amount: 2000000000,
       cnt: 0,
     },
   ],
   isChecked: false,
+  profit: 0,
+  profitRate: 0,
 };
 
 export default class Lotto {
@@ -46,6 +48,7 @@ export default class Lotto {
     $resultButton,
     $winningNumbers,
     $bonusNumber,
+    $profitRateText,
     $resultBoard,
   }) {
     this.$paymentForm = $paymentForm;
@@ -60,6 +63,7 @@ export default class Lotto {
     this.$resultBoard = $resultBoard;
     this.$winningNumbers = $winningNumbers;
     this.$bonusNumber = $bonusNumber;
+    this.$profitRateText = $profitRateText;
     this.state = initialState;
   }
 
@@ -129,7 +133,7 @@ export default class Lotto {
       (prev, cur) =>
         (prev += `<tr class="text-center">
         <td class="p-3">${cur.name}</td>
-        <td class="p-3">${cur.amout}</td>
+        <td class="p-3">${cur.amount}</td>
         <td class="p-3">${cur.cnt}개</td>
         </tr>`),
       ""
@@ -175,37 +179,56 @@ export default class Lotto {
       console.log(matchWinningNumberCnt);
       switch (matchWinningNumberCnt) {
         case 6:
-          this.state.matchNumberList = this.state.matchNumberList.map((ele) =>
-            ele.name === "6개" ? { ...ele, cnt: ele.cnt + 1 } : ele
-          );
+          this.state.matchNumberList = this.state.matchNumberList.map((ele) => {
+            this.state.profit += parseInt(ele.amount);
+            return ele.name === "6개" ? { ...ele, cnt: ele.cnt + 1 } : ele;
+          });
           break;
         case 5:
-          this.state.matchNumberList = isMatchBonus
-            ? this.state.matchNumberList.map((ele) =>
-                ele.name === "5개 + 보너스볼"
+          if (isMatchBonus) {
+            this.state.matchNumberList = this.state.matchNumberList.map(
+              (ele) => {
+                this.state.profit += parseInt(ele.amount);
+                return ele.name === "5개 + 보너스볼"
                   ? { ...ele, cnt: ele.cnt + 1 }
-                  : ele
-              )
-            : this.state.matchNumberList.map((ele) =>
-                ele.name === "5개" ? { ...ele, cnt: ele.cnt + 1 } : ele
-              );
+                  : ele;
+              }
+            );
+          }
+          if (!isMatchBonus) {
+            this.state.matchNumberList = this.state.matchNumberList.map(
+              (ele) => {
+                this.state.profit += parseInt(ele.amount);
+                return ele.name === "5개" ? { ...ele, cnt: ele.cnt + 1 } : ele;
+              }
+            );
+          }
           break;
         case 4:
-          this.state.matchNumberList = this.state.matchNumberList.map((ele) =>
-            ele.name === "4개" ? { ...ele, cnt: ele.cnt + 1 } : ele
-          );
+          this.state.matchNumberList = this.state.matchNumberList.map((ele) => {
+            this.state.profit += parseInt(ele.amount);
+            return ele.name === "4개" ? { ...ele, cnt: ele.cnt + 1 } : ele;
+          });
           break;
         case 3:
-          this.state.matchNumberList = this.state.matchNumberList.map((ele) =>
-            ele.name === "3개" ? { ...ele, cnt: ele.cnt + 1 } : ele
-          );
+          this.state.matchNumberList = this.state.matchNumberList.map((ele) => {
+            this.state.profit += parseInt(ele.amount);
+            return ele.name === "3개" ? { ...ele, cnt: ele.cnt + 1 } : ele;
+          });
           break;
         default:
           this.state.matchNumberList = this.state.matchNumberList;
       }
     });
-
+    this.setProfitRate();
     this.showResult();
+  }
+
+  setProfitRate() {
+    //수익률을 구하고, state에 저장하는 함수
+    this.state.profitRate =
+      ((this.state.profit - this.$payment.value) / this.$payment.value) * 100;
+    this.showProfitRate();
   }
 
   onClickToggleBtn(e) {
@@ -272,6 +295,10 @@ export default class Lotto {
     this.$resultBoard.innerHTML = temp;
   }
 
+  showProfitRate() {
+    this.$profitRateText.innerText = `당신의 총 수익률은 ${this.state.profitRate}%입니다.`;
+  }
+
   clearLottoNumber() {
     //state lottoNumber 초기화
     this.state.lottoNumberList = [];
@@ -286,27 +313,27 @@ export default class Lotto {
     this.state.matchNumberList = [
       {
         name: "3개",
-        amout: "5,000",
+        amount: 5000,
         cnt: 0,
       },
       {
         name: "4개",
-        amout: "50,000",
+        amount: 50000,
         cnt: 0,
       },
       {
         name: "5개",
-        amout: "1,500,000",
+        amount: 1500000,
         cnt: 0,
       },
       {
         name: "5개 + 보너스볼",
-        amout: "30,000,000",
+        amount: 30000000,
         cnt: 0,
       },
       {
         name: "6개",
-        amout: "2,000,000,000",
+        amount: 2000000000,
         cnt: 0,
       },
     ];
