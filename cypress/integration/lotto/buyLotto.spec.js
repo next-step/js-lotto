@@ -9,12 +9,9 @@ describe('Lotto 구매', () => {
         //로또 1장의 가격은 1,000원이다.
         //소비자는 자동 구매를 할 수 있어야 한다.
         const amount = 2000;
-        const count = 2000 / PRICE_PER_TICKET;
+        const count = amount / PRICE_PER_TICKET;
 
-        cy.getBySel('amount-input')
-          .type(amount);
-        cy.getBySel('amount-form')
-          .submit();
+        cy.purchaseTickets(amount)
 
         cy.getBySel('tickets-count')
           .should('include.text', count);
@@ -26,12 +23,7 @@ describe('Lotto 구매', () => {
         const stub = cy.stub();
         cy.on('window:alert', stub);
 
-        const amount = 2500;
-
-        cy.getBySel('amount-input')
-          .type(amount);
-        cy.getBySel('amount-form')
-          .submit()
+        cy.purchaseTickets(2500)
           .then(() => {
               expect(stub.getCall(0))
                   .to
@@ -41,11 +33,7 @@ describe('Lotto 구매', () => {
     });
 
     it('복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.', () => {
-        const amount = 2000;
-        cy.getBySel('amount-input')
-          .type(amount);
-        cy.getBySel('amount-form')
-          .submit();
+        cy.purchaseTickets(2000);
 
         cy.getBySel('lotto-number-detail')
           .then($el => {

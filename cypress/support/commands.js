@@ -26,3 +26,21 @@
 Cypress.Commands.add('getBySel', (selector, ...args) => {
     return cy.get(`[data-test=${selector}]`, ...args);
 });
+
+Cypress.Commands.add('purchaseTickets', (amount) => {
+    cy.getBySel('amount-input').type(amount);
+    return cy.getBySel('amount-form').submit();
+});
+
+Cypress.Commands.add('typeWinningNumbers', ({normalNumbers, bonusNumber}) => {
+    const numbers = [...normalNumbers, bonusNumber];
+    return cy.get('[data-winning-number]').each(($input, index) => cy.wrap($input).type(numbers[index]));
+});
+
+Cypress.Commands.add('confirmLottoResult', () => {
+    return cy.contains('결과 확인하기').click();
+});
+
+Cypress.Commands.add('restartLotto', () => {
+    return cy.contains('다시 시작하기').click();
+})
