@@ -89,15 +89,14 @@ export default class Lotto {
   }
 
   makeResultTemp() {
-    const temp = this.state.matchNumberList.reduce(
-      (prev, cur) =>
-        (prev += `<tr class="text-center">
+    const temp = this.state.matchNumberList.reduce((prev, cur) => {
+      const amountToString = cur.amount.toLocaleString("ko-KR");
+      return (prev += `<tr class="text-center">
         <td class="p-3">${cur.name}</td>
-        <td class="p-3">${cur.amount}</td>
+        <td class="p-3">${amountToString}</td>
         <td class="p-3">${cur.cnt}개</td>
-        </tr>`),
-      ""
-    );
+        </tr>`);
+    }, "");
     return temp;
   }
 
@@ -128,8 +127,9 @@ export default class Lotto {
 
     this.initMatchNumberList();
     this.state.lottoNumberList.forEach((numbers) => {
-      const isMatchBonus = numbers.includes(this.state.bonusNumber);
+      const isMatchBonus = numbers.includes(this.state.bonusNumber); //보너스넘버를 맞췄는지 안 맞췄는지에 대한 여부
       const matchWinningNumberCnt = this.state.winningNumberList.reduce(
+        //로또넘버 중 몇 개를 맞았는지에 대한 값
         (prev, cur) => {
           numbers.includes(cur) && prev++;
           return prev;
