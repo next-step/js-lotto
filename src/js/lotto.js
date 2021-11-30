@@ -103,13 +103,16 @@ export default class Lotto {
   makeAutoLottoNum() {
     //로또 한 장에 대한 자동으로 숫자 6자리를 만들어내는 함수
     let result = [];
-    let randomCnt = 0; //<-랜덤카운팅이 6까지 일때 while문을 돌릴 것이다.
-    while (randomCnt < 6) {
+    const arr1_45 = Array(45)
+      .fill()
+      .map((v, i) => i + 1);
+    while (result.length < 6) {
       //한장 당 만들 수 있는 랜덤숫자갯수가 6개까지이므로 6까지 만들 것임.
-      const random_1_45 = Math.ceil(Math.random() * 45);
-      if (result.includes(random_1_45)) continue;
+      const random_1_45 = arr1_45.splice(
+        Math.floor(Math.random() * arr1_45.length),
+        1
+      );
       result.push(random_1_45);
-      randomCnt++;
     }
     return result;
   }
