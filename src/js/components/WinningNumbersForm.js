@@ -19,7 +19,7 @@ export const WinningNumbersForm = ($el, props) => {
     function onSubmitWinningNumbers(event) {
         event.preventDefault();
 
-        const normalNumbers = [...$$('[data-winning-number="normal"]', event.target)].map(({value}) => value);
+        const normalNumbers = [...$$('[data-winning-number="normal"]', event.target)].map(({value}) => Number(value));
         const bonusNumber = $('[data-winning-number="bonus"]', event.target).value;
 
         if (!LottoService.validateWinningNumber({normalNumbers, bonusNumber})) {
@@ -27,7 +27,7 @@ export const WinningNumbersForm = ($el, props) => {
         }
 
         props.pickWinningNumbers({
-            normalNumbers: normalNumbers.map(Number),
+            normalNumbers,
             bonusNumber: Number(bonusNumber),
         });
     }
