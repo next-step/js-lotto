@@ -5,33 +5,7 @@ const initialState = {
   lottoNumberList: [],
   winningNumberList: [],
   bonusNumber: null,
-  matchNumberList: [
-    {
-      name: "3개",
-      amount: 5000,
-      cnt: 0,
-    },
-    {
-      name: "4개",
-      amount: 50000,
-      cnt: 0,
-    },
-    {
-      name: "5개",
-      amount: 1500000,
-      cnt: 0,
-    },
-    {
-      name: "5개 + 보너스볼",
-      amount: 30000000,
-      cnt: 0,
-    },
-    {
-      name: "6개",
-      amount: 2000000000,
-      cnt: 0,
-    },
-  ],
+  matchNumberList: [],
   profit: 0,
   profitRate: 0,
 };
@@ -41,7 +15,6 @@ export default class Lotto {
     $paymentForm,
     $payment,
     $lottoNumberSwitch,
-    $confirmBtn,
     $lottoBoard,
     $lottoCnt,
     $modal,
@@ -56,7 +29,6 @@ export default class Lotto {
     this.$paymentForm = $paymentForm;
     this.$payment = $payment;
     this.$lottoNumberSwitch = $lottoNumberSwitch;
-    this.$confirmBtn = $confirmBtn;
     this.$lottoBoard = $lottoBoard;
     this.$lottoCnt = $lottoCnt;
     this.$modal = $modal;
@@ -73,13 +45,7 @@ export default class Lotto {
   bindEvents() {
     this.$paymentForm.addEventListener(
       "submit",
-      function (e) {
-        e.preventDefault();
-      }.bind(this)
-    );
-    this.$confirmBtn.addEventListener(
-      "click",
-      this.onClickConfirmBtn.bind(this)
+      this.submitPaymentForm.bind(this)
     );
     this.$lottoNumberSwitch.addEventListener(
       "click",
@@ -160,7 +126,7 @@ export default class Lotto {
   setLottoResult() {
     //당첨번호정보와 구입한 로또번호를 비교한 값을 state에 주입하는 함수
 
-    this.clearMatchNumberList();
+    this.initMatchNumberList();
     this.state.lottoNumberList.forEach((numbers) => {
       const isMatchBonus = numbers.includes(this.state.bonusNumber);
       const matchWinningNumberCnt = this.state.winningNumberList.reduce(
@@ -241,8 +207,9 @@ export default class Lotto {
     this.$lottoBoard.classList.remove("flex-col");
   }
 
-  onClickConfirmBtn() {
+  submitPaymentForm(e) {
     //지불액에 따라 로또를 구입하는 함수
+    e.preventDefault();
     const payment = Number(this.$payment.value);
     const numberOfPurchase = Math.trunc(payment / LOTTO_PRICE);
     this.state.lottoCnt = numberOfPurchase;
@@ -285,7 +252,7 @@ export default class Lotto {
     this.state.lottoNumberList = [];
   }
 
-  clearMatchNumberList() {
+  initMatchNumberList() {
     this.state.matchNumberList = [
       {
         name: "3개",
