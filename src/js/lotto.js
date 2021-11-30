@@ -1,3 +1,5 @@
+import { LOTTO_PRICE } from "./constants/index.js";
+
 const initialState = {
   lottoCnt: 0,
   lottoNumberList: [],
@@ -30,7 +32,6 @@ const initialState = {
       cnt: 0,
     },
   ],
-  isChecked: false,
   profit: 0,
   profitRate: 0,
 };
@@ -113,18 +114,16 @@ export default class Lotto {
       prev += `
       <li class="mx-1 text-4xl lotto-wrapper">
         <span class="lotto-icon">🎟️ </span>
-        <span class="lotto-detail" style="display: inline;">${numberStr}</span>
+        <span class="lotto-detail" style="display: none;">${numberStr}</span>
       </li>
     `;
       return prev;
     }, "");
-
     return temp;
   }
 
   makeResultTemp() {
-    console.log(this.state.matchNumberList);
-    const basicTemp = this.state.matchNumberList.reduce(
+    const temp = this.state.matchNumberList.reduce(
       (prev, cur) =>
         (prev += `<tr class="text-center">
         <td class="p-3">${cur.name}</td>
@@ -133,7 +132,7 @@ export default class Lotto {
         </tr>`),
       ""
     );
-    return basicTemp;
+    return temp;
   }
 
   setLottoNum() {
@@ -171,7 +170,6 @@ export default class Lotto {
         },
         0
       );
-      console.log(matchWinningNumberCnt);
       switch (matchWinningNumberCnt) {
         case 6:
           this.state.matchNumberList = this.state.matchNumberList.map((ele) => {
@@ -229,22 +227,24 @@ export default class Lotto {
   onClickToggleBtn(e) {
     //번호보기버튼 스위치
     const isChecked = e.target.checked;
+    const $lottoNumbers = document.querySelectorAll(".lotto-detail");
     if (isChecked) {
-      this.state.isChecked = true;
-      this.showLottoNumber();
+      $lottoNumbers.forEach(
+        ($lottoNumber) => ($lottoNumber.style.display = "inline")
+      );
       this.$lottoBoard.classList.add("flex-col");
       return;
     }
-    this.state.isChecked = false;
-    this.showLotto();
+    $lottoNumbers.forEach(
+      ($lottoNumber) => ($lottoNumber.style.display = "none")
+    );
     this.$lottoBoard.classList.remove("flex-col");
   }
 
   onClickConfirmBtn() {
     //지불액에 따라 로또를 구입하는 함수
     const payment = Number(this.$payment.value);
-    const lottoPrice = 1000;
-    const numberOfPurchase = Math.trunc(payment / lottoPrice);
+    const numberOfPurchase = Math.trunc(payment / LOTTO_PRICE);
     this.state.lottoCnt = numberOfPurchase;
     this.setLottoNum();
     this.showLotto();
@@ -263,35 +263,16 @@ export default class Lotto {
     this.$modal.classList.remove("open");
   };
 
-  showLottoNumber() {
-    this.clearBoard();
-
-    const htmlTemp = this.makeLottoNumberTemp();
-    this.$lottoBoard.innerHTML = htmlTemp;
-  }
-
   showLotto() {
-    // 렌더링 해야 할 html :  <span class="mx-1 text-4xl">🎟️ </span>
-    this.clearBoard();
-
-    const cnt = this.state.lottoCnt;
-
-    //로또를 구입한 갯수만큼 node 추가하여 화면에 렌더링
-    for (let i = 0; i < cnt; i++) {
-      const newSpan = document.createElement("span");
-      newSpan.classList.add("mx-1", "text-4xl");
-      newSpan.innerText = "🎟️ ";
-      this.$lottoBoard.appendChild(newSpan);
-    }
+    this.$lottoBoard.innerHTML = this.makeLottoNumberTemp();
 
     //로또를 구입한 갯수 렌더링
-    const cntTemp = `총 ${cnt}개를 구매하였습니다.`;
+    const cntTemp = `총 ${this.state.lottoCnt}개를 구매하였습니다.`;
     this.$lottoCnt.innerText = cntTemp;
   }
 
   showResult() {
-    const temp = this.makeResultTemp();
-    this.$resultBoard.innerHTML = temp;
+    this.$resultBoard.innerHTML = this.makeResultTemp();
   }
 
   showProfitRate() {
@@ -302,11 +283,6 @@ export default class Lotto {
   clearLottoNumber() {
     //state lottoNumber 초기화
     this.state.lottoNumberList = [];
-  }
-
-  clearBoard() {
-    //보드를 모두 지워주는 함수
-    this.$lottoBoard.innerHTML = "";
   }
 
   clearMatchNumberList() {
