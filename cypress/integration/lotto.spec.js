@@ -23,24 +23,24 @@ describe('로또 게임', () => {
   });
 
   it('결과 확인하기 버튼을 누르면 당첨 통계 , 수익률을 모달로 확인할 수 있다.', ()=>{
-    cy.get('.winning-number:first-child').type(5);
-    cy.get('.winning-number:nth-child(2)').type(11);
-    cy.get('.winning-number:nth-child(3)').type(16);
-    cy.get('.winning-number:nth-child(4)').type(22);
-    cy.get('.winning-number:nth-child(5)').type(30);
-    cy.get('.winning-number:last-child').type(44);
+    cy.get('.winning-number[data-winning-number="1"]').type(5);
+    cy.get('.winning-number[data-winning-number="2"]').type(11);
+    cy.get('.winning-number[data-winning-number="3"]').type(16);
+    cy.get('.winning-number[data-winning-number="4"]').type(22);
+    cy.get('.winning-number[data-winning-number="5"]').type(30);
+    cy.get('.winning-number[data-winning-number="6"]').type(44);
     cy.get('.bonus-number').type(35);
     cy.get('.open-result-modal-button').click();
   })
 
    it('다시 시작하기 버튼을 누르면 초기화되서 다시 구매를 시작할 수 있다.', ()=>{
     buyLotto(5000);
-    cy.get('.winning-number:first-child').type(5);
-    cy.get('.winning-number:nth-child(2)').type(15);
-    cy.get('.winning-number:nth-child(3)').type(22);
-    cy.get('.winning-number:nth-child(4)').type(25);
-    cy.get('.winning-number:nth-child(5)').type(30);
-    cy.get('.winning-number:last-child').type(40);
+    cy.get('.winning-number[data-winning-number="1"]').type(5);
+    cy.get('.winning-number[data-winning-number="2"]').type(15);
+    cy.get('.winning-number[data-winning-number="3"]').type(22);
+    cy.get('.winning-number[data-winning-number="4"]').type(25);
+    cy.get('.winning-number[data-winning-number="5"]').type(30);
+    cy.get('.winning-number[data-winning-number="6"]').type(40);
     cy.get('.bonus-number').type(43);
     cy.get('.open-result-modal-button').click();
     cy.get('.js-reset-button').click();

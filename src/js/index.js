@@ -20,24 +20,6 @@ const $modalCloseButton = document.querySelector('.modal-close');
 
 const $resultPersent = document.querySelector('.js-percent'); 
 
-// 만들고자하는 객체
-// {
-//   lottoNumbers: [],
-
-//   setLottoNumbers() {},
-//   evaluateRank(winnigNumber, bonusNumber) {}
-// }
-
-// const getLottoNumber = () => Math.floor(Math.random() * 45) + 1;
-// [1,2,3,4,5,6,7,8,9,10]
-// 1~10 중 랜덤하게 하나 뽑는다.
-// 예를 들어 3을 뽑았다.
-// 배열 수정
-// a = [1,2] b = [4,5, 6,7,8,9,10]
-// [...a, ...b]
-// [1,2,4,5,6,7,8,9,10]
-// 다시 랜덤하게 뽑는다.
-// ... 반복
 
 // 로또 한 장을 발행한다.
 const setLotto = (maxNum, minNum) => {
@@ -234,26 +216,61 @@ const modalView = document.querySelector('.js-modal-view');
 $resultButton.addEventListener('click', ()=> {
   const winnigNumber = Array.from($winningNumber).map(($input) => Number($input.value));
   const bonusNumber = Number($bonusNumber.value);
-  console.log(winnigNumber);
-  console.log(bonusNumber);
+  
+  const allNumber = [];
+  for (let i = 0 ; i < winnigNumber.length ; i ++){
+    if(winnigNumber[i] > 45){
+      alert('45까지 입력 가능합니다');
+      return;
+    }
+    else if (winnigNumber[i] === 0){
+      alert('공백 및 0은 입력이 안됩니다.');
+      return;
+    }
+    else if(winnigNumber[i] > 0 || winnigNumber[i] < 46){
+      allNumber.push(winnigNumber[i]);
+    }
+  }
+
+  if(bonusNumber > 45){
+    alert('45까지 입력 가능합니다');
+    return;
+  }
+  else if (bonusNumber <= 45 ){
+    allNumber.push(bonusNumber);
+  }
+  const setWinning = new Set(allNumber);
+
+  if(allNumber.length !== setWinning.size){
+    alert('중복된 숫자가 존재합니다');
+    return;
+  }    
+  
   lotto.evaluateRank(winnigNumber ,bonusNumber);
-  console.log(lotto.rank);
-
-
+  
   modalView.classList.add('open');
   $resultContainer.innerHTML = matchedCountTemplate(lotto.rank);
+
+  const priceRank = {
+    prize_money_1 : 2000000000,
+    prize_money_2 : 30000000,
+    prize_money_3 : 1500000,
+    prize_money_4 : 50000,
+    prize_money_5 : 5000
+  }
   
-  const prize = (lotto.rank["1등"] * 2000000000) + 
-                (lotto.rank["2등"] * 30000000) +
-                (lotto.rank["3등"] * 1500000) +
-                (lotto.rank["4등"] * 50000) + 
-                (lotto.rank["5등"] * 5000);
+  const prize = (lotto.rank["1등"] * priceRank.prize_money_1) + 
+                (lotto.rank["2등"] * priceRank.prize_money_2) +
+                (lotto.rank["3등"] * priceRank.prize_money_3) +
+                (lotto.rank["4등"] * priceRank.prize_money_4) + 
+                (lotto.rank["5등"] * priceRank.prize_money_5);
   
 
-  // (이익 / 내가 쓴 돈)
-  const prizePercent = (prize/ price).toFixed(2);
+  // (이익 - 내가 쓴 돈 / 내가 쓴 돈)
 
-  $resultPersent.textContent = `당신의 총 수익률은 ${ prizePercent === NaN ? 0 : prizePercent}%입니다.`;
+  const prizePercent = ((prize - price )/price).toFixed(2);
+
+  $resultPersent.textContent = `당신의 총 수익률은 ${ prizePercent === NaN || prizePercent  < 0? 0 : prizePercent}%입니다.`;
 })
 
 // 다시 시작하기 버튼 
@@ -268,6 +285,4 @@ $modalCloseButton.addEventListener('click',() =>{
   modalView.classList.remove('open');
 })
 
-// local step1
-// fork setp1
-// upstream merge mini
+
