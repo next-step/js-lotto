@@ -15,7 +15,6 @@ class WinningNumberFormView extends View {
   }
 
   onKeyUp = ({ target, keyCode }) => {
-    console.dir("onKeyUp__", keyCode);
     if (target.type === "number" && keyCode >= 48 && keyCode <= 57 && target.value.length == 2) {
       if (target.classList.contains("bonus-number")) return false;
 

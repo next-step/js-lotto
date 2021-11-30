@@ -9,8 +9,6 @@ export default class View {
     if (!element) throw element;
     this.$elem = element;
 
-    console.log(`[${this.tag}] $elem: ${this.$elem}`);
-
     return this;
   }
 

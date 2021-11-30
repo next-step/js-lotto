@@ -17,7 +17,6 @@ class ResultModalView extends View {
   }
 
   bindEvent() {
-    console.log("this.$modalClose >>",this.$modalClose);
     this.$modalClose.addEventListener("click", this.hide);
     this.$btnRestart.addEventListener("click", this.restartHandler);
   }
