@@ -1,26 +1,26 @@
 import { $ } from "../utils/selector.js";
+import { LOTTO_PRICE } from "../utils/constants.js";
 import {
   isValidPrice,
   isValidPurchaseAmount,
   isValidPurchaseNumber,
-  generateLottoNumbers,
-} from "../utils/utilFunc.js";
+} from "../utils/validator.js";
+import { generateLottoNumbers } from "../utils/numberGenerator.js";
 import {
   updateLottoAmounts,
-  addWinningNumberInput,
   updateLottoTickets,
-  resetLotto,
+  addWinningNumberInput,
   addManualNumberInput,
+  resetLotto,
   resetManualLotto,
 } from "../utils/renderer.js";
 import { handleLottoResult, onModalClose } from "./winningResult.js";
-import { LOTTO_PRICE } from "../utils/constants.js";
 
 function App() {
   let lottoTicketsList = [];
   let manualLottoNumberList = [];
-  let IsLottoNumberVisible = false;
-  let IsManualLotto = false;
+  let isLottoNumberVisible = false;
+  let isManualLotto = false;
   let manualLottoCount = 0;
 
   const showLottoNumbers = () => {
@@ -30,7 +30,7 @@ function App() {
         el.classList.remove("d-none");
         el.classList.add("d-flex");
       });
-    IsLottoNumberVisible = false;
+    isLottoNumberVisible = false;
   };
 
   const hideLottoNumbers = () => {
@@ -40,7 +40,7 @@ function App() {
         el.classList.remove("d-flex");
         el.classList.add("d-none");
       });
-    IsLottoNumberVisible = true;
+    isLottoNumberVisible = true;
   };
 
   const purchaseNewLottos = () => {
@@ -52,38 +52,29 @@ function App() {
     lottoTicketsList = [];
 
     const count = Math.floor(purchasePrice / LOTTO_PRICE);
-    let purchaseAmounts = IsManualLotto ? count - manualLottoCount : count;
+    let purchaseAmounts = isManualLotto ? count - manualLottoCount : count;
     lottoTicketsList = generateLottoNumbers(purchaseAmounts);
 
-    if (IsManualLotto) {
+    if (isManualLotto) {
       lottoTicketsList = lottoTicketsList.concat(manualLottoNumberList);
     }
 
-    updateLottoAmounts(".lotto__menu", purchaseAmounts);
+    updateLottoAmounts(".lotto__menu", count);
     updateLottoTickets(count, lottoTicketsList);
     addWinningNumberInput(".winning-number-form");
-    IsLottoNumberVisible = true;
+    isLottoNumberVisible = true;
 
     handleLottoResult(lottoTicketsList);
   };
 
   $(".purchase__form").addEventListener("submit", (e) => {
     e.preventDefault();
-  });
-
-  $(".purchase__price-input").addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      purchaseNewLottos();
-    }
-  });
-
-  $(".purchase__confirm-btn").addEventListener("click", (e) => {
     purchaseNewLottos();
   });
 
   $(".lotto__menu").addEventListener("click", (e) => {
     if (e.target.classList.contains("lotto-numbers-toggle-btn")) {
-      IsLottoNumberVisible ? showLottoNumbers() : hideLottoNumbers();
+      isLottoNumberVisible ? showLottoNumbers() : hideLottoNumbers();
     }
   });
 
@@ -94,15 +85,14 @@ function App() {
 
   const issueManualLotto = () => {
     const manualNumbers = document.querySelectorAll(".manual-number");
-    let manualNumberList = [];
 
-    manualNumbers.forEach((number) => {
-      manualNumberList.push(Number(number.value));
-    });
+    const manualNumberList = [...manualNumbers].map((number) =>
+      Number(number.value)
+    );
 
     if (isValidPurchaseNumber(manualNumberList)) {
       manualLottoNumberList = [];
-      for (let i = 0; i < manualNumberList.length / 6; i++) {
+      for (let i = 0; i < manualLottoCount / 6; i++) {
         manualLottoNumberList[i] = manualNumberList.slice(i * 6, i * 6 + 6);
       }
     }
@@ -113,7 +103,7 @@ function App() {
     e.preventDefault();
     const purchasePrice = $(".purchase__price-input").value;
     manualLottoCount = $(".manual-purchase__price-input").value;
-    IsManualLotto = true;
+    isManualLotto = true;
 
     if (!isValidPrice(purchasePrice)) {
       return;
@@ -124,7 +114,10 @@ function App() {
     }
 
     resetManualLotto();
-    addManualNumberInput(".manual-number-form", manualLottoCount);
+
+    if (manualLottoCount > 0) {
+      addManualNumberInput(".manual-number-form", manualLottoCount);
+    }
 
     $(".manual-purchase-btn").addEventListener("click", (e) => {
       issueManualLotto();

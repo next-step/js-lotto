@@ -27,6 +27,11 @@ export const isValidPrice = (price) => {
 };
 
 export const isValidPurchaseAmount = (amount, purchasePrice) => {
+  if (amount < 0) {
+    alert("0개 이상 입력 해주세요.");
+    return false;
+  }
+
   if (amount === "") {
     alert("수동으로 구매할 티켓의 수를 입력해주세요.");
     return false;
@@ -96,24 +101,4 @@ export const isValidWinningNumber = (numberList, bonusNumber, winningSet) => {
   }
 
   return true;
-};
-
-export const generateRandomNumber = (min, max) => {
-  return Math.floor(Math.random() * (max - min) + min);
-};
-
-export const generateRandomNumbers = () => {
-  const newLottoNumbers = Array.from({ length: 6 }, () => {
-    return generateRandomNumber(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER);
-  });
-
-  return newLottoNumbers;
-};
-
-export const generateLottoNumbers = (amounts) => {
-  const lottoTicketsList = [...new Array(amounts)].map(() => {
-    return generateRandomNumbers();
-  });
-
-  return lottoTicketsList;
 };

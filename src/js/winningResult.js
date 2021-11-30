@@ -1,6 +1,6 @@
 import { $ } from "../utils/selector.js";
 import { WINNING_PRICE, LOTTO_PRICE } from "../utils/constants.js";
-import { isValidWinningNumber } from "../utils/utilFunc.js";
+import { isValidWinningNumber } from "../utils/validator.js";
 import { updateResult } from "../utils/renderer.js";
 
 let lottoResultCount = {
