@@ -54,3 +54,7 @@ svg {
     box-sizing: border-box;
   }
 }
+
+.js-lotto-section {
+  display: none;
+}
