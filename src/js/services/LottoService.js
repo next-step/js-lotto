@@ -103,7 +103,7 @@ function computeLottoResult({tickets, winningNumbers}) {
     const totalPrizeMoney = Object.values(lottoResult).reduce((totalPrizeMoney, {prizeMoney, count}) => {
         return totalPrizeMoney + (prizeMoney * count);
     }, 0);
-    const rateOfProfit = Math.round((totalPrizeMoney / amount) * 100);
+    const rateOfProfit = Math.round(((totalPrizeMoney - amount) / amount) * 100);
 
     return {
         lottoResult,
