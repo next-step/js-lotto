@@ -89,17 +89,6 @@ export default class Lotto {
     this.$resetBtn.addEventListener("click", this.onClickResetBtn.bind(this));
   }
 
-  makeNumberString(numberArr) {
-    //숫자 템플릿을 만드는 함수 ex) '1, 31, 4, 27, 44, 2'
-    let numberString = "";
-    const maxIdx = 5;
-    numberArr.forEach((number, idx) => {
-      if (idx === maxIdx) numberString += number;
-      else numberString += `${number},`;
-    });
-    return numberString;
-  }
-
   makeAutoLottoNum() {
     //로또 한 장에 대한 자동으로 숫자 6자리를 만들어내는 함수
     let result = [];
@@ -111,7 +100,7 @@ export default class Lotto {
       const random_1_45 = arr1_45.splice(
         Math.floor(Math.random() * arr1_45.length),
         1
-      );
+      )[0];
       result.push(random_1_45);
     }
     return result;
@@ -119,17 +108,17 @@ export default class Lotto {
 
   makeLottoNumberTemp() {
     //로또숫자를 보여주는 템플릿을 만드는 함수
-    let temp = "";
-    const lottoCnt = this.state.lottoCnt; //로또갯수
-    for (let i = 0; i < lottoCnt; i++) {
-      const numberString = this.makeNumberString(this.state.lottoNumberList[i]);
-      temp += `
+    const temp = this.state.lottoNumberList.reduce((prev, cur) => {
+      const numberStr = cur.join(","); //숫자 템플릿 ex) '1, 31, 4, 27, 44, 2'
+      prev += `
       <li class="mx-1 text-4xl lotto-wrapper">
         <span class="lotto-icon">🎟️ </span>
-        <span class="lotto-detail" style="display: inline;">${numberString}</span>
+        <span class="lotto-detail" style="display: inline;">${numberStr}</span>
       </li>
     `;
-    }
+      return prev;
+    }, "");
+
     return temp;
   }
 
