@@ -1,4 +1,4 @@
-import { selector, numberWithCommas } from "../utils/common.js";
+import { selector, numberWithCommas, toFixedDecimalPoint } from "../utils/common.js";
 import { WINNINGS } from "../constants/index.js"
 import View from "./View.js";
 
@@ -27,7 +27,9 @@ class ResultModalView extends View {
 
   render({ lottoResultObj, totlaReturnRate }) {
     this.$resultTable.innerHTML = this.getListHTML(lottoResultObj);
-    this.$totalWinningResult.textContent = `당신의 총 수익률은 ${totlaReturnRate}%입니다.`;
+    this.$totalWinningResult.textContent = `당신의 총 수익률은 ${toFixedDecimalPoint(totlaReturnRate, 2)}%입니다.`;
+
+    return this;
   }
 
   getListHTML(lottoResultObj) {

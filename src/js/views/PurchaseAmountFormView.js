@@ -1,4 +1,4 @@
-import { selector } from "../utils/common.js";
+import { selector, selectorAll } from "../utils/common.js";
 import View from "./View.js";
 
 class PurchaseAmountFormView extends View {
@@ -6,18 +6,24 @@ class PurchaseAmountFormView extends View {
   constructor() {
     super();
     this.$inputPurchaseAmount = selector("#InputPurchaseAmount");
+    this.$manualRadioButtons = selectorAll("input[type='radio']", this.$elem);
   }
 
   bindEvent() {
     this.on('submit', e => {
       e.preventDefault();
 
-      this.emit("submit.updateAmount", { price: this.$inputPurchaseAmount.value });
+      this.emit("submit.updateAmount", {
+        price: this.$inputPurchaseAmount.value,
+        selectedProcess: [...this.$manualRadioButtons]
+          .find($elem => $elem.checked)
+          .dataset.process
+      });
     });
   }
 
-  initValue() {
-    this.$inputPurchaseAmount.value = null;
+  initValue(val = null) {
+    this.$inputPurchaseAmount.value = val;
     return this;
   }
 }

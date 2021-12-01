@@ -24,12 +24,11 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('submitPrice', (price) => {
+Cypress.Commands.add('submitPrice', (purchaseProcess, price) => {
+  cy.get(`input[data-process='${purchaseProcess}']`).check();
   cy.get("#InputPurchaseAmount").type(price).as("input");
   cy.get("@input").next('button').click();
   cy.get("@input").clear();
-
-  return cy.get("#PurchasedLottoList");
 })
 
 Cypress.Commands.add('getAmountMessage', () => {
@@ -51,4 +50,22 @@ Cypress.Commands.add('inputWinningNumber', (mockWinningNumber) => {
       }
     });
   cy.get("#WinningNumberForm").submit();
+})
+
+Cypress.Commands.add('clearWinningNumber', () => {
+  cy.get("#WinningNumberForm")
+    .find("input[type='number']")
+    .clear();
+})
+
+Cypress.Commands.add('inputManualNumber', ({mock2DManualNumbers, autoSelectRest = false}) => {
+  cy.get(".lotto-manual-item[data-process='manual']").each(($item, i) => {
+    cy.get($item).find("input[type='number']").each((input, j) => {
+      if (!mock2DManualNumbers[i]) return;
+      cy.get(input).type(mock2DManualNumbers[i][j]);
+    })
+  });
+
+  if (autoSelectRest) cy.get(".auto-select-rest-checkbox").click({force: true});
+  cy.get("#ManualLottoForm").submit();
 })

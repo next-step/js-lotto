@@ -12,12 +12,27 @@
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
           <form id="PurchaseAmountForm" class="mt-5">
-            <label class="mb-2 d-inline-block"
-              >구입할 금액을 입력해주세요.
+            <div class="mb-5">구매 방법을 선택하고<br /> 구입할 금액을 입력해주세요.</div>
+            <label class="purchase-switch mb-2">
+              <input type="radio" class="toggle-button" name="process" checked data-process="auto" />
+              <span class="text-base font-normal">자동</span>
+            </label>
+            <label class="purchase-switch mb-2">
+              <input type="radio" class="toggle-button" name="process" data-process="manual" />
+              <span class="text-base font-normal">수동</span>
             </label>
             <div class="d-flex">
               <input type="number" id="InputPurchaseAmount" class="w-100 mr-2 pl-2" name="price" placeholder="구입 금액" required min="1000" max="100000">
               <button type="submit" class="btn btn-cyan">확인</button>
+            </div>
+          </form>
+          <form id="ManualLottoForm" class="hide">
+            <div class="d-flex justify-between items-center">
+              <label class="switch mr-2">
+                <input type="checkbox" class="auto-select-rest-checkbox" />
+                <span class="text-base font-normal">나머지 일괄 자동 구매</span>
+              </label>
+              <button type="submit" class="btn-apply btn btn-cyan">로또 구매하기</button>
             </div>
           </form>
           <section id="PurchasedLottoList" class="mt-9 hide">
