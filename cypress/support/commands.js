@@ -27,9 +27,18 @@ Cypress.Commands.add('getBySel', (selector, ...args) => {
     return cy.get(`[data-test=${selector}]`, ...args);
 });
 
-Cypress.Commands.add('purchaseTickets', (amount) => {
+Cypress.Commands.add('typeAmount', (amount) => {
     cy.getBySel('amount-input').type(amount);
     return cy.getBySel('amount-form').submit();
+});
+
+Cypress.Commands.add('autoPurchase', () => {
+    return cy.contains('남는금액 자동 구입하기').click();
+});
+
+Cypress.Commands.add('manualPurchase', ({lottoNumbers}) => {
+    cy.get('[data-ticket-number]').each(($input, index) => cy.wrap($input).type(lottoNumbers[index]));
+    return cy.contains('구입하기').click();
 });
 
 Cypress.Commands.add('typeWinningNumbers', ({normalNumbers, bonusNumber}) => {

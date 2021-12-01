@@ -11,7 +11,8 @@ describe('Lotto 구매', () => {
         const amount = 2000;
         const count = amount / PRICE_PER_TICKET;
 
-        cy.purchaseTickets(amount)
+        cy.typeAmount(amount);
+        cy.autoPurchase();
 
         cy.getBySel('tickets-count')
           .should('include.text', count);
@@ -23,7 +24,7 @@ describe('Lotto 구매', () => {
         const stub = cy.stub();
         cy.on('window:alert', stub);
 
-        cy.purchaseTickets(2500)
+        cy.typeAmount(2500)
           .then(() => {
               expect(stub.getCall(0))
                   .to
@@ -33,7 +34,8 @@ describe('Lotto 구매', () => {
     });
 
     it('복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.', () => {
-        cy.purchaseTickets(2000);
+        cy.typeAmount(2000);
+        cy.autoPurchase();
 
         cy.getBySel('lotto-number-detail')
           .then($el => {
@@ -55,5 +57,44 @@ describe('Lotto 구매', () => {
           .then($el => {
               expect(Cypress.dom.isVisible($el)).false;
           });
+    });
+
+    it('로또번호를 수동으로 입력하여 구매할 수 있다.', () => {
+        const amount = 2000;
+        cy.typeAmount(amount);
+
+        cy.manualPurchase({lottoNumbers: [1, 2, 3, 4, 5, 6]});
+
+        cy.getBySel('tickets-count')
+          .should('include.text', 1);
+        cy.getBySel('lotto-number')
+          .should('have.length', 1);
+
+        cy.manualPurchase({lottoNumbers: [1, 2, 3, 4, 5, 6]});
+
+        cy.getBySel('tickets-count')
+          .should('include.text', 2);
+        cy.getBySel('lotto-number')
+          .should('have.length', 2);
+    });
+
+    it('로또번호를 수동으로 입력하여 구매 후 잔액을 자동으로 구입할 수 있다.', () => {
+        const amount = 4000;
+        cy.typeAmount(amount);
+
+        cy.manualPurchase({lottoNumbers: [1, 2, 3, 4, 5, 6]});
+        cy.manualPurchase({lottoNumbers: [1, 2, 3, 4, 5, 6]});
+
+        cy.getBySel('tickets-count')
+          .should('include.text', 2);
+        cy.getBySel('lotto-number')
+          .should('have.length', 2);
+
+        cy.autoPurchase();
+
+        cy.getBySel('tickets-count')
+          .should('include.text', 4);
+        cy.getBySel('lotto-number')
+          .should('have.length', 4);
     });
 });
