@@ -5,7 +5,7 @@ import RenderService from '../services/RenderService.js';
 /**
  * @param $el
  * @param props
- * @param {function} props.purchaseTickets
+ * @param {function} props.typeAmount
  */
 export const AmountForm = ($el, props) => {
 
@@ -19,7 +19,7 @@ export const AmountForm = ($el, props) => {
             return;
         }
 
-        props.purchaseTickets(amount);
+        props.typeAmount(amount);
     }
 
     RenderService.render({

@@ -6,7 +6,6 @@ import {TicketsForm} from './TicketsForm.js';
 import {Tickets} from './Tickets.js';
 import {PRICE_PER_TICKET} from '../consts.js';
 import {WinningNumbersForm} from './WinningNumbersForm.js';
-import LottoService from '../services/LottoService.js';
 
 export const LottoApp = ($el) => {
 
@@ -14,33 +13,23 @@ export const LottoApp = ($el) => {
      * @type {{amount: number | null, tickets: Ticket[]}}
      */
     const state = {
-        amount: null,
+        amount: 0,
         tickets: [],
     };
 
-    function purchaseTickets(amount) {
+    function typeAmount(amount) {
         state.amount = amount;
-        TicketsForm($('[data-component="tickets-form"]', $el), {balance: state.amount, manualPurchaseTicket, autoPurchaseTickets});
+        TicketsForm($('[data-component="tickets-form"]', $el), {amount: state.amount, purchaseTickets});
     }
 
-    function manualPurchaseTicket(ticket) {
-        state.tickets = [...state.tickets, ticket];
+    function purchaseTickets(tickets) {
+        state.tickets = [...state.tickets, ...tickets];
         Tickets($('[data-component="tickets"]', $el), {tickets: state.tickets});
 
         const balance = state.amount - state.tickets.length * PRICE_PER_TICKET;
-        TicketsForm($('[data-component="tickets-form"]', $el), {balance, manualPurchaseTicket, autoPurchaseTickets});
-
         if (!balance) {
-            TicketsForm($('[data-component="tickets-form"]', $el), {balance, manualPurchaseTicket, autoPurchaseTickets});
             WinningNumbersForm($('[data-component="winning-numbers-form"]', $el), {pickWinningNumbers});
         }
-    }
-
-    function autoPurchaseTickets(balance) {
-        state.tickets = [...state.tickets, ...LottoService.autoGenerateLottoNumbers(balance / PRICE_PER_TICKET)];
-        Tickets($('[data-component="tickets"]', $el), {tickets: state.tickets});
-        TicketsForm($('[data-component="tickets-form"]', $el), {balance: 0, manualPurchaseTicket, autoPurchaseTickets});
-        WinningNumbersForm($('[data-component="winning-numbers-form"]', $el), {pickWinningNumbers});
     }
 
     function restartLotto() {
@@ -78,7 +67,7 @@ export const LottoApp = ($el) => {
             childComponents: [
                 {
                     selector: '[data-component="amount-form"]',
-                    props: {purchaseTickets},
+                    props: {typeAmount},
                     renderComponent: AmountForm,
                 },
             ],
