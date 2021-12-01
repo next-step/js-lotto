@@ -22,7 +22,7 @@ export const WinningNumbersForm = ($el, props) => {
         const normalNumbers = [...$$('[data-winning-number="normal"]', event.target)].map(({value}) => Number(value));
         const bonusNumber = $('[data-winning-number="bonus"]', event.target).value;
 
-        if (!LottoService.validateWinningNumber({normalNumbers, bonusNumber})) {
+        if (!LottoService.validateLottoNumber({normalNumbers, bonusNumber})) {
             return;
         }
 

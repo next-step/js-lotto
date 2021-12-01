@@ -1,11 +1,12 @@
 import {AmountForm} from './AmountForm.js';
-import LottoService from '../services/LottoService.js';
-import {PRICE_PER_TICKET} from '../consts.js';
-import {Tickets} from './Tickets.js';
 import {$} from '../utils/element.js';
 import RenderService from '../services/RenderService.js';
-import {WinningNumbersForm} from './WinningNumbersForm.js';
 import {LottoResultModal} from './LottoResultModal.js';
+import {TicketsForm} from './TicketsForm.js';
+import {Tickets} from './Tickets.js';
+import {PRICE_PER_TICKET} from '../consts.js';
+import {WinningNumbersForm} from './WinningNumbersForm.js';
+import LottoService from '../services/LottoService.js';
 
 export const LottoApp = ($el) => {
 
@@ -19,8 +20,26 @@ export const LottoApp = ($el) => {
 
     function purchaseTickets(amount) {
         state.amount = amount;
-        state.tickets = LottoService.autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
+        TicketsForm($('[data-component="tickets-form"]', $el), {balance: state.amount, manualPurchaseTicket, autoPurchaseTickets});
+    }
+
+    function manualPurchaseTicket(ticket) {
+        state.tickets = [...state.tickets, ticket];
         Tickets($('[data-component="tickets"]', $el), {tickets: state.tickets});
+
+        const balance = state.amount - state.tickets.length * PRICE_PER_TICKET;
+        TicketsForm($('[data-component="tickets-form"]', $el), {balance, manualPurchaseTicket, autoPurchaseTickets});
+
+        if (!balance) {
+            TicketsForm($('[data-component="tickets-form"]', $el), {balance, manualPurchaseTicket, autoPurchaseTickets});
+            WinningNumbersForm($('[data-component="winning-numbers-form"]', $el), {pickWinningNumbers});
+        }
+    }
+
+    function autoPurchaseTickets(balance) {
+        state.tickets = [...state.tickets, ...LottoService.autoGenerateLottoNumbers(balance / PRICE_PER_TICKET)];
+        Tickets($('[data-component="tickets"]', $el), {tickets: state.tickets});
+        TicketsForm($('[data-component="tickets-form"]', $el), {balance: 0, manualPurchaseTicket, autoPurchaseTickets});
         WinningNumbersForm($('[data-component="winning-numbers-form"]', $el), {pickWinningNumbers});
     }
 
@@ -49,6 +68,7 @@ export const LottoApp = ($el) => {
                 <div class="w-100">
                     <h1 class="text-center">🎱 행운의 로또</h1>
                     <div data-component="amount-form"></div>
+                    <div data-component="tickets-form"></div>
                     <div data-component="tickets"></div>
                     <div data-component="winning-numbers-form"></div>
                 </div>

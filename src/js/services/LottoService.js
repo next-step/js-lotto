@@ -47,7 +47,7 @@ function shuffle(numbers) {
     return numbers.slice().sort(() => Math.random() - 0.5);
 }
 
-function validateWinningNumber({normalNumbers, bonusNumber}) {
+function validateLottoNumber({normalNumbers, bonusNumber = 0}) {
     const isDuplicatedWinningNumber = new Set([...normalNumbers, bonusNumber]).size < COUNT_LOTTO_NORMAL_NUMBERS + COUNT_LOTTO_BONUS_NUMBER;
     if (isDuplicatedWinningNumber) {
         ModalService.alert('로또 번호에는 중복된 숫자를 입력할 수 없습니다.');
@@ -113,6 +113,6 @@ function computeLottoResult({tickets, winningNumbers}) {
 
 export default {
     autoGenerateLottoNumbers,
-    validateWinningNumber,
+    validateLottoNumber,
     computeLottoResult,
 };
