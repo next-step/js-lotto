@@ -26,7 +26,7 @@
 
 Cypress.Commands.add('submitPrice', (price) => {
   cy.get("#InputPurchaseAmount").type(price).as("input");
-  cy.get("@input").siblings('button').click();
+  cy.get("@input").next('button').click();
   cy.get("@input").clear();
 
   return cy.get("#PurchasedLottoList");
@@ -38,4 +38,17 @@ Cypress.Commands.add('getAmountMessage', () => {
 
 Cypress.Commands.add('getLottoList', () => {
   return cy.get(".purchased-lotto-list").find("li");
+})
+
+Cypress.Commands.add('inputWinningNumber', (mockWinningNumber) => {
+  cy.get("#WinningNumberForm")
+    .find("input[type='number']")
+    .each(($el, i) => {
+      if (i > mockWinningNumber.length - 1) return;
+      cy.get($el).type(mockWinningNumber[i]);
+      if (i === mockWinningNumber.length - 1) {
+        cy.get($el).type("{enter}");
+      }
+    });
+  cy.get("#WinningNumberForm").submit();
 })
