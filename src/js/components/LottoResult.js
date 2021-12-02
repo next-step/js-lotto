@@ -12,6 +12,7 @@ class LottoResult {
     this.$resultModalCloseButton = document.querySelector(CLASS_NAME.LOTTO_RESULT_MODAL_CLOSE);
     this.$lottoResultTable = document.querySelector(CLASS_NAME.LOTTO_RESULT_TABLE);
     this.$profitRate = document.querySelector(CLASS_NAME.PROFIT_RATE);
+    this.$resetButton = document.querySelector(CLASS_NAME.LOTTO_RESET_BUTTON);
 
     this.winningNumbers = [];
     this.bonusNumber = -1;
@@ -23,6 +24,7 @@ class LottoResult {
     this.$winningNumberForm.addEventListener("keydown", this.onFormKeydown.bind(this));
     this.$resultModalCloseButton.addEventListener("click", this.onModalClose.bind(this));
     this.$resultModal.addEventListener("mouseup", this.onModalBackDropClick.bind(this));
+    this.$resetButton.addEventListener("click", this.onReset.bind(this));
   }
 
   onWinningNumberSubmit(event) {
@@ -87,6 +89,24 @@ class LottoResult {
     if (target === currentTarget) {
       this.onModalClose();
     }
+  }
+
+  onReset() {
+    this.$winningNumberForm.reset();
+
+    lottoStore.setState(LOTTO_STORE_KEY.PAYMENT, 0);
+    lottoStore.setState(LOTTO_STORE_KEY.PAYMENT_CHANGES, 0);
+    lottoStore.setState(LOTTO_STORE_KEY.TICKET_COUNT, 0);
+    lottoStore.setState(LOTTO_STORE_KEY.LOTTO_NUMBERS, []);
+    lottoStore.setState(LOTTO_STORE_KEY.LOTTO_PRIZE, {
+      [LOTTO_PRIZE_KEY.FIRST]: 0,
+      [LOTTO_PRIZE_KEY.SECOND]: 0,
+      [LOTTO_PRIZE_KEY.THIRD]: 0,
+      [LOTTO_PRIZE_KEY.FOURTH]: 0,
+      [LOTTO_PRIZE_KEY.FIFTH]: 0,
+    });
+
+    this.onModalClose();
   }
 
   evalutateLottoPrize() {

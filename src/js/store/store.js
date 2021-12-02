@@ -1,9 +1,9 @@
-export const createStore = (state) => {
+export const createStore = (initialState) => {
   return {
-    state: Object.keys(state).reduce((stateCollection, stateKey) => {
+    state: Object.keys(initialState).reduce((stateCollection, stateKey) => {
       return {
         ...stateCollection,
-        [stateKey]: { value: state[stateKey], effects: [] },
+        [stateKey]: { value: initialState[stateKey], effects: [] },
       };
     }, {}),
 
