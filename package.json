@@ -1,9 +1,13 @@
 {
-  "name": "racingcar",
+  "name": "lotto",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "devDependencies": {
-    "cypress": "^6.3.0"
+  "devDependencies": {},
+  "scripts": {
+    "cypress:open": "cypress open"
+  },
+  "dependencies": {
+    "cypress": "^9.1.0"
   }
 }
