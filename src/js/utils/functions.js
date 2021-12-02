@@ -12,10 +12,20 @@ const rand = (min, max) => {
 };
 
 export const randomNumbers = () => {
-	let numbers = new Set();
-	while (numbers.size() < 6) {
-		numbers.add(rand(1, 45));
+	let numberSet = new Set();
+	while (numberSet.size < 6) {
+		numberSet.add(rand(1, 45));
 	}
 
-	return [...numbers.sort]((a, b) => a - b).join(', ');
+	return [...numberSet].sort((a, b) => a - b);
 };
+
+export const makeLottoNumbers = (count) => {
+	const result = [];
+	for (let i = 0; i < count; i++) {
+		result.push(randomNumbers())
+	}
+	
+	return result
+} 
+
