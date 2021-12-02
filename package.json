@@ -4,7 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "live-server ."
+    "start": "live-server .",
+    "test:run": "cypress run",
+    "test:open": "cypress open"
   },
   "devDependencies": {
     "cypress": "^6.3.0",

@@ -1,5 +1,5 @@
 import { TICKET } from "../../src/js/constants/lotto.js";
-import { STATUS_MESSAGE } from "../../src/js/constants/messages.js";
+import { ALERT_MESSAGE, STATUS_MESSAGE } from "../../src/js/constants/messages.js";
 import { CLASS_NAME, INPUT_NAME } from "../../src/js/constants/selectors.js";
 
 before(() => {
@@ -51,5 +51,34 @@ describe("구매 티켓 조회", () => {
     cy.submitPayment(paymentTestValue);
     cy.get(CLASS_NAME.LOTTO_NUMBER_TOGGLE_BUTTON).check({ force: true });
     cy.get(CLASS_NAME.LOTTO_NUMBERS).each(($lottoNumbers) => cy.wrap($lottoNumbers).should("not.have.class", "d-none"));
+  });
+});
+
+describe("결과 확인", () => {
+  const oneTicketPrice = TICKET.PRICE;
+  const notEnoughWingginNumbers = [1, 2, 3, 4, 5];
+  const duplicatedWinningNumbers = [1, 2, 3, 4, 6, 6];
+  const bonusNumber = 45;
+
+  beforeEach(() => {
+    cy.get(`${CLASS_NAME.WINNING_NUMBER_FORM} input`).each(($input) => cy.wrap($input).clear());
+  });
+
+  it("결과 확인하기 버튼을 모달에 당첨결과를 보여준다.", () => {
+    // 수동 입력 구현 시 작성 예정
+  });
+
+  it("당첨 번호와 보너스 번호는 비어있으면 결과를 확인할 수 없다.", () => {
+    cy.submitPayment(oneTicketPrice);
+    cy.submitWinningNumber(notEnoughWingginNumbers, bonusNumber);
+    cy.on("window:alert", (text) => expect(text).to.contains(ALERT_MESSAGE.EMPTY_NUMBERS));
+  });
+  it("당첨 번호와 보너스 번호에 중복된 숫자가 있으면 결과를 확인할 수 없다.", () => {
+    cy.submitPayment(oneTicketPrice);
+    cy.submitWinningNumber(duplicatedWinningNumbers, bonusNumber);
+    cy.on("window:alert", (text) => expect(text).to.contains(ALERT_MESSAGE.DUPLICATED_NUMBERS));
+  });
+  it("다시 시작하기 버튼을 누르면 input이 비워지고 로또 티켓 영역이 사라진다.", () => {
+    // 수동 입력 구현 시 작성 예정
   });
 });
