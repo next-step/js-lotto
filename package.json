@@ -5,7 +5,7 @@
   "license": "MIT",
   "devDependencies": {},
   "scripts": {
-    "test": "cypress open"
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "cypress": "^9.1.0"
