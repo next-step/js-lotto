@@ -1,22 +1,22 @@
 import { LOTTO_NUMBER, TICKET } from "../constants/lotto.js";
+import { CLASS_NAME, INPUT_NAME } from "../constants/selectors.js";
 import lottoStore, { LOTTO_STORE_KEY } from "../lottoStore.js";
 import { generateRamdomNumbers } from "../utils/random.js";
 
 class LottoPaymentForm {
-  constructor($paymentForm, paymentInputName) {
-    this.$paymentForm = $paymentForm;
-    this.paymentInputName = paymentInputName;
+  constructor() {
+    this.$paymentForm = document.querySelector(CLASS_NAME.PAYMENT_FORM);
   }
 
   init() {
     this.$paymentForm.addEventListener("submit", this.onPaymentSubmit.bind(this));
-    this.$paymentForm.elements[this.paymentInputName].addEventListener("keyup", this.onPaymentChange.bind(this));
+    this.$paymentForm.addEventListener("keydown", this.onPaymentKeydown.bind(this));
   }
 
   onPaymentSubmit(event) {
     event.preventDefault();
 
-    const payment = Number(event.target.elements[this.paymentInputName].value);
+    const payment = Number(event.target.elements[INPUT_NAME.PAYMENT_INPUT].value);
     const paymentChanges = payment % TICKET.PRICE;
     const ticketCount = Math.floor(payment / TICKET.PRICE);
     const lottoNumbers = [...Array(ticketCount)].map(() =>
@@ -31,8 +31,10 @@ class LottoPaymentForm {
     event.target.reset();
   }
 
-  onPaymentChange({ target }) {
-    target.value = target.value.replaceAll(/[^0-9]/g, "");
+  onPaymentKeydown(event) {
+    if (/[.-]/.test(event.key)) {
+      event.preventDefault();
+    }
   }
 }
 

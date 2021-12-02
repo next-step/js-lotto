@@ -1,3 +1,5 @@
+import { LOTTO_PRIZE_KEY } from "../lottoStore.js";
+
 export const TICKET = {
   PRICE: 1000,
 };
@@ -6,4 +8,12 @@ export const LOTTO_NUMBER = {
   LENGTH: 6,
   MIN_VALUE: 1,
   MAX_VALUE: 45,
+};
+
+export const WINNING_MONEY = {
+  [LOTTO_PRIZE_KEY.FIRST]: 2000000000,
+  [LOTTO_PRIZE_KEY.SECOND]: 30000000,
+  [LOTTO_PRIZE_KEY.THIRD]: 1500000,
+  [LOTTO_PRIZE_KEY.FOURTH]: 50000,
+  [LOTTO_PRIZE_KEY.FIFTH]: 5000,
 };
