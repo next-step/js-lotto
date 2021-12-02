@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "live-server ."
+  },
   "devDependencies": {
     "cypress": "^6.3.0",
     "eslint": "^8.2.0",
@@ -10,5 +13,8 @@
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.4.1"
+  },
+  "dependencies": {
+    "live-server": "^1.2.1"
   }
 }
