@@ -1,8 +1,6 @@
 @import './shared/index.css';
 @import './ui/index.css';
-
-html,
-body {
+html, body {
   margin: 0;
   height: 100%;
   font-size: 16px;
@@ -11,6 +9,10 @@ body {
 #app {
   max-width: 400px;
   margin: 0 auto;
+}
+
+.lotto-numbers {
+  font-size: 1.25rem;
 }
 
 .winning-number {
