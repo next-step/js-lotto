@@ -1,20 +1,17 @@
 import { calculatePayment } from "./utils/functions.js";
 
 export default class Payment {
-	constructor({ $paymentForm, $paymentFormInput, setPurchaseCount }) {
-		this.$paymentForm = $paymentForm;
-		this.$paymentFormInput = $paymentFormInput;
+	constructor({ $targetPayment, onSubmit }) {
+		this.$targetPayment = $targetPayment;
+		this.$targetPaymentInput = document.querySelector(".payment-input");
 
-		const onClickSubmit = (e) => {
+		const clickSubmitEvent = (e) => {
 			e.preventDefault();
 			if (e.target.classList.contains("payment-submit")) {
-				const money = this.$paymentFormInput.valueAsNumber;
-				if(isNaN(money)) return 
-				const countLotto = calculatePayment(money);
-				if (countLotto > 0) setPurchaseCount(countLotto);
+				onSubmit(calculatePayment(Number(this.$targetPaymentInput.value)));
 			}
-		};
-		this.$paymentFormInput.addEventListener("click", (e) => (e.target.value = ""));
-		this.$paymentForm.addEventListener("click", onClickSubmit);
+    };
+    this.$targetPaymentInput.addEventListener("click", (e) => e.target.value = '')
+		this.$targetPayment.addEventListener("click", clickSubmitEvent);
 	}
 }
