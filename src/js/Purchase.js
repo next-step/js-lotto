@@ -33,7 +33,6 @@ export default class Purchase {
 		this.$targetPurchaseToggle.addEventListener("click", clickToggleEvent);
 	}
 	render() {
-		if (this.count >= 1) {
 			this.$targetPurchaseInfo.classList.remove("hidden");
 			this.$targetPurchaseCount.innerText = countLottoTemplate(this.count);
 			this.purchasedLottos = makeLottoNumbers(this.count);
@@ -41,7 +40,6 @@ export default class Purchase {
 				this.purchasedLottos,
 				this.$targetPurchaseToggle.checked
 			);
-		}
 	}
 	setState(nextCount) {
 		this.count = nextCount;
