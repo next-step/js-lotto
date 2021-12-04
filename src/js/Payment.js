@@ -1,5 +1,5 @@
 import { calculatePayment } from "./utils/functions.js";
-import { countLottoTemplate } from "./utils/templates.js";
+// import { countLottoTemplate } from "./utils/templates.js";
 
 export default class Payment {
 	constructor({ $targetPayment, onSubmit }) {
@@ -10,7 +10,7 @@ export default class Payment {
 			e.preventDefault();
 			if (e.target.classList.contains("payment-submit")) {
 				const countLotto = calculatePayment(
-					Number(this.$targetPaymentInput.value)
+					this.$targetPaymentInput.valueAsNumber
 				);
 				if (countLotto > 0) onSubmit(countLotto);
 			}
