@@ -35,7 +35,7 @@ const lottoManager = {
 
   issueAll() {
     while (this.hasLeft()) {
-      this.lottos.push(...[...Array(this.amount)].map(issueRandomLotto));
+      this.lottos.push(issueRandomLotto());
     }
   },
 
