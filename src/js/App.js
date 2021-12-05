@@ -25,7 +25,7 @@ export default class App {
           <section id="LottoNumbersPanel"></section>
         </div>
       </div>
-      <div class="modal" id="Modal"> </div>
+      <div id="Modal"></div>
     `;
   }
 

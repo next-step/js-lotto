@@ -35,3 +35,20 @@ Cypress.Commands.add("checkToggle", () => {
 Cypress.Commands.add("unCheckToggle", () => {
   cy.get(".lotto-numbers-toggle-button").uncheck({ force: true });
 });
+
+Cypress.Commands.add("clickRetry", () => {
+  cy.get("#retry-btn").click();
+});
+
+Cypress.Commands.add("checkResult", () => {
+  cy.get(".open-result-modal-button").click();
+});
+
+Cypress.Commands.add("inputWinningNumbers", ({ winningNumbers = [], bonusNumber = "" }) => {
+  cy.get(".winning-number").each((el, index) => {
+    console.log("winningNumbers[index]", winningNumbers[index]);
+    cy.get(el).type(winningNumbers[index]);
+  });
+
+  cy.get(".bonus-number").type(bonusNumber);
+});
