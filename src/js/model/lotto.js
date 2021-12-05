@@ -1,4 +1,4 @@
-import { LOTTO_PRICE, MIN_MATCH_AMOUNT, PRIZE_TABLE } from '../constant/lotto.js';
+import { LOTTO, PRIZE_TABLE } from '../constant/lotto.js';
 import { issueLotto } from '../service/lotto.js';
 
 const getRank = (answer, input) => {
@@ -29,7 +29,7 @@ const lottoManager = {
     this.lottos.forEach((lotto) => {
       const rank = getRank(lotto, answer);
 
-      if (rank < MIN_MATCH_AMOUNT) return;
+      if (rank < LOTTO.MIN_MATCH_AMOUNT) return;
 
       this.result[rank]++;
     });
@@ -58,7 +58,7 @@ const lottoManager = {
   },
 
   getProfitPercentage() {
-    return Math.trunc((this.getTotalPrize() / (LOTTO_PRICE * this.lottos.length)) * 100) || 0;
+    return Math.trunc((this.getTotalPrize() / (LOTTO.PRICE * this.lottos.length)) * 100) || 0;
   },
 };
 

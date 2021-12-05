@@ -1,6 +1,6 @@
 import SELECTOR from '../../src/js/constant/selector';
 import ERROR_MESSAGE from '../../src/js/constant/errorMessage';
-import { MAX_LOTTO_NUMBER } from '../../src/js/constant/lotto';
+import { LOTTO, MAX_LOTTO_NUMBER } from '../../src/js/constant/lotto';
 
 const BASE_URL = 'http://127.0.0.1:5500';
 
@@ -57,7 +57,7 @@ describe('로또 게임', () => {
 
   it('당첨번호는 1~45 사이의 숫자여야한다.', () => {
     cy.window().then((window) => cy.stub(window, 'alert').as('alert'));
-    answer(MAX_LOTTO_NUMBER + 1, 2, 3, 4, 5, 6, 7);
+    answer(LOTTO.MAX_NUMBER + 1, 2, 3, 4, 5, 6, 7);
     cy.get('@alert').should('be.calledWith', ERROR_MESSAGE.INVALID_ANSWER_INPUT);
   });
 

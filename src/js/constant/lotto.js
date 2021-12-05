@@ -1,8 +1,10 @@
-export const LOTTO_PRICE = 1000;
-export const MAX_LOTTO_NUMBER = 45;
-export const MIN_LOTTO_NUMBER = 1;
-export const LOTTO_NUMBER_COUNT = 6;
-export const MIN_MATCH_AMOUNT = 3;
+export const LOTTO = {
+  PRICE: 1000,
+  MAX_NUMBER: 45,
+  MIN_NUMBER: 1,
+  NUMBER_AMOUNT: 6,
+  MIN_MATCH_AMOUNT: 3,
+};
 
 export const PRIZE_TABLE = {
   6: 2_000_000_000,
