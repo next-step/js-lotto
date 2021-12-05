@@ -4,6 +4,7 @@ import {
   setDetailMode,
   showManualNumberingForm,
   updateLottoCount,
+  updateLottoTicketView,
 } from '../view/main.js';
 
 export const handleLottoPayment = (event) => {
@@ -12,6 +13,7 @@ export const handleLottoPayment = (event) => {
   const price = event.target.elements['price'].value;
 
   lottoManager.resetAll();
+  updateLottoTicketView();
   lottoManager.setAmount(price);
 
   if (!lottoManager.amount) {
