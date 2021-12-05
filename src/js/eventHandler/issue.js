@@ -16,7 +16,7 @@ const getManualLotto = ({ first, second, third, fourth, fifth, sixth }) => [
   sixth.value,
 ];
 
-export const handleManualIssue = (event) => {
+export const handleManualLottoIssue = (event) => {
   event.preventDefault();
 
   const lottoInput = getManualLotto(event.target.elements);
@@ -35,7 +35,7 @@ export const handleManualIssue = (event) => {
   }
 };
 
-export const handleIssueRest = () => {
+export const handleIssueRestLotto = () => {
   lottoManager.issueAll();
   updateLottoTicketView(lottoManager.lottos);
   hideManualNumberingForm();

@@ -30,7 +30,7 @@ const getErrorMessage = (answer) => {
   }
 };
 
-export const handleAnswer = (event) => {
+export const handleLottoAnswer = (event) => {
   event.preventDefault();
 
   const answer = filterAnswer(event.target.elements);

@@ -6,7 +6,7 @@ import {
   updateLottoCount,
 } from '../view/main.js';
 
-export const handlePayment = (event) => {
+export const handleLottoPayment = (event) => {
   event.preventDefault();
 
   const price = event.target.elements['price'].value;
