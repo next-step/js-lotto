@@ -1,13 +1,11 @@
-import { LOTTO, LOTTO_PRICE } from '../constant/lotto.js';
+import { LOTTO } from '../constant/lotto.js';
 import { getRandomNumber } from '../util/random.js';
 
 const generateLottoNumber = () => getRandomNumber(LOTTO.MIN_NUMBER, LOTTO.MAX_NUMBER);
 
-export const issueLotto = () => [...Array(LOTTO.NUMBER_AMOUNT)].map(generateLottoNumber);
+export const issueRandomLotto = () => [...Array(LOTTO.NUMBER_AMOUNT)].map(generateLottoNumber);
 
-export const getLottoAmount = (price) => Math.floor(price / LOTTO_PRICE);
-
-export const isAnswerValid = (answer) => {
+export const isValidLottoInput = (answer) => {
   const answerValues = Object.values(answer);
 
   return (

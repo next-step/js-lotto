@@ -12,6 +12,8 @@ const SELECTOR = {
   MODAL_CLOSE: '.js-modal-close',
   RESTART_BUTTON: '.js-restart-button',
   ANSWER_SUBMIT: '.js-answer-submit',
+  MANUAL_NUMBERING_FORM: '.js-manual-numbering-form',
+  MANUAL_NUMBERING_CANCEL: '.js-manual-numbering-cancel',
   RESULT: {
     FIRST: '.js-result-first',
     SECOND: '.js-result-second',

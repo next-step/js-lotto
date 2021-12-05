@@ -106,3 +106,7 @@
 .content-evenly {
   align-content: space-around;
 }
+
+.self-center {
+  margin: 0 auto;
+}

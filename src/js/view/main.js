@@ -36,3 +36,15 @@ export const setBriefMode = () => {
 export const setDetailMode = () => {
   $(SELECTOR.LOTTO_CONTAINER).classList.remove(lottoNumberHidden);
 };
+
+export const showManualNumberingForm = () => {
+  $(SELECTOR.MANUAL_NUMBERING_FORM).hidden = false;
+};
+
+export const hideManualNumberingForm = () => {
+  $(SELECTOR.MANUAL_NUMBERING_FORM).hidden = true;
+};
+
+export const resetManualNumberingForm = () => {
+  $(SELECTOR.MANUAL_NUMBERING_FORM).reset();
+};

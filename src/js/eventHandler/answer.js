@@ -1,7 +1,7 @@
 import ERROR_MESSAGE from '../constant/errorMessage.js';
 import { ANSWER_INPUT_NAMES } from '../constant/lotto.js';
 import lottoManager from '../model/lotto.js';
-import { isAnswerValid } from '../service/lotto.js';
+import { isValidLottoInput } from '../service/lotto.js';
 import { focusPaymentInput, resetMainView } from '../view/main.js';
 import { closeModal, openModal, updateResultView } from '../view/resultModal.js';
 
@@ -12,18 +12,31 @@ const filterAnswer = (elements) =>
       .map(([key, value]) => [key, value.valueAsNumber])
   );
 
+const isValid = (answer) => {
+  return lottoManager.amount && isValidLottoInput(answer) && !lottoManager.hasLeft();
+};
+
+const getErrorMessage = (answer) => {
+  if (!lottoManager.amount) {
+    return ERROR_MESSAGE.EMPTY_LOTTO;
+  }
+
+  if (!isValidLottoInput(answer)) {
+    return ERROR_MESSAGE.INVALID_ANSWER_INPUT;
+  }
+
+  if (lottoManager.hasLeft()) {
+    return ERROR_MESSAGE.LOTTO_LEFT;
+  }
+};
+
 export const handleAnswer = (event) => {
   event.preventDefault();
 
   const answer = filterAnswer(event.target.elements);
 
-  if (!lottoManager.lottos.length) {
-    alert(ERROR_MESSAGE.EMPTY_LOTTO);
-    return;
-  }
-
-  if (!isAnswerValid(answer)) {
-    alert(ERROR_MESSAGE.INVALID_ANSWER_INPUT);
+  if (!isValid(answer)) {
+    alert(getErrorMessage(answer));
     return;
   }
 

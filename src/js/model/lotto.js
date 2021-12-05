@@ -1,5 +1,5 @@
 import { LOTTO, PRIZE_TABLE } from '../constant/lotto.js';
-import { issueLotto } from '../service/lotto.js';
+import { issueRandomLotto } from '../service/lotto.js';
 
 const getRank = (answer, input) => {
   let rank = Object.entries(input).reduce(
@@ -17,11 +17,26 @@ const getRank = (answer, input) => {
 const initialResult = { 6: 0, 5.5: 0, 5: 0, 4: 0, 3: 0 };
 
 const lottoManager = {
+  amount: 0,
   lottos: [],
   result: initialResult,
 
-  issue(amount) {
-    this.lottos = [...Array(amount)].map(issueLotto);
+  setAmount(price) {
+    this.amount = Math.floor(price / LOTTO.PRICE);
+  },
+
+  hasLeft() {
+    return this.lottos.length < this.amount;
+  },
+
+  issue(lotto) {
+    this.lottos.push(lotto);
+  },
+
+  issueAll() {
+    while (this.hasLeft()) {
+      this.lottos.push(...[...Array(this.amount)].map(issueRandomLotto));
+    }
   },
 
   setResult(answer) {
@@ -35,19 +50,6 @@ const lottoManager = {
     });
   },
 
-  resetAll() {
-    this.resetLottos();
-    this.resetResult();
-  },
-
-  resetLottos() {
-    this.lottos = [];
-  },
-
-  resetResult() {
-    this.result = { ...initialResult };
-  },
-
   getTotalPrize() {
     return (
       Object.entries(this.result).reduce(
@@ -59,6 +61,24 @@ const lottoManager = {
 
   getProfitPercentage() {
     return Math.trunc((this.getTotalPrize() / (LOTTO.PRICE * this.lottos.length)) * 100) || 0;
+  },
+
+  resetAll() {
+    this.resetAmount();
+    this.resetLottos();
+    this.resetResult();
+  },
+
+  resetAmount() {
+    this.amount = 0;
+  },
+
+  resetLottos() {
+    this.lottos = [];
+  },
+
+  resetResult() {
+    this.result = { ...initialResult };
   },
 };
 
