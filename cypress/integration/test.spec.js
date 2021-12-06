@@ -28,8 +28,8 @@ describe("lotto test", () => {
 		cy.get(".text-base").click();
 		cy.get(".lotto-numbers")
 			.first()
-			.should(($target) => {
-				const text = $target.text();
+			.should(($) => {
+				const text = $.text();
 				console.log(text);
 				expect(text.split(",").length).to.eq(6);
 			});
