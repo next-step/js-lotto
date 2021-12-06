@@ -41,4 +41,8 @@ export default class ResultModal {
       this.$resultCountList[index].innerText = `${count}개`;
     });
   }
+
+  setProfitMessage(profit) {
+    this.$profitMessage.innerText = `당신의 총 수익률은 ${profit}% 입니다.`;
+  }
 }

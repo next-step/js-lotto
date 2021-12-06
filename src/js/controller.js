@@ -54,7 +54,7 @@ export default class Controller {
     this.ResultModal.openModal();
     this.model.setResult(winningNumbers, bonusNumber);
     this.model.setProfit();
-    this.model.setProfitMessage(this.ResultModal.$profitMessage);
+    this.ResultModal.setProfitMessage(this.model.data.profit);
     this.ResultModal.updateModal(this.model.data.result);
   };
 

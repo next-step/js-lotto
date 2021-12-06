@@ -82,8 +82,4 @@ export default class Model {
       this.data.totalPrize - (this.data.amount * LOTTO_PRICE))
         / (this.data.amount * LOTTO_PRICE)) * 100;
   }
-
-  setProfitMessage($profitMessage) {
-    $profitMessage.innerText = `당신의 총 수익률은 ${this.data.profit}% 입니다.`;
-  }
 }
