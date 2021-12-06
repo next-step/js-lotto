@@ -1,45 +1,45 @@
-import { countLottoTemplate, fullLottoTemplate } from "./utils/templates.js";
 import { makeLottoNumbers } from "./utils/functions.js";
+import { countLottoTemplate, fullLottoTemplate } from "./utils/templates.js";
 
 export default class Purchase {
 	constructor({
 		count,
 		purchasedLottos,
-		$targetPurchaseInfo,
-		$targetPurchaseCount,
-		$targetPurchaseToggle,
-		$targetLottoInfo,
+		$purchaseInfo,
+		$purchaseCount,
+		$purchaseToggle,
+		$lottoInfo,
 	}) {
 		this.count = count;
 		this.purchasedLottos = purchasedLottos;
-		this.$targetPurchaseInfo = $targetPurchaseInfo;
-		this.$targetPurchaseCount = $targetPurchaseCount;
-		this.$targetPurchaseToggle = $targetPurchaseToggle;
-		this.$targetLottoInfo = $targetLottoInfo;
+		this.$purchaseInfo = $purchaseInfo;
+		this.$purchaseCount = $purchaseCount;
+		this.$purchaseToggle = $purchaseToggle;
+		this.$lottoInfo = $lottoInfo;
 
 		const clickToggleEvent = () => {
-			const lottoNumbersNodeList = this.$targetLottoInfo.querySelectorAll(
+			const lottoNumbersNodeList = this.$lottoInfo.querySelectorAll(
 				".lotto-numbers"
 			);
-			if (this.$targetPurchaseToggle.checked) {
-				this.$targetLottoInfo.classList.add("flex-col");
+			if (this.$purchaseToggle.checked) {
+				this.$lottoInfo.classList.add("flex-col");
 				lottoNumbersNodeList.forEach((node) => node.classList.remove("hidden"));
 			} else {
-				this.$targetLottoInfo.classList.remove("flex-col");
+				this.$lottoInfo.classList.remove("flex-col");
 				lottoNumbersNodeList.forEach((node) => node.classList.add("hidden"));
 			}
 		};
 
-		this.$targetPurchaseToggle.addEventListener("click", clickToggleEvent);
+		this.$purchaseToggle.addEventListener("click", clickToggleEvent);
 	}
 	render() {
-			this.$targetPurchaseInfo.classList.remove("hidden");
-			this.$targetPurchaseCount.innerText = countLottoTemplate(this.count);
-			this.purchasedLottos = makeLottoNumbers(this.count);
-			this.$targetLottoInfo.innerHTML = fullLottoTemplate(
-				this.purchasedLottos,
-				this.$targetPurchaseToggle.checked
-			);
+		this.$purchaseInfo.classList.remove("hidden");
+		this.$purchaseCount.innerText = countLottoTemplate(this.count);
+		this.purchasedLottos = makeLottoNumbers(this.count);
+		this.$lottoInfo.innerHTML = fullLottoTemplate(
+			this.purchasedLottos,
+			this.$purchaseToggle.checked
+		);
 	}
 	setState(nextCount) {
 		this.count = nextCount;

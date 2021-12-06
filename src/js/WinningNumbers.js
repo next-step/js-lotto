@@ -1,21 +1,13 @@
 export default class WinningNumbers {
-  constructor({ 
-    $targetWinningNumbers
-  }) {
-    this.$targetWinningNumbers = $targetWinningNumbers;
+	constructor({ $winningNumbers }) {
+		this.$winningNumbers = $winningNumbers;
+	}
 
+	render() {
+		this.$winningNumbers.classList.remove("hidden");
+	}
 
-
-
-
-
-  }
-
-  render() {
-    this.$targetWinningNumbers.classList.remove('hidden');
-  }
-
-  setState() {
-    this.render(); 
-  }
+	setState() {
+		this.render();
+	}
 }
