@@ -1,3 +1,4 @@
+import {$} from '../utils/element.js';
 import {MIN_PURCHASE_AMOUNT, PRICE_PER_TICKET} from '../consts.js';
 import ModalService from '../services/ModalService.js';
 import RenderService from '../services/RenderService.js';
@@ -8,6 +9,11 @@ import RenderService from '../services/RenderService.js';
  * @param {function} props.typeAmount
  */
 export const AmountForm = ($el, props) => {
+
+    function preventTypeAmount() {
+        $('input[name="amount"]').disabled = true;
+        $('button[type="submit"]').disabled = true;
+    }
 
     function onSubmitAmount(event) {
         event.preventDefault();
@@ -20,6 +26,7 @@ export const AmountForm = ($el, props) => {
         }
 
         props.typeAmount(amount);
+        preventTypeAmount();
     }
 
     RenderService.render({

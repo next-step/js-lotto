@@ -33,6 +33,21 @@ describe('Lotto 구매', () => {
           });
     });
 
+    it('로또를 구매하면 구매금액 입력 input 과 button 은 disabled 처리된다.', () => {
+        cy.getBySel('amount-input').should('not.have.attr', 'disabled');
+        cy.getBySel('amount-form').within(() => {
+            cy.get('button[type="submit"]').should('not.have.attr', 'disabled');
+        });
+
+        cy.typeAmount(2000)
+          .then(() => {
+              cy.getBySel('amount-input').should('have.attr', 'disabled');
+              cy.getBySel('amount-form').within(() => {
+                  cy.get('button[type="submit"]').should('have.attr', 'disabled');
+              });
+          });
+    });
+
     it('복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.', () => {
         cy.typeAmount(2000);
         cy.autoPurchase();
