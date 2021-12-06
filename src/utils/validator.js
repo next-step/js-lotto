@@ -27,8 +27,8 @@ export const isValidPrice = (price) => {
 };
 
 export const isValidPurchaseAmount = (amount, purchasePrice) => {
-  if (amount < 0) {
-    alert("0개 이상 입력 해주세요.");
+  if (amount < 1) {
+    alert("1개 이상 입력 해주세요.");
     return false;
   }
 

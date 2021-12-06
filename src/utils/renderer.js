@@ -99,16 +99,10 @@ export const addManualNumberInput = (selector, amounts) => {
       </div>
     </div>`;
 
-  let newManualNumberInputs = [];
-
-  for (let i = 0; i < amounts; i++) {
-    newManualNumberInputs.push(template(i));
-  }
-
   $(selector).innerHTML = `
     <label class="flex-auto d-inline-block mb-3">로또 번호를 입력해주세요.</label>
     <div class="d-flex flex-col">
-    ${newManualNumberInputs.join("")}
+    ${[...new Array(Number(amounts)).keys()].map((v) => template(v)).join("")}
     </div>
     <button
       type="button"

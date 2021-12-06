@@ -96,6 +96,7 @@ function App() {
         manualLottoNumberList[i] = manualNumberList.slice(i * 6, i * 6 + 6);
       }
     }
+
     purchaseNewLottos();
   };
 
