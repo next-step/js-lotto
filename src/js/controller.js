@@ -84,9 +84,10 @@ export default class Controller {
     this.SelfLottoForm.$selfLottoInputContainer.forEach(($oneLottoList) => {
       const oneSelfLottoValues = [];
       $oneLottoList.querySelectorAll('input').forEach(($lottoInput) => {
-        const lottoNumber = $lottoInput.value;
+        if ($lottoInput.value.length === 0) throw Error(ERROR_MESSAGE.NO_INPUT);
+        const lottoNumber = Number($lottoInput.value);
 
-        checkNumber(lottoNumber);
+        checkNumber(Number(lottoNumber));
 
         if (oneSelfLottoValues.includes(lottoNumber)) throw ERROR_MESSAGE.DUPLICATED_NUMBER;
         oneSelfLottoValues.push(Number(lottoNumber));

@@ -17,7 +17,6 @@ export const countSameNumbers = (arr1, arr2) => {
 };
 
 export const checkNumber = (number) => {
-  if (number === '') throw Error(ERROR_MESSAGE.NONE_VALUE);
   if (number > MAX_LOTTO_NUMBER) throw Error(ERROR_MESSAGE.MAX_NUMBER);
   if (number < MIN_LOTTO_NUMBER) throw Error(ERROR_MESSAGE.MIN_NUMBER);
 };
