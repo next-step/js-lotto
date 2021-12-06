@@ -35,3 +35,10 @@ export const LOTTO_WINNINGS = [
 		count: 0,
 	},
 ];
+
+export const CONSTANT = {
+	MIN_NUMBER: 1,
+	MAX_NUMBER: 45,
+	WINNING_NUMBERS_LENGTH: 6,
+	LOTTO_PRICE: 1000,
+}
