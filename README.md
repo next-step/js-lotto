@@ -37,7 +37,7 @@
 2) 배포
 - [x] 실행 가능한 페이지에 접근할 수 있도록 github page 기능을 이용하고, 해당 링크를 PR과 README에 작성한다.
 
-# 반영해본 것
+# STEP3에서 반영해본 것
 - 포맷터 도입.
 - form 태그에 사용되는 `HTMLElement.value = ''` 대신 `.reset()` 사용.
 - `DOMContentLoaded` 이벤트 별도로 사용 할 필요 없게 `defer` 속성 추가.
