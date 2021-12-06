@@ -7,9 +7,8 @@ import ResultModal from './view/ResultModal.js';
 import SelfLottoForm from './view/SelfLottoForm.js';
 
 export default class Controller {
-  constructor(model, view) {
+  constructor(model) {
     this.model = model;
-    this.view = view;
 
     this.LottoForm = new LottoForm();
     this.LottoInfo = new LottoInfo();

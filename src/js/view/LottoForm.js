@@ -3,11 +3,8 @@ import {
   $, $$, checkNumber, hide,
 } from '../utils.js';
 
-import View from './view.js';
-
-export default class LottoForm extends View {
+export default class LottoForm {
   constructor() {
-    super();
     this.$lottoInputForm = $(DOM_ID.LOTTO_INPUT_FORM);
     this.$getResultButton = $(DOM_ID.GET_RESULT_BUTTON);
     this.$winningNumbers = $$(DOM_ID.WINNING_NUMBERS);

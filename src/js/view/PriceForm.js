@@ -1,11 +1,8 @@
 import { DOM_ID } from '../constants.js';
 import { $ } from '../utils.js';
 
-import View from './view.js';
-
-export default class PriceForm extends View {
+export default class PriceForm {
   constructor() {
-    super();
     this.$moneyInput = $(DOM_ID.MONEY_INPUT);
     this.$priceForm = $(DOM_ID.PRICE_FORM);
     this.$purchaseMessage = $(DOM_ID.PURCHASE_MESSAGE);

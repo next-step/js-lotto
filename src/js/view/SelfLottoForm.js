@@ -2,11 +2,8 @@ import { DOM_ID, LOTTO_LENGTH } from '../constants.js';
 import el from '../dom.js';
 import { $, $$, hide } from '../utils.js';
 
-import View from './view.js';
-
-export default class SelfLottoForm extends View {
+export default class SelfLottoForm {
   constructor() {
-    super();
     this.$selfLottoList = $(DOM_ID.SELF_LOTTO_LIST);
     this.$autoGenerateButton = $(DOM_ID.GENERATE_BUTTON);
     this.$selfLottoInputContainer = $$(DOM_ID.SELF_LOTTO_INPUT_CONTAINER);

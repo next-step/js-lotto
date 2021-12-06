@@ -1,11 +1,8 @@
 import { DOM_ID } from '../constants.js';
 import { $, $$ } from '../utils.js';
 
-import View from './view.js';
-
-export default class ResultModal extends View {
+export default class ResultModal {
   constructor() {
-    super();
     this.$resultModal = $(DOM_ID.RESULT_MODAL);
     this.$resultCountList = $$(DOM_ID.RESULT_COUNT_LIST);
     this.$profitMessage = $(DOM_ID.PROFIT_MESSAGE);
