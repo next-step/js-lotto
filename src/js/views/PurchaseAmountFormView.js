@@ -1,12 +1,12 @@
-import { selector, selectorAll } from "../utils/common.js";
+import { $, $$ } from "../utils/common.js";
 import View from "./View.js";
 
 class PurchaseAmountFormView extends View {
   tag = "PurchaseAmountFormView";
   constructor() {
     super();
-    this.$inputPurchaseAmount = selector("#InputPurchaseAmount");
-    this.$manualRadioButtons = selectorAll("input[type='radio']", this.$elem);
+    this.$inputPurchaseAmount = $("#InputPurchaseAmount");
+    this.$manualRadioButtons = $$("input[type='radio']", this.$elem);
   }
 
   bindEvent() {

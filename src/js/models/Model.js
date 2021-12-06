@@ -25,11 +25,11 @@ class Model {
     return this.#purchaseAmount;
   }
 
-  setlottoTicketsAuto(amount) {
+  setLottoTicketsAuto(amount) {
     this.#lottoTickets = get2DLottoNumberList(amount);
   }
 
-  setlottoTicketsManual(manualLottoList) {
+  setLottoTicketsManual(manualLottoList) {
     const restAmount = this.#purchaseAmount - manualLottoList.length;
 
     if (restAmount > 0) {
@@ -77,18 +77,14 @@ class Model {
 
     return {
       lottoResultObj,
-      totlaReturnRate: getTotalReturnRate(totalWinning, this.#purchaseAmount)
+      totalReturnRate: getTotalReturnRate(totalWinning, this.#purchaseAmount)
     }
   }
 
-  getMatchedCount(lottTicket, winningNumbers) {
+  getMatchedCount(lottoTicket, winningNumbers) {
     const winningNumberSet = new Set(winningNumbers);
 
-    lottTicket.forEach((num) => {
-      if (winningNumberSet.has(num)) winningNumberSet.delete(num);
-    });
-
-    return winningNumbers.length - winningNumberSet.size;
+    return lottoTicket.filter((val) => winningNumberSet.has(val)).length;
   }
 
 }

@@ -1,4 +1,4 @@
-import { selector, selectorAll } from "../utils/common.js";
+import { $, $$ } from "../utils/common.js";
 import { ERROR_MESSAGES } from "../constants/index.js";
 import View from "./View.js";
 
@@ -20,13 +20,13 @@ class WinningNumberFormView extends View {
 
       target.nextElementSibling
         ? target.nextElementSibling.focus()
-        : selector(".bonus-number").focus()
+        : $(".bonus-number").focus()
     }
   }
 
   onSubmit = (e) => {
     e.preventDefault();
-    const winningNumbers = [...selectorAll("input[type='number']", e.currentTarget)].map(v => Number(v.value));
+    const winningNumbers = [...$$("input[type='number']", e.currentTarget)].map(v => Number(v.value));
 
     if (new Set(winningNumbers).size < 7) {
       window.alert(ERROR_MESSAGES.DUPLICATE_NUMBER);
@@ -40,7 +40,7 @@ class WinningNumberFormView extends View {
   }
 
   initValue() {
-    [...selectorAll("input[type='number']", this.$elem)].forEach(v => v.value = null);
+    [...$$("input[type='number']", this.$elem)].forEach(v => v.value = null);
     return this;
   }
 }

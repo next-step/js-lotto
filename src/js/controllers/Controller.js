@@ -4,32 +4,32 @@ import ManualLottoFormView from "../views/ManualLottoFormView.js";
 import PurchasedLottoView from "../views/PurchasedLottoView.js";
 import WinningNumberFormView from "../views/WinningNumberFormView.js";
 import ResultModalView from "../views/ResultModalView.js";
-import { selector } from "../utils/common.js";
+import { $ } from "../utils/common.js";
 
 export default class Controller {
   tag = "Controller";
   constructor() {
     PurchaseAmountFormView
-      .init(selector("#PurchaseAmountForm"))
+      .init($("#PurchaseAmountForm"))
       .on("submit.updateAmount", this.onUpdateAmount)
       .bindEvent();
     
     ManualLottoFormView
-      .init(selector("#ManualLottoForm"))
+      .init($("#ManualLottoForm"))
       .on("submit.updateManualLottoTicket", this.onUpdateManualLottos)
       .bindEvent();
     
     PurchasedLottoView
-      .init(selector("#PurchasedLottoList"))
+      .init($("#PurchasedLottoList"))
       .bindEvent();
     
     WinningNumberFormView
-      .init(selector("#WinningNumberForm"))
+      .init($("#WinningNumberForm"))
       .on("submit.updateWinningNumbers", this.onUpdateWinningNumbers)
       .bindEvent();
     
     ResultModalView
-      .init(selector(".modal"))
+      .init($(".modal"))
       .on("restart", this.onRestart)
       .bindEvent();
   }
@@ -63,22 +63,23 @@ export default class Controller {
     if (selectedProcess === "manual") {
       this.renderManualLottoForm();
     } else {
-      lottoModel.setlottoTicketsAuto(lottoModel.purchaseAmount);
+      lottoModel.setLottoTicketsAuto(lottoModel.purchaseAmount);
       ManualLottoFormView.hide();
       this.renderPurchasedLottoTickets();
     }
   }
 
   onUpdateManualLottos = ({ detail: { totalManualItems } }) => {
-    lottoModel.setlottoTicketsManual(totalManualItems);
+    lottoModel.setLottoTicketsManual(totalManualItems);
     this.renderPurchasedLottoTickets();
   }
 
   onUpdateWinningNumbers = ({detail: { winningNumbers }}) => {
     if (lottoModel.winningNumbers.join("") !== winningNumbers.join("")) {
       lottoModel.winningNumbers = winningNumbers;
-      ResultModalView.render(lottoModel.getLottoResults());
     }
+    
+    ResultModalView.render(lottoModel.getLottoResults());
     ResultModalView.show();
   }
 

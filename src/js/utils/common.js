@@ -1,10 +1,10 @@
 import { LOTTO_PRICE } from "../constants/index.js";
 
-export const selector = (selector, dom = document) => {
+export const $ = (selector, dom = document) => {
   return dom.querySelector(selector);
 };
 
-export const selectorAll = (selector, dom = document) => {
+export const $$ = (selector, dom = document) => {
   return dom.querySelectorAll(selector);
 };
 
@@ -41,9 +41,7 @@ export const hasDuplicateNumber = (arr) => {
   return false;
 }
 
-export const numberWithCommas = (number) => {
-  return number.toLocaleString();
-}
+export const numberWithCommas = (number) => number.toLocaleString();
 
 export const ascendingSort = (arr) => {
   return [...arr].sort(function(a, b) {

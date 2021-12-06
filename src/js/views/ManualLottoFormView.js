@@ -1,4 +1,4 @@
-import { selector, selectorAll, hasDuplicateNumber } from "../utils/common.js";
+import { $, $$, hasDuplicateNumber } from "../utils/common.js";
 import { ERROR_MESSAGES } from "../constants/index.js";
 import View from "./View.js";
 
@@ -6,8 +6,8 @@ class ManualLottoFormView extends View {
   tag = "ManualLottoFormView";
   constructor() {
     super();
-    this.$AutoSelectCheckbox = selector(".auto-select-rest-checkbox");
-    this.$applyButton = selector(".btn-apply");
+    this.$AutoSelectCheckbox = $(".auto-select-rest-checkbox");
+    this.$applyButton = $(".btn-apply");
   }
 
   bindEvent() {
@@ -18,8 +18,8 @@ class ManualLottoFormView extends View {
   }
 
   toggleAutoAll = (e) => {
-    const lottoManualItems = [...selectorAll(".lotto-manual-item", this.$elem)];
-    const getLottoManualInputs = $elem => [...selectorAll("input[type='number']", $elem)];
+    const lottoManualItems = [...$$(".lotto-manual-item", this.$elem)];
+    const getLottoManualInputs = $elem => [...$$("input[type='number']", $elem)];
 
     if (e.target.checked === false) {
       lottoManualItems
@@ -51,8 +51,8 @@ class ManualLottoFormView extends View {
   onSubmit = (e) => {
     e.preventDefault();
     
-    const lottoManualItems = [...selectorAll(".lotto-manual-item[data-process='manual']", e.currentTarget)];
-    const getLottoManualInputs = $elem => [...selectorAll("input[type='number']", $elem)];
+    const lottoManualItems = [...$$(".lotto-manual-item[data-process='manual']", e.currentTarget)];
+    const getLottoManualInputs = $elem => [...$$("input[type='number']", $elem)];
 
     const totalManualItems = lottoManualItems
       .map(($elem) => getLottoManualInputs($elem).map(v => Number(v.value)));
@@ -77,7 +77,7 @@ class ManualLottoFormView extends View {
   }
 
   render({ amount }) {
-    const list = selector("ul", this.$elem);
+    const list = $("ul", this.$elem);
     if (list) {
       list.parentNode.removeChild(list);
     }

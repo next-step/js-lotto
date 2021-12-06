@@ -1,4 +1,4 @@
-import { selector, ascendingSort } from "../utils/common.js";
+import { $, ascendingSort } from "../utils/common.js";
 import View from "./View.js";
 
 class PurchasedLottoView extends View {
@@ -8,12 +8,12 @@ class PurchasedLottoView extends View {
 
   constructor() {
     super();
-    this.$purchasedResultMessage = selector(".purchased-lotto-message");
-    this.$lottoList = selector(".purchased-lotto-list");
+    this.$purchasedResultMessage = $(".purchased-lotto-message");
+    this.$lottoList = $(".purchased-lotto-list");
   }
 
   bindEvent() {
-    selector(".lotto-numbers-toggle-button")
+    $(".lotto-numbers-toggle-button")
       .addEventListener("change", this.toggleBtnChangeHandler);
   }
 
