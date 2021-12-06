@@ -1,10 +1,8 @@
-import View from "./view.js";
-import {$, $$} from "../utils.js";
-import {DOM_ID} from "../constants.js";
+import { DOM_ID } from '../constants.js';
+import { $, $$ } from '../utils.js';
 
-export default class ResultModal extends View {
+export default class ResultModal {
   constructor() {
-    super();
     this.$resultModal = $(DOM_ID.RESULT_MODAL);
     this.$resultCountList = $$(DOM_ID.RESULT_COUNT_LIST);
     this.$profitMessage = $(DOM_ID.PROFIT_MESSAGE);
@@ -12,16 +10,16 @@ export default class ResultModal extends View {
     this.$cancelButton = $(DOM_ID.CANCEL_BUTTON);
   }
 
-  show() {
+  openModal() {
     this.$resultModal.classList.add('open');
   }
 
-  hide() {
+  closeModal() {
     this.$resultModal.classList.remove('open');
   }
 
   bindOnClickBlackout(handler) {
-    addEventListener('click', (event) => {
+    document.addEventListener('click', (event) => {
       handler(event, this.$resultModal);
     });
   }
@@ -44,6 +42,7 @@ export default class ResultModal extends View {
     });
   }
 
-
-
-};
+  setProfitMessage(profit) {
+    this.$profitMessage.innerText = `당신의 총 수익률은 ${profit}% 입니다.`;
+  }
+}

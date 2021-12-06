@@ -1,17 +1,15 @@
-import View from "./view.js";
-import {$, $$} from "../utils.js";
-import {DOM_ID} from "../constants.js";
+import { DOM_ID } from '../constants.js';
+import { $ } from '../utils.js';
 
-export default class PriceForm extends View {
+export default class PriceForm {
   constructor() {
-    super();
     this.$moneyInput = $(DOM_ID.MONEY_INPUT);
     this.$priceForm = $(DOM_ID.PRICE_FORM);
     this.$purchaseMessage = $(DOM_ID.PURCHASE_MESSAGE);
   }
 
   clearInput() {
-    this.$moneyInput.value = '';
+    this.$priceForm.reset();
   }
 
   updatePurchaseMessage(amount) {
@@ -19,9 +17,9 @@ export default class PriceForm extends View {
   }
 
   bindOnClickPurchaseButton(handler) {
-    this.$priceForm.addEventListener('submit', event => {
+    this.$priceForm.addEventListener('submit', (event) => {
       event.preventDefault();
       handler(event);
     });
   }
-};
+}

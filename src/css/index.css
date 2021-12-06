@@ -13,6 +13,12 @@ body {
   margin: 0 auto;
 }
 
+.self-number {
+  margin: 5px;
+  width: 30px;
+  height: 36px;
+}
+
 .winning-number {
   width: 30px;
   height: 36px;

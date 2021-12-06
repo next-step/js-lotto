@@ -1,31 +1,26 @@
-import View from "./view.js"
-import {$, $$} from "../utils.js";
-import {DOM_ID, ERROR_MESSAGE, MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER, WINNING_NUMBERS_LENGTH} from "../constants.js";
+import { DOM_ID, ERROR_MESSAGE, WINNING_NUMBERS_LENGTH } from '../constants.js';
+import {
+  $, $$, checkNumber, hide,
+} from '../utils.js';
 
-export default class LottoForm extends View {
+export default class LottoForm {
   constructor() {
-    super();
     this.$lottoInputForm = $(DOM_ID.LOTTO_INPUT_FORM);
     this.$getResultButton = $(DOM_ID.GET_RESULT_BUTTON);
-    this.$winningNumbers = $$(DOM_ID.WINNING_NUMBERS); //.value
+    this.$winningNumbers = $$(DOM_ID.WINNING_NUMBERS);
     this.$bonusNumber = $(DOM_ID.BONUS_NUMBER);
-  }
 
-  hide() {
-    this.$lottoInputForm.style.display = 'none';
+    hide(this.$lottoInputForm);
   }
 
   clearInput() {
-    this.$winningNumbers.forEach($number => $number.value = '');
-    this.$bonusNumber.value = '';
+    this.$lottoInputForm.reset();
   }
 
   checkLottoNumber(winningNumbers, bonusNumber) {
     const uniqueWinningNumbers = [...new Set(winningNumbers), bonusNumber];
     uniqueWinningNumbers.forEach((number) => {
-      if (number === '') throw Error(ERROR_MESSAGE.NONE_VALUE);
-      if (number > MAX_LOTTO_NUMBER) throw Error(ERROR_MESSAGE.MAX_NUMBER);
-      if (number < MIN_LOTTO_NUMBER) throw Error(ERROR_MESSAGE.MIN_NUMBER);
+      checkNumber(number);
       if (uniqueWinningNumbers.length !== WINNING_NUMBERS_LENGTH) throw Error(ERROR_MESSAGE.DUPLICATED_NUMBER);
     });
   }
@@ -34,9 +29,9 @@ export default class LottoForm extends View {
     this.$getResultButton.addEventListener('click', (event) => {
       event.preventDefault();
       handler(
-        [...this.$winningNumbers].map($input => Number($input.value)),
+        [...this.$winningNumbers].map(($input) => Number($input.value)),
         this.$bonusNumber.value,
       );
     });
   }
-};
+}
