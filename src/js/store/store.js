@@ -17,7 +17,7 @@ export const createStore = (initialState) => {
         value,
       };
 
-      this.state[stateKey].effects.forEach((effect) => effect());
+      this.state[stateKey].effects.forEach((effect) => effect(value));
     },
 
     selectState(stateKey) {
