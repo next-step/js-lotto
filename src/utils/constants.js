@@ -2,6 +2,15 @@ export const MESSAGES = {
   PURCHASE: "로또 구입 금액을 1,000원 단위로 입력해 주세요.",
 };
 
+export const VIEW = Object.freeze({
+  INPUT: "INPUT",
+  MANUAL_INPUT: "MANUAL_INPUT",
+  MANUAL_TICKET: "MANUAL_TICKET",
+  TICKET: "TICKET",
+  WINNING_NUMBER: "WINNING_NUMBER",
+  RESULT_MODAL: "RESULT_MODAL",
+});
+
 export const LOTTO_MAX = 45;
 export const LOTTO_MIN = 1;
 
@@ -19,6 +28,7 @@ export const LOTTOS_RESULT = {
 export const LOTTOS_STATE = {
   lottos: [],
   manualTicket: 0,
+  showManualTicketInputs: false,
   winningNums: [0, 0, 0, 0, 0, 0],
   bonusNum: 0,
   result: LOTTOS_RESULT,

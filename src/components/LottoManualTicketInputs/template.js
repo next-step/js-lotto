@@ -6,6 +6,7 @@ export const manualTicketInputTemplate = (num) => {
       data-cy="manual-number"
       min="1"
       max="45"
+      required
     />
     <input
       type="number"
@@ -13,6 +14,7 @@ export const manualTicketInputTemplate = (num) => {
       data-cy="manual-number"
       min="1"
       max="45"
+      required
     />
     <input
       type="number"
@@ -20,6 +22,7 @@ export const manualTicketInputTemplate = (num) => {
       data-cy="manual-number"
       min="1"
       max="45"
+      required
     />
     <input
       type="number"
@@ -27,6 +30,7 @@ export const manualTicketInputTemplate = (num) => {
       data-cy="manual-number"
       min="1"
       max="45"
+      required
     />
     <input
       type="number"
@@ -34,6 +38,7 @@ export const manualTicketInputTemplate = (num) => {
       data-cy="manual-number"
       min="1"
       max="45"
+      required
     />
     <input
       type="number"
@@ -41,6 +46,7 @@ export const manualTicketInputTemplate = (num) => {
       data-cy="manual-number"
       min="1"
       max="45"
+      required
     />
   </div>`;
 };

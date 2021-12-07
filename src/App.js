@@ -1,11 +1,11 @@
 import LottoInput from "./components/LottoInput/index.js";
 import LottoManualInput from "./components/LottoManualInput/index.js";
-import lottoManualTicket from "./components/LottoManualTicket/index.js";
+import LottoManualTicketInputs from "./components/LottoManualTicketInputs/index.js";
 import LottoTickets from "./components/LottoTickets/index.js";
 import LottoWinningNumber from "./components/LottoWinningNumber/index.js";
 import LottoResultModal from "./components/LottoResultModal/LottoResultModal.js";
 
-import { LOTTOS_ACTION, LOTTOS_STATE, LOTTOS_RESULT, LOTTO_MIN, LOTTO_MAX } from "./utils/constants.js";
+import { LOTTOS_ACTION, LOTTOS_STATE, LOTTOS_RESULT, LOTTO_MIN, LOTTO_MAX, VIEW } from "./utils/constants.js";
 import { cloneDeep, createRandomLotto } from "./utils/helpers.js";
 import { $ } from "./utils/selectors.js";
 
@@ -19,42 +19,42 @@ export default class App {
   init = () => {
     this.store.registerObserver(
       {
-        key: "lottoInput",
+        key: VIEW.INPUT,
         component: new LottoInput(".lotto-input", {
           getState: this.getState,
           setState: this.setState,
         }),
       },
       {
-        key: "lottoManualInput",
+        key: VIEW.MANUAL_INPUT,
         component: new LottoManualInput(".lotto-manual-input", {
           getState: this.getState,
           setState: this.setState,
         }),
       },
       {
-        key: "lottoManualTicket",
-        component: new lottoManualTicket(".lotto-manual-ticket", {
+        key: VIEW.MANUAL_TICKET,
+        component: new LottoManualTicketInputs(".lotto-manual-ticket", {
           getState: this.getState,
           setState: this.setState,
         }),
       },
       {
-        key: "lottoTicket",
+        key: VIEW.TICKET,
         component: new LottoTickets(".lotto-tickets", {
           getState: this.getState,
           setState: this.setState,
         }),
       },
       {
-        key: "lottoWinningNumber",
+        key: VIEW.WINNING_NUMBER,
         component: new LottoWinningNumber(".lotto-win", {
           getState: this.getState,
           setState: this.setState,
         }),
       },
       {
-        key: "lottoResultModal",
+        key: VIEW.RESULT_MODAL,
         component: new LottoResultModal(".modal", {
           getState: this.getState,
           setState: this.setState,
@@ -80,7 +80,7 @@ export default class App {
       case LOTTOS_ACTION.BUY_MANUAL_LOTTOS:
         return this.buyManualLottos(prevState, data);
       case LOTTOS_ACTION.SET_LOTTO_MANUAL_TICKET:
-        return this.setLottoManualTicket(prevState, data);
+        return this.setLottoManualTicketInputs(prevState, data);
       case LOTTOS_ACTION.TOGGLE_LOTTO_DISPLAY:
         return this.toggleLottoDispaly(prevState, data);
       case LOTTOS_ACTION.SHOW_LOTTO_RESULT:
@@ -102,7 +102,7 @@ export default class App {
         lottos,
         purchaseMoney,
       },
-      ["lottoTicket", "lottoWinningNumber"],
+      [VIEW.INPUT, VIEW.MANUAL_INPUT, VIEW.TICKET, VIEW.WINNING_NUMBER],
     ];
   };
 
@@ -125,32 +125,29 @@ export default class App {
     const randomLottos = new Array(purchaseMoney / 1000 - manualTicket)
       .fill([])
       .map(() => createRandomLotto(LOTTO_MIN, LOTTO_MAX, 3));
-
     return [
       {
         ...prevState,
         purchaseMoney: purchaseMoney,
-        manualTicket: 0,
+        showManualTicketInputs: false,
         lottos: [...this.getManualLottos(lottoNums), ...randomLottos],
       },
-      ["lottoManualTicket", "lottoTicket", "lottoWinningNumber"],
+      [VIEW.INPUT, VIEW.MANUAL_INPUT, VIEW.MANUAL_TICKET, VIEW.TICKET, VIEW.WINNING_NUMBER],
     ];
-    
   };
 
-  setLottoManualTicket = (prevState, manualTicket) => {
-    return [{ ...prevState, manualTicket }, ["lottoManualTicket"]];
+  setLottoManualTicketInputs = (prevState, manualTicket) => {
+    return [{ ...prevState, manualTicket, showManualTicketInputs: true }, [VIEW.MANUAL_TICKET]];
   };
 
   toggleLottoDispaly = (prevState, checked) => {
-    return [{ ...prevState, toggle: checked }, ["lottoTicket"]];
+    return [{ ...prevState, toggle: checked }, [VIEW.TICKET]];
   };
 
   updateLottoResult = (prevState, { winningNums, bonusNum }) => {
     const { lottos, purchaseMoney } = prevState;
     const result = this.getResult(cloneDeep(LOTTOS_RESULT), lottos, winningNums, bonusNum);
     const prizeMoney = this.getPrizeMoney(result);
-
     return [
       {
         ...prevState,
@@ -161,22 +158,24 @@ export default class App {
         prizeMoney,
         earningRatio: this.getEarningRatio(prizeMoney, purchaseMoney),
       },
-      ["lottoResultModal"],
+      [VIEW.RESULT_MODAL],
     ];
   };
 
   closeResultModal = (prevState) => {
-    return [{ ...prevState, showResultModal: false, toggle: false }, ["lottoResultModal"]];
+    return [{ ...prevState, showResultModal: false, toggle: false }, [VIEW.RESULT_MODAL]];
   };
 
   restart = () => {
-    return [LOTTOS_STATE, ["lottoInput", "lottoTicket", "lottoWinningNumber", "lottoResultModal"]];
+    return [LOTTOS_STATE, [VIEW.INPUT, VIEW.MANUAL_INPUT, VIEW.TICKET, VIEW.WINNING_NUMBER, VIEW.RESULT_MODAL]];
   };
 
   getPrizeMoney = (lottoResult) => {
     let prizeMoney = 0;
-    for (let [_, p] of Object.entries(lottoResult)) {
-      prizeMoney += p[0] * p[1];
+    for (const [_, p] of Object.entries(lottoResult)) {
+      const winCount = p[0];
+      const winPrize = p[1];
+      prizeMoney += winCount * winPrize;
     }
     return prizeMoney;
   };

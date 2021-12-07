@@ -8,7 +8,7 @@ export default class LottoInput extends Component {
     this.mount();
   }
   template = () => {
-    const { purchaseMoney } = this.props.getState();
+    const { purchaseMoney, lottos } = this.props.getState();
     return `<label class="mb-2 d-inline-block"
         >구입할 금액을 입력해주세요.
       </label>
@@ -22,6 +22,7 @@ export default class LottoInput extends Component {
           required min="1000"
           max="100000"
           data-cy="input-purchase"
+          ${lottos.length === 0 ? "" : "disabled"}
       />
       <button type="submit" class="btn btn-cyan btn-purchase" data-cy="btn-purchase">확인</button>
       </div>

@@ -2,8 +2,9 @@ import Component from "../Component.js";
 import { LOTTOS_ACTION } from "../../utils/constants.js";
 import { manualTicketInputTemplate } from "./template.js";
 import { $all } from "../../utils/selectors.js";
+import { isDuplicateNumsExist, isNumsIn1to45Range } from "../../utils/helpers.js";
 
-export default class LottoManualTicket extends Component {
+export default class LottoManualTicketInputs extends Component {
   constructor(app, props) {
     super(app, props);
     this.render();
@@ -11,9 +12,8 @@ export default class LottoManualTicket extends Component {
   }
 
   template = () => {
-    const { manualTicket } = this.props.getState();
-
-    if (manualTicket === 0) {
+    const { manualTicket, showManualTicketInputs } = this.props.getState();
+    if (!showManualTicketInputs) {
       return "";
     }
 
@@ -34,9 +34,17 @@ export default class LottoManualTicket extends Component {
   mount = () => {
     this.$app.addEventListener("submit", (e) => {
       e.preventDefault();
+      const manualTicketNums = [
+        ...Array.prototype.map.call($all(".winning-number"), (lottoNum) => parseInt(lottoNum.value)),
+      ];
+
+      if (isDuplicateNumsExist(manualTicketNums)) {
+        alert("중복된 로또 번호가 없어야 합니다.");
+        return;
+      }
       this.props.setState({
         type: LOTTOS_ACTION.BUY_MANUAL_LOTTOS,
-        data: Array.prototype.map.call($all(".winning-number"), (lottoNum) => Number(lottoNum.value)),
+        data: manualTicketNums,
       });
     });
   };
