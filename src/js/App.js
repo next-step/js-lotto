@@ -9,9 +9,10 @@ export default class App {
 		this.winningNumberArray = winningNumberArray;
 
 		this.payment = new Payment({
-			$payment: document.querySelector("#payment"),
-			onSubmit: (count) => {
-				this.purchase.setState(count);
+			$paymentForm: document.querySelector("#payment"),
+			$paymentFormInput: document.querySelector(".payment-input"),
+			setPurchaseCount: (count) => {
+				this.purchase.setCount(count);
 				this.winningNumbers.render();
 			},
 		});

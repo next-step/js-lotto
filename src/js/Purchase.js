@@ -41,7 +41,7 @@ export default class Purchase {
 			this.$purchaseToggle.checked
 		);
 	}
-	setState(nextCount) {
+	setCount(nextCount) {
 		this.count = nextCount;
 		this.render();
 	}
