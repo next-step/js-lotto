@@ -1,0 +1,7 @@
+.purchased-numbers-wrapper span.numbers {
+  display: none;
+}
+
+.purchased-numbers-wrapper.show span.numbers {
+  display: inline-block;
+}

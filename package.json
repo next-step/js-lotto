@@ -1,9 +1,21 @@
 {
-  "name": "racingcar",
+  "name": "lotto",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^6.3.0"
-  }
+    "cypress": "^9.0.0",
+    "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.1"
+  },
+  "scripts": {
+    "cypress:open": "cypress open",
+    "start": "python -m SimpleHTTPServer",
+    "lint": "eslint . --fix --max-warnings=0 --ext .js"
+  },
+  "repository": "https://github.com/mojosoeun/js-lotto.git",
+  "author": "Soeun Lee <soeun@chartmogul.com>"
 }
