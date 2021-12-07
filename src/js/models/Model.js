@@ -1,11 +1,11 @@
-import { computedAmount, getLottoNumberList } from "../utils/common.js";
-import { LOTTO_PRICE, WINNINGS } from "../constants/index.js"
+import { computedAmount, get2DLottoNumberList, getTotalReturnRate } from "../utils/common.js";
+import { WINNINGS } from "../constants/index.js"
 
 class Model {
   tag = "Model";
   #purchaseAmount;
   #lottoTickets;
-  #winnings;
+  #winningNumbers;
 
   constructor() {
     this.init();
@@ -14,41 +14,49 @@ class Model {
   init() {
     this.#purchaseAmount = "";
     this.#lottoTickets = [];
-    this.#winnings = new Array(7).fill(0);
+    this.#winningNumbers = new Array(7).fill(0);
   }
 
-  set purchaseAmount(purchaseAmount) {
-    this.#purchaseAmount = computedAmount(purchaseAmount);
-    this.lottoTickets = this.#purchaseAmount;
+  set purchaseAmount(price) {
+    this.#purchaseAmount = computedAmount(price);
   }
 
   get purchaseAmount() {
     return this.#purchaseAmount;
   }
 
-  set lottoTickets(amount) {
-    this.#lottoTickets = new Array(amount).fill(0).map(v => getLottoNumberList());
+  setLottoTicketsAuto(amount) {
+    this.#lottoTickets = get2DLottoNumberList(amount);
+  }
+
+  setLottoTicketsManual(manualLottoList) {
+    const restAmount = this.#purchaseAmount - manualLottoList.length;
+
+    if (restAmount > 0) {
+      this.#lottoTickets = [...manualLottoList, ...get2DLottoNumberList(restAmount)];
+    } else {
+      this.#lottoTickets = manualLottoList;
+    }
   }
 
   get lottoTickets() {
     return this.#lottoTickets;
   }
 
-  set winnings(winnings) {
-    this.#winnings = winnings;
-    console.log(`[${this.tag}] tshis.#winnings -> ${this.#winnings}`);
+  set winningNumbers(winningNumbers) {
+    this.#winningNumbers = winningNumbers;
   }
 
-  get winnings() {
-    return this.#winnings;
+  get winningNumbers() {
+    return this.#winningNumbers;
   }
 
   getLottoResults() {
-    const bonus = this.#winnings.slice(-1).pop();
-    const winningsWithoutBonus = this.#winnings.slice(0, -1);
+    const bonus = this.#winningNumbers[this.#winningNumbers.length - 1];
+    const winningNumberWithoutBonus = this.#winningNumbers.slice(0, -1);
 
     const lottoResultObj = this.#lottoTickets.reduce((prevObj, lottoTicket) => {
-      const matchedCount = this.getMatchedCount(lottoTicket, winningsWithoutBonus);
+      const matchedCount = this.getMatchedCount(lottoTicket, winningNumberWithoutBonus);
 
       if (matchedCount >= 3) {
         prevObj[`NUM${matchedCount}${matchedCount === 5 && lottoTicket.some((num) => num === bonus)
@@ -69,18 +77,14 @@ class Model {
 
     return {
       lottoResultObj,
-      totlaReturnRate: ((totalWinning / (this.#purchaseAmount * LOTTO_PRICE)) * 100) - 100
+      totalReturnRate: getTotalReturnRate(totalWinning, this.#purchaseAmount)
     }
   }
 
-  getMatchedCount(lottTicket, winnings) {
-    const winningSet = new Set(winnings);
+  getMatchedCount(lottoTicket, winningNumbers) {
+    const winningNumberSet = new Set(winningNumbers);
 
-    lottTicket.forEach((num) => {
-      if (winningSet.has(num)) winningSet.delete(num);
-    });
-
-    return winnings.length - winningSet.size;
+    return lottoTicket.filter((val) => winningNumberSet.has(val)).length;
   }
 
 }

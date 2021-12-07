@@ -1,4 +1,4 @@
-import { selector, selectorAll } from "../utils/common.js";
+import { $, $$ } from "../utils/common.js";
 import { ERROR_MESSAGES } from "../constants/index.js";
 import View from "./View.js";
 
@@ -14,33 +14,33 @@ class WinningNumberFormView extends View {
       .on("submit", this.onSubmit);
   }
 
-  onKeyUp = ({ target, keyCode }) => {
-    if (target.type === "number" && keyCode >= 48 && keyCode <= 57 && target.value.length == 2) {
+  onKeyUp = ({ target, key }) => {
+    if (target.type === "number" && key >= 0 && key <= 9 && target.value.length == 2) {
       if (target.classList.contains("bonus-number")) return false;
 
       target.nextElementSibling
         ? target.nextElementSibling.focus()
-        : selector(".bonus-number").focus()
+        : $(".bonus-number").focus()
     }
   }
 
   onSubmit = (e) => {
     e.preventDefault();
-    const winnings = [...selectorAll("input[type='number']", e.currentTarget)].map(v => Number(v.value));
+    const winningNumbers = [...$$("input[type='number']", e.currentTarget)].map(v => Number(v.value));
 
-    if (new Set(winnings).size < 7) {
+    if (new Set(winningNumbers).size < 7) {
       window.alert(ERROR_MESSAGES.DUPLICATE_NUMBER);
       return false;
     }
 
-    this.emit("submit.updateWinnings", {
-      winnings,
+    this.emit("submit.updateWinningNumbers", {
+      winningNumbers,
     });
 
   }
 
   initValue() {
-    [...selectorAll("input[type='number']", this.$elem)].forEach(v => v.value = null);
+    [...$$("input[type='number']", this.$elem)].forEach(v => v.value = null);
     return this;
   }
 }

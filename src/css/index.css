@@ -58,3 +58,8 @@ li {
 .hide-details > .flex-wrap {
   flex-direction: row;
 }
+
+.purchase-switch {
+  display: inline-block;
+  margin-right: 0.5rem;
+}

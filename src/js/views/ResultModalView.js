@@ -1,4 +1,4 @@
-import { selector, numberWithCommas } from "../utils/common.js";
+import { $, numberWithCommas, toFixedDecimalPoint } from "../utils/common.js";
 import { WINNINGS } from "../constants/index.js"
 import View from "./View.js";
 
@@ -10,10 +10,10 @@ class ResultModalView extends View {
 
   constructor() {
     super();
-    this.$modalClose = selector(".modal-close", this.$elem);
-    this.$resultTable = selector("#LottoResultTable", this.$elem);
-    this.$totalWinningResult = selector(".total-winning-result", this.$elem);
-    this.$btnRestart = selector(".btn-restart", this.$elem);
+    this.$modalClose = $(".modal-close", this.$elem);
+    this.$resultTable = $("#LottoResultTable", this.$elem);
+    this.$totalWinningResult = $(".total-winning-result", this.$elem);
+    this.$btnRestart = $(".btn-restart", this.$elem);
   }
 
   bindEvent() {
@@ -25,9 +25,11 @@ class ResultModalView extends View {
     this.emit("restart");
   }
 
-  render({ lottoResultObj, totlaReturnRate }) {
+  render({ lottoResultObj, totalReturnRate }) {
     this.$resultTable.innerHTML = this.getListHTML(lottoResultObj);
-    this.$totalWinningResult.textContent = `당신의 총 수익률은 ${totlaReturnRate}%입니다.`;
+    this.$totalWinningResult.textContent = `당신의 총 수익률은 ${toFixedDecimalPoint(totalReturnRate, 2)}%입니다.`;
+
+    return this;
   }
 
   getListHTML(lottoResultObj) {

@@ -1,10 +1,10 @@
 import { LOTTO_PRICE } from "../constants/index.js";
 
-export const selector = (selector, dom = document) => {
+export const $ = (selector, dom = document) => {
   return dom.querySelector(selector);
 };
 
-export const selectorAll = (selector, dom = document) => {
+export const $$ = (selector, dom = document) => {
   return dom.querySelectorAll(selector);
 };
 
@@ -26,6 +26,10 @@ export const getLottoNumberList = (listSize = 6) => {
   return [...newLottoSet];
 }
 
+export const get2DLottoNumberList = (arr1DLength) => {
+  return new Array(arr1DLength).fill(0).map(v => getLottoNumberList());
+}
+
 export const hasDuplicateNumber = (arr) => {
   const setList = new Set();
 
@@ -37,6 +41,22 @@ export const hasDuplicateNumber = (arr) => {
   return false;
 }
 
-export const numberWithCommas = (number) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export const numberWithCommas = (number) => number.toLocaleString();
+
+export const ascendingSort = (arr) => {
+  return [...arr].sort(function(a, b) {
+    return a - b;
+  });
+}
+
+export const toFixedDecimalPoint = (number, digitsToFixed) => {
+  const decimalPointIndex = (`${number}`).indexOf(".");
+  if (decimalPointIndex >= 0 && [...(`${number}`)].slice(decimalPointIndex).length > digitsToFixed) {
+    return number.toFixed(digitsToFixed);
+  }
+  return number;
+}
+
+export const getTotalReturnRate = (totalWinning, purchaseAmount) => {
+  return ((totalWinning / (purchaseAmount * LOTTO_PRICE)) * 100) - 100;
 }

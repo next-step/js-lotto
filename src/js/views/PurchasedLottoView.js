@@ -1,4 +1,4 @@
-import { selector } from "../utils/common.js";
+import { $, ascendingSort } from "../utils/common.js";
 import View from "./View.js";
 
 class PurchasedLottoView extends View {
@@ -8,12 +8,12 @@ class PurchasedLottoView extends View {
 
   constructor() {
     super();
-    this.$purchasedResultMessage = selector(".purchased-lotto-message");
-    this.$lottoList = selector(".purchased-lotto-list");
+    this.$purchasedResultMessage = $(".purchased-lotto-message");
+    this.$lottoList = $(".purchased-lotto-list");
   }
 
   bindEvent() {
-    selector(".lotto-numbers-toggle-button")
+    $(".lotto-numbers-toggle-button")
       .addEventListener("change", this.toggleBtnChangeHandler);
   }
 
@@ -25,6 +25,8 @@ class PurchasedLottoView extends View {
   render({ amount, lottoTickets }) {
     this.$purchasedResultMessage.textContent = `총 ${amount}개를 구매하였습니다.`;
     this.$lottoList.innerHTML = this.getListHTML(lottoTickets);
+
+    return this;
   }
 
   getListHTML(lottoTickets) {
@@ -32,7 +34,7 @@ class PurchasedLottoView extends View {
       ${lottoTickets.map((numbers) => 
         `<li class="mx-1 text-4xl lotto-wrapper">
           <span class="lotto-icon">🎟️ </span>
-          <span class="lotto-detail">${numbers.join(", ")}</span>
+          <span class="lotto-detail">${ascendingSort(numbers).join(", ")}</span>
         </li>`
       ).join("")}
     </ul>`;
