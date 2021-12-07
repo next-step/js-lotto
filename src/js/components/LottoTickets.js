@@ -3,10 +3,10 @@ import { CLASS_NAME } from "../constants/selectors.js";
 import lottoStore, { LOTTO_STORE_KEY } from "../lottoStore.js";
 
 class LottoTickets {
-  constructor($ticketContainer, $lottoPurchaseStatus, $toggleButton) {
-    this.$ticketContainer = $ticketContainer;
-    this.$lottoPurchaseStatus = $lottoPurchaseStatus;
-    this.$toggleButton = $toggleButton;
+  constructor() {
+    this.$ticketContainer = document.querySelector(CLASS_NAME.TICKET_CONTAINER);
+    this.$lottoPurchaseStatus = document.querySelector(CLASS_NAME.LOTTO_PURCHASE_STATUS);
+    this.$toggleButton = document.querySelector(CLASS_NAME.LOTTO_NUMBER_TOGGLE_BUTTON);
   }
 
   init() {
