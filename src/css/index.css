@@ -31,3 +31,14 @@ body {
 .lotto-number-hidden .js-lotto-numbers {
   display: none;
 }
+
+.manual{
+  margin-top: 10px;
+}
+
+.manual input {
+  width: 30px;
+  height: 35px;
+  margin: 5px;
+  text-align: center;
+}
