@@ -48,7 +48,7 @@ export const lottoStoreActions = {
   },
 
   evalutateLottoPrize() {
-    const lottoPrize = initialState[LOTTO_STORE_KEY.LOTTO_PRIZE];
+    const lottoPrize = { ...initialState[LOTTO_STORE_KEY.LOTTO_PRIZE] };
     const lottoNumbers = lottoStore.selectState(LOTTO_STORE_KEY.LOTTO_NUMBERS);
     const winningNumbers = lottoStore.selectState(LOTTO_STORE_KEY.WINNGIN_NUMBERS);
     const bonusNumber = lottoStore.selectState(LOTTO_STORE_KEY.BONUS_NUMBER);
