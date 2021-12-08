@@ -12,13 +12,16 @@ const buyLotto = (price) => {
 describe('로또 게임', () => {
   it('로또 구입 금액을 입력하면, 금액에 해당하는 로또를 구입해야 한다.', () => {
     buyLotto(5000);
-    cy.get('.js-lotto-count').should('have.text', '5');
+    cy.get('.js-lotto-count').should('have.text', 5);
+    
+    cy.get('.js-automatic-buy-button').click();
     cy.get('.js-lotto-ticket').should('have.length', 5);
   });
 
   it('복권 번호는 번호보기 토글버틀을 클릭하면, 숫자를 확인할수 있어야 한다.', () => {
     buyLotto(5000);
     cy.get('.js-toggle').click();
+    cy.get('.js-automatic-buy-button').click();
     cy.get('.js-lotto-numbers').first().should('be.visible');
   });
 
@@ -45,5 +48,19 @@ describe('로또 게임', () => {
     cy.get('.open-result-modal-button').click();
     cy.get('.js-reset-button').click();
    })
-});
+
+   it('소비자는 수동구매를 할 수 있어야 한다. (번호입력) 남는 금액이 있다면 자동으로 구매할수 있어야한다.',()=>{
+    buyLotto(5000);
+    cy.get('.manual-number[data-manual-number="1"]').type(5);
+    cy.get('.manual-number[data-manual-number="2"]').type(15);
+    cy.get('.manual-number[data-manual-number="3"]').type(22);
+    cy.get('.manual-number[data-manual-number="4"]').type(25);
+    cy.get('.manual-number[data-manual-number="5"]').type(30);
+    cy.get('.manual-number[data-manual-number="6"]').type(40);
+    cy.get('.js-manual-buy-button').click();
+    cy.get('.js-automatic-buy-button').click();
+   })
+});  
+
+
 

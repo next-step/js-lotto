@@ -28,10 +28,22 @@
   flex-wrap: nowrap;
 }
 
+.flex-manual-div{
+  margin-top: 10px;
+}
+
+.flex-manual-div input {
+  width: 30px;
+  height: 35px;
+  text-align: center;
+} 
 .flex-item-center {
   align-items: center;
 }
 
+.flex-item-center div {
+  margin: 5px;
+}
 /* Flex */
 .flex-1 {
   flex: 1 1 0%;

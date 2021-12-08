@@ -23,17 +23,18 @@
         </form>
 
 <!-- 추가 -->
-        <div class="manual">
+        <div class="flex-manual-div">
           <p>구매 가능한 로또: <span class="js-remain-lotto-count">0</span>개</p>
+          
           <label>수동 번호 입력해주세요.</label>
           <form class="js-manual-form d-flex flex-item-center">
             <div>
-              <input type="number" name="manual-number"/>
-              <input type="number" name="manual-number"/>
-              <input type="number" name="manual-number"/>
-              <input type="number" name="manual-number"/>
-              <input type="number" name="manual-number"/>
-              <input type="number" name="manual-number"/>
+              <input type="number" name="manual-number" class="manual-number" data-manual-number="1"/>
+              <input type="number" name="manual-number" class="manual-number" data-manual-number="2"/>
+              <input type="number" name="manual-number" class="manual-number" data-manual-number="3"/>
+              <input type="number" name="manual-number" class="manual-number" data-manual-number="4"/>
+              <input type="number" name="manual-number" class="manual-number" data-manual-number="5"/>
+              <input type="number" name="manual-number" class="manual-number" data-manual-number="6"/>
             </div>
             <button class="btn btn-cyan js-manual-buy-button">수동 구매하기</button>
           </form>
@@ -43,7 +44,7 @@
 
         <section class="mt-9 js-lotto-section">
           <div class="d-flex">
-            <label class="flex-auto my-0">총 <span class="js-lotto-count">0</span>개를 구매하였습니다.</label>
+            <label class="flex-auto my-0">총 <span class="js-lotto-count">5</span>개를 구매하였습니다.</label>
             <div class="flex-auto d-flex justify-end pr-1">
               <label class="switch js-toggle">
                 <input type="checkbox" class="lotto-numbers-toggle-button" />
