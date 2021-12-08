@@ -8,7 +8,7 @@ export const fullLottoTemplate = (array, isChecked) =>
         <span class="mx-1 text-4xl">
           <span class="lotto-icon">🎟️</span>
           <span class="lotto-numbers ${
-						isChecked ? "" : "hidden"
+						isChecked ? '' : 'hidden'
 					}">${subArray
 				.map((val) =>
 					String(val).length === 2 ? String(val) : "&nbsp" + String(val)

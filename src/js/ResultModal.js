@@ -10,6 +10,7 @@ export default class ResultModal {
 		$modalClose,
 		$resultTable,
 		$resultProfitRate,
+		$restartButton,
 	}) {
 		this.purchasedLottos = purchasedLottos;
 		this.winningNumberArray = winningNumberArray;
@@ -18,9 +19,11 @@ export default class ResultModal {
 		this.$modalClose = $modalClose;
 		this.$resultTable = $resultTable;
 		this.$resultProfitRate = $resultProfitRate;
+		this.$restartButton = $restartButton;
 
 		const onModalShow = () => {
-			if(this.purchasedLottos.length < 1) return
+			if (this.purchasedLottos.length < 1) return
+			if (new Set(this.winningNumberArray).size < 7) return
 			this.$modal.classList.add("open");
 		};
 
@@ -30,6 +33,7 @@ export default class ResultModal {
 
 		this.$showResultButton.addEventListener("click", onModalShow);
 		this.$modalClose.addEventListener("click", onModalClose);
+		this.$restartButton.addEventListener("click", () => location.reload())
 	}
 
 	render() {
