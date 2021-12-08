@@ -2,6 +2,7 @@ import Payment from "./Payment.js";
 import Purchase from "./Purchase.js";
 import ResultModal from "./ResultModal.js";
 import WinningNumbers from "./WinningNumbers.js";
+import { makeLottoNumbers } from "./utils/functions.js";
 
 export default class App {
 	constructor({ purchasedLottos, winningNumberArray }) {
@@ -13,13 +14,17 @@ export default class App {
 			$paymentFormInput: document.querySelector(".payment-input"),
 			setPurchaseCount: (count) => {
 				this.purchase.setCount(count);
+				this.purchasedLottos = makeLottoNumbers(count);
+				console.log(this.purchasedLottos);
+				this.purchase.setPurchasedLottos(this.purchasedLottos);
+				this.purchase.render();
 				this.winningNumbers.render();
 			},
 		});
 
 		this.purchase = new Purchase({
 			count: 0,
-			purchasedLottos,
+			purchasedLottos: this.purchasedLottos,
 			$purchaseInfo: document.querySelector(".purchase-info"),
 			$purchaseCount: document.querySelector(".purchase-count"),
 			$purchaseToggle: document.querySelector(".purchase-toggle"),
@@ -27,13 +32,24 @@ export default class App {
 		});
 
 		this.winningNumbers = new WinningNumbers({
-			$WinningNumbers: document.querySelector("#winning-numbers"),
+			$showResultButton: document.querySelector(".open-result-modal-button"),
+			$winningNumbersForm: document.querySelectorAll(".winning-number"),
+			$bonusNumberForm: document.querySelector(".bonus-number"),
+			$winningNumbers: document.querySelector("#winning-numbers"),
+			setWinningNumbers: (numbersArray) => {
+				this.winningNumberArray = numbersArray;
+				this.resultModal.setLottoRank(this.purchasedLottos, this.winningNumberArray);
+			},
 		});
 
 		this.resultModal = new ResultModal({
+			purchasedLottos: [],
+			winningNumberArray: [],
 			$showResultButton: document.querySelector(".open-result-modal-button"),
 			$modal: document.querySelector(".modal"),
 			$modalClose: document.querySelector(".modal-close"),
+			$resultTable: document.querySelector(".result-table"),
+			$resultProfitRate: document.querySelector(".result-profit-rate"),
 		});
 	}
 }

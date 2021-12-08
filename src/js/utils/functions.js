@@ -1,4 +1,4 @@
-import { CONSTANT } from './constants.js';
+import { CONSTANT, LOTTO_WINNINGS } from "./constants.js";
 
 export const calculatePayment = (money) => {
 	if (money < CONSTANT.LOTTO_PRICE) return alert("1,000원 이상 입력해주세요");
@@ -25,9 +25,39 @@ export const randomNumbers = () => {
 export const makeLottoNumbers = (count) => {
 	const result = [];
 	for (let i = 0; i < count; i++) {
-		result.push(randomNumbers())
+		result.push(randomNumbers());
 	}
-	
-	return result
-} 
 
+	return result;
+};
+
+export const countLottoRank = (
+	input2DArray,
+	winningArray,
+	result = JSON.parse(JSON.stringify(LOTTO_WINNINGS))
+) => {
+	console.log(result);
+	const winningNumbersArray = winningArray.slice(0, -1);
+	const bonusNumber = winningArray.slice(-1)[0];
+	input2DArray.forEach((inputArray) => {
+		const matchCount = inputArray.filter((val) =>
+			winningNumbersArray.includes(val)
+		).length;
+		const bonusMatchCount = inputArray.includes(bonusNumber) ? 1 : 0;
+		const resultFindIndex = result.findIndex(
+			(val) =>
+				val.matchCount === matchCount && val.bonusMatchCount === bonusMatchCount
+		);
+		if (resultFindIndex !== -1) {
+			result[resultFindIndex].count++;
+		}
+	});
+
+	return result;
+};
+
+export const calculateProfitRate = (rank, count) => {
+	const sum = rank.reduce((acc, val) => acc + val.count * val.prize, 0);
+
+	return Math.floor((sum / (count * CONSTANT.LOTTO_PRICE)) * 100) - 100;
+};
