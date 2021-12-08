@@ -15,7 +15,6 @@ export default class App {
 			setPurchaseCount: (count) => {
 				this.purchase.setCount(count);
 				this.purchasedLottos = makeLottoNumbers(count);
-				console.log(this.purchasedLottos);
 				this.purchase.setPurchasedLottos(this.purchasedLottos);
 				this.purchase.render();
 				this.winningNumbers.render();
