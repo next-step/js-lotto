@@ -36,7 +36,6 @@ export const countLottoRank = (
 	winningArray,
 	result = JSON.parse(JSON.stringify(LOTTO_WINNINGS))
 ) => {
-	console.log(result);
 	const winningNumbersArray = winningArray.slice(0, -1);
 	const bonusNumber = winningArray.slice(-1)[0];
 	input2DArray.forEach((inputArray) => {

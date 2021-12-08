@@ -49,6 +49,7 @@ export default class App {
 			$modalClose: document.querySelector(".modal-close"),
 			$resultTable: document.querySelector(".result-table"),
 			$resultProfitRate: document.querySelector(".result-profit-rate"),
+			$restartButton: document.querySelector(".restart"),
 		});
 	}
 }
