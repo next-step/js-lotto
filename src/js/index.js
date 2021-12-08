@@ -175,7 +175,7 @@ const handlePayment = (event) => {
 
   lotto.setAmount(price);
   $lottoSection.style.display = 'block';
-};
+}; 
 
 $paymentForm.addEventListener('submit', handlePayment);
 
