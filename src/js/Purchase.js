@@ -35,7 +35,8 @@ export default class Purchase {
 	render() {
 		this.$purchaseInfo.classList.remove("hidden");
 		this.$purchaseCount.innerText = countLottoTemplate(this.count);
-		this.purchasedLottos = makeLottoNumbers(this.count);
+		// this.purchasedLottos = makeLottoNumbers(this.count);
+		console.log(this.purchasedLottos)
 		this.$lottoInfo.innerHTML = fullLottoTemplate(
 			this.purchasedLottos,
 			this.$purchaseToggle.checked
@@ -43,6 +44,9 @@ export default class Purchase {
 	}
 	setCount(nextCount) {
 		this.count = nextCount;
-		this.render();
+		// this.render();
+	}
+	setPurchasedLottos(nextPurchasedLottos) {
+		this.purchasedLottos = nextPurchasedLottos;
 	}
 }
