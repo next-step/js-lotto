@@ -12,7 +12,6 @@ export default class WinningNumbers {
 				(node) => node.valueAsNumber
 			);
 			winningNumbers.push(this.$bonusNumberForm.valueAsNumber);
-			console.log(winningNumbers)
 			if(winningNumbers.filter(val => typeof val === 'number').length !== 7) return
 			setWinningNumbers(winningNumbers);
 		}
@@ -23,9 +22,4 @@ export default class WinningNumbers {
 	render() {
 		this.$winningNumbers.classList.remove("hidden");
 	}
-
-	// setWinningNumbers(array) {
-
-	// 	this.render();
-	// }
 }
