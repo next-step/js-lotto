@@ -37,7 +37,6 @@ export default class ResultModal {
 			this.purchasedLottos,
 			this.winningNumberArray
 		);
-		console.log(lottoRank);
 		this.$resultTable.innerHTML = resultLottoTemplate(lottoRank);
 		const profitRate = calculateProfitRate(
 			lottoRank,
