@@ -2,7 +2,7 @@ import Component from "../Component.js";
 import { LOTTOS_ACTION } from "../../utils/constants.js";
 import { manualTicketInputTemplate } from "./template.js";
 import { $all } from "../../utils/selectors.js";
-import { isDuplicateNumsExist, isNumsIn1to45Range } from "../../utils/helpers.js";
+import { isDuplicateNumsExist } from "../../utils/helpers.js";
 
 export default class LottoManualTicketInputs extends Component {
   constructor(app, props) {

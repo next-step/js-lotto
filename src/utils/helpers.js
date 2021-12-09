@@ -32,16 +32,6 @@ export const isDuplicateNumsExist = (manualNums) => {
   return isDuplicateExist;
 };
 
-export const isNumsIn1to45Range = (nums) => {
-  let isNumsIn1to45 = true;
-  nums.forEach((num) => {
-    if (num <= 0 || num > 45) {
-      isNumsNotIn1to45 = false;
-    }
-  });
-  return isNumsIn1to45;
-};
-
 export const cloneDeep = (target) => {
   return JSON.parse(JSON.stringify(target));
 };

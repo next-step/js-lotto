@@ -19,7 +19,8 @@ export default class LottoInput extends Component {
           value="${purchaseMoney ? purchaseMoney : ""}"
           class="input-purchase w-100 mr-2 pl-2"
           placeholder="구입 금액"
-          required min="1000"
+          required 
+          min="1000"
           max="100000"
           data-cy="input-purchase"
           ${lottos.length === 0 ? "" : "disabled"}

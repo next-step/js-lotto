@@ -37,6 +37,10 @@ export default class LottoManualInput extends Component {
         alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
         return;
       }
+      if (purchase > 100000) {
+        alert("구입 금액이 100,000원을 초과할 수 없습니다.");
+        return;
+      }
       if (manualTicketValue * 1000 > purchase && manualTicketValue > 0) {
         alert("유효한 로또 티켓의 수를 입력해주세요");
         manualTicket.value = "";
