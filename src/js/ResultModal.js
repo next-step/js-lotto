@@ -1,5 +1,6 @@
 import { countLottoRank, calculateProfitRate } from "./utils/functions.js";
 import { resultLottoTemplate, profitRateTemplate } from "./utils/templates.js";
+import { MESSAGE } from "./utils/constants.js";
 
 export default class ResultModal {
 	constructor({
@@ -22,8 +23,13 @@ export default class ResultModal {
 		this.$restartButton = $restartButton;
 
 		const onModalShow = () => {
-			if (this.purchasedLottos.length < 1) return
-			if (new Set(this.winningNumberArray).size < 7) return
+			console.log(this.winningNumberArray)
+			if (this.purchasedLottos.length < 1) return alert(MESSAGE.BUY_LOTTO);
+			if (this.winningNumberArray.filter((val) => typeof val === "number" && !isNaN(val)).length !== 7)
+				return alert(MESSAGE.BLANK_INPUT)
+			
+			if (new Set(this.winningNumberArray).size < 7)
+				return alert(MESSAGE.DUPLICATE_NUMBER);
 			this.$modal.classList.add("open");
 		};
 
@@ -33,7 +39,7 @@ export default class ResultModal {
 
 		this.$showResultButton.addEventListener("click", onModalShow);
 		this.$modalClose.addEventListener("click", onModalClose);
-		this.$restartButton.addEventListener("click", () => location.reload())
+		this.$restartButton.addEventListener("click", () => location.reload());
 	}
 
 	render() {

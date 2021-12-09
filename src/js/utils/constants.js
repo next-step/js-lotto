@@ -47,3 +47,9 @@ export const CONSTANT = {
 	WINNING_NUMBERS_LENGTH: 6,
 	LOTTO_PRICE: 1000,
 }
+
+export const MESSAGE = {
+	BUY_LOTTO: '로또를 구매해주세요',
+	BLANK_INPUT: '빈칸을 모두 채워주세요',
+	DUPLICATE_NUMBER: '겹치는 번호가 없이 입력해주세요',
+}
