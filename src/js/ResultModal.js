@@ -23,7 +23,6 @@ export default class ResultModal {
 		this.$restartButton = $restartButton;
 
 		const onModalShow = () => {
-			console.log(this.winningNumberArray)
 			if (this.purchasedLottos.length < 1) return alert(MESSAGE.BUY_LOTTO);
 			if (this.winningNumberArray.filter((val) => typeof val === "number" && !isNaN(val)).length !== 7)
 				return alert(MESSAGE.BLANK_INPUT)
