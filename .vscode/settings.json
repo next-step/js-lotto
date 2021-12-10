@@ -1,3 +1,16 @@
 {
+    
+    //기본 포멧팅 설정 
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    //자동포멧팅 
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+    },
+    "editor.formatOnSave": false,
+      
     "liveServer.settings.port": 5501
+    
 }

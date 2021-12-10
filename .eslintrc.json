@@ -1,16 +1,42 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es6": true,
+    "node": true
   },
-  "extends": ["eslint:recommended", "prettier", "plugin:prettier/recommended"],
-  "plugins": ["prettier"],
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:prettier/recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "parserOptions": {
-    "ecmaVersion": 13,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
     "sourceType": "module"
   },
+  "plugins": [
+    "react",
+    "react-hooks",
+    "prettier"
+  ],
   "rules": {
-    "prettier/prettier": "error"
+    "react/react-in-jsx-scope": 0,
+    "react/prefer-stateless-function": 0,
+    "react/jsx-filename-extension": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "no-nested-ternary": 0
+  },
+  "globals": {
+    "React": "writable"
   },
   "ignorePatterns": ["cypress"]
 }

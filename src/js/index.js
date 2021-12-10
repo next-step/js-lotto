@@ -1,9 +1,6 @@
-import {matchedCountTemplate , lottoTemplate } from "./template.js"
-import { $resultButton 
-        , $resetButton 
-        , $modalCloseButton 
-        , $autoLottoButton} from "./button.js" 
-import {PRICE_RANK } from "./constant.js"        
+import { matchedCountTemplate , lottoTemplate } from "./template.js"
+import { $resultButton , $resetButton , $modalCloseButton , $autoLottoButton} from "./button.js" 
+import { PRICE_RANK } from "./constant.js"        
 import { MESSAGE } from "./alert.js";
 
  const $paymentForm = document.querySelector('.js-payment-form');
@@ -91,6 +88,7 @@ class Lotto {
   // 한장씩 3번 this.numbers에 push한다.
   
   setAutoNumbers() {
+    // $lottoContainer.innerHTML = '';
     for(let i = 0 ; i < this.remainAmount ; i++ ){
       const lotto = setLotto(45, 1);
       this.numbers.push(lotto);
@@ -108,9 +106,11 @@ class Lotto {
   }
 
   setLottoSectionView() {
-    $lottoCount.textContent = this.amount; // 구입한 개수를 업데이트
+    // 구입한 개수를 업데이트
+    $lottoCount.textContent = this.amount; 
     // 현재까지 구입한 로또 번호(티켓이미지)를 업데이트
     $lottoContainer.innerHTML = this.numbers.map(lottoTemplate).join('');
+    //this.amount = 0;
   }
   
 // [1,2,3,4,5,6]
@@ -159,6 +159,7 @@ let price;
 
 // 확인 버튼 클릭 시 
 const handlePayment = (event) => {
+  $lottoCount.textContent = 0;
   event.preventDefault();
 
   price = event.target.elements['price'].value;
@@ -175,6 +176,8 @@ const handlePayment = (event) => {
 
   lotto.setAmount(price);
   $lottoSection.style.display = 'block';
+  //$lottoContainer.innerHTML = '';
+
 }; 
 
 $paymentForm.addEventListener('submit', handlePayment);
@@ -182,7 +185,7 @@ $paymentForm.addEventListener('submit', handlePayment);
 
 $lottoToggle.addEventListener('change', (event) => {
   const lottoNumberHidden = 'lotto-number-hidden';
-  event.target.checked == true ? $lottoContainer.classList.remove(lottoNumberHidden) :  $lottoContainer.classList.add(lottoNumberHidden);  
+  event.target.checked === true ? $lottoContainer.classList.remove(lottoNumberHidden) :  $lottoContainer.classList.add(lottoNumberHidden);  
 });
 
 // 결과 확인 버튼
@@ -194,7 +197,6 @@ $resultButton.addEventListener('click', ()=> {
 
   for (let i = 0 ; i < winnigNumber.length ; i ++){
     if(winnigNumber[i] > 45){
-      // alert('45까지 입력 가능합니다');
       alert(MESSAGE.MAXIMUM);
       return;
     }
@@ -247,6 +249,11 @@ $resetButton.addEventListener('click',()=>{
   $lottoSection.style.display = 'none';
   $inputLotto.value = null;
   $winningNumberForm.reset();
+  lotto.numbers = [];
+  lotto.amount = 0;
+  lotto.remainAmount = 0;
+  $lottoCount.textContent = 0;
+  
 })
 
 $modalCloseButton.addEventListener('click',() =>{
