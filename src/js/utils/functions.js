@@ -45,7 +45,7 @@ export const countLottoRank = (
 		const bonusMatchCount = inputArray.includes(bonusNumber) ? 1 : 0;
 		const resultFindIndex = result.findIndex(
 			(val) =>
-				val.matchCount === matchCount && val.bonusMatchCount === bonusMatchCount
+				val.matchCount === matchCount && val.bonusMatchCount <= bonusMatchCount
 		);
 		if (resultFindIndex !== -1) {
 			result[resultFindIndex].count++;
