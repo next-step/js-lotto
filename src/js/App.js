@@ -2,7 +2,7 @@ import Payment from "./Payment.js";
 import Purchase from "./Purchase.js";
 import ResultModal from "./ResultModal.js";
 import WinningNumbers from "./WinningNumbers.js";
-import { makeLottoNumbers } from "./utils/functions.js";
+import { makeLottoNumbers } from "./utils/service.js";
 
 export default class App {
 	constructor({ purchasedLottos, winningNumberArray }) {

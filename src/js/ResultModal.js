@@ -1,4 +1,4 @@
-import { countLottoRank, calculateProfitRate } from "./utils/functions.js";
+import { countLottoRank, calculateProfitRate } from "./utils/service.js";
 import { resultLottoTemplate, profitRateTemplate } from "./utils/templates.js";
 import { MESSAGE } from "./utils/constants.js";
 

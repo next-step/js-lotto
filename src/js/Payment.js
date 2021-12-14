@@ -1,4 +1,4 @@
-import { calculatePayment } from "./utils/functions.js";
+import { calculatePayment } from "./utils/service.js";
 
 export default class Payment {
 	constructor({ $paymentForm, $paymentFormInput, setPurchaseCount }) {
