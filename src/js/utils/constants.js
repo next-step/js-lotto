@@ -2,7 +2,7 @@ export const LOTTO_WINNINGS = [
 	{
 		idx: 0,
 		matchCount: 3,
-		bonusMatchCount: 0,
+		bonusMatchCount: 1,
 		matchText: '3개',
 		prize: 5000,
 		count: 0,
@@ -10,7 +10,7 @@ export const LOTTO_WINNINGS = [
 	{
 		idx: 1,
 		matchCount: 4,
-		bonusMatchCount: 0,
+		bonusMatchCount: 1,
 		matchText: '4개',
 		prize: 50000,
 		count: 0,
