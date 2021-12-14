@@ -12,7 +12,7 @@ const filterAnswer = (elements) =>
       .map(([key, value]) => [key, value.valueAsNumber])
   );
 
-const isValid = (answer) => {
+const isValidAnswer = (answer) => {
   return lottoManager.amount && isValidLottoInput(answer) && !lottoManager.hasLeft();
 };
 
@@ -35,7 +35,7 @@ export const handleLottoAnswer = (event) => {
 
   const answer = filterAnswer(event.target.elements);
 
-  if (!isValid(answer)) {
+  if (!isValidAnswer(answer)) {
     alert(getErrorMessage(answer));
     return;
   }
