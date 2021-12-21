@@ -17,15 +17,10 @@ export default class Purchase {
 		this.$lottoInfo = $lottoInfo;
 
 		const clickToggleEvent = () => {
-			const lottoNumbersNodeList = this.$lottoInfo.querySelectorAll(
-				".lotto-numbers"
-			);
 			if (this.$purchaseToggle.checked) {
 				this.$lottoInfo.classList.add("flex-col");
-				lottoNumbersNodeList.forEach((node) => node.classList.remove("hidden"));
 			} else {
 				this.$lottoInfo.classList.remove("flex-col");
-				lottoNumbersNodeList.forEach((node) => node.classList.add("hidden"));
 			}
 		};
 

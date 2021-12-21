@@ -1,6 +1,6 @@
 import { countLottoRank, calculateProfitRate } from "./utils/service.js";
 import { resultLottoTemplate, profitRateTemplate } from "./utils/templates.js";
-import { MESSAGE } from "./utils/constants.js";
+import { MESSAGE, CONSTANT } from "./utils/constants.js";
 
 export default class ResultModal {
 	constructor({
@@ -27,7 +27,10 @@ export default class ResultModal {
 			if (this.winningNumberArray.filter((val) => typeof val === "number" && !isNaN(val)).length !== 7)
 				return alert(MESSAGE.BLANK_INPUT)
 			
-			if (new Set(this.winningNumberArray).size < 7)
+			if (
+				new Set(this.winningNumberArray).size <
+				CONSTANT.WINNING_NUMBERS_WITH_BONUS_LENGTH
+			)
 				return alert(MESSAGE.DUPLICATE_NUMBER);
 			this.$modal.classList.add("open");
 		};

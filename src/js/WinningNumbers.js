@@ -1,17 +1,17 @@
 export default class WinningNumbers {
-	constructor({ $showResultButton, $winningNumbersForm, $bonusNumberForm, $winningNumbers, setWinningNumbers }) {
+	constructor({ $showResultButton, $winningNumberInputs, $bonusNumberInput, $winningNumbers, setWinningNumbers }) {
 		this.$showResultButton = $showResultButton;
-		this.$winningNumbersForm = $winningNumbersForm;
-		this.$bonusNumberForm = $bonusNumberForm;
+		this.$winningNumberInputs = $winningNumberInputs;
+		this.$bonusNumberInput = $bonusNumberInput;
 		this.$winningNumbers = $winningNumbers;
 
 
 		const onClickResultButton = (e) => {
 			e.preventDefault();
-			const winningNumbers = Array.prototype.slice.call(this.$winningNumbersForm).map(
+			const winningNumbers = [...this.$winningNumberInputs].map(
 				(node) => node.valueAsNumber
 			);
-			winningNumbers.push(this.$bonusNumberForm.valueAsNumber);
+			winningNumbers.push(this.$bonusNumberInput.valueAsNumber);
 			if(winningNumbers.filter(val => typeof val === 'number').length !== 7) return
 			setWinningNumbers(winningNumbers);
 		}

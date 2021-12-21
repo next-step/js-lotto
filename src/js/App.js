@@ -32,8 +32,8 @@ export default class App {
 
 		this.winningNumbers = new WinningNumbers({
 			$showResultButton: document.querySelector(".open-result-modal-button"),
-			$winningNumbersForm: document.querySelectorAll(".winning-number"),
-			$bonusNumberForm: document.querySelector(".bonus-number"),
+			$winningNumberInputs: document.querySelectorAll(".winning-number"),
+			$bonusNumberInput: document.querySelector(".bonus-number"),
 			$winningNumbers: document.querySelector("#winning-numbers"),
 			setWinningNumbers: (numbersArray) => {
 				this.winningNumberArray = numbersArray;
