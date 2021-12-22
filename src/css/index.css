@@ -22,3 +22,13 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.ticket {
+  display: none;
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.ticket.show {
+  display: block;
+}
