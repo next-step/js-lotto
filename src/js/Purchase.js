@@ -70,7 +70,7 @@ export default class Purchase {
 	renderManual() {
 		this.$lottoInfoManual.insertAdjacentHTML(
 			"beforeend",
-			fullLottoTemplate([this.manualLottos.slice(-1)], true)
+			fullLottoTemplate(this.manualLottos.slice(-1), true)
 		);
 	}
 	renderAuto() {
