@@ -56,6 +56,8 @@ export default class Purchase {
 			if (new Set(manualNumbers).size < CONSTANT.WINNING_NUMBERS_LENGTH)
 				return alert(MESSAGE.DUPLICATE_NUMBER);
 			addManualNumbers(manualNumbers);
+			[...this.$manualNumberInputs].forEach((element) => element.value = null);
+			[...this.$manualNumberInputs][0].focus();
 		};
 
 		this.$manualNumbers.addEventListener("click", onClickAddEvent);
@@ -90,6 +92,6 @@ export default class Purchase {
 	}
 	setAutoLottos(nextAutoLottos) {
 		this.autoLottos = nextAutoLottos;
-		
+
 	}
 }
