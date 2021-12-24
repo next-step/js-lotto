@@ -24,9 +24,12 @@ export default class ResultModal {
 
 		const onModalShow = () => {
 			if (this.purchasedLottos.length < 1) return alert(MESSAGE.BUY_LOTTO);
-			if (this.winningNumberArray.filter((val) => typeof val === "number" && !isNaN(val)).length !== 7)
-				return alert(MESSAGE.BLANK_INPUT)
-			
+			if (
+				this.winningNumberArray.filter((val) => !Number.isNaN(val)).length !==
+				CONSTANT.WINNING_NUMBERS_WITH_BONUS_LENGTH
+			)
+				return alert(MESSAGE.BLANK_INPUT);
+
 			if (
 				new Set(this.winningNumberArray).size <
 				CONSTANT.WINNING_NUMBERS_WITH_BONUS_LENGTH

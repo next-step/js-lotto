@@ -19,6 +19,11 @@ html, body {
   font-size: 1.25rem;
 }
 
+.manual-number {
+  width: 30px;
+  height: 36px;
+}
+
 .winning-number {
   width: 30px;
   height: 36px;
