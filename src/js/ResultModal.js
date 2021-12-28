@@ -22,29 +22,16 @@ export default class ResultModal {
 		this.$resultProfitRate = $resultProfitRate;
 		this.$restartButton = $restartButton;
 
-		const onModalShow = () => {
-			if (this.purchasedLottos.length < 1) return alert(MESSAGE.BUY_LOTTO);
-			if (
-				this.winningNumberArray.filter((val) => !Number.isNaN(val)).length !==
-				CONSTANT.WINNING_NUMBERS_WITH_BONUS_LENGTH
-			)
-				return alert(MESSAGE.BLANK_INPUT);
-
-			if (
-				new Set(this.winningNumberArray).size <
-				CONSTANT.WINNING_NUMBERS_WITH_BONUS_LENGTH
-			)
-				return alert(MESSAGE.DUPLICATE_NUMBER);
-			this.$modal.classList.add("open");
-		};
-
-		const onModalClose = () => {
+			const onModalClose = () => {
 			this.$modal.classList.remove("open");
 		};
 
-		this.$showResultButton.addEventListener("click", onModalShow);
 		this.$modalClose.addEventListener("click", onModalClose);
 		this.$restartButton.addEventListener("click", () => location.reload());
+	}
+
+	showModal() {
+			this.$modal.classList.add("open");
 	}
 
 	render() {

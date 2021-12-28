@@ -42,7 +42,6 @@ export default class Purchase {
 
 		const onClickAddEvent = (e) => {
 			e.preventDefault();
-			if (!e.target.classList.contains("manual-numbers-confirm-button")) return;
 			const manualNumbers = [...this.$manualNumberInputs].map(
 				(node) => node.valueAsNumber
 			);
@@ -60,7 +59,7 @@ export default class Purchase {
 			[...this.$manualNumberInputs][0].focus();
 		};
 
-		this.$manualNumbers.addEventListener("click", onClickAddEvent);
+		this.$manualNumbers.addEventListener("submit", onClickAddEvent);
 	}
 	render() {
 		this.$manualNumbers.classList.remove("hidden");

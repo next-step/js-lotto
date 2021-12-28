@@ -1,7 +1,13 @@
-import { CONSTANT } from './utils/constants.js';
+import { CONSTANT, MESSAGE } from "./utils/constants.js";
 
 export default class WinningNumbers {
-	constructor({ $showResultButton, $winningNumberInputs, $bonusNumberInput, $winningNumbers, setWinningNumbers }) {
+	constructor({
+		$showResultButton,
+		$winningNumberInputs,
+		$bonusNumberInput,
+		$winningNumbers,
+		setWinningNumbers,
+	}) {
 		this.$showResultButton = $showResultButton;
 		this.$winningNumberInputs = $winningNumberInputs;
 		this.$bonusNumberInput = $bonusNumberInput;
@@ -13,11 +19,22 @@ export default class WinningNumbers {
 				(node) => node.valueAsNumber
 			);
 			winningNumbers.push(this.$bonusNumberInput.valueAsNumber);
-			if(winningNumbers.filter(val => !Number.isNaN(val)).length !== CONSTANT.WINNING_NUMBERS_WITH_BONUS_LENGTH) return
+			if (
+				winningNumbers.filter((val) => !Number.isNaN(val)).length !==
+				CONSTANT.WINNING_NUMBERS_WITH_BONUS_LENGTH
+			)
+				return alert(MESSAGE.BLANK_INPUT);
+			if (Math.min(...winningNumbers) < CONSTANT.MIN_NUMBER || Math.max(...winningNumbers) > CONSTANT.MAX_NUMBER)
+				return alert(MESSAGE.RANGE_ERROR);
+			if (
+				new Set(winningNumbers).size <
+				CONSTANT.WINNING_NUMBERS_WITH_BONUS_LENGTH
+			)
+				return alert(MESSAGE.DUPLICATE_NUMBER);
 			setWinningNumbers(winningNumbers);
-		}
+		};
 
-		this.$showResultButton.addEventListener('click' , onClickResultButton) 
+		this.$showResultButton.addEventListener("click", onClickResultButton);
 	}
 
 	render() {

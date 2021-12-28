@@ -58,6 +58,7 @@ export default class App {
 					this.purchasedLottos,
 					this.winningNumberArray
 				);
+				this.resultModal.showModal();
 			},
 		});
 
