@@ -5,5 +5,9 @@ export function getRandomIntInclusive(min = 0, max = 9) {
 }
 
 export function getTestRandomArray(min = 0, max = 9, length = 10) {
-  return new Array(length).fill(0).map(ele => getRandomIntInclusive(min, max));
+  const randomSet = new Set();
+  while (randomSet.size < length) {
+    randomSet.add(getRandomIntInclusive(min, max));
+  }
+  return Array.from(randomSet);
 }

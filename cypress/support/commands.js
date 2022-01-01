@@ -42,3 +42,18 @@ Cypress.Commands.add("checkToggle", () => {
 Cypress.Commands.add("unCheckToggle", () => {
   cy.get(".lotto-numbers-toggle-button").uncheck({ force: true });
 });
+
+Cypress.Commands.add("showResult", () => {
+  cy.get(".open-result-modal-button").click();
+});
+
+Cypress.Commands.add("inputResult", (winningNumbers, bonusNumber) => {
+  cy.get(".winning-number").each((winningNumber, i) => {
+    winningNumber[0].value = winningNumbers[i];
+  });
+  cy.get(".bonus-number").type(bonusNumber);
+});
+
+Cypress.Commands.add("resetLotto", () => {
+  cy.get(".reset").click();
+});
