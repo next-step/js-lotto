@@ -65,7 +65,6 @@ export default class App {
 		this.resultModal = new ResultModal({
 			purchasedLottos: [],
 			winningNumberArray: [],
-			$showResultButton: document.querySelector(".open-result-modal-button"),
 			$modal: document.querySelector(".modal"),
 			$modalClose: document.querySelector(".modal-close"),
 			$resultTable: document.querySelector(".result-table"),

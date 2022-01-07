@@ -34,7 +34,7 @@ export default class WinningNumbers {
 			setWinningNumbers(winningNumbers);
 		};
 
-		this.$showResultButton.addEventListener("click", onClickResultButton);
+		this.$winningNumbers.addEventListener("submit", onClickResultButton);
 	}
 
 	render() {
