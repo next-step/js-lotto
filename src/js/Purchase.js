@@ -1,5 +1,6 @@
 import { CONSTANT, MESSAGE } from "./utils/constants.js";
 import { countLottoTemplate, fullLottoTemplate } from "./utils/templates.js";
+import { validationNumbers } from "./utils/service.js";
 
 export default class Purchase {
 	constructor({
@@ -45,17 +46,14 @@ export default class Purchase {
 			const manualNumbers = [...this.$manualNumberInputs].map(
 				(node) => node.valueAsNumber
 			);
-			if (
-				manualNumbers.filter((val) => !Number.isNaN(val)).length !==
-				CONSTANT.WINNING_NUMBERS_LENGTH
-			)
-				return alert(MESSAGE.BLANK_INPUT);
 			if (this.manualLottos.length >= this.totalCount)
 				return alert(MESSAGE.NO_MORE_MANUAL);
-			if (new Set(manualNumbers).size < CONSTANT.WINNING_NUMBERS_LENGTH)
-				return alert(MESSAGE.DUPLICATE_NUMBER);
-			addManualNumbers(manualNumbers);
-			[...this.$manualNumberInputs].forEach((element) => element.value = null);
+			if (validationNumbers(manualNumbers, CONSTANT.WINNING_NUMBERS_LENGTH)) {
+				addManualNumbers(manualNumbers);
+			}
+			[...this.$manualNumberInputs].forEach(
+				(element) => (element.value = null)
+			);
 			[...this.$manualNumberInputs][0].focus();
 		};
 
@@ -91,6 +89,5 @@ export default class Purchase {
 	}
 	setAutoLottos(nextAutoLottos) {
 		this.autoLottos = nextAutoLottos;
-
 	}
 }

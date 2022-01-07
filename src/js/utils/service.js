@@ -1,4 +1,4 @@
-import { CONSTANT, LOTTO_WINNINGS } from "./constants.js";
+import { CONSTANT, MESSAGE, LOTTO_WINNINGS } from "./constants.js";
 import { rand } from "./functions.js";
 
 export const randomNumbers = () => {
@@ -56,4 +56,16 @@ export const calculateProfitRate = (rank, count) => {
 	const sum = rank.reduce((acc, val) => acc + val.count * val.prize, 0);
 
 	return Math.floor((sum / (count * CONSTANT.LOTTO_PRICE)) * 100) - 100;
+};
+
+export const validationNumbers = (inputArray, maxLength) => {
+	if (inputArray.filter((val) => !Number.isNaN(val)).length !== maxLength) {
+		alert(MESSAGE.BLANK_INPUT);
+		return false;
+	}
+	if (new Set(inputArray).size < maxLength) {
+		alert(MESSAGE.DUPLICATE_NUMBER);
+		return false;
+	}
+	return true;
 };

@@ -1,4 +1,5 @@
-import { CONSTANT, MESSAGE } from "./utils/constants.js";
+import { CONSTANT } from "./utils/constants.js";
+import { validationNumbers } from "./utils/service.js";
 
 export default class WinningNumbers {
 	constructor({
@@ -20,18 +21,13 @@ export default class WinningNumbers {
 			);
 			winningNumbers.push(this.$bonusNumberInput.valueAsNumber);
 			if (
-				winningNumbers.filter((val) => !Number.isNaN(val)).length !==
-				CONSTANT.WINNING_NUMBERS_WITH_BONUS_LENGTH
-			)
-				return alert(MESSAGE.BLANK_INPUT);
-			if (Math.min(...winningNumbers) < CONSTANT.MIN_NUMBER || Math.max(...winningNumbers) > CONSTANT.MAX_NUMBER)
-				return alert(MESSAGE.RANGE_ERROR);
-			if (
-				new Set(winningNumbers).size <
-				CONSTANT.WINNING_NUMBERS_WITH_BONUS_LENGTH
-			)
-				return alert(MESSAGE.DUPLICATE_NUMBER);
-			setWinningNumbers(winningNumbers);
+				validationNumbers(
+					winningNumbers,
+					CONSTANT.WINNING_NUMBERS_WITH_BONUS_LENGTH
+				)
+			) {
+				setWinningNumbers(winningNumbers);
+			}
 		};
 
 		this.$winningNumbers.addEventListener("submit", onClickResultButton);
