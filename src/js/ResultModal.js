@@ -19,7 +19,7 @@ export default class ResultModal {
 		this.$resultProfitRate = $resultProfitRate;
 		this.$restartButton = $restartButton;
 
-			const onModalClose = () => {
+		const onModalClose = () => {
 			this.$modal.classList.remove("open");
 		};
 

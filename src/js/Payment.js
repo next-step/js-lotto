@@ -18,6 +18,7 @@ export default class Payment {
 			"click",
 			(e) => (e.target.value = "")
 		);
+
 		this.$paymentForm.addEventListener("click", onClickSubmit);
 	}
 }
