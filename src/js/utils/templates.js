@@ -1,15 +1,15 @@
 export const countLottoTemplate = (countLotto) =>
 	`총 ${countLotto}개를 구매하였습니다.`;
 
-export const fullLottoTemplate = (array, isChecked) =>
-	array
+export const fullLottoTemplate = (array2D, isChecked) =>
+	array2D
 		.map(
-			(subArray) => /*html*/ `
-        <span class="mx-1 text-4xl">
+			(array) => /*html*/ `
+        <span class="mx-1 text-4xl d-flex">
           <span class="lotto-icon">🎟️</span>
           <span class="lotto-numbers ${
 						isChecked ? '' : 'hidden'
-					}">${subArray
+					}">${array
 				.map((val) =>
 					String(val).length === 2 ? String(val) : "&nbsp" + String(val)
 				)

@@ -11,8 +11,17 @@ html, body {
   margin: 0 auto;
 }
 
+.flex-col .lotto-numbers {
+  display: inline-block;
+}
+
 .lotto-numbers {
   font-size: 1.25rem;
+}
+
+.manual-number {
+  width: 30px;
+  height: 36px;
 }
 
 .winning-number {

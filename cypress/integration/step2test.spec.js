@@ -2,7 +2,7 @@ import { MESSAGE } from "../../src/js/utils/constants.js";
 import {
 	countLottoRank,
 	calculateProfitRate,
-} from "../../src/js/utils/functions.js";
+} from "../../src/js/utils/service.js";
 
 describe("lotto test", () => {
 	beforeEach("로또 사이트로 이동한다.", () => {
