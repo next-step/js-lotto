@@ -20,8 +20,12 @@ Cypress.Commands.add("clickConfirmBtn", () => {
   cy.get(SELECTOR.CONFIRM_BTN).click();
 });
 
-Cypress.Commands.add("clickToggleBtn", () => {
-  cy.get(SELECTOR.LOTTO_NUMBER_SWITCH).click({ force: true });
+Cypress.Commands.add("checkToggleBtn", () => {
+  cy.get(SELECTOR.LOTTO_NUMBER_SWITCH).check({ force: true });
+});
+
+Cypress.Commands.add("uncheckToggleBtn", () => {
+  cy.get(SELECTOR.LOTTO_NUMBER_SWITCH).uncheck({ force: true });
 });
 
 Cypress.Commands.add("clearInput", () => {

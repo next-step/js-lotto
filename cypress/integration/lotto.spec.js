@@ -14,11 +14,11 @@ describe("JS 로또", function () {
   it("로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.", () => {
     //로또 1장의 가격은 1,000원이다.
     //소비자는 **자동 구매**를 할 수 있어야 한다.
-    testCase.forEach((ele) => {
+    testCase.forEach((testNumber) => {
       cy.clearInput();
-      cy.typeInput(ele);
+      cy.typeInput(testNumber);
       cy.clickConfirmBtn();
-      const lottoCnt = Math.trunc(ele / 1000);
+      const lottoCnt = Math.trunc(testNumber / 1000);
       cy.get(SELECTOR.LOTTO_BOARD).then(($parent) => {
         const childNodesCnt = $parent[0].childNodes.length;
         expect(childNodesCnt).to.equal(lottoCnt);
@@ -26,13 +26,17 @@ describe("JS 로또", function () {
     });
   });
 
-  it("복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.", () => {
+  it("토글이 켜져있으면, 로또숫자를 볼 수 있어야 한다.", () => {
     cy.typeInput(3000);
     cy.clickConfirmBtn();
-    cy.clickToggleBtn();
-    cy.get(SELECTOR.LOTTO_BOARD)
-      .children()
-      .children()
-      .should("have.class", "lotto-detail");
+    cy.checkToggleBtn();
+    cy.get(".lotto-detail").should("exist");
+  });
+
+  it("토글이 꺼져있으면, 로또숫자를 볼 수 없다.", () => {
+    cy.typeInput(3000);
+    cy.clickConfirmBtn();
+    cy.uncheckToggleBtn();
+    cy.get(".lotto-detail").should("not.exist");
   });
 });
