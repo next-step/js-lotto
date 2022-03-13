@@ -2,7 +2,7 @@
   <img width="200px;" src="./src/images/lotto_ball.png"/>
 </p>
 <h2 align="middle">행운의 로또</h2>
-<p align="middle">자바스크립트로 구현 하는 로또 어플리케이션</p>
+<p align="middle">자바스크립트로 구현하는 로또 어플리케이션</p>
 <p align="middle">
   <img src="https://img.shields.io/badge/version-1.0.0-blue?style=flat-square" alt="template version"/>
   <img src="https://img.shields.io/badge/language-html-red.svg?style=flat-square"/>
@@ -12,7 +12,7 @@
 </p>
 
 <p align="middle">
-  <a href="https://next-step.github.io/js-lotto/">🖥️ 데모 링크</a>
+  <a href="https://next-step.github.io/js-lotto">🖥️ 데모 링크</a>
 </p>
 
 ## 🔥 Projects!
