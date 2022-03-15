@@ -1,9 +1,16 @@
 {
-  "name": "racingcar",
+  "name": "js-lotto-dahye",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^6.3.0",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "2.5.1"
+  },
+  "scripts": {
+    "cypress:open": "cypress open"
   }
 }
