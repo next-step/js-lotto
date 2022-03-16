@@ -10,5 +10,8 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [],
-  rules: {},
+  rules: {
+    'no-new': 0,
+    'import/extensions': 0,
+  },
 };

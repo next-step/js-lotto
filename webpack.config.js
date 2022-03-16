@@ -35,12 +35,20 @@ module.exports = (_, argv) => {
           test: /\.css$/,
           use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
+        {
+          test: /\.(ttf|eot|woff|woff2|svg|png|ico|jpg|jpeg|gif)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                publicPath: '/build/',
+              },
+            },
+          ],
+        },
       ],
     },
-    plugins: [
-      new HtmlWebpackPlugin({ template: './index.html ' }),
-      new MiniCssExtractPlugin({ filename: 'style.css' }),
-    ],
+    plugins: [new HtmlWebpackPlugin({ template: './index.html' }), new MiniCssExtractPlugin()],
     performance: {
       hints: isDevelopment ? 'warning' : 'error',
     },
