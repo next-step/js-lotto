@@ -2,15 +2,20 @@ const PRICE_FORM = 'price-form';
 const PRICE_FORM__INPUT = 'price-form__input';
 const PRICE_FORM__BUTTON = 'price-form__button';
 
+import PriceFormButton from './PriceFormButton.js';
 export default class PriceForm {
   #el;
-  #state;
 
-  constructor(props = { state: { price: '' } }) {
-    const { state } = props;
-    this.#state = state || { price: '' };
-    this.#el = document.createElement('form');
+  constructor($parent, props) {
+    Object.assign(this, props);
+
+    this.#el = document.createElement('div');
     this.#el.innerHTML = this.getHtml();
+
+    const $btn = this.#el.querySelector(`.${PRICE_FORM__BUTTON}`);
+    new PriceFormButton($btn, { onClick: this.eventHandler.PURCHASE });
+
+    $parent.querySelector(`.${PRICE_FORM}`).append(this.#el);
   }
 
   getHtml = () => {
@@ -20,9 +25,9 @@ export default class PriceForm {
                          <input
                              type="number"
                              class="w-100 mr-2 pl-2 ${PRICE_FORM__INPUT}"
-                             value="${this.#state.price || ''}"
+                             value="${this.price}"
                              placeholder="구입 금액"/>
-                         <button type="button" class="btn btn-cyan ${PRICE_FORM__BUTTON}">확인</button>
+                          <button class="${PRICE_FORM__BUTTON}"></button>       
                      </div>
              </form>`;
   };
