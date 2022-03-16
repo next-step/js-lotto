@@ -1,6 +1,8 @@
 export default class User {
   #wallet;
 
+  #purchaseHistory;
+
   constructor() {
     this.#wallet = 0;
   }
@@ -8,7 +10,14 @@ export default class User {
   buyLotto(seller, machine) {
     const count = seller.calculateLotto(this.#wallet);
 
-    return seller.sellLotto(machine, count);
+    this.#purchaseHistory = [
+      ...this.#purchaseHistory,
+      ...seller.sellLotto(machine, count),
+    ];
+  }
+
+  get purchaseHistory() {
+    return this.#purchaseHistory;
   }
 
   set wallet(value) {
