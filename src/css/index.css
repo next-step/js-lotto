@@ -13,6 +13,22 @@ body {
   margin: 0 auto;
 }
 
+.lotto-list {
+  list-style: none;
+  padding: 0;
+}
+
+.lotto-numbers-wrapper {
+  display: flex;
+}
+
+.lotto-numbers {
+  font-size: 1.25rem;
+  margin-left: 12px;
+  /* 스위칭 시 해당 속성 토글 */
+  display: none;
+}
+
 .winning-number {
   width: 30px;
   height: 36px;
