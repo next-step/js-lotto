@@ -1,0 +1,5 @@
+{
+  "testFiles": "*.test.js",
+  "screenshotOnRunFailure": false,
+  "video": false
+}
