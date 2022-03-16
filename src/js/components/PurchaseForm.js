@@ -1,3 +1,5 @@
+import { DOM } from '../constants.js';
+
 class PurchaseForm {
   render() {
     return `
@@ -7,14 +9,14 @@ class PurchaseForm {
 				</label>
 				<div class="d-flex">
 					<input
-						id="purchase-form-input"
+						id="${DOM.purchaseFormInput}"
 						type="number"
 						class="w-100 mr-2 pl-2"
 						placeholder="구입 금액"
 					/>
 					<button
 						type="button"
-						id="purchase-form-button"
+						id="${DOM.purchaseFormButton}"
 						class="btn btn-cyan"
 					>
 						확인
