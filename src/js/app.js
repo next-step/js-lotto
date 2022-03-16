@@ -1,26 +1,21 @@
-import { $create } from './utils/dom.js';
+import PurchaseForm from './components/PurchaseForm.js';
 
 class LottoApp {
   constructor($app) {
     this.$app = $app;
-
+    this.$purchaseForm = new PurchaseForm();
     this.render();
   }
 
   render() {
-    const flexBox = $create('div');
-    flexBox.className = 'd-flex justify-center mt-5';
-
-    const fullWidthBox = $create('div');
-    fullWidthBox.className = 'w-100';
-
-    const title = $create('h1');
-    title.className = 'text-center';
-    title.textContent = '🎱 행운의 로또';
-
-    fullWidthBox.appendChild(title);
-    flexBox.appendChild(fullWidthBox);
-    this.$app.appendChild(flexBox);
+    this.$app.innerHTML = `
+			<div class="d-flex justify-center mt-5">
+				<div class="w-100">
+					<h1 class="text-center">🎱 행운의 로또</h1>
+					${this.$purchaseForm.render()}
+				</div>
+			</div>
+		`;
   }
 }
 
