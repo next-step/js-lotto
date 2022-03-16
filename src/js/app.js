@@ -1,4 +1,4 @@
-import { $ } from './utils/dom.js';
+import { $create } from './utils/dom.js';
 
 class LottoApp {
   constructor($app) {
@@ -8,13 +8,13 @@ class LottoApp {
   }
 
   render() {
-    const flexBox = document.createElement('div');
+    const flexBox = $create('div');
     flexBox.className = 'd-flex justify-center mt-5';
 
-    const fullWidthBox = document.createElement('div');
+    const fullWidthBox = $create('div');
     fullWidthBox.className = 'w-100';
 
-    const title = document.createElement('h1');
+    const title = $create('h1');
     title.className = 'text-center';
     title.textContent = '🎱 행운의 로또';
 
