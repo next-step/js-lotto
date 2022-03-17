@@ -60,3 +60,22 @@ $purchaseResult.style.display = "none";
 
 const $confirmWinningNumbers = document.querySelector("#confirmWinningNumbers");
 $confirmWinningNumbers.style.display = "none";
+
+// * [번호보기] 토글 : 이벤트 추가
+const lottoNumbersToggle = () => {
+  // * 로또 번호를 표시한다.
+  const lottoNumbers = document.querySelectorAll(".lotto-numbers");
+  lottoNumbers.forEach(lottoNumber => {
+    lottoNumber.classList.toggle("numbers-closed");
+  });
+
+  // * 아이콘과 번호 정렬 상태 변경 (ul) : flex -> block
+  const lottoList = document.querySelector(".lotto-list");
+  lottoList.classList.toggle("d-flex");
+
+  // * 아이콘과 번호 정렬 상태 변경 (li)
+  const lottoListWithNumbers = document.querySelector(".lotto-item");
+  lottoListWithNumbers.classList.toggle("lotto-item-with-numbers");
+};
+
+$lottoNumbersToggleButton.addEventListener("click", lottoNumbersToggle);
