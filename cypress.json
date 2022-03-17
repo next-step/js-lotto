@@ -3,6 +3,6 @@
   "video": false,
   "baseUrl": "http://localhost:8080",
   "cypress-watch-and-reload": {
-    "watch": "src/js/*"
+    "watch": ["src/js/*", "src/js/components/*", "src/js/core/*", "src/js/utils/*"]
   }
 }
