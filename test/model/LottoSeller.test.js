@@ -1,5 +1,5 @@
 import {describe, it, expect} from "vitest";
-import LottoSeller from "../../src/js/model/LottoSeller";
+import LottoSeller from "../../src/js/model/LottoSeller.mjs";
 
 describe('LottoSeller', () => {
     describe('지불한 금액만큼만 로또를 팔 수 있다', () => {

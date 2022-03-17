@@ -5,6 +5,7 @@ export default class User {
 
   constructor() {
     this.#wallet = 0;
+    this.#purchaseHistory = [];
   }
 
   buyLotto(seller, machine) {
@@ -14,6 +15,7 @@ export default class User {
       ...this.#purchaseHistory,
       ...seller.sellLotto(machine, count),
     ];
+    return this.#purchaseHistory;
   }
 
   get purchaseHistory() {

@@ -1,7 +1,8 @@
-import LottoMachine from "./model/LottoMachine";
-import LottoSeller from "./model/LottoSeller";
-import User from "./model/User";
-import PurchaseForm from "./viewModel/PurchaseForm";
+import LottoMachine from "./model/LottoMachine.mjs";
+import LottoSeller from "./model/LottoSeller.mjs";
+import User from "./model/User.mjs";
+import PurchaseForm from "./viewModel/PurchaseForm.mjs";
+import LottoHistory from "./viewModel/LottoHistory.mjs";
 
 const $app = document.querySelector("#app");
 const $showResultButton = document.querySelector(".open-result-modal-button");
@@ -20,7 +21,13 @@ function addAppEventListener() {
   const lottoMachine = new LottoMachine();
   const lottoSeller = new LottoSeller();
 
-  const puchaseForm = new PurchaseForm(user, lottoSeller, lottoMachine);
+  const lottoHistory = new LottoHistory();
+  const puchaseForm = new PurchaseForm(
+    user,
+    lottoSeller,
+    lottoMachine,
+    lottoHistory
+  );
 }
 
 addAppEventListener();

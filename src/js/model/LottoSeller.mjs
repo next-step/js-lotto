@@ -9,6 +9,6 @@ export default class LottoSeller {
   }
 
   sellLotto(machine, count) {
-    return Array(count).map(() => machine.drawLots());
+    return Array.from({length: count}, () => machine.drawLots());
   }
 }

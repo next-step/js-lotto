@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "test": "vitest -w",
-    "start": "live-server --port=5000 ./"
+    "start": "live-server --port=5000 ./",
+    "test:e2e:open": "yarn cypress open",
+    "test:e2e:run": "yarn cypress run"
   },
   "devDependencies": {
     "cypress": "^6.3.0",

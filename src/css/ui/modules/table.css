@@ -8,3 +8,7 @@ th,
 td {
   border-bottom: 1px solid gainsboro;
 }
+
+.history__detail--simplified  .history__detail__numbers {
+  display: none;
+}
