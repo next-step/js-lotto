@@ -1,7 +1,8 @@
 import { DOM } from '../constants.js';
+import Component from '../core/Component.js';
 
-class PurchaseForm {
-  render() {
+class PurchaseForm extends Component {
+  template() {
     return `
 			<form class="mt-5">
 				<label class="mb-2 d-inline-block">
@@ -25,6 +26,8 @@ class PurchaseForm {
 			</form>
 		`;
   }
+
+  mounted() {}
 }
 
 export default PurchaseForm;
