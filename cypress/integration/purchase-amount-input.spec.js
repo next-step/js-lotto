@@ -49,7 +49,7 @@ context('purchase amount form', () => {
         });
 
       cy.on('window:alert', text => {
-        expect(text).to.equal('구입 금액은 1000원 단위로 입력해주세요.');
+        expect(text).to.equal('로또 구입 금액을 1,000원 단위로 입력해 주세요.');
         alert++;
       });
     });
