@@ -1,17 +1,12 @@
-.lotto-numbers-open {
+ul.lotto-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+li.lotto-item-with-numbers {
   display: block;
 }
 
-.lotto-numbers-closed {
+span.numbers-closed {
   display: none;
-}
-
-.lotto-numbers {
-  font-size: 1.25rem;
-}
-
-#lottoIconAndNumbers {
-  display: flex;
-  list-style: none;
-  padding-left: 0;
 }
