@@ -7,22 +7,48 @@ const $modal = document.querySelector('.modal');
 //   '.lotto-numbers-toggle-button'
 // );
 const $purchaseLotto = document.querySelector('form.mt-5');
-const $lottoAmount = document.querySelector('section.mt-9 label.my-0 span');
+const $purchaseResult = document.querySelector('section.mt-9');
+const $lottoAmount = $purchaseResult.querySelector('label.my-0 span');
+const $lottoWinningResult = document.querySelector('form.mt-9');
 
-const onModalShow = () => {
+function hidePurchaseResult() {
+  $purchaseResult.style.visibility = 'hidden';
+}
+
+function hideLottoWinningResult() {
+  $lottoWinningResult.style.visibility = 'hidden';
+}
+
+function showPurchaseResult() {
+  $purchaseResult.style.visibility = 'visible';
+}
+
+function changePurchaseAmount(amount) {
+  $lottoAmount.innerText = amount;
+}
+
+function openPurchasedLottoWinningResultHandler() {
   $modal.classList.add('open');
-};
+}
 
-const onModalClose = () => {
+function closePurchasedLottoWinningResultHandler() {
   $modal.classList.remove('open');
-};
+}
 
-$showResultButton.addEventListener('click', onModalShow);
-$modalClose.addEventListener('click', onModalClose);
-
-$purchaseLotto.addEventListener('submit', (event) => {
+function purchaseHandler(event) {
   event.preventDefault();
+  showPurchaseResult();
   const money = new FormData(event.currentTarget).get('money');
-  const lottos = LottoVendingMachine.purchaseLotto(money);
-  $lottoAmount.innerText = lottos.length;
-});
+  const purchasedLottoList = LottoVendingMachine.purchaseLotto(money);
+  changePurchaseAmount(purchasedLottoList.length);
+}
+
+$showResultButton.addEventListener(
+  'click',
+  openPurchasedLottoWinningResultHandler
+);
+$modalClose.addEventListener('click', closePurchasedLottoWinningResultHandler);
+$purchaseLotto.addEventListener('submit', purchaseHandler);
+
+hidePurchaseResult();
+hideLottoWinningResult();
