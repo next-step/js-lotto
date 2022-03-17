@@ -95,7 +95,7 @@ describe('로또 미션 Cypress', () => {
         cy.get('@purchaseButton').click();
       });
 
-      it.only('(1) 로또 구매 결과와 당첨번호 입력 칸이 노출된다.', () => {
+      it('(1) 로또 구매 결과와 당첨번호 입력 칸이 노출된다.', () => {
         cy.get('.lotto-section').should('be.visible');
         cy.get('.lotto-form').should('be.visible');
       });
@@ -114,19 +114,20 @@ describe('로또 미션 Cypress', () => {
       it('(3) 구매 수량만큼 로또 티켓이 발급한다.', () => {
         cy.get('.lotto-section')
           .should('be.visible')
-          .find('.lotto-section-tickets span')
+          .find('.lotto-section-tickets')
+          .find('.lotto-section-ticket')
           .should(($span) => {
             expect($span).to.have.length(mockData.tickets);
           });
       });
 
-      it('(4) 로또 티켓의 버튼은 미노출 상태이다.', () => {
+      it.only('(4) 로또 티켓 번호는 미노출 상태이다.', () => {
         cy.get('.lotto-section')
           .should('be.visible')
-          .find('.lotto-section-tickets span')
-          .find('.lotto-section-tickets-numbers')
-          .should(($span) => {
-            expect($span).to.have.length(mockData.tickets);
+          .find('.lotto-section-tickets')
+          .find('.lotto-section-ticket__numbers')
+          .each(($span) => {
+            expect($span).not.to.be.visible;
           });
       });
     });
