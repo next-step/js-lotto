@@ -10,22 +10,16 @@ describe('lotto machine basic requirement', () => {
        * - 금액 창을 가져와 1000원을 입력한다.
        * - 발급 버튼을 누른다.
        */
-      cy.getInputPrice().type(1000).should('have.value', 1000);
-
-      cy.getInputPriceForm().then(($inputPriceForm) => {
-        $inputPriceForm.on('submit', (e) => {
-          e.preventDefault();
-        });
-      });
+      cy.getInputPrice().type(2000).should('have.value', 2000);
+      cy.getInputPriceForm().submit();
 
       /**
        * 로또가 발급된다.
        * - 발매된 로또 리스트가 보인다.
        * - 로또 티켓 이미지만 보인다.
        */
-      cy.getLottos().should('be.visible');
-      cy.getLottos().children('.lotto-icon').should('be.visible');
-      cy.getLottos().children('.lotto-detail').should('not.be.visible');
+      cy.getLottoIcons().should('be.visible');
+      cy.getLottoDetails().should('not.be.visible');
 
       /**
        * 로또 번호를 확인할 수 있다.
@@ -34,9 +28,9 @@ describe('lotto machine basic requirement', () => {
        * - 로또 티켓 이미지가 보인다.
        * - 로또 티켓 번호가 보인다.
        */
-      cy.getLottoSwitchToggle().check().should('be.checked');
-      cy.getLottos().children('.lotto-icon').should('be.visible');
-      cy.getLottos().children('.lotto.detail').should('be.visible');
+      cy.getLottoSwitchToggle().check({ force: true }).should('be.checked');
+      cy.getLottoIcons().should('be.visible');
+      cy.getLottoDetails().should('be.visible');
 
       /**
        * 로또 번호를 다시 숨길 수 있다.
@@ -45,9 +39,9 @@ describe('lotto machine basic requirement', () => {
        * - 로또 티켓 이미지만 보인다.
        * - 로또 티켓 번호는 보이지 않는다.
        */
-      cy.getLottoSwitchToggle().check().should('not.be.checked');
-      cy.getLottos().children('.lotto-icon').should('be.visible');
-      cy.getLottos().children('.lotto.detail').should('be.visible');
+      cy.getLottoSwitchToggle().uncheck({ force: true }).should('not.be.checked');
+      cy.getLottoIcons().should('be.visible');
+      cy.getLottoDetails().should('not.be.visible');
     });
   });
 });
