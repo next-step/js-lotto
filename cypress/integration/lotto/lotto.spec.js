@@ -3,6 +3,13 @@ describe('로또 미션 Cypress', () => {
     cy.visit('/');
   });
 
+  beforeEach(() => {
+    cy.visit('/');
+    // alias
+    cy.get('.price-form').find('.price-form__input').as('priceInput');
+    cy.get('.price-form').find('.price-form__button').as('purchaseButton');
+  });
+
   context('START', () => {
     it('초기화면 상태 테스트', () => {
       cy.get('.price-form').should('be.visible');
@@ -17,12 +24,6 @@ describe('로또 미션 Cypress', () => {
      * (1) 확인 버튼 누른 후, 구입 금액 초기화
      * (2) 엔터 눌럿을 때도, 같은 동작
      */
-    beforeEach(() => {
-      cy.visit('/');
-      // alias
-      cy.get('.price-form').find('.price-form__input').as('priceInput');
-      cy.get('.price-form').find('.price-form__button').as('purchaseButton');
-    });
 
     context('1. 구매 불가능한 가격 입력 테스트', () => {
       it('(1) 가격 미입력', () => {
@@ -70,6 +71,17 @@ describe('로또 미션 Cypress', () => {
           expect(text).to.contains('금액을 1000원 단위로 입력해주세요!');
         });
       });
+
+      it('Detail1 : 가격 입력 후, 엔터', () => {
+        cy.get('.price-form')
+          .find('.price-form__input')
+          .type(5000)
+          .type('{leftarrow}{rightarrow}{uparrow}{downarrow}')
+          .type('{del}{selectall}{backspace}')
+          .type('{shift}')
+          .type(1000, { delay: 100 })
+          .should('have.value', mockData.typedPrice);
+      });
     });
 
     context.only('2. 구매 가능한 가격 입력 테스트', () => {
@@ -78,18 +90,14 @@ describe('로또 미션 Cypress', () => {
         tickets: 5,
       };
 
-      it.only('(1) 로또 구매 결과와 당첨번호 입력 칸이 노출된다.', () => {
+      beforeEach(() => {
+        cy.get('@priceInput').type(5000);
+        cy.get('@purchaseButton').click();
+      });
+
+      it('(1) 로또 구매 결과와 당첨번호 입력 칸이 노출된다.', () => {
         cy.get('.lotto-section').should('not.be.visible');
         cy.get('.lotto-form').should('not.be.visible');
-
-        cy.get('.price-form')
-          .find('.price-form__input')
-          .type(mockData.typedPrice)
-          .type('{leftarrow}{rightarrow}{uparrow}{downarrow}')
-          .type('{del}{selectall}{backspace}')
-          .type('{shift}')
-          .type(mockData.typedPrice, { delay: 100 })
-          .should('have.value', mockData.typedPrice);
 
         cy.get('@purchaseButton').click();
 
@@ -102,7 +110,7 @@ describe('로또 미션 Cypress', () => {
         cy.get('.lotto-form').should('be.visible');
       });
 
-      it('(3) 구매 수량을 노출된다.', () => {
+      it.only('(3) 구매 수량을 노출된다.', () => {
         cy.get('.lotto-section')
           .should('be.visible')
           .find('.lotto-section__label')
