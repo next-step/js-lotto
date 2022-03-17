@@ -26,7 +26,7 @@ class PurchaseForm extends Component {
 		`;
   }
 
-  mounted() {
+  setEvent() {
     this.$target.addEventListener('submit', e => e.preventDefault());
     $(`#${DOM.purchaseFormButton}`).addEventListener(
       'click',
@@ -41,7 +41,10 @@ class PurchaseForm extends Component {
       alert(MESSAGE.pleaseEnterlottoPurchasePriceInUnitsOf1000);
       $purchaseFormInput.value = '';
       $purchaseFormInput.focus();
+      return;
     }
+
+    this.props.setLottoCount($purchaseFormInput.value / 1000);
   }
 }
 
