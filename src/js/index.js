@@ -23,8 +23,31 @@ const $purchaseButton = document.querySelector("#purchaseButton");
 const purchaseLottoTickets = () => {
   const $purchasePrice = Number(document.querySelector("#purchasePrice").value);
   const numberOfLottoTickets = Math.floor($purchasePrice / 1000);
+  const purchasedLottoTickets = createLottoTickets(numberOfLottoTickets);
 
-  createLottoTickets(numberOfLottoTickets);
+  // * UI 업데이트 : 구입한 로또 장수 표시
+  const $purchasedLottoCount = document.querySelector("#purchasedLottoCount");
+  $purchasedLottoCount.innerText = numberOfLottoTickets;
+
+  // * UI 업데이트 : 구입한 로또 장수만큼 로또 아이콘 및 번호
+  const $lottoIconAndNumbers = document.querySelector("#lottoIconAndNumbers");
+
+  const lottoTemplate = purchasedLottoTickets
+    .map(lotto => {
+      return `
+        <li class="mx-1 text-4xl lotto-item">
+          <span class="lotto-icon">🎟️ </span>
+          <span class="lotto-numbers numbers-closed">${lotto.join(", ")}</span>
+        </li>
+      `;
+    })
+    .join("");
+
+  $lottoIconAndNumbers.innerHTML = lottoTemplate;
+
+  // * UI 업데이트 : 로또 구매 결과 영역과, 당첨 번호 입력 영역을 사용자에게 보여준다.
+  $purchaseResult.style.display = "block";
+  $confirmWinningNumbers.style.display = "block";
 };
 
 // * [확인] 버튼 - 이벤트 리스너 등록
