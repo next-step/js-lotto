@@ -12,7 +12,7 @@ Cypress.Commands.add('purchase', () => {
   cy.get('form.mt-5').submit();
 });
 
-Cypress.Commands.add('lottoAmount', (value) => {
+Cypress.Commands.add('isEqualLottoAmount', (value) => {
   cy.get('section.mt-9 .my-0 span').should('have.text', value);
 });
 
@@ -35,7 +35,13 @@ describe('로또 자판기', () => {
 
   describe('로또 구매', () => {
     it('금액 지불전 구매한 로또 갯수', () => {
-      cy.lottoAmount(0);
+      cy.isEqualLottoAmount(0);
+    });
+
+    it('금액 지불후 구매한 로또 갯수', () => {
+      cy.inputMoney(3000);
+      cy.purchase();
+      cy.isEqualLottoAmount(3);
     });
   });
 });
