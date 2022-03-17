@@ -1,5 +1,5 @@
 const LOTTO_SECTION = 'lotto-section';
-
+const LOTTO_SECTION__LABEL = 'lotto-section__label';
 export default class LottoSection {
   #el;
   #state;
@@ -19,7 +19,7 @@ export default class LottoSection {
   getHtml() {
     return `<section class="mt-9 ${LOTTO_SECTION}" ${this.isHidden && 'hidden'}>
             <div class="d-flex">
-            <label class="flex-auto my-0">총 5개를 구매하였습니다.</label>
+            <label class="flex-auto my-0 ${LOTTO_SECTION__LABEL}">총 5개를 구매하였습니다.</label>
             <div class="flex-auto d-flex justify-end pr-1">
                 <label class="switch">
                 <input type="checkbox" class="lotto-numbers-toggle-button" />

@@ -6,11 +6,19 @@ export default class LottoModel {
   #isShow;
 
   constructor(quantity) {
-    document.querySelector('.lotto-section').hidden = false;
-    document.querySelector('.lotto-form').hidden = false;
+    //init Data
     this.#tickets = Array(quantity).fill(new LottoTicket());
     this.#winningNumbers = new LottoWinningNumbers();
     this.#isShow = false;
+
+    // update view
+    // 2-(1) to be visible
+    document.querySelector('.lotto-section').hidden = false;
+    document.querySelector('.lotto-form').hidden = false;
+    // 2-(2) 구매 수량을 노출된다
+    document.querySelector(
+      '.lotto-section__label'
+    ).textContent = `총 ${quantity}개를 구매하였습니다.`;
   }
 }
 
