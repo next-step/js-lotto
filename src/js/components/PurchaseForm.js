@@ -1,5 +1,6 @@
-import { DOM } from '../constants.js';
+import { DOM, MESSAGE } from '../constants.js';
 import Component from '../core/Component.js';
+import { $ } from '../utils/dom.js';
 
 class PurchaseForm extends Component {
   template() {
@@ -25,7 +26,23 @@ class PurchaseForm extends Component {
 		`;
   }
 
-  mounted() {}
+  mounted() {
+    this.$target.addEventListener('submit', e => e.preventDefault());
+    $(`#${DOM.purchaseFormButton}`).addEventListener(
+      'click',
+      this.onClickPurchaseFormButton.bind(this),
+    );
+  }
+
+  onClickPurchaseFormButton() {
+    const $purchaseFormInput = $(`#${DOM.purchaseFormInput}`);
+
+    if ($purchaseFormInput.value % 1000 !== 0) {
+      alert(MESSAGE.pleaseEnterlottoPurchasePriceInUnitsOf1000);
+      $purchaseFormInput.value = '';
+      $purchaseFormInput.focus();
+    }
+  }
 }
 
 export default PurchaseForm;
