@@ -1,4 +1,5 @@
 export const DOM = {
+  purchaseContainer: 'purchase-container',
   purchaseFormInput: 'purchase-form-input',
   purchaseFormButton: 'purchase-form-button',
   purchaseSectionLabel: 'purchase-section-label',
