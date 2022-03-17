@@ -27,12 +27,7 @@ export default class LottoSection {
                 </label>
             </div>
             </div>
-            <div class="d-flex flex-wrap">
-            <span class="mx-1 text-4xl">🎟️ </span>
-            <span class="mx-1 text-4xl">🎟️ </span>
-            <span class="mx-1 text-4xl">🎟️ </span>
-            <span class="mx-1 text-4xl">🎟️ </span>
-            <span class="mx-1 text-4xl">🎟️ </span>
+            <div class="d-flex flex-wrap lotto-section-tickets">
             </div>
         </section>`;
   }
