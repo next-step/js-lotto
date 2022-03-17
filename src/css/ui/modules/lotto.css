@@ -1,0 +1,17 @@
+.lotto-numbers-open {
+  display: block;
+}
+
+.lotto-numbers-closed {
+  display: none;
+}
+
+.lotto-numbers {
+  font-size: 1.25rem;
+}
+
+#lottoIconAndNumbers {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+}
