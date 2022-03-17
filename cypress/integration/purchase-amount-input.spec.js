@@ -46,11 +46,12 @@ context('purchase amount form', () => {
         .click()
         .then(() => {
           expect(alertCount).to.equal(1);
+          cy.get('#purchase-amount').should('have.focus');
         });
 
       cy.on('window:alert', text => {
         expect(text).to.equal('로또 구입 금액을 1,000원 단위로 입력해 주세요.');
-        alert++;
+        alertCount++;
       });
     });
 
