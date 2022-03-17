@@ -1,10 +1,13 @@
-const $ = selector => document.querySelector(selector);
-
-const $lottoPurchaseForm = $('.lotto-purchase-form');
-const $ticketSection = $('#purchased-lottos');
-const $winningNumbersForm = $('#lotto-winning-numbers-form');
+import { lottoTicket } from "./ticket.js";
+import { $ } from "./consts.js";
 
 const lottoPurchase = () => {
+  const $lottoPurchaseForm = $('.lotto-purchase-form');  
+
+  $lottoPurchaseForm.addEventListener('submit', event => {
+    event.preventDefault()
+  })
+
   const $lottoPurchaseInput = $('.lotto-purchase-input');
   const $lottoPurchaseBtn = $('.lotto-purchase-btn');
   
@@ -22,31 +25,37 @@ const lottoPurchase = () => {
     return true
   }
 
-  $lottoPurchaseForm.addEventListener('submit', event => {
-    event.preventDefault()
-  })
-  
-  $lottoPurchaseInput.addEventListener('keypress', event => {
+
+  const $ticketSection = $('#purchased-lottos');
+  const $winningNumbersForm = $('#lotto-winning-numbers-form');
+  const tagsVisibleWhenValidationPasses = [$ticketSection, $winningNumbersForm]
+
+  $lottoPurchaseInput.addEventListener('keydown', (event) => {
+    if (event.isComposing) return;
+    
     if (event.key === 'Enter' && event.target.value !== "") {
       if (passValidatitonLottoPurchaseAmount(event.target.value)) {
-        $ticketSection.style.display = "block"
-        $winningNumbersForm.style.display = "block"
+        tagsVisibleWhenValidationPasses.map(tag => tag.style.display = "block")
+        lottoTicket(event.target.value)
       }
     }
   })
-  
+
   $lottoPurchaseBtn.addEventListener('click', () => {
     if (passValidatitonLottoPurchaseAmount($lottoPurchaseInput.value)) {
-      $ticketSection.style.display = "block"
-      $winningNumbersForm.style.display = "block"
+      tagsVisibleWhenValidationPasses.map(tag => tag.style.display = "block")
+      lottoTicket($lottoPurchaseInput.value)
     }
   })
+
+
 }
 
 lottoPurchase()
 
-// $ticketSection
-// $winningNumbersForm
+
+
+
 
 const $showResultButton = $('.open-result-modal-button');
 const $modalClose = $('.modal-close');

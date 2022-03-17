@@ -3,31 +3,33 @@ describe('Lotto test', () => {
     cy.visit('/')
   })
 
+  before(() => {
+    const checkKeyBoardEvent = correct => {
+      if (correct) {
+        cy.get('[data-amount=input]').type('1000{enter}')
+      } else {
+        cy.get('[data-amount=input]').type('1234{enter}')
+      }
+    }
+
+    const checkClickEvent = correct => {
+      if (correct) {
+        cy.get('[data-amount=input]').type('1000')
+        cy.get('[data-amount=btn]').click()
+      } else {
+        cy.get('[data-amount=input]').type('1234')
+        cy.get('[data-amount=btn]').click()
+      }
+    }
+
+    Cypress.Commands.add('submitValue', (options, correct) => {
+      if (options === 'enter') checkKeyBoardEvent(correct)
+      if (options === 'click') checkClickEvent(correct)  
+    })
+  })
+
   describe('Input에 관련한 테스트', () => {
     before(() => {
-      const checkKeyBoardEvent = correct => {
-        if (correct) {
-          cy.get('[data-amount=input]').type('1000{enter}')
-        } else {
-          cy.get('[data-amount=input]').type('1234{enter}')
-        }
-      }
-
-      const checkClickEvent = correct => {
-        if (correct) {
-          cy.get('[data-amount=input]').type('1000')
-          cy.get('[data-amount=btn]').click()
-        } else {
-          cy.get('[data-amount=input]').type('1234')
-          cy.get('[data-amount=btn]').click()
-        }
-      }
-
-      Cypress.Commands.add('submitValue', (options, correct) => {
-        if (options === 'enter') checkKeyBoardEvent(correct)
-        if (options === 'click') checkClickEvent(correct)  
-      })
-  
       Cypress.Commands.add('checkAlert', () => {
         cy.on('window:alert', (text) => {
           expect(text).to.contains('로또 구입 금액을 1,000원 단위로 입력해 주세요');
@@ -68,15 +70,21 @@ describe('Lotto test', () => {
 
   })
 
-  describe('Toggle에 관련한 테스트', () => {
+  describe('Ticket 관련 테스트', () => {
+    it('구매한 티켓에 따라 총 개수 확인.', () => {
+      cy.submitValue('click', true)
+      cy.get('#counted-ticket').should('have.text', '총 1개를 구매하였습니다.')
+    })
+
+    it('구매한 티켓에 티켓 이미지 컴포넌트 생성', () => {
+      cy.submitValue('click', true)
+      cy.get('[data-ticket=container]').find('[data-ticket=image]').should('have.length', 1)
+    })
+
     it('Toggle click event에 따라 랜덤 숫자가 보여야 한다', () => {
       
     })
-
-    it('구매한 갯수에 따라 총 개수 체크', () => {
-
-    })
-
+    
     it('랜덤 숫자는 1부터 45까지로 제한한다', () => {
 
     })
