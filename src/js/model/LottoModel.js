@@ -6,6 +6,8 @@ export default class LottoModel {
   #isShow;
 
   constructor(quantity) {
+    document.querySelector('.lotto-section').hidden = false;
+    document.querySelector('.lotto-form').hidden = false;
     this.#tickets = Array(quantity).fill(new LottoTicket());
     this.#winningNumbers = new LottoWinningNumbers();
     this.#isShow = false;
