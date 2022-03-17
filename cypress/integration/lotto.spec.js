@@ -4,18 +4,28 @@ describe('Lotto test', () => {
   })
 
   describe('Input에 관련한 테스트', () => {
-    
-      
-
-      Cypress.Commands.add('typeErrorNumber', (options) => {
-        if (options === 'enter') {
-          cy.get('[data-amount=input]').type('1001{enter}')
+    before(() => {
+      const checkKeyBoardEvent = correct => {
+        if (correct) {
+          cy.get('[data-amount=input]').type('1000{enter}')
+        } else {
+          cy.get('[data-amount=input]').type('1234{enter}')
         }
-  
-        if (options === 'click') {
-          cy.get('[data-amount=input]').type('1001')
+      }
+
+      const checkClickEvent = correct => {
+        if (correct) {
+          cy.get('[data-amount=input]').type('1000')
+          cy.get('[data-amount=btn]').click()
+        } else {
+          cy.get('[data-amount=input]').type('1234')
           cy.get('[data-amount=btn]').click()
         }
+      }
+
+      Cypress.Commands.add('submitValue', (options, correct) => {
+        if (options === 'enter') checkKeyBoardEvent(correct)
+        if (options === 'click') checkClickEvent(correct)  
       })
   
       Cypress.Commands.add('checkAlert', () => {
@@ -23,36 +33,36 @@ describe('Lotto test', () => {
           expect(text).to.contains('로또 구입 금액을 1,000원 단위로 입력해 주세요');
         });
       })
-    
-
-    describe('금액 단위 체크', () => {
+    })
       
-
-      it('금액 단위가 1000원 단위가 아면 alert 창이 나온다 (텍스트는 “로또 구입 금액을 1,000원 단위로 입력해 주세요" 이다)', () => {
-        cy.typeErrorNumber('enter')
+    describe('금액 단위 체크', () => {
+      it('금액 단위가 1000원 단위가 아니면 alert 창이 나온다 (텍스트는 “로또 구입 금액을 1,000원 단위로 입력해 주세요" 이다)', () => {
+        cy.submitValue('enter', false)
         cy.checkAlert()
       })
       it('금액 단위가 1000원 단위가 아닐 때 alert 확인 버튼 클릭 시 input tag 초기화', () => {
         
-        cy.typeErrorNumber('click')
+        cy.submitValue('click', false)
         cy.checkAlert()
-        cy.on('window:confirm', () => true)
-        cy.get('[data-amount=input]').should('have.text', '')
+        cy.on('window:alert', () => true)
+        cy.get('[data-amount=input]').should('have.value', '')
       })
     })
 
 
-    describe('input 이벤트는 click과 enter 두가지다', () => {
-      it('input validation 실패 시 아래 UI가 보이지 않아야한다.', () => {
-        
+    describe('input event에 따른 UI 변화', () => {
+      it('input validation 실패 시 하위 UI를 볼 수 없다.', () => {
+        cy.submitValue('click', false)
+        cy.on('window:alert', () => true)
+        cy.get('[data-ticket=section]').should('not.be.visible')
+        cy.get('[data-winning-number=form]').should('not.be.visible')
       })
 
-      it('확인 버튼 click 시 input value의 결과가 반영된다.', () => {
-
-      })
-
-      it('input value를 작성하고 enter 버튼을 누르면 input value의 결과가 반영된다.', () => {
-        
+      it('input validation 성공 시 하위 UI를 볼 수 있다.', () => {
+        cy.submitValue('click', true)
+        cy.on('window:alert', () => true)
+        cy.get('[data-ticket=section]').should('be.visible')
+        cy.get('[data-winning-number=form]').should('be.visible')
       })
     })
 

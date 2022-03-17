@@ -12,7 +12,7 @@ const lottoPurchase = () => {
   
   const validateLottoPurchaseAmount = (amount) => {
     if (amount % 1000 !== 0 && Number(amount) > 1000) {
-      $lottoPurchaseInput.textContent = ""
+      $lottoPurchaseInput.value = ""
       alert('로또 구입 금액을 1,000원 단위로 입력해 주세요')
     }
   }
