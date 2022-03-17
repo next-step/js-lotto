@@ -3,7 +3,7 @@ describe('로또 미션 Cypress', () => {
     cy.visit('/');
   });
 
-  context.only('START', () => {
+  context('START', () => {
     it('초기화면 상태 테스트', () => {
       cy.get('.price-form').should('be.visible');
       cy.get('.lotto-section').should('not.be.visible');
@@ -12,6 +12,11 @@ describe('로또 미션 Cypress', () => {
   });
 
   context('STEP1 - 가격 입력 Test', () => {
+    /*******
+     * Detail
+     * (1) 확인 버튼 누른 후, 구입 금액 초기화
+     * (2) 엔터 눌럿을 때도, 같은 동작
+     */
     beforeEach(() => {
       cy.visit('/');
       // alias
@@ -67,6 +72,65 @@ describe('로또 미션 Cypress', () => {
       });
     });
 
-    context('2. 구매 가능한 가격 입력 테스트', () => {});
+    context.only('2. 구매 가능한 가격 입력 테스트', () => {
+      const mockData = {
+        typedPrice: 5000,
+        tickets: 5,
+      };
+
+      it.only('(1) 로또 구매 결과와 당첨번호 입력 칸이 노출된다.', () => {
+        cy.get('.lotto-section').should('not.be.visible');
+        cy.get('.lotto-form').should('not.be.visible');
+
+        cy.get('.price-form')
+          .find('.price-form__input')
+          .type(mockData.typedPrice)
+          .type('{leftarrow}{rightarrow}{uparrow}{downarrow}')
+          .type('{del}{selectall}{backspace}')
+          .type('{shift}')
+          .type(mockData.typedPrice, { delay: 100 })
+          .should('have.value', mockData.typedPrice);
+
+        cy.get('@purchaseButton').click();
+
+        cy.get('.lotto-section').should('be.visible');
+        cy.get('.lotto-form').should('be.visible');
+      });
+
+      it('(2) 발급 결과를 보여주는 컴포넌트가 노출된다.', () => {
+        cy.get('.lotto-section').should('be.visible');
+        cy.get('.lotto-form').should('be.visible');
+      });
+
+      it('(3) 구매 수량을 노출된다.', () => {
+        cy.get('.lotto-section')
+          .should('be.visible')
+          .find('.lotto-section__label')
+          .should(($label) => {
+            expect($label, 'text content').to.have.text(
+              `총 ${mockData.tickets}개를 구매하였습니다.`
+            );
+          });
+      });
+
+      it('(4) 구매 수량만큼 로또 티켓이 발급한다.', () => {
+        cy.get('.lotto-section')
+          .should('be.visible')
+          .find('.lotto-section-tickets span')
+          .should(($span) => {
+            expect($span).to.have.length(mockData.tickets);
+          });
+      });
+
+      it('(5) 로또 티켓의 버튼은 미노출 상태이다.', () => {
+        cy.get('.lotto-section')
+          .should('be.visible')
+          .find('.lotto-section-tickets span')
+          .find('.lotto-section-tickets-numbers')
+          .should(($span) => {
+            expect($span).to.have.length(mockData.tickets);
+          });
+      });
+    });
   });
 });
