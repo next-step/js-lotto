@@ -16,7 +16,7 @@ class LottoApp extends Component {
   }
 
   mounted() {
-    const $purchaseContainer = $(DOM.purchaseContainer);
+    const $purchaseContainer = $(`.${DOM.purchaseContainer}`);
 
     new PurchaseForm($purchaseContainer);
     new PurchaseSection($purchaseContainer);
