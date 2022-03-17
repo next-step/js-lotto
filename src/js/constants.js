@@ -1,7 +1,8 @@
 export const DOM = {
-  purchaseContainer: 'purchase-container',
+  purchaseForm: 'purchase-form',
   purchaseFormInput: 'purchase-form-input',
   purchaseFormButton: 'purchase-form-button',
+  purchaseSection: 'purchase-section',
   purchaseSectionLabel: 'purchase-section-label',
   purchaseSectionLottoNumbersToggleButton: 'purchase-section-lotto-numbers-toggle-button',
   purchaseSectionLottoNumbersFlexBox: 'purchase-section-lotto-numbers-flex-box',

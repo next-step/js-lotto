@@ -8,18 +8,21 @@ class LottoApp extends Component {
   template() {
     return `
       <div class="d-flex justify-center mt-5">
-        <div class="${DOM.purchaseContainer} w-100">
+        <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
+          <form id="${DOM.purchaseForm}" class="mt-5"></form>
+          <section id="${DOM.purchaseSection}" class="mt-9"></section>
         </div>
       </div>
     `;
   }
 
   mounted() {
-    const $purchaseContainer = $(`.${DOM.purchaseContainer}`);
+    const $purchaseForm = $(`#${DOM.purchaseForm}`);
+    const $purchaseSection = $(`#${DOM.purchaseSection}`);
 
-    new PurchaseForm($purchaseContainer);
-    new PurchaseSection($purchaseContainer);
+    new PurchaseForm($purchaseForm);
+    new PurchaseSection($purchaseSection);
   }
 }
 
