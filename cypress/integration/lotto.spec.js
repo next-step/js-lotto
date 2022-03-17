@@ -55,14 +55,14 @@ describe('Lotto test', () => {
         cy.submitValue('click', false)
         cy.on('window:alert', () => true)
         cy.get('[data-ticket=section]').should('not.be.visible')
-        cy.get('[data-winning-number=form]').should('not.be.visible')
+        cy.get('[data-winning-numbers=form]').should('not.be.visible')
       })
 
       it('input validation 성공 시 하위 UI를 볼 수 있다.', () => {
         cy.submitValue('click', true)
         cy.on('window:alert', () => true)
         cy.get('[data-ticket=section]').should('be.visible')
-        cy.get('[data-winning-number=form]').should('be.visible')
+        cy.get('[data-winning-numbers=form]').should('be.visible')
       })
     })
 
