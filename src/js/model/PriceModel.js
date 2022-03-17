@@ -1,6 +1,6 @@
 const PRICE_FORM__INPUT = 'price-form__input';
 import { ERR_MESSAGE } from '../constants/alertMessage.js';
-
+import LottoModel from './LottoModel.js';
 export default class PriceModel {
   #price;
 
@@ -23,8 +23,14 @@ export default class PriceModel {
       if (!!inputPrice % 10000) {
         return alert(ERR_MESSAGE.NOT_VALID_PRICE);
       }
+      this.generateLotto();
     },
   };
+
+  generateLotto() {
+    const quantity = this.#price / 10000;
+    return new LottoModel(quantity);
+  }
 
   updatePrice(newPrice) {
     this.#price = newPrice;
