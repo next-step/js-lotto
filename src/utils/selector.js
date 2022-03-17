@@ -3,6 +3,7 @@ export const SELECTOR = {
     INPUT_PRICE_FORM: '.input-price-form',
     INPUT_PRICE: '.input-price',
     PURCHASED_LOTTOS: '.purchased-lottos',
+    TOTAL_PURCHASED: '.total-purchased',
     LOTTO_NUMBERS_TOGGLE_BUTTON: '.lotto-numbers-toggle-button',
     LOTTOS: '.lottos',
     INPUT_LOTTO_NUMBERS_FORM: '.input-lotto-nums-form',

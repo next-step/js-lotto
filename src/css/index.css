@@ -13,6 +13,20 @@ body {
   margin: 0 auto;
 }
 
+.lottos {
+  list-style: none;
+  padding: 0;
+}
+
+.lottos > .lotto-wrapper {
+  display: flex;
+}
+
+.lottos > .lotto-wrapper > .lotto-detail {
+  font-size: 1.25rem;
+  margin-left: 12px;
+}
+
 .winning-number {
   width: 30px;
   height: 36px;

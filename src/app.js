@@ -21,7 +21,7 @@ export default function App() {
         ...this.state,
         isPreviousPurchase: CONSTANTS.COMMON.IS_PREVIOUS_PURCHASE_ON,
         userInputPrice: price,
-        visiableLottoToggle: CONSTANTS.COMMON.VISIABLE_LOTTO_TOGGLE_ON,
+        visiableLottoToggle: CONSTANTS.INITIAL.VISIABLE_LOTTO_TOGGLE_OFF,
         myLottos: lottos,
       });
     },
