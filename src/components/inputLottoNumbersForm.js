@@ -2,7 +2,6 @@ import { $, SELECTOR } from '../utils/selector.js';
 
 export default function InputLottoNumbersForm({ initState }) {
   this.$inputLottoNumbersForm = $(SELECTOR.CLASS.INPUT_LOTTO_NUMBERS_FORM);
-  this.$inputLottoNumbersForm.style.display = 'none';
   this.$inputWinningNumbers = $(SELECTOR.CLASS.INPUT_WINNING_NUMBERS);
   this.$inputBonusNumber = $(SELECTOR.CLASS.INPUT_BONUS_NUMBER);
 

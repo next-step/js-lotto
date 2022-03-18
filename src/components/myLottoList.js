@@ -2,7 +2,6 @@ import { $, SELECTOR } from '../utils/selector.js';
 
 export default function MyLottoList({ initState, onToggle }) {
   this.$purchasedLottos = $(SELECTOR.CLASS.PURCHASED_LOTTOS);
-  this.$purchasedLottos.style.display = 'none';
   this.$totalPurchase = $(SELECTOR.CLASS.TOTAL_PURCHASED);
   this.$lottoNumbersToggleButton = $(SELECTOR.CLASS.LOTTO_NUMBERS_TOGGLE_BUTTON);
   this.$lottos = $(SELECTOR.CLASS.LOTTOS);

@@ -18,12 +18,15 @@
                 data-test="input-price"
                 type="number"
                 class="input-price w-100 mr-2 pl-2"
+                min="1000"
+                max="100000"
+                required
                 placeholder="구입 금액"
               />
-              <button type="submit" class="btn btn-cyan">확인</button>
+              <button data-test="input-price-submit-button" type="submit" class="btn btn-cyan">확인</button>
             </div>
           </form>
-          <section data-test="purchased-lottos" class="purchased-lottos mt-9">
+          <section data-test="purchased-lottos" class="purchased-lottos mt-9" style="display: none">
             <div class="d-flex">
               <label class="flex-auto my-0"
                 >총 <span data-test="total-purchased" class="total-purchased"></span>개를 구매하였습니다.</label
@@ -37,7 +40,7 @@
             </div>
             <ul data-test="lottos" class="lottos d-flex flex-wrap"></ul>
           </section>
-          <form test-id="input-lotto-nums-form" class="input-lotto-nums-form mt-9">
+          <form test-id="input-lotto-nums-form" class="input-lotto-nums-form mt-9" style="display: none">
             <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
             <div class="d-flex">
               <div>
