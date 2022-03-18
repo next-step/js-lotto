@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^6.9.1"
+    "cypress": "^6.9.1",
+    "gh-pages": "^3.2.3"
   }
 }
