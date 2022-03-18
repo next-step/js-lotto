@@ -85,12 +85,14 @@ describe('구매 기능', () => {
 
   describe('소비자는 자동 구매를 할 수 있어야 합니다.', () => {
     it('구매가 됐다면 6개의 숫자를 가지고 있어야 합니다.', () => {
-      cy.get(`#${DOM.purchaseFormInput}`).type(1000);
+      cy.get(`#${DOM.purchaseFormInput}`).type(4000);
       cy.get(`#${DOM.purchaseFormButton}`).click();
-      cy.get(`.${DOM.lottoDetail}`)
-        .invoke('text')
-        .then(text => text.split(',').length)
-        .should('equal', 6);
+      cy.get(`.${DOM.lottoDetail}`).each($el => {
+        cy.get($el)
+          .invoke('text')
+          .then(text => text.split(',').length)
+          .should('equal', 6);
+      });
     });
 
     it('6개의 숫자는 서로 달라야합니다.', () => {
