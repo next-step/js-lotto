@@ -18,6 +18,7 @@
     "prettier": "^2.6.0"
   },
   "dependencies": {
-    "cypress-watch-and-reload": "^1.7.4"
+    "cypress-watch-and-reload": "^1.7.4",
+    "lit-html": "^2.2.1"
   }
 }

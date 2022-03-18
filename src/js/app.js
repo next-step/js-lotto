@@ -7,7 +7,7 @@ import { pickLottoNumbers } from './utils/index.js';
 
 class LottoApp extends Component {
   template() {
-    return `
+    return html`
       <div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
