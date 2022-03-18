@@ -25,7 +25,13 @@ class PurchaseSection extends Component {
 
   createLottoWithLottoCount(lottoCount) {
     return Array.from({ length: lottoCount })
-      .map(() => '<span class="mx-1 text-4xl">🎟️ </span>')
+      .map(
+        () => `
+				<div class="mx-1 text-4xl">
+					<span class=${DOM.lottoIcon}>🎟️ </span>
+					<span class=${DOM.lottoDetail} style="display: none">15, 22, 42, 32, 15, 64</span>
+				</div>`,
+      )
       .join('');
   }
 }

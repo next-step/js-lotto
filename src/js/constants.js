@@ -6,6 +6,8 @@ export const DOM = {
   purchaseSectionLabel: 'purchase-section-label',
   purchaseSectionLottoNumbersToggleButton: 'purchase-section-lotto-numbers-toggle-button',
   purchaseSectionLottoNumbersFlexBox: 'purchase-section-lotto-numbers-flex-box',
+  lottoIcon: 'lotto-icon',
+  lottoDetail: 'lotto-detail',
 };
 
 export const MESSAGE = {
