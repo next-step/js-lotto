@@ -1,10 +1,10 @@
-const LOTTO_LENGTH = 6;
+import { LOTTO_NUMBERS, PRICE_PER_LOTTO } from "./constants.js";
 
 // * 로또 객체 1개를 생성하는 함수
 const createLottoTicket = () => {
   const lottoTicket = [];
 
-  for (let i = 0; i < LOTTO_LENGTH; i++) {
+  for (let i = 0; i < LOTTO_NUMBERS; i++) {
     let lottoNumber = Math.floor(Math.random() * 44) + 1;
     let isDuplicateNumber = lottoTicket.includes(lottoNumber);
 
@@ -31,7 +31,7 @@ const createLottoTickets = numberOfLottoTickets => {
 
 // * 구매 금액이 1,000원 단위인지 검증하는 함수
 const isValidateAmountOfPayment = payment => {
-  if (!(payment % 1000 === 0)) {
+  if (!(payment % PRICE_PER_LOTTO === 0)) {
     alert("구입 금액은 1,000원 단위로 입력해 주세요.");
     return false;
   }

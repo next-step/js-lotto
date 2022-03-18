@@ -1,0 +1,4 @@
+const PRICE_PER_LOTTO = 1000;
+const LOTTO_NUMBERS = 6;
+
+export { PRICE_PER_LOTTO, LOTTO_NUMBERS };

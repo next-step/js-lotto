@@ -1,4 +1,5 @@
 import { createLottoTickets, isValidateAmountOfPayment } from "./LottoApp.js";
+import { PRICE_PER_LOTTO } from "./constants.js";
 
 const $showResultButton = document.querySelector(".open-result-modal-button");
 const $modalClose = document.querySelector(".modal-close");
@@ -28,7 +29,7 @@ const purchaseLottoTickets = () => {
     document.querySelector("#purchasePrice").value = "";
     return;
   }
-  const numberOfLottoTickets = $purchasePrice / 1000;
+  const numberOfLottoTickets = $purchasePrice / PRICE_PER_LOTTO;
   const purchasedLottoTickets = createLottoTickets(numberOfLottoTickets);
 
   // * UI 업데이트 : 구입한 로또 장수 표시
