@@ -1,5 +1,6 @@
 import { DOM } from '../constants.js';
 import Component from '../core/Component.js';
+import { $, $$ } from '../utils/dom.js';
 
 class PurchaseSection extends Component {
   template() {
@@ -23,13 +24,24 @@ class PurchaseSection extends Component {
 		`;
   }
 
+  setEvent() {
+    $(`#${DOM.purchaseSectionLottoNumbersToggleButton}`).addEventListener('click', () => {
+      $(`#${DOM.purchaseSectionLottoNumbersFlexBox}`).classList.toggle('flex-col');
+      const lottoDetails = $$(`.${DOM.lottoDetail}`);
+      for (let i = 0; i < lottoDetails.length; i += 1) {
+        lottoDetails[i].style.display =
+          lottoDetails[i].style.display === 'none' ? 'inline' : 'none';
+      }
+    });
+  }
+
   createLottoWithLottoCount(lottoCount) {
     return Array.from({ length: lottoCount })
       .map(
         () => `
 				<div class="mx-1 text-4xl">
 					<span class=${DOM.lottoIcon}>🎟️ </span>
-					<span class=${DOM.lottoDetail} style="display: none">15, 22, 42, 32, 15, 64</span>
+					<span class="${DOM.lottoDetail} text-2xl" style="display: none">15, 22, 42, 32, 15, 64</span>
 				</div>`,
       )
       .join('');
