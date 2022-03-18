@@ -33,9 +33,15 @@ export default class State {
       }
 
       this.#priceModel.updatePrice(inputPrice);
-      this.#lottoModel = this.#priceModel.generateLotto();
+      this.generateLotto(inputPrice);
+
     },
   };
+
+  generateLotto(price) {
+    const quantity = price / LOTTO_PAY_UNIT;
+    this.#lottoModel= new LottoModel(quantity);
+  }
 
   get priceModel() {
     return this.#priceModel;
