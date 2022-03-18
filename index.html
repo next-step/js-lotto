@@ -14,8 +14,8 @@
           <form class="mt-5" id="form-price">
             <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요. </label>
             <div class="d-flex">
-              <input type="number" class="w-100 mr-2 pl-2" placeholder="구입 금액" name="price" />
-              <button type="submit" class="btn btn-cyan">확인</button>
+              <input type="number" class="w-100 mr-2 pl-2" placeholder="구입 금액" />
+              <button type="button" class="btn btn-cyan">확인</button>
             </div>
           </form>
           <section class="mt-9" id="lotto-list">
@@ -28,7 +28,17 @@
                 </label>
               </div>
             </div>
-            <ul class="d-flex flex-wrap p-0"></ul>
+            <ul class="d-flex flex-wrap" id="lotto-list">
+              <li class="lotto-list-item">
+                <span class="mx-1 text-4xl">🎟️ </span>
+                <span class="lotto-detail">1, 2, 3, 4, 5, 6</span>
+              </li>
+
+              <span class="mx-1 text-4xl">🎟️ </span>
+              <span class="mx-1 text-4xl">🎟️ </span>
+              <span class="mx-1 text-4xl">🎟️ </span>
+              <span class="mx-1 text-4xl">🎟️ </span>
+            </ul>
           </section>
           <form class="mt-9" id="form-winning">
             <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
