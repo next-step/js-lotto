@@ -7,13 +7,13 @@ export default class PriceForm {
 
     const $el = document.createElement('form');
     $el.className = PRICE_FORM;
-    $el.innerHTML = this.getHtml();
+    $el.innerHTML = PriceForm.getHtml();
     $parent.replaceWith($el);
 
     new PriceFormButton($el.querySelector(`.${PRICE_FORM__BUTTON}`), { onClick: this.eventHandler.PURCHASE });
   }
 
-  getHtml() {
+  static getHtml() {
     return `<form class="mt-9">
               <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.</label>
                     <div class="d-flex">

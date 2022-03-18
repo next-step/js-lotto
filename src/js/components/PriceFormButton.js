@@ -1,12 +1,12 @@
 export default class PriceFormButton {
   constructor($target, { onClick }) {
     const $button = document.createElement('button');
-    $button.innerHTML = this.getHtml();
+    $button.innerHTML = PriceFormButton.getHtml();
     $button.firstChild.addEventListener('click', onClick);
     $target.replaceWith($button.firstChild);
   }
 
-  getHtml() {
+  static getHtml() {
     return `<button type="button" class="btn btn-cyan price-form__button">확인</button>`;
   }
 }

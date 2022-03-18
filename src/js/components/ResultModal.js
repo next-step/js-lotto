@@ -1,7 +1,7 @@
 export default class ResultModal {
   constructor() {}
 
-  getHtml() {
+  static getHtml() {
     return `<div class="modal">
         <div class="modal-inner p-10">
           <div class="modal-close">

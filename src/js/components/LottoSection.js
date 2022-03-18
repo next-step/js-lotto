@@ -8,11 +8,11 @@ export default class LottoSection {
     Object.assign(this, props);
 
     this.#el = document.createElement('div');
-    this.#el.innerHTML = this.getHtml();
+    this.#el.innerHTML = LottoSection.getHtml();
     $parent.replaceWith(this.#el);
   }
 
-  getHtml() {
+  static getHtml() {
     return `<section class="mt-9 ${LOTTO_SECTION}">
               <div class="d-flex">
               <label class="flex-auto my-0 lotto-section__label">총 5개를 구매하였습니다.</label>
