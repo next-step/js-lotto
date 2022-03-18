@@ -19,17 +19,19 @@ $modalClose.addEventListener("click", onModalClose);
 
 // * [확인] 버튼
 const $purchaseButton = document.querySelector("#purchaseButton");
+// * [구매 금액] 입력 칸
+const $purchasePrice = document.querySelector("#purchasePrice");
 
 // * [확인] 버튼 클릭 시, 구매 금액만큼의 로또 티켓들을 생성한다.
 const purchaseLottoTickets = () => {
-  const $purchasePrice = Number(document.querySelector("#purchasePrice").value);
+  const purchasePrice = Number($purchasePrice.value);
 
   // ! 구입 금액 : 1,000원 단위인지 확인
-  if (!isValidateAmountOfPayment($purchasePrice)) {
-    document.querySelector("#purchasePrice").value = "";
+  if (!isValidateAmountOfPayment(purchasePrice)) {
+    $purchasePrice.value = "";
     return;
   }
-  const numberOfLottoTickets = $purchasePrice / PRICE_PER_LOTTO;
+  const numberOfLottoTickets = purchasePrice / PRICE_PER_LOTTO;
   const purchasedLottoTickets = createLottoTickets(numberOfLottoTickets);
 
   // * UI 업데이트 : 구입한 로또 장수 표시
