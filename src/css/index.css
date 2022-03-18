@@ -13,6 +13,22 @@ body {
   margin: 0 auto;
 }
 
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.d-none {
+  opacity: 0;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.lotto-section {
+  transition: ease-in-out 0.3s;
+}
+
 .lotto-list {
   list-style: none;
   padding: 0;
@@ -25,8 +41,6 @@ body {
 .lotto-numbers {
   font-size: 1.25rem;
   margin-left: 12px;
-  /* 스위칭 시 해당 속성 토글 */
-  display: none;
 }
 
 .winning-number {
