@@ -1,15 +1,7 @@
-import { $ } from "../shared/consts.js"
+import { $, WARNING_WHEN_NOT_IN_1000_UNITS } from "../shared/consts.js"
 import { removeCssToggleWhenResubmitting } from "./util/removeCssToggleWhenResubmitting.js";
 
 import lottoTicket from "./lottoTicket.js"
-
-/**
- * lotto에서 넘겨 준 가격을 통해
- *  1. 유효성 검증을 진행
- *  2. 유효성 검증에 따라 통과되면 하위 ui를 보여준다.
- *  3. 티켓 수량 lottoTicket 함수에 넘겨주기
- *  4. 한번 구입한 상태에서 다시 구입할 때 ui 체크
- */
 
 const $lottoPurchaseInput = $('.lotto-purchase-input');
 const tagsShownAccordingToPurchaseStatus = [$('#purchased-lottos'), $('#lotto-winning-numbers-form')]
@@ -30,7 +22,8 @@ const passValidatitonLottoPurchaseAmount = amount => {
 
   if (amount % 1000 !== 0) {
     $lottoPurchaseInput.value = ""
-    alert('로또 구입 금액을 1,000원 단위로 입력해 주세요')
+
+    alert(WARNING_WHEN_NOT_IN_1000_UNITS)
     checkDisplayWhenResubmitting()
     return false
   }

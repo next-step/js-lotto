@@ -1,14 +1,6 @@
 import { $ } from "../shared/consts.js";
 import { createRandomLottoNumber } from "./util/createRandomLottoNumber.js";
 
-/**
- *  1. 티켓 갯수에 따라 ui 변화
- *    - 티켓 개수 텍스트
- *    - 티켓 이미지
- *  2. switch 상태에 따라 ui 변화
- *    - 로또 번호 부여
- *    - flex 상태 변경
- */
 const $ticketContainer = $('ul[data-ticket]')
 
 const changeTicketsUiAccordingToSwitchState = (event) => {

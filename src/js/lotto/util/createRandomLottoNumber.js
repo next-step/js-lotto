@@ -1,6 +1,6 @@
 export const createRandomLottoNumber = (count) => {
   const lottoRandomNumbers = []
-  // 6번 통으로 
+  
   const generateRandomNumbers = () => {
     return  [ (Math.floor(Math.random() * 45) + 1),
         ' ' + (Math.floor(Math.random() * 45) + 1),
