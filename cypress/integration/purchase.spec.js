@@ -37,7 +37,7 @@ describe('구매 기능', () => {
     });
   });
 
-  describe('로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.', () => {
+  describe('로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 합니다.', () => {
     it('2000원은 2개 구매 가능합니다.', () => {
       cy.get(`#${DOM.purchaseFormInput}`).type(2000);
       cy.get(`#${DOM.purchaseFormButton}`).click();
@@ -60,11 +60,40 @@ describe('구매 기능', () => {
     });
   });
 
-  // it('소비자는 자동 구매를 할 수 있어야 한다.', () => {
-  //   expect(false).to.equal(true);
-  // });
+  describe('복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 합니다.', () => {
+    it('토글이 됐다면 번호가 보여야합니다.', () => {
+      cy.get(`#${DOM.purchaseFormInput}`).type(4000);
+      cy.get(`#${DOM.purchaseFormButton}`).click();
+      cy.get(`#${DOM.purchaseSectionLottoNumbersToggleButton}`).click({ force: true });
+      cy.get(`.${DOM.lottoDetail}`).invoke('css', 'display').should('equal', 'inline');
+    });
 
-  // it('복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.', () => {
-  //   expect(false).to.equal(true);
-  // });
+    it('토글이 됐다면 flex의 방향은 column이 되어야합니다', () => {
+      cy.get(`#${DOM.purchaseFormInput}`).type(4000);
+      cy.get(`#${DOM.purchaseFormButton}`).click();
+      cy.get(`#${DOM.purchaseSectionLottoNumbersToggleButton}`).click({ force: true });
+      cy.get(`#${DOM.purchaseSectionLottoNumbersFlexBox}`).should('have.class', 'flex-col');
+    });
+  });
+
+  describe('소비자는 자동 구매를 할 수 있어야 합니다.', () => {
+    it('구매가 됐다면 6개의 숫자를 가지고 있어야 합니다.', () => {
+      cy.get(`#${DOM.purchaseFormInput}`).type(1000);
+      cy.get(`#${DOM.purchaseFormButton}`).click();
+      cy.get(`.${DOM.lottoDetail}`)
+        .invoke('text')
+        .then(text => text.split(',').length)
+        .should('equal', 6);
+    });
+
+    it('6개의 숫자는 서로 달라야합니다.', () => {
+      const set = new Set(pickDifferentSixNumbers()).size;
+      expect(set.size).to.equal(6);
+    });
+
+    it('6개의 숫자는 1에서 45 사이의 숫자여야 합니다.', () => {
+      const pickNumberes = pickDifferentSixNumbers();
+      pickNumberes.map(number => expect(number).to.be.greaterThan(0).and.to.be.lessThan(46));
+    });
+  });
 });
