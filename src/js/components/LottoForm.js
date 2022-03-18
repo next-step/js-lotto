@@ -1,33 +1,10 @@
 const LOTTO_FORM = 'lotto-form';
 
 export default class LottoForm {
-  #el;
-  #state;
-
-  constructor(props = { state: { isShow: false } }) {
-    const { state } = props;
-    this.#state = state;
-
-    this.#el = document.createElement('div');
-    this.#el.innerHTML = this.getHtml();
-
-    const $showResultButton = this.#el.querySelector(
-      '.open-result-modal-button'
-    );
-
-    const onModalShow = () => {
-      this.#el.classList.add('open');
-    };
-
-    $showResultButton.addEventListener('click', onModalShow);
-  }
-
-  get isHidden() {
-    return !this.#state.isShow;
-  }
+  constructor() {}
 
   getHtml() {
-    return `<form class="mt-9 ${LOTTO_FORM}" ${this.isHidden && 'hidden'}>
+    return `<form class="mt-9 ${LOTTO_FORM}" hidden>
             <label class="flex-auto d-inline-block mb-3"
               >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >

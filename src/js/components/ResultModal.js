@@ -1,19 +1,5 @@
 export default class ResultModal {
-  #el;
-  #state;
-
-  constructor($target) {
-    this.#el = document.createElement('div');
-    this.#el.innerHTML = this.getHtml();
-    const $modal = this.#el.querySelector('.modal');
-
-    const onModalClose = () => {
-      $modal.classList.remove('open');
-    };
-
-    const $modalClose = this.#el.querySelector('.modal-close');
-    $modalClose.addEventListener('click', onModalClose);
-  }
+  constructor() {}
 
   getHtml() {
     return `<div class="modal">
