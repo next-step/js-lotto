@@ -62,10 +62,10 @@ function LottoApp() {
     $lottoIconAndNumbers.innerHTML = lottoTemplate;
 
     const $purchaseResult = document.querySelector("#purchaseResult");
-    $purchaseResult.classList.toggle("pre-purchase");
+    $purchaseResult.classList.remove("pre-purchase");
 
     const $confirmWinningNumbers = document.querySelector("#confirmWinningNumbers");
-    $confirmWinningNumbers.classList.toggle("pre-purchase");
+    $confirmWinningNumbers.classList.remove("pre-purchase");
   };
 
   const initEventListeners = () => {
