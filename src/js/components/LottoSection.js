@@ -15,7 +15,7 @@ export default class LottoSection {
   static getHtml() {
     return `<section class="mt-9 ${LOTTO_SECTION}">
               <div class="d-flex">
-              <label class="flex-auto my-0 lotto-section__label">총 5개를 구매하였습니다.</label>
+              <label class="flex-auto my-0 lotto-section__label"></label>
               <div class="flex-auto d-flex justify-end pr-1">
                   <label class="switch">
                   <input type="checkbox" class="lotto-numbers-toggle-button" />
