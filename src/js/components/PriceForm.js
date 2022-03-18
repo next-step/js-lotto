@@ -2,9 +2,7 @@ import { PRICE_FORM, PRICE_FORM__INPUT, PRICE_FORM__BUTTON } from '../constants/
 
 import PriceFormButton from './PriceFormButton.js';
 export default class PriceForm {
-  constructor($parent, props, { onClick }) {
-    Object.assign(this, props);
-
+  constructor($parent, { onClick }) {
     const $el = document.createElement('form');
     $el.className = PRICE_FORM;
     $el.innerHTML = PriceForm.getHtml();
@@ -20,7 +18,6 @@ export default class PriceForm {
                         <input
                             type="number"
                             class="w-100 mr-2 pl-2 ${PRICE_FORM__INPUT}"
-                            value="${this.price}"
                             placeholder="구입 금액"/>
                   <template class="${PRICE_FORM__BUTTON}"></template>
               </div>

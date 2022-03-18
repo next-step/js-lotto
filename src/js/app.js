@@ -29,7 +29,7 @@ function App($target) {
     ${ResultModal.getHtml()}
     `.trim();
 
-  new PriceForm($app.querySelector(`.${PRICE_FORM}`), state.priceModel);
+  new PriceForm($app.querySelector(`.${PRICE_FORM}`), { onClick: state.eventHandler.PURCHASE });
   new LottoSection($app.querySelector(`.${LOTTO_SECTION}`), state.priceModel);
 
   $target.replaceWith($app);
