@@ -20,7 +20,7 @@ export class Lotto {
   }
 
   get value() {
-    return [...this.#values];
+    return [...this.#values].toString();
   }
 
   static #isMaxCreateLottoNumber(values) {
