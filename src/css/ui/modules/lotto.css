@@ -10,3 +10,7 @@ li.lotto-item-with-numbers {
 span.numbers-closed {
   display: none;
 }
+
+.pre-purchase {
+  display: none;
+}

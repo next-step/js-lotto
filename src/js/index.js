@@ -55,8 +55,8 @@ const purchaseLottoTickets = () => {
   $lottoIconAndNumbers.innerHTML = lottoTemplate;
 
   // * UI 업데이트 : 로또 구매 결과 영역과, 당첨 번호 입력 영역을 사용자에게 보여준다.
-  $purchaseResult.style.display = "block";
-  $confirmWinningNumbers.style.display = "block";
+  $purchaseResult.classList.toggle("pre-purchase");
+  $confirmWinningNumbers.classList.toggle("pre-purchase");
 };
 
 // * [확인] 버튼 - 이벤트 리스너 등록
@@ -65,10 +65,7 @@ $purchaseButton.addEventListener("click", purchaseLottoTickets);
 //! 페이지 첫 로딩 시에는, 사용자에게 구입 금액을 입력하는 화면만 보여줘야 한다.
 //! -> [확인] 버튼을 클릭했을 때 아래 화면이 나타나야 한다.
 const $purchaseResult = document.querySelector("#purchaseResult");
-$purchaseResult.style.display = "none";
-
 const $confirmWinningNumbers = document.querySelector("#confirmWinningNumbers");
-$confirmWinningNumbers.style.display = "none";
 
 // * [번호보기] 토글 : 이벤트 추가
 const lottoNumbersToggle = () => {
