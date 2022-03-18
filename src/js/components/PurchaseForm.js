@@ -1,11 +1,10 @@
-import { html } from 'lit-html';
 import { DOM, MESSAGE } from '../constants.js';
 import Component from '../core/Component.js';
 import { $ } from '../utils/dom.js';
 
 class PurchaseForm extends Component {
   template() {
-    return html`
+    return String.raw`
       <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.</label>
       <div class="d-flex">
         <input

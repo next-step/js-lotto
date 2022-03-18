@@ -1,15 +1,14 @@
-import { html } from 'lit-html';
 import { DOM } from '../constants.js';
 import Component from '../core/Component.js';
 import { $, $$ } from '../utils/dom.js';
 
 class PurchaseSection extends Component {
   template() {
-    return html`
+    return String.raw`
       <div class="d-flex">
-        <label id="${DOM.purchaseSectionLabel}" class="mb-2 d-inline-block">
-          총 ${this.props.lottoCount}개를 구매하였습니다.
-        </label>
+        <label id="${DOM.purchaseSectionLabel}" class="mb-2 d-inline-block"
+          >총 ${this.props.lottoCount}개를 구매하였습니다.</label
+        >
         <div class="flex-auto d-flex justify-end pr-1">
           <label class="switch">
             <input
@@ -41,7 +40,7 @@ class PurchaseSection extends Component {
   createLottoWithLottoNumbers(allLottoNumbers) {
     return allLottoNumbers
       .map(
-        oneLottoNumbers => html`
+        oneLottoNumbers => String.raw`
           <div class="mx-1 text-4xl">
             <span class=${DOM.lottoIcon}>🎟️ </span>
             <span class="${DOM.lottoDetail} text-2xl" style="display: none">
