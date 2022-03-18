@@ -2,7 +2,7 @@
   "plugins": ["prettier"],
   "extends": ["airbnb", "plugin:prettier/recommended"],
   "parserOptions": {
-    "ecmaVersion": 2021,
+    "ecmaVersion": "latest",
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": false
