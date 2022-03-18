@@ -19,11 +19,14 @@ describe('로또 미션 Cypress', () => {
   });
 
   context('STEP1 - 가격 입력 Test', () => {
-    /*******
-     * Detail
-     * (1) 확인 버튼 누른 후, 구입 금액 초기화
-     * (2) 엔터 눌럿을 때도, 같은 동작
-     */
+    context.only('0. 기본 입력 테스트', () => {
+      it('(1) 엔터 동작 테스트', () => {
+        cy.get('@priceInput').type(3000).type('{enter}');
+      });
+      it('(2) 클릭 동작 테스트', () => {
+        cy.get('@priceInput').type(3000).type('{enter}');
+      });
+    });
 
     context('1. 구매 불가능한 가격 입력 테스트', () => {
       it('(1) 가격 미입력', () => {
@@ -84,7 +87,7 @@ describe('로또 미션 Cypress', () => {
       });
     });
 
-    context.only('2. 구매 가능한 가격 입력 테스트', () => {
+    context('2. 구매 가능한 가격 입력 테스트', () => {
       const mockData = {
         typedPrice: 5000,
         tickets: 5,
@@ -105,9 +108,7 @@ describe('로또 미션 Cypress', () => {
           .should('be.visible')
           .find('.lotto-section__label')
           .should(($label) => {
-            expect($label, 'text content').to.have.text(
-              `총 ${mockData.tickets}개를 구매하였습니다.`
-            );
+            expect($label, 'text content').to.have.text(`총 ${mockData.tickets}개를 구매하였습니다.`);
           });
       });
 
@@ -121,7 +122,7 @@ describe('로또 미션 Cypress', () => {
           });
       });
 
-      it.only('(4) 로또 티켓 번호는 미노출 상태이다.', () => {
+      it('(4) 로또 티켓 번호는 미노출 상태이다.', () => {
         cy.get('.lotto-section')
           .should('be.visible')
           .find('.lotto-section-tickets')
