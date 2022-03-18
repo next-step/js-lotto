@@ -2,7 +2,7 @@ import { PRICE_FORM, PRICE_FORM__INPUT, PRICE_FORM__BUTTON } from '../constants/
 
 import PriceFormButton from './PriceFormButton.js';
 export default class PriceForm {
-  constructor($parent, props) {
+  constructor($parent, props, { onClick }) {
     Object.assign(this, props);
 
     const $el = document.createElement('form');
@@ -10,7 +10,7 @@ export default class PriceForm {
     $el.innerHTML = PriceForm.getHtml();
     $parent.replaceWith($el);
 
-    new PriceFormButton($el.querySelector(`.${PRICE_FORM__BUTTON}`), { onClick: this.eventHandler.PURCHASE });
+    new PriceFormButton($el.querySelector(`.${PRICE_FORM__BUTTON}`), { onClick });
   }
 
   static getHtml() {
