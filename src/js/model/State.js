@@ -17,7 +17,8 @@ export default class State {
   }
 
   eventHandler = {
-    PURCHASE: () => {
+    PURCHASE: (e) => {
+      e.preventDefault();
       const inputPrice = Number(document.querySelector(`.${PRICE_FORM__INPUT}`).value);
       if (inputPrice === '') {
         return alert(ERR_MESSAGE.NONE_PRICE);
@@ -34,13 +35,12 @@ export default class State {
 
       this.#priceModel.updatePrice(inputPrice);
       this.generateLotto(inputPrice);
-
     },
   };
 
   generateLotto(price) {
     const quantity = price / LOTTO_PAY_UNIT;
-    this.#lottoModel= new LottoModel(quantity);
+    this.#lottoModel = new LottoModel(quantity);
   }
 
   get priceModel() {

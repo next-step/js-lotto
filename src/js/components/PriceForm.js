@@ -2,13 +2,14 @@ import { PRICE_FORM, PRICE_FORM__INPUT, PRICE_FORM__BUTTON } from '../constants/
 
 import PriceFormButton from './PriceFormButton.js';
 export default class PriceForm {
-  constructor($parent, { onClick }) {
+  constructor($parent, { onSubmit }) {
     const $el = document.createElement('form');
     $el.className = PRICE_FORM;
     $el.innerHTML = PriceForm.getHtml();
+    $el.addEventListener('submit', onSubmit);
     $parent.replaceWith($el);
 
-    new PriceFormButton($el.querySelector(`.${PRICE_FORM__BUTTON}`), { onClick });
+    new PriceFormButton($el.querySelector(`.${PRICE_FORM__BUTTON}`), { onSubmit });
   }
 
   static getHtml() {

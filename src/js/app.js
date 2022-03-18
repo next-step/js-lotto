@@ -21,7 +21,7 @@ function App($target) {
           <div class="w-100">
             <h1 class="text-center">🎱 행운의 로또</h1>
                 <template class="${PRICE_FORM}"></template>
-                <template class="mt-9 ${LOTTO_SECTION}"></template>
+               <template class="mt-9 ${LOTTO_SECTION}"></template>
               ${LottoForm.getHtml()}
           </div>
         </div>
@@ -29,7 +29,7 @@ function App($target) {
     ${ResultModal.getHtml()}
     `.trim();
 
-  new PriceForm($app.querySelector(`.${PRICE_FORM}`), { onClick: state.eventHandler.PURCHASE });
+  new PriceForm($app.querySelector(`.${PRICE_FORM}`), { onSubmit: state.eventHandler.PURCHASE });
   new LottoSection($app.querySelector(`.${LOTTO_SECTION}`), state.priceModel);
 
   $target.replaceWith($app);
