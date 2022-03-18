@@ -26,6 +26,10 @@ class PurchaseForm extends Component {
 		`;
   }
 
+  mounted() {
+    $(`#${DOM.purchaseFormInput}`).focus();
+  }
+
   setEvent() {
     this.$target.addEventListener('submit', e => e.preventDefault());
     $(`#${DOM.purchaseFormButton}`).addEventListener(
