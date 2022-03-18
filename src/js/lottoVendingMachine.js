@@ -5,7 +5,7 @@ export class LottoVendingMachine {
   static purchaseLotto(money) {
     return new Array(LottoVendingMachine.#getPurchaseLottoAmount(money))
       .fill()
-      .map(() => new Lotto().value);
+      .map(() => new Lotto());
   }
 
   static #getPurchaseLottoAmount(value) {
