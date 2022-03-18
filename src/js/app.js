@@ -27,8 +27,12 @@ class LottoApp extends Component {
     const $purchaseForm = $(`#${DOM.purchaseForm}`);
     const $purchaseSection = $(`#${DOM.purchaseSection}`);
 
-    new PurchaseForm($purchaseForm, { setLottoCount: this.setLottoCount.bind(this) });
-    new PurchaseSection($purchaseSection, { lottoCount: this.state.lottoCount });
+    new PurchaseForm($purchaseForm, {
+      setLottoCount: this.setLottoCount.bind(this),
+    });
+    new PurchaseSection($purchaseSection, {
+      lottoCount: this.state.lottoCount,
+    });
   }
 
   setLottoCount(count) {
