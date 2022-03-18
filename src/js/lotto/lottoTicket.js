@@ -3,7 +3,7 @@ import { createRandomLottoNumber } from "./util/createRandomLottoNumber.js";
 
 const $ticketContainer = $('ul[data-ticket]')
 
-const changeTicketsUiAccordingToSwitchState = (event) => {
+const changeTicketsUiAccordingToSwitchState = (event, ticketCount) => {
   const $randomNumberLists = document.querySelectorAll('li[data-ticket="list"]')
   const randomLottoNumbersArray = createRandomLottoNumber(ticketCount)
 
@@ -34,7 +34,7 @@ const lottoTicket = (amount) => {
 
   const $switch = $('.switch');
   
-  $switch.addEventListener('click', changeTicketsUiAccordingToSwitchState)
+  $switch.addEventListener('click', (event) => {changeTicketsUiAccordingToSwitchState(event, ticketCount)})
 }
 
 
