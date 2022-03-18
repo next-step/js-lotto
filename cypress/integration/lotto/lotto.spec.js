@@ -24,7 +24,7 @@ describe('로또 미션 Cypress', () => {
   });
 
   context('STEP1 - 가격 입력 Test', () => {
-    context.only('0. 기본 입력 테스트', () => {
+    context('0. 기본 입력 테스트', () => {
       it('(1) 엔터 동작 테스트', () => {
         cy.get('@priceInput').type(3000).type('{enter}');
         cy.get('.lotto-form').should('be.visible');
@@ -95,17 +95,6 @@ describe('로또 미션 Cypress', () => {
           expect(text).to.contains('금액을 1000원 단위로 입력해주세요!');
         });
       });
-
-      it('Detail1 : 가격 입력 후, 엔터', () => {
-        cy.get('.price-form')
-          .find('.price-form__input')
-          .type(5000)
-          .type('{leftarrow}{rightarrow}{uparrow}{downarrow}')
-          .type('{del}{selectall}{backspace}')
-          .type('{shift}')
-          .type(1000, { delay: 100 })
-          .should('have.value', mockData.typedPrice);
-      });
     });
 
     context('2. 구매 가능한 가격 입력 테스트', () => {
@@ -151,6 +140,10 @@ describe('로또 미션 Cypress', () => {
           .each(($span) => {
             expect($span).not.to.be.visible;
           });
+      });
+
+      it('(5) 로또 티켓 구매 이후 입력 금액을 초기화 된다.', () => {
+        cy.get('@priceInput').should('have.value', ''); //
       });
     });
   });
