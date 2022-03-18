@@ -8,10 +8,10 @@
   </head>
   <body>
     <div id="app" class="p-3">
-      <div class="d-flex justify-center mt-5">
+      <div class="d-flex justify-center">
         <div class="w-100">
-          <h1 class="text-center">🎱 행운의 로또</h1>
-          <form class="mt-5 lotto-purchase-form">
+          <h1 class="text-center mb-5">🎱 행운의 로또</h1>
+          <form class="mt-10 lotto-purchase-form">
             <label class="mb-2 d-inline-block"
               >구입할 금액을 입력해주세요.
             </label>
@@ -38,9 +38,7 @@
                 </label>
               </div>
             </div>
-            <div class="d-flex flex-wrap" data-ticket="container">
-              <span class="mx-1 text-4xl" data-ticket="image">🎟️ </span>
-            </div>
+            <ul class="d-flex flex-wrap mt-4" data-ticket="container"></ul>
           </section>
           <form id="lotto-winning-numbers-form" class="mt-9" data-winning-numbers="form" style="display: none;">
             <label class="flex-auto d-inline-block mb-3"
