@@ -48,7 +48,7 @@ class PurchaseForm extends Component {
       return;
     }
 
-    this.props.setLottoCount($purchaseFormInput.value / 1000);
+    this.props.setLottoCountAndNumbers($purchaseFormInput.value / 1000);
   }
 }
 

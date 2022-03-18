@@ -19,7 +19,7 @@ class PurchaseSection extends Component {
 				</div>
 			</div>
 			<div id="${DOM.purchaseSectionLottoNumbersFlexBox}" class="d-flex flex-wrap">
-				${this.createLottoWithLottoCount(this.props.lottoCount)}
+				${this.createLottoWithLottoNumbers(this.props.allLottoNumbers)}
 			</div>
 		`;
   }
@@ -35,14 +35,15 @@ class PurchaseSection extends Component {
     });
   }
 
-  createLottoWithLottoCount(lottoCount) {
-    return Array.from({ length: lottoCount })
+  createLottoWithLottoNumbers(allLottoNumbers) {
+    return allLottoNumbers
       .map(
-        () => `
+        oneLottoNumbers => `
 				<div class="mx-1 text-4xl">
 					<span class=${DOM.lottoIcon}>🎟️ </span>
-					<span class="${DOM.lottoDetail} text-2xl" style="display: none">15, 22, 42, 32, 15, 64</span>
-				</div>`,
+					<span class="${DOM.lottoDetail} text-2xl" style="display: none">${oneLottoNumbers.join(', ')}</span>
+				</div>
+			`,
       )
       .join('');
   }

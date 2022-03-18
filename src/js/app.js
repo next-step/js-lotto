@@ -3,6 +3,7 @@ import PurchaseSection from './components/PurchaseSection.js';
 import { DOM } from './constants.js';
 import Component from './core/Component.js';
 import { $ } from './utils/dom.js';
+import { pickLottoNumbers } from './utils/index.js';
 
 class LottoApp extends Component {
   template() {
@@ -20,6 +21,7 @@ class LottoApp extends Component {
   setUp() {
     this.state = {
       lottoCount: 0,
+      allLottoNumbers: [],
     };
   }
 
@@ -28,15 +30,26 @@ class LottoApp extends Component {
     const $purchaseSection = $(`#${DOM.purchaseSection}`);
 
     new PurchaseForm($purchaseForm, {
-      setLottoCount: this.setLottoCount.bind(this),
+      setLottoCountAndNumbers: this.setLottoCountAndNumbers.bind(this),
     });
     new PurchaseSection($purchaseSection, {
       lottoCount: this.state.lottoCount,
+      allLottoNumbers: this.state.allLottoNumbers,
     });
   }
 
-  setLottoCount(count) {
-    this.setState({ ...this.state, lottoCount: count });
+  setLottoCountAndNumbers(lottoCount) {
+    const allLottoNumbers = [];
+
+    for (let i = 0; i < lottoCount; i += 1) {
+      allLottoNumbers.push(pickLottoNumbers());
+    }
+
+    this.setState({
+      ...this.state,
+      lottoCount,
+      allLottoNumbers,
+    });
   }
 }
 
