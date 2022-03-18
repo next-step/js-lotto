@@ -6,7 +6,7 @@ describe('Lotto test', () => {
   before(() => {
     const checkKeyBoardEvent = correct => {
       if (correct) {
-        cy.get('[data-amount=input]').type('5000{enter}')
+        cy.get('[data-amount=input]').type('10000{enter}')
       } else {
         cy.get('[data-amount=input]').type('1234{enter}')
       }
@@ -14,7 +14,7 @@ describe('Lotto test', () => {
 
     const checkClickEvent = correct => {
       if (correct) {
-        cy.get('[data-amount=input]').type('5000')
+        cy.get('[data-amount=input]').type('10000')
         cy.get('[data-amount=btn]').click()
       } else {
         cy.get('[data-amount=input]').type('1234')
@@ -28,7 +28,7 @@ describe('Lotto test', () => {
     })
   })
 
-  describe('Input에 관련한 테스트', () => {
+  describe('Lotto 구입 input 테스트', () => {
     before(() => {
       Cypress.Commands.add('checkAlert', () => {
         cy.on('window:alert', (text) => {
@@ -37,7 +37,7 @@ describe('Lotto test', () => {
       })
     })
       
-    describe('금액 단위 체크', () => {
+    describe('금액 단위 체크 테스트', () => {
       it('금액 단위가 1000원 단위가 아니면 alert 창이 나온다 (텍스트는 “로또 구입 금액을 1,000원 단위로 입력해 주세요" 이다)', () => {
         cy.submitValue('enter', false)
         cy.checkAlert()
@@ -70,20 +70,20 @@ describe('Lotto test', () => {
 
   })
 
-  describe('Ticket 관련 테스트', () => {
+  describe('Ticket 테스트', () => {
     beforeEach(() => {
       cy.submitValue('click', true)
     })
 
     it('구매한 티켓에 따라 총 개수 확인.', () => {
-      cy.get('#counted-ticket').should('have.text', '총 5개를 구매하였습니다.')
+      cy.get('#counted-ticket').should('have.text', '총 10개를 구매하였습니다.')
     })
 
     it('구매한 티켓에 티켓 이미지 컴포넌트 생성', () => {
-      cy.get('[data-ticket=list]').find('[data-ticket=image]').should('have.length', 5)
+      cy.get('[data-ticket=list]').find('[data-ticket=image]').should('have.length', 10)
     })
 
-    describe('Ticket toggle 관련 테스트', () => {
+    describe('Ticket toggle 테스트', () => {
       beforeEach(() => {
         cy.get('.switch').click()
       })

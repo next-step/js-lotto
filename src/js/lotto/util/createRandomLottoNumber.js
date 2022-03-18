@@ -1,8 +1,8 @@
-export const createlottoRandomNumber = (count) => {
+export const createRandomLottoNumber = (count) => {
   const lottoRandomNumbers = []
   // 6번 통으로 
   const generateRandomNumbers = () => {
-    return  [ String((Math.floor(Math.random() * 45) + 1)),
+    return  [ (Math.floor(Math.random() * 45) + 1),
         ' ' + (Math.floor(Math.random() * 45) + 1),
         ' ' + (Math.floor(Math.random() * 45) + 1),
         ' ' + (Math.floor(Math.random() * 45) + 1),
@@ -14,9 +14,9 @@ export const createlottoRandomNumber = (count) => {
   for (let i = 0; i < count; i++) {
     while (true) {
       const randomNumbers = generateRandomNumbers()
-      const temp = randomNumbers.map(e => parseInt(e.trim()))
+      const temp = randomNumbers.map(randomNumber => Number(randomNumber))
       const set = new Set(temp)
-      if (temp.length === [...set].length) {
+      if (temp.length === set.size) {
         lottoRandomNumbers.push(randomNumbers)
         break
       }
