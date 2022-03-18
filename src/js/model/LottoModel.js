@@ -34,8 +34,8 @@ export default class LottoModel {
   }
 
   get ticketsHtml() {
-    const getTemplate = (ticket) => `<span class="mx-1 text-4xl ${LOTTO_SECTION_TICKET}" data-lotto-id-${ticket.id} hidden> 🎟️ 
-                        <span class="${LOTTO_SECTION_TICKET__NUMBERS}">${ticket.ticketNumbers}</span>
+    const getTemplate = (ticket) => `<span class="mx-1 text-4xl ${LOTTO_SECTION_TICKET}" data-lotto-id-${ticket.id}> 🎟️ 
+                        <span class="${LOTTO_SECTION_TICKET__NUMBERS}" hidden>${ticket.ticketNumbers}</span>
                       </span></span>`;
     return this.#tickets.map((ticket) => getTemplate(ticket)).join('');
   }
