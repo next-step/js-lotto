@@ -8,6 +8,14 @@ export class Lotto {
   #values;
 
   constructor() {
+    this.#generateAutoLottoNumbers();
+  }
+
+  get value() {
+    return [...this.#values].toString();
+  }
+
+  #generateAutoLottoNumbers() {
     this.#values = new Set();
 
     while (true) {
@@ -17,10 +25,6 @@ export class Lotto {
         break;
       }
     }
-  }
-
-  get value() {
-    return [...this.#values].toString();
   }
 
   static #isMaxCreateLottoNumber(values) {
