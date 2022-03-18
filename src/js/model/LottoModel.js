@@ -1,4 +1,13 @@
 import { LOTTO_SIZE } from '../constants/unit.js';
+import {
+  LOTTO_SECTION,
+  LOTTO_FORM,
+  LOTTO_SECTION__LABEL,
+  LOTTO_SECTION_TICKETS,
+  LOTTO_SECTION_TICKET,
+  LOTTO_SECTION_TICKET__NUMBERS,
+} from '../constants/selectTarget.js';
+
 export default class LottoModel {
   #tickets;
   #quantity;
@@ -17,16 +26,16 @@ export default class LottoModel {
   }
 
   showLottoTicket() {
-    document.querySelector('.lotto-section').hidden = false;
-    document.querySelector('.lotto-form').hidden = false;
-    document.querySelector('.lotto-section__label').textContent = `총 ${this.#quantity}개를 구매하였습니다.`;
-    const position = document.querySelector('.lotto-section-tickets');
+    document.querySelector(`.${LOTTO_SECTION}`).hidden = false;
+    document.querySelector(`.${LOTTO_FORM}`).hidden = false;
+    document.querySelector(`.${LOTTO_SECTION__LABEL}`).textContent = `총 ${this.#quantity}개를 구매하였습니다.`;
+    const position = document.querySelector(`.${LOTTO_SECTION_TICKETS}`);
     position.insertAdjacentHTML('afterBegin', this.ticketsHtml);
   }
 
   get ticketsHtml() {
-    const getTemplate = (ticket) => `<span class="mx-1 text-4xl lotto-section-ticket" data-lotto-id-${ticket.id} hidden> 🎟️ 
-                        <span class="lotto-section-ticket__numbers">${ticket.ticketNumbers}</span>
+    const getTemplate = (ticket) => `<span class="mx-1 text-4xl ${LOTTO_SECTION_TICKET}" data-lotto-id-${ticket.id} hidden> 🎟️ 
+                        <span class="${LOTTO_SECTION_TICKET__NUMBERS}">${ticket.ticketNumbers}</span>
                       </span></span>`;
     return this.#tickets.map((ticket) => getTemplate(ticket)).join('');
   }
