@@ -1,5 +1,9 @@
-const LOTTO_SECTION = 'lotto-section';
-const LOTTO_SECTION__LABEL = 'lotto-section__label';
+import {
+  LOTTO_SECTION,
+  LOTTO_SECTION__LABEL,
+  LOTTO_SECTION_TICKETS,
+  LOTTO_NUMBERS_TOGGLE_BUTTON,
+} from '../constants/selectTarget.js';
 export default class LottoSection {
   #el;
   #state;
@@ -13,18 +17,17 @@ export default class LottoSection {
   }
 
   static getHtml() {
-    return `<section class="mt-9 ${LOTTO_SECTION}">
+    return `<section class="mt-9 ${LOTTO_SECTION}" hidden>
               <div class="d-flex">
-              <label class="flex-auto my-0 lotto-section__label"></label>
+              <label class="flex-auto my-0 ${LOTTO_SECTION__LABEL}"></label>
               <div class="flex-auto d-flex justify-end pr-1">
                   <label class="switch">
-                  <input type="checkbox" class="lotto-numbers-toggle-button" />
+                  <input type="checkbox" class="${LOTTO_NUMBERS_TOGGLE_BUTTON}"/>
                   <span class="text-base font-normal">번호보기</span>
                   </label>
               </div>
               </div>
-              <div class="d-flex flex-wrap lotto-section-tickets">
-              </div>
+              <div class="d-flex flex-wrap ${LOTTO_SECTION_TICKETS}"></div>
             </section>`;
   }
 }
