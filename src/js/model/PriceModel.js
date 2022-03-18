@@ -1,3 +1,4 @@
+import { PRICE_FORM__INPUT } from '../constants/selectTarget.js';
 export default class PriceModel {
   #price;
 
@@ -7,6 +8,7 @@ export default class PriceModel {
 
   updatePrice(newPrice) {
     this.#price = newPrice;
+    document.querySelector(`.${PRICE_FORM__INPUT}`).value = '';
   }
 
   resetPrice() {
