@@ -29,8 +29,9 @@ export default class LottoModel {
     document.querySelector(`.${LOTTO_SECTION}`).hidden = false;
     document.querySelector(`.${LOTTO_FORM}`).hidden = false;
     document.querySelector(`.${LOTTO_SECTION__LABEL}`).textContent = `총 ${this.#quantity}개를 구매하였습니다.`;
-    const position = document.querySelector(`.${LOTTO_SECTION_TICKETS}`);
-    position.insertAdjacentHTML('afterBegin', this.ticketsHtml);
+    const lottoSection = document.querySelector(`.${LOTTO_SECTION_TICKETS}`);
+    lottoSection.innerHTML = '';
+    lottoSection.insertAdjacentHTML('afterBegin', this.ticketsHtml);
   }
 
   get ticketsHtml() {

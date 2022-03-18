@@ -20,7 +20,7 @@ export default class State {
     PURCHASE: (e) => {
       e.preventDefault();
       const inputPrice = Number(document.querySelector(`.${PRICE_FORM__INPUT}`).value);
-      if (inputPrice === '') {
+      if (inputPrice === 0) {
         return alert(ERR_MESSAGE.NONE_PRICE);
       }
       if (inputPrice < LOTTO_PAY_UNIT) {
