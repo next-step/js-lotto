@@ -1,3 +1,8 @@
+const mockData = {
+  typedPrice: 5000,
+  tickets: 5,
+};
+
 describe('로또 미션 Cypress', () => {
   before(() => {
     cy.visit('/');
@@ -22,9 +27,25 @@ describe('로또 미션 Cypress', () => {
     context.only('0. 기본 입력 테스트', () => {
       it('(1) 엔터 동작 테스트', () => {
         cy.get('@priceInput').type(3000).type('{enter}');
+        cy.get('.lotto-form').should('be.visible');
       });
+
       it('(2) 클릭 동작 테스트', () => {
         cy.get('@priceInput').type(3000).type('{enter}');
+        cy.get('.lotto-form').should('be.visible');
+      });
+
+      it('(3) 연속 동작 수행시, input 값 기준으로 티켓 생성 확인 ', () => {
+        cy.get('@priceInput').type(3000).type('{enter}').type('{enter}');
+        cy.get('@purchaseButton').click().click();
+
+        cy.get('.lotto-section')
+          .should('be.visible')
+          .find('.lotto-section-tickets')
+          .find('.lotto-section-ticket')
+          .should(($span) => {
+            expect($span).to.have.length(3);
+          });
       });
     });
 
