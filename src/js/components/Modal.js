@@ -1,15 +1,19 @@
-const $showResultButton = document.querySelector('.open-result-modal-button');
-const $modalClose = document.querySelector('.modal-close');
-const $modal = document.querySelector('.modal');
-const $lottoNumbersToggleButton = document.querySelector('.lotto-numbers-toggle-button');
+import Component from '../core/Component.js';
+import { $ } from '../utils/dom.js';
 
-const onModalShow = () => {
-  $modal.classList.add('open');
-};
+class Modal extends Component {
+  setEvent() {
+    $('.open-result-modal-button').addEventListener('click', this.onModalShow.bind(this));
+    $('.modal-close').addEventListener('click', this.onModalClose.bind(this));
+  }
 
-const onModalClose = () => {
-  $modal.classList.remove('open');
-};
+  onModalShow() {
+    $('.modal').classList.add('open');
+  }
 
-$showResultButton.addEventListener('click', onModalShow);
-$modalClose.addEventListener('click', onModalClose);
+  onModalClose() {
+    $('.modal').classList.remove('open');
+  }
+}
+
+export default Modal;
