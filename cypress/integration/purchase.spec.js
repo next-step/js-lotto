@@ -65,7 +65,14 @@ describe('구매 기능', () => {
       cy.get(`#${DOM.purchaseFormInput}`).type(4000);
       cy.get(`#${DOM.purchaseFormButton}`).click();
       cy.get(`#${DOM.purchaseSectionLottoNumbersToggleButton}`).click({ force: true });
-      cy.get(`.${DOM.lottoDetail}`).invoke('css', 'display').should('equal', 'inline');
+      cy.get(`.${DOM.lottoDetail}`).each($el => {
+        cy.get($el).should('have.css', 'display', 'inline');
+      });
+
+      cy.get(`#${DOM.purchaseSectionLottoNumbersToggleButton}`).click({ force: true });
+      cy.get(`.${DOM.lottoDetail}`).each($el => {
+        cy.get($el).should('have.css', 'display', 'none');
+      });
     });
 
     it('토글이 됐다면 flex의 방향은 column이 되어야합니다', () => {
