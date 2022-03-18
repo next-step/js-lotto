@@ -7,12 +7,13 @@
   "author": "Wie Youngmin <50790145+youngminss@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "test": "yarn run cypress open",
-    "cy:run": "cypress run",
-    "cy:open": "cypress open",
+    "live-server": "live-server ./",
     "prod": "webpack serve --mode=production",
     "dev": "webpack serve --mode=development",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "test": "yarn run cypress open",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open"
   },
   "devDependencies": {
     "@babel/core": "^7.17.7",

@@ -17,6 +17,7 @@ export default function MyLottoList({ initState, onToggle }) {
 
     // 저 아래 innerHTML 처럼 확실한 리렌더링 개념이면 현재 함수에 위치할만 하다 생각한다.
     // 하지만 state 에 따라, 기타 스타일링이나 내부 텍스트 컨텐츠만 바뀌는 작업인데 이를 어떻게 처리해야할까.
+    // 토글 버튼, 총 구매 텍스트도 따로 컴포넌트로 분리할까 ?
     this.$purchasedLottos.style.display = isPreviousPurchase && 'block';
     this.$totalPurchase.textContent = myLottos.length;
     this.$lottoNumbersToggleButton.checked = visiableLottoToggle;

@@ -24,6 +24,8 @@ const CONSTANTS = Object.freeze({
     VISIABLE_LOTTO_TOGGLE_ON: true,
     PRICE_UNIT,
     PRICE_LIMIT,
+    LOTTO_MAX_SIZE: 6,
+    LOTTO_MAX_NUMBER: 45,
   },
 });
 

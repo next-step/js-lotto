@@ -1,7 +1,6 @@
 import { $, SELECTOR } from '../utils/selector.js';
 import { PRICE_UNIT } from '../common/constants.js';
 import validator from '../utils/validation.js';
-import lottoMaker from '../libs/lottoMaker.js';
 
 export default function InputPriceForm({ onSubmit }) {
   this.$inputPriceForm = $(SELECTOR.CLASS.INPUT_PRICE_FORM);
@@ -25,8 +24,7 @@ export default function InputPriceForm({ onSubmit }) {
     }
 
     const coin = Math.floor(price / PRICE_UNIT);
-    const newLottos = lottoMaker(coin);
-    onSubmit(price, newLottos);
+    onSubmit(price, coin);
   };
 
   this.$inputPriceForm.addEventListener('submit', this.purchaseLottos);

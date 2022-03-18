@@ -1,6 +1,7 @@
 import InputPriceForm from './components/inputPriceForm.js';
 import MyLottoList from './components/myLottoList.js';
 import InputLottoNumbersForm from './components/inputLottoNumbersForm.js';
+import LottoMaker from './libs/lottoMaker.js';
 import CONSTANTS from './common/constants.js';
 
 export default function App() {
@@ -15,14 +16,17 @@ export default function App() {
     },
   };
 
+  this.lottoMaker = new LottoMaker();
+
   this.$inputPriceForm = new InputPriceForm({
-    onSubmit: (price, lottos) => {
+    onSubmit: (price, coin) => {
+      const newLottos = this.lottoMaker.run(coin);
       this.setState({
         ...this.state,
         isPreviousPurchase: CONSTANTS.COMMON.IS_PREVIOUS_PURCHASE_ON,
         userInputPrice: price,
         visiableLottoToggle: CONSTANTS.INITIAL.VISIABLE_LOTTO_TOGGLE_OFF,
-        myLottos: lottos,
+        myLottos: newLottos,
       });
     },
   });
