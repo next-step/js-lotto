@@ -1,4 +1,4 @@
-import { createLottoTickets } from "./LottoApp.js";
+import { createLottoTickets, isValidateAmountOfPayment } from "./LottoApp.js";
 
 const $showResultButton = document.querySelector(".open-result-modal-button");
 const $modalClose = document.querySelector(".modal-close");
@@ -22,7 +22,13 @@ const $purchaseButton = document.querySelector("#purchaseButton");
 // * [확인] 버튼 클릭 시, 구매 금액만큼의 로또 티켓들을 생성한다.
 const purchaseLottoTickets = () => {
   const $purchasePrice = Number(document.querySelector("#purchasePrice").value);
-  const numberOfLottoTickets = Math.floor($purchasePrice / 1000);
+
+  // ! 구입 금액 : 1,000원 단위인지 확인
+  if (!isValidateAmountOfPayment($purchasePrice)) {
+    document.querySelector("#purchasePrice").value = "";
+    return;
+  }
+  const numberOfLottoTickets = $purchasePrice / 1000;
   const purchasedLottoTickets = createLottoTickets(numberOfLottoTickets);
 
   // * UI 업데이트 : 구입한 로또 장수 표시

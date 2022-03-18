@@ -29,4 +29,14 @@ const createLottoTickets = numberOfLottoTickets => {
   return lottoTicketsArray;
 };
 
-export { createLottoTickets };
+// * 구매 금액이 1,000원 단위인지 검증하는 함수
+const isValidateAmountOfPayment = payment => {
+  if (!(payment % 1000 === 0)) {
+    alert("구입 금액은 1,000원 단위로 입력해 주세요.");
+    return false;
+  }
+
+  return true;
+};
+
+export { createLottoTickets, isValidateAmountOfPayment };
