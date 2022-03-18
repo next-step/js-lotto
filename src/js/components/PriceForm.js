@@ -1,6 +1,4 @@
-const PRICE_FORM = 'price-form';
-const PRICE_FORM__INPUT = 'price-form__input';
-const PRICE_FORM__BUTTON = 'price-form__button';
+import { PRICE_FORM, PRICE_FORM__INPUT, PRICE_FORM__BUTTON } from '../constants/selectTarget.js';
 
 import PriceFormButton from './PriceFormButton.js';
 export default class PriceForm {

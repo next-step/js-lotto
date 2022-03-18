@@ -4,17 +4,17 @@ import LottoSection from './components/LottoSection.js';
 import LottoForm from './components/LottoForm.js';
 import ResultModal from './components/ResultModal.js';
 
-const LOTTO_SECTION = 'lotto-section';
-
 // models
 import PriceModel from './model/PriceModel.js';
 import LottoModel from './model/LottoModel.js';
 import State from './model/State.js';
+
 //classNames
-const PRICE_FORM = 'price-form';
+import { PRICE_FORM, LOTTO_SECTION } from './constants/selectTarget.js';
 
 function App($target) {
   // model
+  const state = new State();
   const priceModel = new PriceModel();
 
   // TODO: components
@@ -37,8 +37,8 @@ function App($target) {
     ${resultModal.getHtml()}
     `.trim();
 
-  new PriceForm($app.querySelector(`.${PRICE_FORM}`), priceModel);
-  new LottoSection($app.querySelector(`.${LOTTO_SECTION}`), priceModel);
+  new PriceForm($app.querySelector(`.${PRICE_FORM}`), state.priceModel);
+  new LottoSection($app.querySelector(`.${LOTTO_SECTION}`), state.priceModel);
 
   $target.replaceWith($app);
 }

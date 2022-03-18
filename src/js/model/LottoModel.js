@@ -1,4 +1,4 @@
-const LOTTO_SIZE = 6;
+import { LOTTO_SIZE } from '../constants/unit.js';
 
 export default class LottoModel {
   #tickets;
@@ -23,11 +23,20 @@ export default class LottoModel {
   }
 
   get ticketsHtml() {
-    const getTemplate = (ticket) => `<span class="mx-1 text-4xl lotto-section-ticket" data-lotto-id-${ticket.id}> 🎟️ 
+    const getTemplate = (ticket) => `<span class="mx-1 text-4xl lotto-section-ticket" data-lotto-id-${ticket.id} hidden> 🎟️ 
                       <span class="lotto-section-ticket__numbers">${ticket.ticketNumbers}</span>
                       </span></span>`;
     return this.#tickets.map((ticket) => getTemplate(ticket)).join('');
   }
+
+  eventHandler = {
+    MAKE_VISIBLE: () => {
+      document.querySelector('.lotto-section').hidden = false;
+      document.querySelector('.lotto-form').hidden = false;
+    },
+    SHOW_QUANTITY: () => {},
+    ISSUE_TICKET: () => {},
+  };
 }
 
 class LottoTicket {
@@ -36,7 +45,6 @@ class LottoTicket {
   #isAuto;
 
   constructor(i) {
-    // debugger;
     this.#id = i || 0;
     this.#ticketNumbers = this.randomGenerator();
     this.#isAuto = true;

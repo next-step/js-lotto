@@ -1,4 +1,4 @@
-const LOTTO_FORM = 'lotto-form';
+import { LOTTO_FORM } from '../constants/selectTarget.js';
 
 export default class LottoForm {
   constructor() {}
