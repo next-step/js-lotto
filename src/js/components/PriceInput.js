@@ -31,7 +31,7 @@ export class PriceInput {
     const input = document.querySelector(".price-input");
     const inputNumber = Number(input.value);
     if (!isNumber(inputNumber) || !canBeDividedBy1000(inputNumber)) {
-      window.alert(`유효한 숫자를 입력해주세요.`);
+      window.alert(`천 원 단위로 금액을 입력해주세요. `);
       input.value = "";
       return;
     }

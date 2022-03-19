@@ -1,4 +1,5 @@
 import { PriceInput } from "./components/PriceInput.js";
+import { PurchaseDetail } from "./components/PurchaseDetail.js";
 
 class App {
   #showResultButton = document.querySelector(".open-result-modal-button");
@@ -25,6 +26,8 @@ class App {
     this.#setEvents();
     const priceInputElement = document.querySelector("#price-input");
     new PriceInput(priceInputElement);
+    const purchaseDetailElement = document.querySelector("#purchase-detail");
+    new PurchaseDetail(purchaseDetailElement);
   }
 }
 
