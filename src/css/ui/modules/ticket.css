@@ -1,0 +1,16 @@
+#lotto-icons {
+  list-style: none;
+  padding: 0px;
+}
+
+#lotto-icons > li {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.hidden {
+  display: hidden;
+}
