@@ -145,6 +145,29 @@ describe('로또 미션 Cypress', () => {
       it('(5) 로또 티켓 구매 이후 입력 금액을 초기화 된다.', () => {
         cy.get('@priceInput').should('have.value', ''); //
       });
+
+      it.only('(6) 로또 티켓 구매 이후, 재구매시 로또는 누적된다.', () => {
+        //purchase 3 time
+        cy.get('@priceInput').type(mockData.typedPrice);
+        cy.get('@purchaseButton').click();
+        cy.get('@priceInput').type(mockData.typedPrice);
+        cy.get('@purchaseButton').click();
+
+        cy.get('.lotto-section')
+          .should('be.visible')
+          .find('.lotto-section__label')
+          .should(($label) => {
+            expect($label, 'text content').to.have.text(`총 ${mockData.tickets * 3}개를 구매하였습니다.`);
+          });
+
+        cy.get('.lotto-section')
+          .should('be.visible')
+          .find('.lotto-section-tickets')
+          .find('.lotto-section-ticket')
+          .should(($span) => {
+            expect($span).to.have.length(mockData.tickets * 3);
+          });
+      });
     });
   });
 });
