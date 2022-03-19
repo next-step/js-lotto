@@ -6,17 +6,19 @@ const toggleInitialStyle = ($el, count) => {
   $el.disabled = count === 0;
 };
 
-const toggleStyle = ($el, show) => {
+const toggleStyle = ($app, show) => {
+  const $el = $(CLASS.LOTTO_DETAIL_LIST, $app);
   const key = show ? 'add' : 'remove';
   $el.classList[key]('flex-column');
 };
 
-const onToggle = ($toggleNumbers, $clonedApp) => {
-  const onToggle = ({ target }) => {
-    emit('@toggle', target.checked, $clonedApp);
+const onToggle = ($app) => {
+  const $toggleNumbers = $(CLASS.TOGGLE_NUMBERS, $app);
+  const toggle = ({ target }) => {
+    emit('@toggle', target.checked, $app);
   };
 
-  $toggleNumbers.addEventListener('change', onToggle);
+  $toggleNumbers.addEventListener('change', toggle);
 };
 
 const render = ($el, { size: count }) => {

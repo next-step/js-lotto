@@ -2,7 +2,6 @@ import { CLASS } from './const/className.js';
 import {
   $,
   onCurry,
-  $Curry,
   rendererCurry,
   eventBinderCurry,
   replaceChild,
@@ -24,29 +23,23 @@ const initialState = {
 const App = () => {
   const $app = $(CLASS.APP);
   const $clonedApp = $app.cloneNode(true);
-  const $find = $Curry($clonedApp);
 
-  const $moneyForm = $find(CLASS.MONEY_FORM);
-  const $lottoDetailList = $find(CLASS.LOTTO_DETAIL_LIST);
-  const $toggleNumbers = $find(CLASS.TOGGLE_NUMBERS);
-
-  const renderer = rendererCurry(
-    App,
-    [$clonedApp, LottoDetailHeader],
-    [$lottoDetailList, LottoDetailList]
-  );
+  const renderer = rendererCurry(App, $clonedApp, [
+    LottoDetailHeader,
+    LottoDetailList,
+  ]);
 
   const state = stateWrapper(initialState, renderer);
 
   const eventBinder = eventBinderCurry($clonedApp);
-  eventBinder([$moneyForm, MoneyForm], [$toggleNumbers, LottoDetailHeader]);
+  eventBinder([MoneyForm, LottoDetailHeader]);
 
   const on = onCurry($clonedApp);
   on('@buy', ({ detail }) => {
     state.lotto = buy(detail, state);
   });
   on('@toggle', ({ detail }) =>
-    LottoDetailHeader.toggleStyle($lottoDetailList, detail)
+    LottoDetailHeader.toggleStyle($clonedApp, detail)
   );
 
   return replaceChild($app, $clonedApp);

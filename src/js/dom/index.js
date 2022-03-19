@@ -3,26 +3,18 @@ export const replaceChild = ($el, $clonedEl) => {
   return $clonedEl;
 };
 
-export const $Curry = ($container) => (selector) => $(selector, $container);
-
 export const $ = (selector, $container = document) =>
   $container.querySelector(selector);
 
-export const rendererCurry =
-  (App, ...components) =>
-  (state) => {
-    components.forEach(([$el, component]) => {
-      component?.render?.($el, state);
-    });
-    App();
-  };
+export const rendererCurry = (App, $app, components) => (state) => {
+  components.forEach((component) => {
+    component?.render?.($app, state);
+  });
+  App();
+};
 
-export const eventBinderCurry =
-  ($clonedApp) =>
-  (...components) =>
-    components.forEach(([$el, component]) =>
-      component?.bindEvents?.($el, $clonedApp)
-    );
+export const eventBinderCurry = ($app) => (components) =>
+  components.forEach((component) => component?.bindEvents?.($app));
 
 export const onCurry =
   ($app) =>

@@ -1,4 +1,5 @@
-import { toggleClassName, replaceChild } from '../dom/index.js';
+import { CLASS } from '../const/className.js';
+import { toggleClassName, replaceChild, $ } from '../dom/index.js';
 
 const getLottoTemplate = (lotto) => `
   <li>
@@ -6,7 +7,8 @@ const getLottoTemplate = (lotto) => `
     <span class="lotto-detail">${lotto}</span>
   </li>`;
 
-const render = ($el, { numbers }) => {
+const render = ($app, { numbers }) => {
+  const $el = $(CLASS.LOTTO_DETAIL_LIST, $app);
   const $clonedList = $el.cloneNode();
 
   $clonedList.insertAdjacentHTML(
