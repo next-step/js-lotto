@@ -1,5 +1,5 @@
-import { LOTTO_PRICE } from "../constant";
+import { LOTTO_PRICE } from "../constant/index.js";
 
-export const getLottoQuantityByInputMoney = input => {
-  return Math.floor(input / LOTTO_PRICE);
+export const getLottoQuantityByTotalAmount = amount => {
+  return Math.floor(amount / LOTTO_PRICE);
 };
