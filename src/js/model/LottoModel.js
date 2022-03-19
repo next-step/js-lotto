@@ -11,16 +11,23 @@ export default class LottoModel {
   #tickets;
   #quantity;
   #winningNumbers;
-  #isShow;
 
   constructor(quantity) {
+    this.createLotto(quantity);
+    this.showLottoTicket();
+  }
+
+  createLotto(quantity) {
     //init Data
     this.#quantity = quantity;
     this.#tickets = Array.from(Array(this.#quantity), (_, i) => new LottoTicket((i += 1)));
     this.#winningNumbers = new LottoWinningNumbers();
-    this.#isShow = false;
+  }
 
-    // update view
+  addLotto(quantity) {
+    this.#quantity += quantity;
+    const newTickets = Array.from(Array(quantity), (_, i) => new LottoTicket((i += 1)));
+    this.#tickets = [...this.#tickets, ...newTickets];
     this.showLottoTicket();
   }
 
@@ -28,7 +35,9 @@ export default class LottoModel {
     document.querySelector(`.${LOTTO_SECTION}`).hidden = false;
     document.querySelector(`.${LOTTO_FORM}`).hidden = false;
     document.querySelector(`.${LOTTO_SECTION__LABEL}`).textContent = `총 ${this.#quantity}개를 구매하였습니다.`;
+
     const ticketPosition = document.querySelector(`.${LOTTO_SECTION_TICKETS}`);
+    if (ticketPosition.childNodes.length > 0) ticketPosition.replaceChildren();
     ticketPosition.insertAdjacentHTML('afterBegin', this.ticketsHtml);
   }
 
@@ -46,7 +55,7 @@ class LottoTicket {
   #isAuto;
 
   constructor(i) {
-    this.#id = i || 0;
+    this.#id = Date.now() + i || 0;
     this.#ticketNumbers = this.randomGenerator();
     this.#isAuto = true;
   }

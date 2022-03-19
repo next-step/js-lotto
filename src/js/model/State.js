@@ -40,7 +40,11 @@ export default class State {
 
   generateLotto(price) {
     const quantity = price / LOTTO_PAY_UNIT;
-    this.#lottoModel = new LottoModel(quantity);
+    if (!this.#lottoModel) {
+      this.#lottoModel = new LottoModel(quantity);
+      return;
+    }
+    this.#lottoModel.addLotto(quantity);
   }
 
   get priceModel() {
