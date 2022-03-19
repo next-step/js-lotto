@@ -1,6 +1,14 @@
 import { CLASS } from './const/className.js';
 import { $, on, emit, $Curry } from './dom/index.js';
 import { buy } from './service/index.js';
+import stateWrapper from './store/stateWrapper.js';
+
+const initialState = {
+  lotto: {
+    numbers: [],
+    size: 0,
+  },
+};
 
 const onSubmitEvent = ($moneyForm, $clonedApp) => {
   const onSubmitMoney = (event) => {
@@ -14,7 +22,7 @@ const onSubmitEvent = ($moneyForm, $clonedApp) => {
 
 const onToggleEvent = ($toggleNumbers, $clonedApp) => {
   const onToggle = ({ target }) => {
-    emit('@toggle-numbers', target.checked, $clonedApp);
+    emit('@toggle', target.checked, $clonedApp);
   };
 
   $toggleNumbers.addEventListener('change', onToggle);
@@ -24,6 +32,43 @@ const renderer =
   ($clonedApp) =>
   (...components) =>
     components.forEach(([$el, handler]) => handler($el, $clonedApp));
+
+const renderCount = ($el, count) => {
+  $el.textContent = `총 ${count}개를 구매하였습니다.`;
+};
+
+const renderLottoList = ($el, numbers) => {
+  const $clonedList = $el.cloneNode();
+  $clonedList.insertAdjacentHTML(
+    'afterBegin',
+    numbers
+      .map(
+        (lotto) => `
+          <li>
+            <span class="mx-1 text-4xl lotto-icon">🎟️ </span>
+            <span class="lotto-detail">${lotto}</span>
+          </li>`
+      )
+      .join('')
+  );
+  $clonedList.classList.remove('flex-column');
+  $el.parentNode.replaceChild($clonedList, $el);
+};
+
+const handleToggleInitialStyle = ($el, count) => {
+  $el.checked = false;
+  $el.disabled = count === 0;
+};
+
+const handleToggleStyle = ($el, show) => {
+  const key = show ? 'add' : 'remove';
+  $el.classList[key]('flex-column');
+};
+
+const onCurry =
+  ($app) =>
+  (...events) =>
+    on(...events, $app);
 
 const App = () => {
   const $app = $(CLASS.APP);
@@ -37,43 +82,22 @@ const App = () => {
   const render = renderer($clonedApp);
   render([$moneyForm, onSubmitEvent], [$toggleNumbers, onToggleEvent]);
 
-  on(
-    '@buy',
-    ({ detail }) => {
-      const { numbers, size } = buy(detail);
-      $lottoDetailCount.textContent = `총 ${size}개를 구매하였습니다.`;
-      const $clonedList = $lottoDetailList.cloneNode();
-      $clonedList.insertAdjacentHTML(
-        'afterBegin',
-        numbers
-          .map(
-            (lotto) => `
-          <li>
-            <span class="mx-1 text-4xl lotto-icon">🎟️ </span>
-            <span class="lotto-detail">${lotto}</span>
-          </li>`
-          )
-          .join('')
-      );
-      $lottoDetailList.parentNode.replaceChild($clonedList, $lottoDetailList);
+  const state = stateWrapper(initialState, () => {
+    const { size, numbers } = state.lotto;
 
-      $toggleNumbers.checked = false;
-      $toggleNumbers.disabled = size === 0;
-      $clonedList.classList.remove('flex-column');
+    renderCount($lottoDetailCount, size);
+    renderLottoList($lottoDetailList, numbers);
+    handleToggleInitialStyle($toggleNumbers, size);
 
-      App();
-    },
-    $clonedApp
-  );
+    App();
+  });
 
-  on(
-    '@toggle-numbers',
-    ({ detail }) => {
-      const key = detail ? 'add' : 'remove';
-      $lottoDetailList.classList[key]('flex-column');
-    },
-    $clonedApp
-  );
+  const on = onCurry($clonedApp);
+
+  on('@buy', ({ detail }) => (state.lotto = buy(detail)));
+
+  on('@toggle', ({ detail }) => handleToggleStyle($lottoDetailList, detail));
+
   return $app.parentNode.replaceChild($clonedApp, $app);
 };
 
