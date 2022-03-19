@@ -42,7 +42,7 @@ export class LottoPurchase {
                     min="1000"
                     max="1000000"
                 />
-                <button type="button" id="purchase-button" class="btn btn-cyan">확인</button>
+                <button type="button" data-test="purchase-button" id="purchase-button" class="btn btn-cyan">확인</button>
             </div>
         </form>`;
     }
@@ -52,18 +52,15 @@ export class LottoPurchase {
     }
 
     onPurchaseClick() {
-        this.onLottoPurchase(this.getLottoList());
+        const purchasePriceInput = this.$purchasePriceInput.value;
+
+        if(this.checkPurchasePrice(purchasePriceInput)) {
+            this.onLottoPurchase(this.getLottoList(purchasePriceInput));
+        }        
     }
 
-    getLottoList() {
-        const purchasePriceInput = this.$purchasePriceInput.value;
-        let lottoTicketList = [];
-
-        if (this.checkPurchasePrice(purchasePriceInput)) {
-            lottoTicketList = this.getLottoTickets(this.getLottoAmount(purchasePriceInput));
-        }
-
-        return lottoTicketList;
+    getLottoList(purchasePriceInput) {
+        return this.getLottoTickets(this.getLottoAmount(purchasePriceInput));
     }
 
     getLottoAmount(price) {
