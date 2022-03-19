@@ -1,15 +1,8 @@
 import { CLASS } from './const/className.js';
-import { $, on, emit } from './dom/index.js';
+import { $, on, emit, $Curry } from './dom/index.js';
 import { buy } from './service/index.js';
 
-const App = () => {
-  const $app = $(CLASS.APP);
-  const $clonedApp = $app.cloneNode(true);
-  const $moneyForm = $(CLASS.MONEY_FORM, $clonedApp);
-  const $lottoDetailCount = $(CLASS.LOTTO_COUNT, $clonedApp);
-  const $lottoDetailList = $(CLASS.LOTTO_DETAIL_LIST, $clonedApp);
-  const $toggleNumbers = $(CLASS.TOGGLE_NUMBERS, $clonedApp);
-
+const onSubmitEvent = ($moneyForm, $clonedApp) => {
   const onSubmitMoney = (event) => {
     event.preventDefault();
     const money = Number($(CLASS.MONEY, $moneyForm)?.value ?? 0);
@@ -17,12 +10,32 @@ const App = () => {
   };
 
   $moneyForm.addEventListener('submit', onSubmitMoney);
+};
 
+const onToggleEvent = ($toggleNumbers, $clonedApp) => {
   const onToggle = ({ target }) => {
     emit('@toggle-numbers', target.checked, $clonedApp);
   };
 
   $toggleNumbers.addEventListener('change', onToggle);
+};
+
+const renderer =
+  ($clonedApp) =>
+  (...components) =>
+    components.forEach(([$el, handler]) => handler($el, $clonedApp));
+
+const App = () => {
+  const $app = $(CLASS.APP);
+  const $clonedApp = $app.cloneNode(true);
+  const $find = $Curry($clonedApp);
+  const $moneyForm = $find(CLASS.MONEY_FORM);
+  const $lottoDetailCount = $find(CLASS.LOTTO_COUNT);
+  const $lottoDetailList = $find(CLASS.LOTTO_DETAIL_LIST);
+  const $toggleNumbers = $find(CLASS.TOGGLE_NUMBERS);
+
+  const render = renderer($clonedApp);
+  render([$moneyForm, onSubmitEvent], [$toggleNumbers, onToggleEvent]);
 
   on(
     '@buy',
