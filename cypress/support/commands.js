@@ -23,3 +23,47 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import { CLASS } from '../../src/js/const/className.js';
+import { MIN_MONEY_UNIT } from '../../src/js/const/constant.js';
+import { buy } from '../../src/js/service/index.js';
+
+Cypress.Commands.add('alert', (alertMessage) => {
+  cy.on('window:alert', (msg) => expect(msg).to.equal(alertMessage));
+});
+
+Cypress.Commands.add('submitMoney', (money) => {
+  cy.get(CLASS.MONEY_FORM).find(CLASS.MONEY).clear().type(money);
+  cy.get(CLASS.MONEY_FORM).submit();
+  return cy;
+});
+
+Cypress.Commands.add('issueLottos', () => {
+  cy.get(CLASS.MONEY_FORM)
+    .find(CLASS.MONEY)
+    .invoke('val')
+    .then((money) => {
+      const amount = money / MIN_MONEY_UNIT;
+
+      buy(money, {
+        lotto: {
+          numbers: [],
+          size: 0,
+        },
+      });
+
+      cy.get(CLASS.LOTTO_DETAIL_LIST).children().should('have.length', amount);
+    });
+});
+
+Cypress.Commands.add('toggleNumbers', (checked) => {
+  if (checked) {
+    cy.get(CLASS.TOGGLE_NUMBERS).check({ force: true });
+    cy.get(CLASS.LOTTO_DETAIL_LIST).then(($el) => {
+      expect($el).to.have.class('flex-column');
+    });
+  } else {
+    cy.get(CLASS.LOTTO_DETAIL_LIST).then(($el) => {
+      expect($el).not.to.have.class('flex-column');
+    });
+  }
+});
