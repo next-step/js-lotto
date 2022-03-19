@@ -1,0 +1,17 @@
+.lotto-list {
+  list-style: none;
+  padding: 0
+}
+
+.lotto-list li {
+  display: inline-flex;
+  align-items: center
+}
+
+.lotto-list li span.lotto-detail {
+  display: none;
+}
+
+.lotto-list.flex-column li span.lotto-detail {
+  display: block !important;
+}
