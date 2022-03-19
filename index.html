@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./src/css/index.css" />
   </head>
   <body>
-    <div id="app" class="p-3">
+    <div id="app" class="p-3 js-app">
       <div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
@@ -25,22 +25,21 @@
             </div>
           </form>
           <section class="mt-9 js-lotto-detail">
-            <div class="d-flex js-lotto-detail-header">
-              <label class="flex-auto my-0">총 5개를 구매하였습니다.</label>
+            <div class="d-flex">
+              <label class="flex-auto my-0 js-lotto-count"
+                >총 0개를 구매하였습니다.</label
+              >
               <div class="flex-auto d-flex justify-end pr-1">
                 <label class="switch">
-                  <input type="checkbox" class="lotto-numbers-toggle-button" />
+                  <input
+                    type="checkbox"
+                    class="lotto-numbers-toggle-button js-toggle-numbers"
+                  />
                   <span class="text-base font-normal">번호보기</span>
                 </label>
               </div>
             </div>
-            <ul class="d-flex flex-wrap js-lotto-detail-list">
-              <li class="mx-1 text-4xl">🎟️</li>
-              <li class="mx-1 text-4xl">🎟️</li>
-              <li class="mx-1 text-4xl">🎟️</li>
-              <li class="mx-1 text-4xl">🎟️</li>
-              <li class="mx-1 text-4xl">🎟️</li>
-            </ul>
+            <ul class="d-flex flex-wrap lotto-list js-lotto-detail-list"></ul>
           </section>
           <form class="mt-9 js-winning-form">
             <label class="flex-auto d-inline-block mb-3"
@@ -49,28 +48,34 @@
             <div class="d-flex">
               <div>
                 <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
-                <div>
+                <div class="winning-number-container">
                   <input
+                    required
                     type="number"
                     class="winning-number mx-1 text-center"
                   />
                   <input
+                    required
                     type="number"
                     class="winning-number mx-1 text-center"
                   />
                   <input
+                    required
                     type="number"
                     class="winning-number mx-1 text-center"
                   />
                   <input
+                    required
                     type="number"
                     class="winning-number mx-1 text-center"
                   />
                   <input
+                    required
                     type="number"
                     class="winning-number mx-1 text-center"
                   />
                   <input
+                    required
                     type="number"
                     class="winning-number mx-1 text-center"
                   />
@@ -92,7 +97,6 @@
           </form>
         </div>
       </div>
-
       <div class="modal">
         <div class="modal-inner p-10">
           <div class="modal-close">
