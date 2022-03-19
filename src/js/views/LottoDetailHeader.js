@@ -1,4 +1,5 @@
-import { emit } from '../dom/index.js';
+import { CLASS } from '../const/className.js';
+import { emit, $ } from '../dom/index.js';
 
 const toggleInitialStyle = ($el, count) => {
   $el.checked = false;
@@ -18,13 +19,18 @@ const onToggle = ($toggleNumbers, $clonedApp) => {
   $toggleNumbers.addEventListener('change', onToggle);
 };
 
-const render = ($el, count) => {
-  $el.textContent = `총 ${count}개를 구매하였습니다.`;
+const render = ($el, { size: count }) => {
+  const $lottoDetailCount = $(CLASS.LOTTO_COUNT, $el);
+  const $toggleNumbers = $(CLASS.TOGGLE_NUMBERS, $el);
+  toggleInitialStyle($toggleNumbers, count);
+  $lottoDetailCount.textContent = `총 ${count}개를 구매하였습니다.`;
 };
 
 export default {
   toggleInitialStyle,
   toggleStyle,
-  onToggle,
+  bindEvents(...args) {
+    onToggle(...args);
+  },
   render,
 };

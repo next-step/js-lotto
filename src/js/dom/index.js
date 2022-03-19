@@ -1,12 +1,28 @@
-export const $ = (selector, $container = document) =>
-  $container.querySelector(selector);
+export const replaceChild = ($el, $clonedEl) => {
+  $el.parentNode.replaceChild($clonedEl, $el);
+  return $clonedEl;
+};
 
 export const $Curry = ($container) => (selector) => $(selector, $container);
 
-export const renderer =
+export const $ = (selector, $container = document) =>
+  $container.querySelector(selector);
+
+export const rendererCurry =
+  (App, ...components) =>
+  (state) => {
+    components.forEach(([$el, component]) => {
+      component?.render?.($el, state);
+    });
+    App();
+  };
+
+export const eventBinderCurry =
   ($clonedApp) =>
   (...components) =>
-    components.forEach(([$el, handler]) => handler($el, $clonedApp));
+    components.forEach(([$el, component]) =>
+      component?.bindEvents?.($el, $clonedApp)
+    );
 
 export const onCurry =
   ($app) =>
@@ -27,4 +43,8 @@ export const emit = (event, data, $container = document) => {
   );
 
   return $container;
+};
+
+export const toggleClassName = ($el, type, className) => {
+  $el.classList[type](className);
 };

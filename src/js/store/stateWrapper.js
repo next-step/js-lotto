@@ -5,7 +5,7 @@ const stateWrapper = (targetState, renderer) => {
     },
     set(...props) {
       const ret = Reflect.set(...props);
-      renderer();
+      renderer(Reflect.get(...props));
       return ret;
     },
   };

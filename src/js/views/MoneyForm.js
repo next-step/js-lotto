@@ -12,5 +12,7 @@ const onSubmit = ($moneyForm, $clonedApp) => {
 };
 
 export default {
-  onSubmit,
+  bindEvents(...args) {
+    onSubmit(...args);
+  },
 };

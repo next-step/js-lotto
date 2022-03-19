@@ -1,8 +1,8 @@
-// import { CLASS } from '../const/className.js';
-// import { emit, $ } from '../dom/index.js';
+import { toggleClassName, replaceChild } from '../dom/index.js';
 
-const render = ($el, numbers) => {
+const render = ($el, { numbers }) => {
   const $clonedList = $el.cloneNode();
+
   $clonedList.insertAdjacentHTML(
     'afterBegin',
     numbers
@@ -15,8 +15,9 @@ const render = ($el, numbers) => {
       )
       .join('')
   );
-  $clonedList.classList.remove('flex-column');
-  $el.parentNode.replaceChild($clonedList, $el);
+
+  toggleClassName($clonedList, 'remove', 'flex-column');
+  replaceChild($el, $clonedList);
 };
 
 export default {
