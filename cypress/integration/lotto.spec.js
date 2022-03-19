@@ -2,7 +2,7 @@
  * <테스트 요구사항>
  * 1. 로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.
  *   - 사용자가 입력하는 데이터가 input창에 나타나야 한다.
- *   - 구매내역을 보여주는 section은 나타나지 않아야 한다.
+ *   - 구매내역을 보여주는 section과 당첨번호를 입력하는 form은 나타나지 않아야 한다.
  *   - 확인 버튼을 누르면 input에 입력된 데이터가 있는지를 확인한다.
  *     a. 없을 경우 '이 입력란을 작성하세요.'라는 메세지가 input 하단에 나타난다.
  *     b. 있을 경우 구매내역을 보여주는 section을 노출한다.
@@ -24,7 +24,10 @@
         cy.get('#purchace-amount-input').should('be.visible');
       })
 
-      it('최초에 구매내역이 보여지는 DOM은 나타나지 않아야 한다.', () => {
+      it('최초에 구매내역과 당첨번호 입력란이 보여지는 DOM은 나타나지 않아야 한다.', () => {
         cy.get('section').should('not.be.visible');
+        cy.get('#winning-number-input-form').should('not.be.visible');
       })
+
+
     })
