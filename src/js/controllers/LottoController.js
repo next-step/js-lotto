@@ -1,9 +1,10 @@
 import LottoTicketList from "../models/LottoTicketList/index.js";
-
+import { getLottoQuantityByTotalAmount } from "../utils/calculator.js";
 class LottoController {
   constructor() {
     this.init();
   }
+
   init() {
     this.addEvent();
   }
@@ -14,8 +15,9 @@ class LottoController {
   }
 
   handleBuyButtonClick() {
-    const $inputMoney = document.querySelector("#input-money");
-    const inputMoney = $inputMoney.value;
+    const $totalAmount = document.querySelector("#total-amount");
+    const quantity = getLottoQuantityByTotalAmount(Number($totalAmount.value));
+    const lottoTicketList = new LottoTicketList({ quantity: quantity });
   }
 }
 
