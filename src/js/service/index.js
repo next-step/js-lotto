@@ -11,11 +11,11 @@ const validateMoney = (money) => {
   return money;
 };
 
-export const buy = (money) => {
-  const either = validateCurry(() => validateMoney(money));
+export const buy = (money, { lotto }) => {
+  const either = validateCurry(() => validateMoney(money), lotto);
   const amount = money / 1000;
   return either(() => ({
-    numbers: range(amount, () => issueLottos(6, 45)) ?? [],
-    size: amount ?? 0,
+    numbers: range(amount, () => issueLottos(6, 45)),
+    size: amount,
   }));
 };

@@ -4,11 +4,12 @@ export const range = (number, callback = null) =>
 export const size = (array = []) => array.length;
 
 export const validateCurry =
-  (validate) =>
+  (validate, initialState) =>
   (success, fail = alert) => {
     try {
       return success(validate());
     } catch (message) {
       fail(message);
+      return initialState;
     }
   };
