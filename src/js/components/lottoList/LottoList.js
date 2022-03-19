@@ -1,30 +1,25 @@
-const LottoList = ({ numbers }) => {
-  if (numbers.length === 0) return '';
-  return `
-  <div class="d-flex">
-    <label class="flex-auto my-0">총 <span data-props="count-span">${
-      numbers.length
-    }</span>개를 구매하였습니다.</label>
-    <div class="flex-auto d-flex justify-end pr-1">
-      <label class="switch">
-        <input type="checkbox" data-props="toggle-button" />
-        <span class="text-base font-normal">번호보기</span>
-      </label>
-    </div>
-  </div>
-  <ul class="d-flex flex-wrap lotto-list">
-    ${numbers
-      .map(
-        lotto => `
-    <li class="mx-1 text-4xl lotto-numbers-wrapper">
-      <span>🎟️ </span>
-      <span class="lotto-numbers d-none">${lotto.join(', ')}</span>
-    </li>
-    `,
-      )
-      .join('')}
-  </ul>
-  `;
+import { $, $all } from '../../helper/index.js';
+import LottoListTemplate from './LottoListTemplate.js';
+import LottoNumbers from './LottoNumbers.js';
+
+const LottoList = count => {
+  const lottoNumbers = LottoNumbers();
+  const $template = LottoListTemplate({ numbers: lottoNumbers.purchasesLotto(count) });
+
+  $template.addEventListener('change', ({ target }) => {
+    if (!target.matches('[data-props="toggle-button"]')) return;
+    const isChecked = target.checked;
+    if (isChecked) {
+      $all('.lotto-numbers').forEach(item => item.classList.remove('d-none'));
+      $('.lotto-list').classList.add('flex-col');
+      return;
+    }
+
+    $all('.lotto-numbers').forEach(item => item.classList.add('d-none'));
+    $('.lotto-list').classList.remove('flex-col');
+  });
+
+  return $template;
 };
 
 export default LottoList;
