@@ -1,21 +1,30 @@
 import { validateCurry, range } from '../utils/index.js';
 import { issueLottos } from '../business/index.js';
+import {
+  MIN_MONEY_UNIT,
+  PICKED_LOTTO_NUMBER_COUNT,
+  RANGE_FOR_RANDOM_NUMBERS,
+  alertMessage,
+} from '../const/constant.js';
 
 const validateMoney = (money) => {
-  if (!money) throw '금액을 입력하세요.';
+  if (!money) throw alertMessage.PLZ_INSERT_MONEY;
 
-  if (money < 1000) throw '복권 최소 금액은 1000원 입니다.';
+  if (money < MIN_MONEY_UNIT)
+    throw alertMessage.ALERT_MIN_AMOUNT_TO_ISSUE_LOTTO;
 
-  if (money % 1000) throw '금액 단위를 확인하세요.';
+  if (money % MIN_MONEY_UNIT) throw alertMessage.PLZ_CHECK_AMOUNT;
 
   return money;
 };
 
 export const buy = (money, { lotto }) => {
   const either = validateCurry(() => validateMoney(money), lotto);
-  const amount = money / 1000;
+  const amount = money / MIN_MONEY_UNIT;
   return either(() => ({
-    numbers: range(amount, () => issueLottos(6, 45)),
+    numbers: range(amount, () =>
+      issueLottos(PICKED_LOTTO_NUMBER_COUNT, RANGE_FOR_RANDOM_NUMBERS)
+    ),
     size: amount,
   }));
 };

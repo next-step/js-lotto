@@ -42,7 +42,9 @@ const App = () => {
   );
 
   const on = onCurry($clonedApp);
-  on('@buy', ({ detail }) => (state.lotto = buy(detail, initialState)));
+  on('@buy', ({ detail }) => {
+    state.lotto = buy(detail, state);
+  });
   on('@toggle', ({ detail }) =>
     LottoDetailHeader.toggleStyle($lottoDetailList, detail)
   );

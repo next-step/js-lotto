@@ -1,3 +1,4 @@
+import { ONE, ZERO } from '../const/constant.js';
 import { range } from '../utils/index.js';
 
 const swap = (maxIdx, i, arr) => {
@@ -10,8 +11,8 @@ const swap = (maxIdx, i, arr) => {
 };
 
 const generateRandomNumbers = (max) => {
-  const maxIdx = max - 1;
-  const candidates = range(max, (i) => i + 1);
+  const maxIdx = max - ONE;
+  const candidates = range(max, (i) => i + ONE);
 
   candidates.forEach((_, i, arr) => swap(maxIdx, i, arr));
 
@@ -20,5 +21,5 @@ const generateRandomNumbers = (max) => {
 
 export const issueLottos = (limit, range) =>
   generateRandomNumbers(range)
-    .slice(0, limit)
+    .slice(ZERO, limit)
     .sort((a, b) => a - b);
