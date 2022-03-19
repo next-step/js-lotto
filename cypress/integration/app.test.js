@@ -58,7 +58,9 @@ describe('Lotto', () => {
     });
 
     it('번호보기가 토글(해제)되면, 복권 번호를 볼 수 없다.', () => {
-      cy.get('.lotto-numbers-toggle-button').uncheck();
+      cy.get('[data-props="amount-input"]').type('2000');
+      cy.get('[data-props="confirm-button"]').click();
+      cy.get('[data-props="toggle-button"]').uncheck();
 
       cy.get('.lotto-list')
         .not('.flex-col')
@@ -68,13 +70,13 @@ describe('Lotto', () => {
     });
 
     it('번호보기가 토글(체크)되면, 복권 번호를 볼 수 있어야 한다.', () => {
-      cy.get('.lotto-numbers-toggle-button').check();
+      cy.get('[data-props="amount-input"]').type('2000');
+      cy.get('[data-props="confirm-button"]').click();
+      cy.get('[data-props="toggle-button"]').check({ force: true });
 
-      cy.get('.lotto-numbers')
-        .first()
-        .should('be.visible')
-        .should('have.css', 'display')
-        .and('match', /inline/);
+      cy.get('.lotto-list').then(() => {
+        cy.get('.lotto-numbers').first().should('be.visible');
+      });
     });
   });
 });
