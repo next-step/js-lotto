@@ -22,3 +22,11 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.flex-column {
+  flex-direction: column;
+}
+
+.hide {
+  display: none;
+}
