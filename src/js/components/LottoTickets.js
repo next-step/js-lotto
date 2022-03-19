@@ -52,9 +52,9 @@ export class LottoTickets {
 
     getLottoAmountTemplate() {
         return `    
-        <label class="flex-auto my-0">총 ${this.getAmount()}개를 구매하였습니다.</label>
+        <label class="flex-auto my-0">총 <span data-test="lotto-amount">${this.getAmount()}</span>개를 구매하였습니다.</label>
         <div class="flex-auto d-flex justify-end pr-1">
-            <label class="switch">
+            <label class="switch" data-test="switch">
                 <input type="checkbox" class="lotto-numbers-toggle-button" ${
                     this.isChecked ? "checked" : ""
                 }/>
@@ -69,9 +69,9 @@ export class LottoTickets {
 
         this.tickets.forEach((ticket) => {
             template += `
-            <li class="mx-1 text-4xl lotto-wrapper d-block p-0 lotto-ticket">
+            <li class="mx-1 text-4xl lotto-wrapper d-block p-0 lotto-ticket" data-test="lotto-ticket">
                 <span class="lotto-icon">🎟️ </span>
-                <span class="lotto-detail text-xl ${this.isChecked ? "" : "d-none"}">
+                <span class="lotto-detail text-xl ${this.isChecked ? "" : "d-none"}" data-test="lotto-detail">
                 ${ticket.join(", ")}
                 </span>
             </li>`;
