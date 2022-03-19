@@ -146,7 +146,7 @@ describe('로또 미션 Cypress', () => {
         cy.get('@priceInput').should('have.value', ''); //
       });
 
-      it.only('(6) 로또 티켓 구매 이후, 재구매시 로또는 누적된다.', () => {
+      it('(6) 로또 티켓 구매 이후, 재구매시 로또는 누적된다.', () => {
         //purchase 3 time
         cy.get('@priceInput').type(mockData.typedPrice);
         cy.get('@purchaseButton').click();
@@ -167,6 +167,21 @@ describe('로또 미션 Cypress', () => {
           .should(($span) => {
             expect($span).to.have.length(mockData.tickets * 3);
           });
+      });
+
+      it.only('(7) 토글 버튼 클릭하면 로또 번호가 노출 상태가 토글된다.', () => {
+        cy.get('.lotto-numbers-toggle__label').click();
+        cy.get('.lotto-section-ticket__numbers').each(($span) => {
+          expect($span).to.be.visible;
+        });
+        cy.get('.lotto-numbers-toggle__label').click();
+        cy.get('.lotto-section-ticket__numbers').each(($span) => {
+          expect($span).not.to.be.visible;
+        });
+        cy.get('.lotto-numbers-toggle__label').click();
+        cy.get('.lotto-section-ticket__numbers').each(($span) => {
+          expect($span).to.be.visible;
+        });
       });
     });
   });
