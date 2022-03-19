@@ -24,8 +24,7 @@ const LottoListTemplate = ({ numbers }) => {
       `,
         )
         .join('')}
-    </ul>
-    `;
+    </ul>`;
   };
 
   const $section = document.createElement('section');

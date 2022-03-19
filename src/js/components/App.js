@@ -2,6 +2,7 @@ import { $ } from '../helper/index.js';
 import AppTemplate from './AppTemplate.js';
 import LottoList from './lottoList/LottoList.js';
 import LottoCheck from './lottoCheck/LottoCheck.js';
+import { validCount } from '../helper/index.js';
 
 const App = () => {
   const $template = AppTemplate();
@@ -21,10 +22,17 @@ const App = () => {
     event.preventDefault();
 
     const { value: amount } = $('[data-props="amount-input"]');
-    const lottoList = LottoList(amount);
-    const lottoCheck = LottoCheck();
-    $('.lotto-section').replaceChildren(lottoList, lottoCheck);
-    $('.lotto-section').classList.remove('hidden');
+    try {
+      const count = validCount(amount);
+      const lottoList = LottoList(count);
+      const lottoCheck = LottoCheck();
+
+      $('.lotto-section').replaceChildren(lottoList, lottoCheck);
+      $('.lotto-section').classList.remove('hidden');
+    } catch (error) {
+      $('[data-props="amount-input"]').value = '';
+      alert(error.message);
+    }
   };
 
   return {
