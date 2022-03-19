@@ -5,12 +5,14 @@ import {
   LOTTO_SECTION__LABEL,
   LOTTO_SECTION_TICKETS,
   LOTTO_SECTION_TICKET,
+  LOTTO_SECTION_TICKET__NUMBERS,
 } from '../constants/selectTarget.js';
 
 export default class LottoModel {
   #tickets;
   #quantity;
   #winningNumbers;
+  #isShowLottoNumber;
 
   constructor(quantity) {
     this.createLotto(quantity);
@@ -41,6 +43,24 @@ export default class LottoModel {
     ticketPosition.insertAdjacentHTML('afterBegin', this.ticketsHtml);
   }
 
+  showLottoTicketsNumbers() {
+    this.#isShowLottoNumber = true;
+    document.querySelector(`.${LOTTO_SECTION_TICKETS}`).classList.add('flex-col');
+    document.querySelector(`.${LOTTO_SECTION_TICKETS}`).classList.remove('flex-wrap');
+    document.querySelectorAll(`.${LOTTO_SECTION_TICKET__NUMBERS}`).forEach((el) => {
+      el.hidden = false;
+    });
+  }
+
+  hideLottoTicketsNumbers() {
+    this.#isShowLottoNumber = false;
+    document.querySelector(`.${LOTTO_SECTION_TICKETS}`).classList.remove('flex-col');
+    document.querySelector(`.${LOTTO_SECTION_TICKETS}`).classList.add('flex-wrap');
+    document.querySelectorAll(`.${LOTTO_SECTION_TICKET__NUMBERS}`).forEach((el) => {
+      el.hidden = true;
+    });
+  }
+
   get ticketsHtml() {
     const getTemplate = (ticket) => `<span class="mx-1 text-4xl ${LOTTO_SECTION_TICKET}" data-lotto-id-${ticket.id}> 🎟️ 
                         <span class="lotto-section-ticket__numbers" hidden>${ticket.ticketNumbers}</span>
@@ -53,11 +73,13 @@ class LottoTicket {
   #id;
   #ticketNumbers;
   #isAuto;
+  #isShow;
 
   constructor(i) {
     this.#id = Date.now() + i || 0;
     this.#ticketNumbers = this.randomGenerator();
     this.#isAuto = true;
+    this.#isShow = false;
   }
 
   randomGenerator(numbers = new Set()) {

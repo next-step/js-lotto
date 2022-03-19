@@ -1,0 +1,16 @@
+.lotto-section-tickets {
+  overflow: scroll;
+  height: 40vh;
+}
+
+.lotto-section-ticket {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.lotto-section-ticket__numbers {
+  visibility: visible;
+  font-size: 1.4rem;
+  color: tomato;
+}

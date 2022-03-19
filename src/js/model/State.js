@@ -2,7 +2,12 @@ import PriceModel from './PriceModel.js';
 import LottoModel from './LottoModel.js';
 
 import { LOTTO_PAY_UNIT } from '../constants/unit.js';
-import { PRICE_FORM__INPUT } from '../constants/selectTarget.js';
+import {
+  PRICE_FORM__INPUT,
+  LOTTO_SECTION,
+  LOTTO_SECTION_TICKETS,
+  LOTTO_SECTION_TICKET__NUMBERS,
+} from '../constants/selectTarget.js';
 
 export default class State {
   #priceModel;
@@ -19,6 +24,14 @@ export default class State {
       if (!PriceModel.validators.isValidPrice(inputPrice)) return;
       this.#priceModel.updatePrice(inputPrice);
       this.generateLotto(inputPrice);
+    },
+    SHOW_NUMBERS: () => {
+      const isChecked = document.querySelector(`.${LOTTO_SECTION} input`).checked;
+      if (isChecked) {
+        this.#lottoModel.showLottoTicketsNumbers();
+        return;
+      }
+      this.#lottoModel.hideLottoTicketsNumbers();
     },
   };
 
