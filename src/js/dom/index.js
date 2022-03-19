@@ -1,33 +1,17 @@
 export const $ = (selector, $container = document) =>
   $container.querySelector(selector);
 
-export const $Curry =
-  (parent, $container = document) =>
-  (selector) =>
-    $(selector, $(parent, $container));
+export const $Curry = ($container) => (selector) => $(selector, $container);
 
-const removeChildren = ($selector) => {
-  while ($selector.hasChildNodes()) {
-    $selector.firstChild.remove();
-  }
-};
+export const renderer =
+  ($clonedApp) =>
+  (...components) =>
+    components.forEach(([$el, handler]) => handler($el, $clonedApp));
 
-export const renderTest = ($el, template) => {
-  if (!$el) return;
-  removeChildren($el);
-  $el.insertAdjacentHTML('afterBegin', template);
-};
-
-export const render = (state, ...templates) => {
-  templates.forEach(([$el, templateCreator]) => {
-    if (!$el) return;
-    removeChildren($el);
-
-    const { template, bindEvents } = templateCreator($el, state);
-    $el.insertAdjacentHTML('afterBegin', template);
-    bindEvents?.();
-  });
-};
+export const onCurry =
+  ($app) =>
+  (...events) =>
+    on(...events, $app);
 
 export const on = (event, handler, $container = document) => {
   $container.addEventListener(event, handler);
