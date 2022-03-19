@@ -29,8 +29,8 @@ function App($target) {
     ${ResultModal.getHtml()}
     `.trim();
 
-  new PriceForm($app.querySelector(`.${PRICE_FORM}`), { onSubmit: state.eventHandler.PURCHASE });
-  new LottoSection($app.querySelector(`.${LOTTO_SECTION}`), { onSwitch: state.eventHandler.SHOW_NUMBERS });
+  PriceForm($app.querySelector(`.${PRICE_FORM}`), { onSubmit: state.eventHandler.PURCHASE });
+  LottoSection($app.querySelector(`.${LOTTO_SECTION}`), { onSwitch: state.eventHandler.SHOW_NUMBERS });
 
   $target.replaceWith($app);
 }

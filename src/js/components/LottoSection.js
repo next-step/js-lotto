@@ -3,20 +3,9 @@ import {
   LOTTO_SECTION__LABEL,
   LOTTO_SECTION_TICKETS,
   LOTTO_NUMBERS_TOGGLE__LABEL,
-  LOTTO_NUMBERS_TOGGLE__CHECK,
 } from '../constants/selectTarget.js';
-export default class LottoSection {
-  #el;
-  #state;
-
-  constructor($parent, { onSwitch }) {
-    this.#el = document.createElement('div');
-    this.#el.innerHTML = LottoSection.getHtml();
-    $parent.replaceWith(this.#el);
-    this.#el.querySelector(`.${LOTTO_NUMBERS_TOGGLE__LABEL}`).addEventListener('click', onSwitch);
-  }
-
-  static getHtml() {
+const LottoSection = ($parent, { onSwitch }) => {
+  const getHtml = () => {
     return `<section class="mt-9 ${LOTTO_SECTION}" hidden>
               <div class="d-flex">
               <label class="flex-auto my-0 ${LOTTO_SECTION__LABEL}"></label>
@@ -29,5 +18,12 @@ export default class LottoSection {
               </div>
               <div class="d-flex flex-wrap ${LOTTO_SECTION_TICKETS}"></div>
             </section>`;
-  }
-}
+  };
+
+  const $el = document.createElement('div');
+  $el.innerHTML = getHtml();
+  $parent.replaceWith($el);
+  $el.querySelector(`.${LOTTO_NUMBERS_TOGGLE__LABEL}`).addEventListener('click', onSwitch);
+};
+
+export default LottoSection;
