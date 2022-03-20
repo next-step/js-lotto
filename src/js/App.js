@@ -1,9 +1,9 @@
 import { PriceInput } from "./components/PriceInput.js";
 import { PurchaseDetail } from "./components/PurchaseDetail.js";
 import { TryForm } from "./components/TryForm.js";
+import { Statistics } from "./components/Statistics.js";
 
 class App {
-  #modalClose = document.querySelector(".modal-close");
   #modal = document.querySelector(".modal");
 
   #onClickPriceInputConfirmButton = (value) => {
@@ -18,10 +18,6 @@ class App {
     this.#modal.classList.remove("open");
   };
 
-  #setEvents = () => {
-    this.#modalClose.addEventListener("click", this.#onModalClose);
-  };
-
   #setComponents = () => {
     const priceInputElement = document.querySelector("#price-input");
     new PriceInput(priceInputElement, this.#onClickPriceInputConfirmButton);
@@ -29,10 +25,11 @@ class App {
     new PurchaseDetail(purchaseDetailElement);
     const tryFormElement = document.querySelector("#try-form");
     new TryForm(tryFormElement, this.#onModalShow);
+    const statisticsElement = document.querySelector("#statistics");
+    new Statistics(statisticsElement, this.#onModalClose);
   };
 
   constructor() {
-    this.#setEvents();
     this.#setComponents();
   }
 }
