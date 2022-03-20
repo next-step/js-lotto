@@ -42,7 +42,7 @@ describe('로또 미션 Cypress', () => {
         cy.get('.lotto-section')
           .should('be.visible')
           .find('.lotto-section-tickets')
-          .find('.lotto-section-ticket')
+          .find('.lotto-section__ticket')
           .should(($span) => {
             expect($span).to.have.length(3);
           });
@@ -126,7 +126,7 @@ describe('로또 미션 Cypress', () => {
         cy.get('.lotto-section')
           .should('be.visible')
           .find('.lotto-section-tickets')
-          .find('.lotto-section-ticket')
+          .find('.lotto-section__ticket')
           .should(($span) => {
             expect($span).to.have.length(mockData.tickets);
           });
@@ -136,7 +136,7 @@ describe('로또 미션 Cypress', () => {
         cy.get('.lotto-section')
           .should('be.visible')
           .find('.lotto-section-tickets')
-          .find('.lotto-section-ticket__numbers')
+          .find('.lotto-section__ticket__numbers')
           .each(($span) => {
             expect($span).not.to.be.visible;
           });
@@ -163,23 +163,23 @@ describe('로또 미션 Cypress', () => {
         cy.get('.lotto-section')
           .should('be.visible')
           .find('.lotto-section-tickets')
-          .find('.lotto-section-ticket')
+          .find('.lotto-section__ticket')
           .should(($span) => {
             expect($span).to.have.length(mockData.tickets * 3);
           });
       });
 
-      it.only('(7) 토글 버튼 클릭하면 로또 번호가 노출 상태가 토글된다.', () => {
+      it('(7) 토글 버튼 클릭하면 로또 번호가 노출 상태가 토글된다.', () => {
         cy.get('.lotto-numbers-toggle__label').click();
-        cy.get('.lotto-section-ticket__numbers').each(($span) => {
+        cy.get('.lotto-section__ticket__numbers').each(($span) => {
           expect($span).to.be.visible;
         });
         cy.get('.lotto-numbers-toggle__label').click();
-        cy.get('.lotto-section-ticket__numbers').each(($span) => {
+        cy.get('.lotto-section__ticket__numbers').each(($span) => {
           expect($span).not.to.be.visible;
         });
         cy.get('.lotto-numbers-toggle__label').click();
-        cy.get('.lotto-section-ticket__numbers').each(($span) => {
+        cy.get('.lotto-section__ticket__numbers').each(($span) => {
           expect($span).to.be.visible;
         });
       });

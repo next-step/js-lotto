@@ -5,8 +5,8 @@ import {
   LOTTO_FORM,
   LOTTO_SECTION__LABEL,
   LOTTO_SECTION_TICKETS,
-  LOTTO_SECTION_TICKET,
-  LOTTO_SECTION_TICKET__NUMBERS,
+  LOTTO_SECTION__TICKET,
+  LOTTO_SECTION__TICKET__NUMBERS,
 } from '../constants/selectTarget.js';
 import { $, $$ } from '../util/dom.js';
 export default class LottoModel {
@@ -57,23 +57,24 @@ export default class LottoModel {
     this.#isShowLottoNumber = true;
     $(`.${LOTTO_SECTION_TICKETS}`).classList.add('flex-col');
     $(`.${LOTTO_SECTION_TICKETS}`).classList.remove('flex-wrap');
-    $$(`.${LOTTO_SECTION_TICKET__NUMBERS}`).forEach((el) => {
+    $$(`.${LOTTO_SECTION__TICKET__NUMBERS}`).forEach((el) => {
       el.hidden = false;
     });
   }
 
   hideLottoTicketsNumbers() {
     this.#isShowLottoNumber = false;
+    const $lottoSectionticket = $(`.${LOTTO_SECTION_TICKETS}`);
     $(`.${LOTTO_SECTION_TICKETS}`).classList.remove('flex-col');
     $(`.${LOTTO_SECTION_TICKETS}`).classList.add('flex-wrap');
-    $$(`.${LOTTO_SECTION_TICKET__NUMBERS}`).forEach((el) => {
+    $$(`.${LOTTO_SECTION__TICKET__NUMBERS}`).forEach((el) => {
       el.hidden = true;
     });
   }
 
   get ticketsHtml() {
-    const getTemplate = (ticket) => `<span class="mx-1 text-4xl ${LOTTO_SECTION_TICKET}" data-lotto-id-${ticket.id}> 🎟️ 
-                        <span class="lotto-section-ticket__numbers" hidden>${ticket.ticketNumbers}</span>
+    const getTemplate = (ticket) => `<span class="mx-1 text-4xl ${LOTTO_SECTION__TICKET}" data-lotto-id-${ticket.id}> 🎟️ 
+                        <span class="lotto-section__ticket__numbers" hidden>${ticket.ticketNumbers}</span>
                       </span></span>`;
     return this.#tickets.map((ticket) => getTemplate(ticket)).join('');
   }

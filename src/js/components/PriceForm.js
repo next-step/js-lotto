@@ -9,7 +9,7 @@ const PriceForm = ($parent, { onSubmit }) => {
                             type="number"
                             class="w-100 mr-2 pl-2 ${PRICE_FORM__INPUT}"
                             placeholder="구입 금액"/>
-                  <button type="submit" class="btn btn-cyan ${PRICE_FORM__BUTTON}"></button>
+                  <button type="submit" class="btn btn-cyan ${PRICE_FORM__BUTTON}">확인</button>
               </div>
             </form>`;
   };

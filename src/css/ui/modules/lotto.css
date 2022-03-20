@@ -1,16 +1,20 @@
 .lotto-section-tickets {
   overflow: scroll;
   max-height: 40vh;
+  background-color: #ccf0f5;
+  border-radius: 2rem;
+  margin-top: 1rem;
+  padding:1rem
 }
 
-.lotto-section-ticket {
+.lotto-section__ticket {
   display: flex;
   justify-content: flex-start;
   gap: 1rem;
 }
 
-.lotto-section-ticket__numbers {
+.lotto-section__ticket__numbers {
   visibility: visible;
   font-size: 1.4rem;
-  color: tomato;
+  color: #000;
 }
