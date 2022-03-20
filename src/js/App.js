@@ -6,7 +6,7 @@ import {
   eventBinder,
   replaceChild,
 } from './dom/index.js';
-import { buy } from './service/index.js';
+import { buy } from './service/lotto.js';
 import stateWrapper from './store/stateWrapper.js';
 
 import MoneyForm from './views/MoneyForm.js';

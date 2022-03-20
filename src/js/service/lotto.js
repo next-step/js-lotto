@@ -1,5 +1,5 @@
 import { validateCurry, range } from '../utils/index.js';
-import { issueLottos } from '../business/index.js';
+import { issueLottos } from '../business/lotto.js';
 import {
   MIN_MONEY_UNIT,
   PICKED_LOTTO_NUMBER_COUNT,

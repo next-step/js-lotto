@@ -25,7 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import { CLASS } from '../../src/js/const/className.js';
 import { MIN_MONEY_UNIT } from '../../src/js/const/constant.js';
-import { buy } from '../../src/js/service/index.js';
+import { buy } from '../../src/js/service/lotto.js';
 
 Cypress.Commands.add('alert', (alertMessage) => {
   cy.on('window:alert', (msg) => expect(msg).to.equal(alertMessage));
