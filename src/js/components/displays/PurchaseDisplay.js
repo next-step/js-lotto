@@ -1,11 +1,11 @@
 export default class PurchaseDisplay {
-  constructor({isEnterBtnClicked}) {
+  constructor({isConfirmBtnClicked}) {
     this.isVisible = null;
-    this.setState(isEnterBtnClicked);
+    this.setState(isConfirmBtnClicked);
   }
 
-  setState(isEnterBtnClicked) {
-    this.isVisible = isEnterBtnClicked;
+  setState(isConfirmBtnClicked) {
+    this.isVisible = isConfirmBtnClicked;
     this.render();
   }
 

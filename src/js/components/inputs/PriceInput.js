@@ -13,6 +13,7 @@ export default class PriceInput {
 
   render() {
     this.$purchaseInput = document.querySelector('#purchace-amount-input');
+    console.log(this.$purchaseInput, this.$purchaseInput.value)
     this.addEvent(this.$purchaseInput, 'change', () => this.handleChange(this.$purchaseInput.value))
   }
 

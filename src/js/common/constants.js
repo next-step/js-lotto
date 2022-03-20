@@ -1,5 +1,5 @@
 export const INITIAL_STATE = {
-  isEnterBtnClicked : false,
+  isConfirmBtnClicked : false,
   priceInputVal: 0,
-  purchasedVal: 0
+  purchasedVal: 0,
 }
