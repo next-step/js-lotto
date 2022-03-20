@@ -37,3 +37,6 @@ export const emit = (event, data, $container = document) => {
 
 export const toggleClassName = ($el, type, className) =>
   $el.classList[type](className);
+
+export const convertFormDataToObject = ($form) =>
+  Object.fromEntries(new FormData($form));
