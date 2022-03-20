@@ -3,8 +3,8 @@ import { $ } from '../utils/dom.js';
 
 class Modal extends Component {
   setEvent() {
-    $('.open-result-modal-button').addEventListener('click', this.onModalShow.bind(this));
-    $('.modal-close').addEventListener('click', this.onModalClose.bind(this));
+    $('.open-result-modal-button').onclick = this.onModalClose.bind(this);
+    $('.modal-close').onclick = this.onModalClose.bind(this);
   }
 
   onModalShow() {

@@ -23,11 +23,12 @@ class PurchaseForm extends Component {
   }
 
   setEvent() {
-    this.$target.addEventListener('submit', e => e.preventDefault());
-    $(`#${DOM.purchaseFormButton}`).addEventListener(
-      'click',
-      this.onClickPurchaseFormButton.bind(this),
-    );
+    this.$target.onsubmit = this.onSubmitPurchaseForm;
+    $(`#${DOM.purchaseFormButton}`).onclick = this.onClickPurchaseFormButton.bind(this);
+  }
+
+  onSubmitPurchaseForm(e) {
+    e.preventDefault();
   }
 
   onClickPurchaseFormButton() {
