@@ -21,10 +21,12 @@ const validateMoney = (money) => {
 export const buy = (money, { lotto }) => {
   const either = validateCurry(() => validateMoney(money), lotto);
   const amount = money / MIN_MONEY_UNIT;
+  const numbers = range(amount, () =>
+    issueLottos(PICKED_LOTTO_NUMBER_COUNT, RANGE_FOR_RANDOM_NUMBERS)
+  );
+
   return either(() => ({
-    numbers: range(amount, () =>
-      issueLottos(PICKED_LOTTO_NUMBER_COUNT, RANGE_FOR_RANDOM_NUMBERS)
-    ),
+    numbers,
     size: amount,
   }));
 };
