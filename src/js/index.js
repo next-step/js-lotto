@@ -54,7 +54,7 @@ function LottoApp() {
         return `
           <li class="mx-1 text-4xl lotto-item">
             <span class="lotto-icon">🎟️ </span>
-            <span class="lotto-numbers numbers-closed">${lotto.join(", ")}</span>
+            <span class="lotto-numbers numbers-closed">${[...lotto].join(", ")}</span>
           </li>
         `;
       })
@@ -71,11 +71,8 @@ function LottoApp() {
 
   const initEventListeners = () => {
     $showResultButton.addEventListener("click", onModalShow);
-
     $modalClose.addEventListener("click", onModalClose);
-
     $purchaseButton.addEventListener("click", purchaseLottoTickets);
-
     $lottoNumbersToggleButton.addEventListener("click", lottoNumbersToggle);
   };
 }
