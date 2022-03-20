@@ -49,6 +49,17 @@ describe('구매 기능', () => {
   });
 
   context('로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 합니다.', () => {
+    it('로또 구입 금액은 필수값입니다.', () => {
+      const alertStub = cy.stub();
+      cy.on('window:alert', alertStub);
+
+      cy.get(`#${DOM.PURCHASE_FORM_BUTTON}`)
+        .click()
+        .then(() => {
+          expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.REQUIRED_PRICE);
+        });
+    });
+
     it('2000원 = 2개 구매', () => {
       cy.get(`#${DOM.PURCHASE_FORM_INPUT}`).type(2000);
       cy.get(`#${DOM.PURCHASE_FORM_BUTTON}`).click();
