@@ -20,10 +20,12 @@ export class PriceInput {
     `;
   };
 
-  #setEvents = () => {
+  #setEvents = (onClickPriceInputConfirmButton) => {
     const button = document.querySelector(".confirm");
     button.addEventListener("click", () => {
-      this.#checkValidation();
+      if (this.#checkValidation()) {
+        onClickPriceInputConfirmButton(this.#value);
+      }
     });
   };
 
@@ -33,14 +35,14 @@ export class PriceInput {
     if (!isNumber(inputNumber) || !canBeDividedBy1000(inputNumber)) {
       window.alert(`천 원 단위로 금액을 입력해주세요. `);
       input.value = "";
-      return;
+      return false;
     }
     this.#value = inputNumber;
-    console.log(`Validation passed: ${this.#value}`);
+    return true;
   };
 
-  constructor(target) {
+  constructor(target, onClickPriceInputConfirmButton) {
     target.innerHTML = this.#template();
-    this.#setEvents();
+    this.#setEvents(onClickPriceInputConfirmButton);
   }
 }

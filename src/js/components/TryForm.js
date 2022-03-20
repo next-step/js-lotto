@@ -52,15 +52,14 @@ export class TryForm {
         `;
   };
 
-  #showResultButton = document.querySelector(".open-result-modal-button");
-
-  #setEvents = () => {
-    // this.#showResultButton.addEventListener("click", () => {
-    //   console.log("show modal now");
-    // });
+  #setEvents = (onClickResultButton) => {
+    const showResultButton = document.querySelector(
+      ".open-result-modal-button"
+    );
+    showResultButton.addEventListener("click", onClickResultButton);
   };
-  constructor(target) {
+  constructor(target, onClickResultButton) {
     target.innerHTML = this.#template();
-    this.#setEvents();
+    this.#setEvents(onClickResultButton);
   }
 }

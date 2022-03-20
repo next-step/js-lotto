@@ -3,12 +3,12 @@ import { PurchaseDetail } from "./components/PurchaseDetail.js";
 import { TryForm } from "./components/TryForm.js";
 
 class App {
-  //#showResultButton = document.querySelector(".open-result-modal-button");
   #modalClose = document.querySelector(".modal-close");
   #modal = document.querySelector(".modal");
-  #lottoNumbersToggleButton = document.querySelector(
-    ".lotto-numbers-toggle-button"
-  );
+
+  #onClickPriceInputConfirmButton = (value) => {
+    console.log(`price input confirm button clicked. value: ${value}`);
+  };
 
   #onModalShow = () => {
     this.#modal.classList.add("open");
@@ -19,22 +19,21 @@ class App {
   };
 
   #setEvents = () => {
-    //this.#showResultButton.addEventListener("click", this.#onModalShow);
     this.#modalClose.addEventListener("click", this.#onModalClose);
   };
 
-  #setLayout = () => {
+  #setComponents = () => {
     const priceInputElement = document.querySelector("#price-input");
-    new PriceInput(priceInputElement);
+    new PriceInput(priceInputElement, this.#onClickPriceInputConfirmButton);
     const purchaseDetailElement = document.querySelector("#purchase-detail");
     new PurchaseDetail(purchaseDetailElement);
     const tryFormElement = document.querySelector("#try-form");
-    new TryForm(tryFormElement);
+    new TryForm(tryFormElement, this.#onModalShow);
   };
 
   constructor() {
     this.#setEvents();
-    this.#setLayout();
+    this.#setComponents();
   }
 }
 
