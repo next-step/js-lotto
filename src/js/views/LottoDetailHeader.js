@@ -1,17 +1,21 @@
 import { CLASS } from '../const/className.js';
 import { emit, $ } from '../dom/index.js';
 
-const toggleInitialStyle = ($el, count) => {
-  $el.checked = false;
-  $el.disabled = count === 0;
+const initializeToggleStyle = ($app, count) => {
+  const $toggleNumbers = $(CLASS.TOGGLE_NUMBERS, $app);
+  $toggleNumbers.checked = false;
+  $toggleNumbers.disabled = count === 0;
+};
+
+const renderCount = ($app, count) => {
+  const $lottoDetailCount = $(CLASS.LOTTO_COUNT, $app);
+  $lottoDetailCount.textContent = `총 ${count}개를 구매하였습니다.`;
 };
 
 const LottoDetailHeader = ($app) => {
   const render = ({ size: count }) => {
-    const $lottoDetailCount = $(CLASS.LOTTO_COUNT, $app);
-    const $toggleNumbers = $(CLASS.TOGGLE_NUMBERS, $app);
-    toggleInitialStyle($toggleNumbers, count);
-    $lottoDetailCount.textContent = `총 ${count}개를 구매하였습니다.`;
+    initializeToggleStyle($app, count);
+    renderCount($app, count);
   };
 
   const toggleStyle = (show) => {

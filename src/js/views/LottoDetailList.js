@@ -1,5 +1,10 @@
 import { CLASS } from '../const/className.js';
-import { toggleClassName, replaceChild, $ } from '../dom/index.js';
+import {
+  toggleClassName,
+  replaceChild,
+  $,
+  insertAdjacentHTML,
+} from '../dom/index.js';
 
 const getLottoTemplate = (lotto) => `
   <li>
@@ -12,11 +17,7 @@ const LottoDetailList = ($app) => {
     const $el = $(CLASS.LOTTO_DETAIL_LIST, $app);
     const $clonedList = $el.cloneNode();
 
-    $clonedList.insertAdjacentHTML(
-      'afterBegin',
-      numbers.map(getLottoTemplate).join('')
-    );
-
+    insertAdjacentHTML($clonedList, numbers.map(getLottoTemplate).join(''));
     toggleClassName($clonedList, 'remove', 'flex-column');
     replaceChild($el, $clonedList);
   };

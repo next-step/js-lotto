@@ -3,6 +3,10 @@ export const replaceChild = ($el, $clonedEl) => {
   return $clonedEl;
 };
 
+export const insertAdjacentHTML = ($el, template) => {
+  $el.insertAdjacentHTML('afterBegin', template);
+};
+
 export const $ = (selector, $container = document) =>
   $container.querySelector(selector);
 
