@@ -8,7 +8,7 @@ import {
   LOTTO_SECTION_TICKET,
   LOTTO_SECTION_TICKET__NUMBERS,
 } from '../constants/selectTarget.js';
-
+import { $, $$ } from '../util/dom.js';
 export default class LottoModel {
   #tickets;
   #quantity;
@@ -44,29 +44,29 @@ export default class LottoModel {
   }
 
   showLottoTicket() {
-    document.querySelector(`.${LOTTO_SECTION}`).hidden = false;
-    document.querySelector(`.${LOTTO_FORM}`).hidden = false;
-    document.querySelector(`.${LOTTO_SECTION__LABEL}`).textContent = `총 ${this.#quantity}개를 구매하였습니다.`;
+    $(`.${LOTTO_SECTION}`).hidden = false;
+    $(`.${LOTTO_FORM}`).hidden = false;
+    $(`.${LOTTO_SECTION__LABEL}`).textContent = `총 ${this.#quantity}개를 구매하였습니다.`;
 
-    const ticketPosition = document.querySelector(`.${LOTTO_SECTION_TICKETS}`);
+    const ticketPosition = $(`.${LOTTO_SECTION_TICKETS}`);
     if (ticketPosition.childNodes.length > 0) ticketPosition.replaceChildren();
     ticketPosition.insertAdjacentHTML('afterBegin', this.ticketsHtml);
   }
 
   showLottoTicketsNumbers() {
     this.#isShowLottoNumber = true;
-    document.querySelector(`.${LOTTO_SECTION_TICKETS}`).classList.add('flex-col');
-    document.querySelector(`.${LOTTO_SECTION_TICKETS}`).classList.remove('flex-wrap');
-    document.querySelectorAll(`.${LOTTO_SECTION_TICKET__NUMBERS}`).forEach((el) => {
+    $(`.${LOTTO_SECTION_TICKETS}`).classList.add('flex-col');
+    $(`.${LOTTO_SECTION_TICKETS}`).classList.remove('flex-wrap');
+    $$(`.${LOTTO_SECTION_TICKET__NUMBERS}`).forEach((el) => {
       el.hidden = false;
     });
   }
 
   hideLottoTicketsNumbers() {
     this.#isShowLottoNumber = false;
-    document.querySelector(`.${LOTTO_SECTION_TICKETS}`).classList.remove('flex-col');
-    document.querySelector(`.${LOTTO_SECTION_TICKETS}`).classList.add('flex-wrap');
-    document.querySelectorAll(`.${LOTTO_SECTION_TICKET__NUMBERS}`).forEach((el) => {
+    $(`.${LOTTO_SECTION_TICKETS}`).classList.remove('flex-col');
+    $(`.${LOTTO_SECTION_TICKETS}`).classList.add('flex-wrap');
+    $$(`.${LOTTO_SECTION_TICKET__NUMBERS}`).forEach((el) => {
       el.hidden = true;
     });
   }
