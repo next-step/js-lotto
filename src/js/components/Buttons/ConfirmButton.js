@@ -11,9 +11,12 @@ export default class ConfirmButton {
   }
 
   render() {
-    console.log("btn", this.inputVal)
-    this.$confirmBtn = document.querySelector('#confirm-button');
-    this.addEvent(this.$confirmBtn, 'click', () => this.handleClick(this.inputVal));
+    const $confirmBtn = document.querySelector('#confirm-button');
+    this.$confirmBtn = $confirmBtn.cloneNode(true);
+    $confirmBtn.after(this.$confirmBtn);
+    $confirmBtn.remove()
+
+    this.addEvent(this.$confirmBtn, 'click', this.handleClick);
   }
 
   addEvent($el, event, callbackFn) {

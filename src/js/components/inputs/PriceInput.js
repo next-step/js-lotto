@@ -12,9 +12,13 @@ export default class PriceInput {
   }
 
   render() {
-    this.$purchaseInput = document.querySelector('#purchace-amount-input');
-    console.log(this.$purchaseInput, this.$purchaseInput.value)
-    this.addEvent(this.$purchaseInput, 'change', () => this.handleChange(this.$purchaseInput.value))
+    const $purchaseInput = document.querySelector('#purchace-amount-input');
+    this.$purchaseInput = $purchaseInput.cloneNode(true);
+    this.$purchaseInput.value = this.inputValue;
+    $purchaseInput.after(this.$purchaseInput);
+    $purchaseInput.remove();
+
+    this.addEvent(this.$purchaseInput, 'change', (e) => this.handleChange(e.target.value))
   }
 
   addEvent($el, event, callbackFn) {

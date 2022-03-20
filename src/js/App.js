@@ -23,13 +23,12 @@ class App {
   }
 
   handlePurchaseInputChange(newInputVal) {
-    console.log("newInputVal", newInputVal)
     this.setState({...this.state, priceInputVal: newInputVal});
   }
 
-  handleConfirmBtnClick(inputVal) {
+  handleConfirmBtnClick() {
     // todo: 입력된 숫자가 1000으로 나뉘어지는 숫자인지 validate
-    this.operator.validatePrice(inputVal);
+    this.operator.validatePrice(this.state.priceInputVal);
     // todo: 랜덤한 숫자를 만들어내기 (2자리, 45이하)
     // todo: 구매 결과 디스플레이 하기
   }
