@@ -1,3 +1,3 @@
 import App from './components/App.js';
 
-App.start();
+App();
