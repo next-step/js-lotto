@@ -5,7 +5,6 @@ export default class Operator {
   }
 
   validatePrice(price) {
-    console.log("validatePrice 실행됨");
     const isDivisibleByThousand = price && Number(price) % 1000 === 0 ? true : false;
     if (isDivisibleByThousand) {
       this.setState({
@@ -16,6 +15,5 @@ export default class Operator {
     } else {
       window.alert('로또 구입 금액을 1000원 단위로 입력해주세요.');
     }
-
   }
 }
