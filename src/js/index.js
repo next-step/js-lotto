@@ -23,8 +23,8 @@ function LottoApp() {
   };
 
   // * 번호보기 토글 이벤트
-  const lottoNumbersToggle = () => {
-    if ($lottoNumbersToggleButton.checked) {
+  const lottoNumbersToggle = event => {
+    if (event.target.checked) {
       showPurchasedLottoNumbers();
       alignVerticalLottoList();
     } else {
@@ -118,7 +118,7 @@ function LottoApp() {
     $showResultButton.addEventListener("click", onModalShow);
     $modalClose.addEventListener("click", onModalClose);
     $purchaseButton.addEventListener("click", purchaseLottoTickets);
-    $lottoNumbersToggleButton.addEventListener("click", lottoNumbersToggle);
+    $lottoNumbersToggleButton.addEventListener("change", lottoNumbersToggle);
   };
 }
 
