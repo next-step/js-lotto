@@ -21,7 +21,7 @@ const createLottoTickets = numberOfLottoTickets => {
   const lottoTicketsArray = [];
 
   for (let i = 0; i < numberOfLottoTickets; i++) {
-    lottoTicketsArray.push(createLottoTicket());
+    lottoTicketsArray.push(createOneLottoTicket());
   }
 
   return lottoTicketsArray;
