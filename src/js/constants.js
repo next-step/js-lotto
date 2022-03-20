@@ -17,4 +17,5 @@ export const DOM = {
 
 export const ERROR_MESSAGE = {
   INVALID_PRICE: `로또 구입 금액을 ${LOTTO_PRICE}원 단위로 입력해 주세요.`,
+  REQUIRED_PRICE: '로또 구입 금액을 입력해주세요.',
 };

@@ -23,25 +23,35 @@ class PurchaseForm extends Component {
   }
 
   setEvent() {
-    this.$target.onsubmit = this.onSubmitPurchaseForm;
-    $(`#${DOM.PURCHASE_FORM_BUTTON}`).onclick = this.onClickPurchaseFormButton.bind(this);
+    this.$target.onsubmit = this.onSubmitPurchaseForm.bind(this);
+    $(`#${DOM.PURCHASE_FORM_BUTTON}`).onclick = this.onSubmitPurchaseForm.bind(this);
   }
 
   onSubmitPurchaseForm(e) {
-    e.preventDefault();
-  }
-
-  onClickPurchaseFormButton() {
     const $purchaseFormInput = $(`#${DOM.PURCHASE_FORM_INPUT}`);
+    e.preventDefault();
 
-    if ($purchaseFormInput.value % LOTTO_PRICE !== 0) {
-      alert(ERROR_MESSAGE.INVALID_PRICE);
+    if (!this.validateFormInput($purchaseFormInput.value)) {
       $purchaseFormInput.value = '';
       $purchaseFormInput.focus();
       return;
     }
 
     this.props.setLottoCountAndNumbers($purchaseFormInput.value / LOTTO_PRICE);
+  }
+
+  validateFormInput(value) {
+    if (!value) {
+      alert(ERROR_MESSAGE.REQUIRED_PRICE);
+      return false;
+    }
+
+    if (value % LOTTO_PRICE !== 0) {
+      alert(ERROR_MESSAGE.INVALID_PRICE);
+      return false;
+    }
+
+    return true;
   }
 }
 
