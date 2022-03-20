@@ -4,6 +4,7 @@ import {
   LOTTO_SECTION_TICKETS,
   LOTTO_NUMBERS_TOGGLE__LABEL,
 } from '../constants/selectTarget.js';
+import { $ } from '../util/dom.js';
 const LottoSection = ($parent, { onSwitch }) => {
   const getHtml = () => {
     return `<section class="mt-9 ${LOTTO_SECTION}" hidden>
@@ -23,7 +24,7 @@ const LottoSection = ($parent, { onSwitch }) => {
   const $el = document.createElement('div');
   $el.innerHTML = getHtml();
   $parent.replaceWith($el);
-  $el.querySelector(`.${LOTTO_NUMBERS_TOGGLE__LABEL}`).addEventListener('click', onSwitch);
+  $(LOTTO_NUMBERS_TOGGLE__LABEL, $el).addEventListener('click', onSwitch);
 };
 
 export default LottoSection;

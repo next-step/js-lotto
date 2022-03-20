@@ -10,6 +10,8 @@ import State from './model/State.js';
 //classNames
 import { PRICE_FORM, LOTTO_SECTION } from './constants/selectTarget.js';
 
+import { $ } from './util/dom.js';
+
 function App($target) {
   const state = new State();
 
@@ -29,8 +31,8 @@ function App($target) {
     ${ResultModal.getHtml()}
     `.trim();
 
-  PriceForm($app.querySelector(`.${PRICE_FORM}`), { onSubmit: state.eventHandler.PURCHASE });
-  LottoSection($app.querySelector(`.${LOTTO_SECTION}`), { onSwitch: state.eventHandler.SHOW_NUMBERS });
+  PriceForm($(PRICE_FORM, $app), { onSubmit: state.eventHandler.purchaseLotto });
+  LottoSection($(LOTTO_SECTION, $app), { onSwitch: state.eventHandler.toggleDisplayLottoNumbers });
 
   $target.replaceWith($app);
 }

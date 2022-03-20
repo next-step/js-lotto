@@ -3,7 +3,7 @@ import LottoModel from './LottoModel.js';
 
 import { LOTTO_PURCHASE_UNIT, LOTTO_PURCHASE_MAX_QUANTITY } from '../constants/unit.js';
 import { PRICE_FORM__INPUT, LOTTO_SECTION } from '../constants/selectTarget.js';
-
+import { $ } from '../util/dom.js';
 export default class State {
   #priceModel;
   #lottoModel;
@@ -13,15 +13,15 @@ export default class State {
   }
 
   eventHandler = {
-    PURCHASE: (e) => {
+    purchaseLotto: (e) => {
       e.preventDefault();
-      const inputPrice = Number(document.querySelector(`.${PRICE_FORM__INPUT}`).value);
+      const inputPrice = Number($(PRICE_FORM__INPUT).value);
       if (!PriceModel.validators.isValidPrice(inputPrice)) return;
       this.#priceModel.updatePrice(inputPrice);
       this.generateLotto(inputPrice);
     },
-    SHOW_NUMBERS: () => {
-      const isChecked = document.querySelector(`.${LOTTO_SECTION} input`).checked;
+    toggleDisplayLottoNumbers: () => {
+      const isChecked = $(`${LOTTO_SECTION} input`).checked;
       if (isChecked) {
         this.#lottoModel.showLottoTicketsNumbers();
         return;

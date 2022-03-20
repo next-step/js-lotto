@@ -1,7 +1,7 @@
 import { LOTTO_PURCHASE_UNIT, LOTTO_PURCHASE_MAX_PRICE } from '../constants/unit.js ';
 import { ERR_MESSAGE } from '../constants/alertMessage.js';
-
 import { PRICE_FORM__INPUT } from '../constants/selectTarget.js';
+import { $ } from '../util/dom.js';
 export default class PriceModel {
   #price;
 
@@ -33,7 +33,7 @@ export default class PriceModel {
 
   updatePrice(newPrice) {
     this.#price = newPrice;
-    document.querySelector(`.${PRICE_FORM__INPUT}`).value = '';
+    $(PRICE_FORM__INPUT).value = '';
   }
 
   getPrice() {

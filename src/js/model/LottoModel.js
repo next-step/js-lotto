@@ -44,30 +44,30 @@ export default class LottoModel {
   }
 
   showLottoTicket() {
-    $(`.${LOTTO_SECTION}`).hidden = false;
-    $(`.${LOTTO_FORM}`).hidden = false;
-    $(`.${LOTTO_SECTION__LABEL}`).textContent = `총 ${this.#quantity}개를 구매하였습니다.`;
+    $(LOTTO_SECTION).hidden = false;
+    $(LOTTO_FORM).hidden = false;
+    $(LOTTO_SECTION__LABEL).textContent = `총 ${this.#quantity}개를 구매하였습니다.`;
 
-    const ticketPosition = $(`.${LOTTO_SECTION_TICKETS}`);
+    const ticketPosition = $(LOTTO_SECTION_TICKETS);
     if (ticketPosition.childNodes.length > 0) ticketPosition.replaceChildren();
     ticketPosition.insertAdjacentHTML('afterBegin', this.ticketsHtml);
   }
 
   showLottoTicketsNumbers() {
     this.#isShowLottoNumber = true;
-    $(`.${LOTTO_SECTION_TICKETS}`).classList.add('flex-col');
-    $(`.${LOTTO_SECTION_TICKETS}`).classList.remove('flex-wrap');
-    $$(`.${LOTTO_SECTION__TICKET__NUMBERS}`).forEach((el) => {
+    $(LOTTO_SECTION_TICKETS).classList.add('flex-col');
+    $(LOTTO_SECTION_TICKETS).classList.remove('flex-wrap');
+    $$(LOTTO_SECTION__TICKET__NUMBERS).forEach((el) => {
       el.hidden = false;
     });
   }
 
   hideLottoTicketsNumbers() {
     this.#isShowLottoNumber = false;
-    const $lottoSectionticket = $(`.${LOTTO_SECTION_TICKETS}`);
-    $(`.${LOTTO_SECTION_TICKETS}`).classList.remove('flex-col');
-    $(`.${LOTTO_SECTION_TICKETS}`).classList.add('flex-wrap');
-    $$(`.${LOTTO_SECTION__TICKET__NUMBERS}`).forEach((el) => {
+    const $lottoSectionticket = $(LOTTO_SECTION_TICKETS);
+    $(LOTTO_SECTION_TICKETS).classList.remove('flex-col');
+    $(LOTTO_SECTION_TICKETS).classList.add('flex-wrap');
+    $$(LOTTO_SECTION__TICKET__NUMBERS).forEach((el) => {
       el.hidden = true;
     });
   }
