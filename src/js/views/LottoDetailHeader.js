@@ -31,8 +31,8 @@ const render = ($el, { size: count }) => {
 export default {
   toggleInitialStyle,
   toggleStyle,
-  bindEvents(...args) {
-    onToggle(...args);
+  bindEvents($app) {
+    onToggle($app);
   },
   render,
 };

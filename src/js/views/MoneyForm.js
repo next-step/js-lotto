@@ -13,7 +13,7 @@ const onSubmit = ($app) => {
 };
 
 export default {
-  bindEvents(...args) {
-    onSubmit(...args);
+  bindEvents($app) {
+    onSubmit($app);
   },
 };
