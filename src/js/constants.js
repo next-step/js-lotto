@@ -1,5 +1,3 @@
-export const REGEXP_SPECIAL = /[-+`~!@#$%^&*|\\'\\";:\\/?]/gi;
-
 export const AMOUNT_UNIT = 1000;
 
 export const ERROR_MESSAGE = {

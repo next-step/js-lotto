@@ -1,5 +1,3 @@
-import { REGEXP_SPECIAL } from '../constants.js';
-
 export const isNil = value => value == null;
 
 export const isEmpty = data => {
@@ -11,5 +9,3 @@ export const isEmpty = data => {
 
   return false;
 };
-
-export const isSpecialSymbol = value => REGEXP_SPECIAL.test(value);
