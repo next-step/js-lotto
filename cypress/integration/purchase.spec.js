@@ -7,7 +7,7 @@ describe('구매 기능', () => {
   });
 
   context('로또는 1000원 단위입니다.', () => {
-    it('4500원은 1000원 단위로 나누어지지 않기 때문에 불가능합니다.', () => {
+    it('4500원 = 구매 불가능', () => {
       const alertStub = cy.stub();
       cy.on('window:alert', alertStub);
 
@@ -22,7 +22,7 @@ describe('구매 기능', () => {
       cy.get(`#${DOM.purchaseFormInput}`).should('have.value', '');
     });
 
-    it('3500원은 1000원 단위로 나누어지지 않기 때문에 불가능합니다.', () => {
+    it('3500원 = 구매 불가능', () => {
       const alertStub = cy.stub();
       cy.on('window:alert', alertStub);
 
@@ -36,28 +36,35 @@ describe('구매 기능', () => {
         });
       cy.get(`#${DOM.purchaseFormInput}`).should('have.value', '');
     });
+
+    it('4000원 = 구매 가능', () => {
+      cy.get(`#${DOM.purchaseFormInput}`).type(4000);
+      cy.get(`#${DOM.purchaseFormButton}`).click();
+      cy.get(`#${DOM.purchaseSectionLabel}`).should('have.text', '총 4개를 구매하였습니다.');
+      cy.get(`#${DOM.purchaseFormInput}`).should('have.value', '');
+    });
   });
 
   context('로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 합니다.', () => {
-    it('2000원은 2개 구매 가능합니다.', () => {
+    it('2000원 = 2개 구매', () => {
       cy.get(`#${DOM.purchaseFormInput}`).type(2000);
       cy.get(`#${DOM.purchaseFormButton}`).click();
       cy.get(`#${DOM.purchaseSectionLabel}`).should('have.text', '총 2개를 구매하였습니다.');
       cy.get(`#${DOM.purchaseSectionLottoNumbersFlexBox}`).children().should('have.length', 2);
     });
 
-    it('3000원은 3개 구매 가능합니다.', () => {
+    it('3000원 = 3개 구매', () => {
       cy.get(`#${DOM.purchaseFormInput}`).type(3000);
       cy.get(`#${DOM.purchaseFormButton}`).click();
       cy.get(`#${DOM.purchaseSectionLabel}`).should('have.text', '총 3개를 구매하였습니다.');
       cy.get(`#${DOM.purchaseSectionLottoNumbersFlexBox}`).children().should('have.length', 3);
     });
 
-    it('4000원은 4개 구매 가능합니다.', () => {
-      cy.get(`#${DOM.purchaseFormInput}`).type(4000);
+    it('10000원은 = 10개 구매', () => {
+      cy.get(`#${DOM.purchaseFormInput}`).type(10000);
       cy.get(`#${DOM.purchaseFormButton}`).click();
-      cy.get(`#${DOM.purchaseSectionLabel}`).should('have.text', '총 4개를 구매하였습니다.');
-      cy.get(`#${DOM.purchaseSectionLottoNumbersFlexBox}`).children().should('have.length', 4);
+      cy.get(`#${DOM.purchaseSectionLabel}`).should('have.text', '총 10개를 구매하였습니다.');
+      cy.get(`#${DOM.purchaseSectionLottoNumbersFlexBox}`).children().should('have.length', 10);
     });
   });
 
