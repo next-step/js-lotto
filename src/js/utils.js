@@ -1,3 +1,13 @@
+import { UNIT_AMOUNT } from './constants.js';
+
+export function validateMultipleOf1000(amount) {
+  if (amount % UNIT_AMOUNT) {
+    return false;
+  }
+
+  return true;
+}
+
 export function getUniqueRandomNumbers(low, high, count) {
   const result = [];
 

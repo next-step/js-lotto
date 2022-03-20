@@ -1,4 +1,6 @@
+import { UNIT_AMOUNT } from './constants.js';
 import Lotto from './purchased-lotto.js';
+import { validateMultipleOf1000 } from './utils.js';
 
 export function handlePurchaseClick(ev) {
   ev.preventDefault();
@@ -17,7 +19,7 @@ export function handlePurchaseClick(ev) {
 
   showAfterPurchaseSection();
 
-  const lottoCount = amount / 1000;
+  const lottoCount = amount / UNIT_AMOUNT;
 
   for (let i = 0; i < lottoCount; i++) {
     new Lotto().render();
@@ -32,12 +34,4 @@ function showAfterPurchaseSection() {
 
   purchasedLottosSection.style.display = 'block';
   lastWinningNumbersSection.style.display = 'block';
-}
-
-function validateMultipleOf1000(amount) {
-  if (amount % 1000) {
-    return false;
-  }
-
-  return true;
 }

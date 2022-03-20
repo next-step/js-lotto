@@ -1,5 +1,6 @@
 import { handlePurchaseClick } from './purchase.js';
 import { handleToggleClick } from './purchased-lotto-section.js';
+import { EVENT, ENTER_KEYCODE } from './constants.js';
 
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $modalClose = document.querySelector('.modal-close');
@@ -20,16 +21,16 @@ const onModalClose = () => {
   $modal.classList.remove('open');
 };
 
-$showResultButton.addEventListener('click', onModalShow);
-$modalClose.addEventListener('click', onModalClose);
+$showResultButton.addEventListener(EVENT.CLICK, onModalShow);
+$modalClose.addEventListener(EVENT.CLICK, onModalClose);
 
-$purchaseAmountInput.addEventListener('keydown', ev => {
-  if (ev.keyCode === 13) {
+$purchaseAmountInput.addEventListener(EVENT.KEYDOWN, ev => {
+  if (ev.keyCode === ENTER_KEYCODE) {
     ev.preventDefault();
     handlePurchaseClick(ev);
   }
 });
 
-$purchaseAmountSubmitButton.addEventListener('click', handlePurchaseClick);
+$purchaseAmountSubmitButton.addEventListener(EVENT.CLICK, handlePurchaseClick);
 
-$lottoNumbersToggleButton.addEventListener('click', handleToggleClick);
+$lottoNumbersToggleButton.addEventListener(EVENT.CLICK, handleToggleClick);
