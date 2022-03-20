@@ -16,12 +16,7 @@ export class PurchaseDetail {
             </label>
         </div>
         </div>
-        <div class="d-flex flex-wrap">
-        <span class="mx-1 text-4xl">🎟️ </span>
-        <span class="mx-1 text-4xl">🎟️ </span>
-        <span class="mx-1 text-4xl">🎟️ </span>
-        <span class="mx-1 text-4xl">🎟️ </span>
-        <span class="mx-1 text-4xl">🎟️ </span>
+        <div class="d-flex flex-wrap icons">
         </div>
     </section>
     `;
@@ -31,6 +26,14 @@ export class PurchaseDetail {
   setState = (lottos) => {
     const countText = document.querySelector("#count-text");
     countText.innerText = `총 ${lottos.length}개를 구매하였습니다. `;
+    for (const lotto of lottos) {
+      const icon = document.createElement("span");
+      const text = document.createTextNode("🎟️");
+      icon.className = "mx-1 text-4xl";
+      icon.appendChild(text);
+      const parent = document.querySelector(".icons");
+      parent.appendChild(icon);
+    }
   };
 
   constructor(target) {
