@@ -1,4 +1,4 @@
-import { DOM, ERROR_MESSAGE, LOTTO_PRICE } from '../constants.js';
+import { DOM, ERROR_MESSAGE, LOTTO } from '../constants.js';
 import Component from '../core/Component.js';
 import { $ } from '../utils/dom.js';
 
@@ -37,7 +37,7 @@ class PurchaseForm extends Component {
       return;
     }
 
-    this.props.setLottoCountAndNumbers($purchaseFormInput.value / LOTTO_PRICE);
+    this.props.setLottoCountAndNumbers($purchaseFormInput.value / LOTTO.PRICE);
   }
 
   validateFormInput(value) {
@@ -46,7 +46,7 @@ class PurchaseForm extends Component {
       return false;
     }
 
-    if (value % LOTTO_PRICE !== 0) {
+    if (value % LOTTO.PRICE !== 0) {
       alert(ERROR_MESSAGE.INVALID_PRICE);
       return false;
     }

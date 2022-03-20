@@ -1,11 +1,4 @@
-import {
-  DOM,
-  ERROR_MESSAGE,
-  LOTTO_END_NUMBER,
-  LOTTO_NUMBER_COUNT,
-  LOTTO_PRICE,
-  LOTTO_START_NUMBER,
-} from '../../src/js/constants.js';
+import { DOM, ERROR_MESSAGE, LOTTO } from '../../src/js/constants.js';
 import { pickRandomNumbers } from '../../src/js/utils/index.js';
 
 describe('구매 기능', () => {
@@ -13,7 +6,7 @@ describe('구매 기능', () => {
     cy.reload();
   });
 
-  context(`로또는 ${LOTTO_PRICE}원 단위입니다.`, () => {
+  context(`로또는 ${LOTTO.PRICE}원 단위입니다.`, () => {
     it('4500원 = 구매 불가능', () => {
       const alertStub = cy.stub();
       cy.on('window:alert', alertStub);
@@ -106,26 +99,26 @@ describe('구매 기능', () => {
   });
 
   context('소비자는 자동 구매를 할 수 있어야 합니다.', () => {
-    it(`구매가 됐다면 ${LOTTO_NUMBER_COUNT}개의 숫자를 가지고 있어야 합니다.`, () => {
+    it(`구매가 됐다면 ${LOTTO.NUMBER_COUNT}개의 숫자를 가지고 있어야 합니다.`, () => {
       cy.get(`#${DOM.PURCHASE_FORM_INPUT}`).type(4000);
       cy.get(`#${DOM.PURCHASE_FORM_BUTTON}`).click();
       cy.get(`.${DOM.LOTTO_DETAIL}`).each($el => {
         cy.get($el)
           .invoke('text')
           .then(text => text.split(',').length)
-          .should('equal', LOTTO_NUMBER_COUNT);
+          .should('equal', LOTTO.NUMBER_COUNT);
       });
     });
 
     it('6개의 숫자는 서로 달라야합니다.', () => {
-      const set = new Set(pickRandomNumbers(LOTTO_NUMBER_COUNT));
-      expect(set.size).to.equal(LOTTO_NUMBER_COUNT);
+      const set = new Set(pickRandomNumbers(LOTTO.NUMBER_COUNT));
+      expect(set.size).to.equal(LOTTO.NUMBER_COUNT);
     });
 
     it('6개의 숫자는 1에서 45 사이의 숫자여야 합니다.', () => {
-      const pickNumberes = pickRandomNumbers(LOTTO_NUMBER_COUNT);
+      const pickNumberes = pickRandomNumbers(LOTTO.NUMBER_COUNT);
       pickNumberes.forEach(number =>
-        expect(number).to.be.gte(LOTTO_START_NUMBER).and.to.be.lte(LOTTO_END_NUMBER),
+        expect(number).to.be.gte(LOTTO.START_NUMBER).and.to.be.lte(LOTTO.END_NUMBER),
       );
     });
   });

@@ -1,7 +1,9 @@
-export const LOTTO_PRICE = 1000;
-export const LOTTO_START_NUMBER = 1;
-export const LOTTO_END_NUMBER = 45;
-export const LOTTO_NUMBER_COUNT = 6;
+export const LOTTO = {
+  PRICE: 1000,
+  START_NUMBER: 1,
+  END_NUMBER: 45,
+  NUMBER_COUNT: 6,
+};
 
 export const DOM = {
   PURCHASE_FORM: 'purchase-form',
@@ -16,6 +18,6 @@ export const DOM = {
 };
 
 export const ERROR_MESSAGE = {
-  INVALID_PRICE: `로또 구입 금액을 ${LOTTO_PRICE}원 단위로 입력해 주세요.`,
+  INVALID_PRICE: `로또 구입 금액을 ${LOTTO.PRICE}원 단위로 입력해 주세요.`,
   REQUIRED_PRICE: '로또 구입 금액을 입력해주세요.',
 };
