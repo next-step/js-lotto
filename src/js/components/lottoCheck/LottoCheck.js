@@ -1,9 +1,10 @@
+import { $renderWithEventBind } from '../../helper/dom.js';
 import LottoCheckTemplate from './LottoCheckTemplate.js';
 
-const LottoCheck = () => {
+const LottoCheck = $renderWithEventBind(() => {
   const $template = LottoCheckTemplate();
 
-  return $template;
-};
+  return [$template];
+});
 
 export default LottoCheck;

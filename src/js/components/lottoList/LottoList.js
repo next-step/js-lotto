@@ -1,25 +1,23 @@
-import { $, $all } from '../../helper/index.js';
+import { $, $all, $renderWithEventBind } from '../../helper/index.js';
+import useLottoService from '../../services/lotto.js';
 import LottoListTemplate from './LottoListTemplate.js';
-import LottoNumbers from './LottoNumbers.js';
 
-const LottoList = count => {
-  const lottoNumbers = LottoNumbers();
-  const $template = LottoListTemplate({ numbers: lottoNumbers.purchasesLotto(count) });
+const LottoList = $renderWithEventBind(count => {
+  const { purchasesLotto } = useLottoService();
+  const $template = LottoListTemplate({ numbers: purchasesLotto(count) });
 
-  $template.addEventListener('change', ({ target }) => {
-    if (!target.matches('[data-props="toggle-button"]')) return;
-    const isChecked = target.checked;
-    if (isChecked) {
-      $all('.lotto-numbers').forEach(item => item.classList.remove('d-none'));
-      $('.lotto-list').classList.add('flex-col');
-      return;
-    }
+  const $events = [
+    {
+      type: 'change',
+      callback: ({ target }) => {
+        if (!target.matches('[data-props="toggle-button"]')) return;
+        $all('.lotto-numbers').forEach(item => item.classList.toggle('d-none'));
+        $('.lotto-list').classList.toggle('flex-col');
+      },
+    },
+  ];
 
-    $all('.lotto-numbers').forEach(item => item.classList.add('d-none'));
-    $('.lotto-list').classList.remove('flex-col');
-  });
-
-  return $template;
-};
+  return [$template, $events];
+});
 
 export default LottoList;
