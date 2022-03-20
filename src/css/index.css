@@ -13,11 +13,15 @@ body {
   margin: 0 auto;
 }
 
-#lotto-purchased-section {
+.lotto-purchased-section {
   visibility: hidden;
 }
 
-#lotto-check-form {
+.lotto-purchased-section .visible {
+  visibility: visible;
+}
+
+.lotto-check-form {
   visibility: hidden;
 }
 

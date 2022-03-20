@@ -27,7 +27,7 @@ $lottoPayForm.addEventListener('submit', (e) => {
 });
 
 const renderPaidSectionItems = (lottos) => {
-  $lottoPaidSection.style.visibility = 'visible';
+  $lottoPaidSection.classList.toggle('visible');
   $lottoPaidCounts.innerHTML = lottos.length;
   $lottoPaidCards.innerHTML = lottos
     .map((lotto) => {

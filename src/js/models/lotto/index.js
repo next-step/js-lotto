@@ -3,7 +3,6 @@ import NOT_ALLOWED_PAY_UNIT from './messageConstants';
 
 class Lotto {
   static pay(paidPrice) {
-    console.log(paidPrice);
     if (!Lotto.#isValidatePaidPrice(paidPrice)) {
       alert(NOT_ALLOWED_PAY_UNIT);
       return;
