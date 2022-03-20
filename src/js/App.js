@@ -24,6 +24,8 @@ class App {
       lottos.push(lotto);
     }
     this.#purchseDetailComponent.setState(lottos);
+    this.#purchaseDetailElement.hidden = false;
+    this.#tryFormElement.hidden = false;
   };
 
   #onModalShow = () => {
@@ -54,6 +56,8 @@ class App {
 
   constructor() {
     this.#setComponents();
+    this.#purchaseDetailElement.hidden = true;
+    this.#tryFormElement.hidden = true;
   }
 }
 

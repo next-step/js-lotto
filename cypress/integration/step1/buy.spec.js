@@ -30,6 +30,9 @@ describe("Calculator Test", function () {
 
   it("구입할 금액을 입력하기 전까지는 아래 구매내역, 번호 입력창을 보여주지 않는다. ", function () {
     // 노출 여부 판단
-    cy.get("#lotto-detail.style.visibility").should("hidden");
+    cy.get("#purchase-detail").should("not.be.visible");
+    cy.get(".price-input").type("10000");
+    cy.get(".confirm").click();
+    cy.get("#purchase-detail").should("be.visible");
   });
 });
