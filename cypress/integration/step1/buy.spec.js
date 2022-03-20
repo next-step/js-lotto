@@ -1,3 +1,5 @@
+import { INVALID_INPUT_ALERT_STRING } from "../../../src/js/constants.js";
+
 describe("Calculator Test", function () {
   beforeEach(() => {
     cy.visit("http://127.0.0.1:5500/index.html");
@@ -19,7 +21,7 @@ describe("Calculator Test", function () {
     cy.get(".price-input").type("5");
     cy.get(".confirm").click();
     cy.on("window:alert", (text) => {
-      expect(text).to.contains("천 원 단위로 금액을 입력해주세요. ");
+      expect(text).to.contains(INVALID_INPUT_ALERT_STRING);
     });
   });
 

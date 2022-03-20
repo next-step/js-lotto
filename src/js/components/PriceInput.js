@@ -1,4 +1,5 @@
 import { isValidPriceInput } from "../validation.js";
+import { INVALID_INPUT_ALERT_STRING } from "../constants.js";
 
 export class PriceInput {
   #template = () => {
@@ -30,7 +31,7 @@ export class PriceInput {
     event.preventDefault();
     const value = event.target[0].valueAsNumber;
     if (!isValidPriceInput(value)) {
-      window.alert(`천 원 단위로 금액을 입력해주세요. `);
+      window.alert(INVALID_INPUT_ALERT_STRING);
       event.target[0].value = "";
       return;
     }

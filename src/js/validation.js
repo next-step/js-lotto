@@ -1,8 +1,9 @@
-const canBeDividedBy1000 = (inputNumber) => {
+import { PRICE_INPUT_UNIT } from "./constants.js";
+const canBeDivided = (inputNumber, unit) => {
   if (inputNumber <= 0) {
     return false;
   }
-  return inputNumber % 1000 === 0;
+  return inputNumber % unit === 0;
 };
 
 const isNumber = (input) => {
@@ -10,5 +11,5 @@ const isNumber = (input) => {
 };
 
 export const isValidPriceInput = (inputNumber) => {
-  return isNumber(inputNumber) && canBeDividedBy1000(inputNumber);
+  return isNumber(inputNumber) && canBeDivided(inputNumber, PRICE_INPUT_UNIT);
 };
