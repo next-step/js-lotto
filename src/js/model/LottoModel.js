@@ -1,4 +1,5 @@
-import { LOTTO_SIZE } from '../constants/unit.js';
+import { LOTTO_SIZE, LOTTO_PURCHASE_MAX_QUANTITY } from '../constants/unit.js';
+import { ERR_MESSAGE } from '../constants/alertMessage.js';
 import {
   LOTTO_SECTION,
   LOTTO_FORM,
@@ -18,6 +19,15 @@ export default class LottoModel {
     this.createLotto(quantity);
     this.showLottoTicket();
   }
+
+  static validators = {
+    isValidQuantity: (totalQuantity) => {
+      if (totalQuantity > LOTTO_PURCHASE_MAX_QUANTITY) {
+        return alert(ERR_MESSAGE.OVER_LIMIT_QUANTITY);
+      }
+      return true;
+    },
+  };
 
   createLotto(quantity) {
     //init Data
@@ -66,6 +76,10 @@ export default class LottoModel {
                         <span class="lotto-section-ticket__numbers" hidden>${ticket.ticketNumbers}</span>
                       </span></span>`;
     return this.#tickets.map((ticket) => getTemplate(ticket)).join('');
+  }
+
+  get quantity() {
+    return this.#quantity;
   }
 }
 
