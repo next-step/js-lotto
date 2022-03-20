@@ -1,10 +1,9 @@
-import { canBeDividedBy1000, isNumber } from "../validation.js";
+import { isValidPriceInput } from "../validation.js";
 
 export class PriceInput {
-  #value = 0;
   #template = () => {
     return `
-    <form class="mt-5">
+    <form id="price-input-form" class="mt-5">
         <label class="mb-2 d-inline-block"
         >구입할 금액을 입력해주세요.
         </label>
@@ -14,31 +13,28 @@ export class PriceInput {
             class="price-input w-100 mr-2 pl-2"
             placeholder="구입 금액"
         />
-        <button type="button" class="confirm btn btn-cyan">확인</button>
+        <button class="confirm btn btn-cyan">확인</button>
         </div>
     </form>
     `;
   };
 
   #setEvents = (onClickPriceInputConfirmButton) => {
-    const button = document.querySelector(".confirm");
-    button.addEventListener("click", () => {
-      if (this.#checkValidation()) {
-        onClickPriceInputConfirmButton(this.#value);
-      }
+    const priceInputForm = document.querySelector("#price-input-form");
+    priceInputForm.addEventListener("submit", (event) => {
+      this.#handlePriceInputSubmitEvent(event, onClickPriceInputConfirmButton);
     });
   };
 
-  #checkValidation = () => {
-    const input = document.querySelector(".price-input");
-    const inputNumber = Number(input.value);
-    if (!isNumber(inputNumber) || !canBeDividedBy1000(inputNumber)) {
+  #handlePriceInputSubmitEvent = (event, callback) => {
+    event.preventDefault();
+    const value = event.target[0].valueAsNumber;
+    if (!isValidPriceInput(value)) {
       window.alert(`천 원 단위로 금액을 입력해주세요. `);
-      input.value = "";
-      return false;
+      event.target[0].value = "";
+      return;
     }
-    this.#value = inputNumber;
-    return true;
+    callback(value);
   };
 
   constructor(target, onClickPriceInputConfirmButton) {
