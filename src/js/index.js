@@ -10,7 +10,7 @@ function LottoApp() {
   const $modalClose = document.querySelector(".modal-close");
   const $modal = document.querySelector(".modal");
   const $lottoNumbersToggleButton = document.querySelector(".lotto-numbers-toggle-button");
-  const $purchaseButton = document.querySelector("#purchaseButton");
+  const $purchaseButton = document.querySelector("#purchase-button");
 
   const onModalShow = () => {
     $modal.classList.add("open");
@@ -34,7 +34,7 @@ function LottoApp() {
   };
 
   const purchaseLottoTickets = () => {
-    const $purchasePrice = document.querySelector("#purchasePrice");
+    const $purchasePrice = document.querySelector("#purchase-price");
     const purchasePrice = Number($purchasePrice.value);
 
     if (!isValidateAmountOfPayment(purchasePrice)) {
@@ -45,10 +45,10 @@ function LottoApp() {
     const numberOfLottoTickets = purchasePrice / PRICE_PER_LOTTO;
     const purchasedLottoTickets = createLottoTickets(numberOfLottoTickets);
 
-    const $purchasedLottoCount = document.querySelector("#purchasedLottoCount");
+    const $purchasedLottoCount = document.querySelector("#purchased-lotto-count");
     $purchasedLottoCount.innerText = numberOfLottoTickets;
 
-    const $lottoIconAndNumbers = document.querySelector("#lottoIconAndNumbers");
+    const $lottoIconAndNumbers = document.querySelector("#lotto-icon-and-numbers");
     const lottoTemplate = purchasedLottoTickets
       .map(lotto => {
         return `
@@ -62,10 +62,10 @@ function LottoApp() {
 
     $lottoIconAndNumbers.innerHTML = lottoTemplate;
 
-    const $purchaseResult = document.querySelector("#purchaseResult");
+    const $purchaseResult = document.querySelector("#purchase-result");
     $purchaseResult.classList.remove("pre-purchase");
 
-    const $confirmWinningNumbers = document.querySelector("#confirmWinningNumbers");
+    const $confirmWinningNumbers = document.querySelector("#confirm-winning-numbers");
     $confirmWinningNumbers.classList.remove("pre-purchase");
   };
 
