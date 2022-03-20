@@ -3,6 +3,8 @@ module.exports = {
     browser: true,
     'cypress/globals': true,
   },
+  parser: '@babel/eslint-parser',
+  parserOptions: { requireConfigFile: false },
   plugins: ['prettier', 'cypress'],
   extends: ['prettier', 'airbnb-base', 'plugin:prettier/recommended', 'plugin:cypress/recommended'],
   rules: {
@@ -13,6 +15,8 @@ module.exports = {
     'cypress/no-force': 'warn',
     'cypress/no-async-tests': 'error',
     'cypress/no-pause': 'error',
+    'import/extensions': ['error', 'always'],
     'max-depth': ['error', 2],
+    'no-alert': 'off',
   },
 };
