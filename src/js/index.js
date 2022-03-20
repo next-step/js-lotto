@@ -1,5 +1,3 @@
-import LottoMachine from "./model/LottoMachine.mjs";
-import LottoSeller from "./model/LottoSeller.mjs";
 import User from "./model/User.mjs";
 import PurchaseForm from "./viewModel/PurchaseForm.mjs";
 import LottoHistory from "./viewModel/LottoHistory.mjs";
@@ -13,24 +11,19 @@ const $lottoNumbersToggleButton = document.querySelector(
 );
 
 function addAppEventListener() {
-  if (!$app) {
-    alert("앱을 찾을 수 없습니다.");
-    return;
-  }
   const user = new User();
-  const lottoMachine = new LottoMachine();
-  const lottoSeller = new LottoSeller();
-
   const lottoHistory = new LottoHistory();
-  const puchaseForm = new PurchaseForm(
+  const puchaseForm = new PurchaseForm({
     user,
-    lottoSeller,
-    lottoMachine,
-    lottoHistory
-  );
+    lottoHistory,
+  });
 }
 
-addAppEventListener();
+if ($app) {
+  addAppEventListener();
+} else {
+  alert("앱을 찾을 수 없습니다.");
+}
 
 const onModalShow = () => {
   $modal.classList.add("open");

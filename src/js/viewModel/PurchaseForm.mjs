@@ -1,25 +1,19 @@
 export default class PurchaseForm {
   #user;
 
-  #seller;
+  #priceForm;
 
-  #machine;
-
-  #button;
-
-  #el;
+  #priceInput;
 
   #lottoHistory;
 
-  constructor(user, seller, machine, lottoHistory) {
+  constructor({user, lottoHistory}) {
     this.#user = user;
-    this.#seller = seller;
-    this.#machine = machine;
     this.#lottoHistory = lottoHistory;
-    this.#el = document.querySelector('input[placeholder="구입 금액"]');
-    this.#button = document.querySelector('input[placeholder="구입 금액"] + button');
-    this.#el.addEventListener("change", this.#handleInputChange);
-    this.#button.addEventListener("click", this.#handleButtonClick);
+    this.#priceInput = document.querySelector('input[placeholder="구입 금액"]');
+    this.#priceForm = this.#priceInput.closest('form');
+    this.#priceInput.addEventListener("change", this.#handleInputChange);
+    this.#priceForm.addEventListener("submit", this.#handleSubmit);
   }
 
   #handleInputChange = (event) => {
@@ -27,8 +21,13 @@ export default class PurchaseForm {
     this.#user.wallet = valueAsNumber;
   }
 
-  #handleButtonClick = (event) => {
-    this.#user.buyLotto(this.#seller, this.#machine);
+  /**
+   *
+   * @param {Event} event
+   */
+  #handleSubmit = (event) => {
+    event.preventDefault()
+    this.#user.buyLotto();
     this.#lottoHistory.render(this.#user.purchaseHistory)
   }
 }

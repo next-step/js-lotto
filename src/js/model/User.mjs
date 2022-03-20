@@ -1,3 +1,5 @@
+import {calculateLotto, getLottos} from "../module/lotto.js";
+
 export default class User {
   #wallet;
 
@@ -8,12 +10,12 @@ export default class User {
     this.#purchaseHistory = [];
   }
 
-  buyLotto(seller, machine) {
-    const count = seller.calculateLotto(this.#wallet);
+  buyLotto() {
+    const count = calculateLotto(this.#wallet);
 
     this.#purchaseHistory = [
       ...this.#purchaseHistory,
-      ...seller.sellLotto(machine, count),
+      ...getLottos(count),
     ];
     return this.#purchaseHistory;
   }
