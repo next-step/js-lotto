@@ -1,4 +1,5 @@
 ul.lotto-list {
+  flex-wrap: wrap;
   list-style: none;
   padding-left: 0;
 }
