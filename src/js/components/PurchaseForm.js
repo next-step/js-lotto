@@ -1,4 +1,4 @@
-import { DOM, MESSAGE } from '../constants.js';
+import { DOM, ERROR_MESSAGE, LOTTO_PRICE } from '../constants.js';
 import Component from '../core/Component.js';
 import { $ } from '../utils/dom.js';
 
@@ -8,23 +8,23 @@ class PurchaseForm extends Component {
       <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.</label>
       <div class="d-flex">
         <input
-          id="${DOM.purchaseFormInput}"
+          id="${DOM.PURCHASE_FORM_INPUT}"
           type="number"
           class="w-100 mr-2 pl-2"
           placeholder="구입 금액"
         />
-        <button type="button" id="${DOM.purchaseFormButton}" class="btn btn-cyan">확인</button>
+        <button type="button" id="${DOM.PURCHASE_FORM_BUTTON}" class="btn btn-cyan">확인</button>
       </div>
     `;
   }
 
   mounted() {
-    $(`#${DOM.purchaseFormInput}`).focus();
+    $(`#${DOM.PURCHASE_FORM_INPUT}`).focus();
   }
 
   setEvent() {
     this.$target.onsubmit = this.onSubmitPurchaseForm;
-    $(`#${DOM.purchaseFormButton}`).onclick = this.onClickPurchaseFormButton.bind(this);
+    $(`#${DOM.PURCHASE_FORM_BUTTON}`).onclick = this.onClickPurchaseFormButton.bind(this);
   }
 
   onSubmitPurchaseForm(e) {
@@ -32,16 +32,16 @@ class PurchaseForm extends Component {
   }
 
   onClickPurchaseFormButton() {
-    const $purchaseFormInput = $(`#${DOM.purchaseFormInput}`);
+    const $purchaseFormInput = $(`#${DOM.PURCHASE_FORM_INPUT}`);
 
-    if ($purchaseFormInput.value % 1000 !== 0) {
-      alert(MESSAGE.pleaseEnterlottoPurchasePriceInUnitsOf1000);
+    if ($purchaseFormInput.value % LOTTO_PRICE !== 0) {
+      alert(ERROR_MESSAGE.INVALID_PRICE);
       $purchaseFormInput.value = '';
       $purchaseFormInput.focus();
       return;
     }
 
-    this.props.setLottoCountAndNumbers($purchaseFormInput.value / 1000);
+    this.props.setLottoCountAndNumbers($purchaseFormInput.value / LOTTO_PRICE);
   }
 }
 

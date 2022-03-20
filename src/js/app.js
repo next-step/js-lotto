@@ -11,8 +11,8 @@ class LottoApp extends Component {
       <div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
-          <form id="${DOM.purchaseForm}" class="mt-5"></form>
-          <section id="${DOM.purchaseSection}" class="mt-9"></section>
+          <form id="${DOM.PURCHASE_FORM}" class="mt-5"></form>
+          <section id="${DOM.PURCHASE_SECTION}" class="mt-9"></section>
         </div>
       </div>
     `;
@@ -26,8 +26,8 @@ class LottoApp extends Component {
   }
 
   mounted() {
-    const $purchaseForm = $(`#${DOM.purchaseForm}`);
-    const $purchaseSection = $(`#${DOM.purchaseSection}`);
+    const $purchaseForm = $(`#${DOM.PURCHASE_FORM}`);
+    const $purchaseSection = $(`#${DOM.PURCHASE_SECTION}`);
 
     new PurchaseForm($purchaseForm, {
       setLottoCountAndNumbers: this.setLottoCountAndNumbers.bind(this),

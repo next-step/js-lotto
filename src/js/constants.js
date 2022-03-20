@@ -1,15 +1,17 @@
+export const LOTTO_PRICE = 1000;
+
 export const DOM = {
-  purchaseForm: 'purchase-form',
-  purchaseFormInput: 'purchase-form-input',
-  purchaseFormButton: 'purchase-form-button',
-  purchaseSection: 'purchase-section',
-  purchaseSectionLabel: 'purchase-section-label',
-  purchaseSectionLottoNumbersToggleButton: 'purchase-section-lotto-numbers-toggle-button',
-  purchaseSectionLottoNumbersFlexBox: 'purchase-section-lotto-numbers-flex-box',
-  lottoIcon: 'lotto-icon',
-  lottoDetail: 'lotto-detail',
+  PURCHASE_FORM: 'purchase-form',
+  PURCHASE_FORM_INPUT: 'purchase-form-input',
+  PURCHASE_FORM_BUTTON: 'purchase-form-button',
+  PURCHASE_SECTION: 'purchase-section',
+  PURCHASE_SECTION_LABEL: 'purchase-section-label',
+  PURCHASE_SECTION_LOTTO_NUMBERS_TOGGLE_BUTTON: 'purchase-section-lotto-numbers-toggle-button',
+  PURCHASE_SECTION_LOTTO_NUMBERS_FLEXBOX: 'purchase-section-lotto-numbers-flex-box',
+  LOTTO_ICON: 'lotto-icon',
+  LOTTO_DETAIL: 'lotto-detail',
 };
 
-export const MESSAGE = {
-  pleaseEnterlottoPurchasePriceInUnitsOf1000: '로또 구입 금액을 1,000원 단위로 입력해 주세요.',
+export const ERROR_MESSAGE = {
+  INVALID_PRICE: `로또 구입 금액을 ${LOTTO_PRICE}원 단위로 입력해 주세요.`,
 };
