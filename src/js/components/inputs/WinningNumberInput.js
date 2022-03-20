@@ -14,6 +14,8 @@ export default class WinningNumberInput {
 
     if(!this.isVisible) {
       $winningNumberInputBox.style.display = "none";
+    } else {
+      $winningNumberInputBox.style.display = "block";
     }
   }
 }
