@@ -1,7 +1,6 @@
 export default class ConfirmButton {
-  constructor({inputPrice, onClick}) {
+  constructor({onClick}) {
    this.$confirmBtn = null;
-   this.inputVal = inputPrice;
    this.handleClick = onClick;
    this.setState();
   }

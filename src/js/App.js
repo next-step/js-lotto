@@ -11,7 +11,7 @@ class App {
     this.$purchaseDisplay = null;
     this.$winningNumberInput = null;
     this.$priceInput = null;
-    this.$confirmBtn = null;
+    this.$confirmBtn = new ConfirmButton({onClick: this.handleConfirmBtnClick.bind(this)})
     this.state = null;
     this.setState({...INITIAL_STATE})
   }
@@ -27,6 +27,7 @@ class App {
   }
 
   handleConfirmBtnClick() {
+    console.log("click on confirm button")
     // todo: 입력된 숫자가 1000으로 나뉘어지는 숫자인지 validate
     this.operator.validatePrice(this.state.priceInputVal);
     // todo: 랜덤한 숫자를 만들어내기 (2자리, 45이하)
@@ -38,7 +39,7 @@ class App {
     this.$purchaseDisplay = new PurchaseDisplay({isConfirmBtnClicked: this.state.isConfirmBtnClicked});
     this.$winningNumberInput = new WinningNumberInput({isConfirmBtnClicked: this.state.isConfirmBtnClicked});
     this.$priceInput = new PriceInput({priceInputVal: this.state.priceInputVal, onChange: this.handlePurchaseInputChange.bind(this) })
-    this.$confirmBtn = new ConfirmButton({inputPrice: this.state.priceInputVal, onClick: this.handleConfirmBtnClick.bind(this)})
+    
   }
 }
 
