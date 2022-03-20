@@ -32,7 +32,6 @@ const createLottoTickets = numberOfLottoTickets => {
 // * 구매 금액이 1,000원 단위인지 검증하는 함수
 const isValidateAmountOfPayment = payment => {
   if (!(payment % PRICE_PER_LOTTO === 0)) {
-    alert("구입 금액은 1,000원 단위로 입력해 주세요.");
     return false;
   }
 
