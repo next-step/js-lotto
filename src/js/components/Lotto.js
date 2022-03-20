@@ -25,6 +25,8 @@ export default class Lotto {
                 this.lottoTickets.setEvent();
 
                 this.lottoWinning.render();
+                this.lottoWinning.mounted();
+                this.lottoWinning.setEvent();
             },
         });
         this.lottoTickets = new LottoTickets(this.$lottoAmountArea, this.$lottoTicketArea);
