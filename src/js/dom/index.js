@@ -6,15 +6,13 @@ export const replaceChild = ($el, $clonedEl) => {
 export const $ = (selector, $container = document) =>
   $container.querySelector(selector);
 
-export const rendererCurry = (App, $app, components) => (state) => {
-  components.forEach((component) => {
-    component?.render?.($app, state);
-  });
+export const rendererCurry = (App, components) => (state) => {
+  components.forEach((component) => component?.render?.(state));
   App();
 };
 
-export const eventBinderCurry = ($app) => (components) =>
-  components.forEach((component) => component?.bindEvents?.($app));
+export const eventBinder = (components) =>
+  components.forEach((component) => component?.bindEvents?.());
 
 export const onCurry =
   ($app) =>
@@ -37,6 +35,5 @@ export const emit = (event, data, $container = document) => {
   return $container;
 };
 
-export const toggleClassName = ($el, type, className) => {
+export const toggleClassName = ($el, type, className) =>
   $el.classList[type](className);
-};

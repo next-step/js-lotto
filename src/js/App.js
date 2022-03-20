@@ -3,7 +3,7 @@ import {
   $,
   onCurry,
   rendererCurry,
-  eventBinderCurry,
+  eventBinder,
   replaceChild,
 } from './dom/index.js';
 import { buy } from './service/index.js';
@@ -24,25 +24,24 @@ const App = () => {
   const $app = $(CLASS.APP);
   const $clonedApp = $app.cloneNode(true);
 
-  const renderer = rendererCurry(App, $clonedApp, [
-    LottoDetailHeader,
-    LottoDetailList,
-  ]);
+  const moneyForm = MoneyForm($clonedApp);
+  const lottoDetailHeader = LottoDetailHeader($clonedApp);
+  const lottoDetailList = LottoDetailList($clonedApp);
 
-  const state = stateWrapper(initialState, renderer);
+  const state = stateWrapper(
+    initialState,
+    rendererCurry(App, [lottoDetailHeader, lottoDetailList])
+  );
 
-  const eventBinder = eventBinderCurry($clonedApp);
-  eventBinder([MoneyForm, LottoDetailHeader]);
+  eventBinder([moneyForm, lottoDetailHeader]);
 
   const on = onCurry($clonedApp);
   on('@buy', ({ detail }) => {
     state.lotto = buy(detail, state);
   });
-  on('@toggle', ({ detail }) =>
-    LottoDetailHeader.toggleStyle($clonedApp, detail)
-  );
+  on('@toggle', ({ detail }) => lottoDetailHeader.toggleStyle(detail));
 
-  return replaceChild($app, $clonedApp);
+  replaceChild($app, $clonedApp);
 };
 
 export default App;

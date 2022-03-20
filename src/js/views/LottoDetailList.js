@@ -7,19 +7,21 @@ const getLottoTemplate = (lotto) => `
     <span class="lotto-detail">${lotto}</span>
   </li>`;
 
-const render = ($app, { numbers }) => {
-  const $el = $(CLASS.LOTTO_DETAIL_LIST, $app);
-  const $clonedList = $el.cloneNode();
+const LottoDetailList = ($app) => {
+  const render = ({ numbers }) => {
+    const $el = $(CLASS.LOTTO_DETAIL_LIST, $app);
+    const $clonedList = $el.cloneNode();
 
-  $clonedList.insertAdjacentHTML(
-    'afterBegin',
-    numbers.map(getLottoTemplate).join('')
-  );
+    $clonedList.insertAdjacentHTML(
+      'afterBegin',
+      numbers.map(getLottoTemplate).join('')
+    );
 
-  toggleClassName($clonedList, 'remove', 'flex-column');
-  replaceChild($el, $clonedList);
+    toggleClassName($clonedList, 'remove', 'flex-column');
+    replaceChild($el, $clonedList);
+  };
+
+  return { render };
 };
 
-export default {
-  render,
-};
+export default LottoDetailList;
