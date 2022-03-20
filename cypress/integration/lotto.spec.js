@@ -29,5 +29,12 @@
         cy.get('#winning-number-input-form').should('not.be.visible');
       })
 
+      context('로또 구입 시 구입내역이 화면에 나타나야 한다.', () => {
+        it('인풋에 3000을 입력하면 3개의 복권 구매 내역이 나타난다.', () => {
+          cy.get('#purchace-amount-input').type('3000');
+          cy.get('#confirm-button').click();
 
+          cy.get('#purchased-result-text').should('have.text', '총 3개를 구매하였습니다.');
+        })
+      })
     })
