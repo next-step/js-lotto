@@ -1,7 +1,6 @@
 import { LOTTO_NUMBERS, PRICE_PER_LOTTO } from "./constants.js";
 
-// * 로또 객체 1개를 생성하는 함수
-const createLottoTicket = () => {
+const createOneLottoTicket = () => {
   const lottoTicket = [];
 
   for (let i = 0; i < LOTTO_NUMBERS; i++) {
@@ -18,7 +17,6 @@ const createLottoTicket = () => {
   return lottoTicket;
 };
 
-// * 구매한 갯수만큼 로또 객체를 생성하는 함수
 const createLottoTickets = numberOfLottoTickets => {
   const lottoTicketsArray = [];
 
@@ -29,7 +27,6 @@ const createLottoTickets = numberOfLottoTickets => {
   return lottoTicketsArray;
 };
 
-// * 구매 금액이 1,000원 단위인지 검증하는 함수
 const isValidateAmountOfPayment = payment => {
   if (!(payment % PRICE_PER_LOTTO === 0)) {
     return false;
