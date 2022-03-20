@@ -4,7 +4,7 @@ export class PurchaseDetail {
     <section class="mt-9">
         <div class="d-flex">
         <label id="count-text" class="flex-auto my-0"
-            >총 5개를 구매하였습니다.</label
+            >총 개를 구매하였습니다.</label
         >
         <div class="flex-auto d-flex justify-end pr-1">
             <label class="switch">
@@ -28,6 +28,10 @@ export class PurchaseDetail {
   };
 
   #setEvents = () => {};
+  setState = (lottos) => {
+    const countText = document.querySelector("#count-text");
+    countText.innerText = `총 ${lottos.length}개를 구매하였습니다. `;
+  };
 
   constructor(target) {
     target.innerHTML = this.#template();
