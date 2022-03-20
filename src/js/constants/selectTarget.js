@@ -11,4 +11,3 @@ export const LOTTO_SECTION_TICKETS = 'lotto-section-tickets';
 export const LOTTO_SECTION_TICKET = 'lotto-section-ticket';
 export const LOTTO_SECTION_TICKET__NUMBERS = 'lotto-section-ticket__numbers';
 export const LOTTO_NUMBERS_TOGGLE__LABEL = 'lotto-numbers-toggle__label';
-export const LOTTO_NUMBERS_TOGGLE__CHECK = 'lotto-numbers-toggle__check';

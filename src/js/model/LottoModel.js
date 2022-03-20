@@ -86,14 +86,10 @@ export default class LottoModel {
 class LottoTicket {
   #id;
   #ticketNumbers;
-  #isAuto;
-  #isShow;
 
   constructor(i) {
     this.#id = Date.now() + i || 0;
     this.#ticketNumbers = this.randomGenerator();
-    this.#isAuto = true;
-    this.#isShow = false;
   }
 
   randomGenerator(numbers = new Set()) {
