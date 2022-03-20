@@ -22,6 +22,6 @@ export default class LottoHistory {
 
     render(history) {
         this.#elHistoryCount.innerHTML = history.length;
-        this.#elHistoryDetail.innerHTML = history.map(item => this.#historyTemplate(item)).join('')
+        this.#elHistoryDetail.innerHTML = history.map(this.#historyTemplate).join('')
     }
 }
