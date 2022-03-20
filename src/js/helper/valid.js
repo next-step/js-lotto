@@ -1,7 +1,15 @@
 import { REGEXP_SPECIAL } from '../constants.js';
 
-export const isNull = value => value === null || value === undefined;
+export const isNil = value => value == null;
 
-export const isEquals = (target1, target2) => target1 === target2;
+export const isEmpty = data => {
+  if (data instanceof Array) return data.length === 0;
+  if (data instanceof Set || data instanceof Map) return data.size === 0;
+  if (data.constructor === Object) return Object.keys(data).length === 0;
+  if (typeof data === 'string') return data === '';
+  if (typeof data === 'number') return data === 0;
 
-export const isSpecial = value => REGEXP_SPECIAL.test(value);
+  return false;
+};
+
+export const isSpecialSymbol = value => REGEXP_SPECIAL.test(value);
