@@ -12,7 +12,7 @@ const $payFormInput = () => $payForm().find('input');
 
 const $paidSection = () => cy.get('[data-target="lotto-paid-section"]');
 
-const $paidCounts = () => cy.get('#lotto-paid-counts');
+const $paidCounts = () => cy.get('[data-target="lotto-paid-counts"]');
 const $paidCard = () => cy.get('[data-target="lotto-paid-card"]');
 const $paidCardNumbers = () => cy.get('[data-target="lotto-paid-card-numbers"]');
 
@@ -25,7 +25,7 @@ const typePriceAndSubmit = (price) => {
 
 afterEach(() => {
   $payFormInput().clear();
-  $paidSection().invoke('css', 'visibility', 'hidden');
+  $paidSection().invoke('removeClass', 'visible');
 });
 
 describe('로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.', () => {

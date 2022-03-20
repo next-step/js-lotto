@@ -13,11 +13,11 @@ body {
   margin: 0 auto;
 }
 
-.lotto-purchased-section {
+.lotto-paid-section {
   visibility: hidden;
 }
 
-.lotto-purchased-section .visible {
+.lotto-paid-section.visible {
   visibility: visible;
 }
 
