@@ -1,6 +1,5 @@
 import { PRICE_FORM, PRICE_FORM__INPUT, PRICE_FORM__BUTTON } from '../constants/selectTarget.js';
 
-import PriceFormButton from './PriceFormButton.js';
 const PriceForm = ($parent, { onSubmit }) => {
   const getHtml = () => {
     return `<form class="mt-9">
@@ -10,7 +9,7 @@ const PriceForm = ($parent, { onSubmit }) => {
                             type="number"
                             class="w-100 mr-2 pl-2 ${PRICE_FORM__INPUT}"
                             placeholder="구입 금액"/>
-                  <template class="${PRICE_FORM__BUTTON}"></template>
+                  <button type="submit" class="btn btn-cyan ${PRICE_FORM__BUTTON}"></button>
               </div>
             </form>`;
   };
@@ -20,8 +19,6 @@ const PriceForm = ($parent, { onSubmit }) => {
   $el.innerHTML = getHtml();
   $el.addEventListener('submit', onSubmit);
   $parent.replaceWith($el);
-
-  PriceFormButton($el.querySelector(`.${PRICE_FORM__BUTTON}`), { onSubmit });
 };
 
 export default PriceForm;
