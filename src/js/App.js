@@ -36,9 +36,7 @@ const App = () => {
   eventBinder([moneyForm, lottoDetailHeader]);
 
   const on = onCurry($clonedApp);
-  on('@buy', ({ detail }) => {
-    state.lotto = buy(detail, state);
-  });
+  on('@buy', ({ detail }) => (state.lotto = buy(detail, state)));
   on('@toggle', ({ detail }) => lottoDetailHeader.toggleStyle(detail));
 
   replaceChild($app, $clonedApp);
