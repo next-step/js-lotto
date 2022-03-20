@@ -6,11 +6,11 @@ import { getQuantityByTotalAmount } from "../utils/calculator.js";
 class LottoController {
   #quantity = null;
   constructor() {
-    this.$toggleButton = document.querySelector(".lotto-numbers-toggle-button");
     this.$buyButton = document.querySelector("#buy-button");
     this.$summaryContainer = document.querySelector("#summary-container");
     this.$quantity = document.querySelector("#lotto-quantity");
     this.$lottoIconsContainer = document.querySelector("#lotto-icons");
+    this.isActive = false;
 
     this.#init();
   }
@@ -23,11 +23,6 @@ class LottoController {
     this.$buyButton.addEventListener(
       "click",
       this.#handleBuyButtonClick.bind(this)
-    );
-
-    this.$toggleButton.addEventListener(
-      "click",
-      this.#handleToggleButtonClick.bind(this)
     );
   }
 
@@ -43,9 +38,49 @@ class LottoController {
 
     this.#renderLottoQuantity();
     this.#renderLottoTicket();
+    this.#addToggleButtonEvent();
   }
 
-  #handleToggleButtonClick() {}
+  #addToggleButtonEvent() {
+    const $toggleButton = document.querySelector(
+      ".lotto-numbers-toggle-button"
+    );
+
+    $toggleButton.addEventListener(
+      "click",
+      this.#handleToggleButtonClick.bind(this)
+    );
+  }
+
+  #handleToggleButtonClick() {
+    const $iconContainer = document.querySelectorAll(".ticket-list");
+    const $iconDetail = document.querySelectorAll(".lotto-detail");
+    const toggle = document.querySelector(".lotto-numbers-toggle-button");
+
+    toggle.checked
+      ? this.#showTicketDetail($iconContainer, $iconDetail)
+      : this.#hideTicketDetail($iconContainer, $iconDetail);
+  }
+
+  #showTicketDetail(container, detail) {
+    container.forEach(icon => {
+      icon.classList.add("icon-wide");
+    });
+
+    detail.forEach(icon => {
+      icon.classList.remove("hidden");
+    });
+  }
+
+  #hideTicketDetail(container, detail) {
+    container.forEach(icon => {
+      icon.classList.remove("icon-wide");
+    });
+
+    detail.forEach(detail => {
+      detail.classList.add("hidden");
+    });
+  }
 
   #renderLottoQuantity() {
     new LottoQuantityView({

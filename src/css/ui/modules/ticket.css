@@ -6,11 +6,14 @@
 #lotto-icons > li {
   display: flex;
   align-items: center;
-  width: 100%;
   font-weight: bold;
   font-size: 18px;
 }
 
 .hidden {
-  display: hidden;
+  display: none;
+}
+
+.icon-wide {
+  width: 100%;
 }

@@ -18,7 +18,7 @@ class LottoTicketView {
       .reduce((acc, cur) => {
         return (
           acc +
-          `<li><span class="mx-1 text-4xl">🎟️ </span><span class="lotto-detail">${cur.join(
+          `<li class="ticket-list"><span class="mx-1 text-4xl">🎟️ </span><span class="lotto-detail hidden">${cur.join(
             ", "
           )}</span></li>`
         );
