@@ -1,4 +1,7 @@
 export const LOTTO_PRICE = 1000;
+export const LOTTO_START_NUMBER = 1;
+export const LOTTO_END_NUMBER = 45;
+export const LOTTO_NUMBER_COUNT = 6;
 
 export const DOM = {
   PURCHASE_FORM: 'purchase-form',

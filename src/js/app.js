@@ -1,9 +1,9 @@
 import PurchaseForm from './components/PurchaseForm.js';
 import PurchaseSection from './components/PurchaseSection.js';
-import { DOM } from './constants.js';
+import { DOM, LOTTO_NUMBER_COUNT } from './constants.js';
 import Component from './core/Component.js';
 import { $ } from './utils/dom.js';
-import { pickLottoNumbers } from './utils/index.js';
+import { pickRandomNumbers } from './utils/index.js';
 
 class LottoApp extends Component {
   template() {
@@ -42,7 +42,7 @@ class LottoApp extends Component {
     const allLottoNumbers = [];
 
     for (let i = 0; i < lottoCount; i += 1) {
-      allLottoNumbers.push(pickLottoNumbers());
+      allLottoNumbers.push(pickRandomNumbers(LOTTO_NUMBER_COUNT));
     }
 
     this.setState({
