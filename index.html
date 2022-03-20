@@ -12,11 +12,11 @@
       <div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
-          <form class="mt-5">
+          <form class="mt-5 lotto-buy-form">
             <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.</label>
             <div class="d-flex">
-              <input type="number" class="w-100 mr-2 pl-2" placeholder="구입 금액" />
-              <button type="button" class="btn btn-cyan">확인</button>
+              <input type="number" class="w-100 mr-2 pl-2 lotto-buy-form-input" placeholder="구입 금액" />
+              <button type="button" class="btn btn-cyan lotto-buy-form-submit">확인</button>
             </div>
           </form>
           <section class="mt-9 lotto-list">
@@ -62,7 +62,6 @@
           </form>
         </div>
       </div>
-
       <div class="modal">
         <div class="modal-inner p-10">
           <div class="modal-close">
@@ -70,7 +69,6 @@
               <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
             </svg>
           </div>
-
           <h2 class="text-center">🏆 당첨 통계 🏆</h2>
           <div class="d-flex justify-center">
             <table class="result-table border-collapse border border-black">
