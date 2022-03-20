@@ -1,4 +1,4 @@
-import { LOTTO_PAY_UNIT } from '../constants/unit.js ';
+import { LOTTO_PAY_UNIT, LOTTO_PURCHASE_MAX_PRICE } from '../constants/unit.js ';
 import { ERR_MESSAGE } from '../constants/alertMessage.js';
 
 import { PRICE_FORM__INPUT } from '../constants/selectTarget.js';
@@ -21,7 +21,7 @@ export default class PriceModel {
       if (price < LOTTO_PAY_UNIT) {
         return alert(ERR_MESSAGE.LESS_THAN_ENOUGH);
       }
-      if (price > 100000) {
+      if (price > LOTTO_PURCHASE_MAX_PRICE) {
         return alert(ERR_MESSAGE.GREATER_THAN_ENOUGH);
       }
       if (!!(price % LOTTO_PAY_UNIT)) {
