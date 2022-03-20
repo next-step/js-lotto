@@ -106,7 +106,7 @@ describe('구매 기능', () => {
 
     it('6개의 숫자는 1에서 45 사이의 숫자여야 합니다.', () => {
       const pickNumberes = pickLottoNumbers();
-      pickNumberes.map(number => expect(number).to.be.greaterThan(0).and.to.be.lessThan(46));
+      pickNumberes.forEach(number => expect(number).to.be.greaterThan(0).and.to.be.lessThan(46));
     });
   });
 });
