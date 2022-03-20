@@ -6,7 +6,7 @@ describe('구매 기능', () => {
     cy.reload();
   });
 
-  describe('로또는 1000원 단위입니다.', () => {
+  context('로또는 1000원 단위입니다.', () => {
     it('4500원은 1000원 단위로 나누어지지 않기 때문에 불가능합니다.', () => {
       const alertStub = cy.stub();
       cy.on('window:alert', alertStub);
@@ -38,7 +38,7 @@ describe('구매 기능', () => {
     });
   });
 
-  describe('로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 합니다.', () => {
+  context('로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 합니다.', () => {
     it('2000원은 2개 구매 가능합니다.', () => {
       cy.get(`#${DOM.purchaseFormInput}`).type(2000);
       cy.get(`#${DOM.purchaseFormButton}`).click();
@@ -61,7 +61,7 @@ describe('구매 기능', () => {
     });
   });
 
-  describe('복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 합니다.', () => {
+  context('복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 합니다.', () => {
     it('토글이 됐다면 번호가 보여야합니다.', () => {
       cy.get(`#${DOM.purchaseFormInput}`).type(4000);
       cy.get(`#${DOM.purchaseFormButton}`).click();
@@ -84,7 +84,7 @@ describe('구매 기능', () => {
     });
   });
 
-  describe('소비자는 자동 구매를 할 수 있어야 합니다.', () => {
+  context('소비자는 자동 구매를 할 수 있어야 합니다.', () => {
     it('구매가 됐다면 6개의 숫자를 가지고 있어야 합니다.', () => {
       cy.get(`#${DOM.purchaseFormInput}`).type(4000);
       cy.get(`#${DOM.purchaseFormButton}`).click();
