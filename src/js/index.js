@@ -14,6 +14,7 @@ function LottoApp() {
   const $purchaseResult = document.querySelector("#purchase-result");
   const $confirmWinningNumbers = document.querySelector("#confirm-winning-numbers");
   const $lottoList = document.querySelector(".lotto-list");
+  const $purchasedLottoCount = document.querySelector("#purchased-lotto-count");
 
   const onModalShow = () => {
     $modal.classList.add("open");
@@ -23,7 +24,6 @@ function LottoApp() {
     $modal.classList.remove("open");
   };
 
-  // * 번호보기 토글 이벤트
   const lottoNumbersToggle = event => {
     if (event.target.checked) {
       showPurchasedLottoNumbers();
@@ -34,7 +34,6 @@ function LottoApp() {
     }
   };
 
-  // * 로또 번호 보여주기
   const showPurchasedLottoNumbers = () => {
     const lottoNumbers = document.querySelectorAll(".lotto-numbers");
     lottoNumbers.forEach(lottoNumber => {
@@ -42,7 +41,6 @@ function LottoApp() {
     });
   };
 
-  // * 로또 번호 가리기
   const hidePurchasedLottoNumbers = () => {
     const lottoNumbers = document.querySelectorAll(".lotto-numbers");
     lottoNumbers.forEach(lottoNumber => {
@@ -50,45 +48,41 @@ function LottoApp() {
     });
   };
 
-  // * 로또 아이콘 정렬 : 수직 정렬
   const alignVerticalLottoList = () => {
     $lottoList.classList.remove("d-flex");
   };
 
-  // * 로또 아이콘 정렬 : 수평 정렬
   const alignHorizontalLottoList = () => {
     $lottoList.classList.add("d-flex");
   };
 
-  // * 구매 내역 영역을 보여준다.
   const showPurchaseResult = () => {
     $purchaseResult.classList.remove("pre-purchase");
   };
 
-  // * 구매 내역 영역을 숨긴다.
   const hidePurchaseResult = () => {
     $purchaseResult.classList.add("pre-purchase");
   };
 
-  // * 당첨 번호 확인 영역을 보여준다.
   const showConfirmWinningNumbers = () => {
     $confirmWinningNumbers.classList.remove("pre-purchase");
   };
 
-  // * 당첨 번호 확인 영역을 숨긴다.
   const hideConfirmWinningNumbers = () => {
     $confirmWinningNumbers.classList.add("pre-purchase");
   };
 
-  // * 로또 구입 전(=확인 버튼 클릭 전) 화면 초기화
   const beforePurchaseLotto = () => {
-    // * 번호보기 토글 : off
     $lottoNumbersToggleButton.checked = false;
-    // * 수평 정렬
     alignHorizontalLottoList();
-    // * 구매 내역과 당첨번호 확인 영역을 숨긴다.
     hidePurchaseResult();
     hideConfirmWinningNumbers();
+  };
+
+  const afterPurchaseLotto = (numberOfLottoTickets, purchasedLottoTickets) => {
+    renderPurchasedLotto(numberOfLottoTickets, purchasedLottoTickets);
+    showPurchaseResult();
+    showConfirmWinningNumbers();
   };
 
   const purchaseLottoTickets = () => {
@@ -105,10 +99,12 @@ function LottoApp() {
     const numberOfLottoTickets = purchasePrice / PRICE_PER_LOTTO;
     const purchasedLottoTickets = createLottoTickets(numberOfLottoTickets);
 
-    const $purchasedLottoCount = document.querySelector("#purchased-lotto-count");
+    afterPurchaseLotto(numberOfLottoTickets, purchasedLottoTickets);
+  };
+
+  const renderPurchasedLotto = (numberOfLottoTickets, purchasedLottoTickets) => {
     $purchasedLottoCount.innerText = numberOfLottoTickets;
 
-    const $lottoIconAndNumbers = document.querySelector("#lotto-icon-and-numbers");
     const lottoTemplate = purchasedLottoTickets
       .map(lotto => {
         return `
@@ -120,10 +116,7 @@ function LottoApp() {
       })
       .join("");
 
-    $lottoIconAndNumbers.innerHTML = lottoTemplate;
-
-    showPurchaseResult();
-    showConfirmWinningNumbers();
+    $lottoList.innerHTML = lottoTemplate;
   };
 
   const initEventListeners = () => {
