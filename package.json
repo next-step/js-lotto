@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "cypress": "cypress open "
+    "cypress": "cypress open ",
+    "cypress:dashboard": "npx cypress run --record --key 118c38e2-f22f-4683-9eb7-9bf45c90e4aa"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
