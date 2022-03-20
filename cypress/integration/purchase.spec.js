@@ -111,12 +111,18 @@ describe('구매 기능', () => {
     });
 
     it('6개의 숫자는 서로 달라야합니다.', () => {
-      const set = new Set(pickRandomNumbers(LOTTO.NUMBER_COUNT));
+      const set = new Set(
+        pickRandomNumbers(LOTTO.START_NUMBER, LOTTO.END_NUMBER, LOTTO.NUMBER_COUNT),
+      );
       expect(set.size).to.equal(LOTTO.NUMBER_COUNT);
     });
 
     it('6개의 숫자는 1에서 45 사이의 숫자여야 합니다.', () => {
-      const pickNumberes = pickRandomNumbers(LOTTO.NUMBER_COUNT);
+      const pickNumberes = pickRandomNumbers(
+        LOTTO.START_NUMBER,
+        LOTTO.END_NUMBER,
+        LOTTO.NUMBER_COUNT,
+      );
       pickNumberes.forEach(number =>
         expect(number).to.be.gte(LOTTO.START_NUMBER).and.to.be.lte(LOTTO.END_NUMBER),
       );
