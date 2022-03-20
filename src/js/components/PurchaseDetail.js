@@ -18,6 +18,7 @@ export class PurchaseDetail {
         </div>
         <div class="d-flex flex-wrap icons">
         </div>
+        <div class="d-flex flex-wrap contents"></div>
     </section>
     `;
   };
@@ -27,13 +28,27 @@ export class PurchaseDetail {
     const countText = document.querySelector("#count-text");
     countText.innerText = `총 ${lottos.length}개를 구매하였습니다. `;
     for (const lotto of lottos) {
-      const icon = document.createElement("span");
-      const text = document.createTextNode("🎟️");
-      icon.className = "mx-1 text-4xl";
-      icon.appendChild(text);
-      const parent = document.querySelector(".icons");
-      parent.appendChild(icon);
+      this.#createIconElelent();
+      this.#createLottoContentElement(lotto);
     }
+  };
+
+  #createIconElelent = () => {
+    const icon = document.createElement("span");
+    const text = document.createTextNode("🎟️");
+    icon.className = "mx-1 text-4xl";
+    icon.appendChild(text);
+    const parent = document.querySelector(".icons");
+    parent.appendChild(icon);
+  };
+
+  #createLottoContentElement = (lotto) => {
+    const content = document.createElement("span");
+    const text = document.createTextNode(`${lotto}`);
+    content.className = "mx-1 text-4xl";
+    content.appendChild(text);
+    const parent = document.querySelector(".contents");
+    parent.appendChild(content);
   };
 
   constructor(target) {
