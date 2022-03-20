@@ -1,6 +1,6 @@
 .lotto-section-tickets {
   overflow: scroll;
-  height: 40vh;
+  max-height: 40vh;
 }
 
 .lotto-section-ticket {
