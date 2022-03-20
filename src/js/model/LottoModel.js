@@ -1,4 +1,4 @@
-import { LOTTO_SIZE, LOTTO_PURCHASE_MAX_QUANTITY } from '../constants/unit.js';
+import { LOTTO_NUMBER_SIZE, LOTTO_MAX_RANGE, LOTTO_PURCHASE_MAX_QUANTITY } from '../constants/unit.js';
 import { ERR_MESSAGE } from '../constants/alertMessage.js';
 import {
   LOTTO_SECTION,
@@ -97,9 +97,9 @@ class LottoTicket {
   }
 
   randomGenerator(numbers = new Set()) {
-    const randomNumber = Math.floor(Math.random() * 45) + 1;
+    const randomNumber = Math.floor(Math.random() * LOTTO_MAX_RANGE) + 1;
     numbers.add(randomNumber);
-    return numbers.size === LOTTO_SIZE ? Array.from(numbers) : this.randomGenerator(numbers);
+    return numbers.size === LOTTO_NUMBER_SIZE ? Array.from(numbers) : this.randomGenerator(numbers);
   }
 
   get id() {
@@ -116,7 +116,7 @@ class LottoWinningNumbers {
   #bonusNumber;
 
   constructor() {
-    this.#winningNumbers = Array(LOTTO_SIZE).fill('');
+    this.#winningNumbers = Array(LOTTO_NUMBER_SIZE).fill('');
     this.#bonusNumber = '';
   }
 }

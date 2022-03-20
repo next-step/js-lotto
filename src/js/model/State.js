@@ -1,7 +1,7 @@
 import PriceModel from './PriceModel.js';
 import LottoModel from './LottoModel.js';
 
-import { LOTTO_PAY_UNIT, LOTTO_PURCHASE_MAX_QUANTITY } from '../constants/unit.js';
+import { LOTTO_PURCHASE_UNIT, LOTTO_PURCHASE_MAX_QUANTITY } from '../constants/unit.js';
 import { PRICE_FORM__INPUT, LOTTO_SECTION } from '../constants/selectTarget.js';
 
 export default class State {
@@ -31,7 +31,7 @@ export default class State {
   };
 
   generateLotto(price) {
-    const quantity = price / LOTTO_PAY_UNIT;
+    const quantity = price / LOTTO_PURCHASE_UNIT;
     const totalQuantity = this.#lottoModel?.quantity + quantity;
 
     if (!LottoModel.validators.isValidQuantity(totalQuantity)) return;
