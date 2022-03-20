@@ -92,10 +92,13 @@ class LottoTicket {
     this.#ticketNumbers = this.randomGenerator();
   }
 
-  randomGenerator(numbers = new Set()) {
-    const randomNumber = Math.floor(Math.random() * LOTTO_MAX_RANGE) + 1;
-    numbers.add(randomNumber);
-    return numbers.size === LOTTO_NUMBER_SIZE ? Array.from(numbers) : this.randomGenerator(numbers);
+  randomGenerator() {
+    const numbers = new Set();
+    while (numbers.size < LOTTO_NUMBER_SIZE) {
+      const random = Math.floor(Math.random() * LOTTO_MAX_RANGE) + 1;
+      numbers.add(random);
+    }
+    return Array.from(numbers);
   }
 
   get id() {
