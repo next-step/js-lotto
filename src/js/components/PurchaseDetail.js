@@ -4,7 +4,7 @@ export class PurchaseDetail {
     <section class="mt-9">
         <div class="d-flex">
         <label id="count-text" class="flex-auto my-0"
-            >총 개를 구매하였습니다.</label
+            ></label
         >
         <div class="flex-auto d-flex justify-end pr-1">
             <label class="switch">
@@ -27,13 +27,14 @@ export class PurchaseDetail {
   setState = (lottos) => {
     const countText = document.querySelector("#count-text");
     countText.innerText = `총 ${lottos.length}개를 구매하였습니다. `;
+    this.#initializeElements();
     for (const lotto of lottos) {
-      this.#createIconElelent();
+      this.#createIconElement();
       this.#createLottoContentElement(lotto);
     }
   };
 
-  #createIconElelent = () => {
+  #createIconElement = () => {
     const icon = document.createElement("span");
     const text = document.createTextNode("🎟️");
     icon.className = "mx-1 text-4xl";
@@ -49,6 +50,21 @@ export class PurchaseDetail {
     content.appendChild(text);
     const parent = document.querySelector(".contents");
     parent.appendChild(content);
+  };
+
+  #initializeElements = () => {
+    try {
+      const icons = document.querySelector(".icons");
+      while (icons.hasChildNodes()) {
+        icons.removeChild(icons.firstChild);
+      }
+      const contents = document.querySelector(".contents");
+      while (contents.hasChildNodes()) {
+        contents.removeChild(contents.firstChild);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   constructor(target) {
