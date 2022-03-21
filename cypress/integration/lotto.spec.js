@@ -25,7 +25,19 @@ describe('구입 금액 입력 폼', () => {
 			});
 	});
 
-	it('1000원 미만의 금액을 제출하면, 유효성 검사 메시지를 표시한다.', () => {});
+	it('1000원 미만의 금액을 제출하면, 유효성 검사 메시지를 표시한다.', () => {
+		cy.get('input[name="purchaseAmountInput"]')
+			.type('999')
+			.next('button')
+			.contains('확인')
+			.click()
+			.get('input[name="purchaseAmountInput"]')
+			.then(($input) => {
+				expect($input[0].validationMessage).to.eq(
+					'Value must be greater than or equal to 1000.',
+				);
+			});
+	});
 });
 
 describe('구입한 로또 번호 섹션', () => {
