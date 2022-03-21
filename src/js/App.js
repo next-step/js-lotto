@@ -18,7 +18,6 @@ class App {
 
   setState(next) {
     this.state = next;
-    console.log(next, this.state);
     this.render();
   }
 
@@ -32,14 +31,12 @@ class App {
   }
   
   handleShowNumbersBtnToggle() {
-    console.log(this.state.randomNumberSet);
-    // todo: 티켓당 6개씩 만들어진 랜덤한 숫자가 토글되어야 한다.
-    console.log('toggle 버튼 클릭됨');
+    this.setState({...this.state, isToggleBtnClicked: this.state.isToggleBtnClicked ? false: true})
   }
 
   render() {
     this.operator = new Operator({state: this.state, setState: this.setState.bind(this)});
-    this.$purchaseDisplay = new PurchaseDisplay({isConfirmBtnClicked: this.state.isConfirmBtnClicked, purchasedVal: this.state.purchasedVal, onToggle: this.handleShowNumbersBtnToggle.bind(this)});
+    this.$purchaseDisplay = new PurchaseDisplay({isConfirmBtnClicked: this.state.isConfirmBtnClicked, isToggleBtnClicked: this.state.isToggleBtnClicked, purchasedVal: this.state.purchasedVal, randomNumberSet: this.state.randomNumberSet, onToggle: this.handleShowNumbersBtnToggle.bind(this)});
     this.$winningNumberInput = new WinningNumberInput({isConfirmBtnClicked: this.state.isConfirmBtnClicked});
     this.$priceInput = new PriceInput({priceInputVal: this.state.priceInputVal, onChange: this.handlePurchaseInputChange.bind(this) })
     
