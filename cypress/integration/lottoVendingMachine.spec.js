@@ -22,19 +22,19 @@ describe('로또 자판기', () => {
   });
 
   describe('로또 구매를 위한 입력', () => {
-    it('숫자 대신 영문자를 넣은경우', () => {
+    it('숫자 대신 영문자를 입력할 경우, 입력되지 않음', () => {
       cy.inputMoney('ABC');
       cy.isEqualMoney('');
     });
 
-    it('숫자를 넣은경우', () => {
+    it('숫자를 넣은경우, 정상적으로 입력됨', () => {
       cy.inputMoney(12300);
       cy.isEqualMoney(12300);
     });
   });
 
   describe('로또 구매', () => {
-    it('금액 지불전 구매한 로또 갯수', () => {
+    it('금액 지불전 구매한 로또 갯수는 0', () => {
       cy.isEqualLottoAmount(0);
     });
 
