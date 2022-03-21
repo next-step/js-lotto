@@ -1,5 +1,6 @@
 import Component from '../core/Component.js';
 import { DOM } from '../constants.js';
+import { $, $$ } from '../utils/dom.js';
 
 class LottoWinningNumberForm extends Component {
   template() {
@@ -30,6 +31,27 @@ class LottoWinningNumberForm extends Component {
 					결과 확인하기
 				</button>
 			`;
+  }
+
+  mounted() {
+    $$(`.${DOM.WINNING_NUMBER_CLASS}`)[0].focus();
+  }
+
+  setEvent() {
+    $(`#${DOM.WINNING_NUMBER_CONTAINER_ID}`).oninput = this.onInputWinningNumberInput.bind(this);
+  }
+
+  onInputWinningNumberInput(e) {
+    if (e.target.value.length < 2) {
+      return;
+    }
+
+    if (!e.target.nextElementSibling) {
+      $(`.${DOM.BONUS_NUMBER_CLASS}`).focus();
+      return;
+    }
+
+    e.target.nextElementSibling.focus();
   }
 }
 
