@@ -16,6 +16,7 @@ export const DOM = {
   LOTTO_WINNING_NUMBER_FORM: 'lotto-winning-number-form',
   LOTTO_ICON: 'lotto-icon',
   LOTTO_DETAIL: 'lotto-detail',
+  MODAL: 'modal',
 };
 
 export const ERROR_MESSAGE = {

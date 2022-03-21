@@ -18,6 +18,7 @@ class LottoApp extends Component {
           <form id="${DOM.LOTTO_WINNING_NUMBER_FORM}" class="mt-9"></form>
         </div>
       </div>
+      <div class="${DOM.MODAL}"></div>
     `;
   }
 
@@ -56,13 +57,14 @@ class LottoApp extends Component {
   renderSection() {
     const $purchaseSection = $(`#${DOM.PURCHASE_SECTION}`);
     const $lottoWinningNumberForm = $(`#${DOM.LOTTO_WINNING_NUMBER_FORM}`);
+    const $modal = $(`.${DOM.MODAL}`);
 
     new PurchaseSection($purchaseSection, {
       lottoCount: this.state.lottoCount,
       allLottoNumbers: this.state.allLottoNumbers,
     });
     new LottoWinningNumberForm($lottoWinningNumberForm, {});
-    new Modal(this.$target, {});
+    new Modal($modal, {});
   }
 }
 
