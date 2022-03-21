@@ -52,8 +52,8 @@ describe('로또 구매 시', () => {
     cy.get('.switch').click();
     cy.get('.lotto-number').then(($elements) => {
       Cypress.$.makeArray($elements).forEach(($element) => {
-        const set = new Set($element.textContent.split(','));
-        expect(set.size).to.eq(LOTTO_NUMBER_COUNT);
+        const numbersRemoveDuplication = new Set($element.textContent.split(','));
+        expect(numbersRemoveDuplication.size).to.eq(LOTTO_NUMBER_COUNT);
       });
     });
   });
