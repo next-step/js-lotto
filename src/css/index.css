@@ -22,3 +22,8 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.display-none {
+  display: none !important;
+}
+
