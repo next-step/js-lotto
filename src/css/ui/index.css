@@ -2,3 +2,9 @@
 @import 'modules/switch.css';
 @import 'modules/table.css';
 @import 'modules/input.css';
+
+#lotto-list,
+#form-winning,
+.lotto-detail {
+  display: none;
+}
