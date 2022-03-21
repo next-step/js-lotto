@@ -12,6 +12,10 @@ class App {
    * @param {HTMLDivElement} element
    */
   constructor(element) {
+    if (!element instanceof HTMLDivElement) {
+      throw new Error('element는 HTMLDivElement 타입이여야 합니다.');
+    }
+
     this.#element = element;
     this.#lotto = new Lotto();
     this.#init();
