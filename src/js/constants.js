@@ -13,6 +13,7 @@ export const DOM = {
   PURCHASE_SECTION_LABEL: 'purchase-section-label',
   PURCHASE_SECTION_LOTTO_NUMBERS_TOGGLE_BUTTON: 'purchase-section-lotto-numbers-toggle-button',
   PURCHASE_SECTION_LOTTO_NUMBERS_FLEXBOX: 'purchase-section-lotto-numbers-flex-box',
+  LOTTO_WINNING_NUMBER_FORM: 'lotto-winning-number-form',
   LOTTO_ICON: 'lotto-icon',
   LOTTO_DETAIL: 'lotto-detail',
 };

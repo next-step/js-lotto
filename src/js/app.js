@@ -1,3 +1,5 @@
+import LottoWinningNumberForm from './components/LottoWinningNumberForm.js';
+import Modal from './components/Modal.js';
 import PurchaseForm from './components/PurchaseForm.js';
 import PurchaseSection from './components/PurchaseSection.js';
 import { DOM, LOTTO } from './constants.js';
@@ -13,6 +15,7 @@ class LottoApp extends Component {
           <h1 class="text-center">🎱 행운의 로또</h1>
           <form id="${DOM.PURCHASE_FORM}" class="mt-5"></form>
           <section id="${DOM.PURCHASE_SECTION}" class="mt-9"></section>
+          <form id="${DOM.LOTTO_WINNING_NUMBER_FORM}" class="mt-9"></form>
         </div>
       </div>
     `;
@@ -52,11 +55,14 @@ class LottoApp extends Component {
 
   renderSection() {
     const $purchaseSection = $(`#${DOM.PURCHASE_SECTION}`);
+    const $lottoWinningNumberForm = $(`#${DOM.LOTTO_WINNING_NUMBER_FORM}`);
 
     new PurchaseSection($purchaseSection, {
       lottoCount: this.state.lottoCount,
       allLottoNumbers: this.state.allLottoNumbers,
     });
+    new LottoWinningNumberForm($lottoWinningNumberForm, {});
+    new Modal(this.$target, {});
   }
 }
 
