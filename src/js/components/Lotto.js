@@ -1,4 +1,5 @@
 import { NUM } from '../utils/constants.js';
+import { shuffle } from '../utils/helper.js';
 
 class Lotto {
     getRandomNumber() {
@@ -9,22 +10,17 @@ class Lotto {
     }
 
     getLotto() {
-        const lotto = [];
-        const lottoTable = {};
+        const lotto = Array.from(
+            { length: NUM.MAX_RANDOM },
+            (value, index) => index + 1
+        );
+        shuffle(lotto);
 
-        while (lotto.length < NUM.MAX_LOTTO_LENGTH) {
-            const randomNumber = this.getRandomNumber();
-            if (!lottoTable[randomNumber]) {
-                lottoTable[randomNumber] = 1;
-                lotto.push(randomNumber);
-            }
-        }
-
-        return lotto;
+        return lotto.slice(0, 7);
     }
 
     getMultipleLotto(num) {
-        return new Array(num).fill(0).map(() => this.getLotto());
+        return Array.from({ length: num }).map(() => this.getLotto());
     }
 }
 

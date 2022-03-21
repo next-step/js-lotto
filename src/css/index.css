@@ -29,8 +29,13 @@ ul {
     margin: 0;
 }
 
-li span.lotto-numbers {
+.lotto-numbers {
+    display: none;
     font-size: 1.125rem;
     margin-left: 15px;
     vertical-align: top;
+}
+
+.lotto-numbers.show {
+    display: inline;
 }
