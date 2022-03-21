@@ -13,10 +13,15 @@ export const DOM = {
   PURCHASE_SECTION_LABEL: 'purchase-section-label',
   PURCHASE_SECTION_LOTTO_NUMBERS_TOGGLE_BUTTON: 'purchase-section-lotto-numbers-toggle-button',
   PURCHASE_SECTION_LOTTO_NUMBERS_FLEXBOX: 'purchase-section-lotto-numbers-flex-box',
-  LOTTO_WINNING_NUMBER_FORM: 'lotto-winning-number-form',
   LOTTO_ICON: 'lotto-icon',
   LOTTO_DETAIL: 'lotto-detail',
+  LOTTO_WINNING_NUMBER_FORM: 'lotto-winning-number-form',
+  WINNING_NUMBER: 'winning-number',
+  BONUS_NUMBER: 'bonus-number',
+  OPEN_RESULT_MODAL_BUTTON: 'open-result-modal-button',
   MODAL: 'modal',
+  MODAL_CLOSE_BUTTON: 'modal-close-button',
+  RESTART_BUTTON: 'restart-button',
 };
 
 export const ERROR_MESSAGE = {

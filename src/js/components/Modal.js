@@ -1,3 +1,4 @@
+import { DOM } from '../constants.js';
 import Component from '../core/Component.js';
 import { $ } from '../utils/dom.js';
 
@@ -5,7 +6,7 @@ class Modal extends Component {
   template() {
     return String.raw`
         <div class="modal-inner p-10">
-          <div class="modal-close">
+          <div id="${DOM.MODAL_CLOSE_BUTTON}" class="modal-close">
             <svg viewbox="0 0 40 40">
               <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
             </svg>
@@ -51,23 +52,23 @@ class Modal extends Component {
         </div>
         <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
         <div class="d-flex justify-center mt-5">
-          <button type="button" class="btn btn-cyan">다시 시작하기</button>
+          <button type="button" id="${DOM.RESTART_BUTTON}" class="btn btn-cyan">다시 시작하기</button>
         </div>
       </div>
     `;
   }
 
   setEvent() {
-    $('.open-result-modal-button').onclick = this.onModalShow.bind(this);
-    $('.modal-close').onclick = this.onModalClose.bind(this);
+    $(`#${DOM.OPEN_RESULT_MODAL_BUTTON}`).onclick = this.onModalShow.bind(this);
+    $(`#${DOM.MODAL_CLOSE_BUTTON}`).onclick = this.onModalClose.bind(this);
   }
 
   onModalShow() {
-    $('.modal').classList.add('open');
+    $(`.${DOM.MODAL}`).classList.add('open');
   }
 
   onModalClose() {
-    $('.modal').classList.remove('open');
+    $(`.${DOM.MODAL}`).classList.remove('open');
   }
 }
 
