@@ -62,10 +62,9 @@ const toggleLottoPaidCardsLayout = () => {
 };
 
 const resetPaidSection = () => {
-  if ($lottoPaidCheckBox.checked) {
-    $lottoPaidCheckBox.checked = false;
-    toggleLottoPaidCardsLayout();
-  }
+  $lottoPaidCheckBox.checked = false;
+  $lottoPaidCards.classList.remove('flex-col');
+  $lottoPaidCards.classList.add('flex-row');
 };
 
 const onModalShow = () => {
