@@ -1,19 +1,8 @@
-class LottoTicketView {
-  constructor({ $target, lottoTicketList }) {
-    this.$target = $target;
-    this.lottoTicketList = lottoTicketList;
-    this.init();
-  }
-  init() {
-    this.render();
-  }
-
-  render() {
-    this.$target.innerHTML = this.makeTemplate();
-  }
-
+import View from "../core/View.js";
+class LottoTicketView extends View {
   makeTemplate() {
-    const template = this.lottoTicketList
+    const { lottoTicketList } = this.props;
+    const template = lottoTicketList
       .map(ticket => ticket.getNumbers())
       .reduce((acc, cur) => {
         return (
