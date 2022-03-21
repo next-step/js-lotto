@@ -1,4 +1,4 @@
-import CreateAction from './CreateAction.js';
+import CreateAction from './createAction.js';
 import { GET_PRICE, SET_PRICE, TOGGLE_IS_SHOW_NUMBER } from './actions.js';
 
 const getPrice = () => CreateAction(GET_PRICE);
