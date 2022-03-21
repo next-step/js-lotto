@@ -37,6 +37,7 @@ class PurchaseForm extends Component {
     }
 
     this.props.setLottoCountAndNumbers($purchaseFormInput.value / LOTTO.PRICE);
+    this.props.renderSection();
   }
 
   isCorrectInputValue(value) {

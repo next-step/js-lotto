@@ -27,14 +27,10 @@ class LottoApp extends Component {
 
   mounted() {
     const $purchaseForm = $(`#${DOM.PURCHASE_FORM}`);
-    const $purchaseSection = $(`#${DOM.PURCHASE_SECTION}`);
 
     new PurchaseForm($purchaseForm, {
       setLottoCountAndNumbers: this.setLottoCountAndNumbers.bind(this),
-    });
-    new PurchaseSection($purchaseSection, {
-      lottoCount: this.state.lottoCount,
-      allLottoNumbers: this.state.allLottoNumbers,
+      renderSection: this.renderSection.bind(this),
     });
   }
 
@@ -51,6 +47,15 @@ class LottoApp extends Component {
       ...this.state,
       lottoCount,
       allLottoNumbers,
+    });
+  }
+
+  renderSection() {
+    const $purchaseSection = $(`#${DOM.PURCHASE_SECTION}`);
+
+    new PurchaseSection($purchaseSection, {
+      lottoCount: this.state.lottoCount,
+      allLottoNumbers: this.state.allLottoNumbers,
     });
   }
 }
