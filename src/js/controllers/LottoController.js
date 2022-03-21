@@ -1,6 +1,7 @@
 import LottoTicketList from "../models/LottoTicketList/index.js";
 import LottoTicketView from "../views/LottoTicketView.js";
 import LottoQuantityView from "../views/LottoQuantityView.js";
+import WinningNumbersView from "../views/WinningNumberView.js";
 import Validator from "../models/Validator/index.js";
 import { getQuantityByTotalAmount } from "../utils/calculator.js";
 
@@ -44,6 +45,7 @@ class LottoController {
     this.#setQuantity(quantity);
     this.#renderLottoQuantity();
     this.#renderLottoTicket();
+    this.#renderWinningNumbers();
     this.#addToggleButtonEvent();
   }
 
@@ -91,7 +93,7 @@ class LottoController {
   #renderLottoQuantity() {
     new LottoQuantityView({
       $target: this.$summaryContainer,
-      quantity: this.#quantity,
+      props: { quantity: this.#quantity },
     });
   }
 
@@ -102,8 +104,15 @@ class LottoController {
 
     new LottoTicketView({
       $target: this.$lottoIconsContainer,
-      lottoTicketList,
+      props: { lottoTicketList },
     });
+  }
+  #renderWinningNumbers() {
+    const $winningNumbersContainer = document.querySelector(
+      "#winning-container"
+    );
+
+    new WinningNumbersView({ $target: $winningNumbersContainer });
   }
 }
 
