@@ -1,4 +1,4 @@
-describe('Lotto test', () => {
+describe('Lotto 테스트', () => {
   beforeEach(() => {
     cy.visit('/')
   })
@@ -70,17 +70,19 @@ describe('Lotto test', () => {
 
   })
 
-  describe('Ticket 테스트', () => {
+  describe('Lotto 구입 후 Ticket 테스트', () => {
     beforeEach(() => {
       cy.submitValue('click', true)
     })
 
-    it('구매한 티켓에 따라 총 개수 확인.', () => {
-      cy.get('#counted-ticket').should('have.text', '총 10개를 구매하였습니다.')
-    })
-
-    it('구매한 티켓에 티켓 이미지 컴포넌트 생성', () => {
-      cy.get('[data-ticket=list]').find('[data-ticket=image]').should('have.length', 10)
+    describe('Ticket 개수에 영향을 받는 테스트', () => {
+      it('구매한 티켓에 따라 총 개수 확인.', () => {
+        cy.get('#counted-ticket').should('have.text', '총 10개를 구매하였습니다.')
+      })
+  
+      it('구매한 티켓에 티켓 이미지 컴포넌트 생성', () => {
+        cy.get('[data-ticket=list]').find('[data-ticket=image]').should('have.length', 10)
+      })
     })
 
     describe('Ticket toggle 테스트', () => {
@@ -88,19 +90,15 @@ describe('Lotto test', () => {
         cy.get('.switch').click()
       })
 
-      it('Toggle click event에 따라 랜덤 숫자가 보여야 한다', () => {
-        cy.get('[data-ticket=list]').find('[data-ticket=numbers]').should('be.visible')
-      })
-  
-      it('각 티켓의 랜덤 숫자들은 중복되지 않아야 한다.', () => {
+      it('Toggle click event에 따라 랜덤 숫자가 보여야 한다.', () => {
         cy.get('[data-ticket=list]').find('[data-ticket=numbers]').should('be.visible')
       })
   
       it('각 티켓의 랜덤 숫자들은 중복되지 않아야 한다.', () => {
         cy.get('[data-ticket=numbers]').should($ticketNumber => {
           $ticketNumber.toArray().map(number => {
-            const set = new Set(number.innerText.split(', '));
-            expect([...set.values()].length).to.equal(6)
+            const set = new Set(number.textContent.split(', '));
+            expect(set.size).to.equal(6)
           })
         })
       })
