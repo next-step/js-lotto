@@ -4,6 +4,9 @@ const baseConfig = require('@younho9/xo-configs');
 module.exports = {
 	...baseConfig,
 	prettier: true,
+	rules: {
+		'no-alert': 'off',
+	},
 	overrides: [
 		{
 			files: ['**/cypress/**/*.js'],
