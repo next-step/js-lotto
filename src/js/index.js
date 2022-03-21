@@ -1,6 +1,4 @@
-import Lotto from './models/lotto';
-
-const lotto = new Lotto();
+import { pay } from './models/lotto';
 
 const $lottoPayForm = document.querySelector('[data-target="lotto-pay-form"]');
 const $lottoPayInput = $lottoPayForm.querySelector('input');
@@ -17,7 +15,7 @@ const $modal = document.querySelector('.modal');
 
 $lottoPayForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  const lottos = Lotto.pay($lottoPayInput.value);
+  const lottos = pay($lottoPayInput.value);
 
   if (lottos === undefined) $lottoPayForm.reset();
   else {
@@ -27,7 +25,6 @@ $lottoPayForm.addEventListener('submit', (e) => {
 });
 
 const renderPaidSectionItems = (lottos) => {
-  console.log($lottoPaidSection);
   $lottoPaidSection.classList.add('visible');
   $lottoPaidCounts.innerHTML = lottos.length;
   $lottoPaidCards.innerHTML = lottos
