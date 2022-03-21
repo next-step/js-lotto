@@ -52,7 +52,6 @@ class ShowLottoNumberSection extends Component {
   setEvents() {
     $('.lotto-numbers-toggle-button').addEventListener('change', (event) => {
       this.isShow = event.target.checked;
-      console.log(this.isShow);
       if (this.isShow) {
         $('#purcharsed-lottos').classList.add('flex-col');
         $$('#purcharsed-lottos .lotto-detail').forEach((li) =>
@@ -74,8 +73,7 @@ class ShowLottoNumberSection extends Component {
   }
 
   template() {
-    const { price, isShow } = store.getState();
-    console.log(isShow);
+    const { price } = store.getState();
     const lottoNumber = price / 1000;
 
     return `
