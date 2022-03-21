@@ -9,6 +9,7 @@ import {
   LOTTO_SECTION__TICKET__NUMBERS,
 } from '../constants/selectTarget.js';
 import { $, $$ } from '../util/dom.js';
+
 export default class LottoModel {
   #tickets;
   #quantity;
@@ -27,7 +28,6 @@ export default class LottoModel {
   };
 
   createLotto(quantity) {
-    //init Data
     this.#quantity = quantity;
     this.#tickets = Array.from(Array(this.#quantity), (_, i) => new LottoTicket((i += 1)));
     this.#winningNumbers = new LottoWinningNumbers();
@@ -60,6 +60,7 @@ export default class LottoModel {
 
   hideLottoTicketsNumbers() {
     this.#isShowLottoNumber = false;
+
     $$(LOTTO_SECTION__TICKET__NUMBERS).forEach((el) => {
       el.hidden = true;
     });
@@ -67,7 +68,7 @@ export default class LottoModel {
 
   get ticketsHtml() {
     const isPriceToggled = $(`${LOTTO_SECTION} input`).checked;
-    const getTemplate = (ticket) => `<span class="mx-1 text-4xl ${LOTTO_SECTION__TICKET}" data-lotto-id-${ticket.id}> 🎟️ 
+    const getTemplate = (ticket) => `<span class="mx-1 text-4xl ${LOTTO_SECTION__TICKET}" data-lotto-id=${ticket.id}> 🎟️ 
                         <span class="lotto-section__ticket__numbers" ${!isPriceToggled && 'hidden'}>${ticket.ticketNumbers}</span>
                       </span></span>`;
     return this.#tickets.map(getTemplate).join('');
@@ -89,10 +90,12 @@ class LottoTicket {
 
   randomGenerator() {
     const numbers = new Set();
+
     while (numbers.size < LOTTO_NUMBER_SIZE) {
       const random = Math.floor(Math.random() * LOTTO_MAX_RANGE) + 1;
       numbers.add(random);
     }
+
     return Array.from(numbers);
   }
 

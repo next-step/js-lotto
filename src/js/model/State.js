@@ -18,7 +18,6 @@ export default class State {
       try {
         e.preventDefault();
         const inputPrice = Number($(PRICE_FORM__INPUT).value);
-        debugger;
         PriceModel.validators.isValidPrice(inputPrice);
         this.#priceModel.updatePrice(inputPrice);
         this.generateLotto(inputPrice);

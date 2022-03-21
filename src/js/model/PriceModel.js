@@ -2,6 +2,7 @@ import { LOTTO_PURCHASE_UNIT, LOTTO_PURCHASE_MAX_PRICE } from '../constants/unit
 import { ERR_MESSAGE } from '../constants/alertMessage.js';
 import { PRICE_FORM__INPUT } from '../constants/selectTarget.js';
 import { $ } from '../util/dom.js';
+
 export default class PriceModel {
   #price;
 

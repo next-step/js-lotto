@@ -5,6 +5,7 @@ import {
   LOTTO_NUMBERS_TOGGLE__LABEL,
 } from '../constants/selectTarget.js';
 import { $ } from '../util/dom.js';
+
 const LottoSection = ($parent, { onSwitch }) => {
   const getHtml = () => {
     return `<section class="mt-9 ${LOTTO_SECTION}" hidden>
