@@ -30,7 +30,7 @@ class PurchaseForm extends Component {
     e.preventDefault();
     const $purchaseFormInput = e.target[0];
 
-    if (!this.validateFormInput($purchaseFormInput.value)) {
+    if (!this.isCorrectInputValue($purchaseFormInput.value)) {
       $purchaseFormInput.value = '';
       $purchaseFormInput.focus();
       return;
@@ -39,7 +39,7 @@ class PurchaseForm extends Component {
     this.props.setLottoCountAndNumbers($purchaseFormInput.value / LOTTO.PRICE);
   }
 
-  validateFormInput(value) {
+  isCorrectInputValue(value) {
     if (!value) {
       alert(ERROR_MESSAGE.REQUIRED_PRICE);
       return false;
