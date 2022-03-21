@@ -1,9 +1,8 @@
+import { LOTTO_NUMBER_COUNT } from "../../src/js/constant/index.js";
 const BASE_URL = "http://localhost:5500";
 
 const payMoney = money => cy.get("#total-amount").type(money);
 const clickBuyButton = () => cy.get("#buy-button").click();
-const checkToggleButton = () =>
-  cy.get(".lotto-numbers-toggle-button").check({ force: true });
 const buyLottoTicket = (money, quantity) => {
   payMoney(money);
   clickBuyButton();
@@ -11,6 +10,18 @@ const buyLottoTicket = (money, quantity) => {
 
   cy.get(".ticket-list").should($list => {
     expect($list).to.have.length(quantity);
+  });
+};
+
+const checkToggleButton = () =>
+  cy.get(".lotto-numbers-toggle-button").check({ force: true });
+
+const checkLottoNumbersCount = () => {
+  cy.get(".lotto-detail").each(el => {
+    cy.get(el)
+      .invoke("text")
+      .then(numbers => numbers.split(",").length)
+      .should("equal", LOTTO_NUMBER_COUNT);
   });
 };
 
@@ -30,6 +41,11 @@ describe("로또 테스트", () => {
       buyLottoTicket(1000, 1);
       checkToggleButton();
       cy.get(".lotto-detail").should("exist");
+    });
+
+    it(`로또 번호는 ${LOTTO_NUMBER_COUNT}개의 숫자이다`, () => {
+      buyLottoTicket(1000, 1);
+      checkLottoNumbersCount();
     });
   });
 });
