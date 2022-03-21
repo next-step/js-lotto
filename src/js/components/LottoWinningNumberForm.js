@@ -10,7 +10,7 @@ class LottoWinningNumberForm extends Component {
 				<div class="d-flex">
 					<div>
 						<h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
-						<div>
+						<div id="${DOM.WINNING_NUMBER_CONTAINER_ID}">
 							<input required type="number" class="${DOM.WINNING_NUMBER_CLASS} mx-1 text-center" />
 							<input required type="number" class="${DOM.WINNING_NUMBER_CLASS} mx-1 text-center" />
 							<input required type="number" class="${DOM.WINNING_NUMBER_CLASS} mx-1 text-center" />
