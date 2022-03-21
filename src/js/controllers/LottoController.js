@@ -1,11 +1,13 @@
 import LottoTicketList from "../models/LottoTicketList/index.js";
 import LottoTicketView from "../views/LottoTicketView.js";
 import LottoQuantityView from "../views/LottoQuantityView.js";
+import Validator from "../models/Validator/index.js";
 import { getQuantityByTotalAmount } from "../utils/calculator.js";
 
 class LottoController {
   #quantity = null;
   constructor() {
+    this.validator = new Validator();
     this.$buyButton = document.querySelector("#buy-button");
     this.$summaryContainer = document.querySelector("#summary-container");
     this.$quantity = document.querySelector("#lotto-quantity");
@@ -32,10 +34,14 @@ class LottoController {
 
   #handleBuyButtonClick() {
     const $totalAmount = document.querySelector("#total-amount");
-    const quantity = getQuantityByTotalAmount(Number($totalAmount.value));
+    const totalAmount = Number($totalAmount.value);
+    const quantity = getQuantityByTotalAmount(totalAmount);
+
+    if (!this.validator.validateTotalAmount(totalAmount)) {
+      return;
+    }
 
     this.#setQuantity(quantity);
-
     this.#renderLottoQuantity();
     this.#renderLottoTicket();
     this.#addToggleButtonEvent();
