@@ -8,7 +8,7 @@ export class LottoVendingMachine {
       .map(() => new Lotto());
   }
 
-  static #getPurchaseLottoAmount(value) {
-    return Math.floor(value / LOTTO_PRICE);
+  static #getPurchaseLottoAmount(money) {
+    return Math.floor(money / LOTTO_PRICE);
   }
 }
