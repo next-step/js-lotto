@@ -32,7 +32,7 @@ describe('purchase lotto test', () => {
         cy.get(`form.${CLASS_NAME.PURCHASE_FORM}`).within(() => {
             cy.get('input')
                 .invoke('prop', 'validationMessage')
-                .should('equal', MESSAGE.IS_REQUIRED);
+                .should('equal', MESSAGE.REQUIRED);
             cy.get('input').type(950);
             cy.get('input')
                 .invoke('prop', 'validationMessage')
@@ -48,7 +48,7 @@ describe('purchase lotto test', () => {
         cy.get(`form.${CLASS_NAME.PURCHASE_FORM}`).within(() => {
             cy.get('input')
                 .invoke('prop', 'validationMessage')
-                .should('equal', MESSAGE.IS_REQUIRED);
+                .should('equal', MESSAGE.REQUIRED);
             cy.get('input').type(11000);
             cy.get('input')
                 .invoke('prop', 'validationMessage')

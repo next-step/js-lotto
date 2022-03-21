@@ -12,10 +12,11 @@ export const NUM = {
     MIN_RANDOM: 1,
     MAX_LOTTO_LENGTH: 6,
     LOTTO_PRICE: 1000,
+    MAX_PURCHASE_AMOUNT: 10000,
 };
 
 export const MESSAGE = {
-    IS_REQUIRED: '이 입력란을 작성하세요.',
-    MIN_VALUE: '값은 1000 이상이어야 합니다.',
-    MAX_VALUE: '값은 10000 이하여야 합니다.',
+    REQUIRED: '이 입력란을 작성하세요.',
+    MIN_VALUE: `값은 ${NUM.LOTTO_PRICE} 이상이어야 합니다.`,
+    MAX_VALUE: `값은 ${NUM.MAX_PURCHASE_AMOUNT} 이하여야 합니다.`,
 };
