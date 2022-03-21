@@ -18,19 +18,26 @@ export class PurchaseDetail {
         </div>
         <div class="d-flex flex-wrap icons">
         </div>
-        <div class="d-flex flex-wrap contents"></div>
+        <div class="d-flex flex-wrap text-base contents"></div>
     </section>
     `;
   };
 
-  #setEvents = () => {};
-  setState = (lottos) => {
-    const countText = document.querySelector("#count-text");
-    countText.innerText = `총 ${lottos.length}개를 구매하였습니다. `;
-    this.#initializeElements();
-    for (const lotto of lottos) {
-      this.#createIconElement();
-      this.#createLottoContentElement(lotto);
+  #toggleButtonElement;
+  #lottoIconsElement;
+  #lottoContentsElement;
+
+  #setEvents = () => {
+    this.#toggleButtonElement.addEventListener("change", () => {
+      this.#handleIfToggleButtonIsChecked();
+    });
+  };
+
+  #handleIfToggleButtonIsChecked = () => {
+    if (this.#toggleButtonElement.checked) {
+      this.#lottoContentsElement.style.visibility = "visible";
+    } else {
+      this.#lottoContentsElement.style.visibility = "hidden";
     }
   };
 
@@ -39,26 +46,24 @@ export class PurchaseDetail {
     const text = document.createTextNode("🎟️");
     icon.className = "mx-1 text-4xl";
     icon.appendChild(text);
-    const parent = document.querySelector(".icons");
-    parent.appendChild(icon);
+    this.#lottoIconsElement.appendChild(icon);
   };
 
   #createLottoContentElement = (lotto) => {
     const content = document.createElement("span");
     const text = document.createTextNode(`${lotto}`);
-    content.className = "mx-1 text-4xl";
+    content.className = "mx-1 text-xl";
     content.appendChild(text);
-    const parent = document.querySelector(".contents");
-    parent.appendChild(content);
+    this.#lottoContentsElement.appendChild(content);
   };
 
   #initializeElements = () => {
     try {
-      const icons = document.querySelector(".icons");
+      const icons = this.#lottoIconsElement;
       while (icons.hasChildNodes()) {
         icons.removeChild(icons.firstChild);
       }
-      const contents = document.querySelector(".contents");
+      const contents = this.#lottoContentsElement;
       while (contents.hasChildNodes()) {
         contents.removeChild(contents.firstChild);
       }
@@ -67,8 +72,22 @@ export class PurchaseDetail {
     }
   };
 
+  setState = (lottos) => {
+    const countText = document.querySelector("#count-text");
+    countText.innerText = `총 ${lottos.length}개를 구매하였습니다. `;
+    this.#initializeElements();
+    for (const lotto of lottos) {
+      this.#createIconElement();
+      this.#createLottoContentElement(lotto);
+    }
+    this.#handleIfToggleButtonIsChecked();
+  };
+
   constructor(target) {
     target.innerHTML = this.#template();
+    this.#toggleButtonElement = document.querySelector(".toggle-button");
+    this.#lottoIconsElement = document.querySelector(".icons");
+    this.#lottoContentsElement = document.querySelector(".contents");
     this.#setEvents();
   }
 }
