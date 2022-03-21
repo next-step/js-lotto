@@ -1,10 +1,22 @@
 .lotto-section-tickets {
+  box-sizing: border-box;
   overflow: scroll;
-  max-height: 40vh;
+  max-height: 30vh;
   background-color: #ccf0f5;
   border-radius: 2rem;
   margin-top: 1rem;
-  padding:1rem
+  margin: auto 0;
+  padding: 2rem;
+}
+
+
+.lotto-section-tickets::-webkit-scrollbar {
+  width: 0.6rem;
+  padding :1rem;
+}
+.lotto-section-tickets::-webkit-scrollbar-thumb {
+  border-radius: 0.6rem;
+  background-color: #00bcd4;
 }
 
 .lotto-section__ticket {
@@ -14,6 +26,11 @@
 }
 
 .lotto-section__ticket__numbers {
+  visibility: visible;
+  font-size: 1.4rem;
+  color: #000;
+}
+.lotto-section__ticket__numbers .hidden{
   visibility: visible;
   font-size: 1.4rem;
   color: #000;

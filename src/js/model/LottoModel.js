@@ -52,8 +52,7 @@ export default class LottoModel {
 
   showLottoTicketsNumbers() {
     this.#isShowLottoNumber = true;
-    $(LOTTO_SECTION_TICKETS).classList.add('flex-col');
-    $(LOTTO_SECTION_TICKETS).classList.remove('flex-wrap');
+
     $$(LOTTO_SECTION__TICKET__NUMBERS).forEach((el) => {
       el.hidden = false;
     });
@@ -61,16 +60,15 @@ export default class LottoModel {
 
   hideLottoTicketsNumbers() {
     this.#isShowLottoNumber = false;
-    $(LOTTO_SECTION_TICKETS).classList.remove('flex-col');
-    $(LOTTO_SECTION_TICKETS).classList.add('flex-wrap');
     $$(LOTTO_SECTION__TICKET__NUMBERS).forEach((el) => {
       el.hidden = true;
     });
   }
 
   get ticketsHtml() {
+    const isPriceToggled = $(`${LOTTO_SECTION} input`).checked;
     const getTemplate = (ticket) => `<span class="mx-1 text-4xl ${LOTTO_SECTION__TICKET}" data-lotto-id-${ticket.id}> 🎟️ 
-                        <span class="lotto-section__ticket__numbers" hidden>${ticket.ticketNumbers}</span>
+                        <span class="lotto-section__ticket__numbers" ${!isPriceToggled && 'hidden'}>${ticket.ticketNumbers}</span>
                       </span></span>`;
     return this.#tickets.map(getTemplate).join('');
   }

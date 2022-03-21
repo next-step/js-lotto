@@ -1,9 +1,10 @@
 import PriceModel from './PriceModel.js';
 import LottoModel from './LottoModel.js';
 
-import { LOTTO_PURCHASE_UNIT, LOTTO_PURCHASE_MAX_QUANTITY } from '../constants/unit.js';
+import { LOTTO_PURCHASE_UNIT } from '../constants/unit.js';
 import { PRICE_FORM__INPUT, LOTTO_SECTION } from '../constants/selectTarget.js';
 import { $ } from '../util/dom.js';
+
 export default class State {
   #priceModel;
   #lottoModel;
@@ -17,6 +18,7 @@ export default class State {
       try {
         e.preventDefault();
         const inputPrice = Number($(PRICE_FORM__INPUT).value);
+        debugger;
         PriceModel.validators.isValidPrice(inputPrice);
         this.#priceModel.updatePrice(inputPrice);
         this.generateLotto(inputPrice);
@@ -25,11 +27,13 @@ export default class State {
       }
     },
     toggleDisplayLottoNumbers: () => {
-      const isChecked = $(`${LOTTO_SECTION} input`).checked;
-      if (isChecked) {
+      const isPriceToggled = $(`${LOTTO_SECTION} input`).checked;
+
+      if (isPriceToggled) {
         this.#lottoModel.showLottoTicketsNumbers();
         return;
       }
+
       this.#lottoModel.hideLottoTicketsNumbers();
     },
   };
@@ -39,10 +43,12 @@ export default class State {
       const quantity = price / LOTTO_PURCHASE_UNIT;
       const totalQuantity = this.#lottoModel?.quantity + quantity;
       LottoModel.validators.isValidQuantity(totalQuantity);
-      if (this.#lottoModel) {
-        this.#lottoModel.addLotto(quantity);
-        return;
-      }
+
+        if (this.#lottoModel) {
+          this.#lottoModel.addLotto(quantity);
+          return;
+        }
+
       this.#lottoModel = new LottoModel(quantity);
     } catch (e) {
       alert(e.message);
