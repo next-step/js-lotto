@@ -8,18 +8,18 @@ class PurchaseForm extends Component {
       <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.</label>
       <div class="d-flex">
         <input
-          id="${DOM.PURCHASE_FORM_INPUT}"
+          id="${DOM.PURCHASE_FORM_INPUT_ID}"
           type="number"
           class="w-100 mr-2 pl-2"
           placeholder="구입 금액"
         />
-        <button type="submit" id="${DOM.PURCHASE_FORM_BUTTON}" class="btn btn-cyan">확인</button>
+        <button type="submit" id="${DOM.PURCHASE_FORM_BUTTON_ID}" class="btn btn-cyan">확인</button>
       </div>
     `;
   }
 
   mounted() {
-    $(`#${DOM.PURCHASE_FORM_INPUT}`).focus();
+    $(`#${DOM.PURCHASE_FORM_INPUT_ID}`).focus();
   }
 
   setEvent() {

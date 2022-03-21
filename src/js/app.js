@@ -13,12 +13,12 @@ class LottoApp extends Component {
       <div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
-          <form id="${DOM.PURCHASE_FORM}" class="mt-5"></form>
-          <section id="${DOM.PURCHASE_SECTION}" class="mt-9"></section>
-          <form id="${DOM.LOTTO_WINNING_NUMBER_FORM}" class="mt-9"></form>
+          <form id="${DOM.PURCHASE_FORM_ID}" class="mt-5"></form>
+          <section id="${DOM.PURCHASE_SECTION_ID}" class="mt-9"></section>
+          <form id="${DOM.LOTTO_WINNING_NUMBER_FORM_ID}" class="mt-9"></form>
         </div>
       </div>
-      <div class="${DOM.MODAL}"></div>
+      <div class="${DOM.MODAL_CLASS}"></div>
     `;
   }
 
@@ -30,7 +30,7 @@ class LottoApp extends Component {
   }
 
   mounted() {
-    const $purchaseForm = $(`#${DOM.PURCHASE_FORM}`);
+    const $purchaseForm = $(`#${DOM.PURCHASE_FORM_ID}`);
 
     new PurchaseForm($purchaseForm, {
       setLottoCountAndNumbers: this.setLottoCountAndNumbers.bind(this),
@@ -55,9 +55,9 @@ class LottoApp extends Component {
   }
 
   renderSection() {
-    const $purchaseSection = $(`#${DOM.PURCHASE_SECTION}`);
-    const $lottoWinningNumberForm = $(`#${DOM.LOTTO_WINNING_NUMBER_FORM}`);
-    const $modal = $(`.${DOM.MODAL}`);
+    const $purchaseSection = $(`#${DOM.PURCHASE_SECTION_ID}`);
+    const $lottoWinningNumberForm = $(`#${DOM.LOTTO_WINNING_NUMBER_FORM_ID}`);
+    const $modal = $(`.${DOM.MODAL_CLASS}`);
 
     new PurchaseSection($purchaseSection, {
       lottoCount: this.state.lottoCount,

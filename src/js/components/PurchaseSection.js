@@ -6,14 +6,14 @@ class PurchaseSection extends Component {
   template() {
     return String.raw`
       <div class="d-flex">
-        <label id="${DOM.PURCHASE_SECTION_LABEL}" class="mb-2 d-inline-block"
+        <label id="${DOM.PURCHASE_SECTION_LABEL_ID}" class="mb-2 d-inline-block"
           >총 ${this.props.lottoCount}개를 구매하였습니다.</label
         >
         <div class="flex-auto d-flex justify-end pr-1">
           <label class="switch">
             <input
               type="checkbox"
-              id="${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_TOGGLE_BUTTON}"
+              id="${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_TOGGLE_BUTTON_ID}"
               class="lotto-numbers-toggle-button"
               onclick="${this.onClickLottoNumberToggleButton}"
             />
@@ -21,20 +21,20 @@ class PurchaseSection extends Component {
           </label>
         </div>
       </div>
-      <div id="${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_FLEXBOX}" class="d-flex flex-wrap">
+      <div id="${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_FLEXBOX_ID}" class="d-flex flex-wrap">
         ${this.createLottoWithLottoNumbers(this.props.allLottoNumbers)}
       </div>
     `;
   }
 
   setEvent() {
-    $(`#${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_TOGGLE_BUTTON}`).onclick =
+    $(`#${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_TOGGLE_BUTTON_ID}`).onclick =
       this.onClickLottoNumberToggleButton;
   }
 
   onClickLottoNumberToggleButton() {
-    $(`#${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_FLEXBOX}`).classList.toggle('flex-col');
-    const lottoDetails = $$(`.${DOM.LOTTO_DETAIL}`);
+    $(`#${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_FLEXBOX_ID}`).classList.toggle('flex-col');
+    const lottoDetails = $$(`.${DOM.LOTTO_DETAIL_CLASS}`);
 
     for (let i = 0; i < lottoDetails.length; i += 1) {
       lottoDetails[i].style.display = lottoDetails[i].style.display === 'none' ? 'inline' : 'none';
@@ -46,8 +46,8 @@ class PurchaseSection extends Component {
       .map(
         oneLottoNumbers => String.raw`
           <div class="mx-1 text-4xl">
-            <span class=${DOM.LOTTO_ICON}>🎟️ </span>
-            <span class="${DOM.LOTTO_DETAIL} text-2xl" style="display: none">
+            <span class=${DOM.LOTTO_ICON_CLASS}>🎟️ </span>
+            <span class="${DOM.LOTTO_DETAIL_CLASS} text-2xl" style="display: none">
               ${oneLottoNumbers.join(', ')}
             </span>
           </div>
