@@ -65,11 +65,11 @@ function changePurchaseResult(lottos = []) {
   changePurchasedLottos(lottos);
 }
 
-function openPurchasedLottoWinningResultHandler() {
+function handleOpenPurchasedLottoWinningResult() {
   $modal.classList.add('open');
 }
 
-function closePurchasedLottoWinningResultHandler() {
+function handleClosePurchasedLottoWinningResult() {
   $modal.classList.remove('open');
 }
 
@@ -81,19 +81,19 @@ function handlePurchase(event) {
   showPurchaseResult();
 }
 
-function togglePurchasedLottoNumbersHandler() {
+function handleTogglePurchasedLottoNumbers() {
   changePurchaseResult(myWallet.lottos);
 }
 
 $showResultButton.addEventListener(
   'click',
-  openPurchasedLottoWinningResultHandler
+  handleOpenPurchasedLottoWinningResult
 );
-$modalClose.addEventListener('click', closePurchasedLottoWinningResultHandler);
+$modalClose.addEventListener('click', handleClosePurchasedLottoWinningResult);
 $purchaseLotto.addEventListener('submit', handlePurchase);
 $lottoNumbersToggleButton.addEventListener(
   'click',
-  togglePurchasedLottoNumbersHandler
+  handleTogglePurchasedLottoNumbers
 );
 
 hidePurchaseResult();
