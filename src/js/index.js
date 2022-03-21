@@ -25,17 +25,24 @@ const submitLottoPay = (e) => {
   }
 };
 
+const lottoCardsTemplate = (
+  lotto,
+) => `<div class="lotto-paid-card d-flex items-center mx-1 text-4xl" data-target="lotto-paid-card">
+        <div>🎟️</div> 
+        <span class="lotto-paid-card-numbers d-none text-xl ml-3" data-target="lotto-paid-card-numbers">${lotto.join()}</span>
+      </div>`;
+
 const renderPaidSectionItems = (lottos) => {
   $lottoPaidSection.classList.add('visible');
   $lottoPaidCounts.innerHTML = lottos.length;
-  $lottoPaidCards.innerHTML = lottos
-    .map((lotto) => {
-      return `<div class="lotto-paid-card d-flex items-center mx-1 text-4xl" data-target="lotto-paid-card">
-                <div>🎟️</div> 
-                <span class="lotto-paid-card-numbers d-none text-xl ml-3" data-target="lotto-paid-card-numbers">${lotto.join()}</span>
-              </div>`;
-    })
-    .join('');
+
+  while ($lottoPaidCards.firstChild) {
+    $lottoPaidCards.removeChild($lottoPaidCards.firstChild);
+  }
+
+  lottos.forEach((lotto) => {
+    return $lottoPaidCards.insertAdjacentHTML('beforeEnd', lottoCardsTemplate(lotto));
+  });
 };
 
 const resetPaidSection = () => {
@@ -43,7 +50,6 @@ const resetPaidSection = () => {
   $lottoPaidCards.classList.remove('flex-col');
   $lottoPaidCards.classList.add('flex-row');
 };
-
 
 const toggleLottoPaidCards = () => {
   const $lottoPaidCardNumbers = document.querySelectorAll('.lotto-paid-card-numbers');
