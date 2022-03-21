@@ -1,11 +1,11 @@
-export const LOTTO = {
+export const LOTTO = Object.freeze({
   PRICE: 1000,
   START_NUMBER: 1,
   END_NUMBER: 45,
   NUMBER_COUNT: 6,
-};
+});
 
-export const DOM = {
+export const DOM = Object.freeze({
   APP_ID: 'app',
   PURCHASE_FORM_ID: 'purchase-form',
   PURCHASE_FORM_INPUT_ID: 'purchase-form-input',
@@ -24,11 +24,11 @@ export const DOM = {
   MODAL_CLASS: 'modal',
   MODAL_CLOSE_BUTTON_ID: 'modal-close-button',
   RESTART_BUTTON_ID: 'restart-button',
-};
+});
 
-export const ERROR_MESSAGE = {
+export const ERROR_MESSAGE = Object.freeze({
   INVALID_PRICE: `로또 구입 금액을 ${LOTTO.PRICE}원 단위로 입력해 주세요.`,
   REQUIRED_PRICE: '로또 구입 금액을 입력해주세요.',
   INVALID_RANGE_LOTTO_NUMBER: '당첨 번호는 1에서 45사이로 입력해 주세요',
   DUPLICATED_LOTTO_NUMBER: '당첨 번호는 겹치지 않게 입력해 주세요',
-};
+});
