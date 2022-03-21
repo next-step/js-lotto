@@ -75,12 +75,12 @@ function closePurchasedLottoWinningResultHandler() {
   $modal.classList.remove('open');
 }
 
-function purchaseHandler(event) {
-  event.preventDefault();
-  showPurchaseResult();
+function handlePurchase(event) {
   const money = new FormData(event.currentTarget).get('money');
   myWallet.addLottos(LottoVendingMachine.purchaseLotto(money));
   changePurchaseResult(myWallet.lottos);
+  event.preventDefault();
+  showPurchaseResult();
 }
 
 function togglePurchasedLottoNumbersHandler() {
@@ -92,7 +92,7 @@ $showResultButton.addEventListener(
   openPurchasedLottoWinningResultHandler
 );
 $modalClose.addEventListener('click', closePurchasedLottoWinningResultHandler);
-$purchaseLotto.addEventListener('submit', purchaseHandler);
+$purchaseLotto.addEventListener('submit', handlePurchase);
 $lottoNumbersToggleButton.addEventListener(
   'click',
   togglePurchasedLottoNumbersHandler
