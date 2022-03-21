@@ -15,7 +15,7 @@ const onModalClose = () => {
   $modal.classList.remove("open");
 };
 
-$showResultButton.addEventListener("click", onModalShow);
-$modalClose.addEventListener("click", onModalClose);
+// $showResultButton.addEventListener("click", onModalShow);
+// $modalClose.addEventListener("click", onModalClose);
 
 new LottoController();
