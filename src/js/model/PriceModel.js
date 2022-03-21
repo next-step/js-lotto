@@ -15,19 +15,10 @@ export default class PriceModel {
 
   static validators = {
     isValidPrice: (price) => {
-      if (price === 0) {
-        return alert(ERR_MESSAGE.NONE_PRICE);
-      }
-      if (price < LOTTO_PURCHASE_UNIT) {
-        return alert(ERR_MESSAGE.LESS_THAN_ENOUGH);
-      }
-      if (price > LOTTO_PURCHASE_MAX_PRICE) {
-        return alert(ERR_MESSAGE.GREATER_THAN_ENOUGH);
-      }
-      if (!!(price % LOTTO_PURCHASE_UNIT)) {
-        return alert(ERR_MESSAGE.NOT_DIVIDED_BY_UNIT);
-      }
-      return true;
+      if (price === 0) throw new Error(ERR_MESSAGE.NONE_PRICE);
+      if (price < LOTTO_PURCHASE_UNIT) throw new Error(ERR_MESSAGE.LESS_THAN_ENOUGH);
+      if (price > LOTTO_PURCHASE_MAX_PRICE) throw new Error(ERR_MESSAGE.GREATER_THAN_ENOUGH);
+      if (!!(price % LOTTO_PURCHASE_UNIT)) throw new Error(ERR_MESSAGE.NOT_DIVIDED_BY_UNIT);
     },
   };
 

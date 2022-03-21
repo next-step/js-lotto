@@ -22,10 +22,7 @@ export default class LottoModel {
 
   static validators = {
     isValidQuantity: (totalQuantity) => {
-      if (totalQuantity > LOTTO_PURCHASE_MAX_QUANTITY) {
-        return alert(ERR_MESSAGE.OVER_LIMIT_QUANTITY);
-      }
-      return true;
+      if (totalQuantity > LOTTO_PURCHASE_MAX_QUANTITY) throw new Error(ERR_MESSAGE.OVER_LIMIT_QUANTITY);
     },
   };
 
@@ -64,7 +61,6 @@ export default class LottoModel {
 
   hideLottoTicketsNumbers() {
     this.#isShowLottoNumber = false;
-    const $lottoSectionticket = $(LOTTO_SECTION_TICKETS);
     $(LOTTO_SECTION_TICKETS).classList.remove('flex-col');
     $(LOTTO_SECTION_TICKETS).classList.add('flex-wrap');
     $$(LOTTO_SECTION__TICKET__NUMBERS).forEach((el) => {

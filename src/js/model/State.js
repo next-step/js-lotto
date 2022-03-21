@@ -14,11 +14,15 @@ export default class State {
 
   eventHandler = {
     purchaseLotto: (e) => {
-      e.preventDefault();
-      const inputPrice = Number($(PRICE_FORM__INPUT).value);
-      if (!PriceModel.validators.isValidPrice(inputPrice)) return;
-      this.#priceModel.updatePrice(inputPrice);
-      this.generateLotto(inputPrice);
+      try {
+        e.preventDefault();
+        const inputPrice = Number($(PRICE_FORM__INPUT).value);
+        PriceModel.validators.isValidPrice(inputPrice);
+        this.#priceModel.updatePrice(inputPrice);
+        this.generateLotto(inputPrice);
+      } catch (err) {
+        alert(err.message);
+      }
     },
     toggleDisplayLottoNumbers: () => {
       const isChecked = $(`${LOTTO_SECTION} input`).checked;
@@ -31,15 +35,18 @@ export default class State {
   };
 
   generateLotto(price) {
-    const quantity = price / LOTTO_PURCHASE_UNIT;
-    const totalQuantity = this.#lottoModel?.quantity + quantity;
-
-    if (!LottoModel.validators.isValidQuantity(totalQuantity)) return;
-    if (!this.#lottoModel) {
+    try {
+      const quantity = price / LOTTO_PURCHASE_UNIT;
+      const totalQuantity = this.#lottoModel?.quantity + quantity;
+      LottoModel.validators.isValidQuantity(totalQuantity);
+      if (this.#lottoModel) {
+        this.#lottoModel.addLotto(quantity);
+        return;
+      }
       this.#lottoModel = new LottoModel(quantity);
-      return;
+    } catch (e) {
+      alert(e.message);
     }
-    this.#lottoModel.addLotto(quantity);
   }
 
   get priceModel() {
