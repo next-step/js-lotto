@@ -72,7 +72,7 @@ export default class LottoModel {
     const getTemplate = (ticket) => `<span class="mx-1 text-4xl ${LOTTO_SECTION__TICKET}" data-lotto-id-${ticket.id}> 🎟️ 
                         <span class="lotto-section__ticket__numbers" hidden>${ticket.ticketNumbers}</span>
                       </span></span>`;
-    return this.#tickets.map((ticket) => getTemplate(ticket)).join('');
+    return this.#tickets.map(getTemplate).join('');
   }
 
   get quantity() {
