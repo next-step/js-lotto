@@ -1,4 +1,4 @@
-import { LOTTO_PRICE_UNIT_NOT_MATCH_MESSAGE } from '../../src/js/constants.js';
+import { LOTTO_PRICE_UNIT_NOT_MATCH_MESSAGE, LOTTO_NUMBER_COUNT } from '../../src/js/constants.js';
 
 describe('로또 구매 시', () => {
   beforeEach(() => {
@@ -44,5 +44,17 @@ describe('로또 구매 시', () => {
     cy.get('.switch').click();
     cy.get('.switch').click();
     cy.get('.lotto-number').should('have.length', 0);
+  });
+
+  it('로또 번호는 중복되지 않는다.', () => {
+    cy.get('.lotto-buy-price-input').type('3000');
+    cy.get('.lotto-buy-submit-button').click();
+    cy.get('.switch').click();
+    cy.get('.lotto-number').then(($elements) => {
+      Cypress.$.makeArray($elements).forEach(($element) => {
+        const set = new Set($element.textContent.split(','));
+        expect(set.size).to.eq(LOTTO_NUMBER_COUNT);
+      });
+    });
   });
 });
