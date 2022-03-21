@@ -1,13 +1,13 @@
 import { pay } from './models/lotto';
 
-const $lottoPayForm = document.querySelector('[data-target="lotto-pay-form"]');
+const $lottoPayForm = document.querySelector('.lotto-pay-form');
 const $lottoPayInput = $lottoPayForm.querySelector('input');
 
-const $lottoPaidSection = document.querySelector('[data-target="lotto-paid-section"]');
-const $lottoPaidCounts = document.querySelector('[data-target="lotto-paid-counts"]');
-const $lottoPaidSwitch = document.querySelector('[data-target="lotto-paid-switch"]');
+const $lottoPaidSection = document.querySelector('.lotto-paid-section');
+const $lottoPaidCounts = document.querySelector('.lotto-paid-counts');
+const $lottoPaidSwitch = document.querySelector('.lotto-paid-switch');
 const $lottoPaidCheckBox = $lottoPaidSwitch.querySelector('input');
-const $lottoPaidCards = document.querySelector('[data-target="lotto-paid-cards"]');
+const $lottoPaidCards = document.querySelector('.lotto-paid-cards');
 
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $modalClose = document.querySelector('.modal-close');
@@ -29,9 +29,9 @@ const renderPaidSectionItems = (lottos) => {
   $lottoPaidCounts.innerHTML = lottos.length;
   $lottoPaidCards.innerHTML = lottos
     .map((lotto) => {
-      return `<div class="d-flex items-center mx-1 text-4xl" data-target="lotto-paid-card">
+      return `<div class="lotto-paid-card d-flex items-center mx-1 text-4xl" data-target="lotto-paid-card">
                 <div>🎟️</div> 
-                <span class="d-none text-xl ml-3" data-target="lotto-paid-card-numbers">${lotto.join()}</span>
+                <span class="lotto-paid-card-numbers d-none text-xl ml-3" data-target="lotto-paid-card-numbers">${lotto.join()}</span>
               </div>`;
     })
     .join('');
@@ -45,9 +45,7 @@ $lottoPaidSwitch.addEventListener('click', (e) => {
 });
 
 const toggleLottoPaidCards = () => {
-  const $lottoPaidCardNumbers = document.querySelectorAll(
-    '[data-target="lotto-paid-card-numbers"]',
-  );
+  const $lottoPaidCardNumbers = document.querySelectorAll('.lotto-paid-card-numbers');
 
   toggleLottoPaidCardsLayout();
   $lottoPaidCardNumbers.forEach((elm) => elm.classList.toggle('d-none'));
