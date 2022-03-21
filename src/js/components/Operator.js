@@ -6,6 +6,7 @@ export default class Operator {
 
   validatePrice(price) {
     const isDivisibleByThousand = price && Number(price) % 1000 === 0 ? true : false;
+
     if (isDivisibleByThousand) {
       this.setState({
         ...this.state,
@@ -15,6 +16,23 @@ export default class Operator {
     } else {
       window.alert('로또 구입 금액을 1000원 단위로 입력해주세요.');
     }
+  }
+
+  createRandomNumber() {
+    return Math.floor(Math.random() * (46 - 1)) + 1;
+  }
+
+  makeNewNumberSets(numSetCount) {
+    const numbersPerTicket = 6;
+    const randomNumbersArr = Array.from(
+      {length: numSetCount},
+      () => Array(numbersPerTicket).fill(null).map(() => this.createRandomNumber())
+    )
+
+    this.setState({
+      ...this.state,
+      randomNumberSet: randomNumbersArr
+    })
   }
 
 }

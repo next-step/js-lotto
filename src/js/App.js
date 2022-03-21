@@ -27,17 +27,19 @@ class App {
   }
 
   handleConfirmBtnClick() {
-    console.log("click on confirm button")
-    // * 입력된 숫자가 1000으로 나뉘어지는 숫자인지 validate
     this.operator.validatePrice(this.state.priceInputVal);
-    // * 구매 결과 디스플레이 하기
-    // todo: 랜덤한 숫자를 만들어내기 (2자리, 45이하)
- 
+    this.operator.makeNewNumberSets(this.state.purchasedVal);
+  }
+  
+  handleShowNumbersBtnToggle() {
+    console.log(this.state.randomNumberSet);
+    // todo: 티켓당 6개씩 만들어진 랜덤한 숫자가 토글되어야 한다.
+    console.log('toggle 버튼 클릭됨');
   }
 
   render() {
     this.operator = new Operator({state: this.state, setState: this.setState.bind(this)});
-    this.$purchaseDisplay = new PurchaseDisplay({isConfirmBtnClicked: this.state.isConfirmBtnClicked, purchasedVal: this.state.purchasedVal});
+    this.$purchaseDisplay = new PurchaseDisplay({isConfirmBtnClicked: this.state.isConfirmBtnClicked, purchasedVal: this.state.purchasedVal, onToggle: this.handleShowNumbersBtnToggle.bind(this)});
     this.$winningNumberInput = new WinningNumberInput({isConfirmBtnClicked: this.state.isConfirmBtnClicked});
     this.$priceInput = new PriceInput({priceInputVal: this.state.priceInputVal, onChange: this.handlePurchaseInputChange.bind(this) })
     
