@@ -8,12 +8,13 @@ const $lottoPaidCounts = document.querySelector('.lotto-paid-counts');
 const $lottoPaidSwitch = document.querySelector('.lotto-paid-switch');
 const $lottoPaidCheckBox = $lottoPaidSwitch.querySelector('input');
 const $lottoPaidCards = document.querySelector('.lotto-paid-cards');
+const $lottoNumberToggleButton = document.querySelector('.lotto-numbers-toggle-button');
 
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $modalClose = document.querySelector('.modal-close');
 const $modal = document.querySelector('.modal');
 
-$lottoPayForm.addEventListener('submit', (e) => {
+const submitLottoPay = (e) => {
   e.preventDefault();
   const lottos = pay($lottoPayInput.value);
 
@@ -22,7 +23,7 @@ $lottoPayForm.addEventListener('submit', (e) => {
     renderPaidSectionItems(lottos);
     resetPaidSection();
   }
-});
+};
 
 const renderPaidSectionItems = (lottos) => {
   $lottoPaidSection.classList.add('visible');
@@ -37,12 +38,12 @@ const renderPaidSectionItems = (lottos) => {
     .join('');
 };
 
-$lottoPaidSwitch.addEventListener('click', (e) => {
-  e.preventDefault();
+const resetPaidSection = () => {
+  $lottoPaidCheckBox.checked = false;
+  $lottoPaidCards.classList.remove('flex-col');
+  $lottoPaidCards.classList.add('flex-row');
+};
 
-  $lottoPaidCheckBox.checked = !$lottoPaidCheckBox.checked;
-  toggleLottoPaidCards();
-});
 
 const toggleLottoPaidCards = () => {
   const $lottoPaidCardNumbers = document.querySelectorAll('.lotto-paid-card-numbers');
@@ -56,11 +57,8 @@ const toggleLottoPaidCardsLayout = () => {
   $lottoPaidCards.classList.toggle('flex-row');
 };
 
-const resetPaidSection = () => {
-  $lottoPaidCheckBox.checked = false;
-  $lottoPaidCards.classList.remove('flex-col');
-  $lottoPaidCards.classList.add('flex-row');
-};
+$lottoPayForm.addEventListener('submit', submitLottoPay);
+$lottoNumberToggleButton.addEventListener('change', toggleLottoPaidCards);
 
 const onModalShow = () => {
   $modal.classList.add('open');
