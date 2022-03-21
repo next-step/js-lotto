@@ -1,14 +1,10 @@
 import { INVALID_INPUT_ALERT_STRING } from "../../../src/js/constants.js";
+import { typePriceInput } from "./cypress-util.js";
 
-describe("Calculator Test", function () {
+describe("화면 렌더링에 관련된 테스트", function () {
   beforeEach(() => {
     cy.visit("http://127.0.0.1:5500/index.html");
   });
-
-  const typePriceInput = (price) => {
-    cy.get(".price-input").type(price);
-    cy.get(".confirm").click();
-  };
 
   it("최초 랜더 시, 로또 금액을 입력할 수 있는 인풋 필드가 존재한다. ", function () {
     cy.get(".price-input").should("be.visible");
@@ -25,13 +21,14 @@ describe("Calculator Test", function () {
     typePriceInput("10000");
     cy.get("#purchase-detail").should("be.visible");
   });
+});
 
-  it("로또 금액을 입력하면 적절한 개수의 로또가 발급된다. ", function () {
-    typePriceInput("10000");
-    cy.get("#count-text").should("have.text", "총 10개를 구매하였습니다. ");
+describe("금액 입력과 관련된 테스트", function () {
+  beforeEach(() => {
+    cy.visit("http://127.0.0.1:5500/index.html");
   });
 
-  it("0 이상이고, 천 원 단위로 나뉘어 떨어지는 경우 정상적으로 로또를 발급한다. ", function () {
+  it("1000 이상이고, 천 원 단위로 나뉘어 떨어지는 경우 정상적으로 로또를 발급한다. ", function () {
     typePriceInput("5000");
     cy.get("#count-text").should("have.text", "총 5개를 구매하였습니다. ");
   });
@@ -41,6 +38,17 @@ describe("Calculator Test", function () {
     cy.on("window:alert", (text) => {
       expect(text).to.contains(INVALID_INPUT_ALERT_STRING);
     });
+  });
+});
+
+describe("로또 발급과 관련된 테스트", function () {
+  beforeEach(() => {
+    cy.visit("http://127.0.0.1:5500/index.html");
+  });
+
+  it("로또 금액을 입력하면 적절한 개수의 로또가 발급된다. ", function () {
+    typePriceInput("10000");
+    cy.get("#count-text").should("have.text", "총 10개를 구매하였습니다. ");
   });
 
   it("번호보기 토글 버튼을 클릭하면 복권 번호를 보여준다. ", function () {
