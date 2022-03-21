@@ -1,0 +1,17 @@
+ul.lotto-list {
+  flex-wrap: wrap;
+  list-style: none;
+  padding-left: 0;
+}
+
+li.lotto-item-with-numbers {
+  display: block;
+}
+
+span.numbers-closed {
+  display: none;
+}
+
+.pre-purchase {
+  display: none;
+}
