@@ -57,4 +57,16 @@ describe('로또 구매 시', () => {
       });
     });
   });
+
+  it('로또 번호는 7개여야 한다.', () => {
+    cy.get('.lotto-buy-price-input').type('3000');
+    cy.get('.lotto-buy-submit-button').click();
+    cy.get('.switch').click();
+    cy.get('.lotto-number').then(($elements) => {
+      Cypress.$.makeArray($elements).forEach(($element) => {
+        const numbers = $element.textContent.split(',');
+        expect(numbers.length).to.eq(7);
+      });
+    });
+  });
 });
