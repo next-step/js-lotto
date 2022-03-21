@@ -56,9 +56,7 @@ function changePurchasedAmount(amount) {
 }
 
 function changePurchasedLottos(lottos) {
-  lottos.forEach((lotto) => {
-    addLottoToPurchasedLottoList(lotto);
-  });
+  lottos.forEach(addLottoToPurchasedLottoList);
 }
 
 function changePurchaseResult(lottos = []) {
