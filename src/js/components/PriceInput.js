@@ -2,6 +2,11 @@ import { isValidPriceInput } from "../validation.js";
 import { INVALID_INPUT_ALERT_STRING } from "../constants.js";
 
 export class PriceInput {
+  constructor(target, onClickPriceInputConfirmButton) {
+    target.innerHTML = this.#template();
+    this.#setEvents(onClickPriceInputConfirmButton);
+  }
+
   #template = () => {
     return `
     <form id="price-input-form" class="mt-5">
@@ -37,9 +42,4 @@ export class PriceInput {
     }
     callback(value);
   };
-
-  constructor(target, onClickPriceInputConfirmButton) {
-    target.innerHTML = this.#template();
-    this.#setEvents(onClickPriceInputConfirmButton);
-  }
 }

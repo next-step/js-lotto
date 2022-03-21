@@ -5,6 +5,12 @@ import { Statistics } from "./components/Statistics.js";
 import { createLotto } from "./util.js";
 
 class App {
+  constructor() {
+    this.#setComponents();
+    this.#purchaseDetailElement.hidden = true;
+    this.#tryFormElement.hidden = true;
+  }
+
   #priceInputElement = document.querySelector("#price-input");
   #purchaseDetailElement = document.querySelector("#purchase-detail");
   #tryFormElement = document.querySelector("#try-form");
@@ -53,12 +59,6 @@ class App {
       this.#onModalClose
     );
   };
-
-  constructor() {
-    this.#setComponents();
-    this.#purchaseDetailElement.hidden = true;
-    this.#tryFormElement.hidden = true;
-  }
 }
 
 new App();

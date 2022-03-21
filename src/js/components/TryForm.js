@@ -1,4 +1,9 @@
 export class TryForm {
+  constructor(target, onClickResultButton) {
+    target.innerHTML = this.#template();
+    this.#setEvents(onClickResultButton);
+  }
+
   #template = () => {
     return `
     <form class="mt-9">
@@ -58,8 +63,4 @@ export class TryForm {
     );
     showResultButton.addEventListener("click", onClickResultButton);
   };
-  constructor(target, onClickResultButton) {
-    target.innerHTML = this.#template();
-    this.#setEvents(onClickResultButton);
-  }
 }

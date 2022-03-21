@@ -1,4 +1,12 @@
 export class PurchaseDetail {
+  constructor(target) {
+    target.innerHTML = this.#template();
+    this.#toggleButtonElement = document.querySelector(".toggle-button");
+    this.#lottoIconsElement = document.querySelector(".icons");
+    this.#lottoContentsElement = document.querySelector(".contents");
+    this.#setEvents();
+  }
+
   #template = () => {
     return `
     <section class="mt-9">
@@ -82,12 +90,4 @@ export class PurchaseDetail {
     }
     this.#handleIfToggleButtonIsChecked();
   };
-
-  constructor(target) {
-    target.innerHTML = this.#template();
-    this.#toggleButtonElement = document.querySelector(".toggle-button");
-    this.#lottoIconsElement = document.querySelector(".icons");
-    this.#lottoContentsElement = document.querySelector(".contents");
-    this.#setEvents();
-  }
 }

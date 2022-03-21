@@ -1,4 +1,9 @@
 export class Statistics {
+  constructor(target, onModalClose) {
+    target.innerHTML = this.#template();
+    this.#setEvents(onModalClose);
+  }
+
   #template = () => {
     return `
             <div class="modal-inner p-10">
@@ -59,9 +64,4 @@ export class Statistics {
     const modalClose = document.querySelector(".modal-close");
     modalClose.addEventListener("click", onModalClose);
   };
-
-  constructor(target, onModalClose) {
-    target.innerHTML = this.#template();
-    this.#setEvents(onModalClose);
-  }
 }
