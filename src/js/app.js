@@ -27,7 +27,7 @@ class App {
    */
   #handleElementClick = ({ target }) => {
     switch (true) {
-      case target.classList.contains('lotto-buy-form-submit'):
+      case target.classList.contains('lotto-buy-submit-button'):
         this.#handleLottoBuy();
         break;
       default:
@@ -57,7 +57,7 @@ class App {
 
   #handleLottoBuy() {
     /** @type {HTMLInputElement} */
-    const $lottoBuyFormInput = this.#element.querySelector('.lotto-buy-form-input');
+    const $lottoBuyFormInput = this.#element.querySelector('.lotto-buy-price-input');
     const price = parseInt($lottoBuyFormInput.value, 10);
     this.#lotto.buy(price);
   }
