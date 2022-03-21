@@ -18,12 +18,8 @@ export class Lotto {
   #generateAutoLottoNumbers() {
     this.#values = new Set();
 
-    while (true) {
+    while (!Lotto.#isMaxCreateLottoNumber(this.#values)) {
       this.#values.add(Lotto.#getRandomNumber());
-
-      if (Lotto.#isMaxCreateLottoNumber(this.#values)) {
-        break;
-      }
     }
   }
 
