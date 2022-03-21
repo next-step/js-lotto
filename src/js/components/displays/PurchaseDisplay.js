@@ -2,7 +2,10 @@ export default class PurchaseDisplay {
   constructor({isConfirmBtnClicked, purchasedVal, onToggle}) {
     this.isVisible = null;
     this.purchasedVal = null;
-    this.$purchaseDisplayBox = null;
+    this.$lottoNumbersToggleBtn = null;
+    this.$purchaseDisplayBox = document.querySelector('section');
+    this.$purchasedResultText = document.getElementById('purchased-result-text');
+    this.$purchasedTicketImgBox = document.getElementById('ticket-img-box');
     this.handleToggle = onToggle;
     this.setState(isConfirmBtnClicked, purchasedVal);
   }
@@ -14,23 +17,18 @@ export default class PurchaseDisplay {
   }
 
   showPurchaseDisplayInfo() {
-    const $purchaseDisplayBox = document.querySelector('section');
-
     if (!this.isVisible) {
-      $purchaseDisplayBox.style.display = 'none';
+      this.$purchaseDisplayBox.style.display = 'none';
     } else {
-      $purchaseDisplayBox.style.display = 'block';
-  
-      const $purchasedResultText = document.getElementById('purchased-result-text');
-      const $purchasedTicketImgBox = document.getElementById('ticket-img-box');
-  
-      $purchasedResultText.textContent = `총 ${this.purchasedVal}개를 구매하였습니다.`;
-  
+      this.$purchaseDisplayBox.style.display = 'block';
+      this.$purchasedResultText.textContent = `총 ${this.purchasedVal}개를 구매하였습니다.`;
+
       let ticketImages = '';
+
       for (let i = 0; i < this.purchasedVal; i++) {
         ticketImages += `<span class="mx-1 text-4xl">🎟️ </span>`;
       }
-      $purchasedTicketImgBox.innerHTML = ticketImages;
+      this.$purchasedTicketImgBox.innerHTML = ticketImages;
     }
   }
 
@@ -38,9 +36,11 @@ export default class PurchaseDisplay {
     this.showPurchaseDisplayInfo();
 
     const $lottoNumbersToggleBtn = document.querySelector('.lotto-numbers-toggle-button');
-    // this.$purchaseDisplayBox = $purchaseDisplayBox.cloneNode(true);
+    this.$lottoNumbersToggleBtn = $lottoNumbersToggleBtn.cloneNode(true);
+    $lottoNumbersToggleBtn.after(this.$lottoNumbersToggleBtn);
+    $lottoNumbersToggleBtn.remove();
 
-    this.addEvent($lottoNumbersToggleBtn, 'input', this.handleToggle);
+    this.addEvent(this.$lottoNumbersToggleBtn, 'click', this.handleToggle);
   }
 
   addEvent($el, event, callbackFn) {
