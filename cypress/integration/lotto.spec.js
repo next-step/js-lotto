@@ -23,4 +23,11 @@ describe('로또 구매 시', () => {
         expect(stub.getCall(0)).to.be.calledWith(LOTTO_PRICE_UNIT_NOT_MATCH_MESSAGE);
       });
   });
+
+  it('구매 금액에 맞게 로또가 발급된다.', () => {
+    cy.get('.lotto-buy-price-input').type('2000');
+    cy.get('.lotto-buy-submit-button').click();
+    cy.get('.lotto-list-count').should('have.text', '2');
+    cy.get('.lotto-item').should('have.length', 2);
+  });
 });
