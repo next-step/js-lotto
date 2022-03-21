@@ -24,11 +24,11 @@ function App($target) {
             <h1 class="text-center">🎱 행운의 로또</h1>
                 <template class="${PRICE_FORM}"></template>
                 <template class="mt-9 ${LOTTO_SECTION}"></template>
-              ${LottoForm.getHtml()}
+              ${LottoForm()}
           </div>
         </div>
       </div>
-    ${ResultModal.getHtml()}
+    ${ResultModal()}
     `.trim();
 
   PriceForm($(PRICE_FORM, $app), { onSubmit: state.eventHandler.purchaseLotto });

@@ -1,8 +1,6 @@
-export default class ResultModal {
-  constructor() {}
-
-  static getHtml() {
-    return `<div class="modal">
+//TODO: - STEP2
+const ResultModal = () => {
+  return `<div class="modal">
         <div class="modal-inner p-10">
           <div class="modal-close">
             <svg viewbox="0 0 40 40">
@@ -55,5 +53,6 @@ export default class ResultModal {
           </div>
         </div>
       </div>`;
-  }
-}
+};
+
+export default ResultModal;

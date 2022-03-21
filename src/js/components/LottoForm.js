@@ -1,10 +1,8 @@
+//TODO: - STEP2
 import { LOTTO_FORM } from '../constants/selectTarget.js';
 
-export default class LottoForm {
-  constructor() {}
-
-  static getHtml() {
-    return `<form class="mt-9 ${LOTTO_FORM}" hidden>
+const LottoForm = () => {
+  return `<form class="mt-9 ${LOTTO_FORM}" hidden>
             <label class="flex-auto d-inline-block mb-3"
               >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >
@@ -52,5 +50,6 @@ export default class LottoForm {
               결과 확인하기
             </button>
           </form>`;
-  }
-}
+};
+
+export default LottoForm;
