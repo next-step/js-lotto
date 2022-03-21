@@ -30,4 +30,19 @@ describe('로또 구매 시', () => {
     cy.get('.lotto-list-count').should('have.text', '2');
     cy.get('.lotto-item').should('have.length', 2);
   });
+
+  it('번호보기 토글 버튼을 클릭하면 복권 번호를 확인할 수 있다.', () => {
+    cy.get('.lotto-buy-price-input').type('3000');
+    cy.get('.lotto-buy-submit-button').click();
+    cy.get('.switch').click();
+    cy.get('.lotto-number').should('have.length', 3);
+  });
+
+  it('번호보기 토글 버튼을 끄면하면 복권 번호가 감춰진다..', () => {
+    cy.get('.lotto-buy-price-input').type('3000');
+    cy.get('.lotto-buy-submit-button').click();
+    cy.get('.switch').click();
+    cy.get('.switch').click();
+    cy.get('.lotto-number').should('have.length', 0);
+  });
 });
