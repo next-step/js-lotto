@@ -3,7 +3,10 @@ beforeEach(() => {
 });
 
 describe('구입 금액 입력 폼', () => {
-	it('구입 금액 입력 폼이 표시된다.', () => {});
+	it('구입 금액 입력 폼이 표시된다.', () => {
+		cy.get('form[name="purchaseForm"]').should('be.visible');
+		cy.get('input[name="purchaseAmountInput"]').should('be.visible');
+	});
 	it('1000원 단위가 아닌 금액을 제출하면, 얼럿 메시지를 표시한다.', () => {});
 	it('1000원 미만의 금액을 제출하면, 유효성 검사 메시지를 표시한다.', () => {});
 });
