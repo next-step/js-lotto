@@ -1,15 +1,23 @@
+import { DOM } from '../../src/js/constants';
+
 describe('당첨 결과 기능', () => {
   context('로또 구매 이후 당첨번호와 보너스 번호를 입력하는 form이 나타납니다.', () => {
     it('당첨 번호 DOM 확인', () => {
-      expect(true).to.equal(false);
+      cy.get(`#${DOM.PURCHASE_FORM_INPUT}`).type(4000);
+      cy.get(`#${DOM.PURCHASE_FORM_BUTTON}`).click();
+      cy.get(`.${DOM.WINNING_NUMBER}`).should('exist');
     });
 
     it('보너스 번호 DOM 확인', () => {
-      expect(true).to.equal(false);
+      cy.get(`#${DOM.PURCHASE_FORM_INPUT}`).type(4000);
+      cy.get(`#${DOM.PURCHASE_FORM_BUTTON}`).click();
+      cy.get(`.${DOM.BONUS_NUMBER}`).should('exist');
     });
 
     it('결과 확인 버튼 DOM 확인', () => {
-      expect(true).to.equal(false);
+      cy.get(`#${DOM.PURCHASE_FORM_INPUT}`).type(4000);
+      cy.get(`#${DOM.PURCHASE_FORM_BUTTON}`).click();
+      cy.get(`#${DOM.OPEN_RESULT_MODAL_BUTTON}`).should('exist');
     });
   });
 
