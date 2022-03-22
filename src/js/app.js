@@ -39,13 +39,9 @@ class LottoApp extends Component {
   }
 
   setLottoCountAndNumbers(lottoCount) {
-    const allLottoNumbers = [];
-
-    for (let i = 0; i < lottoCount; i += 1) {
-      allLottoNumbers.push(
-        pickRandomNumbers(LOTTO.START_NUMBER, LOTTO.END_NUMBER, LOTTO.NUMBER_COUNT),
-      );
-    }
+    const allLottoNumbers = Array.from({ length: lottoCount }, () =>
+      pickRandomNumbers(LOTTO.START_NUMBER, LOTTO.END_NUMBER, LOTTO.NUMBER_COUNT),
+    );
 
     this.setState({
       ...this.state,
