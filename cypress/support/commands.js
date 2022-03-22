@@ -24,8 +24,11 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 Cypress.Commands.add('purchaseLotto', (purchaseAmount) => {
+	if (purchaseAmount) {
+		cy.get('input[name="purchaseAmountInput"]').type(purchaseAmount);
+	}
+
 	cy.get('input[name="purchaseAmountInput"]')
-		.type(purchaseAmount)
 		.next('button')
 		.contains('확인')
 		.click();

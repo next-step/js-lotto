@@ -8,6 +8,16 @@ describe('구입 금액 입력 폼', () => {
 		cy.get('input[name="purchaseAmountInput"]').should('be.visible');
 	});
 
+	it('금액을 입력하지 않고 제출하면, 유효성 검사 메시지를 표시한다.', () => {
+		cy.purchaseLotto().then(() => {
+			cy.get('input[name="purchaseAmountInput"]').then(($inputs) => {
+				expect($inputs[0].validationMessage).to.eq(
+					'Please fill out this field.',
+				);
+			});
+		});
+	});
+
 	it('1000원 단위가 아닌 금액을 제출하면, 얼럿 메시지를 표시한다.', () => {
 		const stub = cy.stub();
 
@@ -23,8 +33,8 @@ describe('구입 금액 입력 폼', () => {
 	it('1000원 미만의 금액을 제출하면, 유효성 검사 메시지를 표시한다.', () => {
 		cy.purchaseLotto(999)
 			.get('input[name="purchaseAmountInput"]')
-			.then(($input) => {
-				expect($input[0].validationMessage).to.eq(
+			.then(($inputs) => {
+				expect($inputs[0].validationMessage).to.eq(
 					'Value must be greater than or equal to 1000.',
 				);
 			});
@@ -79,9 +89,9 @@ describe('구입한 로또 번호 섹션', () => {
 	it('로또 번호는 6개의 숫자이다.', () => {
 		cy.toggleShowLottoNumbers();
 
-		cy.get('.lottoDetail').each(($element) => {
+		cy.get('.lottoDetail').each(($elements) => {
 			const lottoNumbers =
-				$element[0].textContent.split(', ').map(Number) ?? [];
+				$elements[0].textContent.split(', ').map(Number) ?? [];
 
 			expect(lottoNumbers).to.have.lengthOf(6);
 		});
@@ -90,9 +100,9 @@ describe('구입한 로또 번호 섹션', () => {
 	it('로또 번호는 서로 중복하지 않는다.', () => {
 		cy.toggleShowLottoNumbers();
 
-		cy.get('.lottoDetail').each(($element) => {
+		cy.get('.lottoDetail').each(($elements) => {
 			const lottoNumbers =
-				$element[0].textContent.split(', ').map(Number) ?? [];
+				$elements[0].textContent.split(', ').map(Number) ?? [];
 
 			expect(lottoNumbers.length).to.be.equal(new Set(lottoNumbers).size);
 		});
