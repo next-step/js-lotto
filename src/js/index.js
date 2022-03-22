@@ -1,6 +1,5 @@
-import { getLottoListTemplate, getCount, createLottoList } from './domains/index.js';
+import { getLottoListTemplate, isValidPrice, getCount, createLottoList } from './domains/index.js';
 import { getSelector } from './utils/index.js';
-import { validatePrice, errorPrintAlert } from './domains/errors.js';
 
 const initState = {
   price: 0,
@@ -28,6 +27,8 @@ function App() {
   const renderLottoList = () => {
     $countLabel.textContent = `총 ${this.state.count}개를 구매하였습니다.`;
     $lottoListUl.innerHTML = getLottoListTemplate(this.state.lottoList);
+
+    renderLottoNumberToggle();
   };
 
   const renderLottoNumberToggle = () => {
@@ -43,11 +44,7 @@ function App() {
   const handleSubmitPrice = (e) => {
     e.preventDefault();
     const price = e.target['price'].valueAsNumber;
-    const { errorMsg } = validatePrice(price);
-    if (errorMsg) {
-      errorPrintAlert(errorMsg);
-      return;
-    }
+    if (!isValidPrice(price)) return;
 
     buyLotto(price);
   };
