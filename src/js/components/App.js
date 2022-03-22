@@ -1,6 +1,5 @@
-import {EVENT, STATUS} from '../constants/index.js';
+import {EVENT} from '../constants/index.js';
 import {$, eventBus} from '../lib/index.js';
-import Lotto from '../model/lotto.js';
 import {Component} from './Component.js';
 import {PurchaseForm} from './PurchaseForm.js';
 import {PurchasedLottoSection} from './PurchasedLottoSection.js';

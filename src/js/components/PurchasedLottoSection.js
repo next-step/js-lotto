@@ -1,5 +1,4 @@
 import {EVENT, TEXTS} from '../constants/index.js';
-import Lotto from '../model/lotto.js';
 import {format, $, eventBus} from '../lib/index.js';
 import {Component} from './Component.js';
 
