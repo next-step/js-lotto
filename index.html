@@ -30,7 +30,7 @@
 					</form>
 					<section id="purchasedLottoSection" class="mt-9">
 						<div class="d-flex">
-							<label class="purchasedCountsLabel flex-auto my-0"></label>
+							<label class="purchasedCountLabel flex-auto my-0"></label>
 							<div class="flex-auto d-flex justify-end pr-1">
 								<label class="switch">
 									<input
@@ -126,7 +126,7 @@
 				</div>
 			</div>
 
-			<div class="modal">
+			<div class="winningResultModal modal">
 				<div class="modal-inner p-10">
 					<div class="modal-close">
 						<svg viewbox="0 0 40 40">
@@ -144,36 +144,12 @@
 									<th class="p-3">당첨 갯수</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr class="text-center">
-									<td class="p-3">3개</td>
-									<td class="p-3">5,000</td>
-									<td class="p-3">n개</td>
-								</tr>
-								<tr class="text-center">
-									<td class="p-3">4개</td>
-									<td class="p-3">50,000</td>
-									<td class="p-3">n개</td>
-								</tr>
-								<tr class="text-center">
-									<td class="p-3">5개</td>
-									<td class="p-3">1,500,000</td>
-									<td class="p-3">n개</td>
-								</tr>
-								<tr class="text-center">
-									<td class="p-3">5개 + 보너스볼</td>
-									<td class="p-3">30,000,000</td>
-									<td class="p-3">n개</td>
-								</tr>
-								<tr class="text-center">
-									<td class="p-3">6개</td>
-									<td class="p-3">2,000,000,000</td>
-									<td class="p-3">n개</td>
-								</tr>
-							</tbody>
+							<tbody class="resultTableBody"></tbody>
 						</table>
 					</div>
-					<p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+					<p class="earningRate text-center font-bold">
+						당신의 총 수익률은 %입니다.
+					</p>
 					<div class="d-flex justify-center mt-5">
 						<button type="button" class="btn btn-cyan">다시 시작하기</button>
 					</div>

@@ -4,17 +4,22 @@ import {randomNumber} from '../lib/index.js';
 export default class Lotto {
 	#numbers;
 
-	constructor() {
-		this.#numbers = new Set();
-		this.initNumbers();
+	constructor(manualNumbers) {
+		this.#numbers = manualNumbers
+			? new Set(manualNumbers)
+			: this.randomNumbers();
 	}
 
-	initNumbers() {
-		while (this.#numbers.size < LOTTO.COUNT) {
-			this.#numbers.add(
+	randomNumbers() {
+		const numbers = new Set();
+
+		while (numbers.size < LOTTO.COUNT) {
+			numbers.add(
 				randomNumber(LOTTO.MINUMUM_LOTTO_VALUE, LOTTO.MAXIMUM_LOTTO_VALUE),
 			);
 		}
+
+		return numbers;
 	}
 
 	get numbers() {
@@ -23,5 +28,13 @@ export default class Lotto {
 
 	get numbersString() {
 		return [...this.#numbers.values()].join(', ');
+	}
+
+	static create(manualNumbers) {
+		return new Lotto(manualNumbers);
+	}
+
+	static autoPurchase({count = 1}) {
+		return Array.from({length: count}, () => Lotto.create());
 	}
 }

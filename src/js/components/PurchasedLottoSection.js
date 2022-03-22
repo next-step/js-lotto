@@ -7,7 +7,7 @@ export class PurchasedLottoSection extends Component {
 	constructor($element) {
 		super($element);
 
-		this.$purchasedCountsLabel = $('.purchasedCountsLabel');
+		this.$purchasedCountLabel = $('.purchasedCountLabel');
 		this.$showLottoNumbersToggle = $('input[name=showLottoNumbersToggle]');
 		this.$autoPurchasedLottoList = $('.autoPurchasedLottoList');
 
@@ -28,25 +28,33 @@ export class PurchasedLottoSection extends Component {
 	}
 
 	subscribe() {
-		eventBus.on(EVENT.PURCHASE_LOTTO, ({detail: lottoCount}) => {
-			this.setState({lottos: this.generateLottos(lottoCount)});
-			this.show();
+		eventBus.on(EVENT.INITIALIZE, () => {
+			this.setState({lottos: [], isVisibleDetail: false});
+		});
+
+		eventBus.on(EVENT.PURCHASE_LOTTO, ({detail: lottos}) => {
+			this.setState({lottos});
 		});
 	}
 
 	render() {
-		this.renderPurchasedCounts();
+		this.renderPurchasedCount();
 		this.renderAutoPurchasedLottoList();
 	}
 
 	setState({lottos, isVisibleDetail}) {
 		this.lottos = lottos ?? this.lottos;
 		this.isVisibleDetail = isVisibleDetail ?? this.isVisibleDetail;
-		this.render();
-	}
 
-	generateLottos(lottoCount) {
-		return Array.from({length: lottoCount}, () => new Lotto());
+		if (this.lottos.length > 0) {
+			this.show();
+			this.render();
+
+			return;
+		}
+
+		this.hide();
+		this.render();
 	}
 
 	renderAutoPurchasedLottoList() {
@@ -71,9 +79,9 @@ export class PurchasedLottoSection extends Component {
 		this.$autoPurchasedLottoList.classList.remove('flex-col');
 	}
 
-	renderPurchasedCounts() {
-		this.$purchasedCountsLabel.textContent = format(
-			TEXTS.PURCHASED_COUNTS,
+	renderPurchasedCount() {
+		this.$purchasedCountLabel.textContent = format(
+			TEXTS.PURCHASED_COUNT,
 			this.lottos.length,
 		);
 	}

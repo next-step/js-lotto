@@ -1,5 +1,6 @@
 import {divmod, $, eventBus} from '../lib/index.js';
 import {LOTTO, EVENT, MESSAGES} from '../constants/index.js';
+import Lotto from '../model/lotto.js';
 import {Component} from './Component.js';
 
 export class PurchaseForm extends Component {
@@ -27,12 +28,15 @@ export class PurchaseForm extends Component {
 				return;
 			}
 
-			eventBus.emit(EVENT.PURCHASE_LOTTO, quotient);
+			eventBus.emit(
+				EVENT.PURCHASE_LOTTO,
+				Lotto.autoPurchase({count: quotient}),
+			);
 		});
 	}
 
 	subscribe() {
-		eventBus.on(EVENT.INIT, () => {
+		eventBus.on(EVENT.INITIALIZE, () => {
 			this.$purchaseAmountInput.value = '';
 		});
 	}

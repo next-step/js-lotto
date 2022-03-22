@@ -1,3 +1,5 @@
+import Lotto from '../../src/js/model/Lotto.js';
+
 beforeEach(() => {
 	cy.visit('/');
 });
@@ -47,7 +49,7 @@ describe('구입한 로또 번호 섹션', () => {
 	});
 
 	it('1000원 단위의 금액을 제출하면, 금액에 해당하는 로또 갯수가 표시된다.', () => {
-		cy.get('.purchasedCountsLabel').should(
+		cy.get('.purchasedCountLabel').should(
 			'have.text',
 			'총 5개를 구매하였습니다.',
 		);
@@ -75,9 +77,9 @@ describe('구입한 로또 번호 섹션', () => {
 	it('로또 번호는 모두 1이상 45이하의 숫자이다.', () => {
 		cy.toggleShowLottoNumbers();
 
-		cy.get('.lottoDetail').each(($element) => {
+		cy.get('.lottoDetail').each(($elements) => {
 			const lottoNumbers =
-				$element[0].textContent.split(', ').map(Number) ?? [];
+				$elements[0].textContent.split(', ').map(Number) ?? [];
 
 			for (const lottoNumber of lottoNumbers) {
 				expect(lottoNumber).to.be.greaterThan(0);
@@ -163,12 +165,96 @@ describe('당첨 번호 입력 폼', () => {
 });
 
 describe('당첨 결과 모달', () => {
-	it('당첨 번호를 제출하면, 당첨 결과 모달이 표시된다.', () => {});
-	it('구입한 로또 번호의 일치 갯수대로 당첨 갯수의 표시된다.', () => {});
-	it('수익률은 구입 금액 대비 당첨금으로 표시된다.', () => {});
-	it('모달의 닫기 버튼을 클릭하면 모달 요소가 제거된다.', () => {});
-	it('모달의 바깥을 클릭하면 모달 요소가 제거된다.', () => {});
-	it('다시 시작하기 버튼을 누르면, 초기화된다.', () => {});
+	it('당첨 번호를 제출하면, 당첨 결과 모달이 표시된다.', () => {
+		cy.purchaseLotto(5000);
+		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
+
+		cy.get('.winningResultModal').should('be.visible');
+	});
+
+	it('구입한 로또 번호의 일치 갯수대로 당첨 갯수에 표시된다.', () => {
+		cy.document().then(($document) => {
+			$document.dispatchEvent(
+				new CustomEvent('PURCHASE_LOTTO', {
+					detail: [
+						Lotto.create([1, 2, 11, 8, 9, 10]), // 2개
+						Lotto.create([1, 2, 3, 7, 8, 9]), // 3개
+						Lotto.create([1, 2, 3, 4, 7, 8]), // 4개
+						Lotto.create([1, 2, 3, 4, 5, 8]), // 5개
+						Lotto.create([1, 2, 3, 4, 5, 7]), // 5개 + 보너스
+						Lotto.create([1, 2, 3, 4, 5, 6]), // 6개
+					],
+				}),
+			);
+		});
+
+		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
+
+		cy.get('.resultTableBody > .text-center').each(($elements) => {
+			expect($elements[0].lastElementChild.textContent).to.be.equal('1개');
+		});
+	});
+
+	it('수익률은 구입 금액 대비 당첨금으로 표시된다.', () => {
+		cy.document().then(($document) => {
+			$document.dispatchEvent(
+				new CustomEvent('PURCHASE_LOTTO', {
+					detail: [
+						Lotto.create([1, 2, 8, 9, 10, 11]), // 2개
+						Lotto.create([1, 2, 3, 7, 8, 9]), // 3개
+						Lotto.create([1, 2, 3, 4, 7, 8]), // 4개
+						Lotto.create([1, 2, 3, 4, 5, 8]), // 5개
+						Lotto.create([1, 2, 3, 4, 5, 7]), // 5개 + 보너스
+						Lotto.create([1, 2, 3, 4, 5, 6]), // 6개
+					],
+				}),
+			);
+		});
+
+		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
+
+		cy.get('.earningRate').should(
+			'have.text',
+			`당신의 총 수익률은 ${
+				((2_000_000_000 + 5000 + 50_000 + 1_500_000 + 30_000_000) / 6000) * 100
+			}%입니다.`,
+		);
+	});
+
+	it('모달의 닫기 버튼을 클릭하면 모달 요소가 제거된다.', () => {
+		cy.purchaseLotto(5000);
+		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
+
+		cy.get('.winningResultModal > .modal-inner > .modal-close')
+			.should('be.visible')
+			.click()
+			.should('be.not.visible');
+	});
+
+	it('모달의 바깥을 클릭하면 모달 요소가 제거된다.', () => {
+		cy.purchaseLotto(5000);
+		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
+
+		cy.get('.winningResultModal')
+			.should('be.visible')
+			.click(1, 1)
+			.should('be.not.visible');
+	});
+
+	it('다시 시작하기 버튼을 누르면, 초기화된다.', () => {
+		cy.purchaseLotto(5000);
+		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
+		cy.get('.winningResultModal')
+			.contains('다시 시작하기')
+			.click()
+			.then(() => {
+				cy.get('form[name="purchaseForm"]').should('be.visible');
+				cy.get('input[name="purchaseAmountInput"]').should('be.visible');
+				cy.get('#purchasedLottoSection').should('be.not.visible');
+				cy.get('form[name="inputWinningNumbersForm"]').should('be.not.visible');
+				cy.get('.winningResultModal').should('be.not.visible');
+			});
+	});
 });
 
 describe('수동 구매', () => {
