@@ -35,12 +35,7 @@ describe('당첨 결과 기능', () => {
         cy.get($el).type(index + 1);
       });
       cy.get(`.${DOM.BONUS_NUMBER_CLASS}`).type(7);
-      cy.get(`#${DOM.OPEN_RESULT_MODAL_BUTTON_ID}`)
-        .click()
-        .then(() => {
-          expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.INVALID_PRICE);
-        });
-      cy.get(`#${DOM.MODAL_CLASS}`).should('have.class', 'open');
+      cy.get(`.${DOM.MODAL_CLASS}`).should('have.class', 'open');
     });
 
     it('당첨 번호: 41, 42, 43, 44, 45, 46 보너스 번호: 40 = 불가능', () => {
@@ -56,7 +51,7 @@ describe('당첨 결과 기능', () => {
         .then(() => {
           expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.INVALID_RANGE_LOTTO_NUMBER);
         });
-      cy.get(`#${DOM.MODAL_CLASS}`).should('not.have.class', 'open');
+      cy.get(`.${DOM.MODAL_CLASS}`).should('not.have.class', 'open');
     });
 
     it('당첨 번호: 0, 5, 10, 15, 20, 25 보너스 번호: 30 = 불가능', () => {
@@ -72,7 +67,7 @@ describe('당첨 결과 기능', () => {
         .then(() => {
           expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.INVALID_RANGE_LOTTO_NUMBER);
         });
-      cy.get(`#${DOM.MODAL_CLASS}`).should('not.have.class', 'open');
+      cy.get(`.${DOM.MODAL_CLASS}`).should('not.have.class', 'open');
     });
   });
 
@@ -96,7 +91,7 @@ describe('당첨 결과 기능', () => {
         .then(() => {
           expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.DUPLICATED_LOTTO_NUMBER);
         });
-      cy.get(`#${DOM.MODAL_CLASS}`).should('not.have.class', 'open');
+      cy.get(`.${DOM.MODAL_CLASS}`).should('not.have.class', 'open');
     });
 
     it('보너스 번호: 40, 41, 42, 43, 44, 45 보너스 번호: 40 = 불가능', () => {
@@ -113,7 +108,7 @@ describe('당첨 결과 기능', () => {
         .then(() => {
           expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.DUPLICATED_LOTTO_NUMBER);
         });
-      cy.get(`#${DOM.MODAL_CLASS}`).should('not.have.class', 'open');
+      cy.get(`.${DOM.MODAL_CLASS}`).should('not.have.class', 'open');
     });
 
     it('보너스 번호: 1, 6, 11, 16, 21, 1 보너스 번호: 13 = 불가능', () => {
@@ -131,7 +126,7 @@ describe('당첨 결과 기능', () => {
         .then(() => {
           expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.DUPLICATED_LOTTO_NUMBER);
         });
-      cy.get(`#${DOM.MODAL_CLASS}`).should('not.have.class', 'open');
+      cy.get(`.${DOM.MODAL_CLASS}`).should('not.have.class', 'open');
     });
   });
 });
