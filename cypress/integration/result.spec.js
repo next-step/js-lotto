@@ -35,6 +35,7 @@ describe('당첨 결과 기능', () => {
         cy.get($el).type(index + 1);
       });
       cy.get(`.${DOM.BONUS_NUMBER_CLASS}`).type(7);
+      cy.get(`#${DOM.OPEN_RESULT_MODAL_BUTTON_ID}`).click();
       cy.get(`.${DOM.MODAL_CLASS}`).should('have.class', 'open');
     });
 
