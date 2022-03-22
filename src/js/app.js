@@ -23,6 +23,7 @@ class App {
 
   #init() {
     this.#element.addEventListener('click', this.#handleElementClick);
+    this.#element.addEventListener('change', this.#handleElementChange);
     this.#element.addEventListener('submit', this.#handleElementSubmit);
   }
 
@@ -35,6 +36,17 @@ class App {
       case target.classList.contains('lotto-buy-submit-button'):
         this.#handleLottoBuy();
         break;
+      default:
+        break;
+    }
+  };
+
+  /**
+   * @param {Event} e
+   * @param {HTMLElement} e.target
+   */
+  #handleElementChange = ({ target }) => {
+    switch (true) {
       case target.classList.contains('lotto-list-toggle-button'): {
         this.#renderLottoList(target.checked);
         break;
