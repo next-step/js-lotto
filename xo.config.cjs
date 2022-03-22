@@ -16,5 +16,17 @@ module.exports = {
 				'unicorn/no-empty-file': 'off',
 			},
 		},
+		{
+			files: ['**/components/**/*.js'],
+			rules: {
+				'unicorn/filename-case': [
+					'error',
+					{
+						case: 'pascalCase',
+						ignore: ['index.js'],
+					},
+				],
+			},
+		},
 	],
 };
