@@ -16,7 +16,7 @@ export const DOM = Object.freeze({
   PURCHASE_SECTION_LOTTO_NUMBERS_FLEXBOX_ID: 'purchase-section-lotto-numbers-flex-box',
   LOTTO_ICON_CLASS: 'lotto-icon',
   LOTTO_DETAIL_CLASS: 'lotto-detail',
-  LOTTO_WINNING_NUMBER_FORM_ID: 'lotto-winning-number-form',
+  WINNING_NUMBER_FORM_ID: 'winning-number-form',
   WINNING_NUMBER_CONTAINER_ID: 'winning-number-container',
   WINNING_NUMBER_CLASS: 'winning-number',
   BONUS_NUMBER_CLASS: 'bonus-number',
@@ -29,6 +29,6 @@ export const DOM = Object.freeze({
 export const ERROR_MESSAGE = Object.freeze({
   INVALID_PRICE: `로또 구입 금액을 ${LOTTO.PRICE}원 단위로 입력해 주세요.`,
   REQUIRED_PRICE: '로또 구입 금액을 입력해주세요.',
-  INVALID_RANGE_LOTTO_NUMBER: '당첨 번호는 1에서 45사이로 입력해 주세요',
+  INVALID_RANGE_LOTTO_NUMBER: `당첨 번호는 ${LOTTO.START_NUMBER}에서 ${LOTTO.END_NUMBER}사이로 입력해 주세요`,
   DUPLICATED_LOTTO_NUMBER: '당첨 번호는 겹치지 않게 입력해 주세요',
 });
