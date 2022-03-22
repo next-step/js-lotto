@@ -1,9 +1,6 @@
 describe('Lotto 테스트', () => {
   beforeEach(() => {
     cy.visit('/')
-  })
-
-  before(() => {
     const checkKeyBoardEvent = correct => {
       if (correct) {
         cy.get('[data-amount=input]').type('10000{enter}')
@@ -42,8 +39,8 @@ describe('Lotto 테스트', () => {
         cy.submitValue('enter', false)
         cy.checkAlert()
       })
-      it('금액 단위가 1000원 단위가 아닐 때 alert 확인 버튼 클릭 시 input tag 초기화', () => {
-        
+
+      it('금액 단위가 1000원 단위가 아닐 때 alert 확인 버튼 클릭 시 input tag 초기화', () => {  
         cy.submitValue('click', false)
         cy.checkAlert()
         cy.on('window:alert', () => true)

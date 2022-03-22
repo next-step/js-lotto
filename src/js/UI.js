@@ -1,15 +1,19 @@
-import { $ } from "./utils/consts.js";
+import { selector } from "./utils/consts.js";
 import Lotto from "./Lotto.js";
 
 class UI {
   
+  #lottoPurchaseForm = selector('.lotto-purchase-form');  
+  #lottoPurchaseInput = selector('.lotto-purchase-input');
+  #lottoPurchaseBtn = selector('.lotto-purchase-btn');
   #ticketContainer;
-  #lottoPurchaseForm = $('.lotto-purchase-form');  
-  #lottoPurchaseInput = $('.lotto-purchase-input');
-  #lottoPurchaseBtn = $('.lotto-purchase-btn');
+  #countedTicketLabel;
+  #lottoTicketUI;
+  #switchBtn;
+  #toggle;
+  #randomNumberLists;
 
   setEvent() {
-
     this.#lottoPurchaseForm.addEventListener('submit', (event) => {
       event.preventDefault()
     })
@@ -18,8 +22,12 @@ class UI {
       if (event.key === 'Enter' && event.target.value !== "") {
         const lotto = new Lotto(event.target.value)
         const amount = lotto.lottoTicketAmount
-        this.changeLottoTicketUI(event, amount)
+
+        this.#lottoTicketUI = [selector('#purchased-lottos'), selector('#lotto-winning-numbers-form')]
         
+        if (!this.isPassValidateAmount(amount)) return;
+        
+        this.changeLottoTicketUI(amount)
         this.changeTicketsUiAccordingToSwitchState(amount)
       }
     })
@@ -27,58 +35,88 @@ class UI {
     this.#lottoPurchaseBtn.addEventListener('click', (event) => {
       const lotto = new Lotto(event.path[1].childNodes[1].value)
       const amount = lotto.lottoTicketAmount
-      // 왜 메소드를 사용할 수 없지??
-      this.changeLottoTicketUI(event, amount)
+      
+      this.#lottoTicketUI = [selector('#purchased-lottos'), selector('#lotto-winning-numbers-form')]
 
+      if (!this.isPassValidateAmount(amount)) return;
+
+      this.changeLottoTicketUI(amount)
       this.changeTicketsUiAccordingToSwitchState(amount)
     })
   }
 
-
-  changeLottoTicketUI(event, amount) {
-
+  isPassValidateAmount(amount) {
+    this.#toggle = selector('.lotto-numbers-toggle-button')
+    if (!this.changeUIWhenAmountDoNotPassValidation(amount)) return;
+    return true
+  }
+  
+  changeUIWhenAmountDoNotPassValidation(amount) {
     if (!amount) {
-      event.target.value = ""
-      return;
+      this.#lottoPurchaseInput.value = ""
+      this.removeCssStyleWhenResubmitting()
+      return false
     }
+    this.changeCssStyleWhenResubmitting()
+    return true
+  }
 
-    this.#ticketContainer = $('ul[data-ticket]');
-    const countedTicketLabel = $('#counted-ticket');
+  removeCssStyleWhenResubmitting() {
+    if (this.#toggle) {
+      this.#toggle.checked = false
+      this.#ticketContainer.classList.remove('flex-col')
+      this.#lottoTicketUI.forEach(tag => tag.style.display = "none")
+    }
+  }
 
-    countedTicketLabel.textContent = `총 ${amount}개를 구매하였습니다.`
+  changeCssStyleWhenResubmitting() {
+    if (this.#toggle) {
+      this.#toggle.checked = false
+      this.#ticketContainer?.classList.remove('flex-col')
+    }
+  }
+
+  changeLottoTicketUI(amount) {
+
+    this.#ticketContainer = selector('ul[data-ticket]');
+    this.#countedTicketLabel = selector('#counted-ticket');
+
+    this.#countedTicketLabel.textContent = `총 ${amount}개를 구매하였습니다.`
     this.#ticketContainer.innerHTML = `
         <li class="mx-1 text-4xl" data-ticket="list">
           <span data-ticket="image">🎟️ </span>
           <span class="text-xl" style="display: none; vertical-align: middle;" data-ticket="numbers"></span>
         </li>\n`.repeat(amount)
   
-    const tagsShownAccordingToPurchaseStatus = [$('#purchased-lottos'), $('#lotto-winning-numbers-form')]
-    tagsShownAccordingToPurchaseStatus.forEach(tag => tag.style.display = "block")
+    this.#lottoTicketUI.forEach(tag => tag.style.display = "block")
   }
 
   changeTicketsUiAccordingToSwitchState(amount) {
-    const $switch = $('.switch');
+    this.#switchBtn = selector('.switch');
     const randomNumber = Lotto.createRandomNumberFromOneToFortyFive(amount)
-    $switch.addEventListener('click', event => this.handleSwitchEvent(event, randomNumber))
+    this.#switchBtn.addEventListener('click', event => this.handleSwitchEvent(event, randomNumber))
   }
 
+
   handleSwitchEvent(event, randomNumber) {
-    const $randomNumberLists = document.querySelectorAll('li[data-ticket="list"]')
-    
     if (event.target && event.target.nodeName === 'INPUT') {
-      if (event.target.checked) {
-        
-        $randomNumberLists.forEach((li, index) => {
-          li.lastElementChild.style.display = "inline"
-          li.lastElementChild.textContent = randomNumber[index]
-        })
-        this.#ticketContainer.classList.add('flex-col')
-      } else {
-        this.#ticketContainer.classList.remove('flex-col')
-        $randomNumberLists.forEach(li => {
-          li.lastElementChild.style.display = "none"
-        })
-      }
+      this.changeUIAccordingToSwitch(event, randomNumber)
+    }
+  }
+
+  changeUIAccordingToSwitch(event, randomNumber) {
+    this.#randomNumberLists = document.querySelectorAll('li[data-ticket="list"]')
+    if (event.target.checked) {
+      this.#randomNumberLists.forEach((li, index) => {
+        li.lastElementChild.style.display = "inline"
+        li.lastElementChild.textContent = randomNumber[index]
+      })
+      this.#ticketContainer.classList.add('flex-col')
+    } else {
+      this.#ticketContainer.classList.remove('flex-col')
+      this.#randomNumberLists.forEach(li => {
+        li.lastElementChild.style.display = "none"
+      })
     }
   }
 
