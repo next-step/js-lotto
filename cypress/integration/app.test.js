@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE, AMOUNT_UNIT } from '../../src/js/constants.js';
+import { ERROR_MESSAGE, AMOUNT_UNIT } from '../../src/js/services/constants.js';
 
 const REQUIRED_AMOUNT_UNIT = AMOUNT_UNIT.toLocaleString('ko-KR');
 const BASE_URL = '../../index.html';
