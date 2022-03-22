@@ -18,13 +18,13 @@ const LottoSection = ($parent, { onSwitch }) => {
                   </label>
               </div>
               </div>
-              <div class="d-flex flex-wrap ${LOTTO_SECTION_TICKETS}"></div>
+              <div class="d-flex flex-wrap ${LOTTO_SECTION_TICKETS} hidden"></div>
             </section>`;
 
   const $el = document.createElement('div');
   $el.innerHTML = template;
   $parent.replaceWith($el);
-  $(LOTTO_NUMBERS_TOGGLE__LABEL, $el).addEventListener('click', onSwitch);
+  $(LOTTO_NUMBERS_TOGGLE__LABEL, $el).addEventListener('change', onSwitch);
 };
 
 export default LottoSection;

@@ -26,14 +26,7 @@ export default class State {
       }
     },
     toggleDisplayLottoNumbers: () => {
-      const isPriceToggled = $(`${LOTTO_SECTION} input`).checked;
-
-      if (isPriceToggled) {
-        this.#lottoModel.showLottoTicketsNumbers();
-        return;
-      }
-
-      this.#lottoModel.hideLottoTicketsNumbers();
+      this.#lottoModel.toggleLottoTicketsNumbers();
     },
   };
 
@@ -43,10 +36,10 @@ export default class State {
       const totalQuantity = this.#lottoModel?.quantity + quantity;
       LottoModel.validators.isValidQuantity(totalQuantity);
 
-        if (this.#lottoModel) {
-          this.#lottoModel.addLotto(quantity);
-          return;
-        }
+      if (this.#lottoModel) {
+        this.#lottoModel.addLotto(quantity);
+        return;
+      }
 
       this.#lottoModel = new LottoModel(quantity);
     } catch (e) {

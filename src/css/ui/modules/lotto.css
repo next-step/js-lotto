@@ -9,6 +9,9 @@
   padding: 2rem;
 }
 
+.lotto-section-tickets.hidden > .lotto-section__ticket > .lotto-section__ticket__numbers{
+  display:none ;
+}
 
 .lotto-section-tickets::-webkit-scrollbar {
   width: 0.6rem;
@@ -26,12 +29,6 @@
 }
 
 .lotto-section__ticket__numbers {
-  visibility: visible;
-  font-size: 1.4rem;
-  color: #000;
-}
-.lotto-section__ticket__numbers .hidden{
-  visibility: visible;
   font-size: 1.4rem;
   color: #000;
 }

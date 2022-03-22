@@ -14,7 +14,6 @@ export default class LottoModel {
   #tickets;
   #quantity;
   #winningNumbers;
-  #isShowLottoNumber;
 
   constructor(quantity) {
     this.createLotto(quantity);
@@ -50,26 +49,13 @@ export default class LottoModel {
     ticketPosition.insertAdjacentHTML('afterBegin', this.ticketsHtml);
   }
 
-  showLottoTicketsNumbers() {
-    this.#isShowLottoNumber = true;
-
-    $$(LOTTO_SECTION__TICKET__NUMBERS).forEach((el) => {
-      el.hidden = false;
-    });
-  }
-
-  hideLottoTicketsNumbers() {
-    this.#isShowLottoNumber = false;
-
-    $$(LOTTO_SECTION__TICKET__NUMBERS).forEach((el) => {
-      el.hidden = true;
-    });
+  toggleLottoTicketsNumbers() {
+    $(LOTTO_SECTION_TICKETS).classList.toggle('hidden');
   }
 
   get ticketsHtml() {
-    const isPriceToggled = $(`${LOTTO_SECTION} input`).checked;
     const getTemplate = (ticket) => `<span class="mx-1 text-4xl ${LOTTO_SECTION__TICKET}" data-lotto-id=${ticket.id}> 🎟️ 
-                        <span class="lotto-section__ticket__numbers" ${!isPriceToggled && 'hidden'}>${ticket.ticketNumbers}</span>
+                        <span class="lotto-section__ticket__numbers">${ticket.ticketNumbers}</span>
                       </span></span>`;
     return this.#tickets.map(getTemplate).join('');
   }
