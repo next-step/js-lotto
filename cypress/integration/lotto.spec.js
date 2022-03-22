@@ -100,10 +100,56 @@ describe('구입한 로또 번호 섹션', () => {
 });
 
 describe('당첨 번호 입력 폼', () => {
-	it('1000원 단위의 금액을 제출하면, 지난 당첨 번호 입력 폼이 표시된다.', () => {});
-	it('당첨 번호를 제출할 때, 1미만이거나 45를 초과하는 입력이 있으면, 해당 입력에 유효성 검사 메시지를 표시한다.', () => {});
-	it('당첨 번호를 제출할 때, 번호에 중복이 있으면, 얼럿 메시지를 표시한다.', () => {});
-	it('당첨 번호를 제출할 때, 미입력된 입력이 있으면, 유효성 검사 메시지를 표시한다.', () => {});
+	beforeEach(() => {
+		cy.purchaseLotto(5000);
+	});
+
+	it('1000원 단위의 금액을 제출하면, 지난 당첨 번호 입력 폼이 표시된다.', () => {
+		cy.get('form[name=inputWinningNumbersForm]').should('be.visible');
+	});
+
+	it('당첨 번호를 제출할 때, 1미만이거나 45를 초과하는 입력이 있으면, 해당 입력에 유효성 검사 메시지를 표시한다.', () => {
+		cy.submitWinningNumbers([1, -10, 3, 4, 5, 6, 7]);
+		cy.get('form[name=inputWinningNumbersForm]').within(() => {
+			cy.get('input').then(($inputs) => {
+				expect($inputs[1].validationMessage).to.eq(
+					'Value must be greater than or equal to 1.',
+				);
+			});
+		});
+
+		cy.submitWinningNumbers([1, 48, 3, 4, 5, 6, 7]);
+		cy.get('form[name=inputWinningNumbersForm]').within(() => {
+			cy.get('input').then(($inputs) => {
+				expect($inputs[1].validationMessage).to.eq(
+					'Value must be less than or equal to 45.',
+				);
+			});
+		});
+	});
+
+	it('당첨 번호를 제출할 때, 번호에 중복이 있으면, 얼럿 메시지를 표시한다.', () => {
+		const stub = cy.stub();
+
+		cy.on('window:alert', stub);
+
+		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 6]).then(() => {
+			expect(stub.getCall(0)).to.be.calledWith(
+				'로또 번호에는 중복된 숫자를 입력할 수 없습니다.',
+			);
+		});
+	});
+
+	it('당첨 번호를 제출할 때, 미입력된 입력이 있으면, 유효성 검사 메시지를 표시한다.', () => {
+		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6]);
+		cy.get('form[name=inputWinningNumbersForm]').within(() => {
+			cy.get('input').then(($inputs) => {
+				expect($inputs[6].validationMessage).to.eq(
+					'Please fill out this field.',
+				);
+			});
+		});
+	});
 });
 
 describe('당첨 결과 모달', () => {

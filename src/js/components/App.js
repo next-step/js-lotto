@@ -3,6 +3,7 @@ import {$, eventBus} from '../lib/index.js';
 import {Component} from './Component.js';
 import {PurchaseForm} from './PurchaseForm.js';
 import {PurchasedLottoSection} from './PurchasedLottoSection.js';
+import {InputWinningNumbersForm} from './InputWinningNumbersForm.js';
 
 export class App extends Component {
 	constructor($element) {
@@ -11,6 +12,9 @@ export class App extends Component {
 		this.PurchaseForm = new PurchaseForm($('form[name=purchaseForm]'));
 		this.PurchasedLottoSection = new PurchasedLottoSection(
 			$('#purchasedLottoSection'),
+		);
+		this.InputWinningNumbersForm = new InputWinningNumbersForm(
+			$('form[name=inputWinningNumbersForm]'),
 		);
 	}
 

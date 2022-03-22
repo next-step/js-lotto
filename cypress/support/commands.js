@@ -34,3 +34,14 @@ Cypress.Commands.add('purchaseLotto', (purchaseAmount) => {
 Cypress.Commands.add('toggleShowLottoNumbers', () => {
 	cy.get('input[name="showLottoNumbersToggle"]').check({force: true});
 });
+
+Cypress.Commands.add('submitWinningNumbers', (numbers) => {
+	cy.get('form[name=inputWinningNumbersForm]')
+		.within(() => {
+			cy.get('input').each(($input, index) => {
+				$input[0].value = numbers[index];
+			});
+		})
+		.contains('결과 확인하기')
+		.click();
+});

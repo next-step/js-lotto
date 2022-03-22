@@ -7,6 +7,8 @@ export const LOTTO = {
 
 export const MESSAGES = {
 	NON_UNIT_VALUE_ALERT: '로또 구입 금액을 1,000원 단위로 입력해 주세요.',
+	HAS_DUPLICATES_IN_WINNING_NUMBERS_ALERT:
+		'로또 번호에는 중복된 숫자를 입력할 수 없습니다.',
 };
 
 export const EVENT = {
