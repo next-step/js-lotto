@@ -9,3 +9,5 @@ export const pickRandomNumbers = (start, end, count) => {
 
   return [...randomNumbers];
 };
+
+export const isDuplicatedNumbersInArray = array => array.length !== new Set(array).size;
