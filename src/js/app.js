@@ -1,34 +1,33 @@
 import { ERROR_INPUT_PRICE_UNIT } from './constants/message.js';
-
 import { createLottos } from './utils/random.js';
 import { $ } from './utils/selector.js';
+
 const $lottoToggle = $('#lotto-numbers-toggle');
 
 export const purchaseLotto = (e) => {
   e.preventDefault();
   const inputPrice = $('#input-price').value;
 
-  if (isThousandUnits(inputPrice)) {
-    const count = Number(inputPrice) / 1000;
-    insertSectionMessage(count);
-    showResultContainer();
-
-    const lottos = createLottos(count);
-    lottos.forEach((lotto) => {
-      insertLottoElement(lotto);
-    });
-
+  if (isNotThousandUnits(inputPrice)) {
+    alert(ERROR_INPUT_PRICE_UNIT);
     return;
   }
 
-  alert(ERROR_INPUT_PRICE_UNIT);
+  const count = Number(inputPrice) / 1000;
+  insertSectionMessage(count);
+  showResultContainer();
+
+  const lottos = createLottos(count);
+  lottos.forEach((lotto) => {
+    insertLottoElement(lotto);
+  });
 };
 
 const showResultContainer = () => {
   $('.result-container').style.display = 'block';
 };
 
-const isThousandUnits = (price) => Number(price) % 1000 === 0;
+const isNotThousandUnits = (price) => Number(price) % 1000 !== 0;
 
 const insertSectionMessage = (count) => {
   $('.section_message').innerText = `총 ${count}개를 구매하였습니다`;
