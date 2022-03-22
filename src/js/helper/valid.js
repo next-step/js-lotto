@@ -9,3 +9,5 @@ export const isEmpty = data => {
 
   return false;
 };
+
+export const isDOMElement = $element => $element instanceof Element;
