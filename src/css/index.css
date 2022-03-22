@@ -13,6 +13,36 @@ body {
   margin: 0 auto;
 }
 
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.d-none {
+  opacity: 0;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.lotto-section {
+  transition: ease-in-out 0.3s;
+}
+
+.lotto-list {
+  list-style: none;
+  padding: 0;
+}
+
+.lotto-numbers-wrapper {
+  display: flex;
+}
+
+.lotto-numbers {
+  font-size: 1.25rem;
+  margin-left: 12px;
+}
+
 .winning-number {
   width: 30px;
   height: 36px;
