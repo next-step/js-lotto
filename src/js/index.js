@@ -1,4 +1,5 @@
 import { getPrice, getCount, createLottoList } from './domains/index.js';
+import { getSelector } from './utils/index.js';
 
 // [x] 첫화면 렌더링 시에, 로또리스트, 당첨번호 form 비노출
 
@@ -16,7 +17,7 @@ import { getPrice, getCount, createLottoList } from './domains/index.js';
 
 // [x] 로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.
 // [x] 로또 1장의 가격은 1,000원이다.
-// [] 소비자는 자동 구매를 할 수 있어야 한다.
+// [x] 소비자는 자동 구매를 할 수 있어야 한다.
 // [x] 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
 
 const initState = {
@@ -27,20 +28,26 @@ const initState = {
 };
 
 function App() {
-  this.state = { ...initState };
+  const $formPrice = getSelector('#form-price');
+  const $lottoToggleBtn = getSelector('.lotto-numbers-toggle-button');
+  const $countLabel = getSelector('label[data-lotto="count-label"]');
+  const $lottoList = getSelector('#lotto-list');
+  const $lottoListUl = getSelector('#lotto-list ul');
+
+  this.init = () => {
+    this.state = { ...initState };
+    initEventListener();
+  };
 
   const setState = (newState) => {
     this.state = { ...this.state, ...newState };
-    console.log('this.state', this.state);
     render();
   };
 
   const render = () => {
-    const $countLabel = document.querySelector('label[data-lotto="count-label"]');
-    const $lottoListUl = document.querySelector('#lotto-list ul');
-
     $countLabel.textContent = `총 ${this.state.count}개를 구매하였습니다.`;
     $lottoListUl.textContent = '';
+
     this.state.lottoList.forEach((lotto) => {
       $lottoListUl.insertAdjacentHTML(
         'afterbegin',
@@ -52,15 +59,21 @@ function App() {
         `
       );
     });
-    if (this.state.isLottoNumberToggle) {
-      $lottoListUl.classList.add('flex-col');
-      const $LottoDetailNodeList = document.querySelectorAll('.lotto-detail');
-      $LottoDetailNodeList.forEach((lottoDetail) => {
-        lottoDetail.style.display = 'block';
-      });
-    } else {
+    renderLottoNumberToggle();
+  };
+
+  const renderLottoNumberToggle = () => {
+    if (!this.state.isLottoNumberToggle) {
       $lottoListUl.classList.remove('flex-col');
+      return;
     }
+
+    const $LottoDetailNodeList = document.querySelectorAll('.lotto-detail');
+
+    $lottoListUl.classList.add('flex-col');
+    $LottoDetailNodeList.forEach((lottoDetail) => {
+      lottoDetail.style.display = 'block';
+    });
   };
 
   const handleSubmitPrice = (e) => {
@@ -73,7 +86,6 @@ function App() {
 
   const buyLotto = (price) => {
     const count = getCount(price);
-    const $lottoList = document.getElementById('lotto-list');
     const lottoList = createLottoList(count);
     $lottoList.style.display = 'block';
 
@@ -84,8 +96,11 @@ function App() {
     setState({ isLottoNumberToggle: !this.state.isLottoNumberToggle });
   };
 
-  document.getElementById('form-price').addEventListener('submit', handleSubmitPrice);
-  document.querySelector('.lotto-numbers-toggle-button').addEventListener('click', handleClickLottoNumbersToggle);
+  const initEventListener = () => {
+    $formPrice.addEventListener('submit', handleSubmitPrice);
+    $lottoToggleBtn.addEventListener('click', handleClickLottoNumbersToggle);
+  };
 }
 
 const app = new App();
+app.init();
