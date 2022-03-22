@@ -46,7 +46,9 @@ class WinningNumberForm extends Component {
   onSubmitWinningNumberForm(e) {
     e.preventDefault();
 
-    if (!this.isCorrectWinningAndBonusNumbers()) {
+    if (
+      !this.isCorrectWinningAndBonusNumbers([...this.getWinningNumbers(), this.getBonusNumber()])
+    ) {
       return;
     }
 
@@ -66,9 +68,7 @@ class WinningNumberForm extends Component {
     e.target.nextElementSibling.focus();
   }
 
-  isCorrectWinningAndBonusNumbers() {
-    const inputedNumbers = [...this.getWinningNumbers(), this.getBonusNumber()];
-
+  isCorrectWinningAndBonusNumbers(inputedNumbers) {
     if (
       !isAllSatisfiedConditionInArray(
         inputedNumbers,
