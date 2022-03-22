@@ -1,10 +1,10 @@
-import { $, $elementRemoveClass, $renderWithEventBind } from '../helper/index.js';
+import { $, $elementRemoveClass, $eventBindedComponent } from '../helper/index.js';
 import AppTemplate from './AppTemplate.js';
 import LottoList from './lottoList/LottoList.js';
 import LottoCheck from './lottoCheck/LottoCheck.js';
 import useLottoService from '../services/lotto.js';
 
-const App = $renderWithEventBind(() => {
+const App = $eventBindedComponent(() => {
   const { validCount } = useLottoService();
   const $template = AppTemplate();
   const $events = [

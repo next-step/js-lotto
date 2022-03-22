@@ -35,7 +35,7 @@ export const $elements = stringHTML => {
 };
 
 // TODO: DOM Parser를 만들어 렌더링을 루트 앱에서 진행합니다.
-export const $renderWithEventBind = getElement => args => {
+export const $eventBindedComponent = getElement => args => {
   try {
     const [$element, $events = []] = getElement(args);
     if (!isDOMElement($element)) throw new Error('첫 번째 인자로 DOM 요소를 선언해주세요.');

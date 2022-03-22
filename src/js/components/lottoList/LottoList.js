@@ -1,8 +1,8 @@
-import { $, $all, $elementToggleClass, $renderWithEventBind } from '../../helper/index.js';
+import { $, $all, $elementToggleClass, $eventBindedComponent } from '../../helper/index.js';
 import useLottoService from '../../services/lotto.js';
 import LottoListTemplate from './LottoListTemplate.js';
 
-const LottoList = $renderWithEventBind(count => {
+const LottoList = $eventBindedComponent(count => {
   const { purchasesLotto } = useLottoService();
   const $template = LottoListTemplate({ numbers: purchasesLotto(count) });
   const $events = [

@@ -1,7 +1,7 @@
-import { $renderWithEventBind } from '../../helper/dom.js';
+import { $eventBindedComponent } from '../../helper/dom.js';
 import LottoCheckTemplate from './LottoCheckTemplate.js';
 
-const LottoCheck = $renderWithEventBind(() => {
+const LottoCheck = $eventBindedComponent(() => {
   const $template = LottoCheckTemplate();
   return [$template];
 });
