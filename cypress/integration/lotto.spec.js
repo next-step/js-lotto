@@ -13,24 +13,15 @@ describe('구입 금액 입력 폼', () => {
 
 		cy.on('window:alert', stub);
 
-		cy.get('input[name="purchaseAmountInput"]')
-			.type('1999')
-			.next('button')
-			.contains('확인')
-			.click()
-			.then(() => {
-				expect(stub.getCall(0)).to.be.calledWith(
-					'로또 구입 금액을 1,000원 단위로 입력해 주세요.',
-				);
-			});
+		cy.purchaseLotto(1999).then(() => {
+			expect(stub.getCall(0)).to.be.calledWith(
+				'로또 구입 금액을 1,000원 단위로 입력해 주세요.',
+			);
+		});
 	});
 
 	it('1000원 미만의 금액을 제출하면, 유효성 검사 메시지를 표시한다.', () => {
-		cy.get('input[name="purchaseAmountInput"]')
-			.type('999')
-			.next('button')
-			.contains('확인')
-			.click()
+		cy.purchaseLotto(999)
 			.get('input[name="purchaseAmountInput"]')
 			.then(($input) => {
 				expect($input[0].validationMessage).to.eq(
