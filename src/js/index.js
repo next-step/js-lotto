@@ -1,7 +1,7 @@
-import { $ } from "./shared/consts.js";
-import lotto from "./lotto/lotto.js"
+import { $ } from "./utils/consts.js";
+import UI from './UI.js'
 
-lotto()
+new UI().setEvent()
 
 const $showResultButton = $('.open-result-modal-button');
 const $modalClose = $('.modal-close');
