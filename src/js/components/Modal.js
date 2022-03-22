@@ -59,15 +59,14 @@ class Modal extends Component {
   }
 
   setEvent() {
-    $(`#${DOM.OPEN_RESULT_MODAL_BUTTON_ID}`).onclick = this.onModalShow.bind(this);
-    $(`#${DOM.MODAL_CLOSE_BUTTON_ID}`).onclick = this.onModalClose.bind(this);
+    $(`#${DOM.MODAL_CLOSE_BUTTON_ID}`).onclick = this.closeModal.bind(this);
   }
 
-  onModalShow() {
+  openModal() {
     $(`.${DOM.MODAL_CLASS}`).classList.add('open');
   }
 
-  onModalClose() {
+  closeModal() {
     $(`.${DOM.MODAL_CLASS}`).classList.remove('open');
   }
 }
