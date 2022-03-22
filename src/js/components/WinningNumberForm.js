@@ -1,7 +1,7 @@
 import Component from '../core/Component.js';
-import { DOM, ERROR_MESSAGE } from '../constants.js';
+import { DOM, ERROR_MESSAGE, LOTTO } from '../constants.js';
 import { $, $$ } from '../utils/dom.js';
-import { isDuplicatedNumbersInArray } from '../utils/index.js';
+import { isDuplicatedNumbersInArray, isAllSatisfiedConditionInArray } from '../utils/index.js';
 
 class WinningNumberForm extends Component {
   template() {
@@ -69,6 +69,15 @@ class WinningNumberForm extends Component {
   isCorrectWinningAndBonusNumbers() {
     const inputedNumbers = [...this.getWinningNumbers(), this.getBonusNumber()];
 
+    if (
+      !isAllSatisfiedConditionInArray(
+        inputedNumbers,
+        i => i >= LOTTO.START_NUMBER && i <= LOTTO.END_NUMBER,
+      )
+    ) {
+      alert(ERROR_MESSAGE.INVALID_RANGE_LOTTO_NUMBER);
+      return false;
+    }
     if (isDuplicatedNumbersInArray(inputedNumbers)) {
       alert(ERROR_MESSAGE.DUPLICATED_LOTTO_NUMBER);
       return false;

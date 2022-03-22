@@ -11,3 +11,6 @@ export const pickRandomNumbers = (start, end, count) => {
 };
 
 export const isDuplicatedNumbersInArray = array => array.length !== new Set(array).size;
+
+export const isAllSatisfiedConditionInArray = (array, condition) =>
+  array.length === array.filter(i => condition(i)).length;
