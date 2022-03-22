@@ -13,6 +13,10 @@ export const EVENT = {
 	PURCHASE_LOTTO: 'PURCHASE_LOTTO',
 };
 
+export const TEXTS = {
+	PURCHASED_COUNTS: '총 {0}개를 구매하였습니다.',
+};
+
 export const STATUS = {
 	INIT: 'INIT',
 	PURCHASED: 'PURCHASED',

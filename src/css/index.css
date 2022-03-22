@@ -22,3 +22,19 @@ body {
 	width: 30px;
 	height: 36px;
 }
+
+ul {
+	padding: 0;
+}
+
+.lottoItem {
+	display: flex;
+}
+
+.lottoIcon {
+	padding-right: 1rem;
+}
+
+.lottoDetail {
+	font-size: 1.25rem;
+}

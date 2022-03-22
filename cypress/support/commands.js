@@ -31,3 +31,6 @@ Cypress.Commands.add('purchaseLotto', (purchaseAmount) => {
 		.click();
 });
 
+Cypress.Commands.add('toggleShowLottoNumbers', () => {
+	cy.get('input[name="showLottoNumbersToggle"]').check({force: true});
+});

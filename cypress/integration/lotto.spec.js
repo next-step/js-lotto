@@ -32,12 +32,71 @@ describe('구입 금액 입력 폼', () => {
 });
 
 describe('구입한 로또 번호 섹션', () => {
-	it('1000원 단위의 금액을 제출하면, 금액에 해당하는 로또 갯수가 표시된다.', () => {});
-	it('번호보기 토글이 켜져 있으면, 로또 번호가 표시된다.', () => {});
-	it('번호보기 토글이 꺼져 있으면, 로또 번호가 표시되지 않는다.', () => {});
-	it('로또 번호는 모두 1이상 45이하의 숫자이다.', () => {});
-	it('로또 번호는 6개의 숫자이다.', () => {});
-	it('로또 번호는 서로 중복하지 않는다.', () => {});
+	beforeEach(() => {
+		cy.purchaseLotto(5000);
+	});
+
+	it('1000원 단위의 금액을 제출하면, 금액에 해당하는 로또 갯수가 표시된다.', () => {
+		cy.get('.purchasedCountsLabel').should(
+			'have.text',
+			'총 5개를 구매하였습니다.',
+		);
+		cy.get('.autoPurchasedLottoList').children().should('have.length', 5);
+	});
+
+	it('번호보기 토글이 켜져 있으면, 로또 번호가 표시된다.', () => {
+		cy.toggleShowLottoNumbers();
+
+		cy.get('input[name="showLottoNumbersToggle"]')
+			.should('be.checked')
+			.then(() => {
+				cy.get('.lottoDetail').should('be.visible');
+			});
+	});
+
+	it('번호보기 토글이 꺼져 있으면, 로또 번호가 표시되지 않는다.', () => {
+		cy.get('input[name="showLottoNumbersToggle"]')
+			.should('not.be.checked')
+			.then(() => {
+				cy.get('.lottoDetail').should('not.be.visible');
+			});
+	});
+
+	it('로또 번호는 모두 1이상 45이하의 숫자이다.', () => {
+		cy.toggleShowLottoNumbers();
+
+		cy.get('.lottoDetail').each(($element) => {
+			const lottoNumbers =
+				$element[0].textContent.split(', ').map(Number) ?? [];
+
+			for (const lottoNumber of lottoNumbers) {
+				expect(lottoNumber).to.be.greaterThan(0);
+				expect(lottoNumber).to.be.lessThan(46);
+			}
+		});
+	});
+
+	it('로또 번호는 6개의 숫자이다.', () => {
+		cy.toggleShowLottoNumbers();
+
+		cy.get('.lottoDetail').each(($element) => {
+			const lottoNumbers =
+				$element[0].textContent.split(', ').map(Number) ?? [];
+
+			expect(lottoNumbers).to.have.lengthOf(6);
+		});
+	});
+
+	it('로또 번호는 서로 중복하지 않는다.', () => {
+		cy.toggleShowLottoNumbers();
+
+		cy.get('.lottoDetail').each(($element) => {
+			const lottoNumbers =
+				$element[0].textContent.split(', ').map(Number) ?? [];
+
+			expect(lottoNumbers.length).to.be.equal(new Set(lottoNumbers).size);
+		});
+	});
 });
 
 describe('당첨 번호 입력 폼', () => {
