@@ -22,3 +22,22 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.result-container{
+  display: none;
+}
+
+#lotto-container { 
+  list-style: none;
+  padding: 0;
+  display: flex;
+}
+
+.lotto-content {
+  display: flex; 
+  align-items: center;
+}
+
+.lotto-numbers {
+  display: none;
+}
