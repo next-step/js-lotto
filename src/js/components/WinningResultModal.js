@@ -1,6 +1,5 @@
 import {EVENT, LOTTO, TEXTS} from '../constants/index.js';
-import {$, format, eventBus} from '../lib/index.js';
-import {intersection} from '../lib/intersections.js';
+import {$, format, eventBus, intersections} from '../lib/index.js';
 import {Component} from './Component.js';
 
 export class WinningResultModal extends Component {
@@ -63,7 +62,10 @@ export class WinningResultModal extends Component {
 			const countByMatch = this.getInitialCountByMatch();
 
 			for (const lotto of this.lottos) {
-				const match = intersection(lotto.numbers, new Set(winningNumbers)).size;
+				const match = intersections(
+					lotto.numbers,
+					new Set(winningNumbers),
+				).size;
 				const hasBonus = lotto.numbers.has(bonusNumber);
 
 				if (hasBonus && LOTTO.PRIZE_MONEY_BY_MATCH.has(`${match}+`)) {
