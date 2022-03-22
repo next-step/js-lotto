@@ -13,6 +13,18 @@ body {
   margin: 0 auto;
 }
 
+.lotto-paid-section {
+  visibility: hidden;
+}
+
+.lotto-paid-section.visible {
+  visibility: visible;
+}
+
+.lotto-check-form {
+  visibility: hidden;
+}
+
 .winning-number {
   width: 30px;
   height: 36px;
