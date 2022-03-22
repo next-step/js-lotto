@@ -64,7 +64,7 @@ class UI {
   removeCssStyleWhenResubmitting() {
     if (this.#toggle) {
       this.#toggle.checked = false
-      this.#ticketContainer.classList.remove('flex-col')
+      this.#ticketContainer?.classList.remove('flex-col')
       this.#lottoTicketUI.forEach(tag => tag.style.display = "none")
     }
   }
