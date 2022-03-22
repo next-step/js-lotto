@@ -1,12 +1,24 @@
 import { NUMBER, ERROR_MESSAGES } from '../constants/index.js';
 
-export const getPrice = (price) => {
-  if (!price) return alert(ERROR_MESSAGES.EMPTY);
-  if (price < NUMBER.MIN_PRICE) return alert(ERROR_MESSAGES.MIN_PRICE);
-  if (price > NUMBER.MAX_PRICE) return alert(ERROR_MESSAGES.MAX_PRICE);
-  if (price % NUMBER.MIN_PRICE !== 0) return alert(ERROR_MESSAGES.BUY_UNIT);
+export const isValidPrice = (price) => {
+  if (!price) {
+    alert(ERROR_MESSAGES.EMPTY);
+    return false;
+  }
+  if (price < NUMBER.MIN_PRICE) {
+    alert(ERROR_MESSAGES.MIN_PRICE);
+    return false;
+  }
+  if (price > NUMBER.MAX_PRICE) {
+    alert(ERROR_MESSAGES.MAX_PRICE);
+    return false;
+  }
+  if (price % NUMBER.MIN_PRICE !== 0) {
+    alert(ERROR_MESSAGES.BUY_UNIT);
+    return false;
+  }
 
-  return price;
+  return true;
 };
 
 export const getCount = (price) => price / NUMBER.MIN_PRICE;
@@ -14,14 +26,25 @@ export const getCount = (price) => price / NUMBER.MIN_PRICE;
 export const createLottoList = (count) => {
   const lottoList = [];
   for (let i = 0; i < count; i++) {
-    const lotto = [];
-    while (lotto.length < NUMBER.LOTTO_LENGTH) {
+    const lotto = new Set();
+    while (lotto.size < NUMBER.LOTTO_LENGTH) {
       const num = Math.floor(Math.random() * 44) + 1;
-      if (lotto.indexOf(num) < 0) {
-        lotto.push(num);
-      }
+      lotto.add(num);
     }
-    lottoList.push(lotto);
+    lottoList.push([...lotto].sort((a, b) => a - b));
   }
   return lottoList;
+};
+
+export const getLottoListTemplate = (lottoList) => {
+  return lottoList
+    .map(
+      (lotto) => `
+      <li class="lotto-list-item d-flex items-center">
+          <span class="mx-1 text-4xl">🎟️ </span>
+          <span class="lotto-detail text-xl mx-3">${lotto.join(', ')}</span>
+      </li>
+  `
+    )
+    .join('');
 };

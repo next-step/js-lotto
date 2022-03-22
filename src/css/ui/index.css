@@ -8,3 +8,7 @@
 .lotto-detail {
   display: none;
 }
+
+#lotto-list.lotto-detail-view .lotto-detail {
+  display: block;
+}
