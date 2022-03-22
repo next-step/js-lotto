@@ -11,9 +11,7 @@ export const createRandomNumbers = () => {
 };
 
 export const createLottos = (count) => {
-  const lottos = [];
-  for (let i = 0; i < count; i++) {
-    lottos.push([...createRandomNumbers()]);
-  }
-  return lottos;
+  const lottos = new Array(count).fill('_');
+
+  return lottos.map((elem) => (elem = [...createRandomNumbers()]));
 };
