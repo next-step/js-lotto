@@ -23,6 +23,12 @@ export const DOM = Object.freeze({
   OPEN_RESULT_MODAL_BUTTON_ID: 'open-result-modal-button',
   MODAL_CLASS: 'modal',
   MODAL_CLOSE_BUTTON_ID: 'modal-close-button',
+  MODAL_1ST_PLACE_COUNT_ID: 'modal-1st-place-count',
+  MODAL_2ND_PLACE_COUNT_ID: 'modal-2nd-place-count',
+  MODAL_3RD_PLACE_COUNT_ID: 'modal-3rd-place-count',
+  MODAL_4TH_PLACE_COUNT_ID: 'modal-4th-place-count',
+  MODAL_5TH_PLACE_COUNT_ID: 'modal-5th-place-count',
+  MODAL_YIELD_ID: 'modal-yild',
   RESTART_BUTTON_ID: 'restart-button',
 });
 

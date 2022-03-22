@@ -25,34 +25,34 @@ class Modal extends Component {
               <tr class="text-center">
                 <td class="p-3">3개</td>
                 <td class="p-3">5,000</td>
-                <td class="p-3">n개</td>
+                <td class="p-3"><span id="${DOM.MODAL_5TH_PLACE_COUNT_ID}"></span>개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">4개</td>
                 <td class="p-3">50,000</td>
-                <td class="p-3">n개</td>
+                <td class="p-3"><span id="${DOM.MODAL_4TH_PLACE_COUNT_ID}"></span>개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">5개</td>
                 <td class="p-3">1,500,000</td>
-                <td class="p-3">n개</td>
+                <td class="p-3"><span id="${DOM.MODAL_3RD_PLACE_COUNT_ID}"></span>개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">5개 + 보너스볼</td>
                 <td class="p-3">30,000,000</td>
-                <td class="p-3">n개</td>
+                <td class="p-3"><span id="${DOM.MODAL_2ND_PLACE_COUNT_ID}"></span>개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">6개</td>
                 <td class="p-3">2,000,000,000</td>
-                <td class="p-3">n개</td>
+                <td class="p-3"><span id="${DOM.MODAL_1ST_PLACE_COUNT_ID}"></span>개</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+        <p class="text-center font-bold">당신의 총 수익률은 <span id="${DOM.MODAL_5TH_PLACE_COUNT_ID}"></span>입니다.</p>
         <div class="d-flex justify-center mt-5">
-          <button type="button" id="${DOM.RESTART_BUTTON_ID}" class="btn btn-cyan">다시 시작하기</button>
+          <button type="button" id="${DOM.MODAL_YIELD_ID}" class="btn btn-cyan">다시 시작하기</button>
         </div>
       </div>
     `;
