@@ -1,6 +1,7 @@
+import { $elements } from '../../helper/index.js';
+
 const LottoCheckTemplate = () => {
-  const buildTemplate = () => {
-    return `
+  return $elements(`
     <form class="mt-9" data-props="compare-number-form">
       <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
       <div class="d-flex">
@@ -26,14 +27,7 @@ const LottoCheckTemplate = () => {
         결과 확인하기
       </button>
     </form>
-    `;
-  };
-
-  const $form = document.createElement('form');
-  $form.classList.add('mt-9');
-  $form.setAttribute('data-props', 'compare-number-form');
-  $form.innerHTML = buildTemplate();
-  return $form;
+    `);
 };
 
 export default LottoCheckTemplate;

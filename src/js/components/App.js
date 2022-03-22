@@ -1,13 +1,12 @@
-import { $, $renderWithEventBind } from '../helper/index.js';
+import { $, $elementRemoveClass, $renderWithEventBind } from '../helper/index.js';
 import AppTemplate from './AppTemplate.js';
 import LottoList from './lottoList/LottoList.js';
 import LottoCheck from './lottoCheck/LottoCheck.js';
-import { validCount } from '../helper/index.js';
+import useLottoService from '../services/lotto.js';
 
 const App = $renderWithEventBind(() => {
+  const { validCount } = useLottoService();
   const $template = AppTemplate();
-  document.body.insertAdjacentElement('afterbegin', $template);
-
   const $events = [
     {
       type: 'submit',
@@ -22,7 +21,7 @@ const App = $renderWithEventBind(() => {
           const lottoCheck = LottoCheck();
 
           $('.lotto-section').replaceChildren(lottoList, lottoCheck);
-          $('.lotto-section').classList.remove('hidden');
+          $elementRemoveClass($('.lotto-section'), 'hidden');
         } catch (error) {
           $input.value = '';
           alert(error.message);

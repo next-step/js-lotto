@@ -1,6 +1,8 @@
+import { $elements } from '../helper/index.js';
+
 const AppTemplate = () => {
-  const buildTemplate = () => {
-    return `
+  return $elements(`
+    <div id="app" class="p-3">
       <div class="d-flex justify-center mt-5" data-props="amount-info-form">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
@@ -69,14 +71,8 @@ const AppTemplate = () => {
           </div>
         </div>
       </div>
-    `;
-  };
-
-  const $div = document.createElement('div');
-  $div.classList.add('p-3');
-  $div.setAttribute('id', 'app');
-  $div.innerHTML = buildTemplate();
-  return $div;
+    </div>
+    `);
 };
 
 export default AppTemplate;

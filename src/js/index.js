@@ -1,3 +1,4 @@
 import App from './components/App.js';
 
-App();
+const $template = App();
+document.body.insertAdjacentElement('afterbegin', $template);
