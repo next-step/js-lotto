@@ -28,7 +28,7 @@ class PurchaseForm extends Component {
 
   onSubmitPurchaseForm(e) {
     e.preventDefault();
-    const $purchaseFormInput = e.target[0];
+    const [$purchaseFormInput] = e.target;
 
     if (!this.isCorrectInputValue($purchaseFormInput.value)) {
       $purchaseFormInput.value = '';
