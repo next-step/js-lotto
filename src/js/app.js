@@ -8,20 +8,20 @@ export const purchaseLotto = (e) => {
   e.preventDefault();
   const inputPrice = $('#input-price').value;
 
-  if (!isThousandUnits(inputPrice)) {
-    alert(ERROR_INPUT_PRICE_UNIT);
+  if (isThousandUnits(inputPrice)) {
+    const count = Number(inputPrice) / 1000;
+    insertSectionMessage(count);
+    showResultContainer();
+
+    const lottos = createLottos(count);
+    lottos.forEach((lotto) => {
+      insertLottoElement(lotto);
+    });
+
     return;
   }
 
-  const count = Number(inputPrice) / 1000;
-
-  insertSectionMessage(count);
-  showResultContainer();
-  const lottos = createLottos(count);
-
-  lottos.forEach((lotto) => {
-    insertLottoElement(lotto);
-  });
+  alert(ERROR_INPUT_PRICE_UNIT);
 };
 
 const showResultContainer = () => {
@@ -74,11 +74,11 @@ const showLottoNumbers = () => {
 };
 
 const controlLottoNumbers = () => {
-  if (!$lottoToggle.checked) {
-    hideLottoNumbers();
+  if ($lottoToggle.checked) {
+    showLottoNumbers();
     return;
   }
-  showLottoNumbers();
+  hideLottoNumbers();
 };
 
 $lottoToggle.addEventListener('click', controlLottoNumbers);
