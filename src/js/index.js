@@ -15,6 +15,7 @@ function LottoApp() {
   const $confirmWinningNumbers = document.querySelector("#confirm-winning-numbers");
   const $lottoList = document.querySelector(".lotto-list");
   const $purchasedLottoCount = document.querySelector("#purchased-lotto-count");
+  const $purchasePrice = document.querySelector("#purchase-price");
 
   const onModalShow = () => {
     $modal.classList.add("open");
@@ -124,6 +125,14 @@ function LottoApp() {
     $modalClose.addEventListener("click", onModalClose);
     $purchaseButton.addEventListener("click", purchaseLottoTickets);
     $lottoNumbersToggleButton.addEventListener("change", lottoNumbersToggle);
+    $purchasePrice.addEventListener("keypress", e => {
+      if (e.key !== 'Enter') {
+        return;
+      }
+      e.preventDefault();
+      purchaseLottoTickets();
+    })
+
   };
 }
 
