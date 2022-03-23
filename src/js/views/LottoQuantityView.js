@@ -1,4 +1,4 @@
-import View from "../core/View.js";
+import View from "./View.js";
 class LottoQuantityView extends View {
   makeTemplate() {
     const { quantity } = this.props;

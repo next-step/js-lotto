@@ -1,4 +1,4 @@
-import View from "../core/View.js";
+import View from "./View.js";
 class LottoTicketView extends View {
   makeTemplate() {
     const { lottoTicketList } = this.props;
