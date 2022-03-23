@@ -14,3 +14,6 @@ export const isDuplicatedNumbersInArray = array => array.length !== new Set(arra
 
 export const isAllSatisfiedConditionInArray = (array, condition) =>
   array.length === array.filter(i => condition(i)).length;
+
+export const countSameNumberInTwoArray = (array1, array2) =>
+  array1.reduce((acc, cur) => (array2.includes(cur) ? acc + 1 : acc), 0);
