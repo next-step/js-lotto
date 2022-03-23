@@ -12,11 +12,11 @@ export function renderLottoNumbers($el, state, tickets) {
 
     const lottoNumbers = tickets.map(({ normalNumbers }) => {
         return `
-            <li class="mx-1 text-4xl lotto-wrapper">
+            <li class="mx-1 text-4xl lotto-wrapper" data-test="lotto-number">
                 <span class="lotto-icon">🎟️ </span>
                 <span class="${lottoDetailClassNames.join(
             " "
-        )}">${normalNumbers.join(", ")}</span>
+        )}" data-test="lotto-number-detail">${normalNumbers.join(", ")}</span>
             </li>
         `;
     });

@@ -15,10 +15,12 @@ export function Tickets($el, tickets) {
     $el.innerHTML = `
             <section class="mt-9">
                 <div class="d-flex">
-                  <label class="flex-auto my-0">총 ${tickets.length}개를 구매하였습니다.</label>
+                  <label class="flex-auto my-0" data-test="tickets-count">
+                  총 ${tickets.length}개를 구매하였습니다.
+                  </label>
                   <div class="flex-auto d-flex justify-end pr-1">
-                    <label class="switch">
-                      <input type="checkbox" class="lotto-numbers-toggle-button" />
+                    <label class="switch" data-test="number-detail-switch">
+                      <input type="checkbox" class="lotto-numbers-toggle-button" data-test="amount-input"/>
                       <span class="text-base font-normal">번호보기</span>
                     </label>
                   </div>
