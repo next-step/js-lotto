@@ -13,14 +13,17 @@ export const purchaseLotto = (e) => {
     return;
   }
 
+  if (isOriginLottoElement()) {
+    removeLottoElement();
+    resetDisplay();
+  }
+
   const count = Number(inputPrice) / 1000;
   insertSectionMessage(count);
   showResultContainer();
 
   const lottos = createLottos(count);
-  lottos.forEach((lotto) => {
-    insertLottoElement(lotto);
-  });
+  lottos.forEach((lotto) => insertLottoElement(lotto));
 };
 
 const showResultContainer = () => {
@@ -28,6 +31,23 @@ const showResultContainer = () => {
 };
 
 const isNotThousandUnits = (price) => Number(price) % 1000 !== 0;
+
+const isOriginLottoElement = () => {
+  const ul = $('#lotto-container');
+  return ul.hasChildNodes();
+};
+
+const removeLottoElement = () => {
+  const ul = $('#lotto-container');
+  while (ul.hasChildNodes()) {
+    ul.removeChild(ul.firstChild);
+  }
+};
+
+const resetDisplay = () => {
+  $lottoToggle.checked = false;
+  hideLottoNumbers();
+};
 
 const insertSectionMessage = (count) => {
   $('.section_message').innerText = `총 ${count}개를 구매하였습니다`;
