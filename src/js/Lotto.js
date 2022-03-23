@@ -1,14 +1,18 @@
 import {AmountForm} from './components/AmountForm.js';
 import {Tickets} from './components/Tickets.js';
+import { PRICE_PER_TICKET } from './constants/constants.js';
+import { autoGenerateLottoNumbers } from './components/autoGenerateLottoNumbers.js';
 
 export function Lotto($el) {
 
     const state = {
         amount: null,
+        tickets: [],
     }
 
     function purchaseTicketsByUpdatingAmount(amount) {
         state.amount = amount;
+        state.tickets = autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
         console.log('New Amount: ', amount);
     }
 

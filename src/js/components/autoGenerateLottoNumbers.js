@@ -2,8 +2,8 @@ import {
   COUNT_NUMBERS_PER_TICKET,
   MAX_NUMBER,
   MIN_NUMBER,
-} from "../constants/constants";
-import { makeNonDuplicatedRandomNumbers } from "./makeNonDuplicatedRandomNumbers";
+} from "../constants/constants.js";
+import { makeNonDuplicatedRandomNumbers } from "./makeNonDuplicatedRandomNumbers.js";
 
 export function autoGenerateLottoNumbers(lottoCounts) {
   return Array(lottoCounts)
@@ -20,3 +20,5 @@ export function autoGenerateLottoNumbers(lottoCounts) {
       };
     });
 }
+
+export default autoGenerateLottoNumbers;
