@@ -55,7 +55,7 @@ class LottoController {
     );
 
     $toggleButton.addEventListener(
-      "click",
+      "input",
       this.#handleToggleButtonClick.bind(this)
     );
   }
