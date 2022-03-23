@@ -1,4 +1,5 @@
 import { MIN_PURCHASE_AMOUNT, PRICE_PER_TICKET } from "../constants/constants.js";
+import { $ } from "../utils/document.js";
 
 /*
     @dev purchaseTicketsByUpdatingAmount is a function which is injected from Lotto.js
@@ -22,7 +23,7 @@ export const AmountForm = ($el, purchaseTicketsByUpdatingAmount) => {
 
 
   function render() {
-    $el.insertAdjacentHTML = `
+    $el.insertAdjacentHTML('beforeEnd', `
         <form class="mt-5" data-test="amount-form">
             <label class="mb-2 d-inline-block"
               >구입할 금액을 입력해주세요.
@@ -39,9 +40,9 @@ export const AmountForm = ($el, purchaseTicketsByUpdatingAmount) => {
               <button type="submit" class="btn btn-cyan">확인</button>
             </div>
         </form>
-    `;
+    `);
 
-    $el.querySelector('form').addEventListener('submit', onSubmitAmount);
+    $('form', $el).addEventListener('submit', onSubmitAmount);
   }
   render();
 }

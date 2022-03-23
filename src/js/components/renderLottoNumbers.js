@@ -1,3 +1,5 @@
+import { $ } from "../utils/document.js";
+
 export function renderLottoNumbers($el, state, tickets) {
     const { isShowNumbers } = state;
     const lottoNumbersWrapClassNames = [
@@ -21,7 +23,7 @@ export function renderLottoNumbers($el, state, tickets) {
         `;
     });
 
-    $el.querySelector('[data-component="lotto-numbers"]').innerHTML = `
+    $('[data-component="lotto-numbers"]', $el).innerHTML = `
         <ul id="lotto-icons" class="${lottoNumbersWrapClassNames.join(" ")}">
             ${lottoNumbers.join("")}
         </ul>

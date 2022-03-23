@@ -2,6 +2,7 @@ import {AmountForm} from './AmountForm.js';
 import {Tickets} from './Tickets.js';
 import { PRICE_PER_TICKET } from '../constants/constants.js';
 import { autoGenerateLottoNumbers } from './autoGenerateLottoNumbers.js';
+import { $ } from '../utils/document.js';
 
 export const LottoApp = ($el) => {
 
@@ -13,12 +14,12 @@ export const LottoApp = ($el) => {
     function purchaseTicketsByUpdatingAmount(amount) {
         state.amount = amount;
         state.tickets = autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
-        Tickets($el.querySelector('[data-component="tickets"]'), state.tickets);
+        Tickets($('[data-component="tickets"]', $el), state.tickets);
         console.log('New Amount: ', amount);
     }
 
     function render() {
-        $el.insertAdjacentHTML = `
+        $el.insertAdjacentHTML('beforeEnd', `
             <div class="d-flex justify-center mt-5">
                 <div class="w-100">
                   <h1 class="text-center">🎱 행운의 로또</h1>
@@ -126,9 +127,8 @@ export const LottoApp = ($el) => {
           </div>
         </div>
       </div> 
-        `;
-
-        AmountForm($el.querySelector('[data-component="amount-form"]'), purchaseTicketsByUpdatingAmount);
+      `);
+      AmountForm($('[data-component="amount-form"]', $el), purchaseTicketsByUpdatingAmount);
     }
 
     render();

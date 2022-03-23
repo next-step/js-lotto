@@ -1,3 +1,4 @@
+import { $ } from "../utils/document.js";
 import renderLottoNumbers from "./renderLottoNumbers.js";
 
 export const Tickets = ($el, tickets) => {
@@ -12,7 +13,7 @@ export const Tickets = ($el, tickets) => {
   };
 
   function render() {
-    $el.insertAdjacentHTML = `
+    $el.insertAdjacentHTML('beforeEnd', `
             <section class="mt-9">
                 <div class="d-flex">
                   <label class="flex-auto my-0" data-test="tickets-count">
@@ -27,9 +28,9 @@ export const Tickets = ($el, tickets) => {
                 </div>
                 <div data-component="lotto-numbers"><div>
             </section>
-        `;
+        `);
 
-    $el.querySelector('.switch').addEventListener('change', switchShowNumbers);
+    $('.switch', $el).addEventListener('change', switchShowNumbers);
   }
 
   render();
