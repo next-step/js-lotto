@@ -60,6 +60,7 @@ class Modal extends Component {
 
   setEvent() {
     $(`#${DOM.MODAL_CLOSE_BUTTON_ID}`).onclick = this.closeModal.bind(this);
+    $(`#${DOM.RESTART_BUTTON_ID}`).onclick = this.props.restart;
   }
 
   openModalWithResultAndYield(winningResult, totalYield) {

@@ -51,7 +51,9 @@ class LottoApp extends Component {
   }
 
   renderSection() {
-    const modal = new Modal($(`.${DOM.MODAL_CLASS}`), {});
+    const modal = new Modal($(`.${DOM.MODAL_CLASS}`), {
+      restart: this.restart.bind(this),
+    });
     new PurchaseSection($(`#${DOM.PURCHASE_SECTION_ID}`), {
       lottoCount: this.state.lottoCount,
       allLottoNumbers: this.state.allLottoNumbers,
@@ -60,6 +62,13 @@ class LottoApp extends Component {
       openModalWithResultAndYield: modal.openModalWithResultAndYield.bind(modal),
       allLottoNumbers: this.state.allLottoNumbers,
       lottoCount: this.state.lottoCount,
+    });
+  }
+
+  restart() {
+    this.setState({
+      lottoCount: 0,
+      allLottoNumbers: [],
     });
   }
 }
