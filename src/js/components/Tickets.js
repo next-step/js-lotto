@@ -12,7 +12,7 @@ export const Tickets = ($el, tickets) => {
   };
 
   function render() {
-    $el.innerHTML = `
+    $el.insertAdjacentHTML = `
             <section class="mt-9">
                 <div class="d-flex">
                   <label class="flex-auto my-0" data-test="tickets-count">

@@ -22,7 +22,7 @@ export const AmountForm = ($el, purchaseTicketsByUpdatingAmount) => {
 
 
   function render() {
-    $el.innerHTML = `
+    $el.insertAdjacentHTML = `
         <form class="mt-5" data-test="amount-form">
             <label class="mb-2 d-inline-block"
               >구입할 금액을 입력해주세요.
