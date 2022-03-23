@@ -3,13 +3,19 @@ import WinningNumber from "../model/WinningNumber.mjs";
 export default class WinningNumberForm {
   #numberForm;
 
-  #winningNumbers;
-
   #bonusNumberForm;
-  constructor() {
+
+  #numbersForm;
+
+  #modal;
+
+  #user;
+  constructor($modal, user) {
+    this.#modal = $modal;
+    this.#user = user;
     this.#numberForm = document.querySelector(".number-form");
+    this.#numbersForm = Array.from(document.querySelectorAll(".winning-number"));
     this.#bonusNumberForm = document.querySelector(".bonus-number");
-    this.#winningNumbers = new WinningNumber();
 
     this.#numberForm.addEventListener("submit", this.#handleSubmit);
     this.#numberForm.addEventListener("keyup", this.#handleKeyup);
@@ -17,8 +23,17 @@ export default class WinningNumberForm {
 
   #handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: 모달을 띄운다.
-    // TODO: 현재입력한 번호와 이전에 입력한 로또번호를 전달한다.
+
+    const winningNumbers = new WinningNumber();
+
+    this.#numbersForm.map(({valueAsNumber}) => winningNumbers.addNumber(valueAsNumber))
+    winningNumbers.bonusNumber = this.#bonusNumberForm.valueAsNumber;
+
+    if (winningNumbers.isValid()) {
+      this.#modal.openModal(winningNumbers, this.#user);
+      return;
+    }
+    alert('당첨번호가 올바르지 않습니다.')
   };
 
   /**

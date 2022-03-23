@@ -10,14 +10,9 @@ export default class WinningNumber {
 
   #isValidNumber = (number) =>
     number >= 1 &&
-    number <= 45 &&
-    !this.#numbers.has(number) &&
-    this.#bonusNumber !== number;
+    number <= 45;
 
   addNumber = (number) => {
-    if (this.#isValidNumber(number)) {
-      throw new Error(`이미 존재하거나 입력할 수 없는 번호입니다.`);
-    }
     this.#numbers.add(number);
   };
 
@@ -30,9 +25,20 @@ export default class WinningNumber {
   }
 
   set bonusNumber(number) {
-    if (this.#isValidNumber(number)) {
-      throw new Error(`이미 존재하거나 입력할 수 없는 번호입니다.`);
-    }
     this.#bonusNumber = number;
   }
+
+  isValid = () => {
+    if (this.#numbers.size !== 6) {
+      return false;
+    }
+    if (this.#bonusNumber === null) {
+      return false;
+    }
+    if (!([this.#bonusNumber, ...this.numbers].every(this.#isValidNumber))) {
+      return false;
+    }
+
+    return true;
+  };
 }
