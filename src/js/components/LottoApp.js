@@ -131,7 +131,6 @@ export const LottoApp = ($el) => {
       </div> 
       `,
   });
-  AmountForm($('[data-component="amount-form"]', $el), purchaseTicketsByUpdatingAmount);
+  AmountForm($('[data-component="amount-form"]', $el), {purchaseTicketsByUpdatingAmount});
 }
 
-// render();

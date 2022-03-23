@@ -5,7 +5,7 @@ import { replaceRender } from "../utils/replaceRender.js";
 /*
     @dev purchaseTicketsByUpdatingAmount is a function which is injected from Lotto.js
 */
-export const AmountForm = ($el, purchaseTicketsByUpdatingAmount) => {
+export const AmountForm = ($el, props) => {
 
   function onSubmitAmount(event) {
     event.preventDefault();
@@ -19,7 +19,7 @@ export const AmountForm = ($el, purchaseTicketsByUpdatingAmount) => {
       return;
     }
 
-    purchaseTicketsByUpdatingAmount(amount);
+    props.purchaseTicketsByUpdatingAmount(amount);
   }
 
   replaceRender({
