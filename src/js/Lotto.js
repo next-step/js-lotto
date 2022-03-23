@@ -129,7 +129,6 @@ export function Lotto($el) {
         `;
 
         new AmountForm($el.querySelector('[data-component="amount-form"]'), purchaseTicketsByUpdatingAmount);
-        new Tickets($el.querySelector('[data-component="tickets"]'));
     }
 
     render();
