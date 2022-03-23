@@ -51,16 +51,12 @@ class LottoApp extends Component {
   }
 
   renderSection() {
-    const $purchaseSection = $(`#${DOM.PURCHASE_SECTION_ID}`);
-    const $winningNumberForm = $(`#${DOM.WINNING_NUMBER_FORM_ID}`);
-    const $modal = $(`.${DOM.MODAL_CLASS}`);
-
-    const modal = new Modal($modal, {});
-    new PurchaseSection($purchaseSection, {
+    const modal = new Modal($(`.${DOM.MODAL_CLASS}`), {});
+    new PurchaseSection($(`#${DOM.PURCHASE_SECTION_ID}`), {
       lottoCount: this.state.lottoCount,
       allLottoNumbers: this.state.allLottoNumbers,
     });
-    new WinningNumberForm($winningNumberForm, {
+    new WinningNumberForm($(`#${DOM.WINNING_NUMBER_FORM_ID}`), {
       openModal: modal.openModal,
     });
   }
