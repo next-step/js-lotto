@@ -37,7 +37,7 @@
             <div class="d-flex flex-wrap history__detail history__detail--simplified">
             </div>
           </section>
-          <form class="mt-9">
+          <form class="mt-9 number-form" >
             <label class="flex-auto d-inline-block mb-3"
               >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >
@@ -47,26 +47,32 @@
                 <div>
                   <input
                     type="number"
+                    data-number-index="0"
                     class="winning-number mx-1 text-center"
                   />
                   <input
                     type="number"
+                    data-number-index="1"
                     class="winning-number mx-1 text-center"
                   />
                   <input
                     type="number"
+                    data-number-index="2"
                     class="winning-number mx-1 text-center"
                   />
                   <input
                     type="number"
+                    data-number-index="3"
                     class="winning-number mx-1 text-center"
                   />
                   <input
                     type="number"
+                    data-number-index="4"
                     class="winning-number mx-1 text-center"
                   />
                   <input
                     type="number"
+                    data-number-index="5"
                     class="winning-number mx-1 text-center"
                   />
                 </div>
@@ -74,7 +80,7 @@
               <div class="bonus-number-container flex-grow">
                 <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
                 <div class="d-flex justify-center">
-                  <input type="number" class="bonus-number text-center" />
+                  <input type="number" class="bonus-number text-center" data-number-index="6" />
                 </div>
               </div>
             </div>

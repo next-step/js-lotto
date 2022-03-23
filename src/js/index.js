@@ -1,6 +1,7 @@
 import User from "./model/User.mjs";
 import PurchaseForm from "./viewModel/PurchaseForm.mjs";
 import LottoHistory from "./viewModel/LottoHistory.mjs";
+import WinningNumberForm from "./viewModel/WinningNumbersForm";
 
 const $app = document.querySelector("#app");
 const $showResultButton = document.querySelector(".open-result-modal-button");
@@ -12,6 +13,7 @@ const $lottoNumbersToggleButton = document.querySelector(
 
 function addAppEventListener() {
   const user = new User();
+  const winningNumberForm = new WinningNumberForm();
   const lottoHistory = new LottoHistory();
   const puchaseForm = new PurchaseForm({
     user,
