@@ -1,7 +1,7 @@
 import User from "./model/User.mjs";
 import PurchaseForm from "./viewModel/PurchaseForm.mjs";
 import LottoHistory from "./viewModel/LottoHistory.mjs";
-import WinningNumberForm from "./viewModel/WinningNumbersForm";
+import WinningNumberForm from "./viewModel/WinningNumbersForm.mjs";
 
 const $app = document.querySelector("#app");
 const $showResultButton = document.querySelector(".open-result-modal-button");
