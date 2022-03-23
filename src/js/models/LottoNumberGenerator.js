@@ -1,3 +1,4 @@
+import { LOTTO_NUMBER_COUNT } from "../constant/index.js";
 class LottoNumberGenerator {
   #MIN = 1;
   #MAX = 45;
@@ -15,7 +16,7 @@ class LottoNumberGenerator {
   #getRandomNumber(numbers) {
     const newNumbers = [...numbers];
 
-    return Array.from({ length: 6 }).map(_ => {
+    return Array.from({ length: LOTTO_NUMBER_COUNT }).map(_ => {
       const randomIndex = this.generateIndexInRange(
         newNumbers.length,
         this.#MIN
