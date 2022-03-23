@@ -54,41 +54,20 @@ class LottoController {
       ".lotto-numbers-toggle-button"
     );
 
-    $toggleButton.addEventListener(
-      "input",
-      this.#handleToggleButtonClick.bind(this)
-    );
+    $toggleButton.addEventListener("input", this.#toggleTicketDetail);
   }
 
-  #handleToggleButtonClick() {
+  #toggleTicketDetail = () => {
     const $iconContainer = document.querySelectorAll(".ticket-list");
     const $iconDetail = document.querySelectorAll(".lotto-detail");
-    const toggle = document.querySelector(".lotto-numbers-toggle-button");
 
-    toggle.checked
-      ? this.#showTicketDetail($iconContainer, $iconDetail)
-      : this.#hideTicketDetail($iconContainer, $iconDetail);
-  }
-
-  #showTicketDetail(container, detail) {
-    container.forEach(icon => {
-      icon.classList.add("icon-wide");
+    $iconContainer.forEach(icon => {
+      icon.classList.toggle("icon-wide");
     });
-
-    detail.forEach(icon => {
-      icon.classList.remove("hidden");
+    $iconDetail.forEach(icon => {
+      icon.classList.toggle("hidden");
     });
-  }
-
-  #hideTicketDetail(container, detail) {
-    container.forEach(icon => {
-      icon.classList.remove("icon-wide");
-    });
-
-    detail.forEach(detail => {
-      detail.classList.add("hidden");
-    });
-  }
+  };
 
   #renderLottoQuantity() {
     new LottoQuantityView({
