@@ -1,6 +1,6 @@
 import { $ } from "../utils/document.js";
 
-export function renderLottoNumbers($el, state, tickets) {
+export function renderLottoNumbers($lottoNumbers, state, tickets) {
     const { isShowNumbers } = state;
     const lottoNumbersWrapClassNames = [
         "d-flex",
@@ -23,11 +23,15 @@ export function renderLottoNumbers($el, state, tickets) {
         `;
     });
 
-    $('[data-component="lotto-numbers"]', $el).innerHTML = `
-        <ul id="lotto-icons" class="${lottoNumbersWrapClassNames.join(" ")}">
-            ${lottoNumbers.join("")}
-        </ul>
-    `;
+    const lottoNumbersWrap = document.createElement('div');
+        lottoNumbersWrap.setAttribute('data-component', $lottoNumbers.getAttribute('data-component'));
+        lottoNumbersWrap.insertAdjacentHTML('beforeend', `
+            <ul id="lotto-icons" class="${lottoNumbersWrapClassNames.join(' ')}">
+                ${lottoNumbers.join('')}
+            </ul>
+        `);
+
+        $lottoNumbers.replaceWith(lottoNumbersWrap);
 }
 
 export default renderLottoNumbers;
