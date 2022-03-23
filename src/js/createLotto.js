@@ -1,4 +1,8 @@
-import { LOTTO_NUMBERS, PRICE_PER_LOTTO, LOTTO_MAX_NUMBER } from "./constants.js";
+import {
+  LOTTO_NUMBERS,
+  PRICE_PER_LOTTO,
+  LOTTO_MAX_NUMBER,
+} from "./constants.js";
 
 const createOneLottoTicket = () => {
   const lottoTicket = new Set();
@@ -12,8 +16,10 @@ const createOneLottoTicket = () => {
 };
 
 const createLottoTickets = purchasedLottoCount => {
-  const lottoTickets = new Array(purchasedLottoCount).fill().map(() => createOneLottoTicket());
-  
+  const lottoTickets = new Array(purchasedLottoCount)
+    .fill()
+    .map(() => createOneLottoTicket());
+
   return lottoTickets;
 };
 

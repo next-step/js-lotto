@@ -1,4 +1,7 @@
-import { createLottoTickets, isValidateAmountOfPayment } from "./createLotto.js";
+import {
+  createLottoTickets,
+  isValidateAmountOfPayment,
+} from "./createLotto.js";
 import { PRICE_PER_LOTTO } from "./constants.js";
 
 function LottoApp() {
@@ -9,10 +12,14 @@ function LottoApp() {
   const $showResultButton = document.querySelector(".open-result-modal-button");
   const $modalClose = document.querySelector(".modal-close");
   const $modal = document.querySelector(".modal");
-  const $lottoNumbersToggleButton = document.querySelector(".lotto-numbers-toggle-button");
+  const $lottoNumbersToggleButton = document.querySelector(
+    ".lotto-numbers-toggle-button",
+  );
   const $purchaseButton = document.querySelector("#purchase-button");
   const $purchaseResult = document.querySelector("#purchase-result");
-  const $confirmWinningNumbers = document.querySelector("#confirm-winning-numbers");
+  const $confirmWinningNumbers = document.querySelector(
+    "#confirm-winning-numbers",
+  );
   const $lottoList = document.querySelector(".lotto-list");
   const $purchasedLottoCount = document.querySelector("#purchased-lotto-count");
   const $purchasePrice = document.querySelector("#purchase-price");
@@ -103,18 +110,23 @@ function LottoApp() {
     afterPurchaseLotto(numberOfLottoTickets, purchasedLottoTickets);
   };
 
-  const renderPurchasedLotto = (numberOfLottoTickets, purchasedLottoTickets) => {
+  const renderPurchasedLotto = (
+    numberOfLottoTickets,
+    purchasedLottoTickets,
+  ) => {
     $purchasedLottoCount.innerText = numberOfLottoTickets;
 
     const lottoTemplate = purchasedLottoTickets
-      .map(lotto => {
-        return `
+      .map(
+        lotto => `
           <li class="mx-1 text-4xl lotto-item">
             <span class="lotto-icon">🎟️ </span>
-            <span class="lotto-numbers numbers-closed">${[...lotto].join(", ")}</span>
+            <span class="lotto-numbers numbers-closed">${[...lotto].join(
+              ", ",
+            )}</span>
           </li>
-        `;
-      })
+        `,
+      )
       .join("");
 
     $lottoList.innerHTML = lottoTemplate;
@@ -126,13 +138,12 @@ function LottoApp() {
     $purchaseButton.addEventListener("click", purchaseLottoTickets);
     $lottoNumbersToggleButton.addEventListener("change", lottoNumbersToggle);
     $purchasePrice.addEventListener("keypress", e => {
-      if (e.key !== 'Enter') {
+      if (e.key !== "Enter") {
         return;
       }
       e.preventDefault();
       purchaseLottoTickets();
-    })
-
+    });
   };
 }
 
