@@ -1,7 +1,18 @@
+import renderLottoNumbers from "./renderLottoNumbers.js";
+
 export function Tickets($el, tickets) {
-  
+
+  const state = {
+    isShowNumbers: false,
+  };
+
+  function switchShowNumbers() {
+    state.isShowNumbers = !state.isShowNumbers;
+    renderLottoNumbers($el, state, tickets);
+  };
+
   function render() {
-        $el.innerHTML = `
+    $el.innerHTML = `
             <section class="mt-9">
                 <div class="d-flex">
                   <label class="flex-auto my-0">총 ${tickets.length}개를 구매하였습니다.</label>
@@ -12,16 +23,12 @@ export function Tickets($el, tickets) {
                     </label>
                   </div>
                 </div>
-                <div class="d-flex flex-wrap">
-                  <span class="mx-1 text-4xl">🎟️ </span>
-                  <span class="mx-1 text-4xl">🎟️ </span>
-                  <span class="mx-1 text-4xl">🎟️ </span>
-                  <span class="mx-1 text-4xl">🎟️ </span>
-                  <span class="mx-1 text-4xl">🎟️ </span>
-                </div>
+                <div data-component="lotto-numbers"><div>
             </section>
         `;
-    }
 
-    render();
+    $el.querySelector('.switch').addEventListener('change', switchShowNumbers);
+  }
+
+  render();
 }

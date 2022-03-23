@@ -6,8 +6,8 @@ import { autoGenerateLottoNumbers } from './components/autoGenerateLottoNumbers.
 export function Lotto($el) {
 
     const state = {
+      tickets: [],
         amount: null,
-        tickets: [],
     }
 
     function purchaseTicketsByUpdatingAmount(amount) {
