@@ -20,6 +20,10 @@
   display: block;
 }
 
+.d-none {
+  display: none;
+}
+
 .d-inline {
   display: inline;
 }
