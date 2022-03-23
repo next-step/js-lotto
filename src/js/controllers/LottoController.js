@@ -13,27 +13,24 @@ class LottoController {
     this.$summaryContainer = document.querySelector("#summary-container");
     this.$quantity = document.querySelector("#lotto-quantity");
     this.$lottoIconsContainer = document.querySelector("#lotto-icons");
+    this.$totalAmountForm = document.querySelector("#total-amount-form");
     this.isActive = false;
 
-    this.#init();
-  }
-
-  #init() {
     this.#addEvent();
   }
-
   #addEvent() {
-    this.$buyButton.addEventListener(
-      "click",
-      this.#handleBuyButtonClick.bind(this)
-    );
+    this.$buyButton.addEventListener("click", this.#handleBuyButtonClick);
+    this.$totalAmountForm.addEventListener("submit", e => {
+      this.#handleBuyButtonClick();
+      e.preventDefault();
+    });
   }
 
   #setQuantity(quantity) {
     this.#quantity = quantity;
   }
 
-  #handleBuyButtonClick() {
+  #handleBuyButtonClick = () => {
     const $totalAmount = document.querySelector("#total-amount");
     const totalAmount = Number($totalAmount.value);
     const quantity = getQuantityByTotalAmount(totalAmount);
@@ -47,7 +44,7 @@ class LottoController {
     this.#renderLottoTicket();
     this.#renderWinningNumbers();
     this.#addToggleButtonEvent();
-  }
+  };
 
   #addToggleButtonEvent() {
     const $toggleButton = document.querySelector(
