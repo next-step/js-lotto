@@ -9,13 +9,9 @@ class LottoTicket {
   }
 
   generateAutomaticNumbers() {
-    let numberCount = LOTTO_NUMBER_COUNT;
-
-    while (numberCount > 0) {
-      const selectedNumber = this.numberGenerator.getNumber();
-      this.numbers.push(selectedNumber);
-      numberCount--;
-    }
+    this.numbers = Array.from({ length: LOTTO_NUMBER_COUNT }).map(_ =>
+      this.numberGenerator.getNumber()
+    );
   }
 
   getNumbers() {

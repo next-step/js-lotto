@@ -8,13 +8,9 @@ class LottoTicketList {
   }
 
   #generateLottoTicket() {
-    let quantity = this.quantity;
-
-    while (quantity > 0) {
-      const lottoTicket = new LottoTicket();
-      this.lottoTicketList.push(lottoTicket);
-      quantity--;
-    }
+    this.lottoTicketList = Array.from({ length: this.quantity }).map(
+      _ => new LottoTicket()
+    );
   }
 
   getLottoTicketList() {
