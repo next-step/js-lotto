@@ -9,11 +9,11 @@ export class Wallet {
     return this.#lottos;
   }
 
-  removeAllLottos() {
-    this.#lottos = null;
+  setLottos(lottos) {
+    this.#lottos = lottos;
   }
 
-  addLottos(lottos) {
-    this.#lottos = lottos;
+  removeAllLottos() {
+    this.#lottos = null;
   }
 }
