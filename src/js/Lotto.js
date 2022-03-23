@@ -3,6 +3,15 @@ import {Tickets} from './components/Tickets.js';
 
 export function Lotto($el) {
 
+    const state = {
+        amount: null,
+    }
+
+    function purchaseTicketsByUpdatingAmount(amount) {
+        state.amount = amount;
+        console.log('New Amount: ', amount);
+    }
+
     function render() {
         $el.innerHTML = `
             <div class="d-flex justify-center mt-5">
@@ -114,7 +123,7 @@ export function Lotto($el) {
       </div> 
         `;
 
-        new AmountForm($el.querySelector('[data-component="amount-form"]'));
+        new AmountForm($el.querySelector('[data-component="amount-form"]'), purchaseTicketsByUpdatingAmount);
         new Tickets($el.querySelector('[data-component="tickets"]'));
     }
 
