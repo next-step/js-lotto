@@ -15,7 +15,7 @@ export const LottoApp = ($el) => {
   function purchaseTicketsByUpdatingAmount(amount) {
     state.amount = amount;
     state.tickets = autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
-    Tickets($('[data-component="tickets"]', $el), state.tickets);
+    Tickets($('[data-component="tickets"]', $el), {tickets: state.tickets});
     console.log('New Amount: ', amount);
   }
 

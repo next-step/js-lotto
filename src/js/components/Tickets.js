@@ -2,7 +2,7 @@ import { $ } from "../utils/document.js";
 import { replaceRender } from "../utils/replaceRender.js";
 import renderLottoNumbers from "./renderLottoNumbers.js";
 
-export const Tickets = ($el, tickets) => {
+export const Tickets = ($el, props) => {
 
   const state = {
     isShowNumbers: false,
@@ -10,7 +10,7 @@ export const Tickets = ($el, tickets) => {
 
   function switchShowNumbers() {
     state.isShowNumbers = !state.isShowNumbers;
-    renderLottoNumbers($('[data-component="lotto-numbers"]', $el), state, tickets);
+    renderLottoNumbers($('[data-component="lotto-numbers"]', $el), state, props.tickets);
   };
 
   $el = replaceRender({
@@ -18,7 +18,7 @@ export const Tickets = ($el, tickets) => {
     replaceHTML: `
         <section class="mt-9">
             <div class="d-flex">
-                <label class="flex-auto my-0" data-test="tickets-count">총 ${tickets.length}개를 구매하였습니다.</label>
+                <label class="flex-auto my-0" data-test="tickets-count">총 ${props.tickets.length}개를 구매하였습니다.</label>
                 <div class="flex-auto d-flex justify-end pr-1">
                     <label class="switch" data-test="number-detail-switch">
                         <input type="checkbox" class="lotto-numbers-toggle-button" data-test="amount-input"/>
