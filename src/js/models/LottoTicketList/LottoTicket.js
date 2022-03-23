@@ -1,5 +1,4 @@
 import LottoNumberGenerator from "../LottoNumberGenerator.js";
-import { LOTTO_NUMBER_COUNT } from "../../constant/index.js";
 class LottoTicket {
   constructor() {
     this.numberGenerator = new LottoNumberGenerator();
@@ -8,15 +7,13 @@ class LottoTicket {
     this.generateAutomaticNumbers();
   }
 
-  generateAutomaticNumbers() {
-    this.numbers = Array.from({ length: LOTTO_NUMBER_COUNT }).map(_ =>
-      this.numberGenerator.getNumber()
-    );
-  }
+  generateAutomaticNumbers = () => {
+    this.numbers = this.numberGenerator.getNumber();
+  };
 
-  getNumbers() {
+  getNumbers = () => {
     return this.numbers;
-  }
+  };
 }
 
 export default LottoTicket;

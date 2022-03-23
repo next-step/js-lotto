@@ -1,30 +1,40 @@
 class LottoNumberGenerator {
   #MIN = 1;
   #MAX = 45;
+  #pickedNumberCount = 1;
   constructor() {
     this.selectableNumbers = [];
-    this.#init();
+    this.generateNumbers(this.#MAX);
   }
 
-  #init() {
-    this.generateNumbers(this.#MIN, this.#MAX);
-  }
-
-  #shuffleNumbers(numbers) {
-    for (let i = numbers.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1));
-      [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
-    }
-  }
-
-  generateNumbers(min, max) {
+  generateNumbers(max) {
     const numbers = Array.from({ length: max }, (_, i) => i + 1);
-    this.#shuffleNumbers(numbers);
-    this.selectableNumbers = numbers;
+    this.selectableNumbers = this.#getRandomNumber(numbers);
+  }
+
+  #getRandomNumber(numbers) {
+    const newNumbers = [...numbers];
+
+    return Array.from({ length: 6 }).map(_ => {
+      const randomIndex = this.generateIndexInRange(
+        newNumbers.length,
+        this.#MIN
+      );
+      const [pickedNumber] = newNumbers.splice(
+        randomIndex,
+        this.#pickedNumberCount
+      );
+
+      return pickedNumber;
+    });
+  }
+
+  generateIndexInRange(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + 1;
   }
 
   getNumber() {
-    return this.selectableNumbers.pop();
+    return this.selectableNumbers;
   }
 }
 
