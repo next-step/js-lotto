@@ -47,9 +47,9 @@ class PurchaseSection extends Component {
         oneLottoNumbers => String.raw`
           <div class="mx-1 text-4xl">
             <span class=${DOM.LOTTO_ICON_CLASS}>🎟️ </span>
-            <span class="${DOM.LOTTO_DETAIL_CLASS} text-2xl" style="display: none">
-              ${oneLottoNumbers.join(', ')}
-            </span>
+            <span class="${DOM.LOTTO_DETAIL_CLASS} text-2xl" style="display: none"
+              >${oneLottoNumbers.join(', ')}</span
+            >
           </div>
         `,
       )
