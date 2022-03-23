@@ -15,7 +15,6 @@ export function Lotto($el) {
         state.tickets = autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
         new Tickets($el.querySelector('[data-component="tickets"]'), state.tickets);
         console.log('New Amount: ', amount);
-        console.log('Drawn Tickets: ', state.tickets);
     }
 
     function render() {
@@ -25,7 +24,7 @@ export function Lotto($el) {
                   <h1 class="text-center">🎱 행운의 로또</h1>
                   <div data-component="amount-form"></div>
                   <div data-component="tickets"></div>
-                  <form class="mt-9">
+                  <form class="mt-9" style="display: none">
                     <label class="flex-auto d-inline-block mb-3"
                       >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
                     >
