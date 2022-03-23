@@ -1,6 +1,6 @@
-import { DOM, ERROR_MESSAGE } from '../../src/js/constants';
+import { DOM, ERROR_MESSAGE } from '../../src/js/constants.js';
 
-describe('당첨 결과 기능', () => {
+describe('당첨 번호 입력 기능', () => {
   beforeEach(() => {
     cy.reload();
   });
@@ -31,6 +31,7 @@ describe('당첨 결과 기능', () => {
     });
 
     it('당첨 번호: 1, 2, 3, 4, 5, 6 보너스 번호: 7 = 가능', () => {
+      // TODO: winning number input 커맨드 생성
       cy.get(`.${DOM.WINNING_NUMBER_CLASS}`).each(($el, index) => {
         cy.get($el).type(index + 1);
       });
