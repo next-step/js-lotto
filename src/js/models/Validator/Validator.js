@@ -5,14 +5,11 @@ import {
 
 class Validator {
   validateTotalAmount(money) {
-    try {
-      if (money < LOTTO_PRICE) {
-        throw Error(ERROR_MESSAGE_MIN_TOTAL_AMOUNT);
-      }
-    } catch (error) {
-      alert(error.message);
+    if (money < LOTTO_PRICE) {
+      alert(ERROR_MESSAGE_MIN_TOTAL_AMOUNT);
       return false;
     }
+
     return true;
   }
 }
