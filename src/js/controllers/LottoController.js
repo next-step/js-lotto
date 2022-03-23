@@ -19,9 +19,9 @@ class LottoController {
     this.#addEvent();
   }
   #addEvent() {
-    this.$buyButton.addEventListener("click", this.#handleBuyButtonClick);
+    this.$buyButton.addEventListener("click", this.#buyLottoTicket);
     this.$totalAmountForm.addEventListener("submit", e => {
-      this.#handleBuyButtonClick();
+      this.#buyLottoTicket();
       e.preventDefault();
     });
   }
@@ -30,19 +30,22 @@ class LottoController {
     this.#quantity = quantity;
   }
 
-  #handleBuyButtonClick = () => {
+  #buyLottoTicket = () => {
     const $totalAmount = document.querySelector("#total-amount");
     const totalAmount = Number($totalAmount.value);
-    const quantity = getQuantityByTotalAmount(totalAmount);
 
     if (!this.validator.validateTotalAmount(totalAmount)) {
       return;
     }
 
+    const quantity = getQuantityByTotalAmount(totalAmount);
+
     this.#setQuantity(quantity);
+
     this.#renderLottoQuantity();
     this.#renderLottoTicket();
     this.#renderWinningNumbers();
+
     this.#addToggleButtonEvent();
   };
 
