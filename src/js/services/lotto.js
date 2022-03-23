@@ -33,7 +33,7 @@ export const getWinningResult = (winningLottoNumbers, purchaseLottoNumbersArray)
   return winningResult;
 };
 
-export const getYield = (purchasePrice, winningResult) => {
+export const getTotalYield = (purchasePrice, winningResult) => {
   const { first, second, third, fourth, fifth } = winningResult;
   const totalRevenue =
     fifth * 5000 + fourth * 50000 + third * 1500000 + second * 30000000 + first * 2000000000;

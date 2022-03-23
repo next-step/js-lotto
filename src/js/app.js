@@ -57,7 +57,9 @@ class LottoApp extends Component {
       allLottoNumbers: this.state.allLottoNumbers,
     });
     new WinningNumberForm($(`#${DOM.WINNING_NUMBER_FORM_ID}`), {
-      openModal: modal.openModal,
+      openModalWithResultAndYield: modal.openModalWithResultAndYield.bind(modal),
+      allLottoNumbers: this.state.allLottoNumbers,
+      lottoCount: this.state.lottoCount,
     });
   }
 }

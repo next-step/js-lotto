@@ -48,11 +48,11 @@ class Modal extends Component {
                 <td class="p-3"><span id="${DOM.MODAL_1ST_PLACE_COUNT_ID}"></span>개</td>
               </tr>
             </tbody>
-          </table>
+          </table>  
         </div>
-        <p class="text-center font-bold">당신의 총 수익률은 <span id="${DOM.MODAL_5TH_PLACE_COUNT_ID}"></span>입니다.</p>
+        <p class="text-center font-bold">당신의 총 수익률은 <span id="${DOM.MODAL_YIELD_ID}"></span>%입니다.</p>
         <div class="d-flex justify-center mt-5">
-          <button type="button" id="${DOM.MODAL_YIELD_ID}" class="btn btn-cyan">다시 시작하기</button>
+          <button type="button" id="${DOM.RESTART_BUTTON_ID}" class="btn btn-cyan">다시 시작하기</button>
         </div>
       </div>
     `;
@@ -62,8 +62,22 @@ class Modal extends Component {
     $(`#${DOM.MODAL_CLOSE_BUTTON_ID}`).onclick = this.closeModal.bind(this);
   }
 
-  openModal() {
+  openModalWithResultAndYield(winningResult, totalYield) {
+    this.renderWinningResult(winningResult);
+    this.renderTotalYield(totalYield);
     $(`.${DOM.MODAL_CLASS}`).classList.add('open');
+  }
+
+  renderWinningResult(winningResult) {
+    $(`#${DOM.MODAL_1ST_PLACE_COUNT_ID}`).textContent = winningResult.first;
+    $(`#${DOM.MODAL_2ND_PLACE_COUNT_ID}`).textContent = winningResult.second;
+    $(`#${DOM.MODAL_3RD_PLACE_COUNT_ID}`).textContent = winningResult.third;
+    $(`#${DOM.MODAL_4TH_PLACE_COUNT_ID}`).textContent = winningResult.fourth;
+    $(`#${DOM.MODAL_5TH_PLACE_COUNT_ID}`).textContent = winningResult.fifth;
+  }
+
+  renderTotalYield(totalYield) {
+    $(`#${DOM.MODAL_YIELD_ID}`).textContent = totalYield;
   }
 
   closeModal() {

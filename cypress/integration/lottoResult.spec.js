@@ -1,4 +1,4 @@
-import { getWinningResult, getYield } from '../../src/js/services/lotto.js';
+import { getWinningResult, getTotalYield } from '../../src/js/services/lotto.js';
 
 describe('당첨 결과 기능', () => {
   const result = {
@@ -88,7 +88,7 @@ describe('당첨 결과 기능', () => {
         fifth: 1,
       };
       const expectResult = 0;
-      expect(getYield(purchasePrice, winningResult)).to.deep.equal(expectResult);
+      expect(getTotalYield(purchasePrice, winningResult)).to.deep.equal(expectResult);
     });
 
     it('5000원 구매, 4등 1개 = 900%', () => {
@@ -98,7 +98,7 @@ describe('당첨 결과 기능', () => {
         fourth: 1,
       };
       const expectResult = 900;
-      expect(getYield(purchasePrice, winningResult)).to.deep.equal(expectResult);
+      expect(getTotalYield(purchasePrice, winningResult)).to.deep.equal(expectResult);
     });
 
     it('5000원 구매, 1등 1개 = 39999900%', () => {
@@ -108,7 +108,7 @@ describe('당첨 결과 기능', () => {
         first: 1,
       };
       const expectResult = 39999900;
-      expect(getYield(purchasePrice, winningResult)).to.deep.equal(expectResult);
+      expect(getTotalYield(purchasePrice, winningResult)).to.deep.equal(expectResult);
     });
   });
 });

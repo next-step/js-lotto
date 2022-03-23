@@ -2,6 +2,7 @@ import Component from '../core/Component.js';
 import { DOM, ERROR_MESSAGE, LOTTO } from '../constants.js';
 import { $, $$ } from '../utils/dom.js';
 import { isDuplicatedNumbersInArray, isAllSatisfiedConditionInArray } from '../utils/index.js';
+import { getWinningResult, getTotalYield } from '../services/lotto.js';
 
 class WinningNumberForm extends Component {
   template() {
@@ -45,14 +46,14 @@ class WinningNumberForm extends Component {
 
   onSubmitWinningNumberForm(e) {
     e.preventDefault();
+    const winningAndBonusNumbers = [...this.getWinningNumbers(), this.getBonusNumber()];
 
-    if (
-      !this.isCorrectWinningAndBonusNumbers([...this.getWinningNumbers(), this.getBonusNumber()])
-    ) {
-      return;
-    }
+    if (!this.checkWinningAndBonusNumbersWithAlert(winningAndBonusNumbers)) return;
 
-    this.props.openModal();
+    const winningResult = getWinningResult(winningAndBonusNumbers, this.props.allLottoNumbers);
+    const purchasePrice = this.props.lottoCount * 1000;
+    const totalYield = getTotalYield(purchasePrice, winningResult);
+    this.props.openModalWithResultAndYield(winningResult, totalYield);
   }
 
   onInputWinningNumberInput(e) {
@@ -68,7 +69,7 @@ class WinningNumberForm extends Component {
     e.target.nextElementSibling.focus();
   }
 
-  isCorrectWinningAndBonusNumbers(inputedNumbers) {
+  checkWinningAndBonusNumbersWithAlert(inputedNumbers) {
     if (
       !isAllSatisfiedConditionInArray(
         inputedNumbers,
@@ -87,11 +88,11 @@ class WinningNumberForm extends Component {
   }
 
   getWinningNumbers() {
-    return Array.from($$(`.${DOM.WINNING_NUMBER_CLASS}`)).map(element => element.value);
+    return Array.from($$(`.${DOM.WINNING_NUMBER_CLASS}`)).map(element => +element.value);
   }
 
   getBonusNumber() {
-    return $(`.${DOM.BONUS_NUMBER_CLASS}`).value;
+    return +$(`.${DOM.BONUS_NUMBER_CLASS}`).value;
   }
 }
 
