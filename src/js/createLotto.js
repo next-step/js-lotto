@@ -22,11 +22,11 @@ const createLottoTickets = purchasedLottoCount => {
 };
 
 const isValidateAmountOfPayment = payment => {
-  if (!(payment % PRICE_PER_LOTTO === 0)) {
-    return false;
+  if (payment % PRICE_PER_LOTTO === 0) {
+    return true;
   }
 
-  return true;
+  return false;
 };
 
 export { createLottoTickets, isValidateAmountOfPayment };
