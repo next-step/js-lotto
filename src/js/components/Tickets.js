@@ -1,6 +1,6 @@
 import renderLottoNumbers from "./renderLottoNumbers.js";
 
-export function Tickets($el, tickets) {
+export const Tickets = ($el, tickets) => {
 
   const state = {
     isShowNumbers: false,

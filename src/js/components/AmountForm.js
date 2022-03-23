@@ -3,7 +3,7 @@ import { MIN_PURCHASE_AMOUNT, PRICE_PER_TICKET } from "../constants/constants.js
 /*
     @dev purchaseTicketsByUpdatingAmount is a function which is injected from Lotto.js
 */
-export function AmountForm($el, purchaseTicketsByUpdatingAmount) {
+export const AmountForm = ($el, purchaseTicketsByUpdatingAmount) => {
 
     function onSubmitAmount(event) {
         event.preventDefault();
