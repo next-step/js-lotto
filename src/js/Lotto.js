@@ -13,7 +13,9 @@ export function Lotto($el) {
     function purchaseTicketsByUpdatingAmount(amount) {
         state.amount = amount;
         state.tickets = autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
+        new Tickets($el.querySelector('[data-component="tickets"]'), state.tickets);
         console.log('New Amount: ', amount);
+        console.log('Drawn Tickets: ', state.tickets);
     }
 
     function render() {
