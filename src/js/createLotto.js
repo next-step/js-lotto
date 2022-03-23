@@ -12,12 +12,8 @@ const createOneLottoTicket = () => {
 };
 
 const createLottoTickets = purchasedLottoCount => {
-  const lottoTickets = [];
-
-  for (let count = 0; count < purchasedLottoCount; count++) {
-    lottoTickets.push(createOneLottoTicket());
-  }
-
+  const lottoTickets = new Array(purchasedLottoCount).fill().map(() => createOneLottoTicket());
+  
   return lottoTickets;
 };
 
