@@ -1,11 +1,12 @@
-import { getLottoListTemplate, isValidPrice, getCount, createLottoList } from './domains/index.js';
+import { getLottoListTemplate, getCount, createLottoList } from './domains/index.js';
 import { getSelector } from './utils/index.js';
+import { validatePrice, errorPrintAlert } from './domains/errors.js';
 
 const initState = {
   price: 0,
   count: 0,
   lottoList: [],
-  isLottoNumberToggle: false,
+  isShowLottoList: false,
 };
 
 function App() {
@@ -22,18 +23,15 @@ function App() {
 
   const setState = (newState) => {
     this.state = { ...this.state, ...newState };
-    render();
   };
 
-  const render = () => {
+  const renderLottoList = () => {
     $countLabel.textContent = `총 ${this.state.count}개를 구매하였습니다.`;
     $lottoListUl.innerHTML = getLottoListTemplate(this.state.lottoList);
-
-    renderLottoNumberToggle();
   };
 
   const renderLottoNumberToggle = () => {
-    if (!this.state.isLottoNumberToggle) {
+    if (!this.state.isShowLottoList) {
       $lottoListUl.classList.remove('flex-col');
       $lottoList.classList.remove('lotto-detail-view');
       return;
@@ -45,7 +43,11 @@ function App() {
   const handleSubmitPrice = (e) => {
     e.preventDefault();
     const price = e.target['price'].valueAsNumber;
-    if (!isValidPrice(price)) return;
+    const { errorMsg } = validatePrice(price);
+    if (errorMsg) {
+      errorPrintAlert(errorMsg);
+      return;
+    }
 
     buyLotto(price);
   };
@@ -56,10 +58,12 @@ function App() {
     $lottoList.style.display = 'block';
 
     setState({ price, count, lottoList });
+    renderLottoList();
   };
 
   const handleClickLottoNumbersToggle = () => {
-    setState({ isLottoNumberToggle: !this.state.isLottoNumberToggle });
+    setState({ isShowLottoList: !this.state.isShowLottoList });
+    renderLottoNumberToggle();
   };
 
   const initEventListener = () => {
