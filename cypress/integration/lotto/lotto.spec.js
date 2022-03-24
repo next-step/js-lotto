@@ -8,7 +8,7 @@ describe('Lotto 테스트', () => {
         cy.get('[data-amount=input]').type('1234{enter}')
       }
     }
-
+    
     const checkClickEvent = correct => {
       if (correct) {
         cy.get('[data-amount=input]').type('10000')

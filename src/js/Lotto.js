@@ -31,9 +31,8 @@ class Lotto {
     for (let i = 0; i < count; i++) {
       while (true) {
         const randomNumbers = Array.from({ length: 6 }, () => Math.floor(Math.random() * 45) + 1)
-        const temp = randomNumbers
         const set = new Set (randomNumbers)
-        if (temp.length === set.size) {
+        if (randomNumbers.length === set.size) {
           lottoRandomNumbers.push(String(randomNumbers).replaceAll(',', ', '))
           break
         }
