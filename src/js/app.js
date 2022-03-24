@@ -5,6 +5,7 @@ import PurchaseSection from './components/PurchaseSection.js';
 import { DOM, LOTTO } from './constants.js';
 import { $ } from './utils/dom.js';
 import { pickRandomNumbers } from './utils/index.js';
+import { getWinningResult, getTotalYield } from './services/lotto.js';
 
 class LottoApp {
   constructor($target, props) {
@@ -32,7 +33,7 @@ class LottoApp {
   }
 
   setState(nextState) {
-    this.state = { ...nextState };
+    this.state = nextState;
     this.render();
   }
 
@@ -63,18 +64,39 @@ class LottoApp {
   }
 
   renderSection() {
-    const modal = new Modal($(`.${DOM.MODAL_CLASS}`), {
+    this.$modal = new Modal($(`.${DOM.MODAL_CLASS}`), {
       restart: this.restart.bind(this),
     });
-    new PurchaseSection($(`#${DOM.PURCHASE_SECTION_ID}`), {
+    this.$purchaseSection = new PurchaseSection($(`#${DOM.PURCHASE_SECTION_ID}`), {
       lottoCount: this.state.lottoCount,
       allLottoNumbers: this.state.allLottoNumbers,
     });
-    new WinningNumberForm($(`#${DOM.WINNING_NUMBER_FORM_ID}`), {
-      openModalWithResultAndYield: modal.openModalWithResultAndYield.bind(modal),
+    this.$winningNumberForm = new WinningNumberForm($(`#${DOM.WINNING_NUMBER_FORM_ID}`), {
+      onSubmitWinningNumberForm: this.onSubmitWinningNumberForm.bind(this),
       allLottoNumbers: this.state.allLottoNumbers,
       lottoCount: this.state.lottoCount,
     });
+  }
+
+  onSubmitWinningNumberForm(e) {
+    e.preventDefault();
+    const winningAndBonusNumbers = [
+      ...this.$winningNumberForm.getWinningNumbers(),
+      this.$winningNumberForm.getBonusNumber(),
+    ];
+
+    if (!this.$winningNumberForm.checkWinningAndBonusNumbersWithAlert(winningAndBonusNumbers))
+      return;
+
+    const winningResult = getWinningResult(winningAndBonusNumbers, this.state.allLottoNumbers);
+    const totalYield = getTotalYield(this.state.lottoCount * LOTTO.PRICE, winningResult);
+
+    this.$modal.setState({
+      winningResult,
+      totalYield,
+    });
+
+    this.$modal.open();
   }
 
   restart() {

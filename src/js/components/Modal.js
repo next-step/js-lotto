@@ -5,14 +5,24 @@ class Modal {
   constructor($target, props) {
     this.$target = $target;
     this.props = props;
-    this.state = {};
+    this.state = {
+      winningResult: {
+        first: 0,
+        second: 0,
+        third: 0,
+        fourth: 0,
+        fifth: 0,
+      },
+      totalYield: 0,
+    };
     this.render();
     this.setEvent();
   }
 
   setState(nextState) {
-    this.state = { ...nextState };
+    this.state = nextState;
     this.render();
+    this.setEvent();
   }
 
   render() {
@@ -41,32 +51,32 @@ class Modal {
               <tr class="text-center">
                 <td class="p-3">3개</td>
                 <td class="p-3">5,000</td>
-                <td class="p-3"><span id="${DOM.MODAL_5TH_PLACE_COUNT_ID}"></span>개</td>
+                <td class="p-3"><span id="${DOM.MODAL_5TH_PLACE_COUNT_ID}">${this.state.winningResult.fifth}</span>개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">4개</td>
                 <td class="p-3">50,000</td>
-                <td class="p-3"><span id="${DOM.MODAL_4TH_PLACE_COUNT_ID}"></span>개</td>
+                <td class="p-3"><span id="${DOM.MODAL_4TH_PLACE_COUNT_ID}">${this.state.winningResult.fourth}</span>개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">5개</td>
                 <td class="p-3">1,500,000</td>
-                <td class="p-3"><span id="${DOM.MODAL_3RD_PLACE_COUNT_ID}"></span>개</td>
+                <td class="p-3"><span id="${DOM.MODAL_3RD_PLACE_COUNT_ID}">${this.state.winningResult.third}</span>개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">5개 + 보너스볼</td>
                 <td class="p-3">30,000,000</td>
-                <td class="p-3"><span id="${DOM.MODAL_2ND_PLACE_COUNT_ID}"></span>개</td>
+                <td class="p-3"><span id="${DOM.MODAL_2ND_PLACE_COUNT_ID}">${this.state.winningResult.second}</span>개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">6개</td>
                 <td class="p-3">2,000,000,000</td>
-                <td class="p-3"><span id="${DOM.MODAL_1ST_PLACE_COUNT_ID}"></span>개</td>
+                <td class="p-3"><span id="${DOM.MODAL_1ST_PLACE_COUNT_ID}">${this.state.winningResult.first}</span>개</td>
               </tr>
             </tbody>
           </table>  
         </div>
-        <p class="text-center font-bold">당신의 총 수익률은 <span id="${DOM.MODAL_YIELD_ID}"></span>%입니다.</p>
+        <p class="text-center font-bold">당신의 총 수익률은 <span id="${DOM.MODAL_YIELD_ID}">${this.state.totalYield}</span>%입니다.</p>
         <div class="d-flex justify-center mt-5">
           <button type="button" id="${DOM.RESTART_BUTTON_ID}" class="btn btn-cyan">다시 시작하기</button>
         </div>
@@ -75,29 +85,15 @@ class Modal {
   }
 
   setEvent() {
-    $(`#${DOM.MODAL_CLOSE_BUTTON_ID}`).onclick = this.closeModal.bind(this);
+    $(`#${DOM.MODAL_CLOSE_BUTTON_ID}`).onclick = this.close;
     $(`#${DOM.RESTART_BUTTON_ID}`).onclick = this.props.restart;
   }
 
-  openModalWithResultAndYield(winningResult, totalYield) {
-    this.renderWinningResult(winningResult);
-    this.renderTotalYield(totalYield);
+  open() {
     $(`.${DOM.MODAL_CLASS}`).classList.add('open');
   }
 
-  renderWinningResult(winningResult) {
-    $(`#${DOM.MODAL_1ST_PLACE_COUNT_ID}`).textContent = winningResult.first;
-    $(`#${DOM.MODAL_2ND_PLACE_COUNT_ID}`).textContent = winningResult.second;
-    $(`#${DOM.MODAL_3RD_PLACE_COUNT_ID}`).textContent = winningResult.third;
-    $(`#${DOM.MODAL_4TH_PLACE_COUNT_ID}`).textContent = winningResult.fourth;
-    $(`#${DOM.MODAL_5TH_PLACE_COUNT_ID}`).textContent = winningResult.fifth;
-  }
-
-  renderTotalYield(totalYield) {
-    $(`#${DOM.MODAL_YIELD_ID}`).textContent = totalYield;
-  }
-
-  closeModal() {
+  close() {
     $(`.${DOM.MODAL_CLASS}`).classList.remove('open');
   }
 }

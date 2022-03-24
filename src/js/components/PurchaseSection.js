@@ -11,7 +11,7 @@ class PurchaseSection {
   }
 
   setState(nextState) {
-    this.state = { ...nextState };
+    this.state = nextState;
     this.render();
   }
 

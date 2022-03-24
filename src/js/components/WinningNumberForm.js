@@ -1,7 +1,6 @@
 import { DOM, ERROR_MESSAGE, LOTTO } from '../constants.js';
 import { $, $$ } from '../utils/dom.js';
 import { isDuplicatedNumbersInArray, isAllSatisfiedConditionInArray } from '../utils/index.js';
-import { getWinningResult, getTotalYield } from '../services/lotto.js';
 
 class WinningNumberForm {
   constructor($target, props) {
@@ -13,7 +12,7 @@ class WinningNumberForm {
   }
 
   setState(nextState) {
-    this.state = { ...nextState };
+    this.state = nextState;
     this.render();
   }
 
@@ -57,26 +56,14 @@ class WinningNumberForm {
   }
 
   setEvent() {
-    $(`#${DOM.WINNING_NUMBER_CONTAINER_ID}`).oninput = this.onInputWinningNumberInput.bind(this);
-    $(`#${DOM.WINNING_NUMBER_FORM_ID}`).onsubmit = this.onSubmitWinningNumberForm.bind(this);
+    $(`#${DOM.WINNING_NUMBER_CONTAINER_ID}`).oninput =
+      this.changeFocusWinningNumberInput.bind(this);
+    $(`#${DOM.WINNING_NUMBER_FORM_ID}`).onsubmit = this.props.onSubmitWinningNumberForm;
   }
 
-  onSubmitWinningNumberForm(e) {
-    e.preventDefault();
-    const winningAndBonusNumbers = [...this.getWinningNumbers(), this.getBonusNumber()];
-
-    if (!this.checkWinningAndBonusNumbersWithAlert(winningAndBonusNumbers)) return;
-
-    const winningResult = getWinningResult(winningAndBonusNumbers, this.props.allLottoNumbers);
-    const purchasePrice = this.props.lottoCount * 1000;
-    const totalYield = getTotalYield(purchasePrice, winningResult);
-    this.props.openModalWithResultAndYield(winningResult, totalYield);
-  }
-
-  onInputWinningNumberInput(e) {
-    if (e.target.value.length < 2) {
-      return;
-    }
+  changeFocusWinningNumberInput(e) {
+    const MAX_INPUT_LENGTH = 2;
+    if (e.target.value.length < MAX_INPUT_LENGTH) return;
 
     if (!e.target.nextElementSibling) {
       $(`.${DOM.BONUS_NUMBER_CLASS}`).focus();

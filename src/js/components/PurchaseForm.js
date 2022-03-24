@@ -11,13 +11,13 @@ class PurchaseForm {
   }
 
   setState(nextState) {
-    this.state = { ...nextState };
+    this.state = nextState;
     this.render();
   }
 
   render() {
     this.$target.innerHTML = this.template();
-    this.mounted();
+    this.focusOnFirstInput();
   }
 
   template() {
@@ -35,7 +35,7 @@ class PurchaseForm {
     `;
   }
 
-  mounted() {
+  focusOnFirstInput() {
     $(`#${DOM.PURCHASE_FORM_INPUT_ID}`).focus();
   }
 
