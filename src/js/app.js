@@ -3,11 +3,39 @@ import Modal from './components/Modal.js';
 import PurchaseForm from './components/PurchaseForm.js';
 import PurchaseSection from './components/PurchaseSection.js';
 import { DOM, LOTTO } from './constants.js';
-import Component from './core/Component.js';
 import { $ } from './utils/dom.js';
 import { pickRandomNumbers } from './utils/index.js';
 
-class LottoApp extends Component {
+class LottoApp {
+  constructor($target, props) {
+    this.$target = $target;
+    this.state = {
+      lottoCount: 0,
+      allLottoNumbers: [],
+    };
+    this.props = props;
+    this.render();
+  }
+
+  render() {
+    this.$target.innerHTML = this.template();
+    this.mounted();
+  }
+
+  mounted() {
+    const $purchaseForm = $(`#${DOM.PURCHASE_FORM_ID}`);
+
+    new PurchaseForm($purchaseForm, {
+      setLottoCountAndNumbers: this.setLottoCountAndNumbers.bind(this),
+      renderSection: this.renderSection.bind(this),
+    });
+  }
+
+  setState(nextState) {
+    this.state = { ...nextState };
+    this.render();
+  }
+
   template() {
     return String.raw`
       <div class="d-flex justify-center mt-5">
@@ -20,22 +48,6 @@ class LottoApp extends Component {
       </div>
       <div class="${DOM.MODAL_CLASS}"></div>
     `;
-  }
-
-  setUp() {
-    this.state = {
-      lottoCount: 0,
-      allLottoNumbers: [],
-    };
-  }
-
-  mounted() {
-    const $purchaseForm = $(`#${DOM.PURCHASE_FORM_ID}`);
-
-    new PurchaseForm($purchaseForm, {
-      setLottoCountAndNumbers: this.setLottoCountAndNumbers.bind(this),
-      renderSection: this.renderSection.bind(this),
-    });
   }
 
   setLottoCountAndNumbers(lottoCount) {

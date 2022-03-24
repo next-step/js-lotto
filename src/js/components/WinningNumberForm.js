@@ -1,10 +1,27 @@
-import Component from '../core/Component.js';
 import { DOM, ERROR_MESSAGE, LOTTO } from '../constants.js';
 import { $, $$ } from '../utils/dom.js';
 import { isDuplicatedNumbersInArray, isAllSatisfiedConditionInArray } from '../utils/index.js';
 import { getWinningResult, getTotalYield } from '../services/lotto.js';
 
-class WinningNumberForm extends Component {
+class WinningNumberForm {
+  constructor($target, props) {
+    this.$target = $target;
+    this.props = props;
+    this.state = {};
+    this.render();
+    this.setEvent();
+  }
+
+  setState(nextState) {
+    this.state = { ...nextState };
+    this.render();
+  }
+
+  render() {
+    this.$target.innerHTML = this.template();
+    this.mounted();
+  }
+
   template() {
     return String.raw`
 				<label class="flex-auto d-inline-block mb-3"

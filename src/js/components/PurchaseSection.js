@@ -1,8 +1,24 @@
 import { DOM } from '../constants.js';
-import Component from '../core/Component.js';
 import { $, $$ } from '../utils/dom.js';
 
-class PurchaseSection extends Component {
+class PurchaseSection {
+  constructor($target, props) {
+    this.$target = $target;
+    this.props = props;
+    this.state = {};
+    this.render();
+    this.setEvent();
+  }
+
+  setState(nextState) {
+    this.state = { ...nextState };
+    this.render();
+  }
+
+  render() {
+    this.$target.innerHTML = this.template();
+  }
+
   template() {
     return String.raw`
       <div class="d-flex">

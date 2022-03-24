@@ -1,8 +1,25 @@
 import { DOM, ERROR_MESSAGE, LOTTO } from '../constants.js';
-import Component from '../core/Component.js';
 import { $ } from '../utils/dom.js';
 
-class PurchaseForm extends Component {
+class PurchaseForm {
+  constructor($target, props) {
+    this.$target = $target;
+    this.props = props;
+    this.state = {};
+    this.render();
+    this.setEvent();
+  }
+
+  setState(nextState) {
+    this.state = { ...nextState };
+    this.render();
+  }
+
+  render() {
+    this.$target.innerHTML = this.template();
+    this.mounted();
+  }
+
   template() {
     return String.raw`
       <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.</label>
