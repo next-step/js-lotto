@@ -15,7 +15,7 @@ class PurchaseSection extends Component {
               type="checkbox"
               id="${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_TOGGLE_BUTTON_ID}"
               class="lotto-numbers-toggle-button"
-              onclick="${this.onClickLottoNumberToggleButton}"
+              onclick="${this.toggleLottoDetailNumbers}"
             />
             <span class="text-base font-normal">번호보기</span>
           </label>
@@ -29,13 +29,12 @@ class PurchaseSection extends Component {
 
   setEvent() {
     $(`#${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_TOGGLE_BUTTON_ID}`).onclick =
-      this.onClickLottoNumberToggleButton;
+      this.toggleLottoDetailNumbers;
   }
 
-  onClickLottoNumberToggleButton() {
+  toggleLottoDetailNumbers() {
     $(`#${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_FLEXBOX_ID}`).classList.toggle('flex-col');
     const lottoDetails = $$(`.${DOM.LOTTO_DETAIL_CLASS}`);
-
     for (let i = 0; i < lottoDetails.length; i += 1) {
       lottoDetails[i].style.display = lottoDetails[i].style.display === 'none' ? 'inline' : 'none';
     }
