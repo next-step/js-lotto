@@ -1,4 +1,5 @@
 import { countSameNumberInTwoArray } from '../utils/index.js';
+import { LOTTO_WINNING_REVENUE } from '../constants.js';
 
 export const getWinningResult = (winningLottoNumbers, purchaseLottoNumbersArray) => {
   const winningResult = {
@@ -9,8 +10,8 @@ export const getWinningResult = (winningLottoNumbers, purchaseLottoNumbersArray)
     fifth: 0,
   };
 
-  purchaseLottoNumbersArray.forEach(array => {
-    const sameCount = countSameNumberInTwoArray(winningLottoNumbers, array);
+  purchaseLottoNumbersArray.forEach(purchaseLottoNumbers => {
+    const sameCount = countSameNumberInTwoArray(winningLottoNumbers, purchaseLottoNumbers);
     switch (sameCount) {
       case 3:
         winningResult.fifth += 1;
@@ -22,7 +23,7 @@ export const getWinningResult = (winningLottoNumbers, purchaseLottoNumbersArray)
         winningResult.third += 1;
         break;
       case 6:
-        if (array.at(-1) === winningLottoNumbers.at(-1)) winningResult.second += 1;
+        if (purchaseLottoNumbers.at(-1) === winningLottoNumbers.at(-1)) winningResult.second += 1;
         else winningResult.first += 1;
         break;
       default:
@@ -36,7 +37,11 @@ export const getWinningResult = (winningLottoNumbers, purchaseLottoNumbersArray)
 export const getTotalYield = (purchasePrice, winningResult) => {
   const { first, second, third, fourth, fifth } = winningResult;
   const totalRevenue =
-    fifth * 5000 + fourth * 50000 + third * 1500000 + second * 30000000 + first * 2000000000;
+    fifth * LOTTO_WINNING_REVENUE.FIFTH +
+    fourth * LOTTO_WINNING_REVENUE.FOURTH +
+    third * LOTTO_WINNING_REVENUE.THIRD +
+    second * LOTTO_WINNING_REVENUE.SECOND +
+    first * LOTTO_WINNING_REVENUE.FIRST;
   const totalYield = ((totalRevenue - purchasePrice) / purchasePrice) * 100;
   return totalYield;
 };
