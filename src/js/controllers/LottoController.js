@@ -9,7 +9,7 @@ class LottoController {
   #quantity = null;
   constructor() {
     this.validator = new Validator();
-    this.$buyButton = document.querySelector("#buy-button");
+    this.$app = document.querySelector("#app");
     this.$summaryContainer = document.querySelector("#summary-container");
     this.$quantity = document.querySelector("#lotto-quantity");
     this.$lottoIconsContainer = document.querySelector("#lotto-icons");
@@ -19,7 +19,16 @@ class LottoController {
     this.#addEvent();
   }
   #addEvent() {
-    this.$buyButton.addEventListener("click", this.#buyLottoTicket);
+    this.$app.addEventListener("click", ({ target }) => {
+      if (target.id === "total-amount") {
+        this.#buyLottoTicket();
+      }
+
+      if (target.className === "lotto-numbers-toggle-button") {
+        this.#toggleTicketDetail();
+      }
+    });
+
     this.$totalAmountForm.addEventListener("submit", e => {
       this.#buyLottoTicket();
       e.preventDefault();
@@ -45,17 +54,7 @@ class LottoController {
     this.#renderLottoQuantity();
     this.#renderLottoTicket();
     this.#renderWinningNumbers();
-
-    this.#addToggleButtonEvent();
   };
-
-  #addToggleButtonEvent() {
-    const $toggleButton = document.querySelector(
-      ".lotto-numbers-toggle-button"
-    );
-
-    $toggleButton.addEventListener("input", this.#toggleTicketDetail);
-  }
 
   #toggleTicketDetail = () => {
     const $iconContainer = document.querySelectorAll(".ticket-list");
