@@ -1,11 +1,13 @@
-import { LOTTO_NUMBER_COUNT } from "../constant/index.js";
+import {
+  LOTTO_MIN_NUMBER,
+  LOTTO_MAX_NUMBER,
+  LOTTO_NUMBER_COUNT,
+  PICKED_NUMBER_COUNT,
+} from "../constant/index.js";
 class LottoNumberGenerator {
-  #MIN = 1;
-  #MAX = 45;
-  #pickedNumberCount = 1;
   constructor() {
     this.selectableNumbers = [];
-    this.#generateNumbers(this.#MAX);
+    this.#generateNumbers(LOTTO_MAX_NUMBER);
   }
 
   #generateNumbers(max) {
@@ -19,11 +21,11 @@ class LottoNumberGenerator {
     return Array.from({ length: LOTTO_NUMBER_COUNT }).map(_ => {
       const randomIndex = this.#generateIndexInRange(
         newNumbers.length,
-        this.#MIN
+        LOTTO_MIN_NUMBER
       );
       const [pickedNumber] = newNumbers.splice(
         randomIndex,
-        this.#pickedNumberCount
+        PICKED_NUMBER_COUNT
       );
 
       return pickedNumber;
