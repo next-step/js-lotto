@@ -54,7 +54,7 @@ class PurchaseForm {
     }
 
     this.props.setLottoCountAndNumbers($purchaseFormInput.value / LOTTO.PRICE);
-    this.props.renderSection();
+    this.props.renderSectionAndForm();
   }
 
   checkInputValueAndAlert(value) {

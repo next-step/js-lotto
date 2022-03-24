@@ -28,7 +28,7 @@ class LottoApp {
 
     new PurchaseForm($purchaseForm, {
       setLottoCountAndNumbers: this.setLottoCountAndNumbers.bind(this),
-      renderSection: this.renderSection.bind(this),
+      renderSectionAndForm: this.renderSectionAndForm.bind(this),
     });
   }
 
@@ -63,7 +63,7 @@ class LottoApp {
     });
   }
 
-  renderSection() {
+  renderSectionAndForm() {
     this.$modal = new Modal($(`.${DOM.MODAL_CLASS}`), {
       restart: this.restart.bind(this),
     });
