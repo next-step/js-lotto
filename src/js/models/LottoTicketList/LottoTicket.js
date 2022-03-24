@@ -4,10 +4,10 @@ class LottoTicket {
     this.numberGenerator = new LottoNumberGenerator();
     this.numbers = [];
     this.winningCount = 0;
-    this.generateAutomaticNumbers();
+    this.#generateAutomaticNumbers();
   }
 
-  generateAutomaticNumbers = () => {
+  #generateAutomaticNumbers = () => {
     this.numbers = this.numberGenerator.getNumber();
   };
 

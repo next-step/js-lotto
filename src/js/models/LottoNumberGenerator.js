@@ -5,10 +5,10 @@ class LottoNumberGenerator {
   #pickedNumberCount = 1;
   constructor() {
     this.selectableNumbers = [];
-    this.generateNumbers(this.#MAX);
+    this.#generateNumbers(this.#MAX);
   }
 
-  generateNumbers(max) {
+  #generateNumbers(max) {
     const numbers = Array.from({ length: max }, (_, i) => i + 1);
     this.selectableNumbers = this.#getRandomNumber(numbers);
   }
@@ -17,7 +17,7 @@ class LottoNumberGenerator {
     const newNumbers = [...numbers];
 
     return Array.from({ length: LOTTO_NUMBER_COUNT }).map(_ => {
-      const randomIndex = this.generateIndexInRange(
+      const randomIndex = this.#generateIndexInRange(
         newNumbers.length,
         this.#MIN
       );
@@ -30,7 +30,7 @@ class LottoNumberGenerator {
     });
   }
 
-  generateIndexInRange(min, max) {
+  #generateIndexInRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + 1;
   }
 
