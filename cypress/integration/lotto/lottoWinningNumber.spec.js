@@ -25,15 +25,13 @@ describe('Lotto 당첨 번호 테스트', () => {
     })
   })
 
-  it('당첨번호 input value에 min은 1 max는 45이다', () => {
-    cy.submitValue('enter', true)
-    cy.get('[data-winning-numbers=input]').should($winningNumber => {
-      $winningNumber.toArray().map(number => {
-        cy.get(number).should(($input => {
-          const text = $input.text()
-          expect(text).to.be.within(1, 45)
-        }))
-      })
+  it('당첨번호 input 자리수 두자리로 제한', () => {
+    cy.submitValue('click', true)
+    cy.get('[data-winning-numbers=input]').each(element => {
+      cy.wrap(element).type(123)
+    }).each((element) => {
+      const value = Number(element.val())
+      expect(value).to.be.within(1, 45)
     })
   })
 })
