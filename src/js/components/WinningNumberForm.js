@@ -77,7 +77,7 @@ class WinningNumberForm {
     if (
       !isAllSatisfiedConditionInArray(
         inputedNumbers,
-        i => i >= LOTTO.START_NUMBER && i <= LOTTO.END_NUMBER,
+        number => number >= LOTTO.START_NUMBER && number <= LOTTO.END_NUMBER,
       )
     ) {
       alert(ERROR_MESSAGE.INVALID_RANGE_LOTTO_NUMBER);
