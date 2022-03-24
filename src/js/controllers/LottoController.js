@@ -1,21 +1,18 @@
 import LottoTicketList from "../models/LottoTicketList/index.js";
 import LottoTicketView from "../views/LottoTicketView.js";
-import LottoQuantityView from "../views/LottoQuantityView.js";
 import WinningNumbersView from "../views/WinningNumberView.js";
 import Validator from "../models/Validator/index.js";
 import { getQuantityByTotalAmount } from "../utils/calculator.js";
 
 class LottoController {
   #quantity = null;
+
   constructor() {
     this.validator = new Validator();
-    this.$app = document.querySelector("#app");
-    this.$summaryContainer = document.querySelector("#summary-container");
-    this.$quantity = document.querySelector("#lotto-quantity");
-    this.$lottoIconsContainer = document.querySelector("#lotto-icons");
-    this.$totalAmountForm = document.querySelector("#total-amount-form");
     this.isActive = false;
-
+    this.$app = document.querySelector("#app");
+    this.$totalAmountForm = document.querySelector("#total-amount-form");
+    this.$lottoTicketSection = document.querySelector("#lotto-ticket-section");
     this.#addEvent();
   }
   #addEvent() {
@@ -50,10 +47,7 @@ class LottoController {
     const quantity = getQuantityByTotalAmount(totalAmount);
 
     this.#setQuantity(quantity);
-
-    this.#renderLottoQuantity();
-    this.#renderLottoTicket();
-    this.#renderWinningNumbers();
+    this.#renderBuyingResult();
   };
 
   #toggleTicketDetail = () => {
@@ -68,24 +62,16 @@ class LottoController {
     });
   };
 
-  #renderLottoQuantity() {
-    new LottoQuantityView({
-      $target: this.$summaryContainer,
-      props: { quantity: this.#quantity },
-    });
-  }
-
-  #renderLottoTicket() {
+  #renderBuyingResult() {
     const lottoTicketList = new LottoTicketList({
       quantity: this.#quantity,
     }).getLottoTicketList();
 
     new LottoTicketView({
-      $target: this.$lottoIconsContainer,
-      props: { lottoTicketList },
+      $target: this.$lottoTicketSection,
+      props: { lottoTicketList, quantity: this.#quantity },
     });
-  }
-  #renderWinningNumbers() {
+
     const $winningNumbersContainer = document.querySelector(
       "#winning-container"
     );
