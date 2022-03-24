@@ -30,7 +30,7 @@ class PurchaseForm extends Component {
     e.preventDefault();
     const [$purchaseFormInput] = e.target;
 
-    if (!this.isCorrectInputValue($purchaseFormInput.value)) {
+    if (!this.checkInputValueAndAlert($purchaseFormInput.value)) {
       $purchaseFormInput.value = '';
       $purchaseFormInput.focus();
       return;
@@ -40,7 +40,7 @@ class PurchaseForm extends Component {
     this.props.renderSection();
   }
 
-  isCorrectInputValue(value) {
+  checkInputValueAndAlert(value) {
     if (!value) {
       alert(ERROR_MESSAGE.REQUIRED_PRICE);
       return false;
