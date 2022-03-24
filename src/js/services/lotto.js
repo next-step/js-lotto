@@ -1,6 +1,8 @@
 import { countSameNumberInTwoArray } from '../utils/index.js';
 import { LOTTO_WINNING_REVENUE } from '../constants.js';
 
+const isSameBonusNumber = (array1, array2) => array1.at(-1) === array2.at(-1);
+
 export const getWinningResult = (winningLottoNumbers, purchaseLottoNumbersArray) => {
   const winningResult = {
     first: 0,
@@ -23,7 +25,7 @@ export const getWinningResult = (winningLottoNumbers, purchaseLottoNumbersArray)
         winningResult.third += 1;
         break;
       case 6:
-        if (purchaseLottoNumbers.at(-1) === winningLottoNumbers.at(-1)) winningResult.second += 1;
+        if (isSameBonusNumber(winningLottoNumbers, purchaseLottoNumbers)) winningResult.second += 1;
         else winningResult.first += 1;
         break;
       default:
