@@ -145,6 +145,28 @@ function LottoApp() {
       purchaseLottoTickets();
     });
   };
+
+  // todo : 당첨 번호와 보너스 번호를 입력한 뒤 결과 확인하기를 누르면 모달창이 호출되어야 한다.
+  // * 결과 확인하기 버튼 클릭 이벤트 : 사용자가 입력한 당첨 번호와 보너스 번호 값을 확인하여 배열에 담고 반환한다.
+  const getWinningAndBonusNumbers = () => {
+    const winningAndBonusNumbers = [];
+    const winningNumberElements = document.querySelectorAll('.winning-number');
+
+    winningNumberElements.forEach(winningNumberElement => {
+      winningAndBonusNumbers.push(winningNumberElement.value);
+    })
+
+    const bonusNumber = document.querySelector('.bonus-number').value;
+    winningAndBonusNumbers.push(bonusNumber);
+ 
+    return winningAndBonusNumbers;
+  }
+
+  const openResultModalButtonElement = document.querySelector('.open-result-modal-button');
+  openResultModalButtonElement.addEventListener("click", getWinningAndBonusNumbers);
+  
+
+
 }
 
 const app = new LottoApp();
