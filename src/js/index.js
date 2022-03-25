@@ -1,10 +1,10 @@
-import { UI } from "./UI.js";
+import { View } from "./View.js";
 
 function LottoApp() {
 
 
 }
 
-const ui = new UI();
+const view = new View();
 const app = new LottoApp();
-ui.init();
+view.init();

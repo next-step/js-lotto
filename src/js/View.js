@@ -4,7 +4,7 @@ import {
 } from "./createLotto.js";
 import { PRICE_PER_LOTTO } from "./constants.js";
 
-function UI() {
+function View() {
   this.init = () => {
     initEventListeners();
   };
@@ -28,7 +28,7 @@ function UI() {
     $modal.classList.remove("open");
   };
   
-  // * 번호보기 토글 on 시 번호를 보여주는 함수
+
   const showPurchasedLottoNumbers = () => {
     const lottoNumbers = document.querySelectorAll(".lotto-numbers");
     lottoNumbers.forEach(lottoNumber => {
@@ -36,7 +36,7 @@ function UI() {
     });
   };
   
-  // * 번호보기 토글 off 시 번호를 숨기는 함수
+
   const hidePurchasedLottoNumbers = () => {
     const lottoNumbers = document.querySelectorAll(".lotto-numbers");
     lottoNumbers.forEach(lottoNumber => {
@@ -44,67 +44,57 @@ function UI() {
     });
   };
   
-  // * 로또 아이콘을 수평 정렬하는 함수 : 번호보기 off 일 때 동작해야 한다.
-  const alignVerticalLottoList = () => {
-    $lottoList.classList.remove("d-flex");
+
+  const verticalLottoListView = () => {
+    $lottoList.classList.add("flex-row");
+    $lottoList.classList.remove("flex-col");
   };
   
-  // * 로또 아이콘을 수직 정렬하는 함수 : 번호보기 on 일 떄 동작해야 한다.
-  const alignHorizontalLottoList = () => {
-    $lottoList.classList.add("d-flex");
+
+  const horizontalLottoListView = () => {
+    $lottoList.classList.remove("flex-col");
+    $lottoList.classList.add("flex-row");
   };
 
-
-  const onLottoNumberToggle = () => {
-
-    // * 번호 보여주기 on/off
-    const lottoNumbers = document.querySelectorAll(".lotto-numbers");
-    lottoNumbers.forEach(lottoNumber => {
-      lottoNumber.classList.toggle("numbers-closed");
-    });
-
-    $lottoList.classList.toggle("d-flex");    
-  }
-
   
-  const lottoNumbersToggle = event => {
+  const toggleLottoNumberSwitch = event => {
     if (event.target.checked) {
       showPurchasedLottoNumbers();
-      alignVerticalLottoList();
+      verticalLottoListView();
     } else {
       hidePurchasedLottoNumbers();
-      alignHorizontalLottoList();
+      horizontalLottoListView();
     }
   };
 
-  // * 구매 결과를 보여주는 함수 (총 X개를 구매했습니다.)
+
   const showPurchaseResult = () => {
     $purchaseResult.classList.remove("pre-purchase");
   };
   
-  // * 구매 결과를 숨기는 함수 (총 X개를 구매했습니다.)
+
   const hidePurchaseResult = () => {
     $purchaseResult.classList.add("pre-purchase");
   };
   
-  // * 당첨번호, 보너스 번호 입력란을 보여주는 함수
+
   const showConfirmWinningNumbers = () => {
     $confirmWinningNumbers.classList.remove("pre-purchase");
   };
   
-  // * 당첨번호, 보너스 번호 입력란을 숨기는 함수
+
   const hideConfirmWinningNumbers = () => {
     $confirmWinningNumbers.classList.add("pre-purchase");
   };
   
-  const beforePurchaseLotto = () => {
+  const beforePurchaseLottoView = () => {
     $lottoNumbersToggleButton.checked = false;
-    alignHorizontalLottoList();
+    horizontalLottoListView();
     hidePurchaseResult();
     hideConfirmWinningNumbers();
   };
   
-  const afterPurchaseLotto = (numberOfLottoTickets, purchasedLottoTickets) => {
+  const afterPurchaseLottoView = (numberOfLottoTickets, purchasedLottoTickets) => {
     renderPurchasedLotto(numberOfLottoTickets, purchasedLottoTickets);
     showPurchaseResult();
     showConfirmWinningNumbers();
@@ -114,7 +104,7 @@ function UI() {
     $showResultButton.addEventListener("click", onModalShow);
     $modalClose.addEventListener("click", onModalClose);
     $purchaseButton.addEventListener("click", purchaseLottoTickets);
-    $lottoNumbersToggleButton.addEventListener("change", lottoNumbersToggle);
+    $lottoNumbersToggleButton.addEventListener("change", toggleLottoNumberSwitch);
     $purchasePrice.addEventListener("keypress", e => {
       if (e.key !== "Enter") {
         return;
@@ -125,7 +115,7 @@ function UI() {
   };
 
   const purchaseLottoTickets = () => {
-    beforePurchaseLotto();
+    beforePurchaseLottoView();
 
     const $purchasePrice = document.querySelector("#purchase-price");
     const purchasePrice = Number($purchasePrice.value);
@@ -138,7 +128,7 @@ function UI() {
     const numberOfLottoTickets = purchasePrice / PRICE_PER_LOTTO;
     const purchasedLottoTickets = createLottoTickets(numberOfLottoTickets);
 
-    afterPurchaseLotto(numberOfLottoTickets, purchasedLottoTickets);
+    afterPurchaseLottoView(numberOfLottoTickets, purchasedLottoTickets);
   };
 
   const renderPurchasedLotto = (numberOfLottoTickets, purchasedLottoTickets) => {
@@ -181,4 +171,4 @@ function UI() {
 }
 
 
-export { UI }
+export { View }
