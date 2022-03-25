@@ -1,6 +1,6 @@
 import BuyLottoSection from './BuyLottoSection.js';
 import ShowLottoNumberSection from './ShowLottoNumberSection.js';
-import { store } from '../store/store.js';
+import store from '../store/store.js';
 import { $ } from '../utils/dom.js';
 
 export default class App {

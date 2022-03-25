@@ -1,5 +1,5 @@
 import Component from '../core/Component.js';
-import { store } from '../store/store.js';
+import store from '../store/store.js';
 import { SET_PRICE } from '../store/actions.js';
 import { setPrice } from '../store/creator.js';
 import { $ } from '../utils/dom.js';

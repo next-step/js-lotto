@@ -1,6 +1,6 @@
 import Component from '../core/Component.js';
 import Lotto from './Lotto.js';
-import { store } from '../store/store.js';
+import store from '../store/store.js';
 import { TOGGLE_IS_SHOW_NUMBER } from '../store/actions.js';
 import { $, $$ } from '../utils/dom.js';
 import { LOTTO_NUMBER_MAX, LOTTO_NUMBER_MIN } from '../utils/constants.js';
