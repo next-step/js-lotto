@@ -1,17 +1,33 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+import {
+  $confirm,
+  $form,
+  $lottoNumbersToggleButton,
+  $modal,
+  $modalClose,
+  $sectionAndForm,
+  $showResultButton,
+} from './constants/dom.js';
+import { pushConfirm } from './function/pushConfirm.js';
+import { onClickToggle } from './function/pushToggle.js';
 
 const onModalShow = () => {
-  $modal.classList.add('open')
-}
+  $modal.classList.add('open');
+};
 
 const onModalClose = () => {
-  $modal.classList.remove('open')
-}
+  $modal.classList.remove('open');
+};
 
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+$sectionAndForm.forEach((sectionAndForm) => {
+  sectionAndForm.style.display = 'none';
+});
+
+$form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+});
+
+$confirm.addEventListener('click', pushConfirm);
+$lottoNumbersToggleButton.addEventListener('click', onClickToggle);
+$showResultButton.addEventListener('click', onModalShow);
+$modalClose.addEventListener('click', onModalClose);
