@@ -1,6 +1,6 @@
 export default class PurchaseInformation {
 
-  constructor(paymemtn, purchasedLottoCount, purchasedLottos) {
+  constructor(payment, purchasedLottoCount, purchasedLottos) {
     this.payment = payment;
     this.purchasedLottoCount = purchasedLottoCount;
     this.purchasedLottos = purchasedLottos;
