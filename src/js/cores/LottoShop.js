@@ -1,7 +1,9 @@
 import { LottoTicket } from './';
 
+import { LOTTO_PRICE } from '../constants';
+
 export class LottoShop {
-  money;
+  money = 0;
   tickets = [];
 
   constructor() {}
@@ -11,7 +13,7 @@ export class LottoShop {
   }
 
   issueTickets(money) {
-    const ticketCount = money / 1000;
+    const ticketCount = money / LOTTO_PRICE;
 
     for (let i = 0; i < ticketCount; i++) {
       this.tickets.push(new LottoTicket());

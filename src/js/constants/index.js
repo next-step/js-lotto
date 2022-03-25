@@ -1,0 +1,5 @@
+const LOTTO_PRICE = 1000;
+const MAX_NUMBER = 45;
+const MIN_NUMBER = 1;
+
+export { LOTTO_PRICE, MAX_NUMBER, MIN_NUMBER };
