@@ -4,4 +4,8 @@ export class LottoMoney {
   constructor(money) {
     this.money = money;
   }
+
+  getMoney() {
+    return this.money;
+  }
 }

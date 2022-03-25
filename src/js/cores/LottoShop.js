@@ -32,6 +32,10 @@ export class LottoShop {
     this.isShowLottoTickets = !this.isShowLottoTickets;
   }
 
+  clearLottoTickets() {
+    this.lottoTickets = [];
+  }
+
   issueLottoTickets(lottoMoney) {
     const ticketCount = lottoMoney.getMoney() / PRICE;
 
