@@ -1,36 +1,42 @@
-import { $ } from "../utils/selector.js";
-import {
-    LOTTO_MAX_NUMBER,
-    LOTTO_MIN_NUMBER,
-    LOTTO_TICKET_LENGTH,
-    LOTTO_UNIT,
-    MAX_PURCHASE_PRICE,
-    MESSAGE,
-    MIN_PURCHASE_PRICE,
-    SELECTOR,
-} from "../constant/index.js";
+import { MESSAGE } from "../constant/index.js";
+import { LottoNumber } from "./LottoNumber.js";
+
+const LOTTO_MAX_NUMBER = 45;
+const LOTTO_UNIT = 1000;
+const MIN_PURCHASE_PRICE = 1000;
+const MAX_PURCHASE_PRICE = 100000;
+const ENTER = "Enter";
 
 export class LottoPurchase {
-    constructor($element, { onLottoPurchase }) {
+    lottoNumber = null;
+    onLottoPurchase = null;
+
+    $element = null;
+    $purchasePriceInput = null;
+    $purchaseButton = null;
+
+    constructor($element, props) {
         this.$element = $element;
-        this.onLottoPurchase = onLottoPurchase;
+        this.lottoNumber = new LottoNumber();
+        this.onLottoPurchase = props.onLottoPurchase;
 
-        this.render();
-        this.mounted();
-        this.setEvent();
+        this.#render();
+        this.#mounted();
+        this.#setEvent();
     }
 
-    render() {
-        this.$element.innerHTML = this.getTemplate();
+    #render() {
+        this.$element.innerHTML = this.#getTemplate();
     }
 
-    mounted() {
-        this.$purchasePriceInput = $(SELECTOR.ID.PURCHASE_PRICE_INPUT);
+    #mounted() {
+        this.$purchasePriceInput = document.querySelector("#purchase-price-input");
+        this.$purchaseButton = document.querySelector("#purchase-button");
     }
 
-    getTemplate() {
+    #getTemplate() {
         return `
-        <form class="mt-5">
+        <form class="mt-5" onsubmit="return false">
             <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요. </label>
             <div class="d-flex">
                 <input
@@ -47,70 +53,64 @@ export class LottoPurchase {
         </form>`;
     }
 
-    setEvent() {
-        $(SELECTOR.ID.PURCHASE_BUTTON).addEventListener("click", (event) => this.onPurchaseClick());
+    #setEvent() {
+        this.$purchasePriceInput.addEventListener("keyup", (event) =>
+            this.#onPriceInputKeyup(event)
+        );
+        this.$purchaseButton.addEventListener("click", (event) => this.#onPurchaseClick());
     }
 
-    onPurchaseClick() {
+    #onPriceInputKeyup(event) {
+        event.preventDefault();
+        if (event.key === ENTER) {
+            this.#onPurchase();
+        }
+    }
+
+    #onPurchaseClick() {
+        this.#onPurchase();
+    }
+
+    #onPurchase() {
         const purchasePriceInput = this.$purchasePriceInput.value;
+        const resultValue = this.#getPurchasePriceState(purchasePriceInput);
 
-        if(this.checkPurchasePrice(purchasePriceInput)) {
-            this.onLottoPurchase(this.getLottoList(purchasePriceInput));
-        }        
+        if (resultValue.isComplete) {
+            this.onLottoPurchase(this.#getLottoList(purchasePriceInput));
+            return;
+        }
+
+        alert(resultValue.message);
     }
 
-    getLottoList(purchasePriceInput) {
-        return this.getLottoTickets(this.getLottoAmount(purchasePriceInput));
+    #getLottoList(purchasePriceInput) {
+        return this.lottoNumber.getLottoNumbers(this.#getLottoAmount(purchasePriceInput));
     }
 
-    getLottoAmount(price) {
+    #getLottoAmount(price) {
         return price / LOTTO_UNIT;
     }
 
-    getLottoTickets(amount) {
-        let lottoTickets = [];
+    #getPurchasePriceState(price) {
+        let resultValue = { isComplete: true, message: "" };
 
-        for (let i = 0; i < amount; i++) {
-            lottoTickets.push(this.getLottoTicket());
-        }
-
-        return lottoTickets;
-    }
-
-    getLottoTicket() {
-        let numObj = {};
-        let count = 0;
-        let randomNumber = 0;
-
-        while (count < LOTTO_TICKET_LENGTH) {
-            randomNumber = this.getRandomNumber();
-            if (!numObj[randomNumber]) {
-                count++;
-                numObj[randomNumber] = randomNumber;
-            }
-        }
-
-        return Object.keys(numObj);
-    }
-
-    getRandomNumber() {
-        return Math.trunc(
-            Math.random() * (LOTTO_MAX_NUMBER - LOTTO_MIN_NUMBER + 1) + LOTTO_MIN_NUMBER
-        );
-    }
-
-    checkPurchasePrice(price) {
         if (price < MIN_PURCHASE_PRICE) {
-            alert(MESSAGE.ERROR.MIN_PURCHASE);
-            return false;
+            resultValue.isComplete = false;
+            resultValue.message = MESSAGE.ERROR.MIN_PURCHASE;
+
+            return resultValue;
         } else if (price % LOTTO_UNIT > 0) {
-            alert(MESSAGE.ERROR.UNIT_MISMATCH);
-            return false;
+            resultValue.isComplete = false;
+            resultValue.message = MESSAGE.ERROR.UNIT_MISMATCH;
+
+            return resultValue;
         } else if (price > MAX_PURCHASE_PRICE) {
-            alert(MESSAGE.ERROR.MAX_PURCHASE);
-            return false;
+            resultValue.isComplete = false;
+            resultValue.message = MESSAGE.ERROR.MAX_PURCHASE;
+
+            return resultValue;
         }
 
-        return true;
+        return resultValue;
     }
 }
