@@ -61,8 +61,8 @@ describe('Lotto', () => {
     it('번호보기가 토글(해제)되면, 복권 번호를 볼 수 없다.', () => {
       buyLotto('3000');
 
-      cy.get('#purcharsed-lottos .lotto-detail').each(($span) => {
-        expect($span).not.to.be.visible;
+      cy.get('#purcharsed-lottos .lotto-detail').each((lottoNumber) => {
+        expect(lottoNumber).not.to.be.visible;
       });
     });
 
@@ -70,8 +70,8 @@ describe('Lotto', () => {
       buyLotto('3000');
       cy.get('.lotto-numbers-toggle-button').check({ force: true });
 
-      cy.get('#purcharsed-lottos').each(($span) => {
-        expect($span).to.be.visible;
+      cy.get('#purcharsed-lottos').each((lottoNumber) => {
+        expect(lottoNumber).to.be.visible;
       });
     });
   });
