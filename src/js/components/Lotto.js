@@ -9,7 +9,6 @@ function Lotto(lotto) {
   $lottoNumbers.textContent = lotto.join(', ');
   $lottoNumbers.classList.add('lotto-detail');
   $lottoNumbers.classList.add('display-none');
-  $lottoNumbers.style.display = 'inline';
 
   $lotto.appendChild($icon);
   $lotto.appendChild($lottoNumbers);
