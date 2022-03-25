@@ -6,7 +6,6 @@ export default class PurchaseInformation {
     this.purchasedLottos = purchasedLottos;
   }
 
-
   get payment() {
     return this._payment;
   }
