@@ -16,30 +16,13 @@ class UI {
   setEvent() {
     this.#lottoPurchaseForm.addEventListener('submit', (event) => {
       event.preventDefault()
-    })
-
-    this.#lottoPurchaseInput.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' && event.target.value !== "") {
-        const lotto = new Lotto(event.target.value)
-        const amount = lotto.lottoTicketAmount
-
-        this.#lottoTicketUI = [selector('#purchased-lottos'), selector('#lotto-winning-numbers-form')]
-        
-        if (!this.isPassValidateAmount(amount)) return;
-        
-        this.changeLottoTicketUI(amount)
-        this.changeTicketsUiAccordingToSwitchState(amount)
-      }
-    })
-
-    this.#lottoPurchaseBtn.addEventListener('click', (event) => {
-      const lotto = new Lotto(event.path[1].childNodes[1].value)
+      const lotto = new Lotto(this.#lottoPurchaseInput.value)
       const amount = lotto.lottoTicketAmount
-      
+
       this.#lottoTicketUI = [selector('#purchased-lottos'), selector('#lotto-winning-numbers-form')]
-
+        
       if (!this.isPassValidateAmount(amount)) return;
-
+        
       this.changeLottoTicketUI(amount)
       this.changeTicketsUiAccordingToSwitchState(amount)
     })
