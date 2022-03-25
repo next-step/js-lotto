@@ -24,7 +24,7 @@ body {
 }
 
 .display-none {
-  display: none !important;
+  display: none;
 }
 
 ul {
