@@ -1,21 +1,15 @@
-// * 요구사항
-// * 로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.
-// * 로또 1장의 가격은 1,000원이다.
-// * 소비자는 자동 구매를 할 수 있어야 한다.
-// * 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
-
 describe("로또 앱 테스트", () => {
   beforeEach(() => {
-    //given
+    // given
     cy.visit("http://192.168.0.10:5500/index.html");
   });
 
   it("로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.", () => {
-    //when
+    // when
     cy.get("#purchase-price").type(3000);
     cy.get("#purchase-button").click();
 
-    //then
+    // then
     cy.get("#purchased-lotto-count").should("have.text", "3");
     cy.get(".lotto-item").should("have.length", 3);
   });
@@ -24,7 +18,7 @@ describe("로또 앱 테스트", () => {
     const alertStub = cy.stub();
     cy.on("window:alert", alertStub);
 
-    //when
+    // when
     cy.get("#purchase-price").type(950);
     cy.get("#purchase-button")
       .click()
