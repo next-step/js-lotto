@@ -15,11 +15,19 @@ export const calculateLotto = (receivedMoney) => {
 export const getLottos = (count) =>
   Array.from({ length: count }, () => drawLots());
 
-const PRIZE_MONEY_3 = 5000;
-const PRIZE_MONEY_4 = 50_000;
-const PRIZE_MONEY_5 = 1_500_000;
-const PRIZE_MONEY_5_WITH_BONUS = 30_000_000;
-const PRIZE_MONEY_6 = 2_000_000_000;
+export const ENUM_PRIZE_MONEY = {
+  PRIZE_MONEY_3: 5000,
+  PRIZE_MONEY_4: 50_000,
+  PRIZE_MONEY_5: 1_500_000,
+  PRIZE_MONEY_5_WITH_BONUS: 30_000_000,
+  PRIZE_MONEY_6: 2_000_000_000,
+  5000: "PRIZE_MONEY_3",
+  50_000: "PRIZE_MONEY_4",
+  1_500_000: "PRIZE_MONEY_5",
+  30_000_000: "PRIZE_MONEY_5_WITH_BONUS",
+  2_000_000_000: "PRIZE_MONEY_6",
+};
+
 /**
  *
  * @param {number} matchedCount
@@ -27,16 +35,18 @@ const PRIZE_MONEY_6 = 2_000_000_000;
  */
 export const calculateProfit = ({ matchedCount, isIncludeBonus = false }) => {
   if (matchedCount === 3) {
-    return PRIZE_MONEY_3;
+    return ENUM_PRIZE_MONEY.PRIZE_MONEY_3;
   }
   if (matchedCount === 4) {
-    return PRIZE_MONEY_4;
+    return ENUM_PRIZE_MONEY.PRIZE_MONEY_4;
   }
   if (matchedCount === 5) {
-    return isIncludeBonus ? PRIZE_MONEY_5_WITH_BONUS : PRIZE_MONEY_5;
+    return isIncludeBonus
+      ? ENUM_PRIZE_MONEY.PRIZE_MONEY_5_WITH_BONUS
+      : ENUM_PRIZE_MONEY.PRIZE_MONEY_5;
   }
   if (matchedCount === 6) {
-    return PRIZE_MONEY_6;
+    return ENUM_PRIZE_MONEY.PRIZE_MONEY_6;
   }
   return 0;
 };
