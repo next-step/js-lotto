@@ -103,14 +103,14 @@ function View() {
   const initEventListeners = () => {
     $showResultButton.addEventListener("click", onModalShow);
     $modalClose.addEventListener("click", onModalClose);
-    $purchaseButton.addEventListener("click", purchaseLottoTickets);
+    $purchaseButton.addEventListener("click", purchaseLottos);
     $lottoNumbersToggleButton.addEventListener("change", toggleLottoNumberSwitch);
     $purchasePrice.addEventListener("keypress", e => {
       if (e.key !== "Enter") {
         return;
       }
       e.preventDefault();
-      purchaseLottoTickets();
+      purchaseLottos();
     });
   };
 
@@ -139,25 +139,29 @@ function View() {
     $lottoList.innerHTML = lottoTemplate;
   };
 
-  const purchaseLottoTickets = () => {
+  // * 로또를 구매하는 함수
+  const purchaseLottos = () => {
     beforePurchaseLottoView();
 
-    const $purchasePrice = document.querySelector("#purchase-price");
-    const purchasePrice = Number($purchasePrice.value);
+    // * 사용자가 입력한 '지불 금액'이라는 의미에 맞게 이름을 수정하자.
+    const paidMoney = Number($purchasePrice.value);
 
-    if (!isValidateAmountOfPayment(purchasePrice)) {
+    if (!isValidateAmountOfPayment(paidMoney)) {
       alert("구입 금액은 1,000원 단위로 입력해 주세요.");
       $purchasePrice.value = "";
       return;
     }
-    const numberOfLottoTickets = purchasePrice / PRICE_PER_LOTTO;
+
+    // todo : 지금은 자동 구매밖에 없지만 수동 구매가 추가된다면? -> 수동 구매 후 남은 금액을 자동 구매에 사용한다.
+    const numberOfLottoTickets = paidMoney / PRICE_PER_LOTTO;
     const purchasedLottoTickets = createLottoTickets(numberOfLottoTickets);
 
     const purchaseInformation = new PurchaseInformation();
+    purchaseInformation.payment = paidMoney;
     purchaseInformation.purchasedLottoCount = numberOfLottoTickets;
     purchaseInformation.purchasedLottos = purchasedLottoTickets;
 
-    afterPurchaseLottoView(numberOfLottoTickets, purchasedLottoTickets);
+    afterPurchaseLottoView();
 
     renderLottos(purchaseInformation);
   };
