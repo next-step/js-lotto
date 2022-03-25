@@ -4,6 +4,38 @@ import {
 } from "./createLotto.js";
 import { PRICE_PER_LOTTO } from "./constants.js";
 
+
+// * 사용자 구매 정보가 담기는 객체
+class PurchaseInformation {
+
+  constructor(purchasedLottoCount, purchasedLottos) {
+    this.purchasedLottoCount = purchasedLottoCount;
+    this.purchasedLottos = purchasedLottos;
+  }
+
+  get purchasedLottoCount() {
+    return this._purchasedLottoCount;
+  }
+
+
+  set purchasedLottoCount(newPurchasedLottoCount) {
+    this._purchasedLottoCount = newPurchasedLottoCount;
+  }
+
+  get purchasedLottos() {
+    return this._purchasedLottos;
+  }
+
+  set purchasedLottos(newPurchasedLottos) {
+    this._purchasedLottos = newPurchasedLottos;
+  }
+}
+
+
+
+
+
+
 function View() {
   this.init = () => {
     initEventListeners();
@@ -94,8 +126,7 @@ function View() {
     hideConfirmWinningNumbers();
   };
   
-  const afterPurchaseLottoView = (numberOfLottoTickets, purchasedLottoTickets) => {
-    renderPurchasedLotto(numberOfLottoTickets, purchasedLottoTickets);
+  const afterPurchaseLottoView = () => {
     showPurchaseResult();
     showConfirmWinningNumbers();
   };
@@ -114,27 +145,16 @@ function View() {
     });
   };
 
-  const purchaseLottoTickets = () => {
-    beforePurchaseLottoView();
+  const checkWinningLotto = () => {
+    const winningAndBonusNumbers = getWinningAndBonusNumbers();
+    console.log(winningAndBonusNumbers);
 
-    const $purchasePrice = document.querySelector("#purchase-price");
-    const purchasePrice = Number($purchasePrice.value);
+  }
 
-    if (!isValidateAmountOfPayment(purchasePrice)) {
-      alert("구입 금액은 1,000원 단위로 입력해 주세요.");
-      $purchasePrice.value = "";
-      return;
-    }
-    const numberOfLottoTickets = purchasePrice / PRICE_PER_LOTTO;
-    const purchasedLottoTickets = createLottoTickets(numberOfLottoTickets);
+  const renderLottos = (purchaseInformation) => {
+    $purchasedLottoCount.innerText = purchaseInformation.purchasedLottoCount;
 
-    afterPurchaseLottoView(numberOfLottoTickets, purchasedLottoTickets);
-  };
-
-  const renderPurchasedLotto = (numberOfLottoTickets, purchasedLottoTickets) => {
-    $purchasedLottoCount.innerText = numberOfLottoTickets;
-
-    const lottoTemplate = purchasedLottoTickets
+    const lottoTemplate = purchaseInformation.purchasedLottos
       .map(
         lotto => `
           <li class="mx-1 text-4xl lotto-item">
@@ -150,24 +170,47 @@ function View() {
     $lottoList.innerHTML = lottoTemplate;
   };
 
+  const purchaseLottoTickets = () => {
+    beforePurchaseLottoView();
+
+    const $purchasePrice = document.querySelector("#purchase-price");
+    const purchasePrice = Number($purchasePrice.value);
+
+    if (!isValidateAmountOfPayment(purchasePrice)) {
+      alert("구입 금액은 1,000원 단위로 입력해 주세요.");
+      $purchasePrice.value = "";
+      return;
+    }
+    const numberOfLottoTickets = purchasePrice / PRICE_PER_LOTTO;
+    const purchasedLottoTickets = createLottoTickets(numberOfLottoTickets);
+
+    const purchaseInformation = new PurchaseInformation();
+    purchaseInformation.purchasedLottoCount = numberOfLottoTickets;
+    purchaseInformation.purchasedLottos = purchasedLottoTickets;
+
+    afterPurchaseLottoView(numberOfLottoTickets, purchasedLottoTickets);
+
+    renderLottos(purchaseInformation);
+  };
+
+
+
   // todo : 당첨 번호와 보너스 번호를 입력한 뒤 결과 확인하기를 누르면 모달창이 호출되어야 한다.
   // * 결과 확인하기 버튼 클릭 이벤트 : 사용자가 입력한 당첨 번호와 보너스 번호 값을 확인하여 배열에 담고 반환한다.
   const getWinningAndBonusNumbers = () => {
-    const winningAndBonusNumbers = [];
     const winningNumberElements = document.querySelectorAll('.winning-number');
-
+    const bonusNumber = document.querySelector('.bonus-number').value;
+    
+    const winningAndBonusNumbers = [];
     winningNumberElements.forEach(winningNumberElement => {
       winningAndBonusNumbers.push(winningNumberElement.value);
     })
-
-    const bonusNumber = document.querySelector('.bonus-number').value;
-    winningAndBonusNumbers.push(bonusNumber);
  
-    return winningAndBonusNumbers;
+    return { winningAndBonusNumbers, bonusNumber };
   }
 
   const openResultModalButtonElement = document.querySelector('.open-result-modal-button');
-  openResultModalButtonElement.addEventListener("click", getWinningAndBonusNumbers);
+  openResultModalButtonElement.addEventListener("click", checkWinningLotto);
 }
 
 
