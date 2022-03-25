@@ -4,7 +4,7 @@ import {
   LOTTO_MAX_NUMBER,
 } from "./constants.js";
 
-const createOneLottoTicket = () => {
+const createLottoTicket = () => {
   const lottoTicket = new Set();
 
   while (lottoTicket.size < LOTTO_NUMBERS) {
@@ -18,7 +18,7 @@ const createOneLottoTicket = () => {
 const createLottoTickets = purchasedLottoCount => {
   const lottoTickets = new Array(purchasedLottoCount)
     .fill()
-    .map(() => createOneLottoTicket());
+    .map(() => createLottoTicket());
 
   return lottoTickets;
 };
