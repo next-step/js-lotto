@@ -3,38 +3,7 @@ import {
   isValidateAmountOfPayment,
 } from "./createLotto.js";
 import { PRICE_PER_LOTTO } from "./constants.js";
-
-
-// * 사용자 구매 정보가 담기는 객체
-class PurchaseInformation {
-
-  constructor(purchasedLottoCount, purchasedLottos) {
-    this.purchasedLottoCount = purchasedLottoCount;
-    this.purchasedLottos = purchasedLottos;
-  }
-
-  get purchasedLottoCount() {
-    return this._purchasedLottoCount;
-  }
-
-
-  set purchasedLottoCount(newPurchasedLottoCount) {
-    this._purchasedLottoCount = newPurchasedLottoCount;
-  }
-
-  get purchasedLottos() {
-    return this._purchasedLottos;
-  }
-
-  set purchasedLottos(newPurchasedLottos) {
-    this._purchasedLottos = newPurchasedLottos;
-  }
-}
-
-
-
-
-
+import PurchaseInformation from './PurchaseInformation.js';
 
 function View() {
   this.init = () => {
