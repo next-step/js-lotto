@@ -1,29 +1,44 @@
-import { LottoTicket } from './LottoTicket.js';
+import { LottoTicket, LottoMoney } from './index.js';
 
 import { PRICE } from '../constants/index.js';
 
 export class LottoShop {
-  money = 0;
-  tickets = [];
+  lottoMoney;
+  lottoTickets = [];
+  isShowLottoTickets = false;
 
   constructor() {}
 
   inputMoney(money) {
-    this.setMoney(money);
-    this.issueTickets(money);
+    const lottoMoney = new LottoMoney(money);
+
+    this.setLottoMoney(lottoMoney);
+    this.issueLottoTickets(lottoMoney);
   }
 
-  setMoney(money) {
-    this.money = money;
+  getLottoTickets() {
+    return [...this.lottoTickets];
   }
 
-  issueTickets(money) {
-    const ticketCount = money / PRICE;
+  getIsShowLottoTickets() {
+    return this.isShowLottoTickets;
+  }
+
+  setLottoMoney(lottoMoney) {
+    this.lottoMoney = lottoMoney;
+  }
+
+  toggleIsShowLottoTickets() {
+    this.isShowLottoTickets = !this.isShowLottoTickets;
+  }
+
+  issueLottoTickets(lottoMoney) {
+    const ticketCount = lottoMoney.getMoney() / PRICE;
 
     for (let i = 0; i < ticketCount; i++) {
-      this.tickets.push(new LottoTicket());
+      this.lottoTickets.push(new LottoTicket());
     }
 
-    console.log(this.tickets);
+    console.log(this.lottoTickets);
   }
 }
