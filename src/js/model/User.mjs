@@ -31,4 +31,8 @@ export default class User {
   get wallet() {
     return this.#wallet;
   }
+
+  get haveLotto() {
+    return this.#purchaseHistory.length > 0;
+  }
 }

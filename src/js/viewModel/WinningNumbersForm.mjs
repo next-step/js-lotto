@@ -23,6 +23,10 @@ export default class WinningNumberForm {
 
   #handleSubmit = (e) => {
     e.preventDefault();
+    if (!this.#user.haveLotto) {
+      alert('먼저 로또를 구매해주세요')
+      return ;
+    }
 
     const winningNumbers = new WinningNumber();
 
