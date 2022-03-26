@@ -1,4 +1,4 @@
-import { createLottoTickets } from "./createLotto.js";
+import { createLottos } from "./createLotto.js";
 import { PRICE_PER_LOTTO } from "./constants.js";
 import {
   PurchaseInformation,
@@ -151,7 +151,7 @@ function View() {
 
     // todo : 지금은 자동 구매밖에 없지만 수동 구매가 추가된다면? -> 수동 구매 후 남은 금액을 자동 구매에 사용한다.
     const numberOfLottoTickets = paidMoney / PRICE_PER_LOTTO;
-    const purchasedLottoTickets = createLottoTickets(numberOfLottoTickets);
+    const purchasedLottoTickets = createLottos(numberOfLottoTickets);
 
     const purchaseInformation = new PurchaseInformation();
     purchaseInformation.payment = paidMoney;
