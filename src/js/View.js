@@ -1,9 +1,9 @@
-import {
-  createLottoTickets,
-  isValidateAmountOfPayment,
-} from "./createLotto.js";
+import { createLottoTickets } from "./createLotto.js";
 import { PRICE_PER_LOTTO } from "./constants.js";
-import PurchaseInformation from "./PurchaseInformation.js";
+import {
+  PurchaseInformation,
+  isPaymentUnitsOf1000Won,
+} from "./PurchaseInformation.js";
 
 function View() {
   this.init = () => {
@@ -143,7 +143,7 @@ function View() {
     // * 사용자가 입력한 '지불 금액'이라는 의미에 맞게 이름을 수정하자.
     const paidMoney = Number($purchasePrice.value);
 
-    if (!isValidateAmountOfPayment(paidMoney)) {
+    if (!isPaymentUnitsOf1000Won(paidMoney)) {
       alert("구입 금액은 1,000원 단위로 입력해 주세요.");
       $purchasePrice.value = "";
       return;
