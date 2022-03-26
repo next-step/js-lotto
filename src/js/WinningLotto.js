@@ -1,4 +1,4 @@
-class WinningLotto {
+class WinningResult {
   // todo : 당첨 번호 6개와 보너스 번호 1개
   #winningNumbers;
 
@@ -24,4 +24,6 @@ class WinningLotto {
   set bonusNumber(newBonusNumber) {
     this.#bonusNumber = newBonusNumber;
   }
+
+  // todo : 당첨 번호 6개와 구입한 로또 번호를 비교하는 함수가 필요하다.
 }
