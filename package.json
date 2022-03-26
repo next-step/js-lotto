@@ -1,9 +1,24 @@
 {
-  "name": "racingcar",
+  "name": "js-lotto",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
     "cypress": "^6.3.0"
-  }
+  },
+  "description": "<p align=\"middle\" >   <img width=\"200px;\" src=\"./src/images/lotto_ball.png\"/> </p> <h2 align=\"middle\">행운의 로또</h2> <p align=\"middle\">자바스크립트로 구현하는 로또 어플리케이션</p> <p align=\"middle\">   <img src=\"https://img.shields.io/badge/version-1.0.0-blue?style=flat-square\" alt=\"template version\"/>   <img src=\"https://img.shields.io/badge/language-html-red.svg?style=flat-square\"/>   <img src=\"https://img.shields.io/badge/language-css-blue.svg?style=flat-square\"/>   <img src=\"https://img.shields.io/badge/language-js-yellow.svg?style=flat-square\"/>   <img src=\"https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square\"/> </p>",
+  "dependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:open": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jihyundev/js-lotto.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/jihyundev/js-lotto/issues"
+  },
+  "homepage": "https://github.com/jihyundev/js-lotto#readme"
 }
