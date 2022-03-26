@@ -1,9 +1,6 @@
 import { View } from "./View.js";
 
-function LottoApp() {
-
-
-}
+function LottoApp() {}
 
 const view = new View();
 const app = new LottoApp();
