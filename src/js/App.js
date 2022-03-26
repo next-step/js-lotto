@@ -22,7 +22,6 @@ class App {
   #statisticsComponent;
 
   #onClickPriceInputConfirmButton = (value) => {
-    console.log(`price input confirm button clicked. value: ${value}`);
     const count = value / 1000;
     let lottos = [];
     for (let i = 0; i < count; i++) {

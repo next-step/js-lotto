@@ -34,6 +34,7 @@ export class PriceInput {
 
   #handlePriceInputSubmitEvent = (event, callback) => {
     event.preventDefault();
+
     const value = event.target[0].valueAsNumber;
     if (!isValidPriceInput(value)) {
       window.alert(INVALID_INPUT_ALERT_STRING);

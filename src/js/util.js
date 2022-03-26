@@ -4,7 +4,7 @@ export const createLotto = () => {
   return result;
 };
 
-export const getRandomInteger = (min, max) => {
+const getRandomInteger = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min) + min);
