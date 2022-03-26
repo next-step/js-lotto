@@ -24,7 +24,9 @@ class LottoDetailList extends View {
   }
 
   #resetList() {
-    this.$el.innerHTML = '';
+    while (this.$el.hasChildNodes()) {
+      this.$el.firstChild.remove();
+    }
   }
 
   #printList(numbers) {
