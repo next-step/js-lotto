@@ -8,3 +8,8 @@ export const isValidPriceInput = (inputNumber) => {
     typeof inputNumber === "number" && inputNumber % PRICE_INPUT_UNIT === 0
   );
 };
+
+export const areNumbersNotDuplicated = (numbersArray) => {
+  let orderedArray = Array.from(new Set(numbersArray));
+  return numbersArray.length === orderedArray.length;
+};

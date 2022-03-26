@@ -1,6 +1,12 @@
 export const createLotto = () => {
-  let result = Array(6).fill(0);
-  result = result.map(() => getRandomInteger(1, 45));
+  let result = [];
+  while (result.length < 6) {
+    let randomInt = getRandomInteger(1, 45);
+    while (result.includes(randomInt)) {
+      randomInt = getRandomInteger(1, 45);
+    }
+    result.push(randomInt);
+  }
   return result;
 };
 

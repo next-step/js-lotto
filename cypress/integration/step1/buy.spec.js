@@ -1,5 +1,6 @@
 import { INVALID_INPUT_ALERT_STRING } from "../../../src/js/constants.js";
 import { typePriceInput } from "./cypress-util.js";
+import { areNumbersNotDuplicated } from "../../../src/js/validation.js";
 
 describe("화면 렌더링에 관련된 테스트", function () {
   beforeEach(() => {
@@ -49,6 +50,17 @@ describe("로또 발급과 관련된 테스트", function () {
   it("로또 금액을 입력하면 적절한 개수의 로또가 발급된다. ", function () {
     typePriceInput("10000");
     cy.get("#count-text").should("have.text", "총 10개를 구매하였습니다. ");
+  });
+
+  it("발급된 로또 번호들은 중복되지 않는다. ", function () {
+    typePriceInput("10000");
+    cy.get("#purchase-detail section .contents > span:first-child").should(
+      (element) => {
+        const array = element.text().split(",");
+        const validateResult = areNumbersNotDuplicated(array);
+        expect(validateResult).to.equal(true);
+      }
+    );
   });
 
   it("번호보기 토글 버튼을 클릭하면 복권 번호를 보여준다. ", function () {
