@@ -1,4 +1,4 @@
-import { validateCurry, range } from '../utils/index.js';
+import { range } from '../utils/index.js';
 import { issueLottos } from '../business/lotto.js';
 import {
   MIN_MONEY_UNIT,
@@ -17,15 +17,18 @@ const validateMoney = (money) => {
   return money;
 };
 
-export const buy = (money, { lotto }) => {
-  const either = validateCurry(() => validateMoney(money), lotto);
-  const amount = money / MIN_MONEY_UNIT;
-  const numbers = range(amount, () =>
-    issueLottos(PICKED_LOTTO_NUMBER_COUNT, RANGE_FOR_RANDOM_NUMBERS)
-  );
-
-  return either(() => ({
-    numbers,
-    size: amount,
-  }));
+export const buy = (money, prevState) => {
+  try {
+    const amount = validateMoney(money) / MIN_MONEY_UNIT;
+    const numbers = range(amount).map(() =>
+      issueLottos(PICKED_LOTTO_NUMBER_COUNT, RANGE_FOR_RANDOM_NUMBERS)
+    );
+    return {
+      numbers,
+      count: amount,
+    };
+  } catch (e) {
+    alert(e);
+    return prevState;
+  }
 };
