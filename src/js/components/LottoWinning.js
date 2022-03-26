@@ -1,9 +1,15 @@
-import { SELECTOR, MESSAGE, LOTTO_MAX_NUMBER } from "../constant/index.js";
-import { $, $$ } from "../utils/selector.js";
+import { MESSAGE } from "../constant/index.js";
+
+const LOTTO_MAX_NUMBER = 45;
 
 export class LottoWinning {
-    constructor($winngingArea) {
+    props = null;
+    winningNumbers = null;
+    bonusNumber = null;
+
+    constructor($winngingArea, props) {
         this.$winngingArea = $winngingArea;
+        this.props = props;
     }
 
     render() {
@@ -11,47 +17,93 @@ export class LottoWinning {
     }
 
     mounted() {
-        this.$resultModalOpenButton = $(SELECTOR.ID.OPEN_RESULT_MODAL_BUTTON);
-        this.$resultModal = $(SELECTOR.ID.RESULT_MODAL);
-        this.$resultModelCloseButton = $(SELECTOR.ID.RESULT_MODAL_CLOSE);
-        this.$winningNumbers = $$(SELECTOR.CLASS.WINNING_NUMBER);
-        this.$bonusNumber = $(SELECTOR.CLASS.BONUS_NUMBER);
+        this.$resultModalOpenButton = document.querySelector("#open-result-modal-button");
+        this.$winningNumbers = document.querySelectorAll(".winning-number");
+        this.$bonusNumber = document.querySelector(".bonus-number");
     }
 
     setEvent() {
-        this.$resultModalOpenButton.addEventListener("click", (event) => this.onClickOpenResultModalButton())
-        this.$resultModelCloseButton.addEventListener("click", (event) => this.onClickResultModalCloseButton());
-    }
-
-    onClickOpenResultModalButton() {
-        if(this.checkWinningNumber()) {
-            this.$resultModal.classList.add(SELECTOR.CLASS.OPEN.substring(1));
-        }        
-    }
-
-    onClickResultModalCloseButton() {
-        this.$resultModal.classList.remove(SELECTOR.CLASS.OPEN.substring(1));
+        this.$resultModalOpenButton.addEventListener("click", (event) => {
+            if(this.checkWinningNumber().isComplete) {
+                this.props.onLottoModal();
+                this.props.setLottoNumbers(this.#getWinningNumbers());
+                this.props.setBonusNumber(this.#getBonusNumber());
+            }            
+        });
     }
 
     checkWinningNumber() {
         let winningNumber = {};
-        let number = "";
+        let resultValue = {isComplete: true, message: ""};
 
-        this.$winningNumbers.forEach(number => {
-            if(number.value > LOTTO_MAX_NUMBER) {
-                alert(MESSAGE.ERROR.MAX_PURCHASE);
-                return false;
+        for(let i=0; i<this.$winningNumbers.length; i++) {
+            if(!this.$winningNumbers[i].value) {
+                resultValue = {
+                    isComplete: false,
+                    message: "입력하지 않은 당첨 번호가 있습니다."
+                }
+
+                return resultValue; 
             }
 
-            if(!winningNumber[number.value]) {
-                winningNumber[number.value] = number.value;
-                alert(MESSAGE.ERROR.EXIST_WINNING_NUMBER);
-                return false;
+            if(this.$winningNumbers[i].value > LOTTO_MAX_NUMBER) {
+                resultValue = {
+                    isComplete: false,
+                    message: MESSAGE.ERROR.MAX_PURCHASE
+                }
+                
+                return resultValue;
             }
-        })
 
-        console.log(winningNumber);
-        return true;
+            if(winningNumber[this.$winningNumbers[i].value]) {
+                resultValue = {
+                    isComplete: false,
+                    message: MESSAGE.ERROR.EXIST_WINNING_NUMBER
+                }
+                
+                return resultValue;
+            } else {
+                winningNumber[this.$winningNumbers[i].value] = this.$winningNumbers[i].value;
+            }
+        }
+
+        if(!this.$bonusNumber.value) {
+            resultValue = {
+                isComplete: false,
+                message: "보너스 번호를 입력하지 않았습니다."
+            }
+            
+            return resultValue;
+        }
+
+        if(winningNumber[this.$bonusNumber.value]) {
+            resultValue = {
+                isComplete: false,
+                message: "보너스 번호가 당첨 번호와 중복되는 번호입니다."
+            }
+            
+            return resultValue;
+        }
+
+        this.#setWinningNumbers(Object.values[winningNumber]);
+        this.#setBonusNumber(this.$bonusNumber.value);
+        return resultValue;
+    }
+
+    #getWinningNumbers() {
+        return this.winningNumbers;
+    }
+
+    #setWinningNumbers(numbers) {
+        this.winningNumbers = numbers;
+    }
+
+    #getBonusNumber() {
+        return this.bonusNumber;
+    }
+
+    #setBonusNumber(number) {
+        this.bonusNumber = number;
     }
 
     getWinningTemplate() {

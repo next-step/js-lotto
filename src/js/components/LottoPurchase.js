@@ -1,7 +1,6 @@
 import { MESSAGE } from "../constant/index.js";
 import { LottoNumber } from "./LottoNumber.js";
 
-const LOTTO_MAX_NUMBER = 45;
 const LOTTO_UNIT = 1000;
 const MIN_PURCHASE_PRICE = 1000;
 const MAX_PURCHASE_PRICE = 100000;
