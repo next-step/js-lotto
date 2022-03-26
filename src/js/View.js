@@ -1,5 +1,5 @@
 import { createLottos } from "./createLotto.js";
-import { LOTTO_NUMBERS, PRICE_PER_LOTTO } from "./constants.js";
+import { PRICE_PER_LOTTO } from "./constants.js";
 import {
   PurchaseInformation,
   isPaymentUnitsOf1000Won,
@@ -113,9 +113,8 @@ function View() {
     });
   };
 
-  const checkWinningLotto = () => {
-    const winningAndBonusNumbers = getWinningAndBonusNumbers();
-    console.log(winningAndBonusNumbers);
+  const getWinningResult = () => {
+    const winningAndBonusNumbers = createWinningLotto();
   };
 
   const renderLottos = purchaseInformation => {
@@ -180,7 +179,7 @@ function View() {
   const openResultModalButtonElement = document.querySelector(
     ".open-result-modal-button",
   );
-  openResultModalButtonElement.addEventListener("click", checkWinningLotto);
+  openResultModalButtonElement.addEventListener("click", getWinningResult);
 }
 
 export { View };
