@@ -1,5 +1,8 @@
     this.$lottoContainer = $('.lotto-container', this.$target);
     this.isShow = false;
+      const lotto = this.createOneLotto();
+      const lottoComponent = Lotto(lotto);
+      $('.lotto-container').appendChild(lottoComponent);
   createOneLotto = () => {
     const lotto = [];
     while (lotto.length !== 6) {
