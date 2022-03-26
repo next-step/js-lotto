@@ -1,6 +1,6 @@
 import { Wallet } from '../data/wallet.js';
 
-export default (function () {
+const purchasedHistoryView = (function () {
   const $purchaseHistory = document.querySelector('section.mt-9');
   const $purchasedLottoAmount =
     $purchaseHistory.querySelector('label.my-0 span');
@@ -89,3 +89,5 @@ export default (function () {
 
   return { initial, changePurchasedHistory };
 })();
+
+export default purchasedHistoryView;

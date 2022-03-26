@@ -1,7 +1,7 @@
 import purchasedHistoryView from './purchasedHistoryView.js';
 import { LottoVendingMachine } from '../lottoVendingMachine.js';
 
-export default (function () {
+const lottoVendingView = (function () {
   const $purchaseLotto = document.querySelector('form.mt-5');
   const $purchaseMoney = $purchaseLotto.querySelector('input');
   const $winingLottoHistory = document.querySelector('form.mt-9');
@@ -36,3 +36,4 @@ export default (function () {
 
   return { initial };
 })();
+export default lottoVendingView;
