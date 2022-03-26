@@ -11,7 +11,7 @@ export class PurchasedLottoSection extends Component {
 		this.$autoPurchasedLottoList = $('.autoPurchasedLottoList');
 
 		this.lottos = [];
-		this.isVisibleDetail = false;
+		this.isVisibleNumbers = false;
 
 		this.hide();
 		this.bindEvent();
@@ -21,14 +21,14 @@ export class PurchasedLottoSection extends Component {
 	bindEvent() {
 		this.$showLottoNumbersToggle.addEventListener('change', () => {
 			this.setState({
-				isVisibleDetail: this.$showLottoNumbersToggle.checked,
+				isVisibleNumbers: this.$showLottoNumbersToggle.checked,
 			});
 		});
 	}
 
 	subscribe() {
 		eventBus.on(EVENT.INITIALIZE, () => {
-			this.setState({lottos: [], isVisibleDetail: false});
+			this.setState({lottos: [], isVisibleNumbers: false});
 		});
 
 		eventBus.on(EVENT.PURCHASE_LOTTO, ({detail: lottos}) => {
@@ -41,9 +41,9 @@ export class PurchasedLottoSection extends Component {
 		this.renderAutoPurchasedLottoList();
 	}
 
-	setState({lottos, isVisibleDetail}) {
+	setState({lottos, isVisibleNumbers}) {
 		this.lottos = lottos ?? this.lottos;
-		this.isVisibleDetail = isVisibleDetail ?? this.isVisibleDetail;
+		this.isVisibleNumbers = isVisibleNumbers ?? this.isVisibleNumbers;
 
 		if (this.lottos.length > 0) {
 			this.show();
@@ -60,8 +60,8 @@ export class PurchasedLottoSection extends Component {
 		this.$autoPurchasedLottoList.innerHTML = this.lottos
 			.map((lotto) =>
 				this.createPurchasedLottoItemTemplate({
-					isVisibleDetail: this.isVisibleDetail,
-					detail: lotto.numbersString,
+					isVisibleNumbers: this.isVisibleNumbers,
+					numbers: lotto.numbers,
 				}),
 			)
 			.join('');
@@ -70,7 +70,7 @@ export class PurchasedLottoSection extends Component {
 	}
 
 	alignAutoPurchasedLottoList() {
-		if (this.isVisibleDetail) {
+		if (this.isVisibleNumbers) {
 			this.$autoPurchasedLottoList.classList.add('flex-col');
 			return;
 		}
@@ -85,13 +85,13 @@ export class PurchasedLottoSection extends Component {
 		);
 	}
 
-	createPurchasedLottoItemTemplate({isVisibleDetail, detail}) {
+	createPurchasedLottoItemTemplate({isVisibleNumbers, numbers}) {
 		return `
 			<li class="lottoItem mx-1 text-4xl">
 				<span class="lottoIcon">🎟️ </span>
 				<span class="lottoDetail" ${
-					isVisibleDetail ? '' : 'style="display: none;"'
-				}>${detail}</span>
+					isVisibleNumbers ? '' : 'style="display: none;"'
+				}>${[...numbers.values()].join(', ')}</span>
 			</li>
 		`;
 	}

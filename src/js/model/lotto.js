@@ -26,10 +26,6 @@ export default class Lotto {
 		return this.#numbers;
 	}
 
-	get numbersString() {
-		return [...this.#numbers.values()].join(', ');
-	}
-
 	static create(manualNumbers) {
 		return new Lotto(manualNumbers);
 	}
