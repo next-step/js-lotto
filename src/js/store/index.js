@@ -26,8 +26,8 @@ const createStore = (initialState) => {
   const state = stateManager(initialState, subscribeMap);
 
   const subscribe = (key, handle) => {
-    const values = subscribeMap.get(key);
-    subscribeMap.set(key, values.concat(handle));
+    const handles = subscribeMap.get(key);
+    subscribeMap.set(key, handles.concat(handle));
   };
 
   return {
