@@ -12,10 +12,11 @@ const initialState = {
   },
 };
 
+const controllers = [LottoController, WinningController];
+
 export default () => {
   const $app = $Curry()(CLASS.APP);
   const store = createStore(initialState);
 
-  const controllers = [LottoController, WinningController];
   controllers.forEach((controller) => controller($app, store));
 };

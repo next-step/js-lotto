@@ -23,6 +23,13 @@ class LottoDetailList extends View {
     this.#printList(numbers);
   }
 
+  bindEvent() {}
+
+  toggleStyle(showNumbers) {
+    const key = showNumbers ? 'add' : 'remove';
+    this.$el.classList[key]('flex-column');
+  }
+
   #resetList() {
     while (this.$el.hasChildNodes()) {
       this.$el.firstChild.remove();
@@ -38,13 +45,6 @@ class LottoDetailList extends View {
 
   #initializeToggleStyle() {
     this.$el.classList.remove('flex-column');
-  }
-
-  bindEvent() {}
-
-  toggleStyle(showNumbers) {
-    const key = showNumbers ? 'add' : 'remove';
-    this.$el.classList[key]('flex-column');
   }
 }
 
