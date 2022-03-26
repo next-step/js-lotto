@@ -23,12 +23,12 @@ const createStore = (initialState) => {
   const subscribeMap = new Map();
   Object.keys(initialState).forEach((key) => subscribeMap.set(key, []));
 
-  const state = stateManager(initialState, subscribeMap);
-
   const subscribe = (key, handle) => {
     const handles = subscribeMap.get(key);
     subscribeMap.set(key, handles.concat(handle));
   };
+
+  const state = stateManager(initialState, subscribeMap);
 
   return {
     subscribe,
