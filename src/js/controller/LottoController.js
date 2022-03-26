@@ -5,11 +5,14 @@ import LottoList from '../views/lotto/LottoDetailList.js';
 import MoneyForm from '../views/lotto/MoneyForm.js';
 import { $Curry } from '../dom/index.js';
 import Controller from './Controller.js';
+import WinningForm from '../views/winning/WinningForm.js';
 
 class LottoController extends Controller {
   static moneyForm;
   static lottoHeader;
   static lottoList;
+  static winningForm;
+
   constructor(...props) {
     super(...props);
   }
@@ -26,11 +29,14 @@ class LottoController extends Controller {
       .on('@toggle-numbers', this.toggleNumbers.bind(this));
 
     LottoController.lottoList = LottoList($(CLASS.LOTTO_LIST)).init();
+
+    LottoController.winningForm = WinningForm($(CLASS.WINNING_FORM)).init();
   }
 
   initializeState() {
     this.store.subscribe('lotto', LottoController.lottoHeader);
     this.store.subscribe('lotto', LottoController.lottoList);
+    this.store.subscribe('lotto', LottoController.winningForm);
   }
 
   buy({ detail }) {
