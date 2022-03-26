@@ -4,7 +4,6 @@ import mutations from './mutations.js';
 
 const defaultState = {
   price: 0,
-  lottoNumbers: [],
 };
 
 export const store = new Store({
