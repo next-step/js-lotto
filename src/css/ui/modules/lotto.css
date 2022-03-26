@@ -12,6 +12,7 @@
   display: none;
 }
 
+
 .lotto-list.flex-column li span.lotto-detail {
   display: block !important;
 }
