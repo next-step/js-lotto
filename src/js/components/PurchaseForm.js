@@ -1,6 +1,6 @@
-import {divmod, $, eventBus} from '../lib/index.js';
-import {LOTTO, EVENT, MESSAGES} from '../constants/index.js';
-import Lotto from '../model/lotto.js';
+import {$, eventBus} from '../lib/index.js';
+import {EVENT} from '../constants/index.js';
+import lottoService from '../services/lotto-service.js';
 import {Component} from './Component.js';
 
 export class PurchaseForm extends Component {
@@ -18,20 +18,14 @@ export class PurchaseForm extends Component {
 			event.preventDefault();
 
 			const purchaseFormData = new FormData(this.$element);
-			const purchaseAmount = Number(
-				purchaseFormData.get('purchaseAmountInput'),
-			);
-			const [quotient, remainder] = divmod(purchaseAmount, LOTTO.PRICE);
 
-			if (remainder) {
-				alert(MESSAGES.NON_UNIT_VALUE_ALERT);
-				return;
+			try {
+				lottoService.purchaseLotto({
+					purchaseAmount: Number(purchaseFormData.get('purchaseAmountInput')),
+				});
+			} catch (error) {
+				alert(error.message);
 			}
-
-			eventBus.emit(
-				EVENT.PURCHASE_LOTTO,
-				Lotto.autoPurchase({count: quotient}),
-			);
 		});
 	}
 

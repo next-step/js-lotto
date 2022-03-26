@@ -1,5 +1,6 @@
-import {EVENT, MESSAGES, LOTTO} from '../constants/index.js';
-import {eventBus, hasDuplicates} from '../lib/index.js';
+import {EVENT} from '../constants/index.js';
+import lottoService, {LOTTO_COUNT} from '../services/lotto-service.js';
+import {eventBus} from '../lib/index.js';
 import {Component} from './Component.js';
 
 export class InputWinningNumbersForm extends Component {
@@ -19,15 +20,14 @@ export class InputWinningNumbersForm extends Component {
 				...new FormData(this.$element).values(),
 			].map(Number);
 
-			if (hasDuplicates(winningNumbersWithBonus)) {
-				alert(MESSAGES.HAS_DUPLICATES_IN_WINNING_NUMBERS_ALERT);
-				return;
+			try {
+				lottoService.setLottoResult({
+					winningNumbers: winningNumbersWithBonus.slice(0, LOTTO_COUNT),
+					bonusNumber: winningNumbersWithBonus[LOTTO_COUNT],
+				});
+			} catch (error) {
+				alert(error.message);
 			}
-
-			eventBus.emit(EVENT.SUBMIT_WINNING_NUMBERS, {
-				winningNumbers: winningNumbersWithBonus.slice(0, LOTTO.COUNT),
-				bonusNumber: winningNumbersWithBonus[LOTTO.COUNT],
-			});
 		});
 	}
 

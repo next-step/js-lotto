@@ -11,12 +11,8 @@ export class App extends Component {
 		super($element);
 
 		this.PurchaseForm = new PurchaseForm($('form[name=purchaseForm]'));
-		this.PurchasedLottoSection = new PurchasedLottoSection(
-			$('#purchasedLottoSection'),
-		);
-		this.InputWinningNumbersForm = new InputWinningNumbersForm(
-			$('form[name=inputWinningNumbersForm]'),
-		);
+		this.PurchasedLottoSection = new PurchasedLottoSection($('#purchasedLottoSection')); // prettier-ignore
+		this.InputWinningNumbersForm = new InputWinningNumbersForm($('form[name=inputWinningNumbersForm]')); // prettier-ignore
 		this.WinningResultModal = new WinningResultModal($('.winningResultModal'));
 	}
 

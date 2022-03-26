@@ -10,7 +10,7 @@ export class PurchasedLottoSection extends Component {
 		this.$showLottoNumbersToggle = $('input[name=showLottoNumbersToggle]');
 		this.$autoPurchasedLottoList = $('.autoPurchasedLottoList');
 
-		this.lottos = [];
+		this.autoLottoTickets = [];
 		this.isVisibleNumbers = false;
 
 		this.hide();
@@ -28,11 +28,12 @@ export class PurchasedLottoSection extends Component {
 
 	subscribe() {
 		eventBus.on(EVENT.INITIALIZE, () => {
-			this.setState({lottos: [], isVisibleNumbers: false});
+			this.setState({autoLottoTickets: [], isVisibleNumbers: false});
 		});
 
-		eventBus.on(EVENT.PURCHASE_LOTTO, ({detail: lottos}) => {
-			this.setState({lottos});
+		eventBus.on(EVENT.PURCHASE_LOTTO, ({detail}) => {
+			const {autoLottoTickets} = detail;
+			this.setState({autoLottoTickets});
 		});
 	}
 
@@ -41,11 +42,11 @@ export class PurchasedLottoSection extends Component {
 		this.renderAutoPurchasedLottoList();
 	}
 
-	setState({lottos, isVisibleNumbers}) {
-		this.lottos = lottos ?? this.lottos;
+	setState({autoLottoTickets, isVisibleNumbers}) {
+		this.autoLottoTickets = autoLottoTickets ?? this.autoLottoTickets;
 		this.isVisibleNumbers = isVisibleNumbers ?? this.isVisibleNumbers;
 
-		if (this.lottos.length > 0) {
+		if (this.autoLottoTickets.length > 0) {
 			this.show();
 			this.render();
 
@@ -57,7 +58,7 @@ export class PurchasedLottoSection extends Component {
 	}
 
 	renderAutoPurchasedLottoList() {
-		this.$autoPurchasedLottoList.innerHTML = this.lottos
+		this.$autoPurchasedLottoList.innerHTML = this.autoLottoTickets
 			.map((lotto) =>
 				this.createPurchasedLottoItemTemplate({
 					isVisibleNumbers: this.isVisibleNumbers,
@@ -80,8 +81,8 @@ export class PurchasedLottoSection extends Component {
 
 	renderPurchasedCount() {
 		this.$purchasedCountLabel.textContent = format(
-			TEXTS.PURCHASED_COUNT,
-			this.lottos.length,
+			TEXTS.AUTO_PURCHASED_COUNT,
+			this.autoLottoTickets.length,
 		);
 	}
 

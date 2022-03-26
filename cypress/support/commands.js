@@ -23,15 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-Cypress.Commands.add('purchaseLotto', (purchaseAmount) => {
-	if (purchaseAmount) {
-		cy.get('input[name="purchaseAmountInput"]').type(purchaseAmount);
-	}
+Cypress.Commands.add('purchaseLotto', ({purchaseAmount} = {}) => {
+	cy.get('form[name="purchaseForm"]').within(() => {
+		if (purchaseAmount) {
+			cy.get('input[name="purchaseAmountInput"]').type(purchaseAmount);
+		}
 
-	cy.get('input[name="purchaseAmountInput"]')
-		.next('button')
-		.contains('확인')
-		.click();
+		cy.get('button').contains('확인').click();
+	});
 });
 
 Cypress.Commands.add('toggleShowLottoNumbers', () => {

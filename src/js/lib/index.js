@@ -4,4 +4,8 @@ export * from './event-bus.js';
 export * from './format.js';
 export * from './has-duplicates.js';
 export * from './intersections.js';
+export * from './invert.js';
+export * from './is-undefined.js';
+export * from './random-item.js';
 export * from './random-number.js';
+export * from './range.js';

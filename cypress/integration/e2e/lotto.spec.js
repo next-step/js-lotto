@@ -1,4 +1,4 @@
-import Lotto from '../../src/js/model/Lotto.js';
+import LottoTicket from '../../../src/js/model/lotto-ticket.js';
 
 beforeEach(() => {
 	cy.visit('/');
@@ -25,7 +25,7 @@ describe('구입 금액 입력 폼', () => {
 
 		cy.on('window:alert', stub);
 
-		cy.purchaseLotto(1999).then(() => {
+		cy.purchaseLotto({purchaseAmount: 1999}).then(() => {
 			expect(stub.getCall(0)).to.be.calledWith(
 				'로또 구입 금액을 1,000원 단위로 입력해 주세요.',
 			);
@@ -33,7 +33,7 @@ describe('구입 금액 입력 폼', () => {
 	});
 
 	it('1000원 미만의 금액을 제출하면, 유효성 검사 메시지를 표시한다.', () => {
-		cy.purchaseLotto(999)
+		cy.purchaseLotto({purchaseAmount: 999})
 			.get('input[name="purchaseAmountInput"]')
 			.then(($inputs) => {
 				expect($inputs[0].validationMessage).to.eq(
@@ -45,13 +45,13 @@ describe('구입 금액 입력 폼', () => {
 
 describe('구입한 로또 번호 섹션', () => {
 	beforeEach(() => {
-		cy.purchaseLotto(5000);
+		cy.purchaseLotto({purchaseAmount: 5000});
 	});
 
 	it('1000원 단위의 금액을 제출하면, 금액에 해당하는 로또 갯수가 표시된다.', () => {
 		cy.get('.purchasedCountLabel').should(
 			'have.text',
-			'총 5개를 구매하였습니다.',
+			'총 5개를 자동 구매하였습니다.',
 		);
 		cy.get('.autoPurchasedLottoList').children().should('have.length', 5);
 	});
@@ -113,7 +113,7 @@ describe('구입한 로또 번호 섹션', () => {
 
 describe('당첨 번호 입력 폼', () => {
 	beforeEach(() => {
-		cy.purchaseLotto(5000);
+		cy.purchaseLotto({purchaseAmount: 5000});
 	});
 
 	it('1000원 단위의 금액을 제출하면, 지난 당첨 번호 입력 폼이 표시된다.', () => {
@@ -166,7 +166,7 @@ describe('당첨 번호 입력 폼', () => {
 
 describe('당첨 결과 모달', () => {
 	it('당첨 번호를 제출하면, 당첨 결과 모달이 표시된다.', () => {
-		cy.purchaseLotto(5000);
+		cy.purchaseLotto({purchaseAmount: 5000});
 		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
 
 		cy.get('.winningResultModal').should('be.visible');
@@ -176,14 +176,16 @@ describe('당첨 결과 모달', () => {
 		cy.document().then(($document) => {
 			$document.dispatchEvent(
 				new CustomEvent('PURCHASE_LOTTO', {
-					detail: [
-						Lotto.create([1, 2, 11, 8, 9, 10]), // 2개
-						Lotto.create([1, 2, 3, 7, 8, 9]), // 3개
-						Lotto.create([1, 2, 3, 4, 7, 8]), // 4개
-						Lotto.create([1, 2, 3, 4, 5, 8]), // 5개
-						Lotto.create([1, 2, 3, 4, 5, 7]), // 5개 + 보너스
-						Lotto.create([1, 2, 3, 4, 5, 6]), // 6개
-					],
+					detail: {
+						autoLottoTickets: [
+							LottoTicket.create([1, 2, 11, 8, 9, 10]), // 2개
+							LottoTicket.create([1, 2, 3, 7, 8, 9]), // 3개
+							LottoTicket.create([1, 2, 3, 4, 7, 8]), // 4개
+							LottoTicket.create([1, 2, 3, 4, 5, 8]), // 5개
+							LottoTicket.create([1, 2, 3, 4, 5, 7]), // 5개 + 보너스
+							LottoTicket.create([1, 2, 3, 4, 5, 6]), // 6개
+						],
+					},
 				}),
 			);
 		});
@@ -199,14 +201,16 @@ describe('당첨 결과 모달', () => {
 		cy.document().then(($document) => {
 			$document.dispatchEvent(
 				new CustomEvent('PURCHASE_LOTTO', {
-					detail: [
-						Lotto.create([1, 2, 8, 9, 10, 11]), // 2개
-						Lotto.create([1, 2, 3, 7, 8, 9]), // 3개
-						Lotto.create([1, 2, 3, 4, 7, 8]), // 4개
-						Lotto.create([1, 2, 3, 4, 5, 8]), // 5개
-						Lotto.create([1, 2, 3, 4, 5, 7]), // 5개 + 보너스
-						Lotto.create([1, 2, 3, 4, 5, 6]), // 6개
-					],
+					detail: {
+						autoLottoTickets: [
+							LottoTicket.create([1, 2, 8, 9, 10, 11]), // 2개
+							LottoTicket.create([1, 2, 3, 7, 8, 9]), // 3개
+							LottoTicket.create([1, 2, 3, 4, 7, 8]), // 4개
+							LottoTicket.create([1, 2, 3, 4, 5, 8]), // 5개
+							LottoTicket.create([1, 2, 3, 4, 5, 7]), // 5개 + 보너스
+							LottoTicket.create([1, 2, 3, 4, 5, 6]), // 6개
+						],
+					},
 				}),
 			);
 		});
@@ -222,7 +226,7 @@ describe('당첨 결과 모달', () => {
 	});
 
 	it('모달의 닫기 버튼을 클릭하면 모달 요소가 제거된다.', () => {
-		cy.purchaseLotto(5000);
+		cy.purchaseLotto({purchaseAmount: 5000});
 		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
 
 		cy.get('.winningResultModal > .modal-inner > .modal-close')
@@ -232,7 +236,7 @@ describe('당첨 결과 모달', () => {
 	});
 
 	it('모달의 바깥을 클릭하면 모달 요소가 제거된다.', () => {
-		cy.purchaseLotto(5000);
+		cy.purchaseLotto({purchaseAmount: 5000});
 		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
 
 		cy.get('.winningResultModal')
@@ -242,7 +246,7 @@ describe('당첨 결과 모달', () => {
 	});
 
 	it('다시 시작하기 버튼을 누르면, 초기화된다.', () => {
-		cy.purchaseLotto(5000);
+		cy.purchaseLotto({purchaseAmount: 5000});
 		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
 		cy.get('.winningResultModal')
 			.contains('다시 시작하기')
