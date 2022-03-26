@@ -1,4 +1,4 @@
-import { range } from '../utils/index.js';
+import { range, successOrFailureCurry } from '../utils/index.js';
 import { issueLottos } from '../business/lotto.js';
 import {
   MIN_MONEY_UNIT,
@@ -17,18 +17,29 @@ const validateMoney = (money) => {
   return money;
 };
 
-export const buy = (money, prevState) => {
-  try {
-    const amount = validateMoney(money) / MIN_MONEY_UNIT;
-    const numbers = range(amount).map(() =>
-      issueLottos(PICKED_LOTTO_NUMBER_COUNT, RANGE_FOR_RANDOM_NUMBERS)
-    );
-    return {
-      numbers,
-      count: amount,
-    };
-  } catch (e) {
-    alert(e);
-    return prevState;
-  }
+const createNewLottoState = (money) => {
+  const amount = money / MIN_MONEY_UNIT;
+  const numbers = range(amount).map(() =>
+    issueLottos(PICKED_LOTTO_NUMBER_COUNT, RANGE_FOR_RANDOM_NUMBERS)
+  );
+
+  return {
+    numbers,
+    count: amount,
+  };
+};
+
+export const buy = (money, prevLottoState) => {
+  const successOrFailure = successOrFailureCurry(money);
+
+  return successOrFailure(
+    (money) => {
+      validateMoney(money);
+      return createNewLottoState(money);
+    },
+    (error) => {
+      alert(error);
+      return prevLottoState;
+    }
+  );
 };

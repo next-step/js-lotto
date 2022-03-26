@@ -3,7 +3,7 @@ import { $Curry } from './dom/index.js';
 
 import LottoController from './controller/LottoController.js';
 import WinningController from './controller/WinningController.js';
-import createStore from './store/index.js';
+import createStore from './state/index.js';
 
 const initialState = {
   lotto: {
