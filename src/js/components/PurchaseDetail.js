@@ -1,18 +1,27 @@
 export class PurchaseDetail {
   constructor(target) {
-    target.innerHTML = this.#template();
+    this.#target = target;
+    this.#target.innerHTML = this.#template([]);
     this.#toggleButtonElement = document.querySelector(".toggle-button");
     this.#lottoIconsElement = document.querySelector(".icons");
     this.#lottoContentsElement = document.querySelector(".contents");
     this.#setEvents();
   }
 
-  #template = () => {
+  #target;
+
+  #template = (lottos) => {
+    let iconElements = "";
+    let lottoContentElements = "";
+    for (const lotto of lottos) {
+      iconElements += `<span class="mx-1 text-4xl">🎟️</span>`;
+      lottoContentElements += `<span class="mx-1 text-xl">${lotto}</span>`;
+    }
     return `
     <section class="mt-9">
         <div class="d-flex">
         <label id="count-text" class="flex-auto my-0"
-            ></label
+            >총 ${lottos.length}개를 구매하였습니다. </label
         >
         <div class="flex-auto d-flex justify-end pr-1">
             <label class="switch">
@@ -25,8 +34,11 @@ export class PurchaseDetail {
         </div>
         </div>
         <div class="d-flex flex-wrap icons">
+          ${iconElements}
         </div>
-        <div class="d-flex flex-wrap text-base contents"></div>
+        <div class="d-flex flex-wrap text-base contents">
+          ${lottoContentElements}
+        </div>
     </section>
     `;
   };
@@ -49,45 +61,17 @@ export class PurchaseDetail {
     }
   };
 
-  #createIconElement = () => {
-    const icon = document.createElement("span");
-    const text = document.createTextNode("🎟️");
-    icon.className = "mx-1 text-4xl";
-    icon.appendChild(text);
-    this.#lottoIconsElement.appendChild(icon);
-  };
-
-  #createLottoContentElement = (lotto) => {
-    const content = document.createElement("span");
-    const text = document.createTextNode(`${lotto}`);
-    content.className = "mx-1 text-xl";
-    content.appendChild(text);
-    this.#lottoContentsElement.appendChild(content);
-  };
-
   #initializeElements = () => {
-    try {
-      const icons = this.#lottoIconsElement;
-      while (icons.hasChildNodes()) {
-        icons.removeChild(icons.firstChild);
-      }
-      const contents = this.#lottoContentsElement;
-      while (contents.hasChildNodes()) {
-        contents.removeChild(contents.firstChild);
-      }
-    } catch (e) {
-      console.alert(`에러가 발생했습니다. 페이지를 새로고침해주세요.`);
-    }
+    this.#target.innerHTML = this.#template([]);
   };
 
   setState = (lottos) => {
-    const countText = document.querySelector("#count-text");
-    countText.innerText = `총 ${lottos.length}개를 구매하였습니다. `;
     this.#initializeElements();
-    for (const lotto of lottos) {
-      this.#createIconElement();
-      this.#createLottoContentElement(lotto);
-    }
+    this.#target.innerHTML = this.#template(lottos);
+    this.#toggleButtonElement = document.querySelector(".toggle-button");
+    this.#lottoIconsElement = document.querySelector(".icons");
+    this.#lottoContentsElement = document.querySelector(".contents");
+    this.#setEvents();
     this.#handleIfToggleButtonIsChecked();
   };
 }
