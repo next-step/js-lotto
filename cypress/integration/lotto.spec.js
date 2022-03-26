@@ -5,7 +5,7 @@ before(() => cy.visit('http://127.0.0.1:5500/index.html'));
 
 describe('로또 어플리케이션 테스트', () => {
   describe('스텝 1 : 구매하기', () => {
-    it('최소 구매금액은 1000원이다.', () => {
+    it('1000원 미만 입력 시 알럿을 띄운다.', () => {
       cy.submitMoney(500).alert(MESSAGE.ALERT_MIN_AMOUNT_TO_ISSUE_LOTTO);
       cy.submitMoney(800).alert(MESSAGE.ALERT_MIN_AMOUNT_TO_ISSUE_LOTTO);
     });
