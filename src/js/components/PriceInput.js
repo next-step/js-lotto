@@ -16,6 +16,7 @@ export class PriceInput {
         <div class="d-flex">
         <input
             type="number"
+            name="price-input"
             class="price-input w-100 mr-2 pl-2"
             placeholder="구입 금액"
         />
@@ -35,12 +36,14 @@ export class PriceInput {
   #handlePriceInputSubmitEvent = (event, callback) => {
     event.preventDefault();
 
-    const value = event.target[0].valueAsNumber;
-    if (!isValidPriceInput(value)) {
+    const form = new FormData(event.target);
+    const inputValue = Number(form.get("price-input"));
+
+    if (!isValidPriceInput(inputValue)) {
       window.alert(INVALID_INPUT_ALERT_STRING);
-      event.target[0].value = "";
+      form.set("price-input", "");
       return;
     }
-    callback(value);
+    callback(inputValue);
   };
 }
