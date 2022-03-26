@@ -1,45 +1,21 @@
 import { CLASS } from './const/className.js';
-import {
-  $,
-  onCurry,
-  rendererCurry,
-  eventBinder,
-  replaceChild,
-} from './dom/index.js';
-import { buy } from './service/lotto.js';
-import stateWrapper from './store/stateWrapper.js';
+import { $Curry } from './dom/index.js';
 
-import MoneyForm from './views/MoneyForm.js';
-import LottoDetailHeader from './views/LottoDetailHeader.js';
-import LottoDetailList from './views/LottoDetailList.js';
+import LottoController from './controller/LottoController.js';
+import WinningController from './controller/WinningController.js';
+import createStore from './store/index.js';
 
 const initialState = {
   lotto: {
     numbers: [],
-    size: 0,
+    count: 0,
   },
 };
 
-const App = () => {
-  const $app = $(CLASS.APP);
-  const $clonedApp = $app.cloneNode(true);
+export default () => {
+  const $app = $Curry()(CLASS.APP);
+  const store = createStore(initialState);
 
-  const moneyForm = MoneyForm($clonedApp);
-  const lottoDetailHeader = LottoDetailHeader($clonedApp);
-  const lottoDetailList = LottoDetailList($clonedApp);
-
-  const state = stateWrapper(
-    initialState,
-    rendererCurry(App, [lottoDetailHeader, lottoDetailList])
-  );
-
-  eventBinder([moneyForm, lottoDetailHeader]);
-
-  const on = onCurry($clonedApp);
-  on('@buy', ({ detail }) => (state.lotto = buy(detail, state)));
-  on('@toggle', ({ detail }) => lottoDetailHeader.toggleStyle(detail));
-
-  replaceChild($app, $clonedApp);
+  const controllers = [LottoController, WinningController];
+  controllers.forEach((controller) => controller($app, store));
 };
-
-export default App;
