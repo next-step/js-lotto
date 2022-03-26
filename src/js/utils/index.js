@@ -1,4 +1,4 @@
-export const range = (number, callback = null) =>
-  Array.from({ length: number }, (_, i) => (callback ? callback(i) : i));
+export const range = (number) =>
+  Array.from({ length: number }, (_, i) => i + 1);
 
 export const size = (array = []) => array.length;
