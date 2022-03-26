@@ -1,4 +1,4 @@
-const stateManager = (targetState, subscribeMap) => {
+const executeSubscribeWhenUpdatedState = (targetState, subscribeMap) => {
   const handler = {
     get(...props) {
       return Reflect.get(...props);
@@ -28,7 +28,7 @@ const createStore = (initialState) => {
     subscribeMap.set(key, handles.concat(handle));
   };
 
-  const state = stateManager(initialState, subscribeMap);
+  const state = executeSubscribeWhenUpdatedState(initialState, subscribeMap);
 
   return {
     subscribe,
