@@ -1,3 +1,3 @@
-import App from './components/App.js';
+import App from './view/App.js';
 
 new App();
