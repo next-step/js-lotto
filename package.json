@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "yarn run cypress open"
+    "test": "yarn cypress open"
   },
   "devDependencies": {
     "cypress": "^6.3.0"
