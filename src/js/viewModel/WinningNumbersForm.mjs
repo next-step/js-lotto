@@ -21,6 +21,11 @@ export default class WinningNumberForm {
     this.#numberForm.addEventListener("keyup", this.#handleKeyup);
   }
 
+  reset() {
+    this.#numbersForm.forEach(el => el.value = '')
+    this.#bonusNumberForm.value = ''
+  }
+
   #handleSubmit = (e) => {
     e.preventDefault();
     if (!this.#user.haveLotto) {
@@ -30,7 +35,7 @@ export default class WinningNumberForm {
 
     const winningNumbers = new WinningNumber();
 
-    this.#numbersForm.map(({valueAsNumber}) => winningNumbers.addNumber(valueAsNumber))
+    this.#numbersForm.map(({valueAsNumber}) => winningNumbers.addNumber(valueAsNumber));
     winningNumbers.bonusNumber = this.#bonusNumberForm.valueAsNumber;
 
     if (winningNumbers.isValid()) {

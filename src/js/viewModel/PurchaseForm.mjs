@@ -16,6 +16,10 @@ export default class PurchaseForm {
     this.#priceForm.addEventListener("submit", this.#handleSubmit);
   }
 
+  reset() {
+    this.#priceInput.value = "";
+  }
+
   #handleInputChange = (event) => {
     const { valueAsNumber } = event.target;
     this.#user.wallet = valueAsNumber;

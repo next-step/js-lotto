@@ -10,6 +10,11 @@ export default class User {
     this.#purchaseHistory = [];
   }
 
+  reset() {
+    this.#wallet = 0;
+    this.#purchaseHistory = [];
+  }
+
   buyLotto() {
     const count = calculateLotto(this.#wallet);
 

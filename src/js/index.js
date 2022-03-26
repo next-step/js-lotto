@@ -8,13 +8,21 @@ const $app = document.querySelector("#app");
 
 function addAppEventListener() {
   const user = new User();
-  const statisticsModal = new StatisticsModal();
   const lottoHistory = new LottoHistory();
-  const puchaseForm = new PurchaseForm({
+  const purchaseForm = new PurchaseForm({
     user,
     lottoHistory,
   });
+  const statisticsModal = new StatisticsModal();
   const winningNumberForm = new WinningNumberForm(statisticsModal, user);
+
+  statisticsModal.resetButton.addEventListener("click", () => {
+    statisticsModal.reset();
+    user.reset();
+    lottoHistory.reset();
+    purchaseForm.reset();
+    winningNumberForm.reset();
+  });
 }
 
 if ($app) {

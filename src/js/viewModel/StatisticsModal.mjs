@@ -11,6 +11,7 @@ export default class StatisticsModal {
     this.#modal = document.querySelector('.modal');
     this.#modalClose = this.#modal.querySelector(".modal-close");
     this.#earnings = this.#modal.querySelector('.earnings__number');
+    this.resetButton = this.#modal.querySelector('button');
     this.#table = ['PRIZE_MONEY_3', 'PRIZE_MONEY_4', 'PRIZE_MONEY_5', 'PRIZE_MONEY_5_WITH_BONUS', 'PRIZE_MONEY_6'].reduce((acc, curr) => ({
       ...acc,
       [curr]: this.#modal.querySelector(`.${curr}`)
@@ -19,6 +20,11 @@ export default class StatisticsModal {
     this.#modalClose.addEventListener('click', () => {
       this.closeModal()
     });
+  }
+
+  reset = () => {
+    this.#earnings.innerText = 0;
+    this.closeModal();
   }
 
   openModal = (winningNumbers, user) => {
