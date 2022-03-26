@@ -32,11 +32,17 @@
 		"test": "start-server-and-test 'yarn start --quiet' http://localhost:8080 'yarn cypress'",
 		"test:headless": "start-server-and-test 'yarn start --quiet' http://localhost:8080 'yarn cypress:headless'"
 	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "yarn lint && yarn test:headless"
+		}
+	},
 	"prettier": "@younho9/prettier-config",
 	"devDependencies": {
 		"@younho9/prettier-config": "^2.3.1",
 		"@younho9/xo-configs": "^0.7.1",
 		"cypress": "^9.5.1",
+		"husky": "4",
 		"live-server": "^1.2.1",
 		"prettier": "^2.5.1",
 		"start-server-and-test": "^1.14.0",
