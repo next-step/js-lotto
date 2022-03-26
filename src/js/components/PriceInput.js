@@ -19,6 +19,8 @@ export class PriceInput {
             name="price-input"
             class="price-input w-100 mr-2 pl-2"
             placeholder="구입 금액"
+            autofocus
+            required
         />
         <button class="confirm btn btn-cyan">확인</button>
         </div>
