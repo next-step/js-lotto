@@ -1,6 +1,6 @@
 import { LOTTO_NUMBERS, LOTTO_MAX_NUMBER } from "./constants.js";
 
-const createLottoTicket = () => {
+const createLotto = () => {
   const lottoTicket = new Set();
 
   while (lottoTicket.size < LOTTO_NUMBERS) {
@@ -11,12 +11,12 @@ const createLottoTicket = () => {
   return lottoTicket;
 };
 
-const createLottoTickets = purchasedLottoCount => {
+const createLottos = purchasedLottoCount => {
   const lottoTickets = new Array(purchasedLottoCount)
     .fill()
-    .map(() => createLottoTicket());
+    .map(() => createLotto());
 
   return lottoTickets;
 };
 
-export { createLottoTickets };
+export { createLottos };
