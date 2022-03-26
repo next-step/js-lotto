@@ -76,7 +76,7 @@ export class PurchaseDetail {
         contents.removeChild(contents.firstChild);
       }
     } catch (e) {
-      console.error(e);
+      console.alert(`에러가 발생했습니다. 페이지를 새로고침해주세요.`);
     }
   };
 
