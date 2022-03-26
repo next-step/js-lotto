@@ -1,4 +1,6 @@
-export default class PurchaseInformation {
+import { PRICE_PER_LOTTO } from "./constants.js";
+
+class PurchaseInformation {
   constructor(payment, purchasedLottoCount, purchasedLottos) {
     this.payment = payment;
     this.purchasedLottoCount = purchasedLottoCount;
@@ -29,3 +31,12 @@ export default class PurchaseInformation {
     this._purchasedLottos = newPurchasedLottos;
   }
 }
+
+const isPaymentUnitsOf1000Won = payment => {
+  if (payment % PRICE_PER_LOTTO === 0) {
+    return true;
+  }
+  return false;
+};
+
+export { PurchaseInformation, isPaymentUnitsOf1000Won };
