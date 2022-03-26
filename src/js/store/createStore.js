@@ -12,7 +12,7 @@ export default (reducer) => {
 
   const publish = () => {
     listeners.forEach(({ subscriber, context }) => {
-      subscriber.call(null);
+      subscriber.call(context);
     });
   };
 
