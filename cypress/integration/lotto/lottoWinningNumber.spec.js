@@ -75,7 +75,12 @@ describe('Lotto 당첨 번호 테스트', () => {
     })
 
     it('모달창에서 다시하기 버튼을 누르면 어플리케이션이 초기화된다.', () => {
-
+      cy.submitValue('click', true)
+      cy.winningNumberSubmit()
+      cy.get('[data-modal=restart]').click()
+      const toggleUI = [cy.get('[data-ticket=section]'), cy.get('[data-winning-numbers=form]')]
+      toggleUI.forEach(tag => tag.should('not.be.visible'))
+      cy.get('[data-amount=input]').should('have.value', '')
     })
   })
 })
