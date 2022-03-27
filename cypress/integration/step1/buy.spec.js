@@ -1,6 +1,3 @@
-import { ALERT_STRING } from "../../../src/js/constants.js";
-import { typePriceInput } from "../cypress-util.js";
-import { areNumbersNotDuplicated } from "../../../src/js/validation.js";
 
 describe("STEP 1", function () {
   beforeEach(() => {
@@ -64,5 +61,6 @@ describe("STEP 1", function () {
       cy.get(".icons").should("be.visible");
       cy.get(".contents").should("be.visible");
     });
+
   });
 });

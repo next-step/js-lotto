@@ -32,26 +32,31 @@ export class Statistics {
                     <td class="p-3">3개</td>
                     <td class="p-3">5,000</td>
                     <td class="p-3">${winningCounts["3개"]}개</td>
+
                     </tr>
                     <tr class="text-center">
                     <td class="p-3">4개</td>
                     <td class="p-3">50,000</td>
                     <td class="p-3">${winningCounts["4개"]}개</td>
+
                     </tr>
                     <tr class="text-center">
                     <td class="p-3">5개</td>
                     <td class="p-3">1,500,000</td>
                     <td class="p-3">${winningCounts["5개"]}개</td>
+
                     </tr>
                     <tr class="text-center">
                     <td class="p-3">5개 + 보너스볼</td>
                     <td class="p-3">30,000,000</td>
                     <td class="p-3">${winningCounts["5개 + 보너스볼"]}개</td>
+
                     </tr>
                     <tr class="text-center">
                     <td class="p-3">6개</td>
                     <td class="p-3">2,000,000,000</td>
                     <td class="p-3">${winningCounts["6개"]}개</td>
+
                     </tr>
                 </tbody>
                 </table>
@@ -59,6 +64,7 @@ export class Statistics {
             <p class="text-center font-bold">당신의 총 수익률은 ${profit}%입니다.</p>
             <div class="d-flex justify-center mt-5">
                 <button id="restart-button" type="button" class="btn btn-cyan">다시 시작하기</button>
+
             </div>
             </div>
         `;
@@ -74,5 +80,6 @@ export class Statistics {
   setState = (winningCounts, profit, onModalClose, onClickRestart) => {
     this.#target.innerHTML = this.#template(winningCounts, profit);
     this.#setEvents(onModalClose, onClickRestart);
+
   };
 }

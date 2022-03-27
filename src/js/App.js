@@ -1,5 +1,6 @@
 import { PriceInput } from "./components/PriceInput.js";
 import { PurchaseDetail } from "./components/PurchaseDetail.js";
+
 import { WinningNumberInput } from "./components/WinningNumberInput.js";
 import { Statistics } from "./components/Statistics.js";
 import { LottoService } from "./lotto-service.js";
