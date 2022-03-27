@@ -67,7 +67,8 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
     lottoRenderer.removeModal();
     lottoRenderer.removeTickets();
     lottoRenderer.removeWinningNumberInputs();
-    lottoIo.restart();
+    lottoRenderer.renderMoneyForm();
+    lottoIo.restartShop();
   };
 
   const attachListeners = () => {
@@ -78,5 +79,6 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
     targetElement.addEventListener('click', restart);
   };
 
+  lottoRenderer.renderMoneyForm();
   attachListeners();
 };
