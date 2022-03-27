@@ -27,6 +27,8 @@ export class LottoIo {
     return true;
   }
 
+  inputWinningNumbers() {}
+
   clearLottoTickets() {
     this.lottoShop.clearLottoTickets();
   }

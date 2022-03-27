@@ -1,4 +1,9 @@
-import { LottoIo, LottoShop, LottoValidator } from './cores/index.js';
+import {
+  LottoIo,
+  LottoShop,
+  LottoValidator,
+  LottoRenderer,
+} from './cores/index.js';
 import { lottoView } from './views/index.js';
 
 // const $showResultButton = document.querySelector('.open-result-modal-button');
@@ -22,5 +27,6 @@ import { lottoView } from './views/index.js';
 const lottoShop = new LottoShop();
 const lottoValidator = new LottoValidator();
 const lottoInput = new LottoIo(lottoShop, lottoValidator);
+const lottoRenderer = new LottoRenderer();
 
-lottoView('#app', lottoInput);
+lottoView('#app', lottoInput, lottoRenderer);

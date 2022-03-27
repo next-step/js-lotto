@@ -1,9 +1,10 @@
-import { LottoTicket, LottoMoney } from './index.js';
+import { LottoTicket, LottoMoney, LottoWinningTicket } from './index.js';
 
 import { PRICE } from '../constants/index.js';
 
 export class LottoShop {
   lottoMoney;
+  lottoWinningTicket;
   lottoTickets = [];
   isShowLottoTickets = false;
 
@@ -12,7 +13,9 @@ export class LottoShop {
   inputMoney(money) {
     const lottoMoney = new LottoMoney(money);
 
-    this.setLottoMoney(lottoMoney);
+    this.lottoMoney = money;
+    this.lottoWinningTicket = new LottoWinningTicket();
+
     this.issueLottoTickets(lottoMoney);
   }
 
@@ -22,10 +25,6 @@ export class LottoShop {
 
   getIsShowLottoTickets() {
     return this.isShowLottoTickets;
-  }
-
-  setLottoMoney(lottoMoney) {
-    this.lottoMoney = lottoMoney;
   }
 
   toggleIsShowLottoTickets() {
@@ -42,7 +41,5 @@ export class LottoShop {
     for (let i = 0; i < ticketCount; i++) {
       this.lottoTickets.push(new LottoTicket());
     }
-
-    console.log(this.lottoTickets);
   }
 }
