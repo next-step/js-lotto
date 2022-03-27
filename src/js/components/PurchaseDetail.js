@@ -11,12 +11,15 @@ export class PurchaseDetail {
   #target;
 
   #template = (lottos) => {
-    let iconElements = "";
-    let lottoContentElements = "";
-    for (const lotto of lottos) {
-      iconElements += `<span class="mx-1 text-4xl">🎟️</span>`;
-      lottoContentElements += `<span class="mx-1 text-xl">${lotto}</span>`;
-    }
+    const iconElements = lottos.reduce(
+      (sum) => sum + `<span class="mx-1 text-4xl">🎟️</span>`,
+      ""
+    );
+    const lottoContentElements = lottos.reduce(
+      (sum, currentLotto) =>
+        sum + `<span class="mx-1 text-xl">${currentLotto}</span>`,
+      ""
+    );
     return `
     <section class="mt-9">
         <div class="d-flex">
