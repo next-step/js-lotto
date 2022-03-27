@@ -1,3 +1,5 @@
+import { MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER, NUMBERS_PER_TICKET, PRICE_PER_TICKET } from '../common/constants.js';
+
 export default class Operator {
   constructor({state, setState}) {
     this.state = state;
@@ -5,12 +7,12 @@ export default class Operator {
   }
 
   validatePrice(price) {
-    const isDivisibleByThousand = price && Number(price) % 1000 === 0 ? true : false;
+    const isDivisibleByThousand = price && Number(price) % PRICE_PER_TICKET === 0 ? true : false;
 
     if (isDivisibleByThousand) {
       this.setState({
         ...this.state,
-        purchasedVal: price / 1000,
+        purchasedVal: price / PRICE_PER_TICKET,
         isConfirmBtnClicked: true
       });
     } else {
@@ -19,14 +21,13 @@ export default class Operator {
   }
 
   createRandomNumber() {
-    return Math.floor(Math.random() * (46 - 1)) + 1;
+    return Math.floor(Math.random() * (MAX_LOTTO_NUMBER - MIN_LOTTO_NUMBER)) + 1;
   }
 
   makeNewNumberSets(numSetCount) {
-    const numbersPerTicket = 6;
     const randomNumbersArr = Array.from(
       {length: numSetCount},
-      () => Array(numbersPerTicket).fill(null).map(() => this.createRandomNumber())
+      () => Array(NUMBERS_PER_TICKET).fill(null).map(() => this.createRandomNumber())
     )
 
     this.setState({
