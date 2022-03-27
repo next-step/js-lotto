@@ -11,7 +11,7 @@ import LottoResult from '../model/lotto-result.js';
 
 export const LOTTO_PRICE = 1000;
 export const LOTTO_COUNT = 6;
-export const MINUMUM_LOTTO_VALUE = 1;
+export const MINIMUM_LOTTO_VALUE = 1;
 export const MAXIMUM_LOTTO_VALUE = 45;
 
 const MESSAGES = {
@@ -24,7 +24,7 @@ const MESSAGES = {
 
 class LottoService {
 	constructor() {
-		this.lottoNumbers = [...range(MINUMUM_LOTTO_VALUE, MAXIMUM_LOTTO_VALUE)];
+		this.lottoNumbers = [...range(MINIMUM_LOTTO_VALUE, MAXIMUM_LOTTO_VALUE)];
 		this.autoLottoTickets = [];
 		this.lottoResult = undefined;
 	}

@@ -55,7 +55,10 @@ export class WinningResultModal extends Component {
 		eventBus.on(EVENT.SUBMIT_WINNING_NUMBERS, ({detail: lottoResult}) => {
 			this.setState({
 				isOpened: true,
-				countByRank: prizeService.getCountsByRank(this.autoLottoTickets, lottoResult),
+				countByRank: prizeService.getCountsByRank(
+					this.autoLottoTickets,
+					lottoResult,
+				),
 				earningRate: this.calculateEarningRate({
 					earning: prizeService.payPrizes(this.autoLottoTickets, lottoResult),
 					purchaseAmount: this.autoLottoTickets.length,
