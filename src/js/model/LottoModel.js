@@ -40,6 +40,16 @@ export default class LottoModel {
     this.#displayLottoTicket();
   }
 
+  calculateWinningResult(inputWinningNumbers) {
+    this.#tickets.forEach((ticket) => {
+      ticket.setWinningResult(inputWinningNumbers);
+    });
+  }
+
+  getWinningQuantityByRank(rank) {
+    return this.#tickets.filter((ticket) => ticket.lottoRank === rank).length;
+  }
+
   #displayLottoTicket() {
     $(LOTTO_SECTION).hidden = false;
     $(LOTTO_FORM).hidden = false;
@@ -48,12 +58,6 @@ export default class LottoModel {
     const ticketPosition = $(LOTTO_SECTION_TICKETS);
     if (ticketPosition.childNodes.length > 0) ticketPosition.replaceChildren();
     ticketPosition.insertAdjacentHTML('afterBegin', this.ticketsHtml);
-  }
-
-  calculateWinningResult(inputWinningNumbers) {
-    this.#tickets.forEach((ticket) => {
-      ticket.setWinningResult(inputWinningNumbers);
-    });
   }
 
   get ticketsHtml() {
@@ -69,10 +73,6 @@ export default class LottoModel {
 
   get lottoBenefit() {
     return this.#tickets.reduce((acc, cur) => acc + (cur.lottoPrize || 0), 0);
-  }
-
-  getWinningQuantityByRank(rank) {
-    return this.#tickets.filter((ticket) => ticket.lottoRank === rank).length;
   }
 }
 
@@ -124,6 +124,7 @@ class LottoTicket {
   get lottoPrize() {
     return this.#lottoPrize;
   }
+
   get lottoRank() {
     return this.#lottoRank;
   }
