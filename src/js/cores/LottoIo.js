@@ -7,6 +7,10 @@ export class LottoIo {
     this.validator = validator;
   }
 
+  restartShop() {
+    this.shop.restart();
+  }
+
   inputMoney(money) {
     if (!this.validator.isLowerThanUpperLimit(money)) {
       return false;
@@ -31,12 +35,16 @@ export class LottoIo {
     this.shop.inputWinningNumbers(winningNumbers);
   }
 
-  clearTickets() {
-    this.shop.clearTickets();
-  }
-
   outputTickets() {
     return this.shop.getTickets();
+  }
+
+  outputResults() {
+    return this.shop.getResults();
+  }
+
+  clearTickets() {
+    this.shop.clearTickets();
   }
 
   toggleShowButton() {

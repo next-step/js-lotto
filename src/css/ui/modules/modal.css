@@ -1,5 +1,5 @@
 .modal {
-  opacity: 0;
+  opacity: 1;
   visibility: hidden;
   display: flex;
   position: fixed;

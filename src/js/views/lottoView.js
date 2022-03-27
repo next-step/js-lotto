@@ -1,6 +1,4 @@
-export const lottoView = (targetSelector, lottoIo, lottoRenderer) => {
-  const targetElement = document.querySelector(targetSelector);
-
+export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
   const inputMoney = (event) => {
     const { dataset } = event.target;
 
@@ -14,8 +12,8 @@ export const lottoView = (targetSelector, lottoIo, lottoRenderer) => {
       const tickets = lottoIo.outputTickets();
       const isShowtickets = lottoIo.getIsShowTickets();
 
-      lottoRenderer.renderTickets(targetElement, tickets, isShowtickets);
-      lottoRenderer.renderWinningNumberInputs(targetElement);
+      lottoRenderer.renderTickets(tickets, isShowtickets);
+      lottoRenderer.renderWinningNumberInputs();
     }
   };
 
@@ -32,6 +30,10 @@ export const lottoView = (targetSelector, lottoIo, lottoRenderer) => {
     );
 
     lottoIo.inputWinningNumbers(winningNumbers);
+
+    const results = lottoIo.outputResults();
+
+    lottoRenderer.renderModal(results);
   };
 
   const toggleShowButton = (event) => {
@@ -44,13 +46,34 @@ export const lottoView = (targetSelector, lottoIo, lottoRenderer) => {
     const tickets = lottoIo.outputTickets();
     const isShowTickets = lottoIo.getIsShowTickets();
 
-    lottoRenderer.renderTickets(targetElement, tickets, isShowTickets);
+    lottoRenderer.renderTickets(tickets, isShowTickets);
+  };
+
+  const closeModal = (event) => {
+    const { dataset } = event.target;
+
+    if (dataset.purpose !== 'closeModal') return;
+
+    lottoRenderer.removeModal();
+  };
+
+  const restart = (event) => {
+    const { dataset } = event.target;
+
+    if (dataset.purpose !== 'restart') return;
+
+    lottoRenderer.removeModal();
+    lottoRenderer.removeTickets();
+    lottoRenderer.removeWinningNumberInputs();
+    lottoIo.restart();
   };
 
   const attachListeners = () => {
     targetElement.addEventListener('click', inputMoney);
     targetElement.addEventListener('click', toggleShowButton);
     targetElement.addEventListener('click', inputWinningNumbers);
+    targetElement.addEventListener('click', closeModal);
+    targetElement.addEventListener('click', restart);
   };
 
   attachListeners();
