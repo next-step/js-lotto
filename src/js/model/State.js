@@ -11,6 +11,7 @@ import {
   LOTTO_MODAL_BENEFIT_RATE,
   LOTTO_MODAL_WINNING_RESULT,
   LOTTO_FORM__BONUS_NUMBER,
+  LOTTO_SECTION_TICKETS,
 } from '../constants/selectTarget.js';
 import { $, $$ } from '../util/dom.js';
 
@@ -81,7 +82,7 @@ export default class State {
   };
 
   toggleDisplayLottoNumbers = () => {
-    this.#lottoModel.toggleLottoTicketsNumbers();
+    $(LOTTO_SECTION_TICKETS).classList.toggle('hidden');
   };
 
   closeWinningResultModal = (e) => {

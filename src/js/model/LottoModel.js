@@ -50,10 +50,6 @@ export default class LottoModel {
     ticketPosition.insertAdjacentHTML('afterBegin', this.ticketsHtml);
   }
 
-  toggleLottoTicketsNumbers() {
-    $(LOTTO_SECTION_TICKETS).classList.toggle('hidden');
-  }
-
   calculateWinningResult(input) {
     this.#tickets.forEach((ticket) => {
       ticket.checkTheWinningResult(input);
