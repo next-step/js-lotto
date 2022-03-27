@@ -1,6 +1,6 @@
 import {EVENT, TEXTS} from '../constants/index.js';
 import {$, format, eventBus} from '../lib/index.js';
-import {LOTTO_PRICE} from '../services/lotto-service.js';
+import {LottoService} from '../services/lotto-service.js';
 import prizeService, {PrizeService} from '../services/prize-service.js';
 
 export class WinningResultModal {
@@ -106,7 +106,7 @@ export class WinningResultModal {
 	}
 
 	calculateEarningRate({earning, purchaseAmount}) {
-		return (earning / (purchaseAmount * LOTTO_PRICE)) * 100;
+		return (earning / (purchaseAmount * LottoService.lottoPrice)) * 100;
 	}
 
 	createResultTableRowTemplate({matches, prizeMoney, count}) {

@@ -1,29 +1,23 @@
 import {invert, intersections} from '../lib/index.js';
 
 export class PrizeService {
-	static get matchesByRank() {
-		return new Map([
-			[1, '6'],
-			[2, '5+'],
-			[3, '5'],
-			[4, '4'],
-			[5, '3'],
-		]);
-	}
+	static matchesByRank = new Map([
+		[1, '6'],
+		[2, '5+'],
+		[3, '5'],
+		[4, '4'],
+		[5, '3'],
+	]);
 
-	static get rankByMatches() {
-		return invert(PrizeService.matchesByRank);
-	}
+	static rankByMatches = invert(PrizeService.matchesByRank);
 
-	static get prizeMoneyByRank() {
-		return new Map([
-			[1, 2_000_000_000],
-			[2, 30_000_000],
-			[3, 1_500_000],
-			[4, 50_000],
-			[5, 5000],
-		]);
-	}
+	static prizeMoneyByRank = new Map([
+		[1, 2_000_000_000],
+		[2, 30_000_000],
+		[3, 1_500_000],
+		[4, 50_000],
+		[5, 5000],
+	]);
 
 	getRank(lottoTicket, lottoResult) {
 		const matches = intersections(lottoTicket.numbers, lottoResult.winningNumbers).size; // prettier-ignore

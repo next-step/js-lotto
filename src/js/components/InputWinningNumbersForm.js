@@ -1,5 +1,5 @@
 import {EVENT} from '../constants/index.js';
-import lottoService, {LOTTO_COUNT} from '../services/lotto-service.js';
+import lottoService, {LottoService} from '../services/lotto-service.js';
 import {eventBus, hide, show} from '../lib/index.js';
 
 export class InputWinningNumbersForm {
@@ -21,8 +21,11 @@ export class InputWinningNumbersForm {
 
 			try {
 				lottoService.setLottoResult({
-					winningNumbers: winningNumbersWithBonus.slice(0, LOTTO_COUNT),
-					bonusNumber: winningNumbersWithBonus[LOTTO_COUNT],
+					winningNumbers: winningNumbersWithBonus.slice(
+						0,
+						LottoService.lottoCount,
+					),
+					bonusNumber: winningNumbersWithBonus[LottoService.lottoCount],
 				});
 			} catch (error) {
 				alert(error.message);

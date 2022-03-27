@@ -9,11 +9,6 @@ import LottoTicket from '../model/lotto-ticket.js';
 import {EVENT} from '../constants/index.js';
 import LottoResult from '../model/lotto-result.js';
 
-export const LOTTO_PRICE = 1000;
-export const LOTTO_COUNT = 6;
-export const MINIMUM_LOTTO_VALUE = 1;
-export const MAXIMUM_LOTTO_VALUE = 45;
-
 const MESSAGES = {
 	NON_UNIT_VALUE_ALERT: '로또 구입 금액을 1,000원 단위로 입력해 주세요.',
 	MANUAL_LOTTO_COUNT_ALERT:
@@ -22,15 +17,25 @@ const MESSAGES = {
 		'로또 번호에는 중복된 숫자를 입력할 수 없습니다.',
 };
 
-class LottoService {
+export class LottoService {
 	constructor() {
-		this.lottoNumbers = [...range(MINIMUM_LOTTO_VALUE, MAXIMUM_LOTTO_VALUE)];
+		this.lottoNumbers = [
+			...range(LottoService.minimumLottoValue, LottoService.maximumLottoValue),
+		];
 		this.autoLottoTickets = [];
 		this.lottoResult = undefined;
 	}
 
+	static lottoPrice = 1000;
+	static lottoCount = 6;
+	static minimumLottoValue = 1;
+	static maximumLottoValue = 45;
+
 	purchaseLotto({purchaseAmount}) {
-		const [totalLottoCount, remainder] = divmod(purchaseAmount, LOTTO_PRICE);
+		const [totalLottoCount, remainder] = divmod(
+			purchaseAmount,
+			LottoService.lottoPrice,
+		);
 		const autoLottoCount = totalLottoCount;
 
 		if (remainder) {
@@ -60,7 +65,7 @@ class LottoService {
 	}
 
 	generateRandomLotto() {
-		return new LottoTicket(this.getRandomLottoNumbers(LOTTO_COUNT));
+		return new LottoTicket(this.getRandomLottoNumbers(LottoService.lottoCount));
 	}
 
 	getRandomLottoNumbers(count) {

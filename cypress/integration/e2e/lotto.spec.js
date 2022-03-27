@@ -1,9 +1,5 @@
 import LottoTicket from '../../../src/js/model/lotto-ticket.js';
-import {
-	LOTTO_PRICE,
-	MAXIMUM_LOTTO_VALUE,
-	MINIMUM_LOTTO_VALUE,
-} from '../../../src/js/services/lotto-service.js';
+import {LottoService} from '../../../src/js/services/lotto-service.js';
 
 beforeEach(() => {
 	cy.visit('/');
@@ -30,15 +26,17 @@ describe('구입 금액 입력 폼', () => {
 
 		cy.on('window:alert', stub);
 
-		cy.purchaseLotto({purchaseAmount: 2 * LOTTO_PRICE - 1}).then(() => {
-			expect(stub.getCall(0)).to.be.calledWith(
-				'로또 구입 금액을 1,000원 단위로 입력해 주세요.',
-			);
-		});
+		cy.purchaseLotto({purchaseAmount: 2 * LottoService.lottoPrice - 1}).then(
+			() => {
+				expect(stub.getCall(0)).to.be.calledWith(
+					'로또 구입 금액을 1,000원 단위로 입력해 주세요.',
+				);
+			},
+		);
 	});
 
 	it('1000원 미만의 금액을 제출하면, 유효성 검사 메시지를 표시한다.', () => {
-		cy.purchaseLotto({purchaseAmount: LOTTO_PRICE - 1})
+		cy.purchaseLotto({purchaseAmount: LottoService.lottoPrice - 1})
 			.get('input[name="purchaseAmountInput"]')
 			.then(($inputs) => {
 				expect($inputs[0].validationMessage).to.eq(
@@ -50,7 +48,7 @@ describe('구입 금액 입력 폼', () => {
 
 describe('구입한 로또 번호 섹션', () => {
 	beforeEach(() => {
-		cy.purchaseLotto({purchaseAmount: 5 * LOTTO_PRICE});
+		cy.purchaseLotto({purchaseAmount: 5 * LottoService.lottoPrice});
 	});
 
 	it('1000원 단위의 금액을 제출하면, 금액에 해당하는 로또 갯수가 표시된다.', () => {
@@ -86,8 +84,10 @@ describe('구입한 로또 번호 섹션', () => {
 			const lottoNumbers = $elements[0].textContent.split(', ').map(Number);
 
 			for (const lottoNumber of lottoNumbers) {
-				expect(lottoNumber).to.be.greaterThan(MINIMUM_LOTTO_VALUE - 1);
-				expect(lottoNumber).to.be.lessThan(MAXIMUM_LOTTO_VALUE + 1);
+				expect(lottoNumber).to.be.greaterThan(
+					LottoService.minimumLottoValue - 1,
+				);
+				expect(lottoNumber).to.be.lessThan(LottoService.maximumLottoValue + 1);
 			}
 		});
 	});
@@ -115,7 +115,7 @@ describe('구입한 로또 번호 섹션', () => {
 
 describe('당첨 번호 입력 폼', () => {
 	beforeEach(() => {
-		cy.purchaseLotto({purchaseAmount: 5 * LOTTO_PRICE});
+		cy.purchaseLotto({purchaseAmount: 5 * LottoService.lottoPrice});
 	});
 
 	it('1000원 단위의 금액을 제출하면, 지난 당첨 번호 입력 폼이 표시된다.', () => {
@@ -168,7 +168,7 @@ describe('당첨 번호 입력 폼', () => {
 
 describe('당첨 결과 모달', () => {
 	it('당첨 번호를 제출하면, 당첨 결과 모달이 표시된다.', () => {
-		cy.purchaseLotto({purchaseAmount: 5 * LOTTO_PRICE});
+		cy.purchaseLotto({purchaseAmount: 5 * LottoService.lottoPrice});
 		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
 
 		cy.get('.winningResultModal').should('be.visible');
@@ -228,7 +228,7 @@ describe('당첨 결과 모달', () => {
 	});
 
 	it('모달의 닫기 버튼을 클릭하면 모달 요소가 제거된다.', () => {
-		cy.purchaseLotto({purchaseAmount: 5 * LOTTO_PRICE});
+		cy.purchaseLotto({purchaseAmount: 5 * LottoService.lottoPrice});
 		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
 
 		cy.get('.winningResultModal > .modal-inner > .modal-close')
@@ -238,7 +238,7 @@ describe('당첨 결과 모달', () => {
 	});
 
 	it('모달의 바깥을 클릭하면 모달 요소가 제거된다.', () => {
-		cy.purchaseLotto({purchaseAmount: 5 * LOTTO_PRICE});
+		cy.purchaseLotto({purchaseAmount: 5 * LottoService.lottoPrice});
 		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
 
 		cy.get('.winningResultModal')
@@ -248,7 +248,7 @@ describe('당첨 결과 모달', () => {
 	});
 
 	it('다시 시작하기 버튼을 누르면, 초기화된다.', () => {
-		cy.purchaseLotto({purchaseAmount: 5 * LOTTO_PRICE});
+		cy.purchaseLotto({purchaseAmount: 5 * LottoService.lottoPrice});
 		cy.submitWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
 		cy.get('.winningResultModal')
 			.contains('다시 시작하기')
