@@ -37,45 +37,13 @@ export default class State {
     $(LOTTO_FORM__BONUS_NUMBER).value = '';
   };
 
-  calculateAndDisplayWinningResult = (e) => {
-    e.preventDefault();
-
-    try {
-      const winningNumbers = [];
-      let bonusNumber = 0;
-
-      $$(LOTTO_FORM__WINNING_NUMBER).forEach(($el) => {
-        winningNumbers.push($el.value);
-      });
-
-      LottoModel.validators.isDuplicatedWinningNumber(winningNumbers);
-      bonusNumber = $(LOTTO_FORM__BONUS_NUMBER).value;
-      this.#lottoModel.calculateWinningResult({ winningNumbers, bonusNumber });
-      this.displayWinningResultModal();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  displayWinningResultModal = () => {
-    const prizeKeys = Object.keys(PRIZE_TYPES);
-
-    $$(LOTTO_MODAL_WINNING_RESULT).forEach(($el, i) => {
-      $el.lastElementChild.textContent = `${this.lottoModel.getWinningQuantityByRank(prizeKeys[i])}개`;
-    });
-    $(LOTTO_MODAL).classList.toggle('open');
-    $(LOTTO_MODAL_BENEFIT_RATE).textContent = `${this.lottoBenefitRate}%`;
-  };
-
   purchaseLotto = (e) => {
     e.preventDefault();
-
     try {
       const inputPrice = Number($(PRICE_FORM__INPUT).value);
-
       PriceModel.validators.isValidPrice(inputPrice);
       this.#priceModel.updatePrice(inputPrice);
-      this.generateLotto(inputPrice);
+      this.#generateLotto(inputPrice);
     } catch (err) {
       alert(err.message);
     }
@@ -85,12 +53,46 @@ export default class State {
     $(LOTTO_SECTION_TICKETS).classList.toggle('hidden');
   };
 
+  calculateAndDisplayWinningResult = (e) => {
+    e.preventDefault();
+    try {
+      const inputWinningNumbers = this.#getWinningNumbers();
+      LottoModel.validators.isDuplicatedWinningNumber(inputWinningNumbers.winningNumbers);
+      this.#lottoModel.calculateWinningResult(inputWinningNumbers);
+      this.#displayWinningResultModal();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   closeWinningResultModal = (e) => {
     e.preventDefault();
     $(LOTTO_MODAL).classList.toggle('open');
   };
 
-  generateLotto(price) {
+  #getWinningNumbers = () => {
+    const inputWinningNumbers = {
+      winningNumbers: [],
+      bonusNumber: '',
+    };
+
+    $$(LOTTO_FORM__WINNING_NUMBER).forEach(($el) => {
+      inputWinningNumbers.winningNumbers.push($el.value);
+    });
+    inputWinningNumbers.bonusNumber = $(LOTTO_FORM__BONUS_NUMBER).value;
+    return inputWinningNumbers;
+  };
+
+  #displayWinningResultModal = () => {
+    const prizeKeys = Object.keys(PRIZE_TYPES);
+    $$(LOTTO_MODAL_WINNING_RESULT).forEach(($el, i) => {
+      $el.lastElementChild.textContent = `${this.lottoModel.getWinningQuantityByRank(prizeKeys[i])}개`;
+    });
+    $(LOTTO_MODAL).classList.toggle('open');
+    $(LOTTO_MODAL_BENEFIT_RATE).textContent = `${this.lottoBenefitRate}%`;
+  };
+
+  #generateLotto(price) {
     try {
       const quantity = price / LOTTO_PURCHASE_UNIT;
       const totalQuantity = this.#lottoModel?.quantity + quantity;

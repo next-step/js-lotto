@@ -16,7 +16,7 @@ export default class LottoModel {
 
   constructor(quantity) {
     this.createLotto(quantity);
-    this.showLottoTicket();
+    this.#displayLottoTicket();
   }
 
   static validators = {
@@ -37,10 +37,10 @@ export default class LottoModel {
     this.#quantity += quantity;
     const newTickets = Array.from(Array(quantity), (_, i) => new LottoTicket((i += 1)));
     this.#tickets = [...this.#tickets, ...newTickets];
-    this.showLottoTicket();
+    this.#displayLottoTicket();
   }
 
-  showLottoTicket() {
+  #displayLottoTicket() {
     $(LOTTO_SECTION).hidden = false;
     $(LOTTO_FORM).hidden = false;
     $(LOTTO_SECTION__LABEL).textContent = `총 ${this.#quantity}개를 구매하였습니다.`;
@@ -50,9 +50,9 @@ export default class LottoModel {
     ticketPosition.insertAdjacentHTML('afterBegin', this.ticketsHtml);
   }
 
-  calculateWinningResult(input) {
+  calculateWinningResult(inputWinningNumbers) {
     this.#tickets.forEach((ticket) => {
-      ticket.checkTheWinningResult(input);
+      ticket.setWinningResult(inputWinningNumbers);
     });
   }
 
@@ -89,7 +89,7 @@ class LottoTicket {
     this.#matchedCount = 0;
   }
 
-  checkTheWinningResult({ winningNumbers, bonusNumber }) {
+  setWinningResult({ winningNumbers, bonusNumber }) {
     this.#matchedCount = 0;
     winningNumbers.forEach((winningNumber) => {
       if (this.#ticketNumbers.includes(Number(winningNumber))) {
