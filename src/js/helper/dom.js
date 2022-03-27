@@ -28,11 +28,18 @@ export const $elementToggleClass = safeExecutor(([$element, className]) => {
   return $element;
 });
 
-export const $elements = stringHTML => {
+export const $elements = (stringHTML, ...rest) => {
   const root = document.createElement('div');
   root.innerHTML = stringHTML;
+  Array.from(rest).forEach(([selector, $element]) => {
+    $(selector, root).replaceChildren($element);
+  });
+
   return root.firstElementChild;
 };
+
+export const $allElementProp = (selector, prop) =>
+  Array.from($all(selector)).map($element => $element[prop]);
 
 // TODO: DOM Parser를 만들어 렌더링을 루트 앱에서 진행합니다.
 export const $eventBindedComponent = getElement => args => {
