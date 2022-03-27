@@ -1,13 +1,12 @@
 import { MESSAGE } from "../constant/index.js";
-import { LottoNumber } from "./LottoNumber.js";
+import { LottoPurchase } from "../domain/LottoPurchase.js";
 
-const LOTTO_UNIT = 1000;
-const MIN_PURCHASE_PRICE = 1000;
-const MAX_PURCHASE_PRICE = 100000;
+
 const ENTER = "Enter";
 
-export class LottoPurchase {
+export class LottoPurchaseForm {
     lottoNumber = null;
+    lottoPurchase = null;
     onLottoPurchase = null;
 
     $element = null;
@@ -16,8 +15,10 @@ export class LottoPurchase {
 
     constructor($element, props) {
         this.$element = $element;
-        this.lottoNumber = new LottoNumber();
         this.onLottoPurchase = props.onLottoPurchase;
+        this.lottoPurchase = new LottoPurchase({
+
+        });
 
         this.#render();
         this.#mounted();
@@ -72,44 +73,9 @@ export class LottoPurchase {
 
     #onPurchase() {
         const purchasePriceInput = this.$purchasePriceInput.value;
-        const resultValue = this.#getPurchasePriceState(purchasePriceInput);
-
-        if (resultValue.isComplete) {
-            this.onLottoPurchase(this.#getLottoList(purchasePriceInput));
-            return;
-        }
-
-        alert(resultValue.message);
-    }
-
-    #getLottoList(purchasePriceInput) {
-        return this.lottoNumber.getLottoNumbers(this.#getLottoAmount(purchasePriceInput));
-    }
-
-    #getLottoAmount(price) {
-        return price / LOTTO_UNIT;
-    }
-
-    #getPurchasePriceState(price) {
-        let resultValue = { isComplete: true, message: "" };
-
-        if (price < MIN_PURCHASE_PRICE) {
-            resultValue.isComplete = false;
-            resultValue.message = MESSAGE.ERROR.MIN_PURCHASE;
-
-            return resultValue;
-        } else if (price % LOTTO_UNIT > 0) {
-            resultValue.isComplete = false;
-            resultValue.message = MESSAGE.ERROR.UNIT_MISMATCH;
-
-            return resultValue;
-        } else if (price > MAX_PURCHASE_PRICE) {
-            resultValue.isComplete = false;
-            resultValue.message = MESSAGE.ERROR.MAX_PURCHASE;
-
-            return resultValue;
-        }
-
-        return resultValue;
+        this.lottoPurchase.purchase(purchasePriceInput);
+        if(this.lottoPurchase.getAmount() > 0) {
+            this.onLottoPurchase(this.lottoPurchase.getAmount());
+        }       
     }
 }

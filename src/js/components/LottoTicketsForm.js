@@ -1,7 +1,10 @@
-export class LottoTickets {
+import { LottoMachine } from "../domain/LottoMachine.js";
+
+export class LottoTicketsForm {
     isChecked = false;
     amount = 0;
     tickets = null;
+    lottoMachine = null;
 
     $switch = null;
     $amountArea = null;
@@ -11,6 +14,7 @@ export class LottoTickets {
     constructor($amountAreaElement, $ticketAreaElement) {
         this.$amountArea = $amountAreaElement;
         this.$ticketArea = $ticketAreaElement;
+        this.lottoMachine = new LottoMachine();
     }
 
     render() {
@@ -35,8 +39,12 @@ export class LottoTickets {
         this.amount = amountValue;
     }
 
-    setTickets(ticketList) {
-        this.tickets = ticketList;
+    setTickets(tickets) {
+        this.tickets = tickets;
+    }
+
+    pickTickets() {
+        this.setTickets(this.lottoMachine.getLottoNumbers(this.getAmount()));
     }
 
     #onSwitchClick(event) {

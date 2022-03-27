@@ -1,15 +1,19 @@
 import { MESSAGE } from "../constant/index.js";
 
-const LOTTO_MAX_NUMBER = 45;
 
-export class LottoWinning {
+
+export class WinningLottoForm {
     props = null;
     winningNumbers = null;
     bonusNumber = null;
+    winningLotto = null;
 
-    constructor($winngingArea, props) {
+    constructor($winngingArea, winningLotto, props) {
         this.$winngingArea = $winngingArea;
         this.props = props;
+
+        this.winningLotto = winningLotto;
+        console.log(winningLotto);
     }
 
     render() {
@@ -24,78 +28,35 @@ export class LottoWinning {
 
     setEvent() {
         this.$resultModalOpenButton.addEventListener("click", (event) => {
-            if(this.checkWinningNumber().isComplete) {
-                this.props.onLottoModal();
-                this.props.setLottoNumbers(this.#getWinningNumbers());
-                this.props.setBonusNumber(this.#getBonusNumber());
-            }            
+            this.#setWinningNumbers(this.#parseWinningNumbers());
+            this.#setBonusNumber(this.$bonusNumber.value);
+            
+            this.winningLotto.setWinningNumbers(this.#getWinningNumbers());
+            this.winningLotto.setBonus(this.#getBonusNumber());
+            this.props.onWinngingCheck();
+            // this.winningLotto.setWinningNumbers()
+            // if(this.checkWinningNumber().isComplete) {
+            //     this.props.onLottoModal();
+            //     this.props.setLottoNumbers(this.#getWinningNumbers());
+            //     this.props.setBonusNumber(this.#getBonusNumber());
+            // }            
         });
     }
 
-    checkWinningNumber() {
-        let winningNumber = {};
-        let resultValue = {isComplete: true, message: ""};
 
-        for(let i=0; i<this.$winningNumbers.length; i++) {
-            if(!this.$winningNumbers[i].value) {
-                resultValue = {
-                    isComplete: false,
-                    message: "입력하지 않은 당첨 번호가 있습니다."
-                }
-
-                return resultValue; 
-            }
-
-            if(this.$winningNumbers[i].value > LOTTO_MAX_NUMBER) {
-                resultValue = {
-                    isComplete: false,
-                    message: MESSAGE.ERROR.MAX_PURCHASE
-                }
-                
-                return resultValue;
-            }
-
-            if(winningNumber[this.$winningNumbers[i].value]) {
-                resultValue = {
-                    isComplete: false,
-                    message: MESSAGE.ERROR.EXIST_WINNING_NUMBER
-                }
-                
-                return resultValue;
-            } else {
-                winningNumber[this.$winningNumbers[i].value] = this.$winningNumbers[i].value;
-            }
-        }
-
-        if(!this.$bonusNumber.value) {
-            resultValue = {
-                isComplete: false,
-                message: "보너스 번호를 입력하지 않았습니다."
-            }
-            
-            return resultValue;
-        }
-
-        if(winningNumber[this.$bonusNumber.value]) {
-            resultValue = {
-                isComplete: false,
-                message: "보너스 번호가 당첨 번호와 중복되는 번호입니다."
-            }
-            
-            return resultValue;
-        }
-
-        this.#setWinningNumbers(Object.values[winningNumber]);
-        this.#setBonusNumber(this.$bonusNumber.value);
-        return resultValue;
-    }
 
     #getWinningNumbers() {
         return this.winningNumbers;
     }
 
-    #setWinningNumbers(numbers) {
-        this.winningNumbers = numbers;
+    #parseWinningNumbers() {
+        return Array.from(this.$winningNumbers).map(number => {
+            return number.value;
+        });
+    }
+
+    #setWinningNumbers(winningNumbers) {
+        this.winningNumbers = winningNumbers;
     }
 
     #getBonusNumber() {

@@ -31,7 +31,7 @@ describe("test", () => {
         cy.get("[data-test=purchase-button]").click();
 
         cy.on("window:alert", (text) => {
-            expect(text).to.contains(`금액은 100000이야여야 합니다.`);
+            expect(text).to.contains(`금액은 100000이하여야 합니다.`);
         })
     });
 
