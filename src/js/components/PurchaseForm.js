@@ -1,11 +1,10 @@
 import {$, eventBus} from '../lib/index.js';
 import {EVENT} from '../constants/index.js';
 import lottoService from '../services/lotto-service.js';
-import {Component} from './Component.js';
 
-export class PurchaseForm extends Component {
+export class PurchaseForm {
 	constructor($element) {
-		super($element);
+		this.$element = $element;
 
 		this.$purchaseAmountInput = $('input[name="purchaseAmountInput"]');
 

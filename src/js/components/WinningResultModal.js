@@ -2,11 +2,10 @@ import {EVENT, TEXTS} from '../constants/index.js';
 import {$, format, eventBus} from '../lib/index.js';
 import {LOTTO_PRICE} from '../services/lotto-service.js';
 import prizeService, {PrizeService} from '../services/prize-service.js';
-import {Component} from './Component.js';
 
-export class WinningResultModal extends Component {
+export class WinningResultModal {
 	constructor($element) {
-		super($element);
+		this.$element = $element;
 
 		this.isOpened = false;
 		this.autoLottoTickets = [];

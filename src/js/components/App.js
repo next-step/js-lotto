@@ -1,14 +1,14 @@
 import {EVENT} from '../constants/index.js';
 import {$, eventBus} from '../lib/index.js';
-import {Component} from './Component.js';
+
 import {PurchaseForm} from './PurchaseForm.js';
 import {PurchasedLottoSection} from './PurchasedLottoSection.js';
 import {InputWinningNumbersForm} from './InputWinningNumbersForm.js';
 import {WinningResultModal} from './WinningResultModal.js';
 
-export class App extends Component {
+export class App {
 	constructor($element) {
-		super($element);
+		this.$element = $element;
 
 		this.PurchaseForm = new PurchaseForm($('form[name=purchaseForm]'));
 		this.PurchasedLottoSection = new PurchasedLottoSection($('#purchasedLottoSection')); // prettier-ignore

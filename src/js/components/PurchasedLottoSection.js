@@ -1,11 +1,9 @@
 import {EVENT, TEXTS} from '../constants/index.js';
-import {format, $, eventBus} from '../lib/index.js';
-import {Component} from './Component.js';
+import {hide, show, format, $, eventBus} from '../lib/index.js';
 
-export class PurchasedLottoSection extends Component {
+export class PurchasedLottoSection {
 	constructor($element) {
-		super($element);
-
+		this.$element = $element;
 		this.$purchasedCountLabel = $('.purchasedCountLabel');
 		this.$showLottoNumbersToggle = $('input[name=showLottoNumbersToggle]');
 		this.$autoPurchasedLottoList = $('.autoPurchasedLottoList');
@@ -13,7 +11,7 @@ export class PurchasedLottoSection extends Component {
 		this.autoLottoTickets = [];
 		this.isVisibleNumbers = false;
 
-		this.hide();
+		hide(this.$element);
 		this.bindEvent();
 		this.subscribe();
 	}
@@ -47,13 +45,13 @@ export class PurchasedLottoSection extends Component {
 		this.isVisibleNumbers = isVisibleNumbers ?? this.isVisibleNumbers;
 
 		if (this.autoLottoTickets.length > 0) {
-			this.show();
+			show(this.$element);
 			this.render();
 
 			return;
 		}
 
-		this.hide();
+		hide(this.$element);
 		this.render();
 	}
 

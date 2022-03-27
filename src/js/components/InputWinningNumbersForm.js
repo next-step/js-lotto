@@ -1,13 +1,12 @@
 import {EVENT} from '../constants/index.js';
 import lottoService, {LOTTO_COUNT} from '../services/lotto-service.js';
-import {eventBus} from '../lib/index.js';
-import {Component} from './Component.js';
+import {eventBus, hide, show} from '../lib/index.js';
 
-export class InputWinningNumbersForm extends Component {
+export class InputWinningNumbersForm {
 	constructor($element) {
-		super($element);
+		this.$element = $element;
 
-		this.hide();
+		hide(this.$element);
 		this.bindEvent();
 		this.subscribe();
 	}
@@ -33,11 +32,11 @@ export class InputWinningNumbersForm extends Component {
 
 	subscribe() {
 		eventBus.on(EVENT.INITIALIZE, () => {
-			this.hide();
+			hide(this.$element);
 		});
 
 		eventBus.on(EVENT.PURCHASE_LOTTO, () => {
-			this.show();
+			show(this.$element);
 		});
 	}
 }
