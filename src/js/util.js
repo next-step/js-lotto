@@ -1,9 +1,17 @@
+import { RANDOM_INTEGER_CONDITION, LOTTO_LENGTH } from "./constants";
+
 export const createLotto = () => {
   let result = [];
-  while (result.length < 6) {
-    let randomInt = getRandomInteger(1, 45);
+  while (result.length < LOTTO_LENGTH) {
+    let randomInt = getRandomInteger(
+      RANDOM_INTEGER_CONDITION.START,
+      RANDOM_INTEGER_CONDITION.END
+    );
     while (result.includes(randomInt)) {
-      randomInt = getRandomInteger(1, 45);
+      randomInt = getRandomInteger(
+        RANDOM_INTEGER_CONDITION.START,
+        RANDOM_INTEGER_CONDITION.END
+      );
     }
     result.push(randomInt);
   }
