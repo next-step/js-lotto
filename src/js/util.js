@@ -1,4 +1,4 @@
-import { RANDOM_INTEGER_CONDITION, LOTTO_LENGTH } from "./constants";
+import { RANDOM_INTEGER_CONDITION, LOTTO_LENGTH } from "./constants.js";
 
 export const createLotto = () => {
   let result = [];
