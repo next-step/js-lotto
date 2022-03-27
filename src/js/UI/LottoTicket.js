@@ -1,68 +1,30 @@
-import { selector } from "./utils/consts.js";
-import Lotto from "./Lotto.js";
+import Lotto from "../Lotto.js";
+import LottoWinning from "./LottoWinning.js";
 
-class UI {
-  
-  #lottoPurchaseForm = selector('.lotto-purchase-form');  
-  #lottoPurchaseInput = selector('.lotto-purchase-input');
-  #lottoPurchaseBtn = selector('.lotto-purchase-btn');
+import { selector } from "../utils/consts.js";
+
+
+class LottoTicket {
   #ticketContainer;
   #countedTicketLabel;
   #lottoTicketUI;
   #switchBtn;
-  #toggle;
   #randomNumberLists;
 
-  setEvent() {
-    this.#lottoPurchaseForm.addEventListener('submit', (event) => {
-      event.preventDefault()
-      const lotto = new Lotto(this.#lottoPurchaseInput.value)
-      const amount = lotto.lottoTicketAmount
-
-      this.#lottoTicketUI = [selector('#purchased-lottos'), selector('#lotto-winning-numbers-form')]
-        
-      if (!this.isPassValidateAmount(amount)) return;
-        
-      this.changeLottoTicketUI(amount)
-      this.changeTicketsUiAccordingToSwitchState(amount)
-    })
+  constructor(amount) {
+    this.amount = amount
+    this.renderLottoTicket(this.amount)
   }
-
-  isPassValidateAmount(amount) {
-    this.#toggle = selector('.lotto-numbers-toggle-button')
-    if (!this.changeUIWhenAmountDoNotPassValidation(amount)) return;
-    return true
-  }
-  
-  changeUIWhenAmountDoNotPassValidation(amount) {
-    if (!amount) {
-      this.#lottoPurchaseInput.value = ""
-      this.removeCssStyleWhenResubmitting()
-      return false
-    }
-    this.changeCssStyleWhenResubmitting()
-    return true
-  }
-
-  removeCssStyleWhenResubmitting() {
-    if (this.#toggle) {
-      this.#toggle.checked = false
-      this.#ticketContainer?.classList.remove('flex-col')
-      this.#lottoTicketUI.forEach(tag => tag.style.display = "none")
-    }
-  }
-
-  changeCssStyleWhenResubmitting() {
-    if (this.#toggle) {
-      this.#toggle.checked = false
-      this.#ticketContainer?.classList.remove('flex-col')
-    }
+  renderLottoTicket(amount) {
+    this.changeLottoTicketUI(amount)
+    this.changeTicketsUiAccordingToSwitchState(amount)
+    new LottoWinning().setEvent()
   }
 
   changeLottoTicketUI(amount) {
-
     this.#ticketContainer = selector('ul[data-ticket]');
     this.#countedTicketLabel = selector('#counted-ticket');
+    this.#lottoTicketUI = [selector('#purchased-lottos'), selector('#lotto-winning-numbers-form')] // 어떻게 이 변수 중복을 피할까?
 
     this.#countedTicketLabel.textContent = `총 ${amount}개를 구매하였습니다.`
     this.#ticketContainer.innerHTML = `
@@ -74,6 +36,9 @@ class UI {
     this.#lottoTicketUI.forEach(tag => tag.style.display = "block")
   }
 
+
+  // 여기서부터 스위치 인데 저기 위가 스위치에 관여함
+  // 저기 위에서 스위치에 관여하는 부분이
   changeTicketsUiAccordingToSwitchState(amount) {
     this.#switchBtn = selector('.switch');
     const randomNumber = Lotto.createRandomNumberFromOneToFortyFive(amount)
@@ -102,10 +67,6 @@ class UI {
       })
     }
   }
-
 }
 
-
-
-
-export default UI;
+export default LottoTicket;

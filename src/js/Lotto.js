@@ -41,6 +41,15 @@ class Lotto {
 
     return lottoRandomNumbers
   }
+
+  static validateWinningNumberRange(winningNumberLengths) {
+    return winningNumberLengths.every(length => length >= 1 && length < 46)
+  }
+  
+  static validateDuplicateWinningNumber(winningNumbers) {
+    return winningNumbers.every((num, index) => index === winningNumbers.lastIndexOf(num))
+  } 
+  
 }
 
 export default Lotto;

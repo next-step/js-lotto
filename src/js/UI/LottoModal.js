@@ -1,6 +1,4 @@
-import LottoPurchase from "./UI/LottoPurchase.js";
-
-new LottoPurchase().setEvent()
+import { selector } from "../utils/consts.js";
 
 // const showResultButton = selector('.open-result-modal-button');
 // const modalClose = selector('.modal-close');
@@ -15,5 +13,8 @@ new LottoPurchase().setEvent()
 //   modal.classList.remove('open')
 // }
 
-// showResultButton.addEventListener('click', onModalShow)
-// modalClose.addEventListener('click', onModalClose)
+class LottoModal {
+  #hello = selector('.')
+}
+
+export default LottoModal;
