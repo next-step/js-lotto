@@ -6,3 +6,18 @@ Cypress.Commands.add('inputAmount', amount => {
 Cypress.Commands.add('purchasedLottoList', () => {
   cy.get('.lotto-list').children();
 });
+
+Cypress.Commands.add('inputWinningNumbers', inputNumbers => {
+  inputNumbers.forEach();
+  cy.get('[data-props="modal-open-button"]').click();
+});
+
+Cypress.Commands.add('checkLottoNumbers', () => {
+  cy.get('[data-props="modal-open-button"]').click();
+});
+
+Cypress.Commands.add('inputWinningNumbers', winningNumbers => {
+  winningNumbers.forEach((winningNumber, index) => {
+    cy.get('.winning-number').eq(index).type(winningNumber);
+  });
+});
