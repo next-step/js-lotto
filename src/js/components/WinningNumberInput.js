@@ -69,7 +69,19 @@ export class WinningNumberInput {
         window.alert(ALERT_STRING.EMPTY_WINNING_NUMBER_INPUT);
         return;
       }
-      onClickResultButton();
+      const originalNumberInputElementArray = Array.from(
+        document.querySelectorAll(
+          "#winning-number-input-original > div > input"
+        )
+      );
+      const originalNumberArray = [];
+      originalNumberInputElementArray.forEach((numberElement) => {
+        originalNumberArray.push(numberElement.valueAsNumber);
+      });
+      const bonusNumberString = document.querySelector(
+        "#winning-number-input-bonus > div > input"
+      ).valueAsNumber;
+      onClickResultButton(originalNumberArray, bonusNumberString);
     });
   };
 

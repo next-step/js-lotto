@@ -1,11 +1,15 @@
 export class Statistics {
   constructor(target, onModalClose) {
-    target.innerHTML = this.#template();
+    this.#target = target;
+    this.#target.innerHTML = this.#template([], 0);
     this.#setEvents(onModalClose);
   }
 
-  #template = () => {
+  #target;
+
+  #template = (winningCounts, profit) => {
     return `
+            
             <div class="modal-inner p-10">
             <div class="modal-close">
                 <svg viewbox="0 0 40 40">
@@ -27,32 +31,32 @@ export class Statistics {
                     <tr class="text-center">
                     <td class="p-3">3개</td>
                     <td class="p-3">5,000</td>
-                    <td class="p-3">n개</td>
+                    <td class="p-3">${winningCounts["3개"]}개</td>
                     </tr>
                     <tr class="text-center">
                     <td class="p-3">4개</td>
                     <td class="p-3">50,000</td>
-                    <td class="p-3">n개</td>
+                    <td class="p-3">${winningCounts["4개"]}개</td>
                     </tr>
                     <tr class="text-center">
                     <td class="p-3">5개</td>
                     <td class="p-3">1,500,000</td>
-                    <td class="p-3">n개</td>
+                    <td class="p-3">${winningCounts["5개"]}개</td>
                     </tr>
                     <tr class="text-center">
                     <td class="p-3">5개 + 보너스볼</td>
                     <td class="p-3">30,000,000</td>
-                    <td class="p-3">n개</td>
+                    <td class="p-3">${winningCounts["5개 + 보너스볼"]}개</td>
                     </tr>
                     <tr class="text-center">
                     <td class="p-3">6개</td>
                     <td class="p-3">2,000,000,000</td>
-                    <td class="p-3">n개</td>
+                    <td class="p-3">${winningCounts["6개"]}개</td>
                     </tr>
                 </tbody>
                 </table>
             </div>
-            <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+            <p class="text-center font-bold">당신의 총 수익률은 ${profit}%입니다.</p>
             <div class="d-flex justify-center mt-5">
                 <button type="button" class="btn btn-cyan">다시 시작하기</button>
             </div>
@@ -63,5 +67,11 @@ export class Statistics {
   #setEvents = (onModalClose) => {
     const modalClose = document.querySelector(".modal-close");
     modalClose.addEventListener("click", onModalClose);
+  };
+
+  setState = (winningCounts, profit) => {
+    console.dir(winningCounts);
+    console.log(profit);
+    this.#target.innerHTML = this.#template(winningCounts, profit);
   };
 }
