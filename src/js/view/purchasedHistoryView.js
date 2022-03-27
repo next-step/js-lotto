@@ -41,15 +41,11 @@ const purchasedHistoryView = (function () {
   }
 
   function showPurchasedLottoNumbers() {
-    $purchasedLottoTickets
-      .querySelectorAll('span > span')
-      .forEach(($ticketNumber) => $ticketNumber.classList.remove('hide'));
+    $purchasedLottoTickets.classList.remove('hide');
   }
 
   function hidePurchasedLottoNumbers() {
-    $purchasedLottoTickets
-      .querySelectorAll('span > span')
-      .forEach(($ticketNumber) => $ticketNumber.classList.add('hide'));
+    $purchasedLottoTickets.classList.add('hide');
   }
 
   function changeShowLottoNumbersByToggleStatus() {

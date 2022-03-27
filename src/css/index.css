@@ -23,6 +23,6 @@ body {
   height: 36px;
 }
 
-.hide {
+.d-flex.flex-wrap.hide > span > span {
   display: none;
 }
