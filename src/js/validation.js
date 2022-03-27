@@ -10,6 +10,6 @@ export const isValidPriceInput = (inputNumber) => {
 };
 
 export const areNumbersNotDuplicated = (numbersArray) => {
-  let orderedArray = Array.from(new Set(numbersArray));
+  const orderedArray = Array.from(new Set(numbersArray));
   return numbersArray.length === orderedArray.length;
 };

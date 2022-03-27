@@ -1,21 +1,24 @@
 import { RANDOM_INTEGER_CONDITION, LOTTO_LENGTH } from "./constants.js";
 
 export const createLotto = () => {
-  let result = [];
-  while (result.length < LOTTO_LENGTH) {
-    let randomInt = getRandomInteger(
-      RANDOM_INTEGER_CONDITION.START,
-      RANDOM_INTEGER_CONDITION.END
-    );
-    while (result.includes(randomInt)) {
-      randomInt = getRandomInteger(
+  const lottoArray = Array(LOTTO_LENGTH)
+    .fill(0)
+    .map(() =>
+      getRandomInteger(
         RANDOM_INTEGER_CONDITION.START,
         RANDOM_INTEGER_CONDITION.END
-      );
-    }
-    result.push(randomInt);
+      )
+    );
+  const lottoSet = new Set(lottoArray);
+  while (lottoSet.size < LOTTO_LENGTH) {
+    lottoSet.add(
+      getRandomInteger(
+        RANDOM_INTEGER_CONDITION.START,
+        RANDOM_INTEGER_CONDITION.END
+      )
+    );
   }
-  return result;
+  return [...lottoSet];
 };
 
 const getRandomInteger = (min, max) => {
