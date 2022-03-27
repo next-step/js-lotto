@@ -1,8 +1,8 @@
 export class Statistics {
-  constructor(target, onModalClose) {
+  constructor(target, onModalClose, onClickRestart) {
     this.#target = target;
     this.#target.innerHTML = this.#template([], 0);
-    this.#setEvents(onModalClose);
+    this.#setEvents(onModalClose, onClickRestart);
   }
 
   #target;
@@ -58,19 +58,21 @@ export class Statistics {
             </div>
             <p class="text-center font-bold">당신의 총 수익률은 ${profit}%입니다.</p>
             <div class="d-flex justify-center mt-5">
-                <button type="button" class="btn btn-cyan">다시 시작하기</button>
+                <button id="restart-button" type="button" class="btn btn-cyan">다시 시작하기</button>
             </div>
             </div>
         `;
   };
 
-  #setEvents = (onModalClose) => {
+  #setEvents = (onModalClose, onClickRestart) => {
     const modalClose = document.querySelector(".modal-close");
     modalClose.addEventListener("click", onModalClose);
+    const restartButton = document.querySelector("#restart-button");
+    restartButton.addEventListener("click", onClickRestart);
   };
 
-  setState = (winningCounts, profit, onModalClose) => {
+  setState = (winningCounts, profit, onModalClose, onClickRestart) => {
     this.#target.innerHTML = this.#template(winningCounts, profit);
-    this.#setEvents(onModalClose);
+    this.#setEvents(onModalClose, onClickRestart);
   };
 }

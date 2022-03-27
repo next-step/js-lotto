@@ -102,4 +102,17 @@ export class WinningNumberInput {
     }
     return false;
   };
+
+  clear = () => {
+    const originalNumberInputs = document.querySelectorAll(
+      "#winning-number-input-original > div > input"
+    );
+    originalNumberInputs.forEach((element) => {
+      element.value = "";
+    });
+    const bonusNumberInput = document.querySelector(
+      "#winning-number-input-bonus > div > input"
+    );
+    bonusNumberInput.value = "";
+  };
 }

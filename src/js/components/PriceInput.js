@@ -47,4 +47,9 @@ export class PriceInput {
     }
     callback(inputValue);
   };
+
+  clear = () => {
+    const priceInputForm = document.querySelector("#price-input-form");
+    priceInputForm.reset();
+  };
 }

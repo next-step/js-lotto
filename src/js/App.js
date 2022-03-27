@@ -50,8 +50,25 @@ class App {
     this.#onModalShow(data.statistic, data.profit);
   };
 
+  #onClickRestartButton = () => {
+    this.#onModalClose();
+    this.#inputPrice = 0;
+    this.#lottos = [];
+
+    this.#priceInputComponent.clear();
+    this.#winningNumberInputComponent.clear();
+
+    this.#purchaseDetailElement.hidden = true;
+    this.#winningNumberInputElement.hidden = true;
+  };
+
   #onModalShow = (statistic, profit) => {
-    this.#statisticsComponent.setState(statistic, profit, this.#onModalClose);
+    this.#statisticsComponent.setState(
+      statistic,
+      profit,
+      this.#onModalClose,
+      this.#onClickRestartButton
+    );
     this.#statisticsElement.classList.add("open");
   };
 
@@ -73,7 +90,8 @@ class App {
     );
     this.#statisticsComponent = new Statistics(
       this.#statisticsElement,
-      this.#onModalClose
+      this.#onModalClose,
+      this.#onClickRestartButton
     );
   };
 }
