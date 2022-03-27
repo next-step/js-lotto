@@ -21,8 +21,7 @@ class LottoPurchase {
         
       if (!this.isPassValidateAmount(amount)) return;
       
-      // 티켓 클래스에 주입
-      new LottoTicket(amount)
+      new LottoTicket(lotto)
     })
   }
 

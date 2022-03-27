@@ -50,6 +50,9 @@ class Lotto {
     return winningNumbers.every((num, index) => index === winningNumbers.lastIndexOf(num))
   } 
   
+  winningResult() {
+    // 당첨 여부 확인
+  }
 }
 
 export default Lotto;

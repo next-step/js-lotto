@@ -10,15 +10,18 @@ class LottoTicket {
   #lottoTicketUI;
   #switchBtn;
   #randomNumberLists;
+  #lotto
+  #amount
 
-  constructor(amount) {
-    this.amount = amount
-    this.renderLottoTicket(this.amount)
+  constructor(lotto) {
+    this.#lotto = lotto
+    this.#amount = lotto.lottoTicketAmount
+    this.renderLottoTicket(this.#amount)
   }
   renderLottoTicket(amount) {
     this.changeLottoTicketUI(amount)
     this.changeTicketsUiAccordingToSwitchState(amount)
-    new LottoWinning().setEvent()
+    new LottoWinning(this.#lotto).setEvent()
   }
 
   changeLottoTicketUI(amount) {

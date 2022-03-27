@@ -6,7 +6,14 @@ class LottoWinning {
   #lottoWinningNumbersForm;
   #lottoWinningNumberInputs;
   #lottoBonusNumberInput;
-  
+  #lotto
+  #price
+
+  constructor(lotto) {
+    this.#lotto = lotto
+    this.#price = lotto.lottoTicketAmount
+  }
+
   setEvent() {
     this.#lottoWinningNumbersForm = selector('form[data-winning-numbers]')
     this.#lottoWinningNumberInputs = [...selectorAll('input[data-winning-numbers]')]
@@ -26,16 +33,14 @@ class LottoWinning {
 
     this.#lottoWinningNumbersForm.addEventListener('submit', (event) => {
       event.preventDefault()
-      console.log(Lotto.validateDuplicateWinningNumber([...this.#lottoWinningNumberInputs].map(tag => tag.value)))
+      
       if (!Lotto.validateWinningNumberRange([...this.#lottoWinningNumberInputs].map(tag => Number(tag.value.length)))) 
         return alert('로또 번호는 1부터 45까지의 숫자만 입력 가능합니다.');
 
       if (!Lotto.validateDuplicateWinningNumber([...this.#lottoWinningNumberInputs].map(tag => tag.value))) 
         return alert('로또 번호에는 중복된 숫자를 입력할 수 없습니다.');
       
-        
-      
-      // new LottoModal()
+      this.#lotto.winningResult([...this.#lottoWinningNumberInputs])
     })
 
   }
