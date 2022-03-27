@@ -1,6 +1,9 @@
 import { clickButtonWithSelector, typePriceInput } from "../cypress-util.js";
 import { getRandomInteger } from "../../../src/js/util.js";
-import { RANDOM_INTEGER_CONDITION } from "../../../src/js/constants.js";
+import {
+  RANDOM_INTEGER_CONDITION,
+  ALERT_STRING,
+} from "../../../src/js/constants.js";
 
 context("STEP 2", () => {
   beforeEach(() => {
@@ -11,7 +14,7 @@ context("STEP 2", () => {
   it("당첨번호를 입력하지 않고 결과 확인하기 버튼을 누를 경우 번호를 입력하라는 얼럿이 띄워진다. ", () => {
     clickButtonWithSelector(".open-result-modal-button");
     cy.on("window:alert", (text) => {
-      expect(text).to.contains("당첨 번호를 입력해주세요.");
+      expect(text).to.contains(ALERT_STRING.EMPTY_WINNING_NUMBER_INPUT);
     });
   });
 

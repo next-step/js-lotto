@@ -1,4 +1,4 @@
-import { INVALID_INPUT_ALERT_STRING } from "../../../src/js/constants.js";
+import { ALERT_STRING } from "../../../src/js/constants.js";
 import { typePriceInput } from "../cypress-util.js";
 import { areNumbersNotDuplicated } from "../../../src/js/validation.js";
 
@@ -34,7 +34,7 @@ describe("STEP 1", function () {
     it("0 이하이거나, 천 원 단위로 나뉘어 떨어지지 않는 경우 에러를 안내해준다. ", function () {
       typePriceInput("5");
       cy.on("window:alert", (text) => {
-        expect(text).to.contains(INVALID_INPUT_ALERT_STRING);
+        expect(text).to.contains(ALERT_STRING.INVALID_PRICE_INPUT);
       });
     });
   });

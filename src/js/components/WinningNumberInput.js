@@ -1,3 +1,5 @@
+import { ALERT_STRING } from "../constants.js";
+
 export class WinningNumberInput {
   constructor(target, onClickResultButton) {
     target.innerHTML = this.#template();
@@ -61,6 +63,31 @@ export class WinningNumberInput {
     const showResultButton = document.querySelector(
       ".open-result-modal-button"
     );
-    showResultButton.addEventListener("click", onClickResultButton);
+    showResultButton.addEventListener("click", () => {
+      const isEmptyInputExist = this.#checkWhetherEmptyInputExist();
+      if (isEmptyInputExist) {
+        window.alert(ALERT_STRING.EMPTY_WINNING_NUMBER_INPUT);
+        return;
+      }
+      onClickResultButton();
+    });
+  };
+
+  #checkWhetherEmptyInputExist = () => {
+    const originalNumberInputs = document.querySelectorAll(
+      "#winning-number-input-original > div > input"
+    );
+    originalNumberInputs.forEach((element) => {
+      if (!element.value) {
+        return true;
+      }
+    });
+    const bonusNumberInput = document.querySelector(
+      "#winning-number-input-bonus > div > input"
+    );
+    if (!bonusNumberInput.value) {
+      return true;
+    }
+    return false;
   };
 }
