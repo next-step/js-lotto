@@ -24,8 +24,21 @@ export default class State {
     this.#priceModel = new PriceModel();
   }
 
-  displayWinningResultModal = (e) => {
+  initLotto = () => {
+    this.#priceModel.initPrice();
+    this.#lottoModel = undefined;
+    $(LOTTO_SECTION).hidden = true;
+    $(LOTTO_FORM).hidden = true;
+    $(LOTTO_MODAL).classList.toggle('open');
+    $$(LOTTO_FORM__WINNING_NUMBER).forEach(($el) => {
+      $el.value = '';
+    });
+    $(LOTTO_FORM__BONUS_NUMBER).value = '';
+  };
+
+  calculateAndDisplayWinningResult = (e) => {
     e.preventDefault();
+
     try {
       const winningNumbers = [];
       let bonusNumber = 0;
@@ -35,24 +48,25 @@ export default class State {
       });
 
       LottoModel.validators.isDuplicatedWinningNumber(winningNumbers);
-
       bonusNumber = $(LOTTO_FORM__BONUS_NUMBER).value;
       this.#lottoModel.calculateWinningResult({ winningNumbers, bonusNumber });
-
-      const prizeKeys = Object.keys(PRIZE_TYPES);
-
-      $$(LOTTO_MODAL_WINNING_RESULT).forEach(($el, i) => {
-        $el.lastElementChild.textContent = `${this.lottoModel.getWinningQuantityByRank(prizeKeys[i])}개`;
-      });
-      $(LOTTO_MODAL).classList.toggle('open');
-      $(LOTTO_MODAL_BENEFIT_RATE).textContent = `${this.lottoBenefitRate}%`;
+      this.displayWinningResultModal();
     } catch (err) {
       alert(err.message);
     }
   };
 
+  displayWinningResultModal = () => {
+    const prizeKeys = Object.keys(PRIZE_TYPES);
+
+    $$(LOTTO_MODAL_WINNING_RESULT).forEach(($el, i) => {
+      $el.lastElementChild.textContent = `${this.lottoModel.getWinningQuantityByRank(prizeKeys[i])}개`;
+    });
+    $(LOTTO_MODAL).classList.toggle('open');
+    $(LOTTO_MODAL_BENEFIT_RATE).textContent = `${this.lottoBenefitRate}%`;
+  };
+
   purchaseLotto = (e) => {
-    debugger;
     e.preventDefault();
 
     try {
@@ -91,18 +105,6 @@ export default class State {
       alert(e.message);
     }
   }
-
-  initLotto = () => {
-    this.#priceModel.initPrice();
-    this.#lottoModel = undefined;
-    $(LOTTO_SECTION).hidden = true;
-    $(LOTTO_FORM).hidden = true;
-    $(LOTTO_MODAL).classList.toggle('open');
-    $$(LOTTO_FORM__WINNING_NUMBER).forEach(($el) => {
-      $el.value = '';
-    });
-    $(LOTTO_FORM__BONUS_NUMBER).value = '';
-  };
 
   get priceModel() {
     return this.#priceModel;

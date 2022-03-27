@@ -34,7 +34,7 @@ function App($target) {
   PriceForm($(PRICE_FORM, $app), { purchaseLotto: state.purchaseLotto });
   LottoSection($(LOTTO_SECTION, $app), { toggleDisplay: state.toggleDisplayLottoNumbers });
   LottoForm($(LOTTO_FORM, $app), {
-    displayResult: state.displayWinningResultModal,
+    displayResult: state.calculateAndDisplayWinningResult,
   });
   ResultModal($(LOTTO_MODAL, $app), {
     closeModal: state.closeWinningResultModal,
