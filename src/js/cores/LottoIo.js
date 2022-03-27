@@ -1,47 +1,49 @@
 export class LottoIo {
-  lottoShop;
-  lottoValidator;
+  shop;
+  validator;
 
-  constructor(lottoShop, lottoValidator) {
-    this.lottoShop = lottoShop;
-    this.lottoValidator = lottoValidator;
+  constructor(shop, validator) {
+    this.shop = shop;
+    this.validator = validator;
   }
 
   inputMoney(money) {
-    if (!this.lottoValidator.isLowerThanUpperLimit(money)) {
+    if (!this.validator.isLowerThanUpperLimit(money)) {
       return false;
     }
 
-    if (!this.lottoValidator.isUpperThanLowerLimit(money)) {
+    if (!this.validator.isUpperThanLowerLimit(money)) {
       return false;
     }
 
-    if (!this.lottoValidator.isDivisibleMoneyByThousand(money)) {
+    if (!this.validator.isDivisibleMoneyByThousand(money)) {
       alert('로또 구입 금액을 1,000 단위로 입력해 주세요.');
 
       return false;
     }
 
-    this.lottoShop.inputMoney(money);
+    this.shop.inputMoney(money);
 
     return true;
   }
 
-  inputWinningNumbers() {}
-
-  clearLottoTickets() {
-    this.lottoShop.clearLottoTickets();
+  inputWinningNumbers(winningNumbers) {
+    this.shop.inputWinningNumbers(winningNumbers);
   }
 
-  outputLottoTickets() {
-    return this.lottoShop.getLottoTickets();
+  clearTickets() {
+    this.shop.clearTickets();
+  }
+
+  outputTickets() {
+    return this.shop.getTickets();
   }
 
   toggleShowButton() {
-    this.lottoShop.toggleIsShowLottoTickets();
+    this.shop.toggleIsShowTickets();
   }
 
-  getIsShowLottoTickets() {
-    return this.lottoShop.getIsShowLottoTickets();
+  getIsShowTickets() {
+    return this.shop.getIsShowTickets();
   }
 }

@@ -26,7 +26,7 @@ import { lottoView } from './views/index.js';
 
 const lottoShop = new LottoShop();
 const lottoValidator = new LottoValidator();
-const lottoInput = new LottoIo(lottoShop, lottoValidator);
+const lottoIo = new LottoIo(lottoShop, lottoValidator);
 const lottoRenderer = new LottoRenderer();
 
-lottoView('#app', lottoInput, lottoRenderer);
+lottoView('#app', lottoIo, lottoRenderer);

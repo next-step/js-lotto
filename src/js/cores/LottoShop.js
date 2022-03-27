@@ -3,43 +3,44 @@ import { LottoTicket, LottoMoney, LottoWinningTicket } from './index.js';
 import { PRICE } from '../constants/index.js';
 
 export class LottoShop {
-  lottoMoney;
-  lottoWinningTicket;
-  lottoTickets = [];
-  isShowLottoTickets = false;
-
-  constructor() {}
+  money;
+  winningTicket;
+  tickets = [];
+  isShowTickets = false;
 
   inputMoney(money) {
-    const lottoMoney = new LottoMoney(money);
+    this.money = new LottoMoney(money);
 
-    this.lottoMoney = money;
-    this.lottoWinningTicket = new LottoWinningTicket();
-
-    this.issueLottoTickets(lottoMoney);
+    this.issueTickets();
   }
 
-  getLottoTickets() {
-    return [...this.lottoTickets];
+  inputWinningNumbers(winningNumbers) {
+    this.winningTicket = new LottoWinningTicket(winningNumbers);
   }
 
-  getIsShowLottoTickets() {
-    return this.isShowLottoTickets;
+  compareWithTickets() {}
+
+  getTickets() {
+    return [...this.tickets];
   }
 
-  toggleIsShowLottoTickets() {
-    this.isShowLottoTickets = !this.isShowLottoTickets;
+  getIsShowTickets() {
+    return this.isShowTickets;
   }
 
-  clearLottoTickets() {
-    this.lottoTickets = [];
+  toggleIsShowTickets() {
+    this.isShowTickets = !this.isShowTickets;
   }
 
-  issueLottoTickets(lottoMoney) {
-    const ticketCount = lottoMoney.getMoney() / PRICE;
+  clearTickets() {
+    this.tickets = [];
+  }
+
+  issueTickets() {
+    const ticketCount = this.money.getMoney() / PRICE;
 
     for (let i = 0; i < ticketCount; i++) {
-      this.lottoTickets.push(new LottoTicket());
+      this.tickets.push(new LottoTicket());
     }
   }
 }

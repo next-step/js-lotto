@@ -1,3 +1,11 @@
-import { LottoTicket } from './LottoTicket.js';
+export class LottoWinningTicket {
+  winningNumbers;
 
-export class LottoWinningTicket extends LottoTicket {}
+  constructor(winningNumbers) {
+    this.winningNumbers = winningNumbers;
+  }
+
+  getWinningNumbers() {
+    return [...this.winningNumbers];
+  }
+}

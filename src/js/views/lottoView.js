@@ -6,19 +6,15 @@ export const lottoView = (targetSelector, lottoIo, lottoRenderer) => {
 
     if (dataset.purpose !== 'inputMoney') return;
 
-    lottoIo.clearLottoTickets();
+    lottoIo.clearTickets();
 
     const moneyInputElement = targetElement.querySelector('.money-input');
 
     if (lottoIo.inputMoney(Number(moneyInputElement.value))) {
-      const lottoTickets = lottoIo.outputLottoTickets();
-      const isShowLottoTickets = lottoIo.getIsShowLottoTickets();
+      const tickets = lottoIo.outputTickets();
+      const isShowtickets = lottoIo.getIsShowTickets();
 
-      lottoRenderer.renderLottoTickets(
-        targetElement,
-        lottoTickets,
-        isShowLottoTickets
-      );
+      lottoRenderer.renderTickets(targetElement, tickets, isShowtickets);
       lottoRenderer.renderWinningNumberInputs(targetElement);
     }
   };
@@ -34,23 +30,21 @@ export const lottoView = (targetSelector, lottoIo, lottoRenderer) => {
     const winningNumbers = Array.from(winningNumberInputs).map((input) =>
       Number(input.value)
     );
+
+    lottoIo.inputWinningNumbers(winningNumbers);
   };
 
-  const toggleShowButton = () => {
+  const toggleShowButton = (event) => {
     const { dataset } = event.target;
 
     if (dataset.purpose !== 'toggleButton') return;
 
     lottoIo.toggleShowButton();
 
-    const lottoTickets = lottoIo.outputLottoTickets();
-    const isShowLottoTickets = lottoIo.getIsShowLottoTickets();
+    const tickets = lottoIo.outputTickets();
+    const isShowTickets = lottoIo.getIsShowTickets();
 
-    lottoRenderer.renderLottoTickets(
-      targetElement,
-      lottoTickets,
-      isShowLottoTickets
-    );
+    lottoRenderer.renderTickets(targetElement, tickets, isShowTickets);
   };
 
   const attachListeners = () => {
