@@ -4,14 +4,16 @@ import { PRICE_FORM__INPUT } from '../constants/selectTarget.js';
 import { $ } from '../util/dom.js';
 
 export default class PriceModel {
-  #price;
-
-  constructor() {
-    this.initPrice();
-  }
+  #totalPurchasePrice;
 
   initPrice() {
-    this.#price = '';
+    this.#totalPurchasePrice = '';
+    $(PRICE_FORM__INPUT).value = '';
+  }
+
+  updatePrice(newPrice) {
+    this.#totalPurchasePrice = newPrice;
+    $(PRICE_FORM__INPUT).value = '';
   }
 
   static validators = {
@@ -23,12 +25,7 @@ export default class PriceModel {
     },
   };
 
-  updatePrice(newPrice) {
-    this.#price = newPrice;
-    $(PRICE_FORM__INPUT).value = '';
-  }
-
-  getPrice() {
-    return this.#price;
+  get totalPurchasePrice() {
+    return this.#totalPurchasePrice;
   }
 }

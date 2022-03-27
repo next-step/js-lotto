@@ -2,8 +2,19 @@ import PriceModel from './PriceModel.js';
 import LottoModel from './LottoModel.js';
 
 import { LOTTO_PURCHASE_UNIT } from '../constants/unit.js';
-import { PRICE_FORM__INPUT, LOTTO_SECTION } from '../constants/selectTarget.js';
-import { $ } from '../util/dom.js';
+import {
+  LOTTO_SECTION,
+  LOTTO_FORM,
+  PRICE_FORM__INPUT,
+  LOTTO_MODAL,
+  LOTTO_FORM__WINNING_NUMBER,
+  LOTTO_MODAL_BENEFIT_RATE,
+  LOTTO_MODAL_WINNING_RESULT,
+  LOTTO_FORM__BONUS_NUMBER,
+} from '../constants/selectTarget.js';
+import { $, $$ } from '../util/dom.js';
+
+import { PRIZE_TYPES } from '../constants/prize.js';
 
 export default class State {
   #priceModel;
@@ -13,21 +24,55 @@ export default class State {
     this.#priceModel = new PriceModel();
   }
 
-  eventHandler = {
-    purchaseLotto: (e) => {
-      try {
-        e.preventDefault();
-        const inputPrice = Number($(PRICE_FORM__INPUT).value);
-        PriceModel.validators.isValidPrice(inputPrice);
-        this.#priceModel.updatePrice(inputPrice);
-        this.generateLotto(inputPrice);
-      } catch (err) {
-        alert(err.message);
-      }
-    },
-    toggleDisplayLottoNumbers: () => {
-      this.#lottoModel.toggleLottoTicketsNumbers();
-    },
+  displayWinningResultModal = (e) => {
+    e.preventDefault();
+    try {
+      const winningNumbers = [];
+      let bonusNumber = 0;
+
+      $$(LOTTO_FORM__WINNING_NUMBER).forEach(($el) => {
+        winningNumbers.push($el.value);
+      });
+
+      LottoModel.validators.isDuplicatedWinningNumber(winningNumbers);
+
+      bonusNumber = $(LOTTO_FORM__BONUS_NUMBER).value;
+      this.#lottoModel.calculateWinningResult({ winningNumbers, bonusNumber });
+
+      const prizeKeys = Object.keys(PRIZE_TYPES);
+
+      $$(LOTTO_MODAL_WINNING_RESULT).forEach(($el, i) => {
+        $el.lastElementChild.textContent = `${this.lottoModel.getWinningQuantityByRank(prizeKeys[i])}개`;
+      });
+      $(LOTTO_MODAL).classList.toggle('open');
+      $(LOTTO_MODAL_BENEFIT_RATE).textContent = `${this.lottoBenefitRate}%`;
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  purchaseLotto = (e) => {
+    debugger;
+    e.preventDefault();
+
+    try {
+      const inputPrice = Number($(PRICE_FORM__INPUT).value);
+
+      PriceModel.validators.isValidPrice(inputPrice);
+      this.#priceModel.updatePrice(inputPrice);
+      this.generateLotto(inputPrice);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  toggleDisplayLottoNumbers = () => {
+    this.#lottoModel.toggleLottoTicketsNumbers();
+  };
+
+  closeWinningResultModal = (e) => {
+    e.preventDefault();
+    $(LOTTO_MODAL).classList.toggle('open');
   };
 
   generateLotto(price) {
@@ -47,11 +92,27 @@ export default class State {
     }
   }
 
+  initLotto = () => {
+    this.#priceModel.initPrice();
+    this.#lottoModel = undefined;
+    $(LOTTO_SECTION).hidden = true;
+    $(LOTTO_FORM).hidden = true;
+    $(LOTTO_MODAL).classList.toggle('open');
+    $$(LOTTO_FORM__WINNING_NUMBER).forEach(($el) => {
+      $el.value = '';
+    });
+    $(LOTTO_FORM__BONUS_NUMBER).value = '';
+  };
+
   get priceModel() {
     return this.#priceModel;
   }
 
   get lottoModel() {
     return this.#lottoModel;
+  }
+
+  get lottoBenefitRate() {
+    return this.lottoModel.lottoBenefit / this.priceModel.totalPurchasePrice;
   }
 }

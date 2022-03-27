@@ -1,13 +1,27 @@
-//TODO: - STEP2
-const ResultModal = () => {
-  return `<div class="modal">
+import {
+  LOTTO_MODAL,
+  LOTTO_MODAL__CLOSE,
+  LOTTO_MODAL_BENEFIT_RATE,
+  LOTTO_MODAL_WINNING_RESULT,
+  LOTTO_MODAL__RESTART,
+} from '../constants/selectTarget.js';
+import { $ } from '../util/dom.js';
+import { PRIZE_TYPES } from '../constants/prize.js';
+
+const ResultModal = ($parent, { closeModal, reStart }) => {
+  const trTemplate = (prize) => `<tr class="text-center ${LOTTO_MODAL_WINNING_RESULT}">
+                  <td class="p-3">${prize.text}</td>
+                  <td class="p-3">${prize.cost.toLocaleString()}</td>
+                  <td class="p-3">0개</td>
+                </tr>`;
+
+  const template = `<div class="modal ${LOTTO_MODAL}">
         <div class="modal-inner p-10">
-          <div class="modal-close">
+          <div class="modal-close ${LOTTO_MODAL__CLOSE}">
             <svg viewbox="0 0 40 40">
               <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
             </svg>
           </div>
-
           <h2 class="text-center">🏆 당첨 통계 🏆</h2>
           <div class="d-flex justify-center">
             <table class="result-table border-collapse border border-black">
@@ -19,40 +33,22 @@ const ResultModal = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr class="text-center">
-                  <td class="p-3">3개</td>
-                  <td class="p-3">5,000</td>
-                  <td class="p-3">n개</td>
-                </tr>
-                <tr class="text-center">
-                  <td class="p-3">4개</td>
-                  <td class="p-3">50,000</td>
-                  <td class="p-3">n개</td>
-                </tr>
-                <tr class="text-center">
-                  <td class="p-3">5개</td>
-                  <td class="p-3">1,500,000</td>
-                  <td class="p-3">n개</td>
-                </tr>
-                <tr class="text-center">
-                  <td class="p-3">5개 + 보너스볼</td>
-                  <td class="p-3">30,000,000</td>
-                  <td class="p-3">n개</td>
-                </tr>
-                <tr class="text-center">
-                  <td class="p-3">6개</td>
-                  <td class="p-3">2,000,000,000</td>
-                  <td class="p-3">n개</td>
-                </tr>
+                ${Object.values(PRIZE_TYPES).map(trTemplate).join('')}
               </tbody>
             </table>
           </div>
-          <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+          <p class="text-center font-bold ${LOTTO_MODAL_BENEFIT_RATE}">당신의 총 수익률은 %입니다.</p>
           <div class="d-flex justify-center mt-5">
-            <button type="button" class="btn btn-cyan">다시 시작하기</button>
+            <button type="button" class="btn btn-cyan ${LOTTO_MODAL__RESTART}">다시 시작하기</button>
           </div>
         </div>
       </div>`;
+
+  const $el = document.createElement('div');
+  $el.innerHTML = template;
+  $(LOTTO_MODAL__CLOSE, $el).addEventListener('click', closeModal);
+  $(LOTTO_MODAL__RESTART, $el).addEventListener('click', reStart);
+  $parent.replaceWith($el);
 };
 
 export default ResultModal;
