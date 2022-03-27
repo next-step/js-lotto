@@ -1,23 +1,26 @@
 import { MIN_NUMBER, MAX_NUMBER, NUMBER_AMOUNT } from '../constants/index.js';
 
 export class LottoTicket {
-  lottoNumbers = [];
+  lottoNumbers = new Map();
 
   constructor() {
-    this.randomLottoNumbers();
+    this.issueLottoNumbers();
   }
 
-  randomLottoNumbers() {
-    for (let i = 0; i < NUMBER_AMOUNT; i++) {
-      const lottoNumber = Math.trunc(
-        Math.random() * (MAX_NUMBER - MIN_NUMBER) + MIN_NUMBER
-      );
+  issueLottoNumbers() {
+    while (this.lottoNumbers.size < NUMBER_AMOUNT) {
+      const lottoNumber = this.randomLottoNumber();
 
-      this.lottoNumbers.push(lottoNumber);
+      if (this.lottoNumbers.has(lottoNumber)) continue;
+      else this.lottoNumbers.set(lottoNumber, true);
     }
   }
 
+  randomLottoNumber() {
+    return Math.trunc(Math.random() * (MAX_NUMBER - MIN_NUMBER) + MIN_NUMBER);
+  }
+
   getLottoNumbers() {
-    return [...this.lottoNumbers];
+    return Array.from(this.lottoNumbers.entries()).map(([number]) => number);
   }
 }
