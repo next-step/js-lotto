@@ -86,7 +86,7 @@ export default class State {
   #displayWinningResultModal = () => {
     const prizeKeys = Object.keys(PRIZE_TYPES);
     $$(LOTTO_MODAL_WINNING_RESULT).forEach(($el, i) => {
-      $el.lastElementChild.textContent = `${this.lottoModel.getWinningQuantityByRank(prizeKeys[i])}개`;
+      $el.lastElementChild.textContent = `${this.#lottoModel.getWinningQuantityByRank(prizeKeys[i])}개`;
     });
     $(LOTTO_MODAL).classList.toggle('open');
     $(LOTTO_MODAL_BENEFIT_RATE).textContent = `${this.lottoBenefitRate}%`;
@@ -109,15 +109,7 @@ export default class State {
     }
   }
 
-  get priceModel() {
-    return this.#priceModel;
-  }
-
-  get lottoModel() {
-    return this.#lottoModel;
-  }
-
   get lottoBenefitRate() {
-    return this.lottoModel.lottoBenefit / this.priceModel.totalPurchasePrice;
+    return this.#lottoModel.lottoBenefit / this.#priceModel.totalPurchasePrice;
   }
 }
