@@ -1,10 +1,10 @@
 import purchasedHistoryView from './purchasedHistoryView.js';
 import { LottoVendingMachine } from '../lottoVendingMachine.js';
+import winingLottoHistoryView from './winingLottoHistoryView.js';
 
 const lottoVendingView = (function () {
   const $purchaseLotto = document.querySelector('form.mt-5');
   const $purchaseMoney = $purchaseLotto.querySelector('input');
-  const $winingLottoHistory = document.querySelector('form.mt-9');
 
   function handlePurchaseLotto(event) {
     const money = new FormData(event.currentTarget).get('money');
@@ -12,14 +12,11 @@ const lottoVendingView = (function () {
     purchasedHistoryView.changePurchasedHistory(
       LottoVendingMachine.purchaseLotto(money)
     );
+    winingLottoHistoryView.changePurchasedHistory();
   }
 
   function initialMoney() {
     $purchaseMoney.value = '';
-  }
-
-  function initialWinningHistory() {
-    $winingLottoHistory.style.display = 'none';
   }
 
   function eventBindings() {
@@ -28,8 +25,8 @@ const lottoVendingView = (function () {
 
   function initial() {
     initialMoney();
-    initialWinningHistory();
     purchasedHistoryView.initial();
+    winingLottoHistoryView.initial();
   }
 
   eventBindings();
