@@ -16,14 +16,19 @@ context("STEP 2", () => {
   });
 
   it("당첨 번호 입력 후 결과 확인하기 버튼을 누르면 당첨 통계와 관련된 모달창이 띄워진다. ", function () {
-    cy.get("#winning-number-input").forEach((input) => {
+    cy.get("#winning-number-input-original > div > input").each((input) => {
       const randomInt = getRandomInteger(
         RANDOM_INTEGER_CONDITION.START,
-        RANDOM_INTEGER_CONDITION,
-        END
+        RANDOM_INTEGER_CONDITION.END
       ).toString();
-      input.type(randomInt);
+      console.log(input);
+      cy.wrap(input).type(randomInt);
     });
+    const randomIntForBonus = getRandomInteger(
+      RANDOM_INTEGER_CONDITION.START,
+      RANDOM_INTEGER_CONDITION.END
+    ).toString();
+    cy.get("#winning-number-input-bonus > div > input").type(randomIntForBonus);
     clickButtonWithSelector(".open-result-modal-button");
     cy.get("#statistics").should("be.visible");
   });
