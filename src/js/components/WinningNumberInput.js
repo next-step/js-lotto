@@ -1,4 +1,4 @@
-export class TryForm {
+export class WinningNumberInput {
   constructor(target, onClickResultButton) {
     target.innerHTML = this.#template();
     this.#setEvents(onClickResultButton);

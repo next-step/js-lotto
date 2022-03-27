@@ -1,6 +1,6 @@
 import { PriceInput } from "./components/PriceInput.js";
 import { PurchaseDetail } from "./components/PurchaseDetail.js";
-import { TryForm } from "./components/TryForm.js";
+import { WinningNumberInput } from "./components/WinningNumberInput.js";
 import { Statistics } from "./components/Statistics.js";
 import { createLotto } from "./util.js";
 
@@ -8,17 +8,17 @@ class App {
   constructor() {
     this.#setComponents();
     this.#purchaseDetailElement.hidden = true;
-    this.#tryFormElement.hidden = true;
+    this.#winningNumberInputElement.hidden = true;
   }
 
   #priceInputElement = document.querySelector("#price-input");
   #purchaseDetailElement = document.querySelector("#purchase-detail");
-  #tryFormElement = document.querySelector("#try-form");
+  #winningNumberInputElement = document.querySelector("#winning-number-input");
   #statisticsElement = document.querySelector("#statistics");
 
   #priceInputComponent;
   #purchseDetailComponent;
-  #tryFormComponent;
+  #winningNumberInputComponent;
   #statisticsComponent;
 
   #onClickPriceInputConfirmButton = (value) => {
@@ -30,7 +30,7 @@ class App {
     }
     this.#purchseDetailComponent.setState(lottos);
     this.#purchaseDetailElement.hidden = false;
-    this.#tryFormElement.hidden = false;
+    this.#winningNumberInputElement.hidden = false;
   };
 
   #onModalShow = () => {
@@ -49,8 +49,8 @@ class App {
     this.#purchseDetailComponent = new PurchaseDetail(
       this.#purchaseDetailElement
     );
-    this.#tryFormComponent = new TryForm(
-      this.#tryFormElement,
+    this.#winningNumberInputComponent = new WinningNumberInput(
+      this.#winningNumberInputElement,
       this.#onModalShow
     );
     this.#statisticsComponent = new Statistics(
