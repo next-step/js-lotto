@@ -38,12 +38,11 @@ export class PriceInput {
   #handlePriceInputSubmitEvent = (event, callback) => {
     event.preventDefault();
 
-    const form = new FormData(event.target);
-    const inputValue = Number(form.get("price-input"));
+    const inputValue = event.target["price-input"].valueAsNumber;
 
     if (!isValidPriceInput(inputValue)) {
       window.alert(INVALID_INPUT_ALERT_STRING);
-      form.set("price-input", "");
+      event.target.reset();
       return;
     }
     callback(inputValue);
