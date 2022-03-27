@@ -3,15 +3,17 @@ import Lotto from "../Lotto.js";
 import LottoModal from "./LottoModal.js";
 
 class LottoWinning {
+  #randomNumbers;
   #lottoWinningNumbersForm;
   #lottoWinningNumberInputs;
   #lottoBonusNumberInput;
   #lotto
   #price
 
-  constructor(lotto) {
+  constructor(lotto, randomNumbers) {
     this.#lotto = lotto
     this.#price = lotto.lottoTicketAmount
+    this.#randomNumbers = randomNumbers
   }
 
   setEvent() {
@@ -40,7 +42,7 @@ class LottoWinning {
       if (!Lotto.validateDuplicateWinningNumber([...this.#lottoWinningNumberInputs].map(tag => tag.value))) 
         return alert('로또 번호에는 중복된 숫자를 입력할 수 없습니다.');
       
-      this.#lotto.winningResult([...this.#lottoWinningNumberInputs])
+      console.log(this.#lotto.winningResult([...this.#lottoWinningNumberInputs], this.#randomNumbers))
     })
 
   }

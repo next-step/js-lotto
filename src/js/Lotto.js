@@ -1,4 +1,11 @@
-import { WARNING_WHEN_NOT_IN_1000_UNITS, UNIT_PRICE } from "./utils/consts.js";
+import { WARNING_WHEN_NOT_IN_1000_UNITS,
+  UNIT_PRICE,
+  FIRST_PRIZE,
+  SECOND_PRIZE,
+  THIRD_PRIZE,
+  FOURTH_PRIZE,
+  FIFTH_PRIZE
+} from "./utils/consts.js";
 
 class Lotto {
   #price
@@ -50,8 +57,54 @@ class Lotto {
     return winningNumbers.every((num, index) => index === winningNumbers.lastIndexOf(num))
   } 
   
-  winningResult() {
-    // 당첨 여부 확인
+  winningResult(winningNumberList, randomNumberLists) {
+    const bonusNumberIndex = winningNumberList.length - 1
+    const bonusNumber = Number(winningNumberList[bonusNumberIndex].value)
+    winningNumberList = winningNumberList.map(input => Number(input.value))
+    randomNumberLists = randomNumberLists.map(list => list.split(', ').map(num => Number(num)))
+    
+    const rankByTicket = randomNumberLists.map(numberList => numberList.filter(num => winningNumberList.includes(num)))
+      .map(guessNumbers => this.evaluateRank(guessNumbers, bonusNumber))
+    
+    const rankCount = [...this.rankCounter(rankByTicket).values()];
+    const rankOfPrize = [FIRST_PRIZE, SECOND_PRIZE, THIRD_PRIZE, FOURTH_PRIZE, FIFTH_PRIZE];
+    const totalWinnings = [...rankCount]
+      .map((count, i) => count * rankOfPrize[i])
+      .reduce((pre, cur) => pre + cur)
+    const profitRate = (totalWinnings / this.#price) * 100
+    return {
+      profitRate, 
+      rankCount
+    }
+  }
+
+  evaluateRank(guessNumbers, bonusNumber) {
+    const onlyMatchNumbers = guessNumbers.filter(num => num !== bonusNumber)
+    switch (onlyMatchNumbers.length) {
+      case 6:
+        return 1
+      case 5:
+        return guessNumbers.includes(bonusNumber) ? 2 : 3
+      case 4:
+        return 4
+      case 3:
+        return 5
+      default:
+        return 6
+    }
+  }
+  
+  rankCounter(rankByTicket) {
+    const rankNumbers = [1,2,3,4,5]
+    const map = new Map()
+    rankNumbers.forEach((e, i) => {
+      let count = 0
+      rankByTicket.forEach(rank => {
+        rank === e && count ++
+      })
+      map.set(i + 1, count)
+    })
+    return map
   }
 }
 

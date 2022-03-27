@@ -1,7 +1,7 @@
 import Lotto from "../Lotto.js";
 import LottoWinning from "./LottoWinning.js";
 
-import { selector } from "../utils/consts.js";
+import { selector, selectorAll } from "../utils/consts.js";
 
 
 class LottoTicket {
@@ -19,9 +19,10 @@ class LottoTicket {
     this.renderLottoTicket(this.#amount)
   }
   renderLottoTicket(amount) {
+    const randomNumbers = Lotto.createRandomNumberFromOneToFortyFive(amount)
     this.changeLottoTicketUI(amount)
-    this.changeTicketsUiAccordingToSwitchState(amount)
-    new LottoWinning(this.#lotto).setEvent()
+    this.changeTicketsUiAccordingToSwitchState(randomNumbers)
+    new LottoWinning(this.#lotto, randomNumbers).setEvent()
   }
 
   changeLottoTicketUI(amount) {
@@ -42,25 +43,24 @@ class LottoTicket {
 
   // 여기서부터 스위치 인데 저기 위가 스위치에 관여함
   // 저기 위에서 스위치에 관여하는 부분이
-  changeTicketsUiAccordingToSwitchState(amount) {
+  changeTicketsUiAccordingToSwitchState(randomNumbers) {
     this.#switchBtn = selector('.switch');
-    const randomNumber = Lotto.createRandomNumberFromOneToFortyFive(amount)
-    this.#switchBtn.addEventListener('click', event => this.handleSwitchEvent(event, randomNumber))
+    this.#switchBtn.addEventListener('click', event => this.handleSwitchEvent(event, randomNumbers))
   }
 
 
-  handleSwitchEvent(event, randomNumber) {
+  handleSwitchEvent(event, randomNumbers) {
     if (event.target && event.target.nodeName === 'INPUT') {
-      this.changeUIAccordingToSwitch(event, randomNumber)
+      this.changeUIAccordingToSwitch(event, randomNumbers)
     }
   }
 
-  changeUIAccordingToSwitch(event, randomNumber) {
-    this.#randomNumberLists = document.querySelectorAll('li[data-ticket="list"]')
+  changeUIAccordingToSwitch(event, randomNumbers) {
+    this.#randomNumberLists = selectorAll('li[data-ticket="list"]')
     if (event.target.checked) {
       this.#randomNumberLists.forEach((li, index) => {
         li.lastElementChild.style.display = "inline"
-        li.lastElementChild.textContent = randomNumber[index]
+        li.lastElementChild.textContent = randomNumbers[index]
       })
       this.#ticketContainer.classList.add('flex-col')
     } else {
