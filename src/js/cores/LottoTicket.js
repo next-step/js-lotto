@@ -21,6 +21,6 @@ export class LottoTicket {
   }
 
   getLottoNumbers() {
-    return Array.from(this.lottoNumbers.entries()).map(([number]) => number);
+    return Array.from(this.lottoNumbers).map(([number]) => number);
   }
 }
