@@ -31,8 +31,8 @@ export class LottoIo {
     return true;
   }
 
-  inputWinningNumbers(winningNumbers) {
-    this.shop.inputWinningNumbers(winningNumbers);
+  inputWinningNumbers(winningNumbers, bonusNumber) {
+    this.shop.inputWinningNumbers(winningNumbers, bonusNumber);
   }
 
   outputTickets() {

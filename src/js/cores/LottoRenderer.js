@@ -1,3 +1,5 @@
+import { FIVE_PLUS_BONUS } from '../constants/index.js';
+
 export class LottoRenderer {
   targetElement;
 
@@ -151,7 +153,7 @@ export class LottoRenderer {
             <tr class="text-center">
               <td class="p-3">5개 + 보너스볼</td>
               <td class="p-3">30,000,000</td>
-              <td class="p-3">n개</td>
+              <td class="p-3">${results.get(FIVE_PLUS_BONUS)}개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">6개</td>

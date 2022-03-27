@@ -5,6 +5,7 @@ const NUMBER_AMOUNT = 6;
 const UPPER_LIMIT_MONEY = 100000;
 const LOWER_LIMIT_MONEY = 1000;
 const MIN_WINNING_COUNT = 3;
+const FIVE_PLUS_BONUS = '5+bonus';
 
 export {
   PRICE,
@@ -14,4 +15,5 @@ export {
   UPPER_LIMIT_MONEY,
   LOWER_LIMIT_MONEY,
   MIN_WINNING_COUNT,
+  FIVE_PLUS_BONUS,
 };

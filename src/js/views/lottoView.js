@@ -22,14 +22,15 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
 
     if (dataset.purpose !== 'inputWinningNumbers') return;
 
-    const winningNumberInputs = targetElement.querySelectorAll(
-      '.winning-number, .bonus-number'
-    );
+    const winningNumberInputs =
+      targetElement.querySelectorAll('.winning-number');
+    const bonusNumberInput = targetElement.querySelector('.bonus-number');
     const winningNumbers = Array.from(winningNumberInputs).map((input) =>
       Number(input.value)
     );
+    const bonusNumber = Number(bonusNumberInput.value);
 
-    lottoIo.inputWinningNumbers(winningNumbers);
+    lottoIo.inputWinningNumbers(winningNumbers, bonusNumber);
 
     const results = lottoIo.outputResults();
 
