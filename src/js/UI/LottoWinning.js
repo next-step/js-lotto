@@ -42,7 +42,8 @@ class LottoWinning {
       if (!Lotto.validateDuplicateWinningNumber([...this.#lottoWinningNumberInputs].map(tag => tag.value))) 
         return alert('로또 번호에는 중복된 숫자를 입력할 수 없습니다.');
       
-      console.log(this.#lotto.winningResult([...this.#lottoWinningNumberInputs], this.#randomNumbers))
+      const winningResult = this.#lotto.winningResult([...this.#lottoWinningNumberInputs], this.#randomNumbers)
+      new LottoModal(winningResult).setEvent()
     })
 
   }

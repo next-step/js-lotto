@@ -5,16 +5,35 @@ import { selector } from "../utils/consts.js";
 // const modal = selector('.modal');
 // const lottoNumbersToggleButton = selector('.lotto-numbers-toggle-button');
 
-// const onModalShow = () => {
-//   modal.classList.add('open')
-// }
 
-// const onModalClose = () => {
-//   modal.classList.remove('open')
-// }
+
 
 class LottoModal {
-  #hello = selector('.')
+  #modal
+  #profitRate
+  #rankCount
+  #lottoModalCloseBtn
+
+  constructor({profitRate, rankCount}) {
+    this.#profitRate = profitRate
+    this.#rankCount = rankCount
+  }
+
+  setEvent() {
+    this.#modal = selector('.modal')
+    this.onModalShow()
+    
+    this.#lottoModalCloseBtn = selector('.modal-close')
+    this.#lottoModalCloseBtn.addEventListener('click', () => {this.onModalClose()})
+  }
+
+  onModalShow() {
+    this.#modal.classList.add('open')
+  }
+
+  onModalClose() {
+    this.#modal.classList.remove('open')
+}
 }
 
 export default LottoModal;

@@ -47,5 +47,37 @@ describe('Lotto 당첨 번호 테스트', () => {
     })
   })
 
-  
+  describe('modal ui 테스트', () => {
+    beforeEach(() => {
+      Cypress.Commands.add('winningNumberSubmit', () => {
+        cy.get('[data-winning-numbers=input]').each((tag, i) => {
+          cy.wrap(tag).type(i+1)
+        }).then(() => {
+          cy.get('[data-winning-numbers=submit]').click()
+        })
+        
+      })
+    })
+
+    it('당첨번호를 제출하면 모달창이 나온다.', () => {
+      cy.submitValue('click', true)
+      cy.winningNumberSubmit()
+      cy.get('[data-modal=modal]').then((modal) => {
+        expect(modal).to.be.visible
+      })
+    })
+
+    it('모달창에서 x이미지를 누르면 모달창이 꺼진다.', () => {
+      cy.submitValue('click', true)
+      cy.winningNumberSubmit()
+      cy.get('[data-modal=modal]').then((modal) => {
+        cy.get('[data-modal=close]').click()
+        expect(modal).not.to.be.visible
+      })
+    })
+
+    it('모달창에서 다시하기 버튼을 누르면 어플리케이션이 초기화된다.', () => {
+
+    })
+  })
 })
