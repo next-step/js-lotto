@@ -1,3 +1,5 @@
+import { MONEY_INPUT_SELECTOR } from '../constants/index.js';
+
 export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
   const inputMoney = (event) => {
     const { dataset } = event.target;
@@ -6,7 +8,7 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
 
     lottoIo.restartShop();
 
-    const moneyInputElement = targetElement.querySelector('.money-input');
+    const moneyInputElement = targetElement.querySelector(MONEY_INPUT_SELECTOR);
 
     if (lottoIo.inputMoney(Number(moneyInputElement.value))) {
       const tickets = lottoIo.outputTickets();
@@ -14,7 +16,11 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
 
       lottoRenderer.renderTickets(tickets, isShowtickets);
       lottoRenderer.renderWinningNumberInputs();
+
+      return;
     }
+
+    lottoRenderer.renderMoneyForm();
   };
 
   const inputWinningNumbers = (event) => {

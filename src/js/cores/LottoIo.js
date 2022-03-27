@@ -21,8 +21,6 @@ export class LottoIo {
     }
 
     if (!this.validator.isDivisibleMoneyByThousand(money)) {
-      alert('로또 구입 금액을 1,000 단위로 입력해 주세요.');
-
       return false;
     }
 
@@ -49,10 +47,6 @@ export class LottoIo {
     const results = this.shop.getResults();
 
     return results.getRateOfReturn();
-  }
-
-  clearTickets() {
-    this.shop.clearTickets();
   }
 
   toggleShowButton() {

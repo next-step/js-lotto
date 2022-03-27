@@ -19,7 +19,7 @@ export class LottoRenderer {
       class="money-input w-100 mr-2 pl-2"
       placeholder="구입 금액"
     />
-    <button type="button" class="btn btn-cyan" data-purpose="inputMoney">확인</button>
+    <button type="button" class="money-input-button btn btn-cyan" data-purpose="inputMoney">확인</button>
   </div>`;
   }
 
@@ -28,10 +28,10 @@ export class LottoRenderer {
 
     ticketSection.innerHTML = `
     <div class="d-flex">
-      <label class="flex-auto my-0">총 ${
+      <label class="ticket-notice flex-auto my-0">총 ${
         tickets.length
       }개를 구매하였습니다.</label>
-      <div class="flex-auto d-flex justify-end pr-1">
+      <div class="ticket-toggle-button flex-auto d-flex justify-end pr-1">
         <label class="switch">
           <input type="checkbox" data-purpose="toggleButton" ${
             isShowTickets ? 'checked' : ''
@@ -45,14 +45,14 @@ export class LottoRenderer {
         isShowTickets
           ? tickets
               .map(
-                (ticket) => `<span class="mx-1 text-4xl">🎟️ </span>
-                          <span style="display: inline">${ticket
+                (ticket) => `<span class="ticket mx-1 text-4xl">🎟️ </span>
+                          <span class="ticket-numbers" style="display: inline">${ticket
                             .getNumbers()
                             .join(', ')}</span>`
               )
               .join(' ')
           : tickets
-              .map(() => `<span class="mx-1 text-4xl">🎟️ </span>`)
+              .map(() => `<span class="ticket mx-1 text-4xl">🎟️ </span>`)
               .join(' ')
       }
     </div>
