@@ -83,11 +83,10 @@ describe('구입한 로또 번호 섹션', () => {
 		cy.toggleShowLottoNumbers();
 
 		cy.get('.lottoDetail').each(($elements) => {
-			const lottoNumbers =
-				$elements[0].textContent.split(', ').map(Number) ?? [];
+			const lottoNumbers = $elements[0].textContent.split(', ').map(Number);
 
 			for (const lottoNumber of lottoNumbers) {
-				expect(lottoNumber).to.be.greaterThan(MINIMUM_LOTTO_VALUE);
+				expect(lottoNumber).to.be.greaterThan(MINIMUM_LOTTO_VALUE - 1);
 				expect(lottoNumber).to.be.lessThan(MAXIMUM_LOTTO_VALUE + 1);
 			}
 		});
@@ -97,8 +96,7 @@ describe('구입한 로또 번호 섹션', () => {
 		cy.toggleShowLottoNumbers();
 
 		cy.get('.lottoDetail').each(($elements) => {
-			const lottoNumbers =
-				$elements[0].textContent.split(', ').map(Number) ?? [];
+			const lottoNumbers = $elements[0].textContent.split(', ').map(Number);
 
 			expect(lottoNumbers).to.have.lengthOf(6);
 		});
@@ -108,8 +106,7 @@ describe('구입한 로또 번호 섹션', () => {
 		cy.toggleShowLottoNumbers();
 
 		cy.get('.lottoDetail').each(($elements) => {
-			const lottoNumbers =
-				$elements[0].textContent.split(', ').map(Number) ?? [];
+			const lottoNumbers = $elements[0].textContent.split(', ').map(Number);
 
 			expect(lottoNumbers.length).to.be.equal(new Set(lottoNumbers).size);
 		});
