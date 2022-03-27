@@ -51,7 +51,7 @@ class App {
   };
 
   #onModalShow = (statistic, profit) => {
-    this.#statisticsComponent.setState(statistic, profit);
+    this.#statisticsComponent.setState(statistic, profit, this.#onModalClose);
     this.#statisticsElement.classList.add("open");
   };
 

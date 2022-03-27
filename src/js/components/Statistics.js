@@ -69,9 +69,8 @@ export class Statistics {
     modalClose.addEventListener("click", onModalClose);
   };
 
-  setState = (winningCounts, profit) => {
-    console.dir(winningCounts);
-    console.log(profit);
+  setState = (winningCounts, profit, onModalClose) => {
     this.#target.innerHTML = this.#template(winningCounts, profit);
+    this.#setEvents(onModalClose);
   };
 }
