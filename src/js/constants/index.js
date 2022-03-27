@@ -4,7 +4,7 @@ const MONEY_INPUT_BUTTON_SELECTOR = '.money-input-button';
 const TICKET_SELECTOR = '.ticket';
 const TICKET_NOTICE_SELECTOR = '.ticket-notice';
 const TICKET_NUMBERS_SELECTOR = '.ticket-numbers';
-const TICKET_TOGGLE_BUTTON = '.ticket-toggle-button';
+const TICKET_TOGGLE_BUTTON_SELECTOR = '.ticket-toggle-button';
 const PRICE = 1000;
 const MAX_NUMBER = 45;
 const MIN_NUMBER = 1;
@@ -25,7 +25,7 @@ export {
   TICKET_SELECTOR,
   TICKET_NOTICE_SELECTOR,
   TICKET_NUMBERS_SELECTOR,
-  TICKET_TOGGLE_BUTTON,
+  TICKET_TOGGLE_BUTTON_SELECTOR,
   PRICE,
   MAX_NUMBER,
   MIN_NUMBER,

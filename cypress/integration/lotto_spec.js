@@ -10,7 +10,7 @@ import {
   TICKET_NOTICE_SELECTOR,
   MONEY_INPUT_BUTTON_SELECTOR,
   TICKET_NUMBERS_SELECTOR,
-  TICKET_TOGGLE_BUTTON,
+  TICKET_TOGGLE_BUTTON_SELECTOR,
   PRICE,
 } from '../../src/js/constants/index.js';
 
@@ -100,18 +100,18 @@ describe('로또 테스트', () => {
     });
 
     it('번호보기 토글을 클릭하여 번호 미노출/노출 상태를 정할 수 있다.', () => {
-      clickButton(TICKET_TOGGLE_BUTTON);
+      clickButton(TICKET_TOGGLE_BUTTON_SELECTOR);
       cy.get(TICKET_NUMBERS_SELECTOR).should(
         'have.length',
         MOCKED_MONEY / PRICE
       );
 
-      clickButton(TICKET_TOGGLE_BUTTON);
+      clickButton(TICKET_TOGGLE_BUTTON_SELECTOR);
       cy.get(TICKET_NUMBERS_SELECTOR).should('not.exist');
     });
 
     it('번호보기 기능으로 노출되는 번호는 로또 각각 6개이다.', () => {
-      clickButton(TICKET_TOGGLE_BUTTON);
+      clickButton(TICKET_TOGGLE_BUTTON_SELECTOR);
       cy.get(TICKET_NUMBERS_SELECTOR)
         .invoke('text')
         .then((text) => text.split(', ').length === 6);

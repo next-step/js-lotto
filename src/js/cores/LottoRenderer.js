@@ -40,15 +40,19 @@ export class LottoRenderer {
         </label>
       </div>
     </div>
-    <div class="d-flex flex-wrap">
+    <div class="${
+      isShowTickets ? 'd-flex flex-col flex-wrap' : 'd-flex flex-wrap'
+    }">
       ${
         isShowTickets
           ? tickets
               .map(
-                (ticket) => `<span class="ticket mx-1 text-4xl">🎟️ </span>
-                          <span class="ticket-numbers" style="display: inline">${ticket
+                (ticket) => `<div>
+                          <span class="ticket mx-1 text-4xl">🎟️ </span>
+                          <span class="ticket-numbers">${ticket
                             .getNumbers()
-                            .join(', ')}</span>`
+                            .join(', ')}</span>
+                            </div>`
               )
               .join(' ')
           : tickets
