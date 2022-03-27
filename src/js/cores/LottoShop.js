@@ -1,4 +1,4 @@
-import { LottoTicket, LottoWinningTicket } from './index.js';
+import { LottoTicket, LottoWinningTicket, LottoResults } from './index.js';
 
 import {
   PRICE,
@@ -8,26 +8,14 @@ import {
 
 export class LottoShop {
   money = 0;
-  results = new Map([
-    [3, 0],
-    [4, 0],
-    [5, 0],
-    [FIVE_PLUS_BONUS, 0],
-    [6, 0],
-  ]);
+  results = new LottoResults();
   winningTicket;
   tickets = [];
   isShowTickets = false;
 
   restart() {
     this.money = 0;
-    this.results = new Map([
-      [3, 0],
-      [4, 0],
-      [5, 0],
-      [FIVE_PLUS_BONUS, 0],
-      [6, 0],
-    ]);
+    this.results = new LottoResults();
     this.winningTicket = undefined;
     this.tickets = [];
     this.isShowTickets = false;
@@ -36,23 +24,25 @@ export class LottoShop {
   inputMoney(money) {
     this.money = money;
 
+    this.results.setMoney(money);
     this.issueTickets();
   }
 
   inputWinningNumbers(winningNumbers, bonusNumber) {
     this.winningTicket = new LottoWinningTicket(winningNumbers, bonusNumber);
 
-    this.checkTicketsWithWinningNumbers();
+    this.updateResults();
   }
 
-  checkTicketsWithWinningNumbers() {
+  updateResults() {
     const winningNumbers = this.winningTicket.getWinningNumbers();
     const bonusNumber = this.winningTicket.getBonusNumber();
 
     this.tickets.forEach((ticket) => {
+      const numbers = ticket.getNumbers();
+      const sameCounts = this.results.getSameCounts();
       let sameNumbers = 0;
       let checkedBonusNumber = false;
-      const numbers = ticket.getNumbers();
 
       numbers.forEach((number) => {
         if (number === bonusNumber) return (checkedBonusNumber = true);
@@ -63,19 +53,15 @@ export class LottoShop {
       if (
         checkedBonusNumber &&
         sameNumbers === 5 &&
-        this.results.has(FIVE_PLUS_BONUS)
-      ) {
-        this.results.set(
-          FIVE_PLUS_BONUS,
-          this.results.get(FIVE_PLUS_BONUS) + 1
-        );
+        sameCounts.has(FIVE_PLUS_BONUS)
+      )
+        return this.results.updateSameCounts(FIVE_PLUS_BONUS);
 
-        return;
-      }
-
-      if (sameNumbers >= MIN_WINNING_COUNT && this.results.has(sameNumbers))
-        this.results.set(sameNumbers, this.results.get(sameNumbers) + 1);
+      if (sameNumbers >= MIN_WINNING_COUNT && sameCounts.has(sameNumbers))
+        this.results.updateSameCounts(sameNumbers);
     });
+
+    this.results.calculateRateOfReturn();
   }
 
   getTickets() {
@@ -87,15 +73,14 @@ export class LottoShop {
   }
 
   getResults() {
-    return new Map(this.results);
+    return Object.assign(
+      Object.create(Object.getPrototypeOf(this.results)),
+      this.results
+    );
   }
 
   toggleIsShowTickets() {
     this.isShowTickets = !this.isShowTickets;
-  }
-
-  clearTickets() {
-    this.tickets = [];
   }
 
   issueTickets() {

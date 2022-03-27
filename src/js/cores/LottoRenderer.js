@@ -111,7 +111,7 @@ export class LottoRenderer {
     winningNumberForm.innerHTML = '';
   }
 
-  renderModal(results) {
+  renderModal(sameCounts, rateOfReturn) {
     const modalDiv = this.targetElement.querySelector('.modal');
 
     modalDiv.classList.add('open');
@@ -138,32 +138,32 @@ export class LottoRenderer {
             <tr class="text-center">
               <td class="p-3">3개</td>
               <td class="p-3">5,000</td>
-              <td class="p-3">${results.get(3)}개</td>
+              <td class="p-3">${sameCounts.get(3)}개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">4개</td>
               <td class="p-3">50,000</td>
-              <td class="p-3">${results.get(4)}개</td>
+              <td class="p-3">${sameCounts.get(4)}개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">5개</td>
               <td class="p-3">1,500,000</td>
-              <td class="p-3">${results.get(5)}개</td>
+              <td class="p-3">${sameCounts.get(5)}개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">5개 + 보너스볼</td>
               <td class="p-3">30,000,000</td>
-              <td class="p-3">${results.get(FIVE_PLUS_BONUS)}개</td>
+              <td class="p-3">${sameCounts.get(FIVE_PLUS_BONUS)}개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">6개</td>
               <td class="p-3">2,000,000,000</td>
-              <td class="p-3">${results.get(6)}개</td>
+              <td class="p-3">${sameCounts.get(6)}개</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+      <p class="text-center font-bold">당신의 총 수익률은 ${rateOfReturn}% 입니다.</p>
       <div class="d-flex justify-center mt-5">
         <button type="button" class="btn btn-cyan" data-purpose="restart">다시 시작하기</button>
       </div>

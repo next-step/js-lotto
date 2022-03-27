@@ -39,8 +39,16 @@ export class LottoIo {
     return this.shop.getTickets();
   }
 
-  outputResults() {
-    return this.shop.getResults();
+  outputSameCounts() {
+    const results = this.shop.getResults();
+
+    return results.getSameCounts();
+  }
+
+  outputRateOfReturn() {
+    const results = this.shop.getResults();
+
+    return results.getRateOfReturn();
   }
 
   clearTickets() {

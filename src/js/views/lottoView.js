@@ -4,7 +4,7 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
 
     if (dataset.purpose !== 'inputMoney') return;
 
-    lottoIo.clearTickets();
+    lottoIo.restartShop();
 
     const moneyInputElement = targetElement.querySelector('.money-input');
 
@@ -32,9 +32,10 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
 
     lottoIo.inputWinningNumbers(winningNumbers, bonusNumber);
 
-    const results = lottoIo.outputResults();
+    const sameCounts = lottoIo.outputSameCounts();
+    const rateOfReturn = lottoIo.outputRateOfReturn();
 
-    lottoRenderer.renderModal(results);
+    lottoRenderer.renderModal(sameCounts, rateOfReturn);
   };
 
   const toggleShowButton = (event) => {

@@ -4,3 +4,4 @@ export { LottoWinningTicket } from './LottoWinningTicket.js';
 export { LottoIo } from './LottoIo.js';
 export { LottoValidator } from './LottoValidator.js';
 export { LottoRenderer } from './LottoRenderer.js';
+export { LottoResults } from './LottoResults.js';
