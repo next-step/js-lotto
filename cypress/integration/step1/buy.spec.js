@@ -1,5 +1,5 @@
 import { INVALID_INPUT_ALERT_STRING } from "../../../src/js/constants.js";
-import { typePriceInput } from "./cypress-util.js";
+import { typePriceInput } from "../cypress-util.js";
 import { areNumbersNotDuplicated } from "../../../src/js/validation.js";
 
 describe("STEP 1", function () {
