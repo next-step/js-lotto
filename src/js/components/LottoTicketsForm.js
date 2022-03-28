@@ -43,6 +43,10 @@ export class LottoTicketsForm {
         this.tickets = tickets;
     }
 
+    getTickets() {
+        return this.tickets;
+    }
+
     pickTickets() {
         this.setTickets(this.lottoMachine.getLottoNumbers(this.getAmount()));
     }

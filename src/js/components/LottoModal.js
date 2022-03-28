@@ -1,7 +1,34 @@
+const RATING = [
+    {
+        index: 3,
+        count: "3개",
+        winnings: "5000",
+    },
+    {
+        index: 4,
+        count: "4개",
+        winnings: "50000",
+    },
+    {
+        index: 5,
+        count: "5개",
+        winnings: "1500000",
+    },
+    {
+        index: "5+",
+        count: "5개 + 보너스볼",
+        winnings: "30000000",
+    },
+    {
+        index: 6,
+        count: "6개",
+        winnings: "2000000000",
+    },
+];
 export class LottoModal {
     tickets = null;
-    winningNumbers = null;
-    bonusNumber = null;
+    rating = null;
+    rate = null;
     props = null;
     $resultModal = null;
     $resultModalCloseButton = null;
@@ -24,8 +51,10 @@ export class LottoModal {
     }
 
     setEvent() {
-        this.$resultModalCloseButton.addEventListener("click", (event) => this.#onClickResultModalCloseButton());
-        this.$resetButton.addEventListener("click", (event) => this.#onClickResetButton());
+        this.$resultModalCloseButton.addEventListener("click", () =>
+            this.#onClickResultModalCloseButton()
+        );
+        this.$resetButton.addEventListener("click", () => this.#onClickResetButton());
     }
 
     onClickOpenResultModalButton() {
@@ -61,35 +90,13 @@ export class LottoModal {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="text-center">
-                                    <td class="p-3">3개</td>
-                                    <td class="p-3">5,000</td>
-                                    <td class="p-3">n개</td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td class="p-3">4개</td>
-                                    <td class="p-3">50,000</td>
-                                    <td class="p-3">n개</td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td class="p-3">5개</td>
-                                    <td class="p-3">1,500,000</td>
-                                    <td class="p-3"><span class="winnign-count"></span>개</td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td class="p-3">5개 + 보너스볼</td>
-                                    <td class="p-3">30,000,000</td>
-                                    <td class="p-3">n개</td>
-                                </tr>
-                                <tr class="text-center">
-                                    <td class="p-3">6개</td>
-                                    <td class="p-3">2,000,000,000</td>
-                                    <td class="p-3">n개</td>
-                                </tr>
+                            ${this.getRatingTemplate()}
                             </tbody>
                         </table>
                     </div>
-                    <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+                    <p class="text-center font-bold">당신의 총 수익률은 ${this.#getRate().toLocaleString(
+                        "ko-KR"
+                    )}%입니다.</p>
                     <div class="d-flex justify-center mt-5">
                         <button id="reset_button" type="button" class="btn btn-cyan">다시 시작하기</button>
                     </div>
@@ -98,31 +105,39 @@ export class LottoModal {
         `;
     }
 
-    getTicketNumbers() {
+    getRatingTemplate() {
+        console.log(this.rating);
+        return RATING.map(
+            (r) =>
+                `<tr class="text-center">
+                <td class="p-3">${r.count}</td>
+                <td class="p-3">${(+r.winnings).toLocaleString("ko-KR")}</td>
+                <td class="p-3">${this.rating[r.index]}개</td>
+            </tr>`
+        ).join("");
+    }
+
+    #getTickets() {
         return this.tickets;
     }
 
-    setTicketNumbers(numbers) {
-        this.tickets = numbers;
+    setTickets(tickets) {
+        this.tickets = tickets;
     }
 
-    #getWinningNumber() {
-        return this.winningNumbers;
+    #getRate() {
+        return this.rate;
     }
 
-    setWinningNumber(numbers) {
-        this.winningNumbers = numbers;
+    setRate(rate) {
+        this.rate = rate;
     }
 
-    #getBonusNumber() {
-        return this.bonusNumber;
+    #getRating() {
+        return this.rating;
     }
 
-    setBonusNumber(number) {
-        this.bonusNumber = number;
-    }
-
-    computeLottoResult() {
-
+    setRating(rating) {
+        this.rating = rating;
     }
 }

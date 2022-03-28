@@ -1,7 +1,5 @@
 import { MESSAGE } from "../constant/index.js";
 
-
-
 export class WinningLottoForm {
     props = null;
     winningNumbers = null;
@@ -13,7 +11,6 @@ export class WinningLottoForm {
         this.props = props;
 
         this.winningLotto = winningLotto;
-        console.log(winningLotto);
     }
 
     render() {
@@ -30,36 +27,30 @@ export class WinningLottoForm {
         this.$resultModalOpenButton.addEventListener("click", (event) => {
             this.#setWinningNumbers(this.#parseWinningNumbers());
             this.#setBonusNumber(this.$bonusNumber.value);
-            
-            this.winningLotto.setWinningNumbers(this.#getWinningNumbers());
-            this.winningLotto.setBonus(this.#getBonusNumber());
+
+            this.winningLotto.setWinningNumbers(this.getWinningNumbers());
+            this.winningLotto.setBonus(this.getBonusNumber());
             this.props.onWinngingCheck();
-            // this.winningLotto.setWinningNumbers()
-            // if(this.checkWinningNumber().isComplete) {
-            //     this.props.onLottoModal();
-            //     this.props.setLottoNumbers(this.#getWinningNumbers());
-            //     this.props.setBonusNumber(this.#getBonusNumber());
-            // }            
         });
     }
 
-
-
-    #getWinningNumbers() {
+    getWinningNumbers() {
         return this.winningNumbers;
     }
 
     #parseWinningNumbers() {
-        return Array.from(this.$winningNumbers).map(number => {
-            return number.value;
-        });
+        return Array.from(this.$winningNumbers)
+            .map((number) => {
+                return number.value;
+            })
+            .filter((number) => number !== "");
     }
 
     #setWinningNumbers(winningNumbers) {
         this.winningNumbers = winningNumbers;
     }
 
-    #getBonusNumber() {
+    getBonusNumber() {
         return this.bonusNumber;
     }
 
