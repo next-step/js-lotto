@@ -2,7 +2,7 @@ import { LOTTO_NUMBERS, LOTTO_MAX_NUMBER } from "./constants.js";
 
 function Lotto(numbers) {
   this.numbers = numbers;
-  this.matchingCount = 0;
+  this.rank = 0;
 }
 
 const createLotto = () => {
