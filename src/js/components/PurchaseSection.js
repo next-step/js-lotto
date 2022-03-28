@@ -1,18 +1,12 @@
 import { DOM } from '../constants.js';
-import { $, $$ } from '../utils/dom.js';
+import { $ } from '../utils/dom.js';
 
 class PurchaseSection {
   constructor($target, props) {
     this.$target = $target;
     this.props = props;
-    this.state = {};
     this.render();
     this.setEvent();
-  }
-
-  setState(nextState) {
-    this.state = nextState;
-    this.render();
   }
 
   render() {
@@ -31,38 +25,39 @@ class PurchaseSection {
               type="checkbox"
               id="${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_TOGGLE_BUTTON_ID}"
               class="lotto-numbers-toggle-button"
-              onclick="${this.toggleLottoDetailNumbers}"
             />
             <span class="text-base font-normal">번호보기</span>
           </label>
         </div>
       </div>
       <div id="${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_FLEXBOX_ID}" class="d-flex flex-wrap">
-        ${this.createLottoWithLottoNumbers(this.props.allLottoNumbers)}
+        ${this.createLottoWithLottoNumbers(this.props.allLottoNumbers, false)}
       </div>
     `;
   }
 
   setEvent() {
     $(`#${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_TOGGLE_BUTTON_ID}`).onclick =
-      this.toggleLottoDetailNumbers;
+      this.toggleLottoDetailNumbers.bind(this);
   }
 
   toggleLottoDetailNumbers() {
-    $(`#${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_FLEXBOX_ID}`).classList.toggle('flex-col');
-    const lottoDetails = $$(`.${DOM.LOTTO_DETAIL_CLASS}`);
-    for (let i = 0; i < lottoDetails.length; i += 1) {
-      lottoDetails[i].style.display = lottoDetails[i].style.display === 'none' ? 'inline' : 'none';
-    }
+    const $flexbox = $(`#${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_FLEXBOX_ID}`);
+    $flexbox.classList.toggle('flex-col');
+    const isShowNumber = $flexbox.classList.contains('flex-col');
+    $(`#${DOM.PURCHASE_SECTION_LOTTO_NUMBERS_FLEXBOX_ID}`).innerHTML =
+      this.createLottoWithLottoNumbers(this.props.allLottoNumbers, isShowNumber);
   }
 
-  createLottoWithLottoNumbers(allLottoNumbers) {
+  createLottoWithLottoNumbers(allLottoNumbers, isShowNumber) {
     return allLottoNumbers
       .map(
         oneLottoNumbers => String.raw`
           <div class="mx-1 text-4xl">
             <span class=${DOM.LOTTO_ICON_CLASS}>🎟️ </span>
-            <span class="${DOM.LOTTO_DETAIL_CLASS} text-2xl" style="display: none"
+            <span
+              class="${DOM.LOTTO_DETAIL_CLASS} text-2xl"
+              style="display: ${isShowNumber ? 'inline' : 'none'}"
               >${oneLottoNumbers.join(', ')}</span
             >
           </div>
