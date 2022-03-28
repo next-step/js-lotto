@@ -120,15 +120,14 @@ export default function LottoApp() {
 
   const renderLottos = (purchasedLottoCount, purchasedLottos) => {
     $purchasedLottoCount.innerText = purchasedLottoCount;
-
     const lottoTemplate = purchasedLottos
       .map(
         lotto => `
           <li class="mx-1 text-4xl lotto-item">
             <span class="lotto-icon">🎟️ </span>
-            <span class="lotto-numbers numbers-closed">${[...lotto].join(
-              ", ",
-            )}</span>
+            <span class="lotto-numbers numbers-closed">${[
+              ...lotto.numbers,
+            ].join(", ")}</span>
           </li>
         `,
       )
