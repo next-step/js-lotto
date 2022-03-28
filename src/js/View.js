@@ -1,8 +1,13 @@
 import { createLottos } from "./createLotto.js";
 import { PRICE_PER_LOTTO } from "./constants.js";
-import WinningLotto from "./WinningLotto.js";
 
-function View() {
+export default function View() {
+  this.lottoTickets = [];
+  this.winningLotto = {
+    winningNumbers: [],
+    bonusNumber: 0,
+  };
+
   this.init = () => {
     initEventListeners();
   };
@@ -109,10 +114,6 @@ function View() {
     });
   };
 
-  const getWinningResult = () => {
-    const winningAndBonusNumbers = createWinningLotto();
-  };
-
   const renderLottos = (purchasedLottoCount, purchasedLottos) => {
     $purchasedLottoCount.innerText = purchasedLottoCount;
 
@@ -154,24 +155,33 @@ function View() {
 
     // todo : 지금은 자동 구매밖에 없지만 수동 구매가 추가된다면? -> 수동 구매 후 남은 금액을 자동 구매에 사용한다.
     const numberOfLottoTickets = paidMoney / PRICE_PER_LOTTO;
-    const purchasedLottoTickets = createLottos(numberOfLottoTickets);
+    this.lottoTickets = createLottos(numberOfLottoTickets);
 
     afterPurchaseLottoView();
 
-    renderLottos(numberOfLottoTickets, purchasedLottoTickets);
+    renderLottos(numberOfLottoTickets, this.lottoTickets);
   };
 
-  // todo : 당첨 번호와 보너스 번호를 입력한 뒤 결과 확인하기를 누르면 모달창이 호출되어야 한다.
-  // * 결과 확인하기 버튼 클릭 이벤트 : 사용자가 입력한 당첨 번호와 보너스 번호 값을 확인하여 배열에 담고 반환한다.
+  // todo : 사용자가 입력한 당첨 번호와 보너스 번호 값을 확인하여 배열에 담고 반환한다.
   const createWinningLotto = () => {
     const winningNumberElements = document.querySelectorAll(".winning-number");
     const bonusNumber = document.querySelector(".bonus-number").value;
 
-    const winningNumbers = Array.from(winningNumberElements).map(
+    this.winningLotto.winningNumbers = Array.from(winningNumberElements).map(
       winningNumberElement => winningNumberElement.value,
     );
 
-    return new WinningLotto(winningNumbers, bonusNumber);
+    this.winningLotto.bonusNumber = bonusNumber;
+  };
+
+  // todo : '결과 확인하기' 버튼 클릭
+  const getWinningResult = () => {
+    createWinningLotto();
+
+    // * 사용자가 구입한 로또 확인
+    console.log(this.lottoTickets);
+    console.log(this.winningLotto.winningNumbers);
+    console.log(this.winningLotto.bonusNumber);
   };
 
   const openResultModalButtonElement = document.querySelector(
@@ -179,5 +189,3 @@ function View() {
   );
   openResultModalButtonElement.addEventListener("click", getWinningResult);
 }
-
-export { View };
