@@ -3,7 +3,6 @@ export default class Component {
     this.$target = target;
     this.$props = props;
     this.$target.innerHTML = this.template();
-
     this.setEvents();
   }
 
