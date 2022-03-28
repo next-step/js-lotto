@@ -172,10 +172,10 @@ export default function LottoApp() {
     const bonusNumber = document.querySelector(".bonus-number").value;
 
     this.winningLotto.winningNumbers = Array.from(winningNumberElements).map(
-      winningNumberElement => winningNumberElement.value,
+      winningNumberElement => Number(winningNumberElement.value),
     );
 
-    this.winningLotto.bonusNumber = bonusNumber;
+    this.winningLotto.bonusNumber = Number(bonusNumber);
   };
 
   // todo : '결과 확인하기' 버튼 클릭
@@ -186,5 +186,17 @@ export default function LottoApp() {
     console.log(this.lottoTickets);
     console.log(this.winningLotto.winningNumbers);
     console.log(this.winningLotto.bonusNumber);
+
+    console.log("매칭 카운트 확인 시작");
+    // * winningNumbers 의 요소를 순회하면서 각 lotto마다 매칭되는 번호가 몇개인지 확인해야 한다.
+    const matchingInfo = this.lottoTickets.map(lotto => {
+      let matchingCount = 0;
+      this.winningLotto.winningNumbers.forEach(winningNumber => {
+        if (lotto.has(winningNumber)) {
+          matchingCount += 1;
+        }
+      });
+      console.log(`matchingCount: ${matchingCount}`);
+    });
   };
 }
