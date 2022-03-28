@@ -1,17 +1,16 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+import {
+  LottoIo,
+  LottoShop,
+  LottoValidator,
+  LottoRenderer,
+} from './cores/index.js';
+import { lottoView } from './views/index.js';
 
-const onModalShow = () => {
-  $modal.classList.add('open')
-}
+const targetElement = document.querySelector('#app');
 
-const onModalClose = () => {
-  $modal.classList.remove('open')
-}
+const lottoShop = new LottoShop();
+const lottoValidator = new LottoValidator();
+const lottoIo = new LottoIo(lottoShop, lottoValidator);
+const lottoRenderer = new LottoRenderer(targetElement);
 
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+lottoView(targetElement, lottoIo, lottoRenderer);
