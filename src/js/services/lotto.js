@@ -3,6 +3,13 @@ import { LOTTO_WINNING_REVENUE } from '../constants.js';
 
 const isSameBonusNumber = (array1, array2) => array1.at(-1) === array2.at(-1);
 
+const getRankingFromSameCount = {
+  3: () => 'fifth',
+  4: () => 'fourth',
+  5: () => 'third',
+  6: isSecond => (isSecond ? 'second' : 'first'),
+};
+
 export const getWinningResult = (winningLottoNumbers, purchaseLottoNumbersArray) => {
   const winningResult = {
     first: 0,
@@ -14,25 +21,13 @@ export const getWinningResult = (winningLottoNumbers, purchaseLottoNumbersArray)
 
   purchaseLottoNumbersArray.forEach(purchaseLottoNumbers => {
     const sameCount = countSameNumberInTwoArray(winningLottoNumbers, purchaseLottoNumbers);
-    switch (sameCount) {
-      case 3:
-        winningResult.fifth += 1;
-        break;
-      case 4:
-        winningResult.fourth += 1;
-        break;
-      case 5:
-        winningResult.third += 1;
-        break;
-      case 6:
-        if (isSameBonusNumber(winningLottoNumbers, purchaseLottoNumbers)) winningResult.second += 1;
-        else winningResult.first += 1;
-        break;
-      default:
-        break;
+    if (sameCount === 6) {
+      const isSecond = isSameBonusNumber(winningLottoNumbers, purchaseLottoNumbers);
+      winningResult[getRankingFromSameCount[sameCount](isSecond)] += 1;
+    } else if (sameCount > 2) {
+      winningResult[getRankingFromSameCount[sameCount]()] += 1;
     }
   });
-
   return winningResult;
 };
 
