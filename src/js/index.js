@@ -1,4 +1,4 @@
-import View from "./View.js";
+import LottoApp from "./LottoApp.js";
 
-const view = new View();
-view.init();
+const lottoApp = new LottoApp();
+lottoApp.init();

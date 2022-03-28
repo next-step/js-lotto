@@ -1,7 +1,7 @@
 import { createLottos } from "./createLotto.js";
 import { PRICE_PER_LOTTO } from "./constants.js";
 
-export default function View() {
+export default function LottoApp() {
   this.lottoTickets = [];
   this.winningLotto = {
     winningNumbers: [],
