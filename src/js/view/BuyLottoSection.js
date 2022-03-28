@@ -12,41 +12,16 @@ class BuyLottoSection extends Component {
 
   setEvents() {
     $('#input-price-btn').addEventListener('click', (event) => {
-      const action = event.target.dataset.action;
       const price = Number(this.input.value);
       if (
-        this.validation.lottomMinimumPrice(price) ||
-        this.validation.lottomMaximumPrice(price) ||
-        this.validation.lottoPrice(price)
+        validation.lottomMinimumPrice(price) ||
+        validation.lottomMaximumPrice(price) ||
+        validation.lottoPrice(price)
       )
         return;
-      this.actionMap[action](price);
+      actionMap?.SET_PRICE(price);
     });
   }
-
-  validation = {
-    lottoPrice: (money) => {
-      if (money % 1000 !== 0) {
-        alert(INVALID_LOTTO_PRICE);
-        return true;
-      }
-      return false;
-    },
-    lottomMinimumPrice: (money) => {
-      if (money < 1000) {
-        alert(INVALID_LOTTO_MINIMUM_PRICE);
-        return true;
-      }
-      return false;
-    },
-    lottomMaximumPrice: (money) => {
-      if (100000 < money) {
-        alert(INVALID_LOTTO_MAXIMUM_PRICE);
-        return true;
-      }
-      return false;
-    },
-  };
 
   template() {
     const props = store.getState();
@@ -60,7 +35,7 @@ class BuyLottoSection extends Component {
               </label>
               <div class="d-flex">
                 <input type="number" id="input-price" class="w-100 mr-2 pl-2" name="price" placeholder="구입 금액" value="${props.price}" required="" min="1000" max="100000">
-                <button type="submit" id="input-price-btn" class="btn btn-cyan" data-action=${SET_PRICE}>
+                <button type="submit" id="input-price-btn" class="btn btn-cyan">
                   확인
                 </button>
               </div>
