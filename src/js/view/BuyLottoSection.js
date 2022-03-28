@@ -1,25 +1,14 @@
 import Component from '../core/Component.js';
 import store from '../store/store.js';
-import { SET_PRICE } from '../store/actions.js';
-import { setPrice } from '../store/creator.js';
+import validation from '../validation.js';
+import actionMap from '../actionMap.js';
 import { $ } from '../utils/dom.js';
-import {
-  INVALID_LOTTO_PRICE,
-  INVALID_LOTTO_MINIMUM_PRICE,
-  INVALID_LOTTO_MAXIMUM_PRICE,
-} from '../utils/constants.js';
 
 class BuyLottoSection extends Component {
   constructor(target) {
     super(target);
     this.input = $('#input-price');
   }
-
-  actionMap = {
-    SET_PRICE: (money) => {
-      store.dispatch(setPrice(money));
-    },
-  };
 
   setEvents() {
     $('#input-price-btn').addEventListener('click', (event) => {
