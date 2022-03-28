@@ -9,6 +9,10 @@ export class Wallet {
     return this.#lottos;
   }
 
+  get isEmpty() {
+    return (this.lottos ?? []).length === 0;
+  }
+
   setLottos(lottos) {
     this.#lottos = lottos;
   }

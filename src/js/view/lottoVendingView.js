@@ -24,12 +24,11 @@ const lottoVendingView = (function () {
   }
 
   function initial() {
+    eventBindings();
     initialMoney();
     purchasedHistoryView.initial();
     winingLottoHistoryView.initial();
   }
-
-  eventBindings();
 
   return { initial };
 })();
