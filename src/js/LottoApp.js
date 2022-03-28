@@ -26,6 +26,9 @@ export default function LottoApp() {
   const $lottoList = document.querySelector(".lotto-list");
   const $purchasedLottoCount = document.querySelector("#purchased-lotto-count");
   const $purchasePrice = document.querySelector("#purchase-price");
+  const openResultModalButtonElement = document.querySelector(
+    ".open-result-modal-button",
+  );
 
   const onModalShow = () => {
     $modal.classList.add("open");
@@ -112,6 +115,7 @@ export default function LottoApp() {
       e.preventDefault();
       purchaseLottos();
     });
+    openResultModalButtonElement.addEventListener("click", getWinningResult);
   };
 
   const renderLottos = (purchasedLottoCount, purchasedLottos) => {
@@ -162,7 +166,7 @@ export default function LottoApp() {
     renderLottos(numberOfLottoTickets, this.lottoTickets);
   };
 
-  // todo : 사용자가 입력한 당첨 번호와 보너스 번호 값을 확인하여 배열에 담고 반환한다.
+  // todo : 사용자가 입력한 당첨 번호와 보너스 번호 값을 확인한다.
   const createWinningLotto = () => {
     const winningNumberElements = document.querySelectorAll(".winning-number");
     const bonusNumber = document.querySelector(".bonus-number").value;
@@ -183,9 +187,4 @@ export default function LottoApp() {
     console.log(this.winningLotto.winningNumbers);
     console.log(this.winningLotto.bonusNumber);
   };
-
-  const openResultModalButtonElement = document.querySelector(
-    ".open-result-modal-button",
-  );
-  openResultModalButtonElement.addEventListener("click", getWinningResult);
 }
