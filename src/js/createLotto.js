@@ -1,14 +1,19 @@
 import { LOTTO_NUMBERS, LOTTO_MAX_NUMBER } from "./constants.js";
 
-const createLotto = () => {
-  const lottoTicket = new Set();
+function Lotto(numbers) {
+  this.numbers = numbers;
+  this.matchingCount = 0;
+}
 
-  while (lottoTicket.size < LOTTO_NUMBERS) {
+const createLotto = () => {
+  const lottoNumbers = new Set();
+
+  while (lottoNumbers.size < LOTTO_NUMBERS) {
     const randomLottoNumber = Math.floor(Math.random() * LOTTO_MAX_NUMBER + 1);
-    lottoTicket.add(randomLottoNumber);
+    lottoNumbers.add(randomLottoNumber);
   }
 
-  return lottoTicket;
+  return new Lotto(lottoNumbers);
 };
 
 const createLottos = purchasedLottoCount => {
