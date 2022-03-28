@@ -1,9 +1,51 @@
 {
-  "name": "racingcar",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "devDependencies": {
-    "cypress": "^6.3.0"
-  }
+	"name": "@younho9/js-lotto",
+	"version": "1.0.0",
+	"private": true,
+	"description": "자바스크립트로 구현하는 로또 어플리케이션",
+	"keywords": [
+		"javascript",
+		"cypress",
+		"clean-code",
+		"study"
+	],
+	"homepage": "https://github.com/younho9/js-lotto#readme",
+	"bugs": {
+		"url": "https://github.com/younho9/js-lotto/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/younho9/js-lotto.git"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Younho Choo",
+		"email": "yo+github@younho9.com",
+		"url": "https://younho9.dev"
+	},
+	"scripts": {
+		"cypress": "cypress open",
+		"cypress:headless": "cypress run",
+		"format": "prettier . --write",
+		"lint": "xo",
+		"start": "live-server --port=8080 --entry-file=index.html",
+		"test": "start-server-and-test 'yarn start --quiet' http://localhost:8080 'yarn cypress'",
+		"test:headless": "start-server-and-test 'yarn start --quiet' http://localhost:8080 'yarn cypress:headless'"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "yarn lint && yarn test:headless"
+		}
+	},
+	"prettier": "@younho9/prettier-config",
+	"devDependencies": {
+		"@younho9/prettier-config": "^2.3.1",
+		"@younho9/xo-configs": "^0.7.1",
+		"cypress": "^9.5.1",
+		"husky": "4",
+		"live-server": "^1.2.1",
+		"prettier": "^2.5.1",
+		"start-server-and-test": "^1.14.0",
+		"xo": "^0.48.0"
+	}
 }

@@ -1,0 +1,13 @@
+{
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"xo.enable": true,
+	"xo.format.enable": true,
+	"[javascript]": {
+		"editor.defaultFormatter": "samverschueren.linter-xo"
+	},
+	"prettier.ignorePath": "./node_modules/@younho9/prettier-config/.prettierignore"
+}
