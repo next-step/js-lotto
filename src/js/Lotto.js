@@ -63,7 +63,8 @@ class Lotto {
     winningNumberList = winningNumberList.map(input => Number(input.value))
     randomNumberLists = randomNumberLists.map(list => list.split(', ').map(num => Number(num)))
     
-    const rankByTicket = randomNumberLists.map(numberList => numberList.filter(num => winningNumberList.includes(num)))
+    const rankByTicket = randomNumberLists
+      .map(numberList => numberList.filter(num => winningNumberList.includes(num)))
       .map(guessNumbers => this.evaluateRank(guessNumbers, bonusNumber))
     
     const rankCount = [...this.rankCounter(rankByTicket).values()];

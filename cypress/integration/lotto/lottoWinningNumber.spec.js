@@ -55,8 +55,7 @@ describe('Lotto 당첨 번호 테스트', () => {
         }).then(() => {
           cy.get('[data-winning-numbers=submit]').click()
         })
-        
-      })
+      })      
     })
 
     it('당첨번호를 제출하면 모달창이 나온다.', () => {
@@ -81,6 +80,14 @@ describe('Lotto 당첨 번호 테스트', () => {
       const toggleUI = [cy.get('[data-ticket=section]'), cy.get('[data-winning-numbers=form]')]
       toggleUI.forEach(tag => tag.should('not.be.visible'))
       cy.get('[data-amount=input]').should('have.value', '')
+    })
+
+    it('로또 티켓 번호들과 당첨 번호를 비교하여 당첨 갯수를 모달창에 표시한다', () => {
+      // 테스트 코드
+    })
+
+    it('당첨 등수, 갯수, 구입가격을 계산하여 수익률을 모달창에 표시한다. ', () => {
+      // 테스트 코드
     })
   })
 })
