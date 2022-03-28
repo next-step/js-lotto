@@ -1,9 +1,5 @@
 import { createLottos } from "./createLotto.js";
 import { PRICE_PER_LOTTO } from "./constants.js";
-import {
-  PurchaseInformation,
-  isPaymentUnitsOf1000Won,
-} from "./PurchaseInformation.js";
 import WinningLotto from "./WinningLotto.js";
 
 function View() {
@@ -117,10 +113,10 @@ function View() {
     const winningAndBonusNumbers = createWinningLotto();
   };
 
-  const renderLottos = purchaseInformation => {
-    $purchasedLottoCount.innerText = purchaseInformation.purchasedLottoCount;
+  const renderLottos = (purchasedLottoCount, purchasedLottos) => {
+    $purchasedLottoCount.innerText = purchasedLottoCount;
 
-    const lottoTemplate = purchaseInformation.purchasedLottos
+    const lottoTemplate = purchasedLottos
       .map(
         lotto => `
           <li class="mx-1 text-4xl lotto-item">
@@ -134,6 +130,13 @@ function View() {
       .join("");
 
     $lottoList.innerHTML = lottoTemplate;
+  };
+
+  const isPaymentUnitsOf1000Won = payment => {
+    if (payment % PRICE_PER_LOTTO === 0) {
+      return true;
+    }
+    return false;
   };
 
   // * 로또를 구매하는 함수
@@ -153,14 +156,9 @@ function View() {
     const numberOfLottoTickets = paidMoney / PRICE_PER_LOTTO;
     const purchasedLottoTickets = createLottos(numberOfLottoTickets);
 
-    const purchaseInformation = new PurchaseInformation();
-    purchaseInformation.payment = paidMoney;
-    purchaseInformation.purchasedLottoCount = numberOfLottoTickets;
-    purchaseInformation.purchasedLottos = purchasedLottoTickets;
-
     afterPurchaseLottoView();
 
-    renderLottos(purchaseInformation);
+    renderLottos(numberOfLottoTickets, purchasedLottoTickets);
   };
 
   // todo : 당첨 번호와 보너스 번호를 입력한 뒤 결과 확인하기를 누르면 모달창이 호출되어야 한다.
