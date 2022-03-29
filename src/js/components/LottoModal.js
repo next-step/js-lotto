@@ -106,21 +106,15 @@ export class LottoModal {
     }
 
     getRatingTemplate() {
-        console.log(this.rating);
         return RATING.map(
             (r) =>
                 `<tr class="text-center">
-                <td class="p-3">${r.count}</td>
-                <td class="p-3">${(+r.winnings).toLocaleString("ko-KR")}</td>
-                <td class="p-3">${this.rating[r.index]}개</td>
-            </tr>`
+                    <td class="p-3">${r.count}</td>
+                    <td class="p-3">${(+r.winnings).toLocaleString("ko-KR")}</td>
+                    <td class="p-3">${this.rating[r.index]}개</td>
+                </tr>`
         ).join("");
     }
-
-    #getTickets() {
-        return this.tickets;
-    }
-
     setTickets(tickets) {
         this.tickets = tickets;
     }
@@ -131,10 +125,6 @@ export class LottoModal {
 
     setRate(rate) {
         this.rate = rate;
-    }
-
-    #getRating() {
-        return this.rating;
     }
 
     setRating(rating) {

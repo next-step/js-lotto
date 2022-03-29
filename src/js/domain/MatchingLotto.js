@@ -20,6 +20,7 @@ const RATING = {
         winnings: 2000000000,
     },
 };
+const LOTTO_UNIT = 1000;
 
 export class MatchingLotto {
     tickets = null;
@@ -59,7 +60,6 @@ export class MatchingLotto {
 
     computeRate() {
         let total = 0;
-        this.tickets.length * 1000;
 
         for (const [key, value] of Object.entries(this.rating)) {
             if (RATING[key]) {
@@ -67,7 +67,7 @@ export class MatchingLotto {
             }
         }
 
-        this.#setRate((total / (this.tickets.length * 1000)) * 100);
+        this.#setRate((total / (this.tickets.length * LOTTO_UNIT)) * 100);
     }
 
     getTickets() {
