@@ -1,11 +1,11 @@
 import WinningNumber from "../model/WinningNumber.mjs";
 
 export default class WinningNumberForm {
-  #numberForm;
+  #numberInput;
 
   #bonusNumberForm;
 
-  #numbersForm;
+  #numbersInput;
 
   #statisticsModal;
 
@@ -13,16 +13,16 @@ export default class WinningNumberForm {
   constructor($modal, user) {
     this.#statisticsModal = $modal;
     this.#user = user;
-    this.#numberForm = document.querySelector(".number-form");
-    this.#numbersForm = Array.from(document.querySelectorAll(".winning-number"));
+    this.#numberInput = document.querySelector(".number-form");
+    this.#numbersInput = Array.from(document.querySelectorAll(".winning-number"));
     this.#bonusNumberForm = document.querySelector(".bonus-number");
 
-    this.#numberForm.addEventListener("submit", this.#handleSubmit);
-    this.#numberForm.addEventListener("keyup", this.#handleKeyup);
+    this.#numberInput.addEventListener("submit", this.#handleSubmit);
+    this.#numberInput.addEventListener("keyup", this.#handleKeyup);
   }
 
   reset() {
-    this.#numbersForm.forEach(el => el.reset())
+    this.#numbersInput.forEach(el => el.reset())
     this.#bonusNumberForm.reset();
   }
 
@@ -35,7 +35,7 @@ export default class WinningNumberForm {
 
     const winningNumbers = new WinningNumber();
 
-    this.#numbersForm.map(({valueAsNumber}) => winningNumbers.addNumber(valueAsNumber));
+    this.#numbersInput.map(({valueAsNumber}) => winningNumbers.addNumber(valueAsNumber));
     winningNumbers.bonusNumber = this.#bonusNumberForm.valueAsNumber;
 
     try {
