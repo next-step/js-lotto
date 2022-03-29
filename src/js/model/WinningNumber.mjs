@@ -3,14 +3,17 @@ export default class WinningNumber {
 
   #bonusNumber;
 
+  #MIN_NUMBER = 1;
+  #MAX_NUMBER = 45;
+
   constructor() {
     this.#numbers = new Set();
     this.#bonusNumber = null;
   }
 
   #isValidNumber = (number) =>
-    number >= 1 &&
-    number <= 45;
+    number >= this.#MIN_NUMBER &&
+    number <= this.#MAX_NUMBER;
 
   addNumber = (number) => {
     this.#numbers.add(number);
