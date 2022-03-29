@@ -16,11 +16,17 @@ const lottoVendingView = (function () {
   }
 
   function initialMoney() {
-    $purchaseMoney.value = '';
+    $purchaseMoney.value = null;
+  }
+
+  function callbackResetWinningLottoHistory() {
+    initialMoney();
+    purchasedHistoryView.initial();
   }
 
   function eventBindings() {
     $purchaseLotto.addEventListener('submit', handlePurchaseLotto);
+    winingLottoHistoryView.eventBindings(callbackResetWinningLottoHistory);
   }
 
   function initial() {

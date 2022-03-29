@@ -16,6 +16,15 @@ Cypress.Commands.add('isEqualLottoAmount', (value) => {
   cy.get('section.mt-9 .my-0 span').should('have.text', value);
 });
 
+Cypress.Commands.add('showWinningResult', () => cy.get('form.mt-9').submit());
+
+Cypress.Commands.add('isShowWinningResultModal', () =>
+  cy.get('div.modal').should('have.class', 'open')
+);
+Cypress.Commands.add('isHideWinningResultModal', () =>
+  cy.get('div.modal').should('not.have.class', 'open')
+);
+
 describe('로또 자판기', () => {
   beforeEach(() => {
     cy.visit(APP_URL);
@@ -42,6 +51,13 @@ describe('로또 자판기', () => {
       cy.inputMoney(3000);
       cy.purchase();
       cy.isEqualLottoAmount(3);
+    });
+
+    it('로또 구매후 당첨 결과를 입력하지 않은채 결과보기시 화면이 나타나지 않음', () => {
+      cy.inputMoney(3000);
+      cy.purchase();
+      cy.showWinningResult();
+      cy.isHideWinningResultModal();
     });
   });
 });

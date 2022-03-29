@@ -3,10 +3,9 @@ import { LOTTO_MAX_NUM, LOTTO_MIN_NUM } from '../constants/lotto.js';
 
 const winingLottoHistoryView = (function () {
   const $winingLottoHistory = document.querySelector('form.mt-9');
-  const $winingResultButton =
-    $winingLottoHistory.querySelector('#winingResult');
-  const $winningNumbers =
-    $winingLottoHistory.querySelectorAll('.winning-number');
+  const $winningNumbers = $winingLottoHistory.querySelectorAll(
+    'input.winning-number, input.bonus-number'
+  );
   const $winningBonusNumber =
     $winingLottoHistory.querySelector('.bonus-number');
 
@@ -14,11 +13,14 @@ const winingLottoHistoryView = (function () {
     $winingLottoHistory.classList.add('hide');
   }
 
+  function initElementValue($element) {
+    $element.value = null;
+  }
+
   function initialWinningNumbers() {
     $winningNumbers.forEach(($winningNumber) => {
-      $winningNumber.setAttribute('value', null);
+      initElementValue($winningNumber);
     });
-    $winningBonusNumber.setAttribute('value', null);
   }
 
   function hideWinningHistory() {
@@ -29,10 +31,30 @@ const winingLottoHistoryView = (function () {
     $winingLottoHistory.classList.remove('hide');
   }
 
+  function notificationDuplicateNumber() {
+    alert('중복된 당첨 숫자가 존재합니다.');
+  }
+
+  function isDuplicatedWinningNumber(number) {
+    return (
+      Array.from($winningNumbers).filter(
+        ($winningNumber) => $winningNumber.value === number
+      ).length > 1
+    );
+  }
+
+  function isInValidWinningNumbers() {
+    return Array.from($winningNumbers).some(($winningNumber) =>
+      isDuplicatedWinningNumber($winningNumber.value)
+    );
+  }
+
   function handleWinningResult(event) {
     event.preventDefault();
-    // if (validateWinningNumbers()) {
-    // }
+    if (isInValidWinningNumbers()) {
+      notificationDuplicateNumber();
+      return;
+    }
     winingLottoHistoryModalView.open();
   }
 
@@ -42,21 +64,26 @@ const winingLottoHistoryView = (function () {
     initialWinningNumbers();
   }
 
+  function callbackResetWinningLottoHistory(onReset) {
+    initial();
+    onReset();
+  }
+
   function changePurchasedHistory() {
     showWinningHistory();
   }
 
-  function eventBindings() {
+  function eventBindings(onReset) {
     $winingLottoHistory.addEventListener('submit', handleWinningResult);
-    winingLottoHistoryModalView.eventBindings(initial);
+    winingLottoHistoryModalView.eventBindings(() =>
+      callbackResetWinningLottoHistory(onReset)
+    );
     $winningNumbers.forEach(($winningNumber) => {
       $winningNumber.setAttribute('min', LOTTO_MIN_NUM);
       $winningNumber.setAttribute('max', LOTTO_MAX_NUM);
     });
   }
 
-  eventBindings();
-
-  return { initial, changePurchasedHistory };
+  return { initial, eventBindings, changePurchasedHistory };
 })();
 export default winingLottoHistoryView;
