@@ -80,15 +80,13 @@ class LottoApp {
 
   onSubmitWinningNumberForm(e) {
     e.preventDefault();
-    const winningAndBonusNumbers = [
-      ...this.$winningNumberForm.getWinningNumbers(),
-      this.$winningNumberForm.getBonusNumber(),
-    ];
+    const winningNumbers = this.$winningNumberForm.getWinningNumbers();
+    const bonusNumber = this.$winningNumberForm.getBonusNumber();
 
-    if (!this.$winningNumberForm.checkWinningAndBonusNumbersWithAlert(winningAndBonusNumbers))
+    if (!this.$winningNumberForm.checkWinningAndBonusNumbersWithAlert(winningNumbers, bonusNumber))
       return;
 
-    const winningResult = getWinningResult(winningAndBonusNumbers, this.state.allLottoNumbers);
+    const winningResult = getWinningResult(winningNumbers, bonusNumber, this.state.allLottoNumbers);
     const totalYield = getTotalYield(this.state.lottoCount * LOTTO.PRICE, winningResult);
 
     this.$modal.setState({

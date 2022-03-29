@@ -69,17 +69,15 @@ class WinningNumberForm {
     e.target.nextElementSibling.focus();
   }
 
-  checkWinningAndBonusNumbersWithAlert(inputedNumbers) {
+  checkWinningAndBonusNumbersWithAlert(winningNumbers, bonusNumber) {
     if (
-      !isAllSatisfiedConditionInArray(
-        inputedNumbers,
-        number => number >= LOTTO.START_NUMBER && number <= LOTTO.END_NUMBER,
-      )
+      !isAllSatisfiedConditionInArray(winningNumbers, number => this.isValidLottoNumber(number)) ||
+      !this.isValidLottoNumber(bonusNumber)
     ) {
       alert(ERROR_MESSAGE.INVALID_RANGE_LOTTO_NUMBER);
       return false;
     }
-    if (isDuplicatedNumbersInArray(inputedNumbers)) {
+    if (isDuplicatedNumbersInArray([...winningNumbers, bonusNumber])) {
       alert(ERROR_MESSAGE.DUPLICATED_LOTTO_NUMBER);
       return false;
     }
@@ -87,8 +85,12 @@ class WinningNumberForm {
     return true;
   }
 
+  isValidLottoNumber(number) {
+    return LOTTO.START_NUMBER <= number && LOTTO.END_NUMBER >= number;
+  }
+
   getWinningNumbers() {
-    return Array.from(this.$winningNumbers).map(element => +element.value);
+    return [...Array.from(this.$winningNumbers).map(element => +element.value)];
   }
 
   getBonusNumber() {

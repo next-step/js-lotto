@@ -15,68 +15,73 @@ describe('당첨 결과 기능', () => {
 
   context('당첨 통계에는 알맞게 등수가 표시되어야 합니다.', () => {
     it('3개가 같다 = 5등', () => {
-      const winningLottoNumbers = [1, 2, 3, 4, 5, 6, 7];
-      const purchaseLottoNumbersArray = [[1, 2, 3, 10, 11, 12, 13]];
+      const winningLottoNumbers = [1, 2, 3, 4, 5, 6];
+      const bonusNumber = 7;
+      const purchaseLottoNumbersArray = [[1, 2, 3, 10, 11, 12]];
       const expectResult = {
         ...result,
         fifth: 1,
       };
 
-      expect(getWinningResult(winningLottoNumbers, purchaseLottoNumbersArray)).to.deep.equal(
-        expectResult,
-      );
+      expect(
+        getWinningResult(winningLottoNumbers, bonusNumber, purchaseLottoNumbersArray),
+      ).to.deep.equal(expectResult);
     });
 
     it('4개가 같다 = 4등', () => {
-      const winningLottoNumbers = [1, 2, 3, 4, 5, 6, 7];
-      const purchaseLottoNumbersArray = [[1, 2, 3, 4, 11, 12, 13]];
+      const winningLottoNumbers = [1, 2, 3, 4, 5, 6];
+      const bonusNumber = 7;
+      const purchaseLottoNumbersArray = [[1, 2, 3, 4, 11, 12]];
       const expectResult = {
         ...result,
         fourth: 1,
       };
 
-      expect(getWinningResult(winningLottoNumbers, purchaseLottoNumbersArray)).to.deep.equal(
-        expectResult,
-      );
+      expect(
+        getWinningResult(winningLottoNumbers, bonusNumber, purchaseLottoNumbersArray),
+      ).to.deep.equal(expectResult);
     });
 
     it('5개가 같다 = 3등', () => {
-      const winningLottoNumbers = [1, 2, 3, 4, 5, 6, 7];
-      const purchaseLottoNumbersArray = [[1, 2, 3, 4, 5, 12, 13]];
+      const winningLottoNumbers = [1, 2, 3, 4, 5, 6];
+      const bonusNumber = 7;
+      const purchaseLottoNumbersArray = [[1, 2, 3, 4, 5, 12]];
       const expectResult = {
         ...result,
         third: 1,
       };
 
-      expect(getWinningResult(winningLottoNumbers, purchaseLottoNumbersArray)).to.deep.equal(
-        expectResult,
-      );
+      expect(
+        getWinningResult(winningLottoNumbers, bonusNumber, purchaseLottoNumbersArray),
+      ).to.deep.equal(expectResult);
     });
 
     it('5개가 같고, 보너스 번호가 같다 = 2등', () => {
-      const winningLottoNumbers = [1, 2, 3, 4, 5, 6, 7];
-      const purchaseLottoNumbersArray = [[1, 2, 3, 4, 5, 12, 7]];
+      const winningLottoNumbers = [1, 2, 3, 4, 5, 6];
+      const bonusNumber = 7;
+      const purchaseLottoNumbersArray = [[1, 2, 3, 4, 5, 7]];
       const expectResult = {
         ...result,
         second: 1,
       };
 
-      expect(getWinningResult(winningLottoNumbers, purchaseLottoNumbersArray)).to.deep.equal(
-        expectResult,
-      );
+      expect(
+        getWinningResult(winningLottoNumbers, bonusNumber, purchaseLottoNumbersArray),
+      ).to.deep.equal(expectResult);
     });
 
     it('6개가 같다 = 1등', () => {
-      const winningLottoNumbers = [1, 2, 3, 4, 5, 6, 7];
-      const purchaseLottoNumbersArray = [[1, 2, 3, 4, 5, 6, 13]];
+      const winningLottoNumbers = [1, 2, 3, 4, 5, 6];
+      const bonusNumber = 7;
+      const purchaseLottoNumbersArray = [[1, 2, 3, 4, 5, 6]];
       const expectResult = {
         ...result,
         first: 1,
       };
 
-      expect(getWinningResult(winningLottoNumbers, purchaseLottoNumbersArray)).to.deep.equal(
-        expectResult,
-      );
+      expect(
+        getWinningResult(winningLottoNumbers, bonusNumber, purchaseLottoNumbersArray),
+      ).to.deep.equal(expectResult);
     });
   });
 
