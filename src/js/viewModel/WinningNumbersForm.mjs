@@ -22,8 +22,8 @@ export default class WinningNumberForm {
   }
 
   reset() {
-    this.#numbersForm.forEach(el => el.value = '')
-    this.#bonusNumberForm.value = ''
+    this.#numbersForm.forEach(el => el.reset())
+    this.#bonusNumberForm.reset();
   }
 
   #handleSubmit = (e) => {
@@ -38,11 +38,14 @@ export default class WinningNumberForm {
     this.#numbersForm.map(({valueAsNumber}) => winningNumbers.addNumber(valueAsNumber));
     winningNumbers.bonusNumber = this.#bonusNumberForm.valueAsNumber;
 
-    if (winningNumbers.isValid()) {
-      this.#statisticsModal.openModal(winningNumbers, this.#user);
-      return;
+    try {
+      if (winningNumbers.isValid()) {
+        this.#statisticsModal.openModal(winningNumbers, this.#user);
+        return;
+      }
+    } catch (e) {
+      alert(e.message)
     }
-    alert('당첨번호가 올바르지 않습니다.')
   };
 
   /**
