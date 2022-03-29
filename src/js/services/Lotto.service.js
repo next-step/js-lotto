@@ -34,7 +34,7 @@ class LottoService {
     return result;
   }
 
-  validCount = amount => {
+  validCount(amount) {
     const count = Number(amount / AMOUNT_UNIT);
     if (isEmpty(amount) || isNaN(count)) throw new Error(ERROR_MESSAGE.REQUIRED_DIGIT);
     if (amount < AMOUNT_UNIT) throw new Error(ERROR_MESSAGE.MUST_MORE_THAN);
@@ -42,7 +42,7 @@ class LottoService {
 
     this.amount = amount;
     return count;
-  };
+  }
 
   isValidPurchasesNumbers = value => {
     if (isEmpty(value)) throw new Error(ERROR_MESSAGE.REQUIRED_WINNING_NUMBER);
@@ -51,26 +51,26 @@ class LottoService {
     return true;
   };
 
-  isLotteryOpen(target) {
+  isLotteryOpen = target => {
     return target.matches('.open-result-modal-button');
-  }
-
-  isLotteryClose(target) {
-    return target.matches('.modal-close');
-  }
-
-  notingAction = target => {
-    return !this.isLotteryOpen(target) && !this.isLotteryClose(target);
   };
 
-  checkLottery = purchasedNumbers => {
+  isLotteryClose = target => {
+    return target.matches('.modal-close');
+  };
+
+  notingAction(target) {
+    return !this.isLotteryOpen(target) && !this.isLotteryClose(target);
+  }
+
+  checkLottery(purchasedNumbers) {
     const uniquePurchasesNumbers = new Set(purchasedNumbers);
     if (uniquePurchasesNumbers.has('')) throw new Error(ERROR_MESSAGE.REQUIRED_DIGIT);
     if (uniquePurchasesNumbers.size < MAX_LOTTO_DIGIT + BONUS_LOTTO_DIGIT)
       throw new Error(ERROR_MESSAGE.MUST_NOT_DUPLICATE);
     const isValid = purchasedNumbers.every(this.isValidPurchasesNumbers);
     return isValid && purchasedNumbers;
-  };
+  }
 
   findCoincidenceCount = (lotto, regular) => {
     return lotto.filter(lottoNumber => regular.includes(`${lottoNumber}`)).length;
