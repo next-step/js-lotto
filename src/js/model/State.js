@@ -89,7 +89,7 @@ export default class State {
       $el.lastElementChild.textContent = `${this.#lottoModel.getWinningQuantityByRank(prizeKeys[i])}개`;
     });
     $(LOTTO_MODAL).classList.toggle('open');
-    $(LOTTO_MODAL_BENEFIT_RATE).textContent = `${this.lottoBenefitRate}%`;
+    $(LOTTO_MODAL_BENEFIT_RATE).textContent = `당신의 총 수익률은 ${this.lottoBenefitRate}%입니다.`;
   };
 
   #generateLotto(price) {
