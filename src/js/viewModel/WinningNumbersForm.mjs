@@ -7,11 +7,11 @@ export default class WinningNumberForm {
 
   #numbersForm;
 
-  #modal;
+  #statisticsModal;
 
   #user;
   constructor($modal, user) {
-    this.#modal = $modal;
+    this.#statisticsModal = $modal;
     this.#user = user;
     this.#numberForm = document.querySelector(".number-form");
     this.#numbersForm = Array.from(document.querySelectorAll(".winning-number"));
@@ -39,7 +39,7 @@ export default class WinningNumberForm {
     winningNumbers.bonusNumber = this.#bonusNumberForm.valueAsNumber;
 
     if (winningNumbers.isValid()) {
-      this.#modal.openModal(winningNumbers, this.#user);
+      this.#statisticsModal.openModal(winningNumbers, this.#user);
       return;
     }
     alert('당첨번호가 올바르지 않습니다.')
