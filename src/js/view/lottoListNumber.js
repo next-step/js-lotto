@@ -1,14 +1,14 @@
-import { getSelector } from './../utils/index.js';
+import { getSelector } from '../utils/index.js';
 import App from '../app.js';
 
-class LottoNumberRenderer extends App {
+class LottoListNumber extends App {
   constructor() {
     super();
     this.$lottoList = getSelector('#lotto-list');
     this.$lottoListUl = getSelector('#lotto-list ul');
     this.$lottoToggleBtn = getSelector('.lotto-numbers-toggle-button');
   }
-  _init() {
+  init() {
     this.$lottoToggleBtn.addEventListener('click', this.toggleLottoNumbersView.bind(this));
   }
   toggleLottoNumbersView() {
@@ -25,4 +25,4 @@ class LottoNumberRenderer extends App {
   }
 }
 
-export default LottoNumberRenderer;
+export default LottoListNumber;

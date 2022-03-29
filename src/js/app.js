@@ -6,7 +6,9 @@ const initState = {
 };
 
 class App {
-  constructor() {}
+  constructor() {
+    this.state = {};
+  }
   init() {
     this.state = { ...initState };
     this._init();
