@@ -6,14 +6,8 @@ class WinningNumberForm {
   constructor($target, props) {
     this.$target = $target;
     this.props = props;
-    this.state = {};
     this.render();
     this.setEvent();
-  }
-
-  setState(nextState) {
-    this.state = nextState;
-    this.render();
   }
 
   render() {
@@ -52,7 +46,9 @@ class WinningNumberForm {
   }
 
   mounted() {
-    $$(`.${DOM.WINNING_NUMBER_CLASS}`)[0].focus();
+    this.$winningNumbers = $$(`.${DOM.WINNING_NUMBER_CLASS}`);
+    this.$bonusNumber = $(`.${DOM.BONUS_NUMBER_CLASS}`);
+    this.$winningNumbers[0].focus();
   }
 
   setEvent() {
@@ -66,7 +62,7 @@ class WinningNumberForm {
     if (e.target.value.length < MAX_INPUT_LENGTH) return;
 
     if (!e.target.nextElementSibling) {
-      $(`.${DOM.BONUS_NUMBER_CLASS}`).focus();
+      this.$bonusNumber.focus();
       return;
     }
 
@@ -92,11 +88,11 @@ class WinningNumberForm {
   }
 
   getWinningNumbers() {
-    return Array.from($$(`.${DOM.WINNING_NUMBER_CLASS}`)).map(element => +element.value);
+    return Array.from(this.$winningNumbers).map(element => +element.value);
   }
 
   getBonusNumber() {
-    return +$(`.${DOM.BONUS_NUMBER_CLASS}`).value;
+    return +this.$bonusNumber.value;
   }
 }
 
