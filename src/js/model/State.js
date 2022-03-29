@@ -31,10 +31,7 @@ export default class State {
     $(LOTTO_SECTION).hidden = true;
     $(LOTTO_FORM).hidden = true;
     $(LOTTO_MODAL).classList.toggle('open');
-    $$(LOTTO_FORM__WINNING_NUMBER).forEach(($el) => {
-      $el.value = '';
-    });
-    $(LOTTO_FORM__BONUS_NUMBER).value = '';
+    $(LOTTO_FORM).reset();
   };
 
   purchaseLotto = (e) => {
