@@ -2,6 +2,8 @@ export const AMOUNT_UNIT = 1000;
 
 export const MAX_LOTTO_DIGIT = 6;
 
+export const BONUS_LOTTO_DIGIT = 1;
+
 export const MIN_WINNING_COUNT = 3;
 
 export const MAX_LOTTO_NUMBER = 45;

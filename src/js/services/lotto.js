@@ -10,7 +10,7 @@ const useLottoService = () => {
     return Array.from(numbers);
   };
 
-  const purchasesLotto = number => {
+  const generatedLotto = number => {
     return Array.from({ length: number }).map(() => getLottoNumbers());
   };
 
@@ -22,7 +22,7 @@ const useLottoService = () => {
     return count;
   };
 
-  return { purchasesLotto, validCount };
+  return { generatedLotto, validCount };
 };
 
 export default useLottoService;

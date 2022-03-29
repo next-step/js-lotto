@@ -90,7 +90,7 @@ describe('Lotto', () => {
       });
     });
   });
-  
+
   describe('당첨 번호를 입력하지 않고 로또 결과를 확인하는 경우', () => {
     it('"숫자를 입력해주세요." 경고창을 출력한다.', () => {
       const alertStub = cy.stub();
@@ -156,7 +156,7 @@ describe('Lotto', () => {
       cy.inputAmount('3000');
       cy.inputWinningNumbers(winningNumbers);
       cy.checkLottoNumbers().then(() => {
-        LottoService.setAmount(3000);
+        LottoService.amount = 3000;
         const countResult = LottoService.lotteryResult(winningNumbers);
         const winningResult = LottoService.lotterySummary(countResult);
         const profitRate = LottoService.profitRateCalculate(winningResult);

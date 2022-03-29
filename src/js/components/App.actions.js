@@ -33,9 +33,9 @@ export const toggleLottoResultModal = event => {
 
   try {
     if (LottoService.isLotteryOpen($target)) {
-      const winningNumbers = $allElementProp('.winning-number', 'value');
-      const LotteryResult = LottoService.lotteryResult(winningNumbers);
-      const $lottoResultModal = LottoResultModal(LotteryResult);
+      const purchasedNumbers = $allElementProp('.winning-number', 'value');
+      const lotteryResult = LottoService.lotteryResult(purchasedNumbers);
+      const $lottoResultModal = LottoResultModal(lotteryResult);
       $modal.replaceChildren($lottoResultModal);
     }
     $modal.classList.toggle('open');

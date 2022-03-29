@@ -1,6 +1,7 @@
 import {
   ACCEPT_BONUS_NUMBER,
   AMOUNT_UNIT,
+  BONUS_LOTTO_DIGIT,
   ERROR_MESSAGE,
   MAX_LOTTO_DIGIT,
   MAX_LOTTO_NUMBER,
@@ -9,7 +10,7 @@ import {
 import { isEmpty } from '../helper/index.js';
 
 class LottoService {
-  #amount = 0;
+  amount = 0;
   #lottos = [];
   #winningLottoTable = {
     3: 5000,
@@ -19,11 +20,6 @@ class LottoService {
     6: 2000000000,
   };
 
-  setAmount(amount) {
-    this.#amount = amount;
-    return true;
-  }
-
   getLottoNumbers = () => {
     const numbers = new Set();
     while (numbers.size < MAX_LOTTO_DIGIT) {
@@ -32,7 +28,7 @@ class LottoService {
     return Array.from(numbers);
   };
 
-  purchasesLotto(number) {
+  generatedLotto(number) {
     const result = Array.from({ length: number }).map(() => this.getLottoNumbers());
     this.#lottos = result;
     return result;
@@ -43,10 +39,12 @@ class LottoService {
     if (isEmpty(amount) || isNaN(count)) throw new Error(ERROR_MESSAGE.REQUIRED_DIGIT);
     if (amount < AMOUNT_UNIT) throw new Error(ERROR_MESSAGE.MUST_MORE_THAN);
     if (!Number.isInteger(count)) throw new Error(ERROR_MESSAGE.MUST_REQUIRED_AMOUNT_UNIT);
-    return this.setAmount(amount) && count;
+
+    this.amount = amount;
+    return count;
   };
 
-  validWinningNumber = value => {
+  isValidPurchasesNumbers = value => {
     if (isEmpty(value)) throw new Error(ERROR_MESSAGE.REQUIRED_WINNING_NUMBER);
     if (value > MAX_LOTTO_NUMBER) throw new Error(ERROR_MESSAGE.MUST_LESS_THAN);
     if (value < 1) throw new Error(ERROR_MESSAGE.MUST_MORE_THAN_ONE);
@@ -65,13 +63,13 @@ class LottoService {
     return !this.isLotteryOpen(target) && !this.isLotteryClose(target);
   };
 
-  checkLottery = winningNumbers => {
-    const nonDuplicateWinningNumbers = new Set(winningNumbers);
-    if (nonDuplicateWinningNumbers.has('')) throw new Error(ERROR_MESSAGE.REQUIRED_DIGIT);
-    if (nonDuplicateWinningNumbers.size < MAX_LOTTO_DIGIT + 1)
+  checkLottery = purchasedNumbers => {
+    const uniquePurchasesNumbers = new Set(purchasedNumbers);
+    if (uniquePurchasesNumbers.has('')) throw new Error(ERROR_MESSAGE.REQUIRED_DIGIT);
+    if (uniquePurchasesNumbers.size < MAX_LOTTO_DIGIT + BONUS_LOTTO_DIGIT)
       throw new Error(ERROR_MESSAGE.MUST_NOT_DUPLICATE);
-
-    winningNumbers.every(this.validWinningNumber);
+    const isValid = purchasedNumbers.every(this.isValidPurchasesNumbers);
+    return isValid && purchasedNumbers;
   };
 
   findCoincidenceCount = (lotto, regular) => {
@@ -83,10 +81,9 @@ class LottoService {
   };
 
   lotteryResult(winningNumbers) {
-    this.checkLottery(winningNumbers);
-
-    const regular = winningNumbers.slice(0, -1);
-    const bonus = winningNumbers.at(-1);
+    const checkedNumbers = this.checkLottery(winningNumbers);
+    const regular = checkedNumbers.slice(0, -1);
+    const bonus = checkedNumbers.at(-1);
 
     return this.#lottos.map(lotto => {
       const regularCoincidenceCount = this.findCoincidenceCount(lotto, regular);
@@ -100,23 +97,23 @@ class LottoService {
     return { ...result, [count]: result[count] === undefined ? 1 : result[count] + 1 };
   };
 
-  profitCalculate(result, winningNumbersCount) {
-    const [winningCount, count] = winningNumbersCount;
+  profitCalculate(result, winningCounts) {
+    const [winningCount, count] = winningCounts;
     return result + this.#winningLottoTable[winningCount] * count;
   }
 
   // TODO: refactoring to functional programming
-  lotterySummary(winningNumbers) {
-    return winningNumbers.reduce(this.summary, {});
+  lotterySummary(lottery) {
+    return lottery.reduce(this.summary, {});
   }
 
-  profitRateCalculate(winningNumbers) {
-    const profit = Object.entries(winningNumbers).reduce(this.profitCalculate.bind(this), 0);
-    return ((profit - this.#amount) / this.#amount) * 100;
+  profitRateCalculate(result) {
+    const profit = Object.entries(result).reduce(this.profitCalculate.bind(this), 0);
+    return Math.trunc(((profit - this.amount) / this.amount) * 100);
   }
 
   initLottos() {
-    this.#amount = 0;
+    this.amount = 0;
     this.#lottos = [];
   }
 }

@@ -28,13 +28,9 @@ export const $elementToggleClass = safeExecutor(([$element, className]) => {
   return $element;
 });
 
-export const $elements = (stringHTML, ...rest) => {
+export const $elements = stringHTML => {
   const root = document.createElement('div');
   root.innerHTML = stringHTML;
-  Array.from(rest).forEach(([selector, $element]) => {
-    $(selector, root).replaceChildren($element);
-  });
-
   return root.firstElementChild;
 };
 
