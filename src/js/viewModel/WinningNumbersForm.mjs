@@ -55,7 +55,7 @@ export default class WinningNumberForm {
     const { value } = target;
     const isMaxLength = value.length === 2;
     const isWinningNumber = target.classList.contains("winning-number");
-    
+
     if (isWinningNumber && isMaxLength) {
       (target.nextElementSibling ? target.nextElementSibling : this.#bonusNumberForm).focus();
     }

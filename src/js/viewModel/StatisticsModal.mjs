@@ -31,14 +31,14 @@ export default class StatisticsModal {
     this.#modal.classList.add('open');
     const statistics = this.#calculateStatistics(winningNumbers, user.purchaseHistory)
 
-    this.#reRender(statistics)
+    this.#renderResult(statistics)
   }
 
   closeModal = () => {
     this.#modal.classList.remove('open');
   }
 
-  #reRender({ profitRate, statistics }) {
+  #renderResult({ profitRate, statistics }) {
     this.#earnings.innerText = profitRate;
     Object.keys(statistics).forEach(key => {
       this.#table[key].innerText = statistics[key];
