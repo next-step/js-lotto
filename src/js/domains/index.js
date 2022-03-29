@@ -8,7 +8,7 @@ const createLotto = () => {
     const num = Math.floor(Math.random() * 44) + 1;
     lotto.add(num);
   }
-  return [...lotto];
+  return [...lotto].sort((a, b) => a - b);
 };
 
 export const createLottoList = (count) => {

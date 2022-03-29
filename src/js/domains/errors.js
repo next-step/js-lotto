@@ -3,7 +3,7 @@ import { NUMBER, ERROR_MESSAGES } from '../constants/index.js';
 export const validatePrice = (price) => {
   const errors = { errorMsg: null };
   if (!price) {
-    errors.errorMsg = ERROR_MESSAGES.EMPTY;
+    errors.errorMsg = ERROR_MESSAGES.EMPTY_MONEY;
     return errors;
   }
   if (price < NUMBER.MIN_PRICE) {
