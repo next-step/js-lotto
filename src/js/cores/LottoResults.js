@@ -30,8 +30,6 @@ export class LottoResults {
   rateOfReturn;
   money;
 
-  constructor() {}
-
   getSameCounts() {
     return new Map(this.sameCounts);
   }
