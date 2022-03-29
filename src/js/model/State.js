@@ -109,7 +109,11 @@ export default class State {
     }
   }
 
+  get lottoNetBenefit() {
+    return this.#lottoModel.lottoBenefit - this.#priceModel.totalPurchasePrice;
+  }
+
   get lottoBenefitRate() {
-    return (this.#lottoModel.lottoBenefit / this.#priceModel.totalPurchasePrice) * 100;
+    return (this.lottoNetBenefit / this.#priceModel.totalPurchasePrice) * 100;
   }
 }
