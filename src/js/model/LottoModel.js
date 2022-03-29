@@ -1,4 +1,4 @@
-import { LOTTO_NUMBER_SIZE, LOTTO_MAX_RANGE, LOTTO_PURCHASE_MAX_QUANTITY } from '../constants/unit.js';
+import { LOTTO_NUMBER_SIZE, LOTTO_BONUS_MATCHED_SIZE, LOTTO_MAX_RANGE, LOTTO_PURCHASE_MAX_QUANTITY } from '../constants/unit.js';
 import { ERR_MESSAGE } from '../constants/alertMessage.js';
 import { PRIZE_TYPES } from '../constants/prize.js';
 import {
@@ -97,7 +97,7 @@ class LottoTicket {
       }
     });
 
-    const isBonus = this.#matchedCount === 5 && this.#ticketNumbers.includes(Number(bonusNumber));
+    const isBonus = this.#matchedCount === LOTTO_BONUS_MATCHED_SIZE && this.#ticketNumbers.includes(Number(bonusNumber));
     this.#lottoRank = isBonus ? 'RANK-BONUS' : `RANK-${this.#matchedCount}`;
     this.#lottoPrize = Number(PRIZE_TYPES[this.#lottoRank]?.cost) || 0;
   }
