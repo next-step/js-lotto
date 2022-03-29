@@ -65,15 +65,11 @@ export default class StatisticsModal {
   }
 
   #getProfit = (winningNumbers, history) => {
-    let isIncludeBonus = false;
-    const matchedNumbers = history.filter(number => {
-      if (!isIncludeBonus && winningNumbers.bonusNumber === number) {
-        isIncludeBonus = true;
-      }
-      return winningNumbers.numbers.includes(number);
-    });
+    const isIncludeBonus = history.some(number => number === winningNumbers.bonusNumber);
+    const matchedNumbers = history.filter(number => winningNumbers.numbers.includes(number));
     const { length: matchedCount } = matchedNumbers;
     const profit = calculateProfit({ matchedCount, isIncludeBonus })
+    
     return profit;
   }
 }
