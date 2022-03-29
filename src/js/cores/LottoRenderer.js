@@ -1,4 +1,10 @@
-import { FIVE_PLUS_BONUS } from '../constants/index.js';
+import {
+  FIRST_PLACE,
+  SECOND_PLACE,
+  THIRD_PLACE,
+  FOURTH_PLACE,
+  FIFTH_PLACE,
+} from '../constants/index.js';
 
 export class LottoRenderer {
   targetElement;
@@ -158,27 +164,27 @@ export class LottoRenderer {
             <tr class="text-center">
               <td class="p-3">3개</td>
               <td class="p-3">5,000</td>
-              <td class="p-3">${sameCounts.get(3)}개</td>
+              <td class="p-3">${sameCounts.get(FIFTH_PLACE)}개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">4개</td>
               <td class="p-3">50,000</td>
-              <td class="p-3">${sameCounts.get(4)}개</td>
+              <td class="p-3">${sameCounts.get(FOURTH_PLACE)}개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">5개</td>
               <td class="p-3">1,500,000</td>
-              <td class="p-3">${sameCounts.get(5)}개</td>
+              <td class="p-3">${sameCounts.get(THIRD_PLACE)}개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">5개 + 보너스볼</td>
               <td class="p-3">30,000,000</td>
-              <td class="p-3">${sameCounts.get(FIVE_PLUS_BONUS)}개</td>
+              <td class="p-3">${sameCounts.get(SECOND_PLACE)}개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">6개</td>
               <td class="p-3">2,000,000,000</td>
-              <td class="p-3">${sameCounts.get(6)}개</td>
+              <td class="p-3">${sameCounts.get(FIRST_PLACE)}개</td>
             </tr>
           </tbody>
         </table>

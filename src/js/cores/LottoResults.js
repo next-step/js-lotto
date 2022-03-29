@@ -1,20 +1,31 @@
-import { FIVE_PLUS_BONUS } from '../constants/index.js';
+import {
+  FIRST_PLACE,
+  SECOND_PLACE,
+  THIRD_PLACE,
+  FOURTH_PLACE,
+  FIFTH_PLACE,
+  FIRST_PLACE_RETURN,
+  SECOND_PLACE_RETURN,
+  THIRD_PLACE_RETURN,
+  FOURTH_PLACE_RETURN,
+  FIFTH_PLACE_RETURN,
+} from '../constants/index.js';
 
 const returns = new Map([
-  [3, 5000],
-  [4, 50000],
-  [5, 1500000],
-  [FIVE_PLUS_BONUS, 30000000],
-  [6, 2000000000],
+  [FIFTH_PLACE, FIFTH_PLACE_RETURN],
+  [FOURTH_PLACE, FOURTH_PLACE_RETURN],
+  [THIRD_PLACE, THIRD_PLACE_RETURN],
+  [SECOND_PLACE, SECOND_PLACE_RETURN],
+  [FIRST_PLACE, FIRST_PLACE_RETURN],
 ]);
 
 export class LottoResults {
   sameCounts = new Map([
-    [3, 0],
-    [4, 0],
-    [5, 0],
-    [FIVE_PLUS_BONUS, 0],
-    [6, 0],
+    [FIFTH_PLACE, 0],
+    [FOURTH_PLACE, 0],
+    [THIRD_PLACE, 0],
+    [SECOND_PLACE, 0],
+    [FIRST_PLACE, 0],
   ]);
   rateOfReturn;
   money;
@@ -41,11 +52,11 @@ export class LottoResults {
     const { sameCounts, money } = this;
 
     const totalReturn =
-      sameCounts.get(3) * returns.get(3) +
-      sameCounts.get(4) * returns.get(4) +
-      sameCounts.get(5) * returns.get(5) +
-      sameCounts.get(FIVE_PLUS_BONUS) * returns.get(FIVE_PLUS_BONUS) +
-      sameCounts.get(6) * returns.get(6) -
+      sameCounts.get(FIFTH_PLACE) * returns.get(FIFTH_PLACE_RETURN) +
+      sameCounts.get(FOURTH_PLACE) * returns.get(FOURTH_PLACE_RETURN) +
+      sameCounts.get(THIRD_PLACE) * returns.get(THIRD_PLACE_RETURN) +
+      sameCounts.get(SECOND_PLACE) * returns.get(SECOND_PLACE) +
+      sameCounts.get(FIRST_PLACE) * returns.get(FIRST_PLACE) -
       money;
 
     this.rateOfReturn = (totalReturn / money) * 100;

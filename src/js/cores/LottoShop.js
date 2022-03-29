@@ -3,7 +3,8 @@ import { LottoTicket, LottoWinningTicket, LottoResults } from './index.js';
 import {
   PRICE,
   MIN_WINNING_COUNT,
-  FIVE_PLUS_BONUS,
+  SECOND_PLACE,
+  THIRD_PLACE,
 } from '../constants/index.js';
 
 export class LottoShop {
@@ -52,10 +53,10 @@ export class LottoShop {
 
       if (
         checkedBonusNumber &&
-        sameNumbers === 5 &&
-        sameCounts.has(FIVE_PLUS_BONUS)
+        sameNumbers === THIRD_PLACE &&
+        sameCounts.has(SECOND_PLACE)
       )
-        return this.results.updateSameCounts(FIVE_PLUS_BONUS);
+        return this.results.updateSameCounts(SECOND_PLACE);
 
       if (sameNumbers >= MIN_WINNING_COUNT && sameCounts.has(sameNumbers))
         this.results.updateSameCounts(sameNumbers);
