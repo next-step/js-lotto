@@ -110,6 +110,6 @@ export default class State {
   }
 
   get lottoBenefitRate() {
-    return this.#lottoModel.lottoBenefit / this.#priceModel.totalPurchasePrice;
+    return (this.#lottoModel.lottoBenefit / this.#priceModel.totalPurchasePrice) * 100;
   }
 }
