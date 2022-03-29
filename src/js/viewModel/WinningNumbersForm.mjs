@@ -53,10 +53,10 @@ export default class WinningNumberForm {
    */
   #handleKeyup = ({ target }) => {
     const { value } = target;
-    if (
-      target.classList.contains("winning-number") &&
-      value.length === 2
-    ) {
+    const isMaxLength = value.length === 2;
+    const isWinningNumber = target.classList.contains("winning-number");
+    
+    if (isWinningNumber && isMaxLength) {
       (target.nextElementSibling ? target.nextElementSibling : this.#bonusNumberForm).focus();
     }
   };
