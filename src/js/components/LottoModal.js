@@ -94,7 +94,7 @@ export class LottoModal {
                             </tbody>
                         </table>
                     </div>
-                    <p class="text-center font-bold">당신의 총 수익률은 ${this.#getRate().toLocaleString(
+                    <p class="text-center font-bold">당신의 총 수익률은 ${this.rate.toLocaleString(
                         "ko-KR"
                     )}%입니다.</p>
                     <div class="d-flex justify-center mt-5">
@@ -114,20 +114,5 @@ export class LottoModal {
                     <td class="p-3">${this.rating[r.index]}개</td>
                 </tr>`
         ).join("");
-    }
-    setTickets(tickets) {
-        this.tickets = tickets;
-    }
-
-    #getRate() {
-        return this.rate;
-    }
-
-    setRate(rate) {
-        this.rate = rate;
-    }
-
-    setRating(rating) {
-        this.rating = rating;
     }
 }

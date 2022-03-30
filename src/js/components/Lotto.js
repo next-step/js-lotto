@@ -63,13 +63,13 @@ export default class Lotto {
 
         if (resultValue.isComplete) {
             this.matchingLotto.tickets = this.lottoTicketsForm.tickets;
-            this.matchingLotto.winningNumbers = this.winningLottoForm.getWinningNumbers();
-            this.matchingLotto.bonusNumber = this.winningLottoForm.getBonusNumber();
+            this.matchingLotto.winningNumbers = this.winningLottoForm.winningNumbers;
+            this.matchingLotto.bonusNumber = this.winningLottoForm.bonusNumber;
             this.matchingLotto.initRating();
             this.matchingLotto.computeWinning();
-            this.lottoModal.setTickets(this.matchingLotto.tickets);
-            this.lottoModal.setRating(this.matchingLotto.rating);
-            this.lottoModal.setRate(this.matchingLotto.rate);
+            this.lottoModal.tickets = this.matchingLotto.tickets;
+            this.lottoModal.rating = this.matchingLotto.rating;
+            this.lottoModal.rate = this.matchingLotto.rate;
             return;
         }
 
