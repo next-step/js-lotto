@@ -15,8 +15,8 @@ export function autoGenerateLottoNumbers(lottoCounts) {
                 MAX_NUMBER
             );
             return {
-                normalNumbers: randomNumbers.slice(0, randomNumbers.length - 1),
-                bonusNumber: randomNumbers[randomNumbers.length - 1],
+                normalNumbers: randomNumbers.getNormalNumbers(),
+                bonusNumber: randomNumbers.getBonusNumber(),
             };
         });
 }
