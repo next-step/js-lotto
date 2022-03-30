@@ -26,7 +26,12 @@ class App {
 
         this.Lotto = new Lotto();
 
-        this.initialize();
+        $section.style.display = 'none';
+        $lottoForm.style.display = 'none';
+
+        $purchaseForm.querySelector('input').focus();
+
+        this.initializeEventListener();
     }
 
     handleToggleButton() {
@@ -58,12 +63,7 @@ class App {
         });
     }
 
-    initialize() {
-        $section.style.display = 'none';
-        $lottoForm.style.display = 'none';
-
-        $purchaseForm.querySelector('input').focus();
-
+    initializeEventListener() {
         $purchaseForm.addEventListener(
             'submit',
             this.handlePurchaseFormSubmit.bind(this)
