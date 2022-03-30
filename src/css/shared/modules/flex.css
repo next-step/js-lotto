@@ -123,3 +123,7 @@
 .order-none {
   order: 0;
 }
+
+.gap-3 {
+  gap: 0.75rem; /* 12px */
+}
