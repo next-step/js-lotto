@@ -1,12 +1,11 @@
-import { getRandomNumber } from "./getRandomNumber.js";
-
 export function makeNonDuplicatedRandomNumbers(count, min, max) {
-    const numbers = new Set();
-    while (numbers.size !== count) {
-        numbers.add(getRandomNumber(min, max));
-    }
-
-    return [...numbers];
+    const numbers = Array.from({
+            length: max - min + 1,
+        },
+        (_, i) => min + i
+    );
+    numbers.sort(() => Math.random() - 0.5);
+    return numbers.slice(0, count);
 }
 
 export default makeNonDuplicatedRandomNumbers;

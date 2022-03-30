@@ -2,7 +2,7 @@ import { PRICE_PER_TICKET } from "../../../src/js/constants";
 
 describe("Purchasing Lotto", () => {
     beforeEach(() => {
-        cy.visit("localhost:34051");
+        cy.visit("localhost:8080");
     });
 
     it("should return the lotto after submitting the total spending of lotto purchase", () => {

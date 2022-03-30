@@ -1,7 +1,4 @@
-import {
-    MIN_PURCHASE_AMOUNT,
-    PRICE_PER_TICKET,
-} from "../constants/constants.js";
+import { MIN_PURCHASE_AMOUNT, PRICE_PER_TICKET } from "../constants.js";
 import { $ } from "../utils/document.js";
 import { replaceRender } from "../core/replaceRender.js";
 

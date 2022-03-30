@@ -1,6 +1,6 @@
 import { AmountForm } from "./AmountForm.js";
 import { Tickets } from "./Tickets.js";
-import { PRICE_PER_TICKET } from "../constants/constants.js";
+import { PRICE_PER_TICKET } from "../constants.js";
 import { autoGenerateLottoNumbers } from "../LottoService/autoGenerateLottoNumbers.js";
 import { $ } from "../utils/document.js";
 import { replaceRender } from "../core/replaceRender.js";
