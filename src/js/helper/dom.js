@@ -34,6 +34,9 @@ export const $elements = stringHTML => {
   return root.firstElementChild;
 };
 
+export const $allElementProp = (selector, prop) =>
+  Array.from($all(selector)).map($element => $element[prop]);
+
 // TODO: DOM Parser를 만들어 렌더링을 루트 앱에서 진행합니다.
 export const $eventBindedComponent = getElement => args => {
   try {

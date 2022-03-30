@@ -1,4 +1,5 @@
-import { ERROR_MESSAGE, AMOUNT_UNIT } from '../../src/js/services/constants.js';
+import { ERROR_MESSAGE, AMOUNT_UNIT, MAX_LOTTO_NUMBER } from '../../src/js/services/constants.js';
+import LottoService from '../../src/js/services/Lotto.service.js';
 
 const REQUIRED_AMOUNT_UNIT = AMOUNT_UNIT.toLocaleString('ko-KR');
 const BASE_URL = '../../index.html';
@@ -12,6 +13,7 @@ describe('Lotto', () => {
     it('로또 구입 금액 입력창만 보여야 한다.', () => {
       cy.get('[data-props="amount-info-form"]').should('be.visible');
       cy.get('.lotto-section').should('not.be.visible');
+      cy.get('.modal').should('not.be.visible');
     });
 
     it('로또 구입 금액 입력창은 비어 있어야 한다.', () => {
@@ -85,6 +87,103 @@ describe('Lotto', () => {
       cy.on('window:alert', alertStub);
       cy.inputAmount('-1000').then(() => {
         expect(alertStub).to.be.calledWith(ERROR_MESSAGE.MUST_MORE_THAN);
+      });
+    });
+  });
+
+  describe('당첨 번호를 입력하지 않고 로또 결과를 확인하는 경우', () => {
+    it('"숫자를 입력해주세요." 경고창을 출력한다.', () => {
+      const alertStub = cy.stub();
+      cy.on('window:alert', alertStub);
+      cy.inputAmount('3000');
+      cy.checkLottoNumbers().then(() => {
+        expect(alertStub).to.be.calledWith(ERROR_MESSAGE.REQUIRED_DIGIT);
+      });
+    });
+  });
+
+  describe('당첨 번호를 입력하고 로또 결과를 확인하는 경우', () => {
+    it('당첨 번호를 하나라도 적지 않으면 "숫자를 입력해주세요." 경고창을 출력한다.', () => {
+      const alertStub = cy.stub();
+      cy.on('window:alert', alertStub);
+      cy.inputAmount('3000');
+      cy.inputWinningNumbers([1, 2, 3, 4, '-', 6, 7]);
+      cy.checkLottoNumbers().then(() => {
+        expect(alertStub).to.be.calledWith(ERROR_MESSAGE.REQUIRED_DIGIT);
+      });
+    });
+
+    it(`입력한 당첨 번호가 ${MAX_LOTTO_NUMBER}를 넘으면 "${ERROR_MESSAGE.MUST_LESS_THAN}" 경고창을 출력한다.`, () => {
+      const alertStub = cy.stub();
+      cy.on('window:alert', alertStub);
+      cy.inputAmount('3000');
+      cy.inputWinningNumbers([1, 2, 3, 4, 46, 6, 7]);
+      cy.checkLottoNumbers().then(() => {
+        expect(alertStub).to.be.calledWith(ERROR_MESSAGE.MUST_LESS_THAN);
+      });
+    });
+
+    it(`입력한 당첨 번호가 중복되면 "${ERROR_MESSAGE.MUST_NOT_DUPLICATE}" 경고창을 출력한다.`, () => {
+      const alertStub = cy.stub();
+      cy.on('window:alert', alertStub);
+      cy.inputAmount('3000');
+      cy.inputWinningNumbers([1, 2, 3, 4, 6, 6, 7]);
+      cy.checkLottoNumbers().then(() => {
+        expect(alertStub).to.be.calledWith(ERROR_MESSAGE.MUST_NOT_DUPLICATE);
+      });
+    });
+
+    it(`입력한 당첨 번호가 음수라면 "${ERROR_MESSAGE.MUST_MORE_THAN_ONE}" 경고창을 출력한다.`, () => {
+      const alertStub = cy.stub();
+      cy.on('window:alert', alertStub);
+      cy.inputAmount('3000');
+      cy.inputWinningNumbers([1, 2, 3, 4, 6, -1, 7]);
+      cy.checkLottoNumbers().then(() => {
+        expect(alertStub).to.be.calledWith(ERROR_MESSAGE.MUST_MORE_THAN_ONE);
+      });
+    });
+
+    it('당첨 번호를 정상적으로 입력했다면 당첨 통계 모달이 출력된다.', () => {
+      cy.inputAmount('3000');
+      cy.inputWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
+      cy.checkLottoNumbers();
+      cy.get('.modal').should('be.visible');
+    });
+
+    it('당첨 번호를 정상적으로 입력했다면 당첨 갯수와 수익률을 계산한다.', () => {
+      const winningNumbers = [1, 2, 3, 4, 5, 6, 7];
+
+      cy.inputAmount('3000');
+      cy.inputWinningNumbers(winningNumbers);
+      cy.checkLottoNumbers().then(() => {
+        LottoService.amount = 3000;
+        const countResult = LottoService.lotteryResult(winningNumbers);
+        const winningResult = LottoService.lotterySummary(countResult);
+        const profitRate = LottoService.profitRateCalculate(winningResult);
+        cy.get('[data-props="winning-result-3-td"]').should(
+          'have.text',
+          `${winningResult[3] || 0}개`,
+        );
+        cy.get('[data-props="winning-result-4-td"]').should(
+          'have.text',
+          `${winningResult[4] || 0}개`,
+        );
+        cy.get('[data-props="winning-result-5-td"]').should(
+          'have.text',
+          `${winningResult[5] || 0}개`,
+        );
+        cy.get('[data-props="winning-result-5-1-td"]').should(
+          'have.text',
+          `${winningResult['5-1'] || 0}개`,
+        );
+        cy.get('[data-props="winning-result-6-td"]').should(
+          'have.text',
+          `${winningResult[6] || 0}개`,
+        );
+        cy.get('[data-props="winning-rate-p"]').should(
+          'have.text',
+          `당신의 총 수익률은 ${profitRate}%입니다.`,
+        );
       });
     });
   });

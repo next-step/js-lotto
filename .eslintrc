@@ -10,7 +10,13 @@
     "prettier",
     "plugin:cypress/recommended"
   ],
-  "plugins": ["prettier"],
+  "plugins": [
+    "prettier"
+  ],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false
+  },
   "rules": {
     "prettier/prettier": [
       "error",

@@ -52,3 +52,7 @@ body {
   width: 30px;
   height: 36px;
 }
+
+svg {
+  pointer-events: none;
+}
