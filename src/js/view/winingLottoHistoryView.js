@@ -18,6 +18,7 @@ const winingLottoHistoryView = (function () {
   }
 
   function initElementValue($element) {
+    // eslint-disable-next-line no-param-reassign
     $element.value = null;
   }
 
