@@ -1,4 +1,4 @@
-import { PRICE_PER_TICKET } from "../../../src/js/constants/constants";
+import { PRICE_PER_TICKET } from "../../../src/js/constants";
 
 describe("Purchasing Lotto", () => {
     beforeEach(() => {
