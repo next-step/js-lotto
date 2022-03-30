@@ -1,8 +1,7 @@
 import { $elements } from '../helper/index.js';
 
 const AppTemplate = () =>
-  $elements(
-    `
+  $elements(/*html*/ `
     <div id="app" class="p-3">
       <div class="d-flex justify-center mt-5" data-props="amount-info-form">
         <div class="w-100">
@@ -12,7 +11,7 @@ const AppTemplate = () =>
             </label>
             <div class="d-flex">
               <input type="text" class="w-100 mr-2 pl-2" data-props="amount-input" placeholder="구입 금액" />
-              <button type="submit" data-props="confirm-button" class="btn btn-cyan">확인</button>
+              <button type="submit" data-props="confirm-button" class="open-purchase-modal-button btn btn-cyan">구매</button>
             </div>
           </form>
           <div class="lotto-section hidden"></div>
@@ -20,7 +19,6 @@ const AppTemplate = () =>
       </div>
       <div class="modal"></div>
     </div>
-    `,
-  );
+    `);
 
 export default AppTemplate;
