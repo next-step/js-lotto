@@ -68,11 +68,11 @@ export default class LottoModel {
   }
 
   get quantity() {
-    return this.#quantity;
+    return Number(this.#quantity);
   }
 
   get lottoBenefit() {
-    return this.#tickets.reduce((acc, cur) => acc + (cur.lottoPrize || 0), 0);
+    return Number(this.#tickets.reduce((acc, cur) => acc + (cur.lottoPrize || 0), 0));
   }
 }
 

@@ -26,6 +26,6 @@ export default class PriceModel {
   };
 
   get totalPurchasePrice() {
-    return this.#totalPurchasePrice;
+    return Number(this.#totalPurchasePrice);
   }
 }
