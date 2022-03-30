@@ -6,4 +6,11 @@ export const CLASS = {
   TOGGLE_NUMBERS: '.js-toggle-numbers',
   LOTTO_LIST: '.js-lotto-detail-list',
   WINNING_FORM: '.js-winning-form',
+  WINNING_NUMBERS_CONTAINER: '.winning-number-container',
+  WINNING_BONUS_CONTAINER: '.js-winning-bonus-container',
+  WINNING_STATISTICS_INFO: '.js-winning-statistics-info',
+  WINNING_STATISTICS_RATE: '.js-winning-statistics-rate',
+  MODAL: '.modal',
+  OPEN_MODAL: '.open-result-modal-button',
+  CLOSE_MODAL: '.modal-close',
 };

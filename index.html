@@ -49,7 +49,7 @@
             <div class="d-flex">
               <div>
                 <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
-                <div class="winning-number-container"></div>
+                <div class="js-winning-number-container"></div>
               </div>
               <div class="bonus-number-container flex-grow">
                 <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
@@ -60,16 +60,16 @@
             </div>
             <button
               type="submit"
-              class="open-result-modal-button mt-5 btn btn-cyan w-100"
+              class="js-open-result-modal-button mt-5 btn btn-cyan w-100"
             >
               결과 확인하기
             </button>
           </form>
         </div>
       </div>
-      <div class="modal">
+      <div class="modal js-modal">
         <div class="modal-inner p-10">
-          <div class="modal-close">
+          <div class="js-modal-close modal-close">
             <svg viewbox="0 0 40 40">
               <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
             </svg>
@@ -90,7 +90,9 @@
           </div>
           <p class="text-center font-bold js-winning-statistics-rate"></p>
           <div class="d-flex justify-center mt-5">
-            <button type="button" class="btn btn-cyan">다시 시작하기</button>
+            <button type="button" class="btn btn-cyan js-retry">
+              다시 시작하기
+            </button>
           </div>
         </div>
       </div>

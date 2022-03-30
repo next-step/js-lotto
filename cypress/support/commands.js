@@ -52,18 +52,18 @@ Cypress.Commands.add("issueLottos", () => {
         },
       });
 
-      cy.get(CLASS.LOTTO_DETAIL_LIST).children().should("have.length", amount);
+      cy.get(CLASS.LOTTO_LIST).children().should("have.length", amount);
     });
 });
 
 Cypress.Commands.add("toggleNumbers", (checked) => {
   if (checked) {
     cy.get(CLASS.TOGGLE_NUMBERS).check({ force: true });
-    cy.get(CLASS.LOTTO_DETAIL_LIST).then(($el) => {
+    cy.get(CLASS.LOTTO_LIST).then(($el) => {
       expect($el).to.have.class("flex-column");
     });
   } else {
-    cy.get(CLASS.LOTTO_DETAIL_LIST).then(($el) => {
+    cy.get(CLASS.LOTTO_LIST).then(($el) => {
       expect($el).not.to.have.class("flex-column");
     });
   }
