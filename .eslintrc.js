@@ -4,6 +4,9 @@ module.exports = {
     es2021: true,
     node: true,
   },
+  parserOptions: {
+    ecmaVersion: 2021,
+  },
   extends: ['eslint:recommended', 'airbnb-base', 'prettier'],
   plugins: ['prettier'],
   rules: {
@@ -13,5 +16,6 @@ module.exports = {
     'no-alert': 'off',
     'no-undef': 'off',
     'no-new': 'off',
+    'use-numeric-separators': 'off',
   },
 };

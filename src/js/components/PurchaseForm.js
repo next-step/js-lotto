@@ -1,46 +1,63 @@
 import { DOM, ERROR_MESSAGE, LOTTO } from '../constants.js';
-import Component from '../core/Component.js';
 import { $ } from '../utils/dom.js';
 
-class PurchaseForm extends Component {
+class PurchaseForm {
+  constructor($target, props) {
+    this.$target = $target;
+    this.props = props;
+    this.state = {};
+    this.render();
+    this.setEvent();
+  }
+
+  setState(nextState) {
+    this.state = nextState;
+    this.render();
+  }
+
+  render() {
+    this.$target.innerHTML = this.template();
+    this.focusOnFirstInput();
+  }
+
   template() {
     return String.raw`
       <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.</label>
       <div class="d-flex">
         <input
-          id="${DOM.PURCHASE_FORM_INPUT}"
+          id="${DOM.PURCHASE_FORM_INPUT_ID}"
           type="number"
           class="w-100 mr-2 pl-2"
           placeholder="구입 금액"
         />
-        <button type="button" id="${DOM.PURCHASE_FORM_BUTTON}" class="btn btn-cyan">확인</button>
+        <button type="submit" id="${DOM.PURCHASE_FORM_BUTTON_ID}" class="btn btn-cyan">확인</button>
       </div>
     `;
   }
 
-  mounted() {
-    $(`#${DOM.PURCHASE_FORM_INPUT}`).focus();
+  focusOnFirstInput() {
+    $(`#${DOM.PURCHASE_FORM_INPUT_ID}`).focus();
   }
 
   setEvent() {
     this.$target.onsubmit = this.onSubmitPurchaseForm.bind(this);
-    $(`#${DOM.PURCHASE_FORM_BUTTON}`).onclick = this.onSubmitPurchaseForm.bind(this);
   }
 
   onSubmitPurchaseForm(e) {
-    const $purchaseFormInput = $(`#${DOM.PURCHASE_FORM_INPUT}`);
     e.preventDefault();
+    const [$purchaseFormInput] = e.target;
 
-    if (!this.validateFormInput($purchaseFormInput.value)) {
+    if (!this.checkInputValueAndAlert($purchaseFormInput.value)) {
       $purchaseFormInput.value = '';
       $purchaseFormInput.focus();
       return;
     }
 
     this.props.setLottoCountAndNumbers($purchaseFormInput.value / LOTTO.PRICE);
+    this.props.renderSectionAndForm();
   }
 
-  validateFormInput(value) {
+  checkInputValueAndAlert(value) {
     if (!value) {
       alert(ERROR_MESSAGE.REQUIRED_PRICE);
       return false;
