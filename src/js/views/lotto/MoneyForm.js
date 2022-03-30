@@ -1,3 +1,4 @@
+import { createFormData } from '../../dom/index.js';
 import View from '../View.js';
 
 class MoneyForm extends View {
@@ -13,10 +14,10 @@ class MoneyForm extends View {
 
   #onSubmitMoney(event) {
     event.preventDefault();
-    const formData = new FormData(this.$el);
+    const formData = createFormData(this.$el);
 
     this.emit('@buy', formData.get('money'));
   }
 }
 
-export default ($el) => new MoneyForm($el);
+export default $el => new MoneyForm($el);
