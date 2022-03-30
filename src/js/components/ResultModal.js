@@ -3,7 +3,6 @@ import {
   LOTTO_MODAL_TBODY,
   LOTTO_MODAL__CLOSE,
   LOTTO_MODAL_BENEFIT_RATE,
-  LOTTO_MODAL_WINNING_RESULT,
   LOTTO_MODAL__RESTART,
 } from '../constants/selectTarget.js';
 import { $ } from '../util/dom.js';
