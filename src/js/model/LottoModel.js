@@ -103,14 +103,9 @@ class LottoTicket {
   }
 
   generateTicketNumbers() {
-    const clientLottoNumbers = Array.from({ length: LOTTO_NUMBER_SIZE });
-    const lottoNumbersRangeArray = Array.from({ length: LOTTO_MAX_RANGE }, (_, i) => (i += 1));
-    const randomNumber = (i) => Math.floor(Math.random() * (LOTTO_MAX_RANGE - i)) + 1;
-
-    return clientLottoNumbers.reduce((acc, _, i) => {
-      acc.push(lottoNumbersRangeArray.splice(randomNumber(i) - 1, 1)[0]);
-      return acc;
-    }, []);
+    return Array.from({ length: LOTTO_MAX_RANGE }, (_, i) => (i += 1))
+      .sort(() => Math.random() - 0.5)
+      .slice(0, LOTTO_NUMBER_SIZE);
   }
 
   get id() {
