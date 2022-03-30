@@ -22,6 +22,59 @@ describe('Lotto', () => {
   });
 
   describe('로또 구입 금액이 정상인 경우', () => {
+    it('로또 구입 금액을 입력하면, 수동 구매 모달이 팝업되며 가격에 맞는 총 구매 가능한 개수가 출력된다.', () => {
+      cy.inputAmount('3000');
+      cy.get('.modal').should('be.visible');
+      cy.get('[data-props="available-count-h3"]').should('have.text', '총 3장 구매할 수 있어요!');
+    });
+
+    describe('수동 구매 개수가 비정상인 경우', () => {
+      it('수동 구매 개수는 총 구매 개수보다 많을 수 없다.', () => {
+        const alertStub = cy.stub();
+        cy.on('window:alert', alertStub);
+        cy.inputAmount('3000');
+        cy.get('[data-props="purchase-count-input"]').type('4');
+        cy.get('[data-props="purchase-count-button"]')
+          .click()
+          .then(() => {
+            expect(alertStub).to.be.calledWith(ERROR_MESSAGE.IMPOSSIBLE_COUNT);
+          });
+      });
+
+      it('수동 구매 개수는 0보다 작을 수 없다.', () => {
+        const alertStub = cy.stub();
+        cy.on('window:alert', alertStub);
+        cy.inputAmount('3000');
+        cy.get('[data-props="purchase-count-input"]').type('-1');
+        cy.get('[data-props="purchase-count-button"]')
+          .click()
+          .then(() => {
+            expect(alertStub).to.be.calledWith(ERROR_MESSAGE.IMPOSSIBLE_COUNT);
+          });
+      });
+
+      it('수동 구매 개수는 숫자 이외의 문자가 올 수 없다.', () => {
+        const alertStub = cy.stub();
+        cy.on('window:alert', alertStub);
+        cy.inputAmount('3000');
+        cy.get('[data-props="purchase-count-input"]').type('네개');
+        cy.get('[data-props="purchase-count-button"]')
+          .click()
+          .then(() => {
+            expect(alertStub).to.be.calledWith(ERROR_MESSAGE.REQUIRED_DIGIT);
+          });
+      });
+    });
+
+    describe('수동 구매 개수가 정상인 경우', () => {
+      it('수동 구매 개수만큼 로또 번호를 입력할 수 있어야 한다.', () => {
+        cy.inputAmount('3000');
+        cy.get('[data-props="purchase-count-input"]').type('1');
+        cy.get('[data-props="purchase-count-button"]').click();
+        cy.get('.scroll-area').should('be.visible');
+      });
+    });
+
     it('로또 구입 금액을 입력하면, 금액에 해당하는 개수의 로또를 발급해야 한다.', () => {
       cy.inputAmount('3000');
       cy.get('.lotto-section').should('be.visible');
