@@ -44,13 +44,7 @@ Cypress.Commands.add("issueLottos", () => {
     .invoke("val")
     .then((money) => {
       const amount = money / MIN_MONEY_UNIT;
-
-      buy(money, {
-        lotto: {
-          numbers: [],
-          count: 0,
-        },
-      });
+      console.log(amount);
 
       cy.get(CLASS.LOTTO_LIST).children().should("have.length", amount);
     });
