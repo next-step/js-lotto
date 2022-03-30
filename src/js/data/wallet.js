@@ -2,7 +2,7 @@ const wallet = (function () {
   let purchasedLottos;
 
   function lottos() {
-    return purchasedLottos;
+    return purchasedLottos.map((purchasedLotto) => purchasedLotto.value);
   }
 
   function setLottos(lottoList) {

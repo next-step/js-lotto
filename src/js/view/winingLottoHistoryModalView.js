@@ -1,3 +1,5 @@
+import { LOTTO_PRICE } from '../constants/lotto.js';
+
 const WINNING_REWARD_MONEY_1ST = 2000000000;
 const WINNING_REWARD_MONEY_2ND = 30000000;
 const WINNING_REWARD_MONEY_3RD = 1500000;
@@ -20,23 +22,28 @@ const WINNING_FAIL = 0;
 const WINNING_RESULT_CASE = [
   {
     label: `${WINNING_5TH_MATCH_CASE}개`,
-    reward: new Intl.NumberFormat().format(WINNING_REWARD_MONEY_5TH),
+    reward: WINNING_REWARD_MONEY_5TH,
+    key: WINNING_5TH,
   },
   {
     label: `${WINNING_4TH_MATCH_CASE}개`,
-    reward: new Intl.NumberFormat().format(WINNING_REWARD_MONEY_4TH),
+    reward: WINNING_REWARD_MONEY_4TH,
+    key: WINNING_4TH,
   },
   {
     label: `${WINNING_3RD_MATCH_CASE}개`,
-    reward: new Intl.NumberFormat().format(WINNING_REWARD_MONEY_3RD),
+    reward: WINNING_REWARD_MONEY_3RD,
+    key: WINNING_3RD,
   },
   {
     label: `${WINNING_2ND_MATCH_CASE}개 + 보너스볼`,
-    reward: new Intl.NumberFormat().format(WINNING_REWARD_MONEY_2ND),
+    reward: WINNING_REWARD_MONEY_2ND,
+    key: WINNING_2ND,
   },
   {
     label: `${WINNING_1ST_MATCH_CASE}개`,
-    reward: new Intl.NumberFormat().format(WINNING_REWARD_MONEY_1ST),
+    reward: WINNING_REWARD_MONEY_1ST,
+    key: WINNING_1ST,
   },
 ];
 
@@ -45,53 +52,9 @@ const winingLottoHistoryModalView = (function () {
   const $modalCloseButton = $winningResultModal.querySelector('.modal-close');
   const $restartButton = $winningResultModal.querySelector('.btn.btn-cyan');
   const $winningResultPanel = $winningResultModal.querySelector('tbody');
-
-  function handleOpen({ lottoList, winningNumbers, bonusNumber }) {
-    open();
-    createWinningResultPanel(
-      calculateWinningResult({ lottoList, winningNumbers, bonusNumber })
-    );
-  }
-
-  function calculateWinningResult({ lottoList, winningNumbers, bonusNumber }) {
-    return lottoList.reduce((result, lotto) => {
-      const winningResult = getWinningResultFromLotto({
-        lottoNumbers: lotto,
-        winningNumbers,
-        bonusNumber,
-      });
-      result.set(winningResult, result.get(winningResult) + 1);
-      return result;
-    }, new Map());
-  }
-
-  function createWinningResultPanel(winningResult) {
-    const $panel = document.createElement('tbody');
-    $panel.innerHTML = WINNING_RESULT_CASE.map(
-      (winningCase) => `
-       <tr class="text-center">
-         <td class="p-3">${winningCase.label}</td>
-         <td class="p-3">${winningCase.reward}</td>
-         <td class="p-3"></td>
-       </tr>
-    `
-    ).join('');
-    $winningResultPanel.replaceWith($panel);
-  }
-
-  function open() {
-    $winningResultModal.classList.add('open');
-  }
-
-  function close() {
-    $winningResultModal.classList.remove('open');
-  }
-
-  function handleRestart(onRestart) {
-    // eslint-disable-next-line no-debugger
-    close();
-    onRestart();
-  }
+  const $resultRevenue = $winningResultModal.querySelector(
+    '.text-center.font-bold'
+  );
 
   function getWinningDigit(lottoNumbers, winningNumbers) {
     return lottoNumbers.filter((number) =>
@@ -139,9 +102,95 @@ const winingLottoHistoryModalView = (function () {
     return WINNING_FAIL;
   }
 
+  function calculateWinningResult({ lottoList, winningNumbers, bonusNumber }) {
+    const result = {
+      [WINNING_1ST]: 0,
+      [WINNING_2ND]: 0,
+      [WINNING_3RD]: 0,
+      [WINNING_4TH]: 0,
+      [WINNING_5TH]: 0,
+      [WINNING_FAIL]: 0,
+    };
+    lottoList.forEach((lotto) => {
+      const winningResult = getWinningResultFromLotto({
+        lottoNumbers: lotto.split(','),
+        winningNumbers,
+        bonusNumber,
+      });
+      result[winningResult] += 1;
+    });
+    return result;
+  }
+
+  function createWinningResultPanel(winningResult) {
+    const $panel = document.createDocumentFragment();
+    WINNING_RESULT_CASE.forEach((winningCase) => {
+      const tr = document.createElement('tr');
+      tr.classList.add('text-center');
+      tr.innerHTML = `
+        <td class="p-3">${winningCase.label}</td>
+         <td class="p-3">${new Intl.NumberFormat().format(
+           winningCase.reward
+         )}</td>
+         <td class="p-3">${winningResult[winningCase.key]} 개</td>
+    `;
+      $panel.appendChild(tr);
+    });
+    $winningResultPanel.replaceChildren($panel);
+  }
+
+  function createCalculateRevenue({ lottoList, winningResult }) {
+    const purchasedPrice = lottoList.length * LOTTO_PRICE;
+    const revenue = Object.entries(winningResult).reduce(
+      (result, [resultCase, value]) => {
+        const RESULT_CASE_KEY = Number(resultCase);
+        if (RESULT_CASE_KEY === WINNING_FAIL) {
+          return result;
+        }
+
+        return (
+          result +
+          value *
+            WINNING_RESULT_CASE.find(
+              (winningCase) => winningCase.key === RESULT_CASE_KEY
+            ).reward
+        );
+      },
+      0
+    );
+    $resultRevenue.innerHTML = `당신의 총 수익률은 ${
+      revenue / purchasedPrice
+    }%입니다.`;
+  }
+
+  function open() {
+    $winningResultModal.classList.add('open');
+  }
+
+  function close() {
+    $winningResultModal.classList.remove('open');
+  }
+
+  function handleRestart(onRestart) {
+    // eslint-disable-next-line no-debugger
+    close();
+    onRestart();
+  }
+
   function eventBindings(onRestart) {
     $modalCloseButton.addEventListener('click', close);
     $restartButton.addEventListener('click', () => handleRestart(onRestart));
+  }
+
+  function handleOpen({ lottoList, winningNumbers, bonusNumber }) {
+    open();
+    const winningResult = calculateWinningResult({
+      lottoList,
+      winningNumbers,
+      bonusNumber,
+    });
+    createWinningResultPanel(winningResult);
+    createCalculateRevenue({ lottoList, winningResult });
   }
 
   return {
