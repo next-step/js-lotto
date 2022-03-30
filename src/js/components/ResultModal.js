@@ -1,20 +1,14 @@
 import {
   LOTTO_MODAL,
+  LOTTO_MODAL_TBODY,
   LOTTO_MODAL__CLOSE,
   LOTTO_MODAL_BENEFIT_RATE,
   LOTTO_MODAL_WINNING_RESULT,
   LOTTO_MODAL__RESTART,
 } from '../constants/selectTarget.js';
 import { $ } from '../util/dom.js';
-import { PRIZE_TYPES } from '../constants/prize.js';
 
 const ResultModal = ($parent, { closeModal, reStart }) => {
-  const trTemplate = (prize) => `<tr class="text-center ${LOTTO_MODAL_WINNING_RESULT}">
-                  <td class="p-3">${prize.text}</td>
-                  <td class="p-3">${prize.cost.toLocaleString()}</td>
-                  <td class="p-3">0개</td>
-                </tr>`;
-
   const template = `<div class="modal ${LOTTO_MODAL}">
         <div class="modal-inner p-10">
           <div class="modal-close ${LOTTO_MODAL__CLOSE}">
@@ -32,8 +26,7 @@ const ResultModal = ($parent, { closeModal, reStart }) => {
                   <th class="p-3">당첨 갯수</th>
                 </tr>
               </thead>
-              <tbody>
-                ${Object.values(PRIZE_TYPES).map(trTemplate).join('')}
+              <tbody class="${LOTTO_MODAL_TBODY}">
               </tbody>
             </table>
           </div>

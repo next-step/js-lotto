@@ -1,12 +1,13 @@
 import PriceModel from './PriceModel.js';
 import LottoModel from './LottoModel.js';
-
+import { PRIZE_TYPES } from '../constants/prize.js';
 import { LOTTO_PURCHASE_UNIT } from '../constants/unit.js';
 import {
   LOTTO_SECTION,
   LOTTO_FORM,
   PRICE_FORM__INPUT,
   LOTTO_MODAL,
+  LOTTO_MODAL_TBODY,
   LOTTO_FORM__WINNING_NUMBER,
   LOTTO_MODAL_BENEFIT_RATE,
   LOTTO_MODAL_WINNING_RESULT,
@@ -14,8 +15,6 @@ import {
   LOTTO_SECTION_TICKETS,
 } from '../constants/selectTarget.js';
 import { $, $$ } from '../util/dom.js';
-
-import { PRIZE_TYPES } from '../constants/prize.js';
 
 export default class State {
   #priceModel;
@@ -81,11 +80,20 @@ export default class State {
   };
 
   #displayWinningResultModal = () => {
-    const prizeKeys = Object.keys(PRIZE_TYPES);
-    $$(LOTTO_MODAL_WINNING_RESULT).forEach(($el, i) => {
-      $el.lastElementChild.textContent = `${this.#lottoModel.getWinningQuantityByRank(prizeKeys[i])}개`;
-    });
+    const trTemplate = Object.entries(PRIZE_TYPES)
+      .map(
+        ([prizeKey, prize]) =>
+          `<tr class="text-center ${LOTTO_MODAL_WINNING_RESULT}">
+                  <td class="p-3">${prize.text}</td>
+                  <td class="p-3">${prize.cost.toLocaleString()}</td>
+                  <td class="p-3">${this.#lottoModel.getWinningQuantityByRank(prizeKey)}개</td>
+                </tr>`
+      )
+      .join('');
+
     $(LOTTO_MODAL).classList.toggle('open');
+    $(LOTTO_MODAL_TBODY, $(LOTTO_MODAL)).innerHTML = '';
+    $(LOTTO_MODAL_TBODY, $(LOTTO_MODAL)).insertAdjacentHTML('afterbegin', trTemplate);
     $(LOTTO_MODAL_BENEFIT_RATE).textContent = `당신의 총 수익률은 ${this.lottoBenefitRate}%입니다.`;
   };
 
