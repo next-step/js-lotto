@@ -1,4 +1,4 @@
-import { Wallet } from '../data/wallet.js';
+import wallet from '../data/wallet.js';
 
 const purchasedHistoryView = (function () {
   const $purchaseHistory = document.querySelector('section.mt-9');
@@ -10,7 +10,6 @@ const purchasedHistoryView = (function () {
   const $purchasedLottoTickets = $purchaseHistory.querySelector(
     'div.d-flex.flex-wrap'
   );
-  const wallet = new Wallet();
 
   function isShowLottoNumbers() {
     return $showLottoNumbersToggleButton.checked;

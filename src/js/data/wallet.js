@@ -1,23 +1,19 @@
-export class Wallet {
-  #lottos;
+const wallet = (function () {
+  let purchasedLottos;
 
-  constructor() {
-    this.removeAllLottos();
+  function lottos() {
+    return purchasedLottos;
   }
 
-  get lottos() {
-    return this.#lottos;
+  function setLottos(lottoList) {
+    purchasedLottos = lottoList;
   }
 
-  get isEmpty() {
-    return (this.lottos ?? []).length === 0;
+  function removeAllLottos() {
+    purchasedLottos = null;
   }
 
-  setLottos(lottos) {
-    this.#lottos = lottos;
-  }
+  return { lottos, setLottos, removeAllLottos };
+})();
 
-  removeAllLottos() {
-    this.#lottos = null;
-  }
-}
+export default wallet;
