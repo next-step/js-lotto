@@ -1,27 +1,26 @@
-import { AmountForm } from './AmountForm.js';
-import { Tickets } from './Tickets.js';
-import { PRICE_PER_TICKET } from '../constants/constants.js';
-import { autoGenerateLottoNumbers } from './autoGenerateLottoNumbers.js';
-import { $ } from '../utils/document.js';
-import { replaceRender } from '../utils/replaceRender.js';
+import { AmountForm } from "./AmountForm.js";
+import { Tickets } from "./Tickets.js";
+import { PRICE_PER_TICKET } from "../constants/constants.js";
+import { autoGenerateLottoNumbers } from "../LottoService/autoGenerateLottoNumbers.js";
+import { $ } from "../utils/document.js";
+import { replaceRender } from "../core/replaceRender.js";
 
 export const LottoApp = ($el) => {
+    const state = {
+        tickets: [],
+        amount: null,
+    };
 
-  const state = {
-    tickets: [],
-    amount: null,
-  }
+    function purchaseTicketsByUpdatingAmount(amount) {
+        state.amount = amount;
+        state.tickets = autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
+        Tickets($('[data-component="tickets"]', $el), { tickets: state.tickets });
+        console.log("New Amount: ", amount);
+    }
 
-  function purchaseTicketsByUpdatingAmount(amount) {
-    state.amount = amount;
-    state.tickets = autoGenerateLottoNumbers(amount / PRICE_PER_TICKET);
-    Tickets($('[data-component="tickets"]', $el), {tickets: state.tickets});
-    console.log('New Amount: ', amount);
-  }
-
-  $el = replaceRender({
-    $originEl: $el,
-    replaceHTML: `
+    $el = replaceRender({
+        $originEl: $el,
+        replaceHTML: `
             <div class="d-flex justify-center mt-5">
                 <div class="w-100">
                   <h1 class="text-center">🎱 행운의 로또</h1>
@@ -130,7 +129,8 @@ export const LottoApp = ($el) => {
         </div>
       </div> 
       `,
-  });
-  AmountForm($('[data-component="amount-form"]', $el), {purchaseTicketsByUpdatingAmount});
-}
-
+    });
+    AmountForm($('[data-component="amount-form"]', $el), {
+        purchaseTicketsByUpdatingAmount,
+    });
+};

@@ -1,21 +1,24 @@
 import { $ } from "../utils/document.js";
-import { replaceRender } from "../utils/replaceRender.js";
+import { replaceRender } from "../core/replaceRender.js";
 import renderLottoNumbers from "./renderLottoNumbers.js";
 
 export const Tickets = ($el, props) => {
+    const state = {
+        isShowNumbers: false,
+    };
 
-  const state = {
-    isShowNumbers: false,
-  };
+    function switchShowNumbers() {
+        state.isShowNumbers = !state.isShowNumbers;
+        renderLottoNumbers(
+            $('[data-component="lotto-numbers"]', $el),
+            state,
+            props.tickets
+        );
+    }
 
-  function switchShowNumbers() {
-    state.isShowNumbers = !state.isShowNumbers;
-    renderLottoNumbers($('[data-component="lotto-numbers"]', $el), state, props.tickets);
-  };
-
-  $el = replaceRender({
-    $originEl: $el,
-    replaceHTML: `
+    $el = replaceRender({
+        $originEl: $el,
+        replaceHTML: `
         <section class="mt-9">
             <div class="d-flex">
                 <label class="flex-auto my-0" data-test="tickets-count">총 ${props.tickets.length}개를 구매하였습니다.</label>
@@ -29,9 +32,8 @@ export const Tickets = ($el, props) => {
             <div data-component="lotto-numbers"><div>
         </section>
     `,
-    bindEvents: [
-      ($el) => $('.switch', $el)
-        .addEventListener('change', switchShowNumbers),
-    ],
-  });
-}
+        bindEvents: [
+            ($el) => $(".switch", $el).addEventListener("change", switchShowNumbers),
+        ],
+    });
+};
