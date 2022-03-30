@@ -59,13 +59,14 @@ describe('로또 미션 Cypress', () => {
             .last()
             .invoke('text')
             .then((winningQuantityText) => {
-              expect(winningQuantityText).to.be.equal(`0개`);
+              expect(winningQuantityText).contains('개');
             });
         });
       });
 
       it('(3) 구매자의 총 수익률이 노출된다.', () => {
-        cy.get('.lotto-modal-benefit-rate').should('have.text', '당신의 총 수익률은 0%입니다.');
+        // 수익률 = 수익 / 투자원금 * 100
+        cy.get('.lotto-modal-benefit-rate').contains('수익률');
       });
 
       it('(4) 다시 시작하기 - 초기화', () => {
