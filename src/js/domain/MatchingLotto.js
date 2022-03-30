@@ -1,33 +1,33 @@
 const RATING = {
     3: {
         count: "3개",
-        winnings: 5000,
+        winnings: 5_000,
     },
     4: {
         count: "4개",
-        winnings: 50000,
+        winnings: 50_000,
     },
     5: {
         count: "5개",
-        winnings: 1500000,
+        winnings: 1_500_000,
     },
     "5+": {
         count: "5개 + 보너스볼",
-        winnings: 30000000,
+        winnings: 30_000_000,
     },
     6: {
         count: "6개",
-        winnings: 2000000000,
+        winnings: 2_000_000_000,
     },
 };
 const LOTTO_UNIT = 1000;
 
 export class MatchingLotto {
-    tickets = null;
-    winningNumbers = null;
-    bonusNumber = null;
-    rating = null;
-    rate = 0;
+    tickets;
+    winningNumbers;
+    bonusNumber;
+    rating;
+    rate;
 
     constructor() {
         this.initRating();
@@ -55,7 +55,6 @@ export class MatchingLotto {
                     : this.rating[r.length]++
             );
         this.computeRate();
-        this.#setRating(this.rating);
     }
 
     computeRate() {
@@ -67,38 +66,6 @@ export class MatchingLotto {
             }
         }
 
-        this.#setRate((total / (this.tickets.length * LOTTO_UNIT)) * 100);
-    }
-
-    getTickets() {
-        return this.tickets;
-    }
-
-    setTickets(numbers) {
-        this.tickets = numbers;
-    }
-
-    setWinningNumbers(numbers) {
-        this.winningNumbers = numbers;
-    }
-
-    setBonusNumber(number) {
-        this.bonusNumber = number;
-    }
-
-    #setRate(rate) {
-        this.rate = rate;
-    }
-
-    getRate() {
-        return this.rate;
-    }
-
-    #setRating(rating) {
-        this.rating = rating;
-    }
-
-    getRating() {
-        return this.rating;
+        this.rate = (total / (this.tickets.length * LOTTO_UNIT)) * 100;
     }
 }

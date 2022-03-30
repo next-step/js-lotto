@@ -6,16 +6,16 @@ import { LottoTicketsForm } from "./LottoTicketsForm.js";
 import { WinningLottoForm } from "./WinningLottoForm.js";
 
 export default class Lotto {
-    lottoTicketsForm = null;
-    lottoModal = null;
-    matchingLotto = null;
-    winningLotto = null;
-    winningLottoForm = null;
-    $lottoPurchaseArea = null;
-    $lottoAmountArea = null;
-    $lottoTicketArea = null;
-    $winningLottoArea = null;
-    $resultModalArea = null;
+    LottoTicketsForm;
+    lottoModal;
+    matchingLotto;
+    winningLotto;
+    winningLottoForm;
+    $lottoPurchaseArea;
+    $lottoAmountArea;
+    $lottoTicketArea;
+    $winningLottoArea;
+    $resultModalArea;
 
     constructor() {
         this.$lottoPurchaseArea = document.querySelector("#lotto-purchase-area");
@@ -26,7 +26,7 @@ export default class Lotto {
 
         new LottoPurchaseForm(this.$lottoPurchaseArea, {
             onLottoPurchase: (amount) => {
-                this.lottoTicketsForm.setAmount(amount);
+                this.lottoTicketsForm.amount = amount;
                 this.lottoTicketsForm.pickTickets();
                 this.lottoTicketsForm.render();
                 this.lottoTicketsForm.mounted();
@@ -59,18 +59,17 @@ export default class Lotto {
     }
 
     onMatchingwinningNumber() {
-        let resultValue = this.winningLotto.checkWinningNumber();
+        const resultValue = this.winningLotto.checkWinningNumber();
 
         if (resultValue.isComplete) {
-            this.matchingLotto.setTickets(this.lottoTicketsForm.getTickets());
-            this.matchingLotto.setWinningNumbers(this.winningLottoForm.getWinningNumbers());
-            this.matchingLotto.setBonusNumber(this.winningLottoForm.getBonusNumber());
+            this.matchingLotto.tickets = this.lottoTicketsForm.tickets;
+            this.matchingLotto.winningNumbers = this.winningLottoForm.getWinningNumbers();
+            this.matchingLotto.bonusNumber = this.winningLottoForm.getBonusNumber();
             this.matchingLotto.initRating();
             this.matchingLotto.computeWinning();
-            console.log(this.matchingLotto.getRating());
-            this.lottoModal.setTickets(this.matchingLotto.setTickets());
-            this.lottoModal.setRating(this.matchingLotto.getRating());
-            this.lottoModal.setRate(this.matchingLotto.getRate());
+            this.lottoModal.setTickets(this.matchingLotto.tickets);
+            this.lottoModal.setRating(this.matchingLotto.rating);
+            this.lottoModal.setRate(this.matchingLotto.rate);
             return;
         }
 

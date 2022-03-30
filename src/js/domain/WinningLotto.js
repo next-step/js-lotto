@@ -9,25 +9,13 @@ const MESSAGE = {
 };
 
 export class WinningLotto {
-    lottos = null;
-    bonus = null;
-    winningNumbers = null;
+    lottos;
+    bonus;
+    winningNumbers;
 
     constructor(lottos, bonus) {
         this.lottos = lottos;
         this.bonus = bonus;
-    }
-
-    setLottos(lottos) {
-        this.lottos = lottos;
-    }
-
-    setBonus(bonus) {
-        this.bonus = bonus;
-    }
-
-    setWinningNumbers(numbers) {
-        this.winningNumbers = numbers;
     }
 
     checkWinningNumber() {

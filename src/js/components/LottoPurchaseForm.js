@@ -1,24 +1,19 @@
-import { MESSAGE } from "../constant/index.js";
 import { LottoPurchase } from "../domain/LottoPurchase.js";
-
 
 const ENTER = "Enter";
 
 export class LottoPurchaseForm {
-    lottoNumber = null;
-    lottoPurchase = null;
-    onLottoPurchase = null;
+    lottoPurchase;
+    onLottoPurchase;
 
-    $element = null;
-    $purchasePriceInput = null;
-    $purchaseButton = null;
+    $element;
+    $purchasePriceInput;
+    $purchaseButton;
 
     constructor($element, props) {
         this.$element = $element;
         this.onLottoPurchase = props.onLottoPurchase;
-        this.lottoPurchase = new LottoPurchase({
-
-        });
+        this.lottoPurchase = new LottoPurchase({});
 
         this.#render();
         this.#mounted();
@@ -74,8 +69,8 @@ export class LottoPurchaseForm {
     #onPurchase() {
         const purchasePriceInput = this.$purchasePriceInput.value;
         this.lottoPurchase.purchase(purchasePriceInput);
-        if(this.lottoPurchase.getAmount() > 0) {
-            this.onLottoPurchase(this.lottoPurchase.getAmount());
-        }       
+        if (this.lottoPurchase.amount > 0) {
+            this.onLottoPurchase(this.lottoPurchase.amount);
+        }
     }
 }

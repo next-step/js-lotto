@@ -26,14 +26,14 @@ const RATING = [
     },
 ];
 export class LottoModal {
-    tickets = null;
-    rating = null;
-    rate = null;
-    props = null;
-    $resultModal = null;
-    $resultModalCloseButton = null;
-    $resultModalArea = null;
-    $resetButton = null;
+    tickets;
+    rating;
+    rate;
+    props;
+    $resultModal;
+    $resultModalCloseButton;
+    $resultModalArea;
+    $resetButton;
 
     constructor(element, props) {
         this.$resultModalArea = element;

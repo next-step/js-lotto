@@ -1,10 +1,10 @@
 import { MESSAGE } from "../constant/index.js";
 
 export class WinningLottoForm {
-    props = null;
-    winningNumbers = null;
-    bonusNumber = null;
-    winningLotto = null;
+    props;
+    winningNumbers;
+    bonusNumber;
+    winningLotto;
 
     constructor($winngingArea, winningLotto, props) {
         this.$winngingArea = $winngingArea;
@@ -25,11 +25,11 @@ export class WinningLottoForm {
 
     setEvent() {
         this.$resultModalOpenButton.addEventListener("click", (event) => {
-            this.#setWinningNumbers(this.#parseWinningNumbers());
-            this.#setBonusNumber(this.$bonusNumber.value);
+            this.winningNumbers = this.#parseWinningNumbers();
+            this.bonusNumber = this.$bonusNumber.value;
 
-            this.winningLotto.setWinningNumbers(this.getWinningNumbers());
-            this.winningLotto.setBonus(this.getBonusNumber());
+            this.winningLotto.winningNumbers = this.winningNumbers;
+            this.winningLotto.bonus = this.bonusNumber;
             this.props.onWinngingCheck();
         });
     }
@@ -46,16 +46,8 @@ export class WinningLottoForm {
             .filter((number) => number !== "");
     }
 
-    #setWinningNumbers(winningNumbers) {
-        this.winningNumbers = winningNumbers;
-    }
-
     getBonusNumber() {
         return this.bonusNumber;
-    }
-
-    #setBonusNumber(number) {
-        this.bonusNumber = number;
     }
 
     getWinningTemplate() {

@@ -1,20 +1,19 @@
 import { LottoMachine } from "../domain/LottoMachine.js";
 
 export class LottoTicketsForm {
-    isChecked = false;
-    amount = 0;
-    tickets = null;
-    lottoMachine = null;
+    isChecked;
+    amount;
+    tickets;
 
-    $switch = null;
-    $amountArea = null;
-    $ticketArea = null;
-    $lottoTickets = null;
+    $switch;
+    $amountArea;
+    $ticketArea;
+    $lottoTickets;
 
     constructor($amountAreaElement, $ticketAreaElement) {
         this.$amountArea = $amountAreaElement;
         this.$ticketArea = $ticketAreaElement;
-        this.lottoMachine = new LottoMachine();
+        this.isChecked = false;
     }
 
     render() {
@@ -31,24 +30,8 @@ export class LottoTicketsForm {
         this.$switch.addEventListener("click", (event) => this.#onSwitchClick(event));
     }
 
-    getAmount() {
-        return this.amount;
-    }
-
-    setAmount(amountValue) {
-        this.amount = amountValue;
-    }
-
-    setTickets(tickets) {
-        this.tickets = tickets;
-    }
-
-    getTickets() {
-        return this.tickets;
-    }
-
     pickTickets() {
-        this.setTickets(this.lottoMachine.getLottoNumbers(this.getAmount()));
+        this.tickets = LottoMachine.getLottoNumbers(this.amount);
     }
 
     #onSwitchClick(event) {
@@ -64,7 +47,9 @@ export class LottoTicketsForm {
 
     #getLottoAmountTemplate() {
         return `    
-        <label class="flex-auto my-0">총 <span data-test="lotto-amount">${this.getAmount()}</span>개를 구매하였습니다.</label>
+        <label class="flex-auto my-0">총 <span data-test="lotto-amount">${
+            this.amount
+        }</span>개를 구매하였습니다.</label>
         <div class="flex-auto d-flex justify-end pr-1">
             <label class="switch" data-test="switch">
                 <input type="checkbox" class="lotto-numbers-toggle-button" ${
