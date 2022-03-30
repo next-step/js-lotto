@@ -19,17 +19,21 @@ class LottoDetailHeader extends View {
     return this;
   }
 
-  render({ count = 0 }) {
-    this.show();
+  render({ count = 0 }, reset) {
+    console.log(reset);
     this.#initializeToggleStyle(count);
+
+    if (reset) {
+      this.hide();
+      return;
+    }
+
+    this.show();
     this.#printCount(count);
   }
 
   bindEvent() {
-    this.#$toggleNumbersBtn.addEventListener(
-      'change',
-      this.#toggleLottoNumbers.bind(this)
-    );
+    this.#$toggleNumbersBtn.addEventListener('change', this.#toggleLottoNumbers.bind(this));
   }
 
   #printCount(count) {
@@ -46,4 +50,4 @@ class LottoDetailHeader extends View {
   }
 }
 
-export default ($el) => new LottoDetailHeader($el);
+export default $el => new LottoDetailHeader($el);
