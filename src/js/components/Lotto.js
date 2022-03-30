@@ -16,7 +16,7 @@ class Lotto {
         );
         shuffle(lotto);
 
-        return lotto.slice(0, 7);
+        return lotto.slice(0, 6);
     }
 
     getMultipleLotto(num) {
