@@ -9,6 +9,11 @@ const initialState = {
     numbers: [],
     count: 0,
   },
+  winning: {
+    results: [],
+    rate: 0,
+  },
+  reset: true,
 };
 
 const controllers = [LottoController];
