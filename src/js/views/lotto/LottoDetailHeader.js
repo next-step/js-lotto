@@ -20,16 +20,14 @@ class LottoDetailHeader extends View {
   }
 
   render({ count = 0 }, reset) {
-    console.log(reset);
     this.#initializeToggleStyle(count);
 
     if (reset) {
       this.hide();
-      return;
+    } else {
+      this.show();
+      this.#printCount(count);
     }
-
-    this.show();
-    this.#printCount(count);
   }
 
   bindEvent() {

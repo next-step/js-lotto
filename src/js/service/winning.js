@@ -1,21 +1,27 @@
 import { calculateRate } from '../business/winning.js';
-import { PICKED_LOTTO_NUMBER_COUNT } from '../const/constant.js';
+import {
+  MESSAGE,
+  MIN_MONEY_UNIT,
+  NUMBER_WITH_BONUS,
+  PICKED_LOTTO_NUMBER_COUNT,
+  RANGE_FOR_RANDOM_NUMBERS,
+} from '../const/constant.js';
 
 const validate = ({ winningNumbers, bonusNumber }) => {
-  const isNotRange = num => num <= 0 && num > 45;
+  const isNotRange = num => num <= 0 && num > RANGE_FOR_RANDOM_NUMBERS;
   const needsToAlertForRange = winningNumbers.some(isNotRange) || isNotRange(bonusNumber);
 
   if (needsToAlertForRange) {
-    throw '1 ~ 45 사이 숫자를 입력해주세요.';
+    throw MESSAGE.PLZ_CHECK_LOTTO_NUMBER_RANGE;
   }
 
   const winningNumbersSet = new Set(winningNumbers);
   if (winningNumbersSet.size !== PICKED_LOTTO_NUMBER_COUNT) {
-    throw '중복된 당첨 번호가 있습니다. 확인해주세요.';
+    throw MESSAGE.PLZ_CHECK_DUPLICATED_LOTTO_NUMBER;
   }
 
   if (winningNumbers.some(num => num === bonusNumber)) {
-    throw '당첨 번호와 보너스 번호가 중복됩니다. 확인해주세요.';
+    throw MESSAGE.PLZ_CHECK_DUPLICATED_BONUS_NUMBER;
   }
 
   return {
@@ -42,7 +48,8 @@ const winningMap = (() => {
   return map;
 })();
 
-const getWinningKey = (count, hasBonusNumber) => (count === 5 && hasBonusNumber ? 'bonus' : count);
+const getWinningKey = (count, hasBonusNumber) =>
+  count === NUMBER_WITH_BONUS && hasBonusNumber ? 'bonus' : count;
 
 const increaseWinningCount = (key, winningMap) => {
   const { count, ...rest } = winningMap.get(key);
@@ -69,7 +76,7 @@ const checkMatchedNumbers = (winningInfo, lottos) => {
 const createStatisticsResult = lottoCount => {
   const winningInfo = [...winningMap.entries()];
   const prizeInfo = winningInfo.flatMap(([_, value]) => value);
-  const totalAmount = lottoCount * 1000;
+  const totalAmount = lottoCount * MIN_MONEY_UNIT;
 
   return {
     winningInfo,

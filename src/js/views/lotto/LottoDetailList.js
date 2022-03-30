@@ -22,10 +22,10 @@ class LottoDetailList extends View {
 
     if (reset) {
       this.hide();
-      return;
+    } else {
+      this.show();
+      this.#printList(numbers);
     }
-    this.show();
-    this.#printList(numbers);
   }
 
   bindEvent() {}
