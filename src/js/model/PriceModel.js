@@ -12,11 +12,12 @@ export default class PriceModel {
   }
 
   updatePrice(newPrice) {
+    PriceModel.#validators.isValidPrice(newPrice);
     this.#totalPurchasePrice = newPrice;
     $(PRICE_FORM__INPUT).value = '';
   }
 
-  static validators = {
+  static #validators = {
     isValidPrice: (price) => {
       if (price === 0) throw new Error(ERR_MESSAGE.NONE_PRICE);
       if (price < LOTTO_PURCHASE_UNIT) throw new Error(ERR_MESSAGE.LESS_THAN_ENOUGH);

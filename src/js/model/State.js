@@ -37,7 +37,6 @@ export default class State {
     e.preventDefault();
     try {
       const inputPrice = Number($(PRICE_FORM__INPUT).value);
-      PriceModel.validators.isValidPrice(inputPrice);
       this.#priceModel.updatePrice(inputPrice);
       this.#generateLotto(inputPrice);
     } catch (err) {
@@ -53,7 +52,6 @@ export default class State {
     e.preventDefault();
     try {
       const inputWinningNumbers = this.#getWinningNumbers();
-      LottoModel.validators.isDuplicatedWinningNumber(inputWinningNumbers.winningNumbers);
       this.#lottoModel.calculateWinningResult(inputWinningNumbers);
       this.#displayWinningResultModal();
     } catch (err) {
@@ -100,17 +98,9 @@ export default class State {
   #generateLotto(price) {
     try {
       const quantity = price / LOTTO_PURCHASE_UNIT;
-      const totalQuantity = this.#lottoModel?.quantity + quantity;
-      LottoModel.validators.isValidQuantity(totalQuantity);
-
-      if (this.#lottoModel) {
-        this.#lottoModel.addLotto(quantity);
-        return;
-      }
-
-      this.#lottoModel = new LottoModel(quantity);
-    } catch (e) {
-      alert(e.message);
+      this.#lottoModel = this.#lottoModel ? this.#lottoModel.addLotto(quantity) : LottoModel.createLotto(quantity);
+    } catch (err) {
+      alert(err.message);
     }
   }
 

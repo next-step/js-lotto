@@ -15,11 +15,17 @@ export default class LottoModel {
   #quantity;
 
   constructor(quantity) {
-    this.createLotto(quantity);
+    this.#quantity = quantity;
+    this.#tickets = Array.from(Array(this.#quantity), (_, i) => new LottoTicket((i += 1)));
     this.#displayLottoTicket();
   }
 
-  static validators = {
+  static createLotto(quantity) {
+    LottoModel.#validators.isValidQuantity(quantity);
+    return new LottoModel(quantity);
+  }
+
+  static #validators = {
     isValidQuantity: (totalQuantity) => {
       if (totalQuantity > LOTTO_PURCHASE_MAX_QUANTITY) throw new Error(ERR_MESSAGE.OVER_LIMIT_QUANTITY);
     },
@@ -28,19 +34,20 @@ export default class LottoModel {
     },
   };
 
-  createLotto(quantity) {
-    this.#quantity = quantity;
-    this.#tickets = Array.from(Array(this.#quantity), (_, i) => new LottoTicket((i += 1)));
-  }
-
   addLotto(quantity) {
+    const totalQuantity = this.#quantity + quantity;
+    LottoModel.#validators.isValidQuantity(totalQuantity);
+
     this.#quantity += quantity;
     const newTickets = Array.from(Array(quantity), (_, i) => new LottoTicket((i += 1)));
     this.#tickets = [...this.#tickets, ...newTickets];
     this.#displayLottoTicket();
+    return this;
   }
 
   calculateWinningResult(inputWinningNumbers) {
+    const { winningNumbers } = inputWinningNumbers;
+    LottoModel.#validators.isDuplicatedWinningNumber(winningNumbers);
     this.#tickets.forEach((ticket) => {
       ticket.setWinningResult(inputWinningNumbers);
     });
