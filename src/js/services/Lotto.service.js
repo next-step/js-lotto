@@ -93,7 +93,7 @@ class LottoService {
 
   isValidCount(count) {
     if (isEmpty(count) || isNaN(count)) throw new Error(ERROR_MESSAGE.REQUIRED_DIGIT);
-    if (0 >= count || count > this.count) throw new Error(ERROR_MESSAGE.IMPOSSIBLE_COUNT);
+    if (0 > count || count > this.count) throw new Error(ERROR_MESSAGE.IMPOSSIBLE_COUNT);
     if (!Number.isInteger(Number(count))) throw new Error(ERROR_MESSAGE.MUST_REQUIRED_AMOUNT_UNIT);
 
     return true;
