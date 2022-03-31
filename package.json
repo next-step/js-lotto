@@ -1,11 +1,20 @@
 {
-  "name": "racingcar",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "devDependencies": {
-    "cypress": "^6.3.0",
-    "live-server": "^1.2.1"
-  },
-  "dependencies": {}
+    "name": "racingcar",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "devDependencies": {
+        "cypress": "^6.3.0",
+        "jest": "^27.5.1",
+        "live-server": "^1.2.1"
+    },
+    "dependencies": {
+        "@babel/core": "^7.17.8",
+        "@babel/plugin-transform-modules-commonjs": "^7.17.7",
+        "@babel/plugin-transform-runtime": "^7.17.0",
+        "@babel/preset-env": "^7.16.11"
+    },
+    "scripts": {
+        "test": "jest"
+    }
 }

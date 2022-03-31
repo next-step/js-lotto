@@ -8,7 +8,7 @@ export class LottoNumber {
         this.value = value;
     }
 
-    get value() {
+    value() {
         return this.value;
     }
 }
