@@ -67,6 +67,7 @@ export default class Lotto {
             this.matchingLotto.bonusNumber = this.winningLottoForm.bonusNumber;
             this.matchingLotto.initRating();
             this.matchingLotto.computeWinning();
+            this.matchingLotto.computeRate();
             this.lottoModal.tickets = this.matchingLotto.tickets;
             this.lottoModal.rating = this.matchingLotto.rating;
             this.lottoModal.rate = this.matchingLotto.rate;

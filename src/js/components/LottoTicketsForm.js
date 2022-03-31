@@ -31,7 +31,7 @@ export class LottoTicketsForm {
     }
 
     pickTickets() {
-        this.tickets = LottoMachine.getLottoNumbers(this.amount);
+        this.tickets = LottoMachine.createAutoLotto(this.amount);
     }
 
     #onSwitchClick(event) {

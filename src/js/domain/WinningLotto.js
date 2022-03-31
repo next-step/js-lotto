@@ -1,10 +1,10 @@
-const LOTTO_MIN_NUMBER = 1;
-const LOTTO_MAX_NUMBER = 45;
+import { LottoNumber } from "./LottoNumber.js";
+
 const LOTTO_LENGTH = 6;
 const MESSAGE = {
     ERROR: {
         EXIST_WINNING_NUMBER: `중복된 당첨 번호가 있습니다.`,
-        OUT_OF_RANGE: `당첨 번호는 ${LOTTO_MIN_NUMBER} ~ ${LOTTO_MAX_NUMBER} 사이로 입력해야합니다.`,
+        OUT_OF_RANGE: `당첨 번호는 ${LottoNumber.MIN} ~ ${LottoNumber.MAX} 사이로 입력해야합니다.`,
     },
 };
 
@@ -32,8 +32,8 @@ export class WinningLotto {
 
         for (let i = 0; i < this.winningNumbers.length; i++) {
             if (
-                this.winningNumbers[i] < LOTTO_MIN_NUMBER ||
-                this.winningNumbers[i] > LOTTO_MAX_NUMBER
+                this.winningNumbers[i] < LottoNumber.MIN ||
+                this.winningNumbers[i] > LottoNumber.MAX
             ) {
                 resultValue = {
                     isComplete: false,
@@ -73,7 +73,7 @@ export class WinningLotto {
             return resultValue;
         }
 
-        if (this.bonus < LOTTO_MIN_NUMBER || this.bonus > LOTTO_MAX_NUMBER) {
+        if (this.bonus < LottoNumber.MIN || this.bonus > LottoNumber.MAX) {
             resultValue = {
                 isComplete: false,
                 message: MESSAGE.ERROR.OUT_OF_RANGE,

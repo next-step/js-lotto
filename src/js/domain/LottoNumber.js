@@ -1,7 +1,7 @@
-const LOTTO_MAX_NUMBER = 45;
-
 export class LottoNumber {
-    static createAutoLotto() {
-        return Array.from({ length: LOTTO_MAX_NUMBER }, (v, i) => ++i);
+    static MIN = 1;
+    static MAX = 45;
+    static getLottoNumber() {
+        return Array.from({ length: this.MAX }, (v, i) => ++i);
     }
 }
