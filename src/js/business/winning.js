@@ -1,9 +1,9 @@
 import { sum } from '../utils/index.js';
 
 /**
- * 수익률(%) = ((당첨금액 / 복권 구매금액) * 100) - 100;
+ * 수익률(%) = ((당첨금액 / 투자금액) * 100) - 100;
  * @param {number} totalPrize 당첨금액
- * @param {number} investmentAmount 투자금액 (복권 구매금액)
+ * @param {number} investmentAmount 투자금액
  * @returns number 수익률
  */
 const calculateRateOfProfit = (totalPrize, investmentAmount) =>
