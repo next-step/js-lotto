@@ -15,15 +15,15 @@ export const createLottoList = (count) => {
   return Array.from({ length: count }, (lotto) => createLotto());
 };
 
-export const getLottoListTemplate = (lottoList) => {
-  return lottoList
-    .map(
-      (lotto) => `
-      <li class="lotto-list-item d-flex items-center">
-          <span class="mx-1 text-4xl">🎟️ </span>
-          <span class="lotto-detail text-xl mx-3">${lotto.join(', ')}</span>
-      </li>
-  `
-    )
-    .join('');
+export const getWinningNumber = ($inputNumberNodes) => {
+  return Array.from($inputNumberNodes).reduce(
+    (prev, { value }, index) => {
+      if (!value) return prev;
+
+      return index === NUMBER.LOTTO_LENGTH
+        ? { winningNumber: prev.winningNumber, bonusNumber: value }
+        : { winningNumber: [...prev.winningNumber, value], bonusNumber: null };
+    },
+    { winningNumber: [], bonusNumber: null }
+  );
 };

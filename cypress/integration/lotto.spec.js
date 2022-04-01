@@ -114,14 +114,30 @@ describe('로또 테스트', () => {
   });
 
   context('당첨 번호를 잘못입력한 경우에 따른 경고창 노출', () => {
-    it('로또 번호 입력이 없는 경우', () => {
+    it('당첨 번호 입력이 없는 경우', () => {
       const stub = cy.stub();
+      handleInputPrice(3000);
+      cy.get('#form-price button[type=submit]').click();
 
       cy.on('window:alert', stub);
-      cy.get('#form-price button[type=submit]')
+      cy.get('#form-winning button[type=submit]')
         .click()
         .then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGES.EMPTY_MONEY);
+          expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGES.EMPTY_NUMBER);
+        });
+    });
+
+    it('보너스 번호 입력이 없는 경우', () => {
+      const stub = cy.stub();
+      handleInputPrice(3000);
+      cy.get('#form-price button[type=submit]').click();
+
+      handleInputWinningNumbers([1, 2, 3, 4, 5, 6]);
+      cy.on('window:alert', stub);
+      cy.get('#form-winning button[type=submit]')
+        .click()
+        .then(() => {
+          expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGES.EMPTY_BONUS_NUMBER);
         });
     });
 
@@ -132,7 +148,7 @@ describe('로또 테스트', () => {
 
       handleInputWinningNumbers([1, 1, 1, 1, 1, 1, 1]);
       cy.on('window:alert', stub);
-      cy.get('#form-price button[type=submit]')
+      cy.get('#form-winning button[type=submit]')
         .click()
         .then(() => {
           expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGES.DUPLICATED_NUMBER);
@@ -140,19 +156,19 @@ describe('로또 테스트', () => {
     });
   });
 
-  context('당첨번호가 정상적으로 입력된 경우', () => {
-    it('결과 확인 버튼 클릭시 모달 등장 당첨통계 수익률 표시', () => {
-      handleInputPrice(1000);
-      cy.get('#form-price button[type=submit]').click();
+  // context('당첨번호가 정상적으로 입력된 경우', () => {
+  //   it('결과 확인 버튼 클릭시 모달 등장 당첨통계 수익률 표시', () => {
+  //     handleInputPrice(1000);
+  //     cy.get('#form-price button[type=submit]').click();
 
-      cy.get('#lotto-list ul li span.lotto-detail').then(($span) => {
-        const lottoNumbers = $span.text().split(', ').map(Number);
-        const lottoNumbersWithBonus = addBonusNumber(lottoNumbers);
-        handleInputWinningNumbers(lottoNumbersWithBonus);
-      });
-      cy.get('#form-winning button').click();
+  //     cy.get('#lotto-list ul li span.lotto-detail').then(($span) => {
+  //       const lottoNumbers = $span.text().split(', ').map(Number);
+  //       const lottoNumbersWithBonus = addBonusNumber(lottoNumbers);
+  //       handleInputWinningNumbers(lottoNumbersWithBonus);
+  //     });
+  //     cy.get('#form-winning button').click();
 
-      cy.get('.modal').should('be.visible');
-    });
-  });
+  //     cy.get('.modal').should('be.visible');
+  //   });
+  // });
 });

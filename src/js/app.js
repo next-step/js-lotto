@@ -1,6 +1,6 @@
 import LottoPrice from './components/LottoPrice.js';
 import Component from './core/Component.js';
-import { errorPrintAlert, validatePrice } from './domains/errors.js';
+import { errorPrintAlert, validatePrice, validateWinningNumber } from './domains/errors.js';
 import { createLottoList, getCount, getWinningNumber } from './domains/index.js';
 import { getSelector, isRangeNumberInLotto } from './utils/index.js';
 import LottoWinningForm from './components/LottoWinningForm.js';
@@ -63,20 +63,23 @@ class App extends Component {
   result(e) {
     e.preventDefault();
     const { winningNumber, bonusNumber } = getWinningNumber(e.target['winning-number']);
-    console.log('winningNumber', winningNumber);
-    console.log('bonusNumber', bonusNumber);
+    const { errorMsg } = validateWinningNumber(winningNumber, bonusNumber);
+    if (errorMsg) {
+      errorPrintAlert(errorMsg);
+      return;
+    }
 
     this.setState({ winningNumber, bonusNumber });
   }
 
-  changeInput(e) {
-    const value = e.target.value;
+  changeInput({ target }) {
+    const value = target.value;
     const $winningBonusInput = getSelector('input.bonus-number');
     if (!isRangeNumberInLotto(Number(value))) {
-      e.target.value = value.substr(0, value.length - 1);
+      target.value = value.substr(0, value.length - 1);
     }
     if (value.length > 1) {
-      e.target.nextElementSibling ? e.target.nextElementSibling.focus() : $winningBonusInput.focus();
+      target.nextElementSibling ? target.nextElementSibling.focus() : $winningBonusInput.focus();
     }
   }
 }
