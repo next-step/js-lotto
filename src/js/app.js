@@ -8,6 +8,7 @@ const initState = {
 class App {
   constructor() {
     this.state = {};
+    this.init();
   }
   init() {
     this.state = { ...initState };
@@ -15,8 +16,9 @@ class App {
   }
   setState(newState) {
     this.state = { ...this.state, ...newState };
-    this._render();
+    this.render();
   }
+  setRenderer() {}
 }
 
 export default App;

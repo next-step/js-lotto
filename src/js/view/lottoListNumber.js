@@ -2,26 +2,22 @@ import { getSelector } from '../utils/index.js';
 import App from '../app.js';
 
 class LottoListNumber extends App {
-  constructor() {
-    super();
-    this.$lottoList = getSelector('#lotto-list');
-    this.$lottoListUl = getSelector('#lotto-list ul');
-    this.$lottoToggleBtn = getSelector('.lotto-numbers-toggle-button');
-  }
-  init() {
-    this.$lottoToggleBtn.addEventListener('click', this.toggleLottoNumbersView.bind(this));
+  _init() {
+    getSelector('.lotto-numbers-toggle-button').addEventListener('click', this.toggleLottoNumbersView.bind(this));
   }
   toggleLottoNumbersView() {
     this.setState({ isShowLottoList: !this.state.isShowLottoList });
   }
-  _render() {
+  render() {
+    const $lottoList = getSelector('#lotto-list');
+    const $lottoListUl = getSelector('#lotto-list ul');
     if (!this.state.isShowLottoList) {
-      this.$lottoListUl.classList.remove('flex-col');
-      this.$lottoList.classList.remove('lotto-detail-view');
+      $lottoListUl.classList.remove('flex-col');
+      $lottoList.classList.remove('lotto-detail-view');
       return;
     }
 
-    this.$lottoList.classList.add('lotto-detail-view');
+    $lottoList.classList.add('lotto-detail-view');
   }
 }
 
