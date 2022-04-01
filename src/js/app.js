@@ -1,24 +1,84 @@
+import LottoPrice from './components/LottoPrice.js';
+import Component from './core/Component.js';
+import { errorPrintAlert, validatePrice } from './domains/errors.js';
+import { createLottoList, getCount, getWinningNumber } from './domains/index.js';
+import { getSelector, isRangeNumberInLotto } from './utils/index.js';
+import LottoWinningForm from './components/LottoWinningForm.js';
+
 const initState = {
   price: 0,
   count: 0,
   lottoList: [],
   isShowLottoList: false,
+  winningNumber: [],
+  bonusNumber: null,
 };
 
-class App {
-  constructor() {
-    this.state = {};
-    this.init();
+class App extends Component {
+  setup() {
+    this.$state = { ...initState };
   }
-  init() {
-    this.state = { ...initState };
-    this._init();
+  template() {
+    return `
+    <div class="d-flex justify-center mt-5">
+      <div class="w-100">
+        <h1 class="text-center">🎱 행운의 로또</h1>
+        <div id="lotto-price"></div>
+        <form class="mt-9 ${this.$state.count ? 'show' : 'hidden'}" id="form-winning"></form>
+      </div>
+    </div>
+    `;
   }
-  setState(newState) {
-    this.state = { ...this.state, ...newState };
-    this.render();
+  mounted() {
+    const { buyLotto, result, changeInput } = this;
+    const $LottoPrice = this.$target.querySelector('#lotto-price');
+    const $formWinning = this.$target.querySelector('#form-winning');
+
+    new LottoPrice($LottoPrice, {
+      buyLotto: buyLotto.bind(this),
+      lottoList: this.$state.lottoList,
+      count: this.$state.count,
+      isShowLottoList: this.$state.isShowLottoList,
+    });
+    new LottoWinningForm($formWinning, {
+      result: result.bind(this),
+      changeInput: changeInput.bind(this),
+      count: this.$state.count,
+    });
   }
-  setRenderer() {}
+
+  buyLotto(e) {
+    e.preventDefault();
+    const price = e.target['price'].valueAsNumber;
+    const { errorMsg } = validatePrice(price);
+    if (errorMsg) {
+      errorPrintAlert(errorMsg);
+      return;
+    }
+    const count = getCount(price);
+    const lottoList = createLottoList(count);
+    this.setState({ price, count, lottoList });
+  }
+
+  result(e) {
+    e.preventDefault();
+    const { winningNumber, bonusNumber } = getWinningNumber(e.target['winning-number']);
+    console.log('winningNumber', winningNumber);
+    console.log('bonusNumber', bonusNumber);
+
+    this.setState({ winningNumber, bonusNumber });
+  }
+
+  changeInput(e) {
+    const value = e.target.value;
+    const $winningBonusInput = getSelector('input.bonus-number');
+    if (!isRangeNumberInLotto(Number(value))) {
+      e.target.value = value.substr(0, value.length - 1);
+    }
+    if (value.length > 1) {
+      e.target.nextElementSibling ? e.target.nextElementSibling.focus() : $winningBonusInput.focus();
+    }
+  }
 }
 
 export default App;
