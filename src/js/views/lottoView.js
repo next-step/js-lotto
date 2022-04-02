@@ -1,4 +1,8 @@
-import { MONEY_INPUT_SELECTOR } from '../constants/index.js';
+import {
+  BONUS_NUMBER_SELECTOR,
+  MONEY_INPUT_SELECTOR,
+  WINNING_NUMBER_SELECTOR,
+} from '../constants/index.js';
 
 export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
   const inputMoney = (event) => {
@@ -28,15 +32,16 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
 
     if (dataset.purpose !== 'inputWinningNumbers') return;
 
-    const winningNumberInputs =
-      targetElement.querySelectorAll('.winning-number');
-    const bonusNumberInput = targetElement.querySelector('.bonus-number');
+    const winningNumberInputs = targetElement.querySelectorAll(
+      WINNING_NUMBER_SELECTOR
+    );
+    const bonusNumberInput = targetElement.querySelector(BONUS_NUMBER_SELECTOR);
     const winningNumbers = Array.from(winningNumberInputs).map((input) =>
       Number(input.value)
     );
     const bonusNumber = Number(bonusNumberInput.value);
 
-    lottoIo.inputWinningNumbers(winningNumbers, bonusNumber);
+    if (!lottoIo.inputWinningNumbers(winningNumbers, bonusNumber)) return;
 
     const sameCounts = lottoIo.outputSameCounts();
     const rateOfReturn = lottoIo.outputRateOfReturn();
