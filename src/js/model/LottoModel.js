@@ -1,45 +1,63 @@
-import { LOTTO_NUMBER_SIZE, LOTTO_MAX_RANGE, LOTTO_PURCHASE_MAX_QUANTITY } from '../constants/unit.js';
+import { LOTTO_NUMBER_SIZE, LOTTO_BONUS_MATCHED_SIZE, LOTTO_MAX_RANGE, LOTTO_PURCHASE_MAX_QUANTITY } from '../constants/unit.js';
 import { ERR_MESSAGE } from '../constants/alertMessage.js';
+import { PRIZE_TYPES } from '../constants/prize.js';
 import {
   LOTTO_SECTION,
-  LOTTO_FORM,
   LOTTO_SECTION__LABEL,
   LOTTO_SECTION_TICKETS,
   LOTTO_SECTION__TICKET,
-  LOTTO_SECTION__TICKET__NUMBERS,
+  LOTTO_FORM,
 } from '../constants/selectTarget.js';
-import { $, $$ } from '../util/dom.js';
+import { $ } from '../util/dom.js';
 
 export default class LottoModel {
   #tickets;
   #quantity;
-  #winningNumbers;
 
   constructor(quantity) {
-    this.createLotto(quantity);
-    this.showLottoTicket();
+    this.#quantity = quantity;
+    this.#tickets = Array.from(Array(this.#quantity), (_, i) => new LottoTicket((i += 1)));
+    this.#displayLottoTicket();
   }
 
-  static validators = {
+  static createLotto(quantity) {
+    LottoModel.#validators.isValidQuantity(quantity);
+    return new LottoModel(quantity);
+  }
+
+  static #validators = {
     isValidQuantity: (totalQuantity) => {
       if (totalQuantity > LOTTO_PURCHASE_MAX_QUANTITY) throw new Error(ERR_MESSAGE.OVER_LIMIT_QUANTITY);
     },
+    isDuplicatedWinningNumber: (inputNumbers) => {
+      if (new Set(inputNumbers).size < LOTTO_NUMBER_SIZE) throw new Error(ERR_MESSAGE.DUPLICATED_NUMBERS);
+    },
   };
 
-  createLotto(quantity) {
-    this.#quantity = quantity;
-    this.#tickets = Array.from(Array(this.#quantity), (_, i) => new LottoTicket((i += 1)));
-    this.#winningNumbers = new LottoWinningNumbers();
-  }
-
   addLotto(quantity) {
+    const totalQuantity = this.#quantity + quantity;
+    LottoModel.#validators.isValidQuantity(totalQuantity);
+
     this.#quantity += quantity;
     const newTickets = Array.from(Array(quantity), (_, i) => new LottoTicket((i += 1)));
     this.#tickets = [...this.#tickets, ...newTickets];
-    this.showLottoTicket();
+    this.#displayLottoTicket();
+    return this;
   }
 
-  showLottoTicket() {
+  calculateWinningResult(inputWinningNumbers) {
+    const { winningNumbers } = inputWinningNumbers;
+    LottoModel.#validators.isDuplicatedWinningNumber(winningNumbers);
+    this.#tickets.forEach((ticket) => {
+      ticket.setWinningResult(inputWinningNumbers);
+    });
+  }
+
+  getWinningQuantityByRank(rank) {
+    return this.#tickets.filter((ticket) => ticket.lottoRank === rank).length;
+  }
+
+  #displayLottoTicket() {
     $(LOTTO_SECTION).hidden = false;
     $(LOTTO_FORM).hidden = false;
     $(LOTTO_SECTION__LABEL).textContent = `총 ${this.#quantity}개를 구매하였습니다.`;
@@ -47,10 +65,6 @@ export default class LottoModel {
     const ticketPosition = $(LOTTO_SECTION_TICKETS);
     if (ticketPosition.childNodes.length > 0) ticketPosition.replaceChildren();
     ticketPosition.insertAdjacentHTML('afterBegin', this.ticketsHtml);
-  }
-
-  toggleLottoTicketsNumbers() {
-    $(LOTTO_SECTION_TICKETS).classList.toggle('hidden');
   }
 
   get ticketsHtml() {
@@ -61,28 +75,44 @@ export default class LottoModel {
   }
 
   get quantity() {
-    return this.#quantity;
+    return Number(this.#quantity);
+  }
+
+  get lottoBenefit() {
+    return Number(this.#tickets.reduce((acc, cur) => acc + (cur.lottoPrize || 0), 0));
   }
 }
 
 class LottoTicket {
   #id;
   #ticketNumbers;
+  #matchedCount;
+  #lottoRank;
+  #lottoPrize;
 
   constructor(i) {
     this.#id = Date.now() + i || 0;
-    this.#ticketNumbers = this.randomGenerator();
+    this.#ticketNumbers = this.generateTicketNumbers();
+    this.#matchedCount = 0;
   }
 
-  randomGenerator() {
-    const numbers = new Set();
+  setWinningResult({ winningNumbers, bonusNumber }) {
+    this.#matchedCount = 0;
+    winningNumbers.forEach((winningNumber) => {
+      if (this.#ticketNumbers.includes(Number(winningNumber))) {
+        this.#matchedCount += 1;
+      }
+    });
 
-    while (numbers.size < LOTTO_NUMBER_SIZE) {
-      const random = Math.floor(Math.random() * LOTTO_MAX_RANGE) + 1;
-      numbers.add(random);
-    }
+    const isBonus = this.#matchedCount === LOTTO_BONUS_MATCHED_SIZE && this.#ticketNumbers.includes(Number(bonusNumber));
+    this.#lottoRank = isBonus ? 'RANK-BONUS' : `RANK-${this.#matchedCount}`;
+    this.#lottoPrize = Number(PRIZE_TYPES[this.#lottoRank]?.cost) || 0;
+  }
 
-    return Array.from(numbers);
+  generateTicketNumbers() {
+    return Array.from({ length: LOTTO_MAX_RANGE }, (_, i) => (i += 1))
+      .sort(() => Math.random() - 0.5)
+      .slice(0, LOTTO_NUMBER_SIZE);
   }
 
   get id() {
@@ -92,14 +122,12 @@ class LottoTicket {
   get ticketNumbers() {
     return this.#ticketNumbers;
   }
-}
 
-class LottoWinningNumbers {
-  #winningNumbers;
-  #bonusNumber;
+  get lottoPrize() {
+    return this.#lottoPrize;
+  }
 
-  constructor() {
-    this.#winningNumbers = Array(LOTTO_NUMBER_SIZE).fill('');
-    this.#bonusNumber = '';
+  get lottoRank() {
+    return this.#lottoRank;
   }
 }

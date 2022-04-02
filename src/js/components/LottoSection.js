@@ -6,8 +6,7 @@ import {
 } from '../constants/selectTarget.js';
 import { $ } from '../util/dom.js';
 
-const LottoSection = ($parent, { onSwitch }) => {
-
+const LottoSection = ($parent, { toggleDisplay }) => {
   const template = `<section class="mt-9 ${LOTTO_SECTION}" hidden>
               <div class="d-flex">
               <label class="flex-auto my-0 ${LOTTO_SECTION__LABEL}"></label>
@@ -24,7 +23,7 @@ const LottoSection = ($parent, { onSwitch }) => {
   const $el = document.createElement('div');
   $el.innerHTML = template;
   $parent.replaceWith($el);
-  $(LOTTO_NUMBERS_TOGGLE__LABEL, $el).addEventListener('change', onSwitch);
+  $(LOTTO_NUMBERS_TOGGLE__LABEL, $el).addEventListener('change', toggleDisplay);
 };
 
 export default LottoSection;

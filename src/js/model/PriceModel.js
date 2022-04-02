@@ -4,17 +4,20 @@ import { PRICE_FORM__INPUT } from '../constants/selectTarget.js';
 import { $ } from '../util/dom.js';
 
 export default class PriceModel {
-  #price;
-
-  constructor() {
-    this.initPrice();
-  }
+  #totalPurchasePrice;
 
   initPrice() {
-    this.#price = '';
+    this.#totalPurchasePrice = '';
+    $(PRICE_FORM__INPUT).value = '';
   }
 
-  static validators = {
+  updatePrice(newPrice) {
+    PriceModel.#validators.isValidPrice(newPrice);
+    this.#totalPurchasePrice = newPrice;
+    $(PRICE_FORM__INPUT).value = '';
+  }
+
+  static #validators = {
     isValidPrice: (price) => {
       if (price === 0) throw new Error(ERR_MESSAGE.NONE_PRICE);
       if (price < LOTTO_PURCHASE_UNIT) throw new Error(ERR_MESSAGE.LESS_THAN_ENOUGH);
@@ -23,12 +26,7 @@ export default class PriceModel {
     },
   };
 
-  updatePrice(newPrice) {
-    this.#price = newPrice;
-    $(PRICE_FORM__INPUT).value = '';
-  }
-
-  getPrice() {
-    return this.#price;
+  get totalPurchasePrice() {
+    return Number(this.#totalPurchasePrice);
   }
 }

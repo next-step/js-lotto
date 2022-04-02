@@ -13,3 +13,14 @@ export const LOTTO_NUMBERS_TOGGLE__LABEL = 'lotto-numbers-toggle__label';
 
 // lotto form
 export const LOTTO_FORM = 'lotto-form';
+export const LOTTO_FORM__WINNING_NUMBER = 'lotto-form__winning-number';
+export const LOTTO_FORM__BONUS_NUMBER = 'bonus-number';
+export const LOTTO_FORM__BUTTON = 'lotto-form__button';
+
+// lotto result modal
+export const LOTTO_MODAL = 'lotto-modal';
+export const LOTTO_MODAL__CLOSE = 'lotto-modal__close';
+export const LOTTO_MODAL_TBODY = 'lotto-modal_tbody';
+export const LOTTO_MODAL_BENEFIT_RATE = 'lotto-modal-benefit-rate';
+export const LOTTO_MODAL_WINNING_RESULT = 'lotto-modal-winning-result';
+export const LOTTO_MODAL__RESTART = 'lotto-modal__reStart';

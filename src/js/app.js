@@ -8,7 +8,7 @@ import ResultModal from './components/ResultModal.js';
 import State from './model/State.js';
 
 //classNames
-import { PRICE_FORM, LOTTO_SECTION } from './constants/selectTarget.js';
+import { PRICE_FORM, LOTTO_SECTION, LOTTO_FORM, LOTTO_MODAL } from './constants/selectTarget.js';
 
 import { $ } from './util/dom.js';
 
@@ -24,15 +24,22 @@ function App($target) {
             <h1 class="text-center">🎱 행운의 로또</h1>
                 <template class="${PRICE_FORM}"></template>
                 <template class="mt-9 ${LOTTO_SECTION}"></template>
-              ${LottoForm()}
+                <template class="mt-9 ${LOTTO_FORM}"></template>
           </div>
         </div>
       </div>
-    ${ResultModal()}
+    <template class="${LOTTO_MODAL}"></template>
     `.trim();
 
-  PriceForm($(PRICE_FORM, $app), { onSubmit: state.eventHandler.purchaseLotto });
-  LottoSection($(LOTTO_SECTION, $app), { onSwitch: state.eventHandler.toggleDisplayLottoNumbers });
+  PriceForm($(PRICE_FORM, $app), { purchaseLotto: state.purchaseLotto });
+  LottoSection($(LOTTO_SECTION, $app), { toggleDisplay: state.toggleDisplayLottoNumbers });
+  LottoForm($(LOTTO_FORM, $app), {
+    displayResult: state.calculateAndDisplayWinningResult,
+  });
+  ResultModal($(LOTTO_MODAL, $app), {
+    closeModal: state.closeWinningResultModal,
+    reStart: state.initLotto,
+  });
 
   $target.replaceWith($app);
 }

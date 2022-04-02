@@ -46,3 +46,19 @@ Cypress.Commands.add('testToggle', (testExpectedStatus) => {
   });
 });
 
+Cypress.Commands.add('typeWinningNumbers', (numbers) => {
+  cy.get('.lotto-section__ticket__numbers').each(($span) => {
+    testExpectedStatus($span);
+  });
+});
+
+Cypress.Commands.add('typeWinningNumbers', ([randomArray, bonusNumber]) => {
+  cy.get('.winning-number').each(($input, i) => {
+    cy.wrap($input).type(randomArray[i]);
+  });
+  cy.get('.bonus-number').type(bonusNumber);
+});
+
+Cypress.Commands.add('openWinningResult', () => {
+  cy.get('open-result-modal-button').click();
+});
