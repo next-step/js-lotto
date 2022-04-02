@@ -7,18 +7,27 @@ import { LottoTicketsForm } from "./LottoTicketsForm.js";
 import { WinningLottoForm } from "./WinningLottoForm.js";
 import { LottoNumber } from "../domain/LottoNumber.js";
 import { LottoPurchase } from "../domain/LottoPurchase.js";
+import { LottoTickets } from "../domain/LottoTickets.js";
 
 export default class Lotto {
     lottoTicketsForm;
     lottoModal;
     matchingLotto;
     winningLotto;
+    lottoPurchase;
     winningLottoForm;
     $lottoPurchaseArea;
     $lottoAmountArea;
     $lottoTicketArea;
     $winningLottoArea;
     $resultModalArea;
+
+    price;
+
+    buyLottos = (price) => {
+        this.price = price;
+        this.lottos = LottoShop.buy(price);
+    };
 
     constructor() {
         this.$element = document.querySelector("#lotto-area");
@@ -28,11 +37,12 @@ export default class Lotto {
         this.$winningLottoArea = document.querySelector("#lotto-winning-area");
         this.$resultModalArea = document.querySelector("#result_modal_area");
 
-        new LottoNumber();
-        new LottoPurchase();
-        new LottoPurchaseForm(this.$lottoPurchaseArea, {
+        //new LottoNumber();
+        this.lottoPurchase = new LottoPurchase();
+        new LottoPurchaseForm(this.$lottoPurchaseArea, new LottoPurchase(), {
+            //buyLottos: (price) => this.buyLottos(price),
             onLottoPurchase: () => {
-                LottoShop.buy(LottoPurchase.purchasePrice);
+                LottoTickets.tickets = LottoShop.buy(this.lottoPurchase.purchasePrice);
                 //this.lottoTicketsForm.pickTickets();
                 this.lottoTicketsForm.render();
                 this.lottoTicketsForm.mounted();
@@ -44,7 +54,7 @@ export default class Lotto {
             },
         });
         this.matchingLotto = new LottoReward();
-       // this.winningLotto = new WinningNumbers();
+        // this.winningLotto = new WinningNumbers();
         this.lottoTicketsForm = new LottoTicketsForm(this.$lottoAmountArea, this.$lottoTicketArea);
         this.winningLottoForm = new WinningLottoForm(this.$winningLottoArea, this.winningLotto, {
             onWinngingCheck: () => {

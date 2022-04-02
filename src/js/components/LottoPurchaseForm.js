@@ -3,17 +3,18 @@ import { LottoPurchase } from "../domain/LottoPurchase.js";
 const ENTER = "Enter";
 
 export class LottoPurchaseForm {
-    lottoPurchase;
+    static lottoPurchase;
     onLottoPurchase;
 
     $element;
     $purchasePriceInput;
     $purchaseButton;
 
-    constructor($element, props) {
+    constructor($element, lottoPurchase, props) {
         this.$element = $element;
         this.onLottoPurchase = props.onLottoPurchase;
-        this.lottoPurchase = new LottoPurchase();
+        this.lottoPurchase = lottoPurchase;
+        //this.buyLottos = props.buyLottos;
 
         this.#render();
         this.#mounted();
@@ -21,7 +22,6 @@ export class LottoPurchaseForm {
     }
 
     #render() {
-        console.log(123);
         this.$element.innerHTML = this.#getTemplate();
     }
 
@@ -72,6 +72,8 @@ export class LottoPurchaseForm {
         this.lottoPurchase.purchasePrice = purchasePriceInput;
         this.lottoPurchase.purchase(purchasePriceInput);
         console.log(this.lottoPurchase.amount);
+        //this.buyLottos(purchasePriceInput);
+
         if (this.lottoPurchase.amount > 0) {
             this.onLottoPurchase();
         }

@@ -1,23 +1,24 @@
+import Lotto from "../components/lotto.js";
 import { MESSAGE } from "../constant/index.js";
-import { LottoMachine } from "./LottoMachine.js";
+import { LottoShop } from "./LottoShop.js";
 
 const LOTTO_UNIT = 1000;
 const MIN_PURCHASE_PRICE = 1000;
 const MAX_PURCHASE_PRICE = 100000;
 
 export class LottoPurchase {
-    lottoMachine = null;
     static purchasePrice = 0;
     static amount;
 
     constructor() {}
 
     purchase(purchasePrice) {
+        console.log(purchasePrice);
         const resultValue = this.getPurchasePriceState(purchasePrice);
-    
+
         if (resultValue.isComplete) {
             this.purchasePrice = purchasePrice;
-            this.amount = purchasePrice / LOTTO_UNIT;
+            this.amount = purchasePrice / LottoShop.LOTTO_UNIT;
 
             return;
         }

@@ -5,7 +5,8 @@ export class LottoShop {
     static LOTTO_UNIT = 1_000;
 
     static buy(price) {
+        console.log(price);
         const count = Math.floor(price / LottoShop.LOTTO_UNIT);
-        LottoTickets.tickets =  Array.from({length: count}).map(LottoMachine.autoPick);
+        return new LottoTickets(Array.from({ length: count }).map(LottoMachine.autoPick));
     }
 }

@@ -58,7 +58,12 @@ export class WinningLottoForm {
                 <div>
                     <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
                     <div>
-                        ${Array.from({length: LottoNumber.LOTTO_LENGTH}).map(`<input type="number" class="winning-number mx-1 text-center"/>`).join("")}
+                        ${Array.from({ length: LottoNumber.LOTTO_LENGTH })
+                            .map(
+                                () =>
+                                    `<input type="number" class="winning-number mx-1 text-center"/>`
+                            )
+                            .join("")}
                     </div>
                 </div>
                 <div class="bonus-number-container flex-grow">

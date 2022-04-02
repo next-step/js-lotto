@@ -19,7 +19,6 @@ export class LottoTicketsForm {
     }
 
     render() {
-        console.log("LottoTicketsForm");
         this.$amountArea.innerHTML = this.#getLottoAmountTemplate();
         this.$ticketArea.innerHTML = this.#getLottoTicketsTemplate();
     }
@@ -31,10 +30,6 @@ export class LottoTicketsForm {
 
     setEvent() {
         this.$switch.addEventListener("click", (event) => this.#onSwitchClick(event));
-    }
-
-    pickTickets() {
-        LottoShop.buy(LottoPurchase.purchasePrice);
     }
 
     #onSwitchClick(event) {
@@ -51,7 +46,7 @@ export class LottoTicketsForm {
     #getLottoAmountTemplate() {
         return `    
         <label class="flex-auto my-0">총 <span data-test="lotto-amount">${
-            LottoTickets.tickets.length
+            LottoTickets.length
         }</span>개를 구매하였습니다.</label>
         <div class="flex-auto d-flex justify-end pr-1">
             <label class="switch" data-test="switch">
@@ -65,7 +60,7 @@ export class LottoTicketsForm {
     }
 
     #getLottoTicketsTemplate() {
-        return LottoTickets.tickets
+        return LottoTickets.values
             .map(
                 (ticket) =>
                     `<li class="mx-1 text-4xl lotto-wrapper d-block p-0 lotto-ticket" data-test="lotto-ticket">
