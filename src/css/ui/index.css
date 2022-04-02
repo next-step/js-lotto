@@ -11,6 +11,7 @@
   display: block;
 }
 
-.hidden_number  {}
-
-.show_number {}
+.show-modal {
+  opacity: 1;
+  visibility: visible;
+}

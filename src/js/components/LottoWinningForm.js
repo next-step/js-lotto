@@ -2,24 +2,39 @@ import Component from '../core/Component.js';
 
 class LottoWinningForm extends Component {
   template() {
+    const { inputNumber } = this.$props;
     return `
       <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
       <div class="d-flex">
         <div>
           <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
           <div id="winning-input">
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" maxNumber="45" min="1" />
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" />
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" />
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" />
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" />
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" />
+            <input type="number" class="winning-number mx-1 text-center" name="winning-number" maxNumber="45" min="1" value="${
+              inputNumber.winningNumber[0] ?? ''
+            }"/>
+            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
+              inputNumber.winningNumber[1] ?? ''
+            }"/>
+            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
+              inputNumber.winningNumber[2] ?? ''
+            }"/>
+            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
+              inputNumber.winningNumber[3] ?? ''
+            }"/>
+            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
+              inputNumber.winningNumber[4] ?? ''
+            }"/>
+            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
+              inputNumber.winningNumber[5] ?? ''
+            }"/>
           </div>
         </div>
         <div class="bonus-number-container flex-grow">
           <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
           <div class="d-flex justify-center">
-            <input type="number" class="bonus-number text-center" name="winning-number" max="45" min="1" />
+            <input type="number" class="bonus-number text-center" name="winning-number" max="45" min="1" value="${
+              inputNumber.bonusNumber ?? ''
+            }"/>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { NUMBER } from '../constants/index.js';
+import { NUMBER, PRIZE_MONEY } from '../constants/index.js';
 
 export const getCount = (price) => price / NUMBER.MIN_PRICE;
 
@@ -21,9 +21,41 @@ export const getWinningNumber = ($inputNumberNodes) => {
       if (!value) return prev;
 
       return index === NUMBER.LOTTO_LENGTH
-        ? { winningNumber: prev.winningNumber, bonusNumber: value }
-        : { winningNumber: [...prev.winningNumber, value], bonusNumber: null };
+        ? { winningNumber: prev.winningNumber, bonusNumber: Number(value) }
+        : { winningNumber: [...prev.winningNumber, Number(value)], bonusNumber: null };
     },
     { winningNumber: [], bonusNumber: null }
   );
+};
+
+const getWinningCount = (winningNumber, inputWinningNumber) => {
+  return winningNumber.reduce((prev, cur) => {
+    if (inputWinningNumber.includes(cur)) {
+      prev.add(cur);
+    }
+    return prev;
+  }, new Set()).size;
+};
+
+export const getRank = (inputNumber, winningNumber, bonusNumber) => {
+  const winningCount = getWinningCount(winningNumber, inputNumber.winningNumber);
+
+  if (winningCount === 6) {
+    return 1;
+  }
+  if (winningCount === 5 && bonusNumber === inputNumber.bonusNumber) {
+    return 2;
+  }
+
+  return Math.abs(winningCount - NUMBER.LOTTO_LENGTH) + 2;
+};
+
+export const getPriceRate = (price, rank) => {
+  const winningPrice = Object.values(rank).reduce((prev, cur, index) => {
+    if (cur !== 0) {
+      return prev + PRIZE_MONEY[index + 1] * cur;
+    }
+    return prev;
+  }, 0);
+  return (Number(winningPrice) / Number(price)) * 100 - 100;
 };

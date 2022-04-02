@@ -5,5 +5,3 @@ export const isRangeNumberInLotto = (number) => {
 };
 
 export const getSelector = (selector) => document.querySelector(selector);
-
-export const getPriceRate = (price, winningPrice) => (winningPrice / price) * 100 - 100;

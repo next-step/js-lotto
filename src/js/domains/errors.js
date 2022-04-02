@@ -25,8 +25,6 @@ export const validatePrice = (price) => {
 export const validateWinningNumber = (winningNumber, bonusNumber) => {
   const errors = { errorMsg: null };
 
-  console.log('new Set(winningNumber).size', new Set(winningNumber).size);
-  console.log('winningNumber.length', winningNumber.length);
   if (winningNumber.length < NUMBER.LOTTO_LENGTH) {
     errors.errorMsg = ERROR_MESSAGES.EMPTY_NUMBER;
     return errors;
