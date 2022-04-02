@@ -10,7 +10,7 @@ const AppTemplate = () =>
             <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.
             </label>
             <div class="d-flex">
-              <input type="text" class="w-100 mr-2 pl-2" data-props="amount-input" placeholder="구입 금액" />
+              <input type="text" class="w-100 mr-2 pl-2" name="amount-input" data-props="amount-input" placeholder="구입 금액" />
               <button type="submit" data-props="confirm-button" class="open-purchase-modal-button btn btn-cyan">구매</button>
             </div>
           </form>
