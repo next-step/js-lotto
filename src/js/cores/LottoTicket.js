@@ -12,7 +12,8 @@ export class LottoTicket {
       const number = this.randomNumber();
 
       if (this.numbers.has(number)) continue;
-      else this.numbers.set(number, true);
+      
+      this.numbers.set(number, true);
     }
   }
 
