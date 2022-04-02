@@ -1,9 +1,8 @@
-import { MESSAGE } from "../constant/index.js";
+import { LottoNumber } from "../domain/LottoNumber.js";
 
 export class WinningLottoForm {
     props;
     winningNumbers;
-    bonusNumber;
     winningLotto;
 
     constructor($winngingArea, winningLotto, props) {
@@ -26,10 +25,11 @@ export class WinningLottoForm {
     setEvent() {
         this.$resultModalOpenButton.addEventListener("click", (event) => {
             this.winningNumbers = this.#parseWinningNumbers();
-            this.bonusNumber = this.$bonusNumber.value;
+            //this.bonusNumber = this.$bonusNumber.value;
 
             this.winningLotto.winningNumbers = this.winningNumbers;
-            this.winningLotto.bonus = this.bonusNumber;
+            //this.winningLotto.bonus = this.bonusNumber;
+            WinningLotto.bonus = this.$bonusNumber.value;
             this.props.onWinngingCheck();
         });
     }
@@ -46,9 +46,9 @@ export class WinningLottoForm {
             .filter((number) => number !== "");
     }
 
-    getBonusNumber() {
-        return this.bonusNumber;
-    }
+    // getBonusNumber() {
+    //     return this.bonusNumber;
+    // }
 
     getWinningTemplate() {
         return `
@@ -58,12 +58,7 @@ export class WinningLottoForm {
                 <div>
                     <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
                     <div>
-                        <input type="number" class="winning-number mx-1 text-center"/>
-                        <input type="number" class="winning-number mx-1 text-center"/>
-                        <input type="number" class="winning-number mx-1 text-center"/>
-                        <input type="number" class="winning-number mx-1 text-center"/>
-                        <input type="number" class="winning-number mx-1 text-center"/>
-                        <input type="number" class="winning-number mx-1 text-center"/>
+                        ${Array.from({length: LottoNumber.LOTTO_LENGTH}).map(`<input type="number" class="winning-number mx-1 text-center"/>`).join("")}
                     </div>
                 </div>
                 <div class="bonus-number-container flex-grow">

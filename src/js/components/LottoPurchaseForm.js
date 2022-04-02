@@ -13,7 +13,7 @@ export class LottoPurchaseForm {
     constructor($element, props) {
         this.$element = $element;
         this.onLottoPurchase = props.onLottoPurchase;
-        this.lottoPurchase = new LottoPurchase({});
+        this.lottoPurchase = new LottoPurchase();
 
         this.#render();
         this.#mounted();
@@ -21,6 +21,7 @@ export class LottoPurchaseForm {
     }
 
     #render() {
+        console.log(123);
         this.$element.innerHTML = this.#getTemplate();
     }
 
@@ -68,9 +69,11 @@ export class LottoPurchaseForm {
 
     #onPurchase() {
         const purchasePriceInput = this.$purchasePriceInput.value;
+        this.lottoPurchase.purchasePrice = purchasePriceInput;
         this.lottoPurchase.purchase(purchasePriceInput);
+        console.log(this.lottoPurchase.amount);
         if (this.lottoPurchase.amount > 0) {
-            this.onLottoPurchase(this.lottoPurchase.amount);
+            this.onLottoPurchase();
         }
     }
 }

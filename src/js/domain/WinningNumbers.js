@@ -1,17 +1,15 @@
 import { LottoNumber } from "./LottoNumber.js";
 
-const LOTTO_LENGTH = 6;
 const MESSAGE = {
     ERROR: {
         EXIST_WINNING_NUMBER: `중복된 당첨 번호가 있습니다.`,
-        OUT_OF_RANGE: `당첨 번호는 ${LottoNumber.MIN} ~ ${LottoNumber.MAX} 사이로 입력해야합니다.`,
+       // OUT_OF_RANGE: `당첨 번호는 ${LottoNumber.MIN} ~ ${LottoNumber.MAX} 사이로 입력해야합니다.`,
     },
 };
 
-export class WinningLotto {
-    lottos;
-    bonus;
-    winningNumbers;
+export class WinningNumbers {
+    static bonus;
+    static winningNumbers;
 
     constructor(lottos, bonus) {
         this.lottos = lottos;
@@ -22,7 +20,7 @@ export class WinningLotto {
         let winningNumber = {};
         let resultValue = { isComplete: true, message: "" };
 
-        if (this.winningNumbers.length < LOTTO_LENGTH) {
+        if (this.winningNumbers.length < WinningNumbers.LOTTO_LENGTH) {
             resultValue = {
                 isComplete: false,
                 message: "입력하지 않은 당첨 번호가 있습니다.",

@@ -7,14 +7,16 @@ const MAX_PURCHASE_PRICE = 100000;
 
 export class LottoPurchase {
     lottoMachine = null;
-    amount;
+    static purchasePrice = 0;
+    static amount;
 
     constructor() {}
 
     purchase(purchasePrice) {
-        const resultValue = this.#getPurchasePriceState(purchasePrice);
-
+        const resultValue = this.getPurchasePriceState(purchasePrice);
+    
         if (resultValue.isComplete) {
+            this.purchasePrice = purchasePrice;
             this.amount = purchasePrice / LOTTO_UNIT;
 
             return;
@@ -23,7 +25,7 @@ export class LottoPurchase {
         alert(resultValue.message);
     }
 
-    #getPurchasePriceState(price) {
+    getPurchasePriceState(price) {
         let resultValue = { isComplete: true, message: "" };
 
         if (price < MIN_PURCHASE_PRICE) {

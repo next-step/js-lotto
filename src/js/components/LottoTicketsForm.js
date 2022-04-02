@@ -1,8 +1,10 @@
 import { LottoMachine } from "../domain/LottoMachine.js";
+import { LottoPurchase } from "../domain/LottoPurchase.js";
+import { LottoShop } from "../domain/LottoShop.js";
+import { LottoTickets } from "../domain/LottoTickets.js";
 
 export class LottoTicketsForm {
     isChecked;
-    amount;
     tickets;
 
     $switch;
@@ -17,6 +19,7 @@ export class LottoTicketsForm {
     }
 
     render() {
+        console.log("LottoTicketsForm");
         this.$amountArea.innerHTML = this.#getLottoAmountTemplate();
         this.$ticketArea.innerHTML = this.#getLottoTicketsTemplate();
     }
@@ -31,7 +34,7 @@ export class LottoTicketsForm {
     }
 
     pickTickets() {
-        this.tickets = LottoMachine.createAutoLotto(this.amount);
+        LottoShop.buy(LottoPurchase.purchasePrice);
     }
 
     #onSwitchClick(event) {
@@ -48,7 +51,7 @@ export class LottoTicketsForm {
     #getLottoAmountTemplate() {
         return `    
         <label class="flex-auto my-0">총 <span data-test="lotto-amount">${
-            this.amount
+            LottoTickets.tickets.length
         }</span>개를 구매하였습니다.</label>
         <div class="flex-auto d-flex justify-end pr-1">
             <label class="switch" data-test="switch">
@@ -62,16 +65,16 @@ export class LottoTicketsForm {
     }
 
     #getLottoTicketsTemplate() {
-        return this.tickets
+        return LottoTickets.tickets
             .map(
                 (ticket) =>
                     `<li class="mx-1 text-4xl lotto-wrapper d-block p-0 lotto-ticket" data-test="lotto-ticket">
-                <span class="lotto-icon">🎟️ </span>
-                <span class="lotto-detail text-xl 
-                ${this.isChecked ? "" : "d-none"}" data-test="lotto-detail">
-                ${ticket.join(", ")}
-                </span>
-            </li>`
+                        <span class="lotto-icon">🎟️ </span>
+                        <span class="lotto-detail text-xl 
+                        ${this.isChecked ? "" : "d-none"}" data-test="lotto-detail">
+                        ${ticket.join(", ")}
+                        </span>
+                    </li>`
             )
             .join("");
     }

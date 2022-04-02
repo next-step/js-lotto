@@ -1,3 +1,6 @@
+import { LottoTickets } from "./LottoTickets.js";
+import { WinningNumbers } from "./WinningNumbers.js";
+
 const WINNINGS = {
     0: 0,
     1: 0,
@@ -10,7 +13,7 @@ const WINNINGS = {
 };
 const LOTTO_UNIT = 1000;
 
-export class MatchingLotto {
+export class LottoReward {
     tickets;
     winningNumbers;
     bonusNumber;
@@ -35,10 +38,10 @@ export class MatchingLotto {
     }
 
     computeWinning() {
-        this.tickets
-            .map((ticket) => ticket.filter((v) => this.winningNumbers.includes(v.toString())))
+        LottoTickets.tickets
+            .map((ticket) => ticket.filter((v) => WinningNumbers.winningNumbers.includes(v.toString())))
             .map((r, i) =>
-                r.length === 5 && this.tickets[i].includes(+this.bonusNumber)
+                r.length === 5 && LottoTickets.tickets[i].includes(+WinningNumbers.bonusNumber)
                     ? this.rating[r.length + "+"]++
                     : this.rating[r.length]++
             );
@@ -51,6 +54,6 @@ export class MatchingLotto {
             total += value * WINNINGS[key];
         }
 
-        this.rate = (total / (this.tickets.length * LOTTO_UNIT)) * 100;
+        this.rate = (total / (LottoTickets.tickets.length * LOTTO_UNIT)) * 100;
     }
 }
