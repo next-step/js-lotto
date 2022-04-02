@@ -10,6 +10,10 @@ export const MAX_LOTTO_NUMBER = 45;
 
 export const ACCEPT_BONUS_NUMBER = 5;
 
+export const MODAL_SELECTOR = '.modal';
+
+export const MODAL_CONTROL_CLASS = 'open';
+
 export const ERROR_MESSAGE = {
   REQUIRED_DIGIT: '숫자를 입력해주세요.',
   MUST_MORE_THAN: `값은 ${AMOUNT_UNIT} 이상이어야 합니다.`,
