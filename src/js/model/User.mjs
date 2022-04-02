@@ -10,6 +10,11 @@ export default class User {
     this.#purchaseHistory = [];
   }
 
+  reset() {
+    this.#wallet = 0;
+    this.#purchaseHistory = [];
+  }
+
   buyLotto() {
     const count = calculateLotto(this.#wallet);
 
@@ -30,5 +35,9 @@ export default class User {
 
   get wallet() {
     return this.#wallet;
+  }
+
+  get haveLotto() {
+    return this.#purchaseHistory.length > 0;
   }
 }

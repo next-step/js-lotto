@@ -12,6 +12,11 @@ export default class LottoHistory {
         this.#addEventListener();
     }
 
+    reset() {
+        this.render([]);
+        this.#elHistoryDetail.classList.add('history__detail--simplified')
+    }
+
     #addEventListener() {
         this.#elHistoryDetailToggle.addEventListener('click', this.#handleHistoryDetailClick)
     }
