@@ -1,9 +1,11 @@
-import { purchaseLotto } from './app.js';
+import { $ } from './utils/selector.js';
+import { clickLottoNumbersToggle, purchaseLotto } from './controller/purchaseController.js';
 
-const $showResultButton = document.querySelector('.open-result-modal-button');
-const $modalClose = document.querySelector('.modal-close');
-const $modal = document.querySelector('.modal');
-const $purchaseForm = document.querySelector('.input-purchase-form');
+const $showResultButton = $('.open-result-modal-button');
+const $modalClose = $('.modal-close');
+const $modal = $('.modal');
+const $purchaseForm = $('.input-purchase-form');
+const $lottoToggle = $('#lotto-numbers-toggle');
 
 const onModalShow = () => {
   $modal.classList.add('open');
@@ -13,6 +15,8 @@ const onModalClose = () => {
   $modal.classList.remove('open');
 };
 
-$purchaseForm.addEventListener('submit', purchaseLotto);
 $showResultButton.addEventListener('click', onModalShow);
 $modalClose.addEventListener('click', onModalClose);
+
+$purchaseForm.addEventListener('submit', purchaseLotto);
+$lottoToggle.addEventListener('click', clickLottoNumbersToggle);
