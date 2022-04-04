@@ -1,11 +1,11 @@
 import { $elements } from '../../helper/index.js';
 
 const LottoListTemplate = ({ numbers }) => {
-  return $elements(`
+  return $elements(/*html*/ `
   ${
     numbers.length === 0
       ? ''
-      : `
+      : /*html*/ `
     <section class="mt-9" data-props="lotto-wrapper-section">
       <div class="d-flex">
         <label class="flex-auto my-0">총 <span data-props="count-span">${

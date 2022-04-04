@@ -1,7 +1,7 @@
-import { $elements } from '../../helper/index.js';
+import { $elements } from '../../../helper/index.js';
 
-const LottoResultModalTemplate = ({ winningResult, profitRate }) => {
-  return $elements(`
+const LottoResultTemplate = ({ winningResult, profitRate }) => {
+  return $elements(/*html*/ `
   <div class="modal-inner p-10">
     <div class="modal-close" data-props="modal-close-button">
       <svg viewbox="0 0 40 40">
@@ -56,4 +56,4 @@ const LottoResultModalTemplate = ({ winningResult, profitRate }) => {
   `);
 };
 
-export default LottoResultModalTemplate;
+export default LottoResultTemplate;

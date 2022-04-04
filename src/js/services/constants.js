@@ -10,6 +10,10 @@ export const MAX_LOTTO_NUMBER = 45;
 
 export const ACCEPT_BONUS_NUMBER = 5;
 
+export const MODAL_SELECTOR = '.modal';
+
+export const MODAL_CONTROL_CLASS = 'open';
+
 export const ERROR_MESSAGE = {
   REQUIRED_DIGIT: '숫자를 입력해주세요.',
   MUST_MORE_THAN: `값은 ${AMOUNT_UNIT} 이상이어야 합니다.`,
@@ -20,4 +24,5 @@ export const ERROR_MESSAGE = {
   MUST_MORE_THAN_ONE: `당첨 번호는 0보다 크거나 같아야 합니다.`,
   MUST_LESS_THAN: `당첨 번호는 ${MAX_LOTTO_NUMBER}보다 낮아야 합니다.`,
   MUST_NOT_DUPLICATE: `당첨 번호는 중복 입력할 수 없어요.`,
+  IMPOSSIBLE_COUNT: '입력 가능한 구매 수를 확인해주세요.',
 };

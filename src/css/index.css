@@ -56,3 +56,59 @@ body {
 svg {
   pointer-events: none;
 }
+
+.asterisk {
+  color: red;
+  font-size: small;
+}
+
+[data-props="purchase-count-input"], [data-props="purchase-count-button"] {
+  height: 30px;
+  box-sizing: border-box;
+}
+
+[data-props="purchase-count-button"] {
+  padding: 1px 2px;
+}
+
+.purchase-number {
+  width: 30px;
+  height: 36px;
+}
+
+input[type="number"].purchase-number {
+  background-color: #c2f8ff;
+  border-color: #c2f8ff;
+}
+
+input[type="number"].purchase-number.bonus-number {
+  background-color: #00e1ff;
+}
+
+.scroll-area {
+  overflow-y: auto;
+  min-height: 200px;
+  max-height: 300px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 8px;
+  background-color: rgb(171, 224, 245);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}

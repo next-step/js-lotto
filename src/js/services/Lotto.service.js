@@ -11,6 +11,7 @@ import { isEmpty } from '../helper/index.js';
 
 class LottoService {
   amount = 0;
+  count = 0;
   #lottos = [];
   #winningLottoTable = {
     3: 5000,
@@ -28,20 +29,33 @@ class LottoService {
     return Array.from(numbers);
   };
 
-  generatedLotto(number) {
-    const result = Array.from({ length: number }).map(() => this.getLottoNumbers());
+  generatedLotto(alreadyBoughtLotto) {
+    const length = this.count - alreadyBoughtLotto.length;
+    const result = [
+      ...alreadyBoughtLotto,
+      ...Array.from({ length }).map(() => this.getLottoNumbers()),
+    ];
     this.#lottos = result;
     return result;
   }
 
-  validCount(amount) {
+  validAmount(amount) {
     const count = Number(amount / AMOUNT_UNIT);
     if (isEmpty(amount) || isNaN(count)) throw new Error(ERROR_MESSAGE.REQUIRED_DIGIT);
     if (amount < AMOUNT_UNIT) throw new Error(ERROR_MESSAGE.MUST_MORE_THAN);
     if (!Number.isInteger(count)) throw new Error(ERROR_MESSAGE.MUST_REQUIRED_AMOUNT_UNIT);
 
     this.amount = amount;
+    this.count = count;
     return count;
+  }
+
+  isValidCount(count) {
+    if (isEmpty(count) || isNaN(count)) throw new Error(ERROR_MESSAGE.REQUIRED_DIGIT);
+    if (0 > count || count > this.count) throw new Error(ERROR_MESSAGE.IMPOSSIBLE_COUNT);
+    if (!Number.isInteger(count)) throw new Error(ERROR_MESSAGE.MUST_REQUIRED_AMOUNT_UNIT);
+
+    return true;
   }
 
   isValidPurchasesNumbers = value => {
@@ -114,6 +128,7 @@ class LottoService {
 
   initLottos() {
     this.amount = 0;
+    this.count = 0;
     this.#lottos = [];
   }
 }
