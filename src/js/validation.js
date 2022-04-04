@@ -80,8 +80,8 @@ const validation = {
   },
 
   lottoNumberOverlap: () => {
-    let lottoNumber = [];
     for (let lottoInput of $$('.winning-number')) {
+    const lottoNumber = [];
     resetInputErrorStyle(winningNumberElement);
       const lottoNumberValue = lottoInput.value;
       if (lottoNumber.indexOf(lottoNumberValue) > -1) {
