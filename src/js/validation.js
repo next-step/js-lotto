@@ -17,10 +17,8 @@ const showErrorInput = (element) => {
   element.classList.add('error-input');
 };
 
-const resetErrorInput = () => {
-  for (let lottoInput of $$('.winning-number')) {
-    lottoInput.classList.remove('error-input');
-  }
+const resetInputErrorStyle = (selector) => {
+  selector.forEach((input) => input.classList.remove('error-input'));
 };
 
 const validation = {
@@ -46,8 +44,8 @@ const validation = {
     return false;
   },
   emptyLottoNumber: () => {
-    resetErrorInput();
     for (let lottoInput of $$('.winning-number')) {
+    resetInputErrorStyle(winningNumberElement);
       if (lottoInput.value.length === 0) {
         showErrorInput(lottoInput);
         alert(INVALID_LOTTO_NUMBER);
@@ -58,8 +56,8 @@ const validation = {
   },
 
   lottoNumberUnderMinimum: () => {
-    resetErrorInput();
     for (let lottoInput of $$('.winning-number')) {
+    resetInputErrorStyle(winningNumberElement);
       if (lottoInput.value < LOTTO_NUMBER_MINIMUM) {
         showErrorInput(lottoInput);
         alert(INVALID_MINIMUM_LOTTO_NUMBER);
@@ -70,8 +68,8 @@ const validation = {
   },
 
   lottoNumberOverMaximum: () => {
-    resetErrorInput();
     for (let lottoInput of $$('.winning-number')) {
+    resetInputErrorStyle(winningNumberElement);
       if (LOTTO_NUMBER_MAXIMUM < lottoInput.value) {
         showErrorInput(lottoInput);
         alert(INVALID_MAXIMUM_LOTTO_NUMBER);
@@ -83,8 +81,8 @@ const validation = {
 
   lottoNumberOverlap: () => {
     let lottoNumber = [];
-    resetErrorInput();
     for (let lottoInput of $$('.winning-number')) {
+    resetInputErrorStyle(winningNumberElement);
       const lottoNumberValue = lottoInput.value;
       if (lottoNumber.indexOf(lottoNumberValue) > -1) {
         showErrorInput(lottoInput);
