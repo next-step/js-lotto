@@ -23,21 +23,20 @@ body {
   height: 36px;
 }
 
-.result-container{
+.result-container {
   display: none;
 }
 
-#lotto-container { 
+#lotto-container {
   list-style: none;
   padding: 0;
-  display: flex;
 }
 
 .lotto-content {
-  display: flex; 
+  display: flex;
   align-items: center;
 }
 
-.lotto-numbers {
+.lotto-list li > .lotto-numbers {
   display: none;
 }
