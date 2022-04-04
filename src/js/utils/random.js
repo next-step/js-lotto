@@ -1,17 +1,5 @@
-import { LOTTO_LENGTH, MAX_LOTTO } from '../constants/lotto.js';
+import { MAX_LOTTO } from '../constants/lotto.js';
 
-export const createRandomNumbers = () => {
-  const lotto = new Set();
-
-  while (lotto.size !== LOTTO_LENGTH) {
-    let num = Math.floor(Math.random() * MAX_LOTTO) + 1;
-    lotto.add(num);
-  }
-  return lotto;
-};
-
-export const createLottos = (count) => {
-  const lottos = new Array(count).fill('_');
-
-  return lottos.map((elem) => (elem = [...createRandomNumbers()]));
+export const createRandomNumber = () => {
+  return Math.floor(Math.random() * MAX_LOTTO) + 1;
 };
