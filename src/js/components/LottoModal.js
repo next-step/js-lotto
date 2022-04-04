@@ -1,9 +1,9 @@
 import Component from '../core/Component.js';
-import { getSelector } from '../utils/index.js';
+import { $ } from '../utils/index.js';
 
 class LottoModal extends Component {
   template() {
-    const { rank, rateToReturn } = this.$props;
+    const { rankBoard, rateToReturn } = this.$props;
     return `
       <div class="modal-inner p-10">
         <div class="modal-close">
@@ -26,27 +26,27 @@ class LottoModal extends Component {
               <tr class="text-center">
                 <td class="p-3">3개</td>
                 <td class="p-3">5,000</td>
-                <td class="p-3">${rank[5]}개</td>
+                <td class="p-3">${rankBoard[5]}개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">4개</td>
                 <td class="p-3">50,000</td>
-                <td class="p-3">${rank[4]}개</td>
+                <td class="p-3">${rankBoard[4]}개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">5개</td>
                 <td class="p-3">1,500,000</td>
-                <td class="p-3">${rank[3]}개</td>
+                <td class="p-3">${rankBoard[3]}개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">5개 + 보너스볼</td>
                 <td class="p-3">30,000,000</td>
-                <td class="p-3">${rank[2]}개</td>
+                <td class="p-3">${rankBoard[2]}개</td>
               </tr>
               <tr class="text-center">
                 <td class="p-3">6개</td>
                 <td class="p-3">2,000,000,000</td>
-                <td class="p-3">${rank[1]}개</td>
+                <td class="p-3">${rankBoard[1]}개</td>
               </tr>
             </tbody>
           </table>
@@ -66,7 +66,7 @@ class LottoModal extends Component {
   }
 
   closeModal() {
-    getSelector('.modal').classList.toggle('show-modal');
+    $('.modal').classList.toggle('show-modal');
   }
 }
 

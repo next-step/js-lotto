@@ -22,10 +22,10 @@ export const validatePrice = (price) => {
   return errors;
 };
 
-export const validateWinningNumber = (winningNumber, bonusNumber) => {
+export const validateWinningNumber = ({ number, bonusNumber }) => {
   const errors = { errorMsg: null };
 
-  if (winningNumber.length < NUMBER.LOTTO_LENGTH) {
+  if (number.length < NUMBER.LOTTO_LENGTH) {
     errors.errorMsg = ERROR_MESSAGES.EMPTY_NUMBER;
     return errors;
   }
@@ -35,7 +35,7 @@ export const validateWinningNumber = (winningNumber, bonusNumber) => {
     return errors;
   }
 
-  if (new Set([...winningNumber, bonusNumber]).size < NUMBER.LOTTO_LENGTH + 1) {
+  if (new Set([...number, bonusNumber]).size < NUMBER.LOTTO_LENGTH + 1) {
     errors.errorMsg = ERROR_MESSAGES.DUPLICATED_NUMBER;
     return errors;
   }

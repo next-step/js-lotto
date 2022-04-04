@@ -4,4 +4,4 @@ export const isRangeNumberInLotto = (number) => {
   return regex.test(number);
 };
 
-export const getSelector = (selector) => document.querySelector(selector);
+export const $ = (selector) => document.querySelector(selector);

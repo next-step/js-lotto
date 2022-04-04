@@ -1,22 +1,24 @@
 import LottoPrice from './components/LottoPrice.js';
 import Component from './core/Component.js';
 import { errorPrintAlert, validatePrice, validateWinningNumber } from './domains/errors.js';
-import { createLottoList, getCount, getPriceRate, getRank, getWinningNumber } from './domains/index.js';
-import { getSelector, isRangeNumberInLotto } from './utils/index.js';
+import { createLottoList, getLottoAmount, getPriceRate, getRank, getWinningNumber } from './domains/index.js';
+import { $, isRangeNumberInLotto } from './utils/index.js';
 import LottoWinningForm from './components/LottoWinningForm.js';
 import LottoModal from './components/LottoModal.js';
 
 const initState = {
   price: 0,
-  count: 0,
   lottoList: [],
   isShowLottoList: false,
   inputNumber: {
-    winningNumber: [],
+    number: [],
     bonusNumber: null,
   },
-  winningNumber: [],
-  rank: {
+  winningNumber: {
+    number: [],
+    bonusNumber: null,
+  },
+  rankBoard: {
     1: 0,
     2: 0,
     3: 0,
@@ -30,20 +32,21 @@ class App extends Component {
   setup() {
     this.$state = { ...initState };
   }
+
   template() {
     return `
     <div class="d-flex justify-center mt-5">
       <div class="w-100">
         <h1 class="text-center">🎱 행운의 로또</h1>
         <div id="lotto-price"></div>
-        <form class="mt-9 ${this.$state.count ? 'show' : 'hidden'}" id="form-winning"></form>
+        <form class="mt-9 ${this.$state.lottoList.length > 0 ? 'show' : 'hidden'}" id="form-winning"></form>
       </div>
     </div>
     <div class="modal ${this.$state.isShowModal && 'show-modal'}"></div>
     `;
   }
   mounted() {
-    const { buyLotto, result, changeInput, reStart } = this;
+    const { buyLotto, handleFormWinning, changeInput, reStart } = this;
     const $LottoPrice = this.$target.querySelector('#lotto-price');
     const $formWinning = this.$target.querySelector('#form-winning');
     const $LottoModal = this.$target.querySelector('.modal');
@@ -51,19 +54,18 @@ class App extends Component {
     new LottoPrice($LottoPrice, {
       buyLotto: buyLotto.bind(this),
       lottoList: this.$state.lottoList,
-      count: this.$state.count,
       isShowLottoList: this.$state.isShowLottoList,
     });
     new LottoWinningForm($formWinning, {
-      result: result.bind(this),
+      handleFormWinning: handleFormWinning.bind(this),
       changeInput: changeInput.bind(this),
       count: this.$state.count,
       inputNumber: this.$state.inputNumber,
     });
     new LottoModal($LottoModal, {
       reStart: reStart.bind(this),
-      rank: this.$state.rank,
-      rateToReturn: getPriceRate(this.$state.price, this.$state.rank),
+      rankBoard: this.$state.rankBoard,
+      rateToReturn: getPriceRate(this.$state.price, this.$state.rankBoard),
     });
   }
 
@@ -75,33 +77,37 @@ class App extends Component {
       errorPrintAlert(errorMsg);
       return;
     }
-    const count = getCount(price);
-    const lottoList = createLottoList(count);
-    this.setState({ price, count, lottoList, winningNumber: lottoList[0] });
+    const lottoAmount = getLottoAmount(price);
+    const lottoList = createLottoList(lottoAmount);
+    this.setState({ price, lottoList, winningNumber: { number: lottoList[0], bonus: null } });
   }
 
-  result(e) {
+  handleFormWinning(e) {
     e.preventDefault();
-    const { winningNumber, rank } = this.$state;
+    const { winningNumber, rankBoard } = this.$state;
     const inputNumber = getWinningNumber(e.target['winning-number']);
-    const { errorMsg } = validateWinningNumber(inputNumber.winningNumber, inputNumber.bonusNumber);
+    const { errorMsg } = validateWinningNumber(inputNumber);
+
     if (errorMsg) {
       errorPrintAlert(errorMsg);
       return;
     }
-    const _rank = getRank(inputNumber, winningNumber, inputNumber.bonusNumber);
-    const newRank = { ...rank };
-    newRank[_rank] += 1;
 
-    this.setState({ inputNumber, bonusNumber: inputNumber.bonusNumber, rank: newRank, isShowModal: true });
+    const rank = getRank(inputNumber, winningNumber);
+    const newRankBoard = { ...rankBoard };
+    newRankBoard[rank] += 1;
+
+    this.setState({
+      inputNumber,
+      bonusNumber: inputNumber.bonusNumber,
+      rankBoard: newRankBoard,
+      isShowModal: true,
+    });
   }
 
   changeInput({ target }) {
     const value = target.value;
-    const $winningBonusInput = getSelector('input.bonus-number');
-    if (!isRangeNumberInLotto(Number(value))) {
-      target.value = value.substr(0, value.length - 1);
-    }
+    const $winningBonusInput = $('input.bonus-number');
     if (value.length > 1) {
       target.nextElementSibling ? target.nextElementSibling.focus() : $winningBonusInput.focus();
     }

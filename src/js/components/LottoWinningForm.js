@@ -9,23 +9,23 @@ class LottoWinningForm extends Component {
         <div>
           <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
           <div id="winning-input">
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" maxNumber="45" min="1" value="${
-              inputNumber.winningNumber[0] ?? ''
+            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
+              inputNumber.number[0] ?? ''
             }"/>
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              inputNumber.winningNumber[1] ?? ''
+              inputNumber.number[1] ?? ''
             }"/>
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              inputNumber.winningNumber[2] ?? ''
+              inputNumber.number[2] ?? ''
             }"/>
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              inputNumber.winningNumber[3] ?? ''
+              inputNumber.number[3] ?? ''
             }"/>
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              inputNumber.winningNumber[4] ?? ''
+              inputNumber.number[4] ?? ''
             }"/>
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              inputNumber.winningNumber[5] ?? ''
+              inputNumber.number[5] ?? ''
             }"/>
           </div>
         </div>
@@ -43,9 +43,9 @@ class LottoWinningForm extends Component {
   }
 
   setEvent() {
-    const { result, changeInput } = this.$props;
+    const { handleFormWinning, changeInput } = this.$props;
 
-    this.addEvent('submit', '#form-winning', result);
+    this.addEvent('submit', '#form-winning', handleFormWinning);
     this.addEvent('input', '#winning-input', changeInput);
   }
 }

@@ -1,9 +1,9 @@
 import Component from '../core/Component.js';
-import { getSelector } from '../utils/index.js';
+import { $ } from '../utils/index.js';
 
 class LottoPrice extends Component {
   template() {
-    const { count, lottoList, isShowLottoList } = this.$props;
+    const { lottoList, isShowLottoList } = this.$props;
     return `
       <form class="mt-5" id="form-price">
         <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요. </label>
@@ -12,9 +12,9 @@ class LottoPrice extends Component {
           <button type="submit" class="btn btn-cyan">확인</button>
         </div>
       </form>
-      <section class="mt-9 ${count ? 'show' : 'hidden'}" id="lotto-list">
+      <section class="mt-9 ${lottoList.length ? 'visible' : 'hidden'}" id="lotto-list">
         <div class="d-flex">
-          <label class="flex-auto my-0" data-lotto="count-label">총 ${count}개를 구매하였습니다.</label>
+          <label class="flex-auto my-0" data-lotto="count-label">총 ${lottoList.length}개를 구매하였습니다.</label>
           <div class="flex-auto d-flex justify-end pr-1">
             <label class="switch">
               <input
@@ -31,7 +31,7 @@ class LottoPrice extends Component {
               (lotto) => `
               <li class="lotto-list-item d-flex items-center">
                   <span class="mx-1 text-4xl">🎟️ </span>
-                  <span class="lotto-detail text-xl mx-3 hidden">${lotto.join(', ')}</span>
+                  <span class="lotto-detail text-xl mx-3 none">${lotto.join(', ')}</span>
               </li>
           `
             )
@@ -49,7 +49,7 @@ class LottoPrice extends Component {
   toggleLottoNumbersView() {
     const lottoDetails = document.querySelectorAll('#lotto-list li span.lotto-detail');
 
-    lottoDetails.forEach(($lottoDetail) => $lottoDetail.classList.toggle('hidden'));
+    lottoDetails.forEach(($lottoDetail) => $lottoDetail.classList.toggle('none'));
   }
 }
 
