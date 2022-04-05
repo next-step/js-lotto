@@ -122,20 +122,28 @@ const winingLottoHistoryModalView = (function () {
     return result;
   }
 
-  function createWinningResultPanel(winningResult) {
-    const $panel = document.createDocumentFragment();
-    WINNING_RESULT_CASE.forEach((winningCase) => {
-      const tr = document.createElement('tr');
-      tr.classList.add('text-center');
-      tr.innerHTML = `
-        <td class="p-3">${winningCase.label}</td>
-         <td class="p-3">${new Intl.NumberFormat().format(
-           winningCase.reward
-         )}</td>
-         <td class="p-3">${winningResult[winningCase.key]} 개</td>
+  function winningResultPanelTemplate({ label, reward, winningNumber }) {
+    const $tr = document.createElement('tr');
+    $tr.classList.add('text-center');
+    $tr.innerHTML = `
+        <td class="p-3">${label}</td>
+         <td class="p-3">${new Intl.NumberFormat().format(reward)}</td>
+         <td class="p-3">${winningNumber} 개</td>
     `;
-      $panel.appendChild(tr);
-    });
+    return $tr;
+  }
+
+  function changeWinningResultPanel(winningResult) {
+    const $panel = document.createDocumentFragment();
+    $panel.append(
+      ...WINNING_RESULT_CASE.map((winningCase) =>
+        winningResultPanelTemplate({
+          label: winningCase.label,
+          reward: winningCase.reward,
+          winningNumber: winningResult[winningCase.key],
+        })
+      )
+    );
     $winningResultPanel.replaceChildren($panel);
   }
 
@@ -196,7 +204,7 @@ const winingLottoHistoryModalView = (function () {
       winningNumbers,
       bonusNumber,
     });
-    createWinningResultPanel(winningResult);
+    changeWinningResultPanel(winningResult);
     changeTotalRevenuePercent({ lottoList, winningResult });
   }
 
