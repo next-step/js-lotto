@@ -1,9 +1,9 @@
-export const replaceRender = ({$originEl, replaceHTML, bindEvents = []}) => {
+export const replaceRender = ({$originEl, replaceHTML, executors = []}) => {
 
     const $newEl = $originEl.cloneNode(false);
     $newEl.insertAdjacentHTML('beforeEnd', replaceHTML);
 
-    bindEvents.forEach(func => func($newEl));
+    executors.forEach(func => func($newEl));
 
     $originEl.replaceWith($newEl);
 

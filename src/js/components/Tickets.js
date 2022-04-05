@@ -32,7 +32,7 @@ export const Tickets = ($el, props) => {
             <div data-component="lotto-numbers"><div>
         </section>
     `,
-        bindEvents: [
+    executors: [
             ($el) => $(".switch", $el).addEventListener("change", switchShowNumbers),
         ],
     });
