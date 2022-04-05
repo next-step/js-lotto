@@ -139,9 +139,12 @@ const winingLottoHistoryModalView = (function () {
     $winningResultPanel.replaceChildren($panel);
   }
 
-  function createCalculateRevenue({ lottoList, winningResult }) {
-    const purchasedPrice = lottoList.length * LOTTO_PRICE;
-    const revenue = Object.entries(winningResult).reduce(
+  function totalPurchasedPrice(lottoList) {
+    return lottoList.length * LOTTO_PRICE;
+  }
+
+  function totalRevenueFromWinningResult(winningResult) {
+    return Object.entries(winningResult).reduce(
       (result, [resultCase, value]) => {
         const RESULT_CASE_KEY = Number(resultCase);
         if (RESULT_CASE_KEY === WINNING_FAIL) {
@@ -158,8 +161,12 @@ const winingLottoHistoryModalView = (function () {
       },
       0
     );
+  }
+
+  function changeTotalRevenuePercent({ lottoList, winningResult }) {
     $resultRevenue.innerHTML = `당신의 총 수익률은 ${
-      revenue / purchasedPrice
+      totalRevenueFromWinningResult(winningResult) /
+      totalPurchasedPrice(lottoList)
     }%입니다.`;
   }
 
@@ -190,7 +197,7 @@ const winingLottoHistoryModalView = (function () {
       bonusNumber,
     });
     createWinningResultPanel(winningResult);
-    createCalculateRevenue({ lottoList, winningResult });
+    changeTotalRevenuePercent({ lottoList, winningResult });
   }
 
   return {
