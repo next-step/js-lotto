@@ -75,14 +75,14 @@ const purchasedHistoryView = (function () {
     changeShowLottoNumbersByToggleStatus();
   }
 
-  function initial() {
+  function initialize() {
     wallet.removeAllLottos();
     hidePurchaseHistory();
   }
 
   eventBindings();
 
-  return { initial, changePurchasedHistory };
+  return { initialize, changePurchasedHistory };
 })();
 
 export default purchasedHistoryView;

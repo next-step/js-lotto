@@ -15,13 +15,13 @@ const lottoVendingView = (function () {
     winingLottoHistoryView.changePurchasedHistory();
   }
 
-  function initialMoney() {
+  function initializeMoney() {
     $purchaseMoney.value = null;
   }
 
   function handleResetWinningLottoHistory() {
-    initialMoney();
-    purchasedHistoryView.initial();
+    initializeMoney();
+    purchasedHistoryView.initialize();
   }
 
   function eventBindings() {
@@ -29,13 +29,13 @@ const lottoVendingView = (function () {
     winingLottoHistoryView.eventBindings(handleResetWinningLottoHistory);
   }
 
-  function initial() {
+  function initialize() {
     eventBindings();
-    initialMoney();
-    purchasedHistoryView.initial();
-    winingLottoHistoryView.initial();
+    initializeMoney();
+    purchasedHistoryView.initialize();
+    winingLottoHistoryView.initialize();
   }
 
-  return { initial };
+  return { initialize };
 })();
 export default lottoVendingView;

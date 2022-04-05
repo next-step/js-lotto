@@ -13,7 +13,7 @@ const winingLottoHistoryView = (function () {
   const $winningBonusNumber =
     $winingLottoHistory.querySelector('.bonus-number');
 
-  function initialWinningHistory() {
+  function initializeWinningHistory() {
     $winingLottoHistory.classList.add('hide');
   }
 
@@ -22,7 +22,7 @@ const winingLottoHistoryView = (function () {
     $element.value = null;
   }
 
-  function initialWinningNumbers() {
+  function initializeWinningNumbers() {
     $winningAllNumbers.forEach(($winningNumber) => {
       initElementValue($winningNumber);
     });
@@ -76,14 +76,14 @@ const winingLottoHistoryView = (function () {
     });
   }
 
-  function initial() {
+  function initialize() {
     hideWinningHistory();
-    initialWinningHistory();
-    initialWinningNumbers();
+    initializeWinningHistory();
+    initializeWinningNumbers();
   }
 
   function handleResetWinningLottoHistory(onReset) {
-    initial();
+    initialize();
     onReset();
   }
 
@@ -94,7 +94,7 @@ const winingLottoHistoryView = (function () {
   function eventBindings(onReset) {
     $winingLottoHistory.addEventListener('submit', handleWinningResult);
     winingLottoHistoryModalView.eventBindings(() =>
-        handleResetWinningLottoHistory(onReset)
+      handleResetWinningLottoHistory(onReset)
     );
     $winningAllNumbers.forEach(($winningNumber) => {
       $winningNumber.setAttribute('min', LOTTO_MIN_NUM);
@@ -102,6 +102,6 @@ const winingLottoHistoryView = (function () {
     });
   }
 
-  return { initial, eventBindings, changePurchasedHistory };
+  return { initialize, eventBindings, changePurchasedHistory };
 })();
 export default winingLottoHistoryView;
