@@ -1,25 +1,40 @@
+import { UNIT_PRICE } from "../../utils/consts.js"
+
 import Lotto from "../../Model/Lotto.js"
-import { WARNING_WHEN_NOT_IN_1000_UNITS } from "../../utils/consts.js"
-import price from "../../View/alert/priceAlert.js"
+import priceAlert from "../../View/alert/priceAlert.js"
+import LottoPurchaseView from "../../View/lottoPurchaseView.js"
+import LottoTicketView from "../../View/lottoTicketView.js"
+import Event from "../index.js"
+import ticket from "./lottoTicketEvent.js"
 
 const purchase = (function(){
   
-
   return {
     handleSubmitEvent(event) {
       event.preventDefault()
-      const [input, button] = event.target
+      const input = event.target[0]
       const { value } = input
       
       if (Lotto.isNotCorrectPriceRange(value)) {
-        return price.lottoPriceRangeAlert()
+        LottoPurchaseView.removeInputValue(input)
+        LottoPurchaseView.attachInputStyleOutLine(input)
+        return priceAlert.lottoPriceRangeAlert()
       }
 
       if (Lotto.isNotCorrectPriceUnit(value)) {
-        return price.lottoPriceUnitAlert()
+        LottoPurchaseView.removeInputValue(input)
+        LottoPurchaseView.attachInputStyleOutLine(input)
+        return priceAlert.lottoPriceUnitAlert()
       }
+    
+      LottoPurchaseView.detachInputStyleOutLine(input)
 
-      // alert는 여기서
+      const amount = value / UNIT_PRICE
+
+      LottoTicketView.showLottoInfoUI(amount)
+      LottoTicketView.setRandomNumber = Lotto.getRandomNumber(amount)
+      ticket.setAmount = amount
+      Event.ticketToggle()
     },
   }
 })()

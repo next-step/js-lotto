@@ -3,7 +3,7 @@ import {
   WARNING_WHEN_NOT_IN_CORRECT_RANGE 
 } from "../../utils/consts.js"
 
-const price = {
+const priceAlert = {
   lottoPriceRangeAlert() {
     alert(WARNING_WHEN_NOT_IN_CORRECT_RANGE)
   },
@@ -12,4 +12,4 @@ const price = {
   }
 }
 
-export default price;
+export default priceAlert;
