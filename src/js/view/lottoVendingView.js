@@ -19,14 +19,14 @@ const lottoVendingView = (function () {
     $purchaseMoney.value = null;
   }
 
-  function callbackResetWinningLottoHistory() {
+  function handleResetWinningLottoHistory() {
     initialMoney();
     purchasedHistoryView.initial();
   }
 
   function eventBindings() {
     $purchaseLotto.addEventListener('submit', handlePurchaseLotto);
-    winingLottoHistoryView.eventBindings(callbackResetWinningLottoHistory);
+    winingLottoHistoryView.eventBindings(handleResetWinningLottoHistory);
   }
 
   function initial() {

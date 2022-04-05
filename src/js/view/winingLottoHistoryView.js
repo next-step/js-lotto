@@ -82,7 +82,7 @@ const winingLottoHistoryView = (function () {
     initialWinningNumbers();
   }
 
-  function callbackResetWinningLottoHistory(onReset) {
+  function handleResetWinningLottoHistory(onReset) {
     initial();
     onReset();
   }
@@ -94,7 +94,7 @@ const winingLottoHistoryView = (function () {
   function eventBindings(onReset) {
     $winingLottoHistory.addEventListener('submit', handleWinningResult);
     winingLottoHistoryModalView.eventBindings(() =>
-      callbackResetWinningLottoHistory(onReset)
+        handleResetWinningLottoHistory(onReset)
     );
     $winningAllNumbers.forEach(($winningNumber) => {
       $winningNumber.setAttribute('min', LOTTO_MIN_NUM);
