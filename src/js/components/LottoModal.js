@@ -1,72 +1,34 @@
 import Component from '../core/Component.js';
-import { $ } from '../utils/index.js';
+import { getPriceRate } from '../domains/index.js';
+import { $, addEvent } from '../utils/index.js';
+import { getModalTemplate } from './Template.js';
 
-class LottoModal extends Component {
-  template() {
-    const { rankBoard, rateToReturn } = this.$props;
-    return `
-      <div class="modal-inner p-10">
-        <div class="modal-close">
-          <svg viewbox="0 0 40 40">
-            <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
-          </svg>
-        </div>
+class LottoModal {
+  constructor($target, $props) {
+    this.$props = $props;
+    this.$target = $target;
+    this.setEvent();
 
-        <h2 class="text-center">🏆 당첨 통계 🏆</h2>
-        <div class="d-flex justify-center">
-          <table class="result-table border-collapse border border-black">
-            <thead>
-              <tr class="text-center">
-                <th class="p-3">일치 갯수</th>
-                <th class="p-3">당첨금</th>
-                <th class="p-3">당첨 갯수</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="text-center">
-                <td class="p-3">3개</td>
-                <td class="p-3">5,000</td>
-                <td class="p-3">${rankBoard[5]}개</td>
-              </tr>
-              <tr class="text-center">
-                <td class="p-3">4개</td>
-                <td class="p-3">50,000</td>
-                <td class="p-3">${rankBoard[4]}개</td>
-              </tr>
-              <tr class="text-center">
-                <td class="p-3">5개</td>
-                <td class="p-3">1,500,000</td>
-                <td class="p-3">${rankBoard[3]}개</td>
-              </tr>
-              <tr class="text-center">
-                <td class="p-3">5개 + 보너스볼</td>
-                <td class="p-3">30,000,000</td>
-                <td class="p-3">${rankBoard[2]}개</td>
-              </tr>
-              <tr class="text-center">
-                <td class="p-3">6개</td>
-                <td class="p-3">2,000,000,000</td>
-                <td class="p-3">${rankBoard[1]}개</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="text-center font-bold">당신의 총 수익률은 ${rateToReturn}%입니다.</p>
-        <div class="d-flex justify-center mt-5">
-          <button type="button" class="btn btn-cyan">다시 시작하기</button>
-        </div>
-      </div>
-    `;
+    $target.innerHTML = getModalTemplate($props.store.state);
   }
 
   setEvent() {
     const { reStart } = this.$props;
-    this.addEvent('click', '.modal-close', this.closeModal);
-    this.addEvent('click', 'button[type="button"]', reStart);
+
+    addEvent('click', '.modal-close', this.closeModal);
+    addEvent('click', 'button[type="button"]', () => {
+      reStart();
+      this.render();
+    });
+  }
+
+  render() {
+    this.$target.innerHTML = getModalTemplate(this.$props.store.state);
   }
 
   closeModal() {
     $('.modal').classList.toggle('show-modal');
+    $('#form-winning').classList.add('hidden');
   }
 }
 

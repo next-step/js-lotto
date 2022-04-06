@@ -1,52 +1,38 @@
-import Component from '../core/Component.js';
+import { $, addEvent } from '../utils/index.js';
+import { getModalTemplate, getWinningFormTemplate } from './Template.js';
+class LottoWinningForm {
+  constructor($target, $props) {
+    this.$props = $props;
+    this.$target = $target;
+    this.setEvent();
 
-class LottoWinningForm extends Component {
-  template() {
-    const { inputNumber } = this.$props;
-    return `
-      <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
-      <div class="d-flex">
-        <div>
-          <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
-          <div id="winning-input">
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              inputNumber.number[0] ?? ''
-            }"/>
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              inputNumber.number[1] ?? ''
-            }"/>
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              inputNumber.number[2] ?? ''
-            }"/>
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              inputNumber.number[3] ?? ''
-            }"/>
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              inputNumber.number[4] ?? ''
-            }"/>
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              inputNumber.number[5] ?? ''
-            }"/>
-          </div>
-        </div>
-        <div class="bonus-number-container flex-grow">
-          <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
-          <div class="d-flex justify-center">
-            <input type="number" class="bonus-number text-center" name="winning-number" max="45" min="1" value="${
-              inputNumber.bonusNumber ?? ''
-            }"/>
-          </div>
-        </div>
-      </div>
-      <button type="submit" class="open-result-modal-button mt-5 btn btn-cyan w-100">결과 확인하기</button>
-    `;
+    $target.innerHTML = getWinningFormTemplate($props.store.state);
   }
 
   setEvent() {
-    const { handleFormWinning, changeInput } = this.$props;
+    const { handleSubmitFormWinning } = this.$props;
 
-    this.addEvent('submit', '#form-winning', handleFormWinning);
-    this.addEvent('input', '#winning-input', changeInput);
+    addEvent('submit', '#form-winning', (e) => {
+      handleSubmitFormWinning(e);
+      this.render();
+    });
+    addEvent('input', '#winning-input', this.changeInput);
+  }
+
+  changeInput({ target }) {
+    const value = target.value;
+    const $winningBonusInput = $('input.bonus-number');
+    if (value.length > 1) {
+      target.nextElementSibling ? target.nextElementSibling.focus() : $winningBonusInput.focus();
+    }
+  }
+
+  render() {
+    const { state } = this.$props.store;
+
+    $('.modal').classList.toggle('show-modal');
+    $('.modal').innerHTML = getModalTemplate(state);
+    this.$target.innerHTML = getWinningFormTemplate(state);
   }
 }
 
