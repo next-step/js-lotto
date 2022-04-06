@@ -1,19 +1,17 @@
-import { MIN_NUMBER, MAX_NUMBER, NUMBER_AMOUNT } from '../constants/index.js';
+import { MIN_NUMBER, MAX_NUMBER, NUMBERS_COUNT } from '../constants/index.js';
 
 export class LottoTicket {
-  numbers = new Map();
+  numbers = new Set();
 
   constructor() {
     this.issueNumbers();
   }
 
   issueNumbers() {
-    while (this.numbers.size < NUMBER_AMOUNT) {
+    while (this.numbers.size < NUMBERS_COUNT) {
       const number = this.randomNumber();
 
-      if (this.numbers.has(number)) continue;
-      
-      this.numbers.set(number, true);
+      if (!this.numbers.has(number)) this.numbers.add(number);
     }
   }
 
@@ -22,6 +20,6 @@ export class LottoTicket {
   }
 
   getNumbers() {
-    return Array.from(this.numbers).map(([number]) => number);
+    return Array.from(this.numbers.keys());
   }
 }

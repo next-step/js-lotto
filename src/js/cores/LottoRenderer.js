@@ -4,6 +4,12 @@ import {
   THIRD_PLACE,
   FOURTH_PLACE,
   FIFTH_PLACE,
+  FIRST_PLACE_RETURN,
+  SECOND_PLACE_RETURN,
+  THIRD_PLACE_RETURN,
+  FOURTH_PLACE_RETURN,
+  FIFTH_PLACE_RETURN,
+  EACH,
 } from '../constants/index.js';
 
 export class LottoRenderer {
@@ -36,7 +42,7 @@ export class LottoRenderer {
     <div class="d-flex">
       <label class="ticket-notice flex-auto my-0">총 ${
         tickets.length
-      }개를 구매하였습니다.</label>
+      }${EACH}를 구매하였습니다.</label>
       <div class="ticket-toggle-button flex-auto d-flex justify-end pr-1">
         <label class="switch">
           <input type="checkbox" data-purpose="toggleButton" ${
@@ -81,7 +87,7 @@ export class LottoRenderer {
     );
 
     winningNumberForm.innerHTML = `<label class="flex-auto d-inline-block mb-3"
-    >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
+    >지난 주 당첨번호 6${EACH}와 보너스 넘버 1${EACH}를 입력해주세요.</label
   >
   <div class="d-flex">
     <div>
@@ -162,36 +168,46 @@ export class LottoRenderer {
           </thead>
           <tbody>
             <tr class="text-center">
-              <td class="p-3">3개</td>
-              <td class="p-3">5,000</td>
-              <td class="p-3">${sameCounts.get(FIFTH_PLACE)}개</td>
+              <td class="p-3">${FIFTH_PLACE}${EACH}</td>
+              <td class="p-3">${FIFTH_PLACE_RETURN.toLocaleString()}</td>
+              <td class="winning-count p-3">${sameCounts.get(
+                FIFTH_PLACE
+              )}${EACH}</td>
             </tr>
             <tr class="text-center">
-              <td class="p-3">4개</td>
-              <td class="p-3">50,000</td>
-              <td class="p-3">${sameCounts.get(FOURTH_PLACE)}개</td>
+              <td class="p-3">${FOURTH_PLACE}${EACH}</td>
+              <td class="p-3">${FOURTH_PLACE_RETURN.toLocaleString()}</td>
+              <td class="winning-count p-3">${sameCounts.get(
+                FOURTH_PLACE
+              )}${EACH}</td>
             </tr>
             <tr class="text-center">
-              <td class="p-3">5개</td>
-              <td class="p-3">1,500,000</td>
-              <td class="p-3">${sameCounts.get(THIRD_PLACE)}개</td>
+              <td class="p-3">${THIRD_PLACE}${EACH}</td>
+              <td class="p-3">${THIRD_PLACE_RETURN.toLocaleString()}</td>
+              <td class="winning-count p-3">${sameCounts.get(
+                THIRD_PLACE
+              )}${EACH}</td>
             </tr>
             <tr class="text-center">
-              <td class="p-3">5개 + 보너스볼</td>
-              <td class="p-3">30,000,000</td>
-              <td class="p-3">${sameCounts.get(SECOND_PLACE)}개</td>
+              <td class="p-3">${THIRD_PLACE}${EACH} + 보너스볼</td>
+              <td class="p-3">${SECOND_PLACE_RETURN.toLocaleString()}</td>
+              <td class="winning-count p-3">${sameCounts.get(
+                SECOND_PLACE
+              )}${EACH}</td>
             </tr>
             <tr class="text-center">
-              <td class="p-3">6개</td>
-              <td class="p-3">2,000,000,000</td>
-              <td class="p-3">${sameCounts.get(FIRST_PLACE)}개</td>
+              <td class="p-3">${FIRST_PLACE}${EACH}</td>
+              <td class="p-3">${FIRST_PLACE_RETURN.toLocaleString()}</td>
+              <td class="winning-count p-3">${sameCounts.get(
+                FIRST_PLACE
+              )}${EACH}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p class="text-center font-bold">당신의 총 수익률은 ${rateOfReturn}% 입니다.</p>
+      <p class="rate-of-return text-center font-bold">당신의 총 수익률은 ${rateOfReturn}% 입니다.</p>
       <div class="d-flex justify-center mt-5">
-        <button type="button" class="btn btn-cyan" data-purpose="restart">다시 시작하기</button>
+        <button type="button" class="restart-button btn btn-cyan" data-purpose="restart">다시 시작하기</button>
       </div>
     </div>`;
   }

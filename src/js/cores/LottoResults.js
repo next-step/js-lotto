@@ -9,6 +9,7 @@ import {
   THIRD_PLACE_RETURN,
   FOURTH_PLACE_RETURN,
   FIFTH_PLACE_RETURN,
+  INITIAL_WINNING_COUNT,
 } from '../constants/index.js';
 
 const returns = new Map([
@@ -21,11 +22,11 @@ const returns = new Map([
 
 export class LottoResults {
   sameCounts = new Map([
-    [FIFTH_PLACE, 0],
-    [FOURTH_PLACE, 0],
-    [THIRD_PLACE, 0],
-    [SECOND_PLACE, 0],
-    [FIRST_PLACE, 0],
+    [FIFTH_PLACE, INITIAL_WINNING_COUNT],
+    [FOURTH_PLACE, INITIAL_WINNING_COUNT],
+    [THIRD_PLACE, INITIAL_WINNING_COUNT],
+    [SECOND_PLACE, INITIAL_WINNING_COUNT],
+    [FIRST_PLACE, INITIAL_WINNING_COUNT],
   ]);
   rateOfReturn;
   money;
@@ -50,9 +51,9 @@ export class LottoResults {
     const { sameCounts, money } = this;
 
     const totalReturn =
-      sameCounts.get(FIFTH_PLACE) * returns.get(FIFTH_PLACE_RETURN) +
-      sameCounts.get(FOURTH_PLACE) * returns.get(FOURTH_PLACE_RETURN) +
-      sameCounts.get(THIRD_PLACE) * returns.get(THIRD_PLACE_RETURN) +
+      sameCounts.get(FIFTH_PLACE) * returns.get(FIFTH_PLACE) +
+      sameCounts.get(FOURTH_PLACE) * returns.get(FOURTH_PLACE) +
+      sameCounts.get(THIRD_PLACE) * returns.get(THIRD_PLACE) +
       sameCounts.get(SECOND_PLACE) * returns.get(SECOND_PLACE) +
       sameCounts.get(FIRST_PLACE) * returns.get(FIRST_PLACE) -
       money;

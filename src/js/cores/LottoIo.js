@@ -12,9 +12,9 @@ export class LottoIo {
   }
 
   inputMoney(money) {
-    if (!this.validator.isLowerThanUpperLimit(money)) return false;
+    if (!this.validator.isLowerThanHighestLimit(money)) return false;
 
-    if (!this.validator.isUpperThanLowerLimit(money)) return false;
+    if (!this.validator.isUpperThanLowestLimit(money)) return false;
 
     if (!this.validator.isDivisibleMoneyByThousand(money)) return false;
 
@@ -24,25 +24,26 @@ export class LottoIo {
   }
 
   inputWinningNumbers(winningNumbers, bonusNumber) {
-    const filteredWinningNumbers = [...winningNumbers, bonusNumber].filter(
-      (winningNumber) => winningNumber !== 0
-    );
-
-    if (!this.validator.isAllWinningNumbersInput(filteredWinningNumbers))
+    if (!this.validator.isAllWinningNumbersInput(winningNumbers, bonusNumber))
       return false;
 
     if (
       !this.validator.isAllWinningNumbersUpperThanMinNumber(
-        filteredWinningNumbers
+        winningNumbers,
+        bonusNumber
       )
     )
       return false;
 
     if (
       !this.validator.isAllWinningNumbersLowerThanMaxNumber(
-        filteredWinningNumbers
+        winningNumbers,
+        bonusNumber
       )
     )
+      return false;
+
+    if (!this.validator.isAllWinningNumbersUnique(winningNumbers, bonusNumber))
       return false;
 
     this.shop.inputWinningNumbers(winningNumbers, bonusNumber);
