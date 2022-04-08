@@ -1,9 +1,9 @@
 import LottoPrice from './components/LottoPrice.js';
 import { errorPrintAlert, validatePrice, validateWinningNumber } from './domains/errors.js';
-import { createLottoList, getLottoAmount, getPriceRate, getRank, getWinningNumber } from './domains/index.js';
-import { $ } from './utils/index.js';
+import { createLottoList, getLottoAmount, getRankBoard, getWinningNumber } from './domains/index.js';
 import LottoWinningForm from './components/LottoWinningForm.js';
 import LottoModal from './components/LottoModal.js';
+import { $ } from './utils/index.js';
 
 class App {
   $target;
@@ -39,28 +39,26 @@ class App {
     }
     const lottoAmount = getLottoAmount(price);
     const lottoList = createLottoList(lottoAmount);
-    this.$store.setState({ price, lottoList, winningNumber: { number: lottoList[0], bonus: null } });
+    this.$store.setState({ price, lottoList });
+    $('#form-winning').classList.remove('hidden');
   }
 
   handleSubmitFormWinning(e) {
     e.preventDefault();
-    const { winningNumber, rankBoard } = this.$store.state;
-    const userNumber = getWinningNumber(e.target['winning-number']);
-    const { errorMsg } = validateWinningNumber(userNumber);
+    const { lottoList } = this.$store.state;
+    const winningNumber = getWinningNumber(e.target['winning-number']);
+    const { errorMsg } = validateWinningNumber(winningNumber);
 
     if (errorMsg) {
       errorPrintAlert(errorMsg);
       return;
     }
 
-    const rank = getRank(userNumber, winningNumber);
-    const newRankBoard = { ...rankBoard };
-    newRankBoard[rank] += 1;
+    const rankBoard = getRankBoard({ lottoList, winningNumber });
 
     this.$store.setState({
-      userNumber,
-      winningNumber: { ...winningNumber, bonusNumber: userNumber.bonusNumber },
-      rankBoard: newRankBoard,
+      winningNumber,
+      rankBoard,
       isShowModal: true,
     });
   }
@@ -70,6 +68,7 @@ class App {
     this.$LottoPrice.render();
     this.$LottoWinningForm.render();
     this.$LottoModal.render();
+    $('#form-winning').classList.add('hidden');
   }
 }
 

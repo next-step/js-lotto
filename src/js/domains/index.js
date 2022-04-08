@@ -12,7 +12,7 @@ const createLotto = () => {
 };
 
 export const createLottoList = (count) => {
-  return Array.from({ length: count }, (lotto) => createLotto());
+  return Array.from({ length: count }, () => createLotto());
 };
 
 export const getWinningNumber = ($inputNumberNodes) => {
@@ -28,27 +28,38 @@ export const getWinningNumber = ($inputNumberNodes) => {
   );
 };
 
-const getWinningCount = (winningNumber, inputNumber) => {
+const getWinningCount = (lottoNumber, winningNumber) => {
   return winningNumber.reduce((prev, cur) => {
-    if (inputNumber.includes(cur)) {
+    if (lottoNumber.includes(cur)) {
       prev.add(cur);
     }
     return prev;
   }, new Set()).size;
 };
 
-export const getRank = (inputNumber, winningNumber) => {
-  const winningCount = getWinningCount(winningNumber.number, inputNumber.number);
+const getRank = (lottoNumber, winningNumber) => {
+  const winningCount = getWinningCount(lottoNumber, winningNumber.number);
 
   if (winningCount === 6) {
     return 1;
   }
-  if (winningCount === 5 && winningNumber.bonusNumber === inputNumber.bonusNumber) {
+  if (winningCount === 5 && inputNumber.includes(winningNumber.bonusNumber)) {
     return 2;
   }
 
   return Math.abs(winningCount - NUMBER.LOTTO_LENGTH) + 2;
 };
+
+export const getRankBoard = ({ lottoList, winningNumber }) =>
+  lottoList
+    .map((lottoNumber) => getRank(lottoNumber, winningNumber))
+    .reduce(
+      (prev, rank) => {
+        prev[rank] += 1;
+        return prev;
+      },
+      { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+    );
 
 export const getPriceRate = (price, rankBoard) => {
   const winningPrice = Object.values(rankBoard).reduce((prev, cur, index) => {

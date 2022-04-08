@@ -1,4 +1,4 @@
-import { $, addEvent } from '../utils/index.js';
+import { addEvent } from '../utils/index.js';
 import { getLottoPriceTemplate } from './Template.js';
 
 class LottoPrice {
@@ -20,7 +20,6 @@ class LottoPrice {
   }
 
   render() {
-    $('#form-winning').classList.toggle('hidden');
     this.$target.innerHTML = getLottoPriceTemplate(this.$props.store.state);
   }
 

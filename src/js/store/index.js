@@ -1,10 +1,6 @@
 const initState = {
   price: 0,
   lottoList: [],
-  userNumber: {
-    number: [],
-    bonusNumber: null,
-  },
   winningNumber: {
     number: [],
     bonusNumber: null,

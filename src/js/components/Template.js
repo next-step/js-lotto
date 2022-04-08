@@ -93,7 +93,7 @@ export const getLottoPriceTemplate = ({ lottoList }) => {
     `;
 };
 
-export const getWinningFormTemplate = ({ userNumber }) => {
+export const getWinningFormTemplate = ({ winningNumber }) => {
   return `
       <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
       <div class="d-flex">
@@ -101,22 +101,22 @@ export const getWinningFormTemplate = ({ userNumber }) => {
           <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
           <div id="winning-input">
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              userNumber.number[0] ?? ''
+              winningNumber.number[0] ?? ''
             }"/>
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              userNumber.number[1] ?? ''
+              winningNumber.number[1] ?? ''
             }"/>
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              userNumber.number[2] ?? ''
+              winningNumber.number[2] ?? ''
             }"/>
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              userNumber.number[3] ?? ''
+              winningNumber.number[3] ?? ''
             }"/>
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              userNumber.number[4] ?? ''
+              winningNumber.number[4] ?? ''
             }"/>
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              userNumber.number[5] ?? ''
+              winningNumber.number[5] ?? ''
             }"/>
           </div>
         </div>
@@ -124,7 +124,7 @@ export const getWinningFormTemplate = ({ userNumber }) => {
           <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
           <div class="d-flex justify-center">
             <input type="number" class="bonus-number text-center" name="winning-number" max="45" min="1" value="${
-              userNumber.bonusNumber ?? ''
+              winningNumber.bonusNumber ?? ''
             }"/>
           </div>
         </div>
