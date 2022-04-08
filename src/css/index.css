@@ -27,6 +27,10 @@ body {
   display: none;
 }
 
+section.mt-9.hide {
+  display: none;
+}
+
 form.mt-9.hide {
   display: none;
 }
