@@ -12,6 +12,9 @@ Cypress.Commands.add('$purchasedLottoSection', () =>
 Cypress.Commands.add('$winningResultForm', () =>
   cy.get('#winning-result-form')
 );
+Cypress.Commands.add('$purchasedLottoNumbers', () => {
+  cy.$purchasedLottoSection().get('.mx-1.text-4xl span');
+});
 Cypress.Commands.add('inputMoney', (money) => {
   cy.$purchaseLottoInput().type(money);
 });
@@ -24,6 +27,9 @@ Cypress.Commands.add('clickPurchase', () => {
 Cypress.Commands.add('isEqualPurchaseAmount', (value) => {
   cy.$purchasedLottoSection().get('.my-0 span').should('have.text', value);
 });
+Cypress.Commands.add('togglePurchasedLottoNumbers', () =>
+  cy.get('.lotto-numbers-toggle-button').click()
+);
 
 Cypress.Commands.add('showWinningResult', () => cy.get('form.mt-9').submit());
 
@@ -115,6 +121,23 @@ describe('로또 자판기', () => {
       cy.clickPurchase().then(() => {
         cy.$purchasedLottoSection().should('be.visible');
         cy.isEqualPurchaseAmount(10);
+      });
+    });
+
+    it('구매 후 로또번호가 보이지 않음', () => {
+      cy.inputMoney(2000);
+      cy.clickPurchase().then(() => {
+        cy.$purchasedLottoNumbers().should('not.be.visible');
+      });
+    });
+
+    it('구매 후 토글을 클릭시 로또번호가 보임', () => {
+      cy.inputMoney(2000);
+      cy.clickPurchase().then(() => {
+        cy.$purchasedLottoNumbers().should('not.be.visible');
+        cy.togglePurchasedLottoNumbers().then(() => {
+          cy.$purchasedLottoNumbers().should('be.visible');
+        });
       });
     });
   });
