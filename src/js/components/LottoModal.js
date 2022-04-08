@@ -1,3 +1,5 @@
+import { LottoReward } from "../domain/LottoReward.js";
+
 const RATING = [
     {
         index: 3,
@@ -26,31 +28,25 @@ const RATING = [
     },
 ];
 export class LottoModal {
-    tickets;
     rating;
-    rate;
-    props;
-    $resultModal;
-    $resultModalCloseButton;
-    $resultModalArea;
-    $resetButton;
 
-    constructor(element, props) {
-        this.$resultModalArea = element;
+    constructor(rating, props) {
+        this.$resultModalArea = document.querySelector("#result_modal_area");
+        this.rating = rating;
         this.props = props;
+        this.#render();
+        this.#mounted();
     }
 
-    render() {
+    #render() {
         this.$resultModalArea.innerHTML = this.getTemplate();
     }
 
-    mounted() {
+    #mounted() {
         this.$resultModal = document.querySelector("#result_modal");
         this.$resultModalCloseButton = document.querySelector("#result_modal_close");
         this.$resetButton = document.querySelector("#reset_button");
-    }
 
-    setEvent() {
         this.$resultModalCloseButton.addEventListener("click", () =>
             this.#onClickResultModalCloseButton()
         );
@@ -90,11 +86,11 @@ export class LottoModal {
                                 </tr>
                             </thead>
                             <tbody>
-                            ${this.getRatingTemplate()}
+                            ${this.#getRatingTemplate()}
                             </tbody>
                         </table>
                     </div>
-                    <p class="text-center font-bold">당신의 총 수익률은 ${this.rate.toLocaleString(
+                    <p class="text-center font-bold">당신의 총 수익률은 ${LottoReward.rate.toLocaleString(
                         "ko-KR"
                     )}%입니다.</p>
                     <div class="d-flex justify-center mt-5">
@@ -105,7 +101,7 @@ export class LottoModal {
         `;
     }
 
-    getRatingTemplate() {
+    #getRatingTemplate() {
         return RATING.map(
             (r) =>
                 `<tr class="text-center">

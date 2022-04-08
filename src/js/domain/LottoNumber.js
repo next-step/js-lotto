@@ -7,8 +7,4 @@ export class LottoNumber {
     static getLottoPaper() {
         return Array.from({ length: LottoNumber.MAX }, (v, i) => ++i);
     }
-
-    static validate() {
-        WinningNumbers
-    }
 }

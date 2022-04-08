@@ -1,51 +1,29 @@
-import Lotto from "../components/lotto.js";
-import { MESSAGE } from "../constant/index.js";
-import { LottoShop } from "./LottoShop.js";
-
-const LOTTO_UNIT = 1000;
-const MIN_PURCHASE_PRICE = 1000;
-const MAX_PURCHASE_PRICE = 100000;
+import { LottoPurchaseUnitException } from "../exceptions/LottoPurchseUnitException.js";
 
 export class LottoPurchase {
-    static purchasePrice = 0;
-    static amount;
+    #purchasePrice;
 
-    constructor() {}
+    static LOTTO_UNIT = 1_000;
+    static MIN_PURCHASE_PRICE = 1_000;
+    static MAX_PURCHASE_PRICE = 100_000;
 
-    purchase(purchasePrice) {
-        console.log(purchasePrice);
-        const resultValue = this.getPurchasePriceState(purchasePrice);
-
-        if (resultValue.isComplete) {
-            this.purchasePrice = purchasePrice;
-            this.amount = purchasePrice / LottoShop.LOTTO_UNIT;
-
-            return;
+    constructor(price) {
+        if (this.validation(price)) {
+            this.#purchasePrice = price;
         }
-
-        alert(resultValue.message);
     }
 
-    getPurchasePriceState(price) {
-        let resultValue = { isComplete: true, message: "" };
+    get purchasePrice() {
+        return this.#purchasePrice;
+    }
 
-        if (price < MIN_PURCHASE_PRICE) {
-            resultValue.isComplete = false;
-            resultValue.message = MESSAGE.ERROR.MIN_PURCHASE;
+    set purchasePrice(price) {
+        this.#purchasePrice = price;
+    }
 
-            return resultValue;
-        } else if (price % LOTTO_UNIT > 0) {
-            resultValue.isComplete = false;
-            resultValue.message = MESSAGE.ERROR.UNIT_MISMATCH;
-
-            return resultValue;
-        } else if (price > MAX_PURCHASE_PRICE) {
-            resultValue.isComplete = false;
-            resultValue.message = MESSAGE.ERROR.MAX_PURCHASE;
-
-            return resultValue;
+    validation(price) {
+        if (price % LottoPurchase.LOTTO_UNIT !== 0) {
+            throw new LottoPurchaseUnitException();
         }
-
-        return resultValue;
     }
 }

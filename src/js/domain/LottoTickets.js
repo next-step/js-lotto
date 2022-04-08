@@ -5,15 +5,11 @@ export class LottoTickets {
         this.#tickets = tickets;
     }
 
-    get value() {
+    get tickets() {
         return this.#tickets;
     }
 
     get length() {
         return this.value.length;
-    }
-
-    set tickets(tickets) {
-        this.#tickets = tickets;
     }
 }

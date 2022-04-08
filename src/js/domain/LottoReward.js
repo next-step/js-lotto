@@ -1,5 +1,4 @@
 import { LottoTickets } from "./LottoTickets.js";
-import { WinningNumbers } from "./WinningNumbers.js";
 
 const WINNINGS = {
     0: 0,
@@ -14,18 +13,11 @@ const WINNINGS = {
 const LOTTO_UNIT = 1000;
 
 export class LottoReward {
-    tickets;
-    winningNumbers;
-    bonusNumber;
-    rating;
-    rate;
+    static rating;
+    static rate;
 
-    constructor() {
-        this.initRating();
-    }
-
-    initRating() {
-        this.rating = {
+    static computeWinning({ lottos, winningNumbers, bonusNumber }) {
+        let rating = {
             6: 0,
             "5+": 0,
             5: 0,
@@ -35,16 +27,17 @@ export class LottoReward {
             1: 0,
             0: 0,
         };
-    }
 
-    computeWinning() {
-        LottoTickets.tickets
-            .map((ticket) => ticket.filter((v) => WinningNumbers.winningNumbers.includes(v.toString())))
+        lottos
+            .map((ticket) => ticket.filter((v) => winningNumbers.includes(v)))
             .map((r, i) =>
-                r.length === 5 && LottoTickets.tickets[i].includes(+WinningNumbers.bonusNumber)
-                    ? this.rating[r.length + "+"]++
-                    : this.rating[r.length]++
+                r.length === 5 && lottos[i].includes(bonusNumber)
+                    ? rating[r.length + "+"]++
+                    : rating[r.length + ""]++
             );
+
+        this.rating = rating;
+        this.computeRate();
     }
 
     computeRate() {

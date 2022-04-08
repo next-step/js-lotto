@@ -5,50 +5,39 @@ export class WinningLottoForm {
     winningNumbers;
     winningLotto;
 
-    constructor($winngingArea, winningLotto, props) {
-        this.$winngingArea = $winngingArea;
+    constructor(props) {
+        this.$winngingArea = document.querySelector("#lotto-winning-area");
+        // this.props = props;
         this.props = props;
 
-        this.winningLotto = winningLotto;
+        // this.winningLotto = winningLotto;
+
+        this.#render();
+        this.#mounted();
     }
 
-    render() {
+    #render() {
         this.$winngingArea.innerHTML = this.getWinningTemplate();
     }
 
-    mounted() {
-        this.$resultModalOpenButton = document.querySelector("#open-result-modal-button");
+    #mounted() {
+        document.querySelector("#open-result-modal-button").addEventListener("click", () => {
+            this.onClickResultModelButton();
+        });
         this.$winningNumbers = document.querySelectorAll(".winning-number");
         this.$bonusNumber = document.querySelector(".bonus-number");
-    }
-
-    setEvent() {
-        this.$resultModalOpenButton.addEventListener("click", (event) => {
-            this.winningNumbers = this.#parseWinningNumbers();
-            //this.bonusNumber = this.$bonusNumber.value;
-
-            this.winningLotto.winningNumbers = this.winningNumbers;
-            //this.winningLotto.bonus = this.bonusNumber;
-            WinningLotto.bonus = this.$bonusNumber.value;
-            this.props.onWinngingCheck();
-        });
     }
 
     getWinningNumbers() {
         return this.winningNumbers;
     }
 
-    #parseWinningNumbers() {
-        return Array.from(this.$winningNumbers)
-            .map((number) => {
-                return number.value;
-            })
-            .filter((number) => number !== "");
-    }
+    onClickResultModelButton() {
+        const winningNumbers = Array.from(this.$winningNumbers).map((number) => +number.value);
+        const bonusNumber = +this.$bonusNumber.value;
 
-    // getBonusNumber() {
-    //     return this.bonusNumber;
-    // }
+        this.props.onReward(winningNumbers, bonusNumber);
+    }
 
     getWinningTemplate() {
         return `
