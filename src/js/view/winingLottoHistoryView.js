@@ -24,7 +24,8 @@ const winingLottoHistoryView = (function () {
 
   function initializeWinningNumbers() {
     $winningAllNumbers.forEach(($winningNumber) => {
-      initElementValue($winningNumber);
+      // eslint-disable-next-line no-param-reassign
+      $winningNumber.value = null;
     });
   }
 
