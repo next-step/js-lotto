@@ -1,16 +1,14 @@
-import { LottoNumber } from "../domain/LottoNumber.js";
+import LottoNumber from "../domain/LottoNumber.js";
 
-export class WinningLottoForm {
+export default class WinningLottoForm {
     props;
     winningNumbers;
     winningLotto;
 
+
     constructor(props) {
         this.$winngingArea = document.querySelector("#lotto-winning-area");
-        // this.props = props;
         this.props = props;
-
-        // this.winningLotto = winningLotto;
 
         this.#render();
         this.#mounted();
@@ -33,8 +31,8 @@ export class WinningLottoForm {
     }
 
     onClickResultModelButton() {
-        const winningNumbers = Array.from(this.$winningNumbers).map((number) => +number.value);
-        const bonusNumber = +this.$bonusNumber.value;
+        const winningNumbers = Array.from(this.$winningNumbers).filter((data => {return data.value !== ''})).map((number) => Number(number.value));
+        const bonusNumber = Number(this.$bonusNumber.value);
 
         this.props.onReward(winningNumbers, bonusNumber);
     }

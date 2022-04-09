@@ -1,8 +1,8 @@
-import { LottoNumber } from "./LottoNumber.js";
+import LottoNumber from "./LottoNumber.js";
 
 const LOTTO_LENGTH = 6;
 
-export class LottoMachine {
+export default class LottoMachine {
     static autoPick() {
         return LottoNumber.getLottoPaper()
                 .sort(() => Math.random() - 0.5)

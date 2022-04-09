@@ -1,12 +1,15 @@
-export class LottoTickets {
+export default class LottoTickets {
     #tickets;
 
-    constructor(tickets) {
-        this.#tickets = tickets;
+    constructor() {
     }
 
     get tickets() {
         return this.#tickets;
+    }
+
+    set tickets(tickets) {
+        this.#tickets = tickets;
     }
 
     get length() {

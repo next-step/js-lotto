@@ -1,6 +1,4 @@
-import { WinningNumbers } from "./WinningNumbers.js";
-
-export class LottoNumber {
+export default class LottoNumber {
     static MIN = 1;
     static MAX = 45;
     static LOTTO_LENGTH = 6;

@@ -1,4 +1,4 @@
-import { LottoReward } from "../domain/LottoReward.js";
+import LottoReward from "../domain/LottoReward.js";
 
 const RATING = [
     {
@@ -27,7 +27,7 @@ const RATING = [
         winnings: "2000000000",
     },
 ];
-export class LottoModal {
+export default class LottoModal {
     rating;
 
     constructor(rating, props) {

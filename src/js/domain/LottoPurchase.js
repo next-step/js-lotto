@@ -1,6 +1,6 @@
-import { LottoPurchaseUnitException } from "../exceptions/LottoPurchseUnitException.js";
+import LottoPurchaseUnitException from "../exceptions/LottoPurchseUnitException.js";
 
-export class LottoPurchase {
+export default class LottoPurchase {
     #purchasePrice;
 
     static LOTTO_UNIT = 1_000;

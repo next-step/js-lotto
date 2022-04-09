@@ -1,6 +1,4 @@
-import { LottoTickets } from "../domain/LottoTickets.js";
-
-export class LottoTicketsForm {
+export default class LottoTicketsForm {
     lottos;
 
     constructor() {
