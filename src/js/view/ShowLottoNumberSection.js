@@ -4,8 +4,12 @@ import {
   LOTTO_NUMBER_MINIMUM,
   LOTTO_PRICE_MINIMUM,
 } from '../utils/constants.js';
-import validation from '../validation.js';
+
+import Component from '../core/Component.js';
+import Lotto from '../components/Lotto.js';
 import actionMap from '../actionMap.js';
+import store from '../store/store.js';
+import validation from '../validation.js';
 
 class ShowLottoNumberSection extends Component {
   constructor(target) {
