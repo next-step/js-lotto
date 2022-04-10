@@ -86,11 +86,13 @@ class ShowLottoNumberSection extends Component {
     });
 
     $('#show-result-btn').addEventListener('click', () => {
+      const $winningNumber = $$('.winning-number');
+      resetInputErrorStyle($winningNumber);
       if (
-        validation.emptyLottoNumber() ||
-        validation.lottoNumberUnderMinimum() ||
-        validation.lottoNumberOverMaximum() ||
-        validation.lottoNumberOverlap()
+        validation.emptyLottoNumber($winningNumber) ||
+        validation.lottoNumberUnderMinimum($winningNumber) ||
+        validation.lottoNumberOverMaximum($winningNumber) ||
+        validation.lottoNumberOverlap($winningNumber)
       )
         return;
       const lottoNumbers = [...$$('[aria-label="win-number"]')].reduce(
