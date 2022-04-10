@@ -78,7 +78,9 @@ describe('Lotto', () => {
   describe('step 2: 1) 당첨 결과 기능', () => {
     it('결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.', () => {
       buyLotto(2000);
+
       setWinLottoNumber([1, 2, 3, 4, 5, 6, 7]);
+      cy.get('.modal').should('have.class', 'open');
     });
 
     it('당첨 번호는 1이상 적어야한다.', () => {
