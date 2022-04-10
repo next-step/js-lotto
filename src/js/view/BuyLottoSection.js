@@ -11,8 +11,9 @@ class BuyLottoSection extends Component {
   }
 
   setEvents() {
-    $('#input-price-btn').addEventListener('click', (event) => {
+    $('#input-price-btn').addEventListener('click', () => {
       const price = Number(this.input.value);
+
       if (
         validation.lottomMinimumPrice(price) ||
         validation.lottomMaximumPrice(price) ||
