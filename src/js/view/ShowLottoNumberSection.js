@@ -23,18 +23,23 @@ class ShowLottoNumberSection extends Component {
 
   setLottoContainer() {
     this.$lottoContainer.innerHTML = '';
-    const { price, purchasedLottoNumbers } = store.getState();
-    const lottoNumber = price / LOTTO_PRICE_MINIMUM;
+    const { purchasedLottoNumbers } = store.getState();
+    const availablePurchaseLottoNumber = purchasedLottoNumbers.length;
     let lottoElement;
-    Array.from({ length: lottoNumber }).forEach((_, lottoNumberIndex) => {
-      if (purchasedLottoNumbers.length !== 0) {
-        lottoElement = Lotto(purchasedLottoNumbers[lottoNumberIndex]);
-      } else {
-        const lotto = this.createOneLotto();
-        lottoElement = Lotto(lotto);
+
+    Array.from({ length: availablePurchaseLottoNumber }).forEach(
+      (_, availablePurchaseLottoNumberIndex) => {
+        if (purchasedLottoNumbers.length !== 0) {
+          lottoElement = Lotto(
+            purchasedLottoNumbers[availablePurchaseLottoNumberIndex]
+          );
+        } else {
+          const lotto = this.createOneLotto();
+          lottoElement = Lotto(lotto);
+        }
+        this.$lottoContainer.appendChild(lottoElement);
       }
-      this.$lottoContainer.appendChild(lottoElement);
-    });
+    );
   }
 
   createOneLotto = () => {
