@@ -1,8 +1,8 @@
-import store from '../store/store.js';
-import Component from '../core/Component.js';
-import actionMap from '../actionMap.js';
-import { LOTTO_WIN_MONEY } from '../utils/constants.js';
 import { $ } from '../utils/dom.js';
+import Component from '../core/Component.js';
+import { LOTTO_WIN_MONEY } from '../utils/constants.js';
+import actionMap from '../actionMap.js';
+import store from '../store/store.js';
 
 class ShowResultSection extends Component {
   constructor(target) {

@@ -1,7 +1,4 @@
-import Component from '../core/Component.js';
-import Lotto from '../components/Lotto.js';
-import store from '../store/store.js';
-import { $, $$ } from '../utils/dom.js';
+import { $, $$, resetInputErrorStyle } from '../utils/dom.js';
 import {
   LOTTO_NUMBER_MAXIMUM,
   LOTTO_NUMBER_MINIMUM,

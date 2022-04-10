@@ -1,8 +1,8 @@
+import { $ } from '../utils/dom.js';
 import Component from '../core/Component.js';
+import actionMap from '../actionMap.js';
 import store from '../store/store.js';
 import validation from '../validation.js';
-import actionMap from '../actionMap.js';
-import { $ } from '../utils/dom.js';
 
 class BuyLottoSection extends Component {
   constructor(target) {

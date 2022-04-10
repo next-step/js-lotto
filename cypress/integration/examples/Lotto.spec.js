@@ -7,7 +7,6 @@ import {
   INVALID_MAXIMUM_LOTTO_NUMBER,
   INVALID_OVERLAP_LOTTO_NUMBER,
 } from '../../../src/js/utils/constants.js';
-import { $ } from '../../../src/js/utils/dom.js';
 
 const BASE_URL = '../../index.html';
 
