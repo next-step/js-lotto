@@ -3,3 +3,7 @@ export const $ = (selector, target = document.body) =>
 
 export const $$ = (selector, target = document.body) =>
   target.querySelectorAll(selector);
+
+export const resetInputErrorStyle = (selector) => {
+  selector.forEach((input) => input.classList.remove('error-input'));
+};
