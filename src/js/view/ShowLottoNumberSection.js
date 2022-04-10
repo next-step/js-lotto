@@ -25,7 +25,7 @@ class ShowLottoNumberSection extends Component {
     const { price, purchasedLottoNumbers } = store.getState();
     const lottoNumber = price / LOTTO_PRICE_MINIMUM;
     let lottoElement;
-    new Array(lottoNumber).fill(0).forEach((_, lottoNumberIndex) => {
+    Array.from({ length: lottoNumber }).forEach((_, lottoNumberIndex) => {
       if (purchasedLottoNumbers.length !== 0) {
         lottoElement = Lotto(purchasedLottoNumbers[lottoNumberIndex]);
       } else {
