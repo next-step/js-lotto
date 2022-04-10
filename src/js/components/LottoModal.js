@@ -16,7 +16,7 @@ class LottoModal {
     const { reStart } = this.$props;
 
     addEvent('click', '.modal-close', this.closeModal);
-    addEvent('click', 'button[type="button"]', () => {
+    addEvent('click', '.modal button[type="button"]', () => {
       reStart();
       this.render();
     });

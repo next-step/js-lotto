@@ -32,6 +32,9 @@
 .flex-1 {
   flex: 1 1 0%;
 }
+.flex-3 {
+  flex: 3;
+}
 
 .flex-auto {
   flex: 1 1 auto;

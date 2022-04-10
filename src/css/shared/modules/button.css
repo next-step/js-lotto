@@ -8,6 +8,16 @@
   cursor: pointer;
 }
 
+.btn-small {
+  height: 36px;
+  min-width: 54px;
+  padding: 0 16px;
+  border-radius: 4px;
+  outline: 0;
+  border-style: none;
+  cursor: pointer;
+}
+
 .btn-cyan {
   background-color: #00bcd4 !important;
   border-color: #00bcd4 !important;
@@ -15,4 +25,10 @@
 
 .btn.btn-cyan:hover {
   background-color: #018c9e !important;
+}
+
+.btn:disabled,
+.btn.btn-cyan:hover:disabled {
+  background-color: #aaa !important;
+  cursor: unset;
 }

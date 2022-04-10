@@ -1,9 +1,11 @@
-import LottoPrice from './components/LottoPrice.js';
-import { errorPrintAlert, validatePrice, validateWinningNumber } from './domains/errors.js';
-import { createLottoList, getLottoAmount, getRankBoard, getWinningNumber } from './domains/index.js';
+import LottoList from './components/LottoList.js';
+import { errorPrintAlert, validateManualLottoList, validatePrice, validateWinningNumber } from './domains/errors.js';
+import { createLottoList, getLottoAmount, getManualLottoList, getRankBoard, getWinningNumber } from './domains/index.js';
 import LottoWinningForm from './components/LottoWinningForm.js';
 import LottoModal from './components/LottoModal.js';
 import { $ } from './utils/index.js';
+import LottoManualPurchase from './components/LottoManualPurchase.js';
+import { getLottoManualPurchaseItemTemplate } from './components/Template.js';
 
 class App {
   $target;
@@ -12,11 +14,16 @@ class App {
     this.$target = $target;
     this.$store = $store;
 
-    const $LottoPrice = this.$target.querySelector('#lotto-price');
+    const $LottoManualPurchase = this.$target.querySelector('#lotto-purchase-container');
+    const $LottoList = this.$target.querySelector('#lotto-list-container');
     const $formWinning = this.$target.querySelector('#form-winning');
     const $LottoModal = this.$target.querySelector('.modal');
-    this.$LottoPrice = new LottoPrice($LottoPrice, {
-      buyLotto: this.buyLotto.bind(this),
+    this.$LottoManualPurchase = new LottoManualPurchase($LottoManualPurchase, {
+      handleSubmitPurchaseLotto: this.handleSubmitPurchaseLotto.bind(this),
+      store: this.$store,
+    });
+    this.$LottoList = new LottoList($LottoList, {
+      handleSubmitLottoPrice: this.handleSubmitLottoPrice.bind(this),
       store: this.$store,
     });
     this.$LottoWinningForm = new LottoWinningForm($formWinning, {
@@ -29,7 +36,7 @@ class App {
     });
   }
 
-  buyLotto(e) {
+  handleSubmitLottoPrice(e) {
     e.preventDefault();
     const price = e.target['price'].valueAsNumber;
     const { errorMsg } = validatePrice(price);
@@ -37,10 +44,9 @@ class App {
       errorPrintAlert(errorMsg);
       return;
     }
-    const lottoAmount = getLottoAmount(price);
-    const lottoList = createLottoList(lottoAmount);
-    this.$store.setState({ price, lottoList });
-    $('#form-winning').classList.remove('hidden');
+
+    this.$store.setState({ price });
+    $('#lotto-manual-purchase').classList.remove('hidden');
   }
 
   handleSubmitFormWinning(e) {
@@ -61,14 +67,46 @@ class App {
       rankBoard,
       isShowModal: true,
     });
+    $('.modal').classList.toggle('show-modal');
+  }
+
+  handleSubmitPurchaseLotto(e) {
+    e.preventDefault();
+    const { state } = this.$store;
+    const manualLottoList = getManualLottoList(e.target['manual-number']);
+    const { errorMsg } = validateManualLottoList(manualLottoList);
+    const autoLottoCount = getLottoAmount(state.price) - manualLottoList.length;
+    const autoLottoList = autoLottoCount ? createLottoList(autoLottoCount) : [];
+
+    if (errorMsg) {
+      errorPrintAlert(errorMsg);
+      return;
+    }
+
+    this.$store.setState({ lottoList: [...autoLottoList, ...manualLottoList] });
+    $('#form-winning').classList.remove('hidden');
+    $('#form-price input').disabled = true;
+    $('#form-price button').disabled = true;
+    Array.from(document.querySelectorAll('#lotto-manual-purchase button')).forEach(($button) => {
+      $button.disabled = true;
+    });
+    Array.from(document.querySelectorAll('#lotto-manual-purchase input')).forEach(($input) => {
+      $input.disabled = true;
+    });
   }
 
   reStart() {
+    const $lottoListUl = $('#lotto-list ul');
+
     this.$store.resetState();
-    this.$LottoPrice.render();
+    this.$LottoManualPurchase.render();
     this.$LottoWinningForm.render();
     this.$LottoModal.render();
+    $('#form-price input').value = '';
     $('#form-winning').classList.add('hidden');
+    $('#lotto-manual-purchase').classList.add('hidden');
+    $('.modal').classList.remove('show-modal');
+    $lottoListUl.classList.remove('open');
   }
 }
 

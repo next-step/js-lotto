@@ -60,13 +60,6 @@ export const getModalTemplate = ({ rankBoard, price }) => {
 
 export const getLottoPriceTemplate = ({ lottoList }) => {
   return `
-      <form class="mt-5" id="form-price">
-        <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요. </label>
-        <div class="d-flex">
-          <input type="number" class="w-100 mr-2 pl-2" placeholder="구입 금액" name="price" />
-          <button type="submit" class="btn btn-cyan">확인</button>
-        </div>
-      </form>
       <section class="mt-9 ${lottoList.length ? 'visible' : 'hidden'}" id="lotto-list">
         <div class="d-flex">
           <label class="flex-auto my-0" data-lotto="count-label">총 ${lottoList.length}개를 구매하였습니다.</label>
@@ -83,7 +76,7 @@ export const getLottoPriceTemplate = ({ lottoList }) => {
               (lotto) => `
               <li class="lotto-list-item d-flex items-center">
                   <span class="mx-1 text-4xl">🎟️ </span>
-                  <span class="lotto-detail text-xl mx-3 none">${lotto.join(', ')}</span>
+                  <span class="lotto-detail text-xl mx-3">${lotto.join(', ')}</span>
               </li>
           `
             )
@@ -102,22 +95,22 @@ export const getWinningFormTemplate = ({ winningNumber }) => {
           <div id="winning-input">
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
               winningNumber.number[0] ?? ''
-            }"/>
+            }" required />
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
               winningNumber.number[1] ?? ''
-            }"/>
+            }" required />
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
               winningNumber.number[2] ?? ''
-            }"/>
+            }" required />
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
               winningNumber.number[3] ?? ''
-            }"/>
+            }" required />
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
               winningNumber.number[4] ?? ''
-            }"/>
+            }" required />
             <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
               winningNumber.number[5] ?? ''
-            }"/>
+            }" required />
           </div>
         </div>
         <div class="bonus-number-container flex-grow">
@@ -125,10 +118,28 @@ export const getWinningFormTemplate = ({ winningNumber }) => {
           <div class="d-flex justify-center">
             <input type="number" class="bonus-number text-center" name="winning-number" max="45" min="1" value="${
               winningNumber.bonusNumber ?? ''
-            }"/>
+            }" required />
           </div>
         </div>
       </div>
       <button type="submit" class="open-result-modal-button mt-5 btn btn-cyan w-100">결과 확인하기</button>
     `;
+};
+
+export const getLottoManualPurchaseItemTemplate = () => {
+  return `
+    <li class="mb-2">
+      <div class="d-flex items-center">
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required />
+        <div class="flex-grow text-center">
+          <button type="button" class="btn btn-cyan delete-btn">삭제</button>
+        </div>
+      </div>
+    </li>
+  `;
 };

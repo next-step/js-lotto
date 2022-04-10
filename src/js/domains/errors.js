@@ -25,11 +25,6 @@ export const validatePrice = (price) => {
 export const validateWinningNumber = ({ number, bonusNumber }) => {
   const errors = { errorMsg: null };
 
-  if (number.length < NUMBER.LOTTO_LENGTH) {
-    errors.errorMsg = ERROR_MESSAGES.EMPTY_NUMBER;
-    return errors;
-  }
-
   if (!bonusNumber) {
     errors.errorMsg = ERROR_MESSAGES.EMPTY_BONUS_NUMBER;
     return errors;
@@ -45,4 +40,23 @@ export const validateWinningNumber = ({ number, bonusNumber }) => {
 
 export const errorPrintAlert = (message) => {
   alert(message);
+};
+
+const validateManualLottoNumber = (lottoNumber) => {
+  let errorMsg = null;
+
+  if (new Set([...lottoNumber]).size < NUMBER.LOTTO_LENGTH) {
+    errorMsg = ERROR_MESSAGES.DUPLICATED_NUMBER;
+    return errorMsg;
+  }
+
+  return errorMsg;
+};
+
+export const validateManualLottoList = (manualLottoList) => {
+  const errorMessages = manualLottoList
+    .map((lottoNumber) => validateManualLottoNumber(lottoNumber))
+    .filter((errorMsg) => errorMsg !== null);
+
+  return { errorMsg: errorMessages.length !== 0 ? errorMessages[0] : null };
 };

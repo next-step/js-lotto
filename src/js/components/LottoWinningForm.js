@@ -30,7 +30,6 @@ class LottoWinningForm {
   render() {
     const { state } = this.$props.store;
 
-    $('.modal').classList.toggle('show-modal');
     $('.modal').innerHTML = getModalTemplate(state);
     this.$target.innerHTML = getWinningFormTemplate(state);
   }

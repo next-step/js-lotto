@@ -14,3 +14,7 @@ export const addEvent = (eventType, selector, callback) => {
     callback(event);
   });
 };
+
+export const chunkArray = (arr, chunkNumber) => {
+  return Array.from(Array(Math.ceil(arr.length / chunkNumber)), (_, i) => arr.slice(i * chunkNumber, i * chunkNumber + chunkNumber));
+};

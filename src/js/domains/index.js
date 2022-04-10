@@ -1,4 +1,5 @@
 import { NUMBER, PRIZE_MONEY } from '../constants/index.js';
+import { chunkArray } from '../utils/index.js';
 
 export const getLottoAmount = (price) => price / NUMBER.MIN_PRICE;
 
@@ -70,4 +71,12 @@ export const getPriceRate = (price, rankBoard) => {
   }, 0);
 
   return (Number(winningPrice) / Number(price)) * 100 - 100;
+};
+
+export const getManualLottoList = ($inputNumberNodes) => {
+  if (!$inputNumberNodes) return [];
+
+  const manualNumberArr = Array.from($inputNumberNodes).map(({ value }) => Number(value));
+  const chunkNumbers = chunkArray(manualNumberArr, 6);
+  return chunkNumbers.map((numbers) => numbers.sort((a, b) => a - b));
 };
