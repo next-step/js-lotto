@@ -37,3 +37,7 @@ li span.lotto-detail {
   font-size: 1.25rem;
   margin-left: 12px;
 }
+
+.error-input {
+  border: solid 2px red;
+}

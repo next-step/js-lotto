@@ -1,27 +1,45 @@
+import { $, $$, resetInputErrorStyle } from '../utils/dom.js';
+import {
+  LOTTO_NUMBER_MAXIMUM,
+  LOTTO_NUMBER_MINIMUM,
+  LOTTO_PRICE_MINIMUM,
+} from '../utils/constants.js';
+
 import Component from '../core/Component.js';
 import Lotto from '../components/Lotto.js';
+import actionMap from '../actionMap.js';
 import store from '../store/store.js';
-import { $, $$ } from '../utils/dom.js';
-import { LOTTO_NUMBER_MAX, LOTTO_NUMBER_MIN } from '../utils/constants.js';
+import validation from '../validation.js';
 
 class ShowLottoNumberSection extends Component {
   constructor(target) {
     super(target);
 
     this.$lottoContainer = $('.lotto-container', this.$target);
+    this.$bonusNumberInput = $('[aria-label="bonus-number"]', this.$target);
+    this.purchasedLottoNumbers = [];
     this.render();
   }
 
   setLottoContainer() {
     this.$lottoContainer.innerHTML = '';
-    const { price } = store.getState();
-    const lottoNumber = price / 1000;
+    const { purchasedLottoNumbers } = store.getState();
+    const availablePurchaseLottoNumber = purchasedLottoNumbers.length;
+    let lottoElement;
 
-    new Array(lottoNumber).fill(0).forEach((_) => {
-      const lotto = this.createOneLotto();
-      const lottoElement = Lotto(lotto);
-      $('.lotto-container').appendChild(lottoElement);
-    });
+    Array.from({ length: availablePurchaseLottoNumber }).forEach(
+      (_, availablePurchaseLottoNumberIndex) => {
+        if (purchasedLottoNumbers.length !== 0) {
+          lottoElement = Lotto(
+            purchasedLottoNumbers[availablePurchaseLottoNumberIndex]
+          );
+        } else {
+          const lotto = this.createOneLotto();
+          lottoElement = Lotto(lotto);
+        }
+        this.$lottoContainer.appendChild(lottoElement);
+      }
+    );
   }
 
   createOneLotto = () => {
@@ -31,17 +49,29 @@ class ShowLottoNumberSection extends Component {
       if (lotto.includes(randomNumber)) {
         continue;
       }
-
       lotto.push(randomNumber);
     }
-
+    this.purchasedLottoNumbers.push(lotto);
     return lotto;
   };
 
   getLottoNumber = () => {
     return parseInt(
-      Math.random() * (LOTTO_NUMBER_MAX - LOTTO_NUMBER_MIN) + LOTTO_NUMBER_MIN
+      Math.random() * (LOTTO_NUMBER_MAXIMUM - LOTTO_NUMBER_MINIMUM) +
+        LOTTO_NUMBER_MINIMUM
     );
+  };
+
+  setStoreWinLottoNumber = (lottoNumbers) => {
+    actionMap?.SET_WIN_LOTTO_NUMBER(lottoNumbers);
+  };
+
+  setStoreLottoNumber = (lottoNumber) => {
+    actionMap?.SET_PURCHASED_LOTTO_NUMBERS(lottoNumber);
+  };
+
+  setStoreLottoBonusNumber = (bonusNumber) => {
+    actionMap?.SET_PURCHASED_LOTTO_BONUS_NUMBER(bonusNumber);
   };
 
   setEvents() {
@@ -59,17 +89,39 @@ class ShowLottoNumberSection extends Component {
         );
       }
     });
+
+    $('#show-result-btn').addEventListener('click', () => {
+      const $winningNumber = $$('.winning-number');
+      resetInputErrorStyle($winningNumber);
+      if (
+        validation.emptyLottoNumber($winningNumber) ||
+        validation.lottoNumberUnderMinimum($winningNumber) ||
+        validation.lottoNumberOverMaximum($winningNumber) ||
+        validation.lottoNumberOverlap($winningNumber)
+      )
+        return;
+      const lottoNumbers = [...$$('[aria-label="win-number"]')].reduce(
+        (a, b) => [...a, Number(b.value)],
+        []
+      );
+      this.setStoreWinLottoNumber(lottoNumbers);
+      this.setStoreLottoNumber(this.purchasedLottoNumbers);
+      this.setStoreLottoBonusNumber(Number(this.$bonusNumberInput.value));
+      $('.modal').classList.add('open');
+    });
   }
 
   render() {
     const { price } = store.getState();
-    if (price > 1000) $('#lotto-num-form').classList.remove('display-none');
+    if (price >= LOTTO_PRICE_MINIMUM)
+      $('#lotto-num-form').classList.remove('display-none');
+    else $('#lotto-num-form').classList.add('display-none');
     this.setLottoContainer();
   }
 
   template() {
     const { price } = store.getState();
-    const lottoNumber = price / 1000;
+    const lottoNumber = price / LOTTO_PRICE_MINIMUM;
 
     return `
     <section class="mt-9">
@@ -91,29 +143,35 @@ class ShowLottoNumberSection extends Component {
         <div class="d-flex">
         <div>
             <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
-            <div>
+            <div class="lotto-winning-numbers">
             <input
                 type="number"
+                aria-label="win-number"
                 class="winning-number mx-1 text-center"
             />
             <input
                 type="number"
+                aria-label="win-number"
                 class="winning-number mx-1 text-center"
             />
             <input
                 type="number"
+                aria-label="win-number"
                 class="winning-number mx-1 text-center"
             />
             <input
                 type="number"
+                aria-label="win-number"
                 class="winning-number mx-1 text-center"
             />
             <input
                 type="number"
+                aria-label="win-number"
                 class="winning-number mx-1 text-center"
             />
             <input
                 type="number"
+                aria-label="win-number"
                 class="winning-number mx-1 text-center"
             />
             </div>
@@ -121,12 +179,13 @@ class ShowLottoNumberSection extends Component {
         <div class="bonus-number-container flex-grow">
             <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
             <div class="d-flex justify-center">
-            <input type="number" class="bonus-number text-center" />
+            <input type="number" aria-label="bonus-number" class="winning-number text-center" />
             </div>
         </div>
         </div>
         <button
         type="button"
+        id="show-result-btn"
         class="open-result-modal-button mt-5 btn btn-cyan w-100"
         >
         결과 확인하기
