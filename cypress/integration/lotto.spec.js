@@ -13,10 +13,22 @@ const handleInputLottoNumbers = ({ target, numbers }) => {
     });
   });
 };
-const addBonusNumber = (numbers) => {
+const addNumber = (numbers) => {
   const lotto = new Set(numbers);
   while (lotto.size < NUMBER.LOTTO_LENGTH + 1) {
     const num = Math.floor(Math.random() * 44) + 1;
+    lotto.add(num);
+  }
+  return [...lotto];
+};
+
+const changeNumber = ({ numbers, changeCount }) => {
+  const lotto = new Set(numbers.slice(changeCount));
+  while (lotto.size < NUMBER.LOTTO_LENGTH + 1) {
+    const num = Math.floor(Math.random() * 44) + 1;
+    if (numbers.includes(num)) {
+      continue;
+    }
     lotto.add(num);
   }
   return [...lotto];
@@ -27,83 +39,52 @@ describe('로또 테스트', () => {
     cy.visit('http://localhost:5500/');
   });
 
-  it('첫화면 렌더링 시에, 로또리스트, 당첨번호 form 비노출, 수동구매 form 노출', () => {
-    cy.get('#lotto-manual-purchase').should('be.visible');
-    cy.get('#lotto-list').should('not.be.visible');
+  it('첫화면 렌더링 시에, 로또리스트, 당첨번호 form 비노출, 수동구매 form 비노출', () => {
+    cy.get('#lotto-manual-purchase').should('not.be.visible');
+    cy.get('#lotto-list-container').should('not.be.visible');
     cy.get('#form-winning').should('not.be.visible');
   });
 
   context('로또 금액 입력이 잘못된 경우에 따른 경고창 노출', () => {
     it('로또 금액 입력 없이 확인 버튼 클릭할 때 경고창 노출', () => {
-      const stub = cy.stub();
+      cy.on('window:alert', cy.stub().as('alerted'));
 
-      cy.on('window:alert', stub);
-      cy.get('#form-price button[type=submit]')
-        .click()
-        .then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGES.EMPTY_MONEY);
-        });
+      cy.get('#form-price button[type=submit]').click();
+      cy.get('@alerted').should('have.been.calledOnce').and('have.been.calledWith', ERROR_MESSAGES.EMPTY_MONEY);
     });
     it('로또 금액을 1,000원 이하로 구매하는 경우 경고창 노출', () => {
       handleInputPrice(500);
-      const stub = cy.stub();
+      cy.on('window:alert', cy.stub().as('alerted'));
 
-      cy.on('window:alert', stub);
-      cy.get('#form-price button[type=submit]')
-        .click()
-        .then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGES.MIN_PRICE);
-        });
+      cy.get('#form-price button[type=submit]').click();
+      cy.get('@alerted').should('have.been.calledOnce').and('have.been.calledWith', ERROR_MESSAGES.MIN_PRICE);
     });
     it('로또 금액을 100,000원 초과로 구매하는 경우 경고창 노출', () => {
       handleInputPrice(100001);
-      const stub = cy.stub();
+      cy.on('window:alert', cy.stub().as('alerted'));
 
-      cy.on('window:alert', stub);
-      cy.get('#form-price button[type=submit]')
-        .click()
-        .then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGES.MAX_PRICE);
-        });
+      cy.get('#form-price button[type=submit]').click();
+      cy.get('@alerted').should('have.been.calledOnce').and('have.been.calledWith', ERROR_MESSAGES.MAX_PRICE);
     });
     it('로또 금액단위가 맞지않는 경우 경고창 노출', () => {
       handleInputPrice(2022);
-      const stub = cy.stub();
+      cy.on('window:alert', cy.stub().as('alerted'));
 
-      cy.on('window:alert', stub);
-      cy.get('#form-price button[type=submit]')
-        .click()
-        .then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGES.BUY_UNIT);
-        });
+      cy.get('#form-price button[type=submit]').click();
+      cy.get('@alerted').should('have.been.calledOnce').and('have.been.calledWith', ERROR_MESSAGES.BUY_UNIT);
     });
   });
 
   context('수동 구매 금액 입력이 잘못된 경우에 따른 경고창 노출', () => {
-    it('수동 구매 번호를 입력 안한 경우', () => {
-      const alertStub = cy.stub();
-
-      handlePurchaseLotto(3000);
-      cy.get('#lotto-manual-purchase').should('be.visible');
-      cy.get('#lotto-manual-purchase button.manual-purchase-btn').click();
-      cy.get('#lotto-manual-purchase button[type=submit]')
-        .click()
-        .then(() => {
-          expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGES.EMPTY_NUMBER);
-        });
-    });
     it('수동 구매 번호를 중복 입력한 경우', () => {
-      const alertStub = cy.stub();
+      cy.on('window:alert', cy.stub().as('alerted'));
 
       handlePurchaseLotto(3000);
       cy.get('#lotto-manual-purchase').should('be.visible');
       cy.get('#lotto-manual-purchase button.manual-purchase-btn').click();
       handleInputLottoNumbers({ target: cy.get('#lotto-manual-list'), numbers: [1, 1, 1, 1, 1, 1] });
-      cy.get('#lotto-manual-purchase button[type=submit]')
-        .click()
-        .then(() => {
-          expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGES.DUPLICATED_NUMBER);
-        });
+      cy.get('#lotto-manual-purchase button[type=submit]').click();
+      cy.get('@alerted').should('have.been.calledOnce').and('have.been.calledWith', ERROR_MESSAGES.DUPLICATED_NUMBER);
     });
   });
 
@@ -140,69 +121,110 @@ describe('로또 테스트', () => {
   });
 
   context('당첨 번호를 잘못입력한 경우에 따른 경고창 노출', () => {
-    it('당첨 번호 입력이 없는 경우', () => {
-      const stub = cy.stub();
-      handlePurchaseLotto(3000);
-      cy.get('#lotto-manual-purchase').should('be.visible');
-      cy.get('#lotto-manual-purchase button[type=submit]').click();
-
-      cy.on('window:alert', stub);
-      cy.get('#form-winning button[type=submit]')
-        .click()
-        .then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGES.EMPTY_NUMBER);
-        });
-    });
-
-    it('보너스 번호 입력이 없는 경우', () => {
-      const stub = cy.stub();
-      handlePurchaseLotto(3000);
-      cy.get('#lotto-manual-purchase').should('be.visible');
-      cy.get('#lotto-manual-purchase button[type=submit]').click();
-
-      handleInputLottoNumbers({ target: cy.get('#form-winning'), numbers: [1, 2, 3, 4, 5, 6] });
-      cy.on('window:alert', stub);
-      cy.get('#form-winning button[type=submit]')
-        .click()
-        .then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGES.EMPTY_BONUS_NUMBER);
-        });
-    });
-
     it('중복되는 번호를 입력한 경우', () => {
-      const stub = cy.stub();
+      cy.on('window:alert', cy.stub().as('alerted'));
+
       handlePurchaseLotto(1000);
       cy.get('#lotto-manual-purchase').should('be.visible');
       cy.get('#lotto-manual-purchase button[type=submit]').click();
 
-      handleInputLottoNumbers({ target: cy.get('#form-winning'), numbers: [1, 1, 1, 1, 1, 1] });
-      cy.on('window:alert', stub);
-      cy.get('#form-winning button[type=submit]')
-        .click()
-        .then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGES.DUPLICATED_NUMBER);
-        });
+      handleInputLottoNumbers({ target: cy.get('#form-winning'), numbers: [1, 1, 1, 1, 1, 1, 1] });
+      cy.get('#form-winning button[type=submit]').click();
+      cy.get('@alerted').should('have.been.calledOnce').and('have.been.calledWith', ERROR_MESSAGES.DUPLICATED_NUMBER);
     });
   });
 
-  context('당첨번호가 정상적으로 입력된 경우', () => {
-    it('결과 확인 버튼 클릭시 모달 등장 당첨통계 수익률 표시', () => {
+  context('결과 확인 버튼 클릭시 모달 등장 당첨통계 수익률 표시', () => {
+    it('1등 당첨한 경우', () => {
       handlePurchaseLotto(1000);
       cy.get('#lotto-manual-purchase').should('be.visible');
       cy.get('#lotto-manual-purchase button[type=submit]').click();
 
       cy.get('#lotto-list ul li span.lotto-detail').then(($span) => {
         const lottoNumbers = $span.text().split(', ').map(Number);
-        const lottoNumbersWithBonus = addBonusNumber(lottoNumbers);
+        const lottoNumbersWithBonus = addNumber(lottoNumbers);
         handleInputLottoNumbers({ target: cy.get('#form-winning'), numbers: lottoNumbersWithBonus });
-      });
-      cy.get('#form-winning button').click();
 
-      cy.get('.modal').should('be.visible');
-      cy.get('.modal tr').last().get('td').last().should('have.text', '1개');
-      cy.get('.modal p').should('have.text', '당신의 총 수익률은 199999900%입니다.');
+        cy.get('#form-winning button[type="submit"]').click();
+        cy.get('.modal').should('be.visible');
+        cy.get('.modal tr').eq(5).should('contain', '1개');
+        cy.get('.modal p').should('have.text', '당신의 총 수익률은 199999900%입니다.');
+      });
     });
 
+    it('2등 당첨한 경우', () => {
+      handlePurchaseLotto(1000);
+      cy.get('#lotto-manual-purchase').should('be.visible');
+      cy.get('#lotto-manual-purchase button[type=submit]').click();
+
+      cy.get('#lotto-list ul li span.lotto-detail').then(($span) => {
+        const _lottoNumbers = $span.text().split(', ').map(Number);
+        const lottoNumbers = addNumber(_lottoNumbers);
+        const temp = lottoNumbers[5];
+        lottoNumbers[5] = lottoNumbers[6];
+        lottoNumbers[6] = temp;
+
+        handleInputLottoNumbers({ target: cy.get('#form-winning'), numbers: lottoNumbers });
+      });
+      cy.get('#form-winning button[type="submit"]').click();
+      cy.get('.modal').should('be.visible');
+      cy.get('.modal tr').eq(4).should('contain', '1개');
+      cy.get('.modal p').should('have.text', '당신의 총 수익률은 2999900%입니다.');
+    });
+
+    it('3등 당첨한 경우', () => {
+      handlePurchaseLotto(1000);
+      cy.get('#lotto-manual-purchase').should('be.visible');
+      cy.get('#lotto-manual-purchase button[type=submit]').click();
+
+      cy.get('#lotto-list ul li span.lotto-detail').then(($span) => {
+        const _lottoNumbers = $span.text().split(', ').map(Number);
+        const lottoNumbersWithBonus = changeNumber({ numbers: _lottoNumbers, changeCount: 1 });
+        handleInputLottoNumbers({ target: cy.get('#form-winning'), numbers: lottoNumbersWithBonus });
+      });
+      cy.get('#form-winning button[type="submit"]').click();
+
+      cy.get('.modal').should('be.visible');
+      cy.get('.modal tr').eq(3).should('contain', '1개');
+      cy.get('.modal p').should('have.text', '당신의 총 수익률은 149900%입니다.');
+    });
+
+    it('4등 당첨한 경우', () => {
+      handlePurchaseLotto(1000);
+      cy.get('#lotto-manual-purchase').should('be.visible');
+      cy.get('#lotto-manual-purchase button[type=submit]').click();
+
+      cy.get('#lotto-list ul li span.lotto-detail').then(($span) => {
+        const _lottoNumbers = $span.text().split(', ').map(Number);
+        const lottoNumbersWithBonus = changeNumber({ numbers: _lottoNumbers, changeCount: 2 });
+        handleInputLottoNumbers({ target: cy.get('#form-winning'), numbers: lottoNumbersWithBonus });
+      });
+      cy.get('#form-winning button[type="submit"]').click();
+
+      cy.get('.modal').should('be.visible');
+      cy.get('.modal tr').eq(2).should('contain', '1개');
+      cy.get('.modal p').should('have.text', '당신의 총 수익률은 4900%입니다.');
+    });
+
+    it('5등 당첨한 경우', () => {
+      handlePurchaseLotto(1000);
+      cy.get('#lotto-manual-purchase').should('be.visible');
+      cy.get('#lotto-manual-purchase button[type=submit]').click();
+
+      cy.get('#lotto-list ul li span.lotto-detail').then(($span) => {
+        const _lottoNumbers = $span.text().split(', ').map(Number);
+        const lottoNumbersWithBonus = changeNumber({ numbers: _lottoNumbers, changeCount: 3 });
+        handleInputLottoNumbers({ target: cy.get('#form-winning'), numbers: lottoNumbersWithBonus });
+      });
+      cy.get('#form-winning button[type="submit"]').click();
+
+      cy.get('.modal').should('be.visible');
+      cy.get('.modal tr').eq(1).should('contain', '1개');
+      cy.get('.modal p').should('have.text', '당신의 총 수익률은 400%입니다.');
+    });
+  });
+
+  context('당첨번호가 정상적으로 입력된 경우', () => {
     it('모달에서 닫기버튼 누르면 모달 숨기기', () => {
       handlePurchaseLotto(1000);
       cy.get('#lotto-manual-purchase').should('be.visible');
@@ -210,10 +232,10 @@ describe('로또 테스트', () => {
 
       cy.get('#lotto-list ul li span.lotto-detail').then(($span) => {
         const lottoNumbers = $span.text().split(', ').map(Number);
-        const lottoNumbersWithBonus = addBonusNumber(lottoNumbers);
+        const lottoNumbersWithBonus = addNumber(lottoNumbers);
         handleInputLottoNumbers({ target: cy.get('#form-winning'), numbers: lottoNumbersWithBonus });
       });
-      cy.get('#form-winning button').click();
+      cy.get('#form-winning button[type="submit"]').click();
 
       cy.get('.modal').should('be.visible');
       cy.get('.modal .modal-close').click();
@@ -227,10 +249,10 @@ describe('로또 테스트', () => {
 
       cy.get('#lotto-list ul li span.lotto-detail').then(($span) => {
         const lottoNumbers = $span.text().split(', ').map(Number);
-        const lottoNumbersWithBonus = addBonusNumber(lottoNumbers);
+        const lottoNumbersWithBonus = addNumber(lottoNumbers);
         handleInputLottoNumbers({ target: cy.get('#form-winning'), numbers: lottoNumbersWithBonus });
       });
-      cy.get('#form-winning button').click();
+      cy.get('#form-winning button[type="submit"]').click();
 
       cy.get('.modal').should('be.visible');
       cy.get('.modal button').click();
