@@ -12,18 +12,16 @@ class LottoWinningForm {
   setEvent() {
     const { handleSubmitFormWinning } = this.$props;
 
-    addEvent('submit', '#form-winning', (e) => {
-      handleSubmitFormWinning(e);
-      this.render();
-    });
+    addEvent('submit', '#form-winning', handleSubmitFormWinning);
     addEvent('input', '#winning-input', this.changeInput);
   }
 
   changeInput({ target }) {
     const value = target.value;
-    const $winningBonusInput = $('input.bonus-number');
+    const index = Number(target.dataset.winningNumberIndex);
+
     if (value.length > 1) {
-      target.nextElementSibling ? target.nextElementSibling.focus() : $winningBonusInput.focus();
+      document.querySelector(`[data-winning-number-index='${index + 1}']`)?.focus();
     }
   }
 

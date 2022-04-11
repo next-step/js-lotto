@@ -44,7 +44,7 @@ const getRank = (lottoNumber, winningNumber) => {
   if (winningCount === 6) {
     return 1;
   }
-  if (winningCount === 5 && inputNumber.includes(winningNumber.bonusNumber)) {
+  if (winningCount === 5 && lottoNumber.includes(winningNumber.bonusNumber)) {
     return 2;
   }
 

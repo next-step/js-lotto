@@ -12,7 +12,6 @@ const initState = {
     4: 0,
     5: 0,
   },
-  isShowModal: false,
 };
 
 class Store {

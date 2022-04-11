@@ -1,11 +1,10 @@
 import LottoList from './components/LottoList.js';
-import { errorPrintAlert, validateManualLottoList, validatePrice, validateWinningNumber } from './domains/errors.js';
-import { createLottoList, getLottoAmount, getManualLottoList, getRankBoard, getWinningNumber } from './domains/index.js';
 import LottoWinningForm from './components/LottoWinningForm.js';
 import LottoModal from './components/LottoModal.js';
-import { $ } from './utils/index.js';
 import LottoManualPurchase from './components/LottoManualPurchase.js';
-import { getLottoManualPurchaseItemTemplate } from './components/Template.js';
+import { errorPrintAlert, validateManualLottoList, validatePrice, validateWinningNumber } from './domains/errors.js';
+import { createLottoList, getLottoAmount, getManualLottoList, getRankBoard, getWinningNumber } from './domains/index.js';
+import { $ } from './utils/index.js';
 
 class App {
   $target;
@@ -65,8 +64,8 @@ class App {
     this.$store.setState({
       winningNumber,
       rankBoard,
-      isShowModal: true,
     });
+    this.$LottoWinningForm.render();
     $('.modal').classList.toggle('show-modal');
   }
 
@@ -84,6 +83,7 @@ class App {
     }
 
     this.$store.setState({ lottoList: [...autoLottoList, ...manualLottoList] });
+    this.$LottoManualPurchase.render();
     $('#form-winning').classList.remove('hidden');
     $('#form-price input').disabled = true;
     $('#form-price button').disabled = true;
@@ -107,6 +107,14 @@ class App {
     $('#lotto-manual-purchase').classList.add('hidden');
     $('.modal').classList.remove('show-modal');
     $lottoListUl.classList.remove('open');
+    $('#form-price input').disabled = false;
+    $('#form-price button').disabled = false;
+    Array.from(document.querySelectorAll('#lotto-manual-purchase button')).forEach(($button) => {
+      $button.disabled = false;
+    });
+    Array.from(document.querySelectorAll('#lotto-manual-purchase input')).forEach(($input) => {
+      $input.disabled = false;
+    });
   }
 }
 

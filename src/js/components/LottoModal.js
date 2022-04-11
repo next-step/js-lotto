@@ -1,5 +1,3 @@
-import Component from '../core/Component.js';
-import { getPriceRate } from '../domains/index.js';
 import { $, addEvent } from '../utils/index.js';
 import { getModalTemplate } from './Template.js';
 
@@ -16,10 +14,7 @@ class LottoModal {
     const { reStart } = this.$props;
 
     addEvent('click', '.modal-close', this.closeModal);
-    addEvent('click', '.modal button[type="button"]', () => {
-      reStart();
-      this.render();
-    });
+    addEvent('click', '.modal button[type="button"]', reStart);
   }
 
   render() {
@@ -28,7 +23,6 @@ class LottoModal {
 
   closeModal() {
     $('.modal').classList.toggle('show-modal');
-    $('#form-winning').classList.add('hidden');
   }
 }
 

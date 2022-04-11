@@ -93,32 +93,81 @@ export const getWinningFormTemplate = ({ winningNumber }) => {
         <div>
           <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
           <div id="winning-input">
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.number[0] ?? ''
-            }" required />
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.number[1] ?? ''
-            }" required />
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.number[2] ?? ''
-            }" required />
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.number[3] ?? ''
-            }" required />
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.number[4] ?? ''
-            }" required />
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.number[5] ?? ''
-            }" required />
+            <input
+              type="number"
+              class="winning-number mx-1 text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.number[0] ?? ''}"
+              required
+              data-winning-number-index="1"
+            />
+            <input
+              type="number"
+              class="winning-number mx-1 text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.number[1] ?? ''}"
+              required
+              data-winning-number-index="2"
+            />
+            <input
+              type="number"
+              class="winning-number mx-1 text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.number[2] ?? ''}"
+              required
+              data-winning-number-index="3"
+            />
+            <input
+              type="number"
+              class="winning-number mx-1 text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.number[3] ?? ''}"
+              required
+              data-winning-number-index="4"
+            />
+            <input
+              type="number"
+              class="winning-number mx-1 text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.number[4] ?? ''}"
+              required
+              data-winning-number-index="5"
+            />
+            <input
+              type="number"
+              class="winning-number mx-1 text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.number[5] ?? ''}"
+              required
+              data-winning-number-index="6"
+            />
           </div>
         </div>
         <div class="bonus-number-container flex-grow">
           <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
           <div class="d-flex justify-center">
-            <input type="number" class="bonus-number text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.bonusNumber ?? ''
-            }" required />
+            <input
+              type="number"
+              class="bonus-number text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.bonusNumber ?? ''}"
+              required
+              data-winning-number-index="7"
+            />
           </div>
         </div>
       </div>
@@ -127,15 +176,28 @@ export const getWinningFormTemplate = ({ winningNumber }) => {
 };
 
 export const getLottoManualPurchaseItemTemplate = () => {
+  const liCount = document.querySelectorAll('#lotto-manual-list li').length;
   return `
     <li class="mb-2">
       <div class="d-flex items-center">
-        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required />
-        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required />
-        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required />
-        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required />
-        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required />
-        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required data-manual-number-index="${
+          liCount * 6 + 1
+        }" />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required data-manual-number-index="${
+          liCount * 6 + 2
+        }" />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required data-manual-number-index="${
+          liCount * 6 + 3
+        }" />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required data-manual-number-index="${
+          liCount * 6 + 4
+        }" />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required data-manual-number-index="${
+          liCount * 6 + 5
+        }" />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required data-manual-number-index="${
+          liCount * 6 + 6
+        }" />
         <div class="flex-grow text-center">
           <button type="button" class="btn btn-cyan delete-btn">삭제</button>
         </div>

@@ -19,12 +19,18 @@ class LottoManualPurchase {
       if (target.classList.contains('manual-purchase-btn')) {
         this.addManualPurchaseItem();
       }
-      return;
     });
-    addEvent('submit', '#lotto-manual-purchase', (e) => {
-      handleSubmitPurchaseLotto(e);
-      this.render();
-    });
+    addEvent('submit', '#lotto-manual-purchase', handleSubmitPurchaseLotto);
+    addEvent('input', '#lotto-manual-list', this.changeInput);
+  }
+
+  changeInput({ target }) {
+    const value = target.value;
+    const index = Number(target.dataset.manualNumberIndex);
+
+    if (value.length > 1) {
+      document.querySelector(`[data-manual-number-index='${index + 1}']`)?.focus();
+    }
   }
 
   deleteManualPurchaseItem(target) {
