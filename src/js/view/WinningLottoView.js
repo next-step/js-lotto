@@ -1,6 +1,6 @@
 import AbstractView from './AbstractView.js';
 import WinningLotto from '../WinningLotto.js';
-import wallet from '../data/wallet.js';
+import Wallet from '../data/Wallet.js';
 import { WINNING_RESULT_CASE } from '../constants/lotto.js';
 
 const $winingLottoForm = document.querySelector('#winning-result-form');
@@ -72,14 +72,14 @@ class WinningLottoView extends AbstractView {
     );
     $winningResultPanel.replaceChildren($panel);
     $resultRevenue.innerHTML = `당신의 총 수익률은 ${
-      WinningLotto.totalRevenue(winningResult) / wallet.purchasedPrice()
+      WinningLotto.totalRevenue(winningResult) / Wallet.purchasedPrice
     }%입니다.`;
   }
 
   static #openModal() {
     $winningResultModal.classList.add('open');
     const winningResult = WinningLotto.winningResult({
-      lottoList: wallet.lottos(),
+      lottoList: Wallet.lottos,
       winningNumbers: WinningLottoView.#winningNumbers(),
       bonusNumber: WinningLottoView.#winningBonusNumber(),
     });

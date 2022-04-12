@@ -1,7 +1,7 @@
 import AbstractView from './AbstractView.js';
 import LottoVendingMachine from '../LottoVendingMachine.js';
 import Purchase from '../Purchase.js';
-import wallet from '../data/wallet.js';
+import Wallet from '../data/Wallet.js';
 
 const $purchaseLottoForm = document.querySelector('#purchase-lotto-form');
 const $purchaseMoney = $purchaseLottoForm.querySelector('input');
@@ -76,8 +76,8 @@ class PurchaseLottoView extends AbstractView {
     const money = new FormData(event.currentTarget).get('money');
     event.preventDefault();
     if (Purchase.isValidMoney(money)) {
-      wallet.setLottos(LottoVendingMachine.purchaseLotto(money));
-      PurchaseLottoView.#changePurchasedLotto(wallet.lottos());
+      Wallet.setLottos(LottoVendingMachine.purchaseLotto(money));
+      PurchaseLottoView.#changePurchasedLotto(Wallet.lottos);
       onPurchasedLotto();
     }
   }
