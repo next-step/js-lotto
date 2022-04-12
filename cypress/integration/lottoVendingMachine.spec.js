@@ -27,8 +27,11 @@ Cypress.Commands.add('clickPurchase', () => {
 Cypress.Commands.add('isEqualPurchaseAmount', (value) => {
   cy.$purchasedLottoSection().get('.my-0 span').should('have.text', value);
 });
-Cypress.Commands.add('togglePurchasedLottoNumbers', () =>
-  cy.get('.lotto-numbers-toggle-button').click()
+Cypress.Commands.add('showLottoNumbers', () =>
+  cy.get('.lotto-numbers-toggle-button').check({ force: true })
+);
+Cypress.Commands.add('hideLottoNumbers', () =>
+  cy.get('.lotto-numbers-toggle-button').uncheck({ force: true })
 );
 
 Cypress.Commands.add('showWinningResult', () => cy.get('form.mt-9').submit());
@@ -135,8 +138,21 @@ describe('로또 자판기', () => {
       cy.inputMoney(2000);
       cy.clickPurchase().then(() => {
         cy.$purchasedLottoNumbers().should('not.be.visible');
-        cy.togglePurchasedLottoNumbers().then(() => {
+        cy.showLottoNumbers().then(() => {
           cy.$purchasedLottoNumbers().should('be.visible');
+        });
+      });
+    });
+
+    it('구매 후 토글 클릭시 로또 번호 보이기 숨기기', () => {
+      cy.inputMoney(2000);
+      cy.clickPurchase().then(() => {
+        cy.$purchasedLottoNumbers().should('not.be.visible');
+        cy.showLottoNumbers().then(() => {
+          cy.$purchasedLottoNumbers().should('be.visible');
+        });
+        cy.hideLottoNumbers().then(() => {
+          cy.$purchasedLottoNumbers().should('not.be.visible');
         });
       });
     });
