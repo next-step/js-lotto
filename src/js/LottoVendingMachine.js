@@ -1,5 +1,5 @@
 import { LOTTO_PRICE } from './constants/lotto.js';
-import { Lotto } from './lotto.js';
+import { Lotto } from './Lotto.js';
 
 export default class LottoVendingMachine {
   static purchaseLotto(money) {
