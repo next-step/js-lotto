@@ -1,3 +1,5 @@
+import { LOTTO_PRICE } from '../constants/lotto.js';
+
 const wallet = (function () {
   let purchasedLottos;
 
@@ -13,7 +15,11 @@ const wallet = (function () {
     purchasedLottos = null;
   }
 
-  return { lottos, setLottos, removeAllLottos };
+  function purchasedPrice() {
+    return this.lottos().length * LOTTO_PRICE;
+  }
+
+  return { lottos, setLottos, purchasedPrice };
 })();
 
 export default wallet;
