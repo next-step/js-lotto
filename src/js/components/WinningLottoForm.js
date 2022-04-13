@@ -1,40 +1,38 @@
 import LottoNumber from "../domain/LottoNumber.js";
+import WinningNumbers from "../domain/WinningNumbers.js";
 
 export default class WinningLottoForm {
-    props;
-    winningNumbers;
-    winningLotto;
-
-
     constructor(props) {
         this.$winngingArea = document.querySelector("#lotto-winning-area");
         this.props = props;
-
-        this.#render();
-        this.#mounted();
     }
 
-    #render() {
+    render() {
         this.$winngingArea.innerHTML = this.getWinningTemplate();
     }
 
-    #mounted() {
+    mounted() {
         document.querySelector("#open-result-modal-button").addEventListener("click", () => {
-            this.onClickResultModelButton();
+            this.onClickResultModalButton();
         });
         this.$winningNumbers = document.querySelectorAll(".winning-number");
         this.$bonusNumber = document.querySelector(".bonus-number");
     }
 
-    getWinningNumbers() {
-        return this.winningNumbers;
-    }
+    onClickResultModalButton() {
+        try {
+            const winningNumbers = Array.from(this.$winningNumbers)
+                .filter((data) => {
+                    return data.value !== "";
+                })
+                .map((number) => Number(number.value));
+            const bonusNumber = Number(this.$bonusNumber.value);
 
-    onClickResultModelButton() {
-        const winningNumbers = Array.from(this.$winningNumbers).filter((data => {return data.value !== ''})).map((number) => Number(number.value));
-        const bonusNumber = Number(this.$bonusNumber.value);
-
-        this.props.onReward(winningNumbers, bonusNumber);
+            WinningNumbers.validate(winningNumbers, bonusNumber);
+            this.props.onReward(winningNumbers, bonusNumber);
+        } catch (error) {
+            alert(error.message);
+        }
     }
 
     getWinningTemplate() {
@@ -62,5 +60,9 @@ export default class WinningLottoForm {
             </div>
             <button type="button" id="open-result-modal-button" class="open-result-modal-button mt-5 btn btn-cyan w-100">결과 확인하기</button>
         </form>`;
+    }
+
+    onReset() {
+        this.$winngingArea.innerHTML = "";
     }
 }

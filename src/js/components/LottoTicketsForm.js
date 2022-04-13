@@ -61,4 +61,9 @@ export default class LottoTicketsForm {
             )
             .join("");
     }
+
+    onReset() {
+        this.$lottoAmountArea.innerHTML = "";
+        this.$lottoTicketArea.innerHTML = "";
+    }
 }

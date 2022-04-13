@@ -54,4 +54,8 @@ export default class LottoPurchaseForm {
     #onSubmit() {
         this.onPurchase(this.purchasePriceInput.value);
     }
+
+    onReset() {
+        this.purchasePriceInput.value = "";
+    }
 }

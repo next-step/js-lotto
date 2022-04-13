@@ -1,28 +1,12 @@
-import LottoTickets from "./LottoTickets.js";
+import LottoShop from "./LottoShop.js";
 import Winning from "./Winning.js";
-import WinningNumbers from "./WinningNumbers.js";
-
-const WINNINGS = {
-    0: Winning.getWinning(0, 0),
-    1: Winning.getWinning(0, 0),
-    2: Winning.getWinning(0, 0),
-    3: Winning.getWinning(0, 5_000),
-    4: Winning.getWinning(0, 50_000),
-    5: Winning.getWinning(0, 1_500_000),
-    "5+": Winning.getWinning(0, 30_000_000),
-    6: Winning.getWinning(0, 2_000_000_000),
-};
-const LOTTO_UNIT = 1000;
 
 export default class LottoReward {
-    static rating;
-    static rate;
+    rate;
     winnings;
 
-    constructor(props) {
-        WinningNumbers.validate(props.winningNumbers, props.bonusNumber);
+    constructor() {
         this.setWinnings();
-        this.compute(props)
     }
 
     setWinnings() {
@@ -39,17 +23,20 @@ export default class LottoReward {
     }
 
     compute(props) {
-        this.computeRating(props);
+        this.lottos = props.lottos;
+        this.winningNumbers = props.winningNumbers;
+        this.bonusNumber = props.bonusNumber;
+
+        this.setWinnings();
+        this.computeRating();
         this.computeRate();
     }
 
-    computeRating({ lottos, winningNumbers, bonusNumber }) {
-        this.lottos = lottos.tickets;
-
-        lottos.tickets
-            .map((ticket) => ticket.filter((v) => winningNumbers.includes(v)))
+    computeRating() {
+        this.lottos
+            .map((lotto) => lotto.filter((v) => this.winningNumbers.includes(v)))
             .map((r, i) =>
-                r.length === 5 && lottos.tickets[i].includes(bonusNumber)
+                r.length === 5 && this.lottos.tickets[i].includes(this.bonusNumber)
                     ? this.winnings[r.length + "+"].count++
                     : this.winnings[r.length + ""].count++
             );
@@ -62,6 +49,6 @@ export default class LottoReward {
             total += value.price * value.count;
         }
 
-        this.rate = (total / (this.lottos.length * LOTTO_UNIT)) * 100;
+        this.rate = (total / (this.lottos.length * LottoShop.LOTTO_UNIT)) * 100;
     }
 }

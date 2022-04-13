@@ -1,48 +1,41 @@
-import LottoReward from "../domain/LottoReward.js";
-
 const RATING = [
     {
         index: 3,
         count: "3개",
-        winnings: "5000",
+        winnings: 5_000,
     },
     {
         index: 4,
         count: "4개",
-        winnings: "50000",
+        winnings: 50_000,
     },
     {
         index: 5,
         count: "5개",
-        winnings: "1500000",
+        winnings: 1_500_000,
     },
     {
         index: "5+",
         count: "5개 + 보너스볼",
-        winnings: "30000000",
+        winnings: 30_000_000,
     },
     {
         index: 6,
         count: "6개",
-        winnings: "2000000000",
+        winnings: 2_000_000_000,
     },
 ];
 export default class LottoModal {
-    rating;
-
-    constructor(rating, props) {
+    constructor(props) {
         this.$resultModalArea = document.querySelector("#result_modal_area");
-        this.rating = rating;
         this.props = props;
-        this.#render();
-        this.#mounted();
     }
 
-    #render() {
+    render() {
         this.$resultModalArea.innerHTML = this.getTemplate();
     }
 
-    #mounted() {
+    mounted() {
         this.$resultModal = document.querySelector("#result_modal");
         this.$resultModalCloseButton = document.querySelector("#result_modal_close");
         this.$resetButton = document.querySelector("#reset_button");
@@ -90,9 +83,7 @@ export default class LottoModal {
                             </tbody>
                         </table>
                     </div>
-                    <p class="text-center font-bold">당신의 총 수익률은 ${LottoReward.rate.toLocaleString(
-                        "ko-KR"
-                    )}%입니다.</p>
+                    <p class="text-center font-bold">당신의 총 수익률은 ${this.rate}%입니다.</p>
                     <div class="d-flex justify-center mt-5">
                         <button id="reset_button" type="button" class="btn btn-cyan">다시 시작하기</button>
                     </div>
@@ -106,9 +97,15 @@ export default class LottoModal {
             (r) =>
                 `<tr class="text-center">
                     <td class="p-3">${r.count}</td>
-                    <td class="p-3">${(+r.winnings).toLocaleString("ko-KR")}</td>
-                    <td class="p-3">${this.rating[r.index]}개</td>
+                    <td class="p-3">${r.winnings}</td>
+                    <td class="p-3">${this.winnings[r.index].count}개</td>
                 </tr>`
         ).join("");
+    }
+
+    onReset() {
+        this.rate = null;
+        this.winnings = null;
+        this.$resultModal.classList.remove("open");
     }
 }

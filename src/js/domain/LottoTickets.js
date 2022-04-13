@@ -1,9 +1,6 @@
 export default class LottoTickets {
     #tickets;
 
-    constructor() {
-    }
-
     get tickets() {
         return this.#tickets;
     }
