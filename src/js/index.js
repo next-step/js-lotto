@@ -1,3 +1,4 @@
-import lottoVendingView from './view/lottoVendingView.js';
+import LottoVendingView from './view/LottoVendingView.js';
 
-lottoVendingView.initial();
+LottoVendingView.eventBindings();
+LottoVendingView.initialize();
