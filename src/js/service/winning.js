@@ -41,30 +41,35 @@ export const calculateRate = (prizeInfo, totalAmount) => {
   return calculateRateOfProfit(totalPrize, totalAmount);
 };
 
-const generateWinningInfo = prize => ({
-  count: 0,
-  prize,
-});
-
-const winningMap = (() => {
-  const map = new Map();
-
-  // key: 일치 갯수
-  map.set(3, generateWinningInfo(5_000));
-  map.set(4, generateWinningInfo(50_000));
-  map.set(5, generateWinningInfo(1_500_000));
-  map.set(6, generateWinningInfo(2_000_000_000));
-  map.set('bonus', generateWinningInfo(30_000_000));
-
-  return map;
-})();
+const winningMap = {
+  3: {
+    count: 0,
+    prize: 5_000,
+  },
+  4: {
+    count: 0,
+    prize: 50_000,
+  },
+  5: {
+    count: 0,
+    prize: 1_500_000,
+  },
+  6: {
+    count: 0,
+    prize: 2_000_000_000,
+  },
+  bonus: {
+    count: 0,
+    prize: 30_000_000,
+  },
+};
 
 const getWinningKey = (count, hasBonusNumber) =>
   count === NUMBER_WITH_BONUS && hasBonusNumber ? 'bonus' : count;
 
 const increaseWinningCount = (key, winningMap) => {
-  const { count, ...rest } = winningMap.get(key);
-  winningMap.set(key, { ...rest, count: count + 1 });
+  const { count, prize } = winningMap[key];
+  winningMap[key] = { prize, count: count + 1 };
 };
 
 const checkMatchedNumbers = (winningInfo, lottos) => {
@@ -79,13 +84,13 @@ const checkMatchedNumbers = (winningInfo, lottos) => {
 
     const winningKey = getWinningKey(count, lottoSet.has(bonusNumber));
 
-    if (!winningMap.has(winningKey)) return;
+    if (!winningMap[winningKey]) return;
     increaseWinningCount(winningKey, winningMap);
   });
 };
 
 const createStatisticsResult = lottoCount => {
-  const winningInfo = [...winningMap.entries()];
+  const winningInfo = Object.entries(winningMap);
   const prizeInfo = winningInfo.flatMap(([_, value]) => value);
   const totalAmount = lottoCount * MIN_MONEY_UNIT;
 
