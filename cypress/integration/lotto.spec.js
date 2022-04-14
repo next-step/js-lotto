@@ -258,6 +258,7 @@ describe('로또 테스트', () => {
       cy.get('.modal button').click();
       cy.get('#lotto-list').should('not.be.visible');
       cy.get('#form-winning').should('not.be.visible');
+      cy.get('#form-price input').should('have.text', '');
     });
   });
 });

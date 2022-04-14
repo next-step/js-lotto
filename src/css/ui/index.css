@@ -8,10 +8,6 @@
 }
 
 .visible {
-  visibility: visible;
-}
-
-.show-modal {
   opacity: 1;
   visibility: visible;
 }

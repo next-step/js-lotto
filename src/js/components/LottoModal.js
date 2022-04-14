@@ -1,4 +1,5 @@
 import { $, addEvent } from '../utils/index.js';
+import { hiddenEl } from '../view/common.js';
 import { getModalTemplate } from './Template.js';
 
 class LottoModal {
@@ -14,15 +15,15 @@ class LottoModal {
     const { reStart } = this.$props;
 
     addEvent('click', '.modal-close', this.closeModal);
-    addEvent('click', '.modal button[type="button"]', reStart);
-  }
-
-  render() {
-    this.$target.innerHTML = getModalTemplate(this.$props.store.state);
+    addEvent('click', '.modal button.again-btn', reStart);
   }
 
   closeModal() {
-    $('.modal').classList.toggle('show-modal');
+    hiddenEl($('.modal'));
+  }
+
+  reset() {
+    this.$target.innerHTML = getModalTemplate(this.$props.store.state);
   }
 }
 

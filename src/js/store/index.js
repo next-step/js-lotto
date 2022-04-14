@@ -23,9 +23,9 @@ class Store {
     this.state = { ...initState };
   }
 
-  setState(newState) {
+  setState = (newState) => {
     this.state = { ...this.state, ...newState };
-  }
+  };
 }
 
 export default Store;
