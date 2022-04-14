@@ -1,4 +1,3 @@
-import { calculateRate } from '../business/winning.js';
 import {
   MESSAGE,
   MIN_MONEY_UNIT,
@@ -6,6 +5,7 @@ import {
   PICKED_LOTTO_NUMBER_COUNT,
   RANGE_FOR_RANDOM_NUMBERS,
 } from '../const/constant.js';
+import { calculateRateOfProfit, prizeByCount, sum } from '../utils/index.js';
 
 const validate = ({ winningNumbers, bonusNumber }) => {
   const isNotRange = num => num <= 0 && num > RANGE_FOR_RANDOM_NUMBERS;
@@ -28,6 +28,17 @@ const validate = ({ winningNumbers, bonusNumber }) => {
     winningNumbers,
     bonusNumber,
   };
+};
+
+/**
+ *
+ * @param {{ count: number; prize: number }} prizeInfo
+ * @param {number} totalAmount
+ * @returns number 수익률
+ */
+export const calculateRate = (prizeInfo, totalAmount) => {
+  const totalPrize = prizeInfo.map(prizeByCount).reduce(sum);
+  return calculateRateOfProfit(totalPrize, totalAmount);
 };
 
 const generateWinningInfo = prize => ({
