@@ -4,54 +4,49 @@ import LottoHeader from '../views/lotto/LottoDetailHeader.js';
 import LottoList from '../views/lotto/LottoDetailList.js';
 import MoneyForm from '../views/lotto/MoneyForm.js';
 import { $Curry } from '../dom/index.js';
-import Controller from './Controller.js';
 import WinningForm from '../views/winning/WinningForm.js';
 import WinningResultModal from '../views/winning/WinningResultModal.js';
 import { getWinningStatistics } from '../service/winning.js';
 
-class LottoController extends Controller {
-  static moneyForm;
-  static lottoHeader;
-  static lottoList;
-  static winningForm;
-  static winningResultModal;
+class LottoController {
+  moneyForm;
+  lottoHeader;
+  lottoList;
+  winningForm;
+  winningResultModal;
 
-  constructor(...props) {
-    super(...props);
-  }
+  store;
 
-  initializeComponents($app) {
+  constructor($app, store) {
     const $ = $Curry($app);
 
-    LottoController.moneyForm = MoneyForm($(CLASS.MONEY_FORM))
-      .init()
-      .on('@buy', this.buy.bind(this));
+    this.store = store;
 
-    LottoController.lottoHeader = LottoHeader($(CLASS.LOTTO_HEADER))
+    this.moneyForm = MoneyForm($(CLASS.MONEY_FORM)).init().on('@buy', this.buy.bind(this));
+
+    this.lottoHeader = LottoHeader($(CLASS.LOTTO_HEADER))
       .init()
       .on('@toggle-numbers', this.toggleNumbers.bind(this));
 
-    LottoController.lottoList = LottoList($(CLASS.LOTTO_LIST)).init();
+    this.lottoList = LottoList($(CLASS.LOTTO_LIST)).init();
 
-    LottoController.winningForm = WinningForm($(CLASS.WINNING_FORM))
+    this.winningForm = WinningForm($(CLASS.WINNING_FORM))
       .init()
       .on('@submit-winning-numbers', this.openWinningResultModal.bind(this));
 
-    LottoController.winningResultModal = WinningResultModal($Curry()(CLASS.MODAL))
+    this.winningResultModal = WinningResultModal($Curry()(CLASS.MODAL))
       .init()
       .on('@retry', this.retry.bind(this));
-  }
 
-  initializeState() {
-    this.store.subscribe('lotto', LottoController.lottoHeader);
-    this.store.subscribe('lotto', LottoController.lottoList);
-    this.store.subscribe('lotto', LottoController.winningForm);
-    this.store.subscribe('winning', LottoController.winningResultModal);
+    this.store.subscribe('lotto', this.lottoHeader);
+    this.store.subscribe('lotto', this.lottoList);
+    this.store.subscribe('lotto', this.winningForm);
+    this.store.subscribe('winning', this.winningResultModal);
 
-    this.store.subscribe('reset', LottoController.moneyForm);
-    this.store.subscribe('reset', LottoController.lottoHeader);
-    this.store.subscribe('reset', LottoController.lottoList);
-    this.store.subscribe('reset', LottoController.winningForm);
+    this.store.subscribe('reset', this.moneyForm);
+    this.store.subscribe('reset', this.lottoHeader);
+    this.store.subscribe('reset', this.lottoList);
+    this.store.subscribe('reset', this.winningForm);
   }
 
   buy({ detail }) {
@@ -59,7 +54,7 @@ class LottoController extends Controller {
   }
 
   toggleNumbers({ detail }) {
-    LottoController.lottoList.toggleStyle(detail);
+    this.lottoList.toggleStyle(detail);
   }
 
   openWinningResultModal({ detail }) {
