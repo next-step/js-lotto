@@ -15,11 +15,7 @@ const winningNumberTemplateCurry = (min, max) => name =>
   />
 `;
 
-class WinningForm extends View {
-  constructor($el) {
-    super($el);
-  }
-
+export default class WinningForm extends View {
   init() {
     this.#printWinningNumberInputs();
 
@@ -63,5 +59,3 @@ class WinningForm extends View {
     this.emit('@submit-winning-numbers', { winningNumbers, bonusNumber });
   }
 }
-
-export default $el => new WinningForm($el);

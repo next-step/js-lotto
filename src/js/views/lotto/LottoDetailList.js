@@ -6,11 +6,7 @@ const getLottoTemplate = lotto => `
     <span class="lotto-detail">${lotto}</span>
   </li>`;
 
-class LottoDetailList extends View {
-  constructor($el) {
-    super($el);
-  }
-
+export default class LottoDetailList extends View {
   init() {
     this.hide();
     return this;
@@ -49,5 +45,3 @@ class LottoDetailList extends View {
     this.$el.classList.remove('flex-column');
   }
 }
-
-export default $el => new LottoDetailList($el);

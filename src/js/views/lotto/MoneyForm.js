@@ -1,11 +1,7 @@
 import { createFormData } from '../../dom/index.js';
 import View from '../View.js';
 
-class MoneyForm extends View {
-  constructor($el) {
-    super($el);
-  }
-
+export default class MoneyForm extends View {
   render(_, reset) {
     reset && this.#reset();
   }
@@ -25,5 +21,3 @@ class MoneyForm extends View {
     this.$el.reset();
   }
 }
-
-export default $el => new MoneyForm($el);

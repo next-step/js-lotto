@@ -16,11 +16,9 @@ const initialState = {
   reset: true,
 };
 
-const controllers = [LottoController];
-
 export default () => {
   const $app = $Curry()(CLASS.APP);
   const store = createStore(initialState);
 
-  controllers.forEach(controller => controller($app, store));
+  new LottoController($app, store);
 };

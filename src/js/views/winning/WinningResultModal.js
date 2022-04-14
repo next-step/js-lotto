@@ -20,7 +20,7 @@ const swapBonusInfo = results => {
 
   return results;
 };
-class WinningResultModal extends View {
+export default class WinningResultModal extends View {
   #$modalClose;
   #$statisticsRate;
   #$retry;
@@ -76,5 +76,3 @@ class WinningResultModal extends View {
     this.$el.classList.remove('open');
   }
 }
-
-export default $el => new WinningResultModal($el);

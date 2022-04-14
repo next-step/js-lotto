@@ -2,7 +2,7 @@ import { CLASS } from '../../const/className.js';
 import { $Curry } from '../../dom/index.js';
 import View from '../View.js';
 
-class LottoDetailHeader extends View {
+export default class LottoDetailHeader extends View {
   #$toggleNumbersBtn;
   #$lottoCount;
 
@@ -47,5 +47,3 @@ class LottoDetailHeader extends View {
     this.#$toggleNumbersBtn.disabled = count === 0;
   }
 }
-
-export default $el => new LottoDetailHeader($el);
