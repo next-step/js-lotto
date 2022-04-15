@@ -8,14 +8,27 @@
 }
 
 .visible {
-  visibility: visible;
-}
-
-.show-modal {
   opacity: 1;
   visibility: visible;
 }
 
 .none {
   display: none;
+}
+
+#lotto-manual-list {
+  padding: 0;
+}
+#lotto-manual-list li {
+  list-style: none;
+}
+
+#lotto-list ul.open {
+  flex-direction: column;
+}
+#lotto-list ul li .lotto-detail {
+  display: none;
+}
+#lotto-list ul.open li .lotto-detail {
+  display: block;
 }

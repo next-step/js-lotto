@@ -52,7 +52,7 @@ export const getModalTemplate = ({ rankBoard, price }) => {
         </div>
         <p class="text-center font-bold">당신의 총 수익률은 ${rateToReturn}%입니다.</p>
         <div class="d-flex justify-center mt-5">
-          <button type="button" class="btn btn-cyan">다시 시작하기</button>
+          <button type="button" class="btn btn-cyan again-btn">다시 시작하기</button>
         </div>
       </div>
     `;
@@ -60,13 +60,6 @@ export const getModalTemplate = ({ rankBoard, price }) => {
 
 export const getLottoPriceTemplate = ({ lottoList }) => {
   return `
-      <form class="mt-5" id="form-price">
-        <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요. </label>
-        <div class="d-flex">
-          <input type="number" class="w-100 mr-2 pl-2" placeholder="구입 금액" name="price" />
-          <button type="submit" class="btn btn-cyan">확인</button>
-        </div>
-      </form>
       <section class="mt-9 ${lottoList.length ? 'visible' : 'hidden'}" id="lotto-list">
         <div class="d-flex">
           <label class="flex-auto my-0" data-lotto="count-label">총 ${lottoList.length}개를 구매하였습니다.</label>
@@ -83,7 +76,7 @@ export const getLottoPriceTemplate = ({ lottoList }) => {
               (lotto) => `
               <li class="lotto-list-item d-flex items-center">
                   <span class="mx-1 text-4xl">🎟️ </span>
-                  <span class="lotto-detail text-xl mx-3 none">${lotto.join(', ')}</span>
+                  <span class="lotto-detail text-xl mx-3">${lotto.join(', ')}</span>
               </li>
           `
             )
@@ -100,35 +93,115 @@ export const getWinningFormTemplate = ({ winningNumber }) => {
         <div>
           <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
           <div id="winning-input">
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.number[0] ?? ''
-            }"/>
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.number[1] ?? ''
-            }"/>
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.number[2] ?? ''
-            }"/>
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.number[3] ?? ''
-            }"/>
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.number[4] ?? ''
-            }"/>
-            <input type="number" class="winning-number mx-1 text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.number[5] ?? ''
-            }"/>
+            <input
+              type="number"
+              class="winning-number mx-1 text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.number[0] ?? ''}"
+              required
+              data-winning-number-index="1"
+            />
+            <input
+              type="number"
+              class="winning-number mx-1 text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.number[1] ?? ''}"
+              required
+              data-winning-number-index="2"
+            />
+            <input
+              type="number"
+              class="winning-number mx-1 text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.number[2] ?? ''}"
+              required
+              data-winning-number-index="3"
+            />
+            <input
+              type="number"
+              class="winning-number mx-1 text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.number[3] ?? ''}"
+              required
+              data-winning-number-index="4"
+            />
+            <input
+              type="number"
+              class="winning-number mx-1 text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.number[4] ?? ''}"
+              required
+              data-winning-number-index="5"
+            />
+            <input
+              type="number"
+              class="winning-number mx-1 text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.number[5] ?? ''}"
+              required
+              data-winning-number-index="6"
+            />
           </div>
         </div>
         <div class="bonus-number-container flex-grow">
           <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
           <div class="d-flex justify-center">
-            <input type="number" class="bonus-number text-center" name="winning-number" max="45" min="1" value="${
-              winningNumber.bonusNumber ?? ''
-            }"/>
+            <input
+              type="number"
+              class="bonus-number text-center"
+              name="winning-number"
+              max="45"
+              min="1"
+              value="${winningNumber.bonusNumber ?? ''}"
+              required
+              data-winning-number-index="7"
+            />
           </div>
         </div>
       </div>
       <button type="submit" class="open-result-modal-button mt-5 btn btn-cyan w-100">결과 확인하기</button>
     `;
+};
+
+export const getLottoManualPurchaseItemTemplate = () => {
+  const liCount = document.querySelectorAll('#lotto-manual-list li').length;
+  return `
+    <li class="mb-2">
+      <div class="d-flex items-center">
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required data-manual-number-index="${
+          liCount * 6 + 1
+        }" />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required data-manual-number-index="${
+          liCount * 6 + 2
+        }" />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required data-manual-number-index="${
+          liCount * 6 + 3
+        }" />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required data-manual-number-index="${
+          liCount * 6 + 4
+        }" />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required data-manual-number-index="${
+          liCount * 6 + 5
+        }" />
+        <input type="number" class="winning-number mx-1 text-center" name="manual-number" max="45" min="1" required data-manual-number-index="${
+          liCount * 6 + 6
+        }" />
+        <div class="flex-grow text-center">
+          <button type="button" class="btn btn-cyan delete-btn">삭제</button>
+        </div>
+      </div>
+    </li>
+  `;
 };

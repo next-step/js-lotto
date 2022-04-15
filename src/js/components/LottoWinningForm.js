@@ -1,4 +1,7 @@
+import { errorPrintAlert, validateWinningNumber } from '../domains/errors.js';
+import { getRankBoard, getWinningNumber } from '../domains/index.js';
 import { $, addEvent } from '../utils/index.js';
+import { hiddenEl, showEl } from '../view/common.js';
 import { getModalTemplate, getWinningFormTemplate } from './Template.js';
 class LottoWinningForm {
   constructor($target, $props) {
@@ -10,30 +13,60 @@ class LottoWinningForm {
   }
 
   setEvent() {
-    const { handleSubmitFormWinning } = this.$props;
-
-    addEvent('submit', '#form-winning', (e) => {
-      handleSubmitFormWinning(e);
-      this.render();
-    });
-    addEvent('input', '#winning-input', this.changeInput);
+    addEvent('submit', '#form-winning', this.handleSubmitFormWinning);
+    addEvent('input', '#winning-input', this.handleChangeInput);
   }
 
-  changeInput({ target }) {
+  handleChangeInput({ target }) {
     const value = target.value;
-    const $winningBonusInput = $('input.bonus-number');
+    const index = Number(target.dataset.winningNumberIndex);
+
     if (value.length > 1) {
-      target.nextElementSibling ? target.nextElementSibling.focus() : $winningBonusInput.focus();
+      document.querySelector(`[data-winning-number-index='${index + 1}']`)?.focus();
     }
   }
 
   render() {
     const { state } = this.$props.store;
 
-    $('.modal').classList.toggle('show-modal');
     $('.modal').innerHTML = getModalTemplate(state);
     this.$target.innerHTML = getWinningFormTemplate(state);
   }
+
+  updateView() {
+    this.render();
+    showEl($('.modal'));
+  }
+
+  reset() {
+    this.render();
+    hiddenEl($('.modal'));
+  }
+
+  setRankBoardState(e) {
+    const { state, setState } = this.$props.store;
+    const winningNumber = getWinningNumber(e.target['winning-number']);
+    const { errorMsg } = validateWinningNumber(winningNumber);
+
+    if (errorMsg) {
+      errorPrintAlert(errorMsg);
+      return;
+    }
+
+    const rankBoard = getRankBoard({ lottoList: state.lottoList, winningNumber });
+
+    setState({
+      winningNumber,
+      rankBoard,
+    });
+  }
+
+  handleSubmitFormWinning = (e) => {
+    e.preventDefault();
+
+    this.setRankBoardState(e);
+    this.updateView();
+  };
 }
 
 export default LottoWinningForm;

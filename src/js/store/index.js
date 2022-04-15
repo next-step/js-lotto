@@ -12,7 +12,6 @@ const initState = {
     4: 0,
     5: 0,
   },
-  isShowModal: false,
 };
 
 class Store {
@@ -24,9 +23,9 @@ class Store {
     this.state = { ...initState };
   }
 
-  setState(newState) {
+  setState = (newState) => {
     this.state = { ...this.state, ...newState };
-  }
+  };
 }
 
 export default Store;
