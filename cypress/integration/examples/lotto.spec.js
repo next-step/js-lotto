@@ -31,7 +31,7 @@ describe("test", () => {
         cy.get("[data-test=purchase-button]").click();
 
         cy.on("window:alert", (text) => {
-            expect(text).to.contains(`금액은 100000이야여야 합니다.`);
+            expect(text).to.contains(`금액은 100000이하여야 합니다.`);
         })
     });
 
@@ -61,8 +61,8 @@ describe("test", () => {
         cy.get("[data-test=purchase-price-input]").type(5000);
         cy.get("[data-test=purchase-button]").click();
         cy.get("[data-test=switch]").click();
-        cy.get("[data-test=purchase-price-input]").clear();
-        cy.get("[data-test=purchase-price-input]").type(3000);
+        
+        cy.get("[data-test=purchase-price-input]").clear().type(3000);
         cy.get("[data-test=purchase-button]").click();
 
         cy.get("[data-test=lotto-detail]").should("not.have.class", "d-none");
