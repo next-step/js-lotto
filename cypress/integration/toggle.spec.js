@@ -1,4 +1,4 @@
-import { CLASS_NAME } from '../../src/js/utils/constants.js';
+import { CLASS_NAME } from '../../src/js/constants/index.js';
 
 describe('toggle button test', () => {
     beforeEach(() => {
