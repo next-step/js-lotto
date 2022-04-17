@@ -61,7 +61,7 @@ class App {
     }
 
     purchaseLottos() {
-        const purchaseAmount = Number($purchaseFormInput.value);
+        const purchaseAmount = $purchaseFormInput.valueAsNumber;
         const purchaseCount = Math.floor(purchaseAmount / NUM.LOTTO_PRICE);
         const lottos = Lotto.getMultipleLotto(purchaseCount);
 

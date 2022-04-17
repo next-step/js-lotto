@@ -13,9 +13,9 @@ function LottoForm({ setRankingTable }) {
 
         const winningNumbers = [];
         $winningNumbers.forEach(($winningNumber) =>
-            winningNumbers.push(Number($winningNumber.value))
+            winningNumbers.push($winningNumber.valueAsNumber)
         );
-        const bonusNumber = Number($bonusNumber.value);
+        const bonusNumber = $bonusNumber.valueAsNumber;
 
         setRankingTable({ bonusNumber, winningNumbers });
 
