@@ -10,8 +10,6 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
 
     const { dataset } = event.target;
 
-    console.dir(event.target.elements.inputMoney);
-
     if (dataset.purpose !== 'inputMoney') return;
 
     lottoIo.restartShop();
