@@ -27,11 +27,12 @@ export class LottoRenderer {
   </label>
   <div class="d-flex">
     <input
+      id="inputMoney"
       type="number"
       class="money-input w-100 mr-2 pl-2"
       placeholder="구입 금액"
     />
-    <button type="button" class="money-input-button btn btn-cyan" data-purpose="inputMoney">확인</button>
+    <button type="button" class="money-input-button btn btn-cyan">확인</button>
   </div>`;
   }
 

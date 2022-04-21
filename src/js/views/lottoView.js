@@ -6,15 +6,19 @@ import {
 
 export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
   const inputMoney = (event) => {
+    event.preventDefault();
+
     const { dataset } = event.target;
+
+    console.dir(event.target.elements.inputMoney);
 
     if (dataset.purpose !== 'inputMoney') return;
 
     lottoIo.restartShop();
 
-    const moneyInputElement = targetElement.querySelector(MONEY_INPUT_SELECTOR);
+    const { value: money } = event.target.elements.inputMoney;
 
-    if (lottoIo.inputMoney(Number(moneyInputElement.value))) {
+    if (lottoIo.inputMoney(Number(money))) {
       const tickets = lottoIo.outputTickets();
       const isShowtickets = lottoIo.getIsShowTickets();
 
@@ -83,7 +87,7 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
   };
 
   const attachListeners = () => {
-    targetElement.addEventListener('click', inputMoney);
+    targetElement.addEventListener('submit', inputMoney);
     targetElement.addEventListener('click', toggleShowButton);
     targetElement.addEventListener('click', inputWinningNumbers);
     targetElement.addEventListener('click', closeModal);
