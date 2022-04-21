@@ -11,7 +11,6 @@ const OPEN_RESULT_MODAL_BUTTON_SELECTOR = '.open-result-modal-button';
 const RESTART_BUTTON_SELECTOR = '.restart-button';
 const RATE_OF_RETURN_SELECTOR = '.rate-of-return';
 const WINNING_COUNT_SELECTOR = '.winning-count';
-
 const PRICE = 1000;
 const MAX_NUMBER = 45;
 const MIN_NUMBER = 1;
