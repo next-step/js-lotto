@@ -31,8 +31,9 @@ export class LottoRenderer {
       type="number"
       class="money-input w-100 mr-2 pl-2"
       placeholder="구입 금액"
+      autofocus
     />
-    <button type="button" class="money-input-button btn btn-cyan">확인</button>
+    <button class="money-input-button btn btn-cyan">확인</button>
   </div>`;
   }
 
@@ -128,9 +129,7 @@ export class LottoRenderer {
     </div>
   </div>
   <button
-    type="button"
     class="open-result-modal-button mt-5 btn btn-cyan w-100"
-    data-purpose="inputWinningNumbers"
   >
     결과 확인하기
   </button>`;

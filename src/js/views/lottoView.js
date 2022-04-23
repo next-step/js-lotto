@@ -1,7 +1,6 @@
 import {
-  BONUS_NUMBER_SELECTOR,
-  MONEY_INPUT_SELECTOR,
-  WINNING_NUMBER_SELECTOR,
+  WINNING_BOUNS_NUMBER_COUNT,
+  WINNING_NUMBER_COUNT,
 } from '../constants/index.js';
 
 export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
@@ -30,18 +29,24 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
   };
 
   const inputWinningNumbers = (event) => {
+    event.preventDefault();
+
     const { dataset } = event.target;
 
     if (dataset.purpose !== 'inputWinningNumbers') return;
 
-    const winningNumberInputs = targetElement.querySelectorAll(
-      WINNING_NUMBER_SELECTOR
+    const numberInputs = Array.from(event.target.elements).slice(
+      0,
+      WINNING_BOUNS_NUMBER_COUNT
     );
-    const bonusNumberInput = targetElement.querySelector(BONUS_NUMBER_SELECTOR);
-    const winningNumbers = Array.from(winningNumberInputs).map((input) =>
-      Number(input.value)
+
+    const winningNumbers = numberInputs
+      .slice(0, WINNING_NUMBER_COUNT)
+      .map((input) => Number(input.value));
+
+    const bonusNumber = Number(
+      numberInputs[WINNING_NUMBER_COUNT + WINNING_BOUNS_NUMBER_COUNT - 1]
     );
-    const bonusNumber = Number(bonusNumberInput.value);
 
     if (!lottoIo.inputWinningNumbers(winningNumbers, bonusNumber)) return;
 
@@ -87,7 +92,7 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
   const attachListeners = () => {
     targetElement.addEventListener('submit', inputMoney);
     targetElement.addEventListener('click', toggleShowButton);
-    targetElement.addEventListener('click', inputWinningNumbers);
+    targetElement.addEventListener('submit', inputWinningNumbers);
     targetElement.addEventListener('click', closeModal);
     targetElement.addEventListener('click', restart);
   };
