@@ -3,7 +3,8 @@ import { LottoTicket, LottoWinningTicket, LottoResults } from './index.js';
 import {
   PRICE,
   MIN_WINNING_COUNT,
-  FIVE_PLUS_BONUS,
+  SECOND_PLACE,
+  THIRD_PLACE,
 } from '../constants/index.js';
 
 export class LottoShop {
@@ -39,26 +40,25 @@ export class LottoShop {
     const bonusNumber = this.winningTicket.getBonusNumber();
 
     this.tickets.forEach((ticket) => {
-      const numbers = ticket.getNumbers();
+      const ticketNumbers = ticket.getNumbers();
       const sameCounts = this.results.getSameCounts();
-      let sameNumbers = 0;
-      let checkedBonusNumber = false;
-
-      numbers.forEach((number) => {
-        if (number === bonusNumber) return (checkedBonusNumber = true);
-
-        if (winningNumbers.includes(number)) sameNumbers++;
+      const sameNumbers = ticketNumbers.filter((number) => {
+        return winningNumbers.includes(number);
       });
+      const isBonusNumber = ticketNumbers.includes(bonusNumber);
 
       if (
-        checkedBonusNumber &&
-        sameNumbers === 5 &&
-        sameCounts.has(FIVE_PLUS_BONUS)
+        isBonusNumber &&
+        sameNumbers.length === THIRD_PLACE &&
+        sameCounts.has(SECOND_PLACE)
       )
-        return this.results.updateSameCounts(FIVE_PLUS_BONUS);
+        return this.results.updateSameCounts(SECOND_PLACE);
 
-      if (sameNumbers >= MIN_WINNING_COUNT && sameCounts.has(sameNumbers))
-        this.results.updateSameCounts(sameNumbers);
+      if (
+        sameNumbers.length >= MIN_WINNING_COUNT &&
+        sameCounts.has(sameNumbers.length)
+      )
+        this.results.updateSameCounts(sameNumbers.length);
     });
 
     this.results.calculateRateOfReturn();

@@ -1,16 +1,21 @@
-import { MONEY_INPUT_SELECTOR } from '../constants/index.js';
+import {
+  WINNING_BOUNS_NUMBER_COUNT,
+  WINNING_NUMBER_COUNT,
+} from '../constants/index.js';
 
 export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
   const inputMoney = (event) => {
+    event.preventDefault();
+
     const { dataset } = event.target;
 
     if (dataset.purpose !== 'inputMoney') return;
 
     lottoIo.restartShop();
 
-    const moneyInputElement = targetElement.querySelector(MONEY_INPUT_SELECTOR);
+    const { value: money } = event.target.elements.inputMoney;
 
-    if (lottoIo.inputMoney(Number(moneyInputElement.value))) {
+    if (lottoIo.inputMoney(Number(money))) {
       const tickets = lottoIo.outputTickets();
       const isShowtickets = lottoIo.getIsShowTickets();
 
@@ -24,19 +29,26 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
   };
 
   const inputWinningNumbers = (event) => {
+    event.preventDefault();
+
     const { dataset } = event.target;
 
     if (dataset.purpose !== 'inputWinningNumbers') return;
 
-    const winningNumberInputs =
-      targetElement.querySelectorAll('.winning-number');
-    const bonusNumberInput = targetElement.querySelector('.bonus-number');
-    const winningNumbers = Array.from(winningNumberInputs).map((input) =>
-      Number(input.value)
+    const numberInputs = Array.from(event.target.elements).slice(
+      0,
+      WINNING_BOUNS_NUMBER_COUNT
     );
-    const bonusNumber = Number(bonusNumberInput.value);
 
-    lottoIo.inputWinningNumbers(winningNumbers, bonusNumber);
+    const winningNumbers = numberInputs
+      .slice(0, WINNING_NUMBER_COUNT)
+      .map((input) => Number(input.value));
+
+    const bonusNumber = Number(
+      numberInputs[WINNING_NUMBER_COUNT + WINNING_BOUNS_NUMBER_COUNT - 1]
+    );
+
+    if (!lottoIo.inputWinningNumbers(winningNumbers, bonusNumber)) return;
 
     const sameCounts = lottoIo.outputSameCounts();
     const rateOfReturn = lottoIo.outputRateOfReturn();
@@ -78,9 +90,9 @@ export const lottoView = (targetElement, lottoIo, lottoRenderer) => {
   };
 
   const attachListeners = () => {
-    targetElement.addEventListener('click', inputMoney);
+    targetElement.addEventListener('submit', inputMoney);
     targetElement.addEventListener('click', toggleShowButton);
-    targetElement.addEventListener('click', inputWinningNumbers);
+    targetElement.addEventListener('submit', inputWinningNumbers);
     targetElement.addEventListener('click', closeModal);
     targetElement.addEventListener('click', restart);
   };

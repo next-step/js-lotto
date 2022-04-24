@@ -12,17 +12,11 @@ export class LottoIo {
   }
 
   inputMoney(money) {
-    if (!this.validator.isLowerThanUpperLimit(money)) {
-      return false;
-    }
+    if (!this.validator.isLowerThanHighestLimit(money)) return false;
 
-    if (!this.validator.isUpperThanLowerLimit(money)) {
-      return false;
-    }
+    if (!this.validator.isUpperThanLowestLimit(money)) return false;
 
-    if (!this.validator.isDivisibleMoneyByThousand(money)) {
-      return false;
-    }
+    if (!this.validator.isDivisibleMoneyByThousand(money)) return false;
 
     this.shop.inputMoney(money);
 
@@ -30,7 +24,31 @@ export class LottoIo {
   }
 
   inputWinningNumbers(winningNumbers, bonusNumber) {
+    if (!this.validator.isAllWinningNumbersInput(winningNumbers, bonusNumber))
+      return false;
+
+    if (
+      !this.validator.isAllWinningNumbersUpperThanMinNumber(
+        winningNumbers,
+        bonusNumber
+      )
+    )
+      return false;
+
+    if (
+      !this.validator.isAllWinningNumbersLowerThanMaxNumber(
+        winningNumbers,
+        bonusNumber
+      )
+    )
+      return false;
+
+    if (!this.validator.isAllWinningNumbersUnique(winningNumbers, bonusNumber))
+      return false;
+
     this.shop.inputWinningNumbers(winningNumbers, bonusNumber);
+
+    return true;
   }
 
   outputTickets() {
