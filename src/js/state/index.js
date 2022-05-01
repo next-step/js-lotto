@@ -27,8 +27,8 @@ const executeSubscribeWhenUpdatedState = (targetState, subscribeMap) => {
 
       subscribeMap
         .get(key)
-        ?.forEach(subscribe =>
-          subscribe.render(Reflect.get(target, key), Reflect.get(target, 'reset')),
+        .forEach(subscribe =>
+          subscribe?.render(Reflect.get(target, key), Reflect.get(target, 'reset')),
         );
 
       return true;
@@ -44,7 +44,7 @@ const createStore = initialState => {
   const subscribeMap = new Map();
   Object.keys(initialState).forEach(key => subscribeMap.set(key, []));
 
-  const subscribe = (key, handle) => {
+  const subscribe = (key, ...handle) => {
     const handles = subscribeMap.get(key);
     subscribeMap.set(key, handles.concat(handle));
   };
