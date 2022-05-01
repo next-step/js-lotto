@@ -1,17 +1,18 @@
-import inputFocusEvent from "../Controller/common/inputFocusEvent.js";
+import inputFocusEvent from '../Controller/common/inputFocusEvent.js';
+import { selector } from '../utils/consts.js';
 
-const LottoPurchaseView = (function() {
+const LottoPurchaseView = (function () {
   return {
     attachInputStyleOutLine(tag) {
-      inputFocusEvent.addFocusStyle(tag)
+      inputFocusEvent.addFocusStyle(tag);
     },
-    removeInputValue(tag) {
-      tag.value = ''
+    removeInputValue() {
+      selector('.lotto-purchase-input').value = '';
     },
     detachInputStyleOutLine(tag) {
-      inputFocusEvent.removeFocusStyle(tag)
-    }
-  }
-})()
+      inputFocusEvent.removeFocusStyle(tag);
+    },
+  };
+})();
 
 export default LottoPurchaseView;

@@ -1,18 +1,15 @@
-import Lotto from "../../Model/Lotto.js";
-import { selector } from "../../utils/consts.js";
-import LottoTicketView from "../../View/lottoTicketView.js";
+import LottoTicketView from '../../View/lottoTicketView.js';
 
-const ticket = (function(){
-  
-  let amount = 0
-  
+const ticket = (function () {
+  let amount = 0;
+
   return {
     handleClickEvent(event) {
       if (event.pointerType === '') {
         if (event.target.checked) {
-          LottoTicketView.showTicketUI()
+          LottoTicketView.showTicketUI();
         } else {
-          LottoTicketView.hideTicketUI()
+          LottoTicketView.hideTicketUI();
         }
       }
     },
@@ -21,9 +18,9 @@ const ticket = (function(){
      * @param {number} value
      */
     set setAmount(value) {
-      amount = value
-    }
-  }
-})()
+      amount = value;
+    },
+  };
+})();
 
 export default ticket;

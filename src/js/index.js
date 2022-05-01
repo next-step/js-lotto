@@ -1,3 +1,3 @@
-import Event from "./Controller/index.js";
+import Event from './Controller/Event.js';
 
-Event.init()
+Event.init();

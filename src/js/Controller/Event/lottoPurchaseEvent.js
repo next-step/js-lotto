@@ -1,42 +1,46 @@
-import { UNIT_PRICE } from "../../utils/consts.js"
+import { selector, UNIT_PRICE } from '../../utils/consts.js';
 
-import Lotto from "../../Model/Lotto.js"
-import priceAlert from "../../View/alert/priceAlert.js"
-import LottoPurchaseView from "../../View/lottoPurchaseView.js"
-import LottoTicketView from "../../View/lottoTicketView.js"
-import Event from "../index.js"
-import ticket from "./lottoTicketEvent.js"
+import Lotto from '../../Model/Lotto.js';
+import LottoPurchaseView from '../../View/lottoPurchaseView.js';
+import LottoTicketView from '../../View/lottoTicketView.js';
+import Event from '../Event.js';
+import ticket from './lottoTicketEvent.js';
+import priceError from '../error/priceError.js';
 
-const purchase = (function(){
-  
+const purchase = (function () {
   return {
     handleSubmitEvent(event) {
-      event.preventDefault()
-      const input = event.target[0]
-      const { value } = input
-      
-      if (Lotto.isNotCorrectPriceRange(value)) {
-        LottoPurchaseView.removeInputValue(input)
-        LottoPurchaseView.attachInputStyleOutLine(input)
-        return priceAlert.lottoPriceRangeAlert()
+      event.preventDefault();
+      const input = selector('.lotto-purchase-input');
+      const { value } = input;
+
+      if (Lotto.price.isNotCorrectPriceRange(value)) {
+        LottoPurchaseView.removeInputValue();
+        LottoPurchaseView.attachInputStyleOutLine(input);
+        alert(priceError.lottoPriceRangeError().message);
+        return;
       }
 
-      if (Lotto.isNotCorrectPriceUnit(value)) {
-        LottoPurchaseView.removeInputValue(input)
-        LottoPurchaseView.attachInputStyleOutLine(input)
-        return priceAlert.lottoPriceUnitAlert()
+      if (Lotto.price.isNotCorrectPriceUnit(value)) {
+        LottoPurchaseView.removeInputValue();
+        LottoPurchaseView.attachInputStyleOutLine(input);
+        alert(priceError.lottoPriceUnitError().message);
+        return;
       }
-    
-      LottoPurchaseView.detachInputStyleOutLine(input)
 
-      const amount = value / UNIT_PRICE
+      LottoPurchaseView.detachInputStyleOutLine(input);
 
-      LottoTicketView.showLottoInfoUI(amount)
-      LottoTicketView.setRandomNumber = Lotto.getRandomNumber(amount)
-      ticket.setAmount = amount
-      Event.ticketToggle()
+      const amount = value / UNIT_PRICE;
+
+      LottoTicketView.showLottoInfoUI(amount);
+      LottoTicketView.setRandomNumber =
+        Lotto.automaticNumber.getRandomNumber(amount);
+      ticket.setAmount = amount;
+      Event.ticketToggle();
+      Event.winningNumber();
+      Event.statistics();
     },
-  }
-})()
+  };
+})();
 
 export default purchase;

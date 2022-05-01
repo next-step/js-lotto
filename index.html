@@ -11,7 +11,7 @@
       <div class="d-flex justify-center">
         <div class="w-100">
           <h1 class="text-center mb-5">🎱 행운의 로또</h1>
-          <form class="mt-10 lotto-purchase-form">
+          <form id="lotto-purchase-form" class="mt-10 lotto-purchase-form">
             <label class="mb-2 d-inline-block"
               >구입할 금액을 입력해주세요.
             </label>
@@ -25,10 +25,21 @@
                 max="100000"
                 required
               />
-              <button type="submit" class="lotto-purchase-btn btn btn-cyan" data-amount="btn">확인</button>
+              <button
+                type="submit"
+                class="lotto-purchase-btn btn btn-cyan"
+                data-amount="btn"
+              >
+                확인
+              </button>
             </div>
           </form>
-          <section id="purchased-lottos" class="mt-9" data-ticket="section" style="display: none;">
+          <section
+            id="purchased-lottos"
+            class="mt-9"
+            data-ticket="section"
+            style="display: none"
+          >
             <div class="d-flex">
               <label id="counted-ticket" class="flex-auto my-0"></label>
               <div class="flex-auto d-flex justify-end pr-1">
@@ -38,13 +49,22 @@
                 </label>
               </div>
             </div>
-            <ul id="lotto-ticket-list" class="d-flex flex-wrap mt-4" data-ticket="container"></ul>
+            <ul
+              id="lotto-ticket-list"
+              class="d-flex flex-wrap mt-4"
+              data-ticket="container"
+            ></ul>
           </section>
-          <form id="lotto-winning-numbers-form" class="mt-9" data-winning-numbers="form" style="display: none;">
+          <form
+            id="lotto-winning-numbers-form"
+            class="mt-9"
+            data-winning-numbers="form"
+            style="display: none"
+          >
             <label class="flex-auto d-inline-block mb-3"
               >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >
-            <div class="d-flex">
+            <div id="winning-number-container" class="d-flex">
               <div>
                 <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
                 <div>
@@ -54,6 +74,7 @@
                     data-winning-numbers="input"
                     min="1"
                     max="45"
+                    maxlength="2"
                     required
                   />
                   <input
@@ -62,6 +83,7 @@
                     data-winning-numbers="input"
                     min="1"
                     max="45"
+                    maxlength="2"
                     required
                   />
                   <input
@@ -70,6 +92,7 @@
                     data-winning-numbers="input"
                     min="1"
                     max="45"
+                    maxlength="2"
                     required
                   />
                   <input
@@ -78,6 +101,7 @@
                     data-winning-numbers="input"
                     min="1"
                     max="45"
+                    maxlength="2"
                     required
                   />
                   <input
@@ -86,6 +110,7 @@
                     data-winning-numbers="input"
                     min="1"
                     max="45"
+                    maxlength="2"
                     required
                   />
                   <input
@@ -94,6 +119,7 @@
                     data-winning-numbers="input"
                     min="1"
                     max="45"
+                    maxlength="2"
                     required
                   />
                 </div>
@@ -101,12 +127,13 @@
               <div class="bonus-number-container flex-grow">
                 <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
                 <div class="d-flex justify-center">
-                  <input 
+                  <input
                     type="number"
                     class="bonus-number text-center"
                     data-winning-numbers="input"
                     min="1"
                     max="45"
+                    maxlength="2"
                     required
                   />
                 </div>
@@ -172,7 +199,14 @@
           </div>
           <p class="text-center font-bold profit-rate" data-modal="profit"></p>
           <div class="d-flex justify-center mt-5">
-            <button type="button" class="btn btn-cyan restart" data-modal="restart">다시 시작하기</button>
+            <button
+              type="button"
+              id="restart"
+              class="btn btn-cyan restart"
+              data-modal="restart"
+            >
+              다시 시작하기
+            </button>
           </div>
         </div>
       </div>
