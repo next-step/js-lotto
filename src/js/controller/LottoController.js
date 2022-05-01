@@ -1,5 +1,5 @@
 import { CLASS } from '../const/className.js';
-import { buy } from '../service/lotto.js';
+import { buyLotto } from '../service/lotto.js';
 import LottoHeader from '../views/lotto/LottoDetailHeader.js';
 import LottoList from '../views/lotto/LottoDetailList.js';
 import MoneyForm from '../views/lotto/MoneyForm.js';
@@ -53,7 +53,7 @@ export default class LottoController {
   }
 
   buy({ detail }) {
-    this.#store.state.lotto = buy(detail, this.#store.state.lotto);
+    this.#store.state.lotto = buyLotto(detail, this.#store.state.lotto);
   }
 
   toggleNumbers({ detail }) {

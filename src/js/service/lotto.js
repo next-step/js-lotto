@@ -42,7 +42,7 @@ const createNewLottoState = money => {
   };
 };
 
-export const buy = (money, prevLottoState) => {
+export const buyLotto = (money, prevLottoState) => {
   const successOrFailure = successOrFailureCurry(money);
 
   return successOrFailure(
