@@ -1,5 +1,5 @@
 import { CLASS } from '../../const/className.js';
-import { $Curry, insertAdjacentHTML } from '../../dom/index.js';
+import { $Curry, replaceHTML } from '../../dom/index.js';
 import View from '../View.js';
 
 const getStatisticsRowLabel = key => (key === 'bonus' ? `5개 + 보너스볼` : `${key}개`);
@@ -51,12 +51,10 @@ export default class WinningResultModal extends View {
 
   #printStatisticsTable(results) {
     const $statisticsInfo = $Curry()(CLASS.WINNING_STATISTICS_INFO);
-    const $copied = $statisticsInfo.cloneNode();
 
     const template = results.map(getStatisticsRowTemplate).join('');
-    insertAdjacentHTML($copied, template);
 
-    $statisticsInfo.parentNode.replaceChild($copied, $statisticsInfo);
+    replaceHTML($statisticsInfo, template);
   }
 
   #printRate(rate) {
