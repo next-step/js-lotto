@@ -38,15 +38,18 @@ export default class LottoController {
       .init()
       .on('@retry', this.retry.bind(this));
 
-    this.#store.subscribe('lotto', this.#lottoHeader, this.#lottoList, this.#winningForm);
-    this.#store.subscribe('winning', this.#winningResultModal);
-    this.#store.subscribe(
-      'reset',
-      this.#moneyForm,
-      this.#lottoHeader,
-      this.#lottoList,
-      this.#winningForm,
-    );
+    this.#store.subscribe({
+      key: 'lotto',
+      handles: [this.#lottoHeader, this.#lottoList, this.#winningForm],
+    });
+    this.#store.subscribe({
+      key: 'winning',
+      handles: [this.#winningResultModal],
+    });
+    this.#store.subscribe({
+      key: 'reset',
+      handles: [this.#moneyForm, this.#lottoHeader, this.#lottoList, this.#winningForm],
+    });
   }
 
   buy({ detail }) {

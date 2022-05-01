@@ -44,9 +44,9 @@ const createStore = initialState => {
   const subscribeMap = new Map();
   Object.keys(initialState).forEach(key => subscribeMap.set(key, []));
 
-  const subscribe = (key, ...handle) => {
-    const handles = subscribeMap.get(key);
-    subscribeMap.set(key, handles.concat(handle));
+  const subscribe = ({ key, handles }) => {
+    const registeredHandles = subscribeMap.get(key);
+    subscribeMap.set(key, registeredHandles.concat(handles));
   };
 
   const state = executeSubscribeWhenUpdatedState(initialState, subscribeMap);
