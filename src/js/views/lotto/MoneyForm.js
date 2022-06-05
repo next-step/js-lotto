@@ -1,11 +1,10 @@
+import { createFormData } from '../../dom/index.js';
 import View from '../View.js';
 
-class MoneyForm extends View {
-  constructor($el) {
-    super($el);
+export default class MoneyForm extends View {
+  render(_, reset) {
+    reset && this.#reset();
   }
-
-  render() {}
 
   bindEvent() {
     this.$el.addEventListener('submit', this.#onSubmitMoney.bind(this));
@@ -13,10 +12,12 @@ class MoneyForm extends View {
 
   #onSubmitMoney(event) {
     event.preventDefault();
-    const formData = new FormData(this.$el);
+    const formData = createFormData(this.$el);
 
     this.emit('@buy', formData.get('money'));
   }
-}
 
-export default ($el) => new MoneyForm($el);
+  #reset() {
+    this.$el.reset();
+  }
+}

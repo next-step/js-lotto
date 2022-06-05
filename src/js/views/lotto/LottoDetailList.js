@@ -1,26 +1,27 @@
 import View from '../View.js';
 
-const getLottoTemplate = (lotto) => `
+const getLottoTemplate = lotto => `
   <li>
     <span class="mx-1 text-4xl lotto-icon">🎟️ </span>
     <span class="lotto-detail">${lotto}</span>
   </li>`;
 
-class LottoDetailList extends View {
-  constructor($el) {
-    super($el);
-  }
-
+export default class LottoDetailList extends View {
   init() {
     this.hide();
     return this;
   }
 
-  render({ numbers = [] }) {
-    this.show();
+  render({ numbers = [] }, reset) {
     this.#resetList();
     this.#initializeToggleStyle();
-    this.#printList(numbers);
+
+    if (reset) {
+      this.hide();
+    } else {
+      this.show();
+      this.#printList(numbers);
+    }
   }
 
   bindEvent() {}
@@ -37,15 +38,10 @@ class LottoDetailList extends View {
   }
 
   #printList(numbers) {
-    this.$el.insertAdjacentHTML(
-      'afterBegin',
-      numbers.map(getLottoTemplate).join('')
-    );
+    this.$el.insertAdjacentHTML('afterBegin', numbers.map(getLottoTemplate).join(''));
   }
 
   #initializeToggleStyle() {
     this.$el.classList.remove('flex-column');
   }
 }
-
-export default ($el) => new LottoDetailList($el);

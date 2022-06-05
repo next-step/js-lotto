@@ -1,31 +1,52 @@
+let _initialState = {
+  reset: false,
+};
+
 const executeSubscribeWhenUpdatedState = (targetState, subscribeMap) => {
   const handler = {
     get(...props) {
       return Reflect.get(...props);
     },
-    set(target, key, ...rest) {
-      const ret = Reflect.set(target, key, ...rest);
+    set(target, key, value, receiver) {
+      if (key !== 'reset') {
+        Reflect.set(target, 'reset', false, receiver);
+        Reflect.set(target, key, value, receiver);
+      }
+
+      if (key === 'reset' && value) {
+        Reflect.set(
+          target,
+          key,
+          {
+            ..._initialState,
+            reset: value,
+          },
+          receiver,
+        );
+      }
 
       subscribeMap
         .get(key)
-        ?.forEach((subscribe) =>
-          subscribe.render(Reflect.get(target, key, ...rest))
+        .forEach(subscribe =>
+          subscribe?.render(Reflect.get(target, key), Reflect.get(target, 'reset')),
         );
 
-      return ret;
+      return true;
     },
   };
 
   return new Proxy(targetState, handler);
 };
 
-const createStore = (initialState) => {
-  const subscribeMap = new Map();
-  Object.keys(initialState).forEach((key) => subscribeMap.set(key, []));
+const createStore = initialState => {
+  _initialState = { ...initialState };
 
-  const subscribe = (key, handle) => {
-    const handles = subscribeMap.get(key);
-    subscribeMap.set(key, handles.concat(handle));
+  const subscribeMap = new Map();
+  Object.keys(initialState).forEach(key => subscribeMap.set(key, []));
+
+  const subscribe = ({ key, handles }) => {
+    const registeredHandles = subscribeMap.get(key);
+    subscribeMap.set(key, registeredHandles.concat(handles));
   };
 
   const state = executeSubscribeWhenUpdatedState(initialState, subscribeMap);

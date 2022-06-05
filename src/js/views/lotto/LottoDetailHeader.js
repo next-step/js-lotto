@@ -2,7 +2,7 @@ import { CLASS } from '../../const/className.js';
 import { $Curry } from '../../dom/index.js';
 import View from '../View.js';
 
-class LottoDetailHeader extends View {
+export default class LottoDetailHeader extends View {
   #$toggleNumbersBtn;
   #$lottoCount;
 
@@ -19,17 +19,19 @@ class LottoDetailHeader extends View {
     return this;
   }
 
-  render({ count = 0 }) {
-    this.show();
+  render({ count = 0 }, reset) {
     this.#initializeToggleStyle(count);
-    this.#printCount(count);
+
+    if (reset) {
+      this.hide();
+    } else {
+      this.show();
+      this.#printCount(count);
+    }
   }
 
   bindEvent() {
-    this.#$toggleNumbersBtn.addEventListener(
-      'change',
-      this.#toggleLottoNumbers.bind(this)
-    );
+    this.#$toggleNumbersBtn.addEventListener('change', this.#toggleLottoNumbers.bind(this));
   }
 
   #printCount(count) {
@@ -45,5 +47,3 @@ class LottoDetailHeader extends View {
     this.#$toggleNumbersBtn.disabled = count === 0;
   }
 }
-
-export default ($el) => new LottoDetailHeader($el);
