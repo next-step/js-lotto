@@ -1,22 +1,33 @@
-import Lotto from './Lotto.js';
-import { CLASS_NAME, NUM } from '../utils/constants.js';
+import { CLASS_NAME, NUM } from '../constants/index.js';
+import Lotto from '../controllers/Lotto.js';
+import LottoForm from './LottoForm.js';
+import LottoList from './LottoList.js';
+import PurchaseForm from './PurchaseForm.js';
+import ToggleButton from './ToggleButton.js';
+import WinningNumberInputs from './WinningNumberInputs.js';
 
 const initialState = {
     lottos: [],
+    purchaseAmount: 0,
     purchaseCount: 0,
+    rankingTable: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+    profit: 0,
 };
 
 Object.freeze(initialState);
 
-const $purchaseForm = document.querySelector(
-    `form.${CLASS_NAME.PURCHASE_FORM}`
+const $purchaseFormInput = document.querySelector(
+    `form.${CLASS_NAME.PURCHASE_FORM} input`
 );
 const $section = document.querySelector('section');
-const $lottoForm = document.querySelector(`form.${CLASS_NAME.LOTTO_FORM}`);
-const $lottoNumbersToggleButton = document.querySelector(
-    `input.${CLASS_NAME.TOGGLE_BUTTON}`
+const $modalClose = document.querySelector('.modal-close');
+const $modal = document.querySelector('.modal');
+const $resultRows = document.querySelectorAll(
+    `table.${CLASS_NAME.RESULT_TABLE} tbody tr`
 );
-const $lottos = $section.querySelector(`ul.${CLASS_NAME.LOTTO_LIST}`);
+const $lottoForm = document.querySelector(`form.${CLASS_NAME.LOTTO_FORM}`);
+const $profit = document.querySelector(`p.${CLASS_NAME.PROFIT}`);
+const $resetButton = document.querySelector(`button.${CLASS_NAME.RESET}`);
 
 class App {
     state;
@@ -24,55 +35,79 @@ class App {
     constructor() {
         this.state = { ...initialState };
 
-        this.Lotto = new Lotto();
-
-        $section.style.display = 'none';
-        $lottoForm.style.display = 'none';
-
-        $purchaseForm.querySelector('input').focus();
-
+        this.initializeElementStyle();
         this.initializeEventListener();
+        this.initializeComponents();
     }
 
-    handleToggleButton() {
-        $lottos.classList.toggle('flex-col');
+    setRankingTable({ bonusNumber, winningNumbers }) {
+        const { lottos, purchaseAmount } = this.state;
 
-        $lottos
-            .querySelectorAll(`span.${CLASS_NAME.LOTTO_NUMBERS}`)
-            .forEach(($lottoNumbers) => $lottoNumbers.classList.toggle('show'));
-    }
-
-    handlePurchaseFormSubmit(e) {
-        e.preventDefault();
-
-        $section.style.display = 'block';
-        $lottoForm.style.display = 'block';
-
-        if ($lottoNumbersToggleButton.checked) {
-            $lottoNumbersToggleButton.click();
-        }
-
-        const purchaseAmount = $purchaseForm.querySelector('input').value;
-        const purchaseCount = ~~(purchaseAmount / NUM.LOTTO_PRICE);
-        const lottos = this.Lotto.getMultipleLotto(purchaseCount);
+        const rankingTable = Lotto.getRankingTable({
+            lottos,
+            bonusNumber,
+            winningNumbers,
+        });
+        const profit = Lotto.getProfit({
+            principal: purchaseAmount,
+            rankingTable,
+        });
 
         this.setState({
             ...this.state,
+            rankingTable,
+            profit,
+        });
+    }
+
+    purchaseLottos() {
+        const purchaseAmount = $purchaseFormInput.valueAsNumber;
+        const purchaseCount = Math.floor(purchaseAmount / NUM.LOTTO_PRICE);
+        const lottos = Lotto.getMultipleLotto(purchaseCount);
+
+        this.setState({
+            ...this.state,
+            purchaseAmount,
             purchaseCount,
             lottos,
         });
     }
 
-    initializeEventListener() {
-        $purchaseForm.addEventListener(
-            'submit',
-            this.handlePurchaseFormSubmit.bind(this)
-        );
+    handleResetButtonClick() {
+        this.setState({
+            ...initialState,
+        });
 
-        $lottoNumbersToggleButton.addEventListener(
-            'change',
-            this.handleToggleButton.bind(this)
+        this.initializeElementStyle();
+        this.handleModalClose();
+
+        $purchaseFormInput.value = '';
+    }
+
+    handleModalClose() {
+        $modal.classList.remove('open');
+    }
+
+    initializeElementStyle() {
+        $section.style.display = 'none';
+        $lottoForm.style.display = 'none';
+
+        $purchaseFormInput.focus();
+    }
+
+    initializeEventListener() {
+        $modalClose.addEventListener('click', this.handleModalClose);
+        $resetButton.addEventListener(
+            'click',
+            this.handleResetButtonClick.bind(this)
         );
+    }
+
+    initializeComponents() {
+        PurchaseForm({ purchaseLottos: this.purchaseLottos.bind(this) });
+        ToggleButton();
+        LottoForm({ setRankingTable: this.setRankingTable.bind(this) });
+        WinningNumberInputs();
     }
 
     setState(newState) {
@@ -81,35 +116,22 @@ class App {
         this.render();
     }
 
-    createLottoElement(lotto) {
-        const $lotto = document.createElement('li');
-        $lotto.classList.add('mx-1', 'text-4xl');
-
-        const $icon = document.createElement('span');
-        $icon.textContent = '🎟️';
-
-        const $lottoNumbers = document.createElement('span');
-        $lottoNumbers.textContent = lotto.join(', ');
-        $lottoNumbers.classList.add(CLASS_NAME.LOTTO_NUMBERS);
-
-        $lotto.append($icon, $lottoNumbers);
-
-        return $lotto;
-    }
-
     render() {
-        const { purchaseCount, lottos } = this.state;
+        const { rankingTable, profit } = this.state;
 
-        const $label = $section.querySelector(
-            `label.${CLASS_NAME.SECTION_TITLE_LABEL}`
+        const $lottoList = $section.querySelector(
+            `ul.${CLASS_NAME.LOTTO_LIST}`
         );
-        $label.textContent = `총 ${purchaseCount}개를 구매하였습니다.`;
+        const $newLottoList = LottoList({ state: this.state });
 
-        $lottos.replaceChildren();
-        const $lottoElements = lottos.map((lotto) =>
-            this.createLottoElement(lotto)
-        );
-        $lottos.append(...$lottoElements);
+        $section.replaceChild($newLottoList, $lottoList);
+
+        $resultRows.forEach(($row, index) => {
+            const $count = $row.querySelector('td:nth-of-type(3)');
+            $count.textContent = `${rankingTable[5 - index]}개`;
+        });
+
+        $profit.textContent = `당신의 총 수익률은 ${profit}%입니다.`;
     }
 }
 

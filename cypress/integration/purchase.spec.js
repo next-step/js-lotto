@@ -1,4 +1,4 @@
-import { CLASS_NAME, MESSAGE } from '../../src/js/utils/constants.js';
+import { CLASS_NAME, MESSAGE } from '../../src/js/constants/index.js';
 
 describe('purchase lotto test', () => {
     beforeEach(() => {
