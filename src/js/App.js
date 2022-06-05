@@ -1,39 +1,75 @@
 import { PriceInput } from "./components/PriceInput.js";
 import { PurchaseDetail } from "./components/PurchaseDetail.js";
-import { TryForm } from "./components/TryForm.js";
+
+import { WinningNumberInput } from "./components/WinningNumberInput.js";
 import { Statistics } from "./components/Statistics.js";
-import { createLotto } from "./util.js";
+import { LottoService } from "./lotto-service.js";
 
 class App {
   constructor() {
+    this.#lottoService = new LottoService();
     this.#setComponents();
     this.#purchaseDetailElement.hidden = true;
-    this.#tryFormElement.hidden = true;
+    this.#winningNumberInputElement.hidden = true;
   }
+
+  #inputPrice = 0;
+  #lottos = [];
+
+  #lottoService;
 
   #priceInputElement = document.querySelector("#price-input");
   #purchaseDetailElement = document.querySelector("#purchase-detail");
-  #tryFormElement = document.querySelector("#try-form");
+  #winningNumberInputElement = document.querySelector("#winning-number-input");
   #statisticsElement = document.querySelector("#statistics");
 
   #priceInputComponent;
   #purchseDetailComponent;
-  #tryFormComponent;
+  #winningNumberInputComponent;
   #statisticsComponent;
 
   #onClickPriceInputConfirmButton = (value) => {
-    const count = value / 1000;
-    let lottos = [];
-    for (let i = 0; i < count; i++) {
-      const lotto = createLotto();
-      lottos.push(lotto);
-    }
-    this.#purchseDetailComponent.setState(lottos);
+    this.#inputPrice = value;
+    this.#lottos = this.#lottoService.getLottos(this.#inputPrice);
+    this.#purchseDetailComponent.setState(this.#lottos);
     this.#purchaseDetailElement.hidden = false;
-    this.#tryFormElement.hidden = false;
+    this.#winningNumberInputElement.hidden = false;
   };
 
-  #onModalShow = () => {
+  #onClickWinningResultButton = (originalNumbers, bonusNumber) => {
+    const data = {};
+    data.statistic = this.#lottoService.getStatistics(
+      originalNumbers,
+      bonusNumber,
+      this.#lottos
+    );
+    data.profit = this.#lottoService.getProfit(
+      data.statistic,
+      this.#inputPrice
+    );
+
+    this.#onModalShow(data.statistic, data.profit);
+  };
+
+  #onClickRestartButton = () => {
+    this.#onModalClose();
+    this.#inputPrice = 0;
+    this.#lottos = [];
+
+    this.#priceInputComponent.clear();
+    this.#winningNumberInputComponent.clear();
+
+    this.#purchaseDetailElement.hidden = true;
+    this.#winningNumberInputElement.hidden = true;
+  };
+
+  #onModalShow = (statistic, profit) => {
+    this.#statisticsComponent.setState(
+      statistic,
+      profit,
+      this.#onModalClose,
+      this.#onClickRestartButton
+    );
     this.#statisticsElement.classList.add("open");
   };
 
@@ -49,13 +85,14 @@ class App {
     this.#purchseDetailComponent = new PurchaseDetail(
       this.#purchaseDetailElement
     );
-    this.#tryFormComponent = new TryForm(
-      this.#tryFormElement,
-      this.#onModalShow
+    this.#winningNumberInputComponent = new WinningNumberInput(
+      this.#winningNumberInputElement,
+      this.#onClickWinningResultButton
     );
     this.#statisticsComponent = new Statistics(
       this.#statisticsElement,
-      this.#onModalClose
+      this.#onModalClose,
+      this.#onClickRestartButton
     );
   };
 }

@@ -1,5 +1,5 @@
 import { isValidPriceInput } from "../validation.js";
-import { INVALID_INPUT_ALERT_STRING } from "../constants.js";
+import { ALERT_STRING } from "../constants.js";
 
 export class PriceInput {
   constructor(target, onClickPriceInputConfirmButton) {
@@ -38,14 +38,18 @@ export class PriceInput {
   #handlePriceInputSubmitEvent = (event, callback) => {
     event.preventDefault();
 
-    const form = new FormData(event.target);
-    const inputValue = Number(form.get("price-input"));
+    const inputValue = event.target["price-input"].valueAsNumber;
 
     if (!isValidPriceInput(inputValue)) {
-      window.alert(INVALID_INPUT_ALERT_STRING);
-      form.set("price-input", "");
+      window.alert(ALERT_STRING.INVALID_PRICE_INPUT);
+      event.target.reset();
       return;
     }
     callback(inputValue);
+  };
+
+  clear = () => {
+    const priceInputForm = document.querySelector("#price-input-form");
+    priceInputForm.reset();
   };
 }
