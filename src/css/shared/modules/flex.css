@@ -28,6 +28,11 @@
   flex-wrap: nowrap;
 }
 
+.flex-wrap > .lotto-wrapper > .lotto-detail {
+  font-size: 1.25rem;
+  margin-left: 12px;
+}
+
 /* Flex */
 .flex-1 {
   flex: 1 1 0%;

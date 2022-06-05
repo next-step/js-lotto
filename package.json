@@ -2,6 +2,9 @@
   "name": "racingcar",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open"
+  },
   "license": "MIT",
   "devDependencies": {
     "cypress": "^6.3.0"

@@ -22,3 +22,11 @@ body {
   width: 30px;
   height: 36px;
 }
+
+ul {
+  padding-inline-start: 0;
+}
+
+li {
+  list-style-type: none;
+}
