@@ -1,5 +1,5 @@
 import {$, addEvent} from './util.js';
-import { OPEN_RESULT_MODAL_BUTTON, CLOSE_RESULT_MODAL_BUTTON, LOTTO_NUMBERS_TOGGLE_BUTTON } from './constants/selectors.js';
+import { RESULT__MODAL_OPEN_BUTTON, RESULT_MODAL_CLOSE_BUTTON, LOTTO_NUMBERS_TOGGLE_BUTTON } from './constants/selectors.js';
 import { onClickOpenResultModalBtn, onClickCloseResultModalBtn, onClickLottoNumbersToggleBtn } from './event.js';
 
 const $showResultButton = document.querySelector('.open-result-modal-button')
@@ -21,8 +21,8 @@ $showResultButton.addEventListener('click', onModalShow)
 $modalClose.addEventListener('click', onModalClose)
 
 const initApp = function () {
-  addEvent($(OPEN_RESULT_MODAL_BUTTON), 'click', onClickOpenResultModalBtn)
-  addEvent($(CLOSE_RESULT_MODAL_BUTTON), 'click', onClickCloseResultModalBtn)
+  addEvent($(RESULT__MODAL_OPEN_BUTTON), 'click', onClickOpenResultModalBtn)
+  addEvent($(RESULT_MODAL_CLOSE_BUTTON), 'click', onClickCloseResultModalBtn)
   addEvent($(LOTTO_NUMBERS_TOGGLE_BUTTON), 'click', onClickLottoNumbersToggleBtn)
 }
 
