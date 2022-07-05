@@ -1,9 +1,13 @@
+import { MODAL } from "./constants/selectors.js"
+import { $ } from "./util.js"
+import { closeModal, showModal } from "./view.js"
+
 export const onClickOpenResultModalBtn = function () {
-  console.log('modal open!')
+  showModal($(MODAL));
 }
 
 export const onClickCloseResultModalBtn = function () {
-  console.log('modal close!')
+  closeModal($(MODAL));
 }
 
 export const onClickLottoNumbersToggleBtn = function () {
