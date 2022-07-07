@@ -18,3 +18,7 @@ export const onSubmitLottoPurchaseForm = function (ev) {
   ev.preventDefault();
   console.log("lotto price submitted!");
 };
+
+export const onChangePriceInput = function (ev) {
+  console.log(ev.target.value);
+};

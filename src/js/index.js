@@ -4,12 +4,14 @@ import {
   RESULT_MODAL_CLOSE_BUTTON,
   LOTTO_NUMBERS_TOGGLE_BUTTON,
   LOTTO_PURCHASE_FORM,
+  PRICE_INPUT,
 } from "./constants/selectors.js";
 import {
   onClickOpenResultModalBtn,
   onClickCloseResultModalBtn,
   onClickLottoNumbersToggleBtn,
   onSubmitLottoPurchaseForm,
+  onChangePriceInput,
 } from "./event.js";
 
 const initApp = function () {
@@ -20,6 +22,7 @@ const initApp = function () {
     "click",
     onClickLottoNumbersToggleBtn
   );
+  addEvent($(PRICE_INPUT), "change", onChangePriceInput);
   addEvent($(LOTTO_PURCHASE_FORM), "submit", onSubmitLottoPurchaseForm);
 };
 
