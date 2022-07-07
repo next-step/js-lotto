@@ -1,9 +1,21 @@
-import { PRICE_INPUT } from "../../src/js/constants/selectors";
+import {
+  PRICE_INPUT,
+  PURCHASED_LOTTO_COUNT_TEXT,
+} from "../../src/js/constants/selectors";
 
 describe("로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.", () => {
-  it("로또 구입 금액을 입력할 수 있다.", () => {
+  beforeEach(() => {
     cy.visit("http://127.0.0.1:5500/");
+  });
+  it("로또 구입 금액 1000원을 입력할 수 있다.", () => {
     cy.get(PRICE_INPUT).type("1000").should("have.value", "1000");
+  });
+
+  it("확인을 누르면 구매 결과 창에 금액에 해당하는 로또의 개수가 표시된다.", () => {
+    cy.get(PURCHASED_LOTTO_COUNT_TEXT).should(
+      "have.text",
+      "총 1개를 구매하였습니다."
+    );
   });
 });
 
