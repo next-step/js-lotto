@@ -5,7 +5,7 @@ import {
 
 describe("로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.", () => {
   beforeEach(() => {
-    cy.visit("http://127.0.0.1:5500/");
+    cy.visit("/");
   });
   it("로또 구입 금액 1000원을 입력할 수 있다.", () => {
     cy.get(PRICE_INPUT).type("1000").should("have.value", "1000");
