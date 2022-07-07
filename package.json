@@ -7,7 +7,7 @@
     "cypress:open": "cypress open",
     "test": "cypress run"
   },
-  "dependencies": {
+  "devDependencies": {
     "cypress": "^10.3.0"
   }
 }
