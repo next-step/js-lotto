@@ -1,7 +1,8 @@
 /* -------------------------------------------- 로또 구매 관련 -------------------------------------------- */
-export const PRICE_INPUT = "#price-input";
-export const PURCHASED_LOTTO_COUNT_TEXT = "#lotto-purchased-count";
 export const LOTTO_PURCHASE_FORM = "#lotto-purchase-form";
+export const PRICE_INPUT = "#price-input";
+export const PRICE_SUBMIT = "#price-submit-btn";
+export const PURCHASED_LOTTO_COUNT_TEXT = "#lotto-purchased-count";
 
 /* -------------------------------------------- 토글버튼 -------------------------------------------- */
 export const LOTTO_NUMBERS_TOGGLE_BUTTON = ".lotto-numbers-toggle-button";
