@@ -20,8 +20,7 @@ describe('lotto', () => {
       expect(message).to.equal(errorMessages.LOTTO_UNIT_PRICE_ERROR);
     });
 
-    cy.findByPlaceholderText('구입 금액').type('5100');
-    cy.findByRole('button', { name: '확인' }).click();
+    cy.pay(5100);
   });
 
   it('소비자는 자동 구매를 할 수 있어야 한다.', () => {
