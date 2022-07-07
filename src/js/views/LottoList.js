@@ -72,7 +72,7 @@ class LottoList {
 
   render(lottos) {
     this.#convertToDOM(lottos);
-    this.#root.replaceChildren(this.#createLottoItems(lottos));
+    this.#root.replaceChildren(this.#createLottoItems());
   }
 }
 
