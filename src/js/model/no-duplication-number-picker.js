@@ -1,8 +1,33 @@
-class NoDuplicationNumberPicker {
-  constructor() {}
+export class NoDuplicationNumberPicker {
+  #length;
+  #maxValue;
+
+  constructor({ length, maxValue }) {
+    if (length > maxValue) {
+      throw Error("length가 maxValue보다 큽니다.");
+    }
+
+    this.#length = length;
+    this.#maxValue = maxValue;
+  }
+
+  pick() {
+    const result = new Array(this.#length).fill(null);
+
+    const numbers = new Array(this.#maxValue).fill(null).map((_, i) => i + 1);
+
+    result.forEach((_, i) => {
+      const pickedIndex = Math.floor(Math.random() * numbers.length);
+      const [pickedNumber] = numbers.splice(pickedIndex, 1);
+
+      result[i] = pickedNumber;
+    });
+
+    return result;
+  }
 }
 
-function testNumberPicker() {
+export function testNumberPicker() {
   const length = 10;
   const maxValue = 50;
   const numberPicker = new NoDuplicationNumberPicker({ length, maxValue });
