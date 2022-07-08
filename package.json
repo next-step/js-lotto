@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "live-server --port=8080 --browser=chrome",
+    "cypress:open": "node_modules/.bin/cypress open"
+  },
   "devDependencies": {
     "cypress": "^6.3.0"
   }

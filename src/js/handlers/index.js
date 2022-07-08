@@ -1,6 +1,6 @@
 import { LOTTO_NUMBER_COUNT, MAX_LOTTO_NUMBER, MIN_PRICE } from "../constants/index.js";
 import { validatePrice } from "../validates/index.js";
-import { $afterPurchageViewSection, $lottoNumbers, $modal, $purchaseInputValue, addLottoTicket, showPurchaseViewSection } from "../view/index.js"
+import { $afterPurchageViewSection, $modal, $purchaseInputValue, addLottoTicket, showPurchaseViewSection } from "../view/index.js"
 
 export const initHandler = () => {
   $afterPurchageViewSection.forEach((section) => section.style.display = 'none');
@@ -43,19 +43,22 @@ export const handlePurchaseButtonClick = () => {
   addLottoTicket(inputValue);
 }
 
-export const  handleLottoNumbersToggleButtonClick = (e) => {
+export const handleLottoNumbersToggleButtonClick = (e) => {
   const isChecked = e.target.checked;
   const inputValue = $purchaseInputValue.value;
   const lottoCount = inputValue / MIN_PRICE;
+  const lottoNumbers = document.querySelectorAll('span.mx-1');
+
 
   const lottos = getLottoNumber(lottoCount);
   if (isChecked) {
-   $lottoNumbers.forEach((section, index) => {
+   lottoNumbers.forEach((section, index) => {
     section.innerText += lottos[index].join(', ') 
    })
   } else {
-    $lottoNumbers.forEach((section) => {
+    lottoNumbers.forEach((section) => {
       section.innerText = '🎟️ '
      })
+
   }
 }

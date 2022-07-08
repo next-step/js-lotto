@@ -5,6 +5,5 @@ initHandler();
 
 $showResultButton.addEventListener('click', onModalShow)
 $modalClose.addEventListener('click', onModalClose)
-
 $purchaseButton.addEventListener('click', handlePurchaseButtonClick)
 $lottoNumbersToggleButton.addEventListener('change', (e) => handleLottoNumbersToggleButtonClick(e))
