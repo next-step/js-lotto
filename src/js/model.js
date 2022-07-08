@@ -4,3 +4,7 @@ import { setTypedPrice } from './action/lotto-actions.js';
 export const savePriceInputValue = function (value) {
 	lottoStore.dispatch(setTypedPrice(value));
 };
+
+export const getInputMoney = function () {
+	return lottoStore.getState().inputMoney;
+};

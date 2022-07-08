@@ -1,24 +1,26 @@
-import { MODAL } from "./constants/selectors.js";
-import { $ } from "./util.js";
-import { closeModal, showModal } from "./view.js";
-import { savePriceInputValue } from "./model.js";
+import { MODAL } from './constants/selectors.js';
+import { $ } from './util.js';
+import { closeModal, showModal } from './view.js';
+import { getInputMoney, savePriceInputValue } from './model.js';
 
 export const onClickOpenResultModalBtn = function () {
-  showModal($(MODAL));
+	showModal($(MODAL));
 };
 
 export const onClickCloseResultModalBtn = function () {
-  closeModal($(MODAL));
+	closeModal($(MODAL));
 };
 
 export const onClickLottoNumbersToggleBtn = function () {
-  console.log("lotto toggle!");
+	console.log('lotto toggle!');
 };
 
 export const onSubmitLottoPurchaseForm = function (ev) {
-  ev.preventDefault();
+	ev.preventDefault();
+	const priceInput = getInputMoney();
+	console.log('v: ', priceInput);
 };
 
 export const onChangePriceInput = function (ev) {
-  savePriceInputValue(ev.target.value);
+	savePriceInputValue(ev.target.value);
 };
