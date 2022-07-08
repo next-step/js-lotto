@@ -2,7 +2,7 @@ import {
   SET_TYPED_PRICE,
   SET_PURCHASED_LOTTO_COUNT,
   RESET_ALL,
-} from "../action/lotto-actions";
+} from "../action/lotto-actions.js";
 
 export const INITIAL_LOTTO_STATE = {
   typedPrice: 0,
