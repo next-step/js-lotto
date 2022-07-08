@@ -1,7 +1,7 @@
-import { handleLottoNumbersToggleButtonClick, handlePurchaseButtonClick, initHandler, onModalClose, onModalShow } from "./handlers/index.js";
-import { $lottoNumbersToggleButton, $purchaseButton, $modalClose, $showResultButton } from "./view/index.js";
+import { handleLottoNumbersToggleButtonClick, handlePurchaseButtonClick, onModalClose, onModalShow } from "./handlers/index.js";
+import { $lottoNumbersToggleButton, $purchaseButton, $modalClose, $showResultButton, hidePurchaseViewSection } from "./view/index.js";
 
-initHandler();
+hidePurchaseViewSection();
 
 $showResultButton.addEventListener('click', onModalShow)
 $modalClose.addEventListener('click', onModalClose)

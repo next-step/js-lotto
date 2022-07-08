@@ -1,10 +1,6 @@
 import { LOTTO_NUMBER_COUNT, MAX_LOTTO_NUMBER, MIN_PRICE } from "../constants/index.js";
 import { validatePrice } from "../validates/index.js";
-import { $afterPurchageViewSection, $modal, $purchaseInputValue, addLottoTicket, showPurchaseViewSection } from "../view/index.js"
-
-export const initHandler = () => {
-  $afterPurchageViewSection.forEach((section) => section.style.display = 'none');
-}
+import { $modal, $purchaseInputValue, addLottoTicket, showPurchaseViewSection } from "../view/index.js"
 
 export const onModalShow = () => {
   $modal.classList.add('open')

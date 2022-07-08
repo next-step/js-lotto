@@ -11,6 +11,11 @@ export const $purchaseButton = document.querySelector('.btn');
 export const $lottoTickets = document.querySelector('.d-flex .flex-wrap');
 export const $lottoNumbersToggleButton = document.querySelector('input[type=checkbox]');
 
+
+export const hidePurchaseViewSection = () => {
+  $afterPurchageViewSection.forEach((section) => section.style.display = 'none');
+}
+
 export const showPurchaseViewSection = () => {
   $afterPurchageViewSection.forEach((section) => section.style.display = 'block')
 }
