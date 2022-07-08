@@ -2,6 +2,7 @@ import { MODAL } from './constants/selectors.js';
 import { $ } from './util.js';
 import { closeModal, showModal } from './view.js';
 import { getInputMoney, savePriceInputValue } from './model.js';
+import { isInputMoneyValid } from './validate.js';
 
 export const onClickOpenResultModalBtn = function () {
 	showModal($(MODAL));
@@ -18,9 +19,13 @@ export const onClickLottoNumbersToggleBtn = function () {
 export const onSubmitLottoPurchaseForm = function (ev) {
 	ev.preventDefault();
 	const priceInput = getInputMoney();
-	console.log('v: ', priceInput);
+	try {
+		if (!isInputMoneyValid(priceInput)) {
+			// 에러 fire
+		}
+	} catch (err) {}
 };
 
 export const onChangePriceInput = function (ev) {
-	savePriceInputValue(ev.target.value);
+	savePriceInputValue(Number(ev.target.value));
 };
