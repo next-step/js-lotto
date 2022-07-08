@@ -37,7 +37,6 @@ export const handlePurchaseButtonClick = () => {
   }
 
   showPurchaseViewSection();
-
   addLottoCountLabel(lottoCount);
 
   addLottoTicket(lottoCount);
@@ -57,6 +56,5 @@ export const handleLottoNumbersToggleButtonClick = (e) => {
     lottoNumbers.forEach((section) => {
       section.innerText = '🎟️ '
      })
-
   }
 }
