@@ -22,3 +22,34 @@ body {
   width: 30px;
   height: 36px;
 }
+
+#purchased-lotto {
+  padding-left: 0;
+}
+
+.lotto-wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+.lotto-wrapper .lotto-detail {
+  margin-left: 12px;
+}
+
+#purchased-lotto .lotto-detail {
+  display: none;
+}
+
+#purchased-lotto.visible-number .lotto-detail {
+  display: block;
+}
+
+#purchased-lotto-section,
+#result {
+  display: none;
+}
+
+#app.visible-content #purchased-lotto-section,
+#app.visible-content #result {
+  display: block;
+}
