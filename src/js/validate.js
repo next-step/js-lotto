@@ -4,6 +4,7 @@ import {
 	ERROR_INPUT_MONEY_NOT_NUMBER,
 	ERROR_INPUT_MONEY_MULTIPLE_OF_LOTTO_PRICE,
 } from './constants/errors.js';
+import { LOTTO_PRICE } from './constants/nums.js';
 
 const fireError = function (error) {
 	console.error(error);
@@ -11,7 +12,6 @@ const fireError = function (error) {
 };
 
 export const validateInputMoney = function (inputMoney) {
-	const LOTTO_PRICE = 1000;
 	const MAX_INPUT_MONEY = 100000;
 	const isInputMoneyNumber = !isNaN(inputMoney);
 	const isInputMoneyTooSmall = inputMoney <= 0;
