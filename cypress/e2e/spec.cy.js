@@ -33,5 +33,27 @@ describe('Lotto 테스트', () => {
       priceInputAndClick(3000);
       cy.get('.my-0').contains(`총 3개를 구매하였습니다.`);
     });
+    it(`소비자는 자동 구매를 할 수 있어야 한다.`, () => {
+      priceInputAndClick(3000);
+      cy.get('#lotto-icons>.lotto-wrapper').should('have.length', 3);
+      cy.get('#lotto-icons>.lotto-wrapper>.lotto-icon').should('have.length', 3);
+      cy.get('#lotto-icons>.lotto-wrapper>.lotto-detail').should('have.length', 3);
+    });
+
+    describe('번호보기 버튼 클릭시', () => {
+      it('랜덤으로 생성된 로또번호를 볼 수 있어야 한다.', () => {
+        priceInputAndClick(3000);
+        cy.get('.text-base').click();
+        cy.get('.lotto-numbers-toggle-button').should('be.checked');
+        cy.get('.lotto-detail').should('be.visible');
+      });
+      it('로또번호가 보여지고 있다면 숨겨져야한다.', () => {
+        priceInputAndClick(3000);
+        cy.get('.text-base').click();
+        cy.get('.text-base').click();
+        cy.get('.lotto-numbers-toggle-button').should('not.be.checked');
+        cy.get('.lotto-detail').should('not.be.visible');
+      });
+    });
   });
 });

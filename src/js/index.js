@@ -31,5 +31,12 @@ purchaseForm.addEventListener('submit', (e) => {
   }
 });
 
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+toggleButton.addEventListener('click', (e) => {
+  const { checked } = e.target;
+  const lottoWrapper = document.querySelectorAll('.lotto-wrapper');
+  if (checked) {
+    lotto.showLottoList(lottoWrapper);
+  } else {
+    lotto.hiddenLottoList(lottoWrapper);
+  }
+});

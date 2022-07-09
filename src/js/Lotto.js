@@ -3,6 +3,21 @@ class Lotto {
     this.lottoIcons = lottoIcons;
   }
 
+  toggleLottoList = (lottoWrapper) => {
+    this.lottoIcons.classList.toggle('flex-col');
+    lottoWrapper.forEach((element) => {
+      element.children[1].classList.toggle('is-active');
+    });
+  };
+
+  showLottoList = (lottoWrapper) => {
+    this.toggleLottoList(lottoWrapper);
+  };
+
+  hiddenLottoList = (lottoWrapper) => {
+    this.toggleLottoList(lottoWrapper);
+  };
+
   renderCreatedLottoList = (lottoNumberList) => {
     const itemList = this.lottoIcons;
 
