@@ -23,11 +23,18 @@ body {
   height: 36px;
 }
 
+.lottery-number {
+  font-size: 18px;
+}
+
 .hide {
   opacity: 0;
   visibility: hidden;
 }
 
+#lottery-tickets {
+  padding: 0;
+}
 li {
   list-style-type: none;
 }

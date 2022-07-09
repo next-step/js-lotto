@@ -11,9 +11,10 @@
 -[ ] 작성한 문자가 한글이면 확인을 누를 경우 값이 초기화된다.
 -[ ] 입력 금액이 1000 미만 이라면 '값은 1000 이상이어야 합니다' 라는 required 메시지가 등장한다.
 
-# 구매
+# 구매 결과
 
 -[o] 로또 구입에 성공하면 구입한 복권 개수 영역, 지난 주 당첨번호를 입력할 수 있는 영역, 결과 확인하기 버튼이 나타난다.
+-[o] 로또 번호는 1이상 45이하의 숫자가 랜덤으로 6개 구성된다.
 
 테스트케이스
 
@@ -39,14 +40,30 @@ const initEventListeners = () => {
     $(".modal").classList.remove("open");
   };
 
+  const randomNumberGenerator = () => {
+    return Math.floor(Math.random() * 45 + 1);
+  };
+
+  const lottoGenerator = (count) => {
+    let template = "";
+
+    while (count--) {
+      let lotteryNumbers = "";
+      for (let i = 6; i > 0; i--) {
+        lotteryNumbers += randomNumberGenerator();
+        if (i !== 1) {
+          lotteryNumbers += ", ";
+        }
+      }
+      template += `<li class="mx-1 text-4xl">🎟️ <span class="lottery-number">${lotteryNumbers}</span></li>`;
+    }
+    return template;
+  };
+
   const getLotto = () => {
     let lottoCount = $("#input-price").value / 1000;
     $(".lotto-count").innerText = `총 ${lottoCount}개를 구매하였습니다.`;
-    let template = "";
-    while (lottoCount--) {
-      template += `<span class="mx-1 text-4xl">🎟️ </span>`;
-    }
-    $("#lottery-tickets").innerHTML = template;
+    $("#lottery-tickets").innerHTML = lottoGenerator(lottoCount);
   };
 
   const onBuyLotto = () => {
