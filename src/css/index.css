@@ -23,7 +23,7 @@ body {
   height: 36px;
 }
 
-.after-purchase {
+.hide {
   opacity: 0;
   visibility: hidden;
 }
