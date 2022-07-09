@@ -1,7 +1,7 @@
 import { LOTTO_UNIT } from '../../src/js/constants.js';
 
 const priceInputAndClick = (price) =>
-  cy.get('input[placeholder*="구입 금액"]').type(price).get('#purchaseForm > .d-flex > .btn').click();
+  cy.get('input[name="purchasePrice"]').type(price).get('#purchaseForm > .d-flex > .btn').click();
 const onOccurAlert = (text) => cy.on('window:alert', (alert) => expect(alert).to.contains(text));
 
 describe('Lotto 테스트', () => {

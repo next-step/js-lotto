@@ -9,6 +9,8 @@ const purchaseTextLabel = document.querySelector('.my-0');
 const toggleButton = document.querySelector('.lotto-numbers-toggle-button');
 const lottoIcons = document.querySelector('#lotto-icons');
 
+const lotto = new Lotto(lottoIcons);
+
 purchaseForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -21,6 +23,8 @@ purchaseForm.addEventListener('submit', (e) => {
 
     purchaseTextLabel.innerText = `총 ${dividedLottoValue}개를 구매하였습니다.`;
     purchaseSection.classList.add('is-active');
+
+    lotto.renderCreatedLottoList(createLottoList(dividedLottoValue));
   } catch (error) {
     purchaseInput.value = '';
     alert(error.message);
