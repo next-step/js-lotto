@@ -1,4 +1,4 @@
-import { PRICE_PER_LOTTO } from "./constants.js";
+import { PRICE_PER_LOTTO, SELECTORS } from "./constants.js";
 
 export class App {
   $app;
@@ -16,11 +16,15 @@ export class App {
   }
 
   get $charge() {
-    return this.$app.querySelector("#charge");
+    return this.$app.querySelector(SELECTORS.CHARGE_FORM);
   }
 
   get $numOfLotto() {
-    return this.$app.querySelector("#num-of-lotto");
+    return this.$app.querySelector(SELECTORS.NUMBER_OF_LOTTO);
+  }
+
+  get $lotteries() {
+    return this.$app.querySElector(SELECTORS.LOTTERIES);
   }
 
   render() {
