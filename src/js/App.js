@@ -4,6 +4,9 @@ import { randomInt } from "./utils.js";
 export class App {
   $app;
   pricePerLotto = PRICE_PER_LOTTO;
+  MAX_NUMBER = 45;
+  MIN_NUMBER = 1;
+  NUMBER_OF_SELECTABLE_LOTTOS = 5;
   state = {
     numOfLottos: 0,
     lottos: [],
@@ -60,10 +63,10 @@ export class App {
   }
 
   renderLotteries(lottos, isVisualizeLottoNumbers) {
-    this.$lottos.innerHTML = lottos.map((lotto) => this.getLottoElement(lotto, isVisualizeLottoNumbers)).join("");
+    this.$lottos.innerHTML = lottos.map((lotto) => this.generateLottoElement(lotto, isVisualizeLottoNumbers)).join("");
   }
 
-  getLottoElement = (lotto, isVisualizeLottoNumbers) => {
+  generateLottoElement = (lotto, isVisualizeLottoNumbers) => {
     return `
       <li class="mx-1 text-4xl">
         ${LOTTO_ICON} <span style="display: ${isVisualizeLottoNumbers ? "inline" : "none"}">${lotto.join(", ")}</span>
@@ -79,8 +82,8 @@ export class App {
 
   generateLotto() {
     const lotto = new Set();
-    while (lotto.size < 5) {
-      lotto.add(randomInt(1, 45));
+    while (lotto.size < this.NUMBER_OF_SELECTABLE_LOTTOS) {
+      lotto.add(randomInt(this.MIN_NUMBER, this.MAX_NUMBER));
     }
     return Array.from(lotto);
   }
