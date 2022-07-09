@@ -11,6 +11,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'prettier/prettier': 'error',
     'import/prefer-default-export': 'off',
     'import/extensions': ['off'],
     'no-restricted-syntax': ['error', 'ForInStatement'],
@@ -26,5 +27,6 @@ module.exports = {
     'cypress/no-async-tests': 'error',
     'cypress/no-pause': 'error',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
   },
 };
