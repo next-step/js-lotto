@@ -11,4 +11,8 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
+  rules: {
+    'import/prefer-default-export': 'off',
+    'import/extensions': ['off'],
+  }
 };
