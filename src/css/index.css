@@ -27,3 +27,7 @@ body {
   opacity: 0;
   visibility: hidden;
 }
+
+li {
+  list-style-type: none;
+}
