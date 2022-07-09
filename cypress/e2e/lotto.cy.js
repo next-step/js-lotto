@@ -20,4 +20,11 @@ describe("lotto", () => {
     cy.get("#buy-lotto-button").click();
     cy.get(".lotto-count").should("have.text", "총 3개를 구매하였습니다.");
   });
+  it("복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.", () => {
+    cy.get("#input-price").type(3000);
+    cy.get("#buy-lotto-button").click();
+    cy.get(`#lottery-${0}`).should("have.class", "hide");
+    cy.get(".switch").click();
+    cy.get(`#lottery-${0}`).should("not.have.class", "hide");
+  });
 });

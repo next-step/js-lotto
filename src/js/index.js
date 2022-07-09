@@ -55,7 +55,7 @@ const initEventListeners = () => {
           lotteryNumbers += ", ";
         }
       }
-      template += `<li class="mx-1 text-4xl">🎟️ <span class="lottery-number">${lotteryNumbers}</span></li>`;
+      template += `<li class="mx-1 text-4xl">🎟️ <span id=lottery-${count} class="hide lottery-number">${lotteryNumbers}</span></li>`;
     }
     return template;
   };
