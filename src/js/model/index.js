@@ -17,11 +17,17 @@ export class LottoModel {
     });
   }
 
+  #ticketRest() {
+    this.#tickets = [];
+  }
+
   isPriceUnit(payment) {
     return payment % this.#price === 0;
   }
 
   autoBuy(payment) {
+    this.#ticketRest();
+
     const numberOfTickets = Math.floor(payment / this.#price);
 
     for (let i = 0; i < numberOfTickets; i++) {
