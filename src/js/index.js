@@ -25,8 +25,6 @@ $amountInputForm.addEventListener('submit', (e) => {
 	const count = changeAmountToCount(value);
 	lotto = generateLotto(count);
 
-	console.log(lotto);
-
 	renderLottoList($lottoListContainer, lotto);
 });
 
