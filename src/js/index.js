@@ -3,13 +3,11 @@
 -[o] 로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.
 -[o] 로또 1장의 가격은 1,000원이다.
 -[o] 소비자는 자동 구매를 할 수 있어야 한다.
--[ ] 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
+-[o] 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
 
 세부 요구사항
 # 구입 금액 입력칸
 -[o] 구입 금액이 1000원 단위가 아닐 경우 '로또 구입 금액을 1,000원 단위로 입력해 주세요.' 라는 alert가 등장한다.
--[ ] 작성한 문자가 한글이면 확인을 누를 경우 값이 초기화된다.
--[ ] 입력 금액이 1000 미만 이라면 '값은 1000 이상이어야 합니다' 라는 required 메시지가 등장한다.
 
 # 구매 결과
 
@@ -20,6 +18,7 @@
 
 -[o] 구입 금액이 1000원 단위가 아닐 경우 '로또 구입 금액을 1,000원 단위로 입력해 주세요.' 라는 alert가 등장한다.
 -[o] 로또 구입에 성공하면 금액에 해당하는 개수의 로또가 발급된다.
+-[o] 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
 
 */
 
@@ -40,6 +39,19 @@ const initEventListeners = () => {
     $(".modal").classList.remove("open");
   };
 
+  const onToggleLotteryDetail = () => {
+    let toggleChecked = $(".lotto-numbers-toggle-button").checked;
+    let lotteries = document.querySelectorAll(".lottery-number");
+    if (toggleChecked) {
+      for (let i = 0; i < lotteries.length; i++) {
+        lotteries[i].classList.remove("hide");
+      }
+    } else {
+      for (let i = 0; i < lotteries.length; i++) {
+        lotteries[i].classList.add("hide");
+      }
+    }
+  };
   const randomNumberGenerator = () => {
     return Math.floor(Math.random() * 45 + 1);
   };
@@ -77,6 +89,10 @@ const initEventListeners = () => {
   $(".open-result-modal-button").addEventListener("click", onModalShow);
   $(".modal-close").addEventListener("click", onModalClose);
   $("#buy-lotto-button").addEventListener("click", onBuyLotto);
+  $(".lotto-numbers-toggle-button").addEventListener(
+    "click",
+    onToggleLotteryDetail
+  );
 };
 const app = new App();
 app.init();
