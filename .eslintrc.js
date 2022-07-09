@@ -14,5 +14,8 @@ module.exports = {
   rules: {
     'import/prefer-default-export': 'off',
     'import/extensions': ['off'],
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "class-methods-use-this": ["error", { "enforceForClassFields": false }],
+    "no-param-reassign": ["error", { "props": false }]
   }
 };
