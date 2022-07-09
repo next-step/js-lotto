@@ -1,4 +1,4 @@
-import { PRICE_PER_LOTTO, SELECTORS } from "./constants.js";
+import { PRICE_PER_LOTTO, LOTTO_ICON, SELECTORS } from "./constants.js";
 
 export class App {
   $app;
@@ -24,12 +24,20 @@ export class App {
   }
 
   get $lotteries() {
-    return this.$app.querySElector(SELECTORS.LOTTERIES);
+    return this.$app.querySelector(SELECTORS.LOTTERIES);
   }
 
   render() {
     const { numOfLotto } = this.state;
     this.$numOfLotto.innerText = `총 ${numOfLotto}개를 구매하였습니다.`;
+    this.renderLotteries(numOfLotto);
+  }
+
+  renderLotteries(numberOfLotto) {
+    this.$lotteries.innerHTML = Array(numberOfLotto)
+      .fill(LOTTO_ICON)
+      .map((icon) => `<span class="mx-1 text-4xl">${icon}</span>`)
+      .join("");
   }
 
   setState(next) {

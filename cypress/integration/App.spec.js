@@ -10,9 +10,9 @@ describe("DOM selectors", () => {
   });
 
   it("$charge", () => {
-    cy.get(SELECTORS.CHARGE_FORM).should("be.visible");
-    cy.get(SELECTORS.CHARGE_INPUT).should("be.visible");
-    cy.get(SELECTORS.CHARGE_BUTTON).should("be.visible");
+    cy.wrap([SELECTORS.CHARGE_FORM, SELECTORS.CHARGE_BUTTON, SELECTORS.CHARGE_INPUT]).each((selector) => {
+      cy.get(selector).should("be.visible");
+    });
   });
 
   it("$numOfLotto는 0개를 표시", () => {
@@ -21,14 +21,6 @@ describe("DOM selectors", () => {
 
   it("$lotteries는 비어있음", () => {
     cy.get(SELECTORS.LOTTERIES).should("be.empty");
-  });
-});
-
-describe("구매", () => {
-  it("1개당 1000원인 로또를 10장 구매", () => {
-    cy.get(SELECTORS.CHARGE_INPUT).type(10000);
-    cy.get(SELECTORS.CHARGE_BUTTON).click();
-    cy.get(SELECTORS.NUMBER_OF_LOTTO).should("contain.text", "10");
   });
 });
 
@@ -47,5 +39,14 @@ describe("금액 입력", () => {
   it("일반 문자열을 값으로 입력", () => {
     cy.get(SELECTORS.CHARGE_INPUT).type("hello world");
     cy.get(SELECTORS.CHARGE_INPUT).should("have.value", "");
+  });
+});
+
+describe("구매", () => {
+  it("1개당 1000원인 로또를 10장 구매", () => {
+    cy.get(SELECTORS.CHARGE_INPUT).type(10000);
+    cy.get(SELECTORS.CHARGE_BUTTON).click();
+    cy.get(SELECTORS.NUMBER_OF_LOTTO).should("contain.text", "10");
+    cy.get(`${SELECTORS.LOTTERIES} span`).should("have.length", 10);
   });
 });
