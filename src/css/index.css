@@ -1,5 +1,5 @@
-@import './shared/index.css';
-@import './ui/index.css';
+@import "./shared/index.css";
+@import "./ui/index.css";
 
 html,
 body {
@@ -21,4 +21,14 @@ body {
 .bonus-number {
   width: 30px;
   height: 36px;
+}
+ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.flex-wrap > .lotto-wrapper > .lotto-detail {
+  font-size: 1.25rem;
+  margin-left: 12px;
 }
