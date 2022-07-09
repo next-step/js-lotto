@@ -9,4 +9,13 @@ const isPositiveIntegerAmountValidator = (number) => {
 	return { valid: true };
 };
 
-export { isPositiveIntegerAmountValidator };
+const generateResultValidator =
+	(array = []) =>
+	(number) => {
+		if (number < 1) return { valid: false, msg: '0보다 커야합니다' };
+		if (number > 45) return { valid: false, msg: '45보다 작아야 합니다' };
+		if (array.includes(number)) return { valid: false, msg: '중복된 숫지' };
+		return { valid: true };
+	};
+
+export { isPositiveIntegerAmountValidator, generateResultValidator };

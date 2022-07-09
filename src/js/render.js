@@ -1,4 +1,7 @@
-const renderLottoList = (dom, lotto) => {};
+const renderLottoList = (dom, lotto) => {
+	dom.classList.remove('d-none');
+	dom.classList.add('d-block');
+};
 
 const toggleLottoListSwitch = (dom) => {};
 

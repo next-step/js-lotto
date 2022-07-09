@@ -1,5 +1,6 @@
 import { isPositiveIntegerAmountValidator, changeAmountToCount } from '../libs/index.js';
 import { generateLotto } from './lotto.js';
+import { renderLottoList } from './render.js';
 
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $modalClose = document.querySelector('.modal-close');
@@ -7,6 +8,8 @@ const $modal = document.querySelector('.modal');
 const $lottoListContainer = document.querySelector('.lotto-container');
 
 const $amountInputForm = document.querySelector('.amount-input-form');
+
+let lotto;
 
 $amountInputForm.addEventListener('submit', (e) => {
 	e.preventDefault();
@@ -20,7 +23,11 @@ $amountInputForm.addEventListener('submit', (e) => {
 	}
 
 	const count = changeAmountToCount(value);
-	const lotto = generateLotto(count);
+	lotto = generateLotto(count);
+
+	console.log(lotto);
+
+	renderLottoList($lottoListContainer, lotto);
 });
 
 const onModalShow = () => {
