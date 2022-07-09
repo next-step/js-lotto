@@ -1,43 +1,39 @@
 import { PRICE_PER_LOTTO, LOTTO_ICON, SELECTORS } from "./constants.js";
+import { randomInt } from "./utils.js";
 
 export class App {
   $app;
   pricePerLotto = PRICE_PER_LOTTO;
   state = {
-    charge: 0,
-    numOfLotto: 0,
-    lotto: [],
+    numOfLottos: 0,
+    lottos: [],
+    isVisualizeLottoNumbers: false,
   };
 
   constructor($app) {
     this.$app = $app;
-    this.addEvents();
     this.render();
+    this.addEventHandlers();
   }
 
   get $charge() {
     return this.$app.querySelector(SELECTORS.CHARGE_FORM);
   }
 
-  get $numOfLotto() {
-    return this.$app.querySelector(SELECTORS.NUMBER_OF_LOTTO);
+  get $chargeInput() {
+    return this.$app.querySelector(SELECTORS.CHARGE_INPUT);
   }
 
-  get $lotteries() {
-    return this.$app.querySelector(SELECTORS.LOTTERIES);
+  get $numOfLottos() {
+    return this.$app.querySelector(SELECTORS.NUMBER_OF_LOTTOS);
   }
 
-  render() {
-    const { numOfLotto } = this.state;
-    this.$numOfLotto.innerText = `총 ${numOfLotto}개를 구매하였습니다.`;
-    this.renderLotteries(numOfLotto);
+  get $lottos() {
+    return this.$app.querySelector(SELECTORS.LOTTOS);
   }
 
-  renderLotteries(numberOfLotto) {
-    this.$lotteries.innerHTML = Array(numberOfLotto)
-      .fill(LOTTO_ICON)
-      .map((icon) => `<span class="mx-1 text-4xl">${icon}</span>`)
-      .join("");
+  get $visibilityToggle() {
+    return this.$app.querySelector(SELECTORS.NUMBER_VISIBILITY_TOGGLE);
   }
 
   setState(next) {
@@ -48,10 +44,51 @@ export class App {
     this.render();
   }
 
+  render() {
+    const { numOfLottos, lottos, isVisualizeLottoNumbers } = this.state;
+    this.renderNumOfLottos(numOfLottos);
+    this.renderLotteries(lottos, isVisualizeLottoNumbers);
+    this.resetChargeInput();
+  }
+
+  resetChargeInput() {
+    this.$chargeInput.value = "";
+  }
+
+  renderNumOfLottos(numOfLottos) {
+    this.$numOfLottos.innerText = `총 ${numOfLottos}개를 구매하였습니다.`;
+  }
+
+  renderLotteries(lottos, isVisualizeLottoNumbers) {
+    this.$lottos.innerHTML = lottos.map((lotto) => this.getLottoElement(lotto, isVisualizeLottoNumbers)).join("");
+  }
+
+  getLottoElement = (lotto, isVisualizeLottoNumbers) => {
+    return `
+      <li class="mx-1 text-4xl">
+        ${LOTTO_ICON} <span style="display: ${isVisualizeLottoNumbers ? "inline" : "none"}">${lotto.join(", ")}</span>
+      </li>
+    `;
+  };
+
   isValidCharge(charge) {
     if (isNaN(charge)) throw new TypeError("Type of charge must be number");
-    if (charge % this.pricePerLotto !== 0) throw new Error(`${this.pricePerLotto}단위 값을 입력해주세요.`);
+    if (charge % this.pricePerLotto !== 0) throw new Error(`${this.pricePerLotto}원 단위로만 구매할 수 있습니다.`);
     return true;
+  }
+
+  generateLotto() {
+    const lotto = new Set();
+    while (lotto.size < 5) {
+      lotto.add(randomInt(1, 45));
+    }
+    return Array.from(lotto);
+  }
+
+  generateLotteries(numOfLotto) {
+    return Array(numOfLotto)
+      .fill(undefined)
+      .map(() => this.generateLotto());
   }
 
   purchase(e) {
@@ -59,8 +96,10 @@ export class App {
       e.preventDefault();
       const charge = Number(new FormData(e.target).get("charge"));
       if (this.isValidCharge(charge)) {
+        const numOfLottos = charge / this.pricePerLotto;
         const nextState = {
-          numOfLotto: charge / this.pricePerLotto,
+          numOfLottos,
+          lottos: this.generateLotteries(numOfLottos),
         };
         this.setState(nextState);
       }
@@ -70,7 +109,12 @@ export class App {
     }
   }
 
-  addEvents() {
+  toggleLottoNumbers() {
+    this.setState({ isVisualizeLottoNumbers: !this.state.isVisualizeLottoNumbers });
+  }
+
+  addEventHandlers() {
     this.$charge.addEventListener("submit", this.purchase.bind(this));
+    this.$visibilityToggle.addEventListener("change", this.toggleLottoNumbers.bind(this));
   }
 }
