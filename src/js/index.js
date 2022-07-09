@@ -15,22 +15,37 @@
 
 -[o] 로또 구입에 성공하면 구입한 복권 개수 영역, 지난 주 당첨번호를 입력할 수 있는 영역, 결과 확인하기 버튼이 나타난다.
 
+테스트케이스
+
+-[o] 구입 금액이 1000원 단위가 아닐 경우 '로또 구입 금액을 1,000원 단위로 입력해 주세요.' 라는 alert가 등장한다.
+
 */
 
-const $showResultButton = document.querySelector(".open-result-modal-button");
-const $modalClose = document.querySelector(".modal-close");
-const $modal = document.querySelector(".modal");
-const $lottoNumbersToggleButton = document.querySelector(
-  ".lotto-numbers-toggle-button"
-);
+import { $ } from "./utils/dom.js";
 
-const onModalShow = () => {
-  $modal.classList.add("open");
+function App() {
+  this.init = () => {
+    initEventListeners();
+  };
+}
+
+const initEventListeners = () => {
+  const onModalShow = () => {
+    $(".modal").classList.add("open");
+  };
+
+  const onModalClose = () => {
+    $(".modal").classList.remove("open");
+  };
+
+  const onBuyLotto = () => {
+    if ($("#input-price").value < 1000) {
+      alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
+    }
+  };
+  $(".open-result-modal-button").addEventListener("click", onModalShow);
+  $(".modal-close").addEventListener("click", onModalClose);
+  $("#buy-lotto-button").addEventListener("click", onBuyLotto);
 };
-
-const onModalClose = () => {
-  $modal.classList.remove("open");
-};
-
-$showResultButton.addEventListener("click", onModalShow);
-$modalClose.addEventListener("click", onModalClose);
+const app = new App();
+app.init();
