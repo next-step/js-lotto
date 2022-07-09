@@ -14,7 +14,6 @@
   },
   "rules": {
     "linebreak-style": "off",
-    "no-unused-vars": "warn",
-    "implicit-arrow-linebreak": "error"
+    "no-unused-vars": "warn"
   }
 }
