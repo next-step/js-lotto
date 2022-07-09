@@ -1,5 +1,4 @@
-import { PRICE_PER_LOTTO } from '../constants';
+import { changeAmountToCount } from './lotto.js';
+import { isPositiveIntegerAmountValidator } from './validator.js';
 
-const changeAmountToCount = (amount) => amount / PRICE_PER_LOTTO;
-
-export { changeAmountToCount };
+export { changeAmountToCount, isPositiveIntegerAmountValidator };

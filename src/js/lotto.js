@@ -1,20 +1,20 @@
-import { MAX_COUNT_PER_LOTTO, MAX_RANDOM_NUMBER } from '../constants';
+import { MAX_COUNT_PER_LOTTO, MAX_RANDOM_NUMBER } from '../constants/index.js';
 
-const randomNumberGenerator = () => Math.floor(Math.random() * MAX_RANDOM_NUMBER + 1);
+const generateRandomNumber = () => Math.floor(Math.random() * MAX_RANDOM_NUMBER + 1);
 
-const lottoGenerator = (set) => {
+const generateLottoItem = (set) => {
 	if ([...set].length === MAX_COUNT_PER_LOTTO) {
 		return [...set];
 	}
-	const randomNumber = randomNumberGenerator();
+	const randomNumber = generateRandomNumber();
 	set.add(randomNumber);
-	return lottoGenerator(set);
+	return generateLottoItem(set);
 };
 
-const lottosGenerator = (count) =>
+const generateLotto = (count) =>
 	Array.from({ length: count }).map(() => {
 		const lotto = new Set();
-		return lottoGenerator(lotto);
+		return generateLottoItem(lotto);
 	});
 
-export { lottosGenerator };
+export { generateLotto };
