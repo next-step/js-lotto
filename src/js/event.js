@@ -1,7 +1,7 @@
 import { MODAL } from './constants/selectors.js';
 import { $ } from './util.js';
 import { closeModal, showModal } from './view.js';
-import { getInputMoney, generateLotto, resetPriceInputValue, savePriceInputValueToStore } from './model.js';
+import { getInputMoney, generateLotto, resetPriceInputValue, savePriceInputValueToStore, foo } from './model.js';
 import { validateInputMoney } from './validate.js';
 
 export const onClickOpenResultModalBtn = function () {
@@ -20,9 +20,7 @@ export const onSubmitLottoPurchaseForm = function (ev) {
 	ev.preventDefault();
 	const priceInput = getInputMoney();
 	if (validateInputMoney(priceInput)) {
-		// for (let i = 0; i < 100; i++) {
-		// 	console.log(generateLotto());
-		// }
+		foo(priceInput);
 	} else {
 		resetPriceInputValue();
 	}

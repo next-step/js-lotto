@@ -11,8 +11,8 @@ export const closeModal = function (modalElement) {
 };
 
 export const renderPurchasedLottoCnt = function () {
-	const { purchasedLottoCnt } = lottoStore.getState();
-	$(PURCHASED_LOTTO_COUNT_TEXT).innerText = `총${purchasedLottoCnt}개를 구매하였습니다`;
+	const { lottoList } = lottoStore.getState();
+	$(PURCHASED_LOTTO_COUNT_TEXT).innerText = `총${lottoList.length}개를 구매하였습니다`;
 };
 
 const initView = function () {

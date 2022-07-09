@@ -1,8 +1,8 @@
-import { SET_INPUT_MONEY, SET_PURCHASED_LOTTO_COUNT, RESET_ALL } from '../action/lotto-actions.js';
+import { SET_INPUT_MONEY, SET_LOTTO_LIST, RESET_ALL } from '../action/lotto-actions.js';
 
 export const INITIAL_LOTTO_STATE = {
 	inputMoney: 0,
-	purchasedLottoCnt: 0,
+	lottoList: [],
 };
 
 export const lottoReducer = function (state = INITIAL_LOTTO_STATE, action) {
@@ -15,10 +15,10 @@ export const lottoReducer = function (state = INITIAL_LOTTO_STATE, action) {
 				...state,
 				inputMoney: action.payload,
 			};
-		case SET_PURCHASED_LOTTO_COUNT:
+		case SET_LOTTO_LIST:
 			return {
 				...state,
-				purchasedLottoCnt: action.payload,
+				lottoList: action.payload,
 			};
 		case RESET_ALL:
 			return INITIAL_LOTTO_STATE;

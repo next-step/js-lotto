@@ -1,5 +1,5 @@
 import { lottoStore } from './store/lotto-store.js';
-import { setInputMoney } from './action/lotto-actions.js';
+import { setInputMoney, setLottoList } from './action/lotto-actions.js';
 
 export const savePriceInputValueToStore = function (value) {
 	lottoStore.dispatch(setInputMoney(Number(value)));
@@ -31,4 +31,12 @@ export const generateLotto = function () {
 		lottoNums.add(getRandomInt(MIN_LOTTO_NUM, MAX_LOTTO_NUM));
 	}
 	return lottoNums;
+};
+
+export const foo = function (priceInput) {
+	console.log(priceInput);
+};
+
+export const saveLottoListToStore = function (lottoList) {
+	lottoStore.dispatch(setLottoList(lottoList));
 };
