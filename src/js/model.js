@@ -12,3 +12,7 @@ export const resetPriceInputValue = function () {
 export const getInputMoney = function () {
 	return lottoStore.getState().inputMoney;
 };
+
+export const getRandomInt = function (min, max) {
+	return Math.floor(Math.random() * (max + 1 - min) + min);
+};
