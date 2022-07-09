@@ -4,6 +4,19 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^6.3.0"
-  }
+    "cypress": "^6.3.0",
+    "live-server": "^1.2.2"
+  },
+  "scripts": {
+    "start": "live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ag502/js-lotto.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/ag502/js-lotto/issues"
+  },
+  "homepage": "https://github.com/ag502/js-lotto#readme"
 }
