@@ -1,8 +1,8 @@
 import { MODAL } from './constants/selectors.js';
 import { $ } from './util.js';
 import { closeModal, showModal } from './view.js';
-import { getInputMoney, savePriceInputValue } from './model.js';
-import { isInputMoneyValid } from './validate.js';
+import { getInputMoney, resetPriceInputValue, savePriceInputValue } from './model.js';
+import { validateInputMoney } from './validate.js';
 
 export const onClickOpenResultModalBtn = function () {
 	showModal($(MODAL));
@@ -19,13 +19,13 @@ export const onClickLottoNumbersToggleBtn = function () {
 export const onSubmitLottoPurchaseForm = function (ev) {
 	ev.preventDefault();
 	const priceInput = getInputMoney();
-	try {
-		if (!isInputMoneyValid(priceInput)) {
-			// 에러 fire
-		}
-	} catch (err) {}
+	if (validateInputMoney(priceInput)) {
+		console.log('이제 로또를 발급해보자');
+	} else {
+		resetPriceInputValue();
+	}
 };
 
 export const onChangePriceInput = function (ev) {
-	savePriceInputValue(Number(ev.target.value));
+	savePriceInputValue(ev.target.value);
 };
