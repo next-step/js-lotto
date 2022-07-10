@@ -45,7 +45,7 @@ const displayLottoSection = (priceInput) => {
   // 1. <label> 결과 알림: n개의 복권 구매
   $lottoSectionLabel.innerText = `총 ${AMOUNT_OF_LOTTOS}개의 복권을 구입했습니다.`;
 
-  // 중복되지 않은 랜덤 넘버 6개 생성
+  // 2. 중복되지 않은 랜덤 넘버 6개 생성
 
   // const arr = [];
   // // 중복되지 않은 랜덤 넘버 6개 각 <span>에 부여
@@ -68,24 +68,33 @@ const displayLottoSection = (priceInput) => {
 
     const template = `<li class="mx-1 text-4xl lotto-wrapper">
                         <span class="lotto-icon">🎟️ </span>
-                        <span class="lotto-detail" style="display:none;">${[
-                          ...randomNums,
-                        ].join(", ")}</span>
+                        <span class="lotto-detail">${[...randomNums].join(
+                          ", "
+                        )}</span>
                       </li>`;
 
     templateArray.push(template);
   }
 
   $lottoTicketsUl.innerHTML = templateArray.join("");
+
+  // 3. 토글
 };
 
 //toggle 클릭시 각 티켓별로 랜덤이고 중복되지 않은 번호 6개 보여주기.
-const handleToggleClicked = () => {
-  $lottoTicketsUl.classList.add("flex-col");
-  $lottoTicketNumSpan.classList.replace(
-    'style:"dispaly:none"',
-    'style:"display:inline"'
-  );
+const toggleNumberDisplay = () => {
+  const details = $lottoTicketsUl.querySelectorAll("span.lotto-detail");
+  details.forEach((d) => d.classList.toggle("hidden"));
+};
+
+const handleToggleClicked = (e) => {
+  if (e.target.checked) {
+    // const $lottoTicketNumSpan = document.querySelector(".lotto-detail");
+    // const $spanClasses = $lottoTicketNumSpan.classList;
+    // $spanClasses.replace("display:inline", "display:none");
+    // console.log($spanClasses);
+    toggleNumberDisplay();
+  }
 };
 
 $priceForm.addEventListener("submit", showOtherSections);
