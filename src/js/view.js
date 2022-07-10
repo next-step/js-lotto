@@ -10,24 +10,19 @@ export const closeModal = function (modalElement) {
 	modalElement.classList.remove('open');
 };
 
-const shouldRePaint = function (prevState, newState) {
-	return prevState !== newState;
-};
-
 export const renderPriceInput = function () {
 	const { inputMoney: newState } = lottoStore.getState();
 	$(PRICE_INPUT).value = newState;
 };
 
 export const renderPurchasedLottoCnt = function () {
-	const prevState = Number($(PURCHASED_LOTTO_COUNT_TEXT).innerText);
 	const { lottoList } = lottoStore.getState();
 	const newState = lottoList.length;
-	if (!shouldRePaint(prevState, newState)) return;
 	$(PURCHASED_LOTTO_COUNT_TEXT).innerText = `${newState}`;
 };
 
-// 상태의 특정 프로퍼티에만 describe 하는 방법은없을까?
+// 지금은 상태의 프로퍼티 중 하나만 값이 변해도 나머지 모든 observer들이 실행된다.
+// 상태의 특정 프로퍼티에만 subscribe 하는 방법은없을까?
 export const subscribeViewsToStore = function () {
 	lottoStore.subscribe(renderPurchasedLottoCnt);
 	lottoStore.subscribe(renderPriceInput);

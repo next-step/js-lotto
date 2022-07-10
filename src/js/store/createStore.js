@@ -8,7 +8,7 @@ export class Store {
 		this.#observers = new Set();
 	}
 
-	publish() {
+	#publish() {
 		this.#observers.forEach((cb) => cb());
 	}
 
@@ -22,6 +22,6 @@ export class Store {
 
 	dispatch(action) {
 		this.#state = this.reducer(this.#state, action);
-		this.publish();
+		this.#publish();
 	}
 }
