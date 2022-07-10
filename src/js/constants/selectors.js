@@ -7,7 +7,7 @@ export const PURCHASED_LOTTO_COUNT_TEXT = '#lotto-purchased-count';
 /* -------------------------------------------- 로또 티켓 관련 -------------------------------------------- */
 export const LOTTO_NUMBERS_TOGGLE_BUTTON = '.lotto-numbers-toggle-button';
 export const LOTTO_TICKETS_WRAPPER = '#lotto-tickets-wrapper';
-export const LOTTO_NUMBERS_DETAIL = '#lotto-detail';
+export const LOTTO_NUMBERS_DETAIL = '.lotto-detail';
 
 /* -------------------------------------------- 모달 관련 -------------------------------------------- */
 export const RESULT__MODAL_OPEN_BUTTON = '.open-result-modal-button';

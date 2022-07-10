@@ -1,6 +1,6 @@
 import { MODAL } from './constants/selectors.js';
 import { $ } from './util.js';
-import { closeModal, showModal } from './view.js';
+import { closeModal, showModal, toggleLottoDetailNumbers } from './view.js';
 import { getInputMoney, resetPriceInputValue, savePriceInputValueToStore, generateLottoList, saveLottoListToStore } from './model.js';
 import { validateInputMoney } from './validate.js';
 
@@ -13,12 +13,11 @@ export const onClickCloseResultModalBtn = function () {
 };
 
 export const onClickLottoNumbersToggleBtn = function () {
-	console.log('lotto toggle!');
+	toggleLottoDetailNumbers();
 };
 
 export const onSubmitLottoPurchaseForm = function (ev) {
 	ev.preventDefault();
-	// 초기화
 	const priceInput = getInputMoney();
 	if (validateInputMoney(priceInput)) {
 		generateLottoList(priceInput);

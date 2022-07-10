@@ -1,6 +1,6 @@
-import { LOTTO_TICKETS_WRAPPER, PRICE_INPUT, PURCHASED_LOTTO_COUNT_TEXT } from './constants/selectors.js';
+import { LOTTO_NUMBERS_DETAIL, LOTTO_TICKETS_WRAPPER, PRICE_INPUT, PURCHASED_LOTTO_COUNT_TEXT } from './constants/selectors.js';
 import { lottoStore } from './store/lotto-store.js';
-import { $ } from './util.js';
+import { $, $$ } from './util.js';
 
 export const showModal = function (modalElement) {
 	modalElement.classList.add('open');
@@ -43,7 +43,7 @@ const generateLottoTicketComponent = function (detailNumbers) {
 	icon.innerText = '🎟️';
 
 	const detail = document.createElement('span');
-	detail.classList = 'lotto-detail';
+	detail.classList = 'lotto-detail d-none';
 	detail.innerText = Array.from(detailNumbers).join(',');
 
 	li.appendChild(icon);
@@ -60,4 +60,9 @@ const paintLottoTickets = function () {
 		const lottoComp = generateLottoTicketComponent(lottoNums);
 		lottoTicketsWrapper.appendChild(lottoComp);
 	});
+};
+
+export const toggleLottoDetailNumbers = function () {
+	$$(LOTTO_NUMBERS_DETAIL).forEach((el) => el.classList.toggle('d-none'));
+	$(LOTTO_TICKETS_WRAPPER).classList.toggle('flex-col');
 };
