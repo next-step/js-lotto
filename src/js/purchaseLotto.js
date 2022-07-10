@@ -1,4 +1,4 @@
-import { $, $$ } from './DOM.js';
+import { $ } from './DOM.js';
 import { ALERT_MESSAGES, LOTTO_INFORMATION } from './constants.js';
 import getLottoResult from './getLottoResult.js';
 

@@ -11,7 +11,7 @@ const handleLottoNumbersToggle = ({ target: { checked } }) => {
   }
 
   for (let i = 0; i < $$('.lotto-result-number-list').length; i++) {
-    $$('.lotto-result-number-list')[i].style.display = 'inline-block';
+    $$('.lotto-result-number-list')[i].style.display = 'block';
   }
 
   $('.lotto-result-list').classList.add('flex-col');

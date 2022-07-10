@@ -6,7 +6,7 @@ const $purchaseConfirmButton = $('.confirm');
 const $showResultButton = $('.open-result-modal-button');
 const $modalClose = $('.modal-close');
 const $modal = $('.modal');
-const $lottoNumbersToggleButton = $('.lotto-numbers-toggle-button');
+const $lottoNumbersToggleButton = $('.switch');
 
 const onModalShow = () => {
   $modal.classList.add('open');
