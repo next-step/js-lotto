@@ -13,7 +13,7 @@ class View {
     this.$buyBtn = $.qs(".buy-btn");
     this.$lottiesPanel = $.qs(".lottie-panel");
 
-    this.observable.subscribe(notifyTypes.BUY_LOTTIES, this.renderLottiePanel.bind(this));
+    this.observable.subscribe(notifyTypes.BUY_LOTTIES, this.render.bind(this));
 
     this.initEvent();
   }
@@ -53,11 +53,17 @@ class View {
     this.$lottiesPanel.appendElement($lottieListContainer);
   }
 
-  renderLottiePanel(curLotties) {
+  renderNumberCheckForm() {
+    const $numberCheckForm = $.qs(".number-check-form");
+    $numberCheckForm.style.display = "block";
+  }
+
+  render(curLotties) {
     this.$lottiesPanel.setHTML("");
 
     this.renderLottieControlPanel(curLotties);
     this.renderLottieList(curLotties);
+    this.renderNumberCheckForm();
   }
 }
 
