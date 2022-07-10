@@ -3,7 +3,7 @@ const LOTTO_SIZE = 6;
 
 const LOTTO_NUMBER_UNIT = {
   min: 1,
-  max: 46,
+  max: 45,
 };
 
 const MESSAGES = {

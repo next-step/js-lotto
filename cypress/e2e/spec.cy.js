@@ -1,7 +1,7 @@
 import { LOTTO_UNIT } from '../../src/js/constants.js';
 
 const priceInputAndClick = (price) =>
-  cy.get('input[name="purchasePrice"]').type(price).get('#purchaseForm > .d-flex > .btn').click();
+  cy.get('input[name="purchasePrice"]').type(price, { force: true }).get('#purchaseForm > .d-flex > .btn').click();
 const onOccurAlert = (text) => cy.on('window:alert', (alert) => expect(alert).to.contains(text));
 
 describe('Lotto 테스트', () => {
@@ -43,7 +43,17 @@ describe('Lotto 테스트', () => {
       priceInputAndClick(3000);
       cy.get('.lotto-detail').each((elem) => {
         const lottoNumbers = elem.text().split(', ');
-        expect(lottoNumbers).to.have.length(6);
+        expect(lottoNumbers).to.have.lengthOf(6);
+      });
+    });
+    it('로또 숫자는 1이상 45이하의 숫자이다.', () => {
+      priceInputAndClick(3000);
+      cy.get('.lotto-detail').each((elem) => {
+        const lottoNumbers = elem.text().split(', ').map(Number);
+        lottoNumbers.forEach((number) => {
+          expect(number).to.above(0);
+          expect(number).to.below(46);
+        });
       });
     });
   });
