@@ -7,7 +7,7 @@ export default class LottoMachine {
   #lottoTickets = [];
 
   constructor(unitPrice) {
-    this.unitPrice = unitPrice; // 1장당 1000
+    this.unitPrice = unitPrice;
   }
 
   get lottoTickets() {
