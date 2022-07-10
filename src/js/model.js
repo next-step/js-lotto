@@ -31,7 +31,10 @@ const generateLottoNums = function () {
 
 export const generateLottoList = function (priceInput) {
 	const lottoTicketCount = priceInput / LOTTO_PRICE;
-	const lottoList = Array(lottoTicketCount).fill(generateLottoNums());
+	const lottoList = [];
+	for (let i = 0; i < lottoTicketCount; i++) {
+		lottoList.push(generateLottoNums());
+	}
 	saveLottoListToStore(lottoList);
 };
 

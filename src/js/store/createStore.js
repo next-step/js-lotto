@@ -9,7 +9,6 @@ export class Store {
 	}
 
 	publish() {
-		console.log(this.#state);
 		this.#observers.forEach((cb) => cb());
 	}
 

@@ -8,7 +8,7 @@ import { LOTTO_PRICE } from './constants/nums.js';
 
 const fireError = function (error) {
 	console.error(error);
-	window.alert(error);
+	// window.alert(error);
 };
 
 export const validateInputMoney = function (inputMoney) {

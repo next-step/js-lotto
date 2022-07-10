@@ -13,8 +13,10 @@ import {
 	onSubmitLottoPurchaseForm,
 	onChangePriceInput,
 } from './event.js';
+import { subscribeViewsToStore } from './view.js';
 
 const initApp = function () {
+	subscribeViewsToStore();
 	addEvent($(RESULT__MODAL_OPEN_BUTTON), 'click', onClickOpenResultModalBtn);
 	addEvent($(RESULT_MODAL_CLOSE_BUTTON), 'click', onClickCloseResultModalBtn);
 	addEvent($(LOTTO_NUMBERS_TOGGLE_BUTTON), 'click', onClickLottoNumbersToggleBtn);

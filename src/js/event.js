@@ -21,8 +21,6 @@ export const onSubmitLottoPurchaseForm = function (ev) {
 	const priceInput = getInputMoney();
 	if (validateInputMoney(priceInput)) {
 		generateLottoList(priceInput);
-	} else {
-		resetPriceInputValue();
 	}
 };
 
