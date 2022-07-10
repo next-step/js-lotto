@@ -5,7 +5,12 @@ class Model {
     this.curLotties = [];
   }
 
+  initLotties() {
+    this.curLotties = [];
+  }
+
   buyLotties(paidPrice) {
+    this.initLotties();
     const numOfLotties = Math.floor(paidPrice / PRICE_OF_LOTTO);
 
     for (let _ = 0; _ < numOfLotties; _++) {
