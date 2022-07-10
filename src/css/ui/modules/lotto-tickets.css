@@ -1,0 +1,11 @@
+#lotto-tickets-wrapper {
+    padding : 0;
+    /* 토글버튼 누르면 아래 스타일 추가 */
+    /* flex-direction: column; */
+}
+
+.lotto-ticket > .lotto-detail {
+    display: none;
+    font-size: 1.25rem;
+    margin-left: 12px;
+}
