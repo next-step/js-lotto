@@ -1,5 +1,5 @@
 import { $ } from "./utils/dom.js";
-import { MAX_LOTTO_NUM } from "./utils/constant.js";
+import { LOTTO_PRICE, MAX_LOTTO_NUM, MIN_LOTTO_NUM } from "./utils/constant.js";
 
 function App() {
   this.init = () => {
@@ -28,7 +28,7 @@ const initEventListeners = () => {
   };
 
   const randomNumberGenerator = () => {
-    return Math.floor(Math.random() * MAX_LOTTO_NUM + 1);
+    return Math.floor(Math.random() * MAX_LOTTO_NUM + MIN_LOTTO_NUM);
   };
 
   const lottoTemplateGenerator = (lotteryNumbers) => {
@@ -54,7 +54,7 @@ const initEventListeners = () => {
   };
 
   const getLotto = (purchaseValue) => {
-    const lottoCount = purchaseValue / 1000;
+    const lottoCount = purchaseValue / LOTTO_PRICE;
 
     $(".lotto-count").innerText = `총 ${lottoCount}개를 구매하였습니다.`;
     $("#lottery-tickets").innerHTML = lottoGenerator(lottoCount);
@@ -65,7 +65,7 @@ const initEventListeners = () => {
 
     const purchaseValue = event.target[0].valueAsNumber;
 
-    if (purchaseValue % 1000 !== 0 || purchaseValue <= 0) {
+    if (purchaseValue % LOTTO_PRICE !== 0 || purchaseValue <= 0) {
       alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
       return;
     }
