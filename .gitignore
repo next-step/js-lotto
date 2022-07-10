@@ -106,3 +106,4 @@ dist
 cypress/integration/examples
 cypress/videos
 cypress/screenshots
+cypress/e2e/examples

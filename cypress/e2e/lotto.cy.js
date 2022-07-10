@@ -9,9 +9,9 @@ import {
 } from '../../src/js/constants/selectors';
 
 describe('로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.', () => {
-	// beforeEach(() => {
-	// 	cy.visit('/');
-	// });
+	beforeEach(() => {
+		cy.visit('/');
+	});
 
 	it('로또 구입 금액 1000원을 입력할 수 있다.', () => {
 		cy.get(PRICE_INPUT).type('1000');
@@ -19,11 +19,6 @@ describe('로또 구입 금액을 입력하면, 금액에 해당하는 로또를
 
 	it('확인버튼을 누르면, 폼을 제출할 수 있다.', () => {
 		cy.get(PRICE_INPUT).type('1000');
-		// cy.get(LOTTO_PURCHASE_FORM).then((el$) => {
-		// 	el$.on('submit', (ev) => {
-		// 		ev.preventDefault();
-		// 	});
-		// });
 		cy.get(LOTTO_PURCHASE_FORM).submit();
 	});
 
@@ -38,11 +33,11 @@ describe('로또 1장의 가격은 1,000원이다.', () => {});
 
 describe('소비자는 자동 구매를 할 수 있어야 한다.', () => {});
 
-describe('복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.', () => {
-	it('번호보기 토글 버튼을 클릭하면');
-	cy.visit('/');
-	cy.get(LOTTO_NUMBERS_TOGGLE_BUTTON).click();
-});
+// describe('복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.', () => {
+// 	it('번호보기 토글 버튼을 클릭하면');
+// 	cy.visit('/');
+// 	cy.get(LOTTO_NUMBERS_TOGGLE_BUTTON).click();
+// });
 
 describe('결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.', () => {});
 
