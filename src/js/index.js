@@ -17,7 +17,7 @@ export const $lottoNumbersToggleButton = document.querySelector(
 export const $paidAmount = document.querySelector('#paid-amount');
 export const $formLottoBuying = document.querySelector('#form-lotto-buying');
 
-const lottoMachine = new LottoMachine(1000);
+const lottoMachine = new LottoMachine();
 
 const onModalShow = () => {
   $modal.classList.add('open');

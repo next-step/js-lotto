@@ -4,11 +4,9 @@ import executeAlert from '../ui/alert.js';
 import LottoTicket from './lotto-ticket.js';
 
 export default class LottoMachine {
-  #lottoTickets = [];
+  #unitPrice = 1000;
 
-  constructor(unitPrice) {
-    this.unitPrice = unitPrice;
-  }
+  #lottoTickets = [];
 
   get lottoTickets() {
     return this.#lottoTickets;
@@ -29,15 +27,19 @@ export default class LottoMachine {
   };
 
   generateLottoTicketByAutomatic(amount) {
-    if (isValidPurchasable(amount, this.unitPrice)) {
+    if (isValidPurchasable(amount, this.#unitPrice)) {
       const numberOfLottoTickets = getNumberOfLottoTickets(
         amount,
-        this.unitPrice
+        this.#unitPrice
       );
 
       this.#lottoTickets = this.getLottoTickets(numberOfLottoTickets);
     } else {
-      executeAlert('로또 구입 금액을 1,000원 단위로 입력해 주세요.');
+      executeAlert(
+        `로또 구입 금액을 ${this.#unitPrice.toLocaleString(
+          'ko-KR'
+        )}원 단위로 입력해 주세요.`
+      );
     }
   }
 }
