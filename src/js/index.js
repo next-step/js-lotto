@@ -18,18 +18,12 @@ const initEventListeners = () => {
 
   const onToggleLotteryDetail = () => {
     const toggleChecked = $(".lotto-numbers-toggle-button").checked;
-    const lotteries = document.querySelectorAll(".lottery-number");
+    const lotteryTickets = $("#lottery-tickets");
 
     if (toggleChecked) {
-      for (let i = 0; i < lotteries.length; i++) {
-        lotteries[i].classList.remove("hide");
-      }
-      $("#lottery-tickets").classList.add("flex-col");
+      lotteryTickets.classList.add("visible-number", "flex-col");
     } else {
-      for (let i = 0; i < lotteries.length; i++) {
-        lotteries[i].classList.add("hide");
-      }
-      $("#lottery-tickets").classList.remove("flex-col");
+      lotteryTickets.classList.remove("visible-number", "flex-col");
     }
   };
 
@@ -38,7 +32,7 @@ const initEventListeners = () => {
   };
 
   const lottoTemplateGenerator = (lotteryNumbers) => {
-    return `<li class="mx-1 text-4xl"><span class="ticket-paint">🎟️ </span><span id=lottery-${0} class="hide lottery-number">${[
+    return `<li class="mx-1 text-4xl">🎟️<span id=lottery-${0} class="lottery-number">${[
       ...lotteryNumbers,
     ].join(",")}</span></li>`;
   };
@@ -78,7 +72,7 @@ const initEventListeners = () => {
 
     getLotto(purchaseValue);
 
-    $("#after-purchase").classList.remove("hide");
+    $("#after-purchase").classList.remove("invisible");
   };
 
   $(".open-result-modal-button").addEventListener("click", onModalShow);

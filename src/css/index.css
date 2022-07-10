@@ -27,9 +27,15 @@ body {
   font-size: 18px;
 }
 
-.hide {
-  opacity: 0;
-  visibility: hidden;
+#lottery-tickets .lottery-number {
+  display: none;
+}
+
+#lottery-tickets.visible-number .lottery-number {
+  display: inline;
+}
+
+.invisible {
   display: none;
 }
 
