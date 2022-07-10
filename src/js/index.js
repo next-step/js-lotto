@@ -13,12 +13,14 @@
 
 -[o] 로또 구입에 성공하면 구입한 복권 개수 영역, 지난 주 당첨번호를 입력할 수 있는 영역, 결과 확인하기 버튼이 나타난다.
 -[o] 로또 번호는 1이상 45이하의 숫자가 랜덤으로 6개 구성된다.
+-[o] 로또 한 장은 서로 다른 숫자로 구성된다.
 
 테스트케이스
 
 -[o] 구입 금액이 1000원 단위가 아닐 경우 '로또 구입 금액을 1,000원 단위로 입력해 주세요.' 라는 alert가 등장한다.
 -[o] 로또 구입에 성공하면 금액에 해당하는 개수의 로또가 발급된다.
 -[o] 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
+-[o] 로또 한 장의 6개의 복권 번호는 중복이 있으면 안된다.
 
 */
 
@@ -62,14 +64,16 @@ const initEventListeners = () => {
     let template = "";
 
     while (count--) {
-      let lotteryNumbers = "";
-      for (let i = 6; i > 0; i--) {
-        lotteryNumbers += randomNumberGenerator();
-        if (i !== 1) {
-          lotteryNumbers += ", ";
+      let lotteryNumbers = new Set();
+      while (true) {
+        lotteryNumbers.add(randomNumberGenerator());
+        if (lotteryNumbers.size >= 6) {
+          break;
         }
       }
-      template += `<li class="mx-1 text-4xl">🎟️ <span id=lottery-${count} class="hide lottery-number">${lotteryNumbers}</span></li>`;
+      template += `<li class="mx-1 text-4xl">🎟️ <span id=lottery-${count} class="hide lottery-number">${[
+        ...lotteryNumbers,
+      ].join(",")}</span></li>`;
     }
     return template;
   };
