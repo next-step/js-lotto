@@ -14,6 +14,9 @@ const lotto = new Lotto(lottoIcons);
 purchaseForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
+  const alreadyExistList = purchaseSection.className.includes('is-active');
+  if (alreadyExistList) return;
+
   const purchaseInput = document.querySelector('input[name=purchasePrice]');
   const price = purchaseInput.value;
 
