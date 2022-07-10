@@ -7,11 +7,17 @@ describe('로또 구입 금액을 입력하면, 금액에 해당하는 로또를
 	});
 
 	it('입력한 금액을 제출할 수 있다.', () => {
-		cy.get(LOTTO_PURCHASE_FORM).submit();
+		cy.get(LOTTO_PURCHASE_FORM).then((el$) => {
+			el$.on('submit', (ev) => {
+				ev.preventDefault();
+			});
+		});
+		cy.get(PRICE_SUBMIT).click();
+		cy.get(PURCHASED_LOTTO_COUNT_TEXT).should('have.text', '1');
 	});
 
 	it('금액에 해당하는 로또 개수가 표시된다.', () => {
-		cy.get(PURCHASED_LOTTO_COUNT_TEXT).should('have.text', '1');
+		// cy.get(PURCHASED_LOTTO_COUNT_TEXT).should('have.text', '1');
 	});
 });
 
