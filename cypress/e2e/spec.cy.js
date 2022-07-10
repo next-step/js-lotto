@@ -39,21 +39,27 @@ describe('Lotto 테스트', () => {
       cy.get('#lotto-icons>.lotto-wrapper>.lotto-icon').should('have.length', 3);
       cy.get('#lotto-icons>.lotto-wrapper>.lotto-detail').should('have.length', 3);
     });
-
-    describe('번호보기 버튼 클릭시', () => {
-      it('랜덤으로 생성된 로또번호를 볼 수 있어야 한다.', () => {
-        priceInputAndClick(3000);
-        cy.get('.text-base').click();
-        cy.get('.lotto-numbers-toggle-button').should('be.checked');
-        cy.get('.lotto-detail').should('be.visible');
+    it('하나의 로또의 번호의 갯수는 6개 이다.', () => {
+      priceInputAndClick(3000);
+      cy.get('.lotto-detail').each((elem) => {
+        const lottoNumbers = elem.text().split(', ');
+        expect(lottoNumbers).to.have.length(6);
       });
-      it('로또번호가 보여지고 있다면 숨겨져야한다.', () => {
-        priceInputAndClick(3000);
-        cy.get('.text-base').click();
-        cy.get('.text-base').click();
-        cy.get('.lotto-numbers-toggle-button').should('not.be.checked');
-        cy.get('.lotto-detail').should('not.be.visible');
-      });
+    });
+  });
+  describe('번호보기 버튼 클릭시', () => {
+    it('랜덤으로 생성된 로또번호를 볼 수 있어야 한다.', () => {
+      priceInputAndClick(3000);
+      cy.get('.text-base').click();
+      cy.get('.lotto-numbers-toggle-button').should('be.checked');
+      cy.get('.lotto-detail').should('be.visible');
+    });
+    it('로또번호가 보여지고 있다면 숨겨져야한다.', () => {
+      priceInputAndClick(3000);
+      cy.get('.text-base').click();
+      cy.get('.text-base').click();
+      cy.get('.lotto-numbers-toggle-button').should('not.be.checked');
+      cy.get('.lotto-detail').should('not.be.visible');
     });
   });
 });
