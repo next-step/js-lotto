@@ -1,4 +1,4 @@
-const PRICE_UNIT = 1000;
+import { PRICE_UNIT } from '../constants/index.js';
 
 export const isPriceUnitCheck = (input) => {
   const price = input.value;
