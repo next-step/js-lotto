@@ -55,7 +55,7 @@ class View {
 
   renderNumberCheckForm() {
     const $numberCheckForm = $.qs(".number-check-form");
-    $numberCheckForm.style.display = "block";
+    $numberCheckForm.setStyle("display", "block");
   }
 
   render(curLotties) {
