@@ -6,9 +6,11 @@ describe('로또 구입 금액을 입력하면, 금액에 해당하는 로또를
 		cy.get(PRICE_INPUT).type('1000').should('have.value', '1000');
 	});
 
-	it('확인을 누르면 구매 결과 창에 금액에 해당하는 로또의 개수가 표시된다.', () => {
-		cy.get(PRICE_SUBMIT).click();
-		cy.wait(3000);
+	it('입력한 금액을 제출할 수 있다.', () => {
+		cy.get(LOTTO_PURCHASE_FORM).submit();
+	});
+
+	it('금액에 해당하는 로또 개수가 표시된다.', () => {
 		cy.get(PURCHASED_LOTTO_COUNT_TEXT).should('have.text', '1');
 	});
 });
