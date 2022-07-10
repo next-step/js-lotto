@@ -46,10 +46,12 @@ const initEventListeners = () => {
       for (let i = 0; i < lotteries.length; i++) {
         lotteries[i].classList.remove("hide");
       }
+      $("#lottery-tickets").classList.add("flex-col");
     } else {
       for (let i = 0; i < lotteries.length; i++) {
         lotteries[i].classList.add("hide");
       }
+      $("#lottery-tickets").classList.remove("flex-col");
     }
   };
   const randomNumberGenerator = () => {
