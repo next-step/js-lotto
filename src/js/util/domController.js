@@ -17,3 +17,8 @@ Element.prototype.setHTML = function (html) {
   this.innerHTML = html;
   return this;
 };
+
+Element.prototype.setText = function (text) {
+  this.innerText = text;
+  return this;
+};
