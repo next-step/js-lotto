@@ -18,6 +18,11 @@ Element.prototype.removeClass = function (...classes) {
   return this;
 };
 
+Element.prototype.toggleClass = function (...classes) {
+  classes.forEach((name) => this.classList.toggle(name));
+  return this;
+};
+
 Element.prototype.setHTML = function (html) {
   this.innerHTML = html;
   return this;
