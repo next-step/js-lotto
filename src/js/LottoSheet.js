@@ -1,6 +1,8 @@
 import { isPriceUnitCheck } from './validation/index.js';
 
-const LottoSheet = ({ form, input }) => {
+import LottoList from './LottoList.js';
+
+const LottoSheet = ({ target, form, input }) => {
   const onFormSubmitHandler = (event) => {
     event.preventDefault();
 
@@ -9,7 +11,7 @@ const LottoSheet = ({ form, input }) => {
       return;
     }
 
-    alert('로또를 출력합니다!');
+    LottoList({ target, input });
   };
 
   form.addEventListener('submit', onFormSubmitHandler);

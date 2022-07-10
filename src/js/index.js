@@ -19,10 +19,13 @@ $showResultButton.addEventListener('click', onModalShow);
 $modalClose.addEventListener('click', onModalClose);
 
 // --
+const lottoList = document.querySelector('.lotto-list');
+
 const lottoSheetForm = document.querySelector('.lotto-sheet-form');
 const lottoPriceInput = document.querySelector('.lotto-price-input');
 
 LottoSheet({
+  target: lottoList,
   form: lottoSheetForm,
   input: lottoPriceInput,
 });
