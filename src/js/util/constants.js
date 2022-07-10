@@ -5,4 +5,5 @@ export const MAX_LOTTO_NUM = 45;
 
 export const notifyTypes = {
   BUY_LOTTIES: "BUY_LOTTIES",
+  TOGGLE_SHOW_LOTTIES_NUMBERS: "TOGGLE_SHOW_LOTTIES_NUMBERS",
 };

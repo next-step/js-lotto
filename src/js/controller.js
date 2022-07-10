@@ -9,9 +9,16 @@ class Controller {
     this.observable = observable;
   }
 
-  handleBuyLotties(paidMoney) {
+  handleBuyLottiesBtnClick(paidMoney) {
     this.lottoModel.buyLotties(paidMoney);
     this.observable.notify(notifyTypes.BUY_LOTTIES, this.lottoModel.curLotties);
+  }
+
+  handleShowLottieNumBtnToggle(lottieListContainer) {
+    lottieListContainer.toggleClass("flex-col");
+
+    const lottieNumbers = this.lottoModel.curLotties.map((numbers) => numbers.join(", "));
+    this.observable.notify(notifyTypes.TOGGLE_SHOW_LOTTIES_NUMBERS, lottieNumbers);
   }
 }
 

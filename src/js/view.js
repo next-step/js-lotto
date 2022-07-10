@@ -12,45 +12,60 @@ class View {
     this.$priceInput = $.qs(".price-input");
     this.$buyBtn = $.qs(".buy-btn");
     this.$lottiesPanel = $.qs(".lottie-panel");
+    this.$lottieControlPanel = $.qs(".lottie-control-panel");
+    this.$lottieListContainer = $.qs(".lottie-list");
 
     this.observable.subscribe(notifyTypes.BUY_LOTTIES, this.render.bind(this));
+    this.observable.subscribe(notifyTypes.TOGGLE_SHOW_LOTTIES_NUMBERS, this.renderLottieList.bind(this));
 
     this.initEvent();
   }
 
   initEvent() {
     this.$buyBtn.addEventListener("click", () => {
-      this.lottoController.handleBuyLotties(this.$priceInput.value);
+      this.lottoController.handleBuyLottiesBtnClick(this.$priceInput.value);
     });
   }
 
   renderLottieControlPanel(curLotties) {
-    const $lottieControlPanel = $.create("div").addClass("d-flex");
+    this.$lottieControlPanel.setHTML(" ");
 
     const $totalCountLabel = $.create("label")
       .addClass("flex-auto", "my-0")
       .setText(`총 ${curLotties.length}개를 구매하였습니다.`);
 
     const $lottieNumberToggleWrapper = $.create("div").addClass("flex-auto", "d-flex", "justify-end", "pr-1");
+    const $lottieNumberToggleInput = $.create("input")
+      .setAttr("type", "checkbox")
+      .addClass("lotto-numbers-toggle-button");
     const $lottieNumberToggleBtn = $.create("label")
       .addClass("switch")
-      .appendElement($.create("input").setAttr("type", "checkbox").addClass("lotto-numbers-toggle-button"))
+      .appendElement($lottieNumberToggleInput)
       .appendElement($.create("span").addClass("text-base", "font-normal").setText("번호보기"));
+    $lottieNumberToggleInput.addEventListener("change", () => {
+      this.lottoController.handleShowLottieNumBtnToggle(this.$lottieListContainer);
+    });
+
     $lottieNumberToggleWrapper.appendElement($lottieNumberToggleBtn);
 
     this.$lottiesPanel.appendElement(
-      $lottieControlPanel.appendElement($totalCountLabel).appendElement($lottieNumberToggleWrapper)
+      this.$lottieControlPanel.appendElement($totalCountLabel).appendElement($lottieNumberToggleWrapper)
     );
   }
 
   renderLottieList(curLotties) {
-    const lottoTemplate = /* html */ `
-        <span class="mx-1 text-4xl">🎟️ </span>
+    this.$lottieListContainer.setHTML("");
+
+    const lottoTemplate = (number) => /* html */ `
+        <span class="mx-1 text-4xl">🎟️ ${number}</span>
     `;
 
-    const lottieListHTML = curLotties.map((_) => lottoTemplate).join("");
-    const $lottieListContainer = $.create("div").addClass("lottie-list", "d-flex", "flex-wrap").setHTML(lottieListHTML);
-    this.$lottiesPanel.appendElement($lottieListContainer);
+    const isCol = this.$lottieListContainer.classList.contains("flex-col");
+
+    const lottieListHTML = curLotties.map((number) => lottoTemplate(isCol ? number : "")).join("");
+    this.$lottieListContainer.setHTML(lottieListHTML);
+
+    this.$lottiesPanel.appendElement(this.$lottieListContainer);
   }
 
   renderNumberCheckForm() {
@@ -59,8 +74,6 @@ class View {
   }
 
   render(curLotties) {
-    this.$lottiesPanel.setHTML("");
-
     this.renderLottieControlPanel(curLotties);
     this.renderLottieList(curLotties);
     this.renderNumberCheckForm();

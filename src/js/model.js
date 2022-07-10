@@ -19,10 +19,10 @@ class Model {
   }
 
   _autoGenerateNumber() {
-    const lottoNumbers = new Array(NUM_OF_LOTTO_NUMBERS);
+    const lottoNumbers = new Array(NUM_OF_LOTTO_NUMBERS).fill(0);
 
     lottoNumbers.forEach((_, idx) => {
-      const randomLottoNumber = Math.random() * (MAX_LOTTO_NUM - MIN_LOTTO_NUM + 1);
+      const randomLottoNumber = Math.floor(Math.random() * (MAX_LOTTO_NUM - MIN_LOTTO_NUM + 1));
       lottoNumbers[idx] = randomLottoNumber;
     });
 
