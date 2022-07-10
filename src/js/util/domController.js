@@ -32,3 +32,8 @@ Element.prototype.setAttr = function (attrType, attr) {
   this.setAttribute(attrType, attr);
   return this;
 };
+
+Element.prototype.setStyle = function (property, value) {
+  this.style[property] = value;
+  return this;
+};
