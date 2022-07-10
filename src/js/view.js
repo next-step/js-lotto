@@ -10,15 +10,21 @@ export const closeModal = function (modalElement) {
 	modalElement.classList.remove('open');
 };
 
+const shouldRePaint = function (prevState, newState) {
+	return prevState !== newState;
+};
+
 export const renderPriceInput = function () {
-	const { inputMoney } = lottoStore.getState();
-	$(PRICE_INPUT).value = inputMoney;
+	const { inputMoney: newState } = lottoStore.getState();
+	$(PRICE_INPUT).value = newState;
 };
 
 export const renderPurchasedLottoCnt = function () {
+	const prevState = Number($(PURCHASED_LOTTO_COUNT_TEXT).innerText);
 	const { lottoList } = lottoStore.getState();
-	console.log(lottoList);
-	$(PURCHASED_LOTTO_COUNT_TEXT).innerText = `${lottoList.length}`;
+	const newState = lottoList.length;
+	if (!shouldRePaint(prevState, newState)) return;
+	$(PURCHASED_LOTTO_COUNT_TEXT).innerText = `${newState}`;
 };
 
 export const subscribeViewsToStore = function () {
