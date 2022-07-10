@@ -23,4 +23,22 @@ context('로또 구입 기능', () => {
         });
     });
   });
+
+  describe('로또 번호를 확인한다.', () => {
+    it('번호보기를 클릭하면 로또 번호가 보인다.', () => {
+      cy.get('#paid-amount').type('3000');
+      cy.get('#buy-lotto').click();
+      cy.get('.lotto-numbers-toggle-button').check({ force: true });
+      cy.get('.lotto-detail').should('be.visible');
+    });
+
+    it('번호보기를 두번 클릭하면 로또 번호가 사라진다.', () => {
+      cy.get('#paid-amount').type('3000');
+      cy.get('#buy-lotto').click();
+      cy.get('.lotto-numbers-toggle-button').check({ force: true });
+      cy.get('.lotto-detail').should('be.visible');
+      cy.get('.lotto-numbers-toggle-button').uncheck({ force: true });
+      cy.get('.lotto-detail').should('not.be.visible');
+    });
+  });
 });
