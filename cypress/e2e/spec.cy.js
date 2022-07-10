@@ -42,21 +42,44 @@ describe('Lotto 테스트', () => {
     it('하나의 로또의 번호의 갯수는 6개 이다.', () => {
       priceInputAndClick(3000);
       cy.get('.lotto-detail').each((elem) => {
-        const lottoNumbers = elem.text().split(', ');
+        const lottoNumbers = elem
+          .text()
+          .split(', ')
+          .map((text) => parseInt(text, 10));
         expect(lottoNumbers).to.have.lengthOf(6);
       });
     });
     it('로또 숫자는 1이상 45이하의 숫자이다.', () => {
       priceInputAndClick(3000);
       cy.get('.lotto-detail').each((elem) => {
-        const lottoNumbers = elem.text().split(', ').map(Number);
+        const lottoNumbers = elem
+          .text()
+          .split(', ')
+          .map((text) => parseInt(text, 10));
         lottoNumbers.forEach((number) => {
           expect(number).to.above(0);
           expect(number).to.below(46);
         });
       });
     });
+    it('로또 하나의 숫자들은 중복되지 않는다.', () => {
+      priceInputAndClick(3000);
+      cy.get('.lotto-detail').each((elem) => {
+        const lottoNumbers = elem
+          .text()
+          .split(', ')
+          .map((text) => parseInt(text, 10));
+        const noOverlapNumber = new Set();
+        for (let i = 0; i < lottoNumbers.length; i++) {
+          if (lottoNumbers.includes(lottoNumbers[i])) {
+            noOverlapNumber.add(lottoNumbers[i]);
+          }
+        }
+        expect(noOverlapNumber.size).to.equal(6);
+      });
+    });
   });
+
   describe('번호보기 버튼 클릭시', () => {
     it('랜덤으로 생성된 로또번호를 볼 수 있어야 한다.', () => {
       priceInputAndClick(3000);
