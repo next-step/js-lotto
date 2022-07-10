@@ -31,13 +31,13 @@ const generateLottoNums = function () {
 
 export const generateLottoList = function (priceInput) {
 	const lottoTicketCount = priceInput / LOTTO_PRICE;
-	const lottoList = [];
+	const newLottoList = [];
 	for (let i = 0; i < lottoTicketCount; i++) {
-		lottoList.push(generateLottoNums());
+		newLottoList.push(generateLottoNums());
 	}
-	saveLottoListToStore(lottoList);
+	saveLottoListToStore(newLottoList);
 };
 
-const saveLottoListToStore = function (lottoList) {
+export const saveLottoListToStore = function (lottoList) {
 	lottoStore.dispatch(setLottoList(lottoList));
 };
