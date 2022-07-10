@@ -27,6 +27,14 @@ ul {
   height: 36px;
 }
 
+#purchaseSection {
+  display: none;
+}
+
+#purchaseSection.is-active {
+  display: block;
+}
+
 .lotto-detail {
   display: none;
 }
@@ -35,10 +43,3 @@ ul {
   display: inline;
 }
 
-#purchaseSection {
-  display: none;
-}
-
-#purchaseSection.is-active {
-  display: block;
-}

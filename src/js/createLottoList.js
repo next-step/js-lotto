@@ -14,7 +14,7 @@ const createLotto = () => {
     lottoSet.add(createRandomNumber());
   }
 
-  return sortLottoNumbers(Array.from(new Set(lottoSet)));
+  return sortLottoNumbers([...lottoSet]);
 };
 
 const createLottoList = (count) => {

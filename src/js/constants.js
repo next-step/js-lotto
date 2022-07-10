@@ -6,8 +6,8 @@ const LOTTO_NUMBER_UNIT = {
   max: 45,
 };
 
-const MESSAGES = {
+const ALERT_MESSAGES = {
   LOTTO_UNIT_ERROR: `로또 구입 금액을 ${LOTTO_UNIT}원 단위로 입력해 주세요.`,
 };
 
-export { LOTTO_UNIT, LOTTO_NUMBER_UNIT, MESSAGES, LOTTO_SIZE };
+export { LOTTO_UNIT, LOTTO_NUMBER_UNIT, ALERT_MESSAGES, LOTTO_SIZE };
