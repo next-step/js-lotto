@@ -1,17 +1,28 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+import { $ } from './DOM.js';
+import handleLottoNumbersToggle from './handleLottoNumbersToggle.js';
+import confirmPurchaseLotto from './purchaseLotto.js';
+
+const $purchaseConfirmButton = $('.confirm');
+const $showResultButton = $('.open-result-modal-button');
+const $modalClose = $('.modal-close');
+const $modal = $('.modal');
+const $lottoNumbersToggleButton = $('.lotto-numbers-toggle-button');
 
 const onModalShow = () => {
-  $modal.classList.add('open')
-}
+  $modal.classList.add('open');
+};
 
 const onModalClose = () => {
-  $modal.classList.remove('open')
-}
+  $modal.classList.remove('open');
+};
 
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+const init = () => {
+  $showResultButton.addEventListener('click', onModalShow);
+  $modalClose.addEventListener('click', onModalClose);
+  $purchaseConfirmButton.addEventListener('click', confirmPurchaseLotto);
+  $lottoNumbersToggleButton.addEventListener('click', handleLottoNumbersToggle);
+};
+
+window.onload = () => {
+  init();
+};

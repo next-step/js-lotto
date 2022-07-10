@@ -8,6 +8,14 @@ body {
   font-size: 16px;
 }
 
+ul {
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
 #app {
   max-width: 400px;
   margin: 0 auto;
@@ -21,4 +29,23 @@ body {
 .bonus-number {
   width: 30px;
   height: 36px;
+}
+
+.purchased-lotto-result-view {
+  display: none;
+}
+
+.lotto-result-list {
+  margin: 15px 0;
+}
+
+.lotto-result-list > li {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.lotto-result-number-list {
+  display: none;
+  font-size: 1.25rem;
 }
