@@ -26,9 +26,9 @@ describe("lotto", () => {
   it("복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.", () => {
     cy.get("#input-price").type(3000);
     cy.get("#buy-lotto-button").click();
-    cy.get(`#lottery-${0}`).should("have.class", "hide");
+    cy.get(`#lottery-tickets`).should("not.have.class", "visible-number");
     cy.get(".switch").click();
-    cy.get(`#lottery-${0}`).should("not.have.class", "hide");
+    cy.get(`#lottery-tickets`).should("have.class", "visible-number");
   });
 
   it("6개의 복권 번호는 중복이 있으면 안된다.", () => {
