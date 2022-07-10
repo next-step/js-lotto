@@ -23,3 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('purchaseInput', (number) => {
+  cy.get('.input-purchase').should('have.attr', 'placeholder', '구입 금액').type(number);
+  cy.get('.btn-purchase').contains('확인').click();
+});
