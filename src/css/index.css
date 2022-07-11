@@ -27,11 +27,11 @@ ul {
   height: 36px;
 }
 
-#purchaseSection {
+#purchase-section {
   display: none;
 }
 
-#purchaseSection.is-active {
+#purchase-section.is-active {
   display: block;
 }
 
