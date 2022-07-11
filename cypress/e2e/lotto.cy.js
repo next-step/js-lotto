@@ -54,7 +54,6 @@ describe('로또 테스트를 시작합니다.', () => {
 			cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT).type(NOT_TEN_UNIT_PRICE);
 			cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT_FORM_SUBMIT).click();
 			cy.on('window:alert', (t) => {
-				//assertions
 				expect(t).to.contains(NOT_TEN_UNIT_PRICE_MESSAGE);
 			});
 		});
