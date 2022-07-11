@@ -99,4 +99,4 @@ class View {
   }
 }
 
-export default new View();
+export default View;
