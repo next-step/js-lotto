@@ -14,7 +14,6 @@ export const $modal = document.querySelector('.modal');
 export const $lottoNumbersToggleButton = document.querySelector(
   '.lotto-numbers-toggle-button'
 );
-export const $paidAmount = document.querySelector('#paid-amount');
 export const $formLottoBuying = document.querySelector('#form-lotto-buying');
 
 const lottoMachine = new LottoMachine();
@@ -29,7 +28,11 @@ const onModalClose = () => {
 
 const onSubmitLottoBuying = (event) => {
   event.preventDefault();
-  lottoMachine.generateLottoTicketByAutomatic($paidAmount.value);
+
+  const INPUT_NAME = 'paid-amount';
+  const paidAmountValue = new FormData(event.target).get(INPUT_NAME);
+  lottoMachine.generateLottoTicketByAutomatic(paidAmountValue);
+
   if (lottoMachine.isPurchasedLottoTickets()) {
     const lottos = lottoMachine.lottoTickets;
     appendLottoEl(lottos);
