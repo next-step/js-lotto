@@ -1,6 +1,6 @@
-export default function debounce(duration) {
+export default function debounce() {
   let time;
-  return callback => {
+  return ({ duration, callback }) => {
     if (time) return;
     time = setTimeout(() => {
       time = null;

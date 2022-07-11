@@ -1,10 +1,10 @@
 import debounce from './debounce.js';
 import { reactiveRender } from './reactiveRender.js';
 
-const tick = debounce(0);
+const tick = debounce();
 
 function observser() {
-  tick(reactiveRender);
+  tick({ duration: 0, callback: reactiveRender });
 }
 
 export default function reactive(payload) {
