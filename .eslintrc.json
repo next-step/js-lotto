@@ -4,9 +4,13 @@
     "es2021": true,
     "node": true
   },
+  "plugins": [
+    "cypress"
+  ],
   "extends": [
     "eslint:recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:cypress/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",

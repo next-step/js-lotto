@@ -3,9 +3,13 @@ import Store from './store.js';
 import { INITIAL_AMOUNT } from '../constants/index.js';
 import { renderLottoList, renderPurchaseCount } from './render.js';
 
-import { changeDisplayNoneToBlock, changeDisplayBlockToNone } from '../libs/dom.js';
-import { changeAmountToCount, generateLotto } from '../libs/lotto.js';
-import { isPositiveIntegerAmountValidator } from '../libs/validator.js';
+import {
+	changeDisplayNoneToBlock,
+	changeDisplayBlockToNone,
+	changeAmountToCount,
+	generateLotto,
+	isPositiveIntegerAmountValidator,
+} from '../libs/index.js';
 
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $toggleLottoDetailSwitch = document.querySelector('.lotto-numbers-toggle-button');

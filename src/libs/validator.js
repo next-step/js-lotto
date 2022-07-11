@@ -1,8 +1,15 @@
+import {
+	DUPLICATE_MESSAGE,
+	NOT_TEN_UNIT_PRICE_MESSAGE,
+	OVER_ZERO_MESSAGE,
+	UNDER_45_MESSAGE,
+} from '../constants/index.js';
+
 const isPositiveIntegerAmountValidator = (number) => {
 	if (number % 2 !== 0) {
 		return {
 			valid: false,
-			msg: '로또 구입 금액을 1,000원 단위로 입력해 주세요.',
+			msg: NOT_TEN_UNIT_PRICE_MESSAGE,
 		};
 	}
 
@@ -12,9 +19,9 @@ const isPositiveIntegerAmountValidator = (number) => {
 const generateResultValidator =
 	(array = []) =>
 	(number) => {
-		if (number < 1) return { valid: false, msg: '0보다 커야합니다' };
-		if (number > 45) return { valid: false, msg: '45보다 작아야 합니다' };
-		if (array.includes(number)) return { valid: false, msg: '중복된 숫지' };
+		if (number < 1) return { valid: false, msg: OVER_ZERO_MESSAGE };
+		if (number > 45) return { valid: false, msg: UNDER_45_MESSAGE };
+		if (array.includes(number)) return { valid: false, msg: DUPLICATE_MESSAGE };
 		return { valid: true };
 	};
 
