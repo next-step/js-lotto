@@ -10,7 +10,7 @@ document.getElementById('checkout').addEventListener('submit', (e) => {
   try {
     const { value } = e.target.elements.won;
 
-    validate.won(value);
+    validate.isMultipleOfLottoPrice(value);
 
     const lottos = createLottos(value / LOTTO_UNIT_PRICE);
 
