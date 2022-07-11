@@ -18,9 +18,7 @@ class LottoList {
     this.#open = open;
     this.#root.classList.toggle('flex-col', open);
     this.#lottoElements.forEach((lotto) => {
-      lotto.querySelector('.lotto-detail').style.display = open
-        ? 'block'
-        : 'none';
+      lotto.querySelector('.lotto-detail').style.display = open ? '' : 'none';
     });
   }
 
