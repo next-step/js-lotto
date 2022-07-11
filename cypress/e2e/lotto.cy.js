@@ -29,15 +29,38 @@ describe('lotto', () => {
     cy.pay(5100);
   });
 
-  it('소비자는 자동 구매를 할 수 있어야 한다.', () => {
-    cy.pay(5000);
-    cy.get('.lotto-detail').each((el) => {
-      const numbers = el.text().split(', ').map(Number);
+  describe('소비자는 자동 구매를 할 수 있어야 한다.', () => {
+    beforeEach(() => {
+      cy.pay(5000);
 
-      expect(numbers).to.have.lengthOf(LOTTO_NUMBER_LENGTH);
-      numbers.forEach((number) => {
-        expect(number).to.above(MIN_LOTTO_NUMBER - 1);
-        expect(number).to.below(MAX_LOTTO_NUMBER + 1);
+      const lottos = [];
+
+      cy.get('.lotto-detail').each((el) => {
+        const lottoNumbers = el.text().split(', ').map(Number);
+        lottos.push(lottoNumbers);
+      });
+
+      cy.wrap(lottos).as('lottos');
+    });
+
+    it('구매한 로또 한 장은 총 6개의 숫자를 포함한다.', function () {
+      this.lottos.forEach((lotto) => {
+        expect(lotto).to.have.lengthOf(LOTTO_NUMBER_LENGTH);
+      });
+    });
+
+    it('로또 숫자는 1이상 45이하의 숫자이다.', function () {
+      this.lottos.forEach((lotto) => {
+        lotto.forEach((number) => {
+          expect(number).to.above(MIN_LOTTO_NUMBER - 1);
+          expect(number).to.below(MAX_LOTTO_NUMBER + 1);
+        });
+      });
+    });
+
+    it('로또 한 장은 서로 다른 숫자로 구성된다.', function () {
+      this.lottos.forEach((lotto) => {
+        expect(new Set(lotto).size).to.equal(LOTTO_NUMBER_LENGTH);
       });
     });
   });
