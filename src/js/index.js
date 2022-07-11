@@ -1,5 +1,6 @@
 import { LOTTO_UNIT_PRICE } from './constants/index.js';
-import { $, createLottos, validate } from './utils/index.js';
+import createLottos from './createLottos.js';
+import { $, validate } from './utils/index.js';
 import { LottoList } from './views/index.js';
 
 const lottoList = new LottoList($('#lotto-list'));

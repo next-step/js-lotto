@@ -2,7 +2,7 @@ import {
   LOTTO_NUMBER_LENGTH,
   MAX_LOTTO_NUMBER,
   MIN_LOTTO_NUMBER,
-} from '../constants/index.js';
+} from './constants/index.js';
 
 const getLottoNumber = () => {
   return (
