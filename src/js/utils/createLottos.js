@@ -1,5 +1,9 @@
+import { MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER } from '../constants/index.js';
+
 const getLottoNumber = () => {
-  return (Math.floor(Math.random() * 100) % 45) + 1;
+  return (
+    (Math.floor(Math.random() * 100) % MAX_LOTTO_NUMBER) + MIN_LOTTO_NUMBER
+  );
 };
 
 const createLotto = () => {

@@ -1,4 +1,9 @@
-import { LOTTO_UNIT_PRICE, errorMessages } from '../../src/js/constants';
+import {
+  LOTTO_UNIT_PRICE,
+  MAX_LOTTO_NUMBER,
+  MIN_LOTTO_NUMBER,
+  errorMessages,
+} from '../../src/js/constants';
 
 describe('lotto', () => {
   beforeEach(() => {
@@ -30,8 +35,8 @@ describe('lotto', () => {
 
       expect(numbers).to.have.lengthOf(6);
       numbers.forEach((number) => {
-        expect(number).to.above(0);
-        expect(number).to.below(46);
+        expect(number).to.above(MIN_LOTTO_NUMBER - 1);
+        expect(number).to.below(MAX_LOTTO_NUMBER + 1);
       });
     });
   });
