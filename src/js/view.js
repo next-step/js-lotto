@@ -2,8 +2,63 @@ export const addLottoDetail = (element) => {
   element.innerHTML += template;
 };
 
+export const renderLotto = ($lottoList, isToggleOn, lottos) => {
+  for (const lotto of lottos) {
+    const li = lottoLi(lotto);
+    $lottoList.appendChild(li);
+  }
+};
+
+const lottoLi = (lotto) => {
+  const li = document.createElement('li');
+  const iconSpan = document.createElement('span');
+  const numberSpan = document.createElement('span');
+  setClass(li, 'lotto-item');
+  setClass(iconSpan, 'lotto-icon');
+  setClass(numberSpan, 'lotto-numbers');
+  setValue(iconSpan, `🎟️ `);
+  setValue(numberSpan, lotto.join(', '));
+  li.appendChild(iconSpan);
+  li.appendChild(numberSpan);
+  return li;
+};
+
+export const handleToggle = (e) => {
+  const $toggle = e.target;
+  //   console.log(e.target);
+  //   console.log($toggle.className);
+  $toggle.classList.toggle('toggle-on');
+  const isToggleOn = $toggle.className === 'toggle-on';
+  console.log(isToggleOn);
+  const numbers = document.querySelectorAll('.lotto-numbers');
+  for (const number of numbers) {
+    if (isToggleOn) {
+      showElement(number);
+    } else {
+      hideElement(number);
+    }
+  }
+};
+
+const hideElement = ($element) => {
+  $element.style.display = 'none';
+};
+
+const showElement = ($element) => {
+  $element.style.display = 'block';
+};
+
+const setValue = ($element, value) => {
+  const textNode = document.createTextNode(value);
+  $element.appendChild(textNode);
+};
+
+const setClass = ($element, value) => {
+  $element.setAttribute('class', value);
+};
+
 const template = `
-<div class="lotto-detail">
+    <div class="lotto-detail">
 <section class="mt-9">
   <div class="d-flex">
     <label class="flex-auto my-0">총 1개를 구매하였습니다.</label>
@@ -14,9 +69,8 @@ const template = `
       </label>
     </div>
   </div>
-  <div class="d-flex flex-wrap">
-    <span class="mx-1 text-4xl">🎟️ </span>
-  </div>
+  <ul id="lotto-list" class="d-flex flex-wrap">
+  </ul>
 </section>
 <form class="mt-9">
   <label class="flex-auto d-inline-block mb-3"
@@ -67,4 +121,4 @@ const template = `
   </button>
 </form>
 </div>
-`;
+    `;
