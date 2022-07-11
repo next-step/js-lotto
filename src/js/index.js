@@ -1,7 +1,7 @@
 import Store from './store.js';
 
 import { INITIAL_AMOUNT } from '../constants/index.js';
-import { renderLottoList } from './render.js';
+import { renderLottoList, renderPurchaseCount } from './render.js';
 
 import { changeDisplayNoneToBlock, changeDisplayBlockToNone } from '../libs/dom.js';
 import { changeAmountToCount, generateLotto } from '../libs/lotto.js';
@@ -45,7 +45,7 @@ const onSubmitAmount = (e) => {
 
 	store.setLotto(generateLotto(purchaseCount));
 
-	$purchaseCount.innerHTML = store.lotto.length;
+	renderPurchaseCount($purchaseCount, store.lotto.length);
 	renderLottoList($lottoList, store.lotto);
 };
 

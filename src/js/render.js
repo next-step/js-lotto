@@ -1,3 +1,7 @@
+const renderPurchaseCount = (dom, count) => {
+	dom.innerHTML = count;
+};
+
 const lottoItems = (lotto) => {
 	return lotto.map((eachItem) => {
 		return `<li class="mx-1 text-4xl d-flex items-center">
@@ -11,7 +15,6 @@ const renderLottoList = (dom, lotto) => {
 	dom.innerHTML = lottoItems(lotto).join('');
 };
 
-// TODO: STEP 2
 const renderLottoResult = () => {};
 
-export { renderLottoList, renderLottoResult };
+export { renderLottoList, renderLottoResult, renderPurchaseCount };
