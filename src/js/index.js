@@ -41,6 +41,7 @@ const onSubmitAmount = (e) => {
 	if (!valid) {
 		window.alert(msg);
 		e.target.elements.amount.value = INITIAL_AMOUNT;
+		return;
 	}
 
 	changeDisplayNoneToBlock($purchaseResult);

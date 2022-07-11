@@ -6,7 +6,7 @@ import {
 } from '../constants/index.js';
 
 const isPositiveIntegerAmountValidator = (number) => {
-	if (number % 2 !== 0) {
+	if (number % 1000 !== 0) {
 		return {
 			valid: false,
 			msg: NOT_TEN_UNIT_PRICE_MESSAGE,
