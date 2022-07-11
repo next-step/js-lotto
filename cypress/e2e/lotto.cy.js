@@ -1,4 +1,5 @@
 import {
+  LOTTO_NUMBER_LENGTH,
   LOTTO_UNIT_PRICE,
   MAX_LOTTO_NUMBER,
   MIN_LOTTO_NUMBER,
@@ -33,7 +34,7 @@ describe('lotto', () => {
     cy.get('.lotto-detail').each((el) => {
       const numbers = el.text().split(', ').map(Number);
 
-      expect(numbers).to.have.lengthOf(6);
+      expect(numbers).to.have.lengthOf(LOTTO_NUMBER_LENGTH);
       numbers.forEach((number) => {
         expect(number).to.above(MIN_LOTTO_NUMBER - 1);
         expect(number).to.below(MAX_LOTTO_NUMBER + 1);

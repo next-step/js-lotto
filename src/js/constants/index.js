@@ -1,3 +1,4 @@
+export const LOTTO_NUMBER_LENGTH = 6;
 export const LOTTO_UNIT_PRICE = 1000;
 export const MAX_LOTTO_NUMBER = 45;
 export const MIN_LOTTO_NUMBER = 1;
