@@ -2,8 +2,8 @@ import { LOTTO_UNIT, ALERT_MESSAGES } from './constants.js';
 import Lotto from './Lotto.js';
 import createLottoList from './createLottoList.js';
 
-const purchaseForm = document.querySelector('#purchaseForm');
-const purchaseSection = document.querySelector('#purchaseSection');
+const purchaseForm = document.querySelector('#purchase-form');
+const purchaseSection = document.querySelector('#purchase-section');
 const purchaseTextLabel = document.querySelector('.my-0');
 const showToggleButton = document.querySelector('.lotto-numbers-toggle-button');
 const lottoIcons = document.querySelector('#lotto-icons');

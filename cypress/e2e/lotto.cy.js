@@ -22,8 +22,8 @@ describe('Lotto 테스트', () => {
   describe('로또 구매시', () => {
     it(`로또 구매 금액에 따른 section을 볼 수 있어야한다.`, () => {
       cy.priceInputAndClick(3000);
-      cy.get('#purchaseSection').should('have.class', 'is-active');
-      cy.get('#purchaseSection').should('be.visible');
+      cy.get('#purchase-section').should('have.class', 'is-active');
+      cy.get('#purchase-section').should('be.visible');
     });
     it(`로또 1장의 가격은 ${LOTTO_UNIT}원 이고 3000원 구매시 3개가 구매된다.`, () => {
       cy.priceInputAndClick(3000);
