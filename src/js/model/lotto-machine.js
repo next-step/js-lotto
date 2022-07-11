@@ -1,6 +1,5 @@
 import { isValidPurchasable } from '../validation/index.js';
 import { getNumberOfLottoTickets, getLottoNumbers } from '../utils/index.js';
-import executeAlert from '../ui/alert.js';
 import LottoTicket from './lotto-ticket.js';
 
 export default class LottoMachine {
@@ -26,7 +25,7 @@ export default class LottoMachine {
 
   generateLottoTicketByAutomatic(amount) {
     if (!isValidPurchasable(amount, this.#unitPrice)) {
-      executeAlert(
+      alert(
         `로또 구입 금액을 ${this.#unitPrice.toLocaleString(
           'ko-KR'
         )}원 단위로 입력해 주세요.`
