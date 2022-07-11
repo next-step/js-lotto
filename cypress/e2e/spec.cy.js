@@ -10,6 +10,7 @@ describe('로또 테스트', () => {
       cy.get('input').should('have.value', '');
     });
   });
+
   it('금액 입력창에 1000원 단위가 아닌 금액을 입력 후 구매한다.', () => {
     const inputAmount = 7777;
 
@@ -28,6 +29,7 @@ describe('로또 테스트', () => {
       cy.get('input').should('have.value', '');
     });
   });
+
   it('1000원 단위 금액 입력 후 구매한다.', () => {
     const inputAmount = 7000;
 
