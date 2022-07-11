@@ -26,20 +26,21 @@ export default class LottoMachine {
     return tickets;
   };
 
-  generateLottoTicketByAutomatic(amount) {
-    if (isValidPurchasable(amount, this.#unitPrice)) {
-      const numberOfLottoTickets = getNumberOfLottoTickets(
-        amount,
-        this.#unitPrice
-      );
+generateLottoTicketByAutomatic(amount) {
+  if (!isValidPurchasable(amount, this.#unitPrice)) {
+    executeAlert(
+      `로또 구입 금액을 ${this.#unitPrice.toLocaleString(
+        'ko-KR'
+      )}원 단위로 입력해 주세요.`
+    );
 
-      this.#lottoTickets = this.getLottoTickets(numberOfLottoTickets);
-    } else {
-      executeAlert(
-        `로또 구입 금액을 ${this.#unitPrice.toLocaleString(
-          'ko-KR'
-        )}원 단위로 입력해 주세요.`
-      );
-    }
+    return;
   }
+  
+  const numberOfLottoTickets = getNumberOfLottoTickets(
+    amount,
+    this.#unitPrice
+  );
+
+  this.#lottoTickets = this.getLottoTickets(numberOfLottoTickets);
 }
