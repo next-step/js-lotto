@@ -1,6 +1,7 @@
 import { LOTTO_UNIT, ALERT_MESSAGES } from './constants.js';
 import Lotto from './Lotto.js';
 import createLottoList from './createLottoList.js';
+import showAndHideList from './showAndHideList.js';
 
 const purchaseForm = document.querySelector('#purchase-form');
 const purchaseSection = document.querySelector('#purchase-section');
@@ -10,13 +11,18 @@ const lottoIcons = document.querySelector('#lotto-icons');
 
 const lotto = new Lotto(lottoIcons);
 
-purchaseForm.addEventListener('submit', (e) => {
+const addPurchaseNumberText = (dividedLotto) => {
+  purchaseTextLabel.innerText = `총 ${dividedLotto}개를 구매하였습니다.`;
+  purchaseSection.classList.add('is-active');
+};
+
+const renderLottoList = (e) => {
   e.preventDefault();
+
+  const purchaseInput = document.querySelector('input[name=purchasePrice]');
 
   const alreadyExistList = purchaseSection.className.includes('is-active');
   if (alreadyExistList) return;
-
-  const purchaseInput = document.querySelector('input[name=purchasePrice]');
 
   try {
     const price = parseInt(purchaseInput.value, 10);
@@ -26,8 +32,7 @@ purchaseForm.addEventListener('submit', (e) => {
       throw new Error(ALERT_MESSAGES.LOTTO_UNIT_ERROR);
     }
 
-    purchaseTextLabel.innerText = `총 ${dividedLotto}개를 구매하였습니다.`;
-    purchaseSection.classList.add('is-active');
+    addPurchaseNumberText(dividedLotto);
 
     const lottoNumberArrayList = createLottoList(dividedLotto);
     lotto.renderCreatedLottoList(lottoNumberArrayList);
@@ -35,14 +40,7 @@ purchaseForm.addEventListener('submit', (e) => {
     purchaseInput.value = '';
     alert(error.message);
   }
-});
+};
 
-showToggleButton.addEventListener('click', (e) => {
-  const { checked } = e.target;
-  const lottoWrapper = document.querySelectorAll('.lotto-wrapper');
-  if (checked) {
-    lotto.showLottoList(lottoWrapper);
-  } else {
-    lotto.hiddenLottoList(lottoWrapper);
-  }
-});
+purchaseForm.addEventListener('submit', renderLottoList);
+showToggleButton.addEventListener('click', (e) => showAndHideList(e, lotto));
