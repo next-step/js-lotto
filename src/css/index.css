@@ -35,11 +35,12 @@ ul {
   display: block;
 }
 
-.lotto-detail {
+#lotto-icons .lotto-detail {
   display: none;
 }
 
-.lotto-detail.is-active {
+#lotto-icons.flex-col .lotto-detail {
   display: inline;
 }
+
 

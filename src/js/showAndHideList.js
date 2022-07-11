@@ -1,10 +1,9 @@
 const showAndHideList = (e, lotto) => {
   const { checked } = e.target;
-  const lottoWrapper = document.querySelectorAll('.lotto-wrapper');
   if (checked) {
-    lotto.showLottoList(lottoWrapper);
+    lotto.showLottoList();
   } else {
-    lotto.hiddenLottoList(lottoWrapper);
+    lotto.hiddenLottoList();
   }
 };
 
