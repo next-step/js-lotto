@@ -1,17 +1,32 @@
-import { isPositiveIntegerAmountValidator, changeAmountToCount } from '../libs/index.js';
-import { generateLotto } from './lotto.js';
-import { renderLottoList } from './render.js';
+import { changeDisplayNoneToBlock, changeDisplayBlockToNone } from '../libs/dom.js';
+import { changeAmountToCount, generateLotto } from '../libs/lotto.js';
+import { isPositiveIntegerAmountValidator } from '../libs/validator.js';
+import { renderLottoList, renderPurchaseCount } from './render.js';
+
+import Store from './store.js';
 
 const $showResultButton = document.querySelector('.open-result-modal-button');
+const $toggleLottoDetailSwitch = document.querySelector('.lotto-numbers-toggle-button');
+
 const $modalClose = document.querySelector('.modal-close');
 const $modal = document.querySelector('.modal');
-const $lottoListContainer = document.querySelector('.lotto-container');
 
-const $amountInputForm = document.querySelector('.amount-input-form');
+const $amountInputForm = document.querySelector('#amount-input-form');
+const $purchaseCount = document.querySelector('#purchase-count');
+const $purchaseResult = document.querySelector('#purchase-list');
+const $lottoList = document.querySelector('#lotto-list');
 
-let lotto;
+const store = new Store();
 
-$amountInputForm.addEventListener('submit', (e) => {
+const onModalShow = () => {
+	$modal.classList.add('open');
+};
+
+const onModalClose = () => {
+	$modal.classList.remove('open');
+};
+
+const onSubmitAmount = (e) => {
 	e.preventDefault();
 
 	const { value } = e.target.elements.amount;
@@ -22,19 +37,33 @@ $amountInputForm.addEventListener('submit', (e) => {
 		e.target.elements.amount.value = 0;
 	}
 
+	changeDisplayNoneToBlock($purchaseResult);
+
 	const count = changeAmountToCount(value);
-	lotto = generateLotto(count);
 
-	renderLottoList($lottoListContainer, lotto);
-});
+	store.setLotto(generateLotto(count));
 
-const onModalShow = () => {
-	$modal.classList.add('open');
+	renderPurchaseCount($purchaseCount, store.lotto.length);
+	renderLottoList($lottoList, store.lotto);
 };
 
-const onModalClose = () => {
-	$modal.classList.remove('open');
+const toggleLottoDetail = (e) => {
+	$lottoList.classList.toggle('flex-col');
+	const $lottoDetails = document.querySelectorAll(`#lotto-detail`);
+	const isDetailSwitchOn = e.target.checked;
+
+	if (isDetailSwitchOn) {
+		$lottoDetails.forEach((node) => {
+			changeDisplayNoneToBlock(node);
+		});
+	} else {
+		$lottoDetails.forEach((node) => {
+			changeDisplayBlockToNone(node);
+		});
+	}
 };
 
+$amountInputForm.addEventListener('submit', onSubmitAmount);
+$toggleLottoDetailSwitch.addEventListener('click', toggleLottoDetail);
 $showResultButton.addEventListener('click', onModalShow);
 $modalClose.addEventListener('click', onModalClose);
