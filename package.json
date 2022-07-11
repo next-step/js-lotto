@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "live-server --port=5050 --browser=chrome",
     "test:open": "cypress open"
   },
   "devDependencies": {
