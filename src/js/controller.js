@@ -13,9 +13,7 @@ class Controller {
     observable.notify(notifyTypes.BUY_LOTTIES, this.lottoModel.curLotties);
   }
 
-  handleShowLottieNumBtnToggle(lottieListContainer) {
-    lottieListContainer.toggleClass("flex-col");
-
+  handleShowLottieNumBtnToggle() {
     const lottieNumbers = this.lottoModel.curLotties.map((numbers) =>
       numbers.join(", ")
     );

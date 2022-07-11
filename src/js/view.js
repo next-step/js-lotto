@@ -57,9 +57,8 @@ class View {
           .setText("번호보기")
       );
     $lottieNumberToggleInput.addEventListener("change", () => {
-      this.lottoController.handleShowLottieNumBtnToggle(
-        this.$lottieListContainer
-      );
+      this.$lottieListContainer.toggleClass("flex-col");
+      this.lottoController.handleShowLottieNumBtnToggle();
     });
 
     $lottieNumberToggleWrapper.appendElement($lottieNumberToggleBtn);
