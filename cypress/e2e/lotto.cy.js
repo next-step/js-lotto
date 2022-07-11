@@ -11,8 +11,8 @@ describe('lotto', () => {
 
     cy.pay(won);
 
-    cy.findByRole('alert').should('contain', `${totalLotto}개`);
-    cy.findAllByRole('listitem').should('have.lengthOf', totalLotto);
+    cy.get('#orders-message').should('contain', `${totalLotto}개`);
+    cy.get('#lotto-list > li').should('have.lengthOf', totalLotto);
   });
 
   it('로또 1장의 가격은 1,000원이다.', () => {
