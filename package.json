@@ -4,11 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^6.3.0",
+    "cypress": "^10.3.0",
     "live-server": "^1.2.2"
   },
   "scripts": {
-    "start": "live-server"
+    "start": "live-server",
+    "cypress:open": "cypress open"
   },
   "repository": {
     "type": "git",
