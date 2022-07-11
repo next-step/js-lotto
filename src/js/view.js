@@ -31,7 +31,7 @@ class View {
     this.$lottieControlPanel.setHTML(" ");
 
     const $totalCountLabel = $.create("label")
-      .addClass("flex-auto", "my-0")
+      .addClass("flex-auto", "my-0", "total-lottie")
       .setText(`총 ${curLotties.length}개를 구매하였습니다.`);
 
     const $lottieNumberToggleWrapper = $.create("div").addClass("flex-auto", "d-flex", "justify-end", "pr-1");
