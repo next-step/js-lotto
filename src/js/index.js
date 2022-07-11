@@ -1,9 +1,11 @@
+import Store from './store.js';
+
+import { INITIAL_AMOUNT } from '../constants/index.js';
+import { renderLottoList } from './render.js';
+
 import { changeDisplayNoneToBlock, changeDisplayBlockToNone } from '../libs/dom.js';
 import { changeAmountToCount, generateLotto } from '../libs/lotto.js';
 import { isPositiveIntegerAmountValidator } from '../libs/validator.js';
-import { renderLottoList, renderPurchaseCount } from './render.js';
-
-import Store from './store.js';
 
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $toggleLottoDetailSwitch = document.querySelector('.lotto-numbers-toggle-button');
@@ -34,16 +36,16 @@ const onSubmitAmount = (e) => {
 
 	if (!valid) {
 		window.alert(msg);
-		e.target.elements.amount.value = 0;
+		e.target.elements.amount.value = INITIAL_AMOUNT;
 	}
 
 	changeDisplayNoneToBlock($purchaseResult);
 
-	const count = changeAmountToCount(value);
+	const purchaseCount = changeAmountToCount(value);
 
-	store.setLotto(generateLotto(count));
+	store.setLotto(generateLotto(purchaseCount));
 
-	renderPurchaseCount($purchaseCount, store.lotto.length);
+	$purchaseCount.innerHTML = store.lotto.length;
 	renderLottoList($lottoList, store.lotto);
 };
 
