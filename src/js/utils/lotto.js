@@ -1,10 +1,10 @@
 function makeLotto() {
   const balls = new Array(45).fill(null).map((value, index) => index + 1);
-  const lottos = new Array(6).fill(null).map(() => {
+  const lotto = new Array(6).fill(null).map(() => {
     const ballIndex = Math.floor(Math.random() * (balls.length - 1));
     return balls.splice(ballIndex, 1)[0];
   });
-  return lottos;
+  return lotto;
 }
 
 function validateLotto(numbers) {
