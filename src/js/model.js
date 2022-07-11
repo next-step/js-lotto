@@ -1,4 +1,9 @@
-import { PRICE_OF_LOTTO, NUM_OF_LOTTO_NUMBERS, MIN_LOTTO_NUM, MAX_LOTTO_NUM } from "../js/util/constants.js";
+import {
+  PRICE_OF_LOTTO,
+  NUM_OF_LOTTO_NUMBERS,
+  MIN_LOTTO_NUM,
+  MAX_LOTTO_NUM,
+} from "../js/util/constants.js";
 
 class Model {
   constructor() {
@@ -19,14 +24,12 @@ class Model {
   }
 
   _autoGenerateNumber() {
-    const lottoNumbers = new Array(NUM_OF_LOTTO_NUMBERS).fill(0);
-
-    lottoNumbers.forEach((_, idx) => {
-      const randomLottoNumber = Math.floor(Math.random() * (MAX_LOTTO_NUM - MIN_LOTTO_NUM + 1)) + MIN_LOTTO_NUM;
-      lottoNumbers[idx] = randomLottoNumber;
+    return Array.from({ length: NUM_OF_LOTTO_NUMBERS }, () => {
+      const randomLottoNumber =
+        Math.floor(Math.random() * (MAX_LOTTO_NUM - MIN_LOTTO_NUM + 1)) +
+        MIN_LOTTO_NUM;
+      return randomLottoNumber;
     });
-
-    return lottoNumbers;
   }
 }
 
