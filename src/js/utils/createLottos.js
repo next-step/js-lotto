@@ -1,4 +1,8 @@
-import { MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER } from '../constants/index.js';
+import {
+  LOTTO_NUMBER_LENGTH,
+  MAX_LOTTO_NUMBER,
+  MIN_LOTTO_NUMBER,
+} from '../constants/index.js';
 
 const getLottoNumber = () => {
   return (
@@ -11,7 +15,7 @@ const createLotto = () => {
 
   do {
     numbers.add(getLottoNumber());
-  } while (numbers.size < 6);
+  } while (numbers.size < LOTTO_NUMBER_LENGTH);
 
   return Array.from(numbers).sort((a, b) => a - b);
 };
