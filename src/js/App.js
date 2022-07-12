@@ -106,6 +106,7 @@ export class App {
     } catch (e) {
       if (e instanceof TypeError) throw e;
       window.alert(e.message);
+      this.$chargeInput.focus();
     }
   }
 
