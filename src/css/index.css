@@ -8,6 +8,10 @@ body {
   font-size: 16px;
 }
 
+ul {
+  list-style: none; padding: 0
+}
+
 #app {
   max-width: 400px;
   margin: 0 auto;
@@ -22,3 +26,21 @@ body {
   width: 30px;
   height: 36px;
 }
+
+#purchase-section {
+  display: none;
+}
+
+#purchase-section.is-active {
+  display: block;
+}
+
+#lotto-icons .lotto-detail {
+  display: none;
+}
+
+#lotto-icons.flex-col .lotto-detail {
+  display: inline;
+}
+
+
