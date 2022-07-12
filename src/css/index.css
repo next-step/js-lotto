@@ -22,3 +22,12 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.lotto-ul {
+  list-style-type: none;
+  padding-inline-start: 0;
+}
+
+.lotto-numbers {
+  font-size: 1.75rem;
+}

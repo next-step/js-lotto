@@ -11,32 +11,26 @@
       <div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
-          <form class="mt-5">
+          <form id="form-purchase-lotto">
             <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요. </label>
             <div class="d-flex">
-              <input type="number" class="w-100 mr-2 pl-2" placeholder="구입 금액" />
-              <button type="button" class="btn btn-cyan">확인</button>
+              <input id="input-purchase-lotto" type="number" placeholder="구입 금액" min="1000" required />
+              <button id="button-purchase-lotto" type="button" class="btn btn-cyan">확인</button>
             </div>
           </form>
           <section class="mt-9">
-            <div class="d-flex">
-              <label class="flex-auto my-0">총 5개를 구매하였습니다.</label>
+            <div id="div-lotto-result" class="d-flex">
+              <label id="label-lotto-result" class="flex-auto my-0"></label>
               <div class="flex-auto d-flex justify-end pr-1">
                 <label class="switch">
-                  <input type="checkbox" class="lotto-numbers-toggle-button" />
+                  <input type="checkbox" id="input-toggle-button" class="lotto-numbers-toggle-button" />
                   <span class="text-base font-normal">번호보기</span>
                 </label>
               </div>
             </div>
-            <div class="d-flex flex-wrap">
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-            </div>
+            <div id="div-lotto-list" class="d-flex flex-wrap"></div>
           </section>
-          <form class="mt-9">
+          <form class="mt-9" style="display: none">
             <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
             <div class="d-flex">
               <div>
