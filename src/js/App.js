@@ -15,7 +15,7 @@ export class App {
 
   constructor($app) {
     this.$app = $app;
-    this.render();
+    this.render(this.state);
     this.addEventHandlers();
   }
 
@@ -40,15 +40,12 @@ export class App {
   }
 
   setState(next) {
-    this.state = {
-      ...this.state,
-      ...next,
-    };
-    this.render();
+    const nextState = { ...this.state, ...next };
+    this.state = nextState;
+    this.render(nextState);
   }
 
-  render() {
-    const { numOfLottos, lottos, isVisualizeLottoNumbers } = this.state;
+  render({ numOfLottos, lottos, isVisualizeLottoNumbers }) {
     this.renderNumOfLottos(numOfLottos);
     this.renderLotteries(lottos, isVisualizeLottoNumbers);
     this.resetChargeInput();
@@ -75,7 +72,7 @@ export class App {
   };
 
   isValidCharge(charge) {
-    if (isNaN(charge)) throw new TypeError("Type of charge must be number");
+    if (Number.isNaN(charge)) throw new TypeError("Type of charge must be number");
     if (charge % this.pricePerLotto !== 0) throw new Error(`${this.pricePerLotto}원 단위로만 구매할 수 있습니다.`);
     return true;
   }
