@@ -2,11 +2,11 @@
   list-style-type: none;
   margin-top: 1rem;
   padding: 0;
+  flex-direction: row;
 }
 
 .lotto-item {
   list-style: none;
-  width: 100%;
   display: flex;
   align-items: center;
 }
@@ -18,4 +18,5 @@
 
 .lotto-numbers {
   font-size: larger;
+  width: 100%;
 }

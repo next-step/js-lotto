@@ -2,7 +2,7 @@ export const addLottoDetail = (element) => {
   element.innerHTML += template;
 };
 
-export const renderLotto = ($lottoList, isToggleOn, lottos) => {
+export const renderLotto = ($lottoList, lottos) => {
   for (const lotto of lottos) {
     const li = lottoLi(lotto);
     $lottoList.appendChild(li);
@@ -16,6 +16,7 @@ const lottoLi = (lotto) => {
   setClass(li, 'lotto-item');
   setClass(iconSpan, 'lotto-icon');
   setClass(numberSpan, 'lotto-numbers');
+  hideElement(numberSpan);
   setValue(iconSpan, `🎟️ `);
   setValue(numberSpan, lotto.join(', '));
   li.appendChild(iconSpan);
@@ -23,13 +24,18 @@ const lottoLi = (lotto) => {
   return li;
 };
 
-export const handleToggle = (e) => {
-  const $toggle = e.target;
-  //   console.log(e.target);
-  //   console.log($toggle.className);
-  $toggle.classList.toggle('toggle-on');
-  const isToggleOn = $toggle.className === 'toggle-on';
-  console.log(isToggleOn);
+export const handleToggle = () => {
+  const $lottoList = document.getElementById('lotto-list');
+  $lottoList.classList.toggle('flex-col');
+
+  const isToggleOn = $lottoList.classList.contains('flex-col');
+
+  if (isToggleOn) {
+    $lottoList.style.flexDirection = 'column';
+  } else {
+    $lottoList.style.flexDirection = 'row';
+  }
+
   const numbers = document.querySelectorAll('.lotto-numbers');
   for (const number of numbers) {
     if (isToggleOn) {

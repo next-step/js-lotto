@@ -47,7 +47,7 @@ const initLottoDetail = (lottos) => {
   );
   const $lottoList = document.getElementById('lotto-list');
 
-  renderLotto($lottoList, true, lottos);
+  renderLotto($lottoList, lottos);
   $lottoNumbersToggleButton.addEventListener('click', handleToggle);
   $showResultButton.addEventListener('click', onModalShow);
 };
