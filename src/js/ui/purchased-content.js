@@ -14,14 +14,18 @@ export const onLottoNumberToggle = ({ target: { checked } }) => {
 };
 
 export const appendLottoEl = (lottos) => {
-  while ($purchasedLottoList.hasChildNodes()) {
-    $purchasedLottoList.removeChild($purchasedLottoList.firstChild);
+  const listItems = lottos.reduce((fragment, lottoTicket) => {
+    const number = lottoTicket.numbers.join(', ');
+    fragment.appendChild(lottoElement(number));
+    return fragment;
+  }, document.createDocumentFragment());
+
+  if ($purchasedLottoList.hasChildNodes()) {
+    $purchasedLottoList.replaceChildren(listItems);
+    return;
   }
 
-  lottos.forEach((item) => {
-    const number = item.numbers.join(', ');
-    $purchasedLottoList.append(lottoElement(number));
-  });
+  $purchasedLottoList.append(listItems);
 };
 
 export const appendLottoCountEl = (numberOfLotto) => {
