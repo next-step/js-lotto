@@ -14,6 +14,7 @@ export class App {
   };
 
   constructor($app) {
+    if (!($app instanceof HTMLElement)) throw new Error("$app must be html element");
     this.$app = $app;
     this.render(this.state);
     this.addEventHandlers();
