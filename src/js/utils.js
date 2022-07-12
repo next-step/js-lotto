@@ -3,4 +3,11 @@ const getPickupElementByIndex = (array, index) => array.splice(index, 1)[0];
 const compareNumbers = (prev, next) => {
   return prev - next;
 };
-export { getRandomIndex, getPickupElementByIndex, compareNumbers };
+const reduceByFunctionCompose = (array) => (f) =>
+  array.reduce((result, element) => result + f(element), ``);
+export {
+  getRandomIndex,
+  getPickupElementByIndex,
+  compareNumbers,
+  reduceByFunctionCompose,
+};

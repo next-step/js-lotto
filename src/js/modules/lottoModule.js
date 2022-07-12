@@ -3,6 +3,7 @@ import {
   getPickupElementByIndex,
   compareNumbers,
 } from '../utils.js';
+import { LOTTO_NUMBERS, LOTTO_TRY_COUNT } from '../consts.js';
 
 const lottoModule = (inputMoney) => {
   const lottoBudget = inputMoney;
@@ -31,10 +32,16 @@ const lottoModule = (inputMoney) => {
     return getNextLottoNumber(copyLottoArray);
   };
 
+  const buyAllLottoByCount = (count) =>
+    Array.from({ length: count }).map(() => {
+      return getRandomLottoNumbers(LOTTO_TRY_COUNT, LOTTO_NUMBERS);
+    });
+
   return {
     isInvalidInputMoneyUnit,
     getTicketNumbersOfBuying,
     getRandomLottoNumbers,
+    buyAllLottoByCount,
   };
 };
 

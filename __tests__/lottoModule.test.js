@@ -18,7 +18,6 @@ describe('lottoModule', () => {
         LOTTO_TRY_COUNT,
         LOTTO_NUMBERS
       );
-      console.log('selectedLottoNumbers', selectedLottoNumbers);
       expect(selectedLottoNumbers.length).toBe(LOTTO_TRY_COUNT);
       selectedLottoNumbers.map((number) => {});
     });
