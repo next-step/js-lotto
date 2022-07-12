@@ -1,5 +1,7 @@
+import { LOTTO_PRICE } from '../constants/index.js';
+
 export const validateMoney = (money) => {
-  if (money % 1000 === 0) {
+  if (money % LOTTO_PRICE === 0) {
     return true;
   }
   return false;

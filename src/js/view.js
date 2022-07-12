@@ -1,41 +1,70 @@
+import { showElement, hideElement, setValue, setClass } from './element.js';
+
 export const addLottoDetail = (element) => {
   element.innerHTML += template;
 };
 
 export const renderLotto = ($lottoList, lottos) => {
+  renderNumber(lottos.length);
   for (const lotto of lottos) {
     const li = lottoLi(lotto);
     $lottoList.appendChild(li);
   }
 };
 
+const renderNumber = (number) => {
+  const $numberLabel = document.querySelector('.number-label');
+  setValue($numberLabel, `총 ${number}개를 구매하였습니다.`);
+};
+
 const lottoLi = (lotto) => {
-  const li = document.createElement('li');
-  const iconSpan = document.createElement('span');
-  const numberSpan = document.createElement('span');
-  setClass(li, 'lotto-item');
-  setClass(iconSpan, 'lotto-icon');
-  setClass(numberSpan, 'lotto-numbers');
-  hideElement(numberSpan);
-  setValue(iconSpan, `🎟️ `);
-  setValue(numberSpan, lotto.join(', '));
+  const li = lottoItemLi();
+  const iconSpan = lottoIconSpan();
+  const numberSpan = lottoNumberSpan(lotto);
   li.appendChild(iconSpan);
   li.appendChild(numberSpan);
   return li;
 };
 
+const lottoItemLi = () => {
+  const li = document.createElement('li');
+  setClass(li, 'lotto-item');
+  return li;
+};
+
+const lottoIconSpan = () => {
+  const iconSpan = document.createElement('span');
+  setClass(iconSpan, 'lotto-icon');
+  setValue(iconSpan, `🎟️ `);
+  return iconSpan;
+};
+
+const lottoNumberSpan = (lotto) => {
+  const numberSpan = document.createElement('span');
+  setClass(numberSpan, 'lotto-numbers');
+  hideElement(numberSpan);
+  setValue(numberSpan, lotto.join(', '));
+  return numberSpan;
+};
+
 export const handleToggle = () => {
   const $lottoList = document.getElementById('lotto-list');
   $lottoList.classList.toggle('flex-col');
-
   const isToggleOn = $lottoList.classList.contains('flex-col');
 
-  if (isToggleOn) {
-    $lottoList.style.flexDirection = 'column';
-  } else {
-    $lottoList.style.flexDirection = 'row';
-  }
+  handleFlexDirection($lottoList, isToggleOn);
+  handleShowNumbers(isToggleOn);
+};
 
+const handleFlexDirection = ($element, isToggleOn) => {
+  if (isToggleOn) {
+    $element.style.flexDirection = 'column';
+  } else {
+    $element.style.flexDirection = 'row';
+  }
+};
+
+const handleShowNumbers = (isToggleOn) => {
   const numbers = document.querySelectorAll('.lotto-numbers');
   for (const number of numbers) {
     if (isToggleOn) {
@@ -46,28 +75,11 @@ export const handleToggle = () => {
   }
 };
 
-const hideElement = ($element) => {
-  $element.style.display = 'none';
-};
-
-const showElement = ($element) => {
-  $element.style.display = 'block';
-};
-
-const setValue = ($element, value) => {
-  const textNode = document.createTextNode(value);
-  $element.appendChild(textNode);
-};
-
-const setClass = ($element, value) => {
-  $element.setAttribute('class', value);
-};
-
 const template = `
     <div class="lotto-detail">
 <section class="mt-9">
   <div class="d-flex">
-    <label class="flex-auto my-0">총 1개를 구매하였습니다.</label>
+    <label class="number-label flex-auto my-0"></label>
     <div class="flex-auto d-flex justify-end pr-1">
       <label class="switch">
         <input type="checkbox" class="lotto-numbers-toggle-button" />
