@@ -5,7 +5,7 @@ export const SELECTORS = {
   APP: "#app",
   CHARGE_FORM: "#charge",
   CHARGE_INPUT: "#charge input[type=number]",
-  CHARGE_BUTTON: "#charge button[type=submit]",
+  CHARGE_BUTTON: "#charge button",
   NUMBER_OF_LOTTOS: "#num-of-lottos",
   LOTTOS: "#lottos",
   NUMBER_VISIBILITY_TOGGLE: "#visibility-toggle",

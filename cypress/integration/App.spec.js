@@ -47,7 +47,7 @@ describe("로또 번호 시각화", () => {
   it("번호 보기가 true이면 구매한 로또 번호 보여주기", () => {
     cy.get(SELECTORS.CHARGE_INPUT).type(10000);
     cy.get(SELECTORS.CHARGE_BUTTON).click();
-    cy.get(`${SELECTORS.NUMBER_VISIBILITY_TOGGLE} input[type=checkbox]`).click({ force: true });
+    cy.get(SELECTORS.NUMBER_VISIBILITY_TOGGLE).click({ force: true });
     cy.get(SELECTORS.LOTTOS)
       .children()
       .each((el) => {
@@ -58,8 +58,8 @@ describe("로또 번호 시각화", () => {
   it("번호 보기를 true에서 false로 바꾸면 번호를 안보여줌", () => {
     cy.get(SELECTORS.CHARGE_INPUT).type(10000);
     cy.get(SELECTORS.CHARGE_BUTTON).click();
-    cy.get(`${SELECTORS.NUMBER_VISIBILITY_TOGGLE} input[type=checkbox]`).click({ force: true });
-    cy.get(`${SELECTORS.NUMBER_VISIBILITY_TOGGLE} input[type=checkbox]`).click({ force: true });
+    cy.get(SELECTORS.NUMBER_VISIBILITY_TOGGLE).click({ force: true });
+    cy.get(SELECTORS.NUMBER_VISIBILITY_TOGGLE).click({ force: true });
     cy.get(SELECTORS.LOTTOS)
       .children()
       .each((el) => {
@@ -68,7 +68,7 @@ describe("로또 번호 시각화", () => {
   });
 
   it("로또를 구매하지 않았으면 번호보기가 true여도 변화없음", () => {
-    cy.get(`${SELECTORS.NUMBER_VISIBILITY_TOGGLE} input[type=checkbox]`).click({ force: true });
+    cy.get(SELECTORS.NUMBER_VISIBILITY_TOGGLE).click({ force: true });
     cy.get(SELECTORS.LOTTOS).should("be.empty");
   });
 });
