@@ -1,5 +1,5 @@
-@import './shared/index.css';
-@import './ui/index.css';
+@import "./shared/index.css";
+@import "./ui/index.css";
 
 html,
 body {
@@ -21,4 +21,27 @@ body {
 .bonus-number {
   width: 30px;
   height: 36px;
+}
+
+.lottery-number {
+  font-size: 18px;
+}
+
+#lottery-tickets .lottery-number {
+  display: none;
+}
+
+#lottery-tickets.visible-number .lottery-number {
+  display: inline;
+}
+
+.invisible {
+  display: none;
+}
+
+#lottery-tickets {
+  padding: 0;
+}
+li {
+  list-style-type: none;
 }
