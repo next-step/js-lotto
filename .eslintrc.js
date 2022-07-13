@@ -28,5 +28,6 @@ module.exports = {
     'cypress/no-pause': 'error',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+    'arrow-body-style': 'off',
   },
 };

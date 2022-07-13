@@ -17,23 +17,24 @@ class Lotto {
 
   renderCreatedLottoList = (lottoNumberArrayList) => {
     const lottoList = this.lottoIcons;
+    const fragment = document.createDocumentFragment();
 
     lottoNumberArrayList.forEach((lottoNumbers) => {
       const iconWrapper = document.createElement('li');
-      iconWrapper.classList.add('lotto-wrapper', 'd-flex', 'items-center');
-
       const lottoIcon = document.createElement('span');
+      const lottoDetail = document.createElement('span');
+
+      iconWrapper.classList.add('lotto-wrapper', 'd-flex', 'items-center');
       lottoIcon.textContent = '🎟 ';
       lottoIcon.classList.add('lotto-icon', 'mx-1', 'text-4xl');
-
-      const lottoDetail = document.createElement('span');
       lottoDetail.textContent = lottoNumbers.join(', ');
       lottoDetail.classList.add('lotto-detail', 'text-xl');
 
       iconWrapper.appendChild(lottoIcon);
       iconWrapper.appendChild(lottoDetail);
-      lottoList.appendChild(iconWrapper);
+      fragment.appendChild(iconWrapper);
     });
+    lottoList.appendChild(fragment);
   };
 }
 

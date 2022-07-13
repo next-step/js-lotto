@@ -1,4 +1,4 @@
-const showAndHideList = (e, lotto) => {
+const toggleLottoNumbers = (e, lotto) => {
   const { checked } = e.target;
   if (checked) {
     lotto.showLottoList();
@@ -7,4 +7,4 @@ const showAndHideList = (e, lotto) => {
   }
 };
 
-export default showAndHideList;
+export default toggleLottoNumbers;
