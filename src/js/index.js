@@ -1,14 +1,10 @@
 const $priceForm = document.querySelector(".price-form");
-const $priceFormInput = document.querySelector(".price-form__input");
 const $lottoSection = document.querySelector(".lotto-section");
 const $lottoSectionLabel = document.querySelector(".lotto-section__label");
-const $lottoSectionToggleDiv = document.querySelector(".lotto-section__toggle");
 const $lottoSectionToggleInput = document.querySelector(
   ".lotto-section__toggle-input"
 );
 const $lottoTicketsUl = document.querySelector(".lotto-section__tickets");
-const $lottoTicketLi = document.querySelector(".lotto-wrapper");
-const $lottoTicketNumSpan = document.querySelector(".lotto-detail");
 const $lottoForm = document.querySelector(".lotto-form");
 
 const MIN_LOTTO_NUM = 1;
@@ -16,7 +12,7 @@ const MAX_LOTTO_NUM = 45;
 
 let AMOUNT_OF_LOTTOS = 0;
 
-const showOtherSections = (e) => {
+const hadnleSubmitToShowTheRest = (e) => {
   e.preventDefault();
 
   const priceInput = e.target[0].valueAsNumber;
@@ -97,5 +93,5 @@ const handleToggleClicked = (e) => {
   }
 };
 
-$priceForm.addEventListener("submit", showOtherSections);
+$priceForm.addEventListener("submit", handleSubmitToShowTheRest);
 $lottoSectionToggleInput.addEventListener("click", handleToggleClicked);
