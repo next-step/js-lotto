@@ -23,6 +23,42 @@ const validateInput = (validation, err) => {
     return;
   }
 };
+const createRandomNums = () => {
+  const randomNums = new Set();
+
+  for (let i = 1; i < 6; i++) {
+    randomNums.add(
+      Math.floor(
+        Math.random() * (MAX_LOTTO_NUM - MIN_LOTTO_NUM) + MIN_LOTTO_NUM
+      )
+    );
+  }
+  return randomNums;
+};
+
+const createTickets = (AMOUNT_OF_LOTTOS) => {
+  const templateArray = [];
+
+  for (let i = 0; i < AMOUNT_OF_LOTTOS; i++) {
+    const template = `<li class="mx-1 text-4xl lotto-wrapper">
+                        <span class="lotto-icon">🎟️ </span>
+                        <span class="lotto-detail">${[
+                          ...createRandomNums(),
+                        ].join(", ")}</span>
+                      </li>`;
+
+    templateArray.push(template);
+  }
+  return templateArray;
+};
+
+const displayLottoSection = (priceInput) => {
+  const AMOUNT_OF_LOTTOS = priceInput / 1000;
+  // 1. <label> 결과 렌더링: n개의 복권 구매
+  $lottoSectionLabel.innerText = `총 ${AMOUNT_OF_LOTTOS}개의 복권을 구입했습니다.`;
+  // 2. <ul> 복권 생성 및 렌더링
+  $lottoTicketsUl.innerHTML = createTickets(AMOUNT_OF_LOTTOS).join("");
+};
 
 const handleSubmitToShowTheRest = (e) => {
   e.preventDefault();
@@ -36,46 +72,6 @@ const handleSubmitToShowTheRest = (e) => {
   $lottoForm.classList.remove("hidden");
 
   displayLottoSection(priceInput);
-};
-
-const displayLottoSection = (priceInput) => {
-  const AMOUNT_OF_LOTTOS = priceInput / 1000;
-
-  // 1. <label> 결과 알림: n개의 복권 구매
-  $lottoSectionLabel.innerText = `총 ${AMOUNT_OF_LOTTOS}개의 복권을 구입했습니다.`;
-
-  // 2. 중복되지 않은 랜덤 넘버 6개 생성
-
-  // const arr = [];
-  // // 중복되지 않은 랜덤 넘버 6개 각 <span>에 부여
-  // randomNums.forEach((e) => {
-  //   arr.push(e);
-  // });
-
-  const templateArray = [];
-
-  for (let i = 0; i < AMOUNT_OF_LOTTOS; i++) {
-    const randomNums = new Set();
-
-    while (randomNums.size !== 6) {
-      randomNums.add(
-        Math.floor(
-          Math.random() * (MAX_LOTTO_NUM - MIN_LOTTO_NUM) + MIN_LOTTO_NUM
-        )
-      );
-    }
-
-    const template = `<li class="mx-1 text-4xl lotto-wrapper">
-                        <span class="lotto-icon">🎟️ </span>
-                        <span class="lotto-detail">${[...randomNums].join(
-                          ", "
-                        )}</span>
-                      </li>`;
-
-    templateArray.push(template);
-  }
-
-  $lottoTicketsUl.innerHTML = templateArray.join("");
 };
 
 const toggleNumberDisplay = () => {
