@@ -16,12 +16,14 @@ const ERROR_MESSAGES = {
   REQUIRED_MIN_AMOUNT: "1000원 이상 입력해 주세요!",
   UNIT_ERROR: "1000원 단위로 입력해 주세요!",
 };
+
 const validateInput = (validation, err) => {
   if (validation) {
     alert(err);
     return;
   }
 };
+
 const handleSubmitToShowTheRest = (e) => {
   e.preventDefault();
 
@@ -74,24 +76,15 @@ const displayLottoSection = (priceInput) => {
   }
 
   $lottoTicketsUl.innerHTML = templateArray.join("");
-
-  // 3. 토글
 };
 
-//toggle 클릭시 각 티켓별로 랜덤이고 중복되지 않은 번호 6개 보여주기.
 const toggleNumberDisplay = () => {
   const details = $lottoTicketsUl.querySelectorAll("span.lotto-detail");
   details.forEach((d) => d.classList.toggle("hidden"));
 };
 
-const handleToggleClicked = (e) => {
-  if (e.target.checked) {
-    // const $lottoTicketNumSpan = document.querySelector(".lotto-detail");
-    // const $spanClasses = $lottoTicketNumSpan.classList;
-    // $spanClasses.replace("display:inline", "display:none");
-    // console.log($spanClasses);
-    toggleNumberDisplay();
-  }
+const handleToggleClicked = () => {
+  toggleNumberDisplay();
 };
 
 $priceForm.addEventListener("submit", handleSubmitToShowTheRest);
