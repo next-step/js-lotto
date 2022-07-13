@@ -12,22 +12,23 @@ const MAX_LOTTO_NUM = 45;
 
 let AMOUNT_OF_LOTTOS = 0;
 
-const hadnleSubmitToShowTheRest = (e) => {
+const ERROR_MESSAGES = {
+  REQUIRED_MIN_AMOUNT: "1000원 이상 입력해 주세요!",
+  UNIT_ERROR: "1000원 단위로 입력해 주세요!",
+};
+const validateInput = (validation, err) => {
+  if (validation) {
+    alert(err);
+    return;
+  }
+};
+const handleSubmitToShowTheRest = (e) => {
   e.preventDefault();
 
   const priceInput = e.target[0].valueAsNumber;
 
-  //만약 입력 금액이 1000원보다 작다면:
-  if (priceInput < 1000) {
-    alert("1000원 이상 입력해 주세요!");
-    return;
-  }
-
-  //만약 입력 금액이 1000원 단위가 아니라면:
-  if (priceInput % 1000 !== 0) {
-    alert("1000원 단위로 입력해 주세요!");
-    return;
-  }
+  validateInput(priceInput < 1000, ERROR_MESSAGES.REQUIRED_MIN_AMOUNT);
+  validateInput(priceInput % 1000 !== 0, ERROR_MESSAGES.UNIT_ERROR);
 
   $lottoSection.classList.remove("hidden");
   $lottoForm.classList.remove("hidden");
