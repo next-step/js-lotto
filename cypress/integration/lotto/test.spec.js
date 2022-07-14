@@ -26,7 +26,7 @@ describe('Create Lotto List', () => {
     cy.get('form').contains('확인').click();
   });
 
-  it('Show Lotto List', () => {
+  it('Show & Hide Lotto List', () => {
     cy.visit('http://127.0.0.1:5500/');
 
     cy.get('.lotto-price-input').type('50000');
