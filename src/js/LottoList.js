@@ -1,32 +1,5 @@
 import { PRICE_UNIT, LOTTO_MAX_NUMBER } from './constants/index.js';
-
-const getRandomInt = (max) => {
-  return Math.floor(Math.random() * max);
-};
-
-const settingLotto = (lottoArray, count, numberArray) => {
-  if (count === 0) return;
-
-  const tempLottoArray = [];
-  const tempLottoNumberArray = [...numberArray];
-
-  for (let i = 0; i < 6; i++) {
-    const randomNumber = getRandomInt(LOTTO_MAX_NUMBER - i);
-    const lottoNumber = tempLottoNumberArray.splice(randomNumber, 1);
-    tempLottoArray.push(lottoNumber[0]);
-  }
-
-  lottoArray.push(tempLottoArray);
-  settingLotto(lottoArray, count - 1, numberArray);
-};
-
-const getLotto = (count, numberArray) => {
-  const lottoArray = [];
-
-  settingLotto(lottoArray, count, numberArray);
-
-  return lottoArray;
-};
+import getLotto from './logic/getLotto.js';
 
 const render = (target, result) => {
   let numberHideText = '';
