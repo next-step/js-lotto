@@ -1,5 +1,7 @@
 import LottoSheet from './LottoSheet.js';
 
+import Toggle from './Toggle.js';
+
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $modalClose = document.querySelector('.modal-close');
 const $modal = document.querySelector('.modal');
@@ -21,6 +23,10 @@ $modalClose.addEventListener('click', onModalClose);
 // --
 const lottoList = document.querySelector('.lotto-list');
 
+const lottoNumberToggleButton = document.querySelector(
+  '.lotto-numbers-toggle-button'
+);
+
 const lottoSheetForm = document.querySelector('.lotto-sheet-form');
 const lottoPriceInput = document.querySelector('.lotto-price-input');
 
@@ -29,3 +35,5 @@ LottoSheet({
   form: lottoSheetForm,
   input: lottoPriceInput,
 });
+
+Toggle({ target: lottoList, checkbox: lottoNumberToggleButton });

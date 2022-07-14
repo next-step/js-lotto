@@ -29,15 +29,16 @@ const getLotto = (count, numberArray) => {
 };
 
 const render = (target, result) => {
-  let renderText = '';
+  let numberHideText = '';
+  let numberShowText = '';
 
   for (let i = 0; i < result.length; i++) {
-    renderText =
-      renderText +
-      `<div>🎟️ ${result[i][0]} ${result[i][1]} ${result[i][2]} ${result[i][3]} ${result[i][4]} ${result[i][5]}</div>`;
+    numberHideText += `🎟️ `;
+    numberShowText += `<div>🎟️ ${result[i][0]} ${result[i][1]} ${result[i][2]} ${result[i][3]} ${result[i][4]} ${result[i][5]}</div>`;
   }
 
-  target.innerHTML = renderText;
+  target.querySelector('.lotto-number-hide').innerHTML = numberHideText;
+  target.querySelector('.lotto-number-show').innerHTML = numberShowText;
 };
 
 const LottoList = ({ target, input }) => {
