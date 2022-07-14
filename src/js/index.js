@@ -1,5 +1,5 @@
 import {
-  handleSubmitToShowTheRest,
+  handleSubmitPriceForm,
   handleToggleLottoSection,
 } from "./eventHandlers.js";
 
@@ -17,5 +17,5 @@ const $lottoSectionToggleInput = document.querySelector(
 
 // index에는? => 앱을 '시작'하는 코드만!
 
-$priceForm.addEventListener("submit", handleSubmitToShowTheRest);
+$priceForm.addEventListener("submit", handleSubmitPriceForm);
 $lottoSectionToggleInput.addEventListener("click", handleToggleLottoSection);

@@ -5,7 +5,7 @@ import { ERROR_MESSAGES } from "./constants.js";
 const $lottoSection = document.querySelector(".lotto-section");
 const $lottoForm = document.querySelector(".lotto-form");
 
-export const handleSubmitToShowTheRest = (e) => {
+export const handleSubmitPriceForm = (e) => {
   e.preventDefault();
 
   const priceInput = e.target[0].valueAsNumber;
