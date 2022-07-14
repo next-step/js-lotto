@@ -1,13 +1,18 @@
 import { lottoStore } from './store/lotto-store.js';
 import { setInputMoney, setLottoList } from './action/lotto-actions.js';
-import { LOTTO_PRICE } from './constants/nums.js';
+import { LOTTO_PRICE, MAX_LOTTO_NUM, MAX_LOTTO_NUMS_SIZE, MIN_LOTTO_NUM } from './constants/nums.js';
 
-export const savePriceInputValueToStore = function (value) {
-	lottoStore.dispatch(setInputMoney(Number(value)));
+export const savePriceInputValueToStore = function (inputMoney) {
+	lottoStore.dispatch(setInputMoney(inputMoney));
+	generateLottoList(inputMoney);
 };
 
 export const resetPriceInputValue = function () {
 	lottoStore.dispatch(setInputMoney(0));
+};
+
+export const resetLottoList = function () {
+	saveLottoListToStore([]);
 };
 
 export const getInputMoney = function () {
@@ -19,9 +24,6 @@ export const getRandomInt = function (min, max) {
 };
 
 const generateLottoNums = function () {
-	const MIN_LOTTO_NUM = 1;
-	const MAX_LOTTO_NUM = 45;
-	const MAX_LOTTO_NUMS_SIZE = 6;
 	const lottoNums = new Set();
 	while (lottoNums.size < MAX_LOTTO_NUMS_SIZE) {
 		lottoNums.add(getRandomInt(MIN_LOTTO_NUM, MAX_LOTTO_NUM));
@@ -31,11 +33,13 @@ const generateLottoNums = function () {
 
 export const generateLottoList = function (priceInput) {
 	const lottoTicketCount = priceInput / LOTTO_PRICE;
-	const newLottoList = [];
-	for (let i = 0; i < lottoTicketCount; i++) {
-		newLottoList.push(generateLottoNums());
-	}
-	saveLottoListToStore(newLottoList);
+	const newLottoList = Array(lottoTicketCount).fill(undefined);
+	saveLottoListToStore(
+		newLottoList.map(() => {
+			const lottoNums = generateLottoNums();
+			return lottoNums;
+		})
+	);
 };
 
 export const saveLottoListToStore = function (lottoList) {

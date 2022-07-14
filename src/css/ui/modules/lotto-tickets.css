@@ -6,3 +6,7 @@
     font-size: 1.25rem;
     margin-left: 12px;
 }
+
+.hide-detail > .lotto-ticket > .lotto-detail {
+    display : none;
+}

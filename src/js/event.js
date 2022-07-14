@@ -1,7 +1,7 @@
-import { MODAL } from './constants/selectors.js';
+import { MODAL, PRICE_INPUT } from './constants/selectors.js';
 import { $ } from './util.js';
-import { closeModal, showModal, toggleLottoDetailNumbers } from './view.js';
-import { getInputMoney, resetPriceInputValue, savePriceInputValueToStore, generateLottoList, saveLottoListToStore } from './model.js';
+import { closeModal, showModal, showLottoDetailNumbers, hideLottoDetailNumbers } from './view.js';
+import { resetPriceInputValue, savePriceInputValueToStore, resetLottoList } from './model.js';
 import { validateInputMoney } from './validate.js';
 
 export const onClickOpenResultModalBtn = function () {
@@ -12,18 +12,20 @@ export const onClickCloseResultModalBtn = function () {
 	closeModal($(MODAL));
 };
 
-export const onClickLottoNumbersToggleBtn = function () {
-	toggleLottoDetailNumbers();
+export const onCheckLottoNumbersToggleBtn = function ({ target: { checked } }) {
+	if (checked) {
+		showLottoDetailNumbers();
+	} else {
+		hideLottoDetailNumbers();
+	}
 };
 
 export const onSubmitLottoPurchaseForm = function (ev) {
 	ev.preventDefault();
-	const priceInput = getInputMoney();
-	if (validateInputMoney(priceInput)) {
-		generateLottoList(priceInput);
+	resetPriceInputValue();
+	resetLottoList();
+	const inputMoney = $(PRICE_INPUT).valueAsNumber;
+	if (validateInputMoney(inputMoney)) {
+		savePriceInputValueToStore(inputMoney);
 	}
-};
-
-export const onChangePriceInput = function (ev) {
-	savePriceInputValueToStore(ev.target.value);
 };
