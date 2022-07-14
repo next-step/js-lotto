@@ -1,7 +1,7 @@
-import debounce from './debounce.js';
+import throttle from './throttle.js';
 import { reactiveRender } from './reactiveRender.js';
 
-const tick = debounce();
+const tick = throttle();
 
 function observser() {
   tick({ duration: 0, callback: reactiveRender });

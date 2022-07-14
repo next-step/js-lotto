@@ -1,4 +1,4 @@
-export default function debounce() {
+export default function throttle() {
   let time;
   return ({ duration, callback }) => {
     if (time) return;
