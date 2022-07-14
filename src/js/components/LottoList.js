@@ -1,4 +1,4 @@
-import { proxyState } from '../store/index.js';
+import { state } from '../store/index.js';
 import { registeReactiveRender } from '../utils/reactiveRender.js';
 import LottoItem from './LottoItem.js';
 
@@ -14,8 +14,8 @@ export default function LottoList() {
   const render = () => {
     clearLottoList();
 
-    proxyState.lottoList.forEach(lotto => {
-      $lottoList.appendChild(LottoItem({ lotto, visible: proxyState.isVisibleLottos }));
+    state.lottoList.forEach(lotto => {
+      $lottoList.appendChild(LottoItem({ lotto, visible: state.isVisibleLottos }));
     });
   };
 

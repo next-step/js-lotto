@@ -1,7 +1,7 @@
 import { makeLotto } from '../utils/lotto.js';
 import reactive from '../utils/reactive.js';
 
-const { state, proxyState } = reactive({
+const state = reactive({
   amount: null,
   lottoList: [],
   isVisibleLottos: false,
@@ -33,4 +33,4 @@ const action = {
   },
 };
 
-export { mutation, proxyState, action, getter };
+export default { mutation, state: Object.freeze(state), action, getter };

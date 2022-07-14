@@ -9,7 +9,6 @@ function observser() {
 
 export default function reactive(payload) {
   const state = { ...payload };
-  const proxyState = {};
   Object.keys(state).forEach(key => {
     let current = state[key];
     Object.defineProperty(state, key, {
@@ -22,15 +21,7 @@ export default function reactive(payload) {
         observser();
       },
     });
-    Object.defineProperty(proxyState, key, {
-      get() {
-        return current;
-      },
-      set() {
-        throw new Error('외부에서 state조작은 불가능 합니다.');
-      },
-    });
   });
 
-  return { state, proxyState };
+  return state;
 }
