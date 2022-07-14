@@ -8,4 +8,4 @@ function reactiveRender() {
   reactiveRenderList.forEach(renderFunction => renderFunction());
 }
 
-export { reactiveRenderList, registeReactiveRender, reactiveRender };
+export { registeReactiveRender, reactiveRender };
