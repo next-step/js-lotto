@@ -15,7 +15,7 @@ describe('Create Lotto List', () => {
   it('Input Max Test', () => {
     cy.visit('http://127.0.0.1:5500/');
 
-    cy.get('.lotto-price-input').type('100000');
+    cy.get('.lotto-price-input').type('1000000');
     cy.get('form').contains('확인').click();
   });
 
