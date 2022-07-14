@@ -4,7 +4,7 @@ import LottoList from './components/LottoList.js';
 import LottoNumbersToggleButton from './components/LottoNumbersToggleButton.js';
 import { reactiveRender } from './utils/reactiveRender.js';
 
-function App() {
+function main() {
   FormAmount();
   LottoNumbersToggleButton();
   LottoList();
@@ -13,4 +13,4 @@ function App() {
   reactiveRender();
 }
 
-App();
+main();
