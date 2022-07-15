@@ -24,12 +24,21 @@ class Model {
   }
 
   _autoGenerateNumber() {
-    return Array.from({ length: NUM_OF_LOTTO_NUMBERS }, () => {
-      const randomLottoNumber =
+    const randomLottoNumber = new Set();
+
+    while (randomLottoNumber.size <= NUM_OF_LOTTO_NUMBERS) {
+      const curRandomNum =
         Math.floor(Math.random() * (MAX_LOTTO_NUM - MIN_LOTTO_NUM + 1)) +
         MIN_LOTTO_NUM;
-      return randomLottoNumber;
-    });
+
+      if (randomLottoNumber.has(curRandomNum)) {
+        continue;
+      }
+      console.log(curRandomNum);
+      randomLottoNumber.add(curRandomNum);
+    }
+
+    return [...randomLottoNumber];
   }
 }
 
