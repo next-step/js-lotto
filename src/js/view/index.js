@@ -11,11 +11,11 @@ export const $lottoCountLabel = document.querySelector('.flex-auto');
 export const $lottoNumbersToggleButton = document.querySelector('input[type=checkbox]');
 
 export const hidePurchaseViewSection = () => {
-  $afterPurchageViewSection.forEach((section) => section.style.display = 'none');
+  $afterPurchageViewSection.forEach((section) => section.classList.add('d-none'));
 }
 
 export const showPurchaseViewSection = () => {
-  $afterPurchageViewSection.forEach((section) => section.style.display = 'block')
+  $afterPurchageViewSection.forEach((section) => section.classList.add('d-block'))
 }
 
 export const addLottoCountLabel = (lottoCount) => {
