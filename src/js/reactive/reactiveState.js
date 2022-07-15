@@ -1,4 +1,4 @@
-import throttle from './throttle.js';
+import throttle from '../utils/throttle.js';
 import { reactiveRender } from './reactiveRender.js';
 
 const tick = throttle();
@@ -7,7 +7,7 @@ function observser() {
   tick({ duration: 0, callback: reactiveRender });
 }
 
-export default function reactive(payload) {
+export default function reactiveState(payload) {
   const state = { ...payload };
   Object.keys(state).forEach(key => {
     let current = state[key];

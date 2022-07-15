@@ -1,8 +1,8 @@
-import { makeLotto } from '../utils/lotto.js';
-import reactive from '../utils/reactive.js';
+import { makeLotto } from '../lotto/index.js';
+import { reactiveState } from '../reactive/index.js';
 import { COMMIT, DISPATCH } from '../constants/store.js';
 
-const state = reactive({
+const state = reactiveState({
   amount: null,
   lottoList: [],
   isVisibleLottos: false,
