@@ -1,4 +1,4 @@
-import { makeLotto } from '../lotto/index.js';
+import createLotto from '../lotto/createLotto.js';
 import { reactiveState } from '../reactive/index.js';
 import { COMMIT, DISPATCH } from '../constants/store.js';
 
@@ -38,7 +38,7 @@ const commit = (name, payload) => {
 const action = {
   [DISPATCH.MAKE_LOTTO_LIST]() {
     const lottoAmount = getter.getLottoAmount();
-    const lottoList = new Array(lottoAmount).fill(null).map(() => makeLotto());
+    const lottoList = new Array(lottoAmount).fill(null).map(() => createLotto());
 
     commit(COMMIT.SET_LOTTO_LIST, lottoList);
   },
