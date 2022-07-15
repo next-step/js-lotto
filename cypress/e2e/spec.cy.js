@@ -1,4 +1,4 @@
-import { validateLotto } from '../../src/js/utils/lotto.js';
+import { validateLotto } from '../../src/js/lotto/index.js';
 
 describe('로또 테스트', () => {
   before(() => {
