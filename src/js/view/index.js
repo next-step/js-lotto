@@ -15,7 +15,7 @@ export const hidePurchaseViewSection = () => {
 }
 
 export const showPurchaseViewSection = () => {
-  $afterPurchageViewSection.forEach((section) => section.classList.add('d-block'))
+  $afterPurchageViewSection.forEach((section) => section.classList.replace('d-none', 'd-block'))
 }
 
 export const addLottoCountLabel = (lottoCount) => {
@@ -24,10 +24,11 @@ export const addLottoCountLabel = (lottoCount) => {
 
 export const addLottoTicket = (lottoCount) => {
   let lottoTicketTemplate = ``;
-
-  for ( let i = 0; i < lottoCount; i++ ) {
+  
+  Array.from({length: lottoCount}).forEach(() => {
     lottoTicketTemplate += '<span class="mx-1 text-4xl">🎟️ </span>'
-  }
+  })
+
   $lottoTickets.innerHTML = lottoTicketTemplate;
 }
 
