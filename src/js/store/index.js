@@ -1,6 +1,7 @@
 import createLotto from '../lotto/createLotto.js';
 import { reactiveState } from '../reactive/index.js';
 import { COMMIT, DISPATCH } from '../constants/store.js';
+import { PAYMENT_UNIT } from '../constants/common.js';
 
 const state = reactiveState({
   amount: null,
@@ -10,7 +11,7 @@ const state = reactiveState({
 
 const getter = {
   getLottoAmount() {
-    return Math.floor(state.amount / 1000);
+    return Math.floor(state.amount / PAYMENT_UNIT);
   },
 };
 
