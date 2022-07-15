@@ -47,8 +47,7 @@ export const handlePurchaseButtonClick = () => {
   showPurchaseViewSection();
   addLottoCountLabel(lottoCount);
   addLottoTicket(lottoCount);
-  const lottos = getLottoNumber(lottoCount);
-  STORE.lottos = lottos;
+  STORE.lottos = getLottoNumber(lottoCount);
 }
 
 export const handleLottoNumbersToggleButtonClick = (e) => {
