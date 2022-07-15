@@ -1,4 +1,9 @@
-import { validateLotto } from '../../src/js/lotto/index.js';
+import { LOTTO_LENGTH, LOTTO_MAX_NUMBER, LOTTO_MIN_NUMBER } from '../../src/js/constants/lotto.js';
+import {
+  validateLottoLength,
+  validateLottoOutOfRangeNumber,
+  validateLottohaveDuplicateNumber,
+} from '../../src/js/lotto/validateLotto.js';
 
 describe('로또 테스트', () => {
   before(() => {
@@ -41,11 +46,22 @@ describe('로또 테스트', () => {
     cy.get('#lotto-amount').should('have.text', '총 7개를 구매하였습니다.');
     cy.get('.lotto-number').should('have.length', 7);
     cy.get('.lotto-number').each($lottoNumber => {
-      const numbers = $lottoNumber
+      const lotto = $lottoNumber
         .text()
         .split(',')
         .map(num => Number(num.trim()));
-      validateLotto(numbers);
+
+      if (validateLottoLength(lotto)) {
+        throw new Error(`Lotto should have ${LOTTO_LENGTH} numbers`);
+      }
+      if (validateLottoOutOfRangeNumber(lotto)) {
+        throw new Error(
+          `Lottos number should be between ${LOTTO_MIN_NUMBER} and ${LOTTO_MAX_NUMBER}.`
+        );
+      }
+      if (validateLottohaveDuplicateNumber(lotto)) {
+        throw new Error('Lotto should not have duplicate numbers');
+      }
     });
   });
 
