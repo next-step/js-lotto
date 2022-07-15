@@ -8,11 +8,12 @@ export default function LottoList() {
   const render = () => {
     const lottoListFragment = new DocumentFragment();
 
-    store.state.lottoList.forEach(lotto => {
-      lottoListFragment.appendChild(LottoItem({ lotto, visible: store.state.isVisibleLottos }));
-    });
-
     $lottoList.replaceChildren(lottoListFragment);
+    const lottoListHtml = store.state.lottoList.reduce(
+      (html, lotto) => html + LottoItem({ lotto, visible: store.state.isVisibleLottos }),
+      ''
+    );
+    $lottoList.innerHTML = lottoListHtml;
   };
 
   registeReactiveRender(render);
