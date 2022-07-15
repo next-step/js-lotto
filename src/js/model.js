@@ -34,7 +34,6 @@ class Model {
       if (randomLottoNumber.has(curRandomNum)) {
         continue;
       }
-      console.log(curRandomNum);
       randomLottoNumber.add(curRandomNum);
     }
 

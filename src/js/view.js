@@ -78,7 +78,9 @@ class View {
     this.$lottieListContainer.setHTML("");
 
     const lottoTemplate = (number) => /* html */ `
-        <span class="mx-1 text-4xl">🎟️ ${number}</span>
+        <span class="lotto mx-1 text-4xl">🎟️ 
+          <span class="lotto-number">${number}</span>
+        </span>
     `;
 
     this.isShowLottoNumbers
