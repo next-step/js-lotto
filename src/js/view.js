@@ -7,6 +7,7 @@ import { notifyTypes } from "./util/constants.js";
 class View {
   constructor() {
     this.lottoController = controller;
+    this.isShowLottoNumbers = false;
 
     this.$priceInput = $.qs(".price-input");
     this.$buyBtn = $.qs(".buy-btn");
@@ -45,9 +46,11 @@ class View {
       "justify-end",
       "pr-1"
     );
+
     const $lottieNumberToggleInput = $.create("input")
       .setAttr("type", "checkbox")
       .addClass("lotto-numbers-toggle-button");
+
     const $lottieNumberToggleBtn = $.create("label")
       .addClass("switch")
       .appendElement($lottieNumberToggleInput)
@@ -56,8 +59,9 @@ class View {
           .addClass("text-base", "font-normal")
           .setText("번호보기")
       );
+
     $lottieNumberToggleInput.addEventListener("change", () => {
-      this.$lottieListContainer.toggleClass("flex-col");
+      this.isShowLottoNumbers = !this.isShowLottoNumbers;
       this.lottoController.handleShowLottieNumBtnToggle();
     });
 
@@ -77,10 +81,12 @@ class View {
         <span class="mx-1 text-4xl">🎟️ ${number}</span>
     `;
 
-    const isCol = this.$lottieListContainer.classList.contains("flex-col");
+    this.isShowLottoNumbers
+      ? this.$lottieListContainer.addClass("flex-col")
+      : this.$lottieListContainer.removeClass("flex-col");
 
     const lottieListHTML = curLotties
-      .map((number) => lottoTemplate(isCol ? number : ""))
+      .map((number) => lottoTemplate(this.isShowLottoNumbers ? number : ""))
       .join("");
     this.$lottieListContainer.setHTML(lottieListHTML);
 
