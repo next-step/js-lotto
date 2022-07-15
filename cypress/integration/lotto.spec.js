@@ -1,13 +1,4 @@
-// 로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.
-// 로또 1장의 가격은 1,000원이다.
-// 소비자는 자동 구매를 할 수 있어야 한다.
-// 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
-
-const priceInput = () => cy.get('.price-input');
-const purchaseButton = () => cy.get('.confirm');
-const numberShowingToggleButton = () => cy.get('.switch');
-const lottoTicketList = () => cy.get('.lotto-result-list-item');
-const lottoNumberList = () => cy.get('.lotto-result-number-list');
+import { LOTTO_INFORMATION } from '../../src/js/constants';
 
 describe('로또 구입 테스트', () => {
   beforeEach(() => {
@@ -15,48 +6,67 @@ describe('로또 구입 테스트', () => {
   });
 
   it('로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.', () => {
-    priceInput().type('7000');
-    purchaseButton().click();
-    lottoTicketList().its('length').should('eq', 7);
+    cy.insertMoney(7_000);
+    cy.purchase(7);
   });
 
   it('로또 1장의 가격은 1,000원이다.(1,000원 이하로 금액을 입력할 경우)', () => {
-    priceInput().type('900');
-    purchaseButton().click();
-    cy.on('window:alert', (text) => {
-      expect(text).to.equal('1,000원부터 입력이 가능합니다.');
-    });
-    cy.on('window:confirm', () => true);
+    cy.insertMoney(900);
+    cy.purchaseAlert(
+      `${LOTTO_INFORMATION.PRICE_UNIT.toLocaleString()}원부터 입력이 가능합니다.`
+    );
   });
 
-  it('로또 1장의 가격은 1,000원이다.(1,000이상, 1,000원 단위가 아닌 금액으로 입력한 경우)', () => {
-    priceInput().type('1200');
-    purchaseButton().click();
-    cy.on('window:alert', (text) => {
-      expect(text).to.equal('로또 구입 금액을 1,000원 단위로 입력해 주세요.');
-    });
-    cy.on('window:confirm', () => true);
+  it('로또 1장의 가격은 1,000원이다.(1,000원 단위가 아닌 금액으로 입력한 경우)', () => {
+    cy.insertMoney(1_200);
+    cy.purchaseAlert(
+      `로또 구입 금액을 ${LOTTO_INFORMATION.PRICE_UNIT.toLocaleString()}원 단위로 입력해 주세요.`
+    );
   });
 
   it('복권 번호는 번호 보기 토글 버튼을 클릭하면 볼 수 있어야 한다.', () => {
-    priceInput().type('10000');
-    purchaseButton().click();
-    lottoNumberList().each((item) =>
-      expect(item).to.have.css('display', 'none')
-    );
+    cy.insertMoney(10_000);
 
-    numberShowingToggleButton().click();
+    cy.clickToggleButton();
 
-    lottoTicketList().its('length').should('eq', 10);
-    lottoNumberList().its('length').should('eq', 10);
-    lottoNumberList().each((item) =>
-      expect(item).to.have.css('display', 'block')
-    );
+    cy.isVisibleLottoNumbers(10);
 
-    numberShowingToggleButton().click();
+    cy.clickToggleButton();
 
-    lottoNumberList().each((item) =>
-      expect(item).to.have.css('display', 'none')
-    );
+    cy.isUnVisibleLottoNumbers();
   });
+});
+
+Cypress.Commands.add('insertMoney', (price) => {
+  cy.get('.price-input').type(String(price));
+  cy.get('.confirm').click();
+});
+
+Cypress.Commands.add('purchase', (count) => {
+  cy.get('.lotto-result-list-item').its('length').should('eq', count);
+});
+
+Cypress.Commands.add('purchaseAlert', (alertText) => {
+  cy.on('window:alert', (text) => {
+    expect(text).to.equal(alertText);
+  });
+  cy.on('window:confirm', () => true);
+});
+
+Cypress.Commands.add('isVisibleLottoNumbers', (count) => {
+  cy.get('.lotto-result-list-item').its('length').should('eq', count);
+  cy.get('.lotto-result-number-list').its('length').should('eq', count);
+  cy.get('.lotto-result-number-list').each((item) =>
+    cy.wrap(item).should('be.visible')
+  );
+});
+
+Cypress.Commands.add('isUnVisibleLottoNumbers', () => {
+  cy.get('.lotto-result-number-list').each((item) =>
+    cy.wrap(item).should('not.be.visible')
+  );
+});
+
+Cypress.Commands.add('clickToggleButton', () => {
+  cy.get('.switch').click();
 });

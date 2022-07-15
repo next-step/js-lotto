@@ -1,20 +1,23 @@
 import { $, $$ } from './DOM.js';
 
 const handleLottoNumbersToggle = ({ target: { checked } }) => {
+  const lottoResultNumberList = $$('.lotto-result-number-list');
+  const lottoResultList = $('.lotto-result-list');
+
   if (!checked) {
-    for (let i = 0; i < $$('.lotto-result-number-list').length; i++) {
-      $$('.lotto-result-number-list')[i].style.display = 'none';
+    for (let i = 0; i < lottoResultNumberList.length; i++) {
+      lottoResultNumberList[i].style.display = 'none';
     }
 
-    $('.lotto-result-list').classList.remove('flex-col');
+    lottoResultList.classList.remove('flex-col');
     return;
   }
 
-  for (let i = 0; i < $$('.lotto-result-number-list').length; i++) {
-    $$('.lotto-result-number-list')[i].style.display = 'block';
+  for (let i = 0; i < lottoResultNumberList.length; i++) {
+    lottoResultNumberList[i].style.display = 'block';
   }
 
-  $('.lotto-result-list').classList.add('flex-col');
+  lottoResultList.classList.add('flex-col');
 };
 
 export default handleLottoNumbersToggle;
