@@ -26,13 +26,21 @@ const getLottoNumber = (count) => {
   return lottos
 };
 
-export const handlePurchaseButtonClick = () => {
-  const inputValue = $purchaseInputValue.value;
-  const lottoCount = inputValue / MIN_PRICE;
+const catchError = (inputValue) => {
   try {
     validatePrice(inputValue);
   } catch (error) {
-    alert(error);
+    return error;
+  }
+};
+
+export const handlePurchaseButtonClick = () => {
+  const inputValue = $purchaseInputValue.value;
+  const lottoCount = inputValue / MIN_PRICE;
+  const errorMessage = catchError(inputValue);
+  
+  if (errorMessage) {
+    alert(errorMessage)
     return
   }
 
