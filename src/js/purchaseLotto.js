@@ -21,7 +21,7 @@ const isCheckValidationOfPrice = (type, range) => {
   if (type === 'range' && range === 'max') {
     return price > LOTTO_INFORMATION.MAX_PURCHASE_PRICE;
   }
-  if (type === 'unit') {
+  if (type === 'unit' && range === undefined) {
     return price % LOTTO_INFORMATION.PRICE_UNIT !== 0;
   }
 };
