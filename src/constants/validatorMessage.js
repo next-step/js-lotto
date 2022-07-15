@@ -1,4 +1,4 @@
-import { MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER } from './magicNumber';
+import { MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER } from './magicNumber.js';
 
 const getUnderMinimumNumberMessage = (min) => `${min}보다 커야합니다.`;
 

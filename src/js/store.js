@@ -1,5 +1,6 @@
 class Store {
-	constructor(lotto) {
+	constructor(amount, lotto) {
+		this.amount = amount;
 		this.lotto = lotto;
 	}
 

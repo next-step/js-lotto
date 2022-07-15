@@ -35,18 +35,18 @@ const onModalClose = () => {
 const onSubmitAmount = (e) => {
 	e.preventDefault();
 
-	const { value } = e.target.elements.amount;
-	const { valid, msg } = isPositiveIntegerAmountValidator(value);
+	const { value: purchaseAmount } = e.target.elements.amount;
+	const { valid, msg } = isPositiveIntegerAmountValidator(purchaseAmount);
 
 	if (!valid) {
 		window.alert(msg);
-		e.target.elements.amount.value = INITIAL_AMOUNT;
+		e.target.elements.amount.value = '';
 		return;
 	}
 
 	changeDisplayNoneToBlock($purchaseResult);
 
-	const purchaseCount = changeAmountToCount(value);
+	const purchaseCount = changeAmountToCount(purchaseAmount);
 
 	store.setLotto(generateLotto(purchaseCount));
 
