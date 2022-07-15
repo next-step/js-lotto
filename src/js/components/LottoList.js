@@ -5,18 +5,21 @@ import LottoItem from './LottoItem.js';
 export default function LottoList() {
   const $lottoList = document.querySelector('#lotto-list');
 
-  const clearLottoList = () => {
-    while ($lottoList.firstChild) {
-      $lottoList.removeChild($lottoList.firstChild);
+  const clearElementChildren = element => {
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
     }
   };
 
   const render = () => {
-    clearLottoList();
+    const $lottoListClone = $lottoList.cloneNode(true);
+    clearElementChildren($lottoListClone);
 
     store.state.lottoList.forEach(lotto => {
-      $lottoList.appendChild(LottoItem({ lotto, visible: store.state.isVisibleLottos }));
+      $lottoListClone.appendChild(LottoItem({ lotto, visible: store.state.isVisibleLottos }));
     });
+
+    $lottoList.replaceChildren(...$lottoListClone.childNodes);
   };
 
   registeReactiveRender(render);
