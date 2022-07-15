@@ -1,5 +1,5 @@
-import { state } from '../store/index.js';
-import { registeReactiveRender } from '../utils/reactiveRender.js';
+import store from '../store/index.js';
+import { registeReactiveRender } from '../reactive/index.js';
 import LottoItem from './LottoItem.js';
 
 export default function LottoList() {
@@ -14,8 +14,8 @@ export default function LottoList() {
   const render = () => {
     clearLottoList();
 
-    state.lottoList.forEach(lotto => {
-      $lottoList.appendChild(LottoItem({ lotto, visible: state.isVisibleLottos }));
+    store.state.lottoList.forEach(lotto => {
+      $lottoList.appendChild(LottoItem({ lotto, visible: store.state.isVisibleLottos }));
     });
   };
 

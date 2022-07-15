@@ -1,6 +1,7 @@
-import { mutation, action } from '../store/index.js';
 
 const PAYMENT_UNIT = 1000;
+import store from '../store/index.js';
+import { COMMIT, DISPATCH } from '../constants/store.js';
 
 export default function FormAmount() {
   const $formAmount = document.querySelector('#form-amount');
@@ -19,8 +20,8 @@ export default function FormAmount() {
       return;
     }
 
-    mutation.setAmount(amount);
-    action.makeLottoList();
+    store.commit(COMMIT.SET_AMOUNT, amount);
+    store.dispatch(DISPATCH.MAKE_LOTTO_LIST);
   };
 
   $formAmount.addEventListener('submit', buyLottos);

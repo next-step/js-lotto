@@ -1,5 +1,6 @@
 import { makeLotto } from '../utils/lotto.js';
 import reactive from '../utils/reactive.js';
+import { COMMIT, DISPATCH } from '../constants/store.js';
 
 const state = reactive({
   amount: null,
@@ -14,23 +15,41 @@ const getter = {
 };
 
 const mutation = {
-  setAmount(payload) {
+  [COMMIT.SET_AMOUNT](payload) {
     state.amount = payload;
   },
-  setLottoList(payload) {
+
+  [COMMIT.SET_LOTTO_LIST](payload) {
     state.lottoList = payload;
   },
-  setIsVisibleLottos(payload) {
+  [COMMIT.SET_IS_VISIBLE_LOTTOS](payload) {
     state.isVisibleLottos = payload;
   },
 };
 
+const commit = (name, payload) => {
+  const mutate = mutation[name];
+  if (!mutate) {
+    throw new Error(`${name} is not found in mutation`);
+  }
+  mutate(payload);
+};
+
 const action = {
-  makeLottoList() {
+  [DISPATCH.MAKE_LOTTO_LIST]() {
     const lottoAmount = getter.getLottoAmount();
     const lottoList = new Array(lottoAmount).fill(null).map(() => makeLotto());
-    mutation.setLottoList(lottoList);
+
+    commit(COMMIT.SET_LOTTO_LIST, lottoList);
   },
 };
 
-export default { mutation, state: Object.freeze(state), action, getter };
+const dispatch = (name, ...payload) => {
+  const act = action[name];
+  if (!act) {
+    throw new Error(`${name} is not found in action`);
+  }
+  act(...payload);
+};
+
+export default { state: Object.freeze(state), getter, dispatch, commit };
