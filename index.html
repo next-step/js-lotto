@@ -37,6 +37,7 @@
           </form>
           <div
             id="purchase-list"
+            data-cy="purchase-list"
             class="d-none"
           >
             <section class="mt-9 ">
@@ -81,6 +82,7 @@
                       class="winning-number mx-1 text-center"
                       type="number"
                       name="winning-number-1"
+                      data-cy="winning-number-1"
                       nim="1"
                       max="45"
                       required
@@ -89,6 +91,7 @@
                       class="winning-number mx-1 text-center"
                       type="number"
                       name="winning-number-2"
+                      data-cy="winning-number-2"
                       min="1"
                       max="45"
                       required
@@ -97,6 +100,7 @@
                       class="winning-number mx-1 text-center"
                       type="number"
                       name="winning-number-3"
+                      data-cy="winning-number-3"
                       min="1"
                       max="45"
                       required
@@ -105,6 +109,7 @@
                       class="winning-number mx-1 text-center"
                       type="number"
                       name="winning-number-4"
+                      data-cy="winning-number-4"
                       min="1"
                       max="45"
                       required
@@ -113,6 +118,7 @@
                       class="winning-number mx-1 text-center"
                       type="number"
                       name="winning-number-5"
+                      data-cy="winning-number-5"
                       min="1"
                       max="45"
                       required
@@ -121,6 +127,7 @@
                       class="winning-number mx-1 text-center"
                       type="number"
                       name="winning-number-6"
+                      data-cy="winning-number-6"
                       min="1"
                       max="45"
                       required
@@ -134,6 +141,7 @@
                       class="bonus-number winning-number text-center"
                       type="number"
                       name="bonus-number-7"
+                      data-cy="bonus-number-7"
                       min="1"
                       max="45"
                       required
@@ -143,6 +151,7 @@
               </div>
               <button
                 type="submit"
+                data-cy="open-result-modal"
                 class="open-result-modal-button mt-5 btn btn-cyan w-100"
               >
                 결과 확인하기
@@ -172,9 +181,9 @@
               </thead>
             </table>
           </div>
-          <p class="text-center font-bold">당신의 총 수익률은 <span id="profit"></span>%입니다.</p>
+          <p class="text-center font-bold">당신의 총 수익률은 <span id="profit" data-cy="profit"></span>%입니다.</p>
           <div class="d-flex justify-center mt-5">
-            <button id="restart" type="button" class="btn btn-cyan">다시 시작하기</button>
+            <button id="restart" data-cy="restart" type="button" class="btn btn-cyan">다시 시작하기</button>
           </div>
         </div>
       </div>

@@ -38,30 +38,31 @@ const renderLottoResultTable = (dom, resultTable) => {
 			<tr class="text-center">
 				<td class="p-3">3개</td>
 				<td class="p-3">5,000</td>
-				<td class="p-3">{{__fifth_rank__}}개</td>
+				<td class="p-3" id="winning-5" data-cy="winning-5">{{__fifth_rank__}}개</td>
 			</tr>
 			<tr class="text-center">
 				<td class="p-3">4개</td>
 				<td class="p-3">50,000</td>
-				<td class="p-3">{{__forth_rank__}}개</td>
+				<td class="p-3" id="winning-5" data-cy="winning-5">{{__forth_rank__}}개</td>
 			</tr>
 			<tr class="text-center">
 				<td class="p-3">5개</td>
 				<td class="p-3">1,500,000</td>
-				<td class="p-3">{{__third_rank__}}개</td>
+				<td class="p-3" id="winning-5" data-cy="winning-5">{{__third_rank__}}개</td>
 			</tr>
 			<tr class="text-center">
 				<td class="p-3">5개 + 보너스볼</td>
 				<td class="p-3">30,000,000</td>
-				<td class="p-3">{{__second_rank__}}개</td>
+				<td class="p-3" id="winning-5" data-cy="winning-5">{{__second_rank__}}개</td>
 			</tr>
 			<tr class="text-center">
 				<td class="p-3">6개</td>
 				<td class="p-3">2,000,000,000</td>
-				<td class="p-3">{{__first_rank__}}개</td>
+				<td class="p-3" id="winning-5" data-cy="winning-5">{{__first_rank__}}개</td>
 			</tr>
 		</tbody>
 	`;
+
 	tableTemplate = tableTemplate.replace(`{{__fifth_rank__}}`, resultTable[5] ?? 0);
 	tableTemplate = tableTemplate.replace(`{{__forth_rank__}}`, resultTable[4] ?? 0);
 	tableTemplate = tableTemplate.replace(`{{__third_rank__}}`, resultTable[3] ?? 0);
