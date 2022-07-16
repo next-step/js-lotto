@@ -32,8 +32,8 @@ const onSubmitLottoBuying = (event) => {
 
   try {
     lottoMachine.generateLottoTicketByAutomatic(paidAmountValue);
-  } catch (error) {
-    alert(error.message);
+  } catch (e) {
+    alert(e.message);
   }
 
   if (lottoMachine.isPurchasedLottoTickets()) {
@@ -53,7 +53,13 @@ const onSubmitLottoResult = (event) => {
     INPUT_WINNING_NUMBER
   );
   const bonusNumber = new FormData(event.target).get(INPUT_BONUS_NUMBER);
-  console.log(winningNumbers, bonusNumber);
+
+  try {
+    const result = lottoMachine.getResult(winningNumbers, bonusNumber);
+    console.log(result);
+  } catch (e) {
+    alert(e.message);
+  }
 
   onModalShow();
 };
