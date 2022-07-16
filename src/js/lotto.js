@@ -1,13 +1,13 @@
-import { LOTTO_PRICE } from './constants/index.js';
+import { LOTTO } from './constants/index.js';
 
 const getLottoNumbers = (money) => {
-  return money / LOTTO_PRICE;
+  return money / LOTTO.PRICE;
 };
 
 const generateLotto = () => {
   const lotto = [];
-  while (lotto.length < 6) {
-    const number = Math.floor(Math.random() * 45) + 1;
+  while (lotto.length < LOTTO.LENGTH) {
+    const number = Math.floor(Math.random() * LOTTO.MAX_NUM) + 1;
 
     if (lotto.includes(number)) continue;
     lotto.push(number);
