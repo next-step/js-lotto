@@ -9,11 +9,9 @@ import {
 } from '../utils/index.js';
 import LottoTicket from './lotto-ticket.js';
 import LottoResult from './lotto-result.js';
-import { RANK } from '../constant/index.js';
+import { LOTTO_UNIT_PRICE, RANK } from '../constant/index.js';
 
 export default class LottoMachine {
-  #unitPrice = 1_000;
-
   #lottoTickets = [];
 
   get lottoTickets() {
@@ -33,18 +31,15 @@ export default class LottoMachine {
       });
 
   generateLottoTicketByAutomatic(amount) {
-    if (!isValidPurchasable(amount, this.#unitPrice)) {
+    if (!isValidPurchasable(amount)) {
       throw new Error(
-        `로또 구입 금액을 ${this.#unitPrice.toLocaleString(
+        `로또 구입 금액을 ${LOTTO_UNIT_PRICE.toLocaleString(
           'ko-KR'
         )}원 단위로 입력해 주세요.`
       );
     }
 
-    const numberOfLottoTickets = getNumberOfLottoTickets(
-      amount,
-      this.#unitPrice
-    );
+    const numberOfLottoTickets = getNumberOfLottoTickets(amount);
 
     this.#lottoTickets = this.getLottoTickets(numberOfLottoTickets);
   }

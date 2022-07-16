@@ -1,3 +1,5 @@
+export const LOTTO_UNIT_PRICE = 1_000;
+
 export const LOTTO_NUMBER_TYPE = {
   WINNING: 'winning',
   BONUS: 'bonus',

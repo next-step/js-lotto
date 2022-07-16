@@ -1,10 +1,9 @@
-import { LOTTO_NUMBER_TYPE } from '../constant/index.js';
+import { LOTTO_NUMBER_TYPE, LOTTO_UNIT_PRICE } from '../constant/index.js';
 
 export const getRandomIntInclusive = (min, max) =>
   Math.floor(Math.random() * (max - min + 1) + min);
 
-export const getNumberOfLottoTickets = (amount, amountPerLottoTicket) =>
-  amount / amountPerLottoTicket;
+export const getNumberOfLottoTickets = (amount) => amount / LOTTO_UNIT_PRICE;
 
 export const getLottoNumbers = () => {
   const MAX_SIZE = 6;
