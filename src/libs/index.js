@@ -1,5 +1,5 @@
 import { changeDisplayBlockToNone, changeDisplayNoneToBlock } from './dom.js';
-import { generateLotto, changeAmountToCount } from './lotto.js';
+import { generateLotto, changeAmountToCount, getWinningNumberIndex } from './lotto.js';
 import { isPositiveIntegerAmountValidator, generateResultValidator } from './validator.js';
 
 export {
@@ -9,4 +9,5 @@ export {
 	generateResultValidator,
 	generateLotto,
 	changeAmountToCount,
+	getWinningNumberIndex,
 };

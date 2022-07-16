@@ -9,7 +9,14 @@ import {
 	generateLotto,
 	isPositiveIntegerAmountValidator,
 	generateResultValidator,
+	getWinningNumberIndex,
 } from '../libs/index.js';
+import {
+	getWinningsResult,
+	calculateWinningsPerRank,
+	calculateTotalWinnings,
+	calculateTotalReturn,
+} from '../libs/statistics.js';
 
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $toggleLottoDetailSwitch = document.querySelector('.lotto-numbers-toggle-button');
@@ -49,10 +56,11 @@ const onSubmitAmount = (e) => {
 
 	const purchaseCount = changeAmountToCount(purchaseAmount);
 
+	store.setPurchaseAmount(purchaseAmount);
 	store.setLotto(generateLotto(purchaseCount));
 
-	renderPurchaseCount($purchaseCount, store.lotto.length);
-	renderLottoList($lottoList, store.lotto);
+	renderPurchaseCount($purchaseCount, store.lottoNumbers.length);
+	renderLottoList($lottoList, store.lottoNumbers);
 };
 
 const toggleLottoDetail = (e) => {
@@ -71,18 +79,26 @@ const toggleLottoDetail = (e) => {
 	}
 };
 
-const temp = [];
-const handleWinningNumber = (e) => {
-	const validator = generateResultValidator(temp);
-	if (!validator(e.target.value).valid) {
-		window.alert(validator(e.target.value).msg);
-		e.target.value = '';
+const handleWinningNumbers = (e) => {
+	const { value: winningNumber, name } = e.target;
+	const index = getWinningNumberIndex(name);
+
+	const validator = generateResultValidator(store.winningNumbers);
+	if (!validator(winningNumber).valid) {
+		window.alert(validator(winningNumber).msg);
+		store.setWinningNumbers(index, undefined);
 		return;
 	}
-	temp.push(e.target.value);
+	store.setWinningNumbers(index, winningNumber);
+	const resultArray = getWinningsResult(store);
+	const winningsPerRank = calculateWinningsPerRank(resultArray);
+	const totalWinnings = calculateTotalWinnings(resultArray);
+	const totalReturn = calculateTotalReturn(store.purchaseAmount, totalWinnings);
+
+	console.log(winningsPerRank, totalWinnings, totalReturn);
 };
 
-$winningNumberInputForm.addEventListener('change', handleWinningNumber);
+$winningNumberInputForm.addEventListener('change', handleWinningNumbers);
 $amountInputForm.addEventListener('submit', onSubmitAmount);
 $toggleLottoDetailSwitch.addEventListener('click', toggleLottoDetail);
 $showResultButton.addEventListener('click', onModalShow);

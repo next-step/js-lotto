@@ -1,11 +1,20 @@
 class Store {
-	constructor(amount, lotto) {
-		this.amount = amount;
-		this.lotto = lotto;
+	constructor(purchaseAmount = 0, lottoNumbers = [], winningNumbers = []) {
+		this.purchaseAmount = purchaseAmount;
+		this.lottoNumbers = lottoNumbers;
+		this.winningNumbers = winningNumbers;
 	}
 
-	setLotto(lottoNumber) {
-		this.lotto = lottoNumber;
+	setLotto(lottoNumbers) {
+		this.lottoNumbers = lottoNumbers;
+	}
+
+	setWinningNumbers(index, winningNumber) {
+		this.winningNumbers[index] = parseInt(winningNumber, 10);
+	}
+
+	setPurchaseAmount(purchaseAmount) {
+		this.purchaseAmount = purchaseAmount;
 	}
 }
 

@@ -19,4 +19,8 @@ const generateLotto = (count) =>
 		return generateLottoItem(lotto);
 	});
 
-export { generateLotto, changeAmountToCount };
+const getWinningNumberIndex = (name) => {
+	return name.split('-').at(-1) - 1;
+};
+
+export { generateLotto, changeAmountToCount, getWinningNumberIndex };
