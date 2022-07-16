@@ -5,17 +5,17 @@ const handleLottoNumbersToggle = ({ target: { checked } }) => {
   const lottoResultList = $('.lotto-result-list');
 
   if (!checked) {
-    for (let i = 0; i < lottoResultNumberList.length; i++) {
-      lottoResultNumberList[i].style.display = 'none';
-    }
+    lottoResultNumberList.forEach((element) => {
+      element.style.display = 'none';
+    });
 
     lottoResultList.classList.remove('flex-col');
     return;
   }
 
-  for (let i = 0; i < lottoResultNumberList.length; i++) {
-    lottoResultNumberList[i].style.display = 'block';
-  }
+  lottoResultNumberList.forEach((element) => {
+    element.style.display = 'block';
+  });
 
   lottoResultList.classList.add('flex-col');
 };

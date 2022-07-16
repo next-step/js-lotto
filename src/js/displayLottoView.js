@@ -21,10 +21,6 @@ const getRandomLottoNumberListPerTicket = () => {
 };
 
 const renderLottoResult = () => {
-  $(
-    '.purchased-lotto-alert'
-  ).innerText = `총 ${getPurchasedLottoTicketCount()}개를 구매하셨습니다.`;
-
   const lottoRenderList = Array.from(
     { length: getPurchasedLottoTicketCount() },
     () =>
@@ -32,6 +28,11 @@ const renderLottoResult = () => {
         ', '
       )}</span></li>`
   );
+
+  $(
+    '.purchased-lotto-alert'
+  ).innerText = `총 ${getPurchasedLottoTicketCount()}개를 구매하셨습니다.`;
+
   $('.lotto-result-list').innerHTML = lottoRenderList.join('');
 };
 
