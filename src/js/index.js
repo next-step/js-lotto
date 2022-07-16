@@ -1,6 +1,5 @@
 import Store from './store.js';
 
-import { INITIAL_AMOUNT } from '../constants/index.js';
 import { renderLottoList, renderPurchaseCount } from './render.js';
 
 import {
@@ -9,6 +8,7 @@ import {
 	changeAmountToCount,
 	generateLotto,
 	isPositiveIntegerAmountValidator,
+	generateResultValidator,
 } from '../libs/index.js';
 
 const $showResultButton = document.querySelector('.open-result-modal-button');
@@ -21,6 +21,7 @@ const $amountInputForm = document.querySelector('#amount-input-form');
 const $purchaseCount = document.querySelector('#purchase-count');
 const $purchaseResult = document.querySelector('#purchase-list');
 const $lottoList = document.querySelector('#lotto-list');
+const $winningNumberInputForm = document.querySelector('#winning-number-input-form');
 
 const store = new Store();
 
@@ -70,6 +71,18 @@ const toggleLottoDetail = (e) => {
 	}
 };
 
+const temp = [];
+const handleWinningNumber = (e) => {
+	const validator = generateResultValidator(temp);
+	if (!validator(e.target.value).valid) {
+		window.alert(validator(e.target.value).msg);
+		e.target.value = '';
+		return;
+	}
+	temp.push(e.target.value);
+};
+
+$winningNumberInputForm.addEventListener('change', handleWinningNumber);
 $amountInputForm.addEventListener('submit', onSubmitAmount);
 $toggleLottoDetailSwitch.addEventListener('click', toggleLottoDetail);
 $showResultButton.addEventListener('click', onModalShow);

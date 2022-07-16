@@ -66,7 +66,10 @@
                 class="d-flex flex-wrap">
               </ul>
             </section>
-            <form class="mt-9">
+            <form
+              class="mt-9"
+              id="winning-number-input-form"
+            >
               <label class="flex-auto d-inline-block mb-3"
                 >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
               >
@@ -75,35 +78,66 @@
                   <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
                   <div>
                     <input
-                      type="number"
                       class="winning-number mx-1 text-center"
+                      type="number"
+                      name="winning-number"
+                      nim="1"
+                      max="45"
+                      required
                     />
                     <input
-                      type="number"
                       class="winning-number mx-1 text-center"
+                      type="number"
+                      name="winning-number"
+                      min="1"
+                      max="45"
+                      required
                     />
                     <input
-                      type="number"
                       class="winning-number mx-1 text-center"
+                      type="number"
+                      name="winning-number"
+                      min="1"
+                      max="45"
+                      required
                     />
                     <input
-                      type="number"
                       class="winning-number mx-1 text-center"
+                      type="number"
+                      name="winning-number"
+                      min="1"
+                      max="45"
+                      required
                     />
                     <input
-                      type="number"
                       class="winning-number mx-1 text-center"
+                      type="number"
+                      name="winning-number"
+                      min="1"
+                      max="45"
+                      required
                     />
                     <input
-                      type="number"
                       class="winning-number mx-1 text-center"
+                      type="number"
+                      name="winning-number"
+                      min="1"
+                      max="45"
+                      required
                     />
                   </div>
                 </div>
                 <div class="bonus-number-container flex-grow">
                   <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
                   <div class="d-flex justify-center">
-                    <input type="number" class="bonus-number text-center" />
+                    <input
+                      class="bonus-number text-center"
+                      type="number"
+                      name="bonus-number"
+                      min="1"
+                      max="45"
+                      required
+                    />
                   </div>
                 </div>
               </div>
