@@ -1,5 +1,5 @@
-const renderPurchaseCount = (dom, count) => {
-	dom.innerHTML = count;
+const renderNumberToDOM = (dom, number) => {
+	dom.innerHTML = number;
 };
 
 const lottoItems = (lotto) => {
@@ -69,8 +69,5 @@ const renderLottoResultTable = (dom, resultTable) => {
 	tableTemplate = tableTemplate.replace(`{{__first_rank__}}`, resultTable[1] ?? 0);
 	dom.innerHTML = tableTemplate;
 };
-const renderLottoReturn = (dom, returns) => {
-	dom.innerHTML = returns;
-};
 
-export { renderLottoList, renderLottoResultTable, renderPurchaseCount, renderLottoReturn };
+export { renderLottoList, renderLottoResultTable, renderNumberToDOM };

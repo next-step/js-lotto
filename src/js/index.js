@@ -1,11 +1,6 @@
 import Store from './store.js';
 
-import {
-	renderLottoList,
-	renderLottoResultTable,
-	renderPurchaseCount,
-	renderLottoReturn,
-} from './render.js';
+import { renderLottoList, renderLottoResultTable, renderNumberToDOM } from './render.js';
 
 import {
 	changeDisplayNoneToBlock,
@@ -16,6 +11,7 @@ import {
 	generateResultValidator,
 	getWinningNumberIndex,
 	winningNumberValidator,
+	resetInputValue,
 } from '../libs/index.js';
 import {
 	getRankArrayPerLotto,
@@ -54,10 +50,11 @@ const onModalShow = () => {
 
 	const totalWinnings = go(store, getRankArrayPerLotto, calculateTotalWinning);
 	const winningsPerRank = go(store, getRankArrayPerLotto, calculateWinningPerRank);
+	console.log(winningsPerRank);
 	const totalReturn = calculateTotalReturn(store.purchaseAmount, totalWinnings);
 
 	renderLottoResultTable($resultTable, winningsPerRank);
-	renderLottoReturn($profit, totalReturn);
+	renderNumberToDOM($profit, totalReturn);
 };
 
 const onModalClose = () => {
@@ -66,8 +63,7 @@ const onModalClose = () => {
 
 const restartLotto = () => {
 	$modal.classList.remove('open');
-	$winningInputs.forEach((e) => (e.value = ''));
-	$amountInput.value = '';
+	resetInputValue($winningInputs, $amountInput);
 	store.reset();
 	changeDisplayBlockToNone($purchaseResult);
 };
@@ -91,7 +87,7 @@ const onSubmitAmount = (e) => {
 	store.setPurchaseAmount(purchaseAmount);
 	store.setLotto(generateLotto(purchaseCount));
 
-	renderPurchaseCount($purchaseCount, store.lottoNumbers.length);
+	renderNumberToDOM($purchaseCount, store.lottoNumbers.length);
 	renderLottoList($lottoList, store.lottoNumbers);
 };
 
@@ -114,6 +110,7 @@ const toggleLottoDetail = (e) => {
 const handleWinningNumbers = (e) => {
 	const { value: winningNumber, name } = e.target;
 	const index = getWinningNumberIndex(name);
+	console.log(index);
 
 	const validator = generateResultValidator(store.winningNumbers);
 	const { valid, msg } = validator(winningNumber);
@@ -121,6 +118,7 @@ const handleWinningNumbers = (e) => {
 	if (!valid) {
 		window.alert(msg);
 		store.setWinningNumbers(index, undefined);
+		e.target.value = undefined;
 		return;
 	}
 

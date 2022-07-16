@@ -31,8 +31,8 @@ const generateResultValidator =
 	(lottoNumber) => {
 		if (lottoNumber < MIN_LOTTO_NUMBER) return { valid: false, msg: UNDER_MIN_NUMBER_MESSAGE };
 		if (lottoNumber > MAX_LOTTO_NUMBER) return { valid: false, msg: OVER_MAX_NUMBER_MESSAGE };
-		if (lottoResult.includes(parseInt(lottoNumber, 10)))
-			return { valid: false, msg: DUPLICATE_NUMBER_MESSAGE };
+		console.log(typeof lottoNumber);
+		if (lottoResult.includes(lottoNumber)) return { valid: false, msg: DUPLICATE_NUMBER_MESSAGE };
 		return { valid: true };
 	};
 

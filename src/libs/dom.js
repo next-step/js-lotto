@@ -8,4 +8,14 @@ const changeDisplayNoneToBlock = (element) => {
 	element.classList.add('d-block');
 };
 
-export { changeDisplayBlockToNone, changeDisplayNoneToBlock };
+const resetInputValue = (...inputsArgs) => {
+	inputsArgs.forEach((inputs) => {
+		if (inputs.length > 0) {
+			inputs.forEach((input) => (input.value = ''));
+		} else {
+			inputs.value = '';
+		}
+	});
+};
+
+export { changeDisplayBlockToNone, changeDisplayNoneToBlock, resetInputValue };

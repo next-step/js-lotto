@@ -10,7 +10,7 @@ class Store {
 	}
 
 	setWinningNumbers(index, winningNumber) {
-		this.winningNumbers[index] = parseInt(winningNumber, 10);
+		this.winningNumbers[index] = winningNumber ? parseInt(winningNumber, 10) : undefined;
 	}
 
 	setPurchaseAmount(purchaseAmount) {

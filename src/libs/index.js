@@ -1,4 +1,4 @@
-import { changeDisplayBlockToNone, changeDisplayNoneToBlock } from './dom.js';
+import { changeDisplayBlockToNone, changeDisplayNoneToBlock, resetInputValue } from './dom.js';
 import { generateLotto, changeAmountToCount, getWinningNumberIndex } from './lotto.js';
 import {
 	isPurchaseAmountValidator,
@@ -9,6 +9,7 @@ import {
 export {
 	changeDisplayBlockToNone,
 	changeDisplayNoneToBlock,
+	resetInputValue,
 	isPurchaseAmountValidator,
 	generateResultValidator,
 	winningNumberValidator,

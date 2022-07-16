@@ -6,8 +6,6 @@ import {
 	FIFTH_PLACE,
 } from '../constants/index.js';
 
-// 3, 4, 5, 5+1, 6
-
 const includes = (arr, number) => arr.includes(number);
 
 const isNotUndefined = (e) => !!e;
