@@ -1,25 +1,13 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('clickBuy', () => {
+  cy.get('.buy-lotto-button').click();
+});
+Cypress.Commands.add('typeMoney', (money) => {
+  cy.get('.money-input').type(money);
+});
+Cypress.Commands.add('buyLotto', (n) => {
+  cy.typeMoney(n * 1000);
+  cy.clickBuy();
+});
+Cypress.Commands.add('clickToggle', () => {
+  cy.get('.lotto-numbers-toggle-button').click({ force: true });
+});
