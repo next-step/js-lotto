@@ -27,7 +27,7 @@ export const RANK = {
     PRIZE_MONEY: 2_000_000_000,
   },
   OUT: {
-    KEY: '0',
+    KEY: '00',
     PRIZE_MONEY: 0,
   },
 };

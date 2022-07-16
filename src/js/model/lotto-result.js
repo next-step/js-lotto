@@ -1,3 +1,5 @@
+import { LOTTO_UNIT_PRICE, RANK } from '../constant/index.js';
+
 export default class LottoResult {
   #rankObj;
 
@@ -5,8 +7,43 @@ export default class LottoResult {
     this.#rankObj = result;
   }
 
-  // (오르거나 떨어진 현재 주식 가격 / 내가 매수한 주식 가격) * 100 - 100
+  #getPayment() {
+    const ticketCount = Object.values(this.#rankObj).reduce(
+      (acc, cur) => acc + cur
+    );
+    return ticketCount * LOTTO_UNIT_PRICE;
+  }
+
+  #getPrizeMoneyOfTicket = (key, value) => {
+    const { FIRST, SECOND, THIRD, FOURTH, FIFTH, OUT } = RANK;
+    switch (key) {
+      case FIRST.KEY:
+        return FIRST.PRIZE_MONEY * value;
+      case SECOND.KEY:
+        return SECOND.PRIZE_MONEY * value;
+      case THIRD.KEY:
+        return THIRD.PRIZE_MONEY * value;
+      case FOURTH.KEY:
+        return FOURTH.PRIZE_MONEY * value;
+      case FIFTH.KEY:
+        return FIFTH.PRIZE_MONEY * value;
+      case OUT.KEY:
+        return OUT.PRIZE_MONEY * value;
+      default:
+        return 0;
+    }
+  };
+
+  #getPrizeMoney() {
+    return Object.entries(this.#rankObj).reduce((acc, cur) => {
+      const [key, value] = cur;
+      return acc + this.#getPrizeMoneyOfTicket(key, value);
+    }, 0);
+  }
+
   calcRateOfReturn() {
-    return 0;
+    const payment = this.#getPayment();
+    const prizeMoney = this.#getPrizeMoney();
+    return Math.floor((prizeMoney / payment) * 100 - 100);
   }
 }
