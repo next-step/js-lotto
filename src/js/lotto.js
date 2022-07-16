@@ -6,8 +6,7 @@ const getLottoNumbers = (money) => {
 
 const generateLotto = () => {
   const lotto = [];
-  while (true) {
-    if (lotto.length === 6) break;
+  while (lotto.length < 6) {
     const number = Math.floor(Math.random() * 45) + 1;
 
     if (lotto.includes(number)) continue;
