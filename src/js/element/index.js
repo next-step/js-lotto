@@ -19,3 +19,26 @@ export const lottoElement = (lottoNumber) => {
   el.append(lottoNumberElement(lottoNumber));
   return el;
 };
+
+export const resultRowElement = (viewObj) => {
+  const { equalCount, prizeMoney, winningTicketCount } = viewObj;
+
+  const tr = document.createElement('tr');
+  tr.setAttribute('class', 'text-center');
+
+  const td1 = document.createElement('td');
+  td1.setAttribute('class', 'p-3');
+  td1.append(equalCount);
+
+  const td2 = document.createElement('td');
+  td2.setAttribute('class', 'p-3');
+  td2.append(prizeMoney.toLocaleString('ko-KR'));
+
+  const td3 = document.createElement('td');
+  td3.setAttribute('class', 'p-3');
+  td3.append(winningTicketCount);
+
+  tr.append(td1, td2, td3);
+
+  return tr;
+};

@@ -5,6 +5,10 @@ import {
   appendLottoCountEl,
   showContent,
 } from './ui/purchased-content.js';
+import {
+  appendResultWinningCount,
+  appendRateOfReturn,
+} from './ui/result-content.js';
 
 export const $modalClose = document.querySelector('.modal-close');
 export const $modal = document.querySelector('.modal');
@@ -57,7 +61,8 @@ const onSubmitLottoResult = (event) => {
 
   try {
     const result = lottoMachine.getResult(winningNumbers, bonusNumber);
-    console.log(result);
+    appendResultWinningCount(result.rankObj);
+    appendRateOfReturn(result.calcRateOfReturn());
   } catch (e) {
     alert(e.message);
     return;
