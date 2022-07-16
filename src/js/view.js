@@ -1,89 +1,66 @@
-import { showElement, hideElement, setValue, setClass } from './element.js';
+import { setValue } from './element.js';
 
-export const addLottoDetail = (element) => {
-  element.innerHTML += template;
+export const renderLottoDetail = (lottos) => {
+  renderLottoDetailTemplate();
+  renderLottoNumbers(lottos.length);
+  renderLottoLists(lottos);
 };
 
-export const renderLotto = ($lottoList, lottos) => {
-  renderNumber(lottos.length);
-  for (const lotto of lottos) {
-    const li = lottoLi(lotto);
-    $lottoList.appendChild(li);
-  }
+const renderLottoDetailTemplate = () => {
+  const $lottoDetail = document.querySelector('.lotto-detail');
+  $lottoDetail.innerHTML = template;
 };
 
-const renderNumber = (number) => {
+const renderLottoNumbers = (number) => {
   const $numberLabel = document.querySelector('.number-label');
   setValue($numberLabel, `총 ${number}개를 구매하였습니다.`);
 };
 
-const lottoLi = (lotto) => {
-  const li = lottoItemLi();
-  const iconSpan = lottoIconSpan();
-  const numberSpan = lottoNumberSpan(lotto);
-  li.appendChild(iconSpan);
-  li.appendChild(numberSpan);
-  return li;
+export const handleToggle = (lottos) => {
+  const toggle = document.querySelector('.number-toggle');
+  const isToggleOn = toggle.classList.toggle('on');
+
+  renderLottoLists(lottos, isToggleOn);
+  handleFlexDirection(isToggleOn);
 };
 
-const lottoItemLi = () => {
-  const li = document.createElement('li');
-  setClass(li, 'lotto-item');
-  return li;
-};
-
-const lottoIconSpan = () => {
-  const iconSpan = document.createElement('span');
-  setClass(iconSpan, 'lotto-icon');
-  setValue(iconSpan, `🎟️ `);
-  return iconSpan;
-};
-
-const lottoNumberSpan = (lotto) => {
-  const numberSpan = document.createElement('span');
-  setClass(numberSpan, 'lotto-numbers');
-  hideElement(numberSpan);
-  setValue(numberSpan, lotto.join(', '));
-  return numberSpan;
-};
-
-export const handleToggle = () => {
-  const $lottoList = document.getElementById('lotto-list');
-  $lottoList.classList.toggle('flex-col');
-  const isToggleOn = $lottoList.classList.contains('flex-col');
-
-  handleFlexDirection($lottoList, isToggleOn);
-  handleShowNumbers(isToggleOn);
-};
-
-const handleFlexDirection = ($element, isToggleOn) => {
+const handleFlexDirection = (isToggleOn) => {
+  const $lottoList = document.querySelector('#lotto-list');
   if (isToggleOn) {
-    $element.style.flexDirection = 'column';
+    $lottoList.style.flexDirection = 'column';
   } else {
-    $element.style.flexDirection = 'row';
+    $lottoList.style.flexDirection = 'row';
   }
 };
 
-const handleShowNumbers = (isToggleOn) => {
-  const numbers = document.querySelectorAll('.lotto-numbers');
-  for (const number of numbers) {
-    if (isToggleOn) {
-      showElement(number);
-    } else {
-      hideElement(number);
-    }
-  }
+const renderLottoLists = (lottos, isToggleOn) => {
+  const $lottoList = document.querySelector('#lotto-list');
+  $lottoList.innerHTML = lottoList(lottos, isToggleOn);
+};
+
+const lottoList = (lottos, isToggleOn) => {
+  return lottos.map((lotto) => lottoItem(lotto, isToggleOn)).join('');
+};
+
+const lottoItem = (lotto, isToggleOn) => {
+  const lottoNumbers = lotto.join(', ');
+  const display = isToggleOn ? 'block' : 'none';
+  return `
+<li class="lotto-item">
+  <span class="lotto-icon">🎟️  </span>
+  <span class="lotto-numbers" style="display: ${display};">${lottoNumbers}</span>
+</li>
+`;
 };
 
 const template = `
-    <div class="lotto-detail">
 <section class="mt-9">
   <div class="d-flex">
     <label class="number-label flex-auto my-0"></label>
     <div class="flex-auto d-flex justify-end pr-1">
       <label class="switch">
         <input type="checkbox" class="lotto-numbers-toggle-button" />
-        <span class="text-base font-normal">번호보기</span>
+        <span class="number-toggle text-base font-normal">번호보기</span>
       </label>
     </div>
   </div>
@@ -138,5 +115,4 @@ const template = `
     결과 확인하기
   </button>
 </form>
-</div>
     `;

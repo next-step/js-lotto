@@ -1,12 +1,13 @@
 import { ERR_MSG } from './constants/index.js';
 import { validateMoney } from './validate/money.js';
-import { addLottoDetail, renderLotto, handleToggle } from './view.js';
+import { renderLottoDetail, handleToggle } from './view.js';
 import { generateLottos } from './lotto.js';
+import { LottoStore } from './LottoStore.js';
 
 const $modalClose = document.querySelector('.modal-close');
 const $modal = document.querySelector('.modal');
-const $lottoDiv = document.querySelector('.lotto-div');
 const $moneyForm = document.querySelector('.money-form');
+const lottoStore = new LottoStore();
 
 const onModalShow = () => {
   $modal.classList.add('open');
@@ -28,13 +29,8 @@ const handleClickBuy = (e) => {
 
 const setBuyLotto = (money) => {
   const lottos = generateLottos(money);
-  addLottoDetail($lottoDiv);
-  initLottoDetail(lottos);
-};
-
-const initLottoDetail = (lottos) => {
-  const $lottoList = document.getElementById('lotto-list');
-  renderLotto($lottoList, lottos);
+  lottoStore.lottos = lottos;
+  renderLottoDetail(lottos);
   initListenerAfterBuyLotto();
 };
 
@@ -44,7 +40,9 @@ const initListenerAfterBuyLotto = () => {
     '.lotto-numbers-toggle-button'
   );
 
-  $lottoNumbersToggleButton.addEventListener('click', handleToggle);
+  $lottoNumbersToggleButton.addEventListener('click', () => {
+    handleToggle(lottoStore.lottos);
+  });
   $showResultButton.addEventListener('click', onModalShow);
   $modalClose.addEventListener('click', onModalClose);
 };
