@@ -1,24 +1,28 @@
 import Store from './store.js';
 
-import { renderLottoList, renderLottoResultTable, renderNumberToDOM } from './render.js';
+import {
+	renderLottoList,
+	renderLottoResultTable,
+	renderNumberToDOM,
+	changeDisplayBlockToNone,
+	changeDisplayNoneToBlock,
+	resetInputValue,
+} from './rendering.js';
 
 import {
-	changeDisplayNoneToBlock,
-	changeDisplayBlockToNone,
 	changeAmountToCount,
 	generateLotto,
 	isPurchaseAmountValidator,
 	generateResultValidator,
 	getWinningNumberIndex,
 	winningNumberValidator,
-	resetInputValue,
 } from '../libs/index.js';
 import {
 	getRankArrayPerLotto,
 	calculateWinningPerRank,
 	calculateTotalWinning,
 	calculateTotalReturn,
-} from '../libs/statistics.js';
+} from './statistics.js';
 import { go } from '../libs/fp.js';
 
 const $showResultButton = document.querySelector('.open-result-modal-button');

@@ -4,15 +4,20 @@ import {
 	UNDER_MIN_NUMBER_MESSAGE,
 	OVER_MAX_NUMBER_MESSAGE,
 	PRICE_PER_LOTTO,
+	INPUT_AMOUNT_MESSAGE,
+	NOT_EMPTY_WINNING_NUMBERS_MESSAGE,
+	MAX_LOTTO_NUMBER,
+	MIN_LOTTO_NUMBER,
+	MAX_WINNING_NUMBERS_LENGTH,
 } from '../constants/index.js';
-import { MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER } from '../constants/magicNumber.js';
-import { isNotUndefined } from './fp.js';
+
+import { isNil } from './fp.js';
 
 const isPurchaseAmountValidator = (number) => {
 	if (!number) {
 		return {
 			valid: false,
-			msg: '금액을 입력해주세요',
+			msg: INPUT_AMOUNT_MESSAGE,
 		};
 	}
 
@@ -31,16 +36,15 @@ const generateResultValidator =
 	(lottoNumber) => {
 		if (lottoNumber < MIN_LOTTO_NUMBER) return { valid: false, msg: UNDER_MIN_NUMBER_MESSAGE };
 		if (lottoNumber > MAX_LOTTO_NUMBER) return { valid: false, msg: OVER_MAX_NUMBER_MESSAGE };
-		console.log(typeof lottoNumber);
 		if (lottoResult.includes(lottoNumber)) return { valid: false, msg: DUPLICATE_NUMBER_MESSAGE };
 		return { valid: true };
 	};
 
 const winningNumberValidator = (winningNumbers) => {
-	if (winningNumbers.filter(isNotUndefined).length < 7) {
+	if (winningNumbers.filter(isNil).length < MAX_WINNING_NUMBERS_LENGTH) {
 		return {
 			valid: false,
-			msg: '모든 숫자를 채워야 합니다',
+			msg: NOT_EMPTY_WINNING_NUMBERS_MESSAGE,
 		};
 	}
 	return { valid: true };

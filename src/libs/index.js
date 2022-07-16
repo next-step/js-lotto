@@ -1,19 +1,21 @@
-import { changeDisplayBlockToNone, changeDisplayNoneToBlock, resetInputValue } from './dom.js';
-import { generateLotto, changeAmountToCount, getWinningNumberIndex } from './lotto.js';
+import { generateLotto, changeAmountToCount, getWinningNumberIndex } from '../js/lotto.js';
 import {
 	isPurchaseAmountValidator,
 	generateResultValidator,
 	winningNumberValidator,
 } from './validator.js';
 
+import { reduce, go, isNil, includes } from './fp.js';
+
 export {
-	changeDisplayBlockToNone,
-	changeDisplayNoneToBlock,
-	resetInputValue,
 	isPurchaseAmountValidator,
 	generateResultValidator,
 	winningNumberValidator,
 	generateLotto,
 	changeAmountToCount,
 	getWinningNumberIndex,
+	reduce,
+	go,
+	isNil,
+	includes,
 };

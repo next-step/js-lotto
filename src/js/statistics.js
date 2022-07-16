@@ -5,10 +5,7 @@ import {
 	FORTH_PLACE,
 	FIFTH_PLACE,
 } from '../constants/index.js';
-
-const includes = (arr, number) => arr.includes(number);
-
-const isNotUndefined = (e) => !!e;
+import { isNil, includes } from '../libs/fp.js';
 
 const splitWinningNumberAndBonus = (winningNumbers) => {
 	return {
@@ -30,7 +27,7 @@ const getRankArrayPerLotto = (store) => {
 			if (filteredLottoNumber.length === 4) return 4;
 			if (filteredLottoNumber.length === 3) return 5;
 		})
-		.filter(isNotUndefined);
+		.filter(isNil);
 };
 
 const calculateWinningPerRank = (rankArray) => {
@@ -58,6 +55,7 @@ const calculateTotalWinning = (rankArray) => {
 
 const calculateTotalReturn = (purchaseAmount, totalWinnings) =>
 	((totalWinnings - purchaseAmount) / purchaseAmount) * 100;
+
 export {
 	getRankArrayPerLotto,
 	calculateWinningPerRank,

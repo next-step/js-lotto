@@ -6,6 +6,8 @@ export const MAX_RANDOM_NUMBER = 45;
 
 export const MAX_COUNT_PER_LOTTO = 6;
 
+export const MAX_WINNING_NUMBERS_LENGTH = 7;
+
 export const PRICE_PER_LOTTO = 1_000;
 
 export const FIFTH_PLACE = 5_000;
