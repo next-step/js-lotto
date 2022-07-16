@@ -25,12 +25,16 @@ const lottoViewModule = ($moneyInput) => {
     $autoBuySection.classList.remove('hidden');
   };
 
+  const visibleWinningFormView = ($winningNumbersForm) => {
+    $winningNumbersForm.classList.remove('hidden');
+  };
   return {
     initializeView,
     getLottoTicketSet,
     renderTicketNumbers,
     renderAutoBuyResult,
     visibleAutoBuySectionView,
+    visibleWinningFormView,
   };
 };
 

@@ -2,8 +2,14 @@ import {
   getRandomIndex,
   getPickupElementByIndex,
   compareNumbers,
+  reduceByFunctionCompose,
 } from '../utils.js';
-import { LOTTO_NUMBERS, LOTTO_TRY_COUNT } from '../consts.js';
+import {
+  BONUS_WEIGHT,
+  LOTTO_NUMBERS,
+  LOTTO_TRY_COUNT,
+  MATCHED_NUMBERS,
+} from '../consts.js';
 
 const lottoModule = (inputMoney) => {
   const lottoBudget = inputMoney;
@@ -37,11 +43,37 @@ const lottoModule = (inputMoney) => {
       return getRandomLottoNumbers(LOTTO_TRY_COUNT, LOTTO_NUMBERS);
     });
 
+  const addBonusWeight = (result, numbers, bonusNumber, weight) => {
+    if (
+      result === MATCHED_NUMBERS.FIVE &&
+      bonusNumber &&
+      +numbers.includes(bonusNumber)
+    ) {
+      return weight;
+    }
+    return 0;
+  };
+
+  const getWinningResult = (winningNumbers, numbersSet, bonusNumber) =>
+    numbersSet
+      .map((numbers) => {
+        const result = reduceByFunctionCompose(
+          numbers,
+          0
+        )((number) => +winningNumbers.includes(number));
+
+        return (
+          result + addBonusWeight(result, numbers, bonusNumber, BONUS_WEIGHT)
+        );
+      })
+      .sort(compareNumbers);
+
   return {
     isInvalidInputMoneyUnit,
     getTicketNumbersOfBuying,
     getRandomLottoNumbers,
     buyAllLottoByCount,
+    getWinningResult,
   };
 };
 
