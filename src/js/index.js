@@ -34,6 +34,7 @@ const onSubmitLottoBuying = (event) => {
     lottoMachine.generateLottoTicketByAutomatic(paidAmountValue);
   } catch (e) {
     alert(e.message);
+    return;
   }
 
   if (lottoMachine.isPurchasedLottoTickets()) {
@@ -59,6 +60,7 @@ const onSubmitLottoResult = (event) => {
     console.log(result);
   } catch (e) {
     alert(e.message);
+    return;
   }
 
   onModalShow();
