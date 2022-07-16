@@ -18,6 +18,10 @@ export default class LottoMachine {
     return this.#lottoTickets;
   }
 
+  reset() {
+    this.#lottoTickets.length = 0;
+  }
+
   isPurchasedLottoTickets() {
     return this.#lottoTickets.length > 0;
   }

@@ -4,6 +4,8 @@ import {
   appendLottoEl,
   appendLottoCountEl,
   showContent,
+  hideContent,
+  offLottoNumberToggle,
 } from './ui/purchased-content.js';
 import {
   appendResultWinningCount,
@@ -17,6 +19,7 @@ export const $lottoNumbersToggleButton = document.querySelector(
 );
 export const $formLottoBuying = document.querySelector('#form-lotto-buying');
 export const $formWinningNumbers = document.querySelector('#result');
+export const $reset = document.querySelector('#reset');
 
 const lottoMachine = new LottoMachine();
 
@@ -71,7 +74,24 @@ const onSubmitLottoResult = (event) => {
   onModalShow();
 };
 
+const resetLottoNumberToggle = () => {
+  if ($lottoNumbersToggleButton.checked) {
+    $lottoNumbersToggleButton.checked = '';
+    offLottoNumberToggle();
+  }
+};
+
+const onResetForm = () => {
+  $formLottoBuying.reset();
+  $formWinningNumbers.reset();
+  lottoMachine.reset();
+  resetLottoNumberToggle();
+  hideContent();
+  onModalClose();
+};
+
 $modalClose.addEventListener('click', onModalClose);
 $lottoNumbersToggleButton.addEventListener('change', onLottoNumberToggle);
 $formLottoBuying.addEventListener('submit', onSubmitLottoBuying);
 $formWinningNumbers.addEventListener('submit', onSubmitLottoResult);
+$reset.addEventListener('click', onResetForm);
