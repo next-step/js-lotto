@@ -16,9 +16,9 @@ const generateLotto = () => {
 };
 
 export const generateLottos = (money) => {
-  const lottos = [];
-  for (let i = 0; i < getLottoNumbers(money); i++) {
-    lottos.push(generateLotto());
-  }
+  const lottos = Array.from({ length: getLottoNumbers(money) }, () =>
+    generateLotto()
+  );
+
   return lottos;
 };
