@@ -10,18 +10,23 @@ export const onModalClose = () => {
   $modal.classList.remove('open')
 }
 
-const getLottoNumbers = (count) => {
-  let lottos = [];
-  for (let i = 0; i < count; i++) {
-    let lotto = []
-    while (lotto.length < LOTTO_NUMBER_COUNT) {
-      const number = parseInt(Math.random() * MAX_LOTTO_NUMBER) + 1;
-      if (!lotto.includes(number)) {
-        lotto.push(number);
-      }
+const drawLottoNumbers = () => {
+  let lottoNumber = []
+  while (lottoNumber.length < LOTTO_NUMBER_COUNT) {
+    const number = parseInt(Math.random() * MAX_LOTTO_NUMBER) + 1;
+    if (!lottoNumber.includes(number)) {
+      lottoNumber.push(number);
     }
-    lottos.push(lotto);
   }
+  return lottoNumber;
+}
+
+const getLottos = (count) => {
+  let lottos = [];
+  Array.from({ length: count }).forEach(() => {
+    const lottoNumber = drawLottoNumbers();
+    lottos.push(lottoNumber);
+  })
   return lottos
 };
 
@@ -37,7 +42,7 @@ export const handlePurchaseButtonClick = () => {
   const inputValue = $purchaseInputValue.value;
   const lottoCount = inputValue / MIN_PRICE;
   const errorMessage = catchError(inputValue);
-  const lottos = getLottoNumbers(lottoCount);
+  const lottos = getLottos(lottoCount);
   
   if (errorMessage) {
     alert(errorMessage)
