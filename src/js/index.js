@@ -29,7 +29,12 @@ const onSubmitLottoBuying = (event) => {
 
   const INPUT_NAME = 'paid-amount';
   const paidAmountValue = new FormData(event.target).get(INPUT_NAME);
-  lottoMachine.generateLottoTicketByAutomatic(paidAmountValue);
+
+  try {
+    lottoMachine.generateLottoTicketByAutomatic(paidAmountValue);
+  } catch (error) {
+    alert(error.message);
+  }
 
   if (lottoMachine.isPurchasedLottoTickets()) {
     const lottos = lottoMachine.lottoTickets;

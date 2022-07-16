@@ -25,13 +25,11 @@ export default class LottoMachine {
 
   generateLottoTicketByAutomatic(amount) {
     if (!isValidPurchasable(amount, this.#unitPrice)) {
-      alert(
+      throw new Error(
         `로또 구입 금액을 ${this.#unitPrice.toLocaleString(
           'ko-KR'
         )}원 단위로 입력해 주세요.`
       );
-
-      return;
     }
 
     const numberOfLottoTickets = getNumberOfLottoTickets(
