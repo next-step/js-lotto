@@ -30,7 +30,7 @@ const getRankArrayPerLotto = (store) => {
 		.filter(isNil);
 };
 
-const calculateWinningPerRank = (rankArray) => {
+const calculateWinningCountPerRank = (rankArray) => {
 	const result = {};
 	rankArray.forEach((number) => {
 		if (Object.keys(result).includes(number)) {
@@ -50,7 +50,7 @@ const calculateTotalWinning = (rankArray) => {
 		5: FIFTH_PLACE,
 	};
 
-	return rankArray.reduce((winningSum, rank) => winningSum + winningTable[rank], 0);
+	return rankArray.reduce((winningCount, rank) => winningCount + winningTable[rank], 0);
 };
 
 const calculateTotalReturn = (purchaseAmount, totalWinnings) =>
@@ -58,7 +58,7 @@ const calculateTotalReturn = (purchaseAmount, totalWinnings) =>
 
 export {
 	getRankArrayPerLotto,
-	calculateWinningPerRank,
+	calculateWinningCountPerRank,
 	calculateTotalWinning,
 	calculateTotalReturn,
 };

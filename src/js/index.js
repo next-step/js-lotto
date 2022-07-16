@@ -19,7 +19,7 @@ import {
 } from '../libs/index.js';
 import {
 	getRankArrayPerLotto,
-	calculateWinningPerRank,
+	calculateWinningCountPerRank,
 	calculateTotalWinning,
 	calculateTotalReturn,
 } from './statistics.js';
@@ -53,7 +53,7 @@ const onModalShow = () => {
 	$modal.classList.add('open');
 
 	const totalWinnings = go(store, getRankArrayPerLotto, calculateTotalWinning);
-	const winningsPerRank = go(store, getRankArrayPerLotto, calculateWinningPerRank);
+	const winningsPerRank = go(store, getRankArrayPerLotto, calculateWinningCountPerRank);
 	console.log(winningsPerRank);
 	const totalReturn = calculateTotalReturn(store.purchaseAmount, totalWinnings);
 
