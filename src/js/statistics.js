@@ -53,12 +53,12 @@ const calculateTotalWinning = (rankArray) => {
 	return rankArray.reduce((winningCount, rank) => winningCount + winningTable[rank], 0);
 };
 
-const calculateTotalReturn = (purchaseAmount, totalWinnings) =>
+const calculateTotalProfit = (purchaseAmount, totalWinnings) =>
 	((totalWinnings - purchaseAmount) / purchaseAmount) * 100;
 
 export {
 	getRankArrayPerLotto,
 	calculateWinningCountPerRank,
 	calculateTotalWinning,
-	calculateTotalReturn,
+	calculateTotalProfit,
 };

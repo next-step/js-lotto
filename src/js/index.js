@@ -21,7 +21,7 @@ import {
 	getRankArrayPerLotto,
 	calculateWinningCountPerRank,
 	calculateTotalWinning,
-	calculateTotalReturn,
+	calculateTotalProfit,
 } from './statistics.js';
 import { go } from '../libs/fp.js';
 
@@ -53,12 +53,11 @@ const onModalShow = () => {
 	$modal.classList.add('open');
 
 	const totalWinnings = go(store, getRankArrayPerLotto, calculateTotalWinning);
-	const winningsPerRank = go(store, getRankArrayPerLotto, calculateWinningCountPerRank);
-	console.log(winningsPerRank);
-	const totalReturn = calculateTotalReturn(store.purchaseAmount, totalWinnings);
+	const winningsCountTablePerRank = go(store, getRankArrayPerLotto, calculateWinningCountPerRank);
+	const totalProfit = calculateTotalProfit(store.purchaseAmount, totalWinnings);
 
-	renderLottoResultTable($resultTable, winningsPerRank);
-	renderNumberToDOM($profit, totalReturn);
+	renderLottoResultTable($resultTable, winningsCountTablePerRank);
+	renderNumberToDOM($profit, totalProfit);
 };
 
 const onModalClose = () => {
@@ -68,8 +67,9 @@ const onModalClose = () => {
 const restartLotto = () => {
 	$modal.classList.remove('open');
 	resetInputValue($winningInputs, $amountInput);
-	store.reset();
 	changeDisplayBlockToNone($purchaseResult);
+	$toggleLottoDetailSwitch.checked = false;
+	store.reset();
 };
 
 const onSubmitAmount = (e) => {
@@ -114,7 +114,6 @@ const toggleLottoDetail = (e) => {
 const handleWinningNumbers = (e) => {
 	const { value: winningNumber, name } = e.target;
 	const index = getWinningNumberIndex(name);
-	console.log(index);
 
 	const validator = generateResultValidator(store.winningNumbers);
 	const { valid, msg } = validator(winningNumber);
