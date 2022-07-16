@@ -16,6 +16,12 @@ class Store {
 	setPurchaseAmount(purchaseAmount) {
 		this.purchaseAmount = purchaseAmount;
 	}
+
+	reset() {
+		this.purchaseAmount = 0;
+		this.lottoNumbers = [];
+		this.winningNumbers = [];
+	}
 }
 
 export default Store;

@@ -10,36 +10,34 @@ import {
 
 const includes = (arr, number) => arr.includes(number);
 
-const isTruthy = (e) => !!e;
+const isNotUndefined = (e) => !!e;
 
-const sliceWinningNumberAndBonus = (winningNumbers) => {
+const splitWinningNumberAndBonus = (winningNumbers) => {
 	return {
 		winnings: winningNumbers.slice(0, 6),
 		bonus: winningNumbers.slice(6, 7)[0],
 	};
 };
 
-const getWinningsResult = (store) => {
+const getRankArrayPerLotto = (store) => {
 	const { lottoNumbers, winningNumbers } = store;
-	const { winnings, bonus } = sliceWinningNumberAndBonus(winningNumbers);
+	const { winnings, bonus } = splitWinningNumberAndBonus(winningNumbers);
 
-	const resultArray = lottoNumbers
+	return lottoNumbers
 		.map((lottoNumber) => {
-			const filteredLottoNumber = lottoNumber.filter((number) => {
-				return includes(winnings, number);
-			});
+			const filteredLottoNumber = lottoNumber.filter((number) => includes(winnings, number));
 			if (filteredLottoNumber.length === 6) return 1;
 			if (filteredLottoNumber.length === 5 && includes(lottoNumber, bonus)) return 2;
-			if (filteredLottoNumber.length === 4) return 3;
-			if (filteredLottoNumber.length === 3) return 4;
+			if (filteredLottoNumber.length === 5 && !includes(lottoNumber, bonus)) return 3;
+			if (filteredLottoNumber.length === 4) return 4;
+			if (filteredLottoNumber.length === 3) return 5;
 		})
-		.filter(isTruthy);
-	return resultArray;
+		.filter(isNotUndefined);
 };
 
-const calculateWinningsPerRank = (resultArray) => {
+const calculateWinningPerRank = (rankArray) => {
 	const result = {};
-	resultArray.forEach((number) => {
+	rankArray.forEach((number) => {
 		if (Object.keys(result).includes(number)) {
 			result[number] += 1;
 		}
@@ -48,23 +46,23 @@ const calculateWinningsPerRank = (resultArray) => {
 	return result;
 };
 
-const calculateTotalWinnings = (resultArray) => {
+const calculateTotalWinning = (rankArray) => {
 	const winningTable = {
 		1: FIRST_PLACE,
 		2: SECOND_PLACE,
 		3: THIRD_PLACE,
-		4: FIFTH_PLACE,
+		4: FORTH_PLACE,
+		5: FIFTH_PLACE,
 	};
-	return resultArray.reduce((acc, cur) => acc + winningTable[cur], 0);
+
+	return rankArray.reduce((winningSum, rank) => winningSum + winningTable[rank], 0);
 };
 
 const calculateTotalReturn = (purchaseAmount, totalWinnings) =>
-	(totalWinnings - purchaseAmount) / purchaseAmount;
+	((totalWinnings - purchaseAmount) / purchaseAmount) * 100;
 export {
-	getWinningsResult,
-	calculateWinningsPerRank,
-	calculateTotalWinnings,
+	getRankArrayPerLotto,
+	calculateWinningPerRank,
+	calculateTotalWinning,
 	calculateTotalReturn,
 };
-
-// 계산식
