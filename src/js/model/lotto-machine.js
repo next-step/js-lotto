@@ -2,7 +2,11 @@ import {
   isValidPurchasable,
   isValidNonDuplicateNumbers,
 } from '../validation/index.js';
-import { getNumberOfLottoTickets, getLottoNumbers } from '../utils/index.js';
+import {
+  getNumberOfLottoTickets,
+  getLottoNumbers,
+  getWinningLottoNumberMap,
+} from '../utils/index.js';
 import LottoTicket from './lotto-ticket.js';
 import LottoResult from './lotto-result.js';
 
@@ -48,6 +52,9 @@ export default class LottoMachine {
     if (!isValidNonDuplicateNumbers(winningNumbers, bonusNumber)) {
       throw new Error('로또 번호에는 중복된 숫자를 입력할 수 없습니다.');
     }
+
+    console.log(getWinningLottoNumberMap(winningNumbers, bonusNumber));
+
     return new LottoResult();
   };
 }
