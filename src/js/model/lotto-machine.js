@@ -3,7 +3,7 @@ import { getNumberOfLottoTickets, getLottoNumbers } from '../utils/index.js';
 import LottoTicket from './lotto-ticket.js';
 
 export default class LottoMachine {
-  #unitPrice = 1000;
+  #unitPrice = 1_000;
 
   #lottoTickets = [];
 
