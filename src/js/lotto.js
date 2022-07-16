@@ -1,10 +1,14 @@
-const $lottoPriceForm = document.querySelector('#lottoPriceForm')
-const $lottoPriceInput = document.querySelector('input[name="lottoPriceInput"]')
+import { updateLottoResultForm } from './lottoResult.js'
 
-const $lottoResult = document.querySelector('#lottoResult')
+const $lottoPriceForm = document.querySelector('#lottoPriceForm')
+const $lottoResultForm = document.querySelector('#lottoResultForm')
 const $lottoNumberForm = document.querySelector('#lottoNumberForm')
 
+const $lottoPriceInput = document.querySelector('input[name="lottoPriceInput"]')
+
 const PREFIX = 1000
+
+const getLottoCount = () => $lottoPriceInput.value / PREFIX
 
 const handleFormSubmit = (e) => {
   e.preventDefault()
@@ -14,6 +18,7 @@ const handleFormSubmit = (e) => {
   }
 
   updateStyle()
+  updateLottoResultForm(getLottoCount())
 }
 
 const checkValidate = () => {
@@ -35,7 +40,7 @@ const isPriceValidate = () => {
 
 const updateStyle = () => {
   if (isPriceValidate) {
-    $lottoResult.style.display = 'block'
+    $lottoResultForm.style.display = 'block'
     $lottoNumberForm.style.display = 'block'
   }
 }

@@ -1,4 +1,4 @@
-import './lottoPrice.js'
+import './lotto.js'
 
 const $showResultButton = document.querySelector('.open-result-modal-button')
 const $modalClose = document.querySelector('.modal-close')
