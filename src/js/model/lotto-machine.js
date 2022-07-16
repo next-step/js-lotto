@@ -9,6 +9,7 @@ import {
 } from '../utils/index.js';
 import LottoTicket from './lotto-ticket.js';
 import LottoResult from './lotto-result.js';
+import { RANK } from '../constant/index.js';
 
 export default class LottoMachine {
   #unitPrice = 1_000;
@@ -48,13 +49,34 @@ export default class LottoMachine {
     this.#lottoTickets = this.getLottoTickets(numberOfLottoTickets);
   }
 
-  getResult = (winningNumbers, bonusNumber) => {
+  getResult(winningNumbers, bonusNumber) {
     if (!isValidNonDuplicateNumbers(winningNumbers, bonusNumber)) {
       throw new Error('로또 번호에는 중복된 숫자를 입력할 수 없습니다.');
     }
 
-    console.log(getWinningLottoNumberMap(winningNumbers, bonusNumber));
+    const winningNumberMap = getWinningLottoNumberMap(
+      winningNumbers,
+      bonusNumber
+    );
 
-    return new LottoResult();
-  };
+    const result = this.#lottoTickets.reduce(
+      (acc, item) => {
+        const rank = item.getRank(winningNumberMap);
+        if (rank) {
+          acc[rank] += 1;
+        }
+        return acc;
+      },
+      {
+        [RANK.FIRST.KEY]: 0,
+        [RANK.SECOND.KEY]: 0,
+        [RANK.THIRD.KEY]: 0,
+        [RANK.FOURTH.KEY]: 0,
+        [RANK.FIFTH.KEY]: 0,
+        [RANK.OUT.KEY]: 0,
+      }
+    );
+
+    return new LottoResult(result);
+  }
 }
