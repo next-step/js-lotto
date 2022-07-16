@@ -6,15 +6,13 @@ import {
   showContent,
 } from './ui/purchased-content.js';
 
-export const $showResultButton = document.querySelector(
-  '.open-result-modal-button'
-);
 export const $modalClose = document.querySelector('.modal-close');
 export const $modal = document.querySelector('.modal');
 export const $lottoNumbersToggleButton = document.querySelector(
   '.lotto-numbers-toggle-button'
 );
 export const $formLottoBuying = document.querySelector('#form-lotto-buying');
+export const $formWinningNumbers = document.querySelector('#result');
 
 const lottoMachine = new LottoMachine();
 
@@ -41,7 +39,21 @@ const onSubmitLottoBuying = (event) => {
   }
 };
 
-$showResultButton.addEventListener('click', onModalShow);
+const onSubmitLottoResult = (event) => {
+  event.preventDefault();
+
+  const INPUT_WINNING_NUMBER = 'winning-number';
+  const INPUT_BONUS_NUMBER = 'bonus-number';
+  const winningNumbers = new FormData(event.target).getAll(
+    INPUT_WINNING_NUMBER
+  );
+  const bonusNumber = new FormData(event.target).get(INPUT_BONUS_NUMBER);
+  console.log(winningNumbers, bonusNumber);
+
+  onModalShow();
+};
+
 $modalClose.addEventListener('click', onModalClose);
 $lottoNumbersToggleButton.addEventListener('change', onLottoNumberToggle);
 $formLottoBuying.addEventListener('submit', onSubmitLottoBuying);
+$formWinningNumbers.addEventListener('submit', onSubmitLottoResult);
