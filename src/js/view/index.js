@@ -22,11 +22,11 @@ export const addLottoCountLabel = (lottoCount) => {
   $lottoCountLabel.innerText = `총 ${lottoCount}개를 구매하였습니다.`;
 }
 
-export const addLottoTicket = (lottoCount) => {
+export const addLottoTickets = (lottos) => {
   let lottoTicketTemplate = ``;
-  
-  Array.from({length: lottoCount}).forEach(() => {
-    lottoTicketTemplate += '<span class="mx-1 text-4xl">🎟️ </span>'
+
+  lottos.forEach((_, index) => {
+    lottoTicketTemplate += `<div class="d-flex items-center"><div class="mx-1 text-4xl">🎟️ </div><div class="lotto-numbers d-none">${lottos[index].join(', ')}</div></div>`
   })
 
   $lottoTickets.innerHTML = lottoTicketTemplate;
