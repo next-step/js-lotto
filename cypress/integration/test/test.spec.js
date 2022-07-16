@@ -8,12 +8,12 @@ describe('행운의 로또 테스트', () => {
   describe('구입할 금액을 입력하고 확인 버튼을 누르면 구매 내역을 볼 수 있다.', () => {
     context('확인 버튼을', () => {
       it('누르기 전엔 구매 내역이 뜨지 않는다.', () => {
-        cy.get('.lotto-detail').should('not.exist');
+        cy.get('#lotto-list').should('not.exist');
       });
       it('누르고 나면 구매 내역이 뜬다.', () => {
         cy.typeMoney('1000');
         cy.clickBuy();
-        cy.get('.lotto-detail').should('be.visible');
+        cy.get('#lotto-list').should('be.visible');
       });
     });
   });
@@ -23,12 +23,12 @@ describe('행운의 로또 테스트', () => {
       it('1000원 미만이면 구매할 수 없다.', () => {
         cy.typeMoney('500');
         cy.clickBuy();
-        cy.get('.lotto-detail').should('not.exist');
+        cy.get('#lotto-list').should('not.exist');
       });
       it('100000원 초과면 구매할 수 없다.', () => {
         cy.typeMoney('100001');
         cy.clickBuy();
-        cy.get('.lotto-detail').should('not.exist');
+        cy.get('#lotto-list').should('not.exist');
       });
       it('1000원 단위가 아니면 alert 창이 뜬다.', () => {
         cy.typeMoney('1200');
