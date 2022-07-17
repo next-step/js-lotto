@@ -1,0 +1,15 @@
+const LOTTO_INFORMATION = {
+  PRICE_UNIT: 1_000,
+  MAXIMUM_NUMBER: 45,
+  COUNT: 6,
+  MIN_PURCHASE_PRICE: 1_000,
+  MAX_PURCHASE_PRICE: 100_000,
+};
+
+const ALERT_MESSAGES = {
+  MIN_PURCHASE_ERROR: '1,000원부터 입력이 가능합니다.',
+  NOT_CORRECT_UNIT: '로또 구입 금액을 1,000원 단위로 입력해 주세요.',
+  MAX_PURCHASE_ERROR: '100,000 이하로만 입력이 가능합니다.',
+};
+
+export { LOTTO_INFORMATION, ALERT_MESSAGES };
