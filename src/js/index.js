@@ -1,4 +1,6 @@
-import { App } from "./App.js";
+import { LottoController } from "./Controllers/LottoController.js";
+import { LottoModel } from "./Models/LottoModel.js";
+import { LottoView } from "./Views/LottoView.js";
 
 const $showResultButton = document.querySelector(".open-result-modal-button");
 const $modalClose = document.querySelector(".modal-close");
@@ -15,4 +17,4 @@ const onModalClose = () => {
 $showResultButton.addEventListener("click", onModalShow);
 $modalClose.addEventListener("click", onModalClose);
 
-const app = new App(document.querySelector("#app"));
+new LottoController(new LottoView(document.querySelector("#app")), new LottoModel());

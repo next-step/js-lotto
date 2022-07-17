@@ -1,4 +1,4 @@
-import { SELECTORS, PRICE_PER_LOTTO, LOTTO_NUMBER_REGEXP } from "../../src/js/constants";
+import { SELECTORS, PRICE_PER_LOTTO } from "../../src/js/constants";
 
 beforeEach(() => {
   cy.visit("http://localhost:5500");

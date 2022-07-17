@@ -1,4 +1,5 @@
-export const PRICE_PER_LOTTO = 1000;
+export const PRICE_PER_LOTTO = 1_000;
+export const MAX_CHARGE_FOR_BUY_LOTTOS = 100_000;
 export const LOTTO_ICON = "🎟️";
 
 export const SELECTORS = {

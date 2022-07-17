@@ -3,3 +3,11 @@ export const randomInt = (min, max) => {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
+export const isNumber = (value) => {
+  return typeof value === "number" && !Number.isNaN(value);
+};
+
+export const isDivisible = (numerator, denominator) => {
+  return numerator % denominator === 0;
+};
