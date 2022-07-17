@@ -12,14 +12,12 @@ export default class component {
 	}
 	setup() {};
 	mounted() {};
-	template() {return '';}
-
+	// template() {return '';}
 	render() {
 		// this.$target.innerHTML = this.template();
 		this.mounted();
 	}
 	setState(newState) {
-		debugger
 		this.$state = {...this.$state, ...newState}
 		this.render();
 	}
