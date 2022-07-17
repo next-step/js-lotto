@@ -22,3 +22,17 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.lotto-number,
+.lotto-number--visible {
+  font-size: 1.25rem;
+  margin-left: 12px;
+}
+
+.lotto-number {
+  display: none;
+}
+
+.lotto-number--visible {
+  display: inline;
+}
