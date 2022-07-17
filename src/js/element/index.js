@@ -36,6 +36,7 @@ export const resultRowElement = (viewObj) => {
 
   const td3 = document.createElement('td');
   td3.setAttribute('class', 'p-3');
+  td3.setAttribute('data-cy', 'winning-ticket-count');
   td3.append(winningTicketCount);
 
   tr.append(td1, td2, td3);

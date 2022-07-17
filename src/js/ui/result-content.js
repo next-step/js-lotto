@@ -1,4 +1,4 @@
-import { resultRowElement } from '../element';
+import { resultRowElement } from '../element/index.js';
 import { RANK } from '../constant/index.js';
 
 const resultTBodyData = (rankObj) =>
