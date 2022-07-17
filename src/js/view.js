@@ -14,6 +14,7 @@ class View {
     this.$lottiesPanel = $.qs(".lottie-panel");
     this.$lottieControlPanel = $.qs(".lottie-control-panel");
     this.$lottieListContainer = $.qs(".lottie-list");
+    this.$numberCheckForm = $.qs(".number-check-form");
     this.$winningNumberInputs = $.qs(".winning-number-inputs");
     this.$bonnusWinningNumberInput = $.qs(".bonus-number");
 
@@ -21,6 +22,7 @@ class View {
     this.$modal = $.qs(".modal");
     this.$modalCloseBtn = $.qs(".modal-close");
     this.$showResultBtn = $.qs(".open-result-modal-button");
+    this.$lottoResetBtn = $.qs(".lotto-reset-btn");
 
     this.initObservable();
     this.initEvent();
@@ -30,6 +32,7 @@ class View {
     observable.subscribe(notifyTypes.BUY_LOTTIES, this.render.bind(this));
     observable.subscribe(notifyTypes.TOGGLE_SHOW_LOTTIES_NUMBERS, this.renderLottieList.bind(this));
     observable.subscribe(notifyTypes.SHOW_LOTTIE_WINNING_INFO, this.renderResultModal.bind(this));
+    observable.subscribe(notifyTypes.RESET_LOTTIE_GAME, this.resetRender.bind(this));
   }
 
   initEvent() {
@@ -44,6 +47,7 @@ class View {
     this.$bonnusWinningNumberInput.addEventListener("input", ({ target }) => {
       this.onWinningLottoDigitsInput(target);
     });
+    this.$lottoResetBtn.addEventListener("click", this.onLottoGameReset);
   }
 
   onLottieBuy = () => {
@@ -67,6 +71,11 @@ class View {
   onWinningLottoDigitsInput({ dataset, value }) {
     this.lottoController.handleInputWinningLottoDigits(dataset.order, value);
   }
+
+  onLottoGameReset = () => {
+    this.onModalClose();
+    this.lottoController.handleLottoReset();
+  };
 
   renderLottieControlPanel(curLotties) {
     this.$lottieControlPanel.setHTML(" ");
@@ -118,8 +127,8 @@ class View {
   }
 
   renderNumberCheckForm() {
-    const $numberCheckForm = $.qs(".number-check-form");
-    $numberCheckForm.setStyle("display", "block");
+    this.$numberCheckForm = $.qs(".number-check-form");
+    this.$numberCheckForm.setStyle("display", "block");
   }
 
   renderResultModal(profitRatio, winningInfo) {
@@ -173,6 +182,13 @@ class View {
     this.renderLottieControlPanel(curLotties);
     this.renderLottieList(curLotties);
     this.renderNumberCheckForm();
+  }
+
+  resetRender() {
+    this.isShowLottoNumbers = false;
+    this.$lottieControlPanel.innerHTML = "";
+    this.$lottieListContainer.innerHTML = "";
+    this.$numberCheckForm.style.display = "none";
   }
 }
 

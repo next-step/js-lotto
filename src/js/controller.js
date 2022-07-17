@@ -36,6 +36,11 @@ class Controller {
     this.lottoModel.resetWinningInfo();
   }
 
+  handleLottoReset() {
+    this.lottoModel.initLottiesModel();
+    observable.notify(notifyTypes.RESET_LOTTIE_GAME);
+  }
+
   checkWinningType(curLottoNumber) {
     const mybasicNumbers = curLottoNumber.slice(0, -1);
     const mybonusNumber = curLottoNumber.at(-1);
