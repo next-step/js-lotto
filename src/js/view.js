@@ -8,7 +8,6 @@ class View {
   constructor() {
     this.lottoController = controller;
     this.isShowLottoNumbers = false;
-    this.isShowModal = false;
 
     this.$priceInput = $.qs(".price-input");
     this.$buyBtn = $.qs(".buy-btn");
@@ -51,13 +50,17 @@ class View {
   };
 
   onModalOpen = () => {
+    if (!this.lottoController.canShowModal()) {
+      alert("당첨 번호이 형식이 옳바르지 않습니다");
+      return;
+    }
     this.$modal.addClass("open");
-    this.lottoController.handleModalClose();
+    this.lottoController.handleModalOpen();
   };
 
   onModalClose = () => {
     this.$modal.removeClass("open");
-    this.lottoController.handleModalOpen();
+    this.lottoController.handleModalClose();
   };
 
   onWinningLottoDigitsInput({ dataset, value }) {

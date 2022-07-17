@@ -22,6 +22,10 @@ class Controller {
     this.lottoModel.setWinningLottoDigits(index, digit);
   }
 
+  canShowModal() {
+    return !this.lottoModel.winningLottoDigits.some((number) => number <= 0 || number > 45);
+  }
+
   handleModalOpen() {
     console.log("open");
   }
