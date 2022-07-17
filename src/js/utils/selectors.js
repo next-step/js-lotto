@@ -13,3 +13,7 @@ export const CHECK_AWARD_BUTTON = `${WINNING_NUMBER_FORM} button[type=submit]`;
 
 export const AWARD_MODAL = "#award-modal";
 export const AWARD_MODAL_CLOSE_BUTTON = `${AWARD_MODAL}-close-button`;
+
+export const RESULT_TABLE_BODY = "#result-table-body";
+
+export const REVENUE = "#revenue";

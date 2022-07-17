@@ -9,7 +9,9 @@ export class LottoController extends Controller {
 
   purchase(e) {
     try {
-      this.model.purchase(e);
+      e.preventDefault();
+      const charge = Number(new FormData(e.target).get("charge"));
+      this.model.purchase(charge);
       this.render();
     } catch (e) {
       if (e instanceof TypeError) throw e;

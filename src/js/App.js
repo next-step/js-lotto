@@ -21,10 +21,13 @@ export class App {
         isVisualizeLottoNumbers: false,
       })
     );
+
     this.controllers.award = new AwardController(
       new AwardView(this.$app),
       new AwardModel({
         isShowAward: false,
+        reward: {},
+        revenue: 0,
       }),
       {
         reset: this.resetApp.bind(this),

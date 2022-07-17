@@ -7,7 +7,7 @@ import { Model } from "./Model.js";
 export class LottoModel extends Model {
   MAX_NUMBER = 45;
   MIN_NUMBER = 1;
-  NUMBER_OF_SELECTABLE_LOTTOS = 5;
+  NUMBER_OF_SELECTABLE_LOTTOS = 6;
 
   #generateLotto() {
     const lotto = new Set();
@@ -25,7 +25,7 @@ export class LottoModel extends Model {
 
   #validateCharge(charge) {
     if (!isNumber(charge)) {
-      throw new TypeError("Type of charge must be nnumber");
+      throw new TypeError("Type of charge must be number");
     }
 
     if (!isDivisible(charge, PRICE_PER_LOTTO)) {
@@ -35,9 +35,7 @@ export class LottoModel extends Model {
     return true;
   }
 
-  purchase(e) {
-    e.preventDefault();
-    const charge = Number(new FormData(e.target).get("charge"));
+  purchase(charge) {
     if (this.#validateCharge(charge)) {
       const numOfLottos = charge / PRICE_PER_LOTTO;
       this.state = {
