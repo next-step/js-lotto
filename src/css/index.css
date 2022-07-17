@@ -13,6 +13,13 @@ body {
   margin: 0 auto;
 }
 
+ul {
+  list-style:none;
+  padding: 0;
+}
+li {
+  display: flex;
+}
 .winning-number {
   width: 30px;
   height: 36px;
@@ -21,4 +28,17 @@ body {
 .bonus-number {
   width: 30px;
   height: 36px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.auto-buy-result-ul > li > span.lotto-result{
+  display: none;
+}
+.auto-buy-result-ul.flex-col > li > span.lotto-result{
+  display: inline;
+  font-size: 1.25rem;
+  margin-left: 12px;
 }
