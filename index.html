@@ -57,6 +57,7 @@
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
+                    name="lotto1"
                     min="1"
                     max="45"
                     required
@@ -64,6 +65,7 @@
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
+                    name="lotto2"
                     min="1"
                     max="45"
                     required
@@ -71,6 +73,7 @@
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
+                    name="lotto3"
                     min="1"
                     max="45"
                     required
@@ -78,6 +81,7 @@
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
+                    name="lotto4"
                     min="1"
                     max="45"
                     required
@@ -85,6 +89,7 @@
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
+                    name="lotto5"
                     min="1"
                     max="45"
                     required
@@ -92,6 +97,7 @@
                   <input
                     type="number"
                     class="winning-number mx-1 text-center"
+                    name="lotto6"
                     min="1"
                     max="45"
                     required
@@ -111,10 +117,7 @@
                 </div>
               </div>
             </div>
-            <button
-              type="button"
-              class="open-result-modal-button mt-5 btn btn-cyan w-100"
-            >
+            <button class="open-result-modal-button mt-5 btn btn-cyan w-100">
               결과 확인하기
             </button>
           </form>
@@ -143,34 +146,53 @@
                 <tr class="text-center">
                   <td class="p-3">3개</td>
                   <td class="p-3">5,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">
+                    <span class="rank" data-rank="5"></span>
+                    개
+                  </td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">4개</td>
                   <td class="p-3">50,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">
+                    <span class="rank" data-rank="4"></span>
+                    개
+                  </td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">5개</td>
                   <td class="p-3">1,500,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">
+                    <span class="rank" data-rank="3"></span>
+                    개
+                  </td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">5개 + 보너스볼</td>
                   <td class="p-3">30,000,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">
+                    <span class="rank" data-rank="2"></span>
+                    개
+                  </td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">6개</td>
                   <td class="p-3">2,000,000,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">
+                    <span class="rank" data-rank="1"></span>
+                    개
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+          <p class="text-center font-bold">
+            당신의 총 수익률은 <span id="earnings-rate"></span>%입니다.
+          </p>
           <div class="d-flex justify-center mt-5">
-            <button type="button" class="btn btn-cyan">다시 시작하기</button>
+            <button id="reset-btn" type="reset" class="btn btn-cyan">
+              다시 시작하기
+            </button>
           </div>
         </div>
       </div>

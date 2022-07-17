@@ -1,11 +1,20 @@
 import { LOTTO_UNIT_PRICE } from './constants/index.js';
-import createLottos from './createLottos.js';
+import { Lotto } from './models/index.js';
 import { $, validate } from './utils/index.js';
-import { LottoList } from './views/index.js';
+import {
+  LottoView,
+  LottoWinningNumberFormView,
+  LottoRankModalView,
+} from './views/index.js';
 
-const lottoList = new LottoList($('#lotto-list'));
+const lotto = new Lotto();
+const lottoView = new LottoView($('#orders'));
+const lottoWinningNumberFormView = new LottoWinningNumberFormView(
+  $('#winning-number-form')
+);
+const lottoRankModalView = new LottoRankModalView($('.modal'));
 
-document.getElementById('checkout').addEventListener('submit', (e) => {
+$('#checkout').addEventListener('submit', (e) => {
   e.preventDefault();
 
   try {
@@ -13,22 +22,40 @@ document.getElementById('checkout').addEventListener('submit', (e) => {
 
     validate.isMultipleOfLottoPrice(value);
 
-    const lottos = createLottos(value / LOTTO_UNIT_PRICE);
-
-    lottoList.render(lottos);
-    $(
-      '#orders-message'
-    ).textContent = `총 ${lottos.length}개를 구매하였습니다.`;
-    $('#orders').style.display = 'block';
+    lotto.createLottos(value / LOTTO_UNIT_PRICE);
+    lottoView.renderList(lotto);
+    lottoView.renderMessage(lotto);
+    lottoView.show();
+    lottoWinningNumberFormView.show();
   } catch (error) {
     alert(error.message);
   }
 });
 
-$('.lotto-numbers-toggle-button').addEventListener('click', (e) => {
-  if (e.target.checked) {
-    lottoList.showLottoDetail();
-  } else {
-    lottoList.hideLottoDetail();
+lottoWinningNumberFormView.addSubmitEventListener((e) => {
+  e.preventDefault();
+
+  try {
+    const winningNumbers = Array.from(e.target.elements)
+      .filter((element) => element.classList.contains('winning-number'))
+      .map((element) => element.value);
+    const bonusNumber = Array.from(e.target.elements)
+      .filter((element) => element.classList.contains('bonus-number'))
+      .map((element) => element.value);
+
+    validate.isDuplicateNumbers(winningNumbers.concat(bonusNumber));
+
+    lotto.setWinningLotto(winningNumbers, bonusNumber);
+    lottoRankModalView.renderResult(lotto);
+    lottoRankModalView.open();
+  } catch (error) {
+    alert(error.message);
   }
+});
+
+lottoRankModalView.addResetEventListener(() => {
+  lottoView.hide().resetSwitch();
+  lottoWinningNumberFormView.hide().resetForm();
+  lotto.init();
+  $('#checkout').reset();
 });
