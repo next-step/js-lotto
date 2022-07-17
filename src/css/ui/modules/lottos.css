@@ -1,0 +1,22 @@
+#lotto-list {
+  list-style-type: none;
+  margin-top: 1rem;
+  padding: 0;
+  flex-direction: row;
+}
+
+.lotto-item {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.lotto-icon {
+  font-size: xx-large;
+  margin-right: 1rem;
+}
+
+.lotto-numbers {
+  font-size: larger;
+  width: 100%;
+}
