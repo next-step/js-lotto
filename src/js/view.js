@@ -8,6 +8,7 @@ class View {
   constructor() {
     this.lottoController = controller;
     this.isShowLottoNumbers = false;
+    this.isShowModal = false;
 
     this.$priceInput = $.qs(".price-input");
     this.$buyBtn = $.qs(".buy-btn");
@@ -15,21 +16,32 @@ class View {
     this.$lottieControlPanel = $.qs(".lottie-control-panel");
     this.$lottieListContainer = $.qs(".lottie-list");
 
+    // modal component
+    this.$modal = $.qs(".modal");
+    this.$modalCloseBtn = $.qs(".modal-close");
+    this.$showResultBtn = $.qs(".open-result-modal-button");
+
     this.initObservable();
     this.initEvent();
   }
 
   initObservable() {
     observable.subscribe(notifyTypes.BUY_LOTTIES, this.render.bind(this));
-    observable.subscribe(
-      notifyTypes.TOGGLE_SHOW_LOTTIES_NUMBERS,
-      this.renderLottieList.bind(this)
-    );
+    observable.subscribe(notifyTypes.TOGGLE_SHOW_LOTTIES_NUMBERS, this.renderLottieList.bind(this));
   }
 
   initEvent() {
     this.$buyBtn.addEventListener("click", () => {
       this.lottoController.handleBuyLottiesBtnClick(this.$priceInput.value);
+    });
+    this.$showResultBtn.addEventListener("click", () => {
+      console.log(this.$modal);
+      this.$modal.addClass("open");
+      this.lottoController.handleModalClose();
+    });
+    this.$modalCloseBtn.addEventListener("click", () => {
+      this.$modal.removeClass("open");
+      this.lottoController.handleModalOpen();
     });
   }
 
@@ -40,12 +52,7 @@ class View {
       .addClass("flex-auto", "my-0", "total-lottie")
       .setText(`총 ${curLotties.length}개를 구매하였습니다.`);
 
-    const $lottieNumberToggleWrapper = $.create("div").addClass(
-      "flex-auto",
-      "d-flex",
-      "justify-end",
-      "pr-1"
-    );
+    const $lottieNumberToggleWrapper = $.create("div").addClass("flex-auto", "d-flex", "justify-end", "pr-1");
 
     const $lottieNumberToggleInput = $.create("input")
       .setAttr("type", "checkbox")
@@ -54,11 +61,7 @@ class View {
     const $lottieNumberToggleBtn = $.create("label")
       .addClass("switch")
       .appendElement($lottieNumberToggleInput)
-      .appendElement(
-        $.create("span")
-          .addClass("text-base", "font-normal")
-          .setText("번호보기")
-      );
+      .appendElement($.create("span").addClass("text-base", "font-normal").setText("번호보기"));
 
     $lottieNumberToggleInput.addEventListener("change", () => {
       this.isShowLottoNumbers = !this.isShowLottoNumbers;
@@ -68,9 +71,7 @@ class View {
     $lottieNumberToggleWrapper.appendElement($lottieNumberToggleBtn);
 
     this.$lottiesPanel.appendElement(
-      this.$lottieControlPanel
-        .appendElement($totalCountLabel)
-        .appendElement($lottieNumberToggleWrapper)
+      this.$lottieControlPanel.appendElement($totalCountLabel).appendElement($lottieNumberToggleWrapper)
     );
   }
 
@@ -87,9 +88,7 @@ class View {
       ? this.$lottieListContainer.addClass("flex-col")
       : this.$lottieListContainer.removeClass("flex-col");
 
-    const lottieListHTML = curLotties
-      .map((number) => lottoTemplate(this.isShowLottoNumbers ? number : ""))
-      .join("");
+    const lottieListHTML = curLotties.map((number) => lottoTemplate(this.isShowLottoNumbers ? number : "")).join("");
     this.$lottieListContainer.setHTML(lottieListHTML);
 
     this.$lottiesPanel.appendElement(this.$lottieListContainer);
