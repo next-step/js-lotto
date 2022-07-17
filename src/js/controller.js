@@ -18,6 +18,10 @@ class Controller {
     observable.notify(notifyTypes.TOGGLE_SHOW_LOTTIES_NUMBERS, lottieNumbers);
   }
 
+  handleInputWinningLottoDigits(index, digit) {
+    this.lottoModel.setWinningLottoDigits(index, digit);
+  }
+
   handleModalOpen() {
     console.log("open");
   }

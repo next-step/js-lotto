@@ -1,16 +1,12 @@
-import {
-  PRICE_OF_LOTTO,
-  NUM_OF_LOTTO_NUMBERS,
-  MIN_LOTTO_NUM,
-  MAX_LOTTO_NUM,
-} from "../js/util/constants.js";
+import { PRICE_OF_LOTTO, NUM_OF_LOTTO_NUMBERS, MIN_LOTTO_NUM, MAX_LOTTO_NUM } from "../js/util/constants.js";
 
 class Model {
   constructor() {
-    this.curLotties = [];
+    this.initLotties();
   }
 
   initLotties() {
+    this.winningLottoDigits = Array.from({ length: NUM_OF_LOTTO_NUMBERS + 1 }, () => 0);
     this.curLotties = [];
   }
 
@@ -23,13 +19,16 @@ class Model {
     }
   }
 
+  setWinningLottoDigits(order, digit) {
+    const idx = Number(order);
+    this.winningLottoDigits[idx] = digit === "" ? 0 : Number(digit);
+  }
+
   _autoGenerateNumber() {
     const randomLottoNumber = new Set();
 
     while (randomLottoNumber.size <= NUM_OF_LOTTO_NUMBERS) {
-      const curRandomNum =
-        Math.floor(Math.random() * (MAX_LOTTO_NUM - MIN_LOTTO_NUM + 1)) +
-        MIN_LOTTO_NUM;
+      const curRandomNum = Math.floor(Math.random() * (MAX_LOTTO_NUM - MIN_LOTTO_NUM + 1)) + MIN_LOTTO_NUM;
 
       if (randomLottoNumber.has(curRandomNum)) {
         continue;

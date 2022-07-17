@@ -15,6 +15,8 @@ class View {
     this.$lottiesPanel = $.qs(".lottie-panel");
     this.$lottieControlPanel = $.qs(".lottie-control-panel");
     this.$lottieListContainer = $.qs(".lottie-list");
+    this.$winningNumberInputs = $.qs(".winning-number-inputs");
+    this.$bonnusWinningNumberInput = $.qs(".bonus-number");
 
     // modal component
     this.$modal = $.qs(".modal");
@@ -31,18 +33,35 @@ class View {
   }
 
   initEvent() {
-    this.$buyBtn.addEventListener("click", () => {
-      this.lottoController.handleBuyLottiesBtnClick(this.$priceInput.value);
+    this.$buyBtn.addEventListener("click", this.onLottieBuy);
+    this.$showResultBtn.addEventListener("click", this.onModalOpen);
+    this.$modalCloseBtn.addEventListener("click", this.onModalClose);
+    this.$winningNumberInputs.addEventListener("input", ({ target }) => {
+      if (target.tagName === "INPUT") {
+        this.onWinningLottoDigitsInput(target);
+      }
     });
-    this.$showResultBtn.addEventListener("click", () => {
-      console.log(this.$modal);
-      this.$modal.addClass("open");
-      this.lottoController.handleModalClose();
+    this.$bonnusWinningNumberInput.addEventListener("input", ({ target }) => {
+      this.onWinningLottoDigitsInput(target);
     });
-    this.$modalCloseBtn.addEventListener("click", () => {
-      this.$modal.removeClass("open");
-      this.lottoController.handleModalOpen();
-    });
+  }
+
+  onLottieBuy = () => {
+    this.lottoController.handleBuyLottiesBtnClick(this.$priceInput.value);
+  };
+
+  onModalOpen = () => {
+    this.$modal.addClass("open");
+    this.lottoController.handleModalClose();
+  };
+
+  onModalClose = () => {
+    this.$modal.removeClass("open");
+    this.lottoController.handleModalOpen();
+  };
+
+  onWinningLottoDigitsInput({ dataset, value }) {
+    this.lottoController.handleInputWinningLottoDigits(dataset.order, value);
   }
 
   renderLottieControlPanel(curLotties) {
