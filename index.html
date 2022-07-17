@@ -30,7 +30,7 @@
             </div>
             <ul id="lottos" class="d-flex flex-wrap"></ul>
           </section>
-          <form class="mt-9">
+          <form id="winning-number-form" class="mt-9">
             <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
             <div class="d-flex">
               <div>
@@ -51,19 +51,18 @@
                 </div>
               </div>
             </div>
-            <button type="button" class="open-result-modal-button mt-5 btn btn-cyan w-100">결과 확인하기</button>
+            <button type="submit" class="open-result-modal-button mt-5 btn btn-cyan w-100">결과 확인하기</button>
           </form>
         </div>
       </div>
 
-      <div class="modal">
+      <div id="award-modal" class="modal">
         <div class="modal-inner p-10">
-          <div class="modal-close">
+          <button id="award-modal-close-button" class="modal-close">
             <svg viewbox="0 0 40 40">
               <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
             </svg>
-          </div>
-
+          </button>
           <h2 class="text-center">🏆 당첨 통계 🏆</h2>
           <div class="d-flex justify-center">
             <table class="result-table border-collapse border border-black">

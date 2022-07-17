@@ -1,14 +1,24 @@
 export class Model {
-  state;
+  #state;
+  #initialState;
 
-  setState(next) {
-    this.state = {
-      ...this.state,
+  constructor(initialState) {
+    this.#initialState = initialState;
+    this.#state = { ...initialState };
+  }
+
+  set state(next) {
+    this.#state = {
+      ...this.#state,
       ...next,
     };
   }
 
-  getState() {
-    return this.state;
+  get state() {
+    return this.#state;
+  }
+
+  reset() {
+    this.state = this.#initialState;
   }
 }

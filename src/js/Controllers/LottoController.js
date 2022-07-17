@@ -4,7 +4,7 @@ export class LottoController extends Controller {
   constructor(view, model) {
     super(view, model);
     this.addEventHandlers();
-    this.view.render(this.model.state);
+    this.render();
   }
 
   purchase(e) {

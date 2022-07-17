@@ -1,5 +1,6 @@
-import { isNumber, isDivisible, randomInt } from "../utils.js";
-import { PRICE_PER_LOTTO } from "../constants.js";
+import { isNumber, isDivisible } from "../utils/validator.js";
+import { randomInt } from "../utils/randomInt.js";
+import { PRICE_PER_LOTTO } from "../utils/constants.js";
 
 import { Model } from "./Model.js";
 
@@ -7,11 +8,6 @@ export class LottoModel extends Model {
   MAX_NUMBER = 45;
   MIN_NUMBER = 1;
   NUMBER_OF_SELECTABLE_LOTTOS = 5;
-  state = {
-    numOfLottos: 0,
-    lottos: [],
-    isVisualizeLottoNumbers: false,
-  };
 
   #generateLotto() {
     const lotto = new Set();
@@ -44,16 +40,16 @@ export class LottoModel extends Model {
     const charge = Number(new FormData(e.target).get("charge"));
     if (this.#validateCharge(charge)) {
       const numOfLottos = charge / PRICE_PER_LOTTO;
-      this.setState({
+      this.state = {
         numOfLottos,
         lottos: this.#generateLottos(numOfLottos),
-      });
+      };
     }
   }
 
   toggleLottoNumbers() {
-    this.setState({
+    this.state = {
       isVisualizeLottoNumbers: !this.state.isVisualizeLottoNumbers,
-    });
+    };
   }
 }

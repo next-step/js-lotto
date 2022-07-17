@@ -28,16 +28,24 @@
 }
 
 .modal-close {
-  margin: 20px;
-  width: 20px;
+  display: block;
+  background-color: transparent;
+  border: unset;
   position: absolute;
   right: 10px;
   top: 10px;
   cursor: pointer;
+  padding: 0;
+}
+
+.modal-close:hover {
+  background-color: #f8f8f6;
 }
 
 svg {
   display: block;
+  width: 20px;
+  height: 20px;
 }
 
 .close-x {

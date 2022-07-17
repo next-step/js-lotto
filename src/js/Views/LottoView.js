@@ -1,4 +1,5 @@
-import { SELECTORS, LOTTO_ICON } from "../constants.js";
+import { LOTTO_ICON } from "../utils/constants.js";
+import { CHARGE_FORM, CHARGE_INPUT, NUMBER_OF_LOTTOS, LOTTOS, NUMBER_VISIBILITY_TOGGLE } from "../utils/selectors.js";
 
 import { View } from "./View.js";
 
@@ -11,11 +12,11 @@ export class LottoView extends View {
 
   constructor($target) {
     super($target);
-    this.$charge = $target.querySelector(SELECTORS.CHARGE_FORM);
-    this.$chargeInput = $target.querySelector(SELECTORS.CHARGE_INPUT);
-    this.$numOfLottos = $target.querySelector(SELECTORS.NUMBER_OF_LOTTOS);
-    this.$lottos = $target.querySelector(SELECTORS.LOTTOS);
-    this.$visibilityToggle = $target.querySelector(SELECTORS.NUMBER_VISIBILITY_TOGGLE);
+    this.$charge = $target.querySelector(CHARGE_FORM);
+    this.$chargeInput = $target.querySelector(CHARGE_INPUT);
+    this.$numOfLottos = $target.querySelector(NUMBER_OF_LOTTOS);
+    this.$lottos = $target.querySelector(LOTTOS);
+    this.$visibilityToggle = $target.querySelector(NUMBER_VISIBILITY_TOGGLE);
   }
 
   render(state) {
