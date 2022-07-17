@@ -1,32 +1,47 @@
-class LottoList {
-  /** @type {HTMLElement} */
+class LottoView {
   #root;
 
-  /** @type {Array<HTMLDivElement>} */
+  #list;
+
   #lottoElements;
 
-  /** @type {boolean} */
   #open;
 
   constructor(root) {
     this.#root = root;
+    this.#list = this.#root.querySelector('#lotto-list');
     this.#open = false;
     this.#lottoElements = [];
+
+    this.#root
+      .querySelector('.lotto-numbers-toggle-button')
+      .addEventListener('change', (e) => {
+        if (e.target.checked) {
+          this.#showLottoDetail();
+        } else {
+          this.#hideLottoDetail();
+        }
+      });
+  }
+
+  resetSwitch() {
+    this.#root.querySelector('.lotto-numbers-toggle-button').checked = false;
+    this.#hideLottoDetail();
   }
 
   #toggleLottoDetail(open) {
     this.#open = open;
-    this.#root.classList.toggle('flex-col', open);
+    this.#list.classList.toggle('flex-col', open);
     this.#lottoElements.forEach((lotto) => {
       lotto.querySelector('.lotto-detail').style.display = open ? '' : 'none';
     });
   }
 
-  showLottoDetail() {
+  #showLottoDetail() {
     this.#toggleLottoDetail(true);
   }
 
-  hideLottoDetail() {
+  #hideLottoDetail() {
     this.#toggleLottoDetail(false);
   }
 
@@ -68,10 +83,26 @@ class LottoList {
     return items;
   }
 
-  render(lottos) {
-    this.#convertToDOM(lottos);
-    this.#root.replaceChildren(this.#createLottoItems());
+  renderMessage(lotto) {
+    this.#root.querySelector(
+      '#orders-message'
+    ).textContent = `총 ${lotto.length}개를 구매하였습니다.`;
+  }
+
+  renderList(lotto) {
+    this.#convertToDOM(lotto.getNumbers());
+    this.#list.replaceChildren(this.#createLottoItems());
+  }
+
+  show() {
+    this.#root.style.display = null;
+    return this;
+  }
+
+  hide() {
+    this.#root.style.display = 'none';
+    return this;
   }
 }
 
-export default LottoList;
+export default LottoView;
