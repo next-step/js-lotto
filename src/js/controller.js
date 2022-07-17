@@ -23,12 +23,13 @@ class Controller {
   }
 
   canShowModal() {
-    console.log(this.lottoModel.winningLottoDigits);
     return !this.lottoModel.winningLottoDigits.some((number) => number <= 0 || number > 45);
   }
 
   handleModalOpen() {
     this.lottoModel.curLotties.forEach((curLottoNumber) => this.checkWinningType(curLottoNumber));
+    const profitRatio = Math.round((this.lottoModel.earnedMoney / this.lottoModel.paidMoney) * 100);
+    observable.notify(notifyTypes.SHOW_LOTTIE_WINNING_INFO, profitRatio, this.lottoModel.winningInfo);
   }
 
   handleModalClose() {
