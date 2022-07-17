@@ -1,7 +1,7 @@
 import model from "./model.js";
 import observable from "../js/util/observable.js";
 
-import { notifyTypes } from "./util/constants.js";
+import { notifyTypes, winningTypes, NUM_OF_LOTTO_NUMBERS } from "./util/constants.js";
 
 class Controller {
   constructor() {
@@ -23,15 +23,57 @@ class Controller {
   }
 
   canShowModal() {
+    console.log(this.lottoModel.winningLottoDigits);
     return !this.lottoModel.winningLottoDigits.some((number) => number <= 0 || number > 45);
   }
 
   handleModalOpen() {
-    console.log("open");
+    this.lottoModel.curLotties.forEach((curLottoNumber) => this.checkWinningType(curLottoNumber));
   }
 
   handleModalClose() {
-    console.log("close");
+    this.lottoModel.resetWinningInfo();
+  }
+
+  checkWinningType(curLottoNumber) {
+    const mybasicNumbers = curLottoNumber.slice(0, -1);
+    const mybonusNumber = curLottoNumber.at(-1);
+    const winningBasicNumbers = this.lottoModel.winningLottoDigits.slice(0, -1);
+    const winningBonusNumber = this.lottoModel.winningLottoDigits.at(-1);
+
+    const flag = Array.from({ length: NUM_OF_LOTTO_NUMBERS }, () => 0);
+
+    const correctNumbers = mybasicNumbers.filter((number, idx) => {
+      if (winningBasicNumbers.includes(number) && flag[idx] === 0) {
+        flag[idx] = 1;
+        return true;
+      }
+    });
+
+    switch (correctNumbers.length) {
+      case 3: {
+        this.lottoModel.addEarnedMoney(winningTypes.THREE);
+        break;
+      }
+      case 4: {
+        this.lottoModel.addEarnedMoney(winningTypes.FOUR);
+        break;
+      }
+      case 5: {
+        if (mybonusNumber === winningBonusNumber) {
+          this.lottoModel.addEarnedMoney(winningTypes.FIVE_WITH_BONUS);
+        } else {
+          this.lottoModel.addEarnedMoney(winningTypes.FIVE);
+        }
+        break;
+      }
+      case 6: {
+        this.lottoModel.addEarnedMoney(winningTypes.ALL);
+        break;
+      }
+      default:
+        break;
+    }
   }
 }
 

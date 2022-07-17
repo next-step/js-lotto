@@ -7,3 +7,19 @@ export const notifyTypes = {
   BUY_LOTTIES: "BUY_LOTTIES",
   TOGGLE_SHOW_LOTTIES_NUMBERS: "TOGGLE_SHOW_LOTTIES_NUMBERS",
 };
+
+export const winningTypes = {
+  ALL: "ALL",
+  FIVE_WITH_BONUS: "FIVE_WITH_BONUS",
+  FIVE: "FIVE",
+  FOUR: "FOUR",
+  THREE: "THREE",
+};
+
+export const winningMoney = {
+  ALL: 2000000000,
+  FIVE_WITH_BONUS: 30000000,
+  FIVE: 1500000,
+  FOUR: 50000,
+  THREE: 5000,
+};
