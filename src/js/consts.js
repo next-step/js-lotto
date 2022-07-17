@@ -1,10 +1,8 @@
 const LOTTO_PER_PRICE = 1000;
 const LOTTO_TRY_COUNT = 6;
-const LOTTO_NUMBER_RANGE = 42;
-const LOTTO_NUMBERS = Array.from(
-  { length: LOTTO_NUMBER_RANGE },
-  (_, i) => i + 1
-);
+const LOTTO_MIN_NUMBER = 1;
+const LOTTO_MAX_NUMBER = 42;
+const LOTTO_NUMBERS = Array.from({ length: LOTTO_MAX_NUMBER }, (_, i) => i + 1);
 
 const BONUS_WEIGHT = 0.5;
 const MATCHED_NUMBERS = {
@@ -21,11 +19,23 @@ const PRIZE_MONEY = {
   [MATCHED_NUMBERS.FIVE_WITH_BONUS]: 30_000_000,
   [MATCHED_NUMBERS.SIX]: 2_000_000_000,
 };
+const MATCHED_NUMBERS_ADDED_STR = {
+  [MATCHED_NUMBERS.FIVE_WITH_BONUS]: ' + 보너스볼',
+};
+const ERROR = {
+  NO_BOUGHT_DATA: '구매 데이터가 없습니다.',
+  DUPLICATED_LOTTO_NUMBER: '중복된 번호는 입력할 수 없습니다.',
+};
+
 export {
   LOTTO_PER_PRICE,
   LOTTO_TRY_COUNT,
+  LOTTO_MIN_NUMBER,
+  LOTTO_MAX_NUMBER,
   LOTTO_NUMBERS,
   MATCHED_NUMBERS,
   BONUS_WEIGHT,
   PRIZE_MONEY,
+  MATCHED_NUMBERS_ADDED_STR,
+  ERROR,
 };

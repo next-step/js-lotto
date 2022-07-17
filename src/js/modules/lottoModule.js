@@ -10,10 +10,15 @@ import {
   LOTTO_TRY_COUNT,
   MATCHED_NUMBERS,
 } from '../consts.js';
+import { LottoData } from './lottoData.js';
 
 const lottoModule = (inputMoney) => {
   const lottoBudget = inputMoney;
+  let lottoData = new LottoData();
 
+  const initializeData = () => {
+    lottoData = new LottoData();
+  };
   const isInvalidInputMoneyUnit = (lottoTicketPrice, inputValue = inputMoney) =>
     inputValue % lottoTicketPrice > 0;
 
@@ -43,7 +48,7 @@ const lottoModule = (inputMoney) => {
       return getRandomLottoNumbers(LOTTO_TRY_COUNT, LOTTO_NUMBERS);
     });
 
-  const addBonusWeight = (result, numbers, bonusNumber, weight) => {
+  const addBonusNumberWeight = (result, numbers, bonusNumber, weight) => {
     if (
       result === MATCHED_NUMBERS.FIVE &&
       bonusNumber &&
@@ -54,21 +59,22 @@ const lottoModule = (inputMoney) => {
     return 0;
   };
 
-  const getWinningResult = (winningNumbers, numbersSet, bonusNumber) =>
-    numbersSet
-      .map((numbers) => {
-        const result = reduceByFunctionCompose(
-          numbers,
-          0
-        )((number) => +winningNumbers.includes(number));
+  const getWinningResult = (winningNumbers, boughtNumbersSet, bonusNumber) =>
+    boughtNumbersSet.map((numbers) => {
+      const result = reduceByFunctionCompose(
+        numbers,
+        0
+      )((number) => +winningNumbers.includes(number));
 
-        return (
-          result + addBonusWeight(result, numbers, bonusNumber, BONUS_WEIGHT)
-        );
-      })
-      .sort(compareNumbers);
+      return (
+        result +
+        addBonusNumberWeight(result, numbers, bonusNumber, BONUS_WEIGHT)
+      );
+    });
 
   return {
+    lottoData,
+    initializeData,
     isInvalidInputMoneyUnit,
     getTicketNumbersOfBuying,
     getRandomLottoNumbers,

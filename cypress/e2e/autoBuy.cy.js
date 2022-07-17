@@ -27,7 +27,7 @@ describe('로또 자동구매', () => {
       cy.get('.money-input').clear();
     });
     it('로또 자동생성으로 정상발급이 가능하다.', () => {
-      cy.get('input.money-input').type('2000');
+      cy.get('input.money-input').type(`${LOTTO_PER_PRICE * 2}`);
       cy.get('button[id=lotto-auto-buying-btn]').click();
       cy.get('li.lotto-ticket-set').should('have.length', 2);
     });
