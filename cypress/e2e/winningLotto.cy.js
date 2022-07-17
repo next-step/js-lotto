@@ -35,7 +35,11 @@ describe('winningLotto', () => {
     });
 
     it('수익률을 확인할 수 있다.', () => {
-      cy.get('#earnings-rate').should('not.be.empty');
+      cy.get('#earnings-rate')
+        .invoke('text')
+        .then((text) => {
+          expect(Number(text)).to.be.a('number');
+        });
     });
   });
 
