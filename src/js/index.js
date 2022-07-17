@@ -76,7 +76,7 @@ const onSubmitLottoResult = (event) => {
 
 const resetLottoNumberToggle = () => {
   if ($lottoNumbersToggleButton.checked) {
-    $lottoNumbersToggleButton.checked = '';
+    $lottoNumbersToggleButton.checked = false;
     offLottoNumberToggle();
   }
 };
