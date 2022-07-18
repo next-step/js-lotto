@@ -1,7 +1,16 @@
-import createLotto from '../lotto/createLotto.js';
 import { reactiveState } from '../reactive/index.js';
-import { COMMIT, DISPATCH } from '../constants/store.js';
 import { PAYMENT_UNIT } from '../constants/common.js';
+import createLotto from '../domain/lotto/createLotto.js';
+
+export const COMMIT = {
+  SET_AMOUNT: 'SET_AMOUNT',
+  SET_LOTTO_LIST: 'SET_LOTTO_LIST',
+  SET_IS_VISIBLE_LOTTOS: 'SET_IS_VISIBLE_LOTTOS',
+};
+
+export const DISPATCH = {
+  MAKE_LOTTO_LIST: 'MAKE_LOTTO_LIST',
+};
 
 const state = reactiveState({
   amount: null,

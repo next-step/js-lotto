@@ -1,5 +1,4 @@
-import store from '../store/index.js';
-import { COMMIT } from '../constants/store.js';
+import store, { COMMIT } from '../store/index.js';
 
 export default function lottoNumbersToggleButton() {
   const $lottoNumbersToggleButton = document.querySelector('.lotto-numbers-toggle-button');
