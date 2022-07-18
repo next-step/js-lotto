@@ -60,8 +60,8 @@ export default class LottoMachine {
 
     const { FIRST, SECOND, THIRD, FOURTH, FIFTH, OUT } = RANK;
     const result = this.#lottoTickets.reduce(
-      (acc, item) => {
-        const rank = item.getRank(winningNumberMap);
+      (acc, lottoTicket) => {
+        const rank = lottoTicket.getRank(winningNumberMap);
         if (rank) {
           acc[rank] += 1;
         }
