@@ -1,10 +1,3 @@
-import { LOTTO_LENGTH, LOTTO_MAX_NUMBER, LOTTO_MIN_NUMBER } from '../../src/js/constants/lotto.js';
-import {
-  validateLottoLength,
-  validateLottoOutOfRangeNumber,
-  validateLottohaveDuplicateNumber,
-} from '../../src/js/lotto/validateLotto.js';
-
 describe('로또 테스트', () => {
   before(() => {
     cy.visit('/', { timeout: 1000 });
@@ -45,24 +38,6 @@ describe('로또 테스트', () => {
 
     cy.get('#lotto-amount').should('have.text', '총 7개를 구매하였습니다.');
     cy.get('.lotto-number').should('have.length', 7);
-    cy.get('.lotto-number').each($lottoNumber => {
-      const lotto = $lottoNumber
-        .text()
-        .split(',')
-        .map(num => Number(num.trim()));
-
-      if (validateLottoLength(lotto)) {
-        throw new Error(`Lotto should have ${LOTTO_LENGTH} numbers`);
-      }
-      if (validateLottoOutOfRangeNumber(lotto)) {
-        throw new Error(
-          `Lottos number should be between ${LOTTO_MIN_NUMBER} and ${LOTTO_MAX_NUMBER}.`
-        );
-      }
-      if (validateLottohaveDuplicateNumber(lotto)) {
-        throw new Error('Lotto should not have duplicate numbers');
-      }
-    });
   });
 
   it('번호보기 라디오 버튼을 On으로 토글한다.', () => {
