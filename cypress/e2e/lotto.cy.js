@@ -3,10 +3,17 @@ import {
 	OVER_MAX_PRICE,
 	UNDER_MIN_PRICE,
 	NOT_TEN_UNIT_PRICE,
-} from '../fixtures/price.js';
+	WINNING_NUMBERS,
+	BONUS_NUMBER,
+	DUPLICATE_WINNING_NUMBERS,
+} from '../fixtures/constants.js';
 import { SELECTOR_CY } from '../fixtures/selector.js';
 import { changeAmountToCount } from '../../src/libs';
-import { NOT_TEN_UNIT_PRICE_MESSAGE } from '../../src/constants/validatorMessage.js';
+import {
+	DUPLICATE_NUMBER_MESSAGE,
+	NOT_EMPTY_WINNING_NUMBERS_MESSAGE,
+	NOT_TEN_UNIT_PRICE_MESSAGE,
+} from '../../src/constants/validatorMessage.js';
 
 describe('로또 테스트를 시작합니다.', () => {
 	beforeEach(() => {
@@ -39,8 +46,12 @@ describe('로또 테스트를 시작합니다.', () => {
 
 		context('로또 결과 확인 과정', () => {
 			beforeEach('', () => {
-				cy.getByCydata(SELECTOR_CY.WINNING_NUMBER).then((elements) => cy.typeMultiInput(elements));
-				cy.getByCydata(SELECTOR_CY.BONUS_NUMBER).then((element) => cy.typeSoleInput(element));
+				cy.getByCydata(SELECTOR_CY.WINNING_NUMBER).then((elements) =>
+					cy.typeMultiInput(elements, WINNING_NUMBERS),
+				);
+				cy.getByCydata(SELECTOR_CY.BONUS_NUMBER).then((element) =>
+					cy.typeSoleInput(element, BONUS_NUMBER),
+				);
 				cy.getByCydata(SELECTOR_CY.OPEN_RESULT_MODAL).click();
 			});
 
@@ -66,23 +77,42 @@ describe('로또 테스트를 시작합니다.', () => {
 	});
 
 	context('실패 시나리오', () => {
-		it('1000원 미만금액을 입력하면, HTML Input Invalid 메세지가 나타나야 합니다.', () => {
-			cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT).type(OVER_MAX_PRICE);
-			cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT_FORM_SUBMIT).click();
-			cy.checkInvalidInput(SELECTOR_CY.AMOUNT_INPUT, '값은 100000 이하여야 합니다.');
+		context('로또 금액 입력 및 로또 구매 과정', () => {
+			it('1000원 미만금액을 입력하면, HTML Input Invalid 메세지가 나타나야 합니다.', () => {
+				cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT).type(OVER_MAX_PRICE);
+				cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT_FORM_SUBMIT).click();
+				cy.checkInvalidInput(SELECTOR_CY.AMOUNT_INPUT, '값은 100000 이하여야 합니다.');
+			});
+
+			it('100000원 초과금액을 입력하면, HTML Input Invalid 메세지가 나타나야 합니다.', () => {
+				cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT).type(UNDER_MIN_PRICE);
+				cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT_FORM_SUBMIT).click();
+				cy.checkInvalidInput(SELECTOR_CY.AMOUNT_INPUT, '값은 1000 이상이어야 합니다.');
+			});
+
+			it('10단위가 아닌 값을 입력하면, Alert 경고 메세지가 떠야합니다.', () => {
+				cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT).type(NOT_TEN_UNIT_PRICE);
+				cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT_FORM_SUBMIT).click();
+				cy.checkAlert(NOT_TEN_UNIT_PRICE_MESSAGE);
+			});
 		});
 
-		it('100000원 초과금액을 입력하면, HTML Input Invalid 메세지가 나타나야 합니다.', () => {
-			cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT).type(UNDER_MIN_PRICE);
-			cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT_FORM_SUBMIT).click();
-			cy.checkInvalidInput(SELECTOR_CY.AMOUNT_INPUT, '값은 1000 이상이어야 합니다.');
-		});
+		context('로또 결과 확인 과정', () => {
+			beforeEach(() => {
+				cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT).type(CORRECT_PURCHASE_PRICE);
+				cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT_FORM_SUBMIT).click();
+			});
 
-		it('10단위가 아닌 값을 입력하면, Alert 경고 메세지가 떠야합니다.', () => {
-			cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT).type(NOT_TEN_UNIT_PRICE);
-			cy.getByCydata(SELECTOR_CY.AMOUNT_INPUT_FORM_SUBMIT).click();
-			cy.on('window:alert', (t) => {
-				expect(t).to.contains(NOT_TEN_UNIT_PRICE_MESSAGE);
+			it('당첨번호를 입력하지 않고, 결과확인하기 버튼을 클릭하면 Alert 경고 메세지가 떠야합니다.', () => {
+				cy.getByCydata(SELECTOR_CY.OPEN_RESULT_MODAL).click();
+				cy.checkAlert(NOT_EMPTY_WINNING_NUMBERS_MESSAGE);
+			});
+
+			it('중복된 당첨번호 숫자를 입력하면, Alert 경고 메세지가 떠야합니다.', () => {
+				cy.getByCydata(SELECTOR_CY.WINNING_NUMBER).then((elements) =>
+					cy.typeMultiInput(elements, DUPLICATE_WINNING_NUMBERS),
+				);
+				cy.checkAlert(DUPLICATE_NUMBER_MESSAGE);
 			});
 		});
 	});
