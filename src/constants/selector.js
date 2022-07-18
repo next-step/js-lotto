@@ -13,14 +13,4 @@ const SELECTOR_CLASS = {
 	MODAL: '.modal',
 };
 
-const SELECTOR_CY = {
-	AMOUNT_INPUT: 'amount-input',
-	AMOUNT_INPUT_FORM_SUBMIT: 'amount-input-form-submit',
-	LOTTO_LIST: 'lotto-list',
-	LOTTO_TICKET: 'lotto-ticket',
-	LOTTO_DETAIL: 'lotto-detail',
-	PURCHASE_COUNT: 'purchase-count',
-	LOTTO_NUMBER_TOGGLE_BUTTON: 'lotto-number-toggle-button',
-};
-
-export { SELECTOR_ID, SELECTOR_CLASS, SELECTOR_CY };
+export { SELECTOR_ID, SELECTOR_CLASS };

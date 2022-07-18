@@ -24,6 +24,7 @@
       {
         "endOfLine": "auto"
       }
-    ]
+    ],
+    "cypress/no-unnecessary-waiting": "warn"
   }
 }
