@@ -1,11 +1,15 @@
-@import './shared/index.css';
-@import './ui/index.css';
+@import "./shared/index.css";
+@import "./ui/index.css";
 
 html,
 body {
   margin: 0;
   height: 100%;
   font-size: 16px;
+}
+
+ul {
+  list-style: none;
 }
 
 #app {
@@ -21,4 +25,8 @@ body {
 .bonus-number {
   width: 30px;
   height: 36px;
+}
+
+.hidden {
+  display: none;
 }

@@ -2,8 +2,12 @@
   "name": "lotto",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run --browser chrome"
+  },
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^6.9.1"
   }
 }
