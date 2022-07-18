@@ -49,7 +49,7 @@ export const addLottoTickets = (lottos) => {
   let lottoTicketTemplate = ``;
 
   lottos.forEach((_, index) => {
-    lottoTicketTemplate += `<div class="d-flex items-center"><div class="mx-1 text-4xl">🎟️ </div><div class="lotto-numbers d-none">${lottos[index].join(', ')}</div></div>`
+    lottoTicketTemplate += `<div class="d-flex items-center"><div class="mx-1 text-4xl lotto-ticket">🎟️ </div><div class="lotto-numbers d-none">${lottos[index].join(', ')}</div></div>`
   })
 
   $lottoTickets.innerHTML = lottoTicketTemplate;
