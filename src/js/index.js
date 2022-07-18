@@ -25,7 +25,6 @@ import {
 } from './statistics.js';
 import { go } from '../libs/fp.js';
 
-
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $toggleLottoDetailSwitch = document.querySelector('.lotto-numbers-toggle-button');
 
@@ -43,7 +42,6 @@ const $resultTable = document.querySelector('#result-table');
 const $profit = document.querySelector('#profit');
 const $restart = document.querySelector('#restart');
 
-
 const store = new Store();
 
 const onModalShow = () => {
@@ -60,7 +58,6 @@ const onModalShow = () => {
 
 	renderLottoResultTable($resultTable, winningsCountTablePerRank);
 	renderNumberToDOM($profit, totalProfit);
-
 };
 
 const onModalClose = () => {
