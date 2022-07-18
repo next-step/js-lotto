@@ -116,7 +116,7 @@ const handleWinningNumbers = (e) => {
 	const index = getWinningNumberIndex(name);
 
 	const validator = generateResultValidator(store.winningNumbers);
-	const { valid, msg } = validator(winningNumber);
+	const { valid, msg } = validator(parseInt(winningNumber, 10));
 
 	if (!valid) {
 		window.alert(msg);
