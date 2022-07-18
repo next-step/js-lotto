@@ -1,12 +1,21 @@
-import { changeDisplayBlockToNone, changeDisplayNoneToBlock } from './dom.js';
-import { generateLotto, changeAmountToCount } from './lotto.js';
-import { isPositiveIntegerAmountValidator, generateResultValidator } from './validator.js';
+import { generateLotto, changeAmountToCount, getWinningNumberIndex } from '../js/lotto.js';
+import {
+	isPurchaseAmountValidator,
+	generateResultValidator,
+	winningNumberValidator,
+} from './validator.js';
+
+import { reduce, go, isNil, includes } from './fp.js';
 
 export {
-	changeDisplayBlockToNone,
-	changeDisplayNoneToBlock,
-	isPositiveIntegerAmountValidator,
+	isPurchaseAmountValidator,
 	generateResultValidator,
+	winningNumberValidator,
 	generateLotto,
 	changeAmountToCount,
+	getWinningNumberIndex,
+	reduce,
+	go,
+	isNil,
+	includes,
 };
