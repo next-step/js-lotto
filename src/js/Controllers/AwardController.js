@@ -17,10 +17,14 @@ export class AwardController extends Controller {
   }
 
   drawLotto(e) {
-    e.preventDefault();
-    const lottos = this.properties.getLottos();
-    this.model.drawLotto(lottos, this.getWinningNumbers(e));
-    this.render();
+    try {
+      e.preventDefault();
+      const lottos = this.properties.getLottos();
+      this.model.drawLotto(lottos, this.getWinningNumbers(e));
+      this.render();
+    } catch (e) {
+      window.alert(e.message);
+    }
   }
 
   resetApp() {
