@@ -7,10 +7,6 @@ export default class LottoResult {
     this.#rankObj = result;
   }
 
-  get rankObj() {
-    return this.#rankObj;
-  }
-
   #getPayment() {
     const ticketCount = Object.values(this.#rankObj).reduce(
       (acc, cur) => acc + cur
