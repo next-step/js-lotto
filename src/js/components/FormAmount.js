@@ -1,6 +1,5 @@
-import store from '../store/index.js';
-import { COMMIT, DISPATCH } from '../constants/store.js';
 import { PAYMENT_UNIT } from '../constants/common.js';
+import store, { COMMIT, DISPATCH } from '../store/index.js';
 
 export default function FormAmount() {
   const $formAmount = document.querySelector('#form-amount');
