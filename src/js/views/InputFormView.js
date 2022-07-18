@@ -3,9 +3,9 @@ import { $ } from '../utils.js';
 
 export default class InputFormView extends View {
   constructor() {
-    super($('#form-purchase-lotto'));
-    this.inputElement = $('#input-purchase-lotto');
-    this.buttonElement = $('#button-purchase-lotto');
+    super($('#purchase-lotto'));
+    this.inputElement = $('#purchase-lotto__input');
+    this.buttonElement = $('#purchase-lotto__button');
     this.bindEvents();
   }
 

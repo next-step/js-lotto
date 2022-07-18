@@ -2,10 +2,10 @@ import View from './View.js';
 import { $ } from '../utils.js';
 
 export default class LottoResultView extends View {
-  constructor(element = $('#div-lotto-result')) {
+  constructor(element = $('#lotto-result')) {
     super(element);
-    this.labelElement = $('#label-lotto-result');
-    this.toggleElement = $('#input-toggle-button');
+    this.labelElement = $('#lotto-result__label');
+    this.toggleElement = $('#lotto-numbers-toggle-button');
     this.bindEvents();
   }
 
@@ -20,12 +20,12 @@ export default class LottoResultView extends View {
   }
 
   show(winningNumbers = []) {
+    const quantity = winningNumbers.length;
+
+    if (!winningNumbers.length) return super.hide();
     if (winningNumbers.length > 0) {
       super.show();
-      const quantity = winningNumbers.length;
-      this.labelElement.textContent = quantity > 0 && `총 ${quantity}개를 구매하였습니다.`;
-    } else {
-      super.hide();
+      this.labelElement.textContent = `총 ${quantity}개를 구매하였습니다.`;
     }
   }
 }

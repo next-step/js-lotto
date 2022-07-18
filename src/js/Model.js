@@ -3,11 +3,11 @@ import { LOTTO_PRICE, LOTTO_NUMBER, LOTTO_LENGTH } from './constant.js';
 export default class LottoModel {
   constructor() {
     this.winningNumbers = [];
-    this.showNumbers = false;
+    this.isShowingNumbers = false;
   }
 
-  #getQuantity(value) {
-    const quantity = Math.floor(value / LOTTO_PRICE);
+  #getQuantity(paidAmount) {
+    const quantity = Math.floor(paidAmount / LOTTO_PRICE);
     return quantity;
   }
 
@@ -20,8 +20,12 @@ export default class LottoModel {
     return Array.from(winningNumbers);
   }
 
-  generateLotto(value) {
-    const quantity = this.#getQuantity(value);
+  generateLotto(paidAmount) {
+    const quantity = this.#getQuantity(paidAmount);
     this.winningNumbers = Array.from({ length: quantity }, () => this.#getWinningNumbers());
+  }
+
+  toggleShowNumber(isShowingNumbers) {
+    this.isShowingNumbers = isShowingNumbers;
   }
 }

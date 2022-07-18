@@ -14,18 +14,18 @@ export default class Controller {
     this.lottoResultView.on('@toggle', ({ detail }) => this.onToggle(detail));
   }
 
-  onPurchase({ value }) {
-    this.model.generateLotto(value);
+  onPurchase({ value: paidAmount }) {
+    this.model.generateLotto(paidAmount);
     this.render();
   }
 
-  onToggle({ value }) {
-    this.model.showNumbers = value;
+  onToggle({ value: isShowNumbers }) {
+    this.model.toggleShowNumber(isShowNumbers);
     this.render();
   }
 
   render() {
     this.lottoResultView.show(this.model.winningNumbers);
-    this.lottoListView.show(this.model.winningNumbers, this.model.showNumbers);
+    this.lottoListView.show(this.model.winningNumbers, this.model.isShowingNumbers);
   }
 }
