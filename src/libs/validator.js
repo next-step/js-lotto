@@ -11,17 +11,17 @@ import {
 	MAX_WINNING_NUMBERS_LENGTH,
 } from '../constants/index.js';
 
-import { isNil } from './fp.js';
+import { isTruthy } from './fp.js';
 
-const isPurchaseAmountValidator = (number) => {
-	if (!number) {
+const isPurchaseAmountValidator = (amount) => {
+	if (!amount) {
 		return {
 			valid: false,
 			msg: INPUT_AMOUNT_MESSAGE,
 		};
 	}
 
-	if (number % PRICE_PER_LOTTO !== 0) {
+	if (amount % PRICE_PER_LOTTO !== 0) {
 		return {
 			valid: false,
 			msg: NOT_TEN_UNIT_PRICE_MESSAGE,
@@ -41,7 +41,7 @@ const generateResultValidator =
 	};
 
 const winningNumberValidator = (winningNumbers) => {
-	if (winningNumbers.filter(isNil).length < MAX_WINNING_NUMBERS_LENGTH) {
+	if (winningNumbers.filter(isTruthy).length < MAX_WINNING_NUMBERS_LENGTH) {
 		return {
 			valid: false,
 			msg: NOT_EMPTY_WINNING_NUMBERS_MESSAGE,

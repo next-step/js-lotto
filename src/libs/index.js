@@ -5,7 +5,7 @@ import {
 	winningNumberValidator,
 } from './validator.js';
 
-import { reduce, go, isNil, includes } from './fp.js';
+import { reduce, go, isTruthy, includes } from './fp.js';
 
 export {
 	isPurchaseAmountValidator,
@@ -16,6 +16,6 @@ export {
 	getWinningNumberIndex,
 	reduce,
 	go,
-	isNil,
+	isTruthy,
 	includes,
 };
