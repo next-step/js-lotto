@@ -1,26 +1,12 @@
 import { resultRowElement } from '../element/index.js';
-import { RANK } from '../constant/index.js';
 
-const resultTBodyData = (rankObj) =>
-  Object.values(RANK)
-    .filter((item) => item.KEY !== RANK.OUT.KEY)
-    .map((item) => ({
-      equalCount: item.EQUAL_COUNT_TEXT,
-      prizeMoney: item.PRIZE_MONEY,
-      winningTicketCount: `${rankObj[item.KEY]}개`,
-    }))
-    .reverse();
-
-export const appendResultWinningCount = (rankObj) => {
+export const appendResultWinningCount = (tbodyData) => {
   const $resultTbody = document.querySelector('#result-tbody');
 
-  const tableBodyInnerElements = resultTBodyData(rankObj).reduce(
-    (fragment, rowObj) => {
-      fragment.append(resultRowElement(rowObj));
-      return fragment;
-    },
-    document.createDocumentFragment()
-  );
+  const tableBodyInnerElements = tbodyData.reduce((fragment, rowObj) => {
+    fragment.append(resultRowElement(rowObj));
+    return fragment;
+  }, document.createDocumentFragment());
 
   if ($resultTbody.hasChildNodes()) {
     $resultTbody.replaceChildren(tableBodyInnerElements);

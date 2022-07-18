@@ -64,7 +64,7 @@ const onSubmitLottoResult = (event) => {
 
   try {
     const result = lottoMachine.getResult(winningNumbers, bonusNumber);
-    appendResultWinningCount(result.rankObj);
+    appendResultWinningCount(result.getResultTBodyData());
     appendRateOfReturn(result.calcRateOfReturn());
   } catch (e) {
     alert(e.message);

@@ -50,4 +50,15 @@ export default class LottoResult {
     const prizeMoney = this.#getPrizeMoney();
     return Math.floor((prizeMoney / payment) * 100 - 100);
   }
+
+  getResultTBodyData() {
+    return Object.values(RANK)
+      .filter((item) => item.KEY !== RANK.OUT.KEY)
+      .map((item) => ({
+        equalCount: item.EQUAL_COUNT_TEXT,
+        prizeMoney: item.PRIZE_MONEY,
+        winningTicketCount: `${this.#rankObj[item.KEY]}개`,
+      }))
+      .reverse();
+  }
 }
