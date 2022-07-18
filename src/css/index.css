@@ -22,3 +22,18 @@ body {
   width: 30px;
   height: 36px;
 }
+
+#lotto-list {
+  padding-left:0;
+  list-style: none;
+  font-size:20px;
+}
+
+.lotto-icon {
+  margin-right:5px;
+  font-size: 30px;
+  vertical-align: middle;
+}
+.lotto-detail {
+  display: none;
+}
