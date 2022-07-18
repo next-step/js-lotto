@@ -58,6 +58,7 @@ export default class LottoMachine {
       bonusNumber
     );
 
+    const { FIRST, SECOND, THIRD, FOURTH, FIFTH, OUT } = RANK;
     const result = this.#lottoTickets.reduce(
       (acc, item) => {
         const rank = item.getRank(winningNumberMap);
@@ -67,12 +68,12 @@ export default class LottoMachine {
         return acc;
       },
       {
-        [RANK.FIRST.KEY]: 0,
-        [RANK.SECOND.KEY]: 0,
-        [RANK.THIRD.KEY]: 0,
-        [RANK.FOURTH.KEY]: 0,
-        [RANK.FIFTH.KEY]: 0,
-        [RANK.OUT.KEY]: 0,
+        [FIRST.KEY]: 0,
+        [SECOND.KEY]: 0,
+        [THIRD.KEY]: 0,
+        [FOURTH.KEY]: 0,
+        [FIFTH.KEY]: 0,
+        [OUT.KEY]: 0,
       }
     );
 

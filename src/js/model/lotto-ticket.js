@@ -26,17 +26,19 @@ export default class LottoTicket {
 
   getRank(winningNumberMap) {
     const { winning, bonus } = this.#getNumberOfWinning(winningNumberMap);
+    const { FIRST, SECOND, THIRD, FOURTH, FIFTH, OUT } = RANK;
+
     switch (winning) {
       case 6:
-        return RANK.FIRST.KEY;
+        return FIRST.KEY;
       case 5:
-        return bonus ? RANK.SECOND.KEY : RANK.THIRD.KEY;
+        return bonus ? SECOND.KEY : THIRD.KEY;
       case 4:
-        return RANK.FOURTH.KEY;
+        return FOURTH.KEY;
       case 3:
-        return RANK.FIFTH.KEY;
+        return FIFTH.KEY;
       default:
-        return RANK.OUT.KEY;
+        return OUT.KEY;
     }
   }
 }
