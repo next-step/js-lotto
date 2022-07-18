@@ -24,7 +24,7 @@ import {
 } from './validatorMessage.js';
 
 export {
-	MAX_RANDOM_NUMBER,
+	MAX_RANDOM_N
 	MAX_LOTTO_NUMBER,
 	MIN_LOTTO_NUMBER,
 	MAX_COUNT_PER_LOTTO,
