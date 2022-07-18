@@ -9,8 +9,6 @@ beforeEach(() => {
   cy.visit("http://localhost:5500");
 });
 
-describe("Initial state", () => {});
-
 describe("모달 창 on/off", () => {
   it("결과 확인하기 버튼 클릭하면 모달창 열기", () => {
     cy.get(CHECK_AWARD_BUTTON).click();

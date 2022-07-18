@@ -1,11 +1,5 @@
 import { PRICE_PER_LOTTO } from "../../src/js/utils/constants";
-import {
-  CHARGE_BUTTON,
-  CHARGE_INPUT,
-  LOTTOS,
-  NUMBER_OF_LOTTOS,
-  NUMBER_VISIBILITY_TOGGLE,
-} from "../../src/js/utils/selectors";
+import { CHARGE_INPUT, LOTTOS, NUMBER_OF_LOTTOS, NUMBER_VISIBILITY_TOGGLE } from "../../src/js/utils/selectors";
 
 beforeEach(() => {
   cy.visit("http://localhost:5500");
@@ -23,27 +17,24 @@ describe("Initial state", () => {
 
 describe("금액 입력", () => {
   it("정상적인 금액 입력", () => {
-    cy.get(CHARGE_INPUT).type(5000);
-    cy.get(CHARGE_BUTTON).click();
+    cy.buyLotto(5000);
     cy.get(CHARGE_INPUT).should("have.value", "");
   });
 
   it("1 개당 가격에 나누어 떨어지지 않는 금액 입력", () => {
-    cy.get(CHARGE_INPUT).type(5500);
-    cy.get(CHARGE_BUTTON).click();
+    cy.buyLotto(5500);
     cy.on("window:alert", (text) => expect(text).to.contain(PRICE_PER_LOTTO));
   });
 
   it("일반 문자열을 값으로 입력", () => {
-    cy.get(CHARGE_INPUT).type("hello world");
+    cy.buyLotto("hello world");
     cy.get(CHARGE_INPUT).should("have.value", "");
   });
 });
 
 describe("구매", () => {
   it("1개당 1000원인 로또를 10장 구매", () => {
-    cy.get(CHARGE_INPUT).type(10000);
-    cy.get(CHARGE_BUTTON).click();
+    cy.buyLotto(10000);
     cy.get(NUMBER_OF_LOTTOS).should("contain.text", "10");
     cy.get(LOTTOS).children().should("have.length", 10);
     cy.get(CHARGE_INPUT).should("have.value", "");
@@ -52,8 +43,7 @@ describe("구매", () => {
 
 describe("로또 번호 시각화", () => {
   it("번호 보기가 true이면 구매한 로또 번호 보여주기", () => {
-    cy.get(CHARGE_INPUT).type(10000);
-    cy.get(CHARGE_BUTTON).click();
+    cy.buyLotto(10000);
     cy.get(`${NUMBER_VISIBILITY_TOGGLE} input[type=checkbox]`).click({ force: true });
     cy.get(LOTTOS)
       .children()
@@ -63,8 +53,7 @@ describe("로또 번호 시각화", () => {
   });
 
   it("번호 보기를 true에서 false로 바꾸면 번호를 안보여줌", () => {
-    cy.get(CHARGE_INPUT).type(10000);
-    cy.get(CHARGE_BUTTON).click();
+    cy.buyLotto(10000);
     cy.get(`${NUMBER_VISIBILITY_TOGGLE} input[type=checkbox]`).click({ force: true });
     cy.get(`${NUMBER_VISIBILITY_TOGGLE} input[type=checkbox]`).click({ force: true });
     cy.get(LOTTOS)
