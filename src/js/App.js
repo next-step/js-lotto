@@ -30,7 +30,7 @@ export class App {
         revenue: 0,
       }),
       {
-        reset: this.resetApp.bind(this),
+        resetApp: this.resetApp.bind(this),
         getLottos: this.getLottos.bind(this),
       }
     );

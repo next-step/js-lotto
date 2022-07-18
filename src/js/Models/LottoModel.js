@@ -1,6 +1,7 @@
-import { isNumber, isDivisible } from "../utils/validator.js";
 import { randomInt } from "../utils/randomInt.js";
-import { PRICE_PER_LOTTO } from "../utils/constants.js";
+import { stringifyNumber } from "../utils/parser.js";
+import { isNumber, isDivisible } from "../utils/validator.js";
+import { PRICE_PER_LOTTO, MAX_CHARGE_FOR_BUY_LOTTOS } from "../utils/constants.js";
 
 import { Model } from "./Model.js";
 
@@ -28,8 +29,12 @@ export class LottoModel extends Model {
       throw new TypeError("Type of charge must be number");
     }
 
+    if (charge > MAX_CHARGE_FOR_BUY_LOTTOS) {
+      throw new Error(`${stringifyNumber(MAX_CHARGE_FOR_BUY_LOTTOS)}원이상 구매할 수 없습니다.`);
+    }
+
     if (!isDivisible(charge, PRICE_PER_LOTTO)) {
-      throw new Error(`${PRICE_PER_LOTTO}원 단위로 구매해 주세요.`);
+      throw new Error(`${stringifyNumber(PRICE_PER_LOTTO)}원 단위로 구매해 주세요.`);
     }
 
     return true;

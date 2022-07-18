@@ -6,13 +6,20 @@ import {
   AWARD_MODAL_CLOSE_BUTTON,
   RESULT_TABLE_BODY,
   REVENUE,
+  RESET_BUTTON,
 } from "../utils/selectors.js";
 import { BONUS_AWARD, WINNINGS } from "../utils/constants.js";
+import { stringifyNumber } from "../utils/parser.js";
 
 export class AwardView extends View {
   $awardModal;
   $winningNumberForm;
-  numberFormatter = Intl.NumberFormat("en-US");
+  $awardModal;
+  $winningNumberForm;
+  $awardModalCloseButton;
+  $resultTableBody;
+  $revenue;
+  $resetButton;
 
   constructor($app) {
     super($app);
@@ -21,12 +28,13 @@ export class AwardView extends View {
     this.$awardModalCloseButton = $app.querySelector(AWARD_MODAL_CLOSE_BUTTON);
     this.$resultTableBody = $app.querySelector(RESULT_TABLE_BODY);
     this.$revenue = $app.querySelector(REVENUE);
+    this.$resetButton = $app.querySelector(RESET_BUTTON);
   }
 
   formatNumber(value) {
     value = Number(value);
     if (Number.isNaN(value)) return "-";
-    return this.numberFormatter.format(value);
+    return stringifyNumber(value);
   }
 
   render(state) {
