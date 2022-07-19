@@ -1,4 +1,4 @@
-import { LOTTO_UNIT } from '../../src/js/constants.js';
+import { LOTTO } from '../../src/js/constants.js';
 
 describe('Lotto 테스트', () => {
   beforeEach(() => {
@@ -6,13 +6,13 @@ describe('Lotto 테스트', () => {
   });
 
   describe('input에 구입금액을 입력하고 확인버튼을 누른 경우', () => {
-    it(`value값이 ${LOTTO_UNIT}원으로 나누어떨어지지 않는다면 경고를표시하고 초기화한다.`, () => {
+    it(`value값이 ${LOTTO.UNIT}원으로 나누어떨어지지 않는다면 경고를표시하고 초기화한다.`, () => {
       cy.priceInputAndClick(1350);
-      cy.onOccurAlert(`로또 구입 금액을 ${LOTTO_UNIT}원 단위로 입력해 주세요.`);
+      cy.onOccurAlert(`로또 구입 금액을 ${LOTTO.UNIT}원 단위로 입력해 주세요.`);
       cy.get('.mr-2').should('have.value', '');
     });
 
-    describe(`value값이 ${LOTTO_UNIT}원으로 나누어떨어진다면`, () => {
+    describe(`value값이 ${LOTTO.UNIT}원으로 나누어떨어진다면`, () => {
       it(`value값이 반환된다.`, () => {
         cy.priceInputAndClick(5000);
         cy.get('.mr-2').should('have.value', '5000');
@@ -27,7 +27,7 @@ describe('Lotto 테스트', () => {
       cy.get('#purchase-section').should('be.visible');
     });
 
-    it(`로또 1장의 가격은 ${LOTTO_UNIT}원 이고 3000원 구매시 3개가 구매된다.`, () => {
+    it(`로또 1장의 가격은 ${LOTTO.UNIT}원 이고 3000원 구매시 3개가 구매된다.`, () => {
       cy.priceInputAndClick(3000);
       cy.get('.my-0').contains(`총 3개를 구매하였습니다.`);
     });
