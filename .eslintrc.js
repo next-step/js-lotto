@@ -16,6 +16,12 @@ module.exports = {
     'import/extensions': ['off'],
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "class-methods-use-this": ["error", { "enforceForClassFields": false }],
-    "no-param-reassign": ["error", { "props": false }]
+    "no-param-reassign": ["error", { "props": false }],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: true
+      },
+    ],
   }
 };

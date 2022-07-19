@@ -4,13 +4,17 @@ const $app = document.querySelector('#app');
 const $purchasedLottoList = document.querySelector('#purchased-lotto');
 const $lottoCount = document.querySelector('#lotto-count');
 
+const lottoNumberToggleClassName = 'visible-number';
 export const onLottoNumberToggle = ({ target: { checked } }) => {
-  const className = 'visible-number';
   if (checked) {
-    $purchasedLottoList.classList.add(className);
+    $purchasedLottoList.classList.add(lottoNumberToggleClassName);
   } else {
-    $purchasedLottoList.classList.remove(className);
+    $purchasedLottoList.classList.remove(lottoNumberToggleClassName);
   }
+};
+
+export const offLottoNumberToggle = () => {
+  $purchasedLottoList.classList.remove(lottoNumberToggleClassName);
 };
 
 export const appendLottoEl = (lottos) => {
@@ -32,6 +36,11 @@ export const appendLottoCountEl = (numberOfLotto) => {
   $lottoCount.textContent = numberOfLotto;
 };
 
+const contentToggleClassName = 'visible-content';
 export const showContent = () => {
-  $app.classList.add('visible-content');
+  $app.classList.add(contentToggleClassName);
+};
+
+export const hideContent = () => {
+  $app.classList.remove(contentToggleClassName);
 };
