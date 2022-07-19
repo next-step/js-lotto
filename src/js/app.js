@@ -4,7 +4,7 @@ import ItemToggle from "./components/ItemToggle.js";
 import {validation} from "./utils/validation.js"
 import {generateRandom} from "./utils/generateRandom.js"
 import {PRICE_FOR_ONE} from './const/const.js'
-import {displayLottoLabel, displayToggleBtn, lottoHidden} from './view/view.js'
+import {resetToggleBtn, displayLottoLabel, displayToggleBtn, lottoHidden, generateLottoTicket, removeAllLottoTickets} from './view/view.js'
 
 export default class App extends Component{
 
@@ -13,41 +13,41 @@ export default class App extends Component{
 			inputValue : 0,
 			lottoCnt : 0,
 			lottoToggle : false,
-			lottoList : [
-				{
-					numbers : [],
-					showNum : false
-				}
-			]
+			lottoList : []
 		}
 	}
-	tempate() {
-		return ``;
-	}
 
-	mounted() {
+	setEvent() {
 		const { setItemToggle } = this
 		const $inputMoneyForm = this.$target.querySelector('#input-money-form')
 		const $lottoToggleBtn = document.querySelector('.lotto-numbers-toggle-button')
 
-		$inputMoneyForm.addEventListener('submit', (event) => {
+		$inputMoneyForm.addEventListener('submit', event => {
 			event.preventDefault();
 			const $inputValue = event.target['inputMoney'].value
-			const check = validation(Number($inputValue))
-			if(!check) {
-				this.setState({inputValue: 0})
+			const isUnit1000 = validation(Number($inputValue))
+			if(!isUnit1000) {
+				// this.setState({inputValue: 0})
+				alert('1000원 단위로 입력해주세요.')
 				return;
 			}
-
+			if(this.$state.lottoList.length > 0 ) {
+				this.initLottoTickets()
+			}
+			
 			this.setLottoCnt(Number($inputValue))
+			for(let i = 0; i < this.$state.lottoCnt; i++) {
+				const lottoNums = generateRandom()
+				generateLottoTicket(lottoNums)
+				this.$state.lottoList.push(lottoNums)
+			}
+			
 		})
 
 		new ItemToggle($lottoToggleBtn, {
 			setItemToggle : setItemToggle.bind(this)
 		})
 	}
-
-	setEvent() {}
 
 	setLottoCnt (inputValue) {
 		const lottoCnt = inputValue / PRICE_FOR_ONE
@@ -61,7 +61,10 @@ export default class App extends Component{
 		const setToggle = !target.checked
 		this.setState({lottoToggle: setToggle})
 		displayToggleBtn(this.$state)
-		if( this.$state.inputValue > 0 ) generateRandom(this.$state.inputValue)
-		
 	}
-}
+	
+	initLottoTickets () {
+		removeAllLottoTickets()
+		resetToggleBtn()
+	}
+} 
