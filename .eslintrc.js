@@ -34,5 +34,7 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'arrow-body-style': 'off',
+    'class-methods-use-this': 'off',
+    'no-param-reassign': 0,
   },
 };
