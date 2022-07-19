@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "test": "cypress run"
+  },
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^10.3.0"
   }
 }

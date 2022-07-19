@@ -1,17 +1,35 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+import { $, addEvent } from "./util.js";
+import { buttonSelector, formSelector } from "./constants/selectors.js";
+import {
+  onClickOpenResultModalBtn,
+  onClickCloseResultModalBtn,
+  onCheckLottoNumbersToggleBtn,
+  onSubmitLottoPurchaseForm,
+} from "./event.js";
+import { subscribeViewsToStore } from "./view.js";
 
-const onModalShow = () => {
-  $modal.classList.add('open')
-}
+const initApp = function () {
+  subscribeViewsToStore();
+  addEvent(
+    $(buttonSelector.LOTTO_RESULT_MODAL_OPEN),
+    "click",
+    onClickOpenResultModalBtn
+  );
+  addEvent(
+    $(buttonSelector.LOTTO_RESULT_MODAL_CLOSE),
+    "click",
+    onClickCloseResultModalBtn
+  );
+  addEvent(
+    $(buttonSelector.LOTTO_NUMBERS_DETAIL_TOGGLE),
+    "change",
+    onCheckLottoNumbersToggleBtn
+  );
+  addEvent(
+    $(formSelector.LOTTO_PURCHASE_FORM),
+    "submit",
+    onSubmitLottoPurchaseForm
+  );
+};
 
-const onModalClose = () => {
-  $modal.classList.remove('open')
-}
-
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+initApp();
