@@ -34,9 +34,9 @@ describe('Lotto 테스트', () => {
 
     it(`소비자는 자동 구매를 할 수 있어야 한다.`, () => {
       cy.priceInputAndClick(3000);
-      cy.get('#lotto-icons>.lotto-wrapper').should('have.length', 3);
-      cy.get('#lotto-icons>.lotto-wrapper>.lotto-icon').should('have.length', 3);
-      cy.get('#lotto-icons>.lotto-wrapper>.lotto-detail').should('have.length', 3);
+      cy.get('#lotto-wrapper-list>.lotto-wrapper').should('have.length', 3);
+      cy.get('#lotto-wrapper-list>.lotto-wrapper>.lotto-icon').should('have.length', 3);
+      cy.get('#lotto-wrapper-list>.lotto-wrapper>.lotto-detail').should('have.length', 3);
     });
 
     it('하나의 로또의 번호의 갯수는 6개 이다.', () => {
