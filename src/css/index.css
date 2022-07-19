@@ -6,6 +6,11 @@ body {
   margin: 0;
   height: 100%;
   font-size: 16px;
+  
+}
+body ul {
+  list-style : none;
+  padding-left : 0px;
 }
 
 #app {
@@ -22,3 +27,11 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.hidden-number { 
+  display : none
+}
+.lotto-numbers {
+  font-size: 1.2em;
+}
+
