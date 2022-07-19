@@ -1,13 +1,10 @@
 import Component from "../core/Component.js";
 
 export default class InputValue extends Component {
+	/**
+	 * @todo : 입력받는 값 이벤트 처리 분리하기
+	 */
 	setEvent() {
-		// const {inputValue} = this.$props;
-		// // const $inputMoneyForm = this.$target.querySelector('#i/nput-money-form')
-		// this.addEvent('submit', '#input-money-form', ({event}) => {
-		// 	event.preventDefault();
-		// 	const $inputValue = event.target['inputMoney'].value
-		// 	inputValue(Number($inputValue))
-		// })	
+
 	}
 }

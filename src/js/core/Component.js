@@ -11,15 +11,20 @@ export default class component {
 		this.render();
 	}
 	setup() {};
+	/**
+	 * @todo : mounted, template, render는 사용법 정확히 이해하고 다시 사용하기
+	 */
 	mounted() {};
-	// template() {return '';}
+	template() {return '';}
 	render() {
 		// this.$target.innerHTML = this.template();
 		this.mounted();
 	}
+	initState() {
+		this.$state = {}
+	}
 	setState(newState) {
 		this.$state = {...this.$state, ...newState}
-		this.render();
 	}
 	setEvent() {}
 	
