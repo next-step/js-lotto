@@ -1,7 +1,5 @@
 import App from './app.js'
 
-//jh.won
-// const $inputMoneyForm = document.querySelector('#input-money-form')
 new App(document.querySelector('#app'))
 
 //basic
@@ -18,14 +16,7 @@ const onModalShow = () => {
 const onModalClose = () => {
   $modal.classList.remove('open')
 }
-// const submitInputMoney = (e) => {
-//   e.preventDefault();
-//   const $inputMoney = new FormData(e.target).get('')
-//   alert('입금 금액은 ', $inputMoney)
-// }
 
-
-// $inputMoneyForm.addEventListener('submit', submitInputMoney)
 $showResultButton.addEventListener('click', onModalShow)
 $modalClose.addEventListener('click', onModalClose)
 
