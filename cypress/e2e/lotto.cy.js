@@ -14,8 +14,8 @@ describe('Lotto 테스트', () => {
 
     describe(`value값이 ${LOTTO.UNIT}원으로 나누어떨어진다면`, () => {
       it(`value값이 반환된다.`, () => {
-        cy.priceInputAndClick(5000);
-        cy.get('.mr-2').should('have.value', '5000');
+        cy.priceInputAndClick(3000);
+        cy.get('.mr-2').should('have.value', '3000');
       });
     });
   });
@@ -25,6 +25,12 @@ describe('Lotto 테스트', () => {
       cy.priceInputAndClick(3000);
       cy.get('#purchase-section').should('have.class', 'is-active');
       cy.get('#purchase-section').should('be.visible');
+    });
+
+    it(`당첨 번호 입력하는 폼을 볼 수 있어야한다.`, () => {
+      cy.priceInputAndClick(3000);
+      cy.get('#lotto-winning-number-form').should('have.class', 'is-active');
+      cy.get('#lotto-winning-number-form').should('be.visible');
     });
 
     it(`로또 1장의 가격은 ${LOTTO.UNIT}원 이고 3000원 구매시 3개가 구매된다.`, () => {
@@ -96,6 +102,57 @@ describe('Lotto 테스트', () => {
       cy.showToggleButtonClick();
       cy.get('.lotto-numbers-toggle-button').should('not.be.checked');
       cy.get('.lotto-detail').should('not.be.visible');
+    });
+  });
+
+  describe('결과 확인하기 form 제출 시', () => {
+    it('로또 당첨 결과 모달을 보여준다.', () => {
+      cy.submitWinningInputForm();
+      cy.get('.modal').should('have.class', 'open');
+      cy.get('.modal').should('be.visible');
+    });
+  });
+
+  describe('다시 시작하기 버튼 클릭시', () => {
+    it('금액금액입력의 value가 초기화된다.', () => {
+      cy.submitWinningInputForm();
+      cy.resetButtonClick();
+      cy.get('input[name="purchasePrice"]').should('have.value', '');
+    });
+
+    it('당첨번호 입력 value가 모두 초기화된다.', () => {
+      cy.submitWinningInputForm();
+      cy.resetButtonClick();
+      for (let i = 1; i < 8; i++) {
+        cy.get(`[data-order=${i}]`).should('have.value', '');
+      }
+      cy.get('input[name="purchasePrice"]').should('have.value', '');
+    });
+
+    it('생성됐던 모든 로또 리스트가 삭제된다.', () => {
+      cy.submitWinningInputForm();
+      cy.resetButtonClick();
+      cy.get('#lotto-wrapper-list').children().should('have.length', 0);
+    });
+
+    it('번호보기 checkbox를 초기화한다.', () => {
+      cy.submitWinningInputForm();
+      cy.resetButtonClick();
+      cy.get('.lotto-numbers-toggle-button').should('not.be.checked');
+    });
+
+    it(`당첨 번호 입력하는 폼을 화면에서 숨김처리한다.`, () => {
+      cy.submitWinningInputForm();
+      cy.resetButtonClick();
+      cy.get('#lotto-winning-number-form').should('not.have.class', 'is-active');
+      cy.get('#lotto-winning-number-form').should('not.be.visible');
+    });
+
+    it(`modal창을 숨김 처리한다.`, () => {
+      cy.submitWinningInputForm();
+      cy.resetButtonClick();
+      cy.get('.modal').should('not.have.class', 'open');
+      cy.get('.modal').should('not.be.visible');
     });
   });
 });
