@@ -31,10 +31,10 @@ export const onCheckLottoNumbersToggleBtn = function ({ target: { checked } }) {
 
 export const onSubmitLottoPurchaseForm = function (ev) {
   ev.preventDefault();
+  const priceInputVal = ev.srcElement[0].value;
   resetPriceInputValue();
   resetLottoList();
-  const inputMoney = $(inputSelector.LOTTO_PURCHASE_FORM_INPUT).valueAsNumber;
-  if (validateInputMoney(inputMoney)) {
-    savePriceInputValueToStore(inputMoney);
+  if (validateInputMoney(priceInputVal)) {
+    savePriceInputValueToStore(priceInputVal);
   }
 };
