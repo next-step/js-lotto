@@ -35,7 +35,7 @@ export const resetToggleBtn = () => {
 
 export const generateLottoTicket = (lottoNums) => {
 	const $icon = document.createElement('li');
-	$icon.classList = 'mx-1 text-4xl';
+	$icon.classList = 'mx-1 text-2xl';
 	$icon.innerText = '🎟️';
 	const $lottoNums = document.createElement('span');
 	$lottoNums.classList = 'lotto-numbers hidden-number'

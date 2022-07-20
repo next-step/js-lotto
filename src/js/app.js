@@ -27,7 +27,6 @@ export default class App extends Component{
 			const $inputValue = event.target['inputMoney'].value
 			const isUnit1000 = validation(Number($inputValue))
 			if(!isUnit1000) {
-				// this.setState({inputValue: 0})
 				alert('1000원 단위로 입력해주세요.')
 				return;
 			}
@@ -35,7 +34,9 @@ export default class App extends Component{
 				this.initLottoTickets()
 			}
 			
-			this.setLottoCnt(Number($inputValue))
+			this.setLottoCntInputValue(Number($inputValue))
+			displayLottoLabel(this.$state.lottoCnt)
+			lottoHidden(false)
 			for(let i = 0; i < this.$state.lottoCnt; i++) {
 				const lottoNums = generateRandom()
 				generateLottoTicket(lottoNums)
@@ -49,12 +50,10 @@ export default class App extends Component{
 		})
 	}
 
-	setLottoCnt (inputValue) {
+	setLottoCntInputValue (inputValue) {
 		const lottoCnt = inputValue / PRICE_FOR_ONE
 		this.setState({ lottoCnt : lottoCnt }) 
 		this.setState({ inputValue: inputValue }) 
-		displayLottoLabel(this.$state.lottoCnt)
-		lottoHidden(false)
 	}
 
 	setItemToggle (target) {
