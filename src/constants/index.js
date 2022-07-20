@@ -1,4 +1,4 @@
-import { SELECTOR_ID, SELECTOR_CLASS, SELECTOR_CY } from './selector.js';
+import { SELECTOR_ID, SELECTOR_CLASS } from './selector.js';
 
 import {
 	MAX_RANDOM_NUMBER,
@@ -24,7 +24,7 @@ import {
 } from './validatorMessage.js';
 
 export {
-	MAX_RANDOM_N
+	MAX_RANDOM_NUMBER,
 	MAX_LOTTO_NUMBER,
 	MIN_LOTTO_NUMBER,
 	MAX_COUNT_PER_LOTTO,
@@ -37,7 +37,6 @@ export {
 	FIRST_PLACE,
 	SELECTOR_ID,
 	SELECTOR_CLASS,
-	SELECTOR_CY,
 	NOT_TEN_UNIT_PRICE_MESSAGE,
 	UNDER_MIN_NUMBER_MESSAGE,
 	OVER_MAX_NUMBER_MESSAGE,

@@ -23,4 +23,4 @@ const getWinningNumberIndex = (name) => {
 	return name.split('-').at(-1) - 1;
 };
 
-export { generateLotto, changeAmountToCount, getWinningNumberIndex };
+export { generateLotto, changeAmountToCount, getWinningNumberIndex, generateRandomNumber };

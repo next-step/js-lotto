@@ -5,7 +5,7 @@ import {
 	FORTH_PLACE,
 	FIFTH_PLACE,
 } from '../constants/index.js';
-import { isNil, includes } from '../libs/fp.js';
+import { isTruthy, includes } from '../libs/fp.js';
 
 const splitWinningNumberAndBonus = (winningNumbers) => {
 	return {
@@ -16,18 +16,18 @@ const splitWinningNumberAndBonus = (winningNumbers) => {
 
 const getRankArrayPerLotto = (store) => {
 	const { lottoNumbers, winningNumbers } = store;
-	const { winnings, bonus } = splitWinningNumberAndBonus(winningNumbers);
+	const { bonus } = splitWinningNumberAndBonus(winningNumbers);
 
 	return lottoNumbers
 		.map((lottoNumber) => {
-			const filteredLottoNumber = lottoNumber.filter((number) => includes(winnings, number));
-			if (filteredLottoNumber.length === 6) return 1;
-			if (filteredLottoNumber.length === 5 && includes(lottoNumber, bonus)) return 2;
-			if (filteredLottoNumber.length === 5 && !includes(lottoNumber, bonus)) return 3;
+			const filteredLottoNumber = lottoNumber.filter((number) => includes(winningNumbers, number));
+			if (filteredLottoNumber.length === 6 && !includes(lottoNumber, bonus)) return 1;
+			if (filteredLottoNumber.length === 6 && includes(lottoNumber, bonus)) return 2;
+			if (filteredLottoNumber.length === 5) return 3;
 			if (filteredLottoNumber.length === 4) return 4;
 			if (filteredLottoNumber.length === 3) return 5;
 		})
-		.filter(isNil);
+		.filter(isTruthy);
 };
 
 const calculateWinningCountPerRank = (rankArray) => {

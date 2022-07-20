@@ -82,7 +82,7 @@
                       class="winning-number mx-1 text-center"
                       type="number"
                       name="winning-number-1"
-                      data-cy="winning-number-1"
+                      data-cy="winning-number"
                       nim="1"
                       max="45"
                       required
@@ -91,7 +91,7 @@
                       class="winning-number mx-1 text-center"
                       type="number"
                       name="winning-number-2"
-                      data-cy="winning-number-2"
+                      data-cy="winning-number"
                       min="1"
                       max="45"
                       required
@@ -100,7 +100,7 @@
                       class="winning-number mx-1 text-center"
                       type="number"
                       name="winning-number-3"
-                      data-cy="winning-number-3"
+                      data-cy="winning-number"
                       min="1"
                       max="45"
                       required
@@ -109,7 +109,7 @@
                       class="winning-number mx-1 text-center"
                       type="number"
                       name="winning-number-4"
-                      data-cy="winning-number-4"
+                      data-cy="winning-number"
                       min="1"
                       max="45"
                       required
@@ -118,7 +118,7 @@
                       class="winning-number mx-1 text-center"
                       type="number"
                       name="winning-number-5"
-                      data-cy="winning-number-5"
+                      data-cy="winning-number"
                       min="1"
                       max="45"
                       required
@@ -127,7 +127,7 @@
                       class="winning-number mx-1 text-center"
                       type="number"
                       name="winning-number-6"
-                      data-cy="winning-number-6"
+                      data-cy="winning-number"
                       min="1"
                       max="45"
                       required
@@ -141,10 +141,11 @@
                       class="bonus-number winning-number text-center"
                       type="number"
                       name="bonus-number-7"
-                      data-cy="bonus-number-7"
+                      data-cy="bonus-number"
                       min="1"
                       max="45"
                       required
+                    />
                   </div>
                 </div>
               </div>
@@ -158,9 +159,9 @@
             </form>
         </div>
       </div>
-      <div class="modal">
+      <div class="modal" data-cy="modal">
         <div class="modal-inner p-10">
-          <div class="modal-close">
+          <div class="modal-close" data-cy="close-result-modal">
             <svg viewbox="0 0 40 40">
               <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
             </svg>

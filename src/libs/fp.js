@@ -11,8 +11,8 @@ const reduce = (f, acc, iter) => {
 
 const go = (...args) => reduce((a, f) => f(a), args);
 
-const isNil = (e) => !!e;
+const isTruthy = (e) => !!e;
 
 const includes = (arr, number) => arr.includes(number);
 
-export { go, reduce, isNil, includes };
+export { go, reduce, isTruthy, includes };

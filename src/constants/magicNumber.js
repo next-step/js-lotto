@@ -19,4 +19,3 @@ export const THIRD_PLACE = 1_500_000;
 export const SECOND_PLACE = 30_000_000;
 
 export const FIRST_PLACE = 2_000_000_000;
-
