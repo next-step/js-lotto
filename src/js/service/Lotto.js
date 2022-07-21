@@ -8,20 +8,20 @@ class Lotto {
     this.score = {};
   }
 
-  toggleLottoList = () => {
+  toggleLottoList() {
     this.lottoWrapperList.classList.toggle('flex-col');
-  };
+  }
 
-  hiddenLottoList = () => {
+  hiddenLottoList() {
     this.lottoWrapperList.classList.remove('flex-col');
-  };
+  }
 
-  createRandomNumber = () => {
+  createRandomNumber() {
     const { min, max } = LOTTO_NUMBER_UNIT;
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
+  }
 
-  createLotto = () => {
+  createLotto() {
     const lottoSet = new Set();
 
     while (lottoSet.size < LOTTO.SIZE) {
@@ -29,20 +29,20 @@ class Lotto {
     }
 
     return [...lottoSet].sort((a, b) => a - b);
-  };
+  }
 
-  createLottoList = (dividedLottoCount) => {
+  createLottoList(dividedLottoCount) {
     for (let i = 0; i < dividedLottoCount; i++) {
       this.lottoNumbers.push(this.createLotto());
     }
     return this.lottoNumbers;
-  };
+  }
 
-  getLottoRandomNumbers = () => {
+  getLottoRandomNumbers() {
     return this.lottoNumbers;
-  };
+  }
 
-  renderCreatedLottoList = () => {
+  renderCreatedLottoList() {
     const fragment = document.createDocumentFragment();
 
     this.lottoNumbers.forEach((lottoNumbers) => {
@@ -62,7 +62,7 @@ class Lotto {
     });
 
     this.lottoWrapperList.appendChild(fragment);
-  };
+  }
 
   setScore(winningNumbers, bonusNumbers) {
     winningNumbers.forEach((number) => {
