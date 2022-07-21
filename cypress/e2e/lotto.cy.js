@@ -119,44 +119,22 @@ describe('Lotto 테스트', () => {
   });
 
   describe('다시 시작하기 버튼 클릭시', () => {
-    it('금액금액입력의 value가 초기화된다.', () => {
+    it('모든 로또 내용이 초기화 된다.', () => {
       cy.submitWinningInputForm();
       cy.clickResetButton();
       cy.get('input[name="purchasePrice"]').should('have.value', '');
-    });
 
-    it('당첨번호 입력 value가 모두 초기화된다.', () => {
-      cy.submitWinningInputForm();
-      cy.clickResetButton();
       for (let i = 1; i < 8; i++) {
         cy.get(`[data-order=${i}]`).should('have.value', '');
       }
       cy.get('input[name="purchasePrice"]').should('have.value', '');
-    });
 
-    it('생성됐던 모든 로또 리스트가 삭제된다.', () => {
-      cy.submitWinningInputForm();
-      cy.clickResetButton();
       cy.get('#lotto-wrapper-list').children().should('have.length', 0);
-    });
 
-    it('번호보기 checkbox를 초기화한다.', () => {
-      cy.submitWinningInputForm();
-      cy.clickResetButton();
       cy.get('.lotto-numbers-toggle-button').should('not.be.checked');
-    });
 
-    it(`당첨 번호 입력하는 폼을 화면에서 숨김처리한다.`, () => {
-      cy.submitWinningInputForm();
-      cy.clickResetButton();
-      cy.get('#lotto-winning-number-form').should('not.have.class', 'is-active');
       cy.get('#lotto-winning-number-form').should('not.be.visible');
-    });
 
-    it(`modal창을 숨김 처리한다.`, () => {
-      cy.submitWinningInputForm();
-      cy.clickResetButton();
-      cy.get('.modal').should('not.have.class', 'open');
       cy.get('.modal').should('not.be.visible');
     });
   });
