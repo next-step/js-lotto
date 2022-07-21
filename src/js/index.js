@@ -1,8 +1,8 @@
 import { ALERT_MESSAGES, INPUT_NAME, LOTTO } from './constants.js';
 import Lotto from './service/Lotto.js';
-import LottoModal from './service/LottoModal.js';
-import LottoWinningForm from './service/LottoWinningForm.js';
-import LottoPurchaseSection from './service/LottoPurchaseSection.js';
+import LottoModal from './view/LottoModal.js';
+import LottoWinningForm from './view/LottoWinningForm.js';
+import LottoPurchaseSection from './view/LottoPurchaseSection.js';
 import { dividedLottoCount, hasRemainderPrice } from './calculation.js';
 
 const purchaseForm = document.querySelector('#purchase-form');
