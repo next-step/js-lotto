@@ -1,8 +1,8 @@
-import FormAmount from './components/FormAmount.js';
-import LottoAmount from './components/LottoAmount.js';
-import LottoList from './components/LottoList.js';
-import LottoNumbersToggleButton from './components/LottoNumbersToggleButton.js';
-import { reactiveRender } from './reactive/index.js';
+import FormAmount from './controller/FormAmount.js';
+import LottoAmount from './controller/LottoAmount.js';
+import LottoList from './controller/LottoList.js';
+import LottoNumbersToggleButton from './controller/LottoNumbersToggleButton.js';
+import { reactiveRender } from './core/reactive/reactiveRender.js';
 
 function main() {
   FormAmount();

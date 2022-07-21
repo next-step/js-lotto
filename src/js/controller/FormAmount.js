@@ -25,6 +25,4 @@ export default function FormAmount() {
   };
 
   $formAmount.addEventListener('submit', buyLottos);
-
-  return $formAmount;
 }

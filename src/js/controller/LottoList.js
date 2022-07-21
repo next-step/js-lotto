@@ -1,6 +1,6 @@
+import { registeReactiveRender } from '../core/reactive/reactiveRender.js';
 import store from '../store/index.js';
-import { registeReactiveRender } from '../reactive/index.js';
-import LottoItem from './LottoItem.js';
+import LottoItem from '../view/LottoItem.js';
 
 export default function LottoList() {
   const $lottoList = document.querySelector('#lotto-list');
@@ -17,5 +17,4 @@ export default function LottoList() {
   };
 
   registeReactiveRender(render);
-  return $lottoList;
 }

@@ -1,5 +1,5 @@
+import { registeReactiveRender } from '../core/reactive/reactiveRender.js';
 import store from '../store/index.js';
-import { registeReactiveRender } from '../reactive/index.js';
 
 export default function LottoAmount() {
   const $lottoAmount = document.querySelector('#lotto-amount');
@@ -11,5 +11,4 @@ export default function LottoAmount() {
   };
 
   registeReactiveRender(render);
-  return $lottoAmount;
 }
