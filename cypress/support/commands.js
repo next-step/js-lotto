@@ -1,17 +1,17 @@
-Cypress.Commands.add('priceInputAndClick', (price) => {
-  cy.get('input[name="purchasePrice"]').type(price, { force: true }).get('#purchase-form > .d-flex > .btn').click();
+Cypress.Commands.add('submitPriceInputForm', (price) => {
+  cy.get('input[name="purchasePrice"]').type(price, { force: true }).get('#purchase-form').submit();
 });
 
 Cypress.Commands.add('showToggleButtonClick', () => {
   cy.get('.text-base').click();
 });
 
-Cypress.Commands.add('resetButtonClick', () => {
+Cypress.Commands.add('clickResetButton', () => {
   cy.get('#reset').click();
 });
 
 Cypress.Commands.add('submitWinningInputForm', () => {
-  cy.priceInputAndClick(3000);
+  cy.submitPriceInputForm(3000);
   for (let i = 1; i < 8; i++) {
     cy.get(`[data-order=${i}]`).type(i, { force: true });
   }
