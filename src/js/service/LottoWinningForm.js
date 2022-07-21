@@ -3,17 +3,17 @@ class LottoWinningForm {
     this.lottoWinningNumberForm = lottoWinningNumberForm;
   }
 
-  showForm = () => {
+  showForm() {
     this.lottoWinningNumberForm.classList.add('is-active');
-  };
+  }
 
-  hiddenForm = () => {
+  hiddenForm() {
     this.lottoWinningNumberForm.classList.remove('is-active');
-  };
+  }
 
-  resetForm = () => {
+  resetForm() {
     this.lottoWinningNumberForm.reset();
-  };
+  }
 }
 
 export default LottoWinningForm;

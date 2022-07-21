@@ -16,10 +16,10 @@ class LottoModal {
   renderModalContents(lotto, lottoNumberArrayList) {
     const lottoRanking = lotto.getLottoRankingObject(lottoNumberArrayList);
 
-    this.modalDataPlaceSet.forEach((elem) => {
-      const { place } = elem.dataset;
+    this.modalDataPlaceSet.forEach((element) => {
+      const { place } = element.dataset;
       const winningRankCount = lottoRanking[place] ?? 0;
-      elem.textContent = `${winningRankCount} 개`;
+      element.textContent = `${winningRankCount} 개`;
     });
 
     this.revenueRate.textContent = lotto.getRevenueRate(lottoNumberArrayList);

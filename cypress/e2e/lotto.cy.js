@@ -47,8 +47,8 @@ describe('Lotto 테스트', () => {
 
     it('하나의 로또의 번호의 갯수는 6개 이다.', () => {
       cy.priceInputAndClick(3000);
-      cy.get('.lotto-detail').each((elem) => {
-        const lottoNumbers = elem
+      cy.get('.lotto-detail').each((element) => {
+        const lottoNumbers = element
           .text()
           .split(', ')
           .map((text) => parseInt(text, 10));
@@ -58,8 +58,8 @@ describe('Lotto 테스트', () => {
 
     it('로또 숫자는 1이상 45이하의 숫자이다.', () => {
       cy.priceInputAndClick(3000);
-      cy.get('.lotto-detail').each((elem) => {
-        const lottoNumbers = elem
+      cy.get('.lotto-detail').each((element) => {
+        const lottoNumbers = element
           .text()
           .split(', ')
           .map((text) => parseInt(text, 10));
@@ -72,8 +72,8 @@ describe('Lotto 테스트', () => {
 
     it('로또 하나의 숫자들은 중복되지 않는다.', () => {
       cy.priceInputAndClick(3000);
-      cy.get('.lotto-detail').each((elem) => {
-        const lottoNumbers = elem
+      cy.get('.lotto-detail').each((element) => {
+        const lottoNumbers = element
           .text()
           .split(', ')
           .map((text) => parseInt(text, 10));
