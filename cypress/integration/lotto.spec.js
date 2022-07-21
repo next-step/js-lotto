@@ -44,7 +44,7 @@ describe('결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 �
   it('당첨 번호와 보너스 번호를 입력하지 않을 시 alert 창을 띄워줘야 한다.', () => {
     cy.get('.open-result-modal-button').click({ force: true });
     cy.on('window.alert()', (message) => {
-      expect(message).to.equal(ERROR_MESSAGE.REQUIRED);
+      expect(message).to.equal(ERROR_MESSAGE.REQUIRED_WINNING_AND_BONUS_NUMBER);
     });
   })
 

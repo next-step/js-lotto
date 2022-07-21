@@ -16,7 +16,7 @@ export const validatePrice = (inputValue) => {
 export const validateWinningNumber = () => {
   const lottoSet = new Set(winningNumber);
   if (winningNumber.length !== 7) {
-    throw ERROR_MESSAGE.REQUIRED;
+    throw ERROR_MESSAGE.REQUIRED_WINNING_AND_BONUS_NUMBER;
   }
   if (winningNumber.length !== lottoSet.size) {
     throw ERROR_MESSAGE.DUPLICATED_MESSAGE

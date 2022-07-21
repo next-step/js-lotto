@@ -51,7 +51,8 @@ const renderModalContent = () => {
 }
 
 export const onModalShow = () => {
-  const errorMessage = catchError(VALIDATE_TYPE.WINNING);
+  console.info('winning', winningNumber);
+  const errorMessage = catchPriceOrWinningNumberError(VALIDATE_TYPE.WINNING_AND_BONUS_NUMBER);
 
   if (errorMessage) {
     alert(errorMessage)
@@ -68,7 +69,7 @@ export const onModalClose = () => {
   $modal.classList.remove('open')
 }
 
-const drawLottoNumbers = () => {
+const getLottoNumbers = () => {
   let lottoNumber = []
   while (lottoNumber.length < LOTTO_NUMBER_COUNT) {
     const number = parseInt(Math.random() * MAX_LOTTO_NUMBER) + 1;
@@ -81,19 +82,25 @@ const drawLottoNumbers = () => {
 
 const getLottos = (count) => {
   Array.from({ length: count }).forEach(() => {
-    const lottoNumber = drawLottoNumbers();
+    const lottoNumber = getLottoNumbers();
     lottos.push(lottoNumber);
   })
 };
 
-const catchError = (type, inputValue) => {
+const validatePriceOrWinningNumber = (type, value) => {
+  if (type === VALIDATE_TYPE.PRICE) {
+    validatePrice(value);
+    return
+  } 
+  if (type === VALIDATE_TYPE.WINNING_AND_BONUS_NUMBER) {
+    validateWinningNumber();
+    return
+  }
+}
+
+const catchPriceOrWinningNumberError = (type, inputValue) => {
   try {
-    if (type === VALIDATE_TYPE.PRICE) {
-      validatePrice(inputValue);
-    } else {
-      validateWinningNumber()
-    }
-    
+    validatePriceOrWinningNumber(type, inputValue);
   } catch (error) {
     return error;
   }
@@ -102,7 +109,7 @@ const catchError = (type, inputValue) => {
 export const handlePurchaseButtonClick = () => {
   const inputValue = $purchaseInputValue.value;
   const lottoCount = inputValue / MIN_PRICE;
-  const errorMessage = catchError(VALIDATE_TYPE.PRICE, inputValue);
+  const errorMessage = catchPriceOrWinningNumberError(VALIDATE_TYPE.PRICE, inputValue);
   
   if (errorMessage) {
     alert(errorMessage)
@@ -127,14 +134,17 @@ export const handleLottoNumbersToggleButtonClick = (e) => {
 }
 
 export const getWinningNumbers = (e, index) => {
-  winningNumber.splice(index, 1, e.target.value);
+  winningNumber[index] = e.target.value;
 }
 
 export const getBonusNumber = (e) => {
   if (winningNumber.length === WINNING_NUMBER_COUNT) {
-    winningNumber.splice(ARRAY_LAST_INDEX, 1, e.target.value);
-  } else {
+    winningNumber[winningNumber.length - 1] = e.target.value;
+    return
+  } 
+  if (winningNumber.length !== WINNING_NUMBER_COUNT) {
     winningNumber.push(e.target.value)
+    return
   }
 }
 
@@ -143,8 +153,8 @@ const resetPurchaseInputValue = () => {
 }
 
 const resetStore = () => {
-  lottos.splice(ARRAY_FIRST_INDEX, lottos.length)
-  winningNumber.splice(ARRAY_FIRST_INDEX, winningNumber.length)
+  lottos.length = 0
+  winningNumber.length = 0
   Object.keys(rankingInfo).forEach((value) => {
    rankingInfo[value].count = 0
   })

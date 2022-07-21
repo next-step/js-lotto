@@ -9,7 +9,7 @@ export const ARRAY_LAST_INDEX = -1;
 
 export const VALIDATE_TYPE = {
   PRICE: 'price',
-  WINNING: 'winning'
+  WINNING_AND_BONUS_NUMBER: 'winningAndBonusNumber'
 }
 
 export const ERROR_MESSAGE = {
@@ -19,5 +19,5 @@ export const ERROR_MESSAGE = {
   DUPLICATED_MESSAGE: '중복된 숫자가 존재합니다.',
   MIN_LOTTO_NUMBER: '1 이상의 숫자만 입력 가능합니다.',
   MAX_LOTTO_NUMBER: '45 이하의 숫자만 입력 가능합니다.',
-  REQUIRED: '당첨번호, 보너스 번호를 모두 입력해주세요.'
+  REQUIRED_WINNING_AND_BONUS_NUMBER: '당첨번호, 보너스 번호를 모두 입력해주세요.'
 }
