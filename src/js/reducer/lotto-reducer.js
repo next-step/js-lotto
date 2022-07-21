@@ -1,8 +1,9 @@
-import { SET_INPUT_MONEY, SET_LOTTO_LIST, RESET_ALL } from '../action/lotto-actions.js';
+import { SET_INPUT_MONEY, SET_LOTTO_LIST, RESET_ALL, SET_LOTTO_ANSWER_LIST } from '../action/lotto-actions.js';
 
 export const INITIAL_LOTTO_STATE = {
 	inputMoney: 0,
 	lottoList: [],
+	lottoAnswerList: [],
 };
 
 export const lottoReducer = function (state = INITIAL_LOTTO_STATE, action) {
@@ -22,6 +23,11 @@ export const lottoReducer = function (state = INITIAL_LOTTO_STATE, action) {
 			};
 		case RESET_ALL:
 			return INITIAL_LOTTO_STATE;
+		case SET_LOTTO_ANSWER_LIST:
+			return {
+				...state,
+				lottoAnswerList: action.payload,
+			};
 		default:
 			console.error(`잘못된 action type : ${action.type}`);
 			return state;

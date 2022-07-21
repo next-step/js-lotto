@@ -1,8 +1,8 @@
 import { formSelector } from './constants/selectors.js';
 import { $ } from './util.js';
 import { showLottoDetailNumbers, hideLottoDetailNumbers, showElement } from './view.js';
-import { resetPriceInputValue, savePriceInputValueToStore, resetLottoList } from './model.js';
-import { validateInputMoney } from './validate.js';
+import { resetPriceInputValue, savePriceInputValueToStore, resetLottoList, saveLottoAnswerListToStore } from './model.js';
+import { validateInputAnswer, validateInputMoney } from './validate.js';
 
 export const onCheckLottoNumbersToggleBtn = function ({ target: { checked } }) {
 	if (checked) {
@@ -33,4 +33,10 @@ export const onSubmitLottoAnswerForm = function (ev) {
 		}
 		return acc;
 	}, []);
+
+	if (validateInputAnswer(answerValues)) {
+		saveLottoAnswerListToStore(answerValues);
+		// 로또당첨율계산 추가할것
+		// 결과모달 보여주기 추가할것
+	}
 };
