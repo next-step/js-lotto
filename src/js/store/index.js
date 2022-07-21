@@ -1,5 +1,5 @@
-import { reactiveState } from '../reactive/index.js';
 import { PAYMENT_UNIT } from '../constants/common.js';
+import reactiveState from '../core/reactive/reactiveState.js';
 import createLotto from '../domain/lotto/createLotto.js';
 
 export const COMMIT = {
