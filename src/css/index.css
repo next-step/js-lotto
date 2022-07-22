@@ -35,12 +35,19 @@ ul {
   display: block;
 }
 
-#lotto-icons .lotto-detail {
+#lotto-wrapper-list .lotto-detail {
   display: none;
 }
 
-#lotto-icons.flex-col .lotto-detail {
+#lotto-wrapper-list.flex-col .lotto-detail {
   display: inline;
 }
 
+#lotto-winning-number-form {
+  display: none;
+}
+
+#lotto-winning-number-form.is-active {
+  display: block;
+}
 
