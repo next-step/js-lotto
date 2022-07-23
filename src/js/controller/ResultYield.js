@@ -14,7 +14,8 @@ export default function ResultYield(countByRank) {
     const revenue = getRevenue();
     const { amount } = store.state;
 
-    if (!revenue || !amount) return 0;
+    if (!amount) return 0;
+    if (!revenue) return -100;
 
     return revenue / amount;
   };
