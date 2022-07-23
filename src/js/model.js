@@ -7,7 +7,7 @@ import {
   MAX_LOTTO_NUM,
 } from "../js/util/constants.js";
 
-function setInitialState() {
+function getInitialState() {
   return {
     paidMoney: 0,
     earnedMoney: 0,
@@ -26,7 +26,7 @@ class Model {
   }
 
   initLottiesModel() {
-    const { paidMoney, earnedMoney, curLotties, winningInfo, winningLottoDigits } = setInitialState();
+    const { paidMoney, earnedMoney, curLotties, winningInfo, winningLottoDigits } = getInitialState();
 
     this.paidMoney = paidMoney;
     this.earnedMoney = earnedMoney;
@@ -36,7 +36,7 @@ class Model {
   }
 
   resetWinningInfo() {
-    const { earnedMoney, winningInfo } = setInitialState();
+    const { earnedMoney, winningInfo } = getInitialState();
     this.earnedMoney = earnedMoney;
     this.winningInfo = winningInfo;
   }
