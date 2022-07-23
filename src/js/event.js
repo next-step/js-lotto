@@ -1,4 +1,4 @@
-import { formSelector, modalSelector } from './constants/selectors.js';
+import { formSelector, modalSelector, sectionSelector } from './constants/selectors.js';
 import { $, reduceNumberInputsToNums } from './util.js';
 import {
 	showLottoDetailNumbers,
@@ -36,6 +36,7 @@ export const onSubmitLottoPurchaseForm = function (ev) {
 	if (validateInputMoney(priceInputVal)) {
 		savePriceInputValueToStore(priceInputVal);
 		showElement($(formSelector.LOTTO_ANSWER_FORM));
+		showElement($(sectionSelector.LOTTO_MENU_SECTION));
 	}
 };
 

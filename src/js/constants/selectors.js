@@ -41,3 +41,7 @@ export const spanSelector = {
 		6: '.winning-count-6',
 	},
 };
+
+export const sectionSelector = {
+	LOTTO_MENU_SECTION: '#lotto-menu',
+};
