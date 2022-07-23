@@ -1,39 +1,26 @@
-import LottoSheet from './LottoSheet.js';
+import { DrawForm, Toggle } from './components/index.js';
 
-import Toggle from './Toggle.js';
+import getLottoList from './lotto/index.js';
+import { getLottoAvailableQuantity } from './lotto/validation/index.js';
 
-const $showResultButton = document.querySelector('.open-result-modal-button');
-const $modalClose = document.querySelector('.modal-close');
-const $modal = document.querySelector('.modal');
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-);
-
-const onModalShow = () => {
-  $modal.classList.add('open');
-};
-
-const onModalClose = () => {
-  $modal.classList.remove('open');
-};
-
-$showResultButton.addEventListener('click', onModalShow);
-$modalClose.addEventListener('click', onModalClose);
-
-// --
 const lottoList = document.querySelector('.lotto-list');
+const listTitleElement = lottoList.querySelector('.lotto-title');
+const showListElement = lottoList.querySelector('.lotto-number-show');
+const hideListElement = lottoList.querySelector('.lotto-number-hide');
 
-const lottoNumberToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-);
+const lottoNumberToggleButton = document.querySelector('.lotto-numbers-toggle-button');
 
 const lottoSheetForm = document.querySelector('.lotto-sheet-form');
 const lottoPriceInput = document.querySelector('.lotto-price-input');
 
-LottoSheet({
-  target: lottoList,
-  form: lottoSheetForm,
+const target = { title: listTitleElement, show: showListElement, hide: hideListElement };
+
+DrawForm({
+  target,
   input: lottoPriceInput,
+  form: lottoSheetForm,
+  validation: getLottoAvailableQuantity,
+  logic: getLottoList,
 });
 
-Toggle({ target: lottoList, checkbox: lottoNumberToggleButton });
+Toggle({ target, checkbox: lottoNumberToggleButton });
