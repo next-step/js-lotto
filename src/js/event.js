@@ -17,6 +17,7 @@ import {
 	getAnswerCountArray,
 	getProfiltRate,
 	saveProfitRateToStore,
+	resetAllData,
 } from './model.js';
 import { validateInputMoney, validateInputAnswer } from './validate.js';
 
@@ -59,4 +60,8 @@ export const onSubmitLottoAnswerForm = function (ev) {
 
 export const onClickCloseModalBtn = function () {
 	closeModal($(modalSelector.LOTTO_RESULT_MODAL));
+};
+
+export const onClickResetBtn = function () {
+	resetAllData();
 };

@@ -9,6 +9,7 @@ export const buttonSelector = {
 	LOTTO_RESULT_MODAL_OPEN: '.open-result-modal-button',
 	LOTTO_RESULT_MODAL_CLOSE: '.modal-close',
 	LOTTO_NUMBERS_DETAIL_TOGGLE: '.switch',
+	LOTTO_RESET: '#reset-lotto',
 };
 
 export const modalSelector = {

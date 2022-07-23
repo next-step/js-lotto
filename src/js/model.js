@@ -1,5 +1,5 @@
 import { lottoStore } from './store/lotto-store.js';
-import { setInputMoney, setLottoAnswerList, setLottoList, setProfitRate } from './action/lotto-actions.js';
+import { setInputMoney, setLottoAnswerList, setLottoList, setProfitRate, resetAll } from './action/lotto-actions.js';
 import { LOTTO_PRICE, MAX_LOTTO_NUM, MAX_LOTTO_NUMS_SIZE, MIN_LOTTO_NUM } from './constants/nums.js';
 
 export const savePriceInputValueToStore = function (inputMoney) {
@@ -90,4 +90,8 @@ export const getProfiltRate = function (answerCountArray) {
 
 export const saveProfitRateToStore = function (profitRate) {
 	lottoStore.dispatch(setProfitRate(profitRate));
+};
+
+export const resetAllData = function () {
+	lottoStore.dispatch(resetAll());
 };
