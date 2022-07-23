@@ -21,12 +21,14 @@ describe('로또 생성 테스트', () => {
 
   it('1000원 단위 금액 입력 후 구매한다.', () => {
     const inputAmount = 7000;
+
     const lottoCount = inputAmount / PAYMENT_UNIT;
 
     cy.get('#form-amount').within(() => {
       cy.get('input').type(inputAmount);
       cy.root().submit();
     });
+
 
     cy.get('#lotto-amount').should('have.text', `총 ${lottoCount}개를 구매하였습니다.`);
     cy.get('.lotto-number').should('have.length', lottoCount);
@@ -41,6 +43,7 @@ describe('로또 생성 테스트', () => {
 
     cy.get('.lotto-number--visible').should('have.length', 7);
   });
+
 
   it('번호보기 라디오 버튼을 Off로 토글하면, 구매한 로또의 번호를 확인할 수 없다.', () => {
     const inputAmount = 7000;
@@ -263,3 +266,4 @@ describe('당첨 결과 확인 테스트', () => {
     cy.get('.switch').should('not.be.checked');
   });
 });
+
