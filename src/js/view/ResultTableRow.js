@@ -1,4 +1,4 @@
-import { RANK_AMOUNT, RANK_CONDITION } from '../domain/lotto/constants';
+import { RANK_AMOUNT, RANK_CONDITION } from '../domain/lotto/constants.js';
 
 export default function ResultTableRow({ rank, matchCount }) {
   const amount = RANK_AMOUNT[rank];
