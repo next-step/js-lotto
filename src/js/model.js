@@ -47,9 +47,7 @@ class Model {
 
     const numOfLotties = Math.floor(paidMoney / PRICE_OF_LOTTO);
 
-    Array.from({ length: numOfLotties }, () => {
-      this.curLotties.push(this._autoGenerateNumber());
-    });
+    this.curLotties = Array.from({ length: numOfLotties }, () => this._autoGenerateNumber());
   }
 
   _autoGenerateNumber() {
