@@ -40,9 +40,7 @@ class View {
     this.$showResultBtn.addEventListener("click", this.onModalOpen);
     this.$modalCloseBtn.addEventListener("click", this.onModalClose);
     this.$winningNumberInputs.addEventListener("input", ({ target }) => {
-      if (target.tagName === "INPUT") {
-        this.onWinningLottoDigitsInput(target);
-      }
+      this.onWinningLottoDigitsInput(target);
     });
     this.$bonnusWinningNumberInput.addEventListener("input", ({ target }) => {
       this.onWinningLottoDigitsInput(target);
