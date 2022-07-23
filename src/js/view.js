@@ -36,7 +36,7 @@ const generateLottoTicketComponent = function (detailNumbers) {
 
 	const detail = document.createElement('span');
 	detail.classList = 'lotto-detail';
-	detail.innerText = Array.from(detailNumbers).join(',');
+	detail.innerText = Array.from(detailNumbers).join(', ');
 
 	li.appendChild(icon);
 	li.appendChild(detail);
@@ -58,11 +58,15 @@ const paintLottoTickets = function () {
 };
 
 export const hideLottoDetailNumbers = function () {
-	$(ulSelector.LOTTO_TICKETS_WRAPPER).classList.add('hide-detail');
+	const lottoTicketsWrapper = $(ulSelector.LOTTO_TICKETS_WRAPPER);
+	lottoTicketsWrapper.classList.add('hide-detail');
+	lottoTicketsWrapper.classList.remove('flex-col');
 };
 
 export const showLottoDetailNumbers = function () {
-	$(ulSelector.LOTTO_TICKETS_WRAPPER).classList.remove('hide-detail');
+	const lottoTicketsWrapper = $(ulSelector.LOTTO_TICKETS_WRAPPER);
+	lottoTicketsWrapper.classList.remove('hide-detail');
+	lottoTicketsWrapper.classList.add('flex-col');
 };
 
 export const paintWinningCount = function (answerCountArray) {
