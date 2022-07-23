@@ -37,7 +37,7 @@ class View {
 
   initEvent() {
     this.$buyBtn.addEventListener("click", this.onLottieBuy);
-    this.$showResultBtn.addEventListener("click", this.onModalOpen);
+    this.$showResultBtn.addEventListener("click", this.onResultShow);
     this.$modalCloseBtn.addEventListener("click", this.onModalClose);
     this.$winningNumberInputs.addEventListener("input", this.onWinningLottoDigitsInput);
     this.$bonnusWinningNumberInput.addEventListener("input", this.onWinningLottoDigitsInput);
@@ -49,12 +49,16 @@ class View {
   };
 
   onModalOpen = () => {
+    this.$modal.addClass("open");
+    this.lottoController.handleModalOpen();
+  };
+
+  onResultShow = () => {
     if (!this.lottoController.canShowModal()) {
       alert("당첨 번호이 형식이 옳바르지 않습니다");
       return;
     }
-    this.$modal.addClass("open");
-    this.lottoController.handleModalOpen();
+    this.onModalOpen();
   };
 
   onModalClose = () => {
