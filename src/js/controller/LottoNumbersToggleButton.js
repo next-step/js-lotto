@@ -1,7 +1,7 @@
+import { COMMIT } from '../store/constants.js';
 import store from '../store/index.js';
-import { COMMIT } from '../constants/store.js';
 
-export default function lottoNumbersToggleButton() {
+export default function LottoNumbersToggleButton() {
   const $lottoNumbersToggleButton = document.querySelector('.lotto-numbers-toggle-button');
 
   const toggle = event => {
@@ -9,6 +9,4 @@ export default function lottoNumbersToggleButton() {
   };
 
   $lottoNumbersToggleButton.addEventListener('change', toggle);
-
-  return $lottoNumbersToggleButton;
 }
