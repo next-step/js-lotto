@@ -64,3 +64,34 @@ export const hideLottoDetailNumbers = function () {
 export const showLottoDetailNumbers = function () {
 	$(ulSelector.LOTTO_TICKETS_WRAPPER).classList.remove('hide-detail');
 };
+
+export const paintWinningCount = function (answerCountArray) {
+	const winningCountMap = {
+		0: 0,
+		1: 0,
+		2: 0,
+		3: 0,
+		4: 0,
+		5: 0,
+		'5-bonus': 0,
+		6: 0,
+	};
+	answerCountArray.forEach((el) => {
+		if (el.bonus && el.answerCnt === 5) {
+			winningCountMap['5-bonus']++;
+		} else {
+			winningCountMap[el.answerCnt]++;
+		}
+	});
+	Object.keys(winningCountMap).forEach((winningCount) => {
+		const winningCountElement = $(spanSelector.WINNING_COUNT_SELECTOR[winningCount]);
+		if (winningCountElement) {
+			winningCountElement.innerHTML = winningCountMap[winningCount];
+		}
+	});
+};
+
+export const paintLottoResult = function () {
+	const { profitRate } = lottoStore.getState();
+	$(spanSelector.PROFIT_SELECTOR).innerHTML = profitRate;
+};

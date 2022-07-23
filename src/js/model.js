@@ -70,7 +70,6 @@ export const getAnswerCountArray = function () {
 		);
 		answerCountArray.push(answerCnt);
 	});
-
 	return answerCountArray;
 };
 
@@ -85,10 +84,10 @@ export const getProfiltRate = function (answerCountArray) {
 		return acc + WINNING_MONEY_BY_ANSWER[cur.answerCnt];
 	}, 0);
 
-	const profitRate = ((profit / inputMoney) * 100).toFixed(2);
+	const profitRate = ((profit - inputMoney) / inputMoney) * 100;
 	return profitRate;
 };
 
-export const saveProfilRateToStore = function (profilRate) {
-	lottoStore.dispatch(setProfitRate(profilRate));
+export const saveProfitRateToStore = function (profitRate) {
+	lottoStore.dispatch(setProfitRate(profitRate));
 };
