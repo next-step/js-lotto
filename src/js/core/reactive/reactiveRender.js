@@ -1,11 +1,9 @@
 const reactiveRenderList = [];
 
-function registeReactiveRender(render) {
+export function registeReactiveRender(render) {
   reactiveRenderList.push(render);
 }
 
-function reactiveRender() {
+export function reactiveRender() {
   reactiveRenderList.forEach(renderFunction => renderFunction());
 }
-
-export { registeReactiveRender, reactiveRender };
