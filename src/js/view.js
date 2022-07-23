@@ -39,12 +39,8 @@ class View {
     this.$buyBtn.addEventListener("click", this.onLottieBuy);
     this.$showResultBtn.addEventListener("click", this.onModalOpen);
     this.$modalCloseBtn.addEventListener("click", this.onModalClose);
-    this.$winningNumberInputs.addEventListener("input", ({ target }) => {
-      this.onWinningLottoDigitsInput(target);
-    });
-    this.$bonnusWinningNumberInput.addEventListener("input", ({ target }) => {
-      this.onWinningLottoDigitsInput(target);
-    });
+    this.$winningNumberInputs.addEventListener("input", this.onWinningLottoDigitsInput);
+    this.$bonnusWinningNumberInput.addEventListener("input", this.onWinningLottoDigitsInput);
     this.$lottoResetBtn.addEventListener("click", this.onLottoGameReset);
   }
 
@@ -66,9 +62,10 @@ class View {
     this.lottoController.handleModalClose();
   };
 
-  onWinningLottoDigitsInput({ dataset, value }) {
+  onWinningLottoDigitsInput = ({ target }) => {
+    const { dataset, value } = target;
     this.lottoController.handleInputWinningLottoDigits(dataset.order, value);
-  }
+  };
 
   onLottoGameReset = () => {
     this.onModalClose();
