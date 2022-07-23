@@ -8,6 +8,7 @@ import {
 	closeModal,
 	paintLottoResult,
 	paintWinningCount,
+	resetAllView,
 } from './view.js';
 import {
 	resetPriceInputValue,
@@ -64,4 +65,6 @@ export const onClickCloseModalBtn = function () {
 
 export const onClickResetBtn = function () {
 	resetAllData();
+	resetAllView();
+	closeModal($(modalSelector.LOTTO_RESULT_MODAL));
 };
