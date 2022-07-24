@@ -103,16 +103,3 @@ export const paintLottoResult = function () {
 	const { profitRate } = lottoStore.getState();
 	$(spanSelector.PROFIT_SELECTOR).innerHTML = profitRate;
 };
-
-export const resetAllView = function () {
-	$(inputSelector.LOTTO_PURCHASE_FORM_INPUT).value = null;
-	$(spanSelector.WINNING_COUNT_SELECTOR[3]).innerHTML = 0;
-	$(spanSelector.WINNING_COUNT_SELECTOR[4]).innerHTML = 0;
-	$(spanSelector.WINNING_COUNT_SELECTOR[5]).innerHTML = 0;
-	$(spanSelector.WINNING_COUNT_SELECTOR['5-bonus']).innerHTML = 0;
-	$(spanSelector.WINNING_COUNT_SELECTOR[6]).innerHTML = 0;
-	$$(inputSelector.LOTTO_ANSWER_NUMBER_INPUT).forEach((input) => (input.value = null));
-	$(inputSelector.LOTTO_BONUS_NUMBER_INPUT).value = null;
-	hideElement($(sectionSelector.LOTTO_MENU_SECTION));
-	hideElement($(formSelector.LOTTO_ANSWER_FORM));
-};

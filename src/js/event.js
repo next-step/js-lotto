@@ -1,6 +1,6 @@
 import { formSelector, modalSelector, sectionSelector } from './constants/selectors.js';
-import { $, reduceNumberInputsToNums } from './util.js';
-import { showLottoDetailNumbers, hideLottoDetailNumbers, showElement, showModal, closeModal, resetAllView } from './view.js';
+import { $, $$, reduceNumberInputsToNums } from './util.js';
+import { showLottoDetailNumbers, hideLottoDetailNumbers, showElement, showModal, closeModal, hideElement } from './view.js';
 import {
 	resetPriceInputValue,
 	savePriceInputValueToStore,
@@ -46,7 +46,6 @@ export const onSubmitLottoAnswerForm = function (ev) {
 
 		const profitRate = getProfiltRate();
 		saveProfitRateToStore(profitRate);
-		// paintLottoResult();
 		showModal($(modalSelector.LOTTO_RESULT_MODAL));
 	}
 };
@@ -57,6 +56,8 @@ export const onClickCloseModalBtn = function () {
 
 export const onClickResetBtn = function () {
 	resetAllData();
-	resetAllView();
+	$$('input').forEach((input) => (input.value = null));
+	hideElement($(sectionSelector.LOTTO_MENU_SECTION));
+	hideElement($(formSelector.LOTTO_ANSWER_FORM));
 	closeModal($(modalSelector.LOTTO_RESULT_MODAL));
 };
