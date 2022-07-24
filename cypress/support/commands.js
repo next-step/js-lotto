@@ -24,9 +24,19 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-import { formSelector, inputSelector } from "../../src/js/constants/selectors";
+import { formSelector, inputSelector } from '../../src/js/constants/selectors';
 
-Cypress.Commands.add("submitPriceForm", (money) => {
-  cy.get(inputSelector.LOTTO_PURCHASE_FORM_INPUT).type(money);
-  cy.get(formSelector.LOTTO_PURCHASE_FORM).submit();
+Cypress.Commands.add('submitPriceForm', (money) => {
+	cy.get(inputSelector.LOTTO_PURCHASE_FORM_INPUT).type(money);
+	cy.get(formSelector.LOTTO_PURCHASE_FORM).submit();
+});
+
+Cypress.Commands.add('submitAnswerForm', () => {
+	cy.get(inputSelector.LOTTO_ANSWER_NUMBER_INPUT).each((input, idx) => {
+		cy.wrap(input)
+			.type(idx + 1)
+			.should('have.value', idx + 1);
+	});
+	cy.get(inputSelector.LOTTO_BONUS_NUMBER_INPUT).type(7);
+	cy.get(formSelector.LOTTO_ANSWER_FORM).submit();
 });
