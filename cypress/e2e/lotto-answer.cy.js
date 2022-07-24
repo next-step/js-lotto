@@ -1,3 +1,4 @@
+import { ERROR } from '../../src/js/constants/messages';
 import { inputSelector, buttonSelector, spanSelector, formSelector, modalSelector } from '../../src/js/constants/selectors';
 
 describe('로또 당첨 결과 기능 테스트', () => {
@@ -34,6 +35,19 @@ describe('로또 당첨 결과 기능 테스트', () => {
 			cy.submitAnswerForm().then(() => {
 				cy.get(spanSelector.PROFIT_SELECTOR).should('not.be.empty');
 			});
+		});
+		it('중복된 당첨 번호가 적혀있으면 결과 확인하기 버튼을 눌렀을 때 경고창이 뜬다.', () => {
+			const stub = cy.stub();
+			cy.on('window:alert', stub);
+			cy.get(inputSelector.LOTTO_ANSWER_NUMBER_INPUT).each((input) => {
+				cy.wrap(input).type(1);
+			});
+			cy.get(inputSelector.LOTTO_BONUS_NUMBER_INPUT).type(1);
+			cy.get(buttonSelector.LOTTO_RESULT_MODAL_OPEN)
+				.click()
+				.then(() => {
+					expect(stub.getCall(0)).to.be.calledWith(`ERROR : ${ERROR.INPUT_ANSWER_DUPLICATE}`);
+				});
 		});
 	});
 
