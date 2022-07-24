@@ -1,4 +1,4 @@
-import { inputSelector, buttonSelector, spanSelector, formSelector, liSelector, modalSelector } from '../../src/js/constants/selectors';
+import { inputSelector, buttonSelector, spanSelector, formSelector, modalSelector } from '../../src/js/constants/selectors';
 
 describe('로또 당첨 결과 기능 테스트', () => {
 	beforeEach(() => {
@@ -38,8 +38,19 @@ describe('로또 당첨 결과 기능 테스트', () => {
 	});
 
 	context('다시 시작하기 테스트', () => {
-		it('다시 시작하기 버튼이 결과 모달에 보인다.', () => {});
-		it('다시 시작하기 버튼을 누르면 모달이 닫힌다.', () => {});
-		it('다시 시작하기 버튼을 누르면 구매한 로또 정보가 초기화된다.', () => {});
+		beforeEach(() => {
+			cy.submitAnswerForm();
+		});
+		it('다시 시작하기 버튼이 결과 모달에 보인다.', () => {
+			cy.get(buttonSelector.LOTTO_RESET).should('be.visible');
+		});
+		it('다시 시작하기 버튼을 누르면 모달이 닫힌다.', () => {
+			cy.get(buttonSelector.LOTTO_RESET).click();
+			cy.get(modalSelector.LOTTO_RESULT_MODAL).should('not.be.visible');
+		});
+		it('다시 시작하기 버튼을 누르면 구매한 로또 정보가 초기화된다.', () => {
+			cy.get(buttonSelector.LOTTO_RESET).click();
+			cy.get(spanSelector.PURCHASED_LOTTO_COUNT_TEXT).should('have.text', '0');
+		});
 	});
 });
