@@ -1,6 +1,13 @@
 import { lottoStore } from './store/lotto-store.js';
-import { setInputMoney, setLottoList } from './action/lotto-actions.js';
-import { LOTTO_PRICE, MAX_LOTTO_NUM, MAX_LOTTO_NUMS_SIZE, MIN_LOTTO_NUM } from './constants/nums.js';
+import {
+	setInputMoney,
+	setLottoAnswerList,
+	setLottoList,
+	setProfitRate,
+	resetAll,
+	setLottoAnswerCountList,
+} from './action/lotto-actions.js';
+import { BONUS_FIVE, LOTTO_PRICE, MAX_LOTTO_NUM, MAX_LOTTO_NUMS_SIZE, MIN_LOTTO_NUM } from './constants/nums.js';
 
 export const savePriceInputValueToStore = function (inputMoney) {
 	lottoStore.dispatch(setInputMoney(inputMoney));
@@ -44,4 +51,57 @@ export const generateLottoList = function (priceInput) {
 
 export const saveLottoListToStore = function (lottoList) {
 	lottoStore.dispatch(setLottoList(lottoList));
+};
+
+export const saveLottoAnswerListToStore = function (answerList) {
+	lottoStore.dispatch(setLottoAnswerList(answerList));
+};
+
+export const getAnswerCountArray = function () {
+	const answerCountArray = [];
+	const { lottoList, lottoAnswerList } = lottoStore.getState();
+	const bonusAnswer = lottoAnswerList.pop();
+
+	lottoList.forEach((lotto) => {
+		const answerCnt = Array.from(lotto).reduce(
+			(acc, cur) => {
+				if (cur === bonusAnswer) {
+					return { ...acc, bonus: true };
+				}
+				if (lottoAnswerList.some((answer) => answer === cur)) {
+					return { ...acc, answerCnt: (acc.answerCnt += 1) };
+				}
+				return acc;
+			},
+			{ answerCnt: 0 }
+		);
+		answerCountArray.push(answerCnt);
+	});
+	return answerCountArray;
+};
+
+export const saveLottoAnswerCountList = function (lottoAnswerCountArray) {
+	lottoStore.dispatch(setLottoAnswerCountList(lottoAnswerCountArray));
+};
+export const getProfiltRate = function () {
+	const { inputMoney, lottoAnswerCountArray } = lottoStore.getState();
+	const WINNING_MONEY_BY_ANSWER = [0, 0, 0, 5000, 50000, 1500000, 2000000000];
+	const WINNING_MONEY_5_BONUS = 30000000;
+	const profit = lottoAnswerCountArray.reduce((acc, cur) => {
+		if (cur.bonus && cur.answerCnt === BONUS_FIVE) {
+			return acc + WINNING_MONEY_5_BONUS;
+		}
+		return acc + WINNING_MONEY_BY_ANSWER[cur.answerCnt];
+	}, 0);
+
+	const profitRate = (((profit - inputMoney) / inputMoney) * 100).toFixed(2);
+	return profitRate;
+};
+
+export const saveProfitRateToStore = function (profitRate) {
+	lottoStore.dispatch(setProfitRate(profitRate));
+};
+
+export const resetAllData = function () {
+	lottoStore.dispatch(resetAll());
 };
