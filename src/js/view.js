@@ -1,3 +1,4 @@
+import { BONUS_FIVE } from './constants/nums.js';
 import { formSelector, inputSelector, sectionSelector, spanSelector, ulSelector } from './constants/selectors.js';
 import { lottoStore } from './store/lotto-store.js';
 import { $, $$ } from './util.js';
@@ -25,6 +26,7 @@ export const renderPurchasedLottoCnt = function (lottoCount) {
 export const subscribeViewsToStore = function () {
 	lottoStore.subscribe(paintLottoTickets);
 	lottoStore.subscribe(paintLottoResult);
+	lottoStore.subscribe(paintWinningCount);
 };
 
 const generateLottoTicketComponent = function (detailNumbers) {
@@ -70,7 +72,8 @@ export const showLottoDetailNumbers = function () {
 	lottoTicketsWrapper.classList.add('flex-col');
 };
 
-export const paintWinningCount = function (answerCountArray) {
+export const paintWinningCount = function () {
+	const { lottoAnswerCountArray } = lottoStore.getState();
 	const winningCountMap = {
 		0: 0,
 		1: 0,
@@ -81,7 +84,7 @@ export const paintWinningCount = function (answerCountArray) {
 		'5-bonus': 0,
 		6: 0,
 	};
-	answerCountArray.forEach((el) => {
+	lottoAnswerCountArray.forEach((el) => {
 		if (el.bonus && el.answerCnt === 5) {
 			winningCountMap['5-bonus']++;
 		} else {

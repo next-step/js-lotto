@@ -1,9 +1,17 @@
-import { SET_INPUT_MONEY, SET_LOTTO_LIST, RESET_ALL, SET_LOTTO_ANSWER_LIST, SET_PROFIT_RATE } from '../action/lotto-actions.js';
+import {
+	SET_INPUT_MONEY,
+	SET_LOTTO_LIST,
+	RESET_ALL,
+	SET_LOTTO_ANSWER_LIST,
+	SET_PROFIT_RATE,
+	SET_LOTTO_ANSWER_COUNT_LIST,
+} from '../action/lotto-actions.js';
 
 export const INITIAL_LOTTO_STATE = {
 	inputMoney: 0,
 	lottoList: [],
 	lottoAnswerList: [],
+	lottoAnswerCountArray: [],
 	profitRate: 0,
 };
 
@@ -28,6 +36,11 @@ export const lottoReducer = function (state = INITIAL_LOTTO_STATE, action) {
 			return {
 				...state,
 				lottoAnswerList: action.payload,
+			};
+		case SET_LOTTO_ANSWER_COUNT_LIST:
+			return {
+				...state,
+				lottoAnswerCountArray: action.payload,
 			};
 		case SET_PROFIT_RATE:
 			return {

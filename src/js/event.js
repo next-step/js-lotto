@@ -1,15 +1,6 @@
 import { formSelector, modalSelector, sectionSelector } from './constants/selectors.js';
 import { $, reduceNumberInputsToNums } from './util.js';
-import {
-	showLottoDetailNumbers,
-	hideLottoDetailNumbers,
-	showElement,
-	showModal,
-	closeModal,
-	paintLottoResult,
-	paintWinningCount,
-	resetAllView,
-} from './view.js';
+import { showLottoDetailNumbers, hideLottoDetailNumbers, showElement, showModal, closeModal, resetAllView } from './view.js';
 import {
 	resetPriceInputValue,
 	savePriceInputValueToStore,
@@ -19,6 +10,7 @@ import {
 	getProfiltRate,
 	saveProfitRateToStore,
 	resetAllData,
+	saveLottoAnswerCountList,
 } from './model.js';
 import { validateInputMoney, validateInputAnswer } from './validate.js';
 
@@ -50,11 +42,11 @@ export const onSubmitLottoAnswerForm = function (ev) {
 	if (validateInputAnswer(answerValues)) {
 		saveLottoAnswerListToStore(answerValues);
 		const answerCountArray = getAnswerCountArray();
-		paintWinningCount(answerCountArray);
+		saveLottoAnswerCountList(answerCountArray);
 
-		const profitRate = getProfiltRate(answerCountArray);
+		const profitRate = getProfiltRate();
 		saveProfitRateToStore(profitRate);
-		paintLottoResult();
+		// paintLottoResult();
 		showModal($(modalSelector.LOTTO_RESULT_MODAL));
 	}
 };
