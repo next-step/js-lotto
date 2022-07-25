@@ -11,12 +11,18 @@ export default class InputFormView extends View {
 
   bindEvents() {
     this.on('submit', (event) => this.purchaseLotto(event));
-    this.on('click', (event) => this.purchaseLotto(event));
   }
 
   purchaseLotto(event) {
     event.preventDefault();
     const { value } = this.inputElement;
     this.emit('@submit', { value });
+  }
+
+  show(winningNumbers = []) {
+    const lottoQuantity = winningNumbers.length;
+    if (!lottoQuantity) {
+      this.inputElement.value = '';
+    }
   }
 }

@@ -7,6 +7,7 @@ export default class LottoResultView extends View {
     this.labelElement = $('#lotto-result__label');
     this.toggleElement = $('#lotto-numbers-toggle-button');
     this.bindEvents();
+    super.hide();
   }
 
   bindEvents() {
@@ -20,12 +21,10 @@ export default class LottoResultView extends View {
   }
 
   show(winningNumbers = []) {
-    const quantity = winningNumbers.length;
+    const lottoQuantity = winningNumbers.length;
+    if (!lottoQuantity) return super.hide();
 
-    if (!winningNumbers.length) return super.hide();
-    if (winningNumbers.length > 0) {
-      super.show();
-      this.labelElement.textContent = `총 ${quantity}개를 구매하였습니다.`;
-    }
+    this.labelElement.textContent = `총 ${lottoQuantity}개를 구매하였습니다.`;
+    super.show();
   }
 }
