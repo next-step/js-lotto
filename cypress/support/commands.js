@@ -24,6 +24,20 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 Cypress.Commands.add('purchaseInput', (number) => {
-  cy.get('.input-purchase').should('have.attr', 'placeholder', '구입 금액').type(number);
+  cy.get('.purchase-input').type(number);
   cy.get('.btn-purchase').contains('확인').click();
+});
+
+Cypress.Commands.add('randomWinningNumberInput', (number) => {
+  cy.get('.result-number').each(($ele) => {
+    const random = Math.floor(Math.random() * number + 1);
+
+    cy.get($ele).type(random);
+  });
+});
+
+Cypress.Commands.add('inputWinningNumbers', (number) => {
+  number.forEach((ele, idx) =>
+    cy.get(`[data-cy="winning-num-${idx + 1}"]`).type(ele)
+  );
 });
