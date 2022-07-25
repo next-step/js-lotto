@@ -9,6 +9,28 @@ describe('로또 생성 테스트', () => {
     cy.get('#input-amount').should('have.value', '');
   });
 
+  it('금액 입력창에 음수의 금액을 입력 후 구매한다.', () => {
+    const inputAmount = -1;
+
+    cy.get('#input-amount').type(inputAmount);
+    cy.get('#amount-submint').click();
+
+    cy.get('#input-amount')
+      .invoke('prop', 'validationMessage')
+      .should('eq', '값은 1000 이상이어야 합니다.');
+  });
+
+  it('금액 입력창에 100000만원 이상의 금액을 입력 후 구매한다.', () => {
+    const inputAmount = 101000;
+
+    cy.get('#input-amount').type(inputAmount);
+    cy.get('#amount-submint').click();
+
+    cy.get('#input-amount')
+      .invoke('prop', 'validationMessage')
+      .should('eq', '값은 100000 이하여야 합니다.');
+  });
+
   it('금액 입력창에 1000원 단위가 아닌 금액을 입력 후 구매한다.', () => {
     const inputAmount = 7777;
 
