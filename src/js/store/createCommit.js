@@ -1,4 +1,4 @@
-export default function Commit({ state, mutation, getter }) {
+export default function commit({ state, mutation, getter }) {
   return (name, payload) => {
     const mutate = mutation[name];
     if (!mutate) {
