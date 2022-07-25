@@ -2,7 +2,6 @@ import { ERROR, LOTTO_PER_PRICE } from './consts.js';
 import { isDuplicated } from './utils.js';
 import { lottoModule } from './modules/lottoModule.js';
 import { lottoViewModule } from './modules/lottoViewModule.js';
-import { LottoError } from './modules/errorModule.js';
 
 const $modalClose = document.querySelector('.modal-close');
 const $modal = document.querySelector('.modal');
@@ -33,7 +32,7 @@ const {
   isInvalidInputMoneyUnit,
   getTicketNumbersOfBuying,
   buyAllLottoByCount,
-  getWinningResult,
+  getWinningResultViewModel,
 } = lottoModule();
 
 const {
@@ -42,7 +41,6 @@ const {
   renderAutoBuyResult,
   visibleAutoBuySectionView,
   getWinningValuesInInput,
-  getWinningResultViewModel,
   renderWinningResult,
   visibleWinningFormView,
   renderProfit,
@@ -63,23 +61,27 @@ const onInitialize = () => {
 
 const onAutoBuyLotto = (e) => {
   e.preventDefault();
-  if (isInvalidInputMoneyUnit(LOTTO_PER_PRICE, +$moneyInput.value)) {
-    return new LottoError(
-      `lotto 금액은 ${LOTTO_PER_PRICE}원 단위로 입력해야 합니다.`
-    );
-  }
+  try {
+    if (isInvalidInputMoneyUnit(LOTTO_PER_PRICE, +$moneyInput.value)) {
+      throw new Error(
+        `lotto 금액은 ${LOTTO_PER_PRICE}원 단위로 입력해야 합니다.`
+      );
+    }
 
-  const ticketNumbers = getTicketNumbersOfBuying(
-    LOTTO_PER_PRICE,
-    +$moneyInput.value
-  );
-  const boughtResult = buyAllLottoByCount(ticketNumbers);
-  lottoData.setInputMoney(+$moneyInput.value);
-  lottoData.setBoughtResult(boughtResult);
-  renderTicketNumbers($buyTicketsCountLabel, ticketNumbers);
-  renderAutoBuyResult(boughtResult);
-  visibleAutoBuySectionView();
-  visibleWinningFormView();
+    const ticketNumbers = getTicketNumbersOfBuying(
+      LOTTO_PER_PRICE,
+      +$moneyInput.value
+    );
+    const boughtResult = buyAllLottoByCount(ticketNumbers);
+    lottoData.setInputMoney(+$moneyInput.value);
+    lottoData.setBoughtResult(boughtResult);
+    renderTicketNumbers($buyTicketsCountLabel, ticketNumbers);
+    renderAutoBuyResult(boughtResult);
+    visibleAutoBuySectionView();
+    visibleWinningFormView();
+  } catch (error) {
+    alert(error.message);
+  }
 };
 
 const onToggleLottoResult = () => {
@@ -88,22 +90,25 @@ const onToggleLottoResult = () => {
 
 const onVisibleWinningResult = (e) => {
   e.preventDefault();
-  const winningNumbers = getWinningValuesInInput($winningNumberInputWrapper);
+  try {
+    const winningNumbers = getWinningValuesInInput($winningNumberInputWrapper);
 
-  if (isDuplicated([...winningNumbers, +$bonusNumberInput.value])) {
-    return new LottoError(ERROR.DUPLICATED_LOTTO_NUMBER);
+    if (isDuplicated([...winningNumbers, +$bonusNumberInput.value])) {
+      throw new Error(ERROR.DUPLICATED_LOTTO_NUMBER);
+    }
+
+    const viewModel = getWinningResultViewModel(
+      winningNumbers,
+      lottoData.getBoughtResult(),
+      +$bonusNumberInput.value
+    );
+
+    renderWinningResult($winningResultBody, viewModel);
+    renderProfit($rateOfProfit, lottoData.getInputMoney(), viewModel);
+    onModalShow();
+  } catch (error) {
+    alert(error.message);
   }
-
-  const result = getWinningResult(
-    winningNumbers,
-    lottoData.getBoughtResult(),
-    +$bonusNumberInput.value
-  );
-
-  const viewModel = getWinningResultViewModel(result);
-  renderWinningResult($winningResultBody, viewModel);
-  renderProfit($rateOfProfit, lottoData.getInputMoney(), viewModel);
-  onModalShow();
 };
 const onModalShow = () => {
   $modal.classList.add('open');

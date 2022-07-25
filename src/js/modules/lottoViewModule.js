@@ -3,14 +3,8 @@ import {
   LOTTO_MIN_NUMBER,
   LOTTO_PER_PRICE,
   LOTTO_TRY_COUNT,
-  MATCHED_NUMBERS_ADDED_STR,
-  PRIZE_MONEY,
 } from '../consts.js';
-import {
-  compareNumbers,
-  reduceByFunctionCompose,
-  filterByNumber,
-} from '../utils.js';
+import { reduceByFunctionCompose } from '../utils.js';
 
 const lottoViewModule = (
   $moneyInput,
@@ -63,19 +57,6 @@ const lottoViewModule = (
     return Array.from(inputs).map((input) => +input.value);
   };
 
-  const getWinningResultViewModel = (winningResult) => {
-    return Object.keys(PRIZE_MONEY)
-      .map((matchedNumber) => ({
-        match: matchedNumber,
-        prizeMoney: PRIZE_MONEY[matchedNumber],
-        matchStr: `${Math.floor(+matchedNumber)}개${
-          MATCHED_NUMBERS_ADDED_STR[matchedNumber] || ''
-        }`,
-        winningCount: filterByNumber(winningResult, matchedNumber).length,
-      }))
-      .sort((prev, next) => compareNumbers(prev.match, next.match));
-  };
-
   const getWinningResultSet = ({ matchStr, prizeMoney, winningCount }) =>
     `<tr class="text-center">
         <td class="p-3">${matchStr}</td>
@@ -115,7 +96,6 @@ const lottoViewModule = (
     renderAutoBuyResult,
     visibleAutoBuySectionView,
     getWinningValuesInInput,
-    getWinningResultViewModel,
     renderWinningResult,
     visibleWinningFormView,
     getRateOfProfit,

@@ -3,12 +3,15 @@ import {
   getPickupElementByIndex,
   compareNumbers,
   reduceByFunctionCompose,
+  filterByNumber,
 } from '../utils.js';
 import {
   BONUS_WEIGHT,
   LOTTO_NUMBERS,
   LOTTO_TRY_COUNT,
   MATCHED_NUMBERS,
+  MATCHED_NUMBERS_ADDED_STR,
+  PRIZE_MONEY,
 } from '../consts.js';
 import { LottoData } from './lottoData.js';
 
@@ -72,6 +75,29 @@ const lottoModule = (inputMoney) => {
       );
     });
 
+  const getWinningResultViewModel = (
+    winningNumbers,
+    boughtNumbersSet,
+    bonusNumber
+  ) => {
+    const winningResult = getWinningResult(
+      winningNumbers,
+      boughtNumbersSet,
+      bonusNumber
+    );
+
+    return Object.keys(PRIZE_MONEY)
+      .map((matchedNumber) => ({
+        match: matchedNumber,
+        prizeMoney: PRIZE_MONEY[matchedNumber],
+        matchStr: `${Math.floor(+matchedNumber)}개${
+          MATCHED_NUMBERS_ADDED_STR[matchedNumber] || ''
+        }`,
+        winningCount: filterByNumber(winningResult, matchedNumber).length,
+      }))
+      .sort((prev, next) => compareNumbers(prev.match, next.match));
+  };
+
   return {
     lottoData,
     initializeData,
@@ -80,6 +106,7 @@ const lottoModule = (inputMoney) => {
     getRandomLottoNumbers,
     buyAllLottoByCount,
     getWinningResult,
+    getWinningResultViewModel,
   };
 };
 
