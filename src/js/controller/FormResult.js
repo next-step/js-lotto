@@ -1,12 +1,11 @@
 import { registeReactiveRender } from '../core/reactive/reactiveRender.js';
 import checkWinningLotto from '../domain/lotto/checkWinningLotto.js';
-import useModal from '../hooks/useModal.js';
 import { COMMIT } from '../store/constants.js';
 import store from '../store/index.js';
+import ModalOpen from './Modal/Open.js';
 import ModalResult from './ModalResult.js';
 
 export default function FormResult() {
-  const { open: openModal } = useModal();
   const $formResult = document.querySelector('#form-result');
   const $inputWinningNumbers = $formResult.querySelectorAll('.winning-number');
   const $inputBonusNumber = $formResult.querySelector('.bonus-number');
@@ -42,7 +41,7 @@ export default function FormResult() {
       store.commit(COMMIT.SET_BONUS_NUMBER, bonus);
 
       ModalResult();
-      openModal();
+      ModalOpen();
     } catch (error) {
       alert(error.message);
     }

@@ -1,10 +1,9 @@
-import useModal from '../hooks/useModal.js';
 import { DISPATCH } from '../store/constants.js';
 import store from '../store/index.js';
+import ModalClose from './Modal/Close.js';
 
 export default function ButtonRestart() {
-  const { $modal, close: closeModal } = useModal();
-  const $restartButton = $modal.querySelector('#restart-button');
+  const $restartButton = document.querySelector('#restart-button');
   const $inputAmount = document.querySelector('#input-amount');
   const $inputWinningNumbers = document.querySelectorAll('.winning-number');
   const $inputBonusNumber = document.querySelector('.bonus-number');
@@ -20,7 +19,7 @@ export default function ButtonRestart() {
   const restart = () => {
     store.dispatch(DISPATCH.RESTART_LOTTO);
     clearInputs();
-    closeModal();
+    ModalClose();
   };
 
   $restartButton.addEventListener('click', restart);
