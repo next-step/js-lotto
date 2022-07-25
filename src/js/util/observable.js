@@ -15,8 +15,8 @@ class Observable {
     }
   }
 
-  notify(key, args) {
-    this.observers[key](args);
+  notify(key, ...args) {
+    this.observers[key](...args);
   }
 }
 
