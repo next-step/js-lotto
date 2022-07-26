@@ -17,26 +17,3 @@ export const RANK_AMOUNT = {
   SECOND: 30_000_000,
   FIRST: 2_000_000_000,
 };
-
-export const RANK_CONDITION = {
-  [RANK.FIFTH]: {
-    matchConditionCount: 3,
-    isNeedBonuce: false,
-  },
-  [RANK.FOURTH]: {
-    matchConditionCount: 4,
-    isNeedBonuce: false,
-  },
-  [RANK.THRID]: {
-    matchConditionCount: 5,
-    isNeedBonuce: false,
-  },
-  [RANK.SECOND]: {
-    matchConditionCount: 5,
-    isNeedBonuce: true,
-  },
-  [RANK.FIRST]: {
-    matchConditionCount: 6,
-    isNeedBonuce: false,
-  },
-};
