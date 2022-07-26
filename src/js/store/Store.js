@@ -7,31 +7,35 @@ export default class Store {
     this.actions = action;
     this.mutations = mutation;
 
-    this.getter = name => {
-      const get = this.getters[name];
-      if (!get) {
-        throw new Error(`${name} is not found in action`);
-      }
+    this.getter = this.getter.bind(this);
+    this.dispatch = this.dispatch.bind(this);
+    this.commit = this.commit.bind(this);
+  }
 
-      return get(this);
-    };
+  getter(name) {
+    const get = this.getters[name];
+    if (!get) {
+      throw new Error(`${name} is not found in getter`);
+    }
 
-    this.dispatch = (name, ...payload) => {
-      const act = this.actions[name];
+    return get(this);
+  }
 
-      if (!act) {
-        throw new Error(`${name} is not found in action`);
-      }
-      act(this, ...payload);
-    };
+  dispatch(name, ...payload) {
+    const act = this.actions[name];
 
-    this.commit = (name, payload) => {
-      const mutate = this.mutations[name];
+    if (!act) {
+      throw new Error(`${name} is not found in action`);
+    }
+    act(this, ...payload);
+  }
 
-      if (!mutate) {
-        throw new Error(`${name} is not found in mutation`);
-      }
-      mutate(this, payload);
-    };
+  commit(name, payload) {
+    const mutate = this.mutations[name];
+
+    if (!mutate) {
+      throw new Error(`${name} is not found in mutation`);
+    }
+    mutate(this, payload);
   }
 }

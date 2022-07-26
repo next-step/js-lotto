@@ -52,4 +52,5 @@ const action = {
 };
 
 const store = new Store({ state, getter, mutation, action });
+
 export default store;
