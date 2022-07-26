@@ -1,20 +1,18 @@
-import { PAYMENT_UNIT } from '../constants/common.js';
-import reactiveState from '../core/reactive/reactiveState.js';
+import Store from './Store.js';
 import createLotto from '../domain/lotto/createLotto.js';
-import { COMMIT, DISPATCH } from './constants.js';
-import createCommit from './createCommit.js';
-import createDispatch from './createDispatch.js';
+import { PAYMENT_UNIT } from '../constants/common.js';
+import { COMMIT, DISPATCH, GETTER } from './constants.js';
 
-const state = reactiveState({
+const state = {
   amount: null,
   lottoList: [],
   wonLotto: [],
   bonusNumber: null,
   isVisibleLottos: false,
-});
+};
 
 const getter = {
-  getLottoAmount() {
+  [GETTER.LOTTO_AMOUNT]({ state }) {
     return Math.floor(state.amount / PAYMENT_UNIT);
   },
 };
@@ -37,16 +35,14 @@ const mutation = {
   },
 };
 
-const commit = createCommit({ state, mutation, getter });
-
 const action = {
-  [DISPATCH.MAKE_LOTTO_LIST]() {
-    const lottoAmount = getter.getLottoAmount();
+  [DISPATCH.MAKE_LOTTO_LIST]({ getter, commit }) {
+    const lottoAmount = getter(GETTER.LOTTO_AMOUNT);
     const lottoList = new Array(lottoAmount).fill(null).map(() => createLotto());
 
     commit(COMMIT.SET_LOTTO_LIST, lottoList);
   },
-  [DISPATCH.RESTART_LOTTO]() {
+  [DISPATCH.RESTART_LOTTO]({ commit }) {
     commit(COMMIT.SET_AMOUNT, null);
     commit(COMMIT.SET_LOTTO_LIST, []);
     commit(COMMIT.SET_IS_VISIBLE_LOTTOS, false);
@@ -55,6 +51,5 @@ const action = {
   },
 };
 
-const dispatch = createDispatch({ state, action, mutation, getter });
-
-export default { state: Object.freeze(state), getter, dispatch, commit };
+const store = new Store({ state, getter, mutation, action });
+export default store;

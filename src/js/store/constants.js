@@ -10,3 +10,7 @@ export const DISPATCH = {
   MAKE_LOTTO_LIST: 'MAKE_LOTTO_LIST',
   RESTART_LOTTO: 'RESTART_LOTTO',
 };
+
+export const GETTER = {
+  LOTTO_AMOUNT: 'LOTTO_AMOUNT',
+};
