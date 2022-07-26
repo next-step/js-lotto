@@ -1,6 +1,9 @@
 import { RANK, RANK_AMOUNT } from '../../domain/lotto/constants.js';
 import store from '../../store/index.js';
 
+const FAIL_ALL_REVENUE = -100;
+const INITIAL_REVENUE = 0;
+
 export default function ResultYield(countByRank) {
   const $yield = document.querySelector('#yield');
 
@@ -14,8 +17,8 @@ export default function ResultYield(countByRank) {
     const revenue = getRevenue();
     const { amount } = store.state;
 
-    if (!amount) return 0;
-    if (!revenue) return -100;
+    if (!amount) return INITIAL_REVENUE;
+    if (!revenue) return FAIL_ALL_REVENUE;
 
     return revenue / amount;
   };
