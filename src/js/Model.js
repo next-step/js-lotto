@@ -2,8 +2,8 @@ import { LOTTO_PRICE, LOTTO_NUMBER, LOTTO_LENGTH } from './constant.js';
 
 export default class LottoModel {
   constructor() {
-    this.winningNumbers = [];
-    this.resultNumbers = [];
+    this.lottoNumbers = [];
+    this.reward = null;
 
     this.isShowingNumbers = false;
     this.isModalOpen = false;
@@ -17,28 +17,46 @@ export default class LottoModel {
     return quantity;
   }
 
-  #getWinningNumbers() {
+  #getLottoNumbers() {
     const baseNumbers = Array.from({ length: LOTTO_NUMBER.MAX }, (_, i) => i + 1);
-    const winningNumbers = new Set();
+    const numbers = new Set();
     do {
-      winningNumbers.add(Math.floor(Math.random() * baseNumbers.length) + 1);
-    } while (winningNumbers.size < LOTTO_LENGTH);
-    return Array.from(winningNumbers);
+      numbers.add(Math.floor(Math.random() * baseNumbers.length) + 1);
+    } while (numbers.size < LOTTO_LENGTH);
+    return Array.from(numbers);
+  }
+
+  #checkMatchedNumbers(arr, { winningNumbers, bonusNumber }) {
+    let matched = 12 - new Set(winningNumbers.concat(arr)).size;
+    if (matched === 5 && arr.includes(bonusNumber)) return 7; //
+    return matched;
+  }
+
+  #getMatchedCount(numbers) {
+    const winningNumbers = [...numbers].splice(0, 6);
+    const bonusNumber = [...numbers].pop();
+    return this.lottoNumbers
+      .map((arr) => this.#checkMatchedNumbers(arr, { winningNumbers, bonusNumber }))
+      .reduce((acc, value) => {
+        if (!value) return acc;
+        return { ...acc, [value]: (acc[value] || 0) + 1 };
+      }, {});
   }
 
   generateLotto(paidAmount) {
     const quantity = this.#getQuantity(paidAmount);
-    this.winningNumbers = Array.from({ length: quantity }, () => this.#getWinningNumbers());
+    this.lottoNumbers = Array.from({ length: quantity }, () => this.#getLottoNumbers());
   }
 
-  setResultNumbers(numbers) {
-    if (!this.#isDuplicated(numbers)) throw new Error('중복된 번호를 입력할 수 없습니다.');
-    this.resultNumbers = numbers;
+  checkWinningNumbers(winningNumbers) {
+    if (!this.#isDuplicated(winningNumbers)) throw new Error('중복된 번호를 입력할 수 없습니다.');
+    const matchedCount = this.#getMatchedCount(winningNumbers);
+    this.reward = matchedCount;
   }
 
-  resetResultNumbers() {
-    this.winningNumbers = [];
-    this.resultNumbers = [];
+  resetWinningNumbers() {
+    this.lottoNumbers = [];
+    this.reward = null;
   }
 
   toggleShowNumber(isShowingNumbers) {

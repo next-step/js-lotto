@@ -20,8 +20,8 @@ export default class LottoResultView extends View {
     checked ? this.toggleElement.setAttribute('checked', true) : this.toggleElement.removeAttribute('checked', false);
   }
 
-  show(winningNumbers = []) {
-    const lottoQuantity = winningNumbers.length;
+  show(lottoNumbers = []) {
+    const lottoQuantity = lottoNumbers.length;
     if (!lottoQuantity) return super.hide();
 
     this.labelElement.textContent = `총 ${lottoQuantity}개를 구매하였습니다.`;

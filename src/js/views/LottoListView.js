@@ -30,9 +30,7 @@ export default class LottoListView extends View {
   `;
   }
 
-  show(winningNumbers = [], isShowingNumbers) {
-    this.element.innerHTML = isShowingNumbers
-      ? this.#getListWithNumbers(winningNumbers)
-      : this.#getList(winningNumbers);
+  show(lottoNumbers = [], isShowingNumbers) {
+    this.element.innerHTML = isShowingNumbers ? this.#getListWithNumbers(lottoNumbers) : this.#getList(lottoNumbers);
   }
 }

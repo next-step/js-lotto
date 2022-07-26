@@ -19,8 +19,8 @@ export default class InputFormView extends View {
     this.emit('@submit', { value });
   }
 
-  show(winningNumbers = []) {
-    const lottoQuantity = winningNumbers.length;
+  show(lottoNumbers = []) {
+    const lottoQuantity = lottoNumbers.length;
     if (!lottoQuantity) {
       this.inputElement.value = '';
     }

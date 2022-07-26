@@ -28,9 +28,9 @@ export default class Controller {
     this.render();
   }
 
-  checkLottoResult({ value: resultNumbers }) {
+  checkLottoResult({ value: winningNumbers }) {
     try {
-      this.model.setResultNumbers(resultNumbers);
+      this.model.checkWinningNumbers(winningNumbers);
       this.model.toggleShowModal(true);
       this.render();
     } catch (err) {
@@ -39,7 +39,7 @@ export default class Controller {
   }
 
   reset() {
-    this.model.resetResultNumbers();
+    this.model.resetWinningNumbers();
     this.closeModal();
     this.render();
   }
@@ -50,10 +50,10 @@ export default class Controller {
   }
 
   render() {
-    this.inputFormView.show(this.model.winningNumbers);
-    this.lottoResultView.show(this.model.winningNumbers);
-    this.lottoListView.show(this.model.winningNumbers, this.model.isShowingNumbers);
-    this.winningNumbersInputView.show(this.model.winningNumbers);
+    this.inputFormView.show(this.model.lottoNumbers);
+    this.lottoResultView.show(this.model.lottoNumbers);
+    this.lottoListView.show(this.model.lottoNumbers, this.model.isShowingNumbers);
+    this.winningNumbersInputView.show(this.model.lottoNumbers);
     this.lottoModalView.show(this.model.isModalOpen);
   }
 }

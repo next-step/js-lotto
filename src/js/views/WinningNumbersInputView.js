@@ -18,13 +18,13 @@ export default class WinningNumbersInputView extends View {
   checkWinningNumbers(event) {
     event.preventDefault();
     const numbers = Array.from(event.target.elements)
-      .map(({ value }) => value)
+      .map(({ value }) => Number(value))
       .filter((number) => number);
     this.emit('@submit', { value: numbers });
   }
 
-  show(winningNumbers = []) {
-    const lottoQuantity = winningNumbers.length;
+  show(lottoNumbers = []) {
+    const lottoQuantity = lottoNumbers.length;
     if (!lottoQuantity) {
       this.inputElements.forEach((el) => (el.value = ''));
       this.bonusInputElement.value = '';
