@@ -1,9 +1,9 @@
-import { registeReactiveRender } from '../core/reactive/reactiveRender.js';
-import checkWinningLotto from '../domain/lotto/checkWinningLotto.js';
-import { COMMIT } from '../store/constants.js';
-import store from '../store/index.js';
-import ModalOpen from './Modal/Open.js';
-import ModalResult from './ModalResult.js';
+import { registeReactiveRender } from '../../core/reactive/reactiveRender.js';
+import checkWinningLotto from '../../domain/lotto/checkWinningLotto.js';
+import { COMMIT } from '../../store/constants.js';
+import store from '../../store/index.js';
+import ModalOpen from '../Modal/Open.js';
+import ResultModal from './Modal.js';
 
 export default function FormResult() {
   const $formResult = document.querySelector('#form-result');
@@ -40,7 +40,7 @@ export default function FormResult() {
       store.commit(COMMIT.SET_WON_LOTTO, winningNumbers);
       store.commit(COMMIT.SET_BONUS_NUMBER, bonus);
 
-      ModalResult();
+      ResultModal();
       ModalOpen();
     } catch (error) {
       alert(error.message);

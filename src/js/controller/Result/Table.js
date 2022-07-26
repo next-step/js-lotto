@@ -1,5 +1,5 @@
-import { RANK } from '../domain/lotto/constants.js';
-import ResultTableRow from '../view/ResultTableRow.js';
+import { RANK } from '../../domain/lotto/constants.js';
+import ResultTableRow from '../../view/ResultTableRow.js';
 
 export default function ResultTable(countByRank) {
   const $resultTable = document.querySelector('.result-table');

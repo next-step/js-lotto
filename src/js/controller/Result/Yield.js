@@ -1,5 +1,5 @@
-import { RANK, RANK_AMOUNT } from '../domain/lotto/constants.js';
-import store from '../store/index.js';
+import { RANK, RANK_AMOUNT } from '../../domain/lotto/constants.js';
+import store from '../../store/index.js';
 
 export default function ResultYield(countByRank) {
   const $yield = document.querySelector('#yield');
