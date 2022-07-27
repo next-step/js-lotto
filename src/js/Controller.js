@@ -54,6 +54,6 @@ export default class Controller {
     this.lottoResultView.show(this.model.lottoNumbers);
     this.lottoListView.show(this.model.lottoNumbers, this.model.isShowingNumbers);
     this.winningNumbersInputView.show(this.model.lottoNumbers);
-    this.lottoModalView.show(this.model.isModalOpen, this.model.reward);
+    this.lottoModalView.show(this.model.isModalOpen, this.model.reward, this.model.lottoNumbers);
   }
 }

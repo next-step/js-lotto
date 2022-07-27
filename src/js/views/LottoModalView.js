@@ -1,5 +1,6 @@
 import View from './View.js';
 import { $ } from '../utils.js';
+import { LOTTO_PRICE, PRIZE_MONEY } from '../constant.js';
 
 export default class LottoModalView extends View {
   constructor(element = $('.modal')) {
@@ -23,13 +24,30 @@ export default class LottoModalView extends View {
     this.emit('@reset');
   }
 
-  show(isModalOpen = false, reward) {
-    isModalOpen ? super.show() : super.hide();
-    if (isModalOpen) {
-      Object.keys(reward).forEach((rank) => {
-        const $rank = $(`[data-rank=${rank.toLowerCase()}]`);
-        return ($rank.textContent = reward[rank]);
-      });
-    }
+  #renderPrizeCount(reward) {
+    Object.keys(reward).forEach((rank) => {
+      const $rank = $(`[data-rank=${rank.toLowerCase()}]`);
+      return ($rank.textContent = reward[rank]);
+    });
+  }
+
+  #renderEarningRate(reward, lottoNumbers) {
+    const $earningRate = $('#earning-rate');
+    const quantity = lottoNumbers.length;
+    const totalPrizeMoney = Object.keys(reward).reduce((acc, rank) => {
+      const prizeMoney = PRIZE_MONEY[rank];
+      const count = reward[rank];
+      return acc + prizeMoney * count;
+    }, 0);
+    const earningRate = (totalPrizeMoney / (quantity * LOTTO_PRICE)) * 100;
+    $earningRate.textContent = earningRate;
+  }
+
+  show(isModalOpen = false, reward, lottoNumbers) {
+    if (!isModalOpen) return super.hide();
+
+    super.show();
+    this.#renderPrizeCount(reward);
+    this.#renderEarningRate(reward, lottoNumbers);
   }
 }
