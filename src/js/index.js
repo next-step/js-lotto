@@ -62,7 +62,8 @@ const onInitialize = () => {
 const onAutoBuyLotto = (e) => {
   e.preventDefault();
   try {
-    if (isInvalidInputMoneyUnit(LOTTO_PER_PRICE, +$moneyInput.value)) {
+    const moneyInputValue = +e.target.lotto_money_input.value;
+    if (isInvalidInputMoneyUnit(LOTTO_PER_PRICE, moneyInputValue)) {
       throw new Error(
         `lotto 금액은 ${LOTTO_PER_PRICE}원 단위로 입력해야 합니다.`
       );
@@ -70,10 +71,10 @@ const onAutoBuyLotto = (e) => {
 
     const ticketNumbers = getTicketNumbersOfBuying(
       LOTTO_PER_PRICE,
-      +$moneyInput.value
+      moneyInputValue
     );
     const boughtResult = buyAllLottoByCount(ticketNumbers);
-    lottoData.setInputMoney(+$moneyInput.value);
+    lottoData.setInputMoney(moneyInputValue);
     lottoData.setBoughtResult(boughtResult);
     renderTicketNumbers($buyTicketsCountLabel, ticketNumbers);
     renderAutoBuyResult(boughtResult);
