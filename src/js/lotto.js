@@ -22,15 +22,14 @@ const handleFormSubmit = (e) => {
 }
 
 const checkValidate = () => {
-  if (!isPriceValidate()) {
-    alert('로또 구입 금액을 1,000원 단위로 입력해 주세요.')
+  if (!isPriceInteger()) {
     return false
   }
 
   return true
 }
 
-const isPriceValidate = () => {
+const isPriceInteger = () => {
   const price = Number($lottoPriceInput.value)
 
   if (price >= PREFIX) {
