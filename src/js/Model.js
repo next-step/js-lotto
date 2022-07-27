@@ -1,4 +1,4 @@
-import { LOTTO_PRICE, LOTTO_NUMBER, LOTTO_LENGTH } from './constant.js';
+import { LOTTO_PRICE, LOTTO_NUMBER, LOTTO_LENGTH, PRIZE_RANK } from './constant.js';
 
 export default class LottoModel {
   constructor() {
@@ -8,6 +8,15 @@ export default class LottoModel {
     this.isShowingNumbers = false;
     this.isModalOpen = false;
   }
+
+  static #winningCountInitialValue = {
+    FIRST: 0,
+    SECOND: 0,
+    THIRD: 0,
+    FOURTH: 0,
+    FIFTH: 0,
+  };
+
   #isDuplicated(numbers) {
     return new Set(numbers).size === LOTTO_LENGTH + 1;
   }
@@ -28,7 +37,7 @@ export default class LottoModel {
 
   #checkMatchedNumbers(arr, { winningNumbers, bonusNumber }) {
     let matched = 12 - new Set(winningNumbers.concat(arr)).size;
-    if (matched === 5 && arr.includes(bonusNumber)) return 7; //
+    if (matched === 5 && arr.includes(bonusNumber)) return 'BONUS';
     return matched;
   }
 
@@ -37,10 +46,11 @@ export default class LottoModel {
     const bonusNumber = [...numbers].pop();
     return this.lottoNumbers
       .map((arr) => this.#checkMatchedNumbers(arr, { winningNumbers, bonusNumber }))
-      .reduce((acc, value) => {
-        if (!value) return acc;
-        return { ...acc, [value]: (acc[value] || 0) + 1 };
-      }, {});
+      .reduce((acc, count) => {
+        const exceptionCount = [0, 1, 2];
+        if (exceptionCount.includes(count)) return acc;
+        return { ...acc, [PRIZE_RANK[count]]: (acc[count] || 0) + 1 };
+      }, LottoModel.#winningCountInitialValue);
   }
 
   generateLotto(paidAmount) {

@@ -23,7 +23,13 @@ export default class LottoModalView extends View {
     this.emit('@reset');
   }
 
-  show(isModalOpen = false) {
+  show(isModalOpen = false, reward) {
     isModalOpen ? super.show() : super.hide();
+    if (isModalOpen) {
+      Object.keys(reward).forEach((rank) => {
+        const $rank = $(`[data-rank=${rank.toLowerCase()}]`);
+        return ($rank.textContent = reward[rank]);
+      });
+    }
   }
 }
