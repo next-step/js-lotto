@@ -1,8 +1,8 @@
-import { LOTTO_PER_PRICE } from '../js/consts.js';
+import { ERROR, LOTTO_PER_PRICE } from './consts.js';
+import { isDuplicated } from './utils.js';
 import { lottoModule } from './modules/lottoModule.js';
 import { lottoViewModule } from './modules/lottoViewModule.js';
 
-const $showResultButton = document.querySelector('.open-result-modal-button');
 const $modalClose = document.querySelector('.modal-close');
 const $modal = document.querySelector('.modal');
 
@@ -17,49 +17,111 @@ const $buyTicketsCountLabel = document.querySelector(
 const $autoBuySection = document.querySelector('.auto-buy-section');
 const $autoBuyResultUl = $autoBuySection.querySelector('.auto-buy-result-ul');
 
-$moneyInput.min = LOTTO_PER_PRICE;
+const $winningNumbersForm = document.querySelector('#winning-numbers-form');
+const $winningNumberInputWrapper = document.querySelector(
+  '.winning-number-input-wrapper'
+);
+const $bonusNumberInput = document.querySelector('.bonus-number');
+const $winningResultBody = document.querySelector('.winning-result-body');
+const $rateOfProfit = document.querySelector('.rate-of-profit');
+const $lottoDataResetButton = document.querySelector('#lotto-data-reset');
+
+const {
+  lottoData,
+  initializeData,
+  isInvalidInputMoneyUnit,
+  getTicketNumbersOfBuying,
+  buyAllLottoByCount,
+  getWinningResultViewModel,
+} = lottoModule();
+
+const {
+  initializeView,
+  renderTicketNumbers,
+  renderAutoBuyResult,
+  visibleAutoBuySectionView,
+  getWinningValuesInInput,
+  renderWinningResult,
+  visibleWinningFormView,
+  renderProfit,
+} = lottoViewModule(
+  $moneyInput,
+  $autoBuySection,
+  $autoBuyResultUl,
+  $winningNumberInputWrapper,
+  $bonusNumberInput,
+  $winningNumbersForm,
+  $modal
+);
+
+const onInitialize = () => {
+  initializeData();
+  initializeView();
+};
 
 const onAutoBuyLotto = (e) => {
   e.preventDefault();
+  try {
+    const moneyInputValue = +e.target.lotto_money_input.value;
+    if (isInvalidInputMoneyUnit(LOTTO_PER_PRICE, moneyInputValue)) {
+      throw new Error(
+        `lotto 금액은 ${LOTTO_PER_PRICE}원 단위로 입력해야 합니다.`
+      );
+    }
 
-  const {
-    isInvalidInputMoneyUnit,
-    getTicketNumbersOfBuying,
-    buyAllLottoByCount,
-  } = lottoModule(+$moneyInput.value);
-
-  const {
-    renderTicketNumbers,
-    renderAutoBuyResult,
-    visibleAutoBuySectionView,
-  } = lottoViewModule($moneyInput);
-
-  if (isInvalidInputMoneyUnit(LOTTO_PER_PRICE)) {
-    alert(`lotto 금액은 ${LOTTO_PER_PRICE}원 단위로 입력해야 합니다.`);
-    return;
+    const ticketNumbers = getTicketNumbersOfBuying(
+      LOTTO_PER_PRICE,
+      moneyInputValue
+    );
+    const boughtResult = buyAllLottoByCount(ticketNumbers);
+    lottoData.setInputMoney(moneyInputValue);
+    lottoData.setBoughtResult(boughtResult);
+    renderTicketNumbers($buyTicketsCountLabel, ticketNumbers);
+    renderAutoBuyResult(boughtResult);
+    visibleAutoBuySectionView();
+    visibleWinningFormView();
+  } catch (error) {
+    alert(error.message);
   }
-
-  const ticketNumbers = getTicketNumbersOfBuying(LOTTO_PER_PRICE);
-  const boughtResult = buyAllLottoByCount(ticketNumbers);
-
-  renderTicketNumbers($buyTicketsCountLabel, ticketNumbers);
-  renderAutoBuyResult($autoBuyResultUl, boughtResult);
-  visibleAutoBuySectionView($autoBuySection);
 };
 
 const onToggleLottoResult = () => {
   $autoBuyResultUl.classList.toggle('flex-col');
 };
 
+const onVisibleWinningResult = (e) => {
+  e.preventDefault();
+  try {
+    const winningNumbers = getWinningValuesInInput($winningNumberInputWrapper);
+
+    if (isDuplicated([...winningNumbers, +$bonusNumberInput.value])) {
+      throw new Error(ERROR.DUPLICATED_LOTTO_NUMBER);
+    }
+
+    const viewModel = getWinningResultViewModel(
+      winningNumbers,
+      lottoData.getBoughtResult(),
+      +$bonusNumberInput.value
+    );
+
+    renderWinningResult($winningResultBody, viewModel);
+    renderProfit($rateOfProfit, lottoData.getInputMoney(), viewModel);
+    onModalShow();
+  } catch (error) {
+    alert(error.message);
+  }
+};
 const onModalShow = () => {
   $modal.classList.add('open');
 };
-
 const onModalClose = () => {
   $modal.classList.remove('open');
 };
 
 $lottoBuyForm.addEventListener('submit', onAutoBuyLotto);
-$showResultButton.addEventListener('click', onModalShow);
+$winningNumbersForm.addEventListener('submit', onVisibleWinningResult);
 $modalClose.addEventListener('click', onModalClose);
 $lottoNumbersToggleButton.addEventListener('click', onToggleLottoResult);
+$lottoDataResetButton.addEventListener('click', onInitialize);
+
+onInitialize();
