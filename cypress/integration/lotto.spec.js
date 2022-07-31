@@ -1,4 +1,4 @@
-import { getLottoNumber } from '../../src/utils/getLottoNumber.js'
+import { getLottoNumber } from '../../src/js/lotto'
 
 describe('로또 테스트 입니다.', () => {
   beforeEach(() => {
