@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "dev": "live-server ./",
     "e2e": "cypress run",
     "e2e:open": "cypress open"
   },
