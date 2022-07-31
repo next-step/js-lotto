@@ -1,24 +1,26 @@
-import { updateLottoResultForm } from './lottoResult.js'
+import { addEvent } from '../utils/addEvent.js'
+import { querySelector, querySelectorAll } from '../utils/querySelector.js'
+import { showLottoForm, updateLottoResultForm } from './lottoView.js'
 
-const $lottoPriceForm = document.querySelector('#lottoPriceForm')
-const $lottoResultForm = document.querySelector('#lottoResultForm')
-const $lottoNumberForm = document.querySelector('#lottoNumberForm')
+const LOTTO_PER_MONEY = 1000
 
-const $lottoPriceInput = document.querySelector('input[name="lottoPriceInput"]')
+const getLottoTicket = () => {
+  const $priceInput = querySelector('input[name=lottoPriceInput]')
+  return $priceInput.value / LOTTO_PER_MONEY
+}
 
-const PREFIX = 1000
+const getLottoNumber = () => {
+  const lottoNumbers = []
 
-const getLottoCount = () => $lottoPriceInput.value / PREFIX
+  while (lottoNumbers.length < 7) {
+    const number = Math.floor(Math.random() * 100) + 1
 
-const handleFormSubmit = (e) => {
-  e.preventDefault()
-
-  if (!checkValidate()) {
-    return
+    if (lottoNumbers.indexOf(number) === -1) {
+      lottoNumbers.push(number)
+    }
   }
 
-  updateStyle()
-  updateLottoResultForm(getLottoCount())
+  return lottoNumbers
 }
 
 const checkValidate = () => {
@@ -30,18 +32,47 @@ const checkValidate = () => {
 }
 
 const isPriceInteger = () => {
-  const price = Number($lottoPriceInput.value)
+  const $priceInput = querySelector('input[name=lottoPriceInput]')
+  const price = Number($priceInput.value)
 
-  if (price >= PREFIX) {
-    return Number.isInteger(price / PREFIX)
+  if (price >= LOTTO_PER_MONEY) {
+    return Number.isInteger(price / LOTTO_PER_MONEY)
   }
 }
 
-const updateStyle = () => {
-  if (isPriceValidate) {
-    $lottoResultForm.style.display = 'block'
-    $lottoNumberForm.style.display = 'block'
+const handleSubmitButton = (e) => {
+  e.preventDefault()
+
+  if (!checkValidate()) {
+    return
+  }
+
+  const lottoTicket = getLottoTicket()
+
+  showLottoForm()
+  updateLottoResultForm(lottoTicket)
+}
+
+const handleToggle = (e) => {
+  const isChecked = e.target.checked
+  const $lottoNumbers = querySelectorAll('span[name="lottoNumbers"]')
+
+  if (isChecked) {
+    $lottoNumbers.forEach((el) => (el.style = 'visibility: visible'))
+  } else {
+    $lottoNumbers.forEach((el) => (el.style = 'visibility: hidden'))
   }
 }
 
-$lottoPriceForm.addEventListener('submit', handleFormSubmit)
+const handlers = () => {
+  addEvent('submit', '#lottoPriceForm', handleSubmitButton)
+  addEvent('change', '.lotto-numbers-toggle-button', handleToggle)
+}
+
+const init = () => {
+  handlers()
+}
+
+init()
+
+export { getLottoNumber }
