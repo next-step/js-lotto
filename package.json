@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "dev": "live-server ./",
+    "e2e": "cypress run",
+    "e2e:open": "cypress open"
+  },
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^6.9.1"
   }
 }
