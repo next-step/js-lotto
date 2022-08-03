@@ -1,4 +1,4 @@
-import { LOTTO, PLACE, PRIZE } from './constants/index.js';
+import { LOTTO, PLACE, PRIZE, PLACE_LENGTH } from './constants/index.js';
 
 const getLottoNumbers = (money) => {
   return money / LOTTO.PRICE;
@@ -26,14 +26,14 @@ const getInitialPlace = (matchNumber) => {
     case 5:
       return PLACE.THIRD;
     case 6:
-      return PLACE.SECOND;
+      return PLACE.FIRST;
   }
 };
 
 const getMatchNumbers = (lotto, winningNumber) => {
   let matchNumbers = 0;
   lotto.forEach((v) => {
-    if (winningNumber.contain(v)) {
+    if (winningNumber.indexOf(v) > -1) {
       matchNumbers++;
     }
   });
@@ -42,13 +42,13 @@ const getMatchNumbers = (lotto, winningNumber) => {
 
 const getLottoPlace = (lotto, winningNumber, bonusNumber) => {
   const place = getInitialPlace(getMatchNumbers(lotto, winningNumber));
-  if (place === PLACE.THIRD && lotto.contain(bonusNumber)) {
+  if (place === PLACE.THIRD && lotto.indexOf(bonusNumber) > -1) {
     return PLACE.SECOND;
   }
   return place;
 };
 
-const getLottoPlacesResult = (lottos, winningNumber, bonusNumber) => {
+export const getLottoPlacesResult = (lottos, winningNumber, bonusNumber) => {
   const result = Array(PLACE_LENGTH).fill(0);
   lottos.forEach((lotto) => {
     result[getLottoPlace(lotto, winningNumber, bonusNumber)]++;

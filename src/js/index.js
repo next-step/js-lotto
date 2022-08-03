@@ -1,7 +1,11 @@
 import { ERR_MSG, LOTTO } from './constants/index.js';
-import { validateMoney, validateWinning } from './validate/money.js';
-import { renderLottoDetail, handleToggle } from './view.js';
-import { generateLottos } from './lotto.js';
+import { validateMoney, validateWinning } from './validate/index.js';
+import { renderLottoDetail, handleToggle, renderModalBody } from './view.js';
+import {
+  generateLottos,
+  getLottoPlacesResult,
+  getLottoTotalPrize,
+} from './lotto.js';
 import { LottoStore } from './LottoStore.js';
 
 const $modalClose = document.querySelector('.modal-close');
@@ -13,12 +17,27 @@ const onModalShow = (e) => {
   e.preventDefault();
   const winningNumbers = Array(6)
     .fill(0)
-    .map((v, i) => e.target[i].value);
-  const bonusNumber = e.target[LOTTO.LENGTH].value;
+    .map((v, i) => Number(e.target[i].value));
+  const bonusNumber = Number(e.target[LOTTO.LENGTH].value);
   if (!validateWinning(winningNumbers, bonusNumber)) {
     alert(ERR_MSG.NOT_A_DUPLICATE_NUMBER);
     return;
   }
+  renderModal(winningNumbers, bonusNumber);
+};
+
+const renderModal = (winningNumbers, bonusNumber) => {
+  const places = getLottoPlacesResult(
+    lottoStore.lottos,
+    winningNumbers,
+    bonusNumber
+  );
+  const money = lottoStore.lottos.length * LOTTO.PRICE;
+  const revenue = Math.round(
+    ((getLottoTotalPrize(places) - money) / money) * 100
+  );
+
+  renderModalBody(places, revenue);
   $modal.classList.add('open');
 };
 
