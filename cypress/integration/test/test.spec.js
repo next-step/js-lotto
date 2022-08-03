@@ -106,4 +106,43 @@ describe('행운의 로또 테스트', () => {
       );
     });
   });
+
+  describe('당첨번호와 보너스 번호를 넣고 결과 확인하기를 누르면 결과 모달창이 뜬다.', () => {
+    it('당첨번호와 보너스 번호를 제대로 넣으면 결과 모달창이 뜬다.', () => {
+      cy.buyLotto(3);
+      cy.typeWinningNumbers([1, 2, 3, 4, 5, 6], 7);
+      cy.clickResult();
+      cy.get('.modal').should('be.visible');
+    });
+    it('공백이 있으면 결과 모달창이 뜨지 않는다.', () => {
+      cy.buyLotto(3);
+      cy.clickResult();
+      cy.get('.modal').should('not.be.visible');
+    });
+    it('1보다 작은 숫자가 있으면 결과 모달창이 뜨지 않는다.', () => {
+      cy.buyLotto(3);
+      cy.typeWinningNumbers([1, 2, 0, 4, 5, 6], 7);
+      cy.clickResult();
+      cy.get('.modal').should('not.be.visible');
+    });
+    it('45보다 큰 숫자가 있으면 결과 모달창이 뜨지 않는다.', () => {
+      cy.buyLotto(3);
+      cy.typeWinningNumbers([1, 2, 56, 4, 5, 6], 7);
+      cy.clickResult();
+      cy.get('.modal').should('not.be.visible');
+    });
+    it('중복된 숫자가 있으면 결과 모달창이 뜨지 않고 alert 창이 뜬다.', () => {
+      cy.buyLotto(3);
+      cy.typeWinningNumbers([1, 2, 2, 4, 5, 6], 7);
+
+      const stub = cy.stub();
+      cy.on('window:alert', stub);
+      cy.clickResult().then(() => {
+        expect(stub.getCall(0)).to.be.calledWith(
+          ERR_MSG.NOT_A_DUPLICATE_NUMBER
+        );
+      });
+      cy.get('.modal').should('not.be.visible');
+    });
+  });
 });

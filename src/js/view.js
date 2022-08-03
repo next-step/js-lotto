@@ -67,7 +67,7 @@ const template = `
   <ul id="lotto-list" class="d-flex flex-wrap">
   </ul>
 </section>
-<form class="mt-9">
+<form class="winning-form mt-9">
   <label class="flex-auto d-inline-block mb-3"
     >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
   >
@@ -78,26 +78,50 @@ const template = `
         <input
           type="number"
           class="winning-number mx-1 text-center"
+          min="1"
+          max="45"
+          maxlength="2"
+          required
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"
+          min="1"
+          max="45"
+          maxlength="2"
+          required
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"
+          min="1"
+          max="45"
+          maxlength="2"
+          required
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"
+          min="1"
+          max="45"
+          maxlength="2"
+          required
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"
+          min="1"
+          max="45"
+          maxlength="2"
+          required
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"
+          min="1"
+          max="45"
+          maxlength="2"
+          required
         />
       </div>
     </div>
@@ -109,7 +133,7 @@ const template = `
     </div>
   </div>
   <button
-    type="button"
+    type="submit"
     class="open-result-modal-button mt-5 btn btn-cyan w-100"
   >
     결과 확인하기
