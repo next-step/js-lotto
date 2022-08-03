@@ -1,6 +1,6 @@
 import { LOTTO, PLACE, PRIZE, PLACE_LENGTH } from './constants/index.js';
 
-const getLottoNumbers = (money) => {
+const getLottoSize = (money) => {
   return money / LOTTO.PRICE;
 };
 
@@ -8,10 +8,13 @@ const lottoNumbers = Array(LOTTO.MAX_NUM)
   .fill(1)
   .map((v, k) => v + k);
 const generateLotto = () =>
-  lottoNumbers.sort(() => 0.5 - Math.random()).slice(0, LOTTO.LENGTH);
+  lottoNumbers
+    .sort(() => 0.5 - Math.random())
+    .slice(0, LOTTO.LENGTH)
+    .sort((a, b) => a - b);
 
 export const generateLottos = (money) => {
-  const lottos = Array.from({ length: getLottoNumbers(money) }, () =>
+  const lottos = Array.from({ length: getLottoSize(money) }, () =>
     generateLotto()
   );
   return lottos;
