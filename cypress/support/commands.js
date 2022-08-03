@@ -20,3 +20,6 @@ Cypress.Commands.add('typeWinningNumbers', (winningNumbers, bonusNumber) => {
 Cypress.Commands.add('clickResult', () => {
   cy.get('.open-result-modal-button').click();
 });
+Cypress.Commands.add('clickReset', () => {
+  cy.get('#reset-button').click();
+});

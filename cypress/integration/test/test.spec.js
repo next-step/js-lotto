@@ -145,4 +145,27 @@ describe('행운의 로또 테스트', () => {
       cy.get('.modal').should('not.be.visible');
     });
   });
+
+  describe('다시 시작하기 버튼을 누르면 초기화된다.', () => {
+    context(
+      '다시 시작하기 버튼을 누르면 구매 내역이 뜨지 않는 상태로 돌아간다.',
+      () => {
+        it('다시 시작하기 버튼을 누르면 구매 내역이 뜨지 않는 상태로 돌아간다.', () => {
+          cy.buyLotto(3);
+          cy.typeWinningNumbers([1, 2, 3, 4, 5, 6], 7);
+          cy.clickResult();
+          cy.clickReset();
+          cy.get('#lotto-list').should('not.exist');
+        });
+        it('다시 시작하기 버튼을 누른 후 다시 로또 구매가 가능하다.', () => {
+          cy.buyLotto(3);
+          cy.typeWinningNumbers([1, 2, 3, 4, 5, 6], 7);
+          cy.clickResult();
+          cy.clickReset();
+          cy.buyLotto(3);
+          cy.get('#lotto-list').should('be.visible');
+        });
+      }
+    );
+  });
 });

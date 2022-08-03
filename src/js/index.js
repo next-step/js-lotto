@@ -11,6 +11,7 @@ import { LottoStore } from './LottoStore.js';
 const $modalClose = document.querySelector('.modal-close');
 const $modal = document.querySelector('.modal');
 const $moneyForm = document.querySelector('.money-form');
+const $resetButton = document.querySelector('#reset-button');
 const lottoStore = new LottoStore();
 
 const onModalShow = (e) => {
@@ -74,5 +75,9 @@ const initListenerAfterBuyLotto = () => {
   $winningForm.addEventListener('submit', onModalShow);
   $modalClose.addEventListener('click', onModalClose);
 };
+
+$resetButton.addEventListener('click', () => {
+  window.location.reload();
+});
 
 $moneyForm.addEventListener('submit', handleClickBuy);
