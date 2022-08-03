@@ -1,4 +1,5 @@
-import { ERR_MSG } from '../../../src/js/constants';
+import { ERR_MSG, PLACE, PRIZE } from '../../../src/js/constants';
+import { getLottoTotalPrize } from '../../../src/js/lotto';
 
 describe('행운의 로또 테스트', () => {
   beforeEach(() => {
@@ -75,6 +76,34 @@ describe('행운의 로또 테스트', () => {
         cy.clickToggle();
         cy.get('.lotto-numbers').should('not.be.visible');
       });
+    });
+  });
+
+  describe('로또 당첨 금액이 올바르게 계산된다.', () => {
+    it('등수에 맞는 금액 계산', () => {
+      const resultArray1 = [0, 0, 0, 0, 0];
+      expect(getLottoTotalPrize(resultArray1)).to.eq(0);
+
+      const resultArray2 = [1, 0, 0, 0, 0];
+      expect(getLottoTotalPrize(resultArray2)).to.eq(PRIZE[PLACE.FIRST]);
+
+      const resultArray3 = [0, 0, 1, 0, 1];
+      expect(getLottoTotalPrize(resultArray3)).to.eq(
+        PRIZE[PLACE.THIRD] + PRIZE[PLACE.FIFTH]
+      );
+
+      const resultArray4 = [0, 1, 0, 0, 1];
+      expect(getLottoTotalPrize(resultArray4)).to.eq(
+        PRIZE[PLACE.SECOND] + PRIZE[PLACE.FIFTH]
+      );
+
+      const resultArray5 = [0, 1, 2, 5, 8];
+      expect(getLottoTotalPrize(resultArray5)).to.eq(
+        PRIZE[PLACE.SECOND] +
+          PRIZE[PLACE.THIRD] * 2 +
+          PRIZE[PLACE.FOURTH] * 5 +
+          PRIZE[PLACE.FIFTH] * 8
+      );
     });
   });
 });
