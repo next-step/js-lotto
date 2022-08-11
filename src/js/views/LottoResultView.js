@@ -1,20 +1,20 @@
 import View from './View.js';
 import { $ } from '../utils.js';
 
-export default class LottoResultView extends View {
+export class LottoResultView extends View {
   constructor(element = $('#lotto-result')) {
     super(element);
     this.labelElement = $('#lotto-result__label');
     this.toggleElement = $('#lotto-numbers-toggle-button');
+
     this.bindEvents();
-    super.hide();
   }
 
   bindEvents() {
-    this.on('change', (event) => this.handleToggle(event));
+    this.on('change', (event) => this.#handleToggle(event));
   }
 
-  handleToggle(event) {
+  #handleToggle(event) {
     const { checked } = event.target;
     this.emit('@toggle', { value: checked });
     checked ? this.toggleElement.setAttribute('checked', true) : this.toggleElement.removeAttribute('checked', false);

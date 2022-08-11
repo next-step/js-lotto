@@ -1,7 +1,7 @@
 import View from './View.js';
 import { $ } from '../utils.js';
 
-export default class InputFormView extends View {
+export class InputFormView extends View {
   constructor() {
     super($('#purchase-lotto'));
     this.inputElement = $('#purchase-lotto__input');
@@ -10,19 +10,21 @@ export default class InputFormView extends View {
   }
 
   bindEvents() {
-    this.on('submit', (event) => this.purchaseLotto(event));
+    this.on('submit', (event) => this.#purchaseLotto(event));
   }
 
-  purchaseLotto(event) {
+  #purchaseLotto(event) {
     event.preventDefault();
     const { value } = this.inputElement;
     this.emit('@submit', { value });
   }
 
+  #removeInputValue() {
+    this.inputElement.value = '';
+  }
+
   show(lottoNumbers = []) {
     const lottoQuantity = lottoNumbers.length;
-    if (!lottoQuantity) {
-      this.inputElement.value = '';
-    }
+    if (!lottoQuantity) return this.#removeInputValue();
   }
 }

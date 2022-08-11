@@ -52,27 +52,23 @@ describe('로또 결과 확인 테스트', () => {
 
   describe('결과창을 닫거나 다시 시작할 수 있다.', () => {
     it('닫기 버튼을 클릭시, 초기화 되지 않고 창이 닫힌다.', () => {
-      cy.get('.modal-close')
-        .click()
-        .then(() => {
-          cy.get('[data-cy="modal"]').should('not.be.visible');
-          cy.get('.lotto-numbers').should('not.be.empty');
-          cy.get('.winning-number').should('exist');
-          cy.get('.bonus-number').should('exist');
-        });
+      cy.get('.modal-close').click();
+
+      cy.get('[data-cy="modal"]').should('not.be.visible');
+      cy.get('.lotto-numbers').should('not.be.empty');
+      cy.get('.winning-number').should('exist');
+      cy.get('.bonus-number').should('exist');
     });
 
     it('다시 시작하기 클릭시, 초기화된다.', () => {
       cy.get('[data-cy="show-winning-result-modal"]').click();
-      cy.get('[data-cy="reset"]')
-        .click()
-        .then(() => {
-          cy.get('[data-cy="modal"]').should('not.be.visible');
-          cy.get('.lotto-numbers').should('not.exist');
-          cy.get('.winning-number').should('be.empty');
-          cy.get('.bonus-number').should('be.empty');
-          cy.get('[data-cy="price-input"]').clear();
-        });
+      cy.get('[data-cy="reset"]').click();
+
+      cy.get('[data-cy="modal"]').should('not.be.visible');
+      cy.get('.lotto-numbers').should('not.exist');
+      cy.get('.winning-number').should('be.empty');
+      cy.get('.bonus-number').should('be.empty');
+      cy.get('[data-cy="price-input"]').clear();
     });
   });
 });

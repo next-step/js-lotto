@@ -1,9 +1,14 @@
 import View from './View.js';
 import { $ } from '../utils.js';
 
-export default class LottoListView extends View {
+export class LottoListView extends View {
   constructor(element = $('#lotto-list')) {
     super(element);
+    this.isShowingNumbers = false;
+  }
+
+  toggleShowNumber(isShowingNumbers) {
+    this.isShowingNumbers = isShowingNumbers;
   }
 
   #getList(winningNumbers) {
@@ -30,7 +35,9 @@ export default class LottoListView extends View {
   `;
   }
 
-  show(lottoNumbers = [], isShowingNumbers) {
-    this.element.innerHTML = isShowingNumbers ? this.#getListWithNumbers(lottoNumbers) : this.#getList(lottoNumbers);
+  show(lottoNumbers = []) {
+    this.element.innerHTML = this.isShowingNumbers
+      ? this.#getListWithNumbers(lottoNumbers)
+      : this.#getList(lottoNumbers);
   }
 }

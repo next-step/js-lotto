@@ -1,10 +1,9 @@
 import View from './View.js';
 import { $ } from '../utils.js';
 
-export default class WinningNumbersInputView extends View {
+export class WinningNumbersInputView extends View {
   constructor(element = $('#winning-lotto-container')) {
     super(element);
-    super.hide();
     this.inputElements = document.querySelectorAll('.winning-number');
     this.bonusInputElement = $('.bonus-number');
     this.buttonElement = $('#show-winning-result-modal');
@@ -12,24 +11,27 @@ export default class WinningNumbersInputView extends View {
   }
 
   bindEvents() {
-    this.on('submit', (event) => this.checkWinningNumbers(event));
+    this.on('submit', (event) => this.#checkWinningNumbers(event));
   }
 
-  checkWinningNumbers(event) {
+  #checkWinningNumbers(event) {
     event.preventDefault();
     const numbers = Array.from(event.target.elements)
       .map(({ value }) => Number(value))
       .filter((number) => number);
+
     this.emit('@submit', { value: numbers });
+  }
+
+  #removeInputValue() {
+    this.inputElements.forEach((el) => (el.value = ''));
+    this.bonusInputElement.value = '';
+    return this.hide();
   }
 
   show(lottoNumbers = []) {
     const lottoQuantity = lottoNumbers.length;
-    if (!lottoQuantity) {
-      this.inputElements.forEach((el) => (el.value = ''));
-      this.bonusInputElement.value = '';
-      return super.hide();
-    }
+    if (!lottoQuantity) return this.#removeInputValue();
     super.show();
   }
 }

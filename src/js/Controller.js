@@ -1,59 +1,57 @@
 export default class Controller {
-  constructor(model, { inputFormView, lottoResultView, lottoListView, winningNumbersInputView, LottoModalView }) {
+  constructor(model, view) {
     this.model = model;
-    this.inputFormView = inputFormView;
-    this.lottoResultView = lottoResultView;
-    this.lottoListView = lottoListView;
-    this.winningNumbersInputView = winningNumbersInputView;
-    this.lottoModalView = LottoModalView;
+    this.view = view;
 
     this.subscribeViewEvents();
     this.render();
   }
 
   subscribeViewEvents() {
-    this.inputFormView.on('@submit', ({ detail }) => this.purchase(detail));
-    this.lottoResultView.on('@toggle', ({ detail }) => this.toggle(detail));
-    this.winningNumbersInputView.on('@submit', ({ detail }) => this.checkLottoResult(detail));
-    this.lottoModalView.on('@click', () => this.closeModal()).on('@reset', () => this.reset());
+    const { inputFormView, lottoResultView, winningNumbersInputView, lottoModalView } = this.view;
+    inputFormView.on('@submit', ({ detail }) => this.purchaseLotteries(detail));
+    lottoResultView.on('@toggle', ({ detail }) => this.toggleShowLottoNumbers(detail));
+    winningNumbersInputView.on('@submit', ({ detail }) => this.checkLottoResult(detail));
+    lottoModalView.on('@click', () => this.closeModal()).on('@reset', () => this.repurchase());
   }
 
-  purchase({ value: paidAmount }) {
-    this.model.generateLotto(paidAmount);
+  purchaseLotteries({ value: paidAmount }) {
+    this.model.lotto.generateLotteries(paidAmount);
     this.render();
   }
 
-  toggle({ value: isShowNumbers }) {
-    this.model.toggleShowNumber(isShowNumbers);
+  toggleShowLottoNumbers({ value: isShowNumbers }) {
+    this.view.lottoListView.toggleShowNumber(isShowNumbers);
     this.render();
   }
 
   checkLottoResult({ value: winningNumbers }) {
     try {
-      this.model.checkWinningNumbers(winningNumbers);
-      this.model.toggleShowModal(true);
+      this.model.prize.checkWinningNumbers(this.model.lotto.lottoNumbers, winningNumbers);
+      this.view.lottoModalView.openModal();
       this.render();
     } catch (err) {
       window.alert(err.message);
     }
   }
 
-  reset() {
-    this.model.resetWinningNumbers();
+  repurchase() {
+    this.model.lotto.resetWinningNumbers();
     this.closeModal();
-    this.render();
   }
 
   closeModal() {
-    this.model.toggleShowModal(false);
+    this.view.lottoModalView.closeModal();
     this.render();
   }
 
   render() {
-    this.inputFormView.show(this.model.lottoNumbers);
-    this.lottoResultView.show(this.model.lottoNumbers);
-    this.lottoListView.show(this.model.lottoNumbers, this.model.isShowingNumbers);
-    this.winningNumbersInputView.show(this.model.lottoNumbers);
-    this.lottoModalView.show(this.model.isModalOpen, this.model.reward, this.model.lottoNumbers);
+    const { inputFormView, lottoListView, lottoResultView, winningNumbersInputView, lottoModalView } = this.view;
+    const { lotto, prize } = this.model;
+    inputFormView.show(lotto.lottoNumbers);
+    lottoResultView.show(lotto.lottoNumbers);
+    lottoListView.show(lotto.lottoNumbers);
+    winningNumbersInputView.show(lotto.lottoNumbers);
+    lottoModalView.show(prize.reward, lotto.lottoNumbers);
   }
 }
