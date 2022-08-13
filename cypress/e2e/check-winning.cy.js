@@ -3,8 +3,10 @@ before(() => {
 });
 
 describe('로또 결과 확인 테스트', () => {
+  afterEach(() => cy.reload());
+
   describe('올바른 당첨 번호를 입력했는지 확인한다.', () => {
-    before(() => cy.purchaseLotto(4000));
+    beforeEach(() => cy.purchaseLotto(4000));
 
     it('로또를 구매시, 당첨번호를 입력할 수 있는 6개의 입력란과 1개의 보너스 입력란을 볼 수 있다.', () => {
       cy.get('.winning-number').should('have.lengthOf', 6);
@@ -24,7 +26,8 @@ describe('로또 결과 확인 테스트', () => {
   });
 
   describe('당첨번호를 입력 후 결과 확인 창에서 결과를 볼 수 있다.', () => {
-    before(() => {
+    beforeEach(() => {
+      cy.purchaseLotto(3000);
       const winningNumbers = [23, 45, 18, 14, 29, 33, 7];
       cy.inputWinningNumbers(winningNumbers);
       cy.get('[data-cy="show-winning-result-modal"]').click();
@@ -51,6 +54,13 @@ describe('로또 결과 확인 테스트', () => {
   });
 
   describe('결과창을 닫거나 다시 시작할 수 있다.', () => {
+    beforeEach(() => {
+      cy.purchaseLotto(5000);
+      const winningNumbers = [30, 10, 9, 42, 23, 17, 29];
+      cy.inputWinningNumbers(winningNumbers);
+      cy.get('[data-cy="show-winning-result-modal"]').click();
+    });
+
     it('닫기 버튼을 클릭시, 초기화 되지 않고 창이 닫힌다.', () => {
       cy.get('.modal-close').click();
 
@@ -61,14 +71,13 @@ describe('로또 결과 확인 테스트', () => {
     });
 
     it('다시 시작하기 클릭시, 초기화된다.', () => {
-      cy.get('[data-cy="show-winning-result-modal"]').click();
       cy.get('[data-cy="reset"]').click();
 
       cy.get('[data-cy="modal"]').should('not.be.visible');
       cy.get('.lotto-numbers').should('not.exist');
       cy.get('.winning-number').should('be.empty');
       cy.get('.bonus-number').should('be.empty');
-      cy.get('[data-cy="price-input"]').clear();
+      cy.get('[data-cy="price-input"]').should('not.have.value');
     });
   });
 });
