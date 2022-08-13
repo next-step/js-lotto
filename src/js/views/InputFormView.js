@@ -19,12 +19,7 @@ export class InputFormView extends View {
     this.emit('@submit', { value });
   }
 
-  #removeInputValue() {
+  removeInputValue() {
     this.inputElement.value = '';
-  }
-
-  show(lottoNumbers = []) {
-    const lottoQuantity = lottoNumbers.length;
-    if (!lottoQuantity) return this.#removeInputValue();
   }
 }

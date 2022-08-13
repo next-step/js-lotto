@@ -36,7 +36,10 @@ export default class Controller {
   }
 
   repurchase() {
+    const { inputFormView, winningNumbersInputView } = this.view;
     this.model.lotto.resetWinningNumbers();
+    inputFormView.removeInputValue();
+    winningNumbersInputView.removeInputValue();
     this.closeModal();
   }
 
@@ -48,6 +51,7 @@ export default class Controller {
   render() {
     const { inputFormView, lottoListView, lottoResultView, winningNumbersInputView, lottoModalView } = this.view;
     const { lotto, prize } = this.model;
+
     inputFormView.show(lotto.lottoNumbers);
     lottoResultView.show(lotto.lottoNumbers);
     lottoListView.show(lotto.lottoNumbers);

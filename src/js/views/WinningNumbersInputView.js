@@ -23,15 +23,9 @@ export class WinningNumbersInputView extends View {
     this.emit('@submit', { value: numbers });
   }
 
-  #removeInputValue() {
+  removeInputValue() {
     this.inputElements.forEach((el) => (el.value = ''));
     this.bonusInputElement.value = '';
     return this.hide();
-  }
-
-  show(lottoNumbers = []) {
-    const lottoQuantity = lottoNumbers.length;
-    if (!lottoQuantity) return this.#removeInputValue();
-    super.show();
   }
 }
