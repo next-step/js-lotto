@@ -2,7 +2,6 @@ export default class View {
   constructor(element) {
     this.element = element;
     this.originalDisplay = this.element.style.display || '';
-    return this;
   }
 
   hide() {

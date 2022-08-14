@@ -1,17 +1,27 @@
 import Controller from './Controller.js';
-import LottoModel from './Model.js';
-import InputFormView from './views/InputFormView.js';
-import LottoResultView from './views/LottoResultView.js';
-import LottoListView from './views/LottoListView.js';
+import { Lotto, Prize } from './models/index.js';
+import {
+  InputFormView,
+  LottoResultView,
+  LottoListView,
+  WinningNumbersInputView,
+  LottoModalView,
+} from './views/index.js';
 
 document.addEventListener('DOMContentLoaded', App);
 
 function App() {
-  const model = new LottoModel();
+  const model = {
+    lotto: new Lotto(),
+    prize: new Prize(),
+  };
+
   const views = {
     inputFormView: new InputFormView(),
     lottoResultView: new LottoResultView(),
     lottoListView: new LottoListView(),
+    winningNumbersInputView: new WinningNumbersInputView(),
+    lottoModalView: new LottoModalView(),
   };
 
   new Controller(model, views);

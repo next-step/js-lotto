@@ -1,31 +1,61 @@
 export default class Controller {
-  constructor(model, { inputFormView, lottoResultView, lottoListView }) {
+  constructor(model, view) {
     this.model = model;
-    this.inputFormView = inputFormView;
-    this.lottoResultView = lottoResultView;
-    this.lottoListView = lottoListView;
+    this.view = view;
 
     this.subscribeViewEvents();
     this.render();
   }
 
   subscribeViewEvents() {
-    this.inputFormView.on('@submit', ({ detail }) => this.onPurchase(detail));
-    this.lottoResultView.on('@toggle', ({ detail }) => this.onToggle(detail));
+    const { inputFormView, lottoResultView, winningNumbersInputView, lottoModalView } = this.view;
+    inputFormView.on('@submit', ({ detail }) => this.purchaseLotteries(detail));
+    lottoResultView.on('@toggle', ({ detail }) => this.toggleShowLottoNumbers(detail));
+    winningNumbersInputView.on('@submit', ({ detail }) => this.checkLottoResult(detail));
+    lottoModalView.on('@click', () => this.closeModal()).on('@reset', () => this.repurchase());
   }
 
-  onPurchase({ value }) {
-    this.model.generateLotto(value);
+  purchaseLotteries({ value: paidAmount }) {
+    this.model.lotto.generateLotteries(paidAmount);
     this.render();
   }
 
-  onToggle({ value }) {
-    this.model.showNumbers = value;
+  toggleShowLottoNumbers({ value: isShowNumbers }) {
+    this.view.lottoListView.toggleShowNumber(isShowNumbers);
+    this.render();
+  }
+
+  checkLottoResult({ value: winningNumbers }) {
+    try {
+      this.model.prize.checkWinningNumbers(this.model.lotto.lottoNumbers, winningNumbers);
+      this.view.lottoModalView.openModal();
+      this.render();
+    } catch (err) {
+      window.alert(err.message);
+    }
+  }
+
+  repurchase() {
+    const { inputFormView, winningNumbersInputView } = this.view;
+    this.model.lotto.resetWinningNumbers();
+    inputFormView.removeInputValue();
+    winningNumbersInputView.removeInputValue();
+    this.closeModal();
+  }
+
+  closeModal() {
+    this.view.lottoModalView.closeModal();
     this.render();
   }
 
   render() {
-    this.lottoResultView.show(this.model.winningNumbers);
-    this.lottoListView.show(this.model.winningNumbers, this.model.showNumbers);
+    const { inputFormView, lottoListView, lottoResultView, winningNumbersInputView, lottoModalView } = this.view;
+    const { lotto, prize } = this.model;
+
+    inputFormView.show(lotto.lottoNumbers);
+    lottoResultView.show(lotto.lottoNumbers);
+    lottoListView.show(lotto.lottoNumbers);
+    winningNumbersInputView.show(lotto.lottoNumbers);
+    lottoModalView.show(prize.reward, lotto.lottoNumbers);
   }
 }

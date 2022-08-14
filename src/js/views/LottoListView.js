@@ -1,41 +1,43 @@
 import View from './View.js';
 import { $ } from '../utils.js';
 
-export default class LottoListView extends View {
-  constructor(element = $('#div-lotto-list'), template = new Template()) {
+export class LottoListView extends View {
+  constructor(element = $('#lotto-list')) {
     super(element);
-    this.template = template;
+    this.isShowingNumbers = false;
   }
 
-  show(winningNumbers = [], showNumbers) {
-    this.element.innerHTML = showNumbers
-      ? this.template.getListWithNumbers(winningNumbers)
-      : this.template.getList(winningNumbers);
+  toggleShowNumber(isShowingNumbers) {
+    this.isShowingNumbers = isShowingNumbers;
   }
-}
 
-class Template {
-  getList(winningNumbers = []) {
+  #getList(winningNumbers) {
     return `
       <ul class="d-flex flex-wrap lotto-ul">
         ${winningNumbers.map(() => `<li class="mx-1 text-4xl">🎟️ </li>`).join('')}
-      </ul>
-    `;
+      </ul>`;
   }
-  getListWithNumbers(winningNumbers = []) {
+
+  #getListWithNumbers(winningNumbers) {
     return `
       <ul class="d-flex flex-wrap lotto-ul">
-      ${winningNumbers
-        .map((number) => {
-          return `
+        ${winningNumbers
+          .map((number) => {
+            return `
               <li class="mx-1 text-4xl">
                 <span class="lotto-icon">🎟️</span>
                 <span class="lotto-numbers">${number.join(',')}</span>
               </li>
-             `;
-        })
-        .join('')}
+              `;
+          })
+          .join('')}
       </ul>
-    `;
+  `;
+  }
+
+  show(lottoNumbers = []) {
+    this.element.innerHTML = this.isShowingNumbers
+      ? this.#getListWithNumbers(lottoNumbers)
+      : this.#getList(lottoNumbers);
   }
 }
