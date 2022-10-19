@@ -1,4 +1,6 @@
-function showLottoDetail(isChecked) {
+function showLottoDetail(e) {
+  const { checked: isChecked } = e.target;
+
   const lotto = document.querySelector('#lotto-list');
   const lottoDetail = document.querySelectorAll('.lotto-detail');
 

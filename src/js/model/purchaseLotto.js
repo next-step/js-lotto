@@ -2,7 +2,9 @@ import createLottoList from '../view/createLottoList.js';
 import createPurchaseDetailsTitle from '../view/createPurchaseDetailsTitle.js';
 import getLottoPurchaseNumbers from './getLottoPurchaseNumbers.js';
 
-function purchaseLotto() {
+function purchaseLotto(e) {
+  e.preventDefault();
+
   const purchaseList = document.querySelector('section.mt-9');
   const winningNumberForm = document.getElementById('winning-number-form');
   const purchaseInput = document.querySelector('.purchase-input');

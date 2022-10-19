@@ -1,14 +1,9 @@
-import executeEvent from './executeEvent.js';
+import addEvent from './addEvent.js';
+import initialSetting from './view/initialSetting.js';
 
 function init() {
-  const purchaseList = document.querySelector('section.mt-9');
-  const winningNumberForm = document.getElementById('winning-number-form');
-  const purchaseInput = document.querySelector('.purchase-input');
-  
-  purchaseList.style.display = 'none';
-  winningNumberForm.style.display = 'none';
-  purchaseInput.focus();
-  executeEvent();
+  initialSetting();
+  addEvent();
 }
 
-window.addEventListener('load', () => init());
+window.addEventListener('load', init);

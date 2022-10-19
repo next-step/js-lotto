@@ -4,7 +4,9 @@ import checkDuplicatedNumber from './checkDuplicatedNumber.js';
 import getNumberOfWinning from './getNumberOfWinning.js';
 import getWinningNumberValues from './getWinningNumberValues.js';
 
-function checkTheResult() {
+function checkTheResult(e) {
+  e.preventDefault();
+
   const winningNumbers = document.querySelectorAll('.winning-number');
   let winningNumberValues = getWinningNumberValues(winningNumbers);
 
