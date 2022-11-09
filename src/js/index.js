@@ -7,7 +7,7 @@ const $paymentCost = document.querySelector("#payment-cost-input");
 const $paymentButton = document.querySelector("#payment-button");
 const $paymentForm = document.querySelector(".payment-form");
 
-let paymentCostArr = [];
+let paymentCostStr = "";
 
 const onModalShow = () => {
   $modal.classList.add("open");
@@ -22,12 +22,14 @@ function blockComma() {
     return false;
   }
 }
+function digitRange() {}
 
 function paymentCost() {
-  paymentCostArr.push($paymentCost.value);
+  paymentCostStr = $paymentCost.value;
   blockComma();
+  digitRange();
   $paymentCost.focus();
-  console.log(paymentCostArr);
+  console.log(paymentCostStr);
 }
 
 $showResultButton.addEventListener("click", onModalShow);
