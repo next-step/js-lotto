@@ -16,11 +16,20 @@ const onModalShow = () => {
 const onModalClose = () => {
   $modal.classList.remove("open");
 };
+
+function blockComma() {
+  if ($paymentCost.key === ",") {
+    return false;
+  }
+}
+
 function paymentCost() {
   paymentCostArr.push($paymentCost.value);
-  console.log(paymentCostArr);
+  blockComma();
   $paymentCost.focus();
+  console.log(paymentCostArr);
 }
+
 $showResultButton.addEventListener("click", onModalShow);
 $modalClose.addEventListener("click", onModalClose);
 $paymentButton.addEventListener("click", paymentCost);
