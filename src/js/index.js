@@ -3,7 +3,7 @@ const $modalClose = document.querySelector(".modal-close");
 const $modal = document.querySelector(".modal");
 const $lottoNumbersToggleButton = document.querySelector(".lotto-numbers-toggle-button");
 
-const $paymentCost = document.querySelector("#payment-cost");
+const $paymentCost = document.querySelector("#payment-cost-input");
 const $paymentButton = document.querySelector("#payment-button");
 const $paymentForm = document.querySelector(".payment-form");
 
