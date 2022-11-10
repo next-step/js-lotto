@@ -9,6 +9,8 @@ const $paymentForm = document.querySelector(".payment-form");
 
 let paymentCostStr = "";
 
+const $paymentTickets = document.querySelector("#payment-ticket");
+
 const onModalShow = () => {
   $modal.classList.add("open");
 };
@@ -31,12 +33,17 @@ function digitRange() {
 function lotteryIssuance() {
   return paymentCostStr / 1000;
 }
+function makeLottoByUser() {
+  const number = lotteryIssuance();
+  $paymentTickets.innerText = `총 ${number}개를 구매하였습니다.`;
+}
 
 function paymentCost() {
   paymentCostStr = $paymentCost.value;
   blockComma();
   digitRange();
   lotteryIssuance();
+  makeLottoByUser();
   $paymentCost.focus();
   console.log(paymentCostStr);
   console.log(lotteryIssuance());
