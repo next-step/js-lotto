@@ -37,7 +37,13 @@ function makeLottoByUser() {
   const number = lotteryIssuance();
   $paymentTickets.innerText = `총 ${number}개를 구매하였습니다.`;
 }
-
+function makeRandomLottoNumber() {
+  let randomNumber = [];
+  for (let i = 0; i < 6; i++) {
+    randomNumber.push(Math.floor(Math.random() * 45 + 1));
+  }
+  return randomNumber;
+}
 function paymentCost() {
   paymentCostStr = $paymentCost.value;
   blockComma();
@@ -47,6 +53,7 @@ function paymentCost() {
   $paymentCost.focus();
   console.log(paymentCostStr);
   console.log(lotteryIssuance());
+  console.log(`당첨번호 : ${makeRandomLottoNumber()}`);
 }
 
 $showResultButton.addEventListener("click", onModalShow);
