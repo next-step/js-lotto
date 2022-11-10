@@ -22,7 +22,11 @@ function blockComma() {
     return false;
   }
 }
-function digitRange() {}
+function digitRange() {
+  if (paymentCostStr % 1000 !== 0) {
+    alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
+  }
+}
 
 function paymentCost() {
   paymentCostStr = $paymentCost.value;
