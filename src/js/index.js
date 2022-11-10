@@ -28,12 +28,18 @@ function digitRange() {
   }
 }
 
+function lotteryIssuance() {
+  return paymentCostStr / 1000;
+}
+
 function paymentCost() {
   paymentCostStr = $paymentCost.value;
   blockComma();
   digitRange();
+  lotteryIssuance();
   $paymentCost.focus();
   console.log(paymentCostStr);
+  console.log(lotteryIssuance());
 }
 
 $showResultButton.addEventListener("click", onModalShow);
