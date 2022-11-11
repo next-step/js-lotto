@@ -60,6 +60,13 @@ function makeRandomLottoNumber() {
   return lottoNumber;
 }
 
+function makeTicket() {
+  let tickets = [];
+  for (let i = 0; i < lotteryIssuance(); i++) {
+    tickets.push(makeRandomLottoNumber());
+  }
+  return tickets;
+}
 function paymentCost() {
   paymentCostStr = $paymentCost.value;
   blockComma();
@@ -70,6 +77,7 @@ function paymentCost() {
   console.log(paymentCostStr);
   console.log(lotteryIssuance());
   console.log(`당첨번호 : ${makeRandomLottoNumber()}`);
+  console.log(makeTicket());
 }
 
 $showResultButton.addEventListener("click", onModalShow);
