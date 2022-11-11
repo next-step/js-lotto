@@ -11,6 +11,8 @@ let paymentCostStr = "";
 
 const $paymentTickets = document.querySelector("#payment-ticket");
 
+$lottoNumbersToggleButton.addEventListener("click", showLottoNumber);
+
 const onModalShow = () => {
   $modal.classList.add("open");
 };
@@ -18,6 +20,12 @@ const onModalShow = () => {
 const onModalClose = () => {
   $modal.classList.remove("open");
 };
+
+function showLottoNumber() {
+  let ticket = makeTicket();
+  // const $tickets = document.querySelectorAll(".tickts");
+  // console.log($tickets);
+}
 
 function blockComma() {
   if ($paymentCost.key === ",") {
@@ -76,7 +84,6 @@ function paymentCost() {
   $paymentCost.focus();
   console.log(paymentCostStr);
   console.log(lotteryIssuance());
-  console.log(`당첨번호 : ${makeRandomLottoNumber()}`);
   console.log(makeTicket());
 }
 
@@ -84,4 +91,7 @@ $showResultButton.addEventListener("click", onModalShow);
 $modalClose.addEventListener("click", onModalClose);
 $paymentButton.addEventListener("click", paymentCost);
 // submit이벤트여도 값이 넘어가야한다.
-$paymentForm.addEventListener("submit", paymentCost);
+$paymentForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  paymentCost();
+});
