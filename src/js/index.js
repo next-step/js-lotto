@@ -37,12 +37,26 @@ function makeLottoByUser() {
   const number = lotteryIssuance();
   $paymentTickets.innerText = `총 ${number}개를 구매하였습니다.`;
 }
+
 function makeRandomLottoNumber() {
-  let randomNumber = [];
+  let lottoNumber = [];
   for (let i = 0; i < 6; i++) {
-    randomNumber.push(Math.floor(Math.random() * 45 + 1));
+    const randomNumber = Math.floor(Math.random() * 45 + 1);
+    if (!isDuplicated(randomNumber)) {
+      lottoNumber.push(randomNumber);
+      // i++;
+    }
   }
-  return randomNumber;
+  function isDuplicated(n) {
+    for (let i = 0; i < lottoNumber.length; i++) {
+      if (n === lottoNumber[i]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  return lottoNumber;
 }
 
 function paymentCost() {
