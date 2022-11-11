@@ -40,15 +40,16 @@ function makeLottoByUser() {
 
 function makeRandomLottoNumber() {
   let lottoNumber = [];
-  for (let i = 0; i < 6; i++) {
+  let i = 0;
+  while (i < 6) {
     const randomNumber = Math.floor(Math.random() * 45 + 1);
     if (!isDuplicated(randomNumber)) {
       lottoNumber.push(randomNumber);
-      // i++;
+      i++;
     }
   }
   function isDuplicated(n) {
-    for (let i = 0; i < lottoNumber.length; i++) {
+    for (let i = 0; i < 6; i++) {
       if (n === lottoNumber[i]) {
         return true;
       }
