@@ -44,6 +44,7 @@ function makeRandomLottoNumber() {
   }
   return randomNumber;
 }
+
 function paymentCost() {
   paymentCostStr = $paymentCost.value;
   blockComma();
