@@ -21,7 +21,9 @@ const onModalClose = () => {
 
 function showLottoNumber(ticket) {
   const lottoResult = document.querySelector(".lotto-result");
-
+  while (lottoResult.hasChildNodes()) {
+    lottoResult.removeChild(lottoResult.firstChild);
+  }
   for (let i = 0; i < ticket.length; i++) {
     const li = document.createElement("li");
     li.className = "d-flex flex-wrap lotto-wrap";
@@ -51,6 +53,8 @@ function blockComma() {
 function digitRange() {
   if (paymentCostStr % 1000 !== 0) {
     alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
+    $paymentCost.value = "";
+    return;
   }
 }
 
