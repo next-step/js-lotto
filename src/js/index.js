@@ -11,7 +11,7 @@ let paymentCostStr = "";
 
 const $paymentTickets = document.querySelector("#payment-ticket");
 
-$lottoNumbersToggleButton.addEventListener("click", showLottoNumber);
+// $lottoNumbersToggleButton.addEventListener("click", showLottoNumber);
 
 const onModalShow = () => {
   $modal.classList.add("open");
@@ -21,10 +21,22 @@ const onModalClose = () => {
   $modal.classList.remove("open");
 };
 
-function showLottoNumber() {
-  let ticket = makeTicket();
-  // const $tickets = document.querySelectorAll(".tickts");
-  // console.log($tickets);
+function showLottoNumber(ticket) {
+  const lottoResult = document.querySelector(".lotto-result");
+
+  for (let i = 0; i < ticket.length; i++) {
+    const img = document.createElement("span");
+    img.className = "mx-1 text-4xl lotto-result-list-item";
+    img.innerText = "🎟️";
+
+    const ticketNumber = document.createElement("span");
+    ticketNumber.classList = "lotto-ticket-number";
+    ticketNumber.innerText = ticket[i];
+    lottoResult.appendChild(img);
+    lottoResult.appendChild(ticketNumber);
+  }
+
+  return lottoResult;
 }
 
 function blockComma() {
@@ -85,6 +97,7 @@ function paymentCost() {
   console.log(paymentCostStr);
   console.log(lotteryIssuance());
   console.log(makeTicket());
+  showLottoNumber(makeTicket());
 }
 
 $showResultButton.addEventListener("click", onModalShow);

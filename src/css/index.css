@@ -22,3 +22,9 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.lotto-result-wrap {
+  display: block;
+  width: 100px;
+  height: 100px;
+}
