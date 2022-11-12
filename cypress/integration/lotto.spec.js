@@ -36,6 +36,9 @@ describe("번호보기 토글버튼 테스트", () => {
     cy.get("#payment-cost-input").click();
     cy.get("#payment-cost-input").type("1000");
     cy.get("#payment-button").click();
-    cy.get(".lotto-numbers-toggle-button").click();
+    cy.get(".lotto-numbers-toggle-button").check({ force: true });
+    cy.get(".lotto-result").should("be.visible");
+    cy.get(".lotto-ticket-number").should("be.visible");
+    cy.get(".lotto-numbers-toggle-button").uncheck({ force: true });
   });
 });
