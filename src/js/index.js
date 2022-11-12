@@ -32,7 +32,7 @@ function showLottoNumber(ticket) {
 
     const ticketNumber = document.createElement("span");
     ticketNumber.classList = "lotto-ticket-number";
-    ticketNumber.style = "display: inline";
+    ticketNumber.style = "display: none";
     ticketNumber.innerText = ticket[i];
 
     lottoResult.appendChild(li);
@@ -94,16 +94,28 @@ function makeTicket() {
   return tickets;
 }
 function clickToggle() {
-  const ul = document.querySelectorAll(".lotto-result");
-  const ticketNumber = document.querySelectorAll(".lotto-ticket-number");
-
-  for (let i = 0; i < ul.length; i++) {
-    ul[i].className = "d-flex flex-wrap lotto-result";
-  }
-  for (let i = 0; i < ticketNumber.length; i++) {
-    ticketNumber[i].style.display = "none";
+  const toggleSwitch = document.querySelector(".lotto-numbers-toggle-button");
+  if (toggleSwitch.checked === true) {
+    const ul = document.querySelectorAll(".lotto-result");
+    const ticketNumber = document.querySelectorAll(".lotto-ticket-number");
+    for (let i = 0; i < ul.length; i++) {
+      ul[i].className = "d-flex flex-wrap flex-col lotto-result";
+    }
+    for (let i = 0; i < ticketNumber.length; i++) {
+      ticketNumber[i].style.display = "inline";
+    }
+  } else {
+    const ul = document.querySelectorAll(".lotto-result");
+    const ticketNumber = document.querySelectorAll(".lotto-ticket-number");
+    for (let i = 0; i < ul.length; i++) {
+      ul[i].className = "d-flex flex-wrap lotto-result";
+    }
+    for (let i = 0; i < ticketNumber.length; i++) {
+      ticketNumber[i].style.display = "none";
+    }
   }
 }
+
 function paymentCost() {
   paymentCostStr = $paymentCost.value;
   blockComma();
