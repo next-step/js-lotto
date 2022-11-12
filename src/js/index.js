@@ -11,8 +11,6 @@ let paymentCostStr = "";
 
 const $paymentTickets = document.querySelector("#payment-ticket");
 
-// $lottoNumbersToggleButton.addEventListener("click", showLottoNumber);
-
 const onModalShow = () => {
   $modal.classList.add("open");
 };
@@ -34,6 +32,7 @@ function showLottoNumber(ticket) {
 
     const ticketNumber = document.createElement("span");
     ticketNumber.classList = "lotto-ticket-number";
+    ticketNumber.style = "display: inline";
     ticketNumber.innerText = ticket[i];
 
     lottoResult.appendChild(li);
@@ -94,6 +93,17 @@ function makeTicket() {
   }
   return tickets;
 }
+function clickToggle() {
+  const ul = document.querySelectorAll(".lotto-result");
+  const ticketNumber = document.querySelectorAll(".lotto-ticket-number");
+
+  for (let i = 0; i < ul.length; i++) {
+    ul[i].className = "d-flex flex-wrap lotto-result";
+  }
+  for (let i = 0; i < ticketNumber.length; i++) {
+    ticketNumber[i].style.display = "none";
+  }
+}
 function paymentCost() {
   paymentCostStr = $paymentCost.value;
   blockComma();
@@ -115,3 +125,4 @@ $paymentForm.addEventListener("submit", (e) => {
   e.preventDefault();
   paymentCost();
 });
+$lottoNumbersToggleButton.addEventListener("click", clickToggle);
