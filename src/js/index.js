@@ -25,6 +25,9 @@ function showLottoNumber(ticket) {
   const lottoResult = document.querySelector(".lotto-result");
 
   for (let i = 0; i < ticket.length; i++) {
+    const li = document.createElement("li");
+    li.className = "d-flex flex-wrap lotto-wrap";
+
     const img = document.createElement("span");
     img.className = "mx-1 text-4xl lotto-result-list-item";
     img.innerText = "🎟️";
@@ -32,8 +35,12 @@ function showLottoNumber(ticket) {
     const ticketNumber = document.createElement("span");
     ticketNumber.classList = "lotto-ticket-number";
     ticketNumber.innerText = ticket[i];
-    lottoResult.appendChild(img);
-    lottoResult.appendChild(ticketNumber);
+
+    lottoResult.appendChild(li);
+    li.appendChild(img);
+    li.appendChild(ticketNumber);
+    // lottoResult.appendChild(img);
+    // lottoResult.appendChild(ticketNumber);
   }
 
   return lottoResult;
