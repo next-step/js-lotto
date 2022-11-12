@@ -123,9 +123,6 @@ function paymentCost() {
   lotteryIssuance();
   makeLottoByUser();
   $paymentCost.focus();
-  console.log(paymentCostStr);
-  console.log(lotteryIssuance());
-  console.log(makeTicket());
   showLottoNumber(makeTicket());
 }
 
