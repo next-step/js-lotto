@@ -54,8 +54,9 @@ function digitRange() {
   if (paymentCostStr % 1000 !== 0) {
     alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
     $paymentCost.value = "";
-    return;
+    return false;
   }
+  return true;
 }
 
 function lotteryIssuance() {
@@ -120,12 +121,15 @@ function clickToggle() {
 
 function paymentCost() {
   paymentCostStr = $paymentCost.value;
-  blockComma();
-  digitRange();
-  lotteryIssuance();
-  makeLottoByUser();
-  $paymentCost.focus();
-  showLottoNumber(makeTicket());
+  if (digitRange() === true) {
+    blockComma();
+    digitRange();
+    lotteryIssuance();
+    makeLottoByUser();
+    $paymentCost.focus();
+    showLottoNumber(makeTicket());
+  }
+  paymentCostStr = 0;
 }
 
 $showResultButton.addEventListener("click", onModalShow);
