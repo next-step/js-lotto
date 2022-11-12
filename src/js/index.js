@@ -38,8 +38,6 @@ function showLottoNumber(ticket) {
     lottoResult.appendChild(li);
     li.appendChild(img);
     li.appendChild(ticketNumber);
-    // lottoResult.appendChild(img);
-    // lottoResult.appendChild(ticketNumber);
   }
 
   return lottoResult;
@@ -129,7 +127,6 @@ function paymentCost() {
 $showResultButton.addEventListener("click", onModalShow);
 $modalClose.addEventListener("click", onModalClose);
 $paymentButton.addEventListener("click", paymentCost);
-// submit이벤트여도 값이 넘어가야한다.
 $paymentForm.addEventListener("submit", (e) => {
   e.preventDefault();
   paymentCost();
