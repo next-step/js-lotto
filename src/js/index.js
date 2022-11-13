@@ -1,5 +1,5 @@
 import { $ } from './utils/dom.js';
-import { SELECTOR } from './constants/lotto.js';
+import { SELECTOR } from './constants/index.js';
 import { handleClickNumberToggle, handleSubmit } from './eventHandlers/lotto.js';
 
 const bindEvents = () => {

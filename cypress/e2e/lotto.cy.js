@@ -1,4 +1,4 @@
-const { ERROR_MESSAGE } = require('../../src/js/constants/lotto');
+const { ERROR_MESSAGE } = require('../../src/js/constants/index.js');
 
 describe('로또 어플리케이션을 테스트한다.', () => {
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { SELECTOR } from '../constants/lotto.js';
+import { SELECTOR } from '../constants/index.js';
 import { generateLottoNumbersToArray } from '../service/lotto.js';
 import { $, $all } from '../utils/dom.js';
 
