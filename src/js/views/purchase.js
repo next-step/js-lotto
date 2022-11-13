@@ -29,12 +29,12 @@ export class Purchase {
         if (!this.hasOnChange) return;
         if (!!this.hasOnChange) this.issue.reset();
 
-        if (!this.$purchased.amount.value) alert(ERROR.InputRequired);
+        if (!this.$purchased.amount.value) return alert(ERROR.InputRequired);
 
-        const isCommensurable = this.$purchased.amount.value % pricePerUnit;
+        const isCommensurable = this.$purchased.amount.value > 0 && !(this.$purchased.amount.value % pricePerUnit);
         const lottoNumber = this.$purchased.amount.value / pricePerUnit;
 
-        !isCommensurable ? this.doPurchase(lottoNumber) : this.rejectPurchase();
+        isCommensurable ? this.doPurchase(lottoNumber) : this.rejectPurchase();
         this.hasOnChange = false;
     }
 
