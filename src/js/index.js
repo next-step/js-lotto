@@ -4,7 +4,7 @@ import LottoModel from './lotto.js';
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $modalClose = document.querySelector('.modal-close');
 const $modal = document.querySelector('.modal');
-const $lottoNumbersToggleButton = document.querySelector('.lotto-numbers-toggle-button');
+const $lottoNumbersToggleButton = document.querySelector('.switch');
 const $purchaseAmountInput = document.querySelector('#purchaseAmount');
 const $purchaseButton = document.querySelector('#purchaseButton');
 const $purchasedLottoList = document.querySelector('#purchasedLottoList');
@@ -24,6 +24,10 @@ const onModalShow = () => {
 
 const onModalClose = () => {
   $modal.classList.remove('open');
+};
+
+const onToggleClick = () => {
+  $lottoIconList.style.flexDirection = 'column';
 };
 
 const onPurchaseClick = (e) => {
@@ -95,4 +99,5 @@ const initPurchaseLotto = () => {
 $showResultButton.addEventListener('click', onModalShow);
 $modalClose.addEventListener('click', onModalClose);
 $purchaseButton.addEventListener('click', onPurchaseClick);
+$lottoNumbersToggleButton.addEventListener('click', onToggleClick);
 displayDetails();
