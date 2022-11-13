@@ -8,6 +8,7 @@ const $purchaseAmountInput = document.querySelector('#purchaseAmount');
 const $purchaseButton = document.querySelector('#purchaseButton');
 const $purchasedLottoList = document.querySelector('#purchasedLottoList');
 const $winningNumberInputs = document.querySelector('#winningNumberInputs');
+const $totalQuantity = document.querySelector('#totalQuantity');
 const lottoState = {
   purchasedAmount: 0,
   quantity: 0,
@@ -36,6 +37,7 @@ const onPurchaseClick = (e) => {
   lottoState.purchasedAmount = purchasedAmount;
   lottoState.quantity = Number(purchasedAmount) / 1000;
   displayDetails();
+  $totalQuantity.innerText = lottoState.quantity;
 const displayDetails = () => {
   if (!lottoState.quantity) {
     $purchasedLottoList.style.display = 'none';
