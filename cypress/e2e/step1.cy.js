@@ -1,3 +1,5 @@
+import { isAlreadyExist } from '../../src/js/validators';
+
 describe('로또 어플리케이션 단계1', () => {
   beforeEach(() => {
     cy.visit('/');
@@ -140,5 +142,11 @@ describe('로또 어플리케이션 단계1', () => {
       });
     });
 
+    it('자동구매된 로또는 서로 같지 않아야 한다.', () => {
+      const arrayA = [1, 2, 3, 4, 5, 6];
+      const arrayB = [2, 4, 1, 3, 6, 5];
+      const result = isAlreadyExist([arrayA, arrayB]);
+      expect(result).to.be.true;
+    });
   });
 });
