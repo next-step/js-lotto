@@ -3,8 +3,8 @@ import { generateLottoNumbersToArray } from '../service/lotto.js';
 import { $, $all } from '../utils/dom.js';
 
 const lottoTemplate = (lottoNumbers) => `
-<li>
-  <span class="mx-1 text-4xl" data-cy="lotto-icon">🎟️ </span>
+<li data-cy='lotto-icon-list'>
+  <span class="mx-1 text-4xl">🎟️ </span>
   <span class="lotto-detail js-lotto-detail-number none" data-cy="lotto-detail-number">${lottoNumbers.join(', ')}</span>
 </li>
 `;
