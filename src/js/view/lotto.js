@@ -33,5 +33,5 @@ export const renderLottoPurchaseCountText = (count) => {
 export const renderLottoIcons = (count) => {
   const lottoNumbersArray = generateLottoNumbersToArray(count);
 
-  $(SELECTOR.LOTTO_ICON_WRAPPER).innerHTML = lottoNumbersArray.map(lottoTemplate);
+  $(SELECTOR.LOTTO_ICON_WRAPPER).innerHTML = lottoNumbersArray.map(lottoTemplate).join('');
 };
