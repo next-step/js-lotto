@@ -1,5 +1,5 @@
 import { SELECTOR } from '../constants/lotto.js';
-import { generateLottoNumbers } from '../service/lotto.js';
+import { generateLottoNumbersToArray } from '../service/lotto.js';
 import { $, $all } from '../utils/dom.js';
 
 const lottoTemplate = (lottoNumbers) => `
@@ -31,10 +31,7 @@ export const renderLottoPurchaseCountText = (count) => {
 };
 
 export const renderLottoIcons = (count) => {
-  let renderedHtml = '';
-  for (let i = 0; i < count; i++) {
-    renderedHtml += lottoTemplate(generateLottoNumbers());
-  }
+  const lottoNumbersArray = generateLottoNumbersToArray(count);
 
-  $(SELECTOR.LOTTO_ICON_WRAPPER).innerHTML = renderedHtml;
+  $(SELECTOR.LOTTO_ICON_WRAPPER).innerHTML = lottoNumbersArray.map(lottoTemplate);
 };
