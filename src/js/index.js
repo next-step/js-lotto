@@ -98,9 +98,9 @@ function makeTicket() {
 }
 function clickToggle() {
   const toggleSwitch = document.querySelector(".lotto-numbers-toggle-button");
+  const ul = document.querySelectorAll(".lotto-result");
+  const ticketNumber = document.querySelectorAll(".lotto-ticket-number");
   if (toggleSwitch.checked === true) {
-    const ul = document.querySelectorAll(".lotto-result");
-    const ticketNumber = document.querySelectorAll(".lotto-ticket-number");
     for (let i = 0; i < ul.length; i++) {
       ul[i].className = "d-flex flex-wrap flex-col lotto-result";
     }
@@ -108,8 +108,6 @@ function clickToggle() {
       ticketNumber[i].style.display = "inline";
     }
   } else {
-    const ul = document.querySelectorAll(".lotto-result");
-    const ticketNumber = document.querySelectorAll(".lotto-ticket-number");
     for (let i = 0; i < ul.length; i++) {
       ul[i].className = "d-flex flex-wrap lotto-result";
     }
