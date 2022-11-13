@@ -1,3 +1,3 @@
-import { initialize } from './ui.js';
+import { initialize } from './view/ui.js';
 
 initialize();

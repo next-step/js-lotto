@@ -35,13 +35,7 @@
                 </label>
               </div>
             </div>
-            <div class="d-flex flex-wrap lotto-icons" data-cy="lotto-icons">
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-            </div>
+            <div class="d-flex flex-wrap lotto-icons" data-cy="lotto-icons"></div>
           </section>
           <form class="mt-9 winning-form">
             <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
@@ -90,27 +84,27 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="text-center">
+                <tr class="text-center tr-3-hit">
                   <td class="p-3">3개</td>
                   <td class="p-3">5,000</td>
                   <td class="p-3">n개</td>
                 </tr>
-                <tr class="text-center">
+                <tr class="text-center tr-4-hit">
                   <td class="p-3">4개</td>
                   <td class="p-3">50,000</td>
                   <td class="p-3">n개</td>
                 </tr>
-                <tr class="text-center">
+                <tr class="text-center tr-5-hit">
                   <td class="p-3">5개</td>
                   <td class="p-3">1,500,000</td>
                   <td class="p-3">n개</td>
                 </tr>
-                <tr class="text-center">
+                <tr class="text-center tr-bonus-hit">
                   <td class="p-3">5개 + 보너스볼</td>
                   <td class="p-3">30,000,000</td>
                   <td class="p-3">n개</td>
                 </tr>
-                <tr class="text-center">
+                <tr class="text-center tr-6-hit">
                   <td class="p-3">6개</td>
                   <td class="p-3">2,000,000,000</td>
                   <td class="p-3">n개</td>
@@ -118,7 +112,7 @@
               </tbody>
             </table>
           </div>
-          <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+          <p class="text-center font-bold">당신의 총 수익률은 <span class="earning-rate">오오오%</span>입니다.</p>
           <div class="d-flex justify-center mt-5">
             <button type="button" class="btn btn-cyan">다시 시작하기</button>
           </div>

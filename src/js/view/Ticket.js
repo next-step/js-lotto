@@ -1,4 +1,4 @@
-import { TICKET_ICON } from './Constant.js';
+import { TICKET_ICON } from '../util/Constant.js';
 
 export function setTickets(tickets = []) {
   const $ticketItems = tickets.map((ticket) => getTicketItem(ticket));

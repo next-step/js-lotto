@@ -109,7 +109,12 @@ describe('로또 요구사항을 테스트한다', () => {
   });
 
   describe('당첨 결과를 입력하고 결과 확인을 누르면 모달 창이 떠야 한다', () => {
-    it('결과 확인 버튼을 누를 수 있어야 한다', () => {
+    beforeEach(() => {
+      cy.get(dom.inputAmount).clear().type('1000');
+      cy.get(dom.btnConfirm).click();
+    });
+
+    it('로또 구매 후 결과 확인 버튼을 누를 수 있어야 한다', () => {
       cy.get(dom.btnWinning).click();
     });
 
@@ -120,6 +125,7 @@ describe('로또 요구사항을 테스트한다', () => {
     it('당첨 번호와 보너스 번호 필드가 모두 입력되어야 결과를 확인할 수 있다', () => {
       const stub = cy.stub();
       cy.on('window:alert', stub);
+
       cy.get(dom.btnWinning)
         .click()
         .then(() => {

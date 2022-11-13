@@ -7,15 +7,17 @@ export const buy = (purchasingAmount) => {
   return getUniqueLottoSets(amount);
 };
 
-function getUniqueLottoSets(amount) {
+function getUniqueLottoSets(amount, strict = false) {
   const set = new Set();
 
   while (set.size < amount) {
     const lotto = getRandomNumbers(6);
+    if (strict) lotto.sort((a, b) => a - b);
     set.add(lotto.join(LOTTO_DELIMITER));
   }
 
-  return [...set].map((s) => s.split(LOTTO_DELIMITER));
+  const strLottos = Array.from(set).map((str) => str.split(LOTTO_DELIMITER));
+  return strLottos.map((arr) => arr.map((s) => parseInt(s)));
 }
 
 function getRandomNumbers(length = 6) {
