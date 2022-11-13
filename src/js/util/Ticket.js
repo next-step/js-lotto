@@ -23,13 +23,19 @@ export function getTicketItem(ticket = []) {
   const $ticketItem = document.createElement('li');
 
   const $ticketIcon = document.createElement('span');
-  $ticketIcon.classList.add('mx-1', 'text-4xl');
+  $ticketIcon.classList.add('mx-1', 'text-4xl', 'lotto-icon');
   $ticketIcon.innerText = TICKET_ICON;
 
   const $ticketNumbers = document.createElement('span');
-  $ticketNumbers.classList.add('hidden');
+  $ticketNumbers.classList.add('hidden', 'lotto-detail');
   $ticketNumbers.innerText = ticket.join(', ');
 
   [$ticketIcon, $ticketNumbers].forEach(($el) => $ticketItem.appendChild($el));
   return $ticketItem;
+}
+
+export function setLottoNumberToggle() {
+  const $ticketList = document.querySelector('.lotto-icons > ul');
+  $ticketList.classList.toggle('flex-col');
+  $ticketList.querySelectorAll('span:last-child').forEach(($span) => $span.classList.toggle('hidden'));
 }

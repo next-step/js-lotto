@@ -11,6 +11,7 @@ describe('로또 요구사항을 테스트한다', () => {
     inputWinningNumber: getDataCySelector('input-winning-number'),
     inputBonusNumber: getDataCySelector('input-bonus-number'),
     btnWinning: getDataCySelector('btn-result'),
+    spanLottoDetails: '.lotto-detail',
   };
 
   const MESSAGE = {
@@ -58,7 +59,7 @@ describe('로또 요구사항을 테스트한다', () => {
     });
   });
 
-  describe.only('금액에 해당하는 로또를 발급해야 한다', () => {
+  describe('금액에 해당하는 로또를 발급해야 한다', () => {
     it('확인 버튼을 클릭할 수 있어야 한다', () => {
       cy.get(dom.inputAmount).clear().type('1000');
       cy.get(dom.btnConfirm).click();
@@ -96,6 +97,14 @@ describe('로또 요구사항을 테스트한다', () => {
   describe('복권 번호는 번호 보기 토글 버튼을 클릭하면 볼 수 있어야 한다', () => {
     it('번호 보기용 토글이 있다', () => {
       cy.get(dom.toggleVisibleNumbers);
+    });
+
+    it('번호 보기용 토글을 누르면 로또 번호가 구입한 개수만큼 보여야 한다', () => {
+      cy.get(dom.inputAmount).type('4000');
+      cy.get(dom.btnConfirm).click();
+      cy.get(dom.toggleVisibleNumbers).click();
+
+      cy.get(dom.spanLottoDetails).should('have.length', 4);
     });
   });
 

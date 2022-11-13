@@ -1,5 +1,6 @@
 import {
   $confirmButton,
+  $lottoNumbersToggleButton,
   $modal,
   $modalClose,
   $purchasingAmountInput,
@@ -7,7 +8,7 @@ import {
   $showResultButton,
 } from './util/Element.js';
 import { buy } from './util/LottoBuyer.js';
-import { setTickets } from './util/Ticket.js';
+import { setLottoNumberToggle, setTickets } from './util/Ticket.js';
 
 const onModalShow = () => {
   $modal.classList.add('open');
@@ -32,6 +33,7 @@ const onTicketsBought = () => {
 export function initialize() {
   $resultAreas.forEach(($el) => $el.classList.add('hidden'));
   $confirmButton.addEventListener('click', onTicketsBought);
+  $lottoNumbersToggleButton.addEventListener('click', setLottoNumberToggle);
 
   $showResultButton.addEventListener('click', onModalShow);
   $modalClose.addEventListener('click', onModalClose);
