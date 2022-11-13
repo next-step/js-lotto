@@ -5,7 +5,7 @@ import { generateLottoNumbers } from './generateLottos.js';
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $modalClose = document.querySelector('.modal-close');
 const $modal = document.querySelector('.modal');
-const $lottoNumbersToggleButton = document.querySelector('.switch');
+const $lottoNumbersToggleButton = document.querySelector('.lotto-numbers-toggle-button');
 const $purchaseAmountInput = document.querySelector('#purchaseAmount');
 const $purchaseButton = document.querySelector('#purchaseButton');
 const $purchasedLottoList = document.querySelector('#purchasedLottoList');
@@ -17,6 +17,7 @@ const lottoState = {
   purchasedAmount: 0,
   quantity: 0,
   lottos: [],
+  isOpen: false,
 };
 
 const onModalShow = () => {
@@ -27,8 +28,21 @@ const onModalClose = () => {
   $modal.classList.remove('open');
 };
 
-const onToggleClick = () => {
-  $lottoIconList.style.flexDirection = 'column';
+const onToggleChange = () => {
+  const $lottoNumbers = document.querySelectorAll('.lotto-numbers');
+  if (!lottoState.isOpen) {
+    $lottoIconList.style.flexDirection = 'column';
+    $lottoNumbers.forEach((el) => {
+      el.style.display = 'inline';
+    });
+    lottoState.isOpen = true;
+    return;
+  }
+  $lottoIconList.style.flexDirection = 'row';
+  $lottoNumbers.forEach((el) => {
+    el.style.display = 'none';
+  });
+  lottoState.isOpen = false;
 };
 
 const onPurchaseClick = (e) => {
@@ -73,14 +87,21 @@ const displayDetails = () => {
 const renderLottoIcons = () => {
   if (!lottoState.quantity || !lottoState.lottos.length) return;
   lottoState.lottos.forEach((lotto) => {
-    const li = document.createElement('li');
-    li.className = 'mx-1 text-4xl';
-    const icon = document.createElement('div');
-    icon.className = 'lotto-item';
-    icon.innerText = `🎟️`;
-    li.appendChild(icon);
-    // TODO: lotto의 번호 보여주기.
-    $lottoIconList.appendChild(li);
+    const $li = document.createElement('li');
+    $li.className = 'mx-1 text-4xl';
+    $li.style.display = 'flex';
+
+    const $icon = document.createElement('div');
+    $icon.className = 'lotto-item';
+    $icon.innerText = `🎟️`;
+    $li.appendChild($icon);
+
+    const $lottoNumbers = document.createElement('div');
+    $lottoNumbers.className = 'lotto-numbers';
+    $lottoNumbers.style.display = 'none';
+    $lottoNumbers.innerText = `${lotto.winningNumbers.join(', ')}`;
+    $li.appendChild($lottoNumbers);
+    $lottoIconList.appendChild($li);
   });
 };
 
@@ -102,5 +123,5 @@ const initPurchaseLotto = () => {
 $showResultButton.addEventListener('click', onModalShow);
 $modalClose.addEventListener('click', onModalClose);
 $purchaseButton.addEventListener('click', onPurchaseClick);
-$lottoNumbersToggleButton.addEventListener('click', onToggleClick);
+$lottoNumbersToggleButton.addEventListener('change', onToggleChange);
 displayDetails();
