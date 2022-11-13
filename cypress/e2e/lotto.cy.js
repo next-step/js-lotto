@@ -34,7 +34,7 @@ describe('로또 어플리케이션을 테스트한다.', () => {
     cy.getByDataset('purchase-button')
       .click()
       .then(() => {
-        expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.INVALID_LOTTO_PRICE);
+        expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.INVALID_LOTTO_PRICE_UNIT);
       });
   });
 
@@ -45,7 +45,20 @@ describe('로또 어플리케이션을 테스트한다.', () => {
     cy.getByDataset('purchase-price-input')
       .type('1500{enter}')
       .then(() => {
-        expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.INVALID_LOTTO_PRICE);
+        expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.INVALID_LOTTO_PRICE_UNIT);
+      });
+  });
+
+  it('로또 구입 금액을 음수로 입력하고 확인 버튼을 클릭하면 사용자에게 alert를 띄워준다.', () => {
+    const alertStub = cy.stub();
+    cy.on('window:alert', alertStub);
+
+    cy.getByDataset('purchase-price-input').type('-1000');
+
+    cy.getByDataset('purchase-button')
+      .click()
+      .then(() => {
+        expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.INVALID_NEGATIVE_LOTTO_PRICE);
       });
   });
 
