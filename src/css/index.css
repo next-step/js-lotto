@@ -31,3 +31,8 @@ ul {
 .lotto-item {
   display: flex;
 }
+
+.lotto-numbers {
+  font-size: 1.25rem;
+  margin-left: 12px;
+}
