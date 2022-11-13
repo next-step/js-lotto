@@ -1,9 +1,23 @@
 {
   "name": "lotto",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.html",
   "license": "MIT",
+  "description": "TDD, 클린 코드 with JavaScript 4기 - 로또 미션",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "author": {
+    "name": "Jo Semin",
+    "email": "awesummer.1021@gmail.com"
+  },
+  "private": true,
+  "type": "module",
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^10.11.0",
+    "eslint": "^8.27.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-import": "^2.26.0"
   }
 }
