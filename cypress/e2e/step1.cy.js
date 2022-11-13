@@ -11,6 +11,7 @@ describe('로또 어플리케이션 단계1', () => {
   const $getTotalQuantity = () => cy.get('[data-cy="total-quantity"]');
   const $getLottoIconList = () => cy.get('[data-cy="lotto-icon-list"]');
   const $getLottoNumbersToggleButton = () => cy.get('[data-cy="lotto-numbers-toggle"');
+  const $getLottoNumbers = () => cy.get('.lotto-numbers');
 
   describe('로또 구입 금액을 입력한다.', () => {
     it('입력할 input 태그가 존재한다.', () => {
@@ -109,5 +110,35 @@ describe('로또 어플리케이션 단계1', () => {
       $getLottoNumbersToggleButton().click();
       $getLottoIconList().should('have.css', 'flex-direction', 'column');
     });
+  });
+
+  describe('소비자는 자동 구매를 할 수 있어야 하며, 번호보기 토글 버튼 클릭 시 번호를 볼 수 있다.', () => {
+    it('번호보기 버튼을 누르면, 로또 아이콘의 옆에 6가지 서로 다른 번호가 나타나야 한다.', () => {
+      $getPurchaseAmount().type('1000');
+      $getPurchaseButton().click();
+      $getLottoNumbers().should('have.css', 'display', 'none');
+      $getLottoNumbersToggleButton().click();
+      $getLottoNumbers().should('have.not.css', 'display', 'none');
+      $getLottoNumbers().should(($numbers) => {
+        const text = $numbers.text();
+        const numArr = text.split(',');
+        const tempSet = new Set();
+        numArr.forEach((num) => tempSet.add(num));
+        expect(tempSet.size).equal(6);
+      });
+    });
+
+    it('로또 번호는 1-45의 범위 안에 존재한다.', () => {
+      $getPurchaseAmount().type('1000');
+      $getPurchaseButton().click();
+      $getLottoNumbersToggleButton().click();
+      $getLottoNumbers().should(($numbers) => {
+        const text = $numbers.text();
+        const numArr = text.split(',');
+        const isValidNumber = numArr.every((num) => num < 46 && num > 1);
+        expect(isValidNumber).to.be.true;
+      });
+    });
+
   });
 });
