@@ -12,4 +12,17 @@ const isValidForExactAmount = (inputValue) => {
   return true;
 };
 
-export { isValidForNoAmount, isValidForExactAmount };
+const isAlreadyExist = (lottos) => {
+  let flag = false;
+  for (let i = 0; i < lottos.length - 1; i++) {
+    for (let j = i + 1; j < lottos.length; j++) {
+      const tempSet = new Set([...lottos[i], ...lottos[j]]);
+      if (tempSet.size === 6) {
+        flag = true;
+      }
+    }
+  }
+  return flag;
+};
+
+export { isValidForNoAmount, isValidForExactAmount, isAlreadyExist };
