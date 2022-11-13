@@ -1,3 +1,7 @@
+import Lotto from '../../src/js/lotto';
+
+const lotto = new Lotto();
+
 describe('로또 테스트', () => {
   beforeEach(() => {
     cy.visit('/');
@@ -7,6 +11,7 @@ describe('로또 테스트', () => {
     it('입력할 Input 태그가 있다.', () => {
       cy.should('eq', '100');
     });
+
     it('입력한 금액이 화면에 노출된다.', () => {
       cy.should('eq', '100');
     });
@@ -16,23 +21,44 @@ describe('로또 테스트', () => {
     it('확인할 버튼이 있다.', () => {
       cy.should('eq', '100');
     });
+
     it('금액은 숫자만 입력 가능하다.', () => {
-      cy.should('eq', '100');
+      lotto.setPrice('abcd');
+      let result = lotto.validatePrice();
+      expect(result).to.equal(false);
+
+      lotto.setPrice(10000);
+      result = lotto.validatePrice();
+      expect(result).to.equal(true);
     });
+
     it('금액은 1,000원 단위로만 입력할 수 있다.', () => {
-      cy.should('eq', '100');
+      lotto.setPrice(1200);
+      let result = lotto.validatePrice();
+      expect(result).to.equal(false);
+
+      lotto.setPrice(2000);
+      result = lotto.validatePrice();
+      expect(result).to.equal(true);
     });
+
     it('양수만 입력할 수 있다.', () => {
-      cy.should('eq', '100');
-    });
-    it('금액에 따른 로또의 개수를 발급되어야 한다.', () => {
-      cy.should('eq', '100');
+      lotto.setPrice(-1);
+      let result = lotto.validatePrice();
+      expect(result).to.equal(false);
+
+      lotto.setPrice(1000);
+      result = lotto.validatePrice();
+      expect(result).to.equal(true);
     });
   });
 
   describe('로또 1장의 가격은 1,000원이다.', () => {
     it('입력한 금액 / 1,000 값인 결과가 구매한 로또의 숫자가 된다.', () => {
-      cy.should('eq', '100');
+      lotto.setPrice(2000);
+      let count = lotto.getLottoCount();
+      console.log(count);
+      expect(count).to.equal(2);
     });
   });
 
@@ -55,11 +81,20 @@ describe('로또 테스트', () => {
     it('토글 버튼을 ON → OFF 변경시 숫자는 가려지며, 구매한 로또 개수의 아이콘만 노출된다.', () => {
       cy.should('eq', '100');
     });
-    it('로또 하나당 숫자는 6개의 숫자가 노출된다.', () => {
-      cy.should('eq', '100');
-    });
+
     it('숫자는 중복이 존재하지 않는다.', () => {
-      cy.should('eq', '100');
+      lotto.setPrice(2000);
+      lotto.registerLotto();
+      const registeredLotto = lotto.getLotto()[0];
+      const uniq = new Set(registeredLotto);
+      expect(registeredLotto.length).to.equal(uniq.length);
+    });
+
+    it('로또 하나당 숫자는 6개의 숫자가 노출된다.', () => {
+      lotto.setPrice(1000);
+      lotto.registerLotto();
+      const registeredLotto = lotto.getLotto()[0];
+      expect(registeredLotto.length).to.equal(6);
     });
   });
 });
