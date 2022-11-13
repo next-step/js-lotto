@@ -5,6 +5,8 @@ describe('로또 어플리케이션 단계1', () => {
 
   const $getPurchaseAmount = () => cy.get('[data-cy="purchase-amount"]');
   const $getPurchaseButton = () => cy.get('[data-cy="purchase-button"]');
+  const $getPurchasedLottoList = () => cy.get('[data-cy="purchased-lotto-list"]');
+  const $getWinningNumberInputs = () => cy.get('[data-cy="winning-number-inputs"]');
 
   describe('로또 구입 금액을 입력한다.', () => {
     it('입력할 input 태그가 존재한다.', () => {
@@ -60,6 +62,18 @@ describe('로또 어플리케이션 단계1', () => {
             }
           });
       });
+    });
+
+    it('로또 발급 전에는 구매금액 입력 폼을 제외하고 다른 요소들은 보이지 않는다.', () => {
+      $getPurchasedLottoList().should('have.css', 'display', 'none');
+      $getWinningNumberInputs().should('have.css', 'display', 'none');
+    });
+
+    it('로또 구입시, 구매한 로또의 정보를 나타내는 섹션과, 당첨번호 입력 폼이 나타난다.', () => {
+      $getPurchaseAmount().type('1000');
+      $getPurchaseButton().click();
+      $getPurchasedLottoList().should('not.have.css', 'display', 'none');
+      $getWinningNumberInputs().should('not.have.css', 'display', 'none');
     });
   });
 });
