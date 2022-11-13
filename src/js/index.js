@@ -1,17 +1,5 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+import { Purchase } from "./views/purchase.js";
 
-const onModalShow = () => {
-  $modal.classList.add('open')
+window.onload = () => {
+    const purchase = new Purchase();
 }
-
-const onModalClose = () => {
-  $modal.classList.remove('open')
-}
-
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
