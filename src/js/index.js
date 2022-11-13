@@ -1,4 +1,4 @@
-import { isValidForNoAmount, isValidForExactAmount } from './validators.js';
+import { isValidForNoAmount, isValidForExactAmount, isAlreadyExist } from './validators.js';
 import LottoModel from './lotto.js';
 import { generateLottoNumbers } from './generateLottos.js';
 
@@ -67,7 +67,19 @@ const onPurchaseClick = (e) => {
 
 const generateLottos = (quantity) => {
   for (let i = 0; i < quantity; i++) {
-    const generatedNumbers = generateLottoNumbers();
+    let flag = true;
+    let generatedNumbers;
+    const lottoNumbers = lottoState.lottos.map((lotto) => lotto.winningNumbers);
+    generatedNumbers = generateLottoNumbers();
+
+    // 로또가 혹시라도 이미 존재하는 지에 대한 검증이 필요.
+    while (flag) {
+      if (!isAlreadyExist(lottoNumbers.concat([generatedNumbers]))) {
+        flag = false;
+      } else {
+        generatedNumbers = generateLottoNumbers();
+      }
+    }
 
     const lotto = new LottoModel(generatedNumbers);
     lottoState.lottos.push(lotto);
