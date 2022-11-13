@@ -16,13 +16,17 @@
             <div class="d-flex">
               <input
                 type="number"
-                class="w-100 mr-2 pl-2 purchased-amount"
+                class="w-100 mr-2 pl-2"
                 id="form-amount"
                 placeholder="구입 금액"
                 minlength="1000"
+                data-cy="purchase-amount"
                 required
               />
-              <button type="button" class="btn btn-cyan purchase-button">확인</button>
+              <button
+                      type="button"
+                      class="btn btn-cyan purchase-button"
+                      data-cy="purchase-button">확인</button>
             </div>
           </form>
           <section class="mt-9 purchased-lotto">
@@ -31,11 +35,11 @@
               <div class="flex-auto d-flex justify-end pr-1">
                 <label class="switch">
                   <input type="checkbox" class="lotto-numbers-toggle-button"/>
-                  <span class="text-base font-normal">번호보기</span>
+                  <span class="text-base font-normal" data-cy="toggle-lotto-numbers">번호보기</span>
                 </label>
               </div>
             </div>
-            <ul class="d-flex flex-wrap lotto-tickets"></ul>
+            <ul class="d-flex flex-wrap lotto-tickets" data-cy="lotto-tickets"></ul>
           </section>
 <!--          <form class="mt-9">-->
 <!--            <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>-->
