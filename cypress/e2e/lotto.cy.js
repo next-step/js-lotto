@@ -3,12 +3,16 @@ describe('로또 사이트 E2E 테스트', () => {
   let $lottoButton = '[data-id=lotto-submit-button]';
   let $resultSpan = '[data-id=result-text]';
   let $numberToggleButton = '[data-id=number-toggle-button]';
+  // let $lottoWrapper = '[data-id=lotto-wrapper]';
+  let $lottoImage = '[data-id=lotto-image]';
+  let $lottoNumber = '[data-id=lotto-number]';
+
   beforeEach(() => {
     cy.visit('../../index.html');
     cy.contains('h1', '🎱 행운의 로또');
   });
 
-  describe('로또 1장의 가격은 1,000원이다.', () => {
+  context('로또 1장의 가격은 1,000원이다.', () => {
     it('구입금액을 입력할 Input이 존재해야한다.', () => {
       cy.get($lottoInput).should('exist');
     });
@@ -62,17 +66,41 @@ describe('로또 사이트 E2E 테스트', () => {
   context(
     '로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.',
     () => {
-      it('금액만큼(1000원당 1개)의 로또 이미지가 생성되어야 한다.', () => {});
-      it('금액만큼(1000원당 1개)의 난수 집합이 생성되어야 한다.', () => {});
-      it('금액만큼(1000원당 1개)의 난수 집합이 생성된 뒤 화면에서 숨겨져 있어야한다', () => {});
+      const [TYPE, IMAGE_COUNT] = ['5000', 5];
+      it('금액만큼(1000원당 1개)의 로또 이미지가 생성되어야 한다.', () => {
+        cy.get($lottoInput).type(TYPE);
+        cy.get($lottoButton).click();
+        cy.get($lottoImage).should('have.length', IMAGE_COUNT);
+      });
+      it('금액만큼(1000원당 1개)의 난수 집합이 생성되어야 한다.', () => {
+        cy.get($lottoInput).type(TYPE);
+        cy.get($lottoButton).click();
+        cy.get($lottoNumber).should('have.length', IMAGE_COUNT);
+      });
+      it('금액만큼(1000원당 1개)의 난수 집합이 생성된 뒤 화면에서 숨겨져 있어야한다', () => {
+        cy.get($lottoInput).type(TYPE);
+        cy.get($lottoButton).click();
+        cy.get($lottoNumber).should('have.css', 'display', 'none');
+      });
     }
   );
 
   context(
     '복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.',
     () => {
-      it('토글버튼이 비활성화 상태일 때 복권의 번호가 보이지 않아야 한다.', () => {});
-      it('토글버튼이 활성화 상태일 때 복권의 번호가 보여야 한다.', () => {});
+      beforeEach(() => {
+        cy.get($lottoInput).type(TYPE);
+        cy.get($lottoButton).click();
+        cy.get($numberToggleButton).should('not.be.checked');
+      });
+
+      it('토글버튼이 비활성화 상태일 때 복권의 번호가 보이지 않아야 한다.', () => {
+        cy.get($lottoNumber).should('have.css', 'display', 'none');
+      });
+      it('토글버튼이 활성화 상태일 때 복권의 번호가 보여야 한다.', () => {
+        cy.get($numberToggleButton).click();
+        cy.get($lottoNumber).should('have.css', 'display', 'inline');
+      });
     }
   );
 });
