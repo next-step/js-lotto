@@ -1,5 +1,6 @@
 import { isValidForNoAmount, isValidForExactAmount } from './validators.js';
 import LottoModel from './lotto.js';
+import { generateLottoNumbers } from './generateLottos.js';
 
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $modalClose = document.querySelector('.modal-close');
@@ -52,7 +53,9 @@ const onPurchaseClick = (e) => {
 
 const generateLottos = (quantity) => {
   for (let i = 0; i < quantity; i++) {
-    const lotto = new LottoModel([`i${i}`, '2', '3', '4', '5']);
+    const generatedNumbers = generateLottoNumbers();
+
+    const lotto = new LottoModel(generatedNumbers);
     lottoState.lottos.push(lotto);
   }
 };
