@@ -1,16 +1,16 @@
 describe('로또 요구사항을 테스트한다', () => {
   const URL = '../../index.html';
 
-  const getSelector = (value) => `[data-cy=${value}]`;
+  const getDataCySelector = (value) => `[data-cy=${value}]`;
   const dom = {
-    inputAmount: getSelector('input-purchasing-amount'),
-    btnConfirm: getSelector('btn-confirm'),
-    labelPurchasingStatus: getSelector('purchasing-status'),
-    lottoIcons: getSelector('lotto-icons'),
-    toggleVisibleNumbers: getSelector('toggle-visible-numbers'),
-    inputWinningNumber: getSelector('input-winning-number'),
-    inputBonusNumber: getSelector('input-bonus-number'),
-    btnWinning: getSelector('btn-result'),
+    inputAmount: getDataCySelector('input-purchasing-amount'),
+    btnConfirm: getDataCySelector('btn-confirm'),
+    labelPurchasingStatus: getDataCySelector('purchasing-status'),
+    lottoIcons: getDataCySelector('lotto-icons'),
+    toggleVisibleNumbers: getDataCySelector('toggle-visible-numbers'),
+    inputWinningNumber: getDataCySelector('input-winning-number'),
+    inputBonusNumber: getDataCySelector('input-bonus-number'),
+    btnWinning: getDataCySelector('btn-result'),
   };
 
   const MESSAGE = {
@@ -42,6 +42,11 @@ describe('로또 요구사항을 테스트한다', () => {
       cy.get(dom.inputAmount);
     });
 
+    it('구입하기 전까지는 구매 결과 섹션과 당첨번호 폼이 화면에 보이지 않아야 한다', () => {
+      cy.get('.result-section').should('not.be.visible');
+      cy.get('.winning-form').should('not.be.visible');
+    });
+
     it('로또 구입 금액을 입력하면 화면에 입력한 금액이 그대로 보여야 한다', () => {
       cy.get(dom.inputAmount).type('1000').should('value', '1000');
     });
@@ -53,12 +58,13 @@ describe('로또 요구사항을 테스트한다', () => {
     });
   });
 
-  describe('금액에 해당하는 로또를 발급해야 한다', () => {
+  describe.only('금액에 해당하는 로또를 발급해야 한다', () => {
     it('확인 버튼을 클릭할 수 있어야 한다', () => {
+      cy.get(dom.inputAmount).clear().type('1000');
       cy.get(dom.btnConfirm).click();
     });
 
-    it.skip('로또 구입 금액은 1000원 단위가 아닌 경우의 수에 대한 예외 발생', () => {
+    it('로또 구입 금액은 1000원 단위가 아닌 경우의 수에 대한 예외 발생', () => {
       const stub = cy.stub();
 
       cy.on('window:alert', stub);
@@ -74,7 +80,7 @@ describe('로또 요구사항을 테스트한다', () => {
       const amount = 3;
       cy.get(dom.inputAmount).type('3000');
       cy.get(dom.btnConfirm).click();
-      cy.get(dom.lottoIcons).find('span').should('have.length', amount);
+      cy.get(dom.lottoIcons).find('li').should('have.length', amount);
     });
   });
 
