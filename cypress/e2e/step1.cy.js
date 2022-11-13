@@ -9,6 +9,7 @@ describe('로또 어플리케이션 단계1', () => {
   const $getWinningNumberInputs = () => cy.get('[data-cy="winning-number-inputs"]');
   const $getNoticeTotalQuantity = () => cy.get('[data-cy="notice-purchased-quantity"]');
   const $getTotalQuantity = () => cy.get('[data-cy="total-quantity"]');
+  const $getLottoIconList = () => cy.get('[data-cy="lotto-icon-list"]');
 
   describe('로또 구입 금액을 입력한다.', () => {
     it('입력할 input 태그가 존재한다.', () => {
@@ -83,6 +84,22 @@ describe('로또 어플리케이션 단계1', () => {
       $getPurchaseButton().click();
       $getNoticeTotalQuantity().should('exist');
       $getTotalQuantity().should('text', '3');
+    });
+
+    it('로또 구입 시, 구매한 금액 만큼의 개수만큼 로또 아이콘이 화면에 나타난다.', () => {
+      $getPurchaseAmount().type('3000');
+      $getPurchaseButton().click();
+      $getLottoIconList().find('.lotto-item').should('have.length', '3');
+    });
+
+    it('로또 구입 후, 금액을 바꾸어 다시 구입하는 경우, 새로 입력한 구매 금액만큼의 로또 아이콘이 화면에 나타난다.', () => {
+      $getPurchaseAmount().type('3000');
+      $getPurchaseButton().click();
+      $getLottoIconList().find('.lotto-item').should('have.length', '3');
+      $getPurchaseAmount().clear();
+      $getPurchaseAmount().type('2000');
+      $getPurchaseButton().click();
+      $getLottoIconList().find('.lotto-item').should('have.length', '2');
     });
   });
 });
