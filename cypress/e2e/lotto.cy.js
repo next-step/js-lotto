@@ -9,7 +9,6 @@ describe('로또 사이트 E2E 테스트', () => {
 
   beforeEach(() => {
     cy.visit('../../index.html');
-    cy.contains('h1', '🎱 행운의 로또');
   });
 
   context('로또 1장의 가격은 1,000원이다.', () => {
@@ -28,7 +27,8 @@ describe('로또 사이트 E2E 테스트', () => {
             '로또 구입 금액을 1,000원 단위로 입력해 주세요.'
           );
         });
-        cy.get($lottoInput).should('have.text', '');
+        cy.on('window:confirm', () => true);
+        cy.get($lottoInput).should('have.value', '');
       });
     });
     it('숫자를 제외한 값을 입력하여도 숫자를 제외한 것은 화면에 렌더링 되지 않아야한다', () => {
@@ -37,9 +37,10 @@ describe('로또 사이트 E2E 테스트', () => {
         ['1000', '1', ''],
       ];
 
-      TYPE.forEach((eachTyping) => {
+      TYPE.forEach((eachTyping, index) => {
         cy.get($lottoInput).type(eachTyping);
-        cy.get($lottoInput).should('have.text', RESULT);
+        cy.get($lottoInput).should('have.value', RESULT[index]);
+        cy.get($lottoInput).clear();
       });
     });
   });
@@ -88,6 +89,7 @@ describe('로또 사이트 E2E 테스트', () => {
   context(
     '복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.',
     () => {
+      const [TYPE, IMAGE_COUNT] = ['5000', 5];
       beforeEach(() => {
         cy.get($lottoInput).type(TYPE);
         cy.get($lottoButton).click();
@@ -98,7 +100,7 @@ describe('로또 사이트 E2E 테스트', () => {
         cy.get($lottoNumber).should('have.css', 'display', 'none');
       });
       it('토글버튼이 활성화 상태일 때 복권의 번호가 보여야 한다.', () => {
-        cy.get($numberToggleButton).click();
+        cy.get($numberToggleButton).click({ force: true });
         cy.get($lottoNumber).should('have.css', 'display', 'inline');
       });
     }

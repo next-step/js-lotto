@@ -2,7 +2,7 @@ import { DEFAULT_LOTTO_STATE } from '../constant.js';
 import { getRandomNumbers } from '../utils/index.js';
 
 class Lotto {
-  constructor($target) {
+  constructor({ $target }) {
     this.$target = $target;
     this.state = {
       ...DEFAULT_LOTTO_STATE,
@@ -18,7 +18,7 @@ class Lotto {
 
     if (ALERT_CONDITION) {
       window.alert('로또 구입 금액을 1,000원 단위로 입력해 주세요.');
-      this.setState({ ...this.state, moneyAmount: 0 });
+      this.setState({ ...this.state, moneyAmount: null });
       return;
     }
 
@@ -41,13 +41,26 @@ class Lotto {
     this.setState({ ...this.state, moneyAmount: Number(value) });
   }
 
+  onToggle() {
+    this.setState({ ...this.state, isToggle: !this.state.isToggle });
+  }
+
   setState(nextState) {
     this.state = nextState;
     this.render();
   }
 
+  renderToggle() {
+    this.$target
+      .querySelectorAll('.lotto-number')
+      .forEach(
+        (element) =>
+          (element.style.display = this.state.isToggle ? 'inline' : 'none')
+      );
+  }
+
   renderResult() {
-    const wrapper = document.querySelector('#purchased-result');
+    const wrapper = this.$target.querySelector('#purchased-result');
 
     if (!this.state.isVisibleResult) {
       wrapper.style.display = 'none';
@@ -63,8 +76,8 @@ class Lotto {
         .map((randomNumber) => {
           return `
         <li>
-          <span class="mx-1 text-4xl">🎟️ </span>
-          <span class="lotto-number" display="none">
+          <span class="mx-1 text-4xl" data-id="lotto-image">🎟️ </span>
+          <span class="lotto-number" data-id="lotto-number">
             ${randomNumber.join(' ')}
           </span>
         </li>
@@ -72,31 +85,46 @@ class Lotto {
         })
         .join('')}
     `;
-    wrapper.style.display = 'block';
+    if (wrapper.style.display !== 'block') wrapper.style.display = 'block';
   }
 
   renderCheckResultForm() {
-    const wrapper = document.querySelector('#check-result');
+    const wrapper = this.$target.querySelector('#check-result');
     if (!this.state.isVisibleResult) {
       wrapper.style.display = 'none';
       return;
     }
-    wrapper.style.display = 'block';
+    if (wrapper.style.display !== 'block') wrapper.style.display = 'block';
+  }
+
+  renderInput() {
+    const VACANT_CONDITION = this.state.moneyAmount === 0;
+    this.$target.querySelector('[data-id=lotto-number-input]').value =
+      VACANT_CONDITION ? null : this.state.moneyAmount;
   }
 
   render() {
     this.renderResult();
     this.renderCheckResultForm();
+    this.renderToggle();
+    this.renderInput();
+    // this.addEventListener();
   }
 
   addEventListener() {
-    document.addEventListener('click', (event) => {
+    this.$target.addEventListener('click', (event) => {
       if (event.target.dataset.id === 'lotto-submit-button') {
         this.onConfirm();
       }
     });
 
-    document.addEventListener('input', (event) => {
+    this.$target
+      .querySelector('.lotto-numbers-toggle-button')
+      .addEventListener('click', () => {
+        this.onToggle();
+      });
+
+    this.$target.addEventListener('input', (event) => {
       if (event.target.dataset.id === 'lotto-number-input') {
         this.onTypeAmount(event.target.value);
       }
