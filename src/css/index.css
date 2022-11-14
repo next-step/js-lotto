@@ -13,6 +13,18 @@ body {
   margin: 0 auto;
 }
 
+#form-purchase {
+  position: relative;
+}
+
+.error-message-purchase {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  margin: 0;
+  color: #e30000;
+  font-size: 12px;
+}
 .winning-number {
   width: 30px;
   height: 36px;
