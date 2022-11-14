@@ -21,6 +21,11 @@ describe('로또 어플리케이션 단계1', () => {
   const $getLottoNumbersToggleButton = () => cy.get('[data-cy="lotto-numbers-toggle"');
   const $getLottoNumbers = () => cy.get('.lotto-numbers');
 
+  const purchaseLottos = (amount = 1000) => {
+    $getPurchaseAmount().type(`${amount}`);
+    $getPurchaseButton().click();
+  };
+
   describe('로또 구입 금액을 입력한다.', () => {
     it('입력할 input 태그가 존재한다.', () => {
       $getPurchaseAmount().should('exist');
@@ -83,38 +88,32 @@ describe('로또 어플리케이션 단계1', () => {
     });
 
     it('로또 구입시, 구매한 로또의 정보를 나타내는 섹션과, 당첨번호 입력 폼이 나타난다.', () => {
-      $getPurchaseAmount().type('1000');
-      $getPurchaseButton().click();
+      purchaseLottos();
       $getPurchasedLottoList().should('not.have.css', 'display', 'none');
       $getWinningNumberInputs().should('not.have.css', 'display', 'none');
     });
 
     it('로또 구입 시, 구매한 로또의 개수를 안내하는 문구와 함께 실제 구매한 개수를 문자로 화면에 표시한다.', () => {
-      $getPurchaseAmount().type('3000');
-      $getPurchaseButton().click();
+      purchaseLottos(3000);
       $getNoticeTotalQuantity().should('exist');
       $getTotalQuantity().should('text', '3');
     });
 
     it('로또 구입 시, 구매한 금액 만큼의 개수만큼 로또 아이콘이 화면에 나타난다.', () => {
-      $getPurchaseAmount().type('3000');
-      $getPurchaseButton().click();
+      purchaseLottos(3000);
       $getLottoIconList().find('.lotto-item').should('have.length', '3');
     });
 
     it('로또 구입 후, 금액을 바꾸어 다시 구입하는 경우, 새로 입력한 구매 금액만큼의 로또 아이콘이 화면에 나타난다.', () => {
-      $getPurchaseAmount().type('3000');
-      $getPurchaseButton().click();
+      purchaseLottos(3000);
       $getLottoIconList().find('.lotto-item').should('have.length', '3');
       $getPurchaseAmount().clear();
-      $getPurchaseAmount().type('2000');
-      $getPurchaseButton().click();
+      purchaseLottos(2000);
       $getLottoIconList().find('.lotto-item').should('have.length', '2');
     });
 
     it('번호보기 버튼을 누르면, 로또 아이콘이 일렬로 정렬된다.', () => {
-      $getPurchaseAmount().type('3000');
-      $getPurchaseButton().click();
+      purchaseLottos();
       $getLottoNumbersToggleButton().click();
       $getLottoIconList().should('have.css', 'flex-direction', 'column');
     });
@@ -122,8 +121,7 @@ describe('로또 어플리케이션 단계1', () => {
 
   describe('소비자는 자동 구매를 할 수 있어야 하며, 번호보기 토글 버튼 클릭 시 번호를 볼 수 있다.', () => {
     it('번호보기 버튼을 누르면, 로또 아이콘의 옆에 6가지 서로 다른 번호가 나타나야 한다.', () => {
-      $getPurchaseAmount().type('1000');
-      $getPurchaseButton().click();
+      purchaseLottos();
       $getLottoNumbers().should('have.css', 'display', 'none');
       $getLottoNumbersToggleButton().click();
       $getLottoNumbers().should('have.not.css', 'display', 'none');
@@ -137,8 +135,7 @@ describe('로또 어플리케이션 단계1', () => {
     });
 
     it('로또 번호는 1-45의 범위 안에 존재한다.', () => {
-      $getPurchaseAmount().type('1000');
-      $getPurchaseButton().click();
+      purchaseLottos();
       $getLottoNumbersToggleButton().click();
       $getLottoNumbers().should(($numbers) => {
         const text = $numbers.text();
