@@ -1,4 +1,10 @@
-import { isAlreadyExist } from '../../src/js/validators';
+import {
+  LOTTO_LENGTH,
+  LOTTO_NUMBER_RANGE,
+  MESSAGE_FOR_EMPTY_VALUE,
+  MESSAGE_FOR_INVALID_UNIT_VALUE,
+} from '../../src/js/constants.js';
+import { isAlreadyExist } from '../../src/js/validators.js';
 
 describe('로또 어플리케이션 단계1', () => {
   beforeEach(() => {
@@ -41,18 +47,18 @@ describe('로또 어플리케이션 단계1', () => {
       $getPurchaseButton().click();
     });
 
-    it(`구매금액 미입력 후 '확인'버튼을 누르면, alert로 '반드시 값을 입력해주세요!' 라는 메세지가 나타난다.`, () => {
+    it(`구매금액 미입력 후 '확인'버튼을 누르면, alert로 '${MESSAGE_FOR_EMPTY_VALUE}' 라는 메세지가 나타난다.`, () => {
       const alertStub = cy.stub();
       cy.on('window:alert', alertStub);
       $getPurchaseButton()
         .click()
         .then(() => {
           const actualMessage = alertStub.getCall(0).lastArg;
-          expect(actualMessage).to.equal('반드시 값을 입력해주세요!');
+          expect(actualMessage).to.equal(MESSAGE_FOR_EMPTY_VALUE);
         });
     });
 
-    it(`구매금액에 1000단위가 아닌 값을 입력후 '확인'버튼을 누르면, alert로 '로또 한 장의 단위는 1000원 입니다.' 라는 메세지가 나타난다.`, () => {
+    it(`구매금액에 1000단위가 아닌 값을 입력후 '확인'버튼을 누르면, alert로 '${MESSAGE_FOR_INVALID_UNIT_VALUE}' 라는 메세지가 나타난다.`, () => {
       const alertStub = cy.stub();
       cy.on('window:alert', alertStub);
 
@@ -63,7 +69,7 @@ describe('로또 어플리케이션 단계1', () => {
           .click()
           .then(() => {
             const actualMessage = alertStub.getCall(0).lastArg;
-            expect(actualMessage).to.equal('로또 한 장의 단위는 1000원 입니다.');
+            expect(actualMessage).to.equal(MESSAGE_FOR_INVALID_UNIT_VALUE);
             if (idx < invalidInputValues.length) {
               $getPurchaseAmount().clear();
             }
@@ -126,7 +132,7 @@ describe('로또 어플리케이션 단계1', () => {
         const numArr = text.split(',');
         const tempSet = new Set();
         numArr.forEach((num) => tempSet.add(num));
-        expect(tempSet.size).equal(6);
+        expect(tempSet.size).equal(LOTTO_LENGTH);
       });
     });
 
@@ -137,7 +143,7 @@ describe('로또 어플리케이션 단계1', () => {
       $getLottoNumbers().should(($numbers) => {
         const text = $numbers.text();
         const numArr = text.split(',');
-        const isValidNumber = numArr.every((num) => num < 46 && num > 1);
+        const isValidNumber = numArr.every((num) => num < LOTTO_NUMBER_RANGE + 1 && num > 1);
         expect(isValidNumber).to.be.true;
       });
     });
