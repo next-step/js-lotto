@@ -1,7 +1,7 @@
 export const DEFAULT_LOTTO_STATE = {
-  lottoPurchaseNumber: 0,
-  moneyAmount: null,
   lottoNumbers: [],
+  moneyAmount: null,
+  lottoPurchaseNumber: 0,
   isVisibleResult: false,
   isToggle: false,
 };

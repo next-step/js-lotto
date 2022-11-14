@@ -1,5 +1,5 @@
 import { DEFAULT_LOTTO_STATE } from '../constant.js';
-import { getRandomNumbers } from '../utils/index.js';
+import { makeRandomNumbers } from '../utils/index.js';
 
 class Lotto {
   constructor({ $target }) {
@@ -23,9 +23,8 @@ class Lotto {
     }
 
     if (CONFIRM_CONDITION) {
-      const RANDOM_NUMBERS = new Array(this.state.moneyAmount / 1000)
-        .fill(0)
-        .map(getRandomNumbers);
+      // *TODO: 랜덤으로 생성된 배열들끼리 중복이 있는 경우 어떻게 처리할 것인지.
+      const RANDOM_NUMBERS = makeRandomNumbers(this.state.moneyAmount);
 
       this.setState({
         ...this.state,
@@ -75,12 +74,12 @@ class Lotto {
       ${this.state.randomNumbers
         .map((randomNumber) => {
           return `
-        <li>
-          <span class="mx-1 text-4xl" data-id="lotto-image">🎟️ </span>
-          <span class="lotto-number" data-id="lotto-number">
-            ${randomNumber.join(' ')}
-          </span>
-        </li>
+            <li>
+              <span class="mx-1 text-4xl" data-id="lotto-image">🎟️ </span>
+              <span class="lotto-number" data-id="lotto-number">
+                ${randomNumber.join(' ')}
+              </span>
+            </li>
         `;
         })
         .join('')}
@@ -90,6 +89,7 @@ class Lotto {
 
   renderCheckResultForm() {
     const wrapper = this.$target.querySelector('#check-result');
+
     if (!this.state.isVisibleResult) {
       wrapper.style.display = 'none';
       return;
@@ -99,6 +99,7 @@ class Lotto {
 
   renderInput() {
     const VACANT_CONDITION = this.state.moneyAmount === 0;
+
     this.$target.querySelector('[data-id=lotto-number-input]').value =
       VACANT_CONDITION ? null : this.state.moneyAmount;
   }
@@ -108,7 +109,6 @@ class Lotto {
     this.renderCheckResultForm();
     this.renderToggle();
     this.renderInput();
-    // this.addEventListener();
   }
 
   addEventListener() {
@@ -119,7 +119,7 @@ class Lotto {
     });
 
     this.$target
-      .querySelector('.lotto-numbers-toggle-button')
+      .querySelector('[data-id=number-toggle-button]')
       .addEventListener('click', () => {
         this.onToggle();
       });
