@@ -2,15 +2,18 @@ import { isValidForNoAmount, isValidForExactAmount, isAlreadyExist } from './val
 import LottoModel from './lotto.js';
 import { generateLottoNumbers } from './generateLottos.js';
 import { MESSAGE_FOR_EMPTY_VALUE, MESSAGE_FOR_INVALID_UNIT_VALUE } from './constants.js';
+import { closeModal, displayDetails, openModal } from './views.js';
+import {
+  addLottoToggleButtonClickEventListener,
+  addPurchaseButtonClickEventListener,
+  addResultButtonClickEventListener,
+  addModalCloseClickEventListener,
+} from './eventListeners.js';
 
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $modalClose = document.querySelector('.modal-close');
 const $modal = document.querySelector('.modal');
-const $lottoNumbersToggleButton = document.querySelector('.lotto-numbers-toggle-button');
 const $purchaseAmountInput = document.querySelector('#purchaseAmount');
-const $purchaseButton = document.querySelector('#purchaseButton');
-const $purchasedLottoList = document.querySelector('#purchasedLottoList');
-const $winningNumberInputs = document.querySelector('#winningNumberInputs');
 const $totalQuantity = document.querySelector('#totalQuantity');
 const $lottoIconList = document.querySelector('#lottoIconList');
 
@@ -132,8 +135,8 @@ const initPurchaseLotto = () => {
   resetLottoIcons();
 };
 
-$showResultButton.addEventListener('click', onModalShow);
-$modalClose.addEventListener('click', onModalClose);
-$purchaseButton.addEventListener('click', onPurchaseClick);
-$lottoNumbersToggleButton.addEventListener('change', onToggleChange);
 displayDetails();
+addPurchaseButtonClickEventListener(onPurchaseClick);
+addLottoToggleButtonClickEventListener(onToggleChange);
+addResultButtonClickEventListener(onModalShow);
+addModalCloseClickEventListener(onModalClose);
