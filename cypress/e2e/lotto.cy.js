@@ -1,5 +1,1 @@
-describe("My First Test", () => {
-  it("Does not do much!", () => {
-    expect(true).to.equal(true);
-  });
-});
+cy.visit("http://localhost:5500");
