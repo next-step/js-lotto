@@ -12,32 +12,31 @@ import { getRandomNumber } from '../utils.js';
 class Lotto {
   #price;
   #lottoCount;
-  #lotto;
+  #lottos;
 
   constructor() {
     this.#price = DEFAULT_PRICE;
     this.#lottoCount = DEFAULT_LOTTO_COUNT;
-    this.#lotto = [];
+    this.#lottos = [];
   }
 
-  setPrice(nextPrice) {
+  setPrice = (nextPrice) => {
     this.#price = nextPrice;
-    this.#lottoCount = Math.floor(this.#price / LOTTO_PRICE);
-  }
+  };
 
-  getPrice() {
+  getPrice = () => {
     return this.#price;
-  }
+  };
 
-  getLottoCount() {
+  getLottoCount = () => {
     return this.#lottoCount;
-  }
+  };
 
-  getLotto() {
-    return this.#lotto;
-  }
+  getLottos = () => {
+    return this.#lottos;
+  };
 
-  validatePrice() {
+  validatePrice = () => {
     if (NUMBER_PATTERN.test(this.#price) === false) {
       return false;
     }
@@ -51,13 +50,16 @@ class Lotto {
     }
 
     return true;
-  }
+  };
 
-  registerLotto() {
+  registerLotto = () => {
+    this.#lottoCount = Math.floor(this.#price / LOTTO_PRICE);
+    this.#lottos = [];
+
     for (let i = 0; i < this.#lottoCount; i++) {
-      this.#lotto.push(this.#getUniqRandomNumbers());
+      this.#lottos.push(this.#getUniqRandomNumbers());
     }
-  }
+  };
 
   #getUniqRandomNumbers() {
     const uniqRandomNumbers = [];
