@@ -1,6 +1,7 @@
 import { isValidForNoAmount, isValidForExactAmount, isAlreadyExist } from './validators.js';
 import LottoModel from './lotto.js';
 import { generateLottoNumbers } from './generateLottos.js';
+import { MESSAGE_FOR_EMPTY_VALUE, MESSAGE_FOR_INVALID_UNIT_VALUE } from './constants.js';
 
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $modalClose = document.querySelector('.modal-close');
@@ -49,11 +50,11 @@ const onPurchaseClick = (e) => {
   e.preventDefault();
   const purchasedAmount = $purchaseAmountInput.value;
   if (!isValidForNoAmount(purchasedAmount)) {
-    alert('반드시 값을 입력해주세요!');
+    alert(MESSAGE_FOR_EMPTY_VALUE);
     return;
   }
   if (!isValidForExactAmount(purchasedAmount)) {
-    alert('로또 한 장의 단위는 1000원 입니다.');
+    alert(MESSAGE_FOR_INVALID_UNIT_VALUE);
     return;
   }
   initPurchaseLotto();
@@ -67,15 +68,14 @@ const onPurchaseClick = (e) => {
 
 const generateLottos = (quantity) => {
   for (let i = 0; i < quantity; i++) {
-    let flag = true;
+    let hasNoSameLotto = true;
     let generatedNumbers;
     const lottoNumbers = lottoState.lottos.map((lotto) => lotto.winningNumbers);
     generatedNumbers = generateLottoNumbers();
 
-    // 로또가 혹시라도 이미 존재하는 지에 대한 검증이 필요.
-    while (flag) {
+    while (hasNoSameLotto) {
       if (!isAlreadyExist(lottoNumbers.concat([generatedNumbers]))) {
-        flag = false;
+        hasNoSameLotto = false;
       } else {
         generatedNumbers = generateLottoNumbers();
       }

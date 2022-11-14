@@ -1,7 +1,9 @@
+import { LOTTO_LENGTH, LOTTO_NUMBER_RANGE } from './constants.js';
+
 const generateLottoNumbers = () => {
   const numberSet = new Set();
-  while (numberSet.size < 6) {
-    const generatedNumber = getRandomNumber(45);
+  while (numberSet.size < LOTTO_LENGTH) {
+    const generatedNumber = getRandomNumber(LOTTO_NUMBER_RANGE);
     numberSet.add(generatedNumber);
   }
   return [...numberSet];

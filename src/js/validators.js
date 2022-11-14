@@ -1,3 +1,5 @@
+import { LOTTO_LENGTH } from './constants.js';
+
 const isValidForNoAmount = (inputValue) => {
   return !!inputValue;
 };
@@ -17,7 +19,7 @@ const isAlreadyExist = (lottos) => {
   for (let i = 0; i < lottos.length - 1; i++) {
     for (let j = i + 1; j < lottos.length; j++) {
       const tempSet = new Set([...lottos[i], ...lottos[j]]);
-      if (tempSet.size === 6) {
+      if (tempSet.size === LOTTO_LENGTH) {
         flag = true;
       }
     }
