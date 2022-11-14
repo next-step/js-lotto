@@ -1,5 +1,5 @@
 import { DEFAULT_LOTTO_STATE } from '../constant.js';
-import { makeRandomNumbers } from '../utils/index.js';
+import { checkRandom, makeRandomNumbers } from '../utils/index.js';
 
 class Lotto {
   constructor({ $target }) {
@@ -24,7 +24,9 @@ class Lotto {
 
     if (CONFIRM_CONDITION) {
       // *TODO: 랜덤으로 생성된 배열들끼리 중복이 있는 경우 어떻게 처리할 것인지.
-      const RANDOM_NUMBERS = makeRandomNumbers(this.state.moneyAmount);
+      const RANDOM_NUMBERS = checkRandom(
+        makeRandomNumbers(this.state.moneyAmount)
+      );
 
       this.setState({
         ...this.state,

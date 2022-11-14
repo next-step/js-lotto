@@ -7,17 +7,31 @@ export const makeRandomNumbers = (moneyAmount) => {
 };
 
 export const checkRandom = (randomNumberArray) => {
-  const set = new Set();
+  //bf
+  let copy = [...randomNumberArray];
 
-  randomNumberArray.forEach((eachNumbers) => {
-    set.add(eachNumbers);
-  });
+  for (let i = 0; i < copy.length - 1; i++) {
+    for (let j = i + 1; j < copy.length; j++) {
+      const eachNumbersSetI = new Set(copy[i]),
+        eachNumbersSetJ = new Set(copy[j]);
 
-  if (set.size() !== randomNumberArray.length) {
-    const diff = randomNumberArray.length - set.size();
-    const newRandomNumber = new Array(diff).fill(0).map(makeRandomNumber);
-    return checkRandom([...set, ...newRandomNumber]);
+      const DUPLICATE_CONDITION =
+        copy[i].every((number1) => eachNumbersSetJ.has(number1)) &&
+        copy[j].every((number2) => eachNumbersSetI.has(number2));
+
+      if (DUPLICATE_CONDITION) copy[i] = null;
+    }
   }
 
-  return;
+  copy = copy.filter((el) => Boolean(el));
+
+  const diff = randomNumberArray.length - copy.length;
+
+  if (diff !== 0) {
+    const result = [...copy, ...makeRandomNumbers(diff * 1000)];
+
+    return checkRandom(result);
+  }
+
+  return [...randomNumberArray];
 };
