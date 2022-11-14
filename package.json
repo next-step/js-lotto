@@ -5,13 +5,14 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack serve",
-    "test": "cypress run",
-    "e2e": "cypress open"
+    "test": "cypress open",
+    "e2e": "start-server-and-test start http://localhost:3000 test"
   },
   "devDependencies": {
     "css-loader": "^6.7.1",
     "cypress": "^6.3.0",
     "html-webpack-plugin": "^5.5.0",
+    "start-server-and-test": "^1.14.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",

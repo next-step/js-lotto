@@ -2,6 +2,7 @@ const purchaseInputSelector = '[data-cy="purchase-amount-input"]';
 const purchaseButtonSelector = '[data-cy="purchase-button"]';
 const lottoIconSelector = '[data-cy="lotto-icon"]';
 const lottoAnnouncementSelector = '[data-cy="lotto-announcement"]';
+
 describe('로또 구입 금액을 입력한다.', () => {
  beforeEach(() => {
   cy.visit('http://localhost:3000');
