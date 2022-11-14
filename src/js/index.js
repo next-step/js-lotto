@@ -10,9 +10,6 @@ import {
   addModalCloseClickEventListener,
 } from './eventListeners.js';
 
-const $showResultButton = document.querySelector('.open-result-modal-button');
-const $modalClose = document.querySelector('.modal-close');
-const $modal = document.querySelector('.modal');
 const $purchaseAmountInput = document.querySelector('#purchaseAmount');
 const $totalQuantity = document.querySelector('#totalQuantity');
 const $lottoIconList = document.querySelector('#lottoIconList');
@@ -22,14 +19,6 @@ const lottoState = {
   quantity: 0,
   lottos: [],
   isOpen: false,
-};
-
-const onModalShow = () => {
-  $modal.classList.add('open');
-};
-
-const onModalClose = () => {
-  $modal.classList.remove('open');
 };
 
 const onToggleChange = () => {
@@ -63,7 +52,7 @@ const onPurchaseClick = (e) => {
   initPurchaseLotto();
   lottoState.purchasedAmount = purchasedAmount;
   lottoState.quantity = Number(purchasedAmount) / 1000;
-  displayDetails();
+  displayDetails(lottoState.quantity);
   $totalQuantity.innerText = lottoState.quantity;
   generateLottos(lottoState.quantity);
   renderLottoIcons();
@@ -89,16 +78,6 @@ const generateLottos = (quantity) => {
   }
 };
 
-const displayDetails = () => {
-  if (!lottoState.quantity) {
-    $purchasedLottoList.style.display = 'none';
-    $winningNumberInputs.style.display = 'none';
-    return;
-  }
-  $purchasedLottoList.style.display = 'block';
-  $winningNumberInputs.style.display = 'block';
-};
-
 const renderLottoIcons = () => {
   if (!lottoState.quantity || !lottoState.lottos.length) return;
   lottoState.lottos.forEach((lotto) => {
@@ -120,6 +99,14 @@ const renderLottoIcons = () => {
   });
 };
 
+const onModalShow = () => {
+  openModal();
+};
+
+const onModalClose = () => {
+  closeModal();
+};
+
 const resetDatas = () => {
   lottoState.purchasedAmount = 0;
   lottoState.quantity = 0;
@@ -135,8 +122,8 @@ const initPurchaseLotto = () => {
   resetLottoIcons();
 };
 
-displayDetails();
 addPurchaseButtonClickEventListener(onPurchaseClick);
 addLottoToggleButtonClickEventListener(onToggleChange);
 addResultButtonClickEventListener(onModalShow);
 addModalCloseClickEventListener(onModalClose);
+displayDetails(lottoState.quantity);
