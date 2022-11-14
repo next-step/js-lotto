@@ -3,7 +3,6 @@ describe('로또 사이트 E2E 테스트', () => {
   let $lottoButton = '[data-id=lotto-submit-button]';
   let $resultSpan = '[data-id=result-text]';
   let $numberToggleButton = '[data-id=number-toggle-button]';
-  // let $lottoWrapper = '[data-id=lotto-wrapper]';
   let $lottoImage = '[data-id=lotto-image]';
   let $lottoNumber = '[data-id=lotto-number]';
 
@@ -31,6 +30,7 @@ describe('로또 사이트 E2E 테스트', () => {
         cy.get($lottoInput).should('have.value', '');
       });
     });
+
     it('숫자를 제외한 값을 입력하여도 숫자를 제외한 것은 화면에 렌더링 되지 않아야한다', () => {
       const [TYPE, RESULT] = [
         ['1000!', '@1', '!'],
@@ -46,20 +46,23 @@ describe('로또 사이트 E2E 테스트', () => {
   });
 
   context('소비자는 자동 구매를 할 수 있어야 한다.', () => {
+    const makeResultandCheckText = () => {
+      const [TYPE, RESULT] = ['5000', '총 5개를 구매하였습니다.'];
+      cy.get($lottoInput).type(TYPE);
+      cy.get($lottoButton).click();
+      cy.get($resultSpan).should('have.text', RESULT);
+    };
+
     it('확인(제출)버튼이 존재해야한다', () => {
       cy.get($lottoButton).should('exist');
     });
+
     it('확인(제출)버튼 클릭 시 구매한 갯수를 알려주는 문자가 렌더되어야 한다.', () => {
-      const [TYPE, RESULT] = ['5000', '총 5개를 구매하였습니다.'];
-      cy.get($lottoInput).type(TYPE);
-      cy.get($lottoButton).click();
-      cy.get($resultSpan).should('have.text', RESULT);
+      makeResultandCheckText();
     });
+
     it('확인(제출)버튼 클릭 시 번호보기 버튼이 렌더되어야 한다.', () => {
-      const [TYPE, RESULT] = ['5000', '총 5개를 구매하였습니다.'];
-      cy.get($lottoInput).type(TYPE);
-      cy.get($lottoButton).click();
-      cy.get($resultSpan).should('have.text', RESULT);
+      makeResultandCheckText();
       cy.get($numberToggleButton).should('exist');
     });
   });
@@ -68,19 +71,19 @@ describe('로또 사이트 E2E 테스트', () => {
     '로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.',
     () => {
       const [TYPE, IMAGE_COUNT] = ['5000', 5];
-      it('금액만큼(1000원당 1개)의 로또 이미지가 생성되어야 한다.', () => {
+
+      beforeEach(() => {
         cy.get($lottoInput).type(TYPE);
         cy.get($lottoButton).click();
+      });
+
+      it('금액만큼(1000원당 1개)의 로또 이미지가 생성되어야 한다.', () => {
         cy.get($lottoImage).should('have.length', IMAGE_COUNT);
       });
       it('금액만큼(1000원당 1개)의 난수 집합이 생성되어야 한다.', () => {
-        cy.get($lottoInput).type(TYPE);
-        cy.get($lottoButton).click();
         cy.get($lottoNumber).should('have.length', IMAGE_COUNT);
       });
       it('금액만큼(1000원당 1개)의 난수 집합이 생성된 뒤 화면에서 숨겨져 있어야한다', () => {
-        cy.get($lottoInput).type(TYPE);
-        cy.get($lottoButton).click();
         cy.get($lottoNumber).should('have.css', 'display', 'none');
       });
     }
@@ -89,7 +92,8 @@ describe('로또 사이트 E2E 테스트', () => {
   context(
     '복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.',
     () => {
-      const [TYPE, IMAGE_COUNT] = ['5000', 5];
+      const TYPE = '5000';
+
       beforeEach(() => {
         cy.get($lottoInput).type(TYPE);
         cy.get($lottoButton).click();
