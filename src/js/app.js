@@ -19,11 +19,8 @@ export class App {
     });
 
     $toggleButton.addEventListener("click", (event) => {
-      const lottoNumbers = document.querySelectorAll(".lotto-number");
-
-      for (const numbers of lottoNumbers) {
-        numbers.style.display = event.target.checked ? "block" : "none";
-      }
+      const checked = event.target.checked;
+      this.viewLottoNumbers(checked);
     });
   }
 
@@ -40,5 +37,12 @@ export class App {
 
     $switch.classList.add("show");
     $winningNumberForm.classList.add("show");
+  }
+
+  viewLottoNumbers(checked) {
+    const $lottoNumbers = document.querySelectorAll(".lotto-number");
+    for (const numbers of $lottoNumbers) {
+      numbers.style.display = checked ? "block" : "none";
+    }
   }
 }
