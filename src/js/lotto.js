@@ -12,18 +12,17 @@ class Lotto {
   }
 
   onConfirm() {
-    const CONFIRM_CONDITION =
+    const IS_CONFIRM =
       this.state.moneyAmount >= 1000 && this.state.moneyAmount <= 100000;
-    const ALERT_CONDITION = this.state.moneyAmount % 1000 !== 0;
+    const IS_ALERT = this.state.moneyAmount % 1000 !== 0;
 
-    if (ALERT_CONDITION) {
+    if (IS_ALERT) {
       window.alert('로또 구입 금액을 1,000원 단위로 입력해 주세요.');
       this.setState({ ...this.state, moneyAmount: null });
       return;
     }
 
-    if (CONFIRM_CONDITION) {
-      // *TODO: 랜덤으로 생성된 배열들끼리 중복이 있는 경우 어떻게 처리할 것인지.
+    if (IS_CONFIRM) {
       const RANDOM_NUMBERS = checkRandom(
         makeRandomNumbers(this.state.moneyAmount)
       );
@@ -96,14 +95,16 @@ class Lotto {
       wrapper.style.display = 'none';
       return;
     }
+
     if (wrapper.style.display !== 'block') wrapper.style.display = 'block';
   }
 
   renderInput() {
-    const VACANT_CONDITION = this.state.moneyAmount === 0;
+    const IS_BLANK = this.state.moneyAmount === 0;
 
-    this.$target.querySelector('[data-id=lotto-number-input]').value =
-      VACANT_CONDITION ? null : this.state.moneyAmount;
+    this.$target.querySelector('[data-id=lotto-number-input]').value = IS_BLANK
+      ? null
+      : this.state.moneyAmount;
   }
 
   render() {

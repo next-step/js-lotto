@@ -3,10 +3,14 @@ const makeRandomNumber = () => {
 };
 
 export const makeRandomNumbers = (moneyAmount) => {
+  if (moneyAmount % 1000 !== 0)
+    throw new Error('난수생성을 위해 1000원 단위로 입력되어야 합니다.');
+
   return new Array(moneyAmount / 1000).fill(0).map(makeRandomNumber);
 };
 
 export const checkRandom = (randomNumberArray) => {
+  if (randomNumberArray.length <= 1) return randomNumberArray;
   //bf
   let copy = [...randomNumberArray];
 
@@ -33,5 +37,5 @@ export const checkRandom = (randomNumberArray) => {
     return checkRandom(result);
   }
 
-  return [...randomNumberArray];
+  return randomNumberArray;
 };
