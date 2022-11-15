@@ -1,4 +1,4 @@
-const purchaseInputSelector = '[data-cy="purchase-amount-input"]';
+const purchaseInputSelector = '#purchase-amount-input';
 const purchaseButtonSelector = '[data-cy="purchase-button"]';
 const lottoIconSelector = '[data-cy="lotto-icon"]';
 const lottoAnnouncementSelector = '[data-cy="lotto-announcement"]';
