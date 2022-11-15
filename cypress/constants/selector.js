@@ -1,4 +1,5 @@
 export const SELECTOR = {
+  PAYMENT_FORM: 'payment-form',
   PURCHASE_PRICE_INPUT: 'purchase-price-input',
   PURCHASE_BUTTON: 'purchase-button',
   LOTTO_PURCHASE_COUNT_TEXT: 'lotto-purchase-count-text',
