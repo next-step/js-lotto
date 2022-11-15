@@ -1,7 +1,7 @@
 describe('로또 구입 금액 입력', () => {
   const $inputPurchase = '[data-cy="input-purchase"]';
   const $submitPurchase = '[data-cy="submit-purchase"]';
-  const $messagePurchase = '[data-cy="message-purchase"]';
+  const $messagePurchase = '[data-cy="message-purchase-error"]';
   const min = 1000;
   const max = 100000;
 
@@ -49,5 +49,43 @@ describe('로또 구입 금액 입력', () => {
   it('올바른 값 입력 시, input 내의 내용을 지운다', () => {
     cy.get($inputPurchase).type(`${min}{enter}`)
       .should('have.value', '');
+  });
+});
+
+describe('로또 구입 후 확인', () => {
+  const $inputPurchase = '[data-cy="input-purchase"]';
+  const $messageTotal = '[data-cy="message-purchase-total"]';
+  const $ticketList = '[data-cy="ticket-list"]';
+  const $btnViewNumber = '[data-cy="btn-view-number"]';
+
+  beforeEach(() => {
+    cy.visit('/');
+    cy.get($inputPurchase).type(`5000{enter}`);
+  });
+
+  it('구매 문구 확인', () => {
+    cy.get($messageTotal).should('have.text', '총 5개를 구매하였습니다.');
+  });
+
+  it('발행된 티켓 갯수 확인', () => {
+    cy.get($ticketList).children().should('have.length', 5);
+  });
+
+  it('번호보기 버튼 on 시, 번호를 확인할 수 있다', () => {
+    cy.get($btnViewNumber).click();
+
+    cy.get($ticketList).children().each((item) => {
+      const $numbers = item.children('.numbers');
+      expect($numbers).to.be.visible;
+    });
+  });
+
+  it('번호보기 버튼 off 시, 번호를 숨긴다', () => {
+    cy.get($btnViewNumber).click();
+    cy.get($btnViewNumber).click();
+    cy.get($ticketList).children().each((item) => {
+      const $numbers = item.children('.numbers');
+      expect($numbers).to.not.visible;
+    });
   });
 });
