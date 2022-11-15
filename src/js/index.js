@@ -8,11 +8,14 @@ const $modal = document.querySelector('.modal');
 const $lottoNumbersToggleButton = document.querySelector(
   '.lotto-numbers-toggle-button'
 );
+const $purchaseInputForm = document.querySelector('#input-price-form');
 const $purchaseButton = document.querySelector('.purchase-button');
 const $purchaseInput = document.querySelector('.purchase-amount');
 
 const $purchasedLottos = document.querySelector('#purchased-lottos');
 const $inputLottoNums = document.querySelector('#input-lotto-nums');
+
+const $totalPurchased = document.querySelector('#total-purchased');
 
 const onModalShow = () => {
   $modal.classList.add('open');
@@ -22,17 +25,21 @@ const onModalClose = () => {
   $modal.classList.remove('open');
 };
 
-const onPurchaseLotto = () => {
+const onPurchaseLotto = (event) => {
+  event.preventDefault();
+
   const purchaseAmount = $purchaseInput.value;
   if (!isValidateAmount(purchaseAmount)) {
     alert(ERROR_MSSAGE.AMOUNT);
     return;
   }
   const ticketCount = purchaseLotto(purchaseAmount);
+  $totalPurchased.textContent = ticketCount;
+
   $purchasedLottos.style.display = 'block';
   $inputLottoNums.style.display = 'block';
 };
 
 $showResultButton.addEventListener('click', onModalShow);
 $modalClose.addEventListener('click', onModalClose);
-$purchaseButton.addEventListener('click', onPurchaseLotto);
+$purchaseInputForm.addEventListener('submit', onPurchaseLotto);
