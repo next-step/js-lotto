@@ -1,12 +1,13 @@
+import { ERROR_MSSAGE } from '../../src/js/utils/constants';
 const $purchaseInput = '[data-cy="purchase-amount"]';
 const $purchaseButton = '[data-cy="purchase-button"]';
 
-describe('LOTTO TEST', () => {
+describe('TEST LOTTO APLICATION', () => {
   beforeEach(() => {
     cy.visit('../../index.html');
   });
 
-  it('exist price input tag', () => {
+  it('exist purchase input tag', () => {
     const purchaseInputTag = cy.get($purchaseInput);
     purchaseInputTag.should('exist');
   });
@@ -26,16 +27,35 @@ describe('LOTTO TEST', () => {
   it('check valid Price is submitted', () => {
     const alertStub = cy.stub();
     cy.on('window:alert', alertStub);
-    const VALID_PRICE_ERROR_MSG =
-      '로또 구입 금액을 1,000원 단위로 입력해 주세요.';
 
     const purchaseInputTag = cy.get($purchaseInput);
-    purchaseInputTag.type(1234);
     const purchaseButtonTag = cy.get($purchaseButton);
+
+    purchaseInputTag.type(1234);
+
     purchaseButtonTag.click().then(() => {
-      const actualMessage = alertStub.getCall(0).lastArg;
-      expect(actualMessage).to.equal(VALID_PRICE_ERROR_MSG);
+      expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MSSAGE.AMOUNT);
     });
+  });
+
+  it('show component when the valid price is submitted', () => {
+    const purchaseInputTag = cy.get($purchaseInput);
+    const purchaseButtonTag = cy.get($purchaseButton);
+
+    purchaseInputTag.type(1000);
+    purchaseButtonTag.click().then(() => {
+      cy.get('#purchased-lottos').should('be.visible');
+      cy.get('#input-lotto-nums').should('be.visible');
+    });
+  });
+
+  it('show total count of lottos', () => {
+    const purchaseInputTag = cy.get($purchaseInput);
+    const purchaseButtonTag = cy.get($purchaseButton);
+
+    purchaseInputTag.type(7000);
+    purchaseButtonTag.click();
+    cy.get('#total-purchased').contains('7');
   });
 });
 
