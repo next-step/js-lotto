@@ -1,8 +1,13 @@
 import './../css/index.css';
+
+import PurchaseModel from './Model/PurchaseModel';
+import LotteryResultView from './View/LotteryResultView';
 import { $modal, $modalClose, $purchaseForm, $showResultButton } from './dom';
 
 class App {
- constructor() {
+ constructor(Model, views) {
+  this.purchase = new Model();
+  views.forEach((View) => new View(this.purchase));
   this.setEvent();
  }
 
@@ -17,11 +22,11 @@ class App {
   event.preventDefault();
   const target = event.currentTarget;
   if (!target) return;
-  console.log(+target.purchase.value);
+  this.purchase.buy = +target.purchase.value;
  }
 }
 
-new App();
+new App(PurchaseModel, [LotteryResultView]);
 
 // // TODO : modal logic 분리
 // const onModalShow = () => {
