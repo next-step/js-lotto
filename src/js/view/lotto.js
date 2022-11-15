@@ -19,7 +19,7 @@ export const showLottoResultForm = () => {
   $(SELECTOR.LOTTO_RESULT_FORM).classList.remove('none');
 };
 
-export const showLottoNumber = () => {
+export const toggleLottoNumber = () => {
   $(SELECTOR.LOTTO_ICON_WRAPPER).classList.toggle('flex-col');
   $all(SELECTOR.LOTTO_DETAIL_NUMBER).forEach((elem) => {
     elem.classList.toggle('none');
