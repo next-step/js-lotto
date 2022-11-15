@@ -1,15 +1,17 @@
-const $showResultButton = document.querySelector(".open-result-modal-button");
-const $modalClose = document.querySelector(".modal-close");
-const $modal = document.querySelector(".modal");
-const $lottoNumbersToggleButton = document.querySelector(".lotto-numbers-toggle-button");
+import { $, $$ } from "./Util/DOM.js";
 
-const $paymentCost = document.querySelector("#payment-cost-input");
-const $paymentButton = document.querySelector("#payment-button");
-const $paymentForm = document.querySelector(".payment-form");
+const $showResultButton = $(".open-result-modal-button");
+const $modalClose = $(".modal-close");
+const $modal = $(".modal");
+const $lottoNumbersToggleButton = $(".lotto-numbers-toggle-button");
+
+const $paymentCost = $("#payment-cost-input");
+const $paymentButton = $("#payment-button");
+const $paymentForm = $(".payment-form");
 
 let paymentCostStr = "";
 
-const $paymentTickets = document.querySelector("#payment-ticket");
+const $paymentTickets = $("#payment-ticket");
 
 const onModalShow = () => {
   $modal.classList.add("open");
@@ -20,7 +22,7 @@ const onModalClose = () => {
 };
 
 function showLottoNumber(ticket) {
-  const lottoResult = document.querySelector(".lotto-result");
+  const lottoResult = $(".lotto-result");
   while (lottoResult.hasChildNodes()) {
     lottoResult.removeChild(lottoResult.firstChild);
   }
@@ -97,9 +99,9 @@ function makeTicket() {
   return tickets;
 }
 function clickToggle() {
-  const toggleSwitch = document.querySelector(".lotto-numbers-toggle-button");
-  const ul = document.querySelectorAll(".lotto-result");
-  const ticketNumber = document.querySelectorAll(".lotto-ticket-number");
+  const toggleSwitch = $(".lotto-numbers-toggle-button");
+  const ul = $$(".lotto-result");
+  const ticketNumber = $$(".lotto-ticket-number");
   if (toggleSwitch.checked === true) {
     for (let i = 0; i < ul.length; i++) {
       ul[i].className = "d-flex flex-wrap flex-col lotto-result";
