@@ -6,7 +6,7 @@
 const formSelector = `[data-cy="purchase-form"]`;
 const inputSelector = `[data-cy="purchase-amount"]`;
 const buttonSelector = `[data-cy="purchase-button"]`;
-const spanSelector = `[data-cy="purchase-span]`;
+const spanSelector = `[data-cy="purchase-span"]`;
 
 describe("로또 구매기능 테스트", () => {
   beforeEach(() => {
