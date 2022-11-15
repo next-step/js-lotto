@@ -25,7 +25,7 @@ li {
   display: none;
 }
 
-.message-purchase-error {
+#form-purchase .error-message {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;

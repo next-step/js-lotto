@@ -20,24 +20,23 @@
                 id="input-purchase"
                 class="w-100 mr-2 pl-2"
                 placeholder="구입 금액"
-                data-cy="input-purchase"
               />
-              <button type="button" id="btn-purchase-submit" class="btn btn-cyan" data-cy="submit-purchase">확인</button>
+              <button type="button" id="btn-purchase-submit" class="btn btn-cyan">확인</button>
             </div>
-            <p class="message-purchase-error" data-cy="message-purchase-error"></p>
+            <p class="error-message" data-cy="message-purchase-error"></p>
           </form>
           <div class="result-wrap hide">
             <section class="mt-9">
              <div class="d-flex">
-               <label class="flex-auto my-0 message-purchase-total" data-cy="message-purchase-total"></label>
+               <label class="flex-auto my-0 message-purchase-total"></label>
                <div class="flex-auto d-flex justify-end pr-1">
-                 <label class="switch" data-cy="btn-view-number">
-                   <input type="checkbox" class="lotto-numbers-toggle-button" />
+                 <label class="switch" data-cy="btn-toggle-numbers">
+                   <input type="checkbox" class="btn-toggle-numbers"/>
                    <span class="text-base font-normal">번호보기</span>
                  </label>
                </div>
              </div>
-             <ul class="d-flex flex-wrap ticket-list" data-cy="ticket-list">
+             <ul class="d-flex flex-wrap ticket-list">
              </ul>
             </section>
             <form class="mt-9">

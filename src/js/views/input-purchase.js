@@ -11,7 +11,7 @@ export default class InputPurchase {
     this.purchaseMax = 100000;
     this.selector = {
       inputPurchase: document.getElementById('input-purchase'),
-      errorMessage: document.querySelector('.message-purchase-error'),
+      errorMessage: document.querySelector('#form-purchase .error-message'),
     };
 
     this.setEventListener();

@@ -7,7 +7,7 @@ export default class TicketList {
     this.selector = {
       resultWrap: document.querySelector('.result-wrap'),
       totalMessage: document.querySelector('.message-purchase-total'),
-      btnViewNumber: document.querySelector('.lotto-numbers-toggle-button'),
+      btnViewNumber: document.querySelector('.btn-toggle-numbers'),
       ticketList: document.querySelector('.ticket-list'),
     };
 
