@@ -1,12 +1,11 @@
 const isPositiveNumber = (number) => number > 0;
 
-const isRemainderZero = (number, unit) => {
-  if (number % unit === 0) return true;
+const isZeroNumber = (number) => number === 0;
 
-  return false;
-};
+const isRemainderZero = (number, unit) => number % unit === 0;
 
 export const validation = {
   isPositiveNumber,
+  isZeroNumber,
   isRemainderZero,
 };

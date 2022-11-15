@@ -1,4 +1,5 @@
 import { ERROR_MESSAGE, LOTTO } from '../constants/index.js';
+import { getLottoPurchaseCount } from '../service/lotto.js';
 import { validation } from '../utils/validation.js';
 import {
   getLottoPurchasePrice,
@@ -6,7 +7,7 @@ import {
   renderLottoIcons,
   showPurchasedLotto,
   showLottoResultForm,
-  showLottoNumber,
+  toggleLottoNumber,
 } from '../view/lotto.js';
 
 export const handleSubmit = (e) => {
@@ -15,17 +16,22 @@ export const handleSubmit = (e) => {
   try {
     const lottoPurchasePrice = getLottoPurchasePrice();
 
+    if (validation.isZeroNumber(Number(lottoPurchasePrice))) {
+      throw Error(ERROR_MESSAGE.INVALID_ZERO_LOTTO_PRICE);
+    }
+
     if (!validation.isPositiveNumber(lottoPurchasePrice)) {
       throw Error(ERROR_MESSAGE.INVALID_NEGATIVE_LOTTO_PRICE);
     }
+
     if (!validation.isRemainderZero(lottoPurchasePrice, LOTTO.PRICE)) {
       throw Error(ERROR_MESSAGE.INVALID_LOTTO_PRICE_UNIT);
     }
 
-    const lottoCount = lottoPurchasePrice / LOTTO.PRICE;
+    const lottoPurchaseCount = getLottoPurchaseCount(lottoPurchasePrice);
 
-    renderLottoPurchaseCountText(lottoCount);
-    renderLottoIcons(lottoCount);
+    renderLottoPurchaseCountText(lottoPurchaseCount);
+    renderLottoIcons(lottoPurchaseCount);
 
     showPurchasedLotto();
     showLottoResultForm();
@@ -36,5 +42,5 @@ export const handleSubmit = (e) => {
 };
 
 export const handleClickNumberToggle = () => {
-  showLottoNumber();
+  toggleLottoNumber();
 };
