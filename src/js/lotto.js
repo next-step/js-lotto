@@ -5,7 +5,6 @@ import {
   LOTTO_MAX_NUMBER,
   LOTTO_MIN_NUMBER,
   LOTTO_PRICE,
-  NUMBER_PATTERN,
 } from '../const.js';
 import { getRandomNumber } from '../utils.js';
 
@@ -36,20 +35,16 @@ class Lotto {
     return this.#lottos;
   };
 
-  validatePrice = () => {
-    if (NUMBER_PATTERN.test(this.#price) === false) {
-      return false;
-    }
-
+  getErrorMessage = () => {
     if (this.#price % LOTTO_PRICE > DEFAULT_PRICE) {
-      return false;
+      return '1,000단위의 숫자를 입력해주세요.';
     }
 
-    if (this.#price < DEFAULT_PRICE) {
-      return false;
+    if (this.#price <= DEFAULT_PRICE) {
+      return '0이상의 숫자를 입력해주세요.';
     }
 
-    return true;
+    return '';
   };
 
   registerLotto = () => {
