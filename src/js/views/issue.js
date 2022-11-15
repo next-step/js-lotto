@@ -18,6 +18,7 @@ export class Issue {
 
     reset() {
         this.lottoNumbers = [];
+        this.$lottoNumbersToggleButton.checked = false;
         this.isShowNumber = false;
         while (this.$issuedTickets.hasChildNodes()) {
             this.$issuedTickets.removeChild(this.$issuedTickets.firstChild);
@@ -38,18 +39,11 @@ export class Issue {
     }
 
     creatLottoElement (lottoNumber) {
-        const $issuedTicket = document.createElement('li');
-        const $lottoIcon = document.createElement('span');
-        const $lottoNumber = document.createElement('span');
-
-        $issuedTicket.classList.add('mx-1', 'text-4xl');
-        $lottoNumber.classList.add('lotto-numbers', 'text-3xl');
-
-        $lottoIcon.innerHTML = `🎟️ `;
-        $lottoNumber.innerHTML = lottoNumber;
-
-        $issuedTicket.append($lottoIcon, $lottoNumber);
-        this.$issuedTickets.append($issuedTicket);
+        this.$issuedTickets.innerHTML +=
+            `<li class="mx-1 text-4xl">
+                <span>🎟️ </span>
+                <span class="lotto-numbers text-3xl">${ lottoNumber }</span>
+            </li>`;
 
         this.showLottoNumbers();
     }
