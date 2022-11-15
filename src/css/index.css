@@ -8,6 +8,10 @@ body {
   font-size: 16px;
 }
 
+li {
+  list-style: none;
+}
+
 #app {
   max-width: 400px;
   margin: 0 auto;
@@ -15,6 +19,10 @@ body {
 
 #form-purchase {
   position: relative;
+}
+
+.hide {
+  display: none;
 }
 
 .message-purchase-error {
@@ -25,6 +33,26 @@ body {
   color: #e30000;
   font-size: 12px;
 }
+
+.ticket-list {
+  width: 100%;
+  padding: 0;
+}
+
+.ticket-list .numbers {
+  display: none;
+}
+
+.ticket-list.view-numbers li {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.ticket-list.view-numbers .numbers {
+  display: block;
+}
+
 .winning-number {
   width: 30px;
   height: 36px;

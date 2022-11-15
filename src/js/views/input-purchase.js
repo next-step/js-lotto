@@ -5,7 +5,8 @@ export default class InputPurchase {
   purchaseMax;
   selector;
 
-  constructor() {
+  constructor(lottoState) {
+    this.lottoState = lottoState;
     this.purchaseMin = 1000;
     this.purchaseMax = 100000;
     this.selector = {
@@ -52,10 +53,15 @@ export default class InputPurchase {
         break;
 
       default:
-        this.selector.inputPurchase.value = '';
-        this.setErrorMessage();
+        this.purchase(value);
     }
   };
+
+  purchase(value) {
+    this.lottoState.lotto = value / 1000;
+    this.selector.inputPurchase.value = '';
+    this.setErrorMessage();
+  }
 
   setErrorMessage(message = '') {
     this.selector.errorMessage.innerHTML = message;

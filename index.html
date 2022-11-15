@@ -26,21 +26,21 @@
             </div>
             <p class="message-purchase-error" data-cy="message-purchase-error"></p>
           </form>
-          <section class="mt-9">
-            <div class="d-flex">
-              <label class="flex-auto my-0" data-cy="message-purchase-total"></label>
-              <div class="flex-auto d-flex justify-end pr-1">
-                <label class="switch">
-                  <input type="checkbox" class="lotto-numbers-toggle-button" />
-                  <span class="text-base font-normal" data-cy="btn-view-number">번호보기</span>
-                </label>
-              </div>
-            </div>
-            <div class="d-flex flex-wrap" data-cy="ticket-list">
-              <span class="mx-1 text-4xl">🎟️</span>
-            </div>
-          </section>
-          <form class="mt-9">
+          <div class="result-wrap hide">
+            <section class="mt-9">
+             <div class="d-flex">
+               <label class="flex-auto my-0 message-purchase-total" data-cy="message-purchase-total"></label>
+               <div class="flex-auto d-flex justify-end pr-1">
+                 <label class="switch" data-cy="btn-view-number">
+                   <input type="checkbox" class="lotto-numbers-toggle-button" />
+                   <span class="text-base font-normal">번호보기</span>
+                 </label>
+               </div>
+             </div>
+             <ul class="d-flex flex-wrap ticket-list" data-cy="ticket-list">
+             </ul>
+            </section>
+            <form class="mt-9">
             <label class="flex-auto d-inline-block mb-3"
               >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >
@@ -88,6 +88,7 @@
               결과 확인하기
             </button>
           </form>
+          </div>
         </div>
       </div>
 
