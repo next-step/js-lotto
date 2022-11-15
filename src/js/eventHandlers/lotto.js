@@ -1,6 +1,5 @@
-import { ERROR_MESSAGE, LOTTO } from '../constants/index.js';
 import { getLottoPurchaseCount } from '../service/lotto.js';
-import { validation } from '../utils/validation.js';
+import { isValidLottoPurchasePrice } from '../utils/validation.js';
 import {
   getLottoPurchasePrice,
   renderLottoPurchaseCountText,
@@ -16,17 +15,7 @@ export const handleSubmit = (e) => {
   try {
     const lottoPurchasePrice = getLottoPurchasePrice();
 
-    if (validation.isZeroNumber(lottoPurchasePrice)) {
-      throw Error(ERROR_MESSAGE.INVALID_ZERO_LOTTO_PRICE);
-    }
-
-    if (!validation.isPositiveNumber(lottoPurchasePrice)) {
-      throw Error(ERROR_MESSAGE.INVALID_NEGATIVE_LOTTO_PRICE);
-    }
-
-    if (!validation.isRemainderZero(lottoPurchasePrice, LOTTO.PRICE)) {
-      throw Error(ERROR_MESSAGE.INVALID_LOTTO_PRICE_UNIT);
-    }
+    if (isValidLottoPurchasePrice(lottoPurchasePrice)) return;
 
     const lottoPurchaseCount = getLottoPurchaseCount(lottoPurchasePrice);
 
