@@ -3,8 +3,10 @@
 // 소비자는 자동 구매를 할 수 있어야 한다.
 // 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
 
+const formSelector = `[data-cy="purchase-form"]`;
 const inputSelector = `[data-cy="purchase-amount"]`;
 const buttonSelector = `[data-cy="purchase-button"]`;
+const spanSelector = `[data-cy="purchase-span]`;
 
 describe("로또 구매기능 테스트", () => {
   beforeEach(() => {
@@ -31,5 +33,13 @@ describe("로또 구매기능 테스트", () => {
 
   it("로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.", () => {
     cy.get(inputSelector).type("1000").should("have.value", "1000");
+  });
+
+  it("금액을 입력하지 않고 확인버튼을 누를 시 로또가 발급되지 않는다.", () => {
+    cy.get(formSelector)
+      .submit()
+      .then(() => {
+        cy.get(spanSelector).should("have.text", "0");
+      });
   });
 });
