@@ -1,3 +1,4 @@
+import PurchaseLottery from '../Lottery/PurchaseLottery';
 import Observer from './Observer';
 
 export default class PurchaseModel extends Observer {
@@ -16,7 +17,10 @@ export default class PurchaseModel extends Observer {
 
  set buy(money) {
   const lotteryAmount = this.#getLotteryAmount(money);
-  this.#lotteries = Array.from({ length: lotteryAmount }, () => 'lottery');
+  this.#lotteries = Array.from(
+   { length: lotteryAmount },
+   () => new PurchaseLottery()
+  );
   this.notify();
  }
 
