@@ -32,7 +32,7 @@ export default class Lottery {
 
   this.validateLottoNumber(number);
 
-  if (this.#numbers >= this.#lotteryCount) {
+  if (this.#numbers.length === this.#lotteryCount) {
    this.#bonus = number;
    return;
   }
@@ -41,8 +41,8 @@ export default class Lottery {
 
  validateLottoNumber(number) {
   if (!Number.isInteger(number)) throw Error('로또 번호는 정수여야합니다.');
-  if (number > 45 || number <= 1) {
-   throw Error('1~45 중에 입력해주세요');
+  if (number > 45 || number < 1) {
+   throw Error('1~45 중에 입력해주세요', number);
   }
  }
  get getLotteryNumber() {

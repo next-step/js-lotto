@@ -1,4 +1,5 @@
 import PurchaseLottery from '../Lottery/PurchaseLottery';
+import WinningLottery from '../Lottery/WinningLottery';
 import Observer from './Observer';
 
 export default class PurchaseModel extends Observer {
@@ -6,6 +7,7 @@ export default class PurchaseModel extends Observer {
  constructor() {
   super();
   this.#lotteries = [];
+  this.winningLottery = new WinningLottery();
  }
  get lotteries() {
   return this.#lotteries;

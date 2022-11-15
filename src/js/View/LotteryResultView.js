@@ -8,11 +8,24 @@ export default class LotteryResultView extends View {
   this.init();
  }
 
+ setEvent() {
+  this.addEvent('submit', '#winning-lottery-form', (event) => {
+   event.preventDefault();
+
+   for (const input of event.target) {
+    if (input.tagName !== 'INPUT') continue;
+    this.purchaseModel.winningLottery.setLottery = +input.value;
+   }
+
+   console.log(this.purchaseModel.winningLottery);
+  });
+ }
+
  getTemplate() {
   if (this.purchaseModel.lotteriesLength === 0) return '';
   return (
    this.generateLotteriesTemplate(this.purchaseModel.lotteriesLength) +
-   `<form class="mt-9">
+   `<form id="winning-lottery-form" class="mt-9">
 <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
 <div class="d-flex">
   <div>
@@ -33,7 +46,7 @@ export default class LotteryResultView extends View {
     </div>
   </div>
 </div>
-<button type="button" class="open-result-modal-button mt-5 btn btn-cyan w-100">
+<button type="submit" class="open-result-modal-button mt-5 btn btn-cyan w-100">
   결과 확인하기
 </button>
 </form>
