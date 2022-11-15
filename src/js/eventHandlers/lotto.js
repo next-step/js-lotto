@@ -1,5 +1,5 @@
 import { getLottoPurchaseCount } from '../service/lotto.js';
-import { isValidLottoPurchasePrice } from '../utils/validation.js';
+import { isInvalidLottoPurchasePrice } from '../utils/validation.js';
 import {
   getLottoPurchasePrice,
   renderLottoPurchaseCountText,
@@ -15,7 +15,7 @@ export const handleSubmit = (e) => {
   try {
     const lottoPurchasePrice = getLottoPurchasePrice();
 
-    if (isValidLottoPurchasePrice(lottoPurchasePrice)) return;
+    if (isInvalidLottoPurchasePrice(lottoPurchasePrice)) return;
 
     const lottoPurchaseCount = getLottoPurchaseCount(lottoPurchasePrice);
 

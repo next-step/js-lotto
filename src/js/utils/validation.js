@@ -6,7 +6,7 @@ const isZeroNumber = (number) => number === 0;
 
 const isRemainderZero = (number, unit) => number % unit === 0;
 
-export const isValidLottoPurchasePrice = (lottoPurchasePrice) => {
+export const isInvalidLottoPurchasePrice = (lottoPurchasePrice) => {
   if (isZeroNumber(lottoPurchasePrice)) {
     throw Error(ERROR_MESSAGE.INVALID_ZERO_LOTTO_PRICE);
   }
