@@ -18,4 +18,6 @@ export const isInvalidLottoPurchasePrice = (lottoPurchasePrice) => {
   if (!isRemainderZero(lottoPurchasePrice, LOTTO.PRICE)) {
     throw Error(ERROR_MESSAGE.INVALID_LOTTO_PRICE_UNIT);
   }
+
+  return false;
 };
