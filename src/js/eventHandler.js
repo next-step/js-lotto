@@ -35,3 +35,10 @@ export const handlePaymentForm = (event) => {
 
   buyLotto(payment); // 구입한 lotto 수를 알려줌.
 };
+
+const $lottoNumberList = $(".lotto-ticket");
+
+export const handleShowNumber = (event) => {
+  //   const isBtnOn = event.target.checked;
+  $lottoNumberList.classList.toggle("hidden");
+};
