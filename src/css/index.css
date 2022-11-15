@@ -22,3 +22,10 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.lotto-result {
+  padding-left: 0;
+}
+.lotto-ticket-number {
+  line-height: 35px;
+}
