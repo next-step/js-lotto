@@ -9,3 +9,5 @@ export const $lottoNumbersToggleButton = document.querySelector(
 export const $purchaseForm = document.querySelector(
  '[data-cy="purchase-amount-form"]'
 );
+
+export const $purchaseInput = document.querySelector('#purchase-amount-input');

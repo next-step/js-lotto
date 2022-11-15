@@ -16,8 +16,12 @@ describe('로또 구입 금액을 입력한다.', () => {
  it('금액은 숫자만 입력할 수 있다.', () => {
   cy.get(purchaseInputSelector).type('123ab').should('have.value', '123');
  });
- it('금액은 100000 이상으로 입력할 수 없다.', () => {
-  cy.get(purchaseInputSelector).type('100001').should('have.value', '100000');
+ it('금액은 100000 이상으로 입력하면 ', () => {
+  cy
+   .get(purchaseInputSelector)
+   .type('100001')
+   .focus()
+   .should('have.value', '100000');
  });
 });
 
@@ -39,7 +43,7 @@ describe('금액에 해당하는 로또를 발급해야 한다.', () => {
   });
  });
  it('금액이 1,000원 보다 적은 경우 alert를 띄워준다.', () => {
-  cy.get(purchaseInputSelector).type('1001');
+  cy.get(purchaseInputSelector).type('999');
   cy.get(purchaseButtonSelector).click();
   cy.on('window:alert', (t) => {
    expect(t).to.contains('로또는 한 장 이상 구매해야합니다.');
