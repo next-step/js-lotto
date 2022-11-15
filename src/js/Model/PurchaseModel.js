@@ -22,13 +22,13 @@ export default class PurchaseModel extends Observer {
 
  #getLotteryAmount(money) {
   const lotteryPrice = 1000;
+  if (money < lotteryPrice) {
+   throw new Error('로또는 한 장 이상 구매해야합니다.');
+  }
   if (money % lotteryPrice !== 0) {
-   throw new Error('에러 메세지');
+   throw new Error('1,000원 단위로 입력해주세요!');
   }
 
-  if (lotteryPrice === 0) {
-   throw new Error('에러 메세지2');
-  }
   return money / lotteryPrice;
  }
 }

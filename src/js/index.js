@@ -2,7 +2,13 @@ import './../css/index.css';
 
 import PurchaseModel from './Model/PurchaseModel';
 import LotteryResultView from './View/LotteryResultView';
-import { $modal, $modalClose, $purchaseForm, $showResultButton } from './dom';
+import {
+ $modal,
+ $modalClose,
+ $purchaseForm,
+ $purchaseInput,
+ $showResultButton,
+} from './dom';
 
 class App {
  constructor(Model, views) {
@@ -16,13 +22,23 @@ class App {
    'submit',
    this.handlePurchaseFormSubmit.bind(this)
   );
+
+  $purchaseInput.addEventListener('change', (event) => {
+   if (event.target.value > 100000) {
+    event.target.value = 100000;
+   }
+  });
  }
 
  handlePurchaseFormSubmit(event) {
   event.preventDefault();
   const target = event.currentTarget;
   if (!target) return;
-  this.purchase.buy = +target.purchase.value;
+  try {
+   this.purchase.buy = +target.purchase.value;
+  } catch (e) {
+   alert(e.message);
+  }
  }
 }
 
