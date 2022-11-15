@@ -9,7 +9,7 @@ const lottoTemplate = (lottoNumbers) => `
 </li>
 `;
 
-export const getLottoPurchasePrice = () => $(SELECTOR.PURCHASE_PRICE_INPUT).value;
+export const getLottoPurchasePrice = () => Number($(SELECTOR.PURCHASE_PRICE_INPUT).value);
 
 export const showPurchasedLotto = () => {
   $(SELECTOR.PURCHASED_LOTTO).classList.remove('none');

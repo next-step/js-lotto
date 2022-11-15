@@ -16,7 +16,7 @@ export const handleSubmit = (e) => {
   try {
     const lottoPurchasePrice = getLottoPurchasePrice();
 
-    if (validation.isZeroNumber(Number(lottoPurchasePrice))) {
+    if (validation.isZeroNumber(lottoPurchasePrice)) {
       throw Error(ERROR_MESSAGE.INVALID_ZERO_LOTTO_PRICE);
     }
 
