@@ -1,9 +1,15 @@
 {
-  "name": "lotto",
+  "name": "js-lotto",
   "version": "1.0.0",
   "main": "index.js",
+  "repository": "https://github.com/yeomgahui/js-lotto.git",
+  "author": "= <=ykh4933@naver.com>",
   "license": "MIT",
+  "scripts": {
+    "cypress:open": "cypress open"
+  },
+  "dependencies": {},
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^11.0.1"
   }
 }
