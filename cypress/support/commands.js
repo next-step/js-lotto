@@ -23,3 +23,10 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('clickPurchaseBtn', (purchaseAmountInput) => {
+  cy.get('[data-cy="lotto-purchase-input"]').type(`${purchaseAmountInput}{enter}`);
+});
+Cypress.Commands.add('pressEnter', (purchaseAmountInput) => {
+  cy.get('[data-cy="lotto-purchase-input"]').type(purchaseAmountInput);
+  cy.get('[data-cy="lotto-purchase-btn"]').click();
+});
