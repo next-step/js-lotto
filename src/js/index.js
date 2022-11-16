@@ -4,14 +4,12 @@ const $showResultButton = $(".open-result-modal-button");
 const $modalClose = $(".modal-close");
 const $modal = $(".modal");
 const $lottoNumbersToggleButton = $(".lotto-numbers-toggle-button");
-
 const $paymentCost = $("#payment-cost-input");
 const $paymentButton = $("#payment-button");
 const $paymentForm = $(".payment-form");
+const $paymentTickets = $("#payment-ticket");
 
 let paymentCostStr = "";
-
-const $paymentTickets = $("#payment-ticket");
 
 const onModalShow = () => {
   $modal.classList.add("open");
@@ -87,7 +85,6 @@ function makeRandomLottoNumber() {
     }
     return false;
   }
-
   return lottoNumber;
 }
 
@@ -98,6 +95,7 @@ function makeTicket() {
   }
   return tickets;
 }
+
 function clickToggle() {
   const toggleSwitch = $(".lotto-numbers-toggle-button");
   const ul = $$(".lotto-result");
@@ -119,7 +117,7 @@ function clickToggle() {
   }
 }
 
-function paymentCost() {
+function handlePayment() {
   paymentCostStr = $paymentCost.value;
   if (digitRange() === true) {
     blockComma();
@@ -134,9 +132,9 @@ function paymentCost() {
 
 $showResultButton.addEventListener("click", onModalShow);
 $modalClose.addEventListener("click", onModalClose);
-$paymentButton.addEventListener("click", paymentCost);
+$paymentButton.addEventListener("click", handlePayment);
 $paymentForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  paymentCost();
+  handlePayment();
 });
 $lottoNumbersToggleButton.addEventListener("click", clickToggle);
