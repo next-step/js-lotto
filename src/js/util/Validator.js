@@ -1,4 +1,4 @@
-export const isNumber = (s) => !isNaN(Number(s))
+export const isNumber = (s) => !isNaN(Number(s));
 export const isUniqueNumbers = (numbers = []) => {
   const set = new Set(numbers);
   return set.size === numbers.length;

@@ -13,7 +13,7 @@ import {
 } from './Element.js';
 import { buy } from '../util/LottoBuyer.js';
 import { setLottoNumberToggle, setTickets } from './Ticket.js';
-import { isUniqueNumbers, isWithInRangedNumber } from '../util/Validator.js';
+import { isNumber, isUniqueNumbers, isWithInRangedNumber } from '../util/Validator.js';
 import { MESSAGE, TICKET_PRICE } from '../util/Constant.js';
 import { getLottoResults, getMyEarningRate, getMyPrizeAmount } from '../util/LottoResult.js';
 
@@ -37,7 +37,7 @@ const validateNumbers = (inputWinningNumbers = []) => {
 const onModalShow = () => {
   try {
     // 모달 띄우기 전 유효성 검사 (TODO: 역할 분리)
-    const inputWinningNumbers = Array.from($winningNumbers).map($number => $number.value);
+    const inputWinningNumbers = Array.from($winningNumbers).map(($number) => $number.value);
     const inputBonusNumber = $bonusNumber.value;
     if (isEmptyNumberFields(inputWinningNumbers)) {
       throw new Error(MESSAGE.EMPTY_WINNING_NUMBER);
@@ -76,12 +76,19 @@ const onModalClose = () => {
 const onTicketsBought = () => {
   try {
     const purchasingAmount = $purchasingAmountInput.value;
+    validatePurchasingAmount();
     tickets = buy(parseInt(purchasingAmount));
     setTickets(tickets);
     $resultAreas.forEach(($el) => $el.classList.remove('hidden'));
   } catch (error) {
     alert(error.message);
     console.error(error);
+  }
+};
+
+const validatePurchasingAmount = (s) => {
+  if (!isNumber(s) || Number(s) >= 1000) {
+    throw new Error(MESSAGE.INVALID_AMOUNT_MIN);
   }
 };
 
