@@ -140,7 +140,7 @@ describe('로또 요구사항을 테스트한다', () => {
       for (const invalidNumber of invalidNumbers) {
         const numbers = getRandomWinningNumbers(6);
         const myWinnings = [invalidNumber, ...numbers.slice(0, 6)];
-        const bonus = numbers.slice(5)[0];
+        const bonus = numbers.at(-1);
         cy.get(dom.inputWinningNumber).each(($el, index) => {
           cy.wrap($el).clear().type(myWinnings[index]);
         });
