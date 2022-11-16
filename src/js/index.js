@@ -62,7 +62,7 @@ function validatePaymentInput() {
 function lotteryIssuance() {
   return paymentCostStr / 1000;
 }
-function makeLottoByUser() {
+function purchaseTicketNumber() {
   const number = lotteryIssuance();
   $paymentTickets.innerText = `총 ${number}개를 구매하였습니다.`;
 }
@@ -123,7 +123,7 @@ function handlePayment() {
     blockComma();
     validatePaymentInput();
     lotteryIssuance();
-    makeLottoByUser();
+    purchaseTicketNumber();
     $paymentCost.focus();
     showLottoNumber(makeTicket());
   }
