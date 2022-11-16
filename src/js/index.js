@@ -96,7 +96,7 @@ function makeTicket() {
   return tickets;
 }
 
-function clickToggle() {
+function clickLottoNumberToggleButton() {
   const toggleSwitch = $(".lotto-numbers-toggle-button");
   const ul = $$(".lotto-result");
   const ticketNumber = $$(".lotto-ticket-number");
