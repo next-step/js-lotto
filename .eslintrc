@@ -4,7 +4,13 @@
     "node": true
   },
   "extends": ["airbnb", "plugin:prettier/recommended"],
+
   "rules": {
-    "prettier/prettier": ["error"]
+    "prettier/prettier": ["error"],
+    "import/prefer-default-export": "off",
+    "import/extensions": ["off"],
+    "react/require-render-return": "off",
+    "react/no-unused-class-component-methods": "off",
+    "class-methods-use-this": "off"
   }
 }
