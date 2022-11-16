@@ -98,6 +98,7 @@ function clickLottoNumberToggleButton() {
   const toggleSwitch = $(".lotto-numbers-toggle-button");
   const ul = $$(".lotto-result");
   const ticketNumber = $$(".lotto-ticket-number");
+
   if (toggleSwitch.checked === true) {
     for (let i = 0; i < ul.length; i++) {
       ul[i].className = "d-flex flex-wrap flex-col lotto-result";
