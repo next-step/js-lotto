@@ -63,11 +63,14 @@ class Lotto {
 
     while (finishCount < LOTTO_COUNT) {
       const randomNumber = getRandomNumber(LOTTO_MIN_NUMBER, LOTTO_MAX_NUMBER);
-      if (uniqRandomNumbers.indexOf(randomNumber) < 0) {
-        finishCount++;
+      const isUniqNumber = uniqRandomNumbers.indexOf(randomNumber) < 0;
+
+      if (isUniqNumber) {
         uniqRandomNumbers.push(randomNumber);
+        finishCount++;
       }
     }
+
     return uniqRandomNumbers;
   }
 }
