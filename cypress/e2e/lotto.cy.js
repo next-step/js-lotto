@@ -25,4 +25,36 @@ describe('로또 테스트', () => {
       alertInput();
     });
   });
+  it('구입하지 않은 상태에서 구입 금액 칸과 확인 버튼만 보인다.', () => {
+    cy.get('.not-purchased').should('have.css', 'display', 'none');
+  });
+  describe('구입을 한 상태에서 총 로또 구입 갯수를 화면에 표시한다.', () => {
+    const validateCount = (count) => {
+      cy.getByDataCy('purchased-lotto-count').should(
+        'have.text',
+        `총 ${count}개를 구매하였습니다.`,
+      );
+    };
+    it('5000원 구입한 상태에서 총 로또 구입 갯수는 5개이다.', () => {
+      cy.pressEnter(5000);
+      validateCount(5);
+    });
+    it('10000원 구입한 상태에서 총 로또 구입 갯수는 10개이다.', () => {
+      cy.clickPurchaseBtn(10000);
+      validateCount(10);
+    });
+  });
+  describe('구입을 한 상태에서 구입 갯수만큼 로또 그림을 화면에 표시한다.', () => {
+    const checkLottoIconCount = (count) => {
+      cy.getByDataCy('purchased-lotto-list').get('li').should('have.length', count);
+    };
+    it('2000원을 구입한 상태에서 2개의 로또 그림을 화면에 표시한다.', () => {
+      cy.pressEnter(2000);
+      checkLottoIconCount(2);
+    });
+    it('15000원을 구입한 상태에서 2개의 로또 그림을 화면에 표시한다.', () => {
+      cy.pressEnter(15000);
+      checkLottoIconCount(15);
+    });
+  });
 });
