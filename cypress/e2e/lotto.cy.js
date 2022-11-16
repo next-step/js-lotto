@@ -66,15 +66,41 @@ describe('TEST LOTTO APLICATION', () => {
     cy.get('.lotto-image').should('have.length', 7);
   });
 
-  it('show lotto numbers when toggle on', () => {
+  it('value true when toggle on', () => {
     const purchaseInputTag = cy.get($purchaseInput);
     purchaseInputTag.type(7000);
     cy.get('#input-price-form').submit();
 
-    cy.get('.text-base')
-      .click()
-      .then(() => { });
+    cy.get('.lotto-numbers-toggle-button')
+      .check({ force: true })
+      .should('be.checked');
   });
+
+  it('shows the numbers of lottos when toggle on', () => {
+    const purchaseInputTag = cy.get($purchaseInput);
+    purchaseInputTag.type(7000);
+    cy.get('#input-price-form').submit();
+
+    cy.get('.lotto-numbers-toggle-button').check({ force: true });
+    cy.get('.lotto-numbers').should('be.visible');
+  });
+  it('lotto number should be 6', () => {
+    const purchaseInputTag = cy.get($purchaseInput);
+    purchaseInputTag.type(7000);
+    cy.get('#input-price-form').submit();
+
+    cy.get('.lotto-numbers-toggle-button').check({ force: true });
+    cy.get('.lotto-numbers')
+      .first()
+      .then(($element) => {
+        const lottoNumberText = $element.text();
+        console.log(lottoNumberText);
+        const lottoNumbers = lottoNumberText.split(',');
+        expect(lottoNumbers.length).to.equal(6);
+      });
+  });
+  // it('lotto numbers must be between 1 and 45', () => { });
+  // it('lotto numbers must not be duplicated', () => { });
 });
 
 // given, when , then 중 THEN 먼저 작성

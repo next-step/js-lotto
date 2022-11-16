@@ -40,11 +40,15 @@ const onPurchaseLotto = (event) => {
   const ticketCount = purchaseLotto(purchaseAmount);
   $totalPurchased.textContent = ticketCount;
 
-  const lottoImageHTML = "<span class='lotto-image mx-1 text-4xl'>🎟️</span>";
+  const lottoImageHTML =
+    "<div><span class='lotto-image mx-1 text-4xl'>🎟️</span><span class='lotto-numbers' style='display:none'>12,32</span></div>";
   for (let count = 0; count < ticketCount; count++) {
     $lottoImages.insertAdjacentHTML('beforeend', lottoImageHTML);
   }
-
+  const $lottoNumbers = document.querySelectorAll('.lotto-numbers');
+  $lottoNumbers.forEach((lotto) => {
+    lotto.style.display = 'block';
+  });
   $purchasedLottos.style.display = 'block';
   $inputLottoNums.style.display = 'block';
 };
