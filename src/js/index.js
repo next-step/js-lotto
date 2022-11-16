@@ -2,13 +2,7 @@ import './../css/index.css';
 
 import PurchaseModel from './Model/PurchaseModel';
 import LotteryResultView from './View/LotteryResultView';
-import {
- $modal,
- $modalClose,
- $purchaseForm,
- $purchaseInput,
- $showResultButton,
-} from './dom';
+import { $purchaseForm, $purchaseInput } from './dom';
 
 class App {
  constructor(Model, views) {

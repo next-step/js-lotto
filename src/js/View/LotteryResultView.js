@@ -1,15 +1,15 @@
+import { SELECTOR } from '../constants';
 import LotteriesView from './LotteriesView';
 import View from './View';
-
 export default class LotteryResultView extends View {
  constructor(model) {
-  super('[data-view="purchase-view"]');
+  super(SELECTOR.LOTTERIES_RESULT_VIEW);
   this.purchaseModel = model;
   this.purchaseModel.subscribe(this.reRender.bind(this));
   this.init();
 
   this.lotteriesView = new LotteriesView(
-   '[data-view="lotteries-view"]',
+   SELECTOR.LOTTERIES_VIEW,
    this.$target,
    this.purchaseModel
   );
@@ -19,14 +19,14 @@ export default class LotteryResultView extends View {
   this.$target.insertAdjacentHTML('beforeend', this.getTemplate());
   if (this.lotteriesView)
    this.lotteriesView = new LotteriesView(
-    '[data-view="lotteries-view"]',
+    SELECTOR.LOTTERIES_VIEW,
     this.$target,
     this.purchaseModel
    );
  }
 
  setEvent() {
-  this.addEvent('submit', '#winning-lottery-form', (event) => {
+  this.addEvent('submit', SELECTOR.WINNING_LOTTERY_FORM, (event) => {
    event.preventDefault();
 
    for (const input of event.target) {
@@ -35,7 +35,7 @@ export default class LotteryResultView extends View {
    }
   });
 
-  this.addEvent('change', '.lotto-numbers-toggle-button', (event) => {
+  this.addEvent('change', SELECTOR.LOTTO_NUMBER_TOGGLE, (event) => {
    this.lotteriesView.setToggle(event.target.checked);
    this.lotteriesView.reRender();
   });
