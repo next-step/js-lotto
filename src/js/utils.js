@@ -1,10 +1,13 @@
 export const isValidPurchaseAmount = (purchaseAmount) => {
-  if (purchaseAmount % 1000 !== 0) {
-    return false;
-  }
-  return true;
+  return purchaseAmount > 0 && purchaseAmount % 1000 === 0;
 };
 
-export const getRandomNumbers = (min, max) => {
-  return Math.floor(Math.random() * (max + 1 - min) + min);
+export const getRandomNumbers = (maxNumber) => {
+  return Array(maxNumber)
+    .fill()
+    .map((number, idx) => idx + 1);
+};
+
+export const shuffle = (array, count) => {
+  return array.sort(() => Math.random() - 0.5).slice(0, count);
 };
