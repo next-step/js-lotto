@@ -12,6 +12,7 @@ class Lotto {
     );
     this.$purchasedTicketContainer =
       document.querySelector("#ticket-container");
+    this.$showNumbersToggle = document.querySelector("#show-numbers-toggle");
   }
 
   setEvent() {
@@ -25,6 +26,9 @@ class Lotto {
     });
     this.$purchaseAmountInput.addEventListener("change", (event) => {
       this.purchaseAmount = event.target.value;
+    });
+    this.$showNumbersToggle.addEventListener("change", (event) => {
+      this.toggleShowNumbers(event.target.checked);
     });
   }
 
@@ -49,12 +53,23 @@ class Lotto {
     this.$purchasedTicketContainer.insertAdjacentHTML(
       "beforeend",
       `<span class="mx-1 text-4xl d-flex items-center" data-cy="lotto-ticket">
-        <span class="lotto-icon">🎟️</span>
-        <span class="lotto-detail text-base ml-2" id="lotto-detail" style="display: none">
+        <span class="ticket-icon">🎟️</span>
+        <span class="ticket-detail text-base ml-2" id="ticket-detail" style="display: none">
           ${randomLottoNumbers}
         </span>
       </span>`
     );
+  }
+
+  toggleShowNumbers(checked) {
+    const $ticketDetailList = document.querySelectorAll("#ticket-detail");
+
+    if (checked) this.$purchasedTicketContainer.classList.add("flex-col");
+    else this.$purchasedTicketContainer.classList.remove("flex-col");
+
+    for (let i = 0; i < $ticketDetailList.length; i++) {
+      $ticketDetailList[i].style.display = checked ? "block" : "none";
+    }
   }
 }
 
