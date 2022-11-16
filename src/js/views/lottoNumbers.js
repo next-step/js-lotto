@@ -9,7 +9,7 @@ export class LottoNumbers {
     }
 
     lottoNumbers = () => {
-        let numbers = arr(lottoLimitNumbers).map(getRandom(lottoRangeMin, lottoRangeMax));
+        let numbers = arr(lottoLimitNumbers).map(_ => getRandom(lottoRangeMin, lottoRangeMax));
         numbers = [...new Set(numbers)];
 
         while (numbers.length < lottoLimitNumbers) {
