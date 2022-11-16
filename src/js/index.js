@@ -1,17 +1,11 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+import $ from './util.js';
+import Lotto from './lotto.js';
 
-const onModalShow = () => {
-  $modal.classList.add('open')
-}
+const lotto = new Lotto({
+  $purchaseForm: $('[data-cy="lotto-purchase-form"]'),
+  $purchaseInput: $('[data-cy="lotto-purchase-input"]'),
+  $lottoCount: $('[data-cy="purchased-lotto-count"]'),
+  $myLotto: $('[data-cy="purchased-lotto"]'),
+});
 
-const onModalClose = () => {
-  $modal.classList.remove('open')
-}
-
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+lotto.initEvents();
