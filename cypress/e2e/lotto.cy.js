@@ -57,6 +57,24 @@ describe('TEST LOTTO APLICATION', () => {
     purchaseButtonTag.click();
     cy.get('#total-purchased').contains('7');
   });
+
+  it('show total images of lottos', () => {
+    const purchaseInputTag = cy.get($purchaseInput);
+    purchaseInputTag.type(7000);
+    cy.get('#input-price-form').submit();
+
+    cy.get('.lotto-image').should('have.length', 7);
+  });
+
+  it('show lotto numbers when toggle on', () => {
+    const purchaseInputTag = cy.get($purchaseInput);
+    purchaseInputTag.type(7000);
+    cy.get('#input-price-form').submit();
+
+    cy.get('.text-base')
+      .click()
+      .then(() => { });
+  });
 });
 
 // given, when , then 중 THEN 먼저 작성

@@ -17,6 +17,8 @@ const $inputLottoNums = document.querySelector('#input-lotto-nums');
 
 const $totalPurchased = document.querySelector('#total-purchased');
 
+const $lottoImages = document.querySelector('.lotto-images');
+
 const onModalShow = () => {
   $modal.classList.add('open');
 };
@@ -29,12 +31,19 @@ const onPurchaseLotto = (event) => {
   event.preventDefault();
 
   const purchaseAmount = $purchaseInput.value;
+
   if (!isValidateAmount(purchaseAmount)) {
     alert(ERROR_MSSAGE.AMOUNT);
     return;
   }
+
   const ticketCount = purchaseLotto(purchaseAmount);
   $totalPurchased.textContent = ticketCount;
+
+  const lottoImageHTML = "<span class='lotto-image mx-1 text-4xl'>🎟️</span>";
+  for (let count = 0; count < ticketCount; count++) {
+    $lottoImages.insertAdjacentHTML('beforeend', lottoImageHTML);
+  }
 
   $purchasedLottos.style.display = 'block';
   $inputLottoNums.style.display = 'block';
