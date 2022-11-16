@@ -26,6 +26,10 @@ describe("로또 어플리케이션의 금액 input을 테스트한다.", () => 
 });
 
 describe("로또 어플리케이션의 발급 버튼을 테스트한다.", () => {
+  beforeEach(() => {
+    cy.visit("../../index.html");
+  });
+
   it("로또를 발급할 확인 버튼이 있다.", () => {
     getPurchaseButton().should("exist");
   });
