@@ -11,6 +11,8 @@
     "import/extensions": ["off"],
     "react/require-render-return": "off",
     "react/no-unused-class-component-methods": "off",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "react/no-access-state-in-setstate": "off",
+    "react/destructuring-assignment": "off"
   }
 }

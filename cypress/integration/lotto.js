@@ -33,7 +33,14 @@ describe('로또 어플리케이션 테스트', () => {
     cy.get('[data-cy="total-purchase"]').should('have.text', '1');
   });
 
-  // it('엔터를 누르면 로또가 발급된다.', () => {
-  //   cy.get('[data-cy="purchase-price-button"]').type({ enter });
-  // });
+  it('엔터를 누르면 로또가 발급된다.', () => {
+    cy.get('[data-cy="purchase-price-input"]').type('1000{enter}');
+    cy.get('[data-cy="total-purchase"]').should('have.text', '1');
+  });
+
+  it('로또 아이콘이 개수에 맞게 나타난다.', () => {
+    cy.get('[data-cy="purchase-price-input"]').type('10000');
+    cy.get('[data-cy="purchase-price-button"]').click();
+    cy.get('[data-cy="ticket-icon"]').should('have.length', 10);
+  });
 });

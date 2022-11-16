@@ -2,7 +2,7 @@
 import App from './components/App.js';
 
 const $app = document.querySelector('#app');
-const initialState = { purchasePrice: 0 };
+const initialState = { ticket: 0 };
 
 new App($app, initialState || undefined);
 
