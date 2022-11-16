@@ -66,12 +66,12 @@ describe("로또 어플리케이션의 번호보기 토글을 테스트한다.",
   });
 
   it("번호보기 토글을 클릭하면 로또 번호를 볼 수 있다.", () => {
-    getLottoTicket().find(".lotto-detail").should("be.visible");
+    getLottoTicket().find(".ticket-detail").should("be.visible");
   });
 
   it("로또 번호의 숫자는 총 6개이다.", () => {
     getLottoTicket()
-      .find(".lotto-detail")
+      .find(".ticket-detail")
       .each(($detail) => {
         const splitted = $detail.text().split(", ");
         assert.equal(splitted.length, "6");
@@ -80,7 +80,7 @@ describe("로또 어플리케이션의 번호보기 토글을 테스트한다.",
 
   it("로또 번호의 범위는 1부터 45까지다.", () => {
     getLottoTicket()
-      .find(".lotto-detail")
+      .find(".ticket-detail")
       .each(($detail) => {
         const splitted = $detail.text().split(", ");
         for (let i = 0; i < splitted.length; i++) {
@@ -93,6 +93,6 @@ describe("로또 어플리케이션의 번호보기 토글을 테스트한다.",
 
   it("번호보기 토글을 비활성화하면 번호는 가려진다.", () => {
     getShowNumbersToggle().click();
-    getLottoTicket().find(".lotto-detail").should("not.be.visible");
+    getLottoTicket().find(".ticket-detail").should("not.be.visible");
   });
 });
