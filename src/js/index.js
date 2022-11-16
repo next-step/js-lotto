@@ -21,6 +21,7 @@ const onModalClose = () => {
 
 function showLottoNumber(ticket) {
   const lottoResult = $(".lotto-result");
+
   while (lottoResult.hasChildNodes()) {
     lottoResult.removeChild(lottoResult.firstChild);
   }
@@ -100,19 +101,19 @@ function clickLottoNumberToggleButton() {
   const ticketNumber = $$(".lotto-ticket-number");
 
   if (toggleSwitch.checked === true) {
-    for (let i = 0; i < ul.length; i++) {
-      ul[i].className = "d-flex flex-wrap flex-col lotto-result";
-    }
-    for (let i = 0; i < ticketNumber.length; i++) {
-      ticketNumber[i].style.display = "inline";
-    }
+    ul.forEach((ele) => {
+      ele.className = "d-flex flex-wrap flex-col lotto-result";
+    });
+    ticketNumber.forEach((ele) => {
+      ele.style.display = "inline";
+    });
   } else {
-    for (let i = 0; i < ul.length; i++) {
-      ul[i].className = "d-flex flex-wrap lotto-result";
-    }
-    for (let i = 0; i < ticketNumber.length; i++) {
-      ticketNumber[i].style.display = "none";
-    }
+    ul.forEach((ele) => {
+      ele.className = "d-flex flex-wrap lotto-result";
+    });
+    ticketNumber.forEach((ele) => {
+      ele.style.display = "none";
+    });
   }
 }
 
