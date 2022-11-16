@@ -2,6 +2,7 @@ import Component from '../core/Component.js';
 import Header from './Header.js';
 import PurchasePrice from './PurchasePrice.js';
 import PurchaseTicket from './PurchaseTicket.js';
+import { UNIT_OF_PRICE } from '../utils/constant.js';
 
 export default class App extends Component {
   constructor($target, state) {
@@ -18,13 +19,21 @@ export default class App extends Component {
     );
   }
 
-  setState(nextState) {
-    this.state = nextState;
+  setState(newState) {
+    this.state = newState;
     this.purchaseTicket.setState(this.state);
     console.log(this.state);
   }
 
-  issueTicket(ticket) {
-    this.setState({ ...this.state, ticket });
+  getTicket(purchasePrice) {
+    let ticket = 0;
+    ticket = purchasePrice / UNIT_OF_PRICE;
+    return ticket;
+  }
+
+  issueTicket(purchasePrice) {
+    const price = Number(purchasePrice);
+    const ticket = this.getTicket(price);
+    this.setState({ ...this.state, purchasePrice: price, ticket });
   }
 }

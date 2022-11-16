@@ -1,16 +1,15 @@
-// import { checkInitialState } from '../utils/validate.js';
+import { checkInitialState } from '../utils/validate.js';
 
 export default class Component {
-  constructor($target, state = { purchasePrice: 0 }) {
+  constructor($target, state = { purchasePrice: 0, ticket: 0 }) {
     this.$target = $target;
-    this.state = state;
-    this.setup();
+    this.state = checkInitialState(state);
+    this.init();
     this.render();
     this.setEvent();
-    // this.state = checkInitialState(state);
   }
 
-  setup() {}
+  init() {}
 
   render() {}
 

@@ -23,3 +23,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getDataset', dataset => cy.get(`[data-cy=${dataset}]`));
+Cypress.Commands.add('purchaseLotto', price => {
+  cy.get('[data-cy="purchase-price-input"]').type(price);
+  cy.get('[data-cy="purchase-price-button"]').click();
+});

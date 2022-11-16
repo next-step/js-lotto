@@ -1,14 +1,18 @@
-import { ERROR_MESSAGES } from './constant.js';
+import { ERROR_MESSAGES, MAX_PRICE, UNIT_OF_PRICE } from './constant.js';
 
 export const checkUnitOfPrice = inputPrice => {
   if (inputPrice < 0) {
-    throw Error('로또 구입 금액은 양수여야 합니다.');
+    throw Error(ERROR_MESSAGES.CANNOT_NEGATIVE_PRICE);
   }
-  if (inputPrice > 100000) {
-    throw Error('로또 구입 금액은 100000을 넘지 않아야 합니다..');
+  if (inputPrice > MAX_PRICE) {
+    throw Error(ERROR_MESSAGES.EXCEED_PRICE);
   }
-  if (inputPrice % 1000 > 0) {
+  if (inputPrice % UNIT_OF_PRICE > 0) {
     throw Error(ERROR_MESSAGES.INCORRECT_UNIT_OF_PRICE);
   }
   return true;
+};
+
+export const checkInitialState = ({ purchasePrice, ticket }) => {
+  return { purchasePrice: purchasePrice || 0, ticket: ticket || 0 };
 };

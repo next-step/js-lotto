@@ -1,6 +1,5 @@
 import Component from '../core/Component.js';
 import { checkUnitOfPrice } from '../utils/validate.js';
-import { UNIT_OF_PRICE } from '../utils/constant.js';
 
 export default class PurchasePrice extends Component {
   constructor($target, state, issueTicket) {
@@ -8,30 +7,28 @@ export default class PurchasePrice extends Component {
     this.issueTicket = issueTicket;
   }
 
-  setState(newState) {
-    super.setState(newState);
-  }
-
   setEvent() {
-    // 이벤트에서 데이터 검증까지??? 좀 더 쪼개야 할듯?
-    this.$target.addEventListener('submit', event => {
+    const handlerOnSubmit = event => {
       event.preventDefault();
       const purchasePrice = this.$target.querySelector(
         'input[data-cy="purchase-price-input"]',
-      );
-      this.issueTicket(this.getTicket(purchasePrice.value));
-    });
+      ).value;
+      if (this.validatePrice(purchasePrice)) {
+        this.issueTicket(purchasePrice);
+      }
+    };
+
+    this.$target.addEventListener('submit', handlerOnSubmit);
   }
 
-  getTicket(purchasePrice) {
-    let ticket = 0;
+  validatePrice(price) {
+    let flag = false;
     try {
-      checkUnitOfPrice(purchasePrice);
-      ticket = purchasePrice / UNIT_OF_PRICE;
+      flag = checkUnitOfPrice(price);
     } catch (error) {
       alert(error.message);
     }
-    return ticket;
+    return flag;
   }
 
   template() {

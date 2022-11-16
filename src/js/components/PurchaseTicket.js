@@ -1,11 +1,7 @@
 import Component from '../core/Component.js';
 
 export default class PurchaseTicket extends Component {
-  setState(newState) {
-    super.setState(newState);
-  }
-
-  setup() {
+  init() {
     this.templateHTML = '<section class="mt-9"></section>';
     this.$target.innerHTML = `${this.$target.innerHTML}${this.templateHTML}`;
   }
