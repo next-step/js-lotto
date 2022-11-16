@@ -2,7 +2,7 @@ describe('로또 요구사항을 테스트한다', () => {
   const URL = '../../index.html';
 
   const getDataCySelector = (value) => `[data-cy=${value}]`;
-  const dom = {
+  const selectors = {
     inputAmount: getDataCySelector('input-purchasing-amount'),
     btnConfirm: getDataCySelector('btn-confirm'),
     labelPurchasingStatus: getDataCySelector('purchasing-status'),
