@@ -1,5 +1,5 @@
-import { Purchase } from "./views/purchase.js";
+import { Purchasing } from "./views/purchasing.js";
 
 window.onload = () => {
-    const purchase = new Purchase();
+    const purchase = new Purchasing();
 }

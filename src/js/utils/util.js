@@ -1,10 +1,12 @@
+import { lottoLimitNumbers, lottoRangeMax, lottoRangeMin } from "./const.js";
+
 export const arr = (num) => Array(num).fill(0);
 export const getRandom = (min, max) => Math.floor((Math.random() * (max - min + 1)) + min);
 
 export const getLottoNumbers = () => {
     let numbers = [];
-    while (numbers.length < 6) {
-        numbers.push(getRandom(1, 45));
+    while (numbers.length < lottoLimitNumbers) {
+        numbers.push(getRandom(lottoRangeMin, lottoRangeMax));
         numbers = [...new Set(numbers)];
     }
     return numbers;

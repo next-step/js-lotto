@@ -3,55 +3,56 @@ import { arr, displayInline, displayNone, getLottoNumbers } from "../utils/util.
 export class Issue {
     $issuedTickets;
     $lottoNumbersToggleButton;
-    isShowNumber;
+    isShowNumbers;
     lottoNumbers;
 
     constructor() {
         this.$issuedTickets = document.querySelector('.lotto-tickets');
         this.$lottoNumbersToggleButton = document.querySelector('.lotto-numbers-toggle-button');
-        this.isShowNumber = false;
+        this.isShowNumbers = false;
         this.lottoNumbers = [];
-
-        this.$lottoNumbersToggleButton.addEventListener('click', () => this.toggleButton());
-        this.showLottoNumbers();
+        this.$lottoNumbersToggleButton.addEventListener('click', () => this.#toggleLottoNumbers());
     }
 
     reset() {
         this.lottoNumbers = [];
         this.$lottoNumbersToggleButton.checked = false;
-        this.isShowNumber = false;
+        this.isShowNumbers = false;
+        this.#removeTickets();
+    }
+
+    #removeTickets() {
         while (this.$issuedTickets.hasChildNodes()) {
             this.$issuedTickets.removeChild(this.$issuedTickets.firstChild);
         }
     }
 
-    toggleButton() {
-        this.isShowNumber = !this.isShowNumber;
-        if (!!document.querySelectorAll('.lotto-numbers')) this.showLottoNumbers();
-    }
-
     issueLotto(units) {
-        arr(units).forEach(unit => {
+        arr(units).forEach(_ => {
             const randomNumbers = getLottoNumbers().join(', ');
-            this.creatLottoElement(randomNumbers);
+            this.#creatLottoElement(randomNumbers);
             this.lottoNumbers.push(randomNumbers);
         })
+        this.#showLottoNumbers();
     }
 
-    creatLottoElement (lottoNumber) {
+    #toggleLottoNumbers() {
+        this.isShowNumbers = !this.isShowNumbers;
+        if (!!document.querySelectorAll('.lotto-numbers').length) this.#showLottoNumbers();
+    }
+
+    #creatLottoElement (lottoNumber) {
         this.$issuedTickets.innerHTML +=
             `<li class="mx-1 text-4xl">
                 <span>🎟️ </span>
                 <span class="lotto-numbers text-3xl">${ lottoNumber }</span>
             </li>`;
-
-        this.showLottoNumbers();
     }
 
-    showLottoNumbers() {
+    #showLottoNumbers() {
         const $lottoNumber = document.querySelectorAll('.lotto-numbers');
         if (!$lottoNumber) return;
-        if (!this.isShowNumber) return $lottoNumber.forEach(row => displayNone(row));
-        $lottoNumber.forEach(row => displayInline(row));
+        const displayFn = this.isShowNumbers ? displayInline : displayNone;
+        $lottoNumber.forEach(displayFn);
     }
 }
