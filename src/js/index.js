@@ -89,11 +89,9 @@ function makeRandomLottoNumber() {
 }
 
 function makeTicket() {
-  let tickets = [];
-  for (let i = 0; i < lotteryIssuance(); i++) {
-    tickets.push(makeRandomLottoNumber());
-  }
-  return tickets;
+  const ticketAmount = lotteryIssuance();
+
+  return Array(ticketAmount).fill(null).map(makeRandomLottoNumber);
 }
 
 function clickLottoNumberToggleButton() {
