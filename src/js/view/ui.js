@@ -37,9 +37,8 @@ const validateNumbers = (inputWinningNumbers = []) => {
 const onModalShow = () => {
   try {
     // 모달 띄우기 전 유효성 검사 (TODO: 역할 분리)
-    const inputWinningNumbers = [];
+    const inputWinningNumbers = Array.from($winningNumbers).map($number => $number.value);
     const inputBonusNumber = $bonusNumber.value;
-    $winningNumbers.forEach(($number) => inputWinningNumbers.push($number.value));
     if (isEmptyNumberFields(inputWinningNumbers)) {
       throw new Error(MESSAGE.EMPTY_WINNING_NUMBER);
     }
