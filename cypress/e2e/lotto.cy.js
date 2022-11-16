@@ -7,6 +7,7 @@ const formSelector = `[data-cy="purchase-form"]`;
 const inputSelector = `[data-cy="purchase-amount"]`;
 const buttonSelector = `[data-cy="purchase-button"]`;
 const spanSelector = `[data-cy="purchase-span"]`;
+const listSelector = `.lotto-number`;
 
 describe("로또 구매기능 테스트", () => {
   beforeEach(() => {
@@ -40,6 +41,33 @@ describe("로또 구매기능 테스트", () => {
       .submit()
       .then(() => {
         cy.get(spanSelector).should("have.text", "0");
+      });
+  });
+});
+
+describe("로또 번호표시 테스트", () => {
+  beforeEach(() => {
+    cy.visit("../../index.html");
+  });
+  it("토글버튼이 있어야한다.", () => {
+    cy.get(buttonSelector).should("exist");
+  });
+
+  it("로또를 구매해야 로또 번호를 볼 수 있다.", () => {
+    cy.get(inputSelector).type("500");
+    cy.get(formSelector)
+      .submit()
+      .then(() => {
+        cy.get(spanSelector).should("have.text", "0");
+      });
+  });
+
+  it("구매한 로또에 자동 생성된 로또 번호가 있어야한다.", () => {
+    cy.get(inputSelector).type("2000");
+    cy.get(buttonSelector)
+      .click()
+      .then(() => {
+        cy.get(listSelector).should("exist");
       });
   });
 });
