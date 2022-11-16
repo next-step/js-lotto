@@ -33,7 +33,7 @@ class Lotto {
 
     this.Tickets.renderTicketContainer(purchaseCount);
     for (let i = 0; i < purchaseCount; i++) {
-      this.Tickets.renderTickets();
+      this.Tickets.renderTicket();
     }
   }
 }

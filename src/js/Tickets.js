@@ -20,7 +20,7 @@ class Tickets {
     this.$purchasedTicketContainer.innerHTML = "";
   }
 
-  renderTickets() {
+  renderTicket() {
     const randomLottoNumbers = getRandomLottoNumbers();
 
     this.$purchaseResult.style.display = "block";
