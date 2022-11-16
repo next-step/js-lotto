@@ -54,8 +54,8 @@ class App {
   handleTargetClick = (event) => {
     const { target } = event;
 
-    console.log(target);
     if (this.$inputPriceButton.contains(target)) {
+      event.preventDefault();
       this.handleInputPriceButtonClick();
       this.initRender();
       return;
@@ -71,7 +71,7 @@ class App {
     this.$target.addEventListener('click', (event) => {
       this.handleTargetClick(event);
     });
-    this.$target.addEventListener('input', (event) => {
+    this.$target.addEventListener('change', (event) => {
       this.handleTargetChange(event);
     });
   }

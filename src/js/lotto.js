@@ -1,6 +1,7 @@
 import {
   DEFAULT_LOTTO_COUNT,
   DEFAULT_PRICE,
+  ERROR_MESSAGE,
   LOTTO_COUNT,
   LOTTO_MAX_NUMBER,
   LOTTO_MIN_NUMBER,
@@ -37,11 +38,11 @@ class Lotto {
 
   getErrorMessage = () => {
     if (this.#price % LOTTO_PRICE > DEFAULT_PRICE) {
-      return '1,000단위의 숫자를 입력해주세요.';
+      return ERROR_MESSAGE.UNIT;
     }
 
     if (this.#price <= DEFAULT_PRICE) {
-      return '0이상의 숫자를 입력해주세요.';
+      return ERROR_MESSAGE.NEGATIVE;
     }
 
     return '';
