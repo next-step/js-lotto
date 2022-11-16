@@ -6,6 +6,8 @@ const toggleSelector = ".switch";
 const lottoNumberSelector = ".lotto-number";
 
 const ERROR_MESSAGE = "1,000원 단위로 입력하세요.";
+const INVALID_ERROR_MESSAGE = "1,000원 단위로 입력하세요.";
+const REQUIRED_ERROR_MESSAGE = "금액을 입력하세요.";
 
 describe("로또 어플리케이션을 테스트한다", () => {
   beforeEach(() => {
@@ -22,16 +24,28 @@ describe("로또 어플리케이션을 테스트한다", () => {
   });
 
   it("금액은 숫자만 입력가능하다", () => {
-    cy.get(inputSelector).type("1000abcd");
-    cy.get(inputSelector).should("have.value", "1000");
+    cy.wrap(["1000abc", "abc", "!!"])
+      .each((typeValue, i, array) => {
+        cy.get(inputSelector).type(typeValue);
+      })
+      .then(() => {
+        cy.get(inputSelector).should("have.value", "1000");
+      });
   });
 
-  it("클릭할 버튼이 있다", () => {
+  it("클릭할 수 있는 확인 버튼이 있다", () => {
     cy.get(buttonSelector).should("exist");
+    cy.get(buttonSelector).click();
   });
 
-  it("버튼을 클릭할 수 있어야 한다", () => {
-    cy.get(buttonSelector).click();
+  it("금액을 입력하지 않은 경우 alert를 띄어준다", () => {
+    const stub = cy.stub();
+    cy.on("window:alert", stub);
+    cy.get(buttonSelector)
+      .click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith(REQUIRED_ERROR_MESSAGE);
+      });
   });
 
   it("1,000원 단위로 입력하지 않은 경우 alert를 띄어준다.", () => {
@@ -41,19 +55,26 @@ describe("로또 어플리케이션을 테스트한다", () => {
     cy.get(buttonSelector)
       .click()
       .then(() => {
-        expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGE);
+        expect(stub.getCall(0)).to.be.calledWith(INVALID_ERROR_MESSAGE);
       });
   });
 
-  it("구입할 금액을 입력하고 확인 버튼을 누르면 금액에 해당하는 로또 개수를 표시한다.", () => {
-    cy.get(inputSelector).type("3000");
-    cy.get(buttonSelector).click();
-    cy.get(numbersSelector).contains("3");
+  it("금액을 음수로 입력한 경우 alert를 띄어준다.", () => {
+    cy.get(inputSelector).type("-1000");
+    const stub = cy.stub();
+    cy.on("window:alert", stub);
+    cy.get(buttonSelector)
+      .click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith(INVALID_ERROR_MESSAGE);
+      });
   });
 
-  it("구입할 금액을 입력하고 확인 버튼을 누르면 금액에 해당하는 로또 아이콘을 표시한다", () => {
+  it("구입할 금액을 입력하고 확인 버튼을 누르면 금액에 해당하는 로또 개수와 아이콘을 표시한다.", () => {
     cy.get(inputSelector).type("3000");
     cy.get(buttonSelector).click();
+
+    cy.get(numbersSelector).contains("3");
     cy.get(iconSelector).should("have.length", 3);
   });
 
