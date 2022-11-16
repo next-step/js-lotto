@@ -1,8 +1,9 @@
-.lotto-ticket {
+.lotto-container-hidden {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
-.hidden {
+.lotto-container-hidden .lotto-number {
   display: none;
 }
