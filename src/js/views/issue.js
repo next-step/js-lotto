@@ -1,4 +1,5 @@
-import { arr, displayInline, displayNone, getLottoNumbers } from "../utils/util.js";
+import { arr, displayInline, displayNone } from "../utils/util.js";
+import { LottoNumbers } from "./lottoNumbers.js";
 
 export class Issue {
     $issuedTickets;
@@ -29,7 +30,7 @@ export class Issue {
 
     issueLotto(units) {
         arr(units).forEach(_ => {
-            const randomNumbers = getLottoNumbers().join(', ');
+            const randomNumbers = new LottoNumbers().numbers;
             this.#creatLottoElement(randomNumbers);
             this.lottoNumbers.push(randomNumbers);
         })
