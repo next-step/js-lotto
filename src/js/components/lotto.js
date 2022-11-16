@@ -9,7 +9,7 @@ const updateLottoState = () => {
   const { length } = lottoList
   Selectors.labelBuyCnt.innerText = `총 ${length}개를 구매하였습니다.`
 
-  Selectors.toggleLottoNumbers.checked ? showLottoNumbers() : showLottoImgs()
+  Selectors.toggleLottoNumbers.checked ? toggleAction.showLottoNumbers() : toggleAction.showLottoImgs()
 }
 
 const toggleAction = {

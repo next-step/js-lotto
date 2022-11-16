@@ -29,6 +29,7 @@ export class LottoMachine {
   }
 
   #makeLotto() {
+    // 로또 한 세트를 만드는 메서드
     const getRandomIdx = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 
     const lotto = new Array(this.winningNumberCnt).fill(0).map(() => {
