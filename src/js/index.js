@@ -5,7 +5,7 @@ const lotto = new Lotto({
   $purchaseForm: $('[data-cy="lotto-purchase-form"]'),
   $purchaseInput: $('[data-cy="lotto-purchase-input"]'),
   $lottoCount: $('[data-cy="purchased-lotto-count"]'),
-  $myLotto: $('[data-cy="purchased-lotto"]'),
+  $lottoList: $('[data-cy="purchased-lotto-list"]'),
 });
 
 lotto.initEvents();

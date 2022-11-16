@@ -22,3 +22,15 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.not-purchased {
+  display: none;
+}
+
+ul[data-cy='purchased-lotto-list'] {
+  padding-left: 0;
+}
+
+.lotto-item {
+  list-style-type: none;
+}
