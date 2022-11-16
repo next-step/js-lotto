@@ -43,6 +43,8 @@ live-server 폴더명
 
 ## 객체 설계
 
+    소비자 -로또를 구매한다 -> purchase  -> 로또가 생성된다 -> 당첨로또 번호를 만든다. 당첨번호 + 보너스
+
 ![lotto drawio (1)](https://user-images.githubusercontent.com/68339352/201698422-5044834e-00c7-4d0d-9ccf-e388f71a6f4e.png)
 
 ## 👏 Contributing
@@ -60,5 +62,3 @@ live-server 폴더명
 ## 📝 License
 
 This project is [MIT](https://github.com/next-step/js-lotto/blob/main/LICENSE) licensed.
-
-    소비자 -로또를 구매한다 -> purchase  -> 로또가 생성된다 -> 당첨로또 번호를 만든다. 당첨번호 + 보너스
