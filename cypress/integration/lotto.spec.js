@@ -1,8 +1,7 @@
 const getPurchaseAmountInput = () =>
   cy.get("[data-cy='purchase-amount-input']");
 const getPurchaseButton = () => cy.get("[data-cy='purchase-button']");
-const getShowNumbersToggleButton = () =>
-  cy.get("[data-cy='show-numbers-toggle-button']");
+const getShowNumbersToggle = () => cy.get("[data-cy='show-numbers-toggle']");
 const getLottoTicket = () => cy.get("[data-cy='lotto-ticket']");
 
 describe("로또 어플리케이션의 금액 input을 테스트한다.", () => {
@@ -59,11 +58,11 @@ describe("로또 어플리케이션의 번호보기 토글을 테스트한다.",
     cy.visit("../../index.html");
     getPurchaseAmountInput().type("3000");
     getPurchaseButton().click();
-    getShowNumbersToggleButton().click();
+    getShowNumbersToggle().click();
   });
 
   it("번호보기 토글이 있다.", () => {
-    getShowNumbersToggleButton().should("exist");
+    getShowNumbersToggle().should("exist");
   });
 
   it("번호보기 토글을 클릭하면 로또 번호를 볼 수 있다.", () => {
@@ -93,7 +92,7 @@ describe("로또 어플리케이션의 번호보기 토글을 테스트한다.",
   });
 
   it("번호보기 토글을 비활성화하면 번호는 가려진다.", () => {
-    getShowNumbersToggleButton().click();
+    getShowNumbersToggle().click();
     getLottoTicket().find(".lotto-detail").should("not.be.visible");
   });
 });
