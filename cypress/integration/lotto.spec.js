@@ -3,10 +3,6 @@ describe("로또게임 페이지 테스트", () => {
     cy.visit("/");
   });
 
-  it("금액 입력창이 비워져있다.", () => {
-    cy.get("#payment-cost-input").should("have.value", "");
-  });
-
   it("input 버튼을 누른다.", () => {
     cy.get("#payment-button").click();
   });
