@@ -1,12 +1,9 @@
-import {$} from "./utils.js";
+import {Selector} from "./constants/selector.js";
 import {handlePaymentForm, handleShowNumber} from "./eventHandler.js";
 
-const $paymentForm = $(".payment-form");
-const $toggleBtn = $(".lotto-numbers-toggle-button");
-
 const init = () => {
-  $paymentForm.addEventListener("submit", handlePaymentForm);
-  $toggleBtn.addEventListener("change", handleShowNumber);
+  Selector.paymentForm.addEventListener("submit", handlePaymentForm);
+  Selector.toggleBtn.addEventListener("change", handleShowNumber);
 };
 
 init();
