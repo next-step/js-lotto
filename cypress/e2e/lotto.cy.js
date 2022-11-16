@@ -1,4 +1,4 @@
-import { ERROR_MSSAGE } from '../../src/js/utils/constants';
+import { ERROR_MSSAGE, LOTTO_NUM_COUNT } from '../../src/js/utils/constants.js';
 const $purchaseInput = '[data-cy="purchase-amount"]';
 const $purchaseButton = '[data-cy="purchase-button"]';
 
@@ -84,7 +84,7 @@ describe('TEST LOTTO APLICATION', () => {
     cy.get('.lotto-numbers-toggle-button').check({ force: true });
     cy.get('.lotto-numbers').should('be.visible');
   });
-  it('lotto number should be 6', () => {
+  it('lotto number should be 6 numbers', () => {
     const purchaseInputTag = cy.get($purchaseInput);
     purchaseInputTag.type(7000);
     cy.get('#input-price-form').submit();
@@ -94,9 +94,8 @@ describe('TEST LOTTO APLICATION', () => {
       .first()
       .then(($element) => {
         const lottoNumberText = $element.text();
-        console.log(lottoNumberText);
         const lottoNumbers = lottoNumberText.split(',');
-        expect(lottoNumbers.length).to.equal(6);
+        expect(lottoNumbers.length).to.equal(LOTTO_NUM_COUNT);
       });
   });
   // it('lotto numbers must be between 1 and 45', () => { });
