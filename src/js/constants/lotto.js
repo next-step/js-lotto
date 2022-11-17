@@ -23,3 +23,5 @@ export const DOM_INDEX_WITH_WINNING_COUNT_MAPPER = {
   3: '5_BONUS',
   4: '6',
 };
+
+export const PERCENTAGE_NUMBER = 100;
