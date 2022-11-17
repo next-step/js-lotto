@@ -75,6 +75,10 @@ class Lotto {
   purchaseLotto(e) {
     e.preventDefault();
     const purchaseAmountInput = this.$purchaseInput.valueAsNumber;
+    if (purchaseAmountInput < 1000) {
+      alert(ALERT_MESSAGE.NOT_OVER_ONE_THOUSAND);
+      return;
+    }
     if (purchaseAmountInput % 1000 !== 0) {
       alert(ALERT_MESSAGE.NOT_ONE_THOUSAND_UNIT);
       return;
