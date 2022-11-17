@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { DOM_INDEX_WITH_WINNING_COUNT_MAPPER, SELECTOR } from '../constants/index.js';
 import { $, $all } from '../utils/dom.js';
 
@@ -80,7 +79,7 @@ export const renderLottoResult = (count, lottoNumbersArray) => {
   showLottoResultForm();
 };
 
-export const renderResultForm = (rateOfReturn, winningCount) => {
+export const renderResultForm = (winningCount, rateOfReturn) => {
   [...$all(SELECTOR.LOTTO_WINNING_COUNT)].forEach((row, index) => {
     row.textContent = `${winningCount[DOM_INDEX_WITH_WINNING_COUNT_MAPPER[index]]}개`;
   });

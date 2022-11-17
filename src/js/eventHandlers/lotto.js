@@ -52,7 +52,7 @@ export const handleSubmitResultForm = (e) => {
     assertLottoWinningNumbers([...winning, bonus]);
 
     model.calculateLottoWinningResult(winning, bonus);
-    renderResultForm(model.rateOfReturn, model.lottoWinningCount);
+    renderResultForm(model.lottoWinningCount, model.rateOfReturn);
 
     handleClickOpenModal();
   } catch (error) {
