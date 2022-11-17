@@ -1,4 +1,4 @@
-import ALERT_MESSAGE from '../../src/js/constants';
+import { ALERT_MESSAGE } from '../../src/js/constants';
 
 describe('로또 테스트', () => {
   beforeEach(() => {
@@ -26,6 +26,8 @@ describe('로또 테스트', () => {
     });
   });
   it('구입하지 않은 상태에서 구입 금액 칸과 확인 버튼만 보인다.', () => {
+    cy.getByDataCy('lotto-purchase-input').should('exist');
+    cy.getByDataCy('lotto-purchase-btn').should('exist');
     cy.get('.not-purchased').should('have.css', 'display', 'none');
   });
   describe('구입을 한 상태에서 총 로또 구입 갯수를 화면에 표시한다.', () => {
@@ -36,11 +38,11 @@ describe('로또 테스트', () => {
       );
     };
     it('5000원 구입한 상태에서 총 로또 구입 갯수는 5개이다.', () => {
-      cy.pressEnter(5000);
+      cy.clickPurchaseBtn(5000);
       validateCount(5);
     });
     it('10000원 구입한 상태에서 총 로또 구입 갯수는 10개이다.', () => {
-      cy.clickPurchaseBtn(10000);
+      cy.pressEnter(10000);
       validateCount(10);
     });
   });
@@ -49,12 +51,24 @@ describe('로또 테스트', () => {
       cy.getByDataCy('purchased-lotto-list').get('li').should('have.length', count);
     };
     it('2000원을 구입한 상태에서 2개의 로또 그림을 화면에 표시한다.', () => {
-      cy.pressEnter(2000);
+      cy.clickPurchaseBtn(2000);
       checkLottoIconCount(2);
     });
     it('15000원을 구입한 상태에서 2개의 로또 그림을 화면에 표시한다.', () => {
       cy.pressEnter(15000);
       checkLottoIconCount(15);
+    });
+  });
+  describe('구입한 상태에서 번호 보기 토글 버튼을 클릭했을 때 중복되지 않은 랜덤한 6개의 숫자를 화면에 표시한다.', () => {
+    it('5000원을 구매한 상태에서 번호 보기 토글 버튼을 눌렀을 때 중복되지 않은 랜덤한 6개의 숫자가 화면에 표시된다.', () => {
+      cy.clickPurchaseBtn(5000);
+      cy.get('.switch').click();
+      cy.getByDataCy('lotto-item-numbers').should('have.css', 'display', 'block');
+    });
+    it('15000원을 구매한 상태에서 번호 보기 토글 버튼을 눌렀을 때 중복되지 않은 랜덤한 6개의 숫자가 화면에 표시된다.', () => {
+      cy.clickPurchaseBtn(15000);
+      cy.get('.switch').click();
+      cy.getByDataCy('lotto-item-numbers').should('have.css', 'display', 'block');
     });
   });
 });
