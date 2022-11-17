@@ -42,7 +42,7 @@ describe('로또 테스트', () => {
   it('구입하지 않은 상태에서 구입 금액 칸과 확인 버튼만 보인다.', () => {
     cy.getByDataCy('lotto-purchase-input').should('exist');
     cy.getByDataCy('lotto-purchase-btn').should('exist');
-    cy.get('.not-purchased').should('have.css', 'display', 'none');
+    cy.get('.hidden').should('have.css', 'display', 'none');
   });
   describe('구입을 한 상태에서 총 로또 구입 갯수를 화면에 표시한다.', () => {
     const validateCount = (count) => {

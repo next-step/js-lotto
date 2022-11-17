@@ -1,4 +1,10 @@
-import { ALERT_MESSAGE, MAX_IN_NUMBER, MIN_IN_NUMBER, LOTTO_NUMBERS_COUNT } from './constants.js';
+import {
+  ALERT_MESSAGE,
+  PURCHASE_AMOUNT_UNIT,
+  MAX_IN_NUMBER,
+  MIN_IN_NUMBER,
+  LOTTO_NUMBERS_COUNT,
+} from './constants.js';
 
 const [$lottoCountAndToggle, $winningNumbers] = document.querySelectorAll('.purchased-result');
 
@@ -35,11 +41,11 @@ class Lotto {
   }
 
   showPurchasedLotto() {
-    $lottoCountAndToggle.classList.remove('not-purchased');
+    $lottoCountAndToggle.classList.remove('hidden');
   }
 
   showWinningNumbersForm() {
-    $winningNumbers.classList.remove('not-purchased');
+    $winningNumbers.classList.remove('hidden');
   }
 
   showLottoCount() {
@@ -54,9 +60,7 @@ class Lotto {
         return `
         <li class="mx-1 d-flex items-center lotto-item">
           <span class="text-4xl">🎟️ </span>
-          <span class="text-2xl ${isToggleOn || 'hidden'}" data-cy="lotto-item-numbers">${item.join(
-          ', ',
-        )} </span>
+          <span class="text-2xl ${isToggleOn || 'hidden'}" data-cy="lotto-item-numbers">${item.join(', ')} </span>
         </li>`;
       })
       .join('');
@@ -75,16 +79,16 @@ class Lotto {
   purchaseLotto(e) {
     e.preventDefault();
     const purchaseAmountInput = this.$purchaseInput.valueAsNumber;
-    if (purchaseAmountInput < 1000) {
+    if (purchaseAmountInput < PURCHASE_AMOUNT_UNIT) {
       alert(ALERT_MESSAGE.NOT_OVER_ONE_THOUSAND);
       return;
     }
-    if (purchaseAmountInput % 1000 !== 0) {
+    if (purchaseAmountInput % PURCHASE_AMOUNT_UNIT !== 0) {
       alert(ALERT_MESSAGE.NOT_ONE_THOUSAND_UNIT);
       return;
     }
 
-    const lottoCount = purchaseAmountInput / 1000;
+    const lottoCount = purchaseAmountInput / PURCHASE_AMOUNT_UNIT;
     this.myLotto = Array(lottoCount).fill(null);
 
     this.setMyLotto();
