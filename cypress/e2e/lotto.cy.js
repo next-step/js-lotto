@@ -25,6 +25,20 @@ describe('로또 테스트', () => {
       alertInput();
     });
   });
+  describe('로또 구입 금액은 1000원 이상이다.', () => {
+    it('0원 입력하면 alert창이 뜬다.', () => {
+      cy.clickPurchaseBtn(0);
+      cy.on('window:alert', (text) => {
+        expect(text).to.contains(ALERT_MESSAGE.NOT_OVER_ONE_THOUSAND);
+      });
+    });
+    it('700원 입력하면 alert창이 뜬다.', () => {
+      cy.clickPurchaseBtn(700);
+      cy.on('window:alert', (text) => {
+        expect(text).to.contains(ALERT_MESSAGE.NOT_OVER_ONE_THOUSAND);
+      });
+    });
+  });
   it('구입하지 않은 상태에서 구입 금액 칸과 확인 버튼만 보인다.', () => {
     cy.getByDataCy('lotto-purchase-input').should('exist');
     cy.getByDataCy('lotto-purchase-btn').should('exist');
