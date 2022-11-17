@@ -41,7 +41,7 @@ const clickOpenResultModalButton = () => {
 describe('로또 어플리케이션을 테스트한다.', () => {
   describe('결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.', () => {
     beforeEach(() => {
-      buyLotto('5000');
+      buyLotto('60000');
     });
 
     it('결과 확인하기 버튼이 존재한다.', () => {
@@ -68,7 +68,9 @@ describe('로또 어플리케이션을 테스트한다.', () => {
       cy.getByDataset(SELECTOR.MODAL).should('have.class', 'open');
     });
 
-    it('모달창에서 당첨 통계를 확인할 수 있다.', () => {
+    it('모달창에서 보여지는 당첨 통계가 실제 구매한 로또의 당첨 통계와 동일한지 검증한다.', () => {
+      const NUMBER_OF_WIN_INDEX = 0;
+
       const lottoWinningCount = {
         3: 0,
         4: 0,
@@ -99,14 +101,14 @@ describe('로또 어플리케이션을 테스트한다.', () => {
 
       cy.getByDataset(SELECTOR.LOTTO_WINNING_COUNT)
         .each(($el, idx) => {
-          viewLottoWinningCount[DOM_INDEX_WITH_WINNING_COUNT_MAPPER[idx]] = Number($el.text()[0]);
+          viewLottoWinningCount[DOM_INDEX_WITH_WINNING_COUNT_MAPPER[idx]] = Number($el.text()[NUMBER_OF_WIN_INDEX]);
         })
         .then(() => {
           expect(JSON.stringify(lottoWinningCount)).to.equal(JSON.stringify(viewLottoWinningCount));
         });
     });
 
-    it('수익률을 모달로 확인할 수 있다.', () => {
+    it('모달창에서 보여지는 수익률이 실제 구매한 로또의 수익률과 일치하는지 검증한다.', () => {
       const lottoWinningCount = {
         3: 0,
         4: 0,
