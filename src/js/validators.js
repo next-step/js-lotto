@@ -5,14 +5,19 @@ const isValidForNoAmount = (inputValue) => {
 };
 
 const isValidForExactAmount = (inputValue) => {
-  if (Number(inputValue) < 0) {
-    return false;
-  }
-  if (Number(inputValue) % LOTTO_PURCHASE_UNIT > 0) {
-    return false;
-  }
-  return true;
+  const value = Number(inputValue);
+  return 0 < value && value % LOTTO_PURCHASE_UNIT === 0;
 };
+// 리뷰 전 코드..
+// const isValidForExactAmount = (inputValue) => {
+//   if (Number(inputValue) < 0) {
+//     return false;
+//   }
+//   if (Number(inputValue) % LOTTO_PURCHASE_UNIT > 0) {
+//     return false;
+//   }
+//   return true;
+// };
 
 const isAlreadyExist = (lottos) => {
   let flag = false;
