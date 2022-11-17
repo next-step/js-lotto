@@ -1,3 +1,4 @@
+import 'cypress-each';
 import { MESSAGE } from '../../src/js/util/Constant.js';
 
 describe('로또 요구사항을 테스트한다', () => {
@@ -50,9 +51,10 @@ describe('로또 요구사항을 테스트한다', () => {
       });
     });
 
-    it.only('금액은 양수 1,000원부터 가능하다', () => {
+    it('금액은 양수 1,000원부터 가능하다', () => {
       const stub = cy.stub();
       cy.on('window:alert', stub);
+
       ['-1000', '0', '100'].forEach((type) => {
         cy.get(selectors.inputAmount).clear().type(type);
         cy.get(selectors.btnConfirm)
@@ -70,19 +72,20 @@ describe('로또 요구사항을 테스트한다', () => {
       cy.get(selectors.btnConfirm).click();
     });
 
-    it('로또 구입 금액은 1000원 단위가 아닌 경우의 수에 대한 예외 발생', () => {
-      const stub = cy.stub();
+    it.each(['1500', '1501', '1999', '59990'])(
+      '로또 구입 금액은 1000원 단위가 아닌 경우의 수에 대한 예외 발생',
+      (invalidInput) => {
+        const stub = cy.stub();
+        cy.on('window:alert', stub);
 
-      cy.on('window:alert', stub);
-      ['1500', '1501', '1999', '59990'].forEach((type) => {
-        cy.get(selectors.inputAmount).clear().type(type);
+        cy.get(selectors.inputAmount).clear().type(invalidInput);
         cy.get(selectors.btnConfirm)
           .click()
           .then(() => {
             expect(stub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_AMOUNT_UNIT);
           });
-      });
-    });
+      }
+    );
 
     it('확인 버튼을 클릭했을 때 입력한 금액에 맞는 로또 개수가 발급되어야 한다', () => {
       const amount = 3;

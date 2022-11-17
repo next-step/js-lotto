@@ -24,7 +24,10 @@ const isEmptyNumberFields = (inputNumbers = []) => {
 };
 
 const validateNumbers = (inputWinningNumbers = []) => {
-  const winningNumbers = inputWinningNumbers.map((s) => parseInt(s));
+  if (isEmptyNumberFields(inputWinningNumbers)) {
+    throw new Error(MESSAGE.INVALID_WINNING_MODAL);
+  }
+  const winningNumbers = inputWinningNumbers.map((s) => parseInt(s)).slice(0, 6);
   if (!isUniqueNumbers(winningNumbers)) {
     throw new Error(MESSAGE.INVALID_WINNING_NUMBER_DUPLICATED);
   }
@@ -39,12 +42,7 @@ const onModalShow = () => {
     // 모달 띄우기 전 유효성 검사 (TODO: 역할 분리)
     const inputWinningNumbers = Array.from($winningNumbers).map(($number) => $number.value);
     const inputBonusNumber = $bonusNumber.value;
-    if (isEmptyNumberFields(inputWinningNumbers)) {
-      throw new Error(MESSAGE.EMPTY_WINNING_NUMBER);
-    }
-    if (isEmptyNumberFields([inputBonusNumber])) {
-      throw new Error(MESSAGE.EMPTY_BONUS_NUMBER);
-    }
+
     validateNumbers([...inputWinningNumbers, inputBonusNumber]);
 
     const winningNumbers = inputWinningNumbers.map((s) => parseInt(s));
@@ -76,7 +74,7 @@ const onModalClose = () => {
 const onTicketsBought = () => {
   try {
     const purchasingAmount = $purchasingAmountInput.value;
-    validatePurchasingAmount();
+    validatePurchasingAmount(purchasingAmount);
     tickets = buy(parseInt(purchasingAmount));
     setTickets(tickets);
     $resultAreas.forEach(($el) => $el.classList.remove('hidden'));
@@ -87,7 +85,8 @@ const onTicketsBought = () => {
 };
 
 const validatePurchasingAmount = (s) => {
-  if (!isNumber(s) || Number(s) >= 1000) {
+  if (!isNumber(s) || Number(s) < 1000) {
+    console.log(s);
     throw new Error(MESSAGE.INVALID_AMOUNT_MIN);
   }
 };
