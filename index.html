@@ -20,24 +20,21 @@
                 min="1000"
                 max="30000"
                 placeholder="구입 금액"
-                data-cy="input-purchasing-amount"
               />
-              <button type="button" class="btn btn-cyan btn-confirm" data-cy="btn-confirm">확인</button>
+              <button type="button" class="btn btn-cyan btn-confirm">확인</button>
             </div>
           </form>
           <section class="mt-9 result-section">
             <div class="d-flex">
-              <label class="flex-auto my-0 purchasing-status" data-cy="purchasing-status"
-                >총 5개를 구매하였습니다.</label
-              >
+              <label class="flex-auto my-0 purchasing-status">총 5개를 구매하였습니다.</label>
               <div class="flex-auto d-flex justify-end pr-1">
-                <label class="switch" data-cy="toggle-visible-numbers">
+                <label class="switch toggle-visible-numbers">
                   <input type="checkbox" class="lotto-numbers-toggle-button" />
                   <span class="text-base font-normal">번호보기</span>
                 </label>
               </div>
             </div>
-            <div class="d-flex flex-wrap lotto-icons" data-cy="lotto-icons"></div>
+            <div class="d-flex flex-wrap lotto-icons"></div>
           </section>
           <form class="mt-9 winning-form">
             <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
@@ -45,24 +42,22 @@
               <div>
                 <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
                 <div>
-                  <input type="number" class="winning-number mx-1 text-center" data-cy="input-winning-number" />
-                  <input type="number" class="winning-number mx-1 text-center" data-cy="input-winning-number" />
-                  <input type="number" class="winning-number mx-1 text-center" data-cy="input-winning-number" />
-                  <input type="number" class="winning-number mx-1 text-center" data-cy="input-winning-number" />
-                  <input type="number" class="winning-number mx-1 text-center" data-cy="input-winning-number" />
-                  <input type="number" class="winning-number mx-1 text-center" data-cy="input-winning-number" />
+                  <input type="number" class="winning-number mx-1 text-center" />
+                  <input type="number" class="winning-number mx-1 text-center" />
+                  <input type="number" class="winning-number mx-1 text-center" />
+                  <input type="number" class="winning-number mx-1 text-center" />
+                  <input type="number" class="winning-number mx-1 text-center" />
+                  <input type="number" class="winning-number mx-1 text-center" />
                 </div>
               </div>
               <div class="bonus-number-container flex-grow">
                 <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
                 <div class="d-flex justify-center">
-                  <input type="number" class="bonus-number text-center" data-cy="input-bonus-number" />
+                  <input type="number" class="bonus-number text-center" />
                 </div>
               </div>
             </div>
-            <button type="button" class="open-result-modal-button mt-5 btn btn-cyan w-100" data-cy="btn-result">
-              결과 확인하기
-            </button>
+            <button type="button" class="open-result-modal-button mt-5 btn btn-cyan w-100">결과 확인하기</button>
           </form>
         </div>
       </div>

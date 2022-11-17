@@ -4,16 +4,15 @@ import { MESSAGE } from '../../src/js/util/Constant.js';
 describe('로또 요구사항을 테스트한다', () => {
   const URL = '../../index.html';
 
-  const getDataCySelector = (value) => `[data-cy=${value}]`;
   const selectors = {
-    inputAmount: getDataCySelector('input-purchasing-amount'),
-    btnConfirm: getDataCySelector('btn-confirm'),
-    labelPurchasingStatus: getDataCySelector('purchasing-status'),
-    lottoIcons: getDataCySelector('lotto-icons'),
-    toggleVisibleNumbers: getDataCySelector('toggle-visible-numbers'),
-    inputWinningNumber: getDataCySelector('input-winning-number'),
-    inputBonusNumber: getDataCySelector('input-bonus-number'),
-    btnWinning: getDataCySelector('btn-result'),
+    inputAmount: '.input-purchasing-amount',
+    btnConfirm: '.btn-confirm',
+    labelPurchasingStatus: '.purchasing-status',
+    lottoIcons: '.lotto-icons',
+    toggleVisibleNumbers: '.toggle-visible-numbers',
+    inputWinningNumber: '.winning-number',
+    inputBonusNumber: '.bonus-number',
+    btnWinning: '.open-result-modal-button',
     spanLottoDetails: '.lotto-detail',
   };
 
@@ -26,7 +25,6 @@ describe('로또 요구사항을 테스트한다', () => {
     cy.visit(URL);
   });
 
-  //TODO: 아직 다 예외 케이스를 입력하지 않았음에 주의
   describe('로또 구입 금액을 입력한다', () => {
     it('구입 금액을 입력할 input 태그가 있다', () => {
       cy.get(selectors.inputAmount);
