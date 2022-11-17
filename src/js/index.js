@@ -1,6 +1,8 @@
 import { isValidateAmount } from './utils/validator.js';
 import { purchaseLotto, getLottoNumbers } from './utils/common.js';
-import { ERROR_MSSAGE } from './utils/constants.js';
+import { ERROR_MSSAGE, SELECTOR } from './utils/constants.js';
+import { $ } from './utils/dom.js';
+
 
 const $showResultButton = document.querySelector('.open-result-modal-button');
 const $modalClose = document.querySelector('.modal-close');
@@ -8,7 +10,6 @@ const $modal = document.querySelector('.modal');
 const $lottoNumbersToggleButton = document.querySelector(
   '.lotto-numbers-toggle-button'
 );
-const $purchaseInputForm = document.querySelector('#input-price-form');
 const $purchaseInput = document.querySelector('.purchase-amount');
 const $purchasedLottos = document.querySelector('#purchased-lottos');
 const $inputLottoNums = document.querySelector('#input-lotto-nums');
@@ -32,7 +33,7 @@ const clear = () => {
 const onPurchaseLotto = (event) => {
   event.preventDefault();
 
-  const purchaseAmount = $purchaseInput.value;
+  const purchaseAmount = $(SELECTOR.PURCHASE_INPUT).value;
 
   if (!isValidateAmount(purchaseAmount)) {
     alert(ERROR_MSSAGE.AMOUNT);
@@ -73,5 +74,5 @@ const onToggleLottoNumbers = () => {
 
 $showResultButton.addEventListener('click', onModalShow);
 $modalClose.addEventListener('click', onModalClose);
-$purchaseInputForm.addEventListener('submit', onPurchaseLotto);
+$(SELECTOR.PURCHASE_FORM).addEventListener('submit', onPurchaseLotto);
 $lottoNumbersToggleButton.addEventListener('change', onToggleLottoNumbers);

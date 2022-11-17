@@ -1,7 +1,7 @@
 import { LOTTO } from './constants.js';
 
 const purchaseLotto = (amount) => {
-  return amount / LOTTO.MIN_PRICE;
+  return amount / LOTTO.PRICE_UNIT;
 };
 
 const getLottoNumbers = () => {
