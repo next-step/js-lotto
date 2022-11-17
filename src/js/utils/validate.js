@@ -7,3 +7,11 @@ export const isMultipleOfLottoPrice = (number) => {
 
   return true;
 };
+
+export const isDuplicateNumbers = (numbers) => {
+  if (new Set(numbers).size !== numbers.length) {
+    throw new Error(errorMessages.DUPLICATE_NUMBERS_ERROR);
+  }
+
+  return false;
+};
