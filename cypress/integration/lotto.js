@@ -65,4 +65,23 @@ describe('로또 어플리케이션 테스트', () => {
       expect(t).to.equal(ERROR_MESSAGES.EXCEED_PRICE);
     });
   });
+
+  // # 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
+  it('번호보기 토글 버튼이 있다.', () => {
+    cy.purchaseLotto('1000');
+    cy.getDataset('toggle-number-button').should('exist');
+  });
+
+  it('토글이 활성화되면 번호가 나타난다.', () => {
+    cy.purchaseLotto('10000');
+    cy.getDataset('toggle-number-button').check({ force: true });
+    cy.getDataset('lotto-numbers').should('exist');
+  });
+
+  it('토글이 비활성화되면 번호가 사라난다.', () => {
+    cy.purchaseLotto('10000');
+    cy.getDataset('toggle-number-button').check({ force: true });
+    cy.getDataset('toggle-number-button').uncheck({ force: true });
+    cy.getDataset('lotto-numbers').should('not.exist');
+  });
 });

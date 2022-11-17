@@ -22,3 +22,18 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.lotto-conatiner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lotto-conatiner span {
+  display: block;
+  margin-right: 20px;
+}
+
+.lotto-detail {
+  font-size: 1.25rem;
+}

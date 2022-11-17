@@ -7,12 +7,12 @@ export const checkUnitOfPrice = inputPrice => {
   if (inputPrice > MAX_PRICE) {
     throw Error(ERROR_MESSAGES.EXCEED_PRICE);
   }
-  if (inputPrice % UNIT_OF_PRICE > 0) {
+  if (inputPrice % UNIT_OF_PRICE > 0 || inputPrice === 0) {
     throw Error(ERROR_MESSAGES.INCORRECT_UNIT_OF_PRICE);
   }
   return true;
 };
 
-export const checkInitialState = ({ purchasePrice, ticket }) => {
-  return { purchasePrice: purchasePrice || 0, ticket: ticket || 0 };
+export const checkInitialState = ({ purchasePrice, ticketCount }) => {
+  return { purchasePrice: purchasePrice || 0, ticketCount: ticketCount || 0 };
 };
