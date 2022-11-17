@@ -1,4 +1,3 @@
-/* eslint-disable no-new */
 import App from './components/App.js';
 
 const $app = document.querySelector('#app');
@@ -8,11 +7,8 @@ const initialState = {
   tickets: [],
   isNumberVisible: false,
 };
-// const initialState = null;
-// const initialState = undefined;
 
 new App($app, initialState || undefined);
-
 // const $showResultButton = document.querySelector('.open-result-modal-button');
 // const $modalClose = document.querySelector('.modal-close');
 // const $modal = document.querySelector('.modal');

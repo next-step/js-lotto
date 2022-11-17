@@ -13,6 +13,16 @@ export const checkUnitOfPrice = inputPrice => {
   return true;
 };
 
-export const checkInitialState = ({ purchasePrice, ticketCount }) => {
-  return { purchasePrice: purchasePrice || 0, ticketCount: ticketCount || 0 };
+export const checkInitialState = ({
+  purchasePrice,
+  ticketCount,
+  tickets,
+  isNumberVisible,
+}) => {
+  return {
+    purchasePrice: purchasePrice || 0,
+    ticketCount: ticketCount || 0,
+    tickets: tickets || [],
+    isNumberVisible: isNumberVisible || false,
+  };
 };
