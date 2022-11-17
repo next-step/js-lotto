@@ -84,6 +84,7 @@ describe('TEST LOTTO APLICATION', () => {
     cy.get('.lotto-numbers-toggle-button').check({ force: true });
     cy.get('.lotto-numbers').should('be.visible');
   });
+
   it('lotto number should be 6 numbers', () => {
     const purchaseInputTag = cy.get($purchaseInput);
     purchaseInputTag.type(7000);
@@ -98,8 +99,8 @@ describe('TEST LOTTO APLICATION', () => {
         expect(lottoNumbers.length).to.equal(LOTTO_NUM_COUNT);
       });
   });
-  // it('lotto numbers must be between 1 and 45', () => { });
-  // it('lotto numbers must not be duplicated', () => { });
 });
 
-// given, when , then 중 THEN 먼저 작성
+describe('fdssdf', () => {
+  it('tetest', () => { });
+});

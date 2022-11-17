@@ -9,14 +9,10 @@ const $lottoNumbersToggleButton = document.querySelector(
   '.lotto-numbers-toggle-button'
 );
 const $purchaseInputForm = document.querySelector('#input-price-form');
-const $purchaseButton = document.querySelector('.purchase-button');
 const $purchaseInput = document.querySelector('.purchase-amount');
-
 const $purchasedLottos = document.querySelector('#purchased-lottos');
 const $inputLottoNums = document.querySelector('#input-lotto-nums');
-
 const $totalPurchased = document.querySelector('#total-purchased');
-
 const $lottoImages = document.querySelector('.lotto-images');
 
 const onModalShow = () => {
@@ -25,6 +21,12 @@ const onModalShow = () => {
 
 const onModalClose = () => {
   $modal.classList.remove('open');
+};
+
+const clear = () => {
+  while ($lottoImages.firstChild) {
+    $lottoImages.removeChild($lottoImages.firstChild);
+  }
 };
 
 const onPurchaseLotto = (event) => {
@@ -36,6 +38,7 @@ const onPurchaseLotto = (event) => {
     alert(ERROR_MSSAGE.AMOUNT);
     return;
   }
+  clear();
 
   const ticketCount = purchaseLotto(purchaseAmount);
   $totalPurchased.textContent = ticketCount;
@@ -50,7 +53,7 @@ const onPurchaseLotto = (event) => {
   $inputLottoNums.style.display = 'block';
 };
 
-const onToggleLottoNumbers = ($event) => {
+const onToggleLottoNumbers = () => {
   const $lottoNumbers = document.querySelectorAll('.lotto-numbers');
 
   if ($lottoNumbersToggleButton.checked) {
