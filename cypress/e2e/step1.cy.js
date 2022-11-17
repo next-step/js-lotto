@@ -126,11 +126,8 @@ describe('로또 어플리케이션 단계1', () => {
       getLottoNumbersToggleButton().click();
       getLottoNumbers().should('have.not.css', 'display', 'none');
       getLottoNumbers().should(($numbers) => {
-        const text = $numbers.text();
-        const numArr = text.split(',');
-        const tempSet = new Set();
-        numArr.forEach((num) => tempSet.add(num));
-        expect(tempSet.size).equal(LOTTO_LENGTH);
+        const size = new Set($numbers.text().split(',').map(Number)).size;
+        expect(size).equal(LOTTO_LENGTH);
       });
     });
 
