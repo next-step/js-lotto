@@ -50,4 +50,25 @@ describe('로또 랜더링 테스트', () => {
       showLottoItemNumbers();
     });
   });
+  describe('번호 보기 토글 버튼이 클릭되어있는 상태에서 토글 버튼을 클릭하면 로또 숫자는 화면에 표시되지 않는다.', () => {
+    const showLottoItemNumbers = () =>
+      cy.getByDataCy('lotto-item-numbers').should('have.css', 'display', 'block');
+    const hideLottoItemNumbers = () =>
+      cy.getByDataCy('lotto-item-numbers').should('have.css', 'display', 'none');
+    const checkToggleBtn = () => {
+      cy.get('.switch').click();
+      showLottoItemNumbers();
+      cy.get('.switch').click();
+      hideLottoItemNumbers();
+    };
+    it('5000원을 구매한 상태에서 번호 보기 토글 버튼을 2번 누른다.', () => {
+      cy.clickPurchaseBtn(5000);
+      checkToggleBtn();
+    });
+    it('5000원을 구매한 상태에서 번호 보기 토글 버튼을 4번 누른다.', () => {
+      cy.clickPurchaseBtn(5000);
+      checkToggleBtn();
+      checkToggleBtn();
+    });
+  });
 });
