@@ -10,6 +10,7 @@
     "sourceType": "module"
   },
   "rules": {
+    "no-param-reassign": "off",
     "import/extensions": "off",
     "no-plusplus": "off",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
