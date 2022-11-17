@@ -1,2 +1,4 @@
-const isValidateAmount = (amount) => amount % 1000 === 0;
+import { LOTTO } from './constants.js';
+
+const isValidateAmount = (amount) => amount % LOTTO.MIN_PRICE === 0;
 export { isValidateAmount };

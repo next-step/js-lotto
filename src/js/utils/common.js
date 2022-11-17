@@ -1,18 +1,20 @@
-import { LOTTO_NUM_COUNT } from './constants.js';
+import { LOTTO } from './constants.js';
 
 const purchaseLotto = (amount) => {
-    return amount / 1000;
+  return amount / LOTTO.MIN_PRICE;
 };
 
 const getLottoNumbers = () => {
-    const lottoNumbers = [];
-    while (lottoNumbers.length !== LOTTO_NUM_COUNT) {
-        const randomNumber = Math.floor(Math.random() * (45 - 1) + 1);
-        if (!lottoNumbers.includes(randomNumber)) {
-            lottoNumbers.push(randomNumber);
-        }
+  const lottoNumbers = [];
+  while (lottoNumbers.length !== LOTTO.LENGTH) {
+    const randomNumber = Math.floor(
+      Math.random() * (LOTTO.MAX_VALUE - LOTTO.MIN_VALUE) + LOTTO.MIN_VALUE
+    );
+    if (!lottoNumbers.includes(randomNumber)) {
+      lottoNumbers.push(randomNumber);
     }
-    return lottoNumbers;
+  }
+  return lottoNumbers;
 };
 
 export { purchaseLotto, getLottoNumbers };

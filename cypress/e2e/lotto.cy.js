@@ -1,4 +1,4 @@
-import { ERROR_MSSAGE, LOTTO_NUM_COUNT } from '../../src/js/utils/constants.js';
+import { ERROR_MSSAGE, LOTTO } from '../../src/js/utils/constants.js';
 const $purchaseInput = '[data-cy="purchase-amount"]';
 const $purchaseButton = '[data-cy="purchase-button"]';
 
@@ -96,11 +96,7 @@ describe('TEST LOTTO APLICATION', () => {
       .then(($element) => {
         const lottoNumberText = $element.text();
         const lottoNumbers = lottoNumberText.split(',');
-        expect(lottoNumbers.length).to.equal(LOTTO_NUM_COUNT);
+        expect(lottoNumbers.length).to.equal(LOTTO.LENGTH);
       });
   });
-});
-
-describe('fdssdf', () => {
-  it('tetest', () => { });
 });
