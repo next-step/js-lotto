@@ -6,6 +6,7 @@ const lotto = new Lotto({
   $purchaseInput: $('[data-cy="lotto-purchase-input"]'),
   $lottoCount: $('[data-cy="purchased-lotto-count"]'),
   $lottoList: $('[data-cy="purchased-lotto-list"]'),
+  $lottoNumbersToggle: $('.lotto-numbers-toggle-button'),
 });
 
 lotto.initEvents();

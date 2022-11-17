@@ -23,7 +23,8 @@ body {
   height: 36px;
 }
 
-.not-purchased {
+.not-purchased,
+.hidden {
   display: none;
 }
 
