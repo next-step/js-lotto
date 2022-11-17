@@ -1,15 +1,44 @@
-import { ERR_MSG } from './constants/index.js';
-import { validateMoney } from './validate/money.js';
-import { renderLottoDetail, handleToggle } from './view.js';
-import { generateLottos } from './lotto.js';
+import { ERR_MSG, LOTTO } from './constants/index.js';
+import { validateMoney, validateWinning } from './validate/index.js';
+import { renderLottoDetail, handleToggle, renderModalBody } from './view.js';
+import {
+  generateLottos,
+  getLottoPlacesResult,
+  getLottoTotalPrize,
+} from './lotto.js';
 import { LottoStore } from './LottoStore.js';
 
 const $modalClose = document.querySelector('.modal-close');
 const $modal = document.querySelector('.modal');
 const $moneyForm = document.querySelector('.money-form');
+const $resetButton = document.querySelector('#reset-button');
 const lottoStore = new LottoStore();
 
-const onModalShow = () => {
+const onModalShow = (e) => {
+  e.preventDefault();
+  const winningNumbers = Array(6)
+    .fill(0)
+    .map((v, i) => Number(e.target[i].value));
+  const bonusNumber = Number(e.target[LOTTO.LENGTH].value);
+  if (!validateWinning(winningNumbers, bonusNumber)) {
+    alert(ERR_MSG.NOT_A_DUPLICATE_NUMBER);
+    return;
+  }
+  renderModal(winningNumbers, bonusNumber);
+};
+
+const renderModal = (winningNumbers, bonusNumber) => {
+  const places = getLottoPlacesResult(
+    lottoStore.lottos,
+    winningNumbers,
+    bonusNumber
+  );
+  const money = lottoStore.lottos.length * LOTTO.PRICE;
+  const revenue = Math.round(
+    ((getLottoTotalPrize(places) - money) / money) * 100
+  );
+
+  renderModalBody(places, revenue);
   $modal.classList.add('open');
 };
 
@@ -35,7 +64,7 @@ const setBuyLotto = (money) => {
 };
 
 const initListenerAfterBuyLotto = () => {
-  const $showResultButton = document.querySelector('.open-result-modal-button');
+  const $winningForm = document.querySelector('.winning-form');
   const $lottoNumbersToggleButton = document.querySelector(
     '.lotto-numbers-toggle-button'
   );
@@ -43,8 +72,12 @@ const initListenerAfterBuyLotto = () => {
   $lottoNumbersToggleButton.addEventListener('click', () => {
     handleToggle(lottoStore.lottos);
   });
-  $showResultButton.addEventListener('click', onModalShow);
+  $winningForm.addEventListener('submit', onModalShow);
   $modalClose.addEventListener('click', onModalClose);
 };
+
+$resetButton.addEventListener('click', () => {
+  window.location.reload();
+});
 
 $moneyForm.addEventListener('submit', handleClickBuy);

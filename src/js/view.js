@@ -1,4 +1,5 @@
 import { setValue } from './element.js';
+import { PLACE } from './constants/index.js';
 
 export const renderLottoDetail = (lottos) => {
   renderLottoDetailTemplate();
@@ -67,7 +68,7 @@ const template = `
   <ul id="lotto-list" class="d-flex flex-wrap">
   </ul>
 </section>
-<form class="mt-9">
+<form class="winning-form mt-9">
   <label class="flex-auto d-inline-block mb-3"
     >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
   >
@@ -78,26 +79,50 @@ const template = `
         <input
           type="number"
           class="winning-number mx-1 text-center"
+          min="1"
+          max="45"
+          maxlength="2"
+          required
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"
+          min="1"
+          max="45"
+          maxlength="2"
+          required
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"
+          min="1"
+          max="45"
+          maxlength="2"
+          required
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"
+          min="1"
+          max="45"
+          maxlength="2"
+          required
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"
+          min="1"
+          max="45"
+          maxlength="2"
+          required
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"
+          min="1"
+          max="45"
+          maxlength="2"
+          required
         />
       </div>
     </div>
@@ -109,10 +134,57 @@ const template = `
     </div>
   </div>
   <button
-    type="button"
+    type="submit"
     class="open-result-modal-button mt-5 btn btn-cyan w-100"
   >
     결과 확인하기
   </button>
 </form>
     `;
+
+export const renderModalBody = (places, revenue) => {
+  const $modalBody = document.querySelector('.modal-body');
+  $modalBody.innerHTML = generateModalBody(places, revenue);
+};
+
+const generateModalBody = (places, revenue) => {
+  return `<div class="d-flex justify-center">
+  <table class="result-table border-collapse border border-black">
+    <thead>
+      <tr class="text-center">
+        <th class="p-3">일치 갯수</th>
+        <th class="p-3">당첨금</th>
+        <th class="p-3">당첨 갯수</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="text-center">
+        <td class="p-3">3개</td>
+        <td class="p-3">5,000</td>
+        <td class="p-3">${places[PLACE.FIFTH]}개</td>
+      </tr>
+      <tr class="text-center">
+        <td class="p-3">4개</td>
+        <td class="p-3">50,000</td>
+        <td class="p-3">${places[PLACE.FOURTH]}개</td>
+      </tr>
+      <tr class="text-center">
+        <td class="p-3">5개</td>
+        <td class="p-3">1,500,000</td>
+        <td class="p-3">${places[PLACE.THIRD]}개</td>
+      </tr>
+      <tr class="text-center">
+        <td class="p-3">5개 + 보너스볼</td>
+        <td class="p-3">30,000,000</td>
+        <td class="p-3">${places[PLACE.SECOND]}개</td>
+      </tr>
+      <tr class="text-center">
+        <td class="p-3">6개</td>
+        <td class="p-3">2,000,000,000</td>
+        <td class="p-3">${places[PLACE.FIRST]}개</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p class="text-center font-bold">당신의 총 수익률은 ${revenue}%입니다.</p>`;
+};
