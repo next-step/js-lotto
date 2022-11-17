@@ -2,6 +2,7 @@ import Component from '../core/Component.js';
 import Header from './Header.js';
 import PurchasePrice from './PurchasePrice.js';
 import PurchaseTickets from './PurchaseTickets.js';
+import WinningNumber from './WinningNumber.js';
 import {
   UNIT_OF_PRICE,
   LOTTO_COUNT,
@@ -23,12 +24,16 @@ export default class App extends Component {
       this.state,
       this.toggleShowNumbers.bind(this),
     );
+    this.winningNumber = new WinningNumber(
+      this.$target.querySelector('#target'),
+      this.state,
+    );
   }
 
   setState(newState) {
     this.state = newState;
     this.purchaseTickets.setState(this.state);
-    console.log(this.state);
+    this.winningNumber.setState(this.state);
   }
 
   getTicketCount(purchasePrice) {
