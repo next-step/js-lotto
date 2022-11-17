@@ -7,8 +7,8 @@ beforeEach(() => {
   cy.visit('index.html');
 });
 
-const buyLotto = (price) => {
-  cy.getByDataset(SELECTOR.PURCHASE_PRICE_INPUT).type(price);
+const buyLotto = (count) => {
+  cy.getByDataset(SELECTOR.PURCHASE_PRICE_INPUT).type(String(LOTTO.PRICE * count));
   cy.getByDataset(SELECTOR.PAYMENT_FORM).submit();
 };
 
@@ -41,7 +41,7 @@ const clickOpenResultModalButton = () => {
 describe('로또 어플리케이션을 테스트한다.', () => {
   describe('결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.', () => {
     beforeEach(() => {
-      buyLotto('60000');
+      buyLotto(DUMMY_DATA.LOTTO_TICKETS_100);
     });
 
     it('결과 확인하기 버튼이 존재한다.', () => {
@@ -117,18 +117,29 @@ describe('로또 어플리케이션을 테스트한다.', () => {
         6: 0,
       };
 
-      typeWinningNumbers();
-      clickOpenResultModalButton();
+      cy.getByDataset(SELECTOR.LOTTO_DETAIL_NUMBER)
+        .each(($el) => {
+          const dummyLottoNumberArray = $el.text().split(',').map(Number);
 
-      const returnOfRate = getRateOfReturn(lottoWinningCount, 5000);
+          const rank = getLottoRank(dummyLottoNumberArray, DUMMY_DATA.WINNING_NUMBERS, DUMMY_DATA.BONUS_NUMBER);
+          if (rank < LOTTO.WINNING_MINIMUM_NUMBER) return;
 
-      cy.getByDataset(SELECTOR.RATE_OF_RETURN).should('have.text', `당신의 총 수익률은 ${returnOfRate}%입니다.`);
+          lottoWinningCount[rank]++;
+        })
+        .then(() => {
+          typeWinningNumbers();
+          clickOpenResultModalButton();
+
+          const returnOfRate = getRateOfReturn(lottoWinningCount, Number(DUMMY_DATA.LOTTO_TICKETS_100) * LOTTO.PRICE);
+
+          cy.getByDataset(SELECTOR.RATE_OF_RETURN).should('have.text', `당신의 총 수익률은 ${returnOfRate}%입니다.`);
+        });
     });
   });
 
   describe('다시 시작하기 버튼을 누르면 초기화되서 다시 구매를 시작할 수 있다.', () => {
     beforeEach(() => {
-      buyLotto('5000');
+      buyLotto(DUMMY_DATA.LOTTO_TICKETS_100);
       typeWinningNumbers();
       clickOpenResultModalButton();
     });
@@ -206,15 +217,15 @@ describe('로또 어플리케이션을 테스트한다.', () => {
     });
 
     it('구입할 금액을 입력하고 확인 버튼을 클릭하면 화면에 구매 안내메시지의 개수가 구입한 로또의 개수와 일치해야 한다.', () => {
-      buyLotto('5000');
+      buyLotto(DUMMY_DATA.LOTTO_TICKETS_100);
 
-      cy.getByDataset(SELECTOR.LOTTO_PURCHASE_COUNT_TEXT).should('have.text', '5');
+      cy.getByDataset(SELECTOR.LOTTO_PURCHASE_COUNT_TEXT).should('have.text', DUMMY_DATA.LOTTO_TICKETS_100);
     });
 
     it('구입할 금액을 입력하고 확인 버튼을 클릭하면 화면에 로또 아이콘의 개수가 구입한 로또의 개수와 일치해야 한다.', () => {
-      buyLotto('5000');
+      buyLotto(DUMMY_DATA.LOTTO_TICKETS_100);
 
-      cy.getByDataset(SELECTOR.LOTTO_ICON_LIST).should('have.length', '5');
+      cy.getByDataset(SELECTOR.LOTTO_ICON_LIST).should('have.length', DUMMY_DATA.LOTTO_TICKETS_100);
     });
   });
 
@@ -234,23 +245,20 @@ describe('로또 어플리케이션을 테스트한다.', () => {
   });
 
   describe('복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.', () => {
+    beforeEach(() => {
+      buyLotto(DUMMY_DATA.LOTTO_TICKETS_100);
+    });
     it('로또를 발급하고 난 후에, 화면에 번호보기 토글 버튼이 존재한다.', () => {
-      buyLotto('5000');
-
       cy.getByDataset(SELECTOR.LOTTO_NUMBERS_TOGGLE_BUTTON).should('exist');
     });
 
     it('번호보기 토글 버튼을 클릭하면 각각의 로또 아이콘에 번호가 보여져야 한다.', () => {
-      buyLotto('5000');
-
       cy.getByDataset(SELECTOR.LOTTO_NUMBERS_TOGGLE_BUTTON).check({ force: true });
 
       cy.getByDataset(SELECTOR.LOTTO_DETAIL_NUMBER).should('exist');
     });
 
     it('번호보기 토글 버튼을 클릭해서 checked가 된 상태에서 토글 버튼을 다시 클릭하면 로또 아이콘에 번호가 사라져야 한다.', () => {
-      buyLotto('5000');
-
       cy.getByDataset(SELECTOR.LOTTO_NUMBERS_TOGGLE_BUTTON).check({ force: true });
       cy.getByDataset(SELECTOR.LOTTO_NUMBERS_TOGGLE_BUTTON).uncheck({ force: true });
 

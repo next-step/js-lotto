@@ -1,4 +1,5 @@
 export const DUMMY_DATA = {
+  LOTTO_TICKETS_100: '100',
   WINNING_NUMBERS: [1, 2, 3, 4, 5, 6],
   BONUS_NUMBER: 7,
 };
