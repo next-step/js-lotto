@@ -1,3 +1,4 @@
+import { $$ } from './util.js';
 import {
   ALERT_MESSAGE,
   PURCHASE_AMOUNT_UNIT,
@@ -6,7 +7,7 @@ import {
   LOTTO_NUMBERS_COUNT,
 } from './constants.js';
 
-const [$lottoCountAndToggle, $winningNumbers] = document.querySelectorAll('.purchased-result');
+const [$lottoCountAndToggle, $winningNumbers] = $$('.purchased-result');
 
 const INIT_MY_LOTTO = [];
 
