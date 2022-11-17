@@ -21,7 +21,7 @@ const lottoState = {
   isOpen: false,
 };
 
-const onToggleChange = () => {
+const handleToggleButton = () => {
   const $lottoNumbers = document.querySelectorAll('.lotto-numbers');
   if (!lottoState.isOpen) {
     $lottoIconList.style.flexDirection = 'column';
@@ -38,7 +38,7 @@ const onToggleChange = () => {
   lottoState.isOpen = false;
 };
 
-const onPurchaseClick = (e) => {
+const handlePurchaseButton = (e) => {
   e.preventDefault();
   const purchasedAmount = $purchaseAmountInput.value;
   if (!isValidForNoAmount(purchasedAmount)) {
@@ -99,11 +99,11 @@ const renderLottoIcons = () => {
   });
 };
 
-const onModalShow = () => {
+const handleModalOpen = () => {
   openModal();
 };
 
-const onModalClose = () => {
+const handleModalClose = () => {
   closeModal();
 };
 
@@ -122,8 +122,8 @@ const initPurchaseLotto = () => {
   resetLottoIcons();
 };
 
-addPurchaseButtonClickEventListener(onPurchaseClick);
-addLottoToggleButtonClickEventListener(onToggleChange);
-addResultButtonClickEventListener(onModalShow);
-addModalCloseClickEventListener(onModalClose);
+addPurchaseButtonClickEventListener(handlePurchaseButton);
+addLottoToggleButtonClickEventListener(handleToggleButton);
+addResultButtonClickEventListener(handleModalOpen);
+addModalCloseClickEventListener(handleModalClose);
 displayDetails(lottoState.quantity);
