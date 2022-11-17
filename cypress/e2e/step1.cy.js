@@ -1,6 +1,7 @@
 import {
   LOTTO_LENGTH,
-  LOTTO_NUMBER_RANGE,
+  LOTTO_NUMBER_RANGE_MAX,
+  LOTTO_NUMBER_RANGE_MIN,
   MESSAGE_FOR_EMPTY_VALUE,
   MESSAGE_FOR_INVALID_UNIT_VALUE,
 } from '../../src/js/constants.js';
@@ -137,7 +138,9 @@ describe('로또 어플리케이션 단계1', () => {
       getLottoNumbers().should(($numbers) => {
         const text = $numbers.text();
         const numArr = text.split(',');
-        const isValidNumber = numArr.every((num) => num < LOTTO_NUMBER_RANGE + 1 && num > 1);
+        const isValidNumber = numArr.every(
+          (num) => num < LOTTO_NUMBER_RANGE_MAX + 1 && num > LOTTO_NUMBER_RANGE_MIN
+        );
         expect(isValidNumber).to.be.true;
       });
     });
