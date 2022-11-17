@@ -2,6 +2,7 @@ import {
   LOTTO_LENGTH,
   LOTTO_NUMBER_RANGE_MAX,
   LOTTO_NUMBER_RANGE_MIN,
+  LOTTO_PURCHASE_UNIT,
   MESSAGE_FOR_EMPTY_VALUE,
   MESSAGE_FOR_INVALID_UNIT_VALUE,
 } from '../../src/js/constants.js';
@@ -22,7 +23,7 @@ describe('로또 어플리케이션 단계1', () => {
   const getLottoNumbersToggleButton = () => cy.get('[data-cy="lotto-numbers-toggle"');
   const getLottoNumbers = () => cy.get('.lotto-numbers');
 
-  const purchaseLottos = (amount = 1000) => {
+  const purchaseLottos = (amount = LOTTO_PURCHASE_UNIT) => {
     getPurchaseAmount().type(`${amount}`);
     getPurchaseButton().click();
   };

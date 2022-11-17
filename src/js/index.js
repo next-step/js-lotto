@@ -1,7 +1,11 @@
 import { isValidForNoAmount, isValidForExactAmount, isAlreadyExist } from './validators.js';
 import LottoModel from './lotto.js';
 import { generateLottoNumbers } from './generateLottos.js';
-import { MESSAGE_FOR_EMPTY_VALUE, MESSAGE_FOR_INVALID_UNIT_VALUE } from './constants.js';
+import {
+  MESSAGE_FOR_EMPTY_VALUE,
+  MESSAGE_FOR_INVALID_UNIT_VALUE,
+  LOTTO_PURCHASE_UNIT,
+} from './constants.js';
 import { closeModal, displayDetails, openModal } from './views.js';
 import {
   addLottoToggleButtonClickEventListener,
@@ -51,7 +55,7 @@ const handlePurchaseButton = (e) => {
   }
   initPurchaseLotto();
   lottoState.purchasedAmount = purchasedAmount;
-  lottoState.quantity = Number(purchasedAmount) / 1000;
+  lottoState.quantity = Number(purchasedAmount) / LOTTO_PURCHASE_UNIT;
   displayDetails(lottoState.quantity);
   $totalQuantity.innerText = lottoState.quantity;
   generateLottos(lottoState.quantity);

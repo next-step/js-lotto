@@ -1,4 +1,4 @@
-import { LOTTO_LENGTH } from './constants.js';
+import { LOTTO_LENGTH, LOTTO_PURCHASE_UNIT } from './constants.js';
 
 const isValidForNoAmount = (inputValue) => {
   return !!inputValue;
@@ -8,7 +8,7 @@ const isValidForExactAmount = (inputValue) => {
   if (Number(inputValue) < 0) {
     return false;
   }
-  if (Number(inputValue) % 1000 > 0) {
+  if (Number(inputValue) % LOTTO_PURCHASE_UNIT > 0) {
     return false;
   }
   return true;
