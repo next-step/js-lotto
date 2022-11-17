@@ -1,5 +1,7 @@
-const { ERROR_MESSAGE } = require('../../src/js/constants/index.js');
-const { SELECTOR } = require('../constants/selector.js');
+import { DOM_INDEX_WITH_WINNING_COUNT_MAPPER, ERROR_MESSAGE, LOTTO } from '../../src/js/constants/index.js';
+import { getLottoRank, getRateOfReturn } from '../../src/js/service/lotto.js';
+import { DUMMY_DATA } from '../constants/lotto.js';
+import { SELECTOR } from '../constants/selector.js';
 
 beforeEach(() => {
   cy.visit('index.html');
@@ -7,10 +9,151 @@ beforeEach(() => {
 
 const buyLotto = (price) => {
   cy.getByDataset(SELECTOR.PURCHASE_PRICE_INPUT).type(price);
-  cy.getByDataset(SELECTOR.PURCHASE_BUTTON).click();
+  cy.getByDataset(SELECTOR.PAYMENT_FORM).submit();
+};
+
+const typeWinningNumbers = () => {
+  cy.getByDataset(SELECTOR.WINNING_NUMBER_INPUT_WRAPPER)
+    .children()
+    .each(($el, idx) => {
+      cy.wrap($el).type(String(DUMMY_DATA.WINNING_NUMBERS[idx]));
+    })
+    .then(() => {
+      cy.getByDataset(SELECTOR.BONUS_NUMBER_INPUT).type(DUMMY_DATA.BONUS_NUMBER);
+    });
+};
+
+const typeDuplicatedWinningNumbers = () => {
+  cy.getByDataset(SELECTOR.WINNING_NUMBER_INPUT_WRAPPER)
+    .children()
+    .each(($el) => {
+      cy.wrap($el).type(String(DUMMY_DATA.WINNING_NUMBERS[0]));
+    })
+    .then(() => {
+      cy.getByDataset(SELECTOR.BONUS_NUMBER_INPUT).type(DUMMY_DATA.BONUS_NUMBER);
+    });
+};
+
+const clickOpenResultModalButton = () => {
+  cy.getByDataset(SELECTOR.OPEN_RESULT_MODAL_BUTTON).click();
 };
 
 describe('로또 어플리케이션을 테스트한다.', () => {
+  describe('결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.', () => {
+    beforeEach(() => {
+      buyLotto('5000');
+    });
+
+    it('결과 확인하기 버튼이 존재한다.', () => {
+      cy.getByDataset(SELECTOR.OPEN_RESULT_MODAL_BUTTON).should('exist');
+    });
+
+    it('결과 확인하기 버튼을 누를 때 당첨 번호와 보너스 번호에 중복된 번호가 있으면 alert을 띄운다.', () => {
+      const alertStub = cy.stub();
+      cy.on('window:alert', alertStub);
+
+      typeDuplicatedWinningNumbers();
+
+      cy.getByDataset(SELECTOR.OPEN_RESULT_MODAL_BUTTON)
+        .click()
+        .then(() => {
+          expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.DUPLICATED_LOTTO_WINNING_NUMBER);
+        });
+    });
+
+    it('결과 확인하기 버튼을 누르면 모달창이 뜬다.', () => {
+      typeWinningNumbers();
+      clickOpenResultModalButton();
+
+      cy.getByDataset(SELECTOR.MODAL).should('have.class', 'open');
+    });
+
+    it('모달창에서 당첨 통계를 확인할 수 있다.', () => {
+      const lottoWinningCount = {
+        3: 0,
+        4: 0,
+        5: 0,
+        '5_BONUS': 0,
+        6: 0,
+      };
+
+      const viewLottoWinningCount = {
+        3: 0,
+        4: 0,
+        5: 0,
+        '5_BONUS': 0,
+        6: 0,
+      };
+
+      cy.getByDataset(SELECTOR.LOTTO_DETAIL_NUMBER).each(($el) => {
+        const dummyLottoNumberArray = $el.text().split(',').map(Number);
+
+        const rank = getLottoRank(dummyLottoNumberArray, DUMMY_DATA.WINNING_NUMBERS, DUMMY_DATA.BONUS_NUMBER);
+        if (rank < LOTTO.WINNING_MINIMUM_NUMBER) return;
+
+        lottoWinningCount[rank]++;
+      });
+
+      typeWinningNumbers();
+      clickOpenResultModalButton();
+
+      cy.getByDataset(SELECTOR.LOTTO_WINNING_COUNT)
+        .each(($el, idx) => {
+          viewLottoWinningCount[DOM_INDEX_WITH_WINNING_COUNT_MAPPER[idx]] = Number($el.text()[0]);
+        })
+        .then(() => {
+          expect(JSON.stringify(lottoWinningCount)).to.equal(JSON.stringify(viewLottoWinningCount));
+        });
+    });
+
+    it('수익률을 모달로 확인할 수 있다.', () => {
+      const lottoWinningCount = {
+        3: 0,
+        4: 0,
+        5: 0,
+        '5_BONUS': 0,
+        6: 0,
+      };
+
+      typeWinningNumbers();
+      clickOpenResultModalButton();
+
+      const returnOfRate = getRateOfReturn(lottoWinningCount, 5000);
+
+      cy.getByDataset(SELECTOR.RATE_OF_RETURN).should('have.text', `당신의 총 수익률은 ${returnOfRate}%입니다.`);
+    });
+  });
+
+  describe('다시 시작하기 버튼을 누르면 초기화되서 다시 구매를 시작할 수 있다.', () => {
+    beforeEach(() => {
+      buyLotto('5000');
+      typeWinningNumbers();
+      clickOpenResultModalButton();
+    });
+
+    it('다시 시작하기 버튼이 존재한다.', () => {
+      cy.getByDataset(SELECTOR.RESET_BUTTON).should('exist');
+    });
+
+    it('다시 시작하기 버튼을 클릭하면 모달창과 구매한 로또 정보가 화면에서 사라진다.', () => {
+      cy.getByDataset(SELECTOR.RESET_BUTTON).click();
+
+      cy.getByDataset(SELECTOR.MODAL).should('not.have.class', 'open');
+
+      cy.getByDataset(SELECTOR.PURCHASED_LOTTO).should('have.class', 'none');
+      cy.getByDataset(SELECTOR.LOTTO_RESULT_FORM).should('have.class', 'none');
+    });
+
+    it('다시 구매를 할 수 있다.', () => {
+      cy.getByDataset(SELECTOR.RESET_BUTTON).click();
+
+      cy.getByDataset(SELECTOR.MODAL).should('not.have.class', 'open');
+      cy.getByDataset(SELECTOR.PURCHASED_LOTTO).should('have.class', 'none');
+      cy.getByDataset(SELECTOR.LOTTO_RESULT_FORM).should('have.class', 'none');
+      cy.getByDataset(SELECTOR.PURCHASE_PRICE_INPUT).should('have.value', '');
+    });
+  });
+
   describe('로또 구입 금액을 입력할 수 있다.', () => {
     it('화면에 구입 금액을 입력할 input 태그가 존재한다.', () => {
       cy.getByDataset(SELECTOR.PURCHASE_PRICE_INPUT).should('exist');
