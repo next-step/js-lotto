@@ -3,10 +3,13 @@ import Component from '../core/Component.js';
 export default class WinningNumber extends Component {
   template() {
     const { ticketCount } = this.state;
-    this.templateHTML =
+    const $form = this.$target.querySelector(
+      'form[data-cy="winning-number-form"]',
+    );
+    $form.innerHTML =
       ticketCount > 0
         ? `
-    		<form class="mt-9">
+    		<form class="mt-9" data-cy="winning-number-form">
             <label class="flex-auto d-inline-block mb-3"
               >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >
@@ -58,8 +61,13 @@ export default class WinningNumber extends Component {
         : '';
   }
 
+  init() {
+    this.templateHTML =
+      '<form class="mt-9" data-cy="winning-number-form"></form>';
+    this.$target.innerHTML = `${this.$target.innerHTML}${this.templateHTML}`;
+  }
+
   render() {
     this.template();
-    this.$target.innerHTML = `${this.$target.innerHTML}${this.templateHTML}`;
   }
 }

@@ -9,6 +9,7 @@ const initialState = {
 };
 
 new App($app, initialState || undefined);
+
 // const $showResultButton = document.querySelector('.open-result-modal-button');
 // const $modalClose = document.querySelector('.modal-close');
 // const $modal = document.querySelector('.modal');
