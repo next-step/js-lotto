@@ -1,5 +1,5 @@
-@import './shared/index.css';
-@import './ui/index.css';
+@import "./shared/index.css";
+@import "./ui/index.css";
 
 html,
 body {
@@ -11,6 +11,14 @@ body {
 #app {
   max-width: 400px;
   margin: 0 auto;
+}
+
+.winning-number-form {
+  display: none;
+}
+
+.winning-number-form.show {
+  display: block;
 }
 
 .winning-number {
