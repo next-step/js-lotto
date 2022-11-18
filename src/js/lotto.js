@@ -22,7 +22,6 @@ class Lotto {
     if (this.validatePaymentInput() === true) {
       this.validatePaymentInput();
       this.renderPurchaseTicketNumber();
-      $paymentCost.focus();
       this.renderLottoNumber(this.makeTicket());
     }
     this.paymentCostStr = 0;
@@ -34,6 +33,7 @@ class Lotto {
       $paymentCost.value = "";
       return false;
     }
+    $paymentCost.focus();
     return true;
   }
 
