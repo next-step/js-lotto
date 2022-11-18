@@ -1,12 +1,5 @@
 import { $, $$ } from "./utils.js";
-const $showResultButton = $(".open-result-modal-button");
-const $modalClose = $(".modal-close");
-const $modal = $(".modal");
-const $lottoNumbersToggleButton = $(".lotto-numbers-toggle-button");
-const $paymentCost = $("#payment-cost-input");
-const $paymentButton = $("#payment-button");
-const $paymentForm = $(".payment-form");
-const $paymentTickets = $("#payment-ticket");
+import { $modal, $lottoNumbersToggleButton, $paymentCost, $paymentForm, $paymentTickets } from "./DOM.js";
 
 class Lotto {
   constructor() {
