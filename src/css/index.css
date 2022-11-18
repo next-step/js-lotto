@@ -22,3 +22,12 @@ body {
   width: 30px;
   height: 36px;
 }
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.purchased-lotto {
+  display: none;
+}
