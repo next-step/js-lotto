@@ -30,12 +30,10 @@ class App {
     });
 
     $lottoNumbersToggleButton.addEventListener("click", () => {
-      const $lottoNumbers = getAll(".lotto-numbers");
+      const lottoPaperClasses = $lottoPapers.classList;
 
-      $lottoNumbers.forEach(
-        ($lottoNumber) =>
-          ($lottoNumber.style.display = displayType[$lottoNumber.style.display])
-      );
+      if (lottoPaperClasses.contains("hide")) lottoPaperClasses.remove("hide");
+      else lottoPaperClasses.add("hide");
     });
   }
 

@@ -24,9 +24,7 @@ export const getLottoPapers = () => {
       prev +
       `<div class="mx-1 text-4xl">
   <span class="lotto-icon">🎟️</span>
-  <span class="lotto-numbers" style="display: none; font-size: 22px;">${curr.join(
-    ", "
-  )}</span>
+  <span class="lotto-numbers">${curr.join(", ")}</span>
 </div>`,
     ""
   );
