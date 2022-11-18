@@ -1,9 +1,16 @@
-import { DEFAULT_LOTTO_STATE } from '../constant.js';
+import {
+  ALERT,
+  DEFAULT_LOTTO_STATE,
+  MAX_LOTTO_PRICE,
+  MIN_LOTTO_PRICE,
+} from '../constants.js';
 import { checkRandom, makeRandomNumbers } from '../utils/index.js';
 
 class Lotto {
   constructor({ $target }) {
     this.$target = $target;
+    this.$resultWrapper = $target.querySelector('#purchased-result');
+    this.$checkWrapper = $target.querySelector('#check-result');
     this.state = {
       ...DEFAULT_LOTTO_STATE,
     };
@@ -13,11 +20,12 @@ class Lotto {
 
   onConfirm() {
     const IS_CONFIRM =
-      this.state.moneyAmount >= 1000 && this.state.moneyAmount <= 100000;
-    const IS_ALERT = this.state.moneyAmount % 1000 !== 0;
+      this.state.moneyAmount >= MIN_LOTTO_PRICE &&
+      this.state.moneyAmount <= MAX_LOTTO_PRICE;
+    const IS_ALERT = this.state.moneyAmount % MIN_LOTTO_PRICE !== 0;
 
     if (IS_ALERT) {
-      window.alert('로또 구입 금액을 1,000원 단위로 입력해 주세요.');
+      window.alert(ALERT.TYPE_THOUSAND_UNIT);
       this.setState({ ...this.state, moneyAmount: null });
       return;
     }
@@ -29,7 +37,7 @@ class Lotto {
 
       this.setState({
         ...this.state,
-        lottoPurchaseNumber: this.state.moneyAmount / 1000,
+        lottoPurchaseNumber: this.state.moneyAmount / MIN_LOTTO_PRICE,
         randomNumbers: RANDOM_NUMBERS,
         isVisibleResult: true,
       });
@@ -60,23 +68,23 @@ class Lotto {
   }
 
   renderResult() {
-    const wrapper = this.$target.querySelector('#purchased-result');
-
     if (!this.state.isVisibleResult) {
-      wrapper.style.display = 'none';
+      this.$resultWrapper.style.display = 'none';
       return;
     }
 
-    wrapper.querySelector(
+    this.$resultWrapper.querySelector(
       '[data-id=result-text]'
     ).innerText = `총 ${this.state.lottoPurchaseNumber}개를 구매하였습니다.`;
 
-    wrapper.querySelector('[data-id=lotto-image-wrapper]').innerHTML = `
+    this.$resultWrapper.querySelector(
+      '[data-id=lotto-image-wrapper]'
+    ).innerHTML = `
       ${this.state.randomNumbers
         .map((randomNumber) => {
           return `
-            <li>
-              <span class="mx-1 text-4xl" data-id="lotto-image">🎟️ </span>
+            <li class="lotto-list">
+              <span class="mx-1 text-4xl" data-id="lotto-image">🎟️</span>
               <span class="lotto-number" data-id="lotto-number">
                 ${randomNumber.join(' ')}
               </span>
@@ -85,18 +93,20 @@ class Lotto {
         })
         .join('')}
     `;
-    if (wrapper.style.display !== 'block') wrapper.style.display = 'block';
+    if (this.$resultWrapper.style.display !== 'block') {
+      this.$resultWrapper.style.display = 'block';
+    }
   }
 
   renderCheckResultForm() {
-    const wrapper = this.$target.querySelector('#check-result');
-
     if (!this.state.isVisibleResult) {
-      wrapper.style.display = 'none';
+      this.$checkWrapper.style.display = 'none';
       return;
     }
 
-    if (wrapper.style.display !== 'block') wrapper.style.display = 'block';
+    if (this.$checkWrapper.style.display !== 'block') {
+      this.$checkWrapper.style.display = 'block';
+    }
   }
 
   renderInput() {
