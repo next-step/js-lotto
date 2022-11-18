@@ -19,10 +19,17 @@ class Lotto {
   }
 
   onConfirm() {
+    const IS_OVERPRICE = this.state.moneyAmount > MAX_LOTTO_PRICE;
     const IS_CONFIRM =
       this.state.moneyAmount >= MIN_LOTTO_PRICE &&
       this.state.moneyAmount <= MAX_LOTTO_PRICE;
     const IS_ALERT = this.state.moneyAmount % MIN_LOTTO_PRICE !== 0;
+
+    if (IS_OVERPRICE) {
+      window.alert(ALERT.OVER_MAX_VALUE);
+      this.setState({ ...this.state, moneyAmount: null });
+      return;
+    }
 
     if (IS_ALERT) {
       window.alert(ALERT.TYPE_THOUSAND_UNIT);
@@ -42,6 +49,11 @@ class Lotto {
         isVisibleResult: true,
       });
     }
+  }
+
+  onEnter(event) {
+    event.preventDefault();
+    this.onConfirm();
   }
 
   onTypeAmount(value) {
@@ -110,11 +122,23 @@ class Lotto {
   }
 
   renderInput() {
-    const IS_BLANK = this.state.moneyAmount === 0;
+    const IS_BLANK =
+      this.state.moneyAmount === 0 || this.state.moneyAmount === null;
 
-    this.$target.querySelector('[data-id=lotto-number-input]').value = IS_BLANK
-      ? null
-      : this.state.moneyAmount;
+    if (IS_BLANK) {
+      this.$target.querySelector('[data-id=lotto-number-input]').value = null;
+      this.$target
+        .querySelector('[data-id=lotto-submit-button]')
+        .setAttribute('disabled', '');
+    }
+
+    if (!IS_BLANK) {
+      this.$target.querySelector('[data-id=lotto-number-input]').value =
+        this.state.moneyAmount;
+      this.$target
+        .querySelector('[data-id=lotto-submit-button]')
+        .removeAttribute('disabled');
+    }
   }
 
   render() {
@@ -129,17 +153,24 @@ class Lotto {
       if (event.target.dataset.id === 'lotto-submit-button') {
         this.onConfirm();
       }
-    });
 
-    this.$target
-      .querySelector('[data-id=number-toggle-button]')
-      .addEventListener('click', () => {
+      if (event.target.dataset.id === 'number-toggle-button') {
         this.onToggle();
-      });
+      }
+    });
 
     this.$target.addEventListener('input', (event) => {
       if (event.target.dataset.id === 'lotto-number-input') {
         this.onTypeAmount(event.target.value);
+      }
+    });
+
+    this.$target.addEventListener('keydown', (event) => {
+      if (
+        event.target.dataset.id === 'lotto-number-input' &&
+        event.key === 'Enter'
+      ) {
+        this.onEnter(event);
       }
     });
   }

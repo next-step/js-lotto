@@ -15,9 +15,23 @@ describe('로또 사이트 E2E 테스트', () => {
       cy.get($lottoInput).should('exist');
     });
 
-    it('값을 입력하지 않는 경우 제출버튼을 비활성화 한다', () => {});
+    it('값을 입력하지 않는 경우 제출버튼을 비활성화 한다', () => {
+      cy.get($lottoInput).clear();
+      cy.get($lottoButton).should('be.disabled');
+    });
 
-    it('100,000원이 넘어가는 금액의 경우 100,000원까지만 구매 가능하다고 경고창을 띄워준 뒤 입력값을 리셋시킨다.', () => {});
+    it('100,000원이 넘어가는 금액의 경우 100,000원까지만 구매 가능하다고 경고창을 띄워준 뒤 입력값을 리셋시킨다.', () => {
+      const PurchageValue = '100001';
+
+      cy.get($lottoInput).type(PurchageValue);
+      cy.get($lottoButton).click();
+
+      cy.on('window:alert', (text) => {
+        expect(text).to.contains('최대 구매가능 금액은 100,000원 입니다.');
+      });
+      cy.on('window:confirm', () => true);
+      cy.get($lottoInput).should('have.value', '');
+    });
 
     it('1000원 단위로 입력하지 않고 제출하는 경우 경고창을 띄우고 입력값을 리셋시킨다.', () => {
       const PurchageValue = '1001';
@@ -73,7 +87,11 @@ describe('로또 사이트 E2E 테스트', () => {
       cy.get($numberToggleButton).should('exist');
     });
 
-    it('엔터키를 누르는 경우 확인버튼 클릭과 동일하게 작동하여야 한다.', () => {});
+    it('엔터키를 누르는 경우 확인버튼 클릭과 동일하게 작동하여야 한다.', () => {
+      cy.get($lottoInput).type(purchasePrice).type('{enter}');
+      checkText(RESULT);
+      cy.get($numberToggleButton).should('exist');
+    });
   });
 
   context(
