@@ -1,3 +1,5 @@
+import { $ } from "./utils.js";
+
 export const $showResultButton = $(".open-result-modal-button");
 export const $modalClose = $(".modal-close");
 export const $modal = $(".modal");
