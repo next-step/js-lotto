@@ -26,7 +26,7 @@ class App {
 
       $totalPurchaseMessage.innerText = `총 ${totalLottoCount}개를 구매하였습니다.`;
       lotto.issue(totalLottoCount);
-      $lottoPapers.innerHTML = getLottoPapers(totalLottoCount);
+      $lottoPapers.innerHTML = getLottoPapers();
     });
 
     $lottoNumbersToggleButton.addEventListener("click", () => {
