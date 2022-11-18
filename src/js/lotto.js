@@ -1,7 +1,7 @@
 class Lotto {
   lottos = [];
 
-  issue(number) {
+  issueLottos(number) {
     this.lottos = Array.from(Array(number), () => this.createRandomNumbers());
   }
 
