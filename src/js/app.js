@@ -7,10 +7,6 @@ const displayType = {
 };
 
 class App {
-  init() {
-    this.setEventListeners();
-  }
-
   setEventListeners() {
     const $purchaseForm = get(".purchase-form");
     const $purchaseInput = get(".purchase-input");
