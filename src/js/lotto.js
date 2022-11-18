@@ -4,13 +4,15 @@ import {
   MAX_LOTTO_PRICE,
   MIN_LOTTO_PRICE,
 } from '../constants.js';
-import { checkRandom, makeRandomNumbers } from '../utils/index.js';
+import { makeRandomNumbers } from '../utils/index.js';
 
 class Lotto {
   constructor({ $target }) {
     this.$target = $target;
     this.$resultWrapper = $target.querySelector('#purchased-result');
     this.$checkWrapper = $target.querySelector('#check-result');
+    this.$numberInput = $target.querySelector('[data-id=lotto-number-input]');
+    this.$submitButton = $target.querySelector('[data-id=lotto-submit-button]');
     this.state = {
       ...DEFAULT_LOTTO_STATE,
     };
@@ -19,33 +21,31 @@ class Lotto {
   }
 
   onConfirm() {
-    const IS_OVERPRICE = this.state.moneyAmount > MAX_LOTTO_PRICE;
-    const IS_CONFIRM =
+    const isOverPirce = this.state.moneyAmount > MAX_LOTTO_PRICE;
+    const isConfirm =
       this.state.moneyAmount >= MIN_LOTTO_PRICE &&
       this.state.moneyAmount <= MAX_LOTTO_PRICE;
-    const IS_ALERT = this.state.moneyAmount % MIN_LOTTO_PRICE !== 0;
+    const isAlert = this.state.moneyAmount % MIN_LOTTO_PRICE !== 0;
 
-    if (IS_OVERPRICE) {
+    if (isOverPirce) {
       window.alert(ALERT.OVER_MAX_VALUE);
       this.setState({ ...this.state, moneyAmount: null });
       return;
     }
 
-    if (IS_ALERT) {
+    if (isAlert) {
       window.alert(ALERT.TYPE_THOUSAND_UNIT);
       this.setState({ ...this.state, moneyAmount: null });
       return;
     }
 
-    if (IS_CONFIRM) {
-      const RANDOM_NUMBERS = checkRandom(
-        makeRandomNumbers(this.state.moneyAmount)
-      );
+    if (isConfirm) {
+      const randomNumbers = makeRandomNumbers(this.state.moneyAmount);
 
       this.setState({
         ...this.state,
         lottoPurchaseNumber: this.state.moneyAmount / MIN_LOTTO_PRICE,
-        randomNumbers: RANDOM_NUMBERS,
+        randomNumbers,
         isVisibleResult: true,
       });
     }
@@ -122,23 +122,24 @@ class Lotto {
   }
 
   renderInput() {
-    const IS_BLANK =
+    const isBlank =
       this.state.moneyAmount === 0 || this.state.moneyAmount === null;
 
-    if (IS_BLANK) {
-      this.$target.querySelector('[data-id=lotto-number-input]').value = null;
-      this.$target
-        .querySelector('[data-id=lotto-submit-button]')
-        .setAttribute('disabled', '');
+    if (isBlank) {
+      this.$numberInput.value = null;
     }
 
-    if (!IS_BLANK) {
-      this.$target.querySelector('[data-id=lotto-number-input]').value =
-        this.state.moneyAmount;
-      this.$target
-        .querySelector('[data-id=lotto-submit-button]')
-        .removeAttribute('disabled');
+    if (!isBlank) {
+      this.$numberInput.value = this.state.moneyAmount;
     }
+  }
+
+  renderButton() {
+    const isBlank =
+      this.state.moneyAmount === 0 || this.state.moneyAmount === null;
+
+    if (isBlank) this.$submitButton.setAttribute('disabled', '');
+    if (!isBlank) this.$submitButton.removeAttribute('disabled');
   }
 
   render() {
@@ -146,6 +147,7 @@ class Lotto {
     this.renderCheckResultForm();
     this.renderToggle();
     this.renderInput();
+    this.renderButton();
   }
 
   addEventListener() {

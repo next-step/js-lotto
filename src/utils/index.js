@@ -1,5 +1,16 @@
 const makeRandomNumber = () => {
-  return Array.from({ length: 6 }, () => Math.floor(Math.random() * 45 + 1));
+  let numbers = [];
+
+  while (numbers.length < 6) {
+    const set = new Set();
+    const randomNumber = Math.floor(Math.random() * 45 + 1);
+
+    if (!set.has(randomNumber)) {
+      set.add(randomNumber);
+      numbers.push(randomNumber);
+    }
+  }
+  return numbers;
 };
 
 export const makeRandomNumbers = (moneyAmount) => {
@@ -9,30 +20,36 @@ export const makeRandomNumbers = (moneyAmount) => {
   return new Array(moneyAmount / 1000).fill(0).map(makeRandomNumber);
 };
 
-export const checkRandom = (randomNumberArray) => {
+export const checkNumbersDuplidate = (randomNumberArray) => {
   if (randomNumberArray.length <= 1) return randomNumberArray;
-  //bf
-  let copy = [...randomNumberArray];
 
-  for (let i = 0; i < copy.length - 1; i++) {
-    for (let j = i + 1; j < copy.length; j++) {
-      const eachNumbersSetI = new Set(copy[i]),
-        eachNumbersSetJ = new Set(copy[j]);
+  const veirifiedLottoNumbers = randomNumberArray.map(
+    (currentRow, rowIndex) => {
+      const currentSet = new Set(currentRow);
 
-      const DUPLICATE_CONDITION =
-        copy[i].every((number1) => eachNumbersSetJ.has(number1)) &&
-        copy[j].every((number2) => eachNumbersSetI.has(number2));
+      for (
+        let start = rowIndex + 1;
+        start < randomNumberArray.length;
+        start++
+      ) {
+        const isDuplicated = randomNumberArray[start].every((currentNumber) =>
+          currentSet.has(currentNumber)
+        );
 
-      if (DUPLICATE_CONDITION) copy[i] = null;
+        if (isDuplicated) return { isDuplicated: true, numbers: currentRow };
+      }
+      return { isDuplicated: false, numbers: currentRow };
     }
-  }
+  );
 
-  copy = copy.filter((el) => Boolean(el));
+  const filteredNumbers = veirifiedLottoNumbers
+    .filter(({ isDuplicated }) => isDuplicated === false)
+    .map(({ numbers }) => numbers);
 
-  const diff = randomNumberArray.length - copy.length;
+  const diff = randomNumberArray.length - filteredNumbers.length;
 
   if (diff !== 0) {
-    const result = [...copy, ...makeRandomNumbers(diff * 1000)];
+    const result = [...filteredNumbers, ...makeRandomNumbers(diff * 1000)];
 
     return checkRandom(result);
   }
