@@ -1,4 +1,5 @@
 import { lotto } from "../../src/js/lotto";
+import { get } from "../../src/js/utils";
 
 const HTML = "../../index.html";
 
@@ -26,17 +27,14 @@ describe("로또 구입 금액을 입력하면 금액에 해당하는 로또를 
     const $purchaseInput = cy.get('[data-cy="purchaseInput"]');
     const $confirmButton = cy.get('[data-cy="confirmButton"]');
 
-    $purchaseInput.type("1001");
-    $confirmButton.click().then(() => {
+    cy.getLottos($purchaseInput, $confirmButton, 1001).then(() => {
       expect(stub.getCall(0)).to.be.calledWith(
         "로또 구입 금액을 1,000원 단위로 입력해 주세요."
       );
     });
 
     cy.delete($purchaseInput);
-
-    $purchaseInput.type("3000");
-    $confirmButton.click();
+    cy.getLottos($purchaseInput, $confirmButton, 3000);
     lotto.lottos.length === 3;
   });
 
@@ -45,12 +43,9 @@ describe("로또 구입 금액을 입력하면 금액에 해당하는 로또를 
     const $confirmButton = cy.get('[data-cy="confirmButton"]');
     const $totalPurchaseMessage = cy.get('[data-cy="totalPurchaseMessage"]');
 
-    $purchaseInput.type("4000");
-    $confirmButton
-      .click()
-      .then(() =>
-        $totalPurchaseMessage.should("have.text", "총 4개를 구매하였습니다.")
-      );
+    cy.getLottos($purchaseInput, $confirmButton, 4000).then(() =>
+      $totalPurchaseMessage.should("have.text", "총 4개를 구매하였습니다.")
+    );
 
     const lottoIcons = cy.get(".lotto-icon");
     lottoIcons.should("have.length", 4);
@@ -61,8 +56,7 @@ describe("로또 구입 금액을 입력하면 금액에 해당하는 로또를 
     const $confirmButton = cy.get('[data-cy="confirmButton"]');
     const $switch = cy.get('[data-cy="switch"]');
 
-    $purchaseInput.type("5000");
-    $confirmButton.click();
+    cy.getLottos($purchaseInput, $confirmButton, 5000);
 
     // toggle-swich on
     $switch.click();

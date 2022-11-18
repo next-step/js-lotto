@@ -28,3 +28,8 @@ Cypress.Commands.add("delete", (element) => {
   element.type("{selectAll}");
   element.type("{del}");
 });
+
+Cypress.Commands.add("getLottos", (input, button, price) => {
+  input.type(price);
+  button.click();
+});
