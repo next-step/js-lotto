@@ -15,14 +15,12 @@ class App {
     const $totalPurchaseMessage = get(".total-purchase-message");
 
     $purchaseForm.addEventListener("submit", (e) => {
-      const totalLottoCount = $purchaseInput.value / 1000;
-
       e.preventDefault();
 
-      if ($purchaseInput.value % 1000) {
-        alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
-        return;
-      }
+      if ($purchaseInput.value % 1000)
+        return alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
+
+      const totalLottoCount = $purchaseInput.value / 1000;
 
       this.initialize();
 
