@@ -33,7 +33,7 @@ describe("로또 어플리케이션의 발급 버튼을 테스트한다.", () =>
     getPurchaseButton().should("exist");
   });
 
-  it("1,000원 단위로 입력되지 않았을 경우 alert를 띄워준다.", () => {
+  it("금액을 1,000원 단위로 입력하지 않고 확인 버튼을 클릭하면 alert를 띄워준다.", () => {
     const stub = cy.stub();
     cy.on("window:alert", stub);
     getPurchaseAmountInput().type("1010");
