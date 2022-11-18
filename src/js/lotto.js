@@ -2,9 +2,7 @@ class Lotto {
   lottos = [];
 
   issue(number) {
-    for (let i = 0; i < number; i++) {
-      this.lottos.push(this.createRandomNumbers());
-    }
+    this.lottos = Array.from(Array(number), () => this.createRandomNumbers());
   }
 
   createRandomNumbers() {
