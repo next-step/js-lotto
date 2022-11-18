@@ -83,18 +83,18 @@ class Lotto {
     const ticketNumber = $$(".lotto-ticket-number");
 
     if (toggleSwitch.checked === true) {
-      ul.forEach((ele) => {
-        ele.className = "d-flex flex-wrap flex-col lotto-result";
+      ul.forEach((ul) => {
+        ul.className = "d-flex flex-wrap flex-col lotto-result";
       });
-      ticketNumber.forEach((ele) => {
-        ele.style.display = "inline";
+      ticketNumber.forEach((ticketNumber) => {
+        ticketNumber.style.display = "inline";
       });
     } else {
-      ul.forEach((ele) => {
-        ele.className = "d-flex flex-wrap lotto-result";
+      ul.forEach((ul) => {
+        ul.className = "d-flex flex-wrap lotto-result";
       });
-      ticketNumber.forEach((ele) => {
-        ele.style.display = "none";
+      ticketNumber.forEach((ticketNumber) => {
+        ticketNumber.style.display = "none";
       });
     }
   }
