@@ -21,16 +21,17 @@ class Lotto {
 }
 
 export const getLottoPapers = () => {
-  return lotto.lottos
-    .map(
-      (lotto) => `<div class="mx-1 text-4xl">
+  return lotto.lottos.reduce(
+    (prev, curr) =>
+      prev +
+      `<div class="mx-1 text-4xl">
   <span class="lotto-icon">🎟️</span>
-  <span class="lotto-numbers" style="display: none; font-size: 22px;">${lotto.join(
+  <span class="lotto-numbers" style="display: none; font-size: 22px;">${curr.join(
     ", "
   )}</span>
-</div>`
-    )
-    .join("");
+</div>`,
+    ""
+  );
 };
 
 export const lotto = new Lotto();
