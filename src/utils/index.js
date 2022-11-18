@@ -1,4 +1,4 @@
-const makeRandomNumber = () => {
+const makeLottoNumber = () => {
   let numbers = [];
 
   while (numbers.length < 6) {
@@ -13,11 +13,11 @@ const makeRandomNumber = () => {
   return numbers;
 };
 
-export const makeRandomNumbers = (moneyAmount) => {
+export const makeLottoNumbers = (moneyAmount) => {
   if (moneyAmount % 1000 !== 0)
     throw new Error('난수생성을 위해 1000원 단위로 입력되어야 합니다.');
 
-  return new Array(moneyAmount / 1000).fill(0).map(makeRandomNumber);
+  return new Array(moneyAmount / 1000).fill(0).map(makeLottoNumber);
 };
 
 export const checkNumbersDuplidate = (randomNumberArray) => {
@@ -49,9 +49,9 @@ export const checkNumbersDuplidate = (randomNumberArray) => {
   const diff = randomNumberArray.length - filteredNumbers.length;
 
   if (diff !== 0) {
-    const result = [...filteredNumbers, ...makeRandomNumbers(diff * 1000)];
+    const result = [...filteredNumbers, ...makeLottoNumbers(diff * 1000)];
 
-    return checkRandom(result);
+    return checkNumbersDuplidate(result);
   }
 
   return randomNumberArray;
