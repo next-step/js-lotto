@@ -18,9 +18,6 @@ class Lotto {
       e.preventDefault();
       this.handlePayment();
     });
-    $paymentButton.addEventListener("click", (e) => {
-      this.handlePayment();
-    });
     $lottoNumbersToggleButton.addEventListener("click", (e) => {
       this.clickLottoNumberToggleButton();
     });
