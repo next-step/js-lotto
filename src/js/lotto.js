@@ -13,7 +13,7 @@ class Lotto {
     return randomNumbers;
   }
 
-  initialize() {
+  clearLottos() {
     this.lottos = [];
   }
 }

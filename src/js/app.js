@@ -25,7 +25,7 @@ class App {
       this.initialize();
 
       $totalPurchaseMessage.innerText = `총 ${totalLottoCount}개를 구매하였습니다.`;
-      lotto.issue(totalLottoCount);
+      lotto.issueLottos(totalLottoCount);
       $lottoPapers.innerHTML = getLottoPapers();
     });
 
@@ -42,7 +42,7 @@ class App {
   initialize() {
     const $lottoNumbersToggleButton = get(".lotto-numbers-toggle-button");
 
-    lotto.initialize();
+    lotto.clearLottos();
     $lottoNumbersToggleButton.checked = false;
   }
 }
