@@ -20,35 +20,29 @@ describe("로또 구입 금액을 입력하면 금액에 해당하는 로또를 
     $purchaseInput.should("have.value", "1000");
   });
 
-  it("금액에 해당하는 로또를 발급해야 한다.", () => {
+  it("금액에 해당하는 로또를 자동으로 발급해야 한다.", () => {
     const stub = cy.stub();
     cy.on("window:alert", stub);
 
     const $purchaseInput = cy.get('[data-cy="purchaseInput"]');
     const $confirmButton = cy.get('[data-cy="confirmButton"]');
+    const $totalPurchaseMessage = cy.get('[data-cy="totalPurchaseMessage"]');
 
+    // 1001원
     cy.getLottos($purchaseInput, $confirmButton, 1001).then(() => {
       expect(stub.getCall(0)).to.be.calledWith(
         "로또 구입 금액을 1,000원 단위로 입력해 주세요."
       );
     });
 
+    // 4000원
     cy.delete($purchaseInput);
-    cy.getLottos($purchaseInput, $confirmButton, 3000);
-    lotto.lottos.length === 3;
-  });
-
-  it("소비자는 자동 구매를 할 수 있어야 한다.", () => {
-    const $purchaseInput = cy.get('[data-cy="purchaseInput"]');
-    const $confirmButton = cy.get('[data-cy="confirmButton"]');
-    const $totalPurchaseMessage = cy.get('[data-cy="totalPurchaseMessage"]');
-
     cy.getLottos($purchaseInput, $confirmButton, 4000).then(() =>
       $totalPurchaseMessage.should("have.text", "총 4개를 구매하였습니다.")
     );
 
-    const lottoIcons = cy.get(".lotto-icon");
-    lottoIcons.should("have.length", 4);
+    const $lottoIcons = cy.get(".lotto-icon");
+    $lottoIcons.should("have.length", 4);
   });
 
   it("복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.", () => {
