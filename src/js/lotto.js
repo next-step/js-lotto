@@ -1,5 +1,6 @@
 import { $, $$ } from "./utils.js";
 import { $modal, $lottoNumbersToggleButton, $paymentCost, $paymentForm, $paymentTickets } from "./DOM.js";
+import { ALERT_ONE_THOUSAND_UNIT, MAX_IN_NUMBER, MIN_IN_NUMBER, PURCHASE_AMOUNT_UNIT } from "./constants.js";
 
 class Lotto {
   constructor() {
@@ -28,8 +29,8 @@ class Lotto {
   }
 
   validatePaymentInput() {
-    if (this.paymentCostStr % 1000 !== 0) {
-      alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
+    if (this.paymentCostStr % PURCHASE_AMOUNT_UNIT !== 0) {
+      alert(ALERT_ONE_THOUSAND_UNIT);
       $paymentCost.value = "";
       return false;
     }
@@ -104,7 +105,7 @@ class Lotto {
   }
 
   lotteryIssuanceNumber() {
-    return this.paymentCostStr / 1000;
+    return this.paymentCostStr / PURCHASE_AMOUNT_UNIT;
   }
 
   makeRandomLottoNumber() {
@@ -112,7 +113,8 @@ class Lotto {
     let i = 0;
 
     while (i < 6) {
-      const randomNumber = Math.floor(Math.random() * 45 + 1);
+      const randomNumber = Math.floor(Math.random() * MAX_IN_NUMBER + MIN_IN_NUMBER);
+
       if (!isDuplicated(randomNumber)) {
         lottoNumber.push(randomNumber);
         i++;
