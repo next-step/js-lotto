@@ -1,17 +1,29 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+import App from './components/App.js';
 
-const onModalShow = () => {
-  $modal.classList.add('open')
-}
+const $app = document.querySelector('#app');
+const initialState = {
+  purchasePrice: 0,
+  ticketCount: 0,
+  tickets: [],
+  isNumberVisible: false,
+};
 
-const onModalClose = () => {
-  $modal.classList.remove('open')
-}
+new App($app, initialState || undefined);
 
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+// const $showResultButton = document.querySelector('.open-result-modal-button');
+// const $modalClose = document.querySelector('.modal-close');
+// const $modal = document.querySelector('.modal');
+// const $lottoNumbersToggleButton = document.querySelector(
+//   '.lotto-numbers-toggle-button',
+// );
+
+// const onModalShow = () => {
+//   $modal.classList.add('open');
+// };
+
+// const onModalClose = () => {
+//   $modal.classList.remove('open');
+// };
+
+// $showResultButton.addEventListener('click', onModalShow);
+// $modalClose.addEventListener('click', onModalClose);
