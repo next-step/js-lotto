@@ -3,9 +3,8 @@ import './LottoPurchaseController.js';
 import './MyLottoInputController.js';
 import { lottoStore } from './store/LottoStore.js';
 
-const lottoListRoot = document.getElementById('lotto-list');
 lottoStore.subscribe((store) => {
-  lottoListRoot.appendChild(LottoList(store.lottos));
+  LottoList(store.lottos);
 });
 
 const mt9s = Array.from(document.getElementsByClassName('mt-9'));
