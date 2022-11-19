@@ -1,10 +1,14 @@
 describe('로또 사이트 E2E 테스트', () => {
-  let $lottoInput = '[data-id=lotto-number-input]';
-  let $lottoButton = '[data-id=lotto-submit-button]';
-  let $resultSpan = '[data-id=result-text]';
-  let $numberToggleButton = '[data-id=number-toggle-button]';
-  let $lottoImage = '[data-id=lotto-image]';
-  let $lottoNumber = '[data-id=lotto-number]';
+  const $lottoInput = '[data-id=lotto-number-input]';
+  const $lottoButton = '[data-id=lotto-submit-button]';
+  const $resultSpan = '[data-id=result-text]';
+  const $numberToggleButton = '[data-id=number-toggle-button]';
+  const $lottoImage = '[data-id=lotto-image]';
+  const $lottoNumber = '[data-id=lotto-number]';
+  const $submitButton = '.open-result-modal-button';
+  const $winningNumberInput = '.winning-number';
+  const $bonusNumberInput = '.bonus-number';
+  const $investmentReturnSpan = '[data-id=investment-return]';
 
   beforeEach(() => {
     cy.visit('../../index.html');
@@ -141,23 +145,82 @@ describe('로또 사이트 E2E 테스트', () => {
   context(
     '결과 확인하기 버튼을 누르면 당첨통계, 수익률을 모달로 확인할 수 있다.',
     () => {
-      it('결과 확인하기 버튼이 존재 해야한다.');
-      it(
-        '당첨 번호를 입력할 6개의 Input과 보너스번호 입력 칸이 존재 해야한다.'
-      );
-      it(
-        '값을 모두 입력하지 않은 경우 버튼을 결과 확인하기 버튼을 비활성화 한다.'
-      );
-      it(
-        '값을 모두 입력한 경우 결과 확인하기 버튼을 클릭할때 모달창이 떠야한다.'
-      );
-      it('당첨 된 개수에 따라 모달에 개수가 표시 된다');
-      it('당첨 된 개수에 따라 모달에 수익률이 표시 된다');
+      const purchaseValue = '5000';
+      const firstPlaceWinningValue = '2000000000';
+      beforeEach(() => {
+        cy.get($lottoInput).type(purchaseValue);
+        cy.get($lottoButton).click();
+        cy.get($numberToggleButton).should('not.be.checked');
+      });
+
+      it('결과 확인하기 버튼이 존재 해야한다.', () => {
+        cy.get($submitButton).should('exist');
+      });
+      it('당첨 번호를 입력할 6개의 Input과 보너스번호 입력 칸이 존재 해야한다.', () => {
+        const winningNumberInputCount = 6,
+          bonusNumberInputCount = 1;
+        cy.get($winningNumberInput).should(
+          'have.length',
+          winningNumberInputCount
+        );
+        cy.get($bonusNumberInput).should('have.length', bonusNumberInputCount);
+      });
+
+      it('값을 모두 입력하지 않은 경우 버튼을 결과 확인하기 버튼을 비활성화 한다.', () => {
+        cy.get($winningNumberInput).each((winningNumberInput) => {
+          cy.get(winningNumberInput).clear();
+        });
+        cy.get($bonusNumberInput).clear();
+        cy.get($submitButton).should('be.disabled');
+      });
+
+      const winLottoInFirstPlace = () => {
+        cy.get($numberToggleButton).click({ force: true });
+        cy.get($lottoNumber)
+          .first()
+          .invoke('text')
+          .then((text) => {
+            const firstRowLottoNumbers = text
+              .split(' ')
+              .map((el) => el.replace(/(\r\n|\n|\r)/gm, ''))
+              .filter((el) => el !== '');
+
+            cy.get($winningNumberInput).each((eachInput, index) => {
+              cy.get(eachInput).type(firstRowLottoNumbers[index]);
+            });
+
+            cy.get($bonusNumberInput).type(firstRowLottoNumbers[0]);
+            cy.get($submitButton).should('not.be.disabled');
+            cy.get($submitButton).click();
+            cy.wait(1000);
+            cy.get('.modal').should('exist');
+          });
+      };
+
+      it('값을 모두 입력한 경우 결과 확인하기 버튼을 클릭할때 모달창이 떠야한다.', () => {
+        winLottoInFirstPlace();
+      });
+
+      it('당첨 된 개수에 따라 모달에 개수가 표시 된다', () => {
+        winLottoInFirstPlace();
+        cy.get('[data-id=win-count-six]')
+          .children()
+          .last()
+          .should('have.text', '1개');
+      });
+
+      it('당첨 된 개수에 따라 모달에 수익률이 표시 된다', () => {
+        winLottoInFirstPlace();
+        cy.get($investmentReturnSpan).should(
+          'have.text',
+          `당신의 총 수익률은 ${
+            Math.round(firstPlaceWinningValue / purchaseValue) * 100
+          } %입니다.`
+        );
+      });
     }
   );
-  // context('로또 당첨 금액은 고정되어 있는 것으로 가정한다.', () => {
-  //   it('')
-  // });
+
   context(
     '다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.',
     () => {
@@ -173,4 +236,8 @@ describe('로또 사이트 E2E 테스트', () => {
       );
     }
   );
+
+  // context('로또 당첨 금액은 고정되어 있는 것으로 가정한다.', () => {
+  //   it('')
+  // });
 });
