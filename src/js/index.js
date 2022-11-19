@@ -9,16 +9,13 @@ import {
 	$purchaseForm,
 	$purchaseInput,
 	$showResultButton,
-	$totalPurchaseMessage,
 } from "./view/elements.js";
-import {
-	lottosTemplate,
-	totalPurchaseMessageTemplate,
-} from "./view/templates.js";
+import { lottosTemplate } from "./view/templates.js";
 import {
 	onModalClose,
 	onModalShow,
 	render,
+	showTotalLottoCount,
 	toggleButtonClick,
 	turnOffToggleButton,
 } from "./view/ui.js";
@@ -38,7 +35,7 @@ const handleSumbit = (e) => {
 	initialize();
 
 	issueLottos(totalLottoCount);
-	render($totalPurchaseMessage, totalPurchaseMessageTemplate(totalLottoCount));
+	showTotalLottoCount(totalLottoCount);
 	render($lottoPapers, lottosTemplate());
 };
 

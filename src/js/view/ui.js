@@ -1,7 +1,16 @@
-import { $lottoNumbersToggleButton, $lottoPapers, $modal } from "./elements.js";
+import {
+	$lottoNumbersToggleButton,
+	$lottoPapers,
+	$modal,
+	$totalLottoCount,
+} from "./elements.js";
 
 export const render = (target, text) => {
-	target.insertAdjacentHTML("afterbegin", text);
+	target.innerHTML = text;
+};
+
+export const showTotalLottoCount = (totalLottoCount) => {
+	$totalLottoCount.innerText = totalLottoCount;
 };
 
 export const toggleButtonClick = () => {
