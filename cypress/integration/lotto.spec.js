@@ -1,3 +1,5 @@
+import { NOT_IN_THOUSANDS } from "../../src/constants/message.js";
+
 const getPurchaseAmountInput = () =>
   cy.get("[data-cy='purchase-amount-input']");
 const getPurchaseButton = () => cy.get("[data-cy='purchase-button']");
@@ -40,9 +42,7 @@ describe("로또 어플리케이션의 발급 버튼을 테스트한다.", () =>
     getPurchaseButton()
       .click()
       .then(() => {
-        expect(stub.getCall(0)).to.be.calledWith(
-          "로또 구입 금액을 1,000원 단위로 입력해 주세요."
-        );
+        expect(stub.getCall(0)).to.be.calledWith(NOT_IN_THOUSANDS);
       });
   });
 

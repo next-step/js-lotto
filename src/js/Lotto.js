@@ -1,4 +1,7 @@
 import Tickets from "./Tickets.js";
+import { NOT_IN_THOUSANDS } from "../constants/message.js";
+
+const TICKET_PRICE = 1000;
 
 class Lotto {
   constructor() {
@@ -15,8 +18,8 @@ class Lotto {
   setEvent() {
     this.$purchaseForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      if (this.purchaseAmount % 1000 !== 0) {
-        alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
+      if (this.purchaseAmount % TICKET_PRICE !== 0) {
+        alert(NOT_IN_THOUSANDS);
       } else {
         this.purchaseLotto();
       }
@@ -29,7 +32,7 @@ class Lotto {
   }
 
   purchaseLotto() {
-    const purchaseCount = this.purchaseAmount / 1000;
+    const purchaseCount = this.purchaseAmount / TICKET_PRICE;
 
     this.Tickets.renderTicketContainer(purchaseCount);
     for (let i = 0; i < purchaseCount; i++) {
