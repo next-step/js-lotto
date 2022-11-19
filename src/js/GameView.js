@@ -1,4 +1,4 @@
-class GameListView {
+class GameView {
   constructor() {
     this.$purchaseTotalCount = document.getElementById("purchase-total-count");
     this.$gameListSection = document.getElementById("game-list-section");
@@ -61,4 +61,4 @@ class GameListView {
   }
 }
 
-export default GameListView;
+export default GameView;

@@ -1,11 +1,11 @@
 import { GAME } from "./constants.js";
-import GameListView from "./GameListView.js";
+import GameView from "./GameView.js";
 
 class Game {
   #gameListView;
 
   constructor() {
-    this.#gameListView = new GameListView();
+    this.#gameListView = new GameView();
   }
 
   makeGames(count) {
