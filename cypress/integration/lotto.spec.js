@@ -63,44 +63,17 @@ describe("로또 계산기", () => {
 
   context("로또 가격에 맞지 않는 금액을 입력한다.", () => {
     it("0을 입력한다.", () => {
-      const alertStub = cy.stub();
-      cy.on("window:alert", alertStub);
-
       cy.get(purchaseAmountInput).type("0");
-      cy.get(purchaseButton)
-        .click()
-        .then(() => {
-          expect(alertStub.getCall(0)).to.be.calledWith(
-            MESSAGES.WRONG_PURCHASE_PRICE
-          );
-        });
+      cy.alertMessage(MESSAGES.WRONG_PURCHASE_PRICE);
     });
 
     it("10001을 입력한다.", () => {
-      const alertStub = cy.stub();
-      cy.on("window:alert", alertStub);
-
       cy.get(purchaseAmountInput).type("10001");
-      cy.get(purchaseButton)
-        .click()
-        .then(() => {
-          expect(alertStub.getCall(0)).to.be.calledWith(
-            MESSAGES.WRONG_PURCHASE_PRICE
-          );
-        });
+      cy.alertMessage(MESSAGES.WRONG_PURCHASE_PRICE);
     });
     it("1234를 입력한다.", () => {
-      const alertStub = cy.stub();
-      cy.on("window:alert", alertStub);
-
       cy.get(purchaseAmountInput).type("1234");
-      cy.get(purchaseButton)
-        .click()
-        .then(() => {
-          expect(alertStub.getCall(0)).to.be.calledWith(
-            MESSAGES.WRONG_PURCHASE_PRICE
-          );
-        });
+      cy.alertMessage(MESSAGES.WRONG_PURCHASE_PRICE);
     });
   });
 
