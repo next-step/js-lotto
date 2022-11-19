@@ -1,5 +1,6 @@
 import { Home } from "./components/Home.js";
 import './LottoPurchaseController.js';
+import './MyLottoInputController.js';
 
 const $showResultButton = document.querySelector('.open-result-modal-button')
 const $modalClose = document.querySelector('.modal-close')
