@@ -2,15 +2,15 @@ import { GAME } from "./constants.js";
 import GameView from "./GameView.js";
 
 class Game {
-  #gameListView;
+  #gameView;
 
   constructor() {
-    this.#gameListView = new GameView();
+    this.#gameView = new GameView();
   }
 
   makeGames(count) {
     const games = this.onGenerateGamesBy(count);
-    this.#gameListView.render(games);
+    this.#gameView.render(games);
   }
 
   onGenerateGamesBy(count) {
