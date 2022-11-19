@@ -6,6 +6,7 @@ export function createStore(initStore, reducer) {
   const subscribeList = [];
 
   return {
+    store,
     // 해당 store를 구독하는 list들
     subscribe: (subscriber) => {
       if (typeof subscriber !== 'function') throw new Error('you can subscribe store with function only');
