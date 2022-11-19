@@ -19,15 +19,17 @@ import { getLottoResults, getMyEarningRate, getMyPrizeAmount } from '../util/Lot
 
 let tickets = [];
 
+const getNumbers = (arr = []) => arr.map(Number);
+
 const isEmptyNumberFields = (inputNumbers = []) => {
   return inputNumbers.some((s) => s === '');
 };
 
-const validateNumbers = (inputWinningNumbers = []) => {
-  if (isEmptyNumberFields(inputWinningNumbers)) {
+const validateNumbers = (inputNumbers = []) => {
+  if (isEmptyNumberFields(inputNumbers)) {
     throw new Error(MESSAGE.INVALID_WINNING_MODAL);
   }
-  const winningNumbers = inputWinningNumbers.map((s) => parseInt(s)).slice(0, 6);
+  const winningNumbers = getNumbers(inputWinningNumbers).slice(0, 6);
   if (!isUniqueNumbers(winningNumbers)) {
     throw new Error(MESSAGE.INVALID_WINNING_NUMBER_DUPLICATED);
   }
@@ -36,30 +38,35 @@ const validateNumbers = (inputWinningNumbers = []) => {
   }
 };
 
+const getMyLottoResult = () => {
+  const inputWinningNumbers = Array.from($winningNumbers).map(($number) => $number.value);
+  const inputBonusNumber = $bonusNumber.value;
+  validateNumbers([...inputWinningNumbers, inputBonusNumber]);
+
+  const winningNumbers = getNumbers(inputWinningNumbers);
+  const bonusNumber = parseInt(inputBonusNumber);
+  return getLottoResults(tickets, winningNumbers, bonusNumber);
+};
+
+const updateLottoResult = (lottoResult) => {
+  // 모듈 글자 렌더링하기
+  const getSelector = (selectorName) => `${selectorName} > td.p-3:last-child`;
+  const updateText = (selector, text) => (document.querySelector(selector).innerText = text);
+
+  const keys = Object.keys(lottoResult);
+  for (const key of keys) {
+    const selector = getSelector(modalResultTr[key]);
+    updateText(selector, lottoResult[key] + '개');
+  }
+
+  // 수익률 계산하기
+  $earningRate.innerText = getMyEarningRate(tickets.length * TICKET_PRICE, getMyPrizeAmount(lottoResult)) + '%';
+};
+
 // TODO: modalShow에서 너무 많은 일을 하고 있음
 const onModalShow = () => {
   try {
-    // 모달 띄우기 전 유효성 검사 (TODO: 역할 분리)
-    const inputWinningNumbers = Array.from($winningNumbers).map(($number) => $number.value);
-    const inputBonusNumber = $bonusNumber.value;
-
-    validateNumbers([...inputWinningNumbers, inputBonusNumber]);
-
-    const winningNumbers = inputWinningNumbers.map((s) => parseInt(s));
-    const bonusNumber = parseInt(inputBonusNumber);
-    const lottoResult = getLottoResults(tickets, winningNumbers, bonusNumber);
-
-    // 모듈 글자 렌더링하기
-    const keys = Object.keys(lottoResult);
-    for (const key of keys) {
-      const selector = `${modalResultTr[key]} > td.p-3:last-child`;
-      document.querySelector(selector).innerText = lottoResult[key] + '개';
-    }
-
-    // 수익률 계산하기
-    $earningRate.innerText = getMyEarningRate(tickets.length * TICKET_PRICE, getMyPrizeAmount(lottoResult)) + '%';
-
-    // 모듈 띄우기 (본 역할)
+    updateLottoResult(getMyLottoResult());
     $modal.classList.add('open');
   } catch (error) {
     alert(error.message);
