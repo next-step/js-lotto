@@ -1,4 +1,4 @@
-import { getRandomLottoNumbers } from "./utils.js";
+import { getNumberFilledArray, shuffleArray } from "./utils.js";
 
 class Tickets {
   constructor() {
@@ -20,8 +20,12 @@ class Tickets {
     this.$purchasedTicketContainer.innerHTML = "";
   }
 
+  getRandomLottoNumbers() {
+    return shuffleArray(getNumberFilledArray(45)).slice(0, 6).join(", ");
+  }
+
   renderTicket() {
-    const randomLottoNumbers = getRandomLottoNumbers();
+    const randomLottoNumbers = this.getRandomLottoNumbers();
 
     this.$purchaseResult.style.display = "block";
     this.$purchasedTicketContainer.insertAdjacentHTML(
