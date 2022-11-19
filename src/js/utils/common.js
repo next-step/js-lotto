@@ -1,6 +1,6 @@
 import { LOTTO } from './constants.js';
 
-const purchaseLotto = (amount) => {
+const getTicketCount = (amount) => {
   return amount / LOTTO.PRICE_UNIT;
 };
 
@@ -17,4 +17,4 @@ const getLottoNumbers = () => {
   return lottoNumbers;
 };
 
-export { purchaseLotto, getLottoNumbers };
+export { getTicketCount, getLottoNumbers };

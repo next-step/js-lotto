@@ -1,7 +1,7 @@
-const $purchaseInput = '[data-cy="purchase-amount"]';
+const $purchaseInputSelector = '[data-cy="purchase-amount"]';
 
 Cypress.Commands.add('purchaseLotto', (amount) => {
-    const purchaseInputTag = cy.get($purchaseInput);
+    const purchaseInputTag = cy.get($purchaseInputSelector);
     purchaseInputTag.type(amount);
     cy.get('#input-price-form').submit();
 })

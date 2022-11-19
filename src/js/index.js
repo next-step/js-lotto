@@ -1,5 +1,5 @@
 import { isValidateAmount } from './utils/validator.js';
-import { purchaseLotto, getLottoNumbers } from './utils/common.js';
+import { getTicketCount, getLottoNumbers } from './utils/common.js';
 import { ERROR_MSSAGE, SELECTOR } from './utils/constants.js';
 import { $ } from './utils/dom.js';
 
@@ -10,7 +10,6 @@ const $modal = document.querySelector('.modal');
 const $lottoNumbersToggleButton = document.querySelector(
   '.lotto-numbers-toggle-button'
 );
-const $purchaseInput = document.querySelector('.purchase-amount');
 const $purchasedLottos = document.querySelector('#purchased-lottos');
 const $inputLottoNums = document.querySelector('#input-lotto-nums');
 const $totalPurchased = document.querySelector('#total-purchased');
@@ -24,7 +23,7 @@ const onModalClose = () => {
   $modal.classList.remove('open');
 };
 
-const clear = () => {
+const clearLottoImages = () => {
   while ($lottoImages.firstChild) {
     $lottoImages.removeChild($lottoImages.firstChild);
   }
@@ -39,9 +38,9 @@ const onPurchaseLotto = (event) => {
     alert(ERROR_MSSAGE.AMOUNT);
     return;
   }
-  clear();
+  clearLottoImages();
 
-  const ticketCount = purchaseLotto(purchaseAmount);
+  const ticketCount = getTicketCount(purchaseAmount);
   $totalPurchased.textContent = ticketCount;
 
   for (let count = 0; count < ticketCount; count++) {
