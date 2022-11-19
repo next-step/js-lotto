@@ -1,3 +1,5 @@
+import { lottoStore } from './store/LottoStore.js';
+
 // 여기서 구입할 금액 입력 담당
 
 const lottoPurchaseContainer = document.getElementById('lotto-purchase');
@@ -18,6 +20,17 @@ lottoPurchaseContainer.addEventListener('submit', (e) => {
     return;
   }
 
+  // 1000 갯수에 따라 로또 반복 생성
+  // 6개의 숫자는 랜덤으로 생성한다.
+  const purchaseLottoCount = Math.floor( Number(inputVal) / 1000);
+  const lottos = createLotto(purchaseLottoCount);
+console.log(lottos)
   // 전역 state를 갱신해야 함.
-  debugger;
+  lottoStore.dispatch('update', lottos);
 })
+
+function createLotto(count) {
+  const lottos = new Array(count).fill(null).map(() => 0);
+
+  return lottos;
+}

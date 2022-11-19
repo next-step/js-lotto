@@ -1,4 +1,4 @@
-import { createStore } from '../core/Store';
+import { createStore } from '../core/Store.js';
 
 // 기본적인 default store의 형태
 const initStore = {
@@ -9,8 +9,9 @@ const reducer = (actionType, payload, store) => {
   const newStore = { ...store };
   // store를 변환시킨 뒤 return한다.
   switch (actionType) {
-    case ('create'): {
+    case ('update'): {
       newStore.lottos = payload;
+      break;
     }
     default: {
       newStore.lottos = [];
