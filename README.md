@@ -11,6 +11,36 @@
   <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square"/>
 </p>
 
+# TODO
+
+[] 로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.
+[] 로또 1장의 가격은 1,000원이다.
+[] 소비자는 자동 구매를 할 수 있어야 한다.
+[] 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.
+[] 위 기능들이 정상적으로 동작하는지 Cypress를 이용해 테스트한다.
+
+# 설계
+
+전체적으로 Model -> View로 가는 중간에 로직을 넣어 가공하는 형태로 가져간다. = 컴포넌트
+
+## V (컴포넌트)
+
+DOM과 맞닿는 View에 대한 설계.
+
+- 여러 DOM을 담는다. (객체하나가 DOM과 동일해야한다.)
+- 다른 View를 자식으로 가질 수 있다.
+- 기본적으로 Model을 구독한다. (어떤 Model을 구독할지는 이곳에서 정할 수 있다.)
+- 로직에 따라서 동적으로 생성 및 삭제가 가능해야 한다.
+- 내가 원하는 (controller)코드를 넣을 수 있어야 한다. (템플릿 메소드를 통한 라이프사이클)
+- mounted, unmounted는 아마 알 수 없을 것이다.
+
+## M
+
+State model에 관한 Model에 관한 설명.
+
+- observer 패턴으로 변화가 있을 시에, 구독하고 있는 것들에 알려줘야한다.
+- 변화는 특정 메소드 혹은 함수를 통해서만 가능하다. -> 이번엔 Proxy 객체를 사용해서 MobX 스타일로 구현.
+
 <p align="middle">
   <a href="https://next-step.github.io/js-lotto">🖥️ 데모 링크</a>
 </p>
