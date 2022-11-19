@@ -1,7 +1,7 @@
 {
   "name": "lotto",
   "version": "1.0.0",
-  "main": "index.html",
+  "main": "index.js",
   "license": "MIT",
   "description": "TDD, 클린 코드 with JavaScript 4기 - 로또 미션",
   "scripts": {

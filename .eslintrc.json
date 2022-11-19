@@ -8,8 +8,6 @@
         "eslint:recommended",
         "plugin:cypress/recommended"
     ],
-    "overrides": [
-    ],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
@@ -53,7 +51,8 @@
         "import/extensions": "off",
         "import/no-unresolved": "off",
         "class-methods-use-this": "off",
-        "import/no-extraneous-dependencies": ["error",
+        "import/no-extraneous-dependencies": [
+            "error",
             {
                 "devDependencies": true
             }
