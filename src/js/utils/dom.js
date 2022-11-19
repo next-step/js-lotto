@@ -1,4 +1,4 @@
-const $ = (selctor) => document.querySelector(selctor);
-const $$ = (selector) => document.querySelectorAll(selector);
+const $ = (selctor, el = document) => el.querySelector(selctor);
+const $all = (selector, el = document) => el.querySelectorAll(selector);
 
-export { $, $$ };
+export { $, $all };
