@@ -32,7 +32,8 @@ const clearLottoImages = () => {
 const onPurchaseLotto = (event) => {
   event.preventDefault();
 
-  const purchaseAmount = $(SELECTOR.PURCHASE_INPUT).value;
+  const formData = new FormData(event.target);
+  const purchaseAmount = formData.get("purchase-amount")
 
   if (!isValidateAmount(purchaseAmount)) {
     alert(ERROR_MSSAGE.AMOUNT);
