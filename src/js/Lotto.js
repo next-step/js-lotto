@@ -1,4 +1,4 @@
-import Result from "./Result.js";
+import PurchaseResult from "./PurchaseResult.js";
 import { NOT_IN_THOUSANDS } from "../constants/message.js";
 
 const TICKET_PRICE = 1000;
@@ -12,7 +12,7 @@ class Lotto {
       "#purchase-amount-input"
     );
 
-    this.Result = new Result();
+    this.PurchaseResult = new PurchaseResult();
   }
 
   setEvent() {
@@ -28,12 +28,12 @@ class Lotto {
       this.purchaseAmount = event.target.value;
     });
 
-    this.Result.setEvent();
+    this.PurchaseResult.setEvent();
   }
 
   purchaseLotto() {
     const purchaseCount = this.purchaseAmount / TICKET_PRICE;
-    this.Result.renderResult(purchaseCount);
+    this.PurchaseResult.render(purchaseCount);
   }
 }
 
