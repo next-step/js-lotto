@@ -1,7 +1,10 @@
-export function createElement(elementType, { onClick, children }) {
+export function createElement(elementType, { onClick, className, children = [] }) {
   const newElement = document.createElement(elementType);
   onClick && newElement.addEventListener('click', onClick);
-  children && newElement.appendChild(children);
+  if (className) { newElement.className = className; }
+  if (children && children.length > 0) {
+    newElement.append(...children);
+  }
 
   return newElement;
 }
