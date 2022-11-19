@@ -9,12 +9,12 @@ import { NUMBER_DICTIONARY } from './Constant.js';
  * @property {number} bonus
  */
 
-const getMyHit = (ticket, winningNumbers, bonusNumber) => {
+const getMyHit = (lotto, winningNumbers, bonusNumber) => {
   const winningSet = new Set([...winningNumbers, bonusNumber]);
 
   let hit = 0;
   let bonusHit = 0;
-  for (const number of ticket) {
+  for (const number of lotto) {
     if (winningSet.has(number)) {
       hit += 1;
       continue;
@@ -27,11 +27,12 @@ const getMyHit = (ticket, winningNumbers, bonusNumber) => {
 };
 
 /** @type {LottoResult} */
-export const getLottoResults = (tickets, winningNumbers = [], bonusNumber) => {
+export const getLottoResults = (lottos, winningNumbers = [], bonusNumber) => {
   const result = { three: 0, four: 0, five: 0, six: 0, bonus: 0 }; // bouns: 5+bonus
   const isBonusHit = (hit, bonusHit) => hit === 5 && bonusHit === 1;
-  for (const ticket of tickets) {
-    const [hitCount, bonusHitCount] = getMyHit(ticket, winningNumbers, bonusNumber);
+
+  for (const lotto of lottos) {
+    const [hitCount, bonusHitCount] = getMyHit(lotto, winningNumbers, bonusNumber);
     if (hitCount < 3) continue;
     if (isBonusHit(hitCount, bonusHitCount)) {
       result.bonus += 1;
@@ -43,7 +44,7 @@ export const getLottoResults = (tickets, winningNumbers = [], bonusNumber) => {
 };
 
 export const getMyPrizeAmount = (lottoResult = { three: 0, four: 0, five: 0, six: 0, bonus: 0 }) => {
-  const prize = { three: 5000, four: 50000, five: 1500000, six: 2000000000, bonus: 30000000 };
+  const prize = { three: 5_000, four: 50_000, five: 1_500_000, six: 2_000_000_000, bonus: 30_000_000 };
   let sum = 0;
   for (const key of Object.keys(lottoResult)) {
     const value = lottoResult[key];
