@@ -55,7 +55,6 @@ export const getMyPrizeAmount = (lottoResult = { three: 0, four: 0, five: 0, six
 };
 
 export const getMyEarningRate = (purchasingAmount = 0, pirzeMoney = 0) => {
-  console.log(purchasingAmount, pirzeMoney);
   if (pirzeMoney - purchasingAmount <= 0) {
     return -1 * 100;
   }

@@ -1,3 +1,5 @@
+import { $resultAreas } from './Selector.js';
+
 // 당첨결과 모달 영역
 export const MODAL_RESULT_TR = {
   three: '.tr-3-hit',
@@ -9,3 +11,7 @@ export const MODAL_RESULT_TR = {
 
 // 당첨결과 확인 영역
 export const MODAL_RESULT_TR_COLUMN = '.p-3';
+
+export function toggleResultAreas() {
+  $resultAreas.forEach(($el) => $el.classList.toggle('hidden'));
+}
