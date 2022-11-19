@@ -22,7 +22,7 @@ class SlotMachine {
     event.preventDefault();
 
     const purchasePrice = this.$purchaseAmountInput.value;
-    if (this.isUnavailablePurchasePrice(purchasePrice)) {
+    if (this.isUnavailablePurchasePrice(+purchasePrice)) {
       window.alert(MESSAGES.WRONG_PURCHASE_PRICE);
       return;
     }
@@ -36,8 +36,7 @@ class SlotMachine {
   }
 
   isUnavailablePurchasePrice(purchasePrice) {
-    // 왜 0은 문자로 인식하는거지?
-    return purchasePrice === "0" || purchasePrice % 1000 !== 0;
+    return purchasePrice === 0 || purchasePrice % 1000 !== 0;
   }
 }
 
