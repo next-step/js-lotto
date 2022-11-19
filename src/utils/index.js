@@ -1,16 +1,16 @@
+const makeRandomNumber = (minValue = 1, maxValue = 45) => {
+  return Math.floor(Math.random() * maxValue + minValue);
+};
+
 const makeLottoNumber = () => {
-  let numbers = [];
+  const MAX_LOTTO_COUNT = 6;
+  const numberSet = new Set();
+  while (numberSet.size < MAX_LOTTO_COUNT) {
+    const randomNumber = makeRandomNumber();
 
-  while (numbers.length < 6) {
-    const set = new Set();
-    const randomNumber = Math.floor(Math.random() * 45 + 1);
-
-    if (!set.has(randomNumber)) {
-      set.add(randomNumber);
-      numbers.push(randomNumber);
-    }
+    if (!numberSet.has(randomNumber)) numberSet.add(randomNumber);
   }
-  return numbers;
+  return [...numberSet];
 };
 
 export const makeLottoNumbers = (moneyAmount) => {

@@ -4,7 +4,7 @@ import {
   MAX_LOTTO_PRICE,
   MIN_LOTTO_PRICE,
 } from '../constants.js';
-import { makeRandomNumbers } from '../utils/index.js';
+import { makeLottoNumbers } from '../utils/index.js';
 
 class Lotto {
   constructor({ $target }) {
@@ -40,7 +40,7 @@ class Lotto {
     }
 
     if (isConfirm) {
-      const randomNumbers = makeRandomNumbers(this.state.moneyAmount);
+      const randomNumbers = makeLottoNumbers(this.state.moneyAmount);
 
       this.setState({
         ...this.state,
