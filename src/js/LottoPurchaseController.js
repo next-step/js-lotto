@@ -30,7 +30,7 @@ console.log(lottos)
 })
 
 function createLotto(count) {
-  const lottos = new Array(count).fill(null).map(() => 0);
+  const lottos = new Array(count).fill(null).map(() => new Array(6).fill(null).map(() => 0));
 
   return lottos;
 }
