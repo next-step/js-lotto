@@ -1,1 +1,5 @@
-export const getNumbers = (arr = []) => arr.map(Number);
+/**
+ * @type {number[]}
+ * @param {string[]} array
+ */
+export const getNumbers = (array = []) => array.map(Number);

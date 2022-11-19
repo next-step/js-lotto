@@ -5,6 +5,9 @@ import { setLottos } from './Lotto.js';
 import { getMyLottoResult, updateLottoResult } from './LottoResult.js';
 import { $modal, $purchasingAmountInput } from './Selector.js';
 
+/**
+ * @param {number[]} lottos
+ */
 export const onModalShow = (lottos = []) => {
   try {
     updateLottoResult(lottos, getMyLottoResult(lottos));

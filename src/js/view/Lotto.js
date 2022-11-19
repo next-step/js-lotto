@@ -1,5 +1,8 @@
 import { LOTTO_ICON } from '../util/Constant.js';
 
+/**
+ * @param {number[]} lottos
+ */
 export function setLottos(lottos = []) {
   const $lottoItems = lottos.map((lotto) => getLottoItem(lotto));
   const $lottoList = getLottoList($lottoItems);
@@ -9,6 +12,10 @@ export function setLottos(lottos = []) {
   document.querySelector('.purchasing-status').innerText = `총 ${lottos.length}개를 구매하였습니다.`;
 }
 
+/**
+ * @param {HTMLElement} $lottoItems
+ * @returns {HTMLElement}
+ */
 export function getLottoList($lottoItems = []) {
   const $lottoList = document.createElement('ul');
   $lottoList.classList.add('d-flex', 'flex-wrap');
@@ -17,6 +24,10 @@ export function getLottoList($lottoItems = []) {
   return $lottoList;
 }
 
+/**
+ * @param {number[]} lottos
+ * @returns {HTMLElement}
+ */
 export function getLottoItem(lotto = []) {
   const $lottoItem = document.createElement('li');
   $lottoItem.innerHTML = `
