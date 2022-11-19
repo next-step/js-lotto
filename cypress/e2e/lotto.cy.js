@@ -34,8 +34,8 @@ describe("로또 구입 금액을 입력하면 금액에 해당하는 로또를 
 		// 4000원
 		cy.delete($purchaseInput);
 		cy.getLottos($purchaseInput, $confirmButton, 4000).then(() => {
-			const $totalPurchaseMessage = cy.get('[data-cy="totalPurchaseMessage"]');
-			$totalPurchaseMessage.should("have.text", "총 4개가 발급되었습니다.");
+			const $totalLottoCount = cy.get('[data-cy="totalLottoCount"]');
+			$totalLottoCount.should("have.text", 4);
 		});
 
 		const $lottoIcons = cy.get(".lotto-icon");
