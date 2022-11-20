@@ -1,4 +1,4 @@
-import { MESSAGE } from './Constant.js';
+import { MESSAGE } from '../util/Constant.js';
 
 /**
  * @param {number} purchasingAmount

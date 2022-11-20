@@ -1,4 +1,4 @@
-import { buy } from '../util/LottoBuyer.js';
+import { buy } from '../service/LottoBuyer.js';
 import { validatePurchasingAmount } from '../util/Validator.js';
 import { setVisibleResultAreas } from './Element.js';
 import { setLottos } from './Lotto.js';
@@ -8,7 +8,7 @@ import { $modal, $purchasingAmountInput } from './Selector.js';
 /**
  * @param {number[]} lottos
  */
-export const onModalShow = (lottos = []) => {
+export const onModalShow = (lottos) => {
   try {
     updateLottoResult(lottos, getMyLottoResult(lottos));
     $modal.classList.add('open');
