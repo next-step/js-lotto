@@ -20,7 +20,7 @@ function Lotto(numbers, isNumberShow) {
   const ticket = createElement('span', { className: 'lotto-icon', children: [createTextNode('🎟️ ')] });
 
   const showClassName = isNumberShow ? '' : 'none';
-  const lottoNumbers = createElement('span', { className: `lotto-detail ${showClassName}`, children: [createTextNode(numbers.join(', '))] });
+  const lottoNumbers = createElement('span', { className: `text-xl ml-4 ${showClassName}`, children: [createTextNode(numbers.join(', '))] });
 
-  return createElement('li', { className: 'mx-1 text-4xl lotto-wrapper', children: [ticket, lottoNumbers] });
+  return createElement('li', { className: 'mx-1 text-4xl d-flex items-center', children: [ticket, lottoNumbers] });
 }
