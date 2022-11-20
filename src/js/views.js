@@ -1,5 +1,7 @@
 const $purchasedLottoList = document.querySelector('#purchasedLottoList');
 const $winningNumberInputs = document.querySelector('#winningNumberInputs');
+const $lottoIconList = document.querySelector('#lottoIconList');
+const $totalQuantity = document.querySelector('#totalQuantity');
 const $modal = document.querySelector('.modal');
 
 const displayDetails = (quantity) => {
@@ -20,4 +22,52 @@ const closeModal = () => {
   $modal.classList.remove('open');
 };
 
-export { displayDetails, openModal, closeModal };
+const handleToggle = (lottoState) => {
+  const $lottoNumbers = document.querySelectorAll('.lotto-numbers');
+  if (!lottoState.isOpen) {
+    $lottoIconList.style.flexDirection = 'column';
+    $lottoNumbers.forEach((el) => {
+      el.style.display = 'inline';
+    });
+    lottoState.setIsOpen(true);
+    return;
+  }
+  $lottoIconList.style.flexDirection = 'row';
+  $lottoNumbers.forEach((el) => {
+    el.style.display = 'none';
+  });
+  lottoState.setIsOpen(false);
+};
+
+const renderLottoIcons = (lottoState) => {
+  if (!lottoState.quantity || !lottoState.lottos.length) return;
+  $lottoIconList.innerHTML = lottoState.lottos
+    .map((lotto) => {
+      return `
+    <li class="mx-1 text-4xl d-flex">
+      <div class="lotto-item">🎟️</div>
+      <div class="lotto-numbers">
+        ${lotto.winningNumbers.join(', ')}
+      </div>
+    </li>`;
+    })
+    .join('');
+};
+
+const resetLottoIcons = () => {
+  $lottoIconList.innerHTML = '';
+};
+
+const renderTotalQuantity = (quantity) => {
+  $totalQuantity.innerText = quantity;
+};
+
+export {
+  displayDetails,
+  openModal,
+  closeModal,
+  handleToggle,
+  renderLottoIcons,
+  renderTotalQuantity,
+  resetLottoIcons,
+};

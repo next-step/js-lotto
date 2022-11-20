@@ -146,11 +146,17 @@ describe('로또 어플리케이션 단계1', () => {
       });
     });
 
-    it('자동구매된 로또는 서로 같지 않아야 한다.', () => {
+    it('isAlreayExist 함수에 서로 값이 똑같은 배열을 넘기면 true를 반환한다.', () => {
       const arrayA = [1, 2, 3, 4, 5, 6];
-      const arrayB = [2, 4, 1, 3, 6, 5];
+      const arrayB = [1, 2, 3, 4, 5, 6];
       const result = isAlreadyExist([arrayA, arrayB]);
       expect(result).to.be.true;
+    });
+    it('isAlreayExist 함수에 서로 중복되지 않은 배열을 넘기면 false를 반환한다.', () => {
+      const arrayA = [1, 2, 3, 4, 5, 6];
+      const arrayB = [4, 5, 7, 9, 11, 12];
+      const result = isAlreadyExist([arrayA, arrayB]);
+      expect(result).to.be.false;
     });
   });
 });

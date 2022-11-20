@@ -1,4 +1,4 @@
-import { LOTTO_LENGTH, LOTTO_PURCHASE_UNIT } from './constants.js';
+import { LOTTO_PURCHASE_UNIT } from './constants.js';
 
 const isValidForNoAmount = (inputValue) => {
   return !!inputValue;
@@ -20,16 +20,23 @@ const isValidForExactAmount = (inputValue) => {
 // };
 
 const isAlreadyExist = (lottos) => {
-  let flag = false;
-  for (let i = 0; i < lottos.length - 1; i++) {
-    for (let j = i + 1; j < lottos.length; j++) {
-      const tempSet = new Set([...lottos[i], ...lottos[j]]);
-      if (tempSet.size === LOTTO_LENGTH) {
-        flag = true;
-      }
-    }
-  }
-  return flag;
+  const originLength = lottos.length;
+  const setLength = new Set(lottos.map((lotto) => lotto.join(','))).size;
+  return originLength !== setLength;
 };
+
+// 리뷰 전 코드...
+// const isAlreadyExist = (lottos) => {
+//   let flag = false;
+//   for (let i = 0; i < lottos.length - 1; i++) {
+//     for (let j = i + 1; j < lottos.length; j++) {
+//       const tempSet = new Set([...lottos[i], ...lottos[j]]);
+//       if (tempSet.size === 6) {
+//         flag = true;
+//       }
+//     }
+//   }
+//   return flag;
+// };
 
 export { isValidForNoAmount, isValidForExactAmount, isAlreadyExist };

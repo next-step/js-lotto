@@ -1,9 +1,10 @@
 import { LOTTO_LENGTH, LOTTO_NUMBER_RANGE_MAX, LOTTO_NUMBER_RANGE_MIN } from './constants.js';
 
+const lottoNumbers = Array.from({ length: LOTTO_NUMBER_RANGE_MAX }).map(
+  (_, i) => i + LOTTO_NUMBER_RANGE_MIN
+);
+
 const generateLottoNumbers = () => {
-  const lottoNumbers = Array.from({ length: LOTTO_NUMBER_RANGE_MAX }).map(
-    (_, i) => i + LOTTO_NUMBER_RANGE_MIN
-  );
   return lottoNumbers
     .sort(() => Math.random() - 0.5)
     .slice(0, LOTTO_LENGTH)

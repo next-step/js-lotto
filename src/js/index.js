@@ -1,49 +1,32 @@
-import { isValidForNoAmount, isValidForExactAmount, isAlreadyExist } from './validators.js';
-import LottoModel from './lotto.js';
-import { generateLottoNumbers } from './generateLottos.js';
+import { isValidForNoAmount, isValidForExactAmount } from './validators.js';
+import LottoModel from './models/LottoTicket.js';
 import {
   MESSAGE_FOR_EMPTY_VALUE,
   MESSAGE_FOR_INVALID_UNIT_VALUE,
   LOTTO_PURCHASE_UNIT,
 } from './constants.js';
-import { closeModal, displayDetails, openModal } from './views.js';
+import {
+  closeModal,
+  displayDetails,
+  openModal,
+  handleToggle,
+  renderLottoIcons,
+  renderTotalQuantity,
+  resetLottoIcons,
+} from './views.js';
 import {
   addLottoToggleButtonClickEventListener,
   addPurchaseButtonClickEventListener,
   addResultButtonClickEventListener,
   addModalCloseClickEventListener,
 } from './eventListeners.js';
+import LottoStateModel from './models/LottoState.js';
 
-const $purchaseAmountInput = document.querySelector('#purchaseAmount');
-const $totalQuantity = document.querySelector('#totalQuantity');
-const $lottoIconList = document.querySelector('#lottoIconList');
-
-const lottoState = {
-  purchasedAmount: 0,
-  quantity: 0,
-  lottos: [],
-  isOpen: false,
-};
-
-const handleToggleButton = () => {
-  const $lottoNumbers = document.querySelectorAll('.lotto-numbers');
-  if (!lottoState.isOpen) {
-    $lottoIconList.style.flexDirection = 'column';
-    $lottoNumbers.forEach((el) => {
-      el.style.display = 'inline';
-    });
-    lottoState.isOpen = true;
-    return;
-  }
-  $lottoIconList.style.flexDirection = 'row';
-  $lottoNumbers.forEach((el) => {
-    el.style.display = 'none';
-  });
-  lottoState.isOpen = false;
-};
+const lottoState = new LottoStateModel();
 
 const handlePurchaseButton = (e) => {
   e.preventDefault();
+  const $purchaseAmountInput = document.querySelector('#purchaseAmount');
   const purchasedAmount = $purchaseAmountInput.value;
   if (!isValidForNoAmount(purchasedAmount)) {
     alert(MESSAGE_FOR_EMPTY_VALUE);
@@ -54,53 +37,21 @@ const handlePurchaseButton = (e) => {
     return;
   }
   initPurchaseLotto();
-  lottoState.purchasedAmount = purchasedAmount;
-  lottoState.quantity = Number(purchasedAmount) / LOTTO_PURCHASE_UNIT;
+  lottoState.setPurchasedAmount(+purchasedAmount);
+  lottoState.setQuantity(Number(purchasedAmount) / LOTTO_PURCHASE_UNIT);
   displayDetails(lottoState.quantity);
-  $totalQuantity.innerText = lottoState.quantity;
+  renderTotalQuantity(lottoState.quantity);
   generateLottos(lottoState.quantity);
-  renderLottoIcons();
+  renderLottoIcons(lottoState);
 };
 
 const generateLottos = (quantity) => {
   for (let i = 0; i < quantity; i++) {
-    let hasNoSameLotto = true;
-    let generatedNumbers;
-    const lottoNumbers = lottoState.lottos.map((lotto) => lotto.winningNumbers);
-    generatedNumbers = generateLottoNumbers();
-
-    while (hasNoSameLotto) {
-      if (!isAlreadyExist(lottoNumbers.concat([generatedNumbers]))) {
-        hasNoSameLotto = false;
-      } else {
-        generatedNumbers = generateLottoNumbers();
-      }
-    }
-
-    const lotto = new LottoModel(generatedNumbers);
+    const lottoNumbers = lottoState.getLottoNumbers();
+    const lotto = new LottoModel();
+    lotto.generate(lottoNumbers);
     lottoState.lottos.push(lotto);
   }
-};
-
-const renderLottoIcons = () => {
-  if (!lottoState.quantity || !lottoState.lottos.length) return;
-  lottoState.lottos.forEach((lotto) => {
-    const $li = document.createElement('li');
-    $li.className = 'mx-1 text-4xl';
-    $li.style.display = 'flex';
-
-    const $icon = document.createElement('div');
-    $icon.className = 'lotto-item';
-    $icon.innerText = `🎟️`;
-    $li.appendChild($icon);
-
-    const $lottoNumbers = document.createElement('div');
-    $lottoNumbers.className = 'lotto-numbers';
-    $lottoNumbers.style.display = 'none';
-    $lottoNumbers.innerText = `${lotto.winningNumbers.join(', ')}`;
-    $li.appendChild($lottoNumbers);
-    $lottoIconList.appendChild($li);
-  });
 };
 
 const handleModalOpen = () => {
@@ -111,18 +62,12 @@ const handleModalClose = () => {
   closeModal();
 };
 
-const resetDatas = () => {
-  lottoState.purchasedAmount = 0;
-  lottoState.quantity = 0;
-  lottoState.lottos = [];
-};
-
-const resetLottoIcons = () => {
-  $lottoIconList.innerHTML = '';
+const handleToggleButton = () => {
+  handleToggle(lottoState);
 };
 
 const initPurchaseLotto = () => {
-  resetDatas();
+  lottoState.initLottoState();
   resetLottoIcons();
 };
 
