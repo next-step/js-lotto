@@ -4,6 +4,8 @@ export const DEFAULT_LOTTO_STATE = {
   lottoPurchaseNumber: 0,
   isVisibleResult: false,
   isToggle: false,
+  isVisibleModal: false,
+  winningNumbers: Array.from({ length: 7 }, (value, index) => null),
 };
 
 export const MIN_LOTTO_PRICE = 1000;

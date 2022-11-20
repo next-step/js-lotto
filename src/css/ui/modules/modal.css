@@ -28,16 +28,22 @@
 }
 
 .modal-close {
-  margin: 20px;
-  width: 20px;
   position: absolute;
   right: 10px;
   top: 10px;
+  width: fit-content;
+  height: fit-content;
   cursor: pointer;
+  border: none;
+  margin: 20px;
+  background-color: white;
 }
 
 svg {
   display: block;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
 }
 
 .close-x {

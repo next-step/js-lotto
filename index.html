@@ -63,7 +63,8 @@
               </div>
             </div>
           </div>
-          <button type="button" class="open-result-modal-button mt-5 btn btn-cyan w-100">
+          <button type="button" class="open-result-modal-button mt-5 btn btn-cyan w-100"
+            data-id="open-result-modal-button">
             결과 확인하기
           </button>
         </form>
@@ -72,11 +73,11 @@
 
     <div class="modal">
       <div class="modal-inner p-10">
-        <div class="modal-close" data-id="modal-close-button">
+        <button class="modal-close" data-id="modal-close-button">
           <svg viewbox="0 0 40 40">
             <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
           </svg>
-        </div>
+        </button>
 
         <h2 class="text-center">🏆 당첨 통계 🏆</h2>
         <div class="d-flex justify-center">

@@ -11,13 +11,22 @@ class Lotto {
     this.$target = $target;
     this.$resultWrapper = $target.querySelector('#purchased-result');
     this.$checkWrapper = $target.querySelector('#check-result');
+    this.$modal = $target.querySelector('.modal');
     this.$numberInput = $target.querySelector('[data-id=lotto-number-input]');
     this.$submitButton = $target.querySelector('[data-id=lotto-submit-button]');
+    this.$winningNumbers = $target.querySelectorAll('.winning-number');
+
     this.state = {
       ...DEFAULT_LOTTO_STATE,
     };
 
     this.initialize();
+  }
+
+  setState(nextState) {
+    console.log({ nextState });
+    this.state = nextState;
+    this.render();
   }
 
   onConfirm() {
@@ -65,9 +74,26 @@ class Lotto {
     this.setState({ ...this.state, isToggle: !this.state.isToggle });
   }
 
-  setState(nextState) {
-    this.state = nextState;
-    this.render();
+  onModalShow({ isVisibleModal }) {
+    this.setState({ ...this.state, isVisibleModal });
+  }
+  onTypeWinning({ value, index }) {
+    this.setState({
+      ...this.state,
+      winningNumbers: this.state.winningNumbers.map((el, originIndex) =>
+        index === originIndex ? value : el
+      ),
+    });
+  }
+
+  renderModal() {
+    if (this.state.isVisibleModal) {
+      this.$modal.classList.add('open');
+    }
+
+    if (!this.state.isVisibleModal) {
+      this.$modal.classList.remove('open');
+    }
   }
 
   renderToggle() {
@@ -148,6 +174,7 @@ class Lotto {
     this.renderToggle();
     this.renderInput();
     this.renderButton();
+    this.renderModal();
   }
 
   addEventListener() {
@@ -158,6 +185,13 @@ class Lotto {
 
       if (event.target.dataset.id === 'number-toggle-button') {
         this.onToggle();
+      }
+      if (event.target.dataset.id === 'open-result-modal-button') {
+        this.onModalShow({ isVisibleModal: true });
+      }
+
+      if (event.target.dataset.id === 'modal-close-button') {
+        this.onModalShow({ isVisibleModal: false });
       }
     });
 
@@ -173,6 +207,27 @@ class Lotto {
         event.key === 'Enter'
       ) {
         this.onEnter(event);
+      }
+    });
+
+    Array.from(this.$target.getElementsByClassName('winning-number')).forEach(
+      (eachInput, winningNumbersIndex) => {
+        eachInput.addEventListener('focusout', (event) => {
+          this.onTypeWinning({
+            value: event.target.value,
+            index: winningNumbersIndex,
+          });
+        });
+      }
+    );
+
+    this.$target.addEventListener('focusout', (event) => {
+      if (event.target.classList.contains('bonus-number')) {
+        const BONUS_NUMBER_STATE_INDEX = 6;
+        this.onTypeWinning({
+          value: event.target.value,
+          index: BONUS_NUMBER_STATE_INDEX,
+        });
       }
     });
   }
