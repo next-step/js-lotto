@@ -1,17 +1,8 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+// controller
+import App from "./app.js";
+import Lotto from "./lotto.js";
+import Ui from "./ui.js";
 
-const onModalShow = () => {
-  $modal.classList.add('open')
-}
+const app = new App({ target: "#app", model: new Lotto(), view: new Ui() });
 
-const onModalClose = () => {
-  $modal.classList.remove('open')
-}
-
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+export default app;
