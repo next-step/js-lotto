@@ -30,7 +30,8 @@ describe("로또게임 페이지 테스트", () => {
     cy.get("#payment-button").click();
     cy.get(".lotto-numbers-toggle-button").check({ force: true });
     cy.get(".lotto-result").should("be.visible");
-    cy.get(".lotto-ticket-number").should("be.visible");
+    cy.get("#payment-button").click();
     cy.get(".lotto-numbers-toggle-button").uncheck({ force: true });
+    cy.get(".lotto-ticket-number").should("not.be.visible");
   });
 });
