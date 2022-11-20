@@ -22,3 +22,14 @@ body {
   width: 30px;
   height: 36px;
 }
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.hidden {
+  display: none;
+}
