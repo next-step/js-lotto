@@ -2,30 +2,21 @@ import { LOTTO } from '../constants/index.js';
 import { generateLottoNumbersToArray, getLottoRank, getRateOfReturn } from '../service/lotto.js';
 
 class Model {
-  #lottoPurchasePrice;
+  #lottoPurchasePrice = 0;
 
-  #lottoPurchaseCount;
+  #lottoPurchaseCount = 0;
 
-  #lottos;
+  #lottos = [];
 
-  #lottoWinningCount;
+  #lottoWinningCount = {
+    3: 0,
+    4: 0,
+    5: 0,
+    '5_BONUS': 0,
+    6: 0,
+  };
 
-  #rateOfReturn;
-
-  constructor() {
-    this.#lottoPurchasePrice = 0;
-    this.#lottoPurchaseCount = 0;
-    this.#lottos = [];
-
-    this.#lottoWinningCount = {
-      3: 0,
-      4: 0,
-      5: 0,
-      '5_BONUS': 0,
-      6: 0,
-    };
-    this.#rateOfReturn = 0;
-  }
+  #rateOfReturn = 0;
 
   get lottoPurchasePrice() {
     return this.#lottoPurchasePrice;
