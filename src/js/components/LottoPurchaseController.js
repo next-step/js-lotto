@@ -1,5 +1,6 @@
-import { lottoStore } from './store/LottoStore.js';
-import { createRandomNumber } from './utils/utils.js';
+import { lottoStore } from '../store/LottoStore.js';
+import { resultStore } from '../store/ResultStore.js';
+import { createRandomNumber } from '../utils/utils.js';
 
 const lottoPurchaseContainer = document.getElementById('lotto-purchase');
 const costInputElement = lottoPurchaseContainer.getElementsByTagName('input')[0];
@@ -25,6 +26,7 @@ lottoPurchaseContainer.addEventListener('submit', (e) => {
   const lottos = createLotto(purchaseLottoCount);
   // 전역 state를 갱신.
   lottoStore.dispatch('update', lottos);
+  resultStore.dispatch('purchase', inputVal);
 })
 
 function createLotto(count) {
