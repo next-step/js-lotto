@@ -21,3 +21,7 @@ Cypress.Commands.add('getTotalLottoIcon', (total) => {
 Cypress.Commands.add('getTotalLottoNumber', (total) => {
   cy.get('.lotto-detail').should('have.length', total);
 });
+
+Cypress.Commands.add('getPurchasedLottos', () => {
+  cy.get('#purchased-lottos');
+});
