@@ -24,15 +24,11 @@ class App {
   }
 
   handleInputPriceButtonClick() {
-    const { getErrorMessage, registerLotto } = this.lotto;
+    const { validatePrice, registerLotto } = this.lotto;
 
-    const message = getErrorMessage();
-
-    if (message === '') {
+    if (validatePrice()) {
       registerLotto();
       this.showPurchasedLottos = true;
-    } else {
-      window.alert(message);
     }
   }
 
@@ -42,16 +38,14 @@ class App {
     setPrice(Number(nextPrice));
   }
 
-  handleTargetChange = (event) => {
-    const { target } = event;
-
+  handleTargetChange({ target }) {
     if (this.$inputPrice.contains(target)) {
       this.handleInputPriceChange(target.value);
       return;
     }
-  };
+  }
 
-  handleTargetClick = (event) => {
+  handleTargetClick(event) {
     const { target } = event;
 
     if (this.$inputPriceButton.contains(target)) {
@@ -65,7 +59,7 @@ class App {
       this.handleLottoSwitchClick();
       this.renderLottoNumbers();
     }
-  };
+  }
 
   initEventHandler() {
     this.$target.addEventListener('click', (event) => {
@@ -77,23 +71,12 @@ class App {
   }
 
   renderPurchasedLottos() {
-    const { getLottoCount } = this.lotto;
+    const { lottoCount, lottos } = this.lotto;
 
     if (this.showPurchasedLottos) {
       this.$purchasedLottos.style.display = 'block';
-      this.$totalPurchased.innerText = getLottoCount();
-      return;
-    }
-
-    this.$purchasedLottos.style.display = 'none';
-  }
-
-  renderLottoNumbers() {
-    const { getLottos } = this.lotto;
-
-    if (this.showLottoNumbers) {
-      this.$lottoIcons.classList.add('flex-col');
-      this.$lottoIcons.innerHTML = getLottos()
+      this.$totalPurchased.innerText = lottoCount;
+      this.$lottoIcons.innerHTML = lottos
         .map(
           (lotto) =>
             `<li class="mx-1 text-4xl lotto-wrapper">
@@ -105,15 +88,16 @@ class App {
       return;
     }
 
+    this.$purchasedLottos.style.display = 'none';
+  }
+
+  renderLottoNumbers() {
+    if (this.showLottoNumbers) {
+      this.$lottoIcons.classList.add('flex-col');
+      return;
+    }
+
     this.$lottoIcons.classList.remove('flex-col');
-    this.$lottoIcons.innerHTML = getLottos()
-      .map(
-        () =>
-          `<li class="mx-1 text-4xl lotto-wrapper">
-        <span class="lotto-icon">🎟️</span>
-      </li>`
-      )
-      .join('');
   }
 
   renderInputLottoNumbers() {

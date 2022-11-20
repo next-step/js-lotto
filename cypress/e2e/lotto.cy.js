@@ -58,7 +58,7 @@ describe('로또 테스트', () => {
       it('로또 구매 화면이 노출된다.', () => {
         cy.getInputPrice(2000);
         cy.clickInputPriceButton();
-        cy.getPurchasedLottos().should('be.visible');
+        cy.getPurchasedLottos();
       });
 
       it('숫자 2가 총 구매 숫자가 된다.', () => {
@@ -83,13 +83,13 @@ describe('로또 테스트', () => {
         cy.getInputPrice(2000);
         cy.clickInputPriceButton();
         cy.clickSwitchButton();
-        cy.getTotalLottoNumber(2);
+        cy.getLottoNumber().should('have.length', 2);
       });
 
       it('숫자는 중복이 존재하지 않는다.', () => {
         lotto.setPrice(2000);
         lotto.registerLotto();
-        const registeredLotto = lotto.getLottos()[0];
+        const registeredLotto = lotto.lottos[0];
         const uniq = new Set(registeredLotto);
         expect(registeredLotto.length).to.equal(uniq.size);
       });
@@ -97,7 +97,7 @@ describe('로또 테스트', () => {
       it('로또 하나당 숫자는 6개의 숫자가 노출된다.', () => {
         lotto.setPrice(2000);
         lotto.registerLotto();
-        const registeredLotto = lotto.getLottos()[0];
+        const registeredLotto = lotto.lottos[0];
         expect(registeredLotto.length).to.equal(6);
       });
     });
@@ -108,7 +108,7 @@ describe('로또 테스트', () => {
         cy.clickInputPriceButton();
         cy.clickSwitchButton();
         cy.clickSwitchButton();
-        cy.getTotalLottoNumber(0);
+        cy.getLottoNumber().should('be.not.visible');
       });
     });
   });

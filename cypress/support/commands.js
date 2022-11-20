@@ -18,10 +18,10 @@ Cypress.Commands.add('getTotalLottoIcon', (total) => {
   cy.get('.lotto-icon').should('have.length', total);
 });
 
-Cypress.Commands.add('getTotalLottoNumber', (total) => {
-  cy.get('.lotto-detail').should('have.length', total);
+Cypress.Commands.add('getLottoNumber', () => {
+  cy.get('.lotto-detail');
 });
 
 Cypress.Commands.add('getPurchasedLottos', () => {
-  cy.get('#purchased-lottos');
+  cy.get('#purchased-lottos').should('be.visible');
 });

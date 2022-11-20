@@ -24,28 +24,26 @@ class Lotto {
     this.#price = nextPrice;
   };
 
-  getPrice = () => {
-    return this.#price;
-  };
-
-  getLottoCount = () => {
+  get lottoCount() {
     return this.#lottoCount;
-  };
+  }
 
-  getLottos = () => {
+  get lottos() {
     return this.#lottos;
-  };
+  }
 
-  getErrorMessage = () => {
+  validatePrice = () => {
     if (this.#price % LOTTO_PRICE > DEFAULT_PRICE) {
-      return ERROR_MESSAGE.INVALID_UNIT_NUMBER;
+      window.alert(ERROR_MESSAGE.INVALID_UNIT_NUMBER);
+      return false;
     }
 
     if (this.#price <= DEFAULT_PRICE) {
-      return ERROR_MESSAGE.INVALID_NEGATIVE_NUMBER;
+      window.alert(ERROR_MESSAGE.INVALID_NEGATIVE_NUMBER);
+      return false;
     }
 
-    return '';
+    return true;
   };
 
   registerLotto = () => {
@@ -58,20 +56,14 @@ class Lotto {
   };
 
   #getUniqRandomNumbers() {
-    const uniqRandomNumbers = [];
-    let finishCount = 0;
+    const uniqRandomNumbers = new Set();
 
-    while (finishCount < LOTTO_COUNT) {
+    while (uniqRandomNumbers.size < LOTTO_COUNT) {
       const randomNumber = getRandomNumber(LOTTO_MIN_NUMBER, LOTTO_MAX_NUMBER);
-      const isUniqNumber = uniqRandomNumbers.indexOf(randomNumber) < 0;
-
-      if (isUniqNumber) {
-        uniqRandomNumbers.push(randomNumber);
-        finishCount++;
-      }
+      uniqRandomNumbers.add(randomNumber);
     }
 
-    return uniqRandomNumbers;
+    return Array.from(uniqRandomNumbers);
   }
 }
 
