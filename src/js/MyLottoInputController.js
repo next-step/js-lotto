@@ -1,9 +1,11 @@
 const $MyLottoInput = document.getElementById('lotto-input');
 
 const inputs = Array.from($MyLottoInput.getElementsByTagName('input'));
+
 const resultButton = $MyLottoInput.getElementsByTagName('button')[0];
 
 inputs.forEach((input, i) => {
+  input.setAttribute('required', true);
   input.setAttribute('min', 1);
   input.setAttribute('max', 45);
   input.setAttribute('aria-label', `$lottery-input-${i + 1}`);
@@ -18,4 +20,10 @@ inputs.forEach((input, i) => {
       inputs[i + 1].focus();
     }
   });
+});
+
+$MyLottoInput.addEventListener('submit', (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+  console.log('submitted')
 });
