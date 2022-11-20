@@ -1,17 +1,49 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+import { ERROR_MESSAGE } from "./constants/errorMessage.js";
+import { LOTTO } from "./constants/lotto.js";
+import { clearLottos, issueLottos } from "./service/lotto.js";
+import { isInvalidPurchasePrice } from "./utils/validator.js";
+import {
+	$lottoNumbersToggleButton,
+	$lottoPapers,
+	$modalClose,
+	$purchaseForm,
+	$purchaseInput,
+	$showResultButton,
+} from "./view/elements.js";
+import { lottosTemplate } from "./view/templates.js";
+import {
+	onModalClose,
+	onModalShow,
+	render,
+	showTotalLottoCount,
+	toggleButtonClick,
+	turnOffToggleButton,
+} from "./view/ui.js";
 
-const onModalShow = () => {
-  $modal.classList.add('open')
-}
+export const initialize = () => {
+	clearLottos();
+	turnOffToggleButton();
+};
 
-const onModalClose = () => {
-  $modal.classList.remove('open')
-}
+const handleSumbit = (e) => {
+	e.preventDefault();
+	if (isInvalidPurchasePrice($purchaseInput.value, LOTTO.LOTTO_UNIT))
+		return alert(ERROR_MESSAGE.INVALID_LOTTO_PRICE);
 
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+	const totalLottoCount = $purchaseInput.value / LOTTO.LOTTO_UNIT;
+
+	initialize();
+
+	issueLottos(totalLottoCount);
+	showTotalLottoCount(totalLottoCount);
+	render($lottoPapers, lottosTemplate());
+};
+
+const setEventListeners = () => {
+	$purchaseForm.addEventListener("submit", handleSumbit);
+	$lottoNumbersToggleButton.addEventListener("click", toggleButtonClick);
+	$showResultButton.addEventListener("click", onModalShow);
+	$modalClose.addEventListener("click", onModalClose);
+};
+
+setEventListeners();
