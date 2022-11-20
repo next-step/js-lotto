@@ -4,7 +4,7 @@ import {
   MAX_LOTTO_PRICE,
   MIN_LOTTO_PRICE,
 } from '../constants.js';
-import { makeLottoNumbers } from '../utils/index.js';
+import { isDuplicatedInArray, makeLottoNumbers } from '../utils/index.js';
 
 class Lotto {
   constructor({ $target }) {
@@ -14,7 +14,10 @@ class Lotto {
     this.$modal = $target.querySelector('.modal');
     this.$numberInput = $target.querySelector('[data-id=lotto-number-input]');
     this.$submitButton = $target.querySelector('[data-id=lotto-submit-button]');
-    this.$winningNumbers = $target.querySelectorAll('.winning-number');
+    this.$bonusNumberInput = $target.querySelector('.bonus-number');
+    this.$winningNumbersInput = Array.from(
+      $target.getElementsByClassName('winning-number')
+    );
 
     this.state = {
       ...DEFAULT_LOTTO_STATE,
@@ -75,15 +78,56 @@ class Lotto {
   }
 
   onModalShow({ isVisibleModal }) {
+    const isAllTyped =
+      this.state.winningNumbers.filter((number) => Number(number) > 0)
+        .length === 7;
+
+    const isValidNumbers =
+      this.state.winningNumbers.filter(
+        (number) => +number >= 1 && +number <= 45
+      ).length === 7;
+
+    if (!isAllTyped) {
+      alert('7개의 값을 모두 입력해주세요');
+      return;
+    }
+
+    if (!isValidNumbers) {
+      alert('1이상 45이하의 숫자를 입력해주세요');
+      return;
+    }
+
+    if (isDuplicatedInArray(this.state.winningNumbers)) {
+      alert('중복된 값이 있습니다.');
+      return;
+    }
+
     this.setState({ ...this.state, isVisibleModal });
   }
+
   onTypeWinning({ value, index }) {
+    const MAX_LENGTH = 2,
+      LAST_WINNING_INPUT_INDEX = 5;
+    if (value.length > MAX_LENGTH) return;
+
+    const isNextWinningInput =
+        value.length >= MAX_LENGTH && index < LAST_WINNING_INPUT_INDEX,
+      isBonusInput =
+        value.length >= MAX_LENGTH && index === LAST_WINNING_INPUT_INDEX;
+
+    if (isNextWinningInput) {
+      const nextInputIndex = index + 1;
+      this.$winningNumbersInput[nextInputIndex].focus();
+    }
+
     this.setState({
       ...this.state,
       winningNumbers: this.state.winningNumbers.map((el, originIndex) =>
         index === originIndex ? value : el
       ),
     });
+
+    if (isBonusInput) this.$bonusNumberInput.focus();
   }
 
   renderModal() {
@@ -160,6 +204,17 @@ class Lotto {
     }
   }
 
+  renderWinningInput() {
+    this.$winningNumbersInput.forEach((element, index) => {
+      element.value = this.state.winningNumbers[index];
+    });
+  }
+
+  renderBonusInput() {
+    this.$bonusNumberInput.value =
+      this.state.winningNumbers[this.state.winningNumbers.length - 1];
+  }
+
   renderButton() {
     const isBlank =
       this.state.moneyAmount === 0 || this.state.moneyAmount === null;
@@ -175,6 +230,8 @@ class Lotto {
     this.renderInput();
     this.renderButton();
     this.renderModal();
+    this.renderWinningInput();
+    this.renderBonusInput();
   }
 
   addEventListener() {
@@ -187,10 +244,12 @@ class Lotto {
         this.onToggle();
       }
       if (event.target.dataset.id === 'open-result-modal-button') {
+        event.preventDefault();
         this.onModalShow({ isVisibleModal: true });
       }
 
       if (event.target.dataset.id === 'modal-close-button') {
+        event.preventDefault();
         this.onModalShow({ isVisibleModal: false });
       }
     });
@@ -210,18 +269,16 @@ class Lotto {
       }
     });
 
-    Array.from(this.$target.getElementsByClassName('winning-number')).forEach(
-      (eachInput, winningNumbersIndex) => {
-        eachInput.addEventListener('focusout', (event) => {
-          this.onTypeWinning({
-            value: event.target.value,
-            index: winningNumbersIndex,
-          });
+    this.$winningNumbersInput.forEach((eachInput, winningNumbersIndex) => {
+      eachInput.addEventListener('keyup', (event) => {
+        this.onTypeWinning({
+          value: event.target.value,
+          index: winningNumbersIndex,
         });
-      }
-    );
+      });
+    });
 
-    this.$target.addEventListener('focusout', (event) => {
+    this.$target.addEventListener('keyup', (event) => {
       if (event.target.classList.contains('bonus-number')) {
         const BONUS_NUMBER_STATE_INDEX = 6;
         this.onTypeWinning({

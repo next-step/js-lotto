@@ -56,3 +56,9 @@ export const checkNumbersDuplidate = (randomNumberArray) => {
 
   return randomNumberArray;
 };
+
+export const isDuplicatedInArray = (numberArray) => {
+  const numberSet = new Set(numberArray);
+
+  return numberSet.size !== numberArray.length;
+};
