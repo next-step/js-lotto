@@ -5,7 +5,7 @@ export const ALERT_MESSAGE = {
   NOT_OVER_ONE_THOUSAND: `구입 금액은 ${PURCHASE_AMOUNT_UNIT}원 이상입니다.`,
 };
 
-export const MAX_IN_NUMBER = 45;
-export const MIN_IN_NUMBER = 1;
+export const MAX_IN_LOTTO_NUMBER = 45;
+export const MIN_IN_LOTTO_NUMBER = 1;
 
 export const LOTTO_NUMBERS_COUNT = 6;

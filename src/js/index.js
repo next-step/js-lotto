@@ -1,4 +1,4 @@
-import { $ } from './util.js';
+import { $ } from './utils.js';
 import Lotto from './lotto.js';
 
 const lotto = new Lotto({

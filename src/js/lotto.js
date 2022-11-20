@@ -1,9 +1,9 @@
-import { $$ } from './util.js';
+import { $$ } from './utils.js';
 import {
   ALERT_MESSAGE,
   PURCHASE_AMOUNT_UNIT,
-  MAX_IN_NUMBER,
-  MIN_IN_NUMBER,
+  MAX_IN_LOTTO_NUMBER,
+  MIN_IN_LOTTO_NUMBER,
   LOTTO_NUMBERS_COUNT,
 } from './constants.js';
 
@@ -28,7 +28,10 @@ class Lotto {
 
   setMyLotto() {
     const generateRandomNumber = () => {
-      return Math.floor(Math.random() * (MAX_IN_NUMBER - MIN_IN_NUMBER + 1)) + MIN_IN_NUMBER;
+      return (
+        Math.floor(Math.random() * (MAX_IN_LOTTO_NUMBER - MIN_IN_LOTTO_NUMBER + 1)) +
+        MIN_IN_LOTTO_NUMBER
+      );
     };
     const generatePurchasedLottoToArray = () => {
       const purchasedLottoToSet = new Set();
@@ -61,7 +64,7 @@ class Lotto {
         return `
         <li class="mx-1 d-flex items-center lotto-item">
           <span class="text-4xl">🎟️ </span>
-          <span class="text-2xl ${isToggleOn || 'hidden'}" data-cy="lotto-item-numbers">${item.join(', ')} </span>
+          <span class="text-2xl ${isToggleOn || 'hidden'}" data-cy="lotto-item-numbers">${item.join(', ')}</span>
         </li>`;
       })
       .join('');
@@ -80,14 +83,11 @@ class Lotto {
   purchaseLotto(e) {
     e.preventDefault();
     const purchaseAmountInput = this.$purchaseInput.valueAsNumber;
-    if (purchaseAmountInput < PURCHASE_AMOUNT_UNIT) {
-      alert(ALERT_MESSAGE.NOT_OVER_ONE_THOUSAND);
-      return;
-    }
-    if (purchaseAmountInput % PURCHASE_AMOUNT_UNIT !== 0) {
-      alert(ALERT_MESSAGE.NOT_ONE_THOUSAND_UNIT);
-      return;
-    }
+    if (purchaseAmountInput < PURCHASE_AMOUNT_UNIT)
+      return window.alert(ALERT_MESSAGE.NOT_OVER_ONE_THOUSAND);
+
+    if (purchaseAmountInput % PURCHASE_AMOUNT_UNIT !== 0)
+      return window.alert(ALERT_MESSAGE.NOT_ONE_THOUSAND_UNIT);
 
     const lottoCount = purchaseAmountInput / PURCHASE_AMOUNT_UNIT;
     this.myLotto = Array(lottoCount).fill(null);
