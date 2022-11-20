@@ -28,7 +28,9 @@ describe('로또 테스트', () => {
         cy.on('window:alert', stub);
         cy.getInputPrice(1500);
         cy.clickInputPriceButton().then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.UNIT);
+          expect(stub.getCall(0)).to.be.calledWith(
+            ERROR_MESSAGE.INVALID_UNIT_NUMBER
+          );
         });
       });
 
@@ -37,7 +39,9 @@ describe('로또 테스트', () => {
         cy.on('window:alert', stub);
         cy.getInputPrice(-1000);
         cy.clickInputPriceButton().then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.NEGATIVE);
+          expect(stub.getCall(0)).to.be.calledWith(
+            ERROR_MESSAGE.INVALID_NEGATIVE_NUMBER
+          );
         });
       });
     });

@@ -38,11 +38,11 @@ class Lotto {
 
   getErrorMessage = () => {
     if (this.#price % LOTTO_PRICE > DEFAULT_PRICE) {
-      return ERROR_MESSAGE.UNIT;
+      return ERROR_MESSAGE.INVALID_UNIT_NUMBER;
     }
 
     if (this.#price <= DEFAULT_PRICE) {
-      return ERROR_MESSAGE.NEGATIVE;
+      return ERROR_MESSAGE.INVALID_NEGATIVE_NUMBER;
     }
 
     return '';
