@@ -1,18 +1,33 @@
+import { IncorrectUnitError, InputMaxExceededError, InputMinInsufficientError, InputRequiredError } from "./error.js";
 import { ERROR_MESSAGE, PRICE_MAX, PRICE_MIN, PRICE_PER_UNIT } from "./const.js";
 
 export class Validator {
-    constructor() {}
+    constructor() {
+    }
 
-    validate = (price) => {
-        if (!price) return this.#afterValidate(ERROR_MESSAGE.InputRequired);
-        if (price < PRICE_MIN) return this.#afterValidate(ERROR_MESSAGE.InputMinInsufficient);
-        if (price > PRICE_MAX) return this.#afterValidate(ERROR_MESSAGE.InputMaxExceeded);
-        if (!!(price % PRICE_PER_UNIT)) return this.#afterValidate(ERROR_MESSAGE.IncorrectUnit);
+    #setErrors = (price) => {
+        if (!price) throw new InputRequiredError(ERROR_MESSAGE.InputRequired);
+        if (price < PRICE_MIN) throw new InputMinInsufficientError(ERROR_MESSAGE.InputMinInsufficient);
+        if (price > PRICE_MAX) throw new InputMaxExceededError(ERROR_MESSAGE.InputMaxExceeded);
+        if (price % PRICE_PER_UNIT !== 0) throw new IncorrectUnitError(ERROR_MESSAGE.IncorrectUnit);
         return true;
     }
 
-    #afterValidate(errorMessage) {
-        alert(errorMessage);
-        return false;
+    validate = (price) => {
+        try {
+            return this.#setErrors(price);
+        } catch (e) {
+            if (e instanceof InputRequiredError) {
+                alert(e.message);
+            } else if (e instanceof InputMinInsufficientError) {
+                alert(e.message);
+            } else if (e instanceof InputMaxExceededError) {
+                alert(e.message);
+            } else if (e instanceof IncorrectUnitError) {
+                alert(e.message);
+            } else {
+                throw e;
+            }
+        }
     }
 }
