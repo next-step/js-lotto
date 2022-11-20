@@ -1,7 +1,7 @@
-import { LottoPurchase } from './components/LottoPurchase.js';
-import { LottoList } from "./components/LottoList.js";
-import { MyLotto } from './components/MyLotto.js';
-import { ResultModal } from "./components/ResultModal.js";
+import { LottoPurchase } from './view/LottoPurchase.js';
+import { LottoList } from "./view/LottoList.js";
+import { MyLotto } from './view/MyLotto.js';
+import { ResultModal } from "./view/ResultModal.js";
 
 import { lottoStore } from './store/LottoStore.js';
 import { resultStore } from './store/ResultStore.js';
