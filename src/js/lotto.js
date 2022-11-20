@@ -7,21 +7,27 @@ import {
   LOTTO_MIN_NUMBER,
   LOTTO_PRICE,
 } from '../const.js';
-import { getRandomNumber } from '../utils.js';
+import { getRandomNumber, isNumbersOutOfRange } from '../utils.js';
 
 class Lotto {
   #price;
   #lottoCount;
   #lottos;
+  #winningNumbers;
 
   constructor() {
     this.#price = DEFAULT_PRICE;
     this.#lottoCount = DEFAULT_LOTTO_COUNT;
     this.#lottos = [];
+    this.#winningNumbers = [];
   }
 
   setPrice = (nextPrice) => {
     this.#price = nextPrice;
+  };
+
+  setWinningNumbers = (winningNumber) => {
+    this.#winningNumbers.push(winningNumber);
   };
 
   get lottoCount() {
@@ -40,6 +46,26 @@ class Lotto {
 
     if (this.#price <= DEFAULT_PRICE) {
       window.alert(ERROR_MESSAGE.INVALID_NEGATIVE_NUMBER);
+      return false;
+    }
+
+    return true;
+  };
+
+  validateWinningNumbers = () => {
+    if (hasDuplicateNumbers(this.#winningNumbers)) {
+      window.alert(ERROR_MESSAGE.INVALID_DUPLICATED_NUMBER);
+      return false;
+    }
+
+    if (
+      isNumbersOutOfRange({
+        max: LOTTO_MAX_NUMBER,
+        min: LOTTO_MIN_NUMBER,
+        targets: this.#winningNumbers,
+      })
+    ) {
+      window.alert(ERROR_MESSAGE.INVALID_RANGE_NUMBER);
       return false;
     }
 
