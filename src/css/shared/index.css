@@ -6,3 +6,7 @@
 @import 'modules/interactivity.css';
 @import 'modules/border.css';
 @import 'modules/flex.css';
+
+ul {
+  padding: 0;
+}

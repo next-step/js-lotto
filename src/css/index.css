@@ -22,3 +22,11 @@ body {
   width: 30px;
   height: 36px;
 }
+
+#lotto-icons > li > .lotto-detail {
+  display: none;
+}
+
+#lotto-icons.flex-col > li > .lotto-detail {
+  display: flex;
+}

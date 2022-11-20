@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>🎱 행운의 로또</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="module" src="./src/js/index.js"></script>
     <link rel="stylesheet" href="./src/css/index.css" />
   </head>
   <body>
@@ -17,32 +18,36 @@
             </label>
             <div class="d-flex">
               <input
+                id="input-price"
                 type="number"
                 class="w-100 mr-2 pl-2"
                 placeholder="구입 금액"
               />
-              <button type="button" class="btn btn-cyan">확인</button>
+              <button id="input-price-btn" type="submit" class="btn btn-cyan">
+                확인
+              </button>
             </div>
           </form>
-          <section class="mt-9">
+          <section id="purchased-lottos" class="mt-9">
             <div class="d-flex">
-              <label class="flex-auto my-0">총 5개를 구매하였습니다.</label>
+              <label class="flex-auto my-0"
+                >총 <span id="total-purchased"></span>개를
+                구매하였습니다.</label
+              >
               <div class="flex-auto d-flex justify-end pr-1">
                 <label class="switch">
-                  <input type="checkbox" class="lotto-numbers-toggle-button" />
+                  <input
+                    id="lotto-switch"
+                    type="checkbox"
+                    class="lotto-numbers-toggle-button"
+                  />
                   <span class="text-base font-normal">번호보기</span>
                 </label>
               </div>
             </div>
-            <div class="d-flex flex-wrap">
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-            </div>
+            <ul id="lotto-icons" class="d-flex flex-wrap"></ul>
           </section>
-          <form class="mt-9">
+          <form id="input-lotto-numbers" class="mt-9">
             <label class="flex-auto d-inline-block mb-3"
               >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >
