@@ -1,5 +1,5 @@
-@import "./shared/index.css";
-@import "./ui/index.css";
+@import './shared/index.css';
+@import './ui/index.css';
 
 html,
 body {
@@ -11,6 +11,10 @@ body {
 #app {
   max-width: 400px;
   margin: 0 auto;
+}
+
+#purchase-lotto {
+  display: none;
 }
 
 .winning-number-form {
