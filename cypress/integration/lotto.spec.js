@@ -34,4 +34,9 @@ describe("로또게임 페이지 테스트", () => {
     cy.get(".lotto-numbers-toggle-button").uncheck({ force: true });
     cy.get(".lotto-ticket-number").should("not.be.visible");
   });
+
+  it("결과 확인하기 버튼", () => {
+    cy.get(".open-result-modal-button").click();
+    cy.get(".modal").should("have.class", "open");
+  });
 });
