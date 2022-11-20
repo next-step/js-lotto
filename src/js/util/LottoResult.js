@@ -75,7 +75,8 @@ export const getMyPrizeAmount = (lottoResult = { three: 0, four: 0, five: 0, six
  * @returns {number}
  */
 export const getMyEarningRate = (purchasingAmount = 0, pirzeMoney = 0) => {
-  if (pirzeMoney - purchasingAmount <= 0) {
+  if ([purchasingAmount, pirzeMoney].every((n) => n === 0)) return 0;
+  if (pirzeMoney - purchasingAmount < 0) {
     return -1 * 100;
   }
   return ((pirzeMoney - purchasingAmount) / purchasingAmount) * 100;

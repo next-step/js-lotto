@@ -1,6 +1,6 @@
 import { buy } from '../util/LottoBuyer.js';
 import { validatePurchasingAmount } from '../util/Validator.js';
-import { toggleResultAreas } from './Element.js';
+import { setVisibleResultAreas } from './Element.js';
 import { setLottos } from './Lotto.js';
 import { getMyLottoResult, updateLottoResult } from './LottoResult.js';
 import { $modal, $purchasingAmountInput } from './Selector.js';
@@ -24,7 +24,7 @@ export const onModalClose = () => {
 
 export const onLottoRestart = () => {
   $purchasingAmountInput.value = '';
-  toggleResultAreas();
+  setVisibleResultAreas(false);
   onModalClose();
 };
 
@@ -34,7 +34,7 @@ export const onLottosBought = () => {
     validatePurchasingAmount(purchasingAmount);
     const lottos = buy(parseInt(purchasingAmount));
     setLottos(lottos);
-    toggleResultAreas();
+    setVisibleResultAreas();
     return lottos;
   } catch (error) {
     alert(error.message);

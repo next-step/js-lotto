@@ -12,6 +12,8 @@ export const MODAL_RESULT_TR = {
 // 당첨결과 확인 영역
 export const MODAL_RESULT_TR_COLUMN = '.p-3';
 
-export function toggleResultAreas() {
-  $resultAreas.forEach(($el) => $el.classList.toggle('hidden'));
+export function setVisibleResultAreas(isVisible = true) {
+  const className = 'hidden';
+  const setVisible = ($el) => (isVisible ? $el.classList.remove(className) : $el.classList.add(className));
+  $resultAreas.forEach(($el) => setVisible($el));
 }

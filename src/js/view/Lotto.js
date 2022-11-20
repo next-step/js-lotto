@@ -8,6 +8,7 @@ export function setLottos(lottos = []) {
   const $lottoList = getLottoList($lottoItems);
   const $lottoIcons = document.querySelector('.lotto-icons');
 
+  $lottoIcons.innerHTML = '';
   $lottoIcons.appendChild($lottoList);
   document.querySelector('.purchasing-status').innerText = `총 ${lottos.length}개를 구매하였습니다.`;
 }

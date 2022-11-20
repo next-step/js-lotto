@@ -1,12 +1,12 @@
 import { $confirmButton, $lottoNumbersToggleButton, $modalClose, $restart, $showResultButton } from './Selector.js';
 import { setLottoNumberToggle } from './Lotto.js';
 import { onLottoRestart, onLottosBought, onModalClose, onModalShow } from './listener.js';
-import { toggleResultAreas } from './Element.js';
+import { setVisibleResultAreas } from './Element.js';
 
 let lottos = [];
 
 export function initialize() {
-  toggleResultAreas();
+  setVisibleResultAreas(false);
   $confirmButton.addEventListener('click', () => {
     lottos = onLottosBought(lottos);
   });
