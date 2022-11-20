@@ -39,4 +39,10 @@ describe("로또게임 페이지 테스트", () => {
     cy.get(".open-result-modal-button").click();
     cy.get(".modal").should("have.class", "open");
   });
+  it("모달 닫기 버튼", () => {
+    cy.get(".open-result-modal-button").click();
+    cy.get(".modal").should("have.class", "open");
+    cy.get(".modal-close").click();
+    cy.get(".modal").should("not.have.class", "open");
+  });
 });
