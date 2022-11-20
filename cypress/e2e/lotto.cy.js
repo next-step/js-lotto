@@ -112,4 +112,66 @@ describe('로또 테스트', () => {
       });
     });
   });
+
+  describe('잘못된 당첨번호를 입력하면 결과확인을 할 수 없다', () => {
+    context('당첨번호를 입력하고 결과확인 버튼을 클릭했을 때', () => {
+      it('당첨번호는 1 ~ 45 사이 숫자가 아닌 경우 alert가 노출된다.', () => {
+        const stub = cy.stub();
+        cy.on('window:alert', stub);
+        cy.get('#show-result-btn')
+          .click()
+          .then(() => {
+            expect(stub.getCall(0)).to.be.calledWith('');
+          });
+      });
+
+      it('당첨번호 6개와 보너스 번호 1개 숫자중 중복된 숫자가 존재하면 alert가 노출된다.', () => {
+        const stub = cy.stub();
+        cy.on('window:alert', stub);
+        cy.get('#show-result-btn')
+          .click()
+          .then(() => {
+            expect(stub.getCall(0)).to.be.calledWith('');
+          });
+      });
+    });
+  });
+
+  describe('결과 확인하기 버튼을 누르면, 수익율을 모달로 확인할 수 있다.', () => {
+    context(
+      '올바른 당첨번호를 입력 후 결과 확인하기 버튼을 클릭했을 때',
+      () => {
+        it('당첨통계 모달이 노출된다.', () => {
+          cy.get('#show-result-btn').click();
+          cy.get('.modal').should('be.visible');
+        });
+
+        it('구매한 로또 번호와 당첨번호를 비교하여 총 수익률이 반영된다.', () => {
+          cy.get('#show-result-btn').click();
+          cy.get('#profit').should('have.text', 0);
+        });
+      }
+    );
+  });
+
+  describe('다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.', () => {
+    context('다시 시작하기 버튼을 클릭했을 때', () => {
+      it('당첨통계 모달이 미노출된다.', () => {
+        cy.get('#reset-btn').click();
+        cy.get('.modal').should('be.not.visible');
+      });
+
+      it('구매한 로또 아이콘 화면이 미노출된다.', () => {
+        cy.get('#reset-btn').click();
+        cy.get('.modal').should('be.not.visible');
+        cy.get('#purchased-lottos').should('be.not.visible');
+      });
+
+      it('입력한 금액이 초기화 된다.', () => {
+        cy.get('#reset-btn').click();
+        cy.get('.modal').should('be.not.visible');
+        cy.get('#input-price').should('have.value', '');
+      });
+    });
+  });
 });

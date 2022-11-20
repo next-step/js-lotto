@@ -89,6 +89,7 @@
               </div>
             </div>
             <button
+              id="show-result-btn"
               type="button"
               class="open-result-modal-button mt-5 btn btn-cyan w-100"
             >
@@ -145,9 +146,13 @@
               </tbody>
             </table>
           </div>
-          <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+          <p class="text-center font-bold">
+            당신의 총 수익률은 <span id="profit"></span>%입니다.
+          </p>
           <div class="d-flex justify-center mt-5">
-            <button type="button" class="btn btn-cyan">다시 시작하기</button>
+            <button id="reset-btn" type="button" class="btn btn-cyan">
+              다시 시작하기
+            </button>
           </div>
         </div>
       </div>
