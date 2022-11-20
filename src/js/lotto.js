@@ -1,6 +1,6 @@
 import { $, $$ } from "./utils.js";
 import { $modal, $lottoNumbersToggleButton, $paymentCost, $paymentForm, $paymentTickets } from "./DOM.js";
-import { ALERT_ONE_THOUSAND_UNIT, MAX_IN_NUMBER, MIN_IN_NUMBER, PURCHASE_AMOUNT_UNIT } from "./constants.js";
+import { ALERT_MESSAGE, MAX_IN_NUMBER, MIN_IN_NUMBER, PURCHASE_AMOUNT_UNIT } from "./constants.js";
 
 class Lotto {
   constructor() {
@@ -28,8 +28,12 @@ class Lotto {
   }
 
   validatePaymentInput() {
+    if (this.paymentCostStr === "") {
+      alert(ALERT_MESSAGE.InputRequired);
+      return false;
+    }
     if (this.paymentCostStr % PURCHASE_AMOUNT_UNIT !== 0) {
-      alert(ALERT_ONE_THOUSAND_UNIT);
+      alert(ALERT_MESSAGE.IncorrectUnit);
       $paymentCost.value = "";
       return false;
     }
