@@ -1,5 +1,5 @@
 import { $bonusNumber, $profit, $purchaseAmount, $tbody } from './dom.js';
-import { removeChild } from './utils.js';
+
 export const winningForm = {
   fifth: { number: `3개`, winnings: 5_000 },
   fourth: { number: `4개`, winnings: 50_000 },
@@ -79,7 +79,7 @@ export class LottoResultComponent {
   }
 
   render() {
-    removeChild($tbody);
+    $tbody.replaceChildren();
 
     const result = Object.keys(winningForm)
       .map(

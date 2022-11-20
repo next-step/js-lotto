@@ -1,4 +1,4 @@
-import { getRandomNumbers, removeChild, shuffle } from './utils.js';
+import { getRandomNumbers, shuffle } from './utils.js';
 import { $lottoIcons } from './dom.js';
 
 export class LottoModel {
@@ -31,7 +31,7 @@ export class LottoComponent {
   }
 
   render() {
-    removeChild($lottoIcons);
+    $lottoIcons.replaceChildren();
     const lottoIcon = this.lottoNumbers
       .map(
         (number) => `

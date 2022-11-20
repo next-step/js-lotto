@@ -148,12 +148,12 @@ export class App {
     });
 
     $modalCloseButton.addEventListener('click', () => {
-      this.onModalClose();
+      this.onCloseModal();
     });
 
     $resetButton.addEventListener('click', () => {
       this.resetLotto();
-      this.onModalClose();
+      this.onCloseModal();
     });
   }
 }
