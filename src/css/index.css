@@ -27,6 +27,10 @@ body {
   display: none;
 }
 
+#input-lotto-numbers {
+  display: none;
+}
+
 #lotto-icons > li > .lotto-detail {
   display: none;
 }
