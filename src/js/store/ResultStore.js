@@ -3,7 +3,7 @@ import { createStore } from '../core/Store.js';
 // 결과 창 통신을 위한 store
 
 // 기본적인 default store의 형태
-const initStore = {
+export const initStore = {
   purchaseCost: 0,
   result: {
     3: 0,

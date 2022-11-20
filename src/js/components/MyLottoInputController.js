@@ -1,4 +1,4 @@
-import { resultStore } from '../store/ResultStore.js';
+import { initStore, resultStore } from '../store/ResultStore.js';
 import { checkIsSameElementInArray } from '../utils/utils.js';
 
 const $MyLottoInput = document.getElementById('lotto-input');
@@ -32,7 +32,7 @@ export function MyLottoInput(lottos) {
     e.stopPropagation();
     e.preventDefault();
 
-    const inputLottoNums = inputs.map((el) => el.value);
+    const inputLottoNums = inputs.map((el) => Number(el.value));
     if (checkIsSameElementInArray(inputLottoNums)) {
       alert('로또 번호에는 중복된 숫자를 입력할 수 없습니다.');
       return;
@@ -40,12 +40,38 @@ export function MyLottoInput(lottos) {
 
     const bonusNumber = inputLottoNums.splice(inputLottoNums.length - 1, 1);
 
-    lottos.forEach((lotto) => {
-      console.log(lotto);
+    const lottoResult = calcLottoResult(lottos, inputLottoNums, bonusNumber);
+    const result = { ...initStore.result };
+    lottoResult.forEach((el) => {
+      if (el) result[el] += 1;
     });
 
-    resultStore.dispatch('showResult', { result: null });
+    resultStore.dispatch('showResult', { result });
   };
 
   $MyLottoInput.addEventListener('submit', submitEventListener);
+}
+
+function calcLottoResult(lottos, myLottoNums, bonusNumber) {
+  return lottos.map((lotto) => {
+    const sameNumberCount = lotto.reduce((prev, curr, i) => {
+      if (curr === myLottoNums[i]) {
+        return prev + 1;
+      }
+
+      return prev;
+    }, 0);
+
+    const isBonusExist = lotto.some((num) => num === bonusNumber);
+
+    if (sameNumberCount === 5 && isBonusExist) {
+      return 'bonus';
+    }
+
+    if (sameNumberCount >= 3) {
+      return sameNumberCount;
+    }
+
+    return null;
+  });
 }
