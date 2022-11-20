@@ -1,5 +1,9 @@
 const modal = document.getElementById('modal');
 const modalCloseButton = document.getElementById('modal-close');
+const table = modal.getElementsByTagName('table')[0];
+const resultRecords = Array.from(table.getElementsByTagName('tbody')[0].children);
+
+const $profit = document.getElementById('profit');
 
 const resultAndMoneyMap = {
   3: 5000,
@@ -15,11 +19,15 @@ modalCloseButton.addEventListener('click', (e) => {
 });
 
 
-export function ResultModal({ result, isShow }) {
+export function ResultModal({ result, isShow, purchaseCost }) {
   if (!isShow) {
     modal.classList.remove('open');
     return;
   }
 
   modal.classList.add('open');
+  resultRecords.forEach((tr) => {
+    const lottoCount = tr.getAttribute('data-table');
+    tr.children[2].textContent = `${result[lottoCount]}개`
+  });
 }
