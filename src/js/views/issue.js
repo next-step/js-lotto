@@ -30,16 +30,16 @@ export class Issue {
 
     issueLotto(units) {
         arr(units).forEach(_ => {
-            const randomNumbers = new LottoNumbers().numbers;
-            this.#creatLottoElement(randomNumbers);
-            this.lottoNumbers.push(randomNumbers);
+            const { numbers } = new LottoNumbers();
+            this.#creatLottoElement(numbers);
+            this.lottoNumbers.push(numbers);
         })
         this.#showLottoNumbers();
     }
 
     #toggleLottoNumbers() {
         this.isShowNumbers = !this.isShowNumbers;
-        if (!!document.querySelectorAll('.lotto-numbers').length) this.#showLottoNumbers();
+        if (document.querySelectorAll('.lotto-numbers').length !== 0) this.#showLottoNumbers();
     }
 
     #creatLottoElement (lottoNumber) {

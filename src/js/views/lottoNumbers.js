@@ -1,22 +1,23 @@
-import { lottoLimitNumbers, lottoRangeMax, lottoRangeMin } from "../utils/const.js";
-import { arr, getRandom } from "../utils/util.js";
+import { LOTTO_LIMIT_NUMBERS, LOTTO_RANGE_MAX, LOTTO_RANGE_MIN } from "../utils/const.js";
+import { getRandom } from "../utils/util.js";
 
 export class LottoNumbers {
-    numbers;
+    _numbers;
 
     constructor() {
-        this.numbers = this.lottoNumbers();
+        this._numbers = this.#setLottoNumbers();
     }
 
-    lottoNumbers = () => {
-        let numbers = arr(lottoLimitNumbers).map(_ => getRandom(lottoRangeMin, lottoRangeMax));
-        numbers = [...new Set(numbers)];
+    get numbers() {
+        return this._numbers;
+    }
 
-        while (numbers.length < lottoLimitNumbers) {
-            const random = getRandom(lottoRangeMin, lottoRangeMax);
-            if (!numbers.includes(random)) numbers.push(random);
+    #setLottoNumbers = () => {
+        const numbers = new Set();
+        while (numbers.size < LOTTO_LIMIT_NUMBERS) {
+            numbers.add(getRandom(LOTTO_RANGE_MIN, LOTTO_RANGE_MAX));
         }
 
-        return numbers;
+        return [...numbers];
     }
 }

@@ -1,9 +1,9 @@
-export const pricePerUnit = 1000;
-export const priceMin = 1000;
-export const priceMax = 10000;
-export const lottoRangeMin = 1;
-export const lottoRangeMax = 45;
-export const lottoLimitNumbers = 6;
+export const PRICE_PER_UNIT = 1000;
+export const PRICE_MIN = 1000;
+export const PRICE_MAX = 10000;
+export const LOTTO_RANGE_MIN = 1;
+export const LOTTO_RANGE_MAX = 45;
+export const LOTTO_LIMIT_NUMBERS = 6;
 
 export const ERROR_MESSAGE = {
     InputRequired: '로또 구입 금액을 입력해 주세요.',
