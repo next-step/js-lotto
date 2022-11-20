@@ -1,4 +1,5 @@
 import { LOTTO_KEYS } from '../service/Constant.js';
+import { $resultAreas } from './Selector.js';
 
 // 당첨결과 모달 영역
 export const MODAL_RESULT_TR = {
