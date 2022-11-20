@@ -16,7 +16,7 @@ resultStore.subscribe((store) => {
   ResultModal(store);
 });
 
-const lottoSection = document.getElementById('lotto-section');
+const lottoList = document.getElementById('lotto-list');
 const lottoInput = document.getElementById('lotto-input');
-lottoSection.classList.add('hide');
+lottoList.classList.add('hide');
 lottoInput.classList.add('hide');
