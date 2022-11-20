@@ -12,37 +12,42 @@
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
           <form class="mt-5">
-            <label class="mb-2 d-inline-block"
-              >구입할 금액을 입력해주세요.
-            </label>
+            <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요. </label>
             <div class="d-flex">
               <input
+                id="purchaseAmount"
                 type="number"
                 class="w-100 mr-2 pl-2"
                 placeholder="구입 금액"
+                data-cy="purchase-amount"
+                required
               />
-              <button type="button" class="btn btn-cyan">확인</button>
+              <button
+                id="purchaseButton"
+                type="submit"
+                class="btn btn-cyan"
+                data-cy="purchase-button"
+              >
+                확인
+              </button>
             </div>
           </form>
-          <section class="mt-9">
+          <section id="purchasedLottoList" class="mt-9" data-cy="purchased-lotto-list">
             <div class="d-flex">
-              <label class="flex-auto my-0">총 5개를 구매하였습니다.</label>
+              <label class="flex-auto my-0" data-cy="notice-purchased-quantity"
+                >총 <span id="totalQuantity" data-cy="total-quantity"></span>개를
+                구매하였습니다.</label
+              >
               <div class="flex-auto d-flex justify-end pr-1">
-                <label class="switch">
+                <label class="switch" data-cy="lotto-numbers-toggle">
                   <input type="checkbox" class="lotto-numbers-toggle-button" />
                   <span class="text-base font-normal">번호보기</span>
                 </label>
               </div>
             </div>
-            <div class="d-flex flex-wrap">
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-            </div>
+            <ul id="lottoIconList" class="d-flex flex-wrap" data-cy="lotto-icon-list"></ul>
           </section>
-          <form class="mt-9">
+          <form id="winningNumberInputs" class="mt-9" data-cy="winning-number-inputs">
             <label class="flex-auto d-inline-block mb-3"
               >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >
@@ -50,30 +55,12 @@
               <div>
                 <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
                 <div>
-                  <input
-                    type="number"
-                    class="winning-number mx-1 text-center"
-                  />
-                  <input
-                    type="number"
-                    class="winning-number mx-1 text-center"
-                  />
-                  <input
-                    type="number"
-                    class="winning-number mx-1 text-center"
-                  />
-                  <input
-                    type="number"
-                    class="winning-number mx-1 text-center"
-                  />
-                  <input
-                    type="number"
-                    class="winning-number mx-1 text-center"
-                  />
-                  <input
-                    type="number"
-                    class="winning-number mx-1 text-center"
-                  />
+                  <input type="number" class="winning-number mx-1 text-center" />
+                  <input type="number" class="winning-number mx-1 text-center" />
+                  <input type="number" class="winning-number mx-1 text-center" />
+                  <input type="number" class="winning-number mx-1 text-center" />
+                  <input type="number" class="winning-number mx-1 text-center" />
+                  <input type="number" class="winning-number mx-1 text-center" />
                 </div>
               </div>
               <div class="bonus-number-container flex-grow">
@@ -83,10 +70,7 @@
                 </div>
               </div>
             </div>
-            <button
-              type="button"
-              class="open-result-modal-button mt-5 btn btn-cyan w-100"
-            >
+            <button type="button" class="open-result-modal-button mt-5 btn btn-cyan w-100">
               결과 확인하기
             </button>
           </form>
