@@ -1,19 +1,19 @@
 import { createElement, createTextNode } from "../core/DOM.js";
 import { lottoStore } from '../store/LottoStore.js';
 
-const lottoSection = document.getElementById('lotto-section');
-const lottoCount = document.getElementById('lotto-count');
-const lottoSwitch = document.getElementById('lotto-switch');
-const lottoList = document.getElementById('lotto-list');
+const $lottoListContainer = document.getElementById('lotto-list');
+const $lottoCount = document.getElementById('lotto-count');
+const $lottoViewSwitch = document.getElementById('lotto-switch');
+const $lottoListTable = document.getElementById('lotto-table');
 
-lottoSwitch.addEventListener('change', (e) => {
+$lottoViewSwitch.addEventListener('change', (e) => {
   const checked = e.currentTarget.checked;
   lottoStore.dispatch('toggleLottoNumber', checked);
 })
 
 export function LottoList({ lottos, isShowLottoNumbers, isShow }) {
   if (!isShow) {
-    lottoSection.classList.add('hide');
+    $lottoListContainer.classList.add('hide');
     return;
   }
 
@@ -21,11 +21,11 @@ export function LottoList({ lottos, isShowLottoNumbers, isShow }) {
     return null;
   }
 
-  lottoSection.classList.remove('hide');
-  lottoCount.replaceChildren(`총 ${lottos.length}개를 구매하였습니다.`);
+  $lottoListContainer.classList.remove('hide');
+  $lottoCount.replaceChildren(`총 ${lottos.length}개를 구매하였습니다.`);
 
   const Lottos = createElement('ul', { className: 'd-flex flex-wrap', children: lottos.map((lottoNumbers) => Lotto(lottoNumbers, isShowLottoNumbers)) });
-  lottoList.replaceChildren(Lottos);
+  $lottoListTable.replaceChildren(Lottos);
 }
 
 function Lotto(numbers, isNumberShow) {

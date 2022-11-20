@@ -1,13 +1,14 @@
-import { LottoPurchase } from './components/LottoPurchaseController.js';
+import { LottoPurchase } from './components/LottoPurchase.js';
 import { LottoList } from "./components/LottoList.js";
+import { MyLotto } from './components/MyLotto.js';
 import { ResultModal } from "./components/ResultModal.js";
-import { MyLottoInput } from './components/MyLottoInputController.js';
+
 import { lottoStore } from './store/LottoStore.js';
 import { resultStore } from './store/ResultStore.js';
 
 lottoStore.subscribe((store) => {
   LottoList(store);
-  MyLottoInput(store);
+  MyLotto(store);
 });
 
 resultStore.subscribe((store) => {
@@ -17,6 +18,5 @@ resultStore.subscribe((store) => {
 
 const lottoSection = document.getElementById('lotto-section');
 const lottoInput = document.getElementById('lotto-input');
-
 lottoSection.classList.add('hide');
 lottoInput.classList.add('hide');

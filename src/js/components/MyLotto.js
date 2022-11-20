@@ -1,45 +1,45 @@
 import { initStore, resultStore } from '../store/ResultStore.js';
 import { checkIsSameElementInArray } from '../utils/utils.js';
 
-const $MyLottoInput = document.getElementById('lotto-input');
-const inputs = Array.from($MyLottoInput.getElementsByTagName('input'));
-const resultButton = $MyLottoInput.getElementsByTagName('button')[0];
+const $MyLottoInputFormContainer = document.getElementById('lotto-input');
+const $numberInputCollection = Array.from($MyLottoInputFormContainer.getElementsByTagName('input'));
+const $resultButton = $MyLottoInputFormContainer.getElementsByTagName('button')[0];
 
-inputs.forEach((input, i) => {
-  input.setAttribute('required', true);
-  input.setAttribute('min', 1);
-  input.setAttribute('max', 45);
-  input.setAttribute('aria-label', `$lottery-input-${i + 1}`);
-  input.addEventListener('keyup', (e) => {
+$numberInputCollection.forEach(($input, i) => {
+  $input.setAttribute('required', true);
+  $input.setAttribute('min', 1);
+  $input.setAttribute('max', 45);
+  $input.setAttribute('aria-label', `$lottery-input-${i + 1}`);
+  $input.addEventListener('keyup', (e) => {
     const value = e.target.value;
     if (value.length > 1) {
-      if (i >= inputs.length - 1) {
-        resultButton.focus();
+      if (i >= $numberInputCollection.length - 1) {
+        $resultButton.focus();
         return;
       }
 
-      inputs[i + 1].focus();
+      $numberInputCollection[i + 1].focus();
     }
   });
 });
 
 let submitEventListener = null;
 
-export function MyLottoInput({ lottos, isShow }) {
+export function MyLotto({ lottos, isShow }) {
   if (!isShow) {
-    $MyLottoInput.classList.add('hide');
-    $MyLottoInput.reset();
+    $MyLottoInputFormContainer.classList.add('hide');
+    $MyLottoInputFormContainer.reset();
     return;
   }
 
-  $MyLottoInput.classList.remove('hide');
-  $MyLottoInput.removeEventListener('submit', submitEventListener);
+  $MyLottoInputFormContainer.classList.remove('hide');
+  $MyLottoInputFormContainer.removeEventListener('submit', submitEventListener);
 
   submitEventListener = (e) => {
     e.stopPropagation();
     e.preventDefault();
 
-    const inputLottoNums = inputs.map((el) => Number(el.value));
+    const inputLottoNums = $numberInputCollection.map(($input) => Number($input.value));
     if (checkIsSameElementInArray(inputLottoNums)) {
       alert('로또 번호에는 중복된 숫자를 입력할 수 없습니다.');
       return;
@@ -56,7 +56,7 @@ export function MyLottoInput({ lottos, isShow }) {
     resultStore.dispatch('showResult', { result });
   };
 
-  $MyLottoInput.addEventListener('submit', submitEventListener);
+  $MyLottoInputFormContainer.addEventListener('submit', submitEventListener);
 }
 
 function calcLottoResult(lottos, myLottoNums, bonusNumber) {
