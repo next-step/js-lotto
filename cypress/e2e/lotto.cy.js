@@ -9,6 +9,8 @@ describe('로또 사이트 E2E 테스트', () => {
   const $winningNumberInput = '.winning-number';
   const $bonusNumberInput = '.bonus-number';
   const $investmentReturnSpan = '[data-id=investment-return]';
+  const $modalCloseButton = '[data-id=modal-close-button]';
+  const $modalRestartButton = '[data-id=restart-button]';
 
   beforeEach(() => {
     cy.visit('../../index.html');
@@ -145,10 +147,11 @@ describe('로또 사이트 E2E 테스트', () => {
   context(
     '결과 확인하기 버튼을 누르면 당첨통계, 수익률을 모달로 확인할 수 있다.',
     () => {
-      const purchaseValue = '5000';
-      const firstPlaceWinningValue = '2000000000';
+      const PURCHASE_VALUE = '5000';
+      const FIRST_PLAICE_WINNING_VALUE = '2000000000';
+
       beforeEach(() => {
-        cy.get($lottoInput).type(purchaseValue);
+        cy.get($lottoInput).type(PURCHASE_VALUE);
         cy.get($lottoButton).click();
         cy.get($numberToggleButton).should('not.be.checked');
       });
@@ -174,35 +177,12 @@ describe('로또 사이트 E2E 테스트', () => {
         cy.get($submitButton).should('be.disabled');
       });
 
-      const winLottoInFirstPlace = () => {
-        cy.get($numberToggleButton).click({ force: true });
-        cy.get($lottoNumber)
-          .first()
-          .invoke('text')
-          .then((text) => {
-            const firstRowLottoNumbers = text
-              .split(' ')
-              .map((el) => el.replace(/(\r\n|\n|\r)/gm, ''))
-              .filter((el) => el !== '');
-
-            cy.get($winningNumberInput).each((eachInput, index) => {
-              cy.get(eachInput).type(firstRowLottoNumbers[index]);
-            });
-
-            cy.get($bonusNumberInput).type(firstRowLottoNumbers[0]);
-            cy.get($submitButton).should('not.be.disabled');
-            cy.get($submitButton).click();
-            cy.wait(1000);
-            cy.get('.modal').should('exist');
-          });
-      };
-
       it('값을 모두 입력한 경우 결과 확인하기 버튼을 클릭할때 모달창이 떠야한다.', () => {
-        winLottoInFirstPlace();
+        cy.winLottoInFirstPlace();
       });
 
       it('당첨 된 개수에 따라 모달에 개수가 표시 된다', () => {
-        winLottoInFirstPlace();
+        cy.winLottoInFirstPlace();
         cy.get('[data-id=win-count-six]')
           .children()
           .last()
@@ -210,11 +190,11 @@ describe('로또 사이트 E2E 테스트', () => {
       });
 
       it('당첨 된 개수에 따라 모달에 수익률이 표시 된다', () => {
-        winLottoInFirstPlace();
+        cy.winLottoInFirstPlace();
         cy.get($investmentReturnSpan).should(
           'have.text',
           `당신의 총 수익률은 ${
-            Math.round(firstPlaceWinningValue / purchaseValue) * 100
+            Math.round(FIRST_PLAICE_WINNING_VALUE / PURCHASE_VALUE) * 100
           } %입니다.`
         );
       });
@@ -224,16 +204,29 @@ describe('로또 사이트 E2E 테스트', () => {
   context(
     '다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.',
     () => {
-      it(
-        '결과 모달이 생성되면 다시시작하기 버튼과 닫기 버튼이 생성되어야 한다.'
-      );
-      it(
-        '닫기 버튼 클릭 시 모달만 사라지고 나머지 상태는 그대로 유지되어야 한다.'
-      );
-      it('다시 시작하기 버튼 클릭 시 모달이 사라져야한다.');
-      it(
-        '다시 시작하기 버튼 클릭 시 로또이미지들과 구입 금액도 리셋 되어야한다.'
-      );
+      beforeEach(() => {
+        cy.winLottoInFirstPlace();
+      });
+      it('결과 모달이 생성되면 다시시작하기 버튼과 닫기 버튼이 생성되어야 한다.', () => {
+        cy.get($modalCloseButton).should('exist');
+        cy.get($modalRestartButton).should('exist');
+      });
+      it('닫기 버튼 클릭 시 모달만 사라지고 나머지 상태는 그대로 유지되어야 한다.', () => {
+        cy.get($modalCloseButton).click();
+        cy.wait(1000);
+        cy.get($modalCloseButton).should('not.exist');
+        cy.get($lottoInput).should('not.be.empty');
+      });
+      it('다시 시작하기 버튼 클릭 시 모달이 사라져야한다.', () => {
+        cy.get($modalRestartButton).click();
+        cy.wait(1000);
+        cy.get($modalCloseButton).should('not.exist');
+      });
+      it('다시 시작하기 버튼 클릭 시 로또이미지들과 구입 금액도 리셋 되어야한다.', () => {
+        cy.get($modalRestartButton).click();
+        cy.wait(1000);
+        cy.get($lottoInput).should('be.empty');
+      });
     }
   );
 

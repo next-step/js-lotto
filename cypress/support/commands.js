@@ -23,3 +23,26 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('winLottoInFirstPlace', () => {
+  cy.get($numberToggleButton).click({ force: true });
+  cy.get($lottoNumber)
+    .first()
+    .invoke('text')
+    .then((text) => {
+      const firstRowLottoNumbers = text
+        .split(' ')
+        .map((el) => el.replace(/(\r\n|\n|\r)/gm, ''))
+        .filter((el) => el !== '');
+
+      cy.get($winningNumberInput).each((eachInput, index) => {
+        cy.get(eachInput).type(firstRowLottoNumbers[index]);
+      });
+
+      cy.get($bonusNumberInput).type(firstRowLottoNumbers[0]);
+      cy.get($submitButton).should('not.be.disabled');
+      cy.get($submitButton).click();
+      cy.wait(1000);
+      cy.get('.modal').should('exist');
+    });
+});
