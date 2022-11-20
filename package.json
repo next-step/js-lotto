@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
+  },
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^6.3.0",
+    "eslint": "^8.27.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "prettier": "^2.7.1"
   }
 }
