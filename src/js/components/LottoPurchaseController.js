@@ -4,7 +4,6 @@ import { createRandomNumber } from '../utils/utils.js';
 
 const lottoPurchaseContainer = document.getElementById('lotto-purchase');
 const costInputElement = lottoPurchaseContainer.getElementsByTagName('input')[0];
-const submitButton = lottoPurchaseContainer.getElementsByTagName('button')[0];
 
 costInputElement.setAttribute('required', true);
 costInputElement.setAttribute('min', 1000);
@@ -38,4 +37,10 @@ function createLotto(count) {
     );
 
   return lottos;
+}
+
+export function LottoPurchase({ purchaseCost }) {
+  if (!purchaseCost) {
+    lottoPurchaseContainer.reset()
+  }
 }

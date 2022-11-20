@@ -25,7 +25,14 @@ inputs.forEach((input, i) => {
 
 let submitEventListener = null;
 
-export function MyLottoInput(lottos) {
+export function MyLottoInput({ lottos, isShow }) {
+  if (!isShow) {
+    $MyLottoInput.classList.add('hide');
+    $MyLottoInput.reset();
+    return;
+  }
+
+  $MyLottoInput.classList.remove('hide');
   $MyLottoInput.removeEventListener('submit', submitEventListener);
 
   submitEventListener = (e) => {

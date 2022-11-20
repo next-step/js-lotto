@@ -11,11 +11,17 @@ lottoSwitch.addEventListener('change', (e) => {
   lottoStore.dispatch('toggleLottoNumber', checked);
 })
 
-export function LottoList(lottos, isShowLottoNumbers) {
+export function LottoList({ lottos, isShowLottoNumbers, isShow }) {
+  if (!isShow) {
+    lottoSection.classList.add('hide');
+    return;
+  }
+
   if (!lottos || lottos.length <= 0) {
     return null;
   }
 
+  lottoSection.classList.remove('hide');
   lottoCount.replaceChildren(`총 ${lottos.length}개를 구매하였습니다.`);
 
   const Lottos = createElement('ul', { className: 'd-flex flex-wrap', children: lottos.map((lottoNumbers) => Lotto(lottoNumbers, isShowLottoNumbers)) });
