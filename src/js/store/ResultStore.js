@@ -1,8 +1,5 @@
 import { createStore } from '../core/Store.js';
 
-// 결과 창 통신을 위한 store
-
-// 기본적인 default store의 형태
 export const initStore = {
   purchaseCost: 0,
   result: {
@@ -34,8 +31,7 @@ const reducer = (actionType, payload, store) => {
       break;
     }
     default: {
-      newStore.result = initStore.result;
-      newStore.isShow = false;
+      return initStore;
     }
   }
 
