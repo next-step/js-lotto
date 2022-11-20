@@ -5,20 +5,22 @@ class Controller {
     this.render();
   }
 
-  addChangeEvent(event) {}
+  addChangeEvent() {}
 
-  addClickEvent(event) {}
+  addClickEvent() {}
 
   initEventHandler() {
     this.$target.addEventListener('click', (event) => {
-      this.addChangeEvent(event);
+      this.addClickEvent(event);
       this.render();
     });
     this.$target.addEventListener('change', (event) => {
-      this.addClickEvent(event);
+      this.addChangeEvent(event);
       this.render();
     });
   }
 
   render() {}
 }
+
+export default Controller;

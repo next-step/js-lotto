@@ -1,11 +1,11 @@
 import { $ } from '../utils.js';
+import InputPriceForm from './view/inputPriceForm.js';
 
 class App {
   constructor($target, lotto) {
     this.lotto = lotto;
     this.$target = $target;
-    this.$inputPrice = $('#input-price');
-    this.$inputPriceButton = $('#input-price-btn');
+    new InputPriceForm($target, lotto);
     this.$lottoSwitch = $('#lotto-switch');
     this.$purchasedLottos = $('#purchased-lottos');
     this.$totalPurchased = $('#total-purchased');
@@ -23,37 +23,14 @@ class App {
     this.showLottoNumbers = !this.showLottoNumbers;
   }
 
-  handleInputPriceButtonClick() {
-    const { validatePrice, registerLotto } = this.lotto;
-
-    if (validatePrice()) {
-      registerLotto();
-      this.showPurchasedLottos = true;
-    }
-  }
-
   handleInputPriceChange(nextPrice) {
     const { setPrice } = this.lotto;
 
     setPrice(Number(nextPrice));
   }
 
-  handleTargetChange({ target }) {
-    if (this.$inputPrice.contains(target)) {
-      this.handleInputPriceChange(target.value);
-      return;
-    }
-  }
-
   handleTargetClick(event) {
     const { target } = event;
-
-    if (this.$inputPriceButton.contains(target)) {
-      event.preventDefault();
-      this.handleInputPriceButtonClick();
-      this.initRender();
-      return;
-    }
 
     if (this.$lottoSwitch.contains(target)) {
       this.handleLottoSwitchClick();
@@ -64,9 +41,6 @@ class App {
   initEventHandler() {
     this.$target.addEventListener('click', (event) => {
       this.handleTargetClick(event);
-    });
-    this.$target.addEventListener('change', (event) => {
-      this.handleTargetChange(event);
     });
   }
 
