@@ -6,8 +6,8 @@ import {
   LOTTO_MAX_NUMBER,
   LOTTO_MIN_NUMBER,
   LOTTO_PRICE,
-} from '../const.js';
-import { getRandomNumber, isNumbersOutOfRange } from '../utils.js';
+} from '../../const.js';
+import { getRandomNumber, isNumbersOutOfRange } from '../../utils.js';
 
 class Lotto {
   #price;

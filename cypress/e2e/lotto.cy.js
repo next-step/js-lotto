@@ -1,5 +1,5 @@
 import { ERROR_MESSAGE } from '../../src/const';
-import Lotto from '../../src/js/lotto';
+import Lotto from '../../src/js/model/lotto';
 
 const lotto = new Lotto();
 
