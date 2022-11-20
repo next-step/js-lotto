@@ -1,6 +1,6 @@
-import InputPurchase from './views/input-purchase.js';
 import LottoStateService from './service/lotto-state.service.js';
 import TicketList from './views/ticket-list.js';
+import PurchaseView from './views/purchase.view.js';
 
 export class App {
   constructor() {
@@ -8,7 +8,7 @@ export class App {
   }
 
   start() {
-    const inputPurchase = new InputPurchase(this.lottoState);
+    const purchaseView = new PurchaseView(this.lottoState);
     const list = new TicketList(this.lottoState);
   }
 }
