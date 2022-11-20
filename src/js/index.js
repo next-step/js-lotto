@@ -1,33 +1,28 @@
 import { isValidateAmount } from './utils/validator.js';
 import { getTicketCount, getLottoNumbers } from './utils/common.js';
 import { ERROR_MSSAGE, SELECTOR } from './utils/constants.js';
-import { $ } from './utils/dom.js';
+import { $, $all } from './utils/dom.js';
 
-
-const $showResultButton = document.querySelector('.open-result-modal-button');
-const $modalClose = document.querySelector('.modal-close');
-const $modal = document.querySelector('.modal');
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-);
-const $purchasedLottos = document.querySelector('#purchased-lottos');
-const $inputLottoNums = document.querySelector('#input-lotto-nums');
-const $totalPurchased = document.querySelector('#total-purchased');
-const $lottoImages = document.querySelector('.lotto-images');
-
-const onModalShow = () => {
-  $modal.classList.add('open');
-};
-
-const onModalClose = () => {
-  $modal.classList.remove('open');
-};
 
 const clearLottoImages = () => {
-  while ($lottoImages.firstChild) {
-    $lottoImages.removeChild($lottoImages.firstChild);
+  while ($(SELECTOR.LOTTO_IMAGES).firstChild) {
+    $(SELECTOR.LOTTO_IMAGES).removeChild($(SELECTOR.LOTTO_IMAGES).firstChild);
   }
 };
+
+const setLottoElement = (purchaseAmount) => {
+  const ticketCount = getTicketCount(purchaseAmount);
+  $(SELECTOR.TOTAL_PURCHASED).textContent = ticketCount;
+
+  const lottoImageTemplate = (numbers) => `<li><span class='lotto-image mx-1 text-4xl'>🎟️</span><span class='lotto-numbers' style='display:none'>${numbers.join(', ')}</span></li>`
+  const lottoImageHTML = Array.from(
+    { length: ticketCount },
+    () => lottoImageTemplate(getLottoNumbers()),
+  ).join('');
+  $(SELECTOR.LOTTO_IMAGES).insertAdjacentHTML('beforeend', lottoImageHTML);
+  $(SELECTOR.PURCHASED_LOTTO).style.display = 'block';
+  $(SELECTOR.INPUT_LOTTO_NUMS).style.display = 'block';
+}
 
 const onPurchaseLotto = (event) => {
   event.preventDefault();
@@ -40,39 +35,33 @@ const onPurchaseLotto = (event) => {
     return;
   }
   clearLottoImages();
-
-  const ticketCount = getTicketCount(purchaseAmount);
-  $totalPurchased.textContent = ticketCount;
-
-  for (let count = 0; count < ticketCount; count++) {
-    const lottoNumbers = getLottoNumbers();
-    const lottoImageHTML = `<li><span class='lotto-image mx-1 text-4xl'>🎟️</span><span class='lotto-numbers' style='display:none'>${lottoNumbers.toString()}</span></li>`;
-    $lottoImages.insertAdjacentHTML('beforeend', lottoImageHTML);
-  }
-
-  $purchasedLottos.style.display = 'block';
-  $inputLottoNums.style.display = 'block';
+  setLottoElement(purchaseAmount);
+};
+const showLottoNumbers = () => {
+  $(SELECTOR.LOTTO_IMAGES).classList.add('d-block');
+  $(SELECTOR.LOTTO_IMAGES).classList.remove('d-flex');
+  $all(SELECTOR.LOTTO_NUMS).forEach((lotto) => {
+    lotto.style.display = 'inline-block';
+  });
 };
 
-const onToggleLottoNumbers = () => {
-  const $lottoNumbers = document.querySelectorAll('.lotto-numbers');
+const hideLottoNumbers = () => {
+  $(SELECTOR.LOTTO_IMAGES).classList.add('d-flex');
+  $(SELECTOR.LOTTO_IMAGES).classList.remove('d-block');
+  $all(SELECTOR.LOTTO_NUMS).forEach((lotto) => {
+    lotto.style.display = 'none';
+  });
+};
 
-  if ($lottoNumbersToggleButton.checked) {
-    $lottoImages.classList.add('d-block');
-    $lottoImages.classList.remove('d-flex');
-    $lottoNumbers.forEach((lotto) => {
-      lotto.style.display = 'inline-block';
-    });
+const onToggleLottoNumbers = (event) => {
+  if (event.target.checked) {
+    showLottoNumbers();
   } else {
-    $lottoImages.classList.add('d-flex');
-    $lottoImages.classList.remove('d-block');
-    $lottoNumbers.forEach((lotto) => {
-      lotto.style.display = 'none';
-    });
+    hideLottoNumbers();
   }
 };
 
-$showResultButton.addEventListener('click', onModalShow);
-$modalClose.addEventListener('click', onModalClose);
 $(SELECTOR.PURCHASE_FORM).addEventListener('submit', onPurchaseLotto);
-$lottoNumbersToggleButton.addEventListener('change', onToggleLottoNumbers);
+$(SELECTOR.LOTTO_NUM_TOGGLE).addEventListener('change', onToggleLottoNumbers);
+
+

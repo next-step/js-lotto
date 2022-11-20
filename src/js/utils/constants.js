@@ -14,6 +14,15 @@ const SELECTOR = {
   PURCHASE_FORM: '#input-price-form',
   PURCHASE_INPUT: '.purchase-amount',
 
+  //Purchase Result 
+  PURCHASED_LOTTO : '#purchased-lottos',
+  TOTAL_PURCHASED : '#total-purchased',
+  LOTTO_IMAGES : '.lotto-images',
+  LOTTO_NUM_TOGGLE : '.lotto-numbers-toggle-button',
+  LOTTO_NUMS : '.lotto-numbers',
+
+  // Input Lotto Nums
+  INPUT_LOTTO_NUMS : '#input-lotto-nums',
 }
 
 export { ERROR_MSSAGE, LOTTO, SELECTOR }
