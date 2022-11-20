@@ -1,3 +1,6 @@
+import { lottoStore } from "../store/LottoStore.js";
+import { resultStore } from "../store/ResultStore.js";
+
 const modal = document.getElementById('modal');
 const modalCloseButton = document.getElementById('modal-close');
 const table = modal.getElementsByTagName('table')[0];
@@ -5,13 +8,19 @@ const resultRecords = Array.from(table.getElementsByTagName('tbody')[0].children
 
 const $profit = document.getElementById('profit');
 
-
+const $resetButton = document.getElementById('reset-button');
 
 modalCloseButton.addEventListener('click', (e) => {
   e.stopPropagation();
   modal.classList.remove('open');
 });
 
+$resetButton.addEventListener('click', (e) => {
+  e.stopPropagation();
+  lottoStore.dispatch();
+  resultStore.dispatch();
+  modal.classList.remove('open');
+});
 
 export function ResultModal({ result, isShow, purchaseCost }) {
   if (!isShow) {
