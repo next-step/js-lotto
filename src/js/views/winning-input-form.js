@@ -1,5 +1,5 @@
 import { $ } from '../../utils.js';
-import Controller from '../controller.js';
+import Controller from '../controllers/controller.js';
 
 class WinningInputForm extends Controller {
   constructor($target, model) {
