@@ -1,7 +1,3 @@
-export const isValidPurchaseAmount = (purchaseAmount) => {
-  return purchaseAmount > 0 && purchaseAmount % 1000 === 0;
-};
-
 export const getRandomNumbers = (maxNumber) => {
   return Array(maxNumber)
     .fill()
@@ -10,4 +6,10 @@ export const getRandomNumbers = (maxNumber) => {
 
 export const shuffle = (array, count) => {
   return array.sort(() => Math.random() - 0.5).slice(0, count);
+};
+
+export const removeChild = ($element) => {
+  while ($element.hasChildNodes()) {
+    $element.removeChild($element.firstChild);
+  }
 };
