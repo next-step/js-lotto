@@ -4,7 +4,8 @@ import './MyLottoInputController.js';
 import { lottoStore } from './store/LottoStore.js';
 
 lottoStore.subscribe((store) => {
-  LottoList(store.lottos);
+  const { lottos, isShowLottoNumbers } = store;
+  LottoList(lottos, isShowLottoNumbers);
 });
 
 const mt9s = Array.from(document.getElementsByClassName('mt-9'));

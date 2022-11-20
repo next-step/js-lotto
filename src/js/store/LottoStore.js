@@ -3,6 +3,7 @@ import { createStore } from '../core/Store.js';
 // 기본적인 default store의 형태
 const initStore = {
   lottos: [],
+  isShowLottoNumbers: false,
 }
 
 const reducer = (actionType, payload, store) => {
@@ -11,6 +12,10 @@ const reducer = (actionType, payload, store) => {
   switch (actionType) {
     case ('update'): {
       newStore.lottos = payload;
+      break;
+    }
+    case ('toggleLottoNumber'): {
+      newStore.isShowLottoNumbers = payload;
       break;
     }
     default: {
