@@ -3,22 +3,21 @@ import Controller from '../controller.js';
 
 class InputPriceForm extends Controller {
   constructor($target, lotto) {
-    super($target);
+    super($target, lotto);
     this.$inputPrice = $('#input-price');
-    this.lotto = lotto;
     this.$inputPriceButton = $('#input-price-btn');
   }
 
   handleInputPriceButtonClick() {
-    const { validatePrice, registerLotto } = this.lotto;
-    console.log(this.lotto);
+    const { validatePrice, registerLotto } = this.model;
+
     if (validatePrice()) {
       registerLotto();
     }
   }
 
   handleInputPriceChange(nextPrice) {
-    const { setPrice } = this.lotto;
+    const { setPrice } = this.model;
 
     setPrice(Number(nextPrice));
   }
