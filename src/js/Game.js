@@ -14,9 +14,7 @@ class Game {
   }
 
   onGenerateGamesBy(count) {
-    return Array(count)
-      .fill()
-      .map(() => this.getGameNumber());
+    return [...Array(count)].map(() => this.getGameNumber());
   }
 
   getGameNumber() {
