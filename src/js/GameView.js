@@ -8,10 +8,10 @@ class GameView {
 
     this.games = [];
     this.isShowGameNumberChecked = false;
-    this.#init();
+    this.#initEvents();
   }
 
-  #init() {
+  #initEvents() {
     this.$showGameNumberToggle.addEventListener(
       "change",
       this.onChangeShowNumberToggle.bind(this)

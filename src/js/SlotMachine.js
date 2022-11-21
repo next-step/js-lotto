@@ -11,10 +11,10 @@ class SlotMachine {
     );
 
     this.#game = new Game();
-    this.#init();
+    this.#initEvents();
   }
 
-  #init() {
+  #initEvents() {
     this.$purchaseForm.addEventListener("submit", this.onSubmit.bind(this));
   }
 
