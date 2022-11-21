@@ -15,10 +15,10 @@ class SlotMachine {
   }
 
   #initEvents() {
-    this.$purchaseForm.addEventListener("submit", this.onPurchase.bind(this));
+    this.$purchaseForm.addEventListener("submit", this.#onPurchase.bind(this));
   }
 
-  onPurchase(event) {
+  #onPurchase(event) {
     event.preventDefault();
 
     const purchasePrice = this.$purchaseAmountInput.value;
