@@ -2,16 +2,14 @@ import { SELECTOR } from "../utils/constants.js";
 import { $, $all } from "../utils/dom.js";
 
 const showLottoNums = (element) => {
-    element.classList.add('d-block');
-    element.classList.remove('d-flex');
-    $all(SELECTOR.LOTTO_NUMS, element).forEach(lotto => { lotto.style.display = 'inline-block' })
+    $all(SELECTOR.LOTTO_NUMS, element).forEach(lotto => {
+        lotto.classList.remove('d-none')
+    });
 };
 
 const hideLottoNums = (element) => {
-    element.classList.add('d-flex');
-    element.classList.remove('d-block');
     $all(SELECTOR.LOTTO_NUMS, element).forEach((lotto) => {
-        lotto.style.display = 'none';
+        lotto.classList.add('d-none')
     });
 };
 

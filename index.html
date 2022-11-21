@@ -17,12 +17,12 @@
           <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.
           </label>
           <div class="d-flex">
-            <input name="purchase-amount" type="number" class="purchase-amount w-100 mr-2 pl-2" placeholder="구입 금액" min="1000" max="100000"
-              required data-cy="purchase-amount" />
+            <input name="purchase-amount" type="number" class="purchase-amount w-100 mr-2 pl-2" placeholder="구입 금액"
+              min="1000" max="100000" required data-cy="purchase-amount" />
             <button type="submit" class="purchase-button btn btn-cyan" data-cy="purchase-button">확인</button>
           </div>
         </form>
-        <section id="purchased-lottos" class="mt-9" style="display:none">
+        <section id="purchased-lottos" class="mt-9 d-none">
           <div class="d-flex">
             <label class="flex-auto my-0">총 <span id="total-purchased">5</span>개를 구매하였습니다.</label>
             <div class="flex-auto d-flex justify-end pr-1">
@@ -32,9 +32,9 @@
               </label>
             </div>
           </div>
-          <ul class="lotto-images flex-wrap d-flex"></ul>
+          <ul class="lotto-images d-flex flex-wrap"></ul>
         </section>
-        <form id="input-lotto-nums" class="mt-9" style="display:none">
+        <form id="input-lotto-nums" class="mt-9 d-none">
           <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
           <div class="d-flex">
             <div>

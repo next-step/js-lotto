@@ -11,13 +11,12 @@ const getLottoCount = (amount) => {
 
 export default (targetElement, state) => {
     const { purchaseAmount } = state;
-    const newState = { ...state, ticketCount: getLottoCount([purchaseAmount]) }
+    const newState = { ...state, ticketCount: getLottoCount(purchaseAmount) }
 
     const element = targetElement.cloneNode(true);
 
-    //@Todo : class로 css변경할수있게 refactoring 필요
-    $(SELECTOR.PURCHASED_LOTTO, element).style.display = 'block';
-    $(SELECTOR.INPUT_LOTTO_NUMS, element).style.display = 'block';
+    $(SELECTOR.PURCHASED_LOTTO, element).classList.toggle('d-none');
+    $(SELECTOR.INPUT_LOTTO_NUMS, element).classList.add('d-none');
 
     const counter = $(SELECTOR.TOTAL_PURCHASED, element);
     counter.replaceWith(counterView(counter, newState));
@@ -27,7 +26,6 @@ export default (targetElement, state) => {
 
     const lottoNumbers = $(SELECTOR.LOTTO_IMAGES, element);
     lottoNumbers.replaceWith(lottoNumsView(lottoNumbers, newState));
-
 
     return element;
 }

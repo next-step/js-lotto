@@ -28,6 +28,15 @@
   flex-wrap: nowrap;
 }
 
+.lotto-images>.lotto-wrapper>.lotto-numbers {
+  font-size: 1.25rem;
+  margin-left: 12px;
+}
+
+.flex-wrap>.lotto-wrapper {
+  display: flex;
+}
+
 /* Flex */
 .flex-1 {
   flex: 1 1 0%;

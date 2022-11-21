@@ -1,7 +1,7 @@
 import { LOTTO } from '../utils/constants.js';
 
 const getLottoElement = (lottoNumbers) => {
-    return `<li><span class='lotto-image mx-1 text-4xl'>🎟️</span><span class='lotto-numbers' style='display:none'>${lottoNumbers.join(', ')}</span></li>`;
+    return `<li class='lotto-wrapper mx-1 text-4xl'><span class='lotto-image'>🎟️</span><span class='lotto-numbers d-none'>${lottoNumbers.join(', ')}</span></li>`;
 };
 
 const getLottoNumbers = () => {
@@ -26,6 +26,5 @@ export default (targetElement, { ticketCount }) => {
     ).join('');
 
     newLottolist.insertAdjacentHTML('beforeend', lottoImageHTML);
-
     return newLottolist;
 }
