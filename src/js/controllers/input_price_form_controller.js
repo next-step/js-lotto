@@ -1,11 +1,8 @@
-import { $ } from '../../utils.js';
 import Controller from './controller.js';
 
 class InputPriceFormController extends Controller {
-  constructor($target, lotto) {
-    super($target, lotto);
-    this.$inputPrice = $('#input-price');
-    this.$inputPriceButton = $('#input-price-btn');
+  constructor(view, lotto) {
+    super(view, lotto);
   }
 
   handleInputPriceButtonClick() {
@@ -25,7 +22,7 @@ class InputPriceFormController extends Controller {
   addClickEvent(event) {
     const { target } = event;
 
-    if (this.$inputPriceButton.contains(target)) {
+    if (this.view.$inputPriceButton.contains(target)) {
       event.preventDefault();
       this.handleInputPriceButtonClick();
       return;
@@ -33,7 +30,7 @@ class InputPriceFormController extends Controller {
   }
 
   addChangeEvent({ target }) {
-    if (this.$inputPrice.contains(target)) {
+    if (this.view.$inputPrice.contains(target)) {
       this.handleInputPriceChange(target.value);
       return;
     }
