@@ -30,11 +30,7 @@ class GameView {
       ? "d-block"
       : "d-flex flex-wrap";
     this.$gameListSection.innerHTML = this.games
-      .map((game) =>
-        this.isShowGameNumberChecked
-          ? this.templateGameIconWithNumber(game)
-          : this.templateGameIcon()
-      )
+      .map((game) => this.templateGame(game))
       .join("");
   }
 
@@ -47,15 +43,15 @@ class GameView {
     return `총 ${this.games.length}개를 구매하였습니다.`;
   }
 
-  templateGameIcon() {
-    return `<span class="mx-1 text-4xl">🎟️ </span>`;
-  }
-
-  templateGameIconWithNumber(game) {
+  templateGame(game) {
     return `
             <div class="d-flex items-center">
               <span class="mx-1 text-4xl">🎟️ </span>
-              <span data-cy="game-number">${game}</span>
+              ${
+                this.isShowGameNumberChecked
+                  ? `<span data-cy="game-number">${game}</span>`
+                  : ``
+              }
             </div>
           `;
   }
