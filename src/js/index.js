@@ -3,8 +3,7 @@ import { isValidateAmount } from './utils/validator.js';
 import { ERROR_MSSAGE, SELECTOR } from './utils/constants.js';
 import { $, $all } from './utils/dom.js';
 
-import view from './view.js';
-
+import appView from './views/app.js';
 
 // const clearLottoImages = () => {
 //   while ($(SELECTOR.LOTTO_IMAGES).firstChild) {
@@ -63,7 +62,7 @@ const showLottoNumbers = () => {
 //   }
 // };
 
-$(SELECTOR.PURCHASE_FORM).addEventListener('submit', onPurchaseLotto);
+// $(SELECTOR.PURCHASE_FORM).addEventListener('submit', onPurchaseLotto);
 // $(SELECTOR.LOTTO_NUM_TOGGLE).addEventListener('change', onToggleLottoNumbers);
 
 const state = {
@@ -72,6 +71,6 @@ const state = {
 }
 
 window.requestAnimationFrame(() => {
-  const newApp = view($('#app'), state);
+  const newApp = appView($('#app'), state);
   $('#app').replaceWith(newApp);
 });
