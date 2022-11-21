@@ -1,4 +1,4 @@
-import { DOM_INDEX_WITH_WINNING_COUNT_MAPPER, ERROR_MESSAGE, LOTTO } from '../../src/js/constants/index.js';
+import { ERROR_MESSAGE, LOTTO } from '../../src/js/constants/index.js';
 import { getLottoRank, getRateOfReturn } from '../../src/js/service/lotto.js';
 import { DUMMY_DATA } from '../constants/lotto.js';
 import { SELECTOR } from '../constants/selector.js';
@@ -100,8 +100,9 @@ describe('로또 어플리케이션을 테스트한다.', () => {
       clickOpenResultModalButton();
 
       cy.getByDataset(SELECTOR.LOTTO_WINNING_COUNT)
-        .each(($el, idx) => {
-          viewLottoWinningCount[DOM_INDEX_WITH_WINNING_COUNT_MAPPER[idx]] = Number($el.text()[NUMBER_OF_WIN_INDEX]);
+        .each(($el) => {
+          const { rank } = $el.get(0).dataset;
+          viewLottoWinningCount[rank] = Number($el.text()[NUMBER_OF_WIN_INDEX]);
         })
         .then(() => {
           expect(JSON.stringify(lottoWinningCount)).to.equal(JSON.stringify(viewLottoWinningCount));

@@ -1,4 +1,4 @@
-import { DOM_INDEX_WITH_WINNING_COUNT_MAPPER, SELECTOR } from '../constants/index.js';
+import { SELECTOR } from '../constants/index.js';
 import { $, $all } from '../utils/dom.js';
 
 const lottoTemplate = (lottoNumbers) => `
@@ -74,9 +74,10 @@ export const renderLottoResult = (count, lottoNumbersArray) => {
 };
 
 export const renderResultForm = (winningCount, rateOfReturn) => {
-  [...$all(SELECTOR.LOTTO_WINNING_COUNT)].forEach((row, index) => {
+  [...$all(SELECTOR.LOTTO_WINNING_COUNT)].forEach((row) => {
+    const { rank } = row.dataset;
     // eslint-disable-next-line no-param-reassign
-    row.textContent = `${winningCount[DOM_INDEX_WITH_WINNING_COUNT_MAPPER[index]]}개`;
+    row.textContent = `${winningCount[rank]}개`;
   });
 
   $(SELECTOR.RATE_OF_RETURN).textContent = `당신의 총 수익률은 ${rateOfReturn}%입니다.`;
