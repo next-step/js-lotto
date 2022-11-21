@@ -38,6 +38,7 @@ describe("행운의 로또 테스트", () => {
       });
     });
   });
+
   describe("금액에 해당하는 로또를 발급해야 한다.", () => {
     it("클릭할 확인 버튼이 있다.", () => {
       cy.get($purchaseInputSelector).should("exist");
@@ -50,6 +51,7 @@ describe("행운의 로또 테스트", () => {
           expectedMessage: "값은 100000 이하여야 합니다.",
         });
       });
+
       describe("1,000원 단위로만 구매가 가능하며 입력이 되지 않았을 경우 alert를 띄워준다.", () => {
         it("999원", () => {
           validateAmountUnit({
@@ -84,7 +86,30 @@ describe("행운의 로또 테스트", () => {
           });
         });
       });
-      it("금액을 입력하고 엔터키를 눌러서도 발급이 된다", () => {});
+
+      describe("금액을 입력하고 엔터키를 눌러서도 submit이 된다.", () => {
+        it("올바른 값을 입력했을 경우 alert가 뜨지 않는다.", () => {
+          const alertStub = cy.stub();
+          cy.on("window:alert", alertStub);
+          cy.get($purchaseInputSelector)
+            .type("1000{enter}")
+            .then(() => {
+              expect(alertStub).to.be.not.called;
+            });
+        });
+
+        it("잘못된 값을 입력했을 경우 alert가 노출된다.", () => {
+          const alertStub = cy.stub();
+          cy.on("window:alert", alertStub);
+          cy.get($purchaseInputSelector)
+            .type("1001{enter}")
+            .then(() => {
+              expect(alertStub.getCall(0)).to.be.calledWith(
+                "로또 구입 금액을 1,000원 단위로 입력해 주세요."
+              );
+            });
+        });
+      });
     });
   });
 
