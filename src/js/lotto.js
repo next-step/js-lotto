@@ -1,4 +1,3 @@
-// model
 import { checkAmountUnit } from "./utils.js";
 import { MESSAGE_ABOUT_UNIT_OF_AMOUNT } from "./constants.js";
 
@@ -6,7 +5,6 @@ const UNIT_AMOUNT = 1000;
 
 class Lotto {
   #state;
-  #gameCount;
 
   constructor() {
     this.#state = {

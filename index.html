@@ -8,7 +8,7 @@
   </head>
   <body>
     <div id="app" class="p-3 d-flex items-center">
-      <div class="d-flex justify-center">
+      <div class="app-container d-flex justify-center">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
           <section class="mt-9">
@@ -37,22 +37,24 @@
             </form>
           </section>
 
-          <section class="mt-9">
+          <section id="purchased-lottos" class="mt-9">
             <h2 class="hidden-text">구매한 로또 내역</h2>
             <div class="d-flex">
-              <p class="flex-auto my-0">총 <strong class="purchased-count">5</strong>개를 구매하였습니다.</p>
+              <p class="flex-auto my-0">
+                총 <strong class="purchased-count">5</strong>개를
+                구매하였습니다.
+              </p>
               <div class="flex-auto d-flex justify-end pr-1">
                 <label class="switch">
-                  <input type="checkbox" class="lotto-numbers-toggle-button" />
+                  <input type="checkbox" class="lotto-numbers-toggle-button" data-cy="lotto-numbers-toggle-button" />
                   <span class="text-base font-normal">번호보기</span>
                 </label>
               </div>
             </div>
-            <!--            <ul id="lotto-list" class="d-flex flex-wrap flex-col">-->
             <ul id="lotto-list" class="d-flex flex-wrap"></ul>
           </section>
 
-          <section class="mt-9">
+          <section id="check-winning-number" class="mt-9">
             <h2 class="hidden-text">당첨 번호 조회 영역</h2>
             <form id="winning-number-confirmation-form">
               <p class="flex-auto mb-3">
