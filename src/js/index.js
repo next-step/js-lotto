@@ -1,5 +1,5 @@
 import { isValidateAmount } from './utils/validator.js';
-import { getTicketCount, getLottoNumbers } from './utils/common.js';
+import { getTicketCount, getLottoNumbers } from './lotto.js';
 import { ERROR_MSSAGE, SELECTOR } from './utils/constants.js';
 import { $, $all } from './utils/dom.js';
 
