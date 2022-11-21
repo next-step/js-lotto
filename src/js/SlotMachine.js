@@ -15,10 +15,10 @@ class SlotMachine {
   }
 
   #initEvents() {
-    this.$purchaseForm.addEventListener("submit", this.onSubmit.bind(this));
+    this.$purchaseForm.addEventListener("submit", this.onPurchase.bind(this));
   }
 
-  onSubmit(event) {
+  onPurchase(event) {
     event.preventDefault();
 
     const purchasePrice = this.$purchaseAmountInput.value;
@@ -27,11 +27,11 @@ class SlotMachine {
       return;
     }
 
-    const purchaseAmount = this.onCalculateAmountPerPrice(purchasePrice);
+    const purchaseAmount = this.calculateAmountPer(purchasePrice);
     this.#game.makeGames(purchaseAmount);
   }
 
-  onCalculateAmountPerPrice(purchasePrice) {
+  calculateAmountPer(purchasePrice) {
     return purchasePrice / 1000;
   }
 
