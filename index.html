@@ -80,7 +80,7 @@
         </button>
 
         <h2 class="text-center">🏆 당첨 통계 🏆</h2>
-        <div class="d-flex justify-center">
+        <div class="d-flex justify-center" data-id="modal-result-table">
           <table class="result-table border-collapse border border-black">
             <thead>
               <tr class="text-center">
@@ -89,8 +89,8 @@
                 <th class="p-3">당첨 갯수</th>
               </tr>
             </thead>
-            <tbody>
-              <tr class="text-center" data-id="win-count-three">
+            <tbody data-id="modal-result-table-body">
+              <!-- <tr class="text-center" data-id="win-count-three">
                 <td class="p-3">3개</td>
                 <td class="p-3">5,000</td>
                 <td class="p-3">n개</td>
@@ -114,11 +114,13 @@
                 <td class="p-3">6개</td>
                 <td class="p-3">2,000,000,000</td>
                 <td class="p-3">n개</td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
-        <p class="text-center font-bold" data-id="investment-return">당신의 총 수익률은 %입니다.</p>
+        <p class="text-center font-bold" data-id="investment-return">
+          <!-- 당신의 총 수익률은 %입니다. -->
+        </p>
         <div class="d-flex justify-center mt-5">
           <button type="button" class="btn btn-cyan" data-id="restart-button">다시 시작하기</button>
         </div>

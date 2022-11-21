@@ -1,8 +1,8 @@
 describe('로또 사이트 E2E 테스트', () => {
   const $lottoInput = '[data-id=lotto-number-input]';
   const $lottoButton = '[data-id=lotto-submit-button]';
-  const $resultSpan = '[data-id=result-text]';
   const $numberToggleButton = '[data-id=number-toggle-button]';
+  const $resultSpan = '[data-id=result-text]';
   const $lottoImage = '[data-id=lotto-image]';
   const $lottoNumber = '[data-id=lotto-number]';
   const $submitButton = '.open-result-modal-button';
@@ -151,8 +151,8 @@ describe('로또 사이트 E2E 테스트', () => {
       const FIRST_PLAICE_WINNING_VALUE = '2000000000';
 
       beforeEach(() => {
-        cy.get($lottoInput).type(PURCHASE_VALUE);
-        cy.get($lottoButton).click();
+        cy.buyNewLottoWithValue(PURCHASE_VALUE);
+
         cy.get($numberToggleButton).should('not.be.checked');
       });
 
@@ -183,19 +183,19 @@ describe('로또 사이트 E2E 테스트', () => {
 
       it('당첨 된 개수에 따라 모달에 개수가 표시 된다', () => {
         cy.winLottoInFirstPlace();
-        cy.get('[data-id=win-count-six]')
-          .children()
-          .last()
-          .should('have.text', '1개');
+        cy.get('[data-id=6개]').children().last().should('have.text', '1개');
       });
 
       it('당첨 된 개수에 따라 모달에 수익률이 표시 된다', () => {
+        const profit =
+          Math.round(
+            (FIRST_PLAICE_WINNING_VALUE - PURCHASE_VALUE) / PURCHASE_VALUE
+          ) * 100;
+
         cy.winLottoInFirstPlace();
         cy.get($investmentReturnSpan).should(
           'have.text',
-          `당신의 총 수익률은 ${
-            Math.round(FIRST_PLAICE_WINNING_VALUE / PURCHASE_VALUE) * 100
-          } %입니다.`
+          `당신의 총 수익률은 ${profit}%입니다.`
         );
       });
     }
@@ -204,7 +204,9 @@ describe('로또 사이트 E2E 테스트', () => {
   context(
     '다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.',
     () => {
+      const PURCHASE_VALUE = '5000';
       beforeEach(() => {
+        cy.buyNewLottoWithValue(PURCHASE_VALUE);
         cy.winLottoInFirstPlace();
       });
       it('결과 모달이 생성되면 다시시작하기 버튼과 닫기 버튼이 생성되어야 한다.', () => {

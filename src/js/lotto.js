@@ -3,8 +3,15 @@ import {
   DEFAULT_LOTTO_STATE,
   MAX_LOTTO_PRICE,
   MIN_LOTTO_PRICE,
+  MODAL_WIINING_TABLE_MAP,
+  WINNING_NUMBER_INPUT_COUNT,
 } from '../constants.js';
-import { isDuplicatedInArray, makeLottoNumbers } from '../utils/index.js';
+import {
+  getWinningCount,
+  isDuplicatedInArray,
+  makeLottoNumbers,
+  makeRateOfReturn,
+} from '../utils/index.js';
 
 class Lotto {
   constructor({ $target }) {
@@ -14,9 +21,18 @@ class Lotto {
     this.$modal = $target.querySelector('.modal');
     this.$numberInput = $target.querySelector('[data-id=lotto-number-input]');
     this.$submitButton = $target.querySelector('[data-id=lotto-submit-button]');
+    this.$openModalButton = $target.querySelector(
+      '[data-id=open-result-modal-button]'
+    );
     this.$bonusNumberInput = $target.querySelector('.bonus-number');
     this.$winningNumbersInput = Array.from(
       $target.getElementsByClassName('winning-number')
+    );
+    this.$modalTableBody = $target.querySelector(
+      '[data-id=modal-result-table-body]'
+    );
+    this.$investmentReturnSpan = $target.querySelector(
+      '[data-id=investment-return]'
     );
 
     this.state = {
@@ -52,12 +68,12 @@ class Lotto {
     }
 
     if (isConfirm) {
-      const randomNumbers = makeLottoNumbers(this.state.moneyAmount);
+      const lottoNumbers = makeLottoNumbers(this.state.moneyAmount);
 
       this.setState({
         ...this.state,
         lottoPurchaseNumber: this.state.moneyAmount / MIN_LOTTO_PRICE,
-        randomNumbers,
+        lottoNumbers,
         isVisibleResult: true,
       });
     }
@@ -78,14 +94,15 @@ class Lotto {
   }
 
   onModalShow({ isVisibleModal }) {
+    const isValidBonusNumber = Boolean(this.state.bonusNumber);
     const isAllTyped =
-      this.state.winningNumbers.filter((number) => Number(number) > 0)
-        .length === 7;
+      this.state.winningNumbers.filter((number) => Boolean(number)).length ===
+        WINNING_NUMBER_INPUT_COUNT && isValidBonusNumber;
 
     const isValidNumbers =
       this.state.winningNumbers.filter(
         (number) => +number >= 1 && +number <= 45
-      ).length === 7;
+      ).length === WINNING_NUMBER_INPUT_COUNT && isValidBonusNumber;
 
     if (!isAllTyped) {
       alert('7개의 값을 모두 입력해주세요');
@@ -128,14 +145,53 @@ class Lotto {
     });
 
     if (isBonusInput) this.$bonusNumberInput.focus();
+    if (index === WINNING_NUMBER_INPUT_COUNT) {
+      this.setState({
+        ...this.state,
+        bonusNumber: value,
+      });
+    }
   }
 
   renderModal() {
-    if (this.state.isVisibleModal) {
+    const {
+      isVisibleModal,
+      lottoNumbers,
+      winningNumbers,
+      bonusNumber,
+      moneyAmount,
+    } = this.state;
+
+    if (isVisibleModal) {
+      const { countedLottoNumbersMap, totalAdvantage } = getWinningCount({
+        lottoNumbers,
+        winningInput: winningNumbers.map((el) => Number(el)),
+        bonusNumber,
+      });
+      const profit = makeRateOfReturn(moneyAmount, totalAdvantage);
+      this.$modalTableBody.innerHTML = `
+            ${MODAL_WIINING_TABLE_MAP.map(({ title, value }) => {
+              return `
+              <tr class="text-center" data-id=${title}>
+                <td class="p-3">${title}</td>
+                <td class="p-3">${value.toLocaleString()}</td>
+                <td class="p-3">${
+                  countedLottoNumbersMap.has(title)
+                    ? countedLottoNumbersMap.get(title)
+                    : 0
+                }개</td>
+              </tr>
+              `;
+            }).join('')}
+          `;
+
+      this.$investmentReturnSpan.innerText = `
+        당신의 총 수익률은 ${profit}%입니다.
+      `;
       this.$modal.classList.add('open');
     }
 
-    if (!this.state.isVisibleModal) {
+    if (!isVisibleModal) {
       this.$modal.classList.remove('open');
     }
   }
@@ -162,13 +218,13 @@ class Lotto {
     this.$resultWrapper.querySelector(
       '[data-id=lotto-image-wrapper]'
     ).innerHTML = `
-      ${this.state.randomNumbers
-        .map((randomNumber) => {
+      ${this.state.lottoNumbers
+        .map((lottoNumber) => {
           return `
             <li class="lotto-list">
               <span class="mx-1 text-4xl" data-id="lotto-image">🎟️</span>
               <span class="lotto-number" data-id="lotto-number">
-                ${randomNumber.join(' ')}
+                ${lottoNumber.join(' ')}
               </span>
             </li>
         `;
@@ -211,11 +267,10 @@ class Lotto {
   }
 
   renderBonusInput() {
-    this.$bonusNumberInput.value =
-      this.state.winningNumbers[this.state.winningNumbers.length - 1];
+    this.$bonusNumberInput.value = this.state.bonusNumber;
   }
 
-  renderButton() {
+  renderConfirmButton() {
     const isBlank =
       this.state.moneyAmount === 0 || this.state.moneyAmount === null;
 
@@ -223,15 +278,27 @@ class Lotto {
     if (!isBlank) this.$submitButton.removeAttribute('disabled');
   }
 
+  renderOpenModalButton() {
+    const isValidBonusNumber = Boolean(this.state.bonusNumber);
+    const isAllTyped =
+      this.state.winningNumbers.filter((number) => Boolean(number)).length ===
+        WINNING_NUMBER_INPUT_COUNT && isValidBonusNumber;
+    const isValid = isAllTyped && isValidBonusNumber;
+
+    if (isValid) this.$openModalButton.removeAttribute('disabled');
+    if (!isValid) this.$openModalButton.setAttribute('disabled', '');
+  }
+
   render() {
     this.renderResult();
     this.renderCheckResultForm();
     this.renderToggle();
     this.renderInput();
-    this.renderButton();
+    this.renderConfirmButton();
     this.renderModal();
     this.renderWinningInput();
     this.renderBonusInput();
+    this.renderOpenModalButton();
   }
 
   addEventListener() {

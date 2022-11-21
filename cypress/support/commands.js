@@ -24,7 +24,22 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+Cypress.Commands.add('buyNewLottoWithValue', (spendMoney) => {
+  const $lottoInput = '[data-id=lotto-number-input]';
+  const $lottoButton = '[data-id=lotto-submit-button]';
+  const $numberToggleButton = '[data-id=number-toggle-button]';
+  cy.get($lottoInput).type(spendMoney);
+  cy.get($lottoButton).click();
+  cy.get($numberToggleButton).should('not.be.checked');
+});
+
 Cypress.Commands.add('winLottoInFirstPlace', () => {
+  const $numberToggleButton = '[data-id=number-toggle-button]';
+  const $lottoNumber = '[data-id=lotto-number]';
+  const $winningNumberInput = '.winning-number';
+  const $bonusNumberInput = '.bonus-number';
+  const $submitButton = '.open-result-modal-button';
+
   cy.get($numberToggleButton).click({ force: true });
   cy.get($lottoNumber)
     .first()
