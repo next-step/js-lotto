@@ -1,7 +1,7 @@
 import { $ } from '../../utils.js';
-import Controller from '../controllers/controller.js';
+import Controller from './controller.js';
 
-class InputPriceForm extends Controller {
+class InputPriceFormController extends Controller {
   constructor($target, lotto) {
     super($target, lotto);
     this.$inputPrice = $('#input-price');
@@ -40,4 +40,4 @@ class InputPriceForm extends Controller {
   }
 }
 
-export default InputPriceForm;
+export default InputPriceFormController;

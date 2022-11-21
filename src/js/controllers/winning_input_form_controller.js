@@ -1,7 +1,7 @@
 import { $ } from '../../utils.js';
-import Controller from '../controllers/controller.js';
+import Controller from './controller.js';
 
-class WinningInputForm extends Controller {
+class WinningInputFormController extends Controller {
   constructor($target, model) {
     super($target, model);
     this.$inputLottoNumbers = $('#input-lotto-numbers');
@@ -16,4 +16,4 @@ class WinningInputForm extends Controller {
   }
 }
 
-export default WinningInputForm;
+export default WinningInputFormController;

@@ -1,10 +1,10 @@
-import InputPriceForm from './views/input-price-form.js';
-import PurchasedLotto from './views/purchased-lotto.js';
-import WinningInputForm from './views/winning-input-form.js';
+import InputPriceFormController from './controllers/input_price_form_controller.js';
+import PurchasedLottoController from './controllers/purchase_lotto_controller.js';
+import WinningInputFormController from './controllers/winning_input_form_controller.js';
 
 class App {
   constructor($target, lotto) {
-    new InputPriceForm($target, lotto);
+    new InputPriceFormController($target, lotto);
     new PurchasedLotto($target, lotto);
     new WinningInputForm($target, lotto);
   }

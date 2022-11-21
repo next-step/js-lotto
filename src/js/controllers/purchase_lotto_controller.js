@@ -1,7 +1,7 @@
 import { $ } from '../../utils.js';
-import Controller from '../controllers/controller.js';
+import Controller from './controller.js';
 
-class PurchasedLotto extends Controller {
+class PurchasedLottoController extends Controller {
   constructor($target, lotto) {
     super($target, lotto);
     this.$lottoSwitch = $('#lotto-switch');
@@ -55,4 +55,4 @@ class PurchasedLotto extends Controller {
   }
 }
 
-export default PurchasedLotto;
+export default PurchasedLottoController;
