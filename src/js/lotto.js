@@ -1,5 +1,5 @@
 import { $, $$ } from "./utils.js";
-import { $modal, $lottoNumbersToggleButton, $paymentCost, $paymentForm, $paymentTickets, $showModalButton, $removeModalButton } from "./DOM.js";
+import { $modal, $lottoNumbersToggleButton, $paymentCost, $paymentForm, $paymentTickets, $showModalButton, $removeModalButton, $$winningNumbers } from "./DOM.js";
 import { ALERT_MESSAGE, MAX_IN_NUMBER, MIN_IN_NUMBER, PURCHASE_AMOUNT_UNIT } from "./constants.js";
 
 class Lotto {
@@ -16,7 +16,8 @@ class Lotto {
       this.handleLottoNumbersToggleButton();
     });
     $showModalButton.addEventListener("click", () => {
-      this.onModalShow();
+      // this.onModalShow();
+      this.getWinningNumbers();
     });
     $removeModalButton.addEventListener("click", () => {
       this.onModalClose();
@@ -77,6 +78,11 @@ class Lotto {
     }
 
     return lottoResult;
+  }
+
+  getWinningNumbers() {
+    const winningNumbers = Array.from($$winningNumbers).map((number) => number.value);
+    console.log(winningNumbers);
   }
 
   onModalShow = () => {
