@@ -5,13 +5,3 @@ export const MESSAGE = {
   INVALID_WINNING_NUMBER_RANGE: '당첨 번호와 보너스 번호는 1~45까지만 입력할 수 있습니다',
   INVALID_WINNING_NUMBER_DUPLICATED: '당첨 번호와 보너스 번호는 서로 중복될 수 없습니다',
 };
-
-export const LOTTO_ICON = '🎟️';
-export const LOTTO_PRICE = 1000;
-export const NUMBER_DICTIONARY = [null, null, null, 'three', 'four', 'five', 'six'];
-export const CARDINAL_NUMBER = {
-  three: 3,
-  four: 4,
-  five: 5,
-  six: 6,
-};

@@ -13,7 +13,8 @@ body {
   margin: 0 auto;
 }
 
-.winning-number {
+.winning-number,
+.manual-number {
   width: 30px;
   height: 36px;
 }

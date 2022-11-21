@@ -10,7 +10,7 @@ describe('로또 요구사항을 테스트한다', () => {
     labelPurchasingStatus: '.purchasing-status',
     lottoIcons: '.lotto-icons',
     toggleVisibleNumbers: '.toggle-visible-numbers',
-    inputWinningNumber: '.winning-number',
+    inputWinningNumber: '.winning-form .winning-number',
     inputBonusNumber: '.bonus-number',
     btnWinning: '.open-result-modal-button',
     spanLottoDetails: '.lotto-detail',

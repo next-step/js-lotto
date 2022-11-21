@@ -1,14 +1,14 @@
-import { buy } from '../util/LottoBuyer.js';
+import { buy } from '../service/LottoBuyer.js';
 import { validatePurchasingAmount } from '../util/Validator.js';
-import { toggleResultAreas } from './Element.js';
+import { setVisibleResultAreas } from './Element.js';
 import { setLottos } from './Lotto.js';
 import { getMyLottoResult, updateLottoResult } from './LottoResult.js';
-import { $modal, $purchasingAmountInput } from './Selector.js';
+import { $checkPurchasingManually, $modal, $purchasingAmountInput } from './Selector.js';
 
 /**
  * @param {number[]} lottos
  */
-export const onModalShow = (lottos = []) => {
+export const onModalShow = (lottos) => {
   try {
     updateLottoResult(lottos, getMyLottoResult(lottos));
     $modal.classList.add('open');
@@ -24,7 +24,7 @@ export const onModalClose = () => {
 
 export const onLottoRestart = () => {
   $purchasingAmountInput.value = '';
-  toggleResultAreas();
+  setVisibleResultAreas(false);
   onModalClose();
 };
 
@@ -32,9 +32,12 @@ export const onLottosBought = () => {
   try {
     const purchasingAmount = $purchasingAmountInput.value;
     validatePurchasingAmount(purchasingAmount);
+    // TODO: 기능 작성 후 역할 분리하기
+    const isPurchasingManually = $checkPurchasingManually.checked;
+    // 로또 구매 로직
     const lottos = buy(parseInt(purchasingAmount));
     setLottos(lottos);
-    toggleResultAreas();
+    setVisibleResultAreas();
     return lottos;
   } catch (error) {
     alert(error.message);

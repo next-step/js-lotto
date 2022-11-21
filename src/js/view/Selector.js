@@ -4,6 +4,7 @@ const querySelectorAll = (selector) => document.querySelectorAll(selector);
 // 로또 구입 금액 영역
 export const $confirmButton = querySelector('.btn-confirm');
 export const $purchasingAmountInput = querySelector('.input-purchasing-amount');
+export const $checkPurchasingManually = querySelector('.check-purchasing-manually');
 
 // 로또 구입 확인 영역
 export const $resultSection = querySelector('.result-section');
