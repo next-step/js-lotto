@@ -1,5 +1,6 @@
 import { GAME } from "./constants.js";
 import GameView from "./GameView.js";
+import { getLottoRandomNumber } from "./utils.js";
 
 class Game {
   #gameListView;
@@ -20,9 +21,7 @@ class Game {
   getGameNumber() {
     const randomNumbers = new Set();
     while (randomNumbers.size !== GAME.MAX_SIZE) {
-      const randomNumber = Math.floor(
-        Math.random() * (GAME.MAX_NUMBER - GAME.MIN_NUMBER) + 1
-      );
+      const randomNumber = getLottoRandomNumber();
       randomNumbers.add(randomNumber);
     }
 
