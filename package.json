@@ -1,9 +1,19 @@
 {
-  "name": "lotto",
+  "name": "js-lotto",
   "version": "1.0.0",
   "main": "index.js",
+  "repository": "https://github.com/yeomgahui/js-lotto.git",
+  "author": "= <=ykh4933@naver.com>",
   "license": "MIT",
+  "scripts": {
+    "cypress:open": "cypress open"
+  },
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^11.0.1",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1"
   }
 }
