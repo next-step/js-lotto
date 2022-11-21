@@ -2,27 +2,51 @@
 import { checkAmountUnit } from "./utils.js";
 import { MESSAGE_ABOUT_UNIT_OF_AMOUNT } from "./constants.js";
 
+const UNIT_AMOUNT = 1000;
+
 class Lotto {
-  #lottos;
+  #state;
+  #gameCount;
 
   constructor() {
-    this.#lottos = [];
+    this.#state = {
+      lottos: [],
+      gameCount: 0,
+    };
   }
 
   get() {
-    return this.#lottos;
+    return this.#state;
   }
 
-  // #generatorLotto(amount) {
-  // [["1", "2", "3", "4", "5", "6"]];
-  // }
+  createGame() {
+    const game = new Array(6).fill(0);
+
+    game.forEach((g, index) => {
+      let num = Math.floor(Math.random() * 44) + 1;
+      while (game.includes(num)) {
+        num = Math.floor(Math.random() * 44) + 1;
+      }
+      game[index] = num;
+    });
+
+    return game;
+  }
+
+  #generatorLotto(amount) {
+    const gameCount = amount / UNIT_AMOUNT;
+    const games = new Array(gameCount).fill(0);
+
+    this.#state.gameCount = gameCount;
+    this.#state.lottos = games.map(() => this.createGame());
+  }
 
   purchaseLotto(amount) {
     if (!checkAmountUnit(amount)) {
       alert(MESSAGE_ABOUT_UNIT_OF_AMOUNT);
     }
 
-    // this.#generatorLotto(amount);
+    this.#generatorLotto(amount);
   }
 }
 
