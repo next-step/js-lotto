@@ -15,7 +15,7 @@ export const resetLottoPurchasePrice = () => {
 };
 
 export const getLottoWinningNumberArray = () => {
-  return $(SELECTOR.WINNING_NUMBER_INPUT_WRAPPER).children;
+  return Array.from($(SELECTOR.WINNING_NUMBER_INPUT_WRAPPER).children).map((input) => Number(input.value));
 };
 
 export const getLottoBonusNumber = () => {
@@ -23,13 +23,7 @@ export const getLottoBonusNumber = () => {
 };
 
 const resetLottoWinningNumbers = () => {
-  const lottoWinningNumberInputs = getLottoWinningNumberArray();
-
-  [...lottoWinningNumberInputs].forEach((input) => {
-    input.value = '';
-  });
-
-  $(SELECTOR.BONUS_NUMBER_INPUT).value = '';
+  $(SELECTOR.LOTTO_RESULT_FORM).reset();
 };
 
 const showPurchasedLotto = () => {
@@ -81,6 +75,7 @@ export const renderLottoResult = (count, lottoNumbersArray) => {
 
 export const renderResultForm = (winningCount, rateOfReturn) => {
   [...$all(SELECTOR.LOTTO_WINNING_COUNT)].forEach((row, index) => {
+    // eslint-disable-next-line no-param-reassign
     row.textContent = `${winningCount[DOM_INDEX_WITH_WINNING_COUNT_MAPPER[index]]}개`;
   });
 

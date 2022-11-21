@@ -13,11 +13,7 @@ export const generateLottoNumbersToArray = (count) => {
 };
 
 export const getLottoWinningNumbers = () => {
-  const lottoWinningNumberArray = getLottoWinningNumberArray();
-
-  const lottoWinningNumbers = [...lottoWinningNumberArray].reduce((acc, cur) => {
-    return acc.concat(Number(cur.value));
-  }, []);
+  const lottoWinningNumbers = getLottoWinningNumberArray();
 
   const lottoBonusNumber = getLottoBonusNumber();
 
