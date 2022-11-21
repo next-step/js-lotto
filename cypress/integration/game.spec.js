@@ -118,9 +118,7 @@ describe("로또 계산기", () => {
       expect(gameNumbers.length).to.be.eq(6);
     });
     it("숫자의 범위는 1~45 이내이다.", () => {
-      const limitNumbers = Array(45)
-        .fill()
-        .map((_, index) => index + 1);
+      const limitNumbers = [...Array(45)].map((_, index) => index + 1);
 
       gameNumbers.forEach((number) => {
         expect(limitNumbers.includes(+number)).to.be.eq(true);
