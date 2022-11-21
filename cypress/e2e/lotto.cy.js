@@ -1,28 +1,28 @@
 describe("행운의 로또 테스트", () => {
-  let $purchaseInputSelector;
+  let $purchaseInput;
   beforeEach(() => {
     cy.visit("/");
-    $purchaseInputSelector = cy.get('[data-cy="purchase-amount-input"]');
+    $purchaseInput = cy.get('[data-cy="purchase-amount-input"]');
   });
 
   describe("로또 구입 금액을 입력한다.", () => {
     it("입력할 input 태그가 있다.", () => {
-      $purchaseInputSelector.should("exist");
+      $purchaseInput.should("exist");
     });
 
     it("로또 구입 금액을 입력하면 input에 입력한 금액이 유지되어야한다.", () => {
-      $purchaseInputSelector.type(1000);
-      $purchaseInputSelector.should("have.value", 1000);
+      $purchaseInput.type(1000);
+      $purchaseInput.should("have.value", 1000);
     });
 
     describe("금액은 숫자만 입력할 수 있다.", () => {
       it("문자를 입력할 수 없다.", () => {
-        $purchaseInputSelector.type("hello");
-        $purchaseInputSelector.should("have.value", "");
+        $purchaseInput.type("hello");
+        $purchaseInput.should("have.value", "");
       });
       it("특수 문자를 입력할 수 없다.", () => {
-        $purchaseInputSelector.type("!#@!#@!#!@");
-        $purchaseInputSelector.should("have.value", "");
+        $purchaseInput.type("!#@!#@!#!@");
+        $purchaseInput.should("have.value", "");
       });
     });
   });
