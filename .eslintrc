@@ -14,6 +14,10 @@
       "off"
     ],
     "max-depth": ["error", 2],
-    "lines-between-class-members": "off"
+    "lines-between-class-members": "off",
+    "class-methods-use-this":  "off",
+    "import/prefer-default-export": "off",
+    "no-unused-expressions": "off",
+    "no-param-reassign": "off"
   }
 }

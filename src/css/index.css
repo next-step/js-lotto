@@ -1,11 +1,12 @@
-@import './shared/index.css';
 @import './ui/index.css';
+@import './shared/index.css';
 
 html,
 body {
   margin: 0;
   height: 100%;
   font-size: 16px;
+  line-height: 1.5;
 }
 
 #app {
@@ -21,4 +22,15 @@ body {
 .bonus-number {
   width: 30px;
   height: 36px;
+}
+
+.hidden-text {
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  background-color: transparent;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
 }

@@ -1,0 +1,12 @@
+.app-container {
+  width: 100%;
+}
+
+#purchased-lottos, #check-winning-number {
+  display: none;
+}
+
+.lotto-detail {
+  font-size: 16px;
+  margin: 0 0 0 10px;
+}

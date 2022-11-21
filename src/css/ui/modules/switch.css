@@ -19,7 +19,6 @@
   outline: none;
   opacity: 0;
   transform: scale(1);
-  pointer-events: none;
   transition: opacity 0.3s 0.1s, transform 0.2s 0.1s;
 }
 
