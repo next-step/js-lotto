@@ -39,10 +39,43 @@ describe("로또게임 페이지 테스트", () => {
     cy.get(".open-result-modal-button").click();
     cy.get(".modal").should("have.class", "open");
   });
+
   it("모달 닫기 버튼", () => {
     cy.get(".open-result-modal-button").click();
     cy.get(".modal").should("have.class", "open");
     cy.get(".modal-close").click();
     cy.get(".modal").should("not.have.class", "open");
+  });
+
+  it("당첨번호와 보너스번호가 1~45사이 숫자가 아니면 alert를 띄운다.", () => {
+    cy.get(".winning-number")
+      .each((element, index, list) => {
+        cy.wrap(element).type(0);
+      })
+      .then(() => {
+        cy.get(".open-result-modal-button").click;
+      });
+    const stub = cy.stub();
+    cy.on("window:alert", stub);
+
+    cy.get(".winning-number").each((element, index, list) => {
+      expect(stub.getCall(0)).to.be.calledWith("1~45사이의 숫자를 입력해주세요");
+    });
+  });
+
+  it("보너스 번호가 1~45사이 숫자가 아니면 alert를 띄운다.", () => {
+    cy.get(".bonus-number")
+      .each((element, index, list) => {
+        cy.wrap(element).type(0);
+      })
+      .then(() => {
+        cy.get(".open-result-modal-button").click;
+      });
+    const stub = cy.stub();
+    cy.on("window:alert", stub);
+
+    cy.get(".bonus-number").each((element, index, list) => {
+      expect(stub.getCall(0)).to.be.calledWith("1~45사이의 숫자를 입력해주세요");
+    });
   });
 });

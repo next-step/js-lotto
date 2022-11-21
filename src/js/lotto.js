@@ -16,7 +16,7 @@ class Lotto {
       this.handleLottoNumbersToggleButton();
     });
     $showModalButton.addEventListener("click", () => {
-      // this.onModalShow();
+      this.onModalShow();
       this.getWinningNumbers();
     });
     $removeModalButton.addEventListener("click", () => {
