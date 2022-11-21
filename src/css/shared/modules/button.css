@@ -16,3 +16,16 @@
 .btn.btn-cyan:hover {
   background-color: #018c9e !important;
 }
+
+.btn-pink {
+  background-color: #ff99c8 !important;
+  border-color: #ff5ca8 !important;
+}
+
+.btn-pink:hover {
+  background-color: #ff479d !important;
+}
+
+.rounded-btn {
+  border-radius: 50%;
+}

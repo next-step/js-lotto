@@ -21,7 +21,30 @@
                 max="30000"
                 placeholder="구입 금액"
               />
-              <button type="button" class="btn btn-cyan btn-confirm">확인</button>
+              <button type="button" class="btn btn-cyan btn-confirm">시작</button>
+            </div>
+          </form>
+          <form class="mt-5 purchasing-manually-form">
+            <div class="d-flex justify-around items-center">
+              <div>
+                <h4 class="mt-0 mb-3 text-center">당첨 번호 입력</h4>
+                <ul>
+                  <li>
+                    <input type="number" class="manual-number mx-1 text-center" />
+                    <input type="number" class="manual-number mx-1 text-center" />
+                    <input type="number" class="manual-number mx-1 text-center" />
+                    <input type="number" class="manual-number mx-1 text-center" />
+                    <input type="number" class="manual-number mx-1 text-center" />
+                    <input type="number" class="manual-number mx-1 text-center" />
+                    <button type="button" class="btn btn-pink w-10 mx-1">삭제</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="d-flex flex-col">
+              <button type="button" class="btn btn-pink w-100 mx-1 mt-3">수동 추가</button>
+              <p class="mx-1 mt-3 mb-0">자동으로 n개를 구매합니다.</p>
+              <button type="button" class="btn btn-cyan w-100 mx-1 mt-3">최종 제출</button>
             </div>
           </form>
           <section class="mt-9 result-section">
@@ -37,7 +60,7 @@
             <div class="d-flex flex-wrap lotto-icons"></div>
           </section>
           <form class="mt-9 winning-form">
-          .<label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
+            <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
             <div class="d-flex">
               <div>
                 <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>

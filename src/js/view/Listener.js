@@ -3,7 +3,7 @@ import { validatePurchasingAmount } from '../util/Validator.js';
 import { setVisibleResultAreas } from './Element.js';
 import { setLottos } from './Lotto.js';
 import { getMyLottoResult, updateLottoResult } from './LottoResult.js';
-import { $modal, $purchasingAmountInput } from './Selector.js';
+import { $checkPurchasingManually, $modal, $purchasingAmountInput } from './Selector.js';
 
 /**
  * @param {number[]} lottos
@@ -32,6 +32,9 @@ export const onLottosBought = () => {
   try {
     const purchasingAmount = $purchasingAmountInput.value;
     validatePurchasingAmount(purchasingAmount);
+    // TODO: 기능 작성 후 역할 분리하기
+    const isPurchasingManually = $checkPurchasingManually.checked;
+    // 로또 구매 로직
     const lottos = buy(parseInt(purchasingAmount));
     setLottos(lottos);
     setVisibleResultAreas();
