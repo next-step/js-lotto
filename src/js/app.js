@@ -1,14 +1,14 @@
-import LottoStateService from './service/lotto-state.service.js';
-import TicketList from './views/ticket-list.js';
+import StateManager from './state-manager.js';
 import PurchaseView from './views/purchase.view.js';
+import TicketListView from './views/ticket-list.view.js';
 
 export class App {
   constructor() {
-    this.lottoState = new LottoStateService();
+    this.lottoState = new StateManager();
   }
 
   start() {
     const purchaseView = new PurchaseView(this.lottoState);
-    const list = new TicketList(this.lottoState);
+    const listView = new TicketListView(this.lottoState);
   }
 }

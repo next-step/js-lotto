@@ -1,4 +1,5 @@
 import { ErrorPurchase, PurchaseInfo } from '../common/enum.js';
+import Util from '../../utils/util.js';
 
 export default class PurchaseService {
   #value;
@@ -31,5 +32,19 @@ export default class PurchaseService {
 
   wrongUnit() {
     return this.#value % PurchaseInfo.UNIT !== 0;
+  }
+
+  getLotto(number) {
+    return Array.from({ length: number }, () => this.generateLotto());
+  }
+
+  generateLotto() {
+    const numberSet = new Set();
+
+    while (numberSet.size < 6) {
+      numberSet.add(Util.randomNumber(1, 45));
+    }
+
+    return Util.toAscendingArr(Array.from(numberSet));
   }
 }

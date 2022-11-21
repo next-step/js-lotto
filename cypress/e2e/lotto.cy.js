@@ -2,7 +2,7 @@ const $inputPurchase = '#input-purchase';
 const $submitPurchase = '#btn-purchase-submit';
 const $messagePurchase = '#form-purchase .error-message';
 const $resultWrap = '.result-wrap';
-const $messageTotal = '.message-purchase-total';
+const $messageTotal = '.message-purchase';
 const $ticketList = '.ticket-list';
 const $btnViewNumber = '[data-cy="btn-toggle-numbers"]';
 const min = 1000;

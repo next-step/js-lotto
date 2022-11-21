@@ -68,7 +68,7 @@ export default class PurchaseView extends View {
     }
 
     this.#input.value = '';
-    this.#lottoState.lotto = value / PurchaseInfo.UNIT;
+    this.#lottoState.setState(this.#purchaseService.getLotto(value / PurchaseInfo.UNIT));
   };
 
   #validateAmount(value) {
