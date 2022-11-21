@@ -1,5 +1,4 @@
 // controller
-
 class App {
   #model;
   #view;
@@ -13,7 +12,10 @@ class App {
 
   onSubmit(form) {
     const submitHandlers = {
-      "purchase-input-form": (amount) => this.#model.purchaseLotto(amount),
+      "purchase-input-form": (amount) => {
+        this.#model.purchaseLotto(amount);
+        this.render(this.#model.get());
+      },
     };
 
     return (
@@ -22,6 +24,10 @@ class App {
         throw new Error("해당하는 타입에 대한 정의가 존재하지 않습니다.");
       })
     );
+  }
+
+  render(state) {
+    this.#view.render(state);
   }
 
   setEvent() {
