@@ -1,7 +1,8 @@
 class Controller {
-  constructor($target, model) {
-    this.$target = $target;
+  constructor(view, model) {
+    this.view = view;
     this.model = model;
+    this.view.render();
     this.initEventHandler();
   }
 
@@ -10,17 +11,15 @@ class Controller {
   addClickEvent() {}
 
   initEventHandler() {
-    this.$target.addEventListener('click', (event) => {
+    this.view.$target.addEventListener('click', (event) => {
       this.addClickEvent(event);
-      this.render();
+      this.view.render();
     });
-    this.$target.addEventListener('change', (event) => {
+    this.view.$target.addEventListener('change', (event) => {
       this.addChangeEvent(event);
-      this.render();
+      this.view.render();
     });
   }
-
-  render() {}
 }
 
 export default Controller;
