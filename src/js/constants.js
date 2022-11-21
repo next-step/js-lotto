@@ -1,0 +1,4 @@
+const LOTTO_COUNT_PER_ONE = 6;
+const LOTTO_PRICE_PER_ONE = 1000;
+const WRONG_INPUT = "입력하신 금액이 유효하지 않습니다.";
+export { LOTTO_COUNT_PER_ONE, LOTTO_PRICE_PER_ONE, WRONG_INPUT };

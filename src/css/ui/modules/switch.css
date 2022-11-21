@@ -19,7 +19,7 @@
   outline: none;
   opacity: 0;
   transform: scale(1);
-  pointer-events: none;
+  pointer-events: true;
   transition: opacity 0.3s 0.1s, transform 0.2s 0.1s;
 }
 
@@ -32,7 +32,7 @@
 
 /* Track */
 .switch > span::before {
-  content: '';
+  content: "";
   float: right;
   display: inline-block;
   margin: 5px 0 5px 10px;
@@ -45,7 +45,7 @@
 }
 
 .switch > span::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 2px;
   right: 16px;
