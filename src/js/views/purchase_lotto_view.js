@@ -9,18 +9,15 @@ class PurchasedLottoView extends View {
     this.$purchasedLottos = $('#purchased-lottos');
     this.$totalPurchased = $('#total-purchased');
     this.$lottoIcons = $('#lotto-icons');
-    this.$inputPriceButton = $('#input-price-btn');
-    this.lottos = [];
-    this.lottoCount = DEFAULT_LOTTO_COUNT;
 
     this.showLottoNumbers = false;
   }
 
-  renderPurchasedLottos() {
-    if (this.lottoCount > DEFAULT_LOTTO_COUNT) {
+  renderPurchasedLottos({ lottoCount, lottos }) {
+    if (lottoCount > DEFAULT_LOTTO_COUNT) {
       this.$purchasedLottos.style.display = 'block';
-      this.$totalPurchased.innerText = this.lottoCount;
-      this.$lottoIcons.innerHTML = this.lottos
+      this.$totalPurchased.innerText = lottoCount;
+      this.$lottoIcons.innerHTML = lottos
         .map(
           (lotto) =>
             `<li class="mx-1 text-4xl lotto-wrapper">
@@ -41,8 +38,8 @@ class PurchasedLottoView extends View {
     this.$lottoIcons.classList.remove('flex-col');
   }
 
-  render() {
-    this.renderPurchasedLottos();
+  render({ lottoCount, lottos }) {
+    this.renderPurchasedLottos({ lottoCount, lottos });
     this.renderLottoNumbers();
   }
 }

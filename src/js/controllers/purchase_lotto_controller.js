@@ -5,11 +5,6 @@ class PurchasedLottoController extends Controller {
     super(view, lotto);
   }
 
-  handleInputPriceButtonClick() {
-    this.view.lottos = this.model.lottos;
-    this.view.lottoCount = this.model.lottoCount;
-  }
-
   handleLottoSwitchClick() {
     this.view.showLottoNumbers = !this.view.showLottoNumbers;
   }
@@ -18,10 +13,6 @@ class PurchasedLottoController extends Controller {
     if (this.view.$lottoSwitch.contains(target)) {
       this.handleLottoSwitchClick();
       return;
-    }
-
-    if (this.view.$inputPriceButton.contains(target)) {
-      this.handleInputPriceButtonClick();
     }
   }
 }
