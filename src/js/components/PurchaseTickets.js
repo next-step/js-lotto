@@ -20,6 +20,10 @@ export default class PurchaseTickets extends HTMLElement {
     });
   }
 
+  disconnectedCallback() {
+    subject.unsubscribe(this);
+  }
+
   connectedCallback() {
     this.render();
     this.setEvent();

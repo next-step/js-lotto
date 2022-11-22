@@ -18,3 +18,9 @@ export const getRandomNumbers = () => {
 export const getLottoNumbers = ticketAmount => {
   return new Array(ticketAmount).fill('').map(() => getRandomNumbers());
 };
+
+export const getWinningNumbers = inputNumbers => {
+  const winningNumbers = [];
+  inputNumbers.forEach(element => winningNumbers.push(Number(element.value)));
+  return winningNumbers;
+};

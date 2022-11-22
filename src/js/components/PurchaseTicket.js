@@ -13,6 +13,10 @@ export default class PurchaseTicket extends HTMLElement {
     this.render();
   }
 
+  disconnectedCallback() {
+    subject.unsubscribe(this);
+  }
+
   connectedCallback() {
     this.render();
   }

@@ -18,3 +18,7 @@ export const setPrice = purchasePrice => {
 export const toggleShowNumbers = isChecked => {
   actionCreator({ isNumberVisible: isChecked });
 };
+
+export const setWinningNumbers = winningNumbers => {
+  console.log(winningNumbers);
+};

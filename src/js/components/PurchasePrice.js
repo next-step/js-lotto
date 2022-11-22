@@ -17,7 +17,6 @@ export default class PurchasePrice extends HTMLElement {
       'input[data-cy="purchase-price-input"]',
     );
     const purchasePrice = Number(inputValue);
-
     if (checkUnitOfPrice(purchasePrice)) setPrice(purchasePrice);
   }
 

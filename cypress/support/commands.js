@@ -29,3 +29,12 @@ Cypress.Commands.add('purchaseLotto', price => {
   cy.getDataset('purchase-price-input').type(price);
   cy.getDataset('purchase-price-button').click();
 });
+
+Cypress.Commands.add('typeWinningNumbers', numbers => {
+  cy.getDataset('winning-number').each((number, index) => {
+    cy.wrap(number).type(numbers[index]);
+  });
+
+  const bonusNumber = numbers[numbers.length - 1];
+  cy.getDataset('bonus-number').type(bonusNumber);
+});

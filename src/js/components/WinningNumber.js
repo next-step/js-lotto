@@ -1,6 +1,9 @@
 import { getState } from '../store/state.js';
 import { subject } from '../index.js';
 import { LOTTO_COUNT } from '../utils/constant.js';
+import { setWinningNumbers } from '../store/actions.js';
+import { getWinningNumbers } from '../utils/lotto.js';
+import { checkWinningNumbers } from '../utils/validate.js';
 
 export default class WinningNumber extends HTMLElement {
   constructor() {
@@ -11,9 +14,24 @@ export default class WinningNumber extends HTMLElement {
 
   onStateChange() {
     this.render();
+    this.setEvent();
   }
 
-  setEvent() {}
+  handleOnSubmit(event) {
+    event.preventDefault();
+    const inputNumbers = this.shadow.querySelectorAll("input[type='number']");
+    const winningNumbers = getWinningNumbers(inputNumbers);
+    if (checkWinningNumbers(winningNumbers)) setWinningNumbers(winningNumbers);
+  }
+
+  setEvent() {
+    const $form = this.shadow.querySelector('form[data-cy="winning-number-form"]');
+    $form.addEventListener('submit', this.handleOnSubmit.bind(this));
+  }
+
+  disconnectedCallback() {
+    subject.unsubscribe(this);
+  }
 
   connectedCallback() {
     this.render();
@@ -24,7 +42,10 @@ export default class WinningNumber extends HTMLElement {
     const { ticketCount } = getState();
     const numberInputs = new Array(LOTTO_COUNT)
       .fill(null)
-      .map(() => `<input type="number" class="winning-number mx-1 text-center" />`)
+      .map(
+        () =>
+          `<input type="number" class="winning-number mx-1 text-center" data-cy="winning-number" required />`,
+      )
       .join('');
 
     this.shadow.innerHTML =
@@ -44,24 +65,28 @@ export default class WinningNumber extends HTMLElement {
               <div class="bonus-number-container flex-grow">
                 <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
                 <div class="d-flex justify-center">
-                  <input type="number" class="bonus-number text-center" />
+                  <input type="number" class="bonus-number text-center" data-cy="bonus-number" />
                 </div>
               </div>
             </div>
             <button
-              type="button"
+              type="submit"
               class="open-result-modal-button mt-5 btn btn-cyan w-100"
+							data-cy="result-btn"
             >
               결과 확인하기
             </button>
           </form>
     	`
-        : '';
+        : '<form class="mt-9" data-cy="winning-number-form"></form>';
   }
 }
 
 const style = `
 <style>
+	.btn.btn-cyan:hover {
+		background-color: #018c9e !important;
+	}
   form {
     display: block;
   }
