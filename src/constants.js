@@ -9,12 +9,18 @@ export const DEFAULT_LOTTO_STATE = {
   bonusNumber: null,
 };
 
+export const LOTTO_MIN_VALUE = 1;
+export const LOTTO_MAX_VALUE = 45;
 export const MIN_LOTTO_PRICE = 1000;
 export const MAX_LOTTO_PRICE = 100000;
+export const MAX_WINNING_INPUT_LENGTH = 6;
 
 export const ALERT = {
   TYPE_THOUSAND_UNIT: '로또 구입 금액을 1,000원 단위로 입력해 주세요.',
   OVER_MAX_VALUE: '최대 구매가능 금액은 100,000원 입니다.',
+  NOT_ALL_TYPED_WINNING_INPUT: '7개의 값을 모두 입력해주세요',
+  IN_RANGE_WINNING_INPUT: '1이상 45이하의 숫자를 입력해주세요',
+  DUPLICATE_VALUE_EXIST: '중복된 값이 있습니다.',
 };
 
 export const TITLE_WITH_VALUE_MAP = new Map([
@@ -24,28 +30,3 @@ export const TITLE_WITH_VALUE_MAP = new Map([
   ['5개 + 보너스볼', 30000000],
   ['6개', 2000000000],
 ]);
-
-export const MODAL_WIINING_TABLE_MAP = [
-  {
-    title: '3개',
-    value: 5000,
-  },
-  {
-    title: '4개',
-    value: 50000,
-  },
-  {
-    title: '5개',
-    value: 1500000,
-  },
-  {
-    title: '5개 + 보너스볼',
-    value: 30000000,
-  },
-  {
-    title: '6개',
-    value: 2000000000,
-  },
-];
-
-export const WINNING_NUMBER_INPUT_COUNT = 6;

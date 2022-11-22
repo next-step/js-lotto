@@ -65,14 +65,13 @@ export const isDuplicatedInArray = (numberArray) => {
   return numberSet.size !== numberArray.length;
 };
 
-export const makeCountedLottoNumbers = ({
+export const generateWinningCount = ({
   lottoNumbers,
   winningInput,
   bonusNumber,
 }) => {
   const winningSet = new Set(winningInput);
 
-  //lottoNumbers를 순회하면서 count로 몇개가 WINNINgInput과 동일한지 체크한 값을 넣어줘야함
   return lottoNumbers.map((lottoNumber) => {
     let winningCount = 0,
       isBonusNumber = false;
@@ -88,7 +87,7 @@ export const makeCountedLottoNumbers = ({
   });
 };
 
-const makeNamingByLevel = ({ winningCount, isBonusNumber }) => {
+const filteringNameByCount = ({ winningCount, isBonusNumber }) => {
   if (
     (winningCount === 2 && isBonusNumber) ||
     (winningCount === 3 && !isBonusNumber)
@@ -127,7 +126,7 @@ export const getWinningCount = ({
 }) => {
   let totalAdvantage = 0;
   const countedLottoNumbersMap = new Map();
-  const countedLottoNumbers = makeCountedLottoNumbers({
+  const countedLottoNumbers = generateWinningCount({
     lottoNumbers,
     winningInput,
     bonusNumber,
@@ -135,7 +134,7 @@ export const getWinningCount = ({
     .reduce(
       (accumulator, { winningCount, isBonusNumber }, index, originArray) => {
         const isEnd = index === originArray.length - 1;
-        const { title, value } = makeNamingByLevel({
+        const { title, value } = filteringNameByCount({
           winningCount,
           isBonusNumber,
         });
@@ -167,4 +166,10 @@ export const getWinningCount = ({
 
 export const makeRateOfReturn = (spend, benefit) => {
   return Math.round((benefit - spend) / spend) * 100;
+};
+
+export const generateTtitleAndValueArray = (titleWithValueMap) => {
+  return [...titleWithValueMap.entries()].map(([title, value]) => {
+    return { title, value };
+  });
 };

@@ -1,12 +1,15 @@
 import {
   ALERT,
   DEFAULT_LOTTO_STATE,
+  LOTTO_MAX_VALUE,
+  LOTTO_MIN_VALUE,
   MAX_LOTTO_PRICE,
+  MAX_WINNING_INPUT_LENGTH,
   MIN_LOTTO_PRICE,
-  MODAL_WIINING_TABLE_MAP,
-  WINNING_NUMBER_INPUT_COUNT,
+  TITLE_WITH_VALUE_MAP,
 } from '../constants.js';
 import {
+  generateTtitleAndValueArray,
   getWinningCount,
   isDuplicatedInArray,
   makeLottoNumbers,
@@ -38,22 +41,20 @@ class Lotto {
     this.state = {
       ...DEFAULT_LOTTO_STATE,
     };
-
     this.initialize();
   }
 
   setState(nextState) {
-    console.log({ nextState });
     this.state = nextState;
     this.render();
   }
 
   onConfirm() {
-    const isOverPirce = this.state.moneyAmount > MAX_LOTTO_PRICE;
+    const { moneyAmount } = this.state;
+    const isOverPirce = moneyAmount > MAX_LOTTO_PRICE;
     const isConfirm =
-      this.state.moneyAmount >= MIN_LOTTO_PRICE &&
-      this.state.moneyAmount <= MAX_LOTTO_PRICE;
-    const isAlert = this.state.moneyAmount % MIN_LOTTO_PRICE !== 0;
+      moneyAmount >= MIN_LOTTO_PRICE && moneyAmount <= MAX_LOTTO_PRICE;
+    const isAlert = moneyAmount % MIN_LOTTO_PRICE !== 0;
 
     if (isOverPirce) {
       window.alert(ALERT.OVER_MAX_VALUE);
@@ -68,11 +69,11 @@ class Lotto {
     }
 
     if (isConfirm) {
-      const lottoNumbers = makeLottoNumbers(this.state.moneyAmount);
+      const lottoNumbers = makeLottoNumbers(moneyAmount);
 
       this.setState({
         ...this.state,
-        lottoPurchaseNumber: this.state.moneyAmount / MIN_LOTTO_PRICE,
+        lottoPurchaseNumber: moneyAmount / MIN_LOTTO_PRICE,
         lottoNumbers,
         isVisibleResult: true,
       });
@@ -97,25 +98,24 @@ class Lotto {
     const isValidBonusNumber = Boolean(this.state.bonusNumber);
     const isAllTyped =
       this.state.winningNumbers.filter((number) => Boolean(number)).length ===
-        WINNING_NUMBER_INPUT_COUNT && isValidBonusNumber;
-
+        MAX_WINNING_INPUT_LENGTH && isValidBonusNumber;
     const isValidNumbers =
       this.state.winningNumbers.filter(
-        (number) => +number >= 1 && +number <= 45
-      ).length === WINNING_NUMBER_INPUT_COUNT && isValidBonusNumber;
+        (number) => +number >= LOTTO_MIN_VALUE && +number <= LOTTO_MAX_VALUE
+      ).length === MAX_WINNING_INPUT_LENGTH && isValidBonusNumber;
 
     if (!isAllTyped) {
-      alert('7개의 값을 모두 입력해주세요');
+      alert(ALERT.NOT_ALL_TYPED_WINNING_INPUT);
       return;
     }
 
     if (!isValidNumbers) {
-      alert('1이상 45이하의 숫자를 입력해주세요');
+      alert(ALERT.IN_RANGE_WINNING_INPUT);
       return;
     }
 
     if (isDuplicatedInArray(this.state.winningNumbers)) {
-      alert('중복된 값이 있습니다.');
+      alert(ALERT.DUPLICATE_VALUE_EXIST);
       return;
     }
 
@@ -123,14 +123,14 @@ class Lotto {
   }
 
   onTypeWinning({ value, index }) {
-    const MAX_LENGTH = 2,
+    const TYPE_MAX_LENGTH = 2,
       LAST_WINNING_INPUT_INDEX = 5;
-    if (value.length > MAX_LENGTH) return;
+    if (value.length > TYPE_MAX_LENGTH) return;
 
     const isNextWinningInput =
-        value.length >= MAX_LENGTH && index < LAST_WINNING_INPUT_INDEX,
+        value.length >= TYPE_MAX_LENGTH && index < LAST_WINNING_INPUT_INDEX,
       isBonusInput =
-        value.length >= MAX_LENGTH && index === LAST_WINNING_INPUT_INDEX;
+        value.length >= TYPE_MAX_LENGTH && index === LAST_WINNING_INPUT_INDEX;
 
     if (isNextWinningInput) {
       const nextInputIndex = index + 1;
@@ -145,7 +145,7 @@ class Lotto {
     });
 
     if (isBonusInput) this.$bonusNumberInput.focus();
-    if (index === WINNING_NUMBER_INPUT_COUNT) {
+    if (index === MAX_WINNING_INPUT_LENGTH) {
       this.setState({
         ...this.state,
         bonusNumber: value,
@@ -176,8 +176,9 @@ class Lotto {
       });
       const profit = makeRateOfReturn(moneyAmount, totalAdvantage);
       this.$modalTableBody.innerHTML = `
-            ${MODAL_WIINING_TABLE_MAP.map(({ title, value }) => {
-              return `
+            ${generateTtitleAndValueArray(TITLE_WITH_VALUE_MAP)
+              .map(({ title, value }) => {
+                return `
               <tr class="text-center" data-id=${title}>
                 <td class="p-3">${title}</td>
                 <td class="p-3">${value.toLocaleString()}</td>
@@ -188,7 +189,8 @@ class Lotto {
                 }개</td>
               </tr>
               `;
-            }).join('')}
+              })
+              .join('')}
           `;
 
       this.$investmentReturnSpan.innerText = `
@@ -288,7 +290,7 @@ class Lotto {
     const isValidBonusNumber = Boolean(this.state.bonusNumber);
     const isAllTyped =
       this.state.winningNumbers.filter((number) => Boolean(number)).length ===
-        WINNING_NUMBER_INPUT_COUNT && isValidBonusNumber;
+        MAX_WINNING_INPUT_LENGTH && isValidBonusNumber;
     const isValid = isAllTyped && isValidBonusNumber;
 
     if (isValid) this.$openModalButton.removeAttribute('disabled');

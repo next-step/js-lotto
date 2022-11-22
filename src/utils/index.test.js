@@ -1,8 +1,8 @@
 import { TITLE_WITH_VALUE_MAP } from '../constants.js';
 import {
   checkNumbersDuplidate,
+  generateWinningCount,
   getWinningCount,
-  makeCountedLottoNumbers,
   makeLottoNumbers,
 } from './index.js';
 
@@ -62,7 +62,7 @@ describe('입력된 당첨 번호 및 보너스번호를 통해 당첨된 케이
   const [winningInput, bonusNumber] = [[1, 2, 3, 4, 5, 6], 11];
   it('입력된 당첨번호와 보너스번호를 통해 각 로또 state와 함께 맞는 개수 및 보너스넘버의 유무가 기재된 배열이 반환되어야함', () => {
     expect(
-      makeCountedLottoNumbers({
+      generateWinningCount({
         lottoNumbers,
         winningInput,
         bonusNumber,
