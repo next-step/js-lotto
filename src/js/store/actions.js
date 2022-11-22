@@ -2,10 +2,10 @@ import { getState, setState } from './state.js';
 import { subject } from '../index.js';
 import { getTicketCount, getLottoNumbers } from '../utils/lotto.js';
 
-const actionCreator = newJSON => {
+const actionCreator = newState => {
   const state = getState();
-  setState({ ...state, ...newJSON });
-  console.log({ ...state, ...newJSON });
+  setState({ ...state, ...newState });
+  console.log({ ...state, ...newState });
   subject.notifyAll();
 };
 

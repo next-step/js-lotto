@@ -11,7 +11,7 @@ export default class PurchasePrice extends HTMLElement {
     this.render();
   }
 
-  onsubmit(e) {
+  handleOnSubmit(e) {
     e.preventDefault();
     const { value: inputValue } = this.shadow.querySelector(
       'input[data-cy="purchase-price-input"]',
@@ -23,7 +23,7 @@ export default class PurchasePrice extends HTMLElement {
 
   setEvent() {
     const $form = this.shadow.querySelector('form[data-cy="purchase-form"]');
-    $form.addEventListener('submit', this.onsubmit.bind(this));
+    $form.addEventListener('submit', this.handleOnSubmit.bind(this));
   }
 
   connectedCallback() {

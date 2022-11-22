@@ -26,6 +26,7 @@ export default class PurchaseTicket extends HTMLElement {
             ', ',
           )}</span>`
         : '';
+
     this.shadow.innerHTML = `
 			${style}
 			<div class='lotto-container'><span class="mx-1 text-4xl" data-cy="ticket-icon">🎟️ </span>
