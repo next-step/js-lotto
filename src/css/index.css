@@ -23,13 +23,13 @@ body {
   height: 36px;
 }
 
-.lotto-conatiner {
+.lotto-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.lotto-conatiner span {
+.lotto-container span {
   display: block;
   margin-right: 20px;
 }

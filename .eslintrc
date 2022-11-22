@@ -1,6 +1,7 @@
 {
   "env": {
     "browser": true,
+    "es6": true,
     "node": true
   },
   "extends": ["airbnb", "plugin:prettier/recommended"],
@@ -14,6 +15,7 @@
     "class-methods-use-this": "off",
     "react/no-access-state-in-setstate": "off",
     "react/destructuring-assignment": "off",
-    "no-new": 0
+    "no-new": 0,
+    "no-use-before-define": "off"
   }
 }

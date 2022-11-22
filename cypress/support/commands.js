@@ -26,6 +26,6 @@
 
 Cypress.Commands.add('getDataset', dataset => cy.get(`[data-cy=${dataset}]`));
 Cypress.Commands.add('purchaseLotto', price => {
-  cy.get('[data-cy="purchase-price-input"]').type(price);
-  cy.get('[data-cy="purchase-price-button"]').click();
+  cy.getDataset('purchase-price-input').type(price);
+  cy.getDataset('purchase-price-button').click();
 });
