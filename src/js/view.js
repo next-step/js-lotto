@@ -2,28 +2,24 @@ import {LOTTO} from "./constants/index.js";
 import {Selector} from "./constants/selector.js";
 import {randomLotto} from "./utils/index.js";
 
-export const issueLotto = (number) => {
-  Selector.lottoContainer.innerHTML = null;
-  if (!number) return;
+const lottoAndNumberView = (randomList) =>
+  `
+<div class="lotto-packet">
+<span class="mx-1 text-4xl">🎟️ </span>
+<span class="lotto-container-hidden lotto-number">${randomList}</span>
+</div>
+`;
 
-  Array(number)
-    .fill(0)
-    .forEach((_) => {
-      Selector.lottoContainer.innerHTML += `
-        <div>
-          <span class="mx-1 text-4xl">🎟️ </span>
-          <span class="lotto-number">${Array.from(
-            {length: LOTTO.MAX_LENGTH},
-            (_) => randomLotto()
-          )}</span>
-        </div>
-        `;
-    });
-};
+const generateRandomList = () =>
+  [...Array(LOTTO.LENGTH)].map(() => randomLotto());
 
-export const countLotto = (number) => {
-  Selector.lottoCounter.innerText = 0;
-  if (!number) return;
+export const issueLotto = (number) =>
+  [...Array(number)].map(() =>
+    Selector.lottoContainer.insertAdjacentHTML(
+      "beforeend",
+      lottoAndNumberView(generateRandomList())
+    )
+  );
 
-  Selector.lottoCounter.innerText = number;
-};
+export const countLotto = (number) =>
+  (Selector.lottoCounter.innerText = number);

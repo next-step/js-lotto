@@ -7,3 +7,9 @@
 .lotto-container-hidden .lotto-number {
   display: none;
 }
+
+.lotto-packet {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}

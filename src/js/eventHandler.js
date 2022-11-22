@@ -1,9 +1,11 @@
+import {LOTTO} from "./constants/index.js";
 import {Selector} from "./constants/selector.js";
 import {issueLotto, countLotto} from "./view.js";
 
 const buyLotto = (payment) => {
-  const LOTTO_PRICE = 1000;
-  const numberOfLotto = Math.floor(payment / LOTTO_PRICE);
+  const numberOfLotto = Math.floor(payment / LOTTO.PRICE);
+
+  if (!numberOfLotto) return;
 
   issueLotto(numberOfLotto);
   countLotto(numberOfLotto);
