@@ -11,6 +11,8 @@ describe('로또 사이트 E2E 테스트', () => {
   const $investmentReturnSpan = '[data-id=investment-return]';
   const $modalCloseButton = '[data-id=modal-close-button]';
   const $modalRestartButton = '[data-id=restart-button]';
+  const $purchaseResultWrapper = '#purchased-result';
+  const $checkResultWrapper = '#check-result';
 
   beforeEach(() => {
     cy.visit('../../index.html');
@@ -231,6 +233,8 @@ describe('로또 사이트 E2E 테스트', () => {
         cy.get($modalRestartButton).click();
         cy.wait(1000);
         cy.get($lottoInput).should('not.have.value');
+        cy.get($purchaseResultWrapper).should('have.css', 'display', 'none');
+        cy.get($checkResultWrapper).should('have.css', 'display', 'none');
       });
     }
   );
