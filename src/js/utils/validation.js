@@ -6,18 +6,22 @@ const isZeroNumber = (number) => number === 0;
 
 const isRemainderZero = (number, unit) => number % unit === 0;
 
-export const isInvalidLottoPurchasePrice = (lottoPurchasePrice) => {
-  if (isZeroNumber(lottoPurchasePrice)) {
-    throw Error(ERROR_MESSAGE.INVALID_ZERO_LOTTO_PRICE);
+const assert = (predicate, message) => {
+  if (!predicate) {
+    throw new Error(message);
   }
+};
 
-  if (!isPositiveNumber(lottoPurchasePrice)) {
-    throw Error(ERROR_MESSAGE.INVALID_NEGATIVE_LOTTO_PRICE);
-  }
+const isDuplicatedLottoNumber = (numbers) => {
+  return new Set(numbers).size !== LOTTO.WINNING_AMOUNT;
+};
 
-  if (!isRemainderZero(lottoPurchasePrice, LOTTO.PRICE)) {
-    throw Error(ERROR_MESSAGE.INVALID_LOTTO_PRICE_UNIT);
-  }
+export const assertLottoPurchasePrice = (price) => {
+  assert(!isZeroNumber(price), ERROR_MESSAGE.INVALID_ZERO_LOTTO_PRICE);
+  assert(isPositiveNumber(price), ERROR_MESSAGE.INVALID_NEGATIVE_LOTTO_PRICE);
+  assert(isRemainderZero(price, LOTTO.PRICE), ERROR_MESSAGE.INVALID_LOTTO_PRICE_UNIT);
+};
 
-  return false;
+export const assertLottoWinningNumbers = (numbers) => {
+  assert(!isDuplicatedLottoNumber(numbers), ERROR_MESSAGE.DUPLICATED_LOTTO_WINNING_NUMBER);
 };
