@@ -1,4 +1,4 @@
-import {Selector} from "./constants/selector.js";
+import {selector} from "./constants/selector.js";
 import {buyLotto} from "./service.js";
 
 export const handlePaymentForm = (event) => {
@@ -11,8 +11,8 @@ export const handlePaymentForm = (event) => {
 
 export const handleShowNumber = (event) => {
   if (event.target.checked) {
-    Selector.lottoContainer.classList.remove("lotto-container-hidden");
+    selector.lottoContainer.classList.remove("lotto-container-hidden");
   } else {
-    Selector.lottoContainer.classList.add("lotto-container-hidden");
+    selector.lottoContainer.classList.add("lotto-container-hidden");
   }
 };

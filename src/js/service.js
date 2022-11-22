@@ -1,13 +1,13 @@
 import {LOTTO} from "./constants/index.js";
-import {Selector} from "./constants/selector.js";
+import {selector} from "./constants/selector.js";
 import {generateRandomList} from "./utils/index.js";
 import {lottoAndNumberView, countLotto} from "./view.js";
 
 export const issueLotto = (number) => {
-  Selector.lottoContainer.innerHTML = null;
+  selector.lottoContainer.innerHTML = null;
 
   return [...Array(number)].map(() =>
-    Selector.lottoContainer.insertAdjacentHTML(
+    selector.lottoContainer.insertAdjacentHTML(
       "beforeend",
       lottoAndNumberView(generateRandomList())
     )

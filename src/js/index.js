@@ -1,9 +1,9 @@
-import {Selector} from "./constants/selector.js";
+import {selector} from "./constants/selector.js";
 import {handlePaymentForm, handleShowNumber} from "./eventHandler.js";
 
 const init = () => {
-  Selector.paymentForm.addEventListener("submit", handlePaymentForm);
-  Selector.toggleBtn.addEventListener("change", handleShowNumber);
+  selector.paymentForm.addEventListener("submit", handlePaymentForm);
+  selector.toggleBtn.addEventListener("change", handleShowNumber);
 };
 
 init();

@@ -1,6 +1,6 @@
 import {$} from "../utils/index.js";
 
-export const Selector = {
+export const selector = {
   lottoContainer: $(".lotto-container"),
   lottoCounter: $(".lotto-amount"),
   paymentForm: $(".payment-form"),

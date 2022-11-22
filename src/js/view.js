@@ -1,4 +1,4 @@
-import {Selector} from "./constants/selector.js";
+import {selector} from "./constants/selector.js";
 
 export const lottoAndNumberView = (randomList) =>
   `
@@ -9,4 +9,4 @@ export const lottoAndNumberView = (randomList) =>
 `;
 
 export const countLotto = (number) =>
-  (Selector.lottoCounter.innerText = number);
+  (selector.lottoCounter.innerText = number);
