@@ -1,12 +1,9 @@
-import { $ } from './utils.js';
-import Lotto from './lotto.js';
+import { $ } from './utils/DOM.js';
+import { handleSubmit, handleToggleBtn } from './eventHandlers.js';
 
-const lotto = new Lotto({
-  $purchaseForm: $('[data-cy="lotto-purchase-form"]'),
-  $purchaseInput: $('[data-cy="lotto-purchase-input"]'),
-  $lottoCount: $('[data-cy="purchased-lotto-count"]'),
-  $lottoList: $('[data-cy="purchased-lotto-list"]'),
-  $lottoNumbersToggle: $('.lotto-numbers-toggle-button'),
-});
+const initEvents = () => {
+  $('[data-cy="lotto-purchase-form"]').addEventListener('submit', handleSubmit);
+  $('.lotto-numbers-toggle-button').addEventListener('click', handleToggleBtn);
+};
 
-lotto.initEvents();
+initEvents();
