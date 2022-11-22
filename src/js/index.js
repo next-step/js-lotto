@@ -15,6 +15,8 @@ import {
   renderLottoIcons,
   renderTotalQuantity,
   resetLottoIcons,
+  renderDrawLottoResult,
+  renderProfitRatio,
 } from './views.js';
 import {
   addLottoToggleButtonClickEventListener,
@@ -58,15 +60,21 @@ const generateLottos = (quantity) => {
 
 const handleModalOpen = (e) => {
   e.preventDefault();
-  const winningNumbers = Array.from(
-    { length: LOTTO_LENGTH },
-    (_, idx) => e.target[`winning-index-${idx}`].value
-  ).concat(e.target['bonus-number'].value);
+  const winningNumbers = Array.from({ length: LOTTO_LENGTH }, (_, idx) =>
+    Number(e.target[`winning-index-${idx}`].value)
+  ).concat(Number(e.target['bonus-number'].value));
   if (!isValidWinningNumbers(winningNumbers)) {
     alert(MESSAGE_FOR_INVALID_WINNING_NUMBERS);
     return;
   }
   openModal();
+  const places = lottoState.drawLotto(
+    winningNumbers.slice(0, winningNumbers.length - 1),
+    winningNumbers.slice(-1)
+  );
+  renderDrawLottoResult(places);
+  const profitRatio = lottoState.calculateProfitRatio();
+  renderProfitRatio(profitRatio);
 };
 
 const handleModalClose = () => {

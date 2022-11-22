@@ -62,6 +62,15 @@ const renderTotalQuantity = (quantity) => {
   $totalQuantity.innerText = quantity;
 };
 
+const renderDrawLottoResult = (places) => {
+  Object.values(places).forEach((place, idx) => {
+    document.querySelector(`#place${idx + 1}`).textContent = place;
+  });
+};
+const renderProfitRatio = (ratio) => {
+  document.querySelector('#profitRatio').textContent = ratio;
+};
+
 export {
   displayDetails,
   openModal,
@@ -70,4 +79,6 @@ export {
   renderLottoIcons,
   renderTotalQuantity,
   resetLottoIcons,
+  renderDrawLottoResult,
+  renderProfitRatio,
 };

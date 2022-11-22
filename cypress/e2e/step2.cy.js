@@ -12,6 +12,8 @@ describe('로또 어플리케이션 단계2', () => {
   const getWinningNumberInputs = () => cy.get('.winning-number');
   const getBonusNumberInput = () => cy.get('.bonus-number');
   const getShowingResultButton = () => cy.get('#showResultButton');
+  const getResultModal = () => cy.get('#resultModal');
+  const getProfitRatio = () => cy.get('#profitRatio');
 
   const purchaseLottos = (amount = LOTTO_PURCHASE_UNIT) => {
     getPurchaseAmount().type(`${amount}`);
@@ -87,6 +89,51 @@ describe('로또 어플리케이션 단계2', () => {
         .should('have.value', `${LOTTO_NUMBER_RANGE_MAX}`);
       getShowingResultButton().click();
       cy.get('#winningNumberInputs :invalid').should('have.length', 0);
+    });
+  });
+
+  describe('결과 확인하기 버튼 클릭 시 모달 및 결과가 표시된다.', () => {
+    it('1부터 45 이하의 중복되지 않은 값의 입력후 결과 확인 버튼을 누르면 결과 모달이 뜬다.', () => {
+      getWinningNumberInputs().each(($el, index) => {
+        cy.wrap($el)
+          .type(`${index + 1}`)
+          .should('have.value', `${index + 1}`);
+      });
+      getBonusNumberInput()
+        .type(`${LOTTO_NUMBER_RANGE_MAX}`)
+        .should('have.value', `${LOTTO_NUMBER_RANGE_MAX}`);
+      getShowingResultButton().click();
+      cy.get('#winningNumberInputs :invalid').should('have.length', 0);
+      getResultModal().should('be.visible');
+    });
+
+    it('일치 갯수 3개, 4개, 5개, 5개 + 보너스, 6개 당첨 갯수를 나타내는 요소가 존재한다.', () => {
+      getWinningNumberInputs().each(($el, index) => {
+        cy.wrap($el)
+          .type(`${index + 1}`)
+          .should('have.value', `${index + 1}`);
+      });
+      getBonusNumberInput()
+        .type(`${LOTTO_NUMBER_RANGE_MAX}`)
+        .should('have.value', `${LOTTO_NUMBER_RANGE_MAX}`);
+      getShowingResultButton().click();
+      cy.get('#place5').should('exist');
+      cy.get('#place4').should('exist');
+      cy.get('#place3').should('exist');
+      cy.get('#place2').should('exist');
+      cy.get('#place1').should('exist');
+    });
+    it('수익률을 나타내는 요소가 존재한다.', () => {
+      getWinningNumberInputs().each(($el, index) => {
+        cy.wrap($el)
+          .type(`${index + 1}`)
+          .should('have.value', `${index + 1}`);
+      });
+      getBonusNumberInput()
+        .type(`${LOTTO_NUMBER_RANGE_MAX}`)
+        .should('have.value', `${LOTTO_NUMBER_RANGE_MAX}`);
+      getShowingResultButton().click();
+      getProfitRatio().should('exist');
     });
   });
 });
