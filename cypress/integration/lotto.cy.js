@@ -16,7 +16,7 @@ describe('로또 구입 금액을 입력한다.', () => {
  it('금액은 숫자만 입력할 수 있다.', () => {
   cy.get(purchaseInputSelector).type('123ab').should('have.value', '123');
  });
- it('금액은 100000 이상으로 입력하면 ', () => {
+ it('금액은 100000 이상으로 입력하면 100000 으로 입력된다.', () => {
   cy
    .get(purchaseInputSelector)
    .type('100001')
