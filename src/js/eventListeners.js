@@ -18,9 +18,15 @@ const addLottoToggleButtonClickEventListener = (callback) => {
   $lottoNumbersToggleButton.addEventListener('change', callback);
 };
 
+const addReplayButtonClickEventListener = (callback) => {
+  const $replayButton = document.querySelector('#replayButton');
+  $replayButton.addEventListener('click', callback);
+};
+
 export {
   addLottoToggleButtonClickEventListener,
   addPurchaseButtonClickEventListener,
   addResultButtonClickEventListener,
   addModalCloseClickEventListener,
+  addReplayButtonClickEventListener,
 };

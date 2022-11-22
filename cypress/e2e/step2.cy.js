@@ -14,6 +14,7 @@ describe('로또 어플리케이션 단계2', () => {
   const getShowingResultButton = () => cy.get('#showResultButton');
   const getResultModal = () => cy.get('#resultModal');
   const getProfitRatio = () => cy.get('#profitRatio');
+  const getReplayButton = () => cy.get('#replayButton');
 
   const purchaseLottos = (amount = LOTTO_PURCHASE_UNIT) => {
     getPurchaseAmount().type(`${amount}`);
@@ -134,6 +135,21 @@ describe('로또 어플리케이션 단계2', () => {
         .should('have.value', `${LOTTO_NUMBER_RANGE_MAX}`);
       getShowingResultButton().click();
       getProfitRatio().should('exist');
+    });
+  });
+
+  describe('다시 시작하기 버튼을 누르면 새로 게임을 재시작한다.', () => {
+    it('다시 시작하기 버튼이 존재한다.', () => {
+      getWinningNumberInputs().each(($el, index) => {
+        cy.wrap($el)
+          .type(`${index + 1}`)
+          .should('have.value', `${index + 1}`);
+      });
+      getBonusNumberInput()
+        .type(`${LOTTO_NUMBER_RANGE_MAX}`)
+        .should('have.value', `${LOTTO_NUMBER_RANGE_MAX}`);
+      getShowingResultButton().click();
+      getReplayButton().should('exist');
     });
   });
 });

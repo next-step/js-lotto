@@ -69,7 +69,10 @@ export default class LottoStateModel {
     this.purchasedAmount = 0;
     this.quantity = 0;
     this.lottos = [];
+    this.resetPlaces();
+    this.totalProfit = 0;
   }
+
   resetPlaces() {
     this.places = {
       place1: 0,

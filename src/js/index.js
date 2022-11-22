@@ -23,6 +23,7 @@ import {
   addPurchaseButtonClickEventListener,
   addResultButtonClickEventListener,
   addModalCloseClickEventListener,
+  addReplayButtonClickEventListener,
 } from './eventListeners.js';
 import LottoStateModel from './models/LottoState.js';
 
@@ -90,8 +91,18 @@ const initPurchaseLotto = () => {
   resetLottoIcons();
 };
 
+const handleClickReplayButton = () => {
+  closeModal();
+  // TODO: refactor 필요
+  location.reload();
+  // lottoState.initLottoState();
+  // displayDetails(lottoState.quantity);
+  // clearPurchaseInput();
+};
+
 addPurchaseButtonClickEventListener(handlePurchaseButton);
 addLottoToggleButtonClickEventListener(handleToggleButton);
 addResultButtonClickEventListener(handleModalOpen);
 addModalCloseClickEventListener(handleModalClose);
+addReplayButtonClickEventListener(handleClickReplayButton);
 displayDetails(lottoState.quantity);
