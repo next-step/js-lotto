@@ -4,6 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "11.0.1"
+    "cypress": "11.0.1",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1"
   }
 }
