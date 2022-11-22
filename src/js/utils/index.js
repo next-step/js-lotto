@@ -6,3 +6,6 @@ export const randomLotto = (max = LOTTO.MAX_VALUE) => {
 
   return Math.ceil(Math.random() * max);
 };
+
+export const generateRandomList = () =>
+  [...Array(LOTTO.LENGTH)].map(() => randomLotto());

@@ -1,15 +1,5 @@
-import {LOTTO} from "./constants/index.js";
 import {Selector} from "./constants/selector.js";
-import {issueLotto, countLotto} from "./view.js";
-
-const buyLotto = (payment) => {
-  const numberOfLotto = Math.floor(payment / LOTTO.PRICE);
-
-  if (!numberOfLotto) return;
-
-  issueLotto(numberOfLotto);
-  countLotto(numberOfLotto);
-};
+import {buyLotto} from "./service.js";
 
 export const handlePaymentForm = (event) => {
   event.preventDefault();
