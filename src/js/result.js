@@ -1,4 +1,11 @@
-import { $bonusNumber, $profit, $purchaseAmount, $tbody } from './dom.js';
+import { ERROR_MESSAGE } from './constants.js';
+import {
+  $bonusNumber,
+  $profit,
+  $purchaseAmount,
+  $tbody,
+  $winningNumbers,
+} from './dom.js';
 
 export const winningForm = {
   fifth: { number: `3개`, winnings: 5_000 },
@@ -30,11 +37,24 @@ export class LottoResultModel {
 
   profitRate = 0;
 
-  constructor(lottoNumbers, winningNumbers) {
+  constructor(lottoNumbers) {
     this.lottoNumbers = lottoNumbers;
-    this.winningNumbers = winningNumbers;
+    this.winningNumbers = Array.from($winningNumbers).map(
+      (number) => +number.value
+    );
+  }
 
-    this.computeWinningResult();
+  validate() {
+    const bonusNumber = parseInt($bonusNumber.value);
+    if (!this.isValidWinningNumbers([...this.winningNumbers, bonusNumber])) {
+      return ERROR_MESSAGE.EMPTY_RANGE;
+    }
+
+    if (this.isDuplicateNumbers([...this.winningNumbers, bonusNumber])) {
+      return ERROR_MESSAGE.DUPLICATED;
+    }
+
+    return;
   }
 
   computeWinningResult() {
@@ -69,6 +89,17 @@ export class LottoResultModel {
     this.profitRate =
       ((profit - purchaseAmount) / purchaseAmount) * PERCENTAGE_UNIT;
   }
+
+  isValidWinningNumbers(winningNumbers) {
+    return winningNumbers.every(
+      (number) => number !== '' && number > 0 && number <= 45
+    );
+  }
+
+  isDuplicateNumbers(numbers) {
+    const numberCollection = new Set(numbers);
+    return numbers.length !== numberCollection.size;
+  }
 }
 
 export class LottoResultComponent {
@@ -76,6 +107,7 @@ export class LottoResultComponent {
 
   constructor(lottoResultModel) {
     this.lottoResultModel = lottoResultModel;
+    this.render();
   }
 
   render() {

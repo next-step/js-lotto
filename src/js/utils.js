@@ -1,4 +1,4 @@
-export const getRandomNumbers = (maxNumber) => {
+export const getNumberList = (maxNumber) => {
   return Array(maxNumber)
     .fill()
     .map((number, idx) => idx + 1);
