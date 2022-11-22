@@ -32,8 +32,6 @@ export const onLottosBought = () => {
   try {
     const purchasingAmount = $purchasingAmountInput.value;
     validatePurchasingAmount(purchasingAmount);
-    // TODO: 기능 작성 후 역할 분리하기
-    const isPurchasingManually = $checkPurchasingManually.checked;
     // 로또 구매 로직
     const lottos = buy(parseInt(purchasingAmount));
     setLottos(lottos);
