@@ -1,6 +1,4 @@
-import { LOTTO_NUMBER } from '../service/Constant.js';
 import { MESSAGE } from './Constant.js';
-import { convertToNumbers } from './Util.js';
 
 /** @type {number} */
 export const isNumber = (s) => !isNaN(Number(s));
@@ -46,11 +44,10 @@ export const validateNumbers = (inputNumbers) => {
   if (isEmptyNumberFields(inputNumbers)) {
     throw new Error(MESSAGE.INVALID_WINNING_MODAL);
   }
-  const winningNumbers = convertToNumbers(inputNumbers).slice(0, LOTTO_NUMBER.LENGTH);
-  if (!isUniqueNumbers(winningNumbers)) {
+  if (!isUniqueNumbers(inputNumbers)) {
     throw new Error(MESSAGE.INVALID_WINNING_NUMBER_DUPLICATED);
   }
-  if (!isWithInRangedNumber(winningNumbers)) {
+  if (!isWithInRangedNumber(inputNumbers)) {
     throw new Error(MESSAGE.INVALID_WINNING_NUMBER_RANGE);
   }
 };
