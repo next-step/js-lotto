@@ -114,25 +114,44 @@ describe('로또 테스트', () => {
   });
 
   describe('잘못된 당첨번호를 입력하면 결과확인을 할 수 없다', () => {
+    beforeEach(() => {
+      cy.getInputPrice(2000);
+      cy.clickInputPriceButton();
+    });
+
     context('당첨번호를 입력하고 결과확인 버튼을 클릭했을 때', () => {
       it('당첨번호는 1 ~ 45 사이 숫자가 아닌 경우 alert가 노출된다.', () => {
         const stub = cy.stub();
         cy.on('window:alert', stub);
-        cy.get('#show-result-btn')
-          .click()
-          .then(() => {
-            expect(stub.getCall(0)).to.be.calledWith('');
-          });
+        cy.typeWinningNumber(0, 10);
+        cy.typeWinningNumber(1, 11);
+        cy.typeWinningNumber(2, 12);
+        cy.typeWinningNumber(3, 13);
+        cy.typeWinningNumber(4, 60);
+        cy.typeWinningNumber(5, 15);
+        cy.typeWinningNumber(6, 16);
+        cy.clickShowResultButton().then(() => {
+          expect(stub.getCall(0)).to.be.calledWith(
+            ERROR_MESSAGE.INVALID_RANGE_NUMBER
+          );
+        });
       });
 
       it('당첨번호 6개와 보너스 번호 1개 숫자중 중복된 숫자가 존재하면 alert가 노출된다.', () => {
         const stub = cy.stub();
         cy.on('window:alert', stub);
-        cy.get('#show-result-btn')
-          .click()
-          .then(() => {
-            expect(stub.getCall(0)).to.be.calledWith('');
-          });
+        cy.typeWinningNumber(0, 11);
+        cy.typeWinningNumber(1, 11);
+        cy.typeWinningNumber(2, 12);
+        cy.typeWinningNumber(3, 13);
+        cy.typeWinningNumber(4, 10);
+        cy.typeWinningNumber(5, 15);
+        cy.typeWinningNumber(6, 16);
+        cy.clickShowResultButton().then(() => {
+          expect(stub.getCall(0)).to.be.calledWith(
+            ERROR_MESSAGE.INVALID_DUPLICATED_NUMBER
+          );
+        });
       });
     });
   });

@@ -25,3 +25,11 @@ Cypress.Commands.add('getLottoNumber', () => {
 Cypress.Commands.add('getPurchasedLottos', () => {
   cy.get('#purchased-lottos').should('be.visible');
 });
+
+Cypress.Commands.add('typeWinningNumber', (index, value) => {
+  cy.get(`#winning-lotto-numbers-form [name=${index}]`).type(value);
+});
+
+Cypress.Commands.add('clickShowResultButton', () => {
+  cy.get('#show-result-btn').click();
+});
