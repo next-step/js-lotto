@@ -7,7 +7,11 @@ import {
   LOTTO_MIN_NUMBER,
   LOTTO_PRICE,
 } from '../../const.js';
-import { getRandomNumber, isNumbersOutOfRange } from '../../utils.js';
+import {
+  getRandomNumber,
+  hasDuplicateNumbers,
+  isNumbersOutOfRange,
+} from '../../utils.js';
 
 class Lotto {
   #price;

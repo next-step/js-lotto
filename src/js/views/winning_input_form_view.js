@@ -12,6 +12,7 @@ class WinningInputFormView extends View {
     this.$winningLottoNumbersForm = $('#winning-lotto-numbers-form');
     this.$winningLottoNumbers = $('#winning-lotto-numbers');
     this.$winningBonusNumbers = $('#winning-bonus-numbers');
+    this.$showResultButton = $('#show-result-btn');
 
     this.$winningLottoNumbers.innerHTML = Array(LOTTO_COUNT)
       .fill()
@@ -23,7 +24,7 @@ class WinningInputFormView extends View {
     this.$winningBonusNumbers.innerHTML = `<input type="number" name=${LOTTO_BONUS_NUMBER_INDEX} class="bonus-number text-center" />`;
   }
 
-  render({ lottoCount, winningNumbers }) {
+  render({ lottoCount }) {
     if (lottoCount > DEFAULT_LOTTO_COUNT) {
       this.$winningLottoNumbersForm.style.display = 'block';
       return;
