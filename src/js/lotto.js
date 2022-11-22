@@ -153,6 +153,12 @@ class Lotto {
     }
   }
 
+  onRestart() {
+    this.setState({
+      ...DEFAULT_LOTTO_STATE,
+    });
+  }
+
   renderModal() {
     const {
       isVisibleModal,
@@ -318,6 +324,10 @@ class Lotto {
       if (event.target.dataset.id === 'modal-close-button') {
         event.preventDefault();
         this.onModalShow({ isVisibleModal: false });
+      }
+
+      if (event.target.dataset.id === 'restart-button') {
+        this.onRestart();
       }
     });
 

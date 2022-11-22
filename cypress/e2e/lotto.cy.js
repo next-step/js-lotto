@@ -193,9 +193,10 @@ describe('로또 사이트 E2E 테스트', () => {
           ) * 100;
 
         cy.winLottoInFirstPlace();
-        cy.get($investmentReturnSpan).should(
-          'have.text',
-          `당신의 총 수익률은 ${profit}%입니다.`
+        cy.get($investmentReturnSpan).should(($element) =>
+          expect($element.text().trim()).to.equal(
+            `당신의 총 수익률은 ${profit}%입니다.`
+          )
         );
       });
     }
@@ -216,23 +217,21 @@ describe('로또 사이트 E2E 테스트', () => {
       it('닫기 버튼 클릭 시 모달만 사라지고 나머지 상태는 그대로 유지되어야 한다.', () => {
         cy.get($modalCloseButton).click();
         cy.wait(1000);
-        cy.get($modalCloseButton).should('not.exist');
-        cy.get($lottoInput).should('not.be.empty');
+        cy.get('.modal').should('not.have.class', 'open');
+        cy.get($lottoInput).should('have.value', PURCHASE_VALUE);
       });
+
       it('다시 시작하기 버튼 클릭 시 모달이 사라져야한다.', () => {
         cy.get($modalRestartButton).click();
         cy.wait(1000);
-        cy.get($modalCloseButton).should('not.exist');
+        cy.get('.modal').should('not.have.class', 'open');
       });
+
       it('다시 시작하기 버튼 클릭 시 로또이미지들과 구입 금액도 리셋 되어야한다.', () => {
         cy.get($modalRestartButton).click();
         cy.wait(1000);
-        cy.get($lottoInput).should('be.empty');
+        cy.get($lottoInput).should('not.have.value');
       });
     }
   );
-
-  // context('로또 당첨 금액은 고정되어 있는 것으로 가정한다.', () => {
-  //   it('')
-  // });
 });
