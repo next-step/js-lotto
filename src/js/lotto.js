@@ -1,6 +1,7 @@
 import { $, $$ } from "./utils.js";
-import { $modal, $lottoNumbersToggleButton, $paymentCost, $paymentForm, $paymentTickets, $showModalButton, $removeModalButton, $$winningNumbers } from "./DOM.js";
+import { $modal, $lottoNumbersToggleButton, $paymentCost, $paymentForm, $paymentTickets, $showModalButton, $removeModalButton, $$winningNumbers, $bonusNumber } from "./DOM.js";
 import { ALERT_MESSAGE, MAX_IN_NUMBER, MIN_IN_NUMBER, PURCHASE_AMOUNT_UNIT } from "./constants.js";
+import { isDuplicatedNumbers, validateRange } from "./validate.js";
 
 class Lotto {
   constructor() {
@@ -16,7 +17,7 @@ class Lotto {
       this.handleLottoNumbersToggleButton();
     });
     $showModalButton.addEventListener("click", () => {
-      this.onModalShow();
+      // this.onModalShow();
       this.getWinningNumbers();
     });
     $removeModalButton.addEventListener("click", () => {
@@ -81,8 +82,14 @@ class Lotto {
   }
 
   getWinningNumbers() {
-    const winningNumbers = Array.from($$winningNumbers).map((number) => number.value);
-    console.log(winningNumbers);
+    const winningNumbers = Array.from($$winningNumbers).map((number) => +number.value);
+
+    if (validateRange(winningNumbers)) {
+      return alert("1~45사이의 숫자를 입력해주세요.");
+    }
+    if (isDuplicatedNumbers(winningNumbers)) {
+      return alert("중복되지 않는 숫자를 입력해주세요.");
+    }
   }
 
   onModalShow = () => {

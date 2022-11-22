@@ -9,3 +9,4 @@ export const $paymentTickets = $("#payment-ticket");
 export const $modal = $(".modal");
 export const $removeModalButton = $(".modal-close");
 export const $$winningNumbers = $$(".winning-number");
+export const $bonusNumber = $(".bonus-number");
