@@ -14,7 +14,7 @@ $lottoPurchaseFormContainer.addEventListener('submit', (e) => {
 
   const inputVal = $costInput.value;
   if (!inputVal.match(/[\d]0{3,5}/)) {
-    alert('맞지 않습니다!');
+    alert('구입 가격은 1000 단위로만 입력해주세요!');
     $costInput.value = null;
     return;
   }
