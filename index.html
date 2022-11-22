@@ -10,7 +10,7 @@
 
 <body>
   <div id="app" class="p-3">
-    <div class="d-flex justify-center mt-5">
+    <div class="d-flex justify-center mt-5" data-component="lottoTemplate">
       <div class="w-100">
         <h1 class="text-center">🎱 행운의 로또</h1>
         <form id="input-price-form" class="mt-5">
@@ -22,9 +22,9 @@
             <button type="submit" class="purchase-button btn btn-cyan" data-cy="purchase-button">확인</button>
           </div>
         </form>
-        <section id="purchased-lottos" class="mt-9 d-none">
+        <section id="purchased-lottos" class="mt-9">
           <div class="d-flex">
-            <label class="flex-auto my-0">총 <span id="total-purchased">5</span>개를 구매하였습니다.</label>
+            <label class="flex-auto my-0">총 <span id="total-purchased" data-component="counter">5</span>개를 구매하였습니다.</label>
             <div class="flex-auto d-flex justify-end pr-1">
               <label class="switch">
                 <input type="checkbox" class="lotto-numbers-toggle-button" />
@@ -32,7 +32,7 @@
               </label>
             </div>
           </div>
-          <ul class="lotto-images d-flex flex-wrap"></ul>
+          <ul class="lotto-images d-flex flex-wrap" data-component="lotto"></ul>
         </section>
         <form id="input-lotto-nums" class="mt-9 d-none">
           <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>

@@ -1,7 +1,6 @@
 module.exports = {
   plugins: ['prettier', 'cypress'],
   extends: ['eslint:recommended', 'plugin:prettier/recommended'],
-  parser: "babel-parser",
   parserOptions: {
     ecmaVersion: 7,
     sourceType: 'module',
