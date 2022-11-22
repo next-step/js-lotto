@@ -1,8 +1,8 @@
 import { MESSAGES } from "./constants.js";
-import Lotto from "./Lotto.js";
+import LottoController from "./controllers/LottoController.js";
 
 class SlotMachine {
-  #lotto;
+  #lottoController;
 
   constructor() {
     this.$purchaseForm = document.getElementById("purchase-form");
@@ -10,7 +10,7 @@ class SlotMachine {
       "purchase-amount-input"
     );
 
-    this.#lotto = new Lotto();
+    this.#lottoController = new LottoController();
     this.#initEvents();
   }
 
@@ -28,7 +28,7 @@ class SlotMachine {
     }
 
     const purchaseAmount = this.calculateAmountPer(purchasePrice);
-    this.#lotto.makeLottos(purchaseAmount);
+    this.#lottoController.onGenerateLottosBy(purchaseAmount);
   }
 
   calculateAmountPer(purchasePrice) {
