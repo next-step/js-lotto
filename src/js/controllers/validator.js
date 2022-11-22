@@ -1,5 +1,5 @@
-import { IncorrectUnitError, InputMaxExceededError, InputMinInsufficientError, InputRequiredError } from "./error.js";
-import { ERROR_MESSAGE, PRICE_MAX, PRICE_MIN, PRICE_PER_UNIT } from "./const.js";
+import { IncorrectUnitError, InputMaxExceededError, InputMinInsufficientError, InputRequiredError } from "../utils/error.js";
+import { ERROR_MESSAGE, PRICE_MAX, PRICE_MIN, PRICE_PER_UNIT } from "../utils/const.js";
 
 export class Validator {
     constructor() {

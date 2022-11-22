@@ -1,7 +1,7 @@
 import { PRICE_PER_UNIT } from "../utils/const.js";
 import { Issue } from "./issue.js";
-import { displayBlock } from "../utils/util.js";
-import { Validator } from "../utils/validator.js";
+import { displayBlock, displayNone } from "../utils/util.js";
+import { Validator } from "../controllers/validator.js";
 
 export class Purchasing {
     $purchased;
@@ -28,7 +28,10 @@ export class Purchasing {
     purchase() {
         if (!this.isSubmitAvailable) return;
         if (this.isSubmitAvailable) this.issue.reset();
-        if (!this.validator.validate(this.$purchased.amount.value)) return this.issue.reset();
+        if (!this.validator.validate(this.$purchased.amount.value)) {
+            displayNone(this.$purchased.lotto);
+            return this.issue.reset();
+        }
 
         const ticketsPurchased = this.$purchased.amount.value / PRICE_PER_UNIT;
         this.#doPurchase(ticketsPurchased);
