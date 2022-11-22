@@ -1,9 +1,11 @@
-import { isValidForNoAmount, isValidForExactAmount } from './validators.js';
+import { isValidForNoAmount, isValidForExactAmount, isValidWinningNumbers } from './validators.js';
 import LottoModel from './models/LottoTicket.js';
 import {
   MESSAGE_FOR_EMPTY_VALUE,
   MESSAGE_FOR_INVALID_UNIT_VALUE,
   LOTTO_PURCHASE_UNIT,
+  LOTTO_LENGTH,
+  MESSAGE_FOR_INVALID_WINNING_NUMBERS,
 } from './constants.js';
 import {
   closeModal,
@@ -54,7 +56,16 @@ const generateLottos = (quantity) => {
   }
 };
 
-const handleModalOpen = () => {
+const handleModalOpen = (e) => {
+  e.preventDefault();
+  const winningNumbers = Array.from(
+    { length: LOTTO_LENGTH },
+    (_, idx) => e.target[`winning-index-${idx}`].value
+  ).concat(e.target['bonus-number'].value);
+  if (!isValidWinningNumbers(winningNumbers)) {
+    alert(MESSAGE_FOR_INVALID_WINNING_NUMBERS);
+    return;
+  }
   openModal();
 };
 

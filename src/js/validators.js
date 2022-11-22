@@ -39,4 +39,10 @@ const isAlreadyExist = (lottos) => {
 //   return flag;
 // };
 
-export { isValidForNoAmount, isValidForExactAmount, isAlreadyExist };
+const isValidWinningNumbers = (winningNumbers) => {
+  const originLength = winningNumbers.length;
+  const newLength = new Set(winningNumbers).size;
+  return originLength === newLength;
+};
+
+export { isValidForNoAmount, isValidForExactAmount, isAlreadyExist, isValidWinningNumbers };
