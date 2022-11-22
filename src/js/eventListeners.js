@@ -1,6 +1,6 @@
 const addResultButtonClickEventListener = (callback) => {
-  const $showResultButton = document.querySelector('.open-result-modal-button');
-  $showResultButton.addEventListener('click', callback);
+  const $showResultForm = document.querySelector('#winningNumberInputs');
+  $showResultForm.addEventListener('submit', callback);
 };
 
 const addModalCloseClickEventListener = (callback) => {
