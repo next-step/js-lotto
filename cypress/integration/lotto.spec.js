@@ -3,8 +3,8 @@ import { MESSAGES } from "../../src/js/constants.js";
 const purchaseAmountInput = "[data-cy='purchase-amount-input']";
 const purchaseButton = "[data-cy='purchase-button']";
 const purchaseTotalCount = "[data-cy='purchase-total-count']";
-const showNumberToggle = "[data-cy='show-game-number-toggle']";
-const gameNumberLabel = "[data-cy='game-number']";
+const showNumberToggle = "[data-cy='show-lotto-number-toggle']";
+const lottoNumberLabel = "[data-cy='lotto-number']";
 
 describe("로또 계산기", () => {
   beforeEach(() => {
@@ -94,33 +94,33 @@ describe("로또 계산기", () => {
 
     it("번호보기 토글 버튼이 on인 경우 복권 번호가 노출된다.", () => {
       cy.get(showNumberToggle).click();
-      cy.get(gameNumberLabel).should("exist");
+      cy.get(lottoNumberLabel).should("exist");
     });
     it("번호보기 토글 버튼이 off인 경우 복권 번호가 노출되지 않는다.", () => {
-      cy.get(gameNumberLabel).should("not.exist");
+      cy.get(lottoNumberLabel).should("not.exist");
     });
   });
 
   context("소비자는 자동 구매를 할 수 있어야 한다.", () => {
-    let gameNumbers = [];
+    let lottoNumbers = [];
     beforeEach(() => {
       cy.get(purchaseAmountInput).type("1000");
       cy.get(purchaseButton).click();
       cy.get(showNumberToggle).click();
-      cy.get(gameNumberLabel)
+      cy.get(lottoNumberLabel)
         .invoke("text")
         .then((numbers) => {
-          gameNumbers = numbers.split(",");
+          lottoNumbers = numbers.split(",");
         });
     });
 
     it("로또 1장을 구매하면 6개의 번호가 생성된다.", () => {
-      expect(gameNumbers.length).to.be.eq(6);
+      expect(lottoNumbers.length).to.be.eq(6);
     });
     it("숫자의 범위는 1~45 이내이다.", () => {
       const limitNumbers = [...Array(45)].map((_, index) => index + 1);
 
-      gameNumbers.forEach((number) => {
+      lottoNumbers.forEach((number) => {
         expect(limitNumbers.includes(+number)).to.be.eq(true);
       });
     });
