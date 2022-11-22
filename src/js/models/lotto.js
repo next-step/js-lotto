@@ -26,8 +26,8 @@ class Lotto {
     this.#price = nextPrice;
   };
 
-  setWinningNumbers = (winningNumber) => {
-    this.#winningNumbers.push(winningNumber);
+  setWinningNumbers = (winningNumber, numberIndex) => {
+    this.#winningNumbers[numberIndex] = winningNumber;
   };
 
   get lottoCount() {
@@ -36,6 +36,10 @@ class Lotto {
 
   get lottos() {
     return this.#lottos;
+  }
+
+  get winningNumbers() {
+    return this.#winningNumbers;
   }
 
   validatePrice = () => {
@@ -80,6 +84,8 @@ class Lotto {
       this.#lottos.push(this.#getUniqRandomNumbers());
     }
   };
+
+  showResult = () => {};
 
   #getUniqRandomNumbers() {
     const uniqRandomNumbers = new Set();
