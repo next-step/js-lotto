@@ -48,49 +48,66 @@
             <div>
               <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
               <div>
+                <<<<<<< HEAD <input type="number" class="winning-number mx-1 text-center" required min="1" max="45"
+                  maxlength="2" />
                 <input type="number" class="winning-number mx-1 text-center" required min="1" max="45" maxlength="2" />
                 <input type="number" class="winning-number mx-1 text-center" required min="1" max="45" maxlength="2" />
                 <input type="number" class="winning-number mx-1 text-center" required min="1" max="45" maxlength="2" />
                 <input type="number" class="winning-number mx-1 text-center" required min="1" max="45" maxlength="2" />
                 <input type="number" class="winning-number mx-1 text-center" required min="1" max="45" maxlength="2" />
-                <input type="number" class="winning-number mx-1 text-center" required min="1" max="45" maxlength="2" />
+                =======
+                <input type="number" class="winning-number mx-1 text-center" />
+                <input type="number" class="winning-number mx-1 text-center" />
+                <input type="number" class="winning-number mx-1 text-center" />
+                <input type="number" class="winning-number mx-1 text-center" />
+                <input type="number" class="winning-number mx-1 text-center" />
+                <input type="number" class="winning-number mx-1 text-center" />
+                >>>>>>> 58160ceddd90c5be8d058481b9f389cde03a821a
               </div>
             </div>
             <div class="bonus-number-container flex-grow">
               <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
               <div class="d-flex justify-center">
-                <input type="number" class="bonus-number text-center" required min="1" max="45" maxlength="2" />
+                <<<<<<< HEAD <input type="number" class="bonus-number text-center" required min="1" max="45"
+                  maxlength="2" />
               </div>
             </div>
           </div>
           <button type="button" class="open-result-modal-button mt-5 btn btn-cyan w-100"
             data-id="open-result-modal-button">
-            결과 확인하기
-          </button>
-        </form>
+            =======
+            <input type="number" class="bonus-number text-center" />
       </div>
     </div>
+  </div>
+  <button type="button" class="open-result-modal-button mt-5 btn btn-cyan w-100">
+    >>>>>>> 58160ceddd90c5be8d058481b9f389cde03a821a
+    결과 확인하기
+  </button>
+  </form>
+  </div>
+  </div>
 
-    <div class="modal">
-      <div class="modal-inner p-10">
-        <button class="modal-close" data-id="modal-close-button">
-          <svg viewbox="0 0 40 40">
-            <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
-          </svg>
-        </button>
+  <div class="modal">
+    <div class="modal-inner p-10">
+      <button class="modal-close" data-id="modal-close-button">
+        <svg viewbox="0 0 40 40">
+          <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
+        </svg>
+      </button>
 
-        <h2 class="text-center">🏆 당첨 통계 🏆</h2>
-        <div class="d-flex justify-center" data-id="modal-result-table">
-          <table class="result-table border-collapse border border-black">
-            <thead>
-              <tr class="text-center">
-                <th class="p-3">일치 갯수</th>
-                <th class="p-3">당첨금</th>
-                <th class="p-3">당첨 갯수</th>
-              </tr>
-            </thead>
-            <tbody data-id="modal-result-table-body">
-              <!-- <tr class="text-center" data-id="win-count-three">
+      <h2 class="text-center">🏆 당첨 통계 🏆</h2>
+      <div class="d-flex justify-center" data-id="modal-result-table">
+        <table class="result-table border-collapse border border-black">
+          <thead>
+            <tr class="text-center">
+              <th class="p-3">일치 갯수</th>
+              <th class="p-3">당첨금</th>
+              <th class="p-3">당첨 갯수</th>
+            </tr>
+          </thead>
+          <tbody data-id="modal-result-table-body">
+            <!-- <tr class="text-center" data-id="win-count-three">
                 <td class="p-3">3개</td>
                 <td class="p-3">5,000</td>
                 <td class="p-3">n개</td>
@@ -115,17 +132,17 @@
                 <td class="p-3">2,000,000,000</td>
                 <td class="p-3">n개</td>
               </tr> -->
-            </tbody>
-          </table>
-        </div>
-        <p class="text-center font-bold" data-id="investment-return">
-          <!-- 당신의 총 수익률은 %입니다. -->
-        </p>
-        <div class="d-flex justify-center mt-5">
-          <button type="button" class="btn btn-cyan" data-id="restart-button">다시 시작하기</button>
-        </div>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-center font-bold" data-id="investment-return">
+        <!-- 당신의 총 수익률은 %입니다. -->
+      </p>
+      <div class="d-flex justify-center mt-5">
+        <button type="button" class="btn btn-cyan" data-id="restart-button">다시 시작하기</button>
       </div>
     </div>
+  </div>
   </div>
   <script type="module" src="./src/js/index.js"></script>
 </body>
