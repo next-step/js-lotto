@@ -5,3 +5,5 @@ export const removeAllChildNodes = (parent) => {
     parent.removeChild(parent.firstChild);
   }
 };
+
+export const getRandomNumber = (max) => Math.floor(Math.random() * max) + 1;

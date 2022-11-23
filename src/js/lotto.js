@@ -1,4 +1,4 @@
-import { checkAmountUnit } from "./utils.js";
+import { checkAmountUnit, getRandomNumber } from "./utils.js";
 import { MESSAGE_ABOUT_UNIT_OF_AMOUNT } from "./constants.js";
 
 const UNIT_AMOUNT = 1000;
@@ -18,17 +18,14 @@ class Lotto {
   }
 
   #generateLottoNumbers() {
-    const game = new Array(6).fill(0);
+    const numbers = new Set();
 
-    game.forEach((g, index) => {
-      let num = Math.floor(Math.random() * 44) + 1;
-      while (game.includes(num)) {
-        num = Math.floor(Math.random() * 44) + 1;
-      }
-      game[index] = num;
-    });
+    while (numbers.size < 6) {
+      const num = getRandomNumber(45);
+      numbers.add(num);
+    }
 
-    return game;
+    return Array.from(numbers);
   }
 
   #generatorLotto(amount) {
@@ -36,7 +33,7 @@ class Lotto {
     const games = new Array(gameCount).fill(0);
 
     this.#state.gameCount = gameCount;
-    this.#state.lottos = games.map(() => this.#generateLottoNumbers());
+    this.#state.lottos = games.map(this.#generateLottoNumbers);
   }
 
   purchaseLotto(amount) {
