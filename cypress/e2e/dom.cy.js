@@ -1,12 +1,20 @@
 import 'cypress-each';
-import { MESSAGE } from '../../src/js/util/Constant.js';
+import { AUTO_N_MESSAGE, MESSAGE } from '../../src/js/util/Constant.js';
 
 describe('로또 요구사항을 테스트한다', () => {
   const URL = '../../index.html';
 
   const selectors = {
+    // 구입할 금액 입력
     inputAmount: '.input-purchasing-amount',
+    btnStart: '.btn-start',
+    // 수동 로또 구매 입력란
+    autoPurchasingInformationPhrase: '.auto-purchasing-information-phrase',
     btnConfirm: '.btn-confirm',
+    btnManualAdd: '.btn-manual-add',
+    inputManualNumber: '.manual-number',
+    // 구입 후
+    lottoNumbersToggleButton: '.switch',
     labelPurchasingStatus: '.purchasing-status',
     lottoIcons: '.lotto-icons',
     toggleVisibleNumbers: '.toggle-visible-numbers',
@@ -55,11 +63,10 @@ describe('로또 요구사항을 테스트한다', () => {
 
       ['-1000', '0', '100'].forEach((type) => {
         cy.get(selectors.inputAmount).clear().type(type);
-        cy.get(selectors.btnConfirm)
-          .click()
-          .then(() => {
-            expect(stub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_AMOUNT_MIN);
-          });
+        cy.get(selectors.btnStart).click();
+        cy.get(selectors.btnConfirm).then(() => {
+          expect(stub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_AMOUNT_MIN);
+        });
       });
     });
   });
@@ -67,6 +74,7 @@ describe('로또 요구사항을 테스트한다', () => {
   describe('금액에 해당하는 로또를 발급해야 한다', () => {
     it('확인 버튼을 클릭할 수 있어야 한다', () => {
       cy.get(selectors.inputAmount).clear().type('1000');
+      cy.get(selectors.btnStart).click();
       cy.get(selectors.btnConfirm).click();
     });
 
@@ -77,19 +85,59 @@ describe('로또 요구사항을 테스트한다', () => {
         cy.on('window:alert', stub);
 
         cy.get(selectors.inputAmount).clear().type(invalidInput);
+        cy.get(selectors.btnStart).click();
         cy.get(selectors.btnConfirm)
           .click()
           .then(() => {
             expect(stub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_AMOUNT_UNIT);
           });
+        cy.get(selectors.btnConfirm).click();
       }
     );
 
     it('확인 버튼을 클릭했을 때 입력한 금액에 맞는 로또 개수가 발급되어야 한다', () => {
       const amount = 3;
       cy.get(selectors.inputAmount).type('3000');
+      cy.get(selectors.btnStart).click();
       cy.get(selectors.btnConfirm).click();
       cy.get(selectors.lottoIcons).find('li').should('have.length', amount);
+    });
+  });
+
+  describe('소비자는 로또를 수동으로도 구매할 수 있어야 한다', () => {
+    const LENGTH = 5;
+    beforeEach(() => {
+      cy.get(selectors.inputAmount).clear().type('5000');
+      cy.get(selectors.btnStart).click();
+    });
+
+    it('5,000원을 구매하면 수동 추가는 5개 항목까지만 가능하다', () => {
+      const stub = cy.stub();
+      cy.on('window:alert', stub);
+
+      Array.from({ length: LENGTH }).forEach(() => cy.get(selectors.btnManualAdd).click());
+      cy.get(selectors.btnManualAdd)
+        .click()
+        .then(() => {
+          expect(stub.getCall(0)).to.be.calledWith(MESSAGE.EXCEEDED_MANUAL_LOTTO);
+        });
+    });
+
+    it('5,000원 중 수동으로 1개를 구매한 항목이 로또 번호에 잘 기입되었는지 확인한다', () => {
+      const manualNumbers = [1, 2, 3, 4, 5, 6];
+      cy.get(selectors.btnManualAdd).click();
+      cy.get(selectors.inputManualNumber).each(($el, index) => {
+        cy.wrap($el).clear().type(manualNumbers[index]);
+      });
+      cy.get(selectors.btnConfirm).click();
+      cy.get(selectors.lottoNumbersToggleButton).click();
+      cy.get(selectors.spanLottoDetails).eq(0).contains(manualNumbers.join(', '));
+    });
+
+    it('5,000원을 구매하고 수동으로 추가하지 않으면 자동으로 5개가 구매되어야 한다.', () => {
+      cy.get(selectors.autoPurchasingInformationPhrase).contains(AUTO_N_MESSAGE(LENGTH));
+      cy.get(selectors.btnConfirm).click();
+      cy.get(selectors.spanLottoDetails).should('have.length', LENGTH);
     });
   });
 
@@ -97,6 +145,7 @@ describe('로또 요구사항을 테스트한다', () => {
     it('몇 개를 구매하였는지 안내하는 문구가 있다', () => {
       const amount = 3;
       cy.get(selectors.inputAmount).type('3000');
+      cy.get(selectors.btnStart).click();
       cy.get(selectors.btnConfirm).click();
       const getPurchasingStatus = (amount = 0) => `총 ${amount}개를 구매하였습니다.`;
       cy.get(selectors.labelPurchasingStatus).contains(getPurchasingStatus(amount));
@@ -110,6 +159,7 @@ describe('로또 요구사항을 테스트한다', () => {
 
     it('번호 보기용 토글을 누르면 로또 번호가 구입한 개수만큼 보여야 한다', () => {
       cy.get(selectors.inputAmount).type('4000');
+      cy.get(selectors.btnStart).click();
       cy.get(selectors.btnConfirm).click();
       cy.get(selectors.toggleVisibleNumbers).click();
 
@@ -120,6 +170,7 @@ describe('로또 요구사항을 테스트한다', () => {
   describe('당첨 결과를 입력하고 결과 확인을 누르면 모달 창이 떠야 한다', () => {
     beforeEach(() => {
       cy.get(selectors.inputAmount).clear().type('1000');
+      cy.get(selectors.btnStart).click();
       cy.get(selectors.btnConfirm).click();
     });
 

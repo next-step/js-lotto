@@ -12,7 +12,7 @@
 </p>
 
 <p align="middle">
-  <a href="https://next-step.github.io/js-lotto">🖥️ 데모 링크</a>
+  <a href="https://sannimdev.github.io/js-lotto/">🖥️ 데모 링크(sannimdev)</a>
 </p>
 
 ## 🔥 Projects!

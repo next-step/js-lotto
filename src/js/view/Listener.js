@@ -43,11 +43,16 @@ export const onLottoRestart = () => {
 };
 
 export const onPurchasingAmountEntered = () => {
-  const purchasingAmount = $purchasingAmountInput.value;
-  validatePurchasingAmount(purchasingAmount);
-  setVisibleAreas($purchasingManuallyForm, true);
-  truncateLottoNumberInput();
-  $autoPurchasingInformationPhrase.innerText = AUTO_N_MESSAGE(purchasingAmount / LOTTO_PRICE);
+  try {
+    const purchasingAmount = $purchasingAmountInput.value;
+    validatePurchasingAmount(purchasingAmount);
+    setVisibleAreas($purchasingManuallyForm, true);
+    truncateLottoNumberInput();
+    $autoPurchasingInformationPhrase.innerText = AUTO_N_MESSAGE(purchasingAmount / LOTTO_PRICE);
+  } catch (error) {
+    alert(error.message);
+    console.error(error);
+  }
 };
 
 export const onManualAdd = () => {

@@ -16,7 +16,7 @@ import {
   onModalClose,
   onModalShow,
   onPurchasingAmountEntered,
-} from './listener.js';
+} from './Listener.js';
 import { setVisibleAreas } from './Element.js';
 
 let lottos = [];
