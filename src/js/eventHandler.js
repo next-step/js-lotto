@@ -1,17 +1,18 @@
 import {selector} from "./constants/selector.js";
 import {buyLotto} from "./service.js";
 
-export const handlePaymentForm = (event) => {
+export const handlePaymentForm = ({target}) => {
   event.preventDefault();
-  const payment = event.target[0].valueAsNumber;
-  event.target[0].value = null;
+
+  const payment = target[0].valueAsNumber;
+  target[0].value = null;
 
   buyLotto(payment);
 };
 
-export const handleShowNumber = (event) => {
+export const handleShowNumber = ({target}) => {
   selector.lottoContainer.classList.toggle(
     "lotto-container-hidden",
-    !event.target.checked
+    !target.checked
   );
 };
