@@ -17,4 +17,13 @@ export const SELECTOR = {
   LOTTO_WINNING_COUNT: '.js-lotto-winning-count',
   RATE_OF_RETURN: '.js-rate-of-return',
   RESET_BUTTON: '.js-reset-button',
+
+  LOTTO_PURCHASE_CONTAINER: '.js-lotto-purchase-container',
+  LOTTO_ANNOUNCEMENT_MESSAGE: '.js-lotto-announcement-message',
+  LOTTO_CURRENT_PURCHASED_STATUS: '.js-lotto-current-purchased-status',
+  LOTTO_SELF_BUYING_FORM: '.js-lotto-self-buying-form',
+  LOTTO_PURCHASING_NUMBER_INPUT_WRAPPER: '.js-lotto-purchasing-number-input-wrapper',
+  LOTTO_PURCHASING_BONUS_NUMBER_INPUT: '.js-lotto-purchasing-bonus-number-input',
+  LOTTO_SELF_BUYING_BUTTON: '.js-lotto-self-buying-button',
+  LOTTO_AUTO_BUYING_BUTTON: '.js-lotto-auto-buying-button',
 };
