@@ -13,7 +13,7 @@ class App {
     const submitHandlers = {
       "purchase-input-form": (amount) => {
         this.#model.purchaseLotto(amount);
-        this.render(this.#model.get());
+        this.render(this.#model.state);
       },
     };
 

@@ -13,7 +13,7 @@ class Lotto {
     };
   }
 
-  get() {
+  get state() {
     return this.#state;
   }
 
