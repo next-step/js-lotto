@@ -17,7 +17,7 @@ class Lotto {
     return this.#state;
   }
 
-  createGame() {
+  #generateLottoNumbers() {
     const game = new Array(6).fill(0);
 
     game.forEach((g, index) => {
@@ -36,7 +36,7 @@ class Lotto {
     const games = new Array(gameCount).fill(0);
 
     this.#state.gameCount = gameCount;
-    this.#state.lottos = games.map(() => this.createGame());
+    this.#state.lottos = games.map(() => this.#generateLottoNumbers());
   }
 
   purchaseLotto(amount) {
