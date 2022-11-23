@@ -5,7 +5,7 @@ export default class LotteriesView extends View {
   super(target);
   this.lotteries = model;
   this.lotteries.subscribe(this.render.bind(this));
-  this.toggle = false;
+  this.show = false;
  }
  getTemplate() {
   return this.lotteries.lotteries
@@ -13,7 +13,7 @@ export default class LotteriesView extends View {
     return (
      '<span data-cy="lotto-icon" class="d-flex items-center mx-1 text-4xl">🎟️' +
      `<span class="${
-      this.toggle ? '' : 'hide'
+      this.show ? '' : 'hide'
      } text-base ml-2">${lottery.getLotteryNumber.numbers.join(
       ','
      )}</span></span>`
@@ -23,7 +23,7 @@ export default class LotteriesView extends View {
  }
 
  setToggle(newToggle) {
-  this.toggle = newToggle;
+  this.show = newToggle;
   this.reRender();
  }
 }
