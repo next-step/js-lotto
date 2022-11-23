@@ -1,8 +1,6 @@
 export default class View {
- constructor(selector, parents) {
-  this.$target = parents
-   ? parents.querySelector(selector)
-   : document.querySelector(selector);
+ constructor(target) {
+  this.$target = target;
   this.children = [];
  }
  init() {

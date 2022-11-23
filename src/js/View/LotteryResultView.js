@@ -2,27 +2,19 @@ import { SELECTOR } from '../constants';
 import LotteriesView from './LotteriesView';
 import View from './View';
 export default class LotteryResultView extends View {
- constructor(model) {
-  super(SELECTOR.LOTTERIES_RESULT_VIEW);
+ constructor(target, model) {
+  super(target);
   this.purchaseModel = model;
   this.purchaseModel.subscribe(this.reRender.bind(this));
   this.init();
-
-  this.lotteriesView = new LotteriesView(
-   SELECTOR.LOTTERIES_VIEW,
-   this.$target,
-   this.purchaseModel
-  );
  }
 
  render() {
   this.$target.insertAdjacentHTML('beforeend', this.getTemplate());
-  if (this.lotteriesView)
-   this.lotteriesView = new LotteriesView(
-    SELECTOR.LOTTERIES_VIEW,
-    this.$target,
-    this.purchaseModel
-   );
+  const $lotteriesView = this.$target.querySelector(
+   '[data-view="lotteries-view"]'
+  );
+  new LotteriesView($lotteriesView, this.purchaseModel);
  }
 
  setEvent() {

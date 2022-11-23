@@ -2,12 +2,14 @@ import './../css/index.css';
 
 import PurchaseModel from './Model/PurchaseModel';
 import LotteryResultView from './View/LotteryResultView';
-import { $purchaseForm, $purchaseInput } from './dom';
+import { $purchaseForm, $purchaseInput, $purchaseResult } from './dom';
 
 class App {
  constructor(Model, views) {
   this.purchase = new Model();
-  views.forEach((View) => new View(this.purchase));
+  views.forEach(({ view, target }) => {
+   new view(target, this.purchase);
+  });
   this.setEvent();
  }
 
@@ -35,8 +37,7 @@ class App {
   }
  }
 }
-
-new App(PurchaseModel, [LotteryResultView]);
+new App(PurchaseModel, [{ view: LotteryResultView, target: $purchaseResult }]);
 
 // // TODO : modal logic 분리
 // const onModalShow = () => {

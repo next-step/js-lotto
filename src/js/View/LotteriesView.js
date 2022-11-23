@@ -1,8 +1,8 @@
 import View from './View';
 
 export default class LotteriesView extends View {
- constructor(selector, parents, model) {
-  super(selector, parents);
+ constructor(target, model) {
+  super(target);
   this.lotteries = model;
   this.lotteries.subscribe(this.render.bind(this));
   this.toggle = false;
