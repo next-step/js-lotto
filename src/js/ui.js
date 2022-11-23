@@ -25,7 +25,7 @@ class Ui {
     });
   }
 
-  createListItem(lotto) {
+  getLottoElement(lotto) {
     const $newListItem = document.createElement("li");
     $newListItem.className = "d-flex mx-1 text-4xl";
 
@@ -43,16 +43,16 @@ class Ui {
     return $newListItem;
   }
 
-  renderLottoElements(lottos) {
+  #renderLottoElements(lottos) {
     removeAllChildNodes(this.#lottoList);
 
     lottos.forEach((lotto) => {
-      const createdListItem = this.createListItem(lotto);
-      this.#lottoList.appendChild(createdListItem);
+      const $lottoElement = this.getLottoElement(lotto);
+      this.#lottoList.appendChild($lottoElement);
     });
   }
 
-  renderLottoCount(count) {
+  #renderLottoCount(count) {
     this.#purchasedCount.innerText = count;
   }
 
@@ -61,8 +61,8 @@ class Ui {
     this.#checkWinningNumber.classList.add("display");
     this.#lottoList.classList.remove("expanded");
     this.#viewNumbersCheckbox.checked = false;
-    this.renderLottoElements(state.lottos);
-    this.renderLottoCount(state.gameCount);
+    this.#renderLottoElements(state.lottos);
+    this.#renderLottoCount(state.gameCount);
   };
 }
 
