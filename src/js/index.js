@@ -1,5 +1,8 @@
-import { Purchasing } from "./views/purchasing.js";
+import { LottoComponent } from "./controllers/lotto.component.js";
+import { StateModel } from "./models/state.model.js";
+import { LottoView } from "./views/lotto.view.js";
+
 
 window.onload = () => {
-    const purchasing = new Purchasing();
+    const lottoComponent = new LottoComponent(new LottoView(), new StateModel({}));
 }
