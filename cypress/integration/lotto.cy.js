@@ -32,9 +32,6 @@ describe('금액에 해당하는 로또를 발급해야 한다.', () => {
  it('발급을 위해 클릭할 "확인"버튼이 존재한다.', () => {
   cy.get(purchaseButtonSelector).should('exist');
  });
- it('확인 버튼을 클릭할 수 있어야 한다.', () => {
-  cy.get(purchaseButtonSelector).click();
- });
  it('1,000원 단위로 입력이 되지 않았을 경우 alert를 띄워준다.', () => {
   cy.get(purchaseInputSelector).type('1001');
   cy.get(purchaseButtonSelector).click();
