@@ -1,30 +1,28 @@
-import { removeAllChildNodes } from "./utils.js";
+import { removeAllChildNodes, toggleClass } from "./utils.js";
 
 class Ui {
   #lottoList;
-  #purchasedCount;
   #purchasedLottos;
+  #purchasedCount;
+  #viewNumbersCheckbox;
   #checkWinningNumber;
 
   constructor() {
-    this.#purchasedLottos = document.querySelector("#purchased-lottos");
     this.#lottoList = document.querySelector("#lotto-list");
-    this.#checkWinningNumber = document.querySelector("#check-winning-number");
+    this.#purchasedLottos = document.querySelector("#purchased-lottos");
     this.#purchasedCount = document.querySelector(".purchased-count");
+    this.#viewNumbersCheckbox = document.querySelector(
+      ".view-numbers-checkbox"
+    );
+    this.#checkWinningNumber = document.querySelector("#check-winning-number");
   }
 
-  displayLottoDetail(checked) {
-    this.#lottoList.querySelectorAll(".lotto-detail").forEach(($detail) => {
-      $detail.style.display = checked ? "inline-block" : "none";
+  onViewNumbers(checked) {
+    toggleClass({
+      $element: this.#lottoList,
+      className: "expanded",
+      condition: checked,
     });
-  }
-
-  onToggleReadMore(checked) {
-    checked
-      ? this.#lottoList.classList.add("flex-col")
-      : this.#lottoList.classList.remove("flex-col");
-
-    this.displayLottoDetail(checked);
   }
 
   createListItem(lotto) {
@@ -33,7 +31,6 @@ class Ui {
 
     const $listOfLottoNumber = document.createElement("span");
     $listOfLottoNumber.className = "lotto-detail ml-1";
-    $listOfLottoNumber.style.display = "none";
     $listOfLottoNumber.innerText = lotto.join(", ");
 
     const $listOfLottoIcon = document.createElement("span");
@@ -60,8 +57,10 @@ class Ui {
   }
 
   render = (state) => {
-    this.#purchasedLottos.style.display = "block";
-    this.#checkWinningNumber.style.display = "block";
+    this.#purchasedLottos.classList.add("display");
+    this.#checkWinningNumber.classList.add("display");
+    this.#lottoList.classList.remove("expanded");
+    this.#viewNumbersCheckbox.checked = false;
     this.renderLottoElements(state.lottos);
     this.renderLottoCount(state.gameCount);
   };

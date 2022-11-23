@@ -2,11 +2,26 @@
   width: 100%;
 }
 
-#purchased-lottos, #check-winning-number {
+#purchased-lottos,
+#check-winning-number {
   display: none;
 }
 
-.lotto-detail {
+#lotto-list.expanded {
+  flex-direction: column;
+}
+
+#lotto-list .lotto-detail {
+  display: none;
   font-size: 16px;
   margin: 0 0 0 10px;
+}
+
+#lotto-list.expanded .lotto-detail {
+  display: inline-block;
+}
+
+#purchased-lottos.display,
+#check-winning-number.display {
+  display: block;
 }

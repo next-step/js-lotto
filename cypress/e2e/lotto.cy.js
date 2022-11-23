@@ -1,6 +1,6 @@
 const $purchaseInputSelector = '[data-cy="purchase-amount-input"]';
 const $purchaseSubmitButtonSelector = '[data-cy="purchase-amount-submit"]';
-const $toggleSelector = '[data-cy="lotto-numbers-toggle-button"]';
+const $toggleSelector = '[data-cy="view-numbers-checkbox"]';
 const $iconSelector = ".lotto-icon";
 const $lottoDetail = ".lotto-detail";
 
