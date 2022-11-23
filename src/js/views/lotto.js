@@ -20,12 +20,16 @@ const getLottoNumbers = () => {
 };
 
 export default (targetElement, { ticketCount }) => {
-  const newLottolist = targetElement.cloneNode(true);
+  const newLottoList = targetElement.cloneNode(true);
+
+  while (newLottoList.firstChild) {
+    newLottoList.removeChild(newLottoList.firstChild);
+  }
 
   const lottoImageHTML = Array.from({ length: ticketCount }, () =>
     getLottoElement(getLottoNumbers())
   ).join('');
 
-  newLottolist.insertAdjacentHTML('beforeend', lottoImageHTML);
-  return newLottolist;
+  newLottoList.insertAdjacentHTML('beforeend', lottoImageHTML);
+  return newLottoList;
 };

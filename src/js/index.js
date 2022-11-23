@@ -3,6 +3,7 @@ import { ERROR_MSSAGE } from './utils/constants.js';
 import { $ } from './utils/dom.js';
 
 import registry from './registry.js';
+import applyDiff from './applyDiff.js';
 
 import lottoTemplate from './views/lottoTemplate.js';
 import lottoView from './views/lotto.js';
@@ -29,8 +30,10 @@ const onPurchaseLotto = (event) => {
   // setLottoElement(purchaseAmount);
 };
 
-// $(SELECTOR.PURCHASE_FORM).addEventListener('submit', onPurchaseLotto);
-// $(SELECTOR.LOTTO_NUM_TOGGLE).addEventListener('change', onToggleLottoNumbers);
+const getPurchaseAmount = () => {
+  const randomNumber = Math.floor(Math.random() * 10) + 1;
+  return randomNumber * 1000;
+};
 
 registry.add('lottoTemplate', lottoTemplate);
 registry.add('lotto', lottoView);
@@ -42,7 +45,15 @@ const state = {
   toggleOn: true,
 };
 
-window.requestAnimationFrame(() => {
-  const newApp = registry.renderRoot($('#app'), state);
-  $('#app').replaceWith(newApp);
-});
+const render = () => {
+  window.requestAnimationFrame(() => {
+    const newApp = registry.renderRoot($('#app'), state);
+    applyDiff(document.body, $('#app'), newApp);
+  });
+};
+
+window.setInterval(() => {
+  state.purchaseAmount = getPurchaseAmount();
+  render();
+}, 5000);
+render();
