@@ -10,9 +10,8 @@ export const handlePaymentForm = (event) => {
 };
 
 export const handleShowNumber = (event) => {
-  if (event.target.checked) {
-    selector.lottoContainer.classList.remove("lotto-container-hidden");
-  } else {
-    selector.lottoContainer.classList.add("lotto-container-hidden");
-  }
+  selector.lottoContainer.classList.toggle(
+    "lotto-container-hidden",
+    !event.target.checked
+  );
 };
