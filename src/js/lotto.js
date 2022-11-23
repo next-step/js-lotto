@@ -42,6 +42,7 @@ class Lotto {
   purchaseLotto(amount) {
     if (!checkAmountUnit(amount)) {
       alert(MESSAGE_ABOUT_UNIT_OF_AMOUNT);
+      return;
     }
 
     this.#generatorLotto(amount);
