@@ -22,3 +22,10 @@ body {
   width: 30px;
   height: 36px;
 }
+
+.lotto-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
