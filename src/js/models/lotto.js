@@ -1,7 +1,7 @@
 import {
-  DEFAULT_LOTTO_COUNT,
-  DEFAULT_PRICE,
+  DEFAULT_NUMBER,
   ERROR_MESSAGE,
+  LOTTO_BONUS_APPLICABLE_COUNT,
   LOTTO_COUNT,
   LOTTO_MAX_NUMBER,
   LOTTO_MIN_NUMBER,
@@ -9,6 +9,7 @@ import {
 } from '../../const.js';
 import {
   getRandomNumber,
+  getSameNumberCount,
   hasDuplicateNumbers,
   isNumbersOutOfRange,
 } from '../../utils.js';
@@ -18,12 +19,16 @@ class Lotto {
   #lottoCount;
   #lottos;
   #winningNumbers;
+  #result;
+  #winRate;
 
   constructor() {
-    this.#price = DEFAULT_PRICE;
-    this.#lottoCount = DEFAULT_LOTTO_COUNT;
+    this.#price = DEFAULT_NUMBER;
+    this.#lottoCount = DEFAULT_NUMBER;
+    this.#winRate = DEFAULT_NUMBER;
     this.#lottos = [];
     this.#winningNumbers = [];
+    this.#result = {};
   }
 
   setPrice = (nextPrice) => {
@@ -46,13 +51,21 @@ class Lotto {
     return this.#winningNumbers;
   }
 
+  get result() {
+    return this.#result;
+  }
+
+  get winRate() {
+    return this.#winRate;
+  }
+
   validatePrice = () => {
-    if (this.#price % LOTTO_PRICE > DEFAULT_PRICE) {
+    if (this.#price % LOTTO_PRICE > DEFAULT_NUMBER) {
       window.alert(ERROR_MESSAGE.INVALID_UNIT_NUMBER);
       return false;
     }
 
-    if (this.#price <= DEFAULT_PRICE) {
+    if (this.#price <= DEFAULT_NUMBER) {
       window.alert(ERROR_MESSAGE.INVALID_NEGATIVE_NUMBER);
       return false;
     }
@@ -89,7 +102,56 @@ class Lotto {
     }
   };
 
-  showResult = () => {};
+  computeWinningNumbers() {
+    const winningNumbers = this.#winningNumbers.slice(
+      DEFAULT_NUMBER,
+      LOTTO_COUNT
+    );
+    const bonusNumber = this.#winningNumbers[LOTTO_COUNT];
+
+    this.#lottos.forEach((lotto) => {
+      const sameNumberCount = getSameNumberCount(lotto, winningNumbers);
+      const hasBonusNumber =
+        sameNumberCount === LOTTO_BONUS_APPLICABLE_COUNT &&
+        winningNumbers.includes(bonusNumber);
+
+      if (hasBonusNumber) {
+        this.#setResult(`${sameNumberCount}+bonus`);
+        return;
+      }
+
+      this.#setResult(sameNumberCount);
+    });
+
+    this.#winRate = this.#computeWinRate();
+  }
+
+  #setResult(winningNumberCount) {
+    if (this.#result[winningNumberCount] === undefined) {
+      this.#result[winningNumberCount] = 1;
+      return;
+    }
+
+    this.#result[winningNumberCount] += 1;
+  }
+
+  #computeWinRate() {
+    const result = Object.values(this.#result).reduce(
+      (accumulator, value) => accumulator + value,
+      DEFAULT_NUMBER
+    );
+
+    return (result / this.#lottos.length) * 100;
+  }
+
+  reset() {
+    this.#price = DEFAULT_NUMBER;
+    this.#lottoCount = DEFAULT_NUMBER;
+    this.#winRate = DEFAULT_NUMBER;
+    this.#lottos = [];
+    this.#winningNumbers = [];
+    this.#result = {};
+  }
 
   #getUniqRandomNumbers() {
     const uniqRandomNumbers = new Set();

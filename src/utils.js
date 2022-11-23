@@ -13,3 +13,7 @@ export function hasDuplicateNumbers(numbers) {
 export function isNumbersOutOfRange({ min, max, targets }) {
   return targets.some((target) => min > target || max < target);
 }
+
+export function getSameNumberCount(numbers, values) {
+  return numbers.filter((nextNumber) => values.includes(nextNumber)).length;
+}
