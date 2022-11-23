@@ -7,7 +7,7 @@ class WinningInputFormController extends Controller {
 
   handleClickShowResultButton() {
     if (this.model.validateWinningNumbers()) {
-      this.model.showResult();
+      this.model.computeWinningNumbers();
     }
   }
 
