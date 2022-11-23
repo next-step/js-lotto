@@ -34,6 +34,7 @@ export const handleSubmitPaymentForm = (e) => {
   e.preventDefault();
 
   try {
+    model.reset();
     const lottoPurchasePrice = getLottoPurchasePrice();
     assertLottoPurchasePrice(lottoPurchasePrice);
 
