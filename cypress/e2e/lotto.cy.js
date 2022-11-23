@@ -7,6 +7,11 @@ beforeEach(() => {
   cy.visit('index.html');
 });
 
+const typeLottoPurchase = (price) => {
+  cy.getByDataset(SELECTOR.PURCHASE_PRICE_INPUT).type(price);
+  cy.getByDataset(SELECTOR.PAYMENT_FORM).submit();
+};
+
 const typeLottoPurchasingNumbers = () => {
   cy.getByDataset(SELECTOR.LOTTO_PURCHASING_NUMBER_INPUT_WRAPPER)
     .children()
@@ -294,8 +299,7 @@ describe('로또 어플리케이션을 테스트한다.', () => {
 
   describe('소비자는 수동 구매를 할 수 있다.', () => {
     it('로또 구입 금액을 입력하면 아래에 로또를 구매해달라는 메시지가 보인다.', () => {
-      cy.getByDataset(SELECTOR.PURCHASE_PRICE_INPUT).type('5000');
-      cy.getByDataset(SELECTOR.PAYMENT_FORM).submit();
+      typeLottoPurchase('5000');
 
       cy.getByDataset(SELECTOR.LOTTO_ANNOUNCEMENT_MESSAGE).should(
         'have.text',
@@ -314,8 +318,7 @@ describe('로또 어플리케이션을 테스트한다.', () => {
 
   describe('수동 구매 후 남는 금액이 있다면 자동으로 구매할 수 있어야 한다.', () => {
     it('구입할 금액에 5000원을 입력하고 2회 수동구매를 하고 3회 자동구매를 하면 구매 결과 화면으로 넘어간다.', () => {
-      cy.getByDataset(SELECTOR.PURCHASE_PRICE_INPUT).type('5000');
-      cy.getByDataset(SELECTOR.PAYMENT_FORM).submit();
+      typeLottoPurchase('5000');
 
       Cypress._.times(2, () => {
         typeLottoPurchasingNumbers();
