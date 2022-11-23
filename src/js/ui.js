@@ -1,39 +1,36 @@
-import { removeAllChildNodes } from "./utils.js";
+import { removeAllChildNodes, toggleClass } from "./utils.js";
 
 class Ui {
   #lottoList;
-  #purchasedCount;
   #purchasedLottos;
+  #purchasedCount;
+  #viewNumbersCheckbox;
   #checkWinningNumber;
 
   constructor() {
-    this.#purchasedLottos = document.querySelector("#purchased-lottos");
     this.#lottoList = document.querySelector("#lotto-list");
-    this.#checkWinningNumber = document.querySelector("#check-winning-number");
+    this.#purchasedLottos = document.querySelector("#purchased-lottos");
     this.#purchasedCount = document.querySelector(".purchased-count");
+    this.#viewNumbersCheckbox = document.querySelector(
+      ".view-numbers-checkbox"
+    );
+    this.#checkWinningNumber = document.querySelector("#check-winning-number");
   }
 
-  displayLottoDetail(checked) {
-    this.#lottoList.querySelectorAll(".lotto-detail").forEach(($detail) => {
-      $detail.style.display = checked ? "inline-block" : "none";
+  onViewNumbers(checked) {
+    toggleClass({
+      $element: this.#lottoList,
+      className: "expanded",
+      condition: checked,
     });
   }
 
-  onToggleReadMore(checked) {
-    checked
-      ? this.#lottoList.classList.add("flex-col")
-      : this.#lottoList.classList.remove("flex-col");
-
-    this.displayLottoDetail(checked);
-  }
-
-  createListItem(lotto) {
+  getLottoElement(lotto) {
     const $newListItem = document.createElement("li");
     $newListItem.className = "d-flex mx-1 text-4xl";
 
     const $listOfLottoNumber = document.createElement("span");
     $listOfLottoNumber.className = "lotto-detail ml-1";
-    $listOfLottoNumber.style.display = "none";
     $listOfLottoNumber.innerText = lotto.join(", ");
 
     const $listOfLottoIcon = document.createElement("span");
@@ -46,24 +43,26 @@ class Ui {
     return $newListItem;
   }
 
-  renderLottoElements(lottos) {
+  #renderLottoElements(lottos) {
     removeAllChildNodes(this.#lottoList);
 
     lottos.forEach((lotto) => {
-      const createdListItem = this.createListItem(lotto);
-      this.#lottoList.appendChild(createdListItem);
+      const $lottoElement = this.getLottoElement(lotto);
+      this.#lottoList.appendChild($lottoElement);
     });
   }
 
-  renderLottoCount(count) {
+  #renderLottoCount(count) {
     this.#purchasedCount.innerText = count;
   }
 
   render = (state) => {
-    this.#purchasedLottos.style.display = "block";
-    this.#checkWinningNumber.style.display = "block";
-    this.renderLottoElements(state.lottos);
-    this.renderLottoCount(state.gameCount);
+    this.#purchasedLottos.classList.add("display");
+    this.#checkWinningNumber.classList.add("display");
+    this.#lottoList.classList.remove("expanded");
+    this.#viewNumbersCheckbox.checked = false;
+    this.#renderLottoElements(state.lottos);
+    this.#renderLottoCount(state.gameCount);
   };
 }
 

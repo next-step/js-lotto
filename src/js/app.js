@@ -13,7 +13,7 @@ class App {
     const submitHandlers = {
       "purchase-input-form": (amount) => {
         this.#model.purchaseLotto(amount);
-        this.render(this.#model.get());
+        this.render(this.#model.state);
       },
     };
 
@@ -38,8 +38,8 @@ class App {
 
     this.$target.addEventListener("click", (e) => {
       e.stopPropagation();
-      if (e.target.classList.contains("lotto-numbers-toggle-button"))
-        this.#view.onToggleReadMore(e.target.checked);
+      if (e.target.classList.contains("view-numbers-checkbox"))
+        this.#view.onViewNumbers(e.target.checked);
     });
   }
 }
