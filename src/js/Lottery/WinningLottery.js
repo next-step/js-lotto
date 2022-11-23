@@ -14,10 +14,10 @@ export default class WinningLottery extends Lottery {
    throw new Error('보너스 번호를 입력해주세요.');
   }
   numbers.forEach((number) => {
-   this.setLottery = number;
+   this.setLottery(number);
   });
 
-  this.setLottery = bonus;
+  this.setLottery(bonus);
  }
 
  matchWinningLottery(lottery) {

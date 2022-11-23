@@ -17,7 +17,7 @@ export default class PurchaseModel extends Observer {
   return this.#lotteries.length;
  }
 
- set buy(money) {
+ buy(money) {
   const lotteryAmount = this.#getLotteryAmount(money);
   this.#lotteries = Array.from(
    { length: lotteryAmount },

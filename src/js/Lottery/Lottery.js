@@ -22,7 +22,7 @@ export default class Lottery {
   return this.#lotteryCount;
  }
 
- set setLottery(number) {
+ setLottery(number) {
   if (this.isIncludes(number)) {
    throw new Error('로또 번호는 중복가능하지 않습니다. 정확히 입력해주세요');
   }

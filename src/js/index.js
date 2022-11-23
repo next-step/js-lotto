@@ -29,7 +29,7 @@ class App {
   const target = event.currentTarget;
   if (!target) return;
   try {
-   this.purchase.buy = +target.purchase.value;
+   this.purchase.buy(+target.purchase.value);
   } catch (e) {
    alert(e.message);
   }
