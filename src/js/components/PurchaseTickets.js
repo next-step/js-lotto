@@ -2,6 +2,7 @@ import { getState } from '../store/state.js';
 import { toggleShowNumbers } from '../store/actions.js';
 import { subject } from '../index.js';
 
+let flag = false;
 export default class PurchaseTickets extends HTMLElement {
   constructor() {
     super();
@@ -10,7 +11,12 @@ export default class PurchaseTickets extends HTMLElement {
   }
 
   onStateChange() {
-    this.render();
+    const { isNumberVisible } = getState();
+    if (flag !== isNumberVisible) {
+      flag = isNumberVisible;
+    } else {
+      this.render();
+    }
   }
 
   setEvent() {
@@ -31,7 +37,6 @@ export default class PurchaseTickets extends HTMLElement {
 
   render() {
     const { ticketCount, isNumberVisible } = getState();
-
     const ticketElements = new Array(ticketCount)
       .fill('')
       .map((element, index) => `<purchase-ticket index="${index}"></purchase-ticket>`)

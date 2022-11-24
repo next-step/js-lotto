@@ -1,5 +1,5 @@
 import { checkUnitOfPrice } from '../utils/validate.js';
-import { setPrice } from '../store/actions.js';
+import { setPurchasePrice, getTickets } from '../store/actions.js';
 
 export default class PurchasePrice extends HTMLElement {
   constructor() {
@@ -13,15 +13,16 @@ export default class PurchasePrice extends HTMLElement {
 
   handleOnSubmit(e) {
     e.preventDefault();
-    const { value: inputValue } = this.shadow.querySelector(
-      'input[data-cy="purchase-price-input"]',
-    );
+    const { value: inputValue } = this.shadow.querySelector('input');
     const purchasePrice = Number(inputValue);
-    if (checkUnitOfPrice(purchasePrice)) setPrice(purchasePrice);
+    if (checkUnitOfPrice(purchasePrice)) {
+      setPurchasePrice(purchasePrice);
+      getTickets(purchasePrice);
+    }
   }
 
   setEvent() {
-    const $form = this.shadow.querySelector('form[data-cy="purchase-form"]');
+    const $form = this.shadow.querySelector('form');
     $form.addEventListener('submit', this.handleOnSubmit.bind(this));
   }
 

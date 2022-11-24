@@ -29,17 +29,15 @@ const isUnique = winningNumbers => {
   return false;
 };
 
-const isValidNumber = winningNumbers => {
-  // 1~45
+const isInRange = winningNumbers => {
   const validNumberCount = winningNumbers.filter(number => number < 1 || number > 45).length;
   if (validNumberCount === 0) return true;
   return false;
 };
 
 export const checkWinningNumbers = winningNumbers => {
-  console.log(winningNumbers);
   try {
-    if (isValidNumber(winningNumbers) === false) {
+    if (isInRange(winningNumbers) === false) {
       throw Error(ERROR_MESSAGES.INVALID_WINNING_NUMBER);
     }
     if (isUnique(winningNumbers) === false) {

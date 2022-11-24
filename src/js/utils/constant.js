@@ -1,9 +1,8 @@
-// CLASS 로 묶어도 ㄱㅊ할듯
 export const UNIT_OF_PRICE = 1000;
 export const MAX_PRICE = 100000;
 export const LOTTO_COUNT = 6;
-export const LOTTO_MIN_NUMBER = 1;
-export const LOTTO_MAX_NUMBER = 45;
+export const LOTTO_MIN = 1;
+export const LOTTO_MAX = 45;
 
 export const WINNING_NUMBER_COUNT = 7;
 
@@ -21,4 +20,22 @@ export const INITIAL_STATE = {
   ticketCount: 0,
   tickets: [],
   isNumberVisible: false,
+  winningNumbers: [],
+  showResult: false,
+  winningScore: {
+    3: 0,
+    4: 0,
+    5: 0,
+    '5-bonus': 0,
+    6: 0,
+  },
+  profit: 0,
+};
+
+export const PRICE_STANDARD = {
+  3: '5_000',
+  4: '50_000',
+  5: '1_500_000',
+  '5-bonus': '30_000_000',
+  6: '2_000_000_000',
 };

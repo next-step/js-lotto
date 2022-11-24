@@ -5,7 +5,7 @@ describe('로또 어플리케이션 테스트', () => {
     cy.visit('');
   });
 
-  //   describe('# 로또 구입 금액을 입력한다.', () => {
+  //   describe('로또 구입 금액을 입력한다.', () => {
   //     it('로또 구입 금액 입력할 input 태그가 있다.', () => {
   //       cy.getDataset('purchase-price-input').should('exist');
   //     });
@@ -21,7 +21,7 @@ describe('로또 어플리케이션 테스트', () => {
   //     });
   //   });
 
-  //   describe('# 금액에 해당하는 로또를 발급해야 한다.', () => {
+  //   describe('금액에 해당하는 로또를 발급해야 한다.', () => {
   //     it('금액 입력란과 확인 버튼이 존재한다.', () => {
   //       cy.getDataset('purchase-price-input').should('exist');
   //       cy.getDataset('purchase-price-button').should('exist');
@@ -43,7 +43,7 @@ describe('로또 어플리케이션 테스트', () => {
   //     });
   //   });
 
-  //   describe('# 로또 1장의 가격은 1,000원이다.', () => {
+  //   describe('로또 1장의 가격은 1,000원이다.', () => {
   //     it('금액이 음수일 경우 alert을 띄워준다.', () => {
   //       cy.purchaseLotto('-1000');
   //       cy.on('window:alert', t => {
@@ -66,7 +66,7 @@ describe('로또 어플리케이션 테스트', () => {
   //     });
   //   });
 
-  //   describe('# 복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.', () => {
+  //   describe('복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.', () => {
   //     it('번호보기 토글 버튼이 있다.', () => {
   //       cy.purchaseLotto('1000');
   //       cy.getDataset('toggle-number-button').should('exist');
@@ -95,43 +95,66 @@ describe('로또 어플리케이션 테스트', () => {
     cy.getDataset('bonus-number').type(bonusNumber);
   };
 
-  describe('# 당첨 번호는 중복되지 않는 7개의 1이상 45이하의 숫자이다.', () => {
+  // describe('당첨 번호는 중복되지 않는 7개의 1이상 45이하의 숫자이다.', () => {
+  //   beforeEach(() => {
+  //     cy.purchaseLotto('10000');
+  //   });
+
+  //   it('당첨 번호 6개와 보너스 번호 1, 총 7개의 input이 있다.', () => {
+  //     cy.getDataset('winning-number').should('have.length', 6);
+  //     cy.getDataset('bonus-number').should('have.length', 1);
+  //   });
+
+  //   it('로또 번호에 중복된 숫자를 입력시 alert이 뜬다.', () => {
+  //     cy.typeWinningNumbers([1, 1, 1, 2, 2, 6, 2]);
+  //     cy.getDataset('result-btn').click();
+  //     cy.on('window:alert', t => {
+  //       expect(t).to.equal(ERROR_MESSAGES.NOT_UNIQUE_WINNING_NUMBER);
+  //     });
+  //   });
+
+  //   it('로또 번호에 숫자가 아닐시 input값 안에 입력되지 않는다.', () => {
+  //     cy.typeWinningNumbers(['가', '나', 'abc', '!!', '!@#', '라', 'e']);
+  //     cy.getDataset('winning-number').each(number => {
+  //       cy.wrap(number).should('have.text', '');
+  //     });
+  //   });
+
+  //   it('로또 번호가 1~45 사이의 수가 아닐시 alert이 뜬다.', () => {
+  //     cy.typeWinningNumbers([-1, 100, 46, 4, -3, 0, 66]);
+  //     cy.getDataset('result-btn').click();
+  //     cy.on('window:alert', t => {
+  //       expect(t).to.equal(ERROR_MESSAGES.INVALID_WINNING_NUMBER);
+  //     });
+  //   });
+
+  //   it('7개의 수를 모두 입력해야 결과를 확인할 수 있다.', () => {
+  //     cy.typeWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
+  //     cy.getDataset('result-btn').click();
+  //     cy.getDataset('result-modal').should('exist');
+  //   });
+  // });
+
+  describe('결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.', () => {
     beforeEach(() => {
       cy.purchaseLotto('10000');
-    });
-
-    it('당첨 번호 6개와 보너스 번호 1, 총 7개의 input이 있다.', () => {
-      cy.getDataset('winning-number').should('have.length', 6);
-      cy.getDataset('bonus-number').should('have.length', 1);
-    });
-
-    it('로또 번호에 중복된 숫자를 입력시 alert이 뜬다.', () => {
-      cy.typeWinningNumbers([1, 1, 1, 2, 2, 6, 2]);
-      cy.getDataset('result-btn').click();
-      cy.on('window:alert', t => {
-        expect(t).to.equal(ERROR_MESSAGES.NOT_UNIQUE_WINNING_NUMBER);
-      });
-    });
-
-    it('로또 번호에 숫자가 아닐시 input값 안에 입력되지 않는다.', () => {
-      cy.typeWinningNumbers(['가', '나', 'abc', '!!', '!@#', '라', 'e']);
-      cy.getDataset('winning-number').each(number => {
-        cy.wrap(number).should('have.text', '');
-      });
-    });
-
-    it('로또 번호가 1~45 사이의 수가 아닐시 alert이 뜬다.', () => {
-      cy.typeWinningNumbers([-1, 100, 46, 4, -3, 0, 66]);
-      cy.getDataset('result-btn').click();
-      cy.on('window:alert', t => {
-        expect(t).to.equal(ERROR_MESSAGES.INVALID_WINNING_NUMBER);
-      });
-    });
-
-    it('7개의 수를 모두 입력해야 결과를 확인할 수 있다.', () => {
       cy.typeWinningNumbers([1, 2, 3, 4, 5, 6, 7]);
       cy.getDataset('result-btn').click();
-      // 모달 띄우기
+    });
+
+    it('당첨 갯수를 확인할 수 있다.', () => {
+      cy.getDataset('winning-count').each($count => {
+        const count = $count.text().slice(0, -1);
+        expect(count).not.to.be.empty;
+        expect(Number(count)).to.match(/[0-9]/);
+      });
+    });
+    it('당첨 통계 창에서 수익률을 확인할 수 있다.', () => {
+      cy.getDataset('profit-rate')
+        .should('not.be.empty')
+        .and($span => {
+          expect(Number($span.text())).to.match(/[0-9]/);
+        });
     });
   });
 });

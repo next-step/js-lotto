@@ -1,7 +1,7 @@
 import { getState } from '../store/state.js';
 import { subject } from '../index.js';
 import { LOTTO_COUNT } from '../utils/constant.js';
-import { setWinningNumbers } from '../store/actions.js';
+import { setWinningNumbers, showModal, calculatePrize } from '../store/actions.js';
 import { getWinningNumbers } from '../utils/lotto.js';
 import { checkWinningNumbers } from '../utils/validate.js';
 
@@ -13,15 +13,22 @@ export default class WinningNumber extends HTMLElement {
   }
 
   onStateChange() {
-    this.render();
-    this.setEvent();
+    const { winningNumbers } = getState();
+    if (winningNumbers.length === 0) {
+      this.render();
+      this.setEvent();
+    }
   }
 
   handleOnSubmit(event) {
     event.preventDefault();
-    const inputNumbers = this.shadow.querySelectorAll("input[type='number']");
+    const inputNumbers = this.shadow.querySelectorAll('input');
     const winningNumbers = getWinningNumbers(inputNumbers);
-    if (checkWinningNumbers(winningNumbers)) setWinningNumbers(winningNumbers);
+    if (checkWinningNumbers(winningNumbers)) {
+      setWinningNumbers(winningNumbers);
+      calculatePrize();
+      showModal();
+    }
   }
 
   setEvent() {
@@ -84,6 +91,11 @@ export default class WinningNumber extends HTMLElement {
 
 const style = `
 <style>
+	input[type="number"]::-webkit-outer-spin-button,
+	input[type="number"]::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
 	.btn.btn-cyan:hover {
 		background-color: #018c9e !important;
 	}
