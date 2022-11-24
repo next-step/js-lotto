@@ -27,15 +27,14 @@ class Ui {
 
   getLottoElement(lotto) {
     const $newListItem = document.createElement("li");
-    $newListItem.className = "d-flex mx-1 text-4xl";
-
     const $listOfLottoNumber = document.createElement("span");
-    $listOfLottoNumber.className = "lotto-detail ml-1";
-    $listOfLottoNumber.innerText = lotto.join(", ");
-
     const $listOfLottoIcon = document.createElement("span");
+
+    $newListItem.className = "d-flex mx-1 text-4xl";
     $listOfLottoIcon.className = "lotto-icon";
+    $listOfLottoNumber.className = "lotto-detail ml-1";
     $listOfLottoIcon.innerText = "🎟";
+    $listOfLottoNumber.innerText = lotto.join(", ");
 
     $newListItem.appendChild($listOfLottoIcon);
     $newListItem.appendChild($listOfLottoNumber);
