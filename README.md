@@ -23,6 +23,18 @@
 
 <br>
 
+## 피드백 요청 사항
+
+✔ LottoInput, LottoResult, LottoGame의 컴포넌트로 분리하려고 했습니다.
+✔ Lotto 번호를 생성하는 부분은 LottoGenerator에서 담당하게 두었습니다.
+✔ 상태는 각각 LottoInput과 LottoResult이 들고있되, 전달할 상태값은 LottoGame 안에서 prop처럼 전달합니다.
+
+? 상태값을 누가 들고 있는 것이 좋은지 헷갈렸습니다. LottoGame이 전부 들고 있으면서 관리하는 게 좋은지, 각각이 갖고 있는 게 좋을지요
+? 테스트 코드를 작성할 때 LottoGenerator에 대한 테스트 코드를 짜거나 컴포넌트를 생성해서 테스트해봐야하는지, 혹은 화면에서 보이는 정보들로만 테스트를 해야할지 헷갈렸습니다. 테스트 종류에 대한 이해가 부족한 탓일까요?
+
+😵 로또 번호에 대한 중복이나 범위값은 테스트해보았지만 "랜덤" 자체에 대한 테스트는 하지 못했습니다
+😵 로또 결과에 대한 동적으로 붙히면서 번호보기 체크박스의 css가 안 먹네요
+
 ## ⚙️ Before Started
 
 #### <img alt="Tip" src="https://img.shields.io/static/v1.svg?label=&message=Tip&style=flat-square&color=673ab8"> 로컬에서 서버 띄워서 손쉽게 static resources 변경 및 확인하는 방법

@@ -1,3 +1,10 @@
+import {
+  LOTTO_NUMBER_MIN,
+  LOTTO_NUMBER_MAX,
+  WRONG_INPUT,
+  LOTTO_COUNT_PER_ONE,
+} from "../../../src/js/constants.js";
+
 describe("로또", () => {
   const inputAmounSelector = "#lotto-input-form input";
   const confirmPurchaseBtnSelector = "#lotto-input-form .confirm-purchase";
@@ -35,9 +42,7 @@ describe("로또", () => {
       cy.get(confirmPurchaseBtnSelector)
         .click()
         .then(() => {
-          expect(invalidAlertStub.getCall(0)).to.be.calledWith(
-            "입력하신 금액이 유효하지 않습니다."
-          );
+          expect(invalidAlertStub.getCall(0)).to.be.calledWith(WRONG_INPUT);
         });
       cy.get(inputAmounSelector).clear();
     });
@@ -57,7 +62,7 @@ describe("로또", () => {
   });
 
   describe("번호보기 스위치 누르면 숨겨진 로또 번호를 볼 수 있다", () => {
-    it("번호보기 스위치 토글 버튼을 누르면 6개의 숫자로 이루어진 (금액/1000개)의 로또번호들을 볼 수 있다", () => {
+    it("번호보기 스위치 토글 버튼을 누르면 (금액/1000개)의 로또번호들을 볼 수 있다", () => {
       cy.get(switchInputelector).check({ force: true });
       cy.get("#lotto-icons li").should("have.length", 4000 / 1000);
     });
@@ -69,11 +74,11 @@ describe("로또", () => {
         const numArray = text.split(",");
         const lottoNumberSet = new Set();
 
-        expect(numArray.length).to.equal(6);
+        expect(numArray.length).to.equal(LOTTO_COUNT_PER_ONE);
         expect(numArray).to.be.instanceOf(Array);
         numArray.forEach((el) => {
           expect(lottoNumberSet.has(el)).to.equal(false);
-          expect(Number(el)).within(1, 45);
+          expect(Number(el)).within(LOTTO_NUMBER_MIN, LOTTO_NUMBER_MAX);
           lottoNumberSet.add(el);
         });
       });
