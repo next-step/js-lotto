@@ -1,13 +1,10 @@
 import LottoGenerator from "./LottoGenerator.js";
 import LottoInput from "./LottoInput.js";
 import LottoResult from "./LottoResult.js";
+import { LOTTO_NUMBER_MIN, LOTTO_NUMBER_MAX } from "./constants.js";
 
 export default function LottoGame() {
   this.$element = document.querySelector("#app");
-
-  // this.inputAmount = 0;
-  // this.lottoNumbers = [];
-  // this.lottoCnt = 0;
 
   const lottoGenerator = new LottoGenerator();
   const lottoInput = new LottoInput({
@@ -15,15 +12,15 @@ export default function LottoGame() {
     onSubmit: (inputAmount) => {
       const [randomNumberArray, lottoCnt] = lottoGenerator({
         moneyAmount: inputAmount,
-        min: 1,
-        max: 45,
+        min: LOTTO_NUMBER_MIN,
+        max: LOTTO_NUMBER_MAX,
       });
-
       lottoResult.setState({
         lottoCnt: lottoCnt,
         lottoNumberArr: randomNumberArray,
         toggled: lottoResult.state.toggled,
       });
+      lottoInput.setState("");
     },
   });
 

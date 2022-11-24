@@ -1,8 +1,8 @@
 describe("로또", () => {
-  const inputAmounSelector = "[data-target=purchase-amount-input]";
-  const confirmPurchaseBtnSelector = "[data-target=confirm-purchase]";
-  const purchaseResultSelector = "[data-target=purchase-result-txt] span";
-  const purchaseResultCntSelector = "[data-target=purchase-result-cnt]";
+  const inputAmounSelector = "#lotto-input-form input";
+  const confirmPurchaseBtnSelector = "#lotto-input-form .confirm-purchase";
+  const purchaseResultSelector = ".purchase-result-txt span";
+  const purchaseResultLottoIconSelector = ".lotto-icon";
   const switchInputelector = ".switch input[type=checkbox]";
   before(() => {
     cy.visit("../../../index.html");
@@ -15,6 +15,12 @@ describe("로또", () => {
 
     it("로또 구입 금액을 입력하면 화면에 입력한 금액이 그대로 보여져야 한다. ", () => {
       cy.get(inputAmounSelector).type(900);
+      cy.get(inputAmounSelector).should("have.value", 900);
+      cy.get(inputAmounSelector).clear();
+    });
+
+    it("로또 구입 금액을 입력하면 화면에 입력한 금액이 숫자만 보여진다. ", () => {
+      cy.get(inputAmounSelector).type("900a");
       cy.get(inputAmounSelector).should("have.value", 900);
       cy.get(inputAmounSelector).clear();
     });
@@ -43,7 +49,7 @@ describe("로또", () => {
       cy.get(confirmPurchaseBtnSelector).click();
 
       cy.get(purchaseResultSelector).should("have.text", 4000 / 1000);
-      cy.get(purchaseResultCntSelector + " span").should(
+      cy.get(purchaseResultLottoIconSelector).should(
         "have.length",
         4000 / 1000
       );
@@ -58,8 +64,18 @@ describe("로또", () => {
 
     it("금액/1000개의 각 로또 번호는 6개의 랜덤한 1~45 사이의 숫자이며 중복되지 않는다.", () => {
       const lottoDetails = cy.get(".lotto-detail");
-      lottoDetails.should((i, el) => {
-        alert(el.eq(0));
+      lottoDetails.each(($el) => {
+        const text = $el.text();
+        const numArray = text.split(",");
+        const lottoNumberSet = new Set();
+
+        expect(numArray.length).to.equal(6);
+        expect(numArray).to.be.instanceOf(Array);
+        numArray.forEach((el) => {
+          expect(lottoNumberSet.has(el)).to.equal(false);
+          expect(Number(el)).within(1, 45);
+          lottoNumberSet.add(el);
+        });
       });
     });
   });
