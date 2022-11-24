@@ -7,7 +7,7 @@ import {
   showWinningNumbersForm,
   renderLottoCount,
   renderLottoItems,
-  toggleLottoItems,
+  showPurchasedLottoNumbers,
 } from './view.js';
 
 export const handleSubmit = (e) => {
@@ -31,5 +31,5 @@ export const handleSubmit = (e) => {
 };
 
 export const handleToggleBtn = (e) => {
-  toggleLottoItems(e);
+  showPurchasedLottoNumbers(e);
 };

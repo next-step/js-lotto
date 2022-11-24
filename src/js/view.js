@@ -22,21 +22,15 @@ export const renderLottoItems = (lottoNumbersList) => {
       return `
       <li class="mx-1 d-flex items-center lotto-item">
         <span class="text-4xl">🎟️ </span>
-        <span class="text-2xl lotto-item-numbers hidden" data-cy="lotto-item-numbers">${item.join(", ")}</span>
+        <span class="text-2xl lotto-item-numbers hidden" data-cy="lotto-item-numbers">${item.join(', ')}</span>
       </li>`;
     })
     .join('');
   $lottoList.innerHTML = lottoItemTemplate;
 };
 
-export const toggleLottoItems = ({ target }) => {
-  const isCheckedToggleBtn = target.checked;
-
+export const showPurchasedLottoNumbers = ({ target }) => {
   $$('[data-cy="lotto-item-numbers"]').forEach((item) => {
-    if (isCheckedToggleBtn) {
-      item.classList.remove('hidden');
-      return;
-    }
-    item.classList.add('hidden');
+    item.classList.toggle('hidden', !target.checked);
   });
 };
