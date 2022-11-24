@@ -27,9 +27,8 @@ export const handleSubmit = (e) => {
     renderLottoItems(lottoNumbersList);
   } catch (error) {
     window.alert(error.message);
+    console.error(error);
   }
 };
 
-export const handleToggleBtn = (e) => {
-  showPurchasedLottoNumbers(e);
-};
+export const handleToggleBtn = (e) => showPurchasedLottoNumbers(e);
