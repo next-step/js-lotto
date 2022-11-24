@@ -17,7 +17,6 @@ class Lotto {
       this.handleLottoNumbersToggleButton();
     });
     $showModalButton.addEventListener("click", () => {
-      // this.onModalShow();
       this.getWinningNumbers();
     });
     $removeModalButton.addEventListener("click", () => {
@@ -83,8 +82,8 @@ class Lotto {
 
   getWinningNumbers() {
     const winningNumbers = Array.from($$winningNumbers).map((number) => +number.value);
-
-    if (validateRange(winningNumbers)) {
+    console.log(validateRange(winningNumbers));
+    if (!validateRange(winningNumbers)) {
       return alert("1~45사이의 숫자를 입력해주세요.");
     }
     if (isDuplicatedNumbers(winningNumbers)) {

@@ -23,3 +23,15 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("getWinningNumber", (numbers) => {
+  cy.get(".winning-number").each((number, index) => {
+    cy.wrap(number).type(numbers[index]);
+  });
+});
+
+Cypress.Commands.add("winningNumberArray", (numbers) => {
+  cy.get(".winning-number").each((number, index) => {
+    cy.wrap(number).type(numbers[index]);
+  });
+});
