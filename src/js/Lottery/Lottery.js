@@ -13,11 +13,20 @@ export default class Lottery {
   this.#numbers = [];
  }
 
+ reset() {
+  this.#bonus = null;
+  this.#numbers = [];
+ }
+
  isIncludes(number) {
   return this.#numbers.includes(number);
  }
  get lotteryMax() {
   return this.#lotteryMax;
+ }
+
+ get lotteryMin() {
+  return this.#lotteryMin;
  }
 
  get lotteryCount() {
@@ -26,12 +35,12 @@ export default class Lottery {
 
  setLottery(number) {
   this.validateLottoNumber(number);
-
-  if (this.#numbers.length === this.#lotteryCount) {
-   this.#bonus = number;
-   return;
-  }
   this.#numbers.push(number);
+ }
+
+ setBonus(number) {
+  this.validateLottoNumber(number);
+  this.#bonus = number;
  }
 
  validateLottoNumber(number) {

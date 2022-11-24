@@ -17,6 +17,25 @@ export default class PurchaseModel extends Observer {
   return this.#lotteries.length;
  }
 
+ setWinningLottery({ numbers, bonus }) {
+  try {
+   this.winningLottery.setWinningLottery({ numbers, bonus });
+  } catch (e) {
+   this.winningLottery.reset();
+   alert(e.message);
+  }
+ }
+
+ validateLotteryNumber(number) {
+  if (number > this.winningLottery.lotteryMax) {
+   return this.winningLottery.lotteryMax;
+  }
+  if (number < this.winningLottery.lotteryMin) {
+   return this.winningLottery.lotteryMin;
+  }
+  return number;
+ }
+
  buy(money) {
   const lotteryAmount = this.#getLotteryAmount(money);
   this.#lotteries = Array.from(

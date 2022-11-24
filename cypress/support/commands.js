@@ -1,25 +1,18 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+export const purchaseInputSelector = '#purchase-amount-input';
+export const purchaseButtonSelector = '[data-cy="purchase-button"]';
+export const lottoIconSelector = '[data-cy="lotto-icon"]';
+export const lottoAnnouncementSelector = '[data-cy="lotto-announcement"]';
+export const winningLotteryNumberSelector = '.winning-number';
+export const winningLotteryBonusSelector = '.bonus-number';
+
+Cypress.Commands.add('purchaseLotto', (count) => {
+ cy.get(purchaseInputSelector).type(count * 1000);
+ cy.get(purchaseButtonSelector).click();
+});
+
+Cypress.Commands.add('setWinningLotto', (numbers, bonus) => {
+ cy.get('.winning-number').each((e, index) => {
+  cy.wrap(e).type(numbers[index]);
+ });
+ cy.get('.bonus-number').type(bonus).focus();
+});

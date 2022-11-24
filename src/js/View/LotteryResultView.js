@@ -18,13 +18,30 @@ export default class LotteryResultView extends View {
  }
 
  setEvent() {
+  this.addEvent('change', 'input[type="number"]', (event) => {
+   event.target.value = this.purchaseModel.validateLotteryNumber(
+    event.target.value
+   );
+  });
   this.addEvent('submit', SELECTOR.WINNING_LOTTERY_FORM, (event) => {
    event.preventDefault();
+   const lotteryNumbers = [];
+   const bonus = [];
 
    for (const input of event.target) {
-    if (input.tagName !== 'INPUT') continue;
-    this.purchaseModel.winningLottery.setLottery = +input.value;
+    if (input.classList.value.includes('winning-number')) {
+     lotteryNumbers.push(+input.value);
+    }
+
+    if (input.classList.value.includes('bonus-number')) {
+     bonus.push(+input.value);
+    }
    }
+
+   this.purchaseModel.setWinningLottery({
+    numbers: lotteryNumbers,
+    bonus: bonus[0],
+   });
   });
 
   this.addEvent('change', SELECTOR.LOTTO_NUMBER_TOGGLE, (event) => {
@@ -50,7 +67,7 @@ export default class LotteryResultView extends View {
     <div class="d-flex">
      <div>
       <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
-      <div>
+      <div data-cy="winning-numbers">
        <input type="number" class="winning-number mx-1 text-center" />
        <input type="number" class="winning-number mx-1 text-center" />
        <input type="number" class="winning-number mx-1 text-center" />
@@ -59,9 +76,9 @@ export default class LotteryResultView extends View {
        <input type="number" class="winning-number mx-1 text-center" />
       </div>
      </div>
-     <div class="bonus-number-container flex-grow">
+     <div class="flex-grow">
       <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
-      <div class="d-flex justify-center">
+      <div data-cy="bonus-numbers" class="d-flex justify-center">
        <input type="number" class="bonus-number text-center" />
       </div>
      </div>
