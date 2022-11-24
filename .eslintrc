@@ -1,0 +1,23 @@
+{
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "extends": ["airbnb", "plugin:prettier/recommended", "plugin:cypress/recommended"],
+  "rules": {
+    "import/extensions": [
+      "off"
+    ],
+    "max-depth": ["error", 2],
+    "lines-between-class-members": "off",
+    "class-methods-use-this":  "off",
+    "import/prefer-default-export": "off",
+    "no-unused-expressions": "off",
+    "no-param-reassign": "off"
+  }
+}
