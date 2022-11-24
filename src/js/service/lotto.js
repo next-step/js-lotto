@@ -1,11 +1,12 @@
 import { createRandomNumbers } from "../utils/operate.js";
+class Lotto {
+  #lottos;
 
-export let lottos = [];
+  issueLottos(number) {
+    const lottos = Array.from(Array(number), () => createRandomNumbers());
+    this.#lottos = lottos;
+    return lottos;
+  }
+}
 
-export const issueLottos = (number) => {
-	lottos = Array.from(Array(number), () => createRandomNumbers());
-};
-
-export const clearLottos = () => {
-	lottos = [];
-};
+export default new Lotto();
