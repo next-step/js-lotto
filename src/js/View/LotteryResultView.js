@@ -29,15 +29,15 @@ export default class LotteryResultView extends View {
    const bonus = [];
 
    for (const input of event.target) {
-    if (input.classList.value.includes('winning-number')) {
+    if (input.classList.value.includes('winning-number') && input.value) {
      lotteryNumbers.push(+input.value);
     }
 
-    if (input.classList.value.includes('bonus-number')) {
+    if (input.classList.value.includes('bonus-number') && input.value) {
      bonus.push(+input.value);
     }
    }
-
+   console.log(lotteryNumbers, bonus);
    this.purchaseModel.setWinningLottery({
     numbers: lotteryNumbers,
     bonus: bonus[0],

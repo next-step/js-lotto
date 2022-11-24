@@ -12,7 +12,12 @@ Cypress.Commands.add('purchaseLotto', (count) => {
 
 Cypress.Commands.add('setWinningLotto', (numbers, bonus) => {
  cy.get('.winning-number').each((e, index) => {
-  cy.wrap(e).type(numbers[index]);
+  cy.log(numbers[index]);
+  if (numbers[index] !== undefined) {
+   cy.wrap(e).type(numbers[index]);
+  }
  });
- cy.get('.bonus-number').type(bonus).focus();
+ if (bonus !== undefined) {
+  cy.get('.bonus-number').type(bonus).focus();
+ }
 });

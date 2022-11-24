@@ -6,7 +6,7 @@ export default class WinningLottery extends Lottery {
  }
 
  setWinningLottery({ numbers, bonus }) {
-  if (numbers.length > this.lotteryCount) {
+  if (numbers.length < this.lotteryCount) {
    throw new Error('로또 번호를 정확하게 입력해주세요.');
   }
 
