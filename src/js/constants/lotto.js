@@ -3,4 +3,11 @@ export const LOTTO = {
 	MAX_NUMBER: 45,
 	TOTAL_NUMBER_COUNT: 6,
 	LOTTO_UNIT: 1000,
+	PRIZE_MONEY: {
+		1: 2000000000,
+		2: 30000000,
+		3: 1500000,
+		4: 50000,
+		5: 5000,
+	},
 };

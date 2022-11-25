@@ -1,31 +1,34 @@
 import {
+	$allWinningLottoCount,
 	$allWinningNumberInputs,
 	$bonusNumber,
+	$earningTotalRate,
 	$lottoPapers,
 	$purchaseInput,
+	$totalLottoCount,
 } from "./view/elements.js";
 import { ERROR_MESSAGE } from "./constants/errorMessage.js";
 import { LOTTO } from "./constants/lotto.js";
 import lotto from "./service/lotto.js";
 import { isInvalidPurchasePrice } from "./utils/validator.js";
 import {
+	changeInnerText,
 	onModalShow,
 	render,
-	showTotalLottoCount,
 	turnOffToggleButton,
 } from "./view/ui.js";
 import { lottosTemplate } from "./view/templates.js";
 
 const getWinningNumbers = () => {
 	const winningNumbers = [...$allWinningNumberInputs].map(
-		(winningNumberInput) => winningNumberInput.value
+		(winningNumberInput) => Number(winningNumberInput.value)
 	);
-	lotto.setResultNumbers(winningNumbers);
+	lotto.setWinningOrBonusNumber(winningNumbers);
 };
 
 const getBonusNumber = () => {
-	const bonusNumber = $bonusNumber.value;
-	lotto.setResultNumbers(bonusNumber);
+	const bonusNumber = Number($bonusNumber.value);
+	lotto.setWinningOrBonusNumber(bonusNumber);
 };
 
 const initialize = () => {
@@ -42,14 +45,21 @@ export const handleSumbit = (e) => {
 	const totalLottoCount = $purchaseInput.value / LOTTO.LOTTO_UNIT;
 	const currentLottos = lotto.issueLottos(totalLottoCount);
 
-	showTotalLottoCount(totalLottoCount);
+	changeInnerText($totalLottoCount, totalLottoCount);
 	render($lottoPapers, lottosTemplate(currentLottos));
 };
 
 export const onShowResultButtonClick = () => {
 	getWinningNumbers();
 	getBonusNumber();
-	// 로또 하나하나와 당첨 숫자를 비교한다
-	// 일치 갯수에 따라 당첨금, 당첨갯수, 당첨금 합이 정해지고 수익률이 결정된다
+	const [lottoResult, earningTotal] = lotto.checkResult();
+	$allWinningLottoCount.forEach(($winningLottoCount, idx) =>
+		changeInnerText($winningLottoCount, `${lottoResult[5 - idx]}개`)
+	);
+	const earningTotalRate = (earningTotal / Number($purchaseInput.value)) * 100;
+	changeInnerText(
+		$earningTotalRate,
+		`당신의 총 수익률은 ${earningTotalRate}%입니다.`
+	);
 	onModalShow();
 };
