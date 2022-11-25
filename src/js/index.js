@@ -4,5 +4,7 @@ import { LottoView } from "./views/lotto.view.js";
 
 
 window.onload = () => {
-    const lottoComponent = new LottoComponent(new LottoView(), new StateModel({}));
+    const view = new LottoView();
+    const stateModel = new StateModel({});
+    const lottoComponent = new LottoComponent(view, stateModel);
 }

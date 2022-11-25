@@ -12,10 +12,17 @@ export const $issued = {
 
 export const $stats = {
     lotto: document.querySelector('.lotto-stats'),
-    openModalButton: document.querySelector('.open-stats-modal-button')
+    openModalButton: document.querySelector('.open-stats-modal-button'),
+    lastNumbers: document.querySelectorAll('.winning-number'),
+    lastBonusNumbers: document.querySelector('.bonus-number')
 }
 
 export const $modal = {
+
     modal: document.querySelector('.modal'),
-    resetButton: document.querySelector('.stats-reset-button')
+    modalOuter: document.querySelector('.modal-outer'),
+    resetButton: document.querySelector('.stats-reset-button'),
+    closeButton: document.querySelector('.modal-close'),
+    resultTable: document.querySelector('.stats-table-tbody'),
+    totalRateOfReturn: document.querySelector('.stats-total')
 }

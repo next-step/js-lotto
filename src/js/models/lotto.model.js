@@ -1,4 +1,4 @@
-import { LOTTO_LIMIT_NUMBERS, LOTTO_RANGE_MAX, LOTTO_RANGE_MIN } from "../utils/const.js";
+import { LOTTO_LIMIT_DIGITS, LOTTO_RANGE_MAX, LOTTO_RANGE_MIN } from "../utils/const.js";
 import { arr, getRandom } from "../utils/util.js";
 
 export class LottoModel {
@@ -18,7 +18,7 @@ export class LottoModel {
 
     #setBundle = () => {
         const numbers = new Set();
-        while (numbers.size < LOTTO_LIMIT_NUMBERS) {
+        while (numbers.size < LOTTO_LIMIT_DIGITS) {
             numbers.add(getRandom(LOTTO_RANGE_MIN, LOTTO_RANGE_MAX));
         }
 

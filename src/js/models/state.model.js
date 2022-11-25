@@ -20,6 +20,11 @@ export class StateModel {
     }
 
     notify(key) {
-        this.#observers.forEach(fn => fn()[key]);
+        console.log(this.#observers);
+        this.#observers.forEach(row => row[key]);
+    }
+
+    getState(key) {
+        return this.#state[key];
     }
 }

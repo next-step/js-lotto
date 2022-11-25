@@ -25,7 +25,23 @@ export class InputMaxExceededError extends Error {
 export class IncorrectUnitError extends Error {
     constructor(message) {
         super(message);
-        this.name = 'IncorrectUnit';
+        this.name = 'IncorrectUnitError';
+        this.message = message;
+    }
+}
+
+export class NotAllowedDuplicatedValueError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'NotAllowedDuplicatedValueError';
+        this.message = message;
+    }
+}
+
+export class OutOfNumberRangeError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'OutOfNumberRangeError';
         this.message = message;
     }
 }

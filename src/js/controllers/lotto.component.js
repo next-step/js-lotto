@@ -1,55 +1,56 @@
 import { $issued, $stats, $purchased } from "../views/selector.js";
-import { PRICE_PER_UNIT } from "../utils/const.js";
+import { PRICE_PER_UNIT, SectionType } from "../utils/const.js";
+
 import { Validator } from "./validator.js";
 import { LottoModel } from "../models/lotto.model.js";
 
-export class LottoComponent {
-    #view;
-    #stateModel;
+import { Component } from "./component.js";
+import { StatsComponent } from "./stats.component.js";
+
+export class LottoComponent extends Component {
     #isInputChange;
     validator;
 
     constructor(view, state) {
-        this.#view = view;
-        this.#stateModel = state;
+        super(view, state);
         this.validator = new Validator();
         this.init();
     }
 
     init() {
-        this.#setEventListeners();
-        this.#setEventHandler();
-        this.subscribe();
-        this.#view.displayNone([$stats.lotto]);
-        this.#view.renderCheckedButton($issued.numberToggleButton, false);
+        super.init();
+        this._view.displayNone([$stats.lotto]);
+        this._view.renderCheckedButton($issued.numberToggleButton, false);
         this.isShowNumbers = false;
     }
 
-    #setEventListeners() {
+    _setEventListeners() {
         $purchased.button.addEventListener('click', () => this.#purchase());
         $purchased.amount.addEventListener('keyup', e => this.#purchaseByEnterKey(e));
         $issued.numberToggleButton.addEventListener('click', () => this.#toggleLottoNumbers());
     }
 
-    #setEventHandler() {
+    _setEventHandler() {
         $purchased.amount.onchange = () => this.#isInputChange = true;
     }
 
-    subscribe() {
-        this.#stateModel.register(() => $issued.numberToggleButton.checked = this.isShowNumbers);
+    _subscribe() {
+        this._stateModel.register({ isShowNumbers: () => $issued.numberToggleButton.checked = this.isShowNumbers });
     }
 
     #purchase() {
         if (!this.#isInputChange) return;
         if (this.#isInputChange) this.reset();
-        if (!this.validator.validate($purchased.amount.value)) {
-            this.#view.displayNone([$purchased.lotto]);
+        if (!this.validator.validate(SectionType.Purchase, $purchased.amount.value)) {
+            this._view.displayNone([$purchased.lotto]);
             return this.reset();
         }
 
+        this._stateModel.setState({ price: $purchased.amount.value });
         const units = $purchased.amount.value / PRICE_PER_UNIT;
-        this.#view.displayBlock([$purchased.lotto, $stats.lotto]);
-        this.#view.renderToReplaceInnerHTML($purchased.total, `총 ${units}개를 구매하였습니다.`);
+        this._view.displayBlock([$purchased.lotto]);
+        const statsComponent = new StatsComponent(this._view, this._stateModel);
+        this._view.renderToReplaceInnerHTML($purchased.total, `총 ${units}개를 구매하였습니다.`);
         this.issueLotto(units);
         this.#isInputChange = false;
     }
@@ -62,13 +63,13 @@ export class LottoComponent {
 
     issueLotto(units) {
         const lottoModel = new LottoModel(units);
-        this.#stateModel.setState({ numberSet: lottoModel.numberSet });
+        this._stateModel.setState({ numberSet: lottoModel.numberSet });
         lottoModel.numberSet.forEach(unit => {
-            this.#view.renderToAddInnerHTML(
+            this._view.renderToAddInnerHTML(
                 $issued.tickets,
-            `<li class="mx-1 text-4xl">
+                `<li class="mx-1 text-4xl">
                     <span>🎟️ </span>
-                    <span class="lotto-numbers text-3xl">${ unit }</span>
+                    <span class="lotto-numbers text-3xl">${unit}</span>
                    </li>`
             );
         })
@@ -76,16 +77,16 @@ export class LottoComponent {
     }
 
     reset() {
-        this.#stateModel.reset();
-        this.#view.displayNone([$stats.lotto]);
-        this.#view.renderCheckedButton($issued.numberToggleButton, false);
+        this._stateModel.reset();
+        this._view.displayNone([$stats.lotto]);
+        this._view.renderCheckedButton($issued.numberToggleButton, false);
         this.isShowNumbers = false;
-        this.#view.removeChildNodes($issued.tickets);
+        this._view.removeChildNodes($issued.tickets);
     }
 
     #toggleLottoNumbers() {
         this.isShowNumbers = !this.isShowNumbers;
-        this.#stateModel.setState({ isShowNumbers: this.isShowNumbers });
+        this._stateModel.setState({ isShowNumbers: this.isShowNumbers });
         const $lottoNumbers = document.querySelectorAll('.lotto-numbers');
         if ($lottoNumbers.length !== 0) this.#showLottoNumbers();
     }
@@ -93,6 +94,6 @@ export class LottoComponent {
     #showLottoNumbers() {
         const $lottoNumbers = document.querySelectorAll('.lotto-numbers');
         if (!$lottoNumbers) return;
-        this.isShowNumbers ? this.#view.displayInline($lottoNumbers) : this.#view.displayNone($lottoNumbers);
+        this.isShowNumbers ? this._view.displayInline($lottoNumbers) : this._view.displayNone($lottoNumbers);
     }
 }
