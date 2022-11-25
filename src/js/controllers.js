@@ -19,6 +19,20 @@ import {
 } from "./view/ui.js";
 import { lottosTemplate } from "./view/templates.js";
 
+export const handleSumbit = (e) => {
+	e.preventDefault();
+	if (isInvalidPurchasePrice($purchaseInput.value, LOTTO.LOTTO_UNIT))
+		return alert(ERROR_MESSAGE.INVALID_LOTTO_PRICE);
+
+	turnOffToggleButton();
+
+	const totalLottoCount = $purchaseInput.value / LOTTO.LOTTO_UNIT;
+	const currentLottos = lotto.issueLottos(totalLottoCount);
+
+	changeInnerText($totalLottoCount, totalLottoCount);
+	render($lottoPapers, lottosTemplate(currentLottos));
+};
+
 const getWinningNumbers = () => {
 	const winningNumbers = [...$allWinningNumberInputs].map(
 		(winningNumberInput) => Number(winningNumberInput.value)
@@ -31,35 +45,22 @@ const getBonusNumber = () => {
 	lotto.setWinningOrBonusNumber(bonusNumber);
 };
 
-const initialize = () => {
-	turnOffToggleButton();
-};
-
-export const handleSumbit = (e) => {
-	e.preventDefault();
-	if (isInvalidPurchasePrice($purchaseInput.value, LOTTO.LOTTO_UNIT))
-		return alert(ERROR_MESSAGE.INVALID_LOTTO_PRICE);
-
-	initialize();
-
-	const totalLottoCount = $purchaseInput.value / LOTTO.LOTTO_UNIT;
-	const currentLottos = lotto.issueLottos(totalLottoCount);
-
-	changeInnerText($totalLottoCount, totalLottoCount);
-	render($lottoPapers, lottosTemplate(currentLottos));
-};
-
 export const onShowResultButtonClick = () => {
+	lotto.clearResult();
 	getWinningNumbers();
 	getBonusNumber();
-	const [lottoResult, earningTotal] = lotto.checkResult();
+
+	const [lottoResult, earningTotal, inputTotal] = lotto.checkResult();
+
 	$allWinningLottoCount.forEach(($winningLottoCount, idx) =>
 		changeInnerText($winningLottoCount, `${lottoResult[5 - idx]}개`)
 	);
-	const earningTotalRate = (earningTotal / Number($purchaseInput.value)) * 100;
+
+	const earningTotalRate = (earningTotal / inputTotal) * 100;
 	changeInnerText(
 		$earningTotalRate,
 		`당신의 총 수익률은 ${earningTotalRate}%입니다.`
 	);
+
 	onModalShow();
 };

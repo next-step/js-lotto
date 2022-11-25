@@ -5,11 +5,13 @@ class Lotto {
 	#winningNumbers;
 	#bonusNumber;
 	#result = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+	#inputTotal = 0;
 	#earningTotal = 0;
 
 	issueLottos(number) {
 		const lottos = Array.from(Array(number), () => createRandomNumbers());
 		this.#lottos = lottos;
+		this.#inputTotal += number * 1000;
 		return lottos;
 	}
 
@@ -26,7 +28,7 @@ class Lotto {
 			this.#result[rank] += 1;
 			this.calculateEarningTotal(rank);
 		}
-		return [this.#result, this.#earningTotal];
+		return [this.#result, this.#earningTotal, this.#inputTotal];
 	}
 
 	setRank(lottoNumbers) {
@@ -50,6 +52,10 @@ class Lotto {
 
 	calculateEarningTotal(rank) {
 		this.#earningTotal += LOTTO.PRIZE_MONEY[rank];
+	}
+
+	clearResult() {
+		this.#result = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 	}
 }
 
