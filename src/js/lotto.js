@@ -54,7 +54,7 @@ class Lotto {
     const isOverPirce = moneyAmount > MAX_LOTTO_PRICE;
     const isConfirm =
       moneyAmount >= MIN_LOTTO_PRICE && moneyAmount <= MAX_LOTTO_PRICE;
-    const isAlert = moneyAmount % MIN_LOTTO_PRICE !== 0;
+    const isThousandUnit = moneyAmount % MIN_LOTTO_PRICE === 0;
 
     if (isOverPirce) {
       window.alert(ALERT.OVER_MAX_VALUE);
@@ -62,7 +62,7 @@ class Lotto {
       return;
     }
 
-    if (isAlert) {
+    if (!isThousandUnit) {
       window.alert(ALERT.TYPE_THOUSAND_UNIT);
       this.setState({ ...this.state, moneyAmount: null });
       return;
@@ -114,7 +114,9 @@ class Lotto {
       return;
     }
 
-    if (isDuplicatedInArray(this.state.winningNumbers)) {
+    if (
+      isDuplicatedInArray([this.state.winningNumbers, this.state.bonusNumber])
+    ) {
       alert(ALERT.DUPLICATE_VALUE_EXIST);
       return;
     }

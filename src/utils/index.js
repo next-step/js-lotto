@@ -10,7 +10,7 @@ const makeLottoNumber = () => {
   while (numberSet.size < MAX_LOTTO_COUNT) {
     const randomNumber = makeRandomNumber();
 
-    if (!numberSet.has(randomNumber)) numberSet.add(randomNumber);
+    numberSet.add(randomNumber);
   }
   return [...numberSet];
 };
@@ -88,34 +88,22 @@ export const generateWinningCount = ({
 };
 
 const filteringNameByCount = ({ winningCount, isBonusNumber }) => {
-  if (
-    (winningCount === 2 && isBonusNumber) ||
-    (winningCount === 3 && !isBonusNumber)
-  )
-    return {
-      title: '3개',
-      value: TITLE_WITH_VALUE_MAP.get('3개'),
-    };
-  if (
-    (winningCount === 3 && isBonusNumber) ||
-    (winningCount === 4 && !isBonusNumber)
-  )
-    return { title: '4개', value: TITLE_WITH_VALUE_MAP.get('4개') };
-  if (
-    (winningCount === 4 && isBonusNumber) ||
-    (winningCount === 5 && !isBonusNumber)
-  )
-    return { title: '5개', value: TITLE_WITH_VALUE_MAP.get('5개') };
   if (winningCount === 5 && isBonusNumber)
     return {
       title: '5개 + 보너스볼',
       value: TITLE_WITH_VALUE_MAP.get('5개 + 보너스볼'),
     };
-  if (winningCount === 6)
-    return { title: '6개', value: TITLE_WITH_VALUE_MAP.get('6개') };
+
+  if (!TITLE_WITH_VALUE_MAP.has(`${winningCount}개`)) {
+    return {
+      title: 'none',
+      value: null,
+    };
+  }
+
   return {
-    title: 'none',
-    value: null,
+    title: `${isBonusNumber ? winningCount - 1 : winningCount}개`,
+    value: TITLE_WITH_VALUE_MAP.get(`${winningCount}개`),
   };
 };
 
