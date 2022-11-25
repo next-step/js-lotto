@@ -71,12 +71,14 @@ describe("로또 구입 금액을 입력하면 금액에 해당하는 로또를 
 		cy.getLottos($purchaseInput, $confirmButton, 5000);
 
 		cy.get(".winning-number").then((inputs) => {
-			[...inputs].forEach((input) => cy.wrap(input).type(1));
+			[...inputs].forEach((input) =>
+				cy
+					.wrap(input)
+					.type(Math.floor(Math.random() * LOTTO.MAX_NUMBER) + LOTTO.MIN_NUMBER)
+			);
 		});
 
 		$showResultButton.click();
-
-		cy.wait(1000);
 		cy.get('[data-cy="modal"]').should("have.class", "open");
 	});
 });
