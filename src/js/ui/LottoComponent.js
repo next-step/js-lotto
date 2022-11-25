@@ -1,41 +1,10 @@
-import { getNumberList, shuffle } from './utils.js';
+import { AMOUNT_UNIT } from '../constants.js';
 import {
   $lottoIcons,
   $purchaseAmount,
   $purchaseLotto,
   $purchaseNumbers,
-} from './dom.js';
-import { AMOUNT_UNIT, ERROR_MESSAGE } from './constants.js';
-
-export class LottoModel {
-  static #MAX = 45;
-  static #SIZE = 6;
-  numbers = [];
-
-  validate() {
-    if ($purchaseAmount.value === '') {
-      return ERROR_MESSAGE.REQUIRED;
-    }
-
-    if (!this.isValidPurchaseAmount($purchaseAmount.value)) {
-      return ERROR_MESSAGE.INVALID;
-    }
-  }
-
-  generateLottoNumbers(purchaseNumbers) {
-    this.numbers = Array.from({ length: purchaseNumbers }).map(() =>
-      shuffle(getNumberList(LottoModel.#MAX), LottoModel.#SIZE)
-    );
-  }
-
-  resetLottoNumber() {
-    this.numbers = [];
-  }
-
-  isValidPurchaseAmount(purchaseAmount) {
-    return purchaseAmount > 0 && purchaseAmount % AMOUNT_UNIT === 0;
-  }
-}
+} from '../dom.js';
 
 export class LottoComponent {
   constructor(lotto) {

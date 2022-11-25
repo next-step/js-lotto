@@ -1,4 +1,3 @@
-import { LottoComponent, LottoModel } from './lotto.js';
 import {
   $purchaseAmount,
   $purchaseButton,
@@ -14,8 +13,13 @@ import {
   $modal,
   $resetButton,
 } from './dom.js';
-import { LottoResultComponent, LottoResultModel } from './result.js';
-import { AMOUNT_UNIT } from './constants.js';
+
+import { LottoModel } from './model/LottoModel.js';
+import { LottoComponent } from './ui/LottoComponent.js';
+import { LottoResultModel } from './model/LottoResultModel.js';
+import { LottoResultComponent } from './ui/LottoResultComponent.js';
+import { WinningLotto } from './WinningLotto.js';
+import { PurchaseNumber } from './PurchaseNumber.js';
 
 export class App {
   lotto;
@@ -24,38 +28,45 @@ export class App {
     this.setEvents();
   }
 
-  onPurchase() {
-    this.lotto = new LottoModel();
-    const invalidMesssage = this.lotto.validate();
-    if (invalidMesssage) {
-      alert(invalidMesssage);
-      return;
+  handlePurchase() {
+    try {
+      this.lotto = new LottoModel();
+      const purchaseNumber = new PurchaseNumber($purchaseAmount.value);
+
+      this.lotto.generateLottoNumbers(purchaseNumber.number);
+      const lottoComp = new LottoComponent(this.lotto);
+
+      this.handleWinningNumbersShow();
+    } catch (err) {
+      alert(err.message);
     }
-
-    const purchaseNumbers = $purchaseAmount.value / AMOUNT_UNIT;
-    this.lotto.generateLottoNumbers(purchaseNumbers);
-
-    const lottoComp = new LottoComponent(this.lotto);
-
-    this.handleWinningNumbersShow();
   }
 
-  handleResultShow() {
-    const lottoResultModel = new LottoResultModel(this.lotto.numbers);
-    const invalidMessage = lottoResultModel.validate();
-    if (invalidMessage) {
-      alert(invalidMessage);
-      return;
+  handleShowResult() {
+    const winningNumbers = Array.from($winningNumbers).map(
+      (number) => +number.value
+    );
+    try {
+      const winngingLotto = new WinningLotto({
+        lottoNumber: winningNumbers,
+        bonusNumber: +$bonusNumber.value,
+      });
+      const lottoResultModel = new LottoResultModel(
+        this.lotto.numbers,
+        winngingLotto
+      );
+      const purchaseAmount = $purchaseAmount.value;
+
+      lottoResultModel.computeWinningResult(purchaseAmount);
+      const lottoResultComp = new LottoResultComponent(lottoResultModel);
+
+      this.handleShowModal();
+    } catch (err) {
+      alert(err.message);
     }
-
-    lottoResultModel.computeWinningResult();
-
-    const lottoResultComp = new LottoResultComponent(lottoResultModel);
-
-    this.handleModalShow();
   }
 
-  handleLottoNumbersShow(checked) {
+  handleShowLotto(checked) {
     const $lottoNumbers = document.querySelectorAll('.lotto-number');
     for (const numbers of $lottoNumbers) {
       numbers.style.display = checked ? 'block' : 'none';
@@ -67,11 +78,11 @@ export class App {
     $winningNumberForm.classList.add('show');
   }
 
-  handleModalShow() {
+  handleShowModal() {
     $modal.classList.add('open');
   }
 
-  handleModalClose() {
+  handleCloseModal() {
     $modal.classList.remove('open');
   }
 
@@ -91,25 +102,25 @@ export class App {
 
   setEvents() {
     $purchaseButton.addEventListener('click', () => {
-      this.onPurchase();
+      this.handlePurchase();
     });
 
     $toggleButton.addEventListener('click', (event) => {
       const checked = event.target.checked;
-      this.handleLottoNumbersShow(checked);
+      this.handleShowLotto(checked);
     });
 
     $lottoResultButton.addEventListener('click', () => {
-      this.handleResultShow();
+      this.handleShowResult();
     });
 
     $modalCloseButton.addEventListener('click', () => {
-      this.handleModalClose();
+      this.handleCloseModal();
     });
 
     $resetButton.addEventListener('click', () => {
       this.resetLotto();
-      this.handleModalClose();
+      this.handleCloseModal();
     });
   }
 }

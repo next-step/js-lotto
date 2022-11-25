@@ -5,4 +5,13 @@ export const ERROR_MESSAGE = {
   DUPLICATED: '당첨 번호와 보너스 번호 모두 중복 입력은 불가합니다.',
 };
 
+export const winningForm = {
+  fifth: { number: `3개`, winnings: 5_000 },
+  fourth: { number: `4개`, winnings: 50_000 },
+  third: { number: `5개`, winnings: 1_500_000 },
+  second: { number: `5개 + 보너스볼`, winnings: 30_000_000 },
+  first: { number: `6개`, winnings: 2_000_000_000 },
+};
+
 export const AMOUNT_UNIT = 1_000;
+export const PERCENTAGE_UNIT = 100;

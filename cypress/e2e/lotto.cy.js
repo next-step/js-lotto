@@ -16,11 +16,11 @@ const EMPTY_RANGE_ERROR_MESSAGE = '1에서 45 사이의 당첨 번호를 입력�
 const DUPLICATED_ERROR_MESSAGE =
   '당첨 번호와 보너스 번호 모두 중복 입력은 불가합니다.';
 
-describe('로또를 구매한다', () => {
   beforeEach(() => {
     cy.visit('../../index.html');
   });
 
+describe('로또를 구매한다', () => {
   it('금액을 입력할 input 태그가 있다', () => {
     cy.get(inputSelector).should('exist');
   });
@@ -116,7 +116,6 @@ describe('로또를 구매한다', () => {
 
 describe('당첨 결과를 확인한다', () => {
   beforeEach(() => {
-    cy.visit('../../index.html');
     cy.get(inputSelector).type('3000');
     cy.get(buttonSelector).click();
   });
@@ -147,17 +146,18 @@ describe('당첨 결과를 확인한다', () => {
   });
 
   it('당첨번호는 1보다 작거나 45보다 크면 alert를 띄어준다', () => {
-    cy.get(winnngNumberSelector)
-      .each(($el, index, $list) => {
-        cy.wrap($el).type(0);
-      })
-      .then(() => {
+    cy.get(winnngNumberSelector).first(-1);
         cy.get(resultButtonSelector).click();
-      });
 
     const stub = cy.stub();
     cy.on('window:alert', stub);
 
+    cy.get(winnngNumberSelector).each(($el, index, $list) => {
+      expect(stub.getCall(0)).to.be.calledWith(EMPTY_RANGE_ERROR_MESSAGE);
+    });
+
+    cy.get(winnngNumberSelector).first().type(46);
+    cy.get(resultButtonSelector).click();
     cy.get(winnngNumberSelector).each(($el, index, $list) => {
       expect(stub.getCall(0)).to.be.calledWith(EMPTY_RANGE_ERROR_MESSAGE);
     });
@@ -166,16 +166,20 @@ describe('당첨 결과를 확인한다', () => {
   it('보너스 번호는 1보다 작거나 45보다 크면 alert를 띄어준다', () => {
     const stub = cy.stub();
     cy.on('window:alert', stub);
-
-    cy.wrap([-11, 45]).each((num, index, list) => {
+    cy.get(bonusNumberSelector).type(-11);
+    cy.get(resultButtonSelector)
+      .click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith(EMPTY_RANGE_ERROR_MESSAGE);
+      });
       cy.get(bonusNumberSelector).clear();
+    cy.get(bonusNumberSelector).type(69);
       cy.get(resultButtonSelector)
         .click()
         .then(() => {
           expect(stub.getCall(0)).to.be.calledWith(EMPTY_RANGE_ERROR_MESSAGE);
         });
     });
-  });
 
   it('당첨 번호와 보너스 번호 모두 중복이 불가능하다', () => {
     const stub = cy.stub();
