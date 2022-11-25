@@ -6,22 +6,15 @@ import {
   MAX_LOTTO_PRICE,
   MAX_WINNING_INPUT_LENGTH,
   MIN_LOTTO_PRICE,
-  TITLE_WITH_VALUE_MAP,
 } from '../constants.js';
-import {
-  generateTtitleAndValueArray,
-  getWinningCount,
-  isDuplicatedInArray,
-  makeLottoNumbers,
-  makeRateOfReturn,
-} from '../utils/index.js';
+import { isDuplicatedInArray, makeLottoNumbers } from '../utils/index.js';
+import ResultModal from './components/ResultModal.js';
 
 class Lotto {
   constructor({ $target }) {
     this.$target = $target;
     this.$resultWrapper = $target.querySelector('#purchased-result');
     this.$checkWrapper = $target.querySelector('#check-result');
-    this.$modal = $target.querySelector('.modal');
     this.$numberInput = $target.querySelector('[data-id=lotto-number-input]');
     this.$submitButton = $target.querySelector('[data-id=lotto-submit-button]');
     this.$openModalButton = $target.querySelector(
@@ -30,12 +23,6 @@ class Lotto {
     this.$bonusNumberInput = $target.querySelector('.bonus-number');
     this.$winningNumbersInput = Array.from(
       $target.getElementsByClassName('winning-number')
-    );
-    this.$modalTableBody = $target.querySelector(
-      '[data-id=modal-result-table-body]'
-    );
-    this.$investmentReturnSpan = $target.querySelector(
-      '[data-id=investment-return]'
     );
 
     this.state = {
@@ -161,51 +148,6 @@ class Lotto {
     });
   }
 
-  renderModal() {
-    const {
-      isVisibleModal,
-      lottoNumbers,
-      winningNumbers,
-      bonusNumber,
-      moneyAmount,
-    } = this.state;
-
-    if (isVisibleModal) {
-      const { countedLottoNumbersMap, totalAdvantage } = getWinningCount({
-        lottoNumbers,
-        winningInput: winningNumbers.map((el) => Number(el)),
-        bonusNumber,
-      });
-      const profit = makeRateOfReturn(moneyAmount, totalAdvantage);
-      this.$modalTableBody.innerHTML = `
-            ${generateTtitleAndValueArray(TITLE_WITH_VALUE_MAP)
-              .map(({ title, value }) => {
-                return `
-              <tr class="text-center" data-id=${title}>
-                <td class="p-3">${title}</td>
-                <td class="p-3">${value.toLocaleString()}</td>
-                <td class="p-3">${
-                  countedLottoNumbersMap.has(title)
-                    ? countedLottoNumbersMap.get(title)
-                    : 0
-                }개</td>
-              </tr>
-              `;
-              })
-              .join('')}
-          `;
-
-      this.$investmentReturnSpan.innerText = `
-        당신의 총 수익률은 ${profit}%입니다.
-      `;
-      this.$modal.classList.add('open');
-    }
-
-    if (!isVisibleModal) {
-      this.$modal.classList.remove('open');
-    }
-  }
-
   renderToggle() {
     this.$target
       .querySelectorAll('.lotto-number')
@@ -305,7 +247,15 @@ class Lotto {
     this.renderToggle();
     this.renderInput();
     this.renderConfirmButton();
-    this.renderModal();
+    new ResultModal({
+      $target: this.$target,
+      props: {
+        state: this.state,
+        onModalShow: this.onModalShow.bind(this),
+        onRestart: this.onRestart.bind(this),
+      },
+    });
+
     this.renderWinningInput();
     this.renderBonusInput();
     this.renderOpenModalButton();
@@ -323,15 +273,6 @@ class Lotto {
       if (event.target.dataset.id === 'open-result-modal-button') {
         event.preventDefault();
         this.onModalShow({ isVisibleModal: true });
-      }
-
-      if (event.target.dataset.id === 'modal-close-button') {
-        event.preventDefault();
-        this.onModalShow({ isVisibleModal: false });
-      }
-
-      if (event.target.dataset.id === 'restart-button') {
-        this.onRestart();
       }
     });
 
