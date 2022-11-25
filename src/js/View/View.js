@@ -10,12 +10,10 @@ export default class View {
 
  setEvent() {}
 
- reRender() {
-  this.$target.replaceChildren();
-  this.render();
- }
-
  render() {
+  if (this.$target.children.length !== 0) {
+   this.$target.replaceChildren();
+  }
   this.$target.insertAdjacentHTML('beforeend', this.getTemplate());
  }
 
@@ -25,6 +23,7 @@ export default class View {
    children.includes(target) || target.closest(selector);
   this.$target.addEventListener(eventType, (ev) => {
    if (ev.target) {
+    console.dir(ev.target);
     if (!isTarget(ev.target)) return false;
 
     callback(ev);
