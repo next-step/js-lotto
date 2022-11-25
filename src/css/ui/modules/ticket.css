@@ -1,0 +1,15 @@
+.lotto-container-hidden {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.lotto-container-hidden .lotto-number {
+  display: none;
+}
+
+.lotto-packet {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}

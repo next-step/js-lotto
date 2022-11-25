@@ -1,17 +1,9 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+import {selector} from "./constants/selector.js";
+import {handlePaymentForm, handleShowNumber} from "./eventHandler.js";
 
-const onModalShow = () => {
-  $modal.classList.add('open')
-}
+const addEvent = () => {
+  selector.paymentForm.addEventListener("submit", handlePaymentForm);
+  selector.toggleBtn.addEventListener("change", handleShowNumber);
+};
 
-const onModalClose = () => {
-  $modal.classList.remove('open')
-}
-
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+addEvent();
