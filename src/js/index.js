@@ -2,7 +2,8 @@ import './../css/index.css';
 
 import PurchaseModel from './Model/PurchaseModel';
 import LotteryResultView from './View/LotteryResultView';
-import { $purchaseForm, $purchaseInput, $purchaseResult } from './dom';
+import { $modal, $purchaseForm, $purchaseInput, $purchaseResult } from './dom';
+import ModalView from './View/ModalView';
 
 class App {
  constructor(Model, views) {
@@ -38,15 +39,3 @@ class App {
  }
 }
 new App(PurchaseModel, [{ view: LotteryResultView, target: $purchaseResult }]);
-
-// // TODO : modal logic 분리
-// const onModalShow = () => {
-//  $modal.classList.add('open');
-// };
-
-// const onModalClose = () => {
-//  $modal.classList.remove('open');
-// };
-
-// $showResultButton.addEventListener('click', onModalShow);
-// $modalClose.addEventListener('click', onModalClose);

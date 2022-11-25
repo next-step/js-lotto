@@ -1,11 +1,14 @@
 import { SELECTOR } from '../constants';
+import { $modal } from '../dom';
 import LotteriesView from './LotteriesView';
+import ModalView from './ModalView';
 import View from './View';
 export default class LotteryResultView extends View {
  constructor(target, model) {
   super(target);
   this.purchaseModel = model;
-  this.purchaseModel.subscribe(this.reRender.bind(this));
+  this.purchaseModel.subscribe(this.render.bind(this));
+  this.modalView = new ModalView($modal, this.purchaseModel);
   this.init();
  }
 
@@ -37,16 +40,16 @@ export default class LotteryResultView extends View {
      bonus.push(+input.value);
     }
    }
-   console.log(lotteryNumbers, bonus);
    this.purchaseModel.setWinningLottery({
     numbers: lotteryNumbers,
     bonus: bonus[0],
    });
+   this.modalView.onModalShow();
   });
 
   this.addEvent('change', SELECTOR.LOTTO_NUMBER_TOGGLE, (event) => {
    this.lotteriesView.setToggle(event.target.checked);
-   this.lotteriesView.reRender();
+   this.lotteriesView.render();
   });
  }
 

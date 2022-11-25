@@ -24,6 +24,6 @@ export default class LotteriesView extends View {
 
  setToggle(newToggle) {
   this.show = newToggle;
-  this.reRender();
+  this.render();
  }
 }
