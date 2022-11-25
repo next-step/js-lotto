@@ -1,5 +1,6 @@
 import {
  lottoAnnouncementSelector,
+ lottoIconSelector,
  purchaseButtonSelector,
  purchaseInputSelector,
 } from '../support/commands';
