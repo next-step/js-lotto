@@ -1,8 +1,8 @@
 import { $, $$ } from './utils/DOM.js';
 
 const [$lottoCountAndToggle, $winningNumbers] = $$('.purchased-result');
-const $lottoCount = $('[data-cy="purchased-lotto-count"]');
-const $lottoList = $('[data-cy="purchased-lotto-list"]');
+const $lottoCount = $('.purchased-lotto-count');
+const $lottoList = $('.purchased-lotto-list');
 
 export const showPurchasedLotto = () => {
   $lottoCountAndToggle.classList.remove('hidden');
@@ -22,7 +22,7 @@ export const renderLottoItems = (lottoNumbersList) => {
       return `
       <li class="mx-1 d-flex items-center lotto-item">
         <span class="text-4xl">🎟️ </span>
-        <span class="text-2xl lotto-item-numbers hidden" data-cy="lotto-item-numbers">${item.join(', ')}</span>
+        <span class="text-2xl lotto-item-numbers hidden">${item.join(', ')}</span>
       </li>`;
     })
     .join('');
@@ -30,7 +30,7 @@ export const renderLottoItems = (lottoNumbersList) => {
 };
 
 export const showPurchasedLottoNumbers = ({ target }) => {
-  $$('[data-cy="lotto-item-numbers"]').forEach((item) => {
+  $$('.lotto-item-numbers').forEach((item) => {
     item.classList.toggle('hidden', !target.checked);
   });
 };

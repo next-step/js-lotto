@@ -13,7 +13,7 @@ import {
 export const handleSubmit = (e) => {
   e.preventDefault();
   try {
-    const priceInput = $('[data-cy="lotto-purchase-input"]').valueAsNumber;
+    const priceInput = $('.purchasing-lotto-input').valueAsNumber;
 
     validatePriceInput(priceInput);
 
