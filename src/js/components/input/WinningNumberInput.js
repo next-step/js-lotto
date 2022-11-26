@@ -8,7 +8,6 @@ class WinningNumberInput {
     );
     this.$bonusNumberInput = $target.querySelector('.bonus-number');
     this.render();
-    this.addEventListener();
   }
 
   render() {
@@ -18,7 +17,5 @@ class WinningNumberInput {
 
     this.$bonusNumberInput.value = this.props.state.bonusNumber;
   }
-
-  addEventListener() {}
 }
 export default WinningNumberInput;

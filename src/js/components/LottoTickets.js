@@ -3,7 +3,6 @@ class LottoTickets {
     this.$target = $target;
     this.props = props;
     this.render();
-    this.addEventListener();
   }
 
   render() {
@@ -16,8 +15,6 @@ class LottoTickets {
             : 'none')
       );
   }
-
-  addEventListener() {}
 }
 
 export default LottoTickets;

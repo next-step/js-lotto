@@ -14,14 +14,12 @@ import {
 } from '../utils/index.js';
 import ConfirmButton from './components/buttons/ConfirmButton.js';
 import OpenModalButton from './components/buttons/OpenModalButton.js';
+import PurchaseInput from './components/input/PurchaseInput.js';
 import ResultForm from './components/ResultForm.js';
 import ResultModal from './components/ResultModal.js';
 class Lotto {
   constructor({ $target }) {
     this.$target = $target;
-    this.$checkWrapper = $target.querySelector('#check-result');
-    this.$numberInput = $target.querySelector('[data-id=lotto-number-input]');
-    this.$submitButton = $target.querySelector('[data-id=lotto-submit-button]');
     this.$bonusNumberInput = $target.querySelector('.bonus-number');
     this.$winningNumbersInput = Array.from(
       $target.getElementsByClassName('winning-number')
@@ -152,21 +150,27 @@ class Lotto {
     });
   }
 
-  renderInput() {
-    const isBlank =
-      this.state.moneyAmount === 0 || this.state.moneyAmount === null;
+  // renderInput() {
+  //   const isBlank =
+  //     this.state.moneyAmount === 0 || this.state.moneyAmount === null;
 
-    if (isBlank) {
-      this.$numberInput.value = null;
-    }
+  //   if (isBlank) {
+  //     this.$numberInput.value = null;
+  //   }
 
-    if (!isBlank) {
-      this.$numberInput.value = this.state.moneyAmount;
-    }
-  }
+  //   if (!isBlank) {
+  //     this.$numberInput.value = this.state.moneyAmount;
+  //   }
+  // }
 
   render() {
-    this.renderInput();
+    new PurchaseInput({
+      $target: this.$target,
+      props: {
+        state: this.state,
+      },
+    });
+    // this.renderInput();
 
     new ResultForm({
       $target: this.$target,
