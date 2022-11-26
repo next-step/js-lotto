@@ -161,3 +161,11 @@ export const generateTtitleAndValueArray = (titleWithValueMap) => {
     return { title, value };
   });
 };
+
+export const isRerender = ({ currentState, nextState }) => {
+  Object.keys(nextState).forEach((key) => {
+    if (currentState[key] !== nextState[key]) return true;
+  });
+
+  return false;
+};

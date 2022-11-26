@@ -7,19 +7,21 @@ import {
   MAX_WINNING_INPUT_LENGTH,
   MIN_LOTTO_PRICE,
 } from '../constants.js';
-import { isDuplicatedInArray, makeLottoNumbers } from '../utils/index.js';
+import {
+  isDuplicatedInArray,
+  isRerender,
+  makeLottoNumbers,
+} from '../utils/index.js';
+import ConfirmButton from './components/buttons/ConfirmButton.js';
+import OpenModalButton from './components/buttons/OpenModalButton.js';
+import ResultForm from './components/ResultForm.js';
 import ResultModal from './components/ResultModal.js';
-
 class Lotto {
   constructor({ $target }) {
     this.$target = $target;
-    this.$resultWrapper = $target.querySelector('#purchased-result');
     this.$checkWrapper = $target.querySelector('#check-result');
     this.$numberInput = $target.querySelector('[data-id=lotto-number-input]');
     this.$submitButton = $target.querySelector('[data-id=lotto-submit-button]');
-    this.$openModalButton = $target.querySelector(
-      '[data-id=open-result-modal-button]'
-    );
     this.$bonusNumberInput = $target.querySelector('.bonus-number');
     this.$winningNumbersInput = Array.from(
       $target.getElementsByClassName('winning-number')
@@ -32,8 +34,14 @@ class Lotto {
   }
 
   setState(nextState) {
+    if (isRerender({ currentState: this.state, nextState })) return;
+
     this.state = nextState;
     this.render();
+  }
+
+  onToggle() {
+    this.setState({ ...this.state, isToggle: !this.state.isToggle });
   }
 
   onConfirm() {
@@ -75,10 +83,6 @@ class Lotto {
   onTypeAmount(value) {
     if (!Number.isInteger(Number(value))) return;
     this.setState({ ...this.state, moneyAmount: Number(value) });
-  }
-
-  onToggle() {
-    this.setState({ ...this.state, isToggle: !this.state.isToggle });
   }
 
   onModalShow({ isVisibleModal }) {
@@ -148,57 +152,6 @@ class Lotto {
     });
   }
 
-  renderToggle() {
-    this.$target
-      .querySelectorAll('.lotto-number')
-      .forEach(
-        (element) =>
-          (element.style.display = this.state.isToggle ? 'inline' : 'none')
-      );
-  }
-
-  renderResult() {
-    if (!this.state.isVisibleResult) {
-      this.$resultWrapper.style.display = 'none';
-      return;
-    }
-
-    this.$resultWrapper.querySelector(
-      '[data-id=result-text]'
-    ).innerText = `총 ${this.state.lottoPurchaseNumber}개를 구매하였습니다.`;
-
-    this.$resultWrapper.querySelector(
-      '[data-id=lotto-image-wrapper]'
-    ).innerHTML = `
-      ${this.state.lottoNumbers
-        .map((lottoNumber) => {
-          return `
-            <li class="lotto-list">
-              <span class="mx-1 text-4xl" data-id="lotto-image">🎟️</span>
-              <span class="lotto-number" data-id="lotto-number">
-                ${lottoNumber.join(' ')}
-              </span>
-            </li>
-        `;
-        })
-        .join('')}
-    `;
-    if (this.$resultWrapper.style.display !== 'block') {
-      this.$resultWrapper.style.display = 'block';
-    }
-  }
-
-  renderCheckResultForm() {
-    if (!this.state.isVisibleResult) {
-      this.$checkWrapper.style.display = 'none';
-      return;
-    }
-
-    if (this.$checkWrapper.style.display !== 'block') {
-      this.$checkWrapper.style.display = 'block';
-    }
-  }
-
   renderInput() {
     const isBlank =
       this.state.moneyAmount === 0 || this.state.moneyAmount === null;
@@ -212,41 +165,24 @@ class Lotto {
     }
   }
 
-  renderWinningInput() {
-    this.$winningNumbersInput.forEach((element, index) => {
-      element.value = this.state.winningNumbers[index];
-    });
-  }
-
-  renderBonusInput() {
-    this.$bonusNumberInput.value = this.state.bonusNumber;
-  }
-
-  renderConfirmButton() {
-    const isBlank =
-      this.state.moneyAmount === 0 || this.state.moneyAmount === null;
-
-    if (isBlank) this.$submitButton.setAttribute('disabled', '');
-    if (!isBlank) this.$submitButton.removeAttribute('disabled');
-  }
-
-  renderOpenModalButton() {
-    const isValidBonusNumber = Boolean(this.state.bonusNumber);
-    const isAllTyped =
-      this.state.winningNumbers.filter((number) => Boolean(number)).length ===
-        MAX_WINNING_INPUT_LENGTH && isValidBonusNumber;
-    const isValid = isAllTyped && isValidBonusNumber;
-
-    if (isValid) this.$openModalButton.removeAttribute('disabled');
-    if (!isValid) this.$openModalButton.setAttribute('disabled', '');
-  }
-
   render() {
-    this.renderResult();
-    this.renderCheckResultForm();
-    this.renderToggle();
     this.renderInput();
-    this.renderConfirmButton();
+
+    new ResultForm({
+      $target: this.$target,
+      props: {
+        state: this.state,
+      },
+    });
+
+    new ConfirmButton({
+      $target: this.$target,
+      props: {
+        state: this.state,
+        onConfirm: this.onConfirm.bind(this),
+      },
+    });
+
     new ResultModal({
       $target: this.$target,
       props: {
@@ -256,23 +192,19 @@ class Lotto {
       },
     });
 
-    this.renderWinningInput();
-    this.renderBonusInput();
-    this.renderOpenModalButton();
+    new OpenModalButton({
+      $target: this.$target,
+      props: {
+        state: this.state,
+        onModalShow: this.onModalShow.bind(this),
+      },
+    });
   }
 
   addEventListener() {
     this.$target.addEventListener('click', (event) => {
-      if (event.target.dataset.id === 'lotto-submit-button') {
-        this.onConfirm();
-      }
-
       if (event.target.dataset.id === 'number-toggle-button') {
         this.onToggle();
-      }
-      if (event.target.dataset.id === 'open-result-modal-button') {
-        event.preventDefault();
-        this.onModalShow({ isVisibleModal: true });
       }
     });
 
