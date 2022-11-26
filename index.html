@@ -12,7 +12,7 @@
       <div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
-          <form class="mt-5">
+          <form id="input-price-form" class="mt-5">
             <label class="mb-2 d-inline-block"
               >구입할 금액을 입력해주세요.
             </label>
@@ -22,6 +22,7 @@
                 type="number"
                 class="w-100 mr-2 pl-2"
                 placeholder="구입 금액"
+                required
               />
               <button id="input-price-btn" type="submit" class="btn btn-cyan">
                 확인
@@ -97,10 +98,10 @@
             </table>
           </div>
           <p class="text-center font-bold">
-            당신의 총 수익률은 <span id="win-rate"></span>%입니다.
+            당신의 총 수익률은 <span id="profit"></span>%입니다.
           </p>
           <div class="d-flex justify-center mt-5">
-            <button id="reset-btn" type="button" class="btn btn-cyan">
+            <button id="reset-btn" type="reset" class="btn btn-cyan">
               다시 시작하기
             </button>
           </div>

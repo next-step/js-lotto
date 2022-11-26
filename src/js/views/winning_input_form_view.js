@@ -8,16 +8,16 @@ class WinningInputFormView extends View {
     this.$winningLottoNumbersForm = $('#winning-lotto-numbers-form');
     this.$winningLottoNumbers = $('#winning-lotto-numbers');
     this.$winningBonusNumbers = $('#winning-bonus-numbers');
-    this.$showResultButton = $('#show-result-btn');
+    this.$winningResultModal = $('.modal');
 
     this.$winningLottoNumbers.innerHTML = Array(LOTTO_COUNT)
       .fill()
       .map(
         (_, index) =>
-          `<input type="number" name=${index} class="winning-number mx-1 text-center" />`
+          `<input type="number" name=${index} class="winning-number mx-1 text-center" required />`
       )
       .join('');
-    this.$winningBonusNumbers.innerHTML = `<input type="number" name=${LOTTO_COUNT} class="bonus-number text-center" />`;
+    this.$winningBonusNumbers.innerHTML = `<input type="number" name=${LOTTO_COUNT} class="bonus-number text-center" required />`;
   }
 
   render({ lottoCount }) {
