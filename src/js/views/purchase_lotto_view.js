@@ -9,8 +9,6 @@ class PurchasedLottoView extends View {
     this.$purchasedLottos = $('#purchased-lottos');
     this.$totalPurchased = $('#total-purchased');
     this.$lottoIcons = $('#lotto-icons');
-
-    this.showLottoNumbers = false;
   }
 
   renderPurchasedLottos({ lottoCount, lottos }) {
@@ -30,7 +28,7 @@ class PurchasedLottoView extends View {
   }
 
   renderLottoNumbers() {
-    if (this.showLottoNumbers) {
+    if (this.$lottoSwitch.checked) {
       this.$lottoIcons.classList.add('flex-col');
       return;
     }
