@@ -57,6 +57,15 @@ class Lotto {
 	clearResult() {
 		this.#result = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 	}
+
+	initialize() {
+		this.#lottos;
+		this.#winningNumbers;
+		this.#bonusNumber;
+		this.#result = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+		this.#inputTotal = 0;
+		this.#earningTotal = 0;
+	}
 }
 
 export default new Lotto();

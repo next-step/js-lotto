@@ -4,7 +4,6 @@ import {
 	$lottoNumbersToggleButton,
 	$modalClose,
 	$purchaseForm,
-	$restartButton,
 	$winningNumberForm,
 } from "./view/elements.js";
 
@@ -15,8 +14,6 @@ const setEventListeners = () => {
 	$lottoNumbersToggleButton.addEventListener("click", toggleButtonClick);
 	$modalClose.addEventListener("click", onModalClose);
 	$winningNumberForm.addEventListener("submit", handleWinningNumberFormSubmit);
-	$restartButton.addEventListener("click", () => {
-		// 로또 모델을 초기화한다.
-	});
 };
+
 setEventListeners();

@@ -78,6 +78,8 @@ describe("로또 구입 금액을 입력하면 금액에 해당하는 로또를 
 			);
 		});
 
+		cy.get(".bonus-number").type(45);
+
 		$showResultButton.click();
 		cy.get('[data-cy="modal"]').should("have.class", "open");
 	});
