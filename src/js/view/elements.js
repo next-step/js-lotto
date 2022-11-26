@@ -13,3 +13,4 @@ export const $allWinningNumberInputs = getAll(".winning-number");
 export const $bonusNumber = get(".bonus-number");
 export const $allWinningLottoCount = getAll(".winning-lotto-count");
 export const $earningTotalRate = get(".earning-total-rate");
+export const $restartButton = get(".restart-button");
