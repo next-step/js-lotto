@@ -6,6 +6,7 @@ import {
   LOTTO_MAX_NUMBER,
   LOTTO_MIN_NUMBER,
   LOTTO_PRICE,
+  PROFIT,
 } from '../../const.js';
 import {
   getRandomNumber,
@@ -20,15 +21,21 @@ class Lotto {
   #lottos;
   #winningNumbers;
   #result;
-  #winRate;
+  #profit;
 
   constructor() {
     this.#price = DEFAULT_NUMBER;
     this.#lottoCount = DEFAULT_NUMBER;
-    this.#winRate = DEFAULT_NUMBER;
+    this.#profit = DEFAULT_NUMBER;
     this.#lottos = [];
     this.#winningNumbers = [];
-    this.#result = {};
+    this.#result = {
+      3: DEFAULT_NUMBER,
+      4: DEFAULT_NUMBER,
+      5: DEFAULT_NUMBER,
+      6: DEFAULT_NUMBER,
+      7: DEFAULT_NUMBER,
+    };
   }
 
   setPrice = (nextPrice) => {
@@ -55,8 +62,8 @@ class Lotto {
     return this.#result;
   }
 
-  get winRate() {
-    return this.#winRate;
+  get profit() {
+    return this.#profit;
   }
 
   validatePrice = () => {
@@ -74,11 +81,6 @@ class Lotto {
   };
 
   validateWinningNumbers = () => {
-    if (hasDuplicateNumbers(this.#winningNumbers)) {
-      window.alert(ERROR_MESSAGE.INVALID_DUPLICATED_NUMBER);
-      return false;
-    }
-
     if (
       isNumbersOutOfRange({
         max: LOTTO_MAX_NUMBER,
@@ -87,6 +89,11 @@ class Lotto {
       })
     ) {
       window.alert(ERROR_MESSAGE.INVALID_RANGE_NUMBER);
+      return false;
+    }
+
+    if (hasDuplicateNumbers(this.#winningNumbers)) {
+      window.alert(ERROR_MESSAGE.INVALID_DUPLICATED_NUMBER);
       return false;
     }
 
@@ -102,7 +109,7 @@ class Lotto {
     }
   };
 
-  computeWinningNumbers() {
+  computeWinningNumbers = () => {
     const winningNumbers = this.#winningNumbers.slice(
       DEFAULT_NUMBER,
       LOTTO_COUNT
@@ -116,42 +123,50 @@ class Lotto {
         winningNumbers.includes(bonusNumber);
 
       if (hasBonusNumber) {
-        this.#setResult(`${sameNumberCount}+bonus`);
+        this.#setResult(6);
+        return;
+      }
+
+      if (sameNumberCount === 6) {
+        this.#setResult(7);
         return;
       }
 
       this.#setResult(sameNumberCount);
     });
 
-    this.#winRate = this.#computeWinRate();
-  }
+    this.#profit = this.#computeProfit();
+  };
 
   #setResult(winningNumberCount) {
-    if (this.#result[winningNumberCount] === undefined) {
-      this.#result[winningNumberCount] = 1;
-      return;
+    if (this.#result[winningNumberCount] !== undefined) {
+      this.#result[winningNumberCount] += 1;
     }
-
-    this.#result[winningNumberCount] += 1;
   }
 
-  #computeWinRate() {
-    const result = Object.values(this.#result).reduce(
-      (accumulator, value) => accumulator + value,
+  #computeProfit() {
+    const result = Object.keys(this.#result).reduce(
+      (accumulator, key) => accumulator + this.#result[key] * PROFIT[key].PRICE,
       DEFAULT_NUMBER
     );
 
-    return (result / this.#lottos.length) * 100;
+    return ((result - this.#price) / this.#price) * 100;
   }
 
-  reset() {
+  clear = () => {
     this.#price = DEFAULT_NUMBER;
     this.#lottoCount = DEFAULT_NUMBER;
-    this.#winRate = DEFAULT_NUMBER;
+    this.#profit = DEFAULT_NUMBER;
     this.#lottos = [];
     this.#winningNumbers = [];
-    this.#result = {};
-  }
+    this.#result = {
+      3: DEFAULT_NUMBER,
+      4: DEFAULT_NUMBER,
+      5: DEFAULT_NUMBER,
+      6: DEFAULT_NUMBER,
+      7: DEFAULT_NUMBER,
+    };
+  };
 
   #getUniqRandomNumbers() {
     const uniqRandomNumbers = new Set();
