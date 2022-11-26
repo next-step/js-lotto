@@ -1,12 +1,16 @@
 import { LOTTO } from "../constants/lotto.js";
 
+const makeRandomNumber = () =>
+	Math.floor(Math.random() * LOTTO.MAX_NUMBER) + LOTTO.MIN_NUMBER;
+
 export const createRandomNumbers = () => {
 	let randomNumbers = [];
-	for (let i = 0; i < 6; i++) {
-		randomNumbers.push(
-			Math.floor(Math.random() * LOTTO.MAX_NUMBER) + LOTTO.MIN_NUMBER
-		);
+
+	while (true) {
+		if (randomNumbers.length === LOTTO.TOTAL_NUMBER_COUNT) return randomNumbers;
+		const randomNumber = makeRandomNumber();
+
+		if (randomNumbers.includes(randomNumber)) continue;
+		randomNumbers.push(randomNumber);
 	}
-	// 중복체크 로직
-	return randomNumbers;
 };
