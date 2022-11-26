@@ -1,11 +1,11 @@
-import { handleSumbit, onShowResultButtonClick } from "./controllers.js";
+import { handleSumbit, handleWinningNumberFormSubmit } from "./controllers.js";
 
 import {
 	$lottoNumbersToggleButton,
 	$modalClose,
 	$purchaseForm,
 	$restartButton,
-	$showResultButton,
+	$winningNumberForm,
 } from "./view/elements.js";
 
 import { onModalClose, toggleButtonClick } from "./view/ui.js";
@@ -13,8 +13,8 @@ import { onModalClose, toggleButtonClick } from "./view/ui.js";
 const setEventListeners = () => {
 	$purchaseForm.addEventListener("submit", handleSumbit);
 	$lottoNumbersToggleButton.addEventListener("click", toggleButtonClick);
-	$showResultButton.addEventListener("click", onShowResultButtonClick);
 	$modalClose.addEventListener("click", onModalClose);
+	$winningNumberForm.addEventListener("submit", handleWinningNumberFormSubmit);
 	$restartButton.addEventListener("click", () => {
 		// 로또 모델을 초기화한다.
 	});

@@ -45,7 +45,9 @@ const getBonusNumber = () => {
 	lotto.setWinningOrBonusNumber(bonusNumber);
 };
 
-export const onShowResultButtonClick = () => {
+export const handleWinningNumberFormSubmit = (e) => {
+	e.preventDefault();
+
 	lotto.clearResult();
 	getWinningNumbers();
 	getBonusNumber();
