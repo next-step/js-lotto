@@ -19,10 +19,10 @@ class InputPriceFormController extends Controller {
     setPrice(Number(nextPrice));
   }
 
-  addClickEvent(event) {
+  addSubmitEvent(event) {
     const { target } = event;
 
-    if (this.view.$inputPriceButton.contains(target)) {
+    if (this.view.$inputPriceForm.contains(target)) {
       event.preventDefault();
       this.handleInputPriceButtonClick();
       return;

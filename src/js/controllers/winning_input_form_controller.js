@@ -8,6 +8,7 @@ class WinningInputFormController extends Controller {
   handleClickShowResultButton() {
     if (this.model.validateWinningNumbers()) {
       this.model.computeWinningNumbers();
+      this.view.$winningResultModal.classList.add('open');
     }
   }
 
@@ -18,9 +19,9 @@ class WinningInputFormController extends Controller {
     }
   }
 
-  addClickEvent(event) {
+  addSubmitEvent(event) {
     const { target } = event;
-    if (this.view.$showResultButton.contains(target)) {
+    if (this.view.$winningLottoNumbersForm.contains(target)) {
       event.preventDefault();
       this.handleClickShowResultButton();
     }

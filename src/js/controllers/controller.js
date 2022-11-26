@@ -10,7 +10,13 @@ class Controller {
 
   addClickEvent() {}
 
+  addSubmitEvent() {}
+
   initEventHandler() {
+    this.view.$target.addEventListener('submit', (event) => {
+      this.addSubmitEvent(event);
+      this.view.render(this.model);
+    });
     this.view.$target.addEventListener('click', (event) => {
       this.addClickEvent(event);
       this.view.render(this.model);
