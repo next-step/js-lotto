@@ -13,8 +13,10 @@ import lotto from "./service/lotto.js";
 import { isInvalidPurchasePrice } from "./utils/validator.js";
 import {
 	changeInnerText,
+	onModalClose,
 	onModalShow,
 	render,
+	toggleButtonClick,
 	turnOffToggleButton,
 } from "./view/ui.js";
 import { lottosTemplate } from "./view/templates.js";
@@ -65,4 +67,17 @@ export const handleWinningNumberFormSubmit = (e) => {
 	);
 
 	onModalShow();
+};
+
+export const handleRestartButtonClick = () => {
+	lotto.initialize();
+	turnOffToggleButton();
+	$purchaseInput.value = "";
+	changeInnerText($totalLottoCount, 0);
+	render($lottoPapers, "");
+	[...$allWinningNumberInputs].forEach(
+		($winningNumberInput) => ($winningNumberInput.value = "")
+	);
+	$bonusNumber.value = "";
+	onModalClose();
 };
