@@ -1,8 +1,4 @@
-export const isValidPurchaseAmount = (purchaseAmount) => {
-  return purchaseAmount > 0 && purchaseAmount % 1000 === 0;
-};
-
-export const getRandomNumbers = (maxNumber) => {
+export const getNumberList = (maxNumber) => {
   return Array(maxNumber)
     .fill()
     .map((number, idx) => idx + 1);

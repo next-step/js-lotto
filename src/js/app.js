@@ -1,56 +1,126 @@
-import { LottoTicket } from "./lotto.js";
-import { isValidPurchaseAmount } from "./utils.js";
+import {
+  $purchaseAmount,
+  $purchaseButton,
+  $purchaseLotto,
+  $purchaseNumbers,
+  $toggleButton,
+  $switch,
+  $winningNumberForm,
+  $winningNumbers,
+  $lottoResultButton,
+  $modalCloseButton,
+  $bonusNumber,
+  $modal,
+  $resetButton,
+} from './dom.js';
 
-const ERROR_MESSAGE = {
-  INVALID: "1,000원 단위로 입력하세요.",
-  REQUIRED: "금액을 입력하세요.",
-};
-const AMOUNT_UNIT = 1_000;
-
-const $purchaseAmount = document.querySelector("[data-cy='purchase-amount']");
-const $purchaseButton = document.querySelector("[data-cy='purchase-button']");
-const $purchaseNumbers = document.querySelector("[data-cy='purchase-numbers']");
-
-const $toggleButton = document.querySelector(".lotto-numbers-toggle-button");
-const $switch = document.querySelector(".switch");
-const $winningNumberForm = document.querySelector(".winning-number-form");
+import { LottoModel } from './model/LottoModel.js';
+import { LottoComponent } from './ui/LottoComponent.js';
+import { LottoResultModel } from './model/LottoResultModel.js';
+import { LottoResultComponent } from './ui/LottoResultComponent.js';
+import { WinningLotto } from './WinningLotto.js';
+import { PurchaseNumber } from './PurchaseNumber.js';
 
 export class App {
+  lotto;
+
   constructor() {
-    $purchaseButton.addEventListener("click", (event) => {
-      this.onPurchase();
-    });
-
-    $toggleButton.addEventListener("click", (event) => {
-      const checked = event.target.checked;
-      this.viewLottoNumbers(checked);
-    });
+    this.setEvents();
   }
 
-  onPurchase() {
-    if ($purchaseAmount.value === "") {
-      alert(ERROR_MESSAGE.REQUIRED);
-      return;
+  handlePurchase() {
+    try {
+      this.lotto = new LottoModel();
+      const purchaseNumber = new PurchaseNumber($purchaseAmount.value);
+
+      this.lotto.generateLottoNumbers(purchaseNumber.number);
+      const lottoComp = new LottoComponent(this.lotto);
+
+      this.handleWinningNumbersShow();
+    } catch (err) {
+      alert(err.message);
     }
-    if (!isValidPurchaseAmount($purchaseAmount.value)) {
-      alert(ERROR_MESSAGE.INVALID);
-      return;
-    }
-
-    const purchaseNumbers = $purchaseAmount.value / AMOUNT_UNIT;
-    $purchaseNumbers.textContent = `총 ${purchaseNumbers}개를 구매하였습니다.`;
-
-    const lottoTicket = new LottoTicket(purchaseNumbers);
-    lottoTicket.issue();
-
-    $switch.classList.add("show");
-    $winningNumberForm.classList.add("show");
   }
 
-  viewLottoNumbers(checked) {
-    const $lottoNumbers = document.querySelectorAll(".lotto-number");
+  handleShowResult() {
+    const winningNumbers = Array.from($winningNumbers).map(
+      (number) => +number.value
+    );
+    try {
+      const winngingLotto = new WinningLotto({
+        lottoNumber: winningNumbers,
+        bonusNumber: +$bonusNumber.value,
+      });
+      const lottoResultModel = new LottoResultModel(
+        this.lotto.numbers,
+        winngingLotto
+      );
+      const purchaseAmount = $purchaseAmount.value;
+
+      lottoResultModel.computeWinningResult(purchaseAmount);
+      const lottoResultComp = new LottoResultComponent(lottoResultModel);
+
+      this.handleShowModal();
+    } catch (err) {
+      alert(err.message);
+    }
+  }
+
+  handleShowLotto(checked) {
+    const $lottoNumbers = document.querySelectorAll('.lotto-number');
     for (const numbers of $lottoNumbers) {
-      numbers.style.display = checked ? "block" : "none";
+      numbers.style.display = checked ? 'block' : 'none';
     }
+  }
+
+  handleWinningNumbersShow() {
+    $switch.classList.add('show');
+    $winningNumberForm.classList.add('show');
+  }
+
+  handleShowModal() {
+    $modal.classList.add('open');
+  }
+
+  handleCloseModal() {
+    $modal.classList.remove('open');
+  }
+
+  resetLotto() {
+    $purchaseAmount.value = '';
+    $purchaseNumbers.textContent = '';
+    $toggleButton.checked = false;
+    $purchaseLotto.style.display = 'none';
+    for (const number of $winningNumbers) {
+      number.value = '';
+    }
+    $bonusNumber.value = '';
+    $winningNumberForm.classList.remove('show');
+    this.lotto.resetLottoNumber();
+    $purchaseAmount.value = '';
+  }
+
+  setEvents() {
+    $purchaseButton.addEventListener('click', () => {
+      this.handlePurchase();
+    });
+
+    $toggleButton.addEventListener('click', (event) => {
+      const checked = event.target.checked;
+      this.handleShowLotto(checked);
+    });
+
+    $lottoResultButton.addEventListener('click', () => {
+      this.handleShowResult();
+    });
+
+    $modalCloseButton.addEventListener('click', () => {
+      this.handleCloseModal();
+    });
+
+    $resetButton.addEventListener('click', () => {
+      this.resetLotto();
+      this.handleCloseModal();
+    });
   }
 }
