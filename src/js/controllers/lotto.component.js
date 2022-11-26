@@ -34,10 +34,6 @@ export class LottoComponent extends Component {
         $purchased.amount.onchange = () => this.#isInputChange = true;
     }
 
-    _subscribe() {
-        this._stateModel.register({ isShowNumbers: () => $issued.numberToggleButton.checked = this.isShowNumbers });
-    }
-
     #purchase() {
         if (!this.#isInputChange) return;
         if (this.#isInputChange) this.reset();
@@ -86,7 +82,6 @@ export class LottoComponent extends Component {
 
     #toggleLottoNumbers() {
         this.isShowNumbers = !this.isShowNumbers;
-        this._stateModel.setState({ isShowNumbers: this.isShowNumbers });
         const $lottoNumbers = document.querySelectorAll('.lotto-numbers');
         if ($lottoNumbers.length !== 0) this.#showLottoNumbers();
     }

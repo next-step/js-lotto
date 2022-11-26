@@ -33,7 +33,9 @@ export class ModalComponent extends Component {
     }
 
     restart() {
+        this.#closeStatsModal();
         this.#reset();
+        window.location.reload();
     }
 
     #reset() {

@@ -16,12 +16,11 @@ export class StateModel {
 
     setState(newState) {
         this.#state = { ...this.#state, ...newState };
-        this.notify(newState);
+        this.notify();
     }
 
-    notify(key) {
-        console.log(this.#observers);
-        this.#observers.forEach(row => row[key]);
+    notify() {
+        this.#observers.forEach(fn => fn());
     }
 
     getState(key) {

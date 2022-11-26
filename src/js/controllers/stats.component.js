@@ -9,7 +9,6 @@ import { ModalComponent } from "./modal.component.js";
 export class StatsComponent extends Component {
     validator;
     lastNumbers;
-    // TODO: input 숫자 두자리 입력 후 auto next focus
 
     constructor(view, state) {
         super(view, state);
