@@ -6,6 +6,7 @@ export const render = (target, html) => {
 
 export const changeInnerText = (target, text) => {
 	target.innerText = text;
+
 };
 
 export const toggleButtonClick = () => {

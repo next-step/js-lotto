@@ -8,6 +8,7 @@ export const lottosTemplate = (lottoNumbers) => {
       <span class="lotto-numbers">${curr.join(", ")}</span>
     </div>
     `,
+
     ""
   );
 };
