@@ -22,6 +22,15 @@ describe("행운의 로또 테스트", () => {
     });
   };
 
+  const validateNumber = ({ input, expectedMessage }) => {
+    cy.get($winningNumberInputSelector).first().type(input);
+    cy.get($checkResultButtonSelector).click();
+
+    cy.get($winningNumberInputSelector).then(($input) => {
+      expect($input[0].validationMessage).to.eq(expectedMessage);
+    });
+  };
+
   beforeEach(() => {
     cy.visit("/");
   });
@@ -177,7 +186,7 @@ describe("행운의 로또 테스트", () => {
       cy.get($checkResultButtonSelector).should("exist");
     });
 
-    it("결과를 확인하기 위해서는 당첨 번호 또는 보너스번호가 입력되어 있지 않다면 비어있는 인풋에 포커스를 잡아준다.", () => {
+    it("결과를 확인하기 위해서는 당첨 번호 또는 보너스 번호가 입력되어 있지 않다면 비어있는 인풋에 포커스를 잡아준다.", () => {
       cy.get($winningNumberInputSelector).each(($number, index) => {
         if (index > 3) return;
         cy.get($number).type("1");
@@ -191,6 +200,22 @@ describe("행운의 로또 테스트", () => {
             expect(isFocused).eq(true);
           });
         });
+    });
+
+    describe("당첨 번호 또는 보너스 번호는 1부터 45까지 입력이 가능하다.", () => {
+      it("당첨 번호 또는 보너스 번호는 1부터 입력이 가능하다.", () => {
+        validateNumber({
+          input: "0",
+          expectedMessage: "값은 1 이상이어야 합니다.",
+        });
+      });
+
+      it("당첨 번호 또는 보너스 번호는 45까지 입력이 가능하다.", () => {
+        validateNumber({
+          input: "46",
+          expectedMessage: "값은 45 이하여야 합니다.",
+        });
+      });
     });
 
     it("당첨 번호와 보너스 번호 중 중복된 번호가 존재한다면 alert를 보여준다.", () => {
