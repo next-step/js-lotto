@@ -13,7 +13,7 @@
           <h1 class="text-center">🎱 행운의 로또</h1>
           <section class="mt-9">
             <h2 class="hidden-text">로또 구매 입력 영역</h2>
-            <form id="purchase-input-form" data-cy="purchase-input-form">
+            <form id="purchase-input-form">
               <p class="mb-2">구입할 금액을 입력해주세요.</p>
               <div class="d-flex">
                 <input
@@ -23,13 +23,11 @@
                   max="100000"
                   id="purchase-amount-input"
                   placeholder="구입 금액"
-                  data-cy="purchase-amount-input"
                 />
                 <button
                   type="submit"
-                  class="btn btn-cyan"
+                  class="purchase-amount-submit-button btn btn-cyan"
                   form="purchase-input-form"
-                  data-cy="purchase-amount-submit"
                 >
                   확인
                 </button>
@@ -46,11 +44,7 @@
               </p>
               <div class="flex-auto d-flex justify-end pr-1">
                 <label class="switch">
-                  <input
-                    type="checkbox"
-                    class="view-numbers-checkbox"
-                    data-cy="view-numbers-checkbox"
-                  />
+                  <input type="checkbox" class="view-numbers-checkbox" />
                   <span class="text-base font-normal">번호보기</span>
                 </label>
               </div>

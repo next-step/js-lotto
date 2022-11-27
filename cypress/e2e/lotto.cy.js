@@ -3,9 +3,9 @@ import {
   MESSAGE_ABOUT_UNIT_OF_AMOUNT,
 } from "../../src/js/constants.js";
 
-const $purchaseInputSelector = '[data-cy="purchase-amount-input"]';
-const $purchaseSubmitButtonSelector = '[data-cy="purchase-amount-submit"]';
-const $toggleSelector = '[data-cy="view-numbers-checkbox"]';
+const $purchaseInputSelector = "#purchase-amount-input";
+const $purchaseSubmitButtonSelector = ".purchase-amount-submit-button";
+const $toggleSelector = ".view-numbers-checkbox";
 const $iconSelector = ".lotto-icon";
 const $lottoDetailSelector = ".lotto-detail";
 const $winningNumberInputSelector = ".winning-number";
