@@ -18,6 +18,8 @@ class Model {
 
   #rateOfReturn = 0;
 
+  #isFinished = false;
+
   get lottoPurchaseCount() {
     return this.#lottoPurchaseCount;
   }
@@ -36,6 +38,14 @@ class Model {
 
   get rateOfReturn() {
     return this.#rateOfReturn;
+  }
+
+  get isFinished() {
+    return this.#isFinished;
+  }
+
+  set isFinished(isFinished) {
+    this.#isFinished = isFinished;
   }
 
   buyLottoSelf(numbers) {
@@ -71,6 +81,7 @@ class Model {
       6: 0,
     };
     this.#rateOfReturn = 0;
+    this.#isFinished = false;
   }
 }
 

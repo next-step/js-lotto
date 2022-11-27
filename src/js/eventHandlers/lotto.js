@@ -103,6 +103,11 @@ export const handleSubmitResultForm = (e) => {
   e.preventDefault();
 
   try {
+    if (model.isFinished) {
+      handleClickOpenModal();
+      return;
+    }
+
     const { winning, bonus } = getLottoWinningNumbers();
     const lottoNumbers = [...winning, bonus];
 
@@ -112,6 +117,8 @@ export const handleSubmitResultForm = (e) => {
 
     renderResultForm(model.lottoWinningCount, model.rateOfReturn);
     handleClickOpenModal();
+
+    model.isFinished = true;
   } catch (error) {
     console.error(error);
     alert(error.message);
