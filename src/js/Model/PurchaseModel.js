@@ -1,3 +1,4 @@
+import { LOTTO_PRICE } from '../constants';
 import PurchaseLottery from '../Lottery/PurchaseLottery';
 import WinningLottery from '../Lottery/WinningLottery';
 import Observer from './Observer';
@@ -15,6 +16,35 @@ export default class PurchaseModel extends Observer {
 
  get lotteriesLength() {
   return this.#lotteries.length;
+  this.notify();
+ }
+ reset() {
+  this.#lotteries = [];
+  this.resetWinningLottery();
+  this.notify();
+ }
+
+ getWinningResult() {
+  if (!this.#lotteries || this.#lotteries.length === 0) {
+   return { rate: 0, result: [] };
+  }
+
+  const result = this.#lotteries.map((lottery) =>
+   this.winningLottery.matchWinningLottery(lottery)
+  );
+
+  const price = this.#lotteries.length * 1000;
+  const winningPrice = result.reduce((acc, type) => {
+   if (type === 5) return acc;
+   return acc + LOTTO_PRICE[type];
+  }, 0);
+  const rate = winningPrice / price;
+
+  return { rate, result };
+ }
+
+ resetWinningLottery() {
+  this.winningLottery = new WinningLottery();
  }
 
  setWinningLottery({ numbers, bonus }) {

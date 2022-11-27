@@ -9,15 +9,20 @@ export default class LotteryResultView extends View {
   this.purchaseModel = model;
   this.purchaseModel.subscribe(this.render.bind(this));
   this.modalView = new ModalView($modal, this.purchaseModel);
+  this.lotteriesView = null;
   this.init();
  }
 
  render() {
+  if (this.$target.children.length !== 0) {
+   this.$target.replaceChildren();
+  }
   this.$target.insertAdjacentHTML('beforeend', this.getTemplate());
   const $lotteriesView = this.$target.querySelector(
    '[data-view="lotteries-view"]'
   );
-  new LotteriesView($lotteriesView, this.purchaseModel);
+  this.lotteriesView = new LotteriesView($lotteriesView, this.purchaseModel);
+  this.lotteriesView.render();
  }
 
  setEvent() {
@@ -30,6 +35,7 @@ export default class LotteryResultView extends View {
    event.preventDefault();
    const lotteryNumbers = [];
    const bonus = [];
+   this.purchaseModel.resetWinningLottery();
 
    for (const input of event.target) {
     if (input.classList.value.includes('winning-number') && input.value) {
@@ -54,8 +60,10 @@ export default class LotteryResultView extends View {
  }
 
  getTemplate() {
-  if (this.purchaseModel.lotteriesLength === 0)
+  console.log(this.purchaseModel.lotteriesLength);
+  if (this.purchaseModel.lotteriesLength === 0) {
    return ' <div data-view="lotteries-view" class="d-flex flex-wrap"></div>';
+  }
   return (
    this.generateLotteriesTemplate(this.purchaseModel.lotteries) +
    this.generateWinningLotteriesInput()

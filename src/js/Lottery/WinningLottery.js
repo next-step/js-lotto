@@ -17,18 +17,18 @@ export default class WinningLottery extends Lottery {
    this.setLottery(number);
   });
 
-  this.setLottery(bonus);
+  this.setBonus(bonus);
  }
 
  matchWinningLottery(lottery) {
-  const { numbers, bonus } = lottery.getLotteryNumber;
+  const { numbers } = lottery.getLotteryNumber;
   const correctNumbers = numbers.filter((number) => this.isIncludes(number));
   if (correctNumbers.length === this.lotteryCount) {
    return 0;
   }
   if (
    correctNumbers.length === this.lotteryCount - 1 &&
-   this.getLotteryNumber.bonus === bonus
+   numbers.includes(this.getLotteryNumber.bonus)
   ) {
    return 1;
   }

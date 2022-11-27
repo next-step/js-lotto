@@ -23,7 +23,6 @@ export default class View {
    children.includes(target) || target.closest(selector);
   this.$target.addEventListener(eventType, (ev) => {
    if (ev.target) {
-    console.dir(ev.target);
     if (!isTarget(ev.target)) return false;
 
     callback(ev);
