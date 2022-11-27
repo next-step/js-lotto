@@ -1,4 +1,9 @@
-import { TITLE_WITH_VALUE_MAP } from '../../constants.js';
+import {
+  CLICK_EVENT_MAP,
+  ELEMENT_DATA_ID,
+  ELEMENT_DATA_ID_FORM,
+  TITLE_WITH_VALUE_MAP,
+} from '../../constants.js';
 import {
   generateTtitleAndValueArray,
   getWinningCount,
@@ -10,10 +15,10 @@ class ResultModal {
     this.props = props;
     this.$modal = $target.querySelector('.modal');
     this.$modalTableBody = $target.querySelector(
-      '[data-id=modal-result-table-body]'
+      ELEMENT_DATA_ID_FORM.MODAL_RESULT_TABLE_BODY
     );
     this.$investmentReturnSpan = $target.querySelector(
-      '[data-id=investment-return]'
+      ELEMENT_DATA_ID_FORM.INVESTMENT_RETURN
     );
     this.render();
     this.addEventListener();
@@ -65,14 +70,10 @@ class ResultModal {
   }
 
   addEventListener() {
-    this.$target.addEventListener('click', (event) => {
-      if (event.target.dataset.id === 'modal-close-button') {
-        event.preventDefault();
-        this.props.onModalShow({ isVisibleModal: false });
-      }
-      if (event.target.dataset.id === 'restart-button') {
-        this.props.onRestart();
-      }
+    CLICK_EVENT_MAP.set(ELEMENT_DATA_ID.RESTART_BUTTON, this.props.onRestart);
+    CLICK_EVENT_MAP.set(ELEMENT_DATA_ID.MODAL_CLOSE_BUTTON, (event) => {
+      event.preventDefault();
+      this.props.onModalShow({ isVisibleModal: false });
     });
   }
 }

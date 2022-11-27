@@ -1,11 +1,16 @@
-import { MAX_WINNING_INPUT_LENGTH } from '../../../constants.js';
+import {
+  CLICK_EVENT_MAP,
+  ELEMENT_DATA_ID,
+  ELEMENT_DATA_ID_FORM,
+  LOTTO_VALUE,
+} from '../../../constants.js';
 
 class OpenModalButton {
   constructor({ $target, props = {} }) {
     this.$target = $target;
     this.props = props;
     this.$openModalButton = $target.querySelector(
-      '[data-id=open-result-modal-button]'
+      ELEMENT_DATA_ID_FORM.OPEN_RESULT_MODAL_BUTTON
     );
     this.render();
     this.addEventListener();
@@ -15,7 +20,7 @@ class OpenModalButton {
     const isValidBonusNumber = Boolean(this.props.state.bonusNumber);
     const isAllTyped =
       this.props.state.winningNumbers.filter((number) => Boolean(number))
-        .length === MAX_WINNING_INPUT_LENGTH && isValidBonusNumber;
+        .length === LOTTO_VALUE.MAX_LOTTO_COUNT && isValidBonusNumber;
     const isValid = isAllTyped && isValidBonusNumber;
 
     if (isValid) this.$openModalButton.removeAttribute('disabled');
@@ -23,11 +28,9 @@ class OpenModalButton {
   }
 
   addEventListener() {
-    this.$target.addEventListener('click', (event) => {
-      if (event.target.dataset.id === 'open-result-modal-button') {
-        event.preventDefault();
-        this.props.onModalShow({ isVisibleModal: true });
-      }
+    CLICK_EVENT_MAP.set(ELEMENT_DATA_ID.OPEN_RESULT_MODAL_BUTTON, (event) => {
+      event.preventDefault();
+      this.props.onModalShow({ isVisibleModal: true });
     });
   }
 }

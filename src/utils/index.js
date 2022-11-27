@@ -1,13 +1,12 @@
-import { TITLE_WITH_VALUE_MAP } from '../constants.js';
+import { LOTTO_VALUE, TITLE_WITH_VALUE_MAP } from '../constants.js';
 
 const makeRandomNumber = (minValue = 1, maxValue = 45) => {
   return Math.floor(Math.random() * maxValue + minValue);
 };
 
 const makeLottoNumber = () => {
-  const MAX_LOTTO_COUNT = 6;
   const numberSet = new Set();
-  while (numberSet.size < MAX_LOTTO_COUNT) {
+  while (numberSet.size < LOTTO_VALUE.MAX_LOTTO_COUNT) {
     const randomNumber = makeRandomNumber();
 
     numberSet.add(randomNumber);
@@ -168,4 +167,12 @@ export const isRerender = ({ currentState, nextState }) => {
   });
 
   return false;
+};
+
+export const makeDataAttributeIdForm = (dataIdsObject) => {
+  const formedObject = {};
+  Object.entries(dataIdsObject).forEach(
+    ([key, value]) => (formedObject[key] = `[data-id=${value}]`)
+  );
+  return formedObject;
 };

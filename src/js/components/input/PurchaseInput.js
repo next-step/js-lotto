@@ -1,7 +1,10 @@
+import { ELEMENT_DATA_ID_FORM } from '../../../constants.js';
 class PurchaseInput {
   constructor({ $target, props = {} }) {
     this.$target = $target;
-    this.$numberInput = $target.querySelector('[data-id=lotto-number-input]');
+    this.$numberInput = $target.querySelector(
+      ELEMENT_DATA_ID_FORM.LOTTO_NUMBER_INPUT
+    );
     this.props = props;
     this.render();
   }

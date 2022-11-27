@@ -1,11 +1,9 @@
 import {
   ALERT,
+  CLICK_EVENT_MAP,
   DEFAULT_LOTTO_STATE,
-  LOTTO_MAX_VALUE,
-  LOTTO_MIN_VALUE,
-  MAX_LOTTO_PRICE,
-  MAX_WINNING_INPUT_LENGTH,
-  MIN_LOTTO_PRICE,
+  ELEMENT_DATA_ID,
+  LOTTO_VALUE,
 } from '../constants.js';
 import {
   isDuplicatedInArray,
@@ -46,10 +44,11 @@ class Lotto {
 
   onConfirm = () => {
     const { moneyAmount } = this.state;
-    const isOverPirce = moneyAmount > MAX_LOTTO_PRICE;
+    const isOverPirce = moneyAmount > LOTTO_VALUE.MAX_PRICE;
     const isConfirm =
-      moneyAmount >= MIN_LOTTO_PRICE && moneyAmount <= MAX_LOTTO_PRICE;
-    const isThousandUnit = moneyAmount % MIN_LOTTO_PRICE === 0;
+      moneyAmount >= LOTTO_VALUE.MIN_PRICE &&
+      moneyAmount <= LOTTO_VALUE.MAX_PRICE;
+    const isThousandUnit = moneyAmount % LOTTO_VALUE.MIN_PRICE === 0;
 
     if (isOverPirce) {
       window.alert(ALERT.OVER_MAX_VALUE);
@@ -68,7 +67,7 @@ class Lotto {
 
       this.setState({
         ...this.state,
-        lottoPurchaseNumber: moneyAmount / MIN_LOTTO_PRICE,
+        lottoPurchaseNumber: moneyAmount / LOTTO_VALUE.MIN_PRICE,
         lottoNumbers,
         isVisibleResult: true,
       });
@@ -89,11 +88,13 @@ class Lotto {
     const isValidBonusNumber = Boolean(this.state.bonusNumber);
     const isAllTyped =
       this.state.winningNumbers.filter((number) => Boolean(number)).length ===
-        MAX_WINNING_INPUT_LENGTH && isValidBonusNumber;
+        LOTTO_VALUE.WINNIN_INPUT_LENGTH && isValidBonusNumber;
     const isValidNumbers =
       this.state.winningNumbers.filter(
-        (number) => +number >= LOTTO_MIN_VALUE && +number <= LOTTO_MAX_VALUE
-      ).length === MAX_WINNING_INPUT_LENGTH && isValidBonusNumber;
+        (number) =>
+          Number(number) >= LOTTO_VALUE.MIN_NUMBER &&
+          Number(number) <= LOTTO_VALUE.MAX_NUMBER
+      ).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH && isValidBonusNumber;
 
     if (!isAllTyped) {
       alert(ALERT.NOT_ALL_TYPED_WINNING_INPUT);
@@ -138,7 +139,7 @@ class Lotto {
     });
 
     if (isBonusInput) this.$bonusNumberInput.focus();
-    if (index === MAX_WINNING_INPUT_LENGTH) {
+    if (index === LOTTO_VALUE.MAX_LOTTO_COUNT) {
       this.setState({
         ...this.state,
         bonusNumber: value,
@@ -164,6 +165,7 @@ class Lotto {
       $target: this.$target,
       props: {
         state: this.state,
+        onToggle: this.onToggle,
       },
     });
 
@@ -195,20 +197,20 @@ class Lotto {
 
   addEventListener() {
     this.$target.addEventListener('click', (event) => {
-      if (event.target.dataset.id === 'number-toggle-button') {
-        this.onToggle();
+      if (CLICK_EVENT_MAP.has(event.target.dataset.id)) {
+        CLICK_EVENT_MAP.get(event.target.dataset.id)(event);
       }
     });
 
     this.$target.addEventListener('input', (event) => {
-      if (event.target.dataset.id === 'lotto-number-input') {
+      if (event.target.dataset.id === ELEMENT_DATA_ID.LOTTO_NUMBER_INPUT) {
         this.onTypeAmount(event.target.value);
       }
     });
 
     this.$target.addEventListener('keydown', (event) => {
       if (
-        event.target.dataset.id === 'lotto-number-input' &&
+        event.target.dataset.id === ELEMENT_DATA_ID.LOTTO_NUMBER_INPUT &&
         event.key === 'Enter'
       ) {
         this.onEnter(event);

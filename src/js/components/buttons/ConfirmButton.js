@@ -1,8 +1,15 @@
+import {
+  CLICK_EVENT_MAP,
+  ELEMENT_DATA_ID,
+  ELEMENT_DATA_ID_FORM,
+} from '../../../constants.js';
 class ConfirmButton {
   constructor({ $target, props = {} }) {
     this.$target = $target;
     this.props = props;
-    this.$submitButton = $target.querySelector('[data-id=lotto-submit-button]');
+    this.$submitButton = $target.querySelector(
+      ELEMENT_DATA_ID_FORM.LOTTO_SUBMIT_BUTTON
+    );
     this.render();
     this.addEventListener();
   }
@@ -17,11 +24,10 @@ class ConfirmButton {
   }
 
   addEventListener() {
-    this.$target.addEventListener('click', (event) => {
-      if (event.target.dataset.id === 'lotto-submit-button') {
-        this.props.onConfirm();
-      }
-    });
+    CLICK_EVENT_MAP.set(
+      ELEMENT_DATA_ID.LOTTO_SUBMIT_BUTTON,
+      this.props.onConfirm
+    );
   }
 }
 
