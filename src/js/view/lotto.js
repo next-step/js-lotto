@@ -98,6 +98,10 @@ export const toggleLottoNumber = () => {
   });
 };
 
+const resetToggle = () => {
+  $(SELECTOR.LOTTO_NUMBERS_TOGGLE_BUTTON).checked = false;
+};
+
 const hideLottoResult = () => {
   hidePurchasedLotto();
   hideLottoResultForm();
@@ -140,6 +144,7 @@ export const resetView = (initCount, initLottoNumbersArray, initRateOfReturn, in
   renderLottoResult(initCount, initLottoNumbersArray);
   renderResultForm(initRateOfReturn, initWinningCount);
 
+  resetToggle();
   resetLottoPurchasePrice();
   resetLottoWinningNumbers();
 
