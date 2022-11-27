@@ -11,6 +11,7 @@ const issueLotto = (purchaseAmount) => lottoModel.issue(purchaseAmount).getLotto
 const getLottoList = () => lottoModel.getLottoList()
 const getPurchaseAmount = () => selectors.inputPurchaseAmount.value
 
+
 const onBuyLotto = (purchaseAmount) => {
   if (purchaseAmount === '') return alert(ERROR_TEXT.EMPTY_PURCHASE_AMOUNT)
   if (!checkPaidAmount(purchaseAmount, LOTTO_MACHINE_CONFIG.price))
@@ -25,6 +26,7 @@ const onClickToggle = (e) => {
   const lottoList = getLottoList()
   state ? showLottoList(lottoList) : updateLottoState(lottoList.length)
 }
+
 
 const onGetResult = () => {
   const enteredNumberList = getValueList(selectors.inputWinningNumber)
