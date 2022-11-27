@@ -60,7 +60,6 @@ export default class LotteryResultView extends View {
  }
 
  getTemplate() {
-  console.log(this.purchaseModel.lotteriesLength);
   if (this.purchaseModel.lotteriesLength === 0) {
    return ' <div data-view="lotteries-view" class="d-flex flex-wrap"></div>';
   }
