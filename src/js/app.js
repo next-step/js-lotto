@@ -7,7 +7,7 @@ class App {
     this.$target = document.querySelector(target);
     this.$amountInput = document.querySelector("#purchase-amount-input");
     this.$winningInputs = document.querySelectorAll(".winning-number");
-    this.$bonusInput = document.querySelectorAll(".bonus-number");
+    this.$bonusInput = document.querySelector(".bonus-number");
     this.#model = model;
     this.#view = view;
     this.setEvent();
@@ -20,7 +20,7 @@ class App {
         this.render(this.#model.state);
       },
       "winning-number-confirmation-form": () => {
-        this.#model.checkResult(this.$winningInputs);
+        this.#model.checkResult(this.$winningInputs, this.$bonusInput);
       },
     };
 

@@ -14,8 +14,10 @@ export const toggleClass = ({ $element, className, flag }) => {
     : $element.classList.remove(className);
 };
 
-export const hasDuplicatedValueInputs = ($inputs) => {
-  const values = Array.from($inputs).map(({ value }) => value);
+export const hasDuplicatedValueInputs = ($inputs, $bonusInput) => {
+  const values = Array.from([...$inputs, $bonusInput]).map(
+    ({ value }) => value
+  );
   const removedDuplicatedValue = [...new Set(values)];
 
   return values.length !== removedDuplicatedValue.length;
