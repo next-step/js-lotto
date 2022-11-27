@@ -1,4 +1,4 @@
-export const checkAmountUnit = (amount) => /000$/.test(amount);
+export const isValidAmountUnit = (amount) => /000$/.test(amount);
 
 export const removeAllChildNodes = (parent) => {
   while (parent.firstChild) {
@@ -12,4 +12,11 @@ export const toggleClass = ({ $element, className, flag }) => {
   flag
     ? $element.classList.add(className)
     : $element.classList.remove(className);
+};
+
+export const hasDuplicatedValueInputs = ($inputs) => {
+  const values = Array.from($inputs).map(({ value }) => value);
+  const removedDuplicatedValue = [...new Set(values)];
+
+  return values.length !== removedDuplicatedValue.length;
 };

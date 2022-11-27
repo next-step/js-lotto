@@ -1,15 +1,22 @@
+import {
+  MESSAGE_ABOUT_DUPLICATION_NUMBER,
+  MESSAGE_ABOUT_UNIT_OF_AMOUNT,
+} from "../../src/js/constants.js";
+
 const $purchaseInputSelector = '[data-cy="purchase-amount-input"]';
 const $purchaseSubmitButtonSelector = '[data-cy="purchase-amount-submit"]';
 const $toggleSelector = '[data-cy="view-numbers-checkbox"]';
 const $iconSelector = ".lotto-icon";
-const $lottoDetail = ".lotto-detail";
+const $lottoDetailSelector = ".lotto-detail";
+const $winningNumberInputSelector = ".winning-number";
+const $bonusNumberInputSelector = ".bonus-number";
+const $checkResultButtonSelector = ".check-result-button";
 
 describe("행운의 로또 테스트", () => {
   const validateAmountUnit = ({ input, expectedMessage }) => {
     cy.get($purchaseInputSelector).type(input);
     cy.get($purchaseSubmitButtonSelector).click();
 
-    cy.get("input:invalid").should("have.length", 1);
     cy.get($purchaseInputSelector).then(($input) => {
       expect($input[0].validationMessage).to.eq(expectedMessage);
     });
@@ -73,7 +80,7 @@ describe("행운의 로또 테스트", () => {
             .click()
             .then(() => {
               expect(alertStub.getCall(0)).to.be.calledWith(
-                "로또 구입 금액을 1,000원 단위로 입력해 주세요."
+                MESSAGE_ABOUT_UNIT_OF_AMOUNT
               );
             });
         });
@@ -111,7 +118,7 @@ describe("행운의 로또 테스트", () => {
             .type("1001{enter}")
             .then(() => {
               expect(alertStub.getCall(0)).to.be.calledWith(
-                "로또 구입 금액을 1,000원 단위로 입력해 주세요."
+                MESSAGE_ABOUT_UNIT_OF_AMOUNT
               );
             });
         });
@@ -147,12 +154,61 @@ describe("행운의 로또 테스트", () => {
     it("토글이 활성화되면 랜덤번호가 보여진다.", () => {
       cy.contains("번호보기").click();
       cy.get($toggleSelector).should("be.checked");
-      cy.get($lottoDetail).should("be.visible");
+      cy.get($lottoDetailSelector).should("be.visible");
     });
 
     it("토글이 비활성화되면 랜덤번호는 가려진다.", () => {
       cy.get($toggleSelector).should("not.be.checked");
-      cy.get($lottoDetail).should("not.be.visible");
+      cy.get($lottoDetailSelector).should("not.be.visible");
+    });
+  });
+
+  describe("결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.", () => {
+    beforeEach(() => {
+      cy.get($purchaseInputSelector).type("5000{enter}");
+    });
+
+    it("당첨 번호 및 보너스 번호를 입력할 수 있는 Input이 존재한다.", () => {
+      cy.get($winningNumberInputSelector).should("have.length", 6);
+      cy.get($bonusNumberInputSelector).should("have.length", 1);
+    });
+
+    it("결과 확인하기 버튼이 존재한다.", () => {
+      cy.get($checkResultButtonSelector).should("exist");
+    });
+
+    it("결과를 확인하기 위해서는 당첨 번호 또는 보너스번호가 입력되어 있지 않다면 비어있는 인풋에 포커스를 잡아준다.", () => {
+      cy.get($winningNumberInputSelector).each(($number, index) => {
+        if (index > 3) return;
+        cy.get($number).type("1");
+      });
+
+      cy.get($checkResultButtonSelector)
+        .click()
+        .then(() => {
+          cy.get($winningNumberInputSelector).should(($input) => {
+            const isFocused = Cypress.dom.isFocused($input[4]);
+            expect(isFocused).eq(true);
+          });
+        });
+    });
+
+    it("당첨 번호와 보너스 번호 중 중복된 번호가 존재한다면 alert를 보여준다.", () => {
+      cy.get($winningNumberInputSelector).each(($number) =>
+        cy.get($number).type("1")
+      );
+      cy.get($bonusNumberInputSelector).type("1");
+
+      const alertStub = cy.stub();
+      cy.on("window:alert", alertStub);
+
+      cy.get($checkResultButtonSelector)
+        .click()
+        .then(() => {
+          expect(alertStub.getCall(0)).to.be.calledWith(
+            MESSAGE_ABOUT_DUPLICATION_NUMBER
+          );
+        });
     });
   });
 });

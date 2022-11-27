@@ -1,7 +1,12 @@
-import { checkAmountUnit, getRandomNumber } from "./utils.js";
+import {
+  isValidAmountUnit,
+  hasDuplicatedValueInputs,
+  getRandomNumber,
+} from "./utils.js";
 import {
   LOTTO_GAME_COUNT,
   MAXIMUM_NUMBER,
+  MESSAGE_ABOUT_DUPLICATION_NUMBER,
   MESSAGE_ABOUT_UNIT_OF_AMOUNT,
 } from "./constants.js";
 
@@ -41,12 +46,18 @@ class Lotto {
   }
 
   purchaseLotto(amount) {
-    if (!checkAmountUnit(amount)) {
+    if (!isValidAmountUnit(amount)) {
       alert(MESSAGE_ABOUT_UNIT_OF_AMOUNT);
       return;
     }
 
     this.#generatorLotto(amount);
+  }
+
+  checkResult($inputs) {
+    if (hasDuplicatedValueInputs($inputs)) {
+      alert(MESSAGE_ABOUT_DUPLICATION_NUMBER);
+    }
   }
 }
 
