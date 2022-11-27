@@ -46,8 +46,8 @@ const resetLottoWinningNumbers = () => {
   $(SELECTOR.LOTTO_RESULT_FORM).reset();
 };
 
-export const getLottoBonusNumber = () => {
-  return Number($(SELECTOR.BONUS_NUMBER_INPUT).value);
+export const getLottoWinningBonusNumber = () => {
+  return Number($(SELECTOR.WINNING_BONUS_NUMBER_INPUT).value);
 };
 
 const showPurchasedLotto = () => {

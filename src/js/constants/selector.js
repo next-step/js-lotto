@@ -10,7 +10,7 @@ export const SELECTOR = {
   LOTTO_RESULT_FORM: '.js-lotto-result-form',
 
   WINNING_NUMBER_INPUT_WRAPPER: '.js-winning-number-input-wrapper',
-  BONUS_NUMBER_INPUT: '.js-bonus-number-input',
+  WINNING_BONUS_NUMBER_INPUT: '.js-winning-bonus-number-input',
 
   MODAL: '.js-modal',
   MODAL_CLOSE_ICON: '.js-modal-close-icon',

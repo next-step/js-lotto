@@ -30,7 +30,7 @@ const typeLottoWinningNumbers = () => {
       cy.wrap($el).type(String(DUMMY_DATA.LOTTO_NUMBERS[idx]));
     })
     .then(() => {
-      cy.getByDataset(SELECTOR.BONUS_NUMBER_INPUT).type(DUMMY_DATA.BONUS_NUMBER);
+      cy.getByDataset(SELECTOR.WINNING_BONUS_NUMBER_INPUT).type(DUMMY_DATA.BONUS_NUMBER);
     });
 };
 
@@ -60,7 +60,7 @@ const typeDuplicatedWinningNumbers = () => {
       cy.wrap($el).type(String(DUMMY_DATA.LOTTO_NUMBERS[0]));
     })
     .then(() => {
-      cy.getByDataset(SELECTOR.BONUS_NUMBER_INPUT).type(DUMMY_DATA.BONUS_NUMBER);
+      cy.getByDataset(SELECTOR.WINNING_BONUS_NUMBER_INPUT).type(DUMMY_DATA.BONUS_NUMBER);
     });
 };
 

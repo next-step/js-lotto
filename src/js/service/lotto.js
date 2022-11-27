@@ -1,6 +1,6 @@
 import { LOTTO, PERCENTAGE_NUMBER } from '../constants/index.js';
 import { generateRandomNumbersToArray } from '../utils/index.js';
-import { getLottoBonusNumber, getLottoWinningNumberArray } from '../view/lotto.js';
+import { getLottoWinningBonusNumber, getLottoWinningNumberArray } from '../view/lotto.js';
 
 export const getLottoPurchaseCount = (lottoPurchasePrice) => {
   return lottoPurchasePrice / LOTTO.PRICE;
@@ -15,7 +15,7 @@ export const generateLottoNumbersToArray = (count) => {
 export const getLottoWinningNumbers = () => {
   const lottoWinningNumbers = getLottoWinningNumberArray();
 
-  const lottoBonusNumber = getLottoBonusNumber();
+  const lottoBonusNumber = getLottoWinningBonusNumber();
 
   return {
     winning: lottoWinningNumbers,
