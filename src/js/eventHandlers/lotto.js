@@ -35,10 +35,11 @@ export const handleSubmitPaymentForm = (e) => {
 
   try {
     model.reset();
-    const lottoPurchasePrice = getLottoPurchasePrice();
-    assertLottoPurchasePrice(lottoPurchasePrice);
 
-    renderLottoPurchaseContainer(model.lottos, lottoPurchasePrice);
+    model.lottoPurchasePrice = getLottoPurchasePrice();
+    assertLottoPurchasePrice(model.lottoPurchasePrice);
+
+    renderLottoPurchaseContainer(model.lottos, model.lottoPurchasePrice);
   } catch (error) {
     console.error(error);
     alert(error.message);
@@ -51,7 +52,7 @@ export const handleSubmitSelfBuyingForm = (e) => {
   e.preventDefault();
 
   try {
-    const lottoPurchasePrice = getLottoPurchasePrice();
+    const { lottoPurchasePrice } = model;
     const lottoPurchaseCount = getLottoPurchaseCount(lottoPurchasePrice);
 
     const lottoInputNumbers = getLottoPurchasingNumberArray();
@@ -80,7 +81,7 @@ export const handleSubmitSelfBuyingForm = (e) => {
 
 export const handleClickAutoBuyingButton = () => {
   try {
-    const lottoPurchasePrice = getLottoPurchasePrice();
+    const { lottoPurchasePrice } = model;
     const lottoPurchaseCount = getLottoPurchaseCount(lottoPurchasePrice);
     model.buyLottoAuto();
 
@@ -103,11 +104,6 @@ export const handleSubmitResultForm = (e) => {
   e.preventDefault();
 
   try {
-    if (model.isFinished) {
-      handleClickOpenModal();
-      return;
-    }
-
     const { winning, bonus } = getLottoWinningNumbers();
     const lottoNumbers = [...winning, bonus];
 
@@ -117,8 +113,6 @@ export const handleSubmitResultForm = (e) => {
 
     renderResultForm(model.lottoWinningCount, model.rateOfReturn);
     handleClickOpenModal();
-
-    model.isFinished = true;
   } catch (error) {
     console.error(error);
     alert(error.message);

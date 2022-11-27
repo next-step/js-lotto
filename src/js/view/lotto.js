@@ -26,6 +26,16 @@ export const resetLottoPurchasePrice = () => {
   $(SELECTOR.PAYMENT_FORM).reset();
 };
 
+const disableLottoPurchaseForm = () => {
+  $(SELECTOR.PURCHASE_PRICE_INPUT).disabled = true;
+  $(SELECTOR.PURCHASE_BUTTON).disabled = true;
+};
+
+const enableLottoPurchaseForm = () => {
+  $(SELECTOR.PURCHASE_PRICE_INPUT).disabled = false;
+  $(SELECTOR.PURCHASE_BUTTON).disabled = false;
+};
+
 export const getLottoPurchasingNumberArray = () => {
   return Array.from($(SELECTOR.LOTTO_PURCHASING_NUMBER_INPUT_WRAPPER).children).map((input) => Number(input.value));
 };
@@ -108,6 +118,7 @@ const hideLottoResult = () => {
 };
 
 export const renderLottoPurchaseContainer = (lottos, price) => {
+  disableLottoPurchaseForm();
   showCurrentPurchasedLottoStatus(lottos, price);
   showLottoPurchaseContainer();
   showLottoAnnouncementMessage(price);
@@ -130,14 +141,21 @@ export const renderLottoResult = (count, lottoNumbersArray) => {
   showLottoResultForm();
 };
 
-export const renderResultForm = (winningCount, rateOfReturn) => {
+const renderResultFormRank = (winningCount) => {
   [...$all(SELECTOR.LOTTO_WINNING_COUNT)].forEach((row) => {
     const { rank } = row.dataset;
     // eslint-disable-next-line no-param-reassign
     row.textContent = `${winningCount[rank]}개`;
   });
+};
 
+const renderResultFormRateOfReturn = (rateOfReturn) => {
   $(SELECTOR.RATE_OF_RETURN).textContent = `당신의 총 수익률은 ${rateOfReturn}%입니다.`;
+};
+
+export const renderResultForm = (winningCount, rateOfReturn) => {
+  renderResultFormRank(winningCount);
+  renderResultFormRateOfReturn(rateOfReturn);
 };
 
 export const resetView = (initCount, initLottoNumbersArray, initRateOfReturn, initWinningCount) => {
@@ -151,4 +169,6 @@ export const resetView = (initCount, initLottoNumbersArray, initRateOfReturn, in
   hideModal();
   hidePurchasedLotto();
   hideLottoResultForm();
+
+  enableLottoPurchaseForm();
 };

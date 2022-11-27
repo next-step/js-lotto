@@ -1,9 +1,10 @@
 import { LOTTO } from '../constants/index.js';
 import { getLottoRank, getRateOfReturn } from '../service/lotto.js';
 import { generateRandomNumbersToArray } from '../utils/index.js';
-import { getLottoPurchasePrice } from '../view/lotto.js';
 
 class Model {
+  #lottoPurchasePrice = 0;
+
   #lottoPurchaseCount = 0;
 
   #lottos = [];
@@ -18,7 +19,13 @@ class Model {
 
   #rateOfReturn = 0;
 
-  #isFinished = false;
+  get lottoPurchasePrice() {
+    return this.#lottoPurchasePrice;
+  }
+
+  set lottoPurchasePrice(Price) {
+    this.#lottoPurchasePrice = Price;
+  }
 
   get lottoPurchaseCount() {
     return this.#lottoPurchaseCount;
@@ -40,14 +47,6 @@ class Model {
     return this.#rateOfReturn;
   }
 
-  get isFinished() {
-    return this.#isFinished;
-  }
-
-  set isFinished(isFinished) {
-    this.#isFinished = isFinished;
-  }
-
   buyLottoSelf(numbers) {
     this.#lottos.push(numbers);
   }
@@ -57,6 +56,14 @@ class Model {
   }
 
   calculateLottoWinningResult(winningNumbers, bonusNumber) {
+    this.#lottoWinningCount = {
+      3: 0,
+      4: 0,
+      5: 0,
+      '5_BONUS': 0,
+      6: 0,
+    };
+
     this.#lottos.forEach((lotto) => {
       const rank = getLottoRank(lotto, winningNumbers, bonusNumber);
 
@@ -65,12 +72,11 @@ class Model {
       this.#lottoWinningCount[rank]++;
     });
 
-    const lottoPurchasePrice = getLottoPurchasePrice();
-
-    this.#rateOfReturn = getRateOfReturn(this.#lottoWinningCount, lottoPurchasePrice);
+    this.#rateOfReturn = getRateOfReturn(this.#lottoWinningCount, this.#lottoPurchasePrice);
   }
 
   reset() {
+    this.#lottoPurchasePrice = 0;
     this.#lottoPurchaseCount = 0;
     this.#lottos = [];
     this.#lottoWinningCount = {
@@ -81,7 +87,6 @@ class Model {
       6: 0,
     };
     this.#rateOfReturn = 0;
-    this.#isFinished = false;
   }
 }
 
