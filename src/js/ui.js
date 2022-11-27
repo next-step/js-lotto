@@ -5,7 +5,7 @@ class Ui {
   #purchasedLottos;
   #purchasedCount;
   #viewNumbersCheckbox;
-  #checkWinningNumber;
+  #checkWinningNumberArea;
 
   constructor() {
     this.#lottoList = document.querySelector("#lotto-list");
@@ -14,7 +14,9 @@ class Ui {
     this.#viewNumbersCheckbox = document.querySelector(
       ".view-numbers-checkbox"
     );
-    this.#checkWinningNumber = document.querySelector("#check-winning-number");
+    this.#checkWinningNumberArea = document.querySelector(
+      "#check-winning-number-area"
+    );
   }
 
   onViewNumbers(checked) {
@@ -55,11 +57,15 @@ class Ui {
     this.#purchasedCount.innerText = count;
   }
 
-  render = (state) => {
+  #initPurchasedView() {
     this.#purchasedLottos.classList.add("display");
-    this.#checkWinningNumber.classList.add("display");
+    this.#checkWinningNumberArea.classList.add("display");
     this.#lottoList.classList.remove("expanded");
     this.#viewNumbersCheckbox.checked = false;
+  }
+
+  render = (state) => {
+    this.#initPurchasedView();
     this.#renderLottoElements(state.lottos);
     this.#renderLottoCount(state.gameCount);
   };
