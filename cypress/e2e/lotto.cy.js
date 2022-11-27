@@ -9,6 +9,8 @@ const winnngNumberSelector = '.winning-number';
 const bonusNumberSelector = '.bonus-number';
 const resultButtonSelector = "[data-cy='lotto-result-button']";
 const modalSelector = '.modal';
+const manualLottoNumberSelector = '.manual-lotto-number';
+const manualPurchase = '.manual-purchase';
 
 const INVALID_ERROR_MESSAGE = '1,000원 단위로 입력하세요.';
 const REQUIRED_ERROR_MESSAGE = '금액을 입력하세요.';
@@ -120,11 +122,6 @@ describe('당첨 결과를 확인한다', () => {
     cy.get(buttonSelector).click();
   });
 
-  it('결과 확인 버튼이 있고 클릭할 수 있다', () => {
-    cy.get(resultButtonSelector).should('exist');
-    cy.get(resultButtonSelector).click();
-  });
-
   it('당첨 번호는 빈 값이면 alert를 띄어준다', () => {
     cy.get(resultButtonSelector).click();
 
@@ -201,7 +198,70 @@ describe('당첨 결과를 확인한다', () => {
       cy.wrap($el).type(index + 1);
     });
     cy.get(bonusNumberSelector).type(8);
+
+    cy.get(resultButtonSelector).should('exist');
     cy.get(resultButtonSelector).click();
     cy.get(modalSelector).should('have.class', 'open');
+  });
+});
+
+describe('로또를 수동 구매한다', () => {
+  it('수동 구매 번호를 입력할 수 있는 input이 있다', () => {
+    cy.get(manualLottoNumberSelector).should('have.length', 6);
+  });
+
+  it('수동 구매 번호를 중복으로 입력하면 alert를 띄어준다', () => {
+    const stub = cy.stub();
+    cy.on('window:alert', stub);
+    cy.get(manualPurchase).check();
+    cy.get(manualLottoNumberSelector).each(($el, index, $list) => {
+      cy.wrap($el).type(10);
+    });
+    cy.get(inputSelector).type('1000');
+
+    cy.get(buttonSelector)
+      .click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith(DUPLICATED_ERROR_MESSAGE);
+      });
+  });
+
+  it('수동 구매 번호는 1~45사이가 아니면 alert를 띄어준다', () => {
+    const stub = cy.stub();
+    cy.on('window:alert', stub);
+    cy.get(manualPurchase).check();
+
+    cy.get(manualLottoNumberSelector).first().type(-11);
+    cy.get(inputSelector).type('1000');
+    cy.get(buttonSelector)
+      .click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith(EMPTY_RANGE_ERROR_MESSAGE);
+      });
+
+    cy.get(manualLottoNumberSelector).clear();
+    cy.get(manualLottoNumberSelector).first().type(46);
+    cy.get(inputSelector).type('1000');
+
+    cy.get(buttonSelector)
+      .click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith(EMPTY_RANGE_ERROR_MESSAGE);
+      });
+  });
+  it('수동 구매 번호, 구입 금액을 입력하고 구매하면 수동 구매 제외한 금액으로 자동 구매가 된다', () => {
+    cy.get(manualPurchase).check();
+    cy.get(manualLottoNumberSelector).each(($el, index, $list) => {
+      cy.wrap($el).type(index + 10);
+    });
+
+    cy.get(inputSelector).type(2000);
+    cy.get(buttonSelector).click();
+
+    cy.get(numbersSelector).contains('2');
+    cy.get(iconSelector).should('have.length', 2);
+
+    cy.get(toggleSelector).click();
+    cy.get(lottoNumberSelector).last().should('contain', '10,11,12,13,14,15');
   });
 });
