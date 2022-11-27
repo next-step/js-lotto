@@ -11,7 +11,7 @@ export default class TicketListView extends View {
     super('.ticket-list-wrap');
 
     this.#lottoState = lottoState;
-    this.#lottoState.subscribe(this.#onStateChanged);
+    this.#lottoState.observers.push(this.#onStateChanged);
     this.#setEvent();
   }
 
@@ -46,7 +46,7 @@ export default class TicketListView extends View {
   #setElement(lotto) {
     if (this.#btnViewNumber.checked) {
       this.#btnViewNumber.checked = false;
-      this.#toggleViewNumbers();
+      this.#ticketList.classList.remove('view-numbers');
     }
 
     this.#resultWrap.classList.remove('hide');

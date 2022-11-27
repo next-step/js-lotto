@@ -1,10 +1,10 @@
-import StateManager from './state-manager.js';
 import PurchaseView from './views/purchase.view.js';
 import TicketListView from './views/ticket-list.view.js';
+import lottoStateService from './service/lotto-state.service.js';
 
 export class App {
   constructor() {
-    this.lottoState = new StateManager();
+    this.lottoState = lottoStateService();
   }
 
   start() {
