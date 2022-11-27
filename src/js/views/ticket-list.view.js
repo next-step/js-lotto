@@ -16,21 +16,18 @@ export default class TicketListView extends View {
   }
 
   #setEvent() {
-    const events = [
+    this.events = [
       {
+        target: this.#btnViewNumber,
         event: 'click',
         handler: this.#toggleViewNumbers,
       },
     ];
 
-    super.setEventHandler(events);
+    super.setEventHandler();
   }
 
-  #toggleViewNumbers = (e) => {
-    if (e.target !== this.#btnViewNumber) {
-      return;
-    }
-
+  #toggleViewNumbers = () => {
     this.#ticketList.classList.toggle('view-numbers');
   };
 
@@ -46,7 +43,7 @@ export default class TicketListView extends View {
   #setElement(lotto) {
     if (this.#btnViewNumber.checked) {
       this.#btnViewNumber.checked = false;
-      this.#ticketList.classList.remove('view-numbers');
+      this.#toggleViewNumbers();
     }
 
     this.#resultWrap.classList.remove('hide');

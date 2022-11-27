@@ -1,17 +1,18 @@
 export default class View {
   element;
+  events;
 
   constructor(element) {
     this.element = document.querySelector(element);
   }
 
-  setEventHandler(events) {
-    if (!events.length) {
+  setEventHandler() {
+    if (!this.events.length) {
       return;
     }
 
-    events.forEach(e => {
-      this.element.addEventListener(e.event, e.handler);
+    this.events.forEach(e => {
+      e.target.addEventListener(e.event, e.handler);
     });
   }
 }

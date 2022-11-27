@@ -18,37 +18,32 @@ export default class PurchaseView extends View {
   }
 
   #setEvent() {
-    const events = [
+    this.events = [
       {
+        target: this.#input,
         event: 'input',
         handler: this.#amountChanges,
       },
       {
+        target: this.#input,
         event: 'keypress',
         handler: this.#triggerSubmit,
       },
       {
+        target: this.#btnSubmit,
         event: 'click',
         handler: this.#purchase,
       },
     ];
 
-    super.setEventHandler(events);
+    super.setEventHandler();
   }
 
   #amountChanges = (e) => {
-    if (e.target !== this.#input) {
-      return;
-    }
-
     e.target.value = e.target.value.replace(/[^0-9]/g, '');
   };
 
   #triggerSubmit = (e) => {
-    if (e.target !== this.#input) {
-      return;
-    }
-
     if ('Enter' === e.key) {
       this.#btnSubmit.click();
 
@@ -56,12 +51,8 @@ export default class PurchaseView extends View {
     }
   };
 
-  #purchase = (e) => {
+  #purchase = () => {
     const { value } = this.#input;
-
-    if (e.target !== this.#btnSubmit) {
-      return;
-    }
 
     if (this.#validateAmount(value)) {
       return;
