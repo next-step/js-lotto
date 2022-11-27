@@ -1,5 +1,9 @@
 import { checkAmountUnit, getRandomNumber } from "./utils.js";
-import { MESSAGE_ABOUT_UNIT_OF_AMOUNT } from "./constants.js";
+import {
+  LOTTO_GAME_COUNT,
+  MAXIMUM_NUMBER,
+  MESSAGE_ABOUT_UNIT_OF_AMOUNT,
+} from "./constants.js";
 
 const UNIT_AMOUNT = 1000;
 
@@ -20,8 +24,8 @@ class Lotto {
   #generateLottoNumbers() {
     const numbers = new Set();
 
-    while (numbers.size < 6) {
-      const num = getRandomNumber(45);
+    while (numbers.size < LOTTO_GAME_COUNT) {
+      const num = getRandomNumber(MAXIMUM_NUMBER);
       numbers.add(num);
     }
 
