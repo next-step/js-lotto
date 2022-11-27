@@ -1,11 +1,11 @@
 import {selector} from "./constants/selector.js";
 import {buyLotto} from "./service.js";
 
-export const handlePaymentForm = ({target}) => {
+export const handlePaymentForm = (event) => {
   event.preventDefault();
 
-  const payment = target[0].valueAsNumber;
-  target[0].value = null;
+  const payment = selector.paymentInput.valueAsNumber;
+  selector.paymentInput.valueAsNumber = null;
 
   buyLotto(payment);
 };
