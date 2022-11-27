@@ -27,23 +27,21 @@ export class LottoResultModel {
   }
 
   computeWinningResult(purchaseAmount) {
-    for (const numbers of this.lottoNumbers) {
-      const hitWinningNumber = numbers.filter((number) =>
-        this.winningLotto.lottoNumber.includes(number)
-      );
-
-      const hitBonusNumber = numbers.includes(this.winningLotto.bonusNumber)
-        ? 1
-        : 0;
-
-      const result = { hit: hitWinningNumber.length, bonus: hitBonusNumber };
-
-      Object.keys(this.place).forEach((key) => {
-        if (JSON.stringify(this.place[key]) === JSON.stringify(result)) {
-          this.winningResult[key] += 1;
-        }
+    const { lottoNumber, bonusNumber } = this.winningLotto;
+    this.lottoNumbers
+      .map((numbers) => {
+        const result = {
+          hit: numbers.filter((number) => lottoNumber.includes(number)).length,
+          bonus: numbers.includes(bonusNumber) ? 1 : 0,
+        };
+        return Object.keys(this.place).find(
+          (key) => JSON.stringify(this.place[key]) === JSON.stringify(result)
+        );
+      })
+      .filter(Boolean)
+      .forEach((key) => {
+        this.winningResult[key] += 1;
       });
-    }
 
     this.computeProfit(purchaseAmount);
   }

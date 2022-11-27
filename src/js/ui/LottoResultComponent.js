@@ -2,14 +2,11 @@ import { winningForm } from '../constants.js';
 import { $profit, $tbody } from '../dom.js';
 
 export class LottoResultComponent {
-  lottoResultModel;
-
   constructor(lottoResultModel) {
-    this.lottoResultModel = lottoResultModel;
-    this.render();
+    this.render(lottoResultModel);
   }
 
-  render() {
+  render(lottoResultModel) {
     $tbody.replaceChildren();
 
     const result = Object.keys(winningForm)
@@ -18,12 +15,12 @@ export class LottoResultComponent {
           <tr class="text-center">
             <td class="p-3">${winningForm[place].number}</td>
             <td class="p-3">${winningForm[place].winnings}</td>
-            <td class="p-3">${this.lottoResultModel.winningResult[place]}개</td>
+            <td class="p-3">${lottoResultModel.winningResult[place]}개</td>
           </tr>`
       )
       .join('');
 
     $tbody.insertAdjacentHTML('afterbegin', result);
-    $profit.textContent = this.lottoResultModel.profitRate;
+    $profit.textContent = lottoResultModel.profitRate;
   }
 }

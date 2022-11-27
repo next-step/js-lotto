@@ -30,3 +30,8 @@ export const $modal = document.querySelector('.modal');
 export const $tbody = document.querySelector('tbody');
 export const $profit = document.querySelector('#profit');
 export const $resetButton = document.querySelector('#reset-button');
+
+export const $manualPurchase = document.querySelector('.manual-purchase');
+export const $manualLottoNumbers = document.querySelectorAll(
+  '.manual-lotto-number'
+);

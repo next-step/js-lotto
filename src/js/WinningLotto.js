@@ -11,17 +11,25 @@ export class WinningLotto {
   }
 
   validate() {
-    if (this.isInValidWinningNumbers([...this.lottoNumber, this.bonusNumber])) {
+    const numbers = this.lottoNumber.concat(this.bonusNumber);
+    if (numbers.length === 0) {
+      return;
+    }
+
+    if (this.isInValidWinningNumbers(numbers)) {
       throw Error(ERROR_MESSAGE.EMPTY_RANGE);
     }
 
-    if (this.isDuplicateNumbers([...this.lottoNumber, this.bonusNumber])) {
+    if (this.isDuplicateNumbers(numbers)) {
       throw Error(ERROR_MESSAGE.DUPLICATED);
     }
   }
 
   isInValidWinningNumbers(winningNumbers) {
-    return winningNumbers.some((number) => new LottoNumber(number).isInValid);
+    return winningNumbers.some((number) => {
+      const lottoNumber = new LottoNumber(number);
+      return lottoNumber.validate(number);
+    });
   }
 
   isDuplicateNumbers(numbers) {

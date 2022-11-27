@@ -1,14 +1,11 @@
 export class LottoNumber {
-  static #MIN = 1;
-  static #MAX = 45;
-  isInValid;
-
-  constructor(number) {
-    this.validate(number);
-  }
+  static MIN = 1;
+  static MAX = 45;
+  constructor() {}
 
   validate(number) {
-    this.isInValid =
-      number === '' || number < LottoNumber.#MIN || number > LottoNumber.#MAX;
+    return (
+      number === '' || number < LottoNumber.MIN || number > LottoNumber.MAX
+    );
   }
 }

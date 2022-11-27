@@ -12,6 +12,8 @@ import {
   $bonusNumber,
   $modal,
   $resetButton,
+  $manualLottoNumbers,
+  $manualPurchase,
 } from './dom.js';
 
 import { LottoModel } from './model/LottoModel.js';
@@ -22,19 +24,32 @@ import { WinningLotto } from './WinningLotto.js';
 import { PurchaseNumber } from './PurchaseNumber.js';
 
 export class App {
-  lotto;
+  lottoModel;
 
   constructor() {
     this.setEvents();
   }
 
   handlePurchase() {
-    try {
-      this.lotto = new LottoModel();
-      const purchaseNumber = new PurchaseNumber($purchaseAmount.value);
+    const manualLottoNumbers = $manualPurchase.checked
+      ? Array.from($manualLottoNumbers).map((number) => +number.value)
+      : [];
 
-      this.lotto.generateLottoNumbers(purchaseNumber.number);
-      const lottoComp = new LottoComponent(this.lotto);
+    try {
+      const manualLotto = new WinningLotto({
+        lottoNumber: manualLottoNumbers,
+        bonusNumber: [],
+      });
+
+      this.lottoModel = new LottoModel();
+      const purchaseNumber = new PurchaseNumber($purchaseAmount.value);
+      const manualLottoValue = manualLotto.lottoNumber.length > 0 ? 1 : 0;
+
+      this.lottoModel.generateLottoNumbers(
+        purchaseNumber.value - manualLottoValue,
+        manualLotto.lottoNumber
+      );
+      new LottoComponent(this.lottoModel);
 
       this.handleWinningNumbersShow();
     } catch (err) {
@@ -52,13 +67,13 @@ export class App {
         bonusNumber: +$bonusNumber.value,
       });
       const lottoResultModel = new LottoResultModel(
-        this.lotto.numbers,
+        this.lottoModel.numbers,
         winngingLotto
       );
       const purchaseAmount = $purchaseAmount.value;
 
       lottoResultModel.computeWinningResult(purchaseAmount);
-      const lottoResultComp = new LottoResultComponent(lottoResultModel);
+      new LottoResultComponent(lottoResultModel);
 
       this.handleShowModal();
     } catch (err) {
@@ -96,7 +111,7 @@ export class App {
     }
     $bonusNumber.value = '';
     $winningNumberForm.classList.remove('show');
-    this.lotto.resetLottoNumber();
+    this.lottoModel.resetLottoNumber();
     $purchaseAmount.value = '';
   }
 

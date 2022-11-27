@@ -7,8 +7,8 @@ import {
 } from '../dom.js';
 
 export class LottoComponent {
-  constructor(lotto) {
-    this.render(lotto.numbers);
+  constructor(lottoModel) {
+    this.render(lottoModel.numbers);
   }
 
   render(lottoNumbers) {

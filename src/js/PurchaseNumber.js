@@ -1,10 +1,10 @@
 import { AMOUNT_UNIT, ERROR_MESSAGE } from './constants.js';
 
 export class PurchaseNumber {
-  number;
+  value;
   constructor(amount) {
     this.validate(amount);
-    this.number = amount / AMOUNT_UNIT;
+    this.value = amount / AMOUNT_UNIT;
   }
 
   validate(purchaseAmount) {
