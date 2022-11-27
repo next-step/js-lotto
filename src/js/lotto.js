@@ -28,7 +28,9 @@ class Lotto {
     this.state = {
       ...DEFAULT_LOTTO_STATE,
     };
-    this.initialize();
+
+    this.render();
+    this.addEventListener();
   }
 
   setState(nextState) {
@@ -38,11 +40,11 @@ class Lotto {
     this.render();
   }
 
-  onToggle() {
+  onToggle = () => {
     this.setState({ ...this.state, isToggle: !this.state.isToggle });
-  }
+  };
 
-  onConfirm() {
+  onConfirm = () => {
     const { moneyAmount } = this.state;
     const isOverPirce = moneyAmount > MAX_LOTTO_PRICE;
     const isConfirm =
@@ -71,19 +73,19 @@ class Lotto {
         isVisibleResult: true,
       });
     }
-  }
+  };
 
-  onEnter(event) {
+  onEnter = (event) => {
     event.preventDefault();
     this.onConfirm();
-  }
+  };
 
-  onTypeAmount(value) {
+  onTypeAmount = (value) => {
     if (!Number.isInteger(Number(value))) return;
     this.setState({ ...this.state, moneyAmount: Number(value) });
-  }
+  };
 
-  onModalShow({ isVisibleModal }) {
+  onModalShow = ({ isVisibleModal }) => {
     const isValidBonusNumber = Boolean(this.state.bonusNumber);
     const isAllTyped =
       this.state.winningNumbers.filter((number) => Boolean(number)).length ===
@@ -111,9 +113,9 @@ class Lotto {
     }
 
     this.setState({ ...this.state, isVisibleModal });
-  }
+  };
 
-  onTypeWinning({ value, index }) {
+  onTypeWinning = ({ value, index }) => {
     const TYPE_MAX_LENGTH = 2,
       LAST_WINNING_INPUT_INDEX = 5;
     if (value.length > TYPE_MAX_LENGTH) return;
@@ -142,26 +144,13 @@ class Lotto {
         bonusNumber: value,
       });
     }
-  }
+  };
 
-  onRestart() {
+  onRestart = () => {
     this.setState({
       ...DEFAULT_LOTTO_STATE,
     });
-  }
-
-  // renderInput() {
-  //   const isBlank =
-  //     this.state.moneyAmount === 0 || this.state.moneyAmount === null;
-
-  //   if (isBlank) {
-  //     this.$numberInput.value = null;
-  //   }
-
-  //   if (!isBlank) {
-  //     this.$numberInput.value = this.state.moneyAmount;
-  //   }
-  // }
+  };
 
   render() {
     new PurchaseInput({
@@ -170,7 +159,6 @@ class Lotto {
         state: this.state,
       },
     });
-    // this.renderInput();
 
     new ResultForm({
       $target: this.$target,
@@ -183,7 +171,7 @@ class Lotto {
       $target: this.$target,
       props: {
         state: this.state,
-        onConfirm: this.onConfirm.bind(this),
+        onConfirm: this.onConfirm,
       },
     });
 
@@ -191,8 +179,8 @@ class Lotto {
       $target: this.$target,
       props: {
         state: this.state,
-        onModalShow: this.onModalShow.bind(this),
-        onRestart: this.onRestart.bind(this),
+        onModalShow: this.onModalShow,
+        onRestart: this.onRestart,
       },
     });
 
@@ -200,7 +188,7 @@ class Lotto {
       $target: this.$target,
       props: {
         state: this.state,
-        onModalShow: this.onModalShow.bind(this),
+        onModalShow: this.onModalShow,
       },
     });
   }
@@ -245,11 +233,6 @@ class Lotto {
         });
       }
     });
-  }
-
-  initialize() {
-    this.render();
-    this.addEventListener();
   }
 }
 
