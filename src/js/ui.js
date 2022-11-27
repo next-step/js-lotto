@@ -23,7 +23,7 @@ class Ui {
     toggleClass({
       $element: this.#lottoList,
       className: "expanded",
-      condition: checked,
+      flag: checked,
     });
   }
 
