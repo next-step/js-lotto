@@ -8,8 +8,8 @@ export const removeAllChildNodes = (parent) => {
 
 export const getRandomNumber = (max) => Math.floor(Math.random() * max) + 1;
 
-export const toggleClass = ({ $element, className, condition }) => {
-  condition
+export const toggleClass = ({ $element, className, flag }) => {
+  flag
     ? $element.classList.add(className)
     : $element.classList.remove(className);
 };
