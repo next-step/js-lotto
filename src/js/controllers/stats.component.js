@@ -39,7 +39,9 @@ export class StatsComponent extends Component {
     #setAutoFocus() {
         [...$stats.lastNumbers].forEach(($lastNumber, i) => {
             if ($lastNumber.value.length === $lastNumber.maxLength) {
-                [...$stats.lastNumbers][i + 1].focus();
+                i === $stats.lastNumbers.length - 1
+                    ? $stats.lastBonusNumbers.focus()
+                    : [...$stats.lastNumbers][i + 1].focus();
             }
         })
     }
