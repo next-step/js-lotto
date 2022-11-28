@@ -6,6 +6,7 @@ import { arrDeepCopy, getRateOfReturn } from "../utils/util.js";
 export class ModalComponent extends Component {
     numberSet;
     lastNumbers;
+    lastBonusNumber;
     price;
     #winStats;
     #rateOfReturn;
@@ -14,6 +15,7 @@ export class ModalComponent extends Component {
         super(container);
         this.numberSet = this._stateModel.getState('numberSet');
         this.lastNumbers = this._stateModel.getState('lastNumbers');
+        this.lastBonusNumber = this._stateModel.getState('lastBonusNumber');
         this.price = this._stateModel.getState('price');
         this.#winStats = arrDeepCopy(WINSTATS);
         this.#rateOfReturn = 0;
@@ -89,8 +91,9 @@ export class ModalComponent extends Component {
         return this.numberSet.map(set => {
             return set.reduce((r, num) => {
                 const index = this.lastNumbers.indexOf(num);
-                if (index > -1) r.matching += 1;
-                if (index === this.lastNumbers.length - 1) r.isBonus = true;
+                const isBonus = num === this.lastBonusNumber;
+                if (isBonus) r.isBonus = true;
+                else if (index > -1) r.matching += 1;
                 return r;
             }, { matching: 0, isBonus: false })
         })

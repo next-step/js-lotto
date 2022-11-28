@@ -6,10 +6,12 @@ import { ModalComponent } from "./modal.component.js";
 
 export class StatsComponent extends Component {
     lastNumbers;
+    lastBonusNumber;
 
     constructor(container) {
         super(container);
         this.lastNumbers = [];
+        this.lastBonusNumber = 0;
         this.init();
     }
 
@@ -29,14 +31,28 @@ export class StatsComponent extends Component {
 
     #validate() {
         this.lastNumbers = [...$stats.lastNumbers].map(row => row.value);
-        this.lastNumbers.push($stats.lastBonusNumbers.value);
+        this.lastBonusNumber = $stats.lastBonusNumbers.value;
 
-        if (!this._validator.validate(SECTIONTYPE.STATS, this.lastNumbers.filter(x => !!x))) return this.reset();
+        if (!this.#isValidated()) return this.reset();
         this.#openStatsModal();
     }
 
+    #isValidated = () => {
+        return this._validator
+            .validate(SECTIONTYPE.STATS, [...this.lastNumbers, this.lastBonusNumber]
+                .filter(x => !!x));
+    }
+
     #openStatsModal() {
-        this._stateModel.setState({ lastNumbers: this.lastNumbers.map(row => +row) });
-        const modalComponent = new ModalComponent(this._view, this._stateModel);
+        this._stateModel.setState(
+            {
+                lastNumbers: this.lastNumbers.map(row => +row),
+                lastBonusNumber: +this.lastBonusNumber
+            });
+        const modalComponent = new ModalComponent({
+            view: this._view,
+            state: this._stateModel,
+            validator: this._validator
+        });
     }
 }
