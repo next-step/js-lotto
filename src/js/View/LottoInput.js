@@ -1,4 +1,4 @@
-import { LOTTO_PRICE_PER_ONE, WRONG_INPUT } from "./constants.js";
+import { LOTTO, ERROR_MESSAGES } from "../constants.js";
 export default function LottoInput({ $target, onSubmit }) {
   const $lottoInputForm = $target.querySelector("#lotto-input-form");
   const $purchaseAmountInput = $target.querySelector(".purchase-amount-input");
@@ -11,23 +11,25 @@ export default function LottoInput({ $target, onSubmit }) {
   };
 
   const isValidInputAmount = () => {
-    if (this.state < LOTTO_PRICE_PER_ONE) return false;
-    return this.state % LOTTO_PRICE_PER_ONE ? false : true;
+    if (this.state < LOTTO.LOTTO_PRICE_PER_ONE_TICKET) return false;
+    return this.state % LOTTO.LOTTO_PRICE_PER_ONE_TICKET ? false : true;
   };
 
   $purchaseAmountInput.addEventListener("change", (event) => {
     this.setState(event.target.value);
   });
 
-  $lottoInputForm.addEventListener("submit", (event) => {
+  const handleSubmitInputAmount = (event) => {
     event.preventDefault();
 
     if (!isValidInputAmount()) {
-      alert(WRONG_INPUT);
+      alert(ERROR_MESSAGES.WRONG_INPUT);
       return;
     }
     onSubmit(this.state);
-  });
+  };
+
+  $lottoInputForm.addEventListener("submit", handleSubmitInputAmount);
 
   this.render = () => {
     $purchaseAmountInput.value = this.state;
