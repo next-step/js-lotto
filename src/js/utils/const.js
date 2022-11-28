@@ -8,20 +8,20 @@ export const LOTTO_LIMIT_DIGITS_BONUS_NUMBER = 7;
 
 export const ERROR_MESSAGE = {
     PriceRequired: '로또 구입 금액을 입력해 주세요.',
-    PriceMinInsufficient: '1000원 이하로 구입할 수 없습니다.',
-    PriceMaxExceeded: '10000원 이상 구입할 수 없습니다.',
-    IncorrectUnit: '로또 구입 금액을 1,000원 단위로 입력해 주세요.',
+    PriceMinInsufficient: `${PRICE_MIN}원 이하로 구입할 수 없습니다.`,
+    PriceMaxExceeded: `${PRICE_MAX}원 이상 구입할 수 없습니다.`,
+    IncorrectUnit: `로또 구입 금액을 ${PRICE_PER_UNIT}원 단위로 입력해 주세요.`,
     StatsNumbersRequired: '로또 번호와 보너스 번호를 모두 입력해 주세요.',
     NotAllowedDuplicatedValue: '로또 번호에는 중복된 숫자를 입력할 수 없습니다.',
-    OutOfNumberRange: '로또 번호는 1 ~ 45사이의 번호만 입력할 수 있습니다.'
+    OutOfNumberRange: `로또 번호는 ${LOTTO_RANGE_MIN} ~ ${LOTTO_RANGE_MAX}사이의 번호만 입력할 수 있습니다.`
 }
 
-export const SectionType = {
-    Purchase: 'Purchase',
-    Stats: 'Stats'
+export const SECTIONTYPE = {
+    PURCHASE: 'PURCHASE',
+    STATS: 'STATS'
 }
 
-export const winStats = [
+export const WINSTATS = [
     {
         matching: 3,
         prize: 5_000,
@@ -41,7 +41,7 @@ export const winStats = [
         isBonus: false
     },
     {
-        matching: 6,
+        matching: 5,
         prize: 30_000_000,
         tickets: 0,
         isBonus: true
@@ -54,5 +54,5 @@ export const winStats = [
     }
 ]
 
-Object.freeze(SectionType);
-Object.freeze(winStats);
+Object.freeze(SECTIONTYPE);
+Object.freeze(WINSTATS);

@@ -1,6 +1,6 @@
 import { $modal } from "../views/selector.js";
 import { Component } from "./component.js";
-import { winStats } from "../utils/const.js";
+import { WINSTATS } from "../utils/const.js";
 import { arrDeepCopy, getRateOfReturn } from "../utils/util.js";
 
 export class ModalComponent extends Component {
@@ -15,7 +15,7 @@ export class ModalComponent extends Component {
         this.numberSet = this._stateModel.getState('numberSet');
         this.lastNumbers = this._stateModel.getState('lastNumbers');
         this.price = this._stateModel.getState('price');
-        this.#winStats = arrDeepCopy(winStats);
+        this.#winStats = arrDeepCopy(WINSTATS);
         this.#rateOfReturn = 0;
         this.init();
     }
@@ -41,7 +41,7 @@ export class ModalComponent extends Component {
     #reset() {
         this._view.renderToReplaceInnerHTML($modal.resultTable);
         this._view.renderToReplaceInnerHTML($modal.totalRateOfReturn);
-        this.#winStats = arrDeepCopy(winStats);
+        this.#winStats = arrDeepCopy(WINSTATS);
         this.#rateOfReturn = 0;
     }
 

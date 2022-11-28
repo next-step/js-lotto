@@ -1,47 +1,43 @@
-export class InputRequiredError extends Error {
-    constructor(message) {
+export class CustomError extends Error {
+    constructor(message, name) {
         super(message);
-        this.name = 'InputRequiredError';
+        this.name = name;
         this.message = message;
     }
 }
 
-export class InputMinInsufficientError extends Error {
+export class InputRequiredError extends CustomError {
     constructor(message) {
-        super(message);
-        this.name = 'InputMinInsufficientError';
-        this.message = message;
+        super(message, 'InputRequiredError');
     }
 }
 
-export class InputMaxExceededError extends Error {
+export class InputMinInsufficientError extends CustomError {
     constructor(message) {
-        super(message);
-        this.name = 'InputMaxExceededError';
-        this.message = message;
+        super(message, 'InputMinInsufficientError');
     }
 }
 
-export class IncorrectUnitError extends Error {
+export class InputMaxExceededError extends CustomError {
     constructor(message) {
-        super(message);
-        this.name = 'IncorrectUnitError';
-        this.message = message;
+        super(message, 'InputMaxExceededError');
     }
 }
 
-export class NotAllowedDuplicatedValueError extends Error {
+export class IncorrectUnitError extends CustomError {
     constructor(message) {
-        super(message);
-        this.name = 'NotAllowedDuplicatedValueError';
-        this.message = message;
+        super(message, 'IncorrectUnitError');
     }
 }
 
-export class OutOfNumberRangeError extends Error {
+export class NotAllowedDuplicatedValueError extends CustomError {
     constructor(message) {
-        super(message);
-        this.name = 'OutOfNumberRangeError';
-        this.message = message;
+        super(message, 'NotAllowedDuplicatedValueError');
+    }
+}
+
+export class OutOfNumberRangeError extends CustomError {
+    constructor(message) {
+        super(message, 'OutOfNumberRangeError');
     }
 }

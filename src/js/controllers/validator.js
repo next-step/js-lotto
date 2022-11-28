@@ -1,4 +1,5 @@
 import {
+    CustomError,
     IncorrectUnitError,
     InputMaxExceededError,
     InputMinInsufficientError,
@@ -12,7 +13,7 @@ import {
     PRICE_MAX,
     PRICE_MIN,
     PRICE_PER_UNIT,
-    SectionType
+    SECTIONTYPE
 } from "../utils/const.js";
 
 export class Validator {
@@ -36,25 +37,15 @@ export class Validator {
 
     validate = (sectionType, value) => {
         try {
-            if (sectionType === SectionType.Purchase) return this.#setPriceErrors(value);
-            if (sectionType === SectionType.Stats) return this.#setStatsErrors(value);
+            if (sectionType === SECTIONTYPE.PURCHASE) return this.#setPriceErrors(value);
+            if (sectionType === SECTIONTYPE.STATS) return this.#setStatsErrors(value);
         } catch (e) {
             this.#catchErrors(e);
         }
     }
 
     #catchErrors(e) {
-        if (e instanceof InputRequiredError) {
-            alert(e.message);
-        } else if (e instanceof InputMinInsufficientError) {
-            alert(e.message);
-        } else if (e instanceof InputMaxExceededError) {
-            alert(e.message);
-        } else if (e instanceof IncorrectUnitError) {
-            alert(e.message);
-        } else if (e instanceof NotAllowedDuplicatedValueError) {
-            alert(e.message);
-        } else if (e instanceof OutOfNumberRangeError) {
+        if (e instanceof CustomError) {
             alert(e.message);
         } else {
             throw e;

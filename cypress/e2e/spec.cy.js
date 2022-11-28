@@ -29,7 +29,7 @@ function inputSpec() {
 
     it('금액의 단위는 1000으로만 입력한다. :: 틀린 값', () => {
         cy.typePurchaseInput('1001');
-        checkAlert(cy.clickPurchaseButton(), '로또 구입 금액을 1,000원 단위로 입력해 주세요.');
+        checkAlert(cy.clickPurchaseButton(), '로또 구입 금액을 1000원 단위로 입력해 주세요.');
     })
 
     it('1000원 이하의 금액을 입력하고 확인 버튼을 누르면 최소금액 미달 경고창이 뜬다.', () => {

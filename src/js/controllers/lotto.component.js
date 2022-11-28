@@ -1,5 +1,5 @@
 import { $issued, $stats, $purchased } from "../views/selector.js";
-import { PRICE_PER_UNIT, SectionType } from "../utils/const.js";
+import { PRICE_PER_UNIT, SECTIONTYPE } from "../utils/const.js";
 
 import { LottoModel } from "../models/lotto.model.js";
 
@@ -31,10 +31,18 @@ export class LottoComponent extends Component {
         $purchased.amount.onchange = () => this.#isInputChange = true;
     }
 
+    reset() {
+        this._stateModel.reset();
+        this._view.displayNone([$stats.lotto]);
+        this._view.renderCheckedButton($issued.numberToggleButton, false);
+        this.isShowNumbers = false;
+        this._view.removeChildNodes($issued.tickets);
+    }
+
     #purchase() {
         if (!this.#isInputChange) return;
         if (this.#isInputChange) this.reset();
-        if (!this._validator.validate(SectionType.Purchase, $purchased.amount.value)) {
+        if (!this._validator.validate(SECTIONTYPE.PURCHASE, $purchased.amount.value)) {
             this._view.displayNone([$purchased.lotto]);
             return this.reset();
         }
@@ -42,9 +50,15 @@ export class LottoComponent extends Component {
         this._stateModel.setState({ price: $purchased.amount.value });
         const units = $purchased.amount.value / PRICE_PER_UNIT;
         this._view.displayBlock([$purchased.lotto]);
-        const statsComponent = new StatsComponent(this._view, this._stateModel);
+
+        const statsComponent = new StatsComponent({
+            view: this._view,
+            state: this._stateModel,
+            validator: this._validator
+        });
+
         this._view.renderToReplaceInnerHTML($purchased.total, `총 ${units}개를 구매하였습니다.`);
-        this.issueLotto(units);
+        this.#issueLotto(units);
         this.#isInputChange = false;
     }
 
@@ -54,7 +68,7 @@ export class LottoComponent extends Component {
         this.#purchase();
     }
 
-    issueLotto(units) {
+    #issueLotto(units) {
         const lottoModel = new LottoModel(units);
         this._stateModel.setState({ numberSet: lottoModel.numberSet });
         lottoModel.numberSet.forEach(unit => {
@@ -67,14 +81,6 @@ export class LottoComponent extends Component {
             );
         })
         this.#showLottoNumbers();
-    }
-
-    reset() {
-        this._stateModel.reset();
-        this._view.displayNone([$stats.lotto]);
-        this._view.renderCheckedButton($issued.numberToggleButton, false);
-        this.isShowNumbers = false;
-        this._view.removeChildNodes($issued.tickets);
     }
 
     #toggleLottoNumbers() {

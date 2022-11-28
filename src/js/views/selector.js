@@ -18,7 +18,6 @@ export const $stats = {
 }
 
 export const $modal = {
-
     modal: document.querySelector('.modal'),
     modalOuter: document.querySelector('.modal-outer'),
     resetButton: document.querySelector('.stats-reset-button'),
