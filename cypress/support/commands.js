@@ -23,3 +23,41 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('buyNewLottoWithValue', (spendMoney) => {
+  const $lottoInput = '[data-id=lotto-number-input]';
+  const $lottoButton = '[data-id=lotto-submit-button]';
+  const $numberToggleButton = '[data-id=number-toggle-button]';
+  cy.get($lottoInput).type(spendMoney);
+  cy.get($lottoButton).click();
+  cy.get($numberToggleButton).should('not.be.checked');
+});
+
+Cypress.Commands.add('winLottoInFirstPlace', () => {
+  const $numberToggleButton = '[data-id=number-toggle-button]';
+  const $lottoNumber = '[data-id=lotto-number]';
+  const $winningNumberInput = '.winning-number';
+  const $bonusNumberInput = '.bonus-number';
+  const $submitButton = '.open-result-modal-button';
+
+  cy.get($numberToggleButton).click({ force: true });
+  cy.get($lottoNumber)
+    .first()
+    .invoke('text')
+    .then((text) => {
+      const firstRowLottoNumbers = text
+        .split(' ')
+        .map((el) => el.replace(/(\r\n|\n|\r)/gm, ''))
+        .filter((el) => el !== '');
+
+      cy.get($winningNumberInput).each((eachInput, index) => {
+        cy.get(eachInput).type(firstRowLottoNumbers[index]);
+      });
+
+      cy.get($bonusNumberInput).type(firstRowLottoNumbers[0]);
+      cy.get($submitButton).should('not.be.disabled');
+      cy.get($submitButton).click();
+      cy.wait(1000);
+      cy.get('.modal').should('exist');
+    });
+});

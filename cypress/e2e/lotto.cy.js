@@ -1,10 +1,18 @@
 describe('로또 사이트 E2E 테스트', () => {
-  let $lottoInput = '[data-id=lotto-number-input]';
-  let $lottoButton = '[data-id=lotto-submit-button]';
-  let $resultSpan = '[data-id=result-text]';
-  let $numberToggleButton = '[data-id=number-toggle-button]';
-  let $lottoImage = '[data-id=lotto-image]';
-  let $lottoNumber = '[data-id=lotto-number]';
+  const $lottoInput = '[data-id=lotto-number-input]';
+  const $lottoButton = '[data-id=lotto-submit-button]';
+  const $numberToggleButton = '[data-id=number-toggle-button]';
+  const $resultSpan = '[data-id=result-text]';
+  const $lottoImage = '[data-id=lotto-image]';
+  const $lottoNumber = '[data-id=lotto-number]';
+  const $submitButton = '.open-result-modal-button';
+  const $winningNumberInput = '.winning-number';
+  const $bonusNumberInput = '.bonus-number';
+  const $investmentReturnSpan = '[data-id=investment-return]';
+  const $modalCloseButton = '[data-id=modal-close-button]';
+  const $modalRestartButton = '[data-id=restart-button]';
+  const $purchaseResultWrapper = '#purchased-result';
+  const $checkResultWrapper = '#check-result';
 
   beforeEach(() => {
     cy.visit('../../index.html');
@@ -134,6 +142,99 @@ describe('로또 사이트 E2E 테스트', () => {
       it('토글버튼이 활성화 상태일 때 복권의 번호가 보여야 한다.', () => {
         cy.get($numberToggleButton).click({ force: true });
         cy.get($lottoNumber).should('have.css', 'display', 'inline');
+      });
+    }
+  );
+
+  context(
+    '결과 확인하기 버튼을 누르면 당첨통계, 수익률을 모달로 확인할 수 있다.',
+    () => {
+      const PURCHASE_VALUE = '5000';
+      const FIRST_PLAICE_WINNING_VALUE = '2000000000';
+
+      beforeEach(() => {
+        cy.buyNewLottoWithValue(PURCHASE_VALUE);
+
+        cy.get($numberToggleButton).should('not.be.checked');
+      });
+
+      it('결과 확인하기 버튼이 존재 해야한다.', () => {
+        cy.get($submitButton).should('exist');
+      });
+      it('당첨 번호를 입력할 6개의 Input과 보너스번호 입력 칸이 존재 해야한다.', () => {
+        const winningNumberInputCount = 6,
+          bonusNumberInputCount = 1;
+        cy.get($winningNumberInput).should(
+          'have.length',
+          winningNumberInputCount
+        );
+        cy.get($bonusNumberInput).should('have.length', bonusNumberInputCount);
+      });
+
+      it('값을 모두 입력하지 않은 경우 버튼을 결과 확인하기 버튼을 비활성화 한다.', () => {
+        cy.get($winningNumberInput).each((winningNumberInput) => {
+          cy.get(winningNumberInput).clear();
+        });
+        cy.get($bonusNumberInput).clear();
+        cy.get($submitButton).should('be.disabled');
+      });
+
+      it('값을 모두 입력한 경우 결과 확인하기 버튼을 클릭할때 모달창이 떠야한다.', () => {
+        cy.winLottoInFirstPlace();
+      });
+
+      it('당첨 된 개수에 따라 모달에 개수가 표시 된다', () => {
+        cy.winLottoInFirstPlace();
+        cy.get('[data-id=6개]').children().last().should('have.text', '1개');
+      });
+
+      it('당첨 된 개수에 따라 모달에 수익률이 표시 된다', () => {
+        const profit =
+          Math.round(
+            (FIRST_PLAICE_WINNING_VALUE - PURCHASE_VALUE) / PURCHASE_VALUE
+          ) * 100;
+
+        cy.winLottoInFirstPlace();
+        cy.get($investmentReturnSpan).should(($element) =>
+          expect($element.text().trim()).to.equal(
+            `당신의 총 수익률은 ${profit}%입니다.`
+          )
+        );
+      });
+    }
+  );
+
+  context(
+    '다시 시작하기 버튼을 누르면 초기화 되서 다시 구매를 시작할 수 있다.',
+    () => {
+      const PURCHASE_VALUE = '5000';
+      beforeEach(() => {
+        cy.buyNewLottoWithValue(PURCHASE_VALUE);
+        cy.winLottoInFirstPlace();
+      });
+      it('결과 모달이 생성되면 다시시작하기 버튼과 닫기 버튼이 생성되어야 한다.', () => {
+        cy.get($modalCloseButton).should('exist');
+        cy.get($modalRestartButton).should('exist');
+      });
+      it('닫기 버튼 클릭 시 모달만 사라지고 나머지 상태는 그대로 유지되어야 한다.', () => {
+        cy.get($modalCloseButton).click();
+        cy.wait(1000);
+        cy.get('.modal').should('not.have.class', 'open');
+        cy.get($lottoInput).should('have.value', PURCHASE_VALUE);
+      });
+
+      it('다시 시작하기 버튼 클릭 시 모달이 사라져야한다.', () => {
+        cy.get($modalRestartButton).click();
+        cy.wait(1000);
+        cy.get('.modal').should('not.have.class', 'open');
+      });
+
+      it('다시 시작하기 버튼 클릭 시 로또이미지들과 구입 금액도 리셋 되어야한다.', () => {
+        cy.get($modalRestartButton).click();
+        cy.wait(1000);
+        cy.get($lottoInput).should('not.have.value');
+        cy.get($purchaseResultWrapper).should('have.css', 'display', 'none');
+        cy.get($checkResultWrapper).should('have.css', 'display', 'none');
       });
     }
   );
