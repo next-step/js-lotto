@@ -1,5 +1,6 @@
+import { ERROR_MESSAGE } from "../../src/js/utils/const.js";
+
 const $purchaseInput = '[data-cy="purchase-amount"]';
-const $purchaseButton = '[data-cy="purchase-button"]';
 const $lottoTickets = '[data-cy="lotto-tickets"]';
 const $lottoNumbersToggleButton = '[data-cy="toggle-lotto-numbers"]';
 
@@ -10,7 +11,6 @@ describe('로또 구현 테스트', () => {
 
     inputSpec();
     purchaseSpec();
-
 })
 
 function inputSpec() {
@@ -29,17 +29,17 @@ function inputSpec() {
 
     it('금액의 단위는 1000으로만 입력한다. :: 틀린 값', () => {
         cy.typePurchaseInput('1001');
-        checkAlert(cy.clickPurchaseButton(), '로또 구입 금액을 1000원 단위로 입력해 주세요.');
+        checkAlert(cy.clickPurchaseButton(), ERROR_MESSAGE.IncorrectUnit);
     })
 
     it('1000원 이하의 금액을 입력하고 확인 버튼을 누르면 최소금액 미달 경고창이 뜬다.', () => {
         cy.typePurchaseInput('900');
-        checkAlert(cy.clickPurchaseButton(), '1000원 이하로 구입할 수 없습니다.');
+        checkAlert(cy.clickPurchaseButton(), ERROR_MESSAGE.PriceMinInsufficient);
     })
 
     it('10000원 이상의 금액을 입력하고 확인 버튼을 누르면 최대금액 초과 경고창이 뜬다.', () => {
         cy.typePurchaseInput('11000');
-        checkAlert(cy.clickPurchaseButton(), '10000원 이상 구입할 수 없습니다.');
+        checkAlert(cy.clickPurchaseButton(), ERROR_MESSAGE.PriceMaxExceeded);
     })
 
 
