@@ -1,4 +1,4 @@
-import { DEFAULT_NUMBER, LOTTO } from '../../const.js';
+import { ZERO_NUMBER, LOTTO } from '../../const.js';
 import { $ } from '../../utils.js';
 import View from './view.js';
 
@@ -21,7 +21,7 @@ class WinningInputFormView extends View {
   }
 
   render({ lottoCount }) {
-    if (lottoCount > DEFAULT_NUMBER) {
+    if (lottoCount > ZERO_NUMBER) {
       this.$winningLottoNumbersForm.style.display = 'block';
       return;
     }

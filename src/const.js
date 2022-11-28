@@ -1,6 +1,6 @@
 const PRICE = 1000;
 
-export const DEFAULT_NUMBER = 0;
+export const ZERO_NUMBER = 0;
 
 const COUNT = 6;
 
@@ -20,7 +20,7 @@ export const LOTTO = {
 
 export const ERROR_MESSAGE = {
   INVALID_UNIT_NUMBER: `${LOTTO.PRICE}단위의 숫자를 입력해주세요.`,
-  INVALID_NEGATIVE_NUMBER: `${DEFAULT_NUMBER}이상의 숫자를 입력해주세요.`,
+  INVALID_NEGATIVE_NUMBER: `${ZERO_NUMBER}이상의 숫자를 입력해주세요.`,
   INVALID_RANGE_NUMBER: `${LOTTO.MIN_NUMBER} ~ ${LOTTO.MAX_NUMBER} 사이의 숫자를 입력해주세요.`,
   INVALID_DUPLICATED_NUMBER: '로또 번호에는 중복된 숫자를 입력할 수 없습니다.',
 };

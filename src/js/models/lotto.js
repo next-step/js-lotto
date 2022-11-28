@@ -1,4 +1,4 @@
-import { DEFAULT_NUMBER, ERROR_MESSAGE, LOTTO, PROFIT } from '../../const.js';
+import { ZERO_NUMBER, ERROR_MESSAGE, LOTTO, PROFIT } from '../../const.js';
 import {
   getRandomNumber,
   getSameNumberCount,
@@ -15,17 +15,17 @@ class Lotto {
   #profit;
 
   constructor() {
-    this.#price = DEFAULT_NUMBER;
-    this.#lottoCount = DEFAULT_NUMBER;
-    this.#profit = DEFAULT_NUMBER;
+    this.#price = ZERO_NUMBER;
+    this.#lottoCount = ZERO_NUMBER;
+    this.#profit = ZERO_NUMBER;
     this.#lottos = [];
     this.#winningNumbers = [];
     this.#result = {
-      3: DEFAULT_NUMBER,
-      4: DEFAULT_NUMBER,
-      5: DEFAULT_NUMBER,
-      6: DEFAULT_NUMBER,
-      7: DEFAULT_NUMBER,
+      3: ZERO_NUMBER,
+      4: ZERO_NUMBER,
+      5: ZERO_NUMBER,
+      6: ZERO_NUMBER,
+      7: ZERO_NUMBER,
     };
   }
 
@@ -58,12 +58,12 @@ class Lotto {
   }
 
   validatePrice = () => {
-    if (this.#price % LOTTO.PRICE > DEFAULT_NUMBER) {
+    if (this.#price % LOTTO.PRICE > ZERO_NUMBER) {
       window.alert(ERROR_MESSAGE.INVALID_UNIT_NUMBER);
       return false;
     }
 
-    if (this.#price <= DEFAULT_NUMBER) {
+    if (this.#price <= ZERO_NUMBER) {
       window.alert(ERROR_MESSAGE.INVALID_NEGATIVE_NUMBER);
       return false;
     }
@@ -101,10 +101,7 @@ class Lotto {
   };
 
   computeWinningNumbers = () => {
-    const winningNumbers = this.#winningNumbers.slice(
-      DEFAULT_NUMBER,
-      LOTTO.COUNT
-    );
+    const winningNumbers = this.#winningNumbers.slice(ZERO_NUMBER, LOTTO.COUNT);
     const bonusNumber = this.#winningNumbers[LOTTO.COUNT];
 
     this.#lottos.forEach((lotto) => {
@@ -138,24 +135,24 @@ class Lotto {
   #computeProfit() {
     const result = Object.keys(this.#result).reduce(
       (accumulator, key) => accumulator + this.#result[key] * PROFIT[key].PRICE,
-      DEFAULT_NUMBER
+      ZERO_NUMBER
     );
 
     return ((result - this.#price) / this.#price) * 100;
   }
 
   clear = () => {
-    this.#price = DEFAULT_NUMBER;
-    this.#lottoCount = DEFAULT_NUMBER;
-    this.#profit = DEFAULT_NUMBER;
+    this.#price = ZERO_NUMBER;
+    this.#lottoCount = ZERO_NUMBER;
+    this.#profit = ZERO_NUMBER;
     this.#lottos = [];
     this.#winningNumbers = [];
     this.#result = {
-      3: DEFAULT_NUMBER,
-      4: DEFAULT_NUMBER,
-      5: DEFAULT_NUMBER,
-      6: DEFAULT_NUMBER,
-      7: DEFAULT_NUMBER,
+      3: ZERO_NUMBER,
+      4: ZERO_NUMBER,
+      5: ZERO_NUMBER,
+      6: ZERO_NUMBER,
+      7: ZERO_NUMBER,
     };
   };
 

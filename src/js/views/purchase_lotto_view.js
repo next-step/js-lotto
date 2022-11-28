@@ -1,4 +1,4 @@
-import { DEFAULT_NUMBER } from '../../const.js';
+import { ZERO_NUMBER } from '../../const.js';
 import { $ } from '../../utils.js';
 import View from './view.js';
 
@@ -12,7 +12,7 @@ class PurchasedLottoView extends View {
   }
 
   renderPurchasedLottos({ lottoCount, lottos }) {
-    if (lottoCount > DEFAULT_NUMBER) {
+    if (lottoCount > ZERO_NUMBER) {
       this.$purchasedLottos.style.display = 'block';
       this.$totalPurchased.innerText = lottoCount;
       this.$lottoIcons.innerHTML = lottos
