@@ -10,8 +10,8 @@ export class ModalComponent extends Component {
     #winStats;
     #rateOfReturn;
 
-    constructor(view, state) {
-        super(view, state);
+    constructor(container) {
+        super(container);
         this.numberSet = this._stateModel.getState('numberSet');
         this.lastNumbers = this._stateModel.getState('lastNumbers');
         this.price = this._stateModel.getState('price');
@@ -68,13 +68,13 @@ export class ModalComponent extends Component {
     }
 
     #getStats() {
-        const matches = this.#getMatch();
-        matches.forEach(matches => {
-            if (matches.matching < 3) return;
+        const matches = this.#getMatches();
+        matches.forEach(match => {
+            if (match.matching < 3) return;
             const matchStats = this.#winStats
                 .find(row =>
-                    row.isBonus === matches.isBonus &&
-                    row.matching === matches.matching)
+                    row.isBonus === match.isBonus &&
+                    row.matching === match.matching)
             if (!!matchStats) matchStats.tickets += 1;
         })
     }
@@ -85,7 +85,7 @@ export class ModalComponent extends Component {
         this.#rateOfReturn = getRateOfReturn(paid, pay);
     }
 
-    #getMatch = () => {
+    #getMatches = () => {
         return this.numberSet.map(set => {
             return set.reduce((r, num) => {
                 const index = this.lastNumbers.indexOf(num);

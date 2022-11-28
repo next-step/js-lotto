@@ -1,19 +1,15 @@
 import { $stats } from "../views/selector.js";
 import { SectionType } from "../utils/const.js";
 
-import { Validator } from "./validator.js";
-
 import { Component } from "./component.js";
 import { ModalComponent } from "./modal.component.js";
 
 export class StatsComponent extends Component {
-    validator;
     lastNumbers;
 
-    constructor(view, state) {
-        super(view, state);
+    constructor(container) {
+        super(container);
         this.lastNumbers = [];
-        this.validator = new Validator();
         this.init();
     }
 
@@ -30,7 +26,7 @@ export class StatsComponent extends Component {
         this.lastNumbers = [...$stats.lastNumbers].map(row => row.value);
         this.lastNumbers.push($stats.lastBonusNumbers.value);
 
-        if (!this.validator.validate(SectionType.Stats, this.lastNumbers.filter(x => !!x))) return this.reset();
+        if (!this._validator.validate(SectionType.Stats, this.lastNumbers.filter(x => !!x))) return this.reset();
         this.#openStatsModal();
     }
 

@@ -1,10 +1,12 @@
 export class Component {
     _view;
     _stateModel;
+    _validator;
 
-    constructor(view, state) {
-        this._view = view;
-        this._stateModel = state;
+    constructor(container) {
+        this._view = container.view;
+        this._stateModel = container.state;
+        this._validator = container.validator;
     }
 
     _setEventListeners() {}

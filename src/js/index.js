@@ -1,8 +1,14 @@
 import { LottoComponent } from "./controllers/lotto.component.js";
 import { StateModel } from "./models/state.model.js";
 import { LottoView } from "./views/lotto.view.js";
+import { Validator } from "./views/validator";
 
 window.onload = () => {
-    const view = new LottoView();
-    const stateModel = new StateModel({});
-    const lottoComponent = new LottoComponent(view, stateModel);
+    const container = {
+        view: new LottoView(),
+        state: new StateModel({}),
+        validator: new Validator()
+    }
+    const lottoComponent = new LottoComponent(container);
+}
+

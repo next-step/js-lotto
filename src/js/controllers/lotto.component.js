@@ -1,7 +1,6 @@
 import { $issued, $stats, $purchased } from "../views/selector.js";
 import { PRICE_PER_UNIT, SectionType } from "../utils/const.js";
 
-import { Validator } from "./validator.js";
 import { LottoModel } from "../models/lotto.model.js";
 
 import { Component } from "./component.js";
@@ -9,11 +8,9 @@ import { StatsComponent } from "./stats.component.js";
 
 export class LottoComponent extends Component {
     #isInputChange;
-    validator;
 
-    constructor(view, state) {
-        super(view, state);
-        this.validator = new Validator();
+    constructor(container) {
+        super(container);
         this.init();
     }
 
@@ -37,7 +34,7 @@ export class LottoComponent extends Component {
     #purchase() {
         if (!this.#isInputChange) return;
         if (this.#isInputChange) this.reset();
-        if (!this.validator.validate(SectionType.Purchase, $purchased.amount.value)) {
+        if (!this._validator.validate(SectionType.Purchase, $purchased.amount.value)) {
             this._view.displayNone([$purchased.lotto]);
             return this.reset();
         }
