@@ -1,3 +1,4 @@
+import { ERROR_MESSAGE, LOTTO, ZERO_NUMBER } from '../../const.js';
 import Controller from './controller.js';
 
 class InputPriceFormController extends Controller {
@@ -5,10 +6,24 @@ class InputPriceFormController extends Controller {
     super(view, lotto);
   }
 
-  handleInputPriceButtonClick() {
-    const { validatePrice, registerLotto } = this.model;
+  validatePrice = () => {
+    if (this.model.price % LOTTO.PRICE > ZERO_NUMBER) {
+      window.alert(ERROR_MESSAGE.INVALID_UNIT_NUMBER);
+      return false;
+    }
 
-    if (validatePrice()) {
+    if (this.model.price <= ZERO_NUMBER) {
+      window.alert(ERROR_MESSAGE.INVALID_NEGATIVE_NUMBER);
+      return false;
+    }
+
+    return true;
+  };
+
+  handleInputPriceButtonClick() {
+    const { registerLotto } = this.model;
+
+    if (this.validatePrice()) {
       registerLotto();
     }
   }

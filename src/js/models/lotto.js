@@ -1,10 +1,5 @@
-import { ZERO_NUMBER, ERROR_MESSAGE, LOTTO, PROFIT } from '../../const.js';
-import {
-  getRandomNumber,
-  getSameNumberCount,
-  hasDuplicateNumbers,
-  isNumbersOutOfRange,
-} from '../../utils.js';
+import { ZERO_NUMBER, ERROR_MESSAGE, LOTTO } from '../../const.js';
+import { getRandomNumber } from '../../utils.js';
 
 class Lotto {
   #price;
@@ -37,6 +32,14 @@ class Lotto {
     this.#winningNumbers[numberIndex] = winningNumber;
   };
 
+  setProfit = (nextProfit) => {
+    this.#profit = nextProfit;
+  };
+
+  get price() {
+    return this.#price;
+  }
+
   get lottoCount() {
     return this.#lottoCount;
   }
@@ -57,40 +60,6 @@ class Lotto {
     return this.#profit;
   }
 
-  validatePrice = () => {
-    if (this.#price % LOTTO.PRICE > ZERO_NUMBER) {
-      window.alert(ERROR_MESSAGE.INVALID_UNIT_NUMBER);
-      return false;
-    }
-
-    if (this.#price <= ZERO_NUMBER) {
-      window.alert(ERROR_MESSAGE.INVALID_NEGATIVE_NUMBER);
-      return false;
-    }
-
-    return true;
-  };
-
-  validateWinningNumbers = () => {
-    if (
-      isNumbersOutOfRange({
-        max: LOTTO.MAX_NUMBER,
-        min: LOTTO.MIN_NUMBER,
-        targets: this.#winningNumbers,
-      })
-    ) {
-      window.alert(ERROR_MESSAGE.INVALID_RANGE_NUMBER);
-      return false;
-    }
-
-    if (hasDuplicateNumbers(this.#winningNumbers)) {
-      window.alert(ERROR_MESSAGE.INVALID_DUPLICATED_NUMBER);
-      return false;
-    }
-
-    return true;
-  };
-
   registerLotto = () => {
     this.#lottoCount = Math.floor(this.#price / LOTTO.PRICE);
     this.#lottos = [];
@@ -100,46 +69,11 @@ class Lotto {
     }
   };
 
-  computeWinningNumbers = () => {
-    const winningNumbers = this.#winningNumbers.slice(ZERO_NUMBER, LOTTO.COUNT);
-    const bonusNumber = this.#winningNumbers[LOTTO.COUNT];
-
-    this.#lottos.forEach((lotto) => {
-      const sameNumberCount = getSameNumberCount(lotto, winningNumbers);
-      const hasBonusNumber =
-        sameNumberCount === LOTTO.BONUS_APPLICABLE_COUNT &&
-        winningNumbers.includes(bonusNumber);
-
-      if (hasBonusNumber) {
-        this.#setResult(6);
-        return;
-      }
-
-      if (sameNumberCount === 6) {
-        this.#setResult(7);
-        return;
-      }
-
-      this.#setResult(sameNumberCount);
-    });
-
-    this.#profit = this.#computeProfit();
-  };
-
-  #setResult(winningNumberCount) {
+  setResult = (winningNumberCount) => {
     if (this.#result[winningNumberCount] !== undefined) {
       this.#result[winningNumberCount] += 1;
     }
-  }
-
-  #computeProfit() {
-    const result = Object.keys(this.#result).reduce(
-      (accumulator, key) => accumulator + this.#result[key] * PROFIT[key].PRICE,
-      ZERO_NUMBER
-    );
-
-    return ((result - this.#price) / this.#price) * 100;
-  }
+  };
 
   clear = () => {
     this.#price = ZERO_NUMBER;
