@@ -9,7 +9,7 @@ import {
 } from "../utils/error.js";
 import {
     ERROR_MESSAGE,
-    LOTTO_LIMIT_DIGITS_BONUS_NUMBER,
+    LOTTO_LIMIT_DIGITS_BONUS_NUMBER, LOTTO_RANGE_MAX, LOTTO_RANGE_MIN,
     PRICE_MAX,
     PRICE_MIN,
     PRICE_PER_UNIT,
@@ -31,7 +31,7 @@ export class Validator {
     #setStatsErrors = (numbers) => {
         if (!numbers.length || (numbers.length < LOTTO_LIMIT_DIGITS_BONUS_NUMBER)) throw new InputRequiredError(ERROR_MESSAGE.StatsNumbersRequired);
         if (new Set(numbers).size < LOTTO_LIMIT_DIGITS_BONUS_NUMBER) throw new NotAllowedDuplicatedValueError(ERROR_MESSAGE.NotAllowedDuplicatedValue);
-        if (numbers.some(row => row.length > 2 || row < 0)) throw new OutOfNumberRangeError(ERROR_MESSAGE.OutOfNumberRange);
+        if (numbers.some(row => row > LOTTO_RANGE_MAX || row < LOTTO_RANGE_MIN)) throw new OutOfNumberRangeError(ERROR_MESSAGE.OutOfNumberRange);
         return true;
     }
 
