@@ -1,13 +1,4 @@
-import {
-  DEFAULT_NUMBER,
-  ERROR_MESSAGE,
-  LOTTO_BONUS_APPLICABLE_COUNT,
-  LOTTO_COUNT,
-  LOTTO_MAX_NUMBER,
-  LOTTO_MIN_NUMBER,
-  LOTTO_PRICE,
-  PROFIT,
-} from '../../const.js';
+import { DEFAULT_NUMBER, ERROR_MESSAGE, LOTTO, PROFIT } from '../../const.js';
 import {
   getRandomNumber,
   getSameNumberCount,
@@ -67,7 +58,7 @@ class Lotto {
   }
 
   validatePrice = () => {
-    if (this.#price % LOTTO_PRICE > DEFAULT_NUMBER) {
+    if (this.#price % LOTTO.PRICE > DEFAULT_NUMBER) {
       window.alert(ERROR_MESSAGE.INVALID_UNIT_NUMBER);
       return false;
     }
@@ -83,8 +74,8 @@ class Lotto {
   validateWinningNumbers = () => {
     if (
       isNumbersOutOfRange({
-        max: LOTTO_MAX_NUMBER,
-        min: LOTTO_MIN_NUMBER,
+        max: LOTTO.MAX_NUMBER,
+        min: LOTTO.MIN_NUMBER,
         targets: this.#winningNumbers,
       })
     ) {
@@ -101,7 +92,7 @@ class Lotto {
   };
 
   registerLotto = () => {
-    this.#lottoCount = Math.floor(this.#price / LOTTO_PRICE);
+    this.#lottoCount = Math.floor(this.#price / LOTTO.PRICE);
     this.#lottos = [];
 
     for (let i = 0; i < this.#lottoCount; i++) {
@@ -112,14 +103,14 @@ class Lotto {
   computeWinningNumbers = () => {
     const winningNumbers = this.#winningNumbers.slice(
       DEFAULT_NUMBER,
-      LOTTO_COUNT
+      LOTTO.COUNT
     );
-    const bonusNumber = this.#winningNumbers[LOTTO_COUNT];
+    const bonusNumber = this.#winningNumbers[LOTTO.COUNT];
 
     this.#lottos.forEach((lotto) => {
       const sameNumberCount = getSameNumberCount(lotto, winningNumbers);
       const hasBonusNumber =
-        sameNumberCount === LOTTO_BONUS_APPLICABLE_COUNT &&
+        sameNumberCount === LOTTO.BONUS_APPLICABLE_COUNT &&
         winningNumbers.includes(bonusNumber);
 
       if (hasBonusNumber) {
@@ -171,8 +162,8 @@ class Lotto {
   #getUniqRandomNumbers() {
     const uniqRandomNumbers = new Set();
 
-    while (uniqRandomNumbers.size < LOTTO_COUNT) {
-      const randomNumber = getRandomNumber(LOTTO_MIN_NUMBER, LOTTO_MAX_NUMBER);
+    while (uniqRandomNumbers.size < LOTTO.COUNT) {
+      const randomNumber = getRandomNumber(LOTTO.MIN_NUMBER, LOTTO.MAX_NUMBER);
       uniqRandomNumbers.add(randomNumber);
     }
 
