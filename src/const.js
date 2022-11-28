@@ -20,22 +20,22 @@ export const ERROR_MESSAGE = {
 export const PROFIT = {
   3: {
     COUNT: '3개',
-    PRICE: 5000,
+    PRICE: 5_000,
   },
   4: {
     COUNT: '4개',
-    PRICE: 50000,
+    PRICE: 50_000,
   },
   5: {
     COUNT: '5개',
-    PRICE: 1500000,
+    PRICE: 1_500_000,
   },
   6: {
     COUNT: '5개 + 보너스볼',
-    PRICE: 30000000,
+    PRICE: 30_000_000,
   },
   7: {
     COUNT: '6개',
-    PRICE: 2000000000,
+    PRICE: 2_000_000_000,
   },
 };
