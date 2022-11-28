@@ -31,20 +31,29 @@ export class LottoComponent extends Component {
         $purchased.amount.onchange = () => this.#isInputChange = true;
     }
 
-    reset() {
+    _subscribe() {
+        this._stateModel.register(() => this.restart());
+    }
+
+    restart() {
+        this._view.renderInputValue($purchased.amount);
+        this._reset();
+    }
+
+    _reset() {
         this._stateModel.reset();
-        this._view.displayNone([$stats.lotto]);
+        this._view.displayNone([$stats.lotto, $purchased.lotto]);
         this._view.renderCheckedButton($issued.numberToggleButton, false);
-        this.isShowNumbers = false;
         this._view.removeChildNodes($issued.tickets);
+        this.isShowNumbers = false;
     }
 
     #purchase() {
         if (!this.#isInputChange) return;
-        if (this.#isInputChange) this.reset();
+        if (this.#isInputChange) this._reset();
         if (!this._validator.validate(SECTIONTYPE.PURCHASE, $purchased.amount.value)) {
             this._view.displayNone([$purchased.lotto]);
-            return this.reset();
+            return this._reset();
         }
 
         this._stateModel.setState({ price: $purchased.amount.value });

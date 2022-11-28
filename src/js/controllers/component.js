@@ -12,6 +12,7 @@ export class Component {
     _setEventListeners() {}
     _setEventHandler() {}
     _subscribe() {}
+    _reset() {}
 
     init() {
         this._setEventListeners();
@@ -19,5 +20,4 @@ export class Component {
         this._subscribe()
     }
 
-    reset() {}
 }

@@ -23,11 +23,15 @@ export class StatsComponent extends Component {
     _setEventListeners() {
         $stats.openModalButton.addEventListener('click', () => this.#validate());
         $stats.lastNumbers.forEach(($lastNumber, i) => {
-            $lastNumber.addEventListener('keyup', () => this.this.#setAutoFocus());
+            $lastNumber.addEventListener('keyup', () => this.#setAutoFocus());
         });
     }
 
-    reset() {
+    _subscribe() {
+        this._stateModel.register(() => this._reset());
+    }
+
+    _reset() {
         [...$stats.lastNumbers].forEach(row => this._view.renderInputValue(row));
         this._view.renderInputValue($stats.lastBonusNumbers);
     }
@@ -44,7 +48,7 @@ export class StatsComponent extends Component {
         this.lastNumbers = [...$stats.lastNumbers].map(row => row.value);
         this.lastBonusNumber = $stats.lastBonusNumbers.value;
 
-        if (!this.#isValidated()) return this.reset();
+        if (!this.#isValidated()) return this._reset();
         this.#openStatsModal();
     }
 

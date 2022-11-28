@@ -35,12 +35,12 @@ export class ModalComponent extends Component {
     }
 
     restart() {
+        this._stateModel.setState({ reset: null });
         this.#closeStatsModal();
-        this.#reset();
-        window.location.reload();
+        this._reset();
     }
 
-    #reset() {
+    _reset() {
         this._view.renderToReplaceInnerHTML($modal.resultTable);
         this._view.renderToReplaceInnerHTML($modal.totalRateOfReturn);
         this.#winStats = arrDeepCopy(WINSTATS);
@@ -52,7 +52,7 @@ export class ModalComponent extends Component {
     }
 
     #renderStats() {
-        this.#reset();
+        this._reset();
         this.#getStats();
         this.#getRateOfReturn();
 

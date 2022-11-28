@@ -16,7 +16,7 @@ export class StateModel {
 
     setState(newState) {
         this.#state = { ...this.#state, ...newState };
-        this.notify();
+        if (Object.values(newState)[0] === null) this.notify();
     }
 
     notify() {
