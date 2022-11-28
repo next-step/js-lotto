@@ -22,11 +22,22 @@ export class StatsComponent extends Component {
 
     _setEventListeners() {
         $stats.openModalButton.addEventListener('click', () => this.#validate());
+        $stats.lastNumbers.forEach(($lastNumber, i) => {
+            $lastNumber.addEventListener('keyup', () => this.this.#setAutoFocus());
+        });
     }
 
     reset() {
         [...$stats.lastNumbers].forEach(row => this._view.renderInputValue(row));
         this._view.renderInputValue($stats.lastBonusNumbers);
+    }
+
+    #setAutoFocus() {
+        [...$stats.lastNumbers].forEach(($lastNumber, i) => {
+            if ($lastNumber.value.length === $lastNumber.maxLength) {
+                [...$stats.lastNumbers][i + 1].focus();
+            }
+        })
     }
 
     #validate() {
