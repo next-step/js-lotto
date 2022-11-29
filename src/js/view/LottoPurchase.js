@@ -2,6 +2,9 @@ import { lottoStore } from '../store/LottoStore.js';
 import { resultStore } from '../store/ResultStore.js';
 import { createRandomNumber } from '../utils/utils.js';
 
+const LOTTO_NUMBER_COUNT = 6;
+const MAX_LOTTO_NUMBER = 45;
+
 const $lottoPurchaseFormContainer = document.getElementById('lotto-purchase');
 const $costInput = $lottoPurchaseFormContainer.getElementsByTagName('input')[0];
 
@@ -33,9 +36,9 @@ function isNumberPlainThousandToTenThousand(num) {
 function createLotto(count) {
   const lottos = new Array(count)
     .fill(null)
-    .map(() => new Array(6)
+    .map(() => new Array(LOTTO_NUMBER_COUNT)
       .fill(null)
-      .map(() => createRandomNumber(45))
+      .map(() => createRandomNumber(MAX_LOTTO_NUMBER))
     );
 
   return lottos;
