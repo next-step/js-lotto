@@ -8,9 +8,9 @@ export const MESSAGE_FOR_INVALID_UNIT_VALUE = '로또 한 장의 단위는 1000�
 export const MESSAGE_FOR_INVALID_WINNING_NUMBERS = '중복된 번호를 입력할 수 없습니다.';
 
 export const PRIZE_FOR_PLACE = {
-  place1: 2000000000,
-  place2: 30000000,
-  place3: 1500000,
-  place4: 50000,
-  place5: 5000,
+  place1: 2_000_000_000,
+  place2: 30_000_000,
+  place3: 1_500_000,
+  place4: 50_000,
+  place5: 5_000,
 };
