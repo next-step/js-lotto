@@ -61,7 +61,7 @@ describe('로또 어플리케이션 단계2', () => {
       cy.get('#winningNumberInputs :invalid').should('have.length', 7);
     });
 
-    it(`이미 입력한 번호는 재입력이 불가능하며, ${MESSAGE_FOR_INVALID_WINNING_NUMBERS} 경고를 띄운다.`, () => {
+    it(`이미 입력한 번호를 보너스 번호에서 재입력이 불가능하며, ${MESSAGE_FOR_INVALID_WINNING_NUMBERS} 경고를 띄운다.`, () => {
       const alertStub = cy.stub();
       cy.on('window:alert', alertStub);
 
@@ -71,6 +71,26 @@ describe('로또 어플리케이션 단계2', () => {
           .should('have.value', `${idx + 1}`);
       });
       getBonusNumberInput().type('1').should('have.value', '1');
+      getShowingResultButton()
+        .click()
+        .then(() => {
+          const actualMessage = alertStub.getCall(0).lastArg;
+          expect(actualMessage).to.equal(MESSAGE_FOR_INVALID_WINNING_NUMBERS);
+        });
+    });
+
+    it(`당첨 번호에서는 이미 입력한 번호의 재입력이 불가능하며, ${MESSAGE_FOR_INVALID_WINNING_NUMBERS} 경고를 띄운다.`, () => {
+      const alertStub = cy.stub();
+      cy.on('window:alert', alertStub);
+
+      getWinningNumberInputs().each(($el, idx) => {
+        if (idx === 0) {
+          cy.wrap($el).type(`1`).should('have.value', `1`);
+        } else {
+          cy.wrap($el).type(`${idx}`).should('have.value', `${idx}`);
+        }
+      });
+      getBonusNumberInput().type('45').should('have.value', '45');
       getShowingResultButton()
         .click()
         .then(() => {
