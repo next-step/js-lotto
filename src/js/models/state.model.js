@@ -16,11 +16,15 @@ export class StateModel {
 
     setState(newState) {
         this.#state = { ...this.#state, ...newState };
-        if (Object.values(newState)[0] === null) this.notify();
+        this.notify(newState);
     }
 
-    notify() {
-        this.#observers.forEach(fn => fn());
+    notify(state) {
+        if (Object.values(state)[0] === true) {
+            const key = Object.keys(state)[0];
+            const fn = () => [...this.#observers].find(observer => Object.keys(observer)[0] === key)[key]();
+            return fn();
+        }
     }
 
     getState(key) {

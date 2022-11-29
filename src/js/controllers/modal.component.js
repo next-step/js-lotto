@@ -35,7 +35,7 @@ export class ModalComponent extends Component {
     }
 
     restart() {
-        this._stateModel.setState({ reset: null });
+        this._stateModel.setState({ reset: true });
         this.#closeStatsModal();
         this._reset();
     }

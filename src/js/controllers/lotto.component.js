@@ -32,7 +32,7 @@ export class LottoComponent extends Component {
     }
 
     _subscribe() {
-        this._stateModel.register(() => this.restart());
+        this._stateModel.register({ reset: () => this.restart() });
     }
 
     restart() {
