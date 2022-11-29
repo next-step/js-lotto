@@ -1,7 +1,5 @@
 import { $, $$ } from './utils/DOM.js';
 
-import { getLottoNumbers } from './getLottoNumbers.js';
-import { validatePriceInput } from './validatePrice.js';
 import {
   renderPurchasedLotto,
   renderWinningNumbersForm,
@@ -9,6 +7,8 @@ import {
   renderLottoItems,
   renderPurchasedLottoNumbers,
 } from './view/purchasedLotto.js';
+import { getLottoNumbers } from './getLottoNumbers.js';
+import { validatePriceInput } from './validatePrice.js';
 import {
   validateWithinLottoNumberRange,
   hasDuplicatedNumber,
@@ -52,6 +52,15 @@ export const handleOpenModal = (e) => {
     hasDuplicatedNumber(winningNumbersAndBonus);
 
     openModal(winningNumbersAndBonus);
+  } catch (error) {
+    window.alert(error.message);
+    console.error(error);
+  }
+};
+
+export const handleRestart = () => {
+  try {
+    window.location.reload();
   } catch (error) {
     window.alert(error.message);
     console.error(error);
