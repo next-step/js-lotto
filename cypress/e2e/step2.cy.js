@@ -61,7 +61,7 @@ describe('로또 어플리케이션 단계2', () => {
       cy.get('#winningNumberInputs :invalid').should('have.length', 7);
     });
 
-    it(`이미 입력한 번호는 재입력이 불가능하며, ${MESSAGE_FOR_INVALID_WINNING_NUMBERS}`, () => {
+    it(`이미 입력한 번호는 재입력이 불가능하며, ${MESSAGE_FOR_INVALID_WINNING_NUMBERS} 경고를 띄운다.`, () => {
       const alertStub = cy.stub();
       cy.on('window:alert', alertStub);
 
