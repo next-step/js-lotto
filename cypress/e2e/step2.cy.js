@@ -67,16 +67,22 @@ describe('당첨 번호 & 보너스 번호 입력 테스트', () => {
 });
 
 describe('모달창 테스트', () => {
-  before(() => {
+  const PRICE_INPUT = 3000;
+
+  const openModalTest = () => {
     cy.visit('../../index.html');
 
-    cy.clickPurchaseBtn(3000);
+    cy.clickPurchaseBtn(PRICE_INPUT);
     cy.typeWinningNumbersAndBonus({ winningNumbers: [1, 2, 3, 4, 5, 6], bonus: 7 });
 
     cy.get('.open-result-modal-button').click();
-  });
+  };
 
   context('결과 확인하기 버튼 기능 테스트', () => {
+    before(() => {
+      openModalTest();
+    });
+
     it('결과 확인하기 버튼을 누르면 모달창이 뜬다.', () => {
       cy.get('.modal').should('be.visible');
     });
@@ -94,6 +100,8 @@ describe('모달창 테스트', () => {
 
   context('모달창의 다시 시작하기 버튼을 누르면 초기화된다.', () => {
     before(() => {
+      openModalTest();
+
       cy.get('.restart-btn').click();
     });
 
@@ -109,6 +117,28 @@ describe('모달창 테스트', () => {
 
     it('입력한 로또 구입 금액은 초기화된다.', () => {
       cy.get('.purchasing-lotto-input').should('have.value', '');
+    });
+  });
+
+  context('모달창의 x 버튼을 누르면 모달창 뜨기 이전 화면으로 돌아간다.', () => {
+    before(() => {
+      openModalTest();
+
+      cy.get('.modal-close').click();
+    });
+
+    it('모달창이 화면에 보이지 않는다.', () => {
+      cy.get('.modal').should('not.be.visible');
+    });
+
+    it('로또 그림과 당첨 번호 input이 화면에 보인다.', () => {
+      cy.get('.purchased-result').each(($ele) => {
+        cy.get($ele).should('be.visible');
+      });
+    });
+
+    it('입력한 로또 구입 금액은 유지된다.', () => {
+      cy.get('.purchasing-lotto-input').should('have.value', PRICE_INPUT);
     });
   });
 });
