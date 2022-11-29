@@ -9,6 +9,7 @@ import lottoTemplate from './views/lottoTemplate.js';
 import lottoView from './views/lotto.js';
 import counterView from './views/lottoCounter.js';
 import lottoNumbersView from './views/lottoNumbers.js';
+// import modalView from './view/modal.js';
 
 // const clearLottoImages = () => {
 //   while ($(SELECTOR.LOTTO_IMAGES).firstChild) {
@@ -43,6 +44,7 @@ registry.add('lottoNumbers', lottoNumbersView);
 const state = {
   purchaseAmount: 7000,
   toggleOn: true,
+  modalOn: true,
 };
 
 const render = () => {

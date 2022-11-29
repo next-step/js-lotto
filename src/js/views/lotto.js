@@ -1,9 +1,18 @@
 import { LOTTO } from '../utils/constants.js';
+import { $ } from '../utils/dom.js';
+let template;
 
-const getLottoElement = (lottoNumbers) => {
-  return `<li class='lotto-wrapper mx-1 text-4xl'><span class='lotto-image'>🎟️</span><span class='lotto-numbers d-none' data-component=lottoNumbers'>${lottoNumbers.join(
-    ', '
-  )}</span></li>`;
+const createNewLottoNode = () => {
+  if (!template) {
+    template = $('#lotto-item');
+  }
+  return template.content.firstElementChild.cloneNode(true);
+};
+
+const getLottoElement = () => {
+  const element = createNewLottoNode();
+  $('.lotto-numbers', element).textContent = getLottoNumbers().join(', ');
+  return element;
 };
 
 const getLottoNumbers = () => {
@@ -22,14 +31,14 @@ const getLottoNumbers = () => {
 export default (targetElement, { ticketCount }) => {
   const newLottoList = targetElement.cloneNode(true);
 
-  while (newLottoList.firstChild) {
-    newLottoList.removeChild(newLottoList.firstChild);
-  }
+  newLottoList.innerHTML = '';
+  const lottoImageElements = Array.from({ length: ticketCount }, () =>
+    getLottoElement()
+  );
 
-  const lottoImageHTML = Array.from({ length: ticketCount }, () =>
-    getLottoElement(getLottoNumbers())
-  ).join('');
+  lottoImageElements.forEach((element) =>
+    newLottoList.insertAdjacentElement('beforeend', element)
+  );
 
-  newLottoList.insertAdjacentHTML('beforeend', lottoImageHTML);
   return newLottoList;
 };
