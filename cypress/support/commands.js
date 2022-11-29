@@ -23,8 +23,11 @@ Cypress.Commands.add('checkTicketUnit', (length) => {
     cy.get($lottoTickets).children('li').should('have.length', length);
 })
 
-Cypress.Commands.add('typeLastLottoNumbers', (eq, number) => {
-    cy.get($lastLottoNumbers).eq(eq).type(number);
+Cypress.Commands.add('typeLastLottoNumbers', (numbers) => {
+    numbers.forEach((number, i) => {
+        cy.get($lastLottoNumbers).eq(i).type(number);
+        cy.get($lastLottoNumbers).eq(i).tab();
+    })
 })
 
 Cypress.Commands.add('typeLastLottoBonusNumbers', (number) => {

@@ -1,16 +1,12 @@
 import { getRandom } from "../../src/js/utils/util";
 
-const $lottoNumberSet = '.lotto-numbers';
-const $lastLottoNumbers = '.winning-number';
-const $lastBonusNumbers = '.bonus-number';
-
 const $purchaseInput = '[data-cy="purchase-amount"]';
 const $purchaseLotto = '.purchased-lotto';
+
 const $lottoStats = '.lotto-stats';
-const $lottoStatsTotal = '.stats-total';
+const $lastBonusNumbers = '.bonus-number';
 
 const $modal = '.modal';
-const $modalResultTable = '.stats-table-tbody';
 const $modalCloseButton = '.modal-close';
 const $modalResetButton = '.stats-reset-button';
 
@@ -26,10 +22,10 @@ describe('로또 구현 테스트 :: 모달', () => {
     })
 
     beforeEach('지난 주 로또 번호와 보너스번호 입력 후 결과 확인하기 버튼 클릭', () => {
-        const numbers = getRandoms(7, 0, 45);
+        const numbers = getRandoms(7, 1, 45);
         const bonusNumber = numbers.pop();
 
-        numbers.forEach((num, i) => cy.get($lastLottoNumbers).eq(i).type(num))
+        cy.typeLastLottoNumbers(numbers);
         cy.get($lastBonusNumbers).type(bonusNumber);
 
         cy.clickOpenResultModal();

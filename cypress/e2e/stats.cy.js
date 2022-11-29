@@ -1,8 +1,11 @@
+import { faker } from '@faker-js/faker';
+
 import { ERROR_MESSAGE } from "../../src/js/utils/const.js";
 import { getRandom } from "../../src/js/utils/util.js";
 const $lastLottoNumbers = '.winning-number';
 const $lastBonusNumbers = '.bonus-number';
 const $modal = '.modal';
+const cypressPluginTab = require('cypress-plugin-tab');
 
 describe('로또 구현 테스트 :: 지난주 로또 번호 입력', () => {
     beforeEach('로또 페이지 방문', () => {
@@ -18,24 +21,27 @@ describe('로또 구현 테스트 :: 지난주 로또 번호 입력', () => {
 
 function statsSpec() {
     it('지난 주 로또번호와 보너스 번호를 입력할 수 있다.', () => {
-        const numbers = getRandoms(7, 0, 99);
+        const numbers = faker.random.numeric(7, { bannedDigits: ['0'] }).split('');
         const bonusNumber = numbers.pop();
 
-        numbers.forEach((num, i) => cy.typeLastLottoNumbers(i, num));
-        numbers.forEach((num, i) => cy.get($lastLottoNumbers).eq(i).should('have.value', num));
+        cy.typeLastLottoNumbers(numbers);
+        numbers.forEach((num, i) => {
+            cy.get($lastLottoNumbers).eq(i).should('have.value', num);
+        });
 
         cy.typeLastLottoBonusNumbers(bonusNumber);
         cy.get($lastBonusNumbers).should('have.value', bonusNumber);
     })
 
     it('지난 주 로또번호와 보너스 번호를 모두 입력해야 한다.', () => {
-        getRandoms(5, 0, 99).forEach((num, i) => cy.get($lastLottoNumbers).eq(i).type(num));
+        const numbers = faker.random.numeric(5, { bannedDigits: ['0'] }).split('');
+        cy.typeLastLottoNumbers(numbers);
         checkAlert(cy.clickOpenResultModal(), ERROR_MESSAGE.StatsNumbersRequired);
     })
 
     it('지난 주 로또번호와 보너스 번호는 중복될 수 없다.', () => {
         const numbers = [1, 14, 12, 31, 21, 1];
-        numbers.forEach((num, i) => cy.typeLastLottoNumbers(i, num));
+        cy.typeLastLottoNumbers(numbers);
         cy.typeLastLottoBonusNumbers(1);
         checkAlert(cy.clickOpenResultModal(), ERROR_MESSAGE.NotAllowedDuplicatedValue);
     })
@@ -44,7 +50,7 @@ function statsSpec() {
         const numbers = getRandoms(7, 0, 99);
         const bonusNumber = numbers.pop();
 
-        numbers.forEach((num, i) => cy.get($lastLottoNumbers).eq(i).type(num));
+        cy.typeLastLottoNumbers(numbers);
         cy.get($lastBonusNumbers).type(bonusNumber);
 
         checkAlert(cy.clickOpenResultModal(), ERROR_MESSAGE.OutOfNumberRange);
@@ -54,11 +60,10 @@ function statsSpec() {
         const numbers = getRandoms(7, 1, 45);
         const bonusNumber = numbers.pop();
 
-        numbers.forEach((num, i) => cy.get($lastLottoNumbers).eq(i).type(num))
+        cy.typeLastLottoNumbers(numbers);
         cy.get($lastBonusNumbers).type(bonusNumber);
 
         cy.clickOpenResultModal();
-
         cy.get($modal).should('be.visible');
     })
 }
