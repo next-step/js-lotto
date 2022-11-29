@@ -68,12 +68,14 @@ describe('당첨 번호 & 보너스 번호 입력 테스트', () => {
 
 describe('모달창 테스트', () => {
   const PRICE_INPUT = 3000;
+  const WINNING_NUMBERS = [1, 2, 3, 4, 5, 6];
+  const BONUS = 7;
 
   const openModalTest = () => {
     cy.visit('../../index.html');
 
     cy.clickPurchaseBtn(PRICE_INPUT);
-    cy.typeWinningNumbersAndBonus({ winningNumbers: [1, 2, 3, 4, 5, 6], bonus: 7 });
+    cy.typeWinningNumbersAndBonus({ winningNumbers: WINNING_NUMBERS, bonus: BONUS });
 
     cy.get('.open-result-modal-btn').click();
   };
@@ -139,6 +141,13 @@ describe('모달창 테스트', () => {
 
     it('입력한 로또 구입 금액은 유지된다.', () => {
       cy.get('.purchasing-lotto-input').should('have.value', PRICE_INPUT);
+    });
+
+    it('입력한 당첨 번호와 보너스 번호는 유지된다.', () => {
+      cy.get('.winning-number').each(($ele, idx) => {
+        cy.get($ele).should('have.value', WINNING_NUMBERS[idx]);
+      });
+      cy.get('.bonus-number').should('have.value', BONUS);
     });
   });
 });

@@ -96,3 +96,4 @@ This project is [MIT](https://github.com/next-step/js-lotto/blob/main/LICENSE) l
   - [x] 모달창이 화면에 보이지 않는다.
   - [x] 로또 그림과 당첨 번호 input이 화면에 보인다.
   - [x] 입력한 로또 구입 금액은 유지된다.
+  - [x] 입력한 당첨 번호와 보너스 번호는 유지된다.
