@@ -1,5 +1,5 @@
 import { isValidForNoAmount, isValidForExactAmount, isValidWinningNumbers } from './validators.js';
-import LottoModel from './models/LottoTicket.js';
+import LottoTicketModel from './models/LottoTicketModel.js';
 import {
   MESSAGE_FOR_EMPTY_VALUE,
   MESSAGE_FOR_INVALID_UNIT_VALUE,
@@ -25,7 +25,7 @@ import {
   addModalCloseClickEventListener,
   addReplayButtonClickEventListener,
 } from './eventListeners.js';
-import LottoStateModel from './models/LottoState.js';
+import LottoStateModel from './models/LottoStateModel.js';
 
 const lottoState = new LottoStateModel();
 
@@ -53,7 +53,7 @@ const handlePurchaseButton = (e) => {
 const generateLottos = (quantity) => {
   for (let i = 0; i < quantity; i++) {
     const lottoNumbers = lottoState.getLottoNumbers();
-    const lotto = new LottoModel();
+    const lotto = new LottoTicketModel();
     lotto.generate(lottoNumbers);
     lottoState.lottos.push(lotto);
   }
