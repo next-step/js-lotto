@@ -1,9 +1,9 @@
 import { lottoStore } from '../store/LottoStore.js';
 import { resultStore } from '../store/ResultStore.js';
 import { createRandomNumber } from '../utils/utils.js';
+import { MAX_LOTTO_NUMBER } from '../constants/lottoConstants';
 
 const LOTTO_NUMBER_COUNT = 6;
-const MAX_LOTTO_NUMBER = 45;
 
 const $lottoPurchaseFormContainer = document.getElementById('lotto-purchase');
 const $costInput = $lottoPurchaseFormContainer.getElementsByTagName('input')[0];

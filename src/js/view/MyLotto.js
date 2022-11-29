@@ -1,5 +1,6 @@
 import { initStore, resultStore } from '../store/ResultStore.js';
 import { hasSameElementInArray } from '../utils/utils.js';
+import { MAX_LOTTO_NUMBER } from '../constants/lottoConstants';
 
 const $MyLottoInputFormContainer = document.getElementById('lotto-input');
 const $numberInputCollection = Array.from($MyLottoInputFormContainer.getElementsByTagName('input'));
@@ -8,7 +9,7 @@ const $resultButton = $MyLottoInputFormContainer.getElementsByTagName('button')[
 $numberInputCollection.forEach(($input, i) => {
   $input.setAttribute('required', true);
   $input.setAttribute('min', 1);
-  $input.setAttribute('max', 45);
+  $input.setAttribute('max', MAX_LOTTO_NUMBER);
   $input.setAttribute('aria-label', `$lottery-input-${i + 1}`);
   $input.addEventListener('keyup', (e) => {
     const value = e.target.value;
