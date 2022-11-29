@@ -15,7 +15,7 @@ import {
 } from './validateWinningNumbersAndBonus.js';
 import { openModal, closeModal } from './modal.js';
 
-export const handleSubmit = (e) => {
+export const handlePurchaseLotto = (e) => {
   e.preventDefault();
   try {
     const priceInput = $('.purchasing-lotto-input').valueAsNumber;

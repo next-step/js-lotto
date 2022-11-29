@@ -12,7 +12,7 @@ describe('당첨 번호 & 보너스 번호 입력 테스트', () => {
   });
 
   it('결과 확인하기 버튼이 존재한다.', () => {
-    cy.get('.open-result-modal-button').should('exist');
+    cy.get('.open-result-modal-btn').should('exist');
   });
 
   context('당첨 번호 6개와 보너스 번호 1개는 1 ~ 45 중 중복되지 않은 7개의 수이다.', () => {
@@ -20,7 +20,7 @@ describe('당첨 번호 & 보너스 번호 입력 테스트', () => {
       const alertStub = cy.stub();
 
       cy.on('window:alert', alertStub);
-      cy.get('.open-result-modal-button')
+      cy.get('.open-result-modal-btn')
         .click()
         .then(() => {
           expect(alertStub.getCall(0)).to.be.calledWith(errorMessage);
@@ -75,7 +75,7 @@ describe('모달창 테스트', () => {
     cy.clickPurchaseBtn(PRICE_INPUT);
     cy.typeWinningNumbersAndBonus({ winningNumbers: [1, 2, 3, 4, 5, 6], bonus: 7 });
 
-    cy.get('.open-result-modal-button').click();
+    cy.get('.open-result-modal-btn').click();
   };
 
   context('결과 확인하기 버튼 기능 테스트', () => {

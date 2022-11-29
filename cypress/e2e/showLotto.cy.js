@@ -46,7 +46,7 @@ describe('로또 렌더링 테스트', () => {
       cy.get('.lotto-item-numbers').should('have.css', 'display', 'none');
 
     it('로또를 구입한 상태에서 토글 버튼이 존재한다.', () => {
-      cy.get('.lotto-numbers-toggle-button').should('exist');
+      cy.get('.lotto-numbers-toggle-btn').should('exist');
     });
 
     it('로또를 구매한 상태에서 번호 보기 토글 버튼을 누르면 각 로또마다 랜덤한 6개의 번호가 보인다.', () => {
