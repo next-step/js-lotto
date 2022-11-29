@@ -60,7 +60,8 @@ describe("로또게임 페이지 테스트", () => {
     });
 
     it("로또 번호에 중복된 숫자가 입력된다면 alert를 띄운다", () => {
-      cy.winningNumberArray([1, 1, 1, 2, 2, 6, 2]);
+      cy.winningNumberArray([1, 1, 1, 2, 2, 6]);
+      cy.get(".bonus-number").type("1");
       cy.get(".open-result-modal-button").click();
       cy.on("window:alert", (error) => {
         expect(error).to.contains("중복되지 않는 숫자를 입력해주세요.");
@@ -68,12 +69,30 @@ describe("로또게임 페이지 테스트", () => {
     });
   });
 
-  // describe("결과 확인하기 버튼을 누른다면 통계, 수익률을 모달로 확인할 수 있다.", () => {
-  //   beforeEach(() => {
-  //     cy.get("#payment-cost-input").click();
-  //     cy.get("#payment-cost-input").type("1000");
-  //     cy.winningNumberArray([1, 2, 3, 4, 5, 6, 7]);
-  //     cy.get(".open-result-modal-button").click();
-  //   });
-  // });
+  describe("결과 확인하기 버튼을 누른다면 통계, 수익률을 모달로 확인할 수 있다.", () => {
+    beforeEach(() => {
+      cy.get("#payment-cost-input").click();
+      cy.get("#payment-cost-input").type("5000");
+    });
+
+    it("로또 당첨개수와 수익률을 보여준다.", () => {
+      cy.winningNumberArray([3, 9, 12, 26, 34, 40]);
+      cy.get(".bonus-number").type("21");
+      cy.get(".open-result-modal-button").click();
+    });
+  });
+
+  describe("다시시작하기 버튼을 누른다면 게임이 다시 시작된다.", () => {
+    beforeEach(() => {
+      cy.get("#payment-cost-input").click();
+      cy.get("#payment-cost-input").type("5000");
+      cy.winningNumberArray([3, 9, 12, 26, 34, 40]);
+      cy.get(".bonus-number").type("21");
+      cy.get(".open-result-modal-button").click();
+    });
+
+    it("다시시작하기 버튼을 누르면 재시작한다.", () => {
+      cy.get("#reset-button").click();
+    });
+  });
 });

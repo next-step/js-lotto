@@ -1,5 +1,5 @@
 import { $, $$ } from "./utils.js";
-import { $modal, $lottoNumbersToggleButton, $paymentCost, $paymentForm, $paymentTickets, $showModalButton, $removeModalButton, $$winningNumbers, $bonusNumber } from "./DOM.js";
+import { $modal, $lottoNumbersToggleButton, $paymentCost, $paymentForm, $paymentTickets, $showModalButton, $removeModalButton, $$winningNumbers, $bonusNumber, $resetButton } from "./DOM.js";
 import { ALERT_MESSAGE, MAX_IN_NUMBER, MIN_IN_NUMBER, PURCHASE_AMOUNT_UNIT } from "./constants.js";
 import { isDuplicatedNumbers, validateRange } from "./validate.js";
 
@@ -25,6 +25,9 @@ class Lotto {
     });
     $removeModalButton.addEventListener("click", () => {
       this.onModalClose();
+    });
+    $resetButton.addEventListener("click", () => {
+      this.resetButton();
     });
   }
 
@@ -158,6 +161,20 @@ class Lotto {
     const matchArray = lottoNum.filter((lotto) => winningNumbers.includes(lotto));
     const matchBonus = lottoNum.includes(bonusNumber);
     return { matchCount: matchArray.length, matchBonus };
+  }
+
+  resetButton() {
+    this.resetLotto();
+  }
+
+  resetLotto() {
+    this.paymentCostStr = "";
+    this.ticket = [];
+    this.winningNumber = [];
+    this.bonusNumber = 0;
+    $paymentCost.value = "";
+    $bonusNumber.value = "";
+    this.onModalClose();
   }
 
   onModalShow = (result) => {
