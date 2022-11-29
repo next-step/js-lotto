@@ -1,4 +1,4 @@
-import { removeAllChildNodes, toggleClass } from "./utils.js";
+import { hasClass, removeAllChildNodes, toggleClass } from "./utils.js";
 
 class Ui {
   #lottoList;
@@ -33,7 +33,7 @@ class Ui {
     toggleClass({
       $element: this.#modal,
       className: "open",
-      flag: !this.#modal.classList.contains("open"),
+      flag: !hasClass(this.#modal, "open"),
     });
   }
 
