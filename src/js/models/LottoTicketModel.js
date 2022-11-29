@@ -8,16 +8,25 @@ export default class LottoTicketModel {
   }
 
   generate(originLottos) {
-    let hasSameLotto = true;
-    let newLottoNumbers = this.generateLottoNumbers();
-    while (hasSameLotto) {
-      if (!isAlreadyExist(originLottos.concat([newLottoNumbers]))) {
-        hasSameLotto = false;
-      } else {
-        newLottoNumbers = this.generateLottoNumbers();
-      }
+    // 리뷰 이전 코드
+    // let hasSameLotto = true;
+    // let newLottoNumbers = this.generateLottoNumbers();
+    // while (hasSameLotto) {
+    //   if (!isAlreadyExist(originLottos.concat([newLottoNumbers]))) {
+    //     hasSameLotto = false;
+    //   } else {
+    //     newLottoNumbers = this.generateLottoNumbers();
+    //   }
+    // }
+    // this.winningNumbers = newLottoNumbers;
+
+    // 알려주신 재귀를 이용한 방식.
+    const newLottoNumbers = this.generateLottoNumbers();
+    if (isAlreadyExist([...originLottos, newLottoNumbers])) {
+      this.generate(originLottos);
+    } else {
+      this.winningNumbers = newLottoNumbers;
     }
-    this.winningNumbers = newLottoNumbers;
   }
 
   generateLottoNumbers = () => {
