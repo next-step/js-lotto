@@ -1,5 +1,4 @@
 import { LOTTO_LENGTH, LOTTO_NUMBER_RANGE_MAX, LOTTO_NUMBER_RANGE_MIN } from '../constants.js';
-import { isAlreadyExist } from '../validators.js';
 
 export default class LottoTicketModel {
   winningNumbers = []; // number[];
@@ -22,12 +21,18 @@ export default class LottoTicketModel {
 
     // 알려주신 재귀를 이용한 방식.
     const newLottoNumbers = this.generateLottoNumbers();
-    if (isAlreadyExist([...originLottos, newLottoNumbers])) {
+    if (this.isAlreadyExist([...originLottos, newLottoNumbers])) {
       this.generate(originLottos);
     } else {
       this.winningNumbers = newLottoNumbers;
     }
   }
+
+  isAlreadyExist = (lottos) => {
+    const originLength = lottos.length;
+    const setLength = new Set(lottos.map((lotto) => lotto.join(','))).size;
+    return originLength !== setLength;
+  };
 
   generateLottoNumbers = () => {
     const lottoNumbers = Array.from({ length: LOTTO_NUMBER_RANGE_MAX }).map(

@@ -19,11 +19,12 @@ const isValidForExactAmount = (inputValue) => {
 //   return true;
 // };
 
-const isAlreadyExist = (lottos) => {
-  const originLength = lottos.length;
-  const setLength = new Set(lottos.map((lotto) => lotto.join(','))).size;
-  return originLength !== setLength;
-};
+// 아래 함수는 내부 메서드로 이동되었습니다.
+// const isAlreadyExist = (lottos) => {
+//   const originLength = lottos.length;
+//   const setLength = new Set(lottos.map((lotto) => lotto.join(','))).size;
+//   return originLength !== setLength;
+// };
 
 // 리뷰 전 코드...
 // const isAlreadyExist = (lottos) => {
@@ -45,4 +46,4 @@ const isValidWinningNumbers = (winningNumbers) => {
   return originLength === newLength;
 };
 
-export { isValidForNoAmount, isValidForExactAmount, isAlreadyExist, isValidWinningNumbers };
+export { isValidForNoAmount, isValidForExactAmount, isValidWinningNumbers };
