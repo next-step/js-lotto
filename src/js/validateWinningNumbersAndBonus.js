@@ -8,8 +8,8 @@ const isWithinLottoNumberRange = (number) => {
   );
 };
 
-export const validateWithinLottoNumberRange = (winningNumbers) => {
-  winningNumbers.forEach((number) => {
+export const validateWithinLottoNumberRange = (winningNumbersAndBonus) => {
+  winningNumbersAndBonus.forEach((number) => {
     if (isEmpty(number) || !isWithinLottoNumberRange(number)) {
       throw new Error(ERROR_MESSAGE.INVALID_NUMBER_WITHIN_RANGE);
     }

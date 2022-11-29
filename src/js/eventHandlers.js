@@ -13,6 +13,7 @@ import {
   validateWithinLottoNumberRange,
   hasDuplicatedNumber,
 } from './validateWinningNumbersAndBonus.js';
+import { openModal } from './modal.js';
 
 export const handleSubmit = (e) => {
   e.preventDefault();
@@ -37,16 +38,20 @@ export const handleSubmit = (e) => {
 
 export const handleToggleBtn = (e) => showPurchasedLottoNumbers(e);
 
-export const handleOpenLottoResult = (e) => {
+export const handleOpenModal = (e) => {
   e.preventDefault();
   try {
-    const winningNumbers = $$('.winning-number');
-    const bonusNumber = $('.bonus-number');
-    const winningNumbersAndBonus = [...winningNumbers, bonusNumber].map((ele) => ele.valueAsNumber);
+    const $winningNumbers = $$('.winning-number');
+    const $bonusNumber = $('.bonus-number');
+
+    const winningNumbersAndBonus = [...$winningNumbers, $bonusNumber].map(
+      (ele) => ele.valueAsNumber
+    );
 
     validateWithinLottoNumberRange(winningNumbersAndBonus);
-
     hasDuplicatedNumber(winningNumbersAndBonus);
+
+    openModal(winningNumbersAndBonus);
   } catch (error) {
     window.alert(error.message);
     console.error(error);
