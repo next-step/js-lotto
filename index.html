@@ -15,8 +15,8 @@
       <span class="lotto-numbers d-none"  data-component="lottoNumbers"></span>
     </li>
   </template>
-  <div id="app" class="p-3">
-    <div class="d-flex justify-center mt-5" data-component="lottoTemplate">
+  <template id="lotto-app">
+    <div class="d-flex justify-center mt-5">
       <div class="w-100">
         <h1 class="text-center">🎱 행운의 로또</h1>
         <form id="input-price-form" class="mt-5">
@@ -67,7 +67,7 @@
         </form>
       </div>
     </div>
-
+  
     <div class="modal">
       <div class="modal-inner p-10">
         <div class="modal-close">
@@ -75,7 +75,7 @@
             <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
           </svg>
         </div>
-
+  
         <h2 class="text-center">🏆 당첨 통계 🏆</h2>
         <div class="d-flex justify-center">
           <table class="result-table border-collapse border border-black">
@@ -121,6 +121,9 @@
         </div>
       </div>
     </div>
+  </template>
+  <div id="root" class="p-3" >
+    <div data-component="app"></div>
   </div>
   <script type="module" src="./src/js/index.js"></script>
 </body>

@@ -43,7 +43,6 @@ const applyDiff = (parentNode, realNode, virtualNode) => {
   const virtualChildren = Array.from(virtualNode.children);
 
   const max = Math.max(realChildren.length, virtualChildren.length);
-
   for (let i = 0; i < max; i++) {
     applyDiff(realNode, realChildren[i], virtualChildren[i]);
   }
