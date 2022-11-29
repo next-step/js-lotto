@@ -3,7 +3,6 @@ const $winningNumberInputs = document.querySelector('#winningNumberInputs');
 const $lottoIconList = document.querySelector('#lottoIconList');
 const $totalQuantity = document.querySelector('#totalQuantity');
 const $modal = document.querySelector('.modal');
-const isModalOpen = $modal.classList.contains('open');
 
 const displayDetails = (quantity) => {
   if (!quantity) {
@@ -24,8 +23,9 @@ const closeModal = () => {
 };
 
 const handleToggle = () => {
+  const isLottoClosed = $lottoIconList.style.flexDirection === 'column';
   const $lottoNumbers = document.querySelectorAll('.lotto-numbers');
-  if (!isModalOpen) {
+  if (!isLottoClosed) {
     $lottoIconList.style.flexDirection = 'column';
     $lottoNumbers.forEach((el) => {
       el.style.display = 'inline';
