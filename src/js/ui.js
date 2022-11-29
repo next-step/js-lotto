@@ -1,4 +1,4 @@
-import { hasClass, removeAllChildNodes, toggleClass } from "./utils.js";
+import { removeAllChildNodes, toggleClass } from "./utils.js";
 
 class Ui {
   #lottoList;
@@ -21,6 +21,10 @@ class Ui {
     this.#modal = document.querySelector(".modal");
   }
 
+  get modal() {
+    return this.#modal;
+  }
+
   onViewNumbers(checked) {
     toggleClass({
       $element: this.#lottoList,
@@ -29,12 +33,12 @@ class Ui {
     });
   }
 
-  onViewResult() {
-    toggleClass({
-      $element: this.#modal,
-      className: "open",
-      flag: !hasClass(this.#modal, "open"),
-    });
+  onOpenResultModal() {
+    this.#modal.classList.add("open");
+  }
+
+  onCloseResultModal() {
+    this.#modal.classList.remove("open");
   }
 
   getLottoElement(lotto) {

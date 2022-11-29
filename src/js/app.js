@@ -18,10 +18,14 @@ class App {
         this.#view.onViewNumbers(e.target.checked);
       },
       modal: () => {
-        this.#view.onViewResult();
+        if (!hasClass(this.#view.modal, "open")) {
+          this.#view.onOpenResultModal();
+        } else {
+          this.#view.onCloseResultModal();
+        }
       },
       "modal-close": () => {
-        this.#view.onViewResult();
+        this.#view.onCloseResultModal();
       },
     };
   }
@@ -45,7 +49,7 @@ class App {
 
         if (!isValidNumbers) return;
 
-        this.#view.onViewResult();
+        this.#view.onOpenResultModal();
       },
     };
 
