@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/oyg0420/js-lotto#readme",
   "devDependencies": {
-    "cypress": "^11.0.1"
+    "cypress": "^11.0.1",
+    "live-server": "^1.2.2"
   }
 }

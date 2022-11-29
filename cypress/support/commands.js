@@ -1,5 +1,9 @@
-Cypress.Commands.add('getInputPrice', (price) => {
+Cypress.Commands.add('typeInputPrice', (price) => {
   cy.get('#input-price').type(price);
+});
+
+Cypress.Commands.add('getInputPrice', (value) => {
+  cy.get('#input-price').should('have.value', value);
 });
 
 Cypress.Commands.add('clickInputPriceButton', () => {
@@ -22,6 +26,26 @@ Cypress.Commands.add('getLottoNumber', () => {
   cy.get('.lotto-detail');
 });
 
-Cypress.Commands.add('getPurchasedLottos', () => {
-  cy.get('#purchased-lottos').should('be.visible');
+Cypress.Commands.add('getPurchasedLottos', (show = true) => {
+  cy.get('#purchased-lottos').should(show ? 'be.visible' : 'not.be.visible');
+});
+
+Cypress.Commands.add('typeWinningNumber', (index, value) => {
+  cy.get(`#winning-lotto-numbers-form [name=${index}]`).type(value);
+});
+
+Cypress.Commands.add('clickShowResultButton', () => {
+  cy.get('#show-result-btn').click();
+});
+
+Cypress.Commands.add('clickResetButton', () => {
+  cy.get('#reset-btn').click();
+});
+
+Cypress.Commands.add('getModal', (show = true) => {
+  cy.get('.modal').should(show ? 'be.visible' : 'be.not.visible');
+});
+
+Cypress.Commands.add('getProfit', () => {
+  cy.get('#profit').should('be.visible');
 });
