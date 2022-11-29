@@ -13,7 +13,7 @@ import {
   validateWithinLottoNumberRange,
   hasDuplicatedNumber,
 } from './validateWinningNumbersAndBonus.js';
-import { openModal } from './modal.js';
+import { openModal, closeModal } from './modal.js';
 
 export const handleSubmit = (e) => {
   e.preventDefault();
@@ -65,4 +65,8 @@ export const handleRestart = () => {
     window.alert(error.message);
     console.error(error);
   }
+};
+
+export const handleCloseModal = () => {
+  closeModal();
 };

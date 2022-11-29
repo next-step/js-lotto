@@ -6,3 +6,7 @@ export const openModal = (winningNumbersAndBonus) => {
   $('.modal').classList.add('open');
   renderModal(winningNumbersAndBonus);
 };
+
+export const closeModal = () => {
+  $('.modal').classList.remove('open');
+};
