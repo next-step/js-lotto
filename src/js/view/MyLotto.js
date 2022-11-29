@@ -28,7 +28,10 @@ function lottoInputKeyUpHandler(e) {
 
 let submitEventListener = null;
 
-export function MyLotto({ lottos, isShow }) {
+export const initMyLottoParam = { lottos: [], isShow: false };
+
+export function MyLotto({ lottos, isShow } = initMyLottoParam) {
+  console.log('MyLotto : ', isShow)
   if (!isShow) {
     $MyLottoInputFormContainer.classList.add('hide');
     $MyLottoInputFormContainer.reset();

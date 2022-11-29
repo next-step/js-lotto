@@ -11,7 +11,9 @@ $lottoViewSwitch.addEventListener('change', (e) => {
   lottoStore.dispatch('toggleLottoNumber', checked);
 })
 
-export function LottoList({ lottos, isShowLottoNumbers, isShow }) {
+export const initParmLottoList = { lottos: [], isShowLottoNumbers: false, isShow: false };
+
+export function LottoList({ lottos, isShowLottoNumbers, isShow } = initParmLottoList) {
   if (!isShow) {
     $lottoListContainer.classList.add('hide');
     return;

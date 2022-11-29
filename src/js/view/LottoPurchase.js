@@ -44,7 +44,9 @@ function createLotto(count) {
   return lottos;
 }
 
-export function LottoPurchase({ purchaseCost }) {
+export const initLottoPurchase = { purchaseCost: 0 };
+
+export function LottoPurchase({ purchaseCost } = initLottoPurchase) {
   if (!purchaseCost) {
     $lottoPurchaseFormContainer.reset()
   }

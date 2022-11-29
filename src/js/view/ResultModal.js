@@ -20,7 +20,9 @@ $resetButton.addEventListener('click', (e) => {
   $modalContainer.classList.remove('open');
 });
 
-export function ResultModal({ result, isShow, purchaseCost }) {
+export const initResultModalParam = { result: {}, isShow: false, purchaseCost: 0 };
+
+export function ResultModal({ result, isShow, purchaseCost } = initResultModalParam) {
   if (!isShow) {
     $modalContainer.classList.remove('open');
     return;
