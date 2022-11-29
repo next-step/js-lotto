@@ -11,6 +11,7 @@
       <div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
+
           <form class="mt-5 js-payment-form" data-cy="payment-form">
             <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.</label>
             <div class="d-flex">
@@ -24,6 +25,69 @@
               <button type="submit" class="btn btn-cyan js-purchase-button" data-cy="purchase-button">확인</button>
             </div>
           </form>
+
+          <div class="js-lotto-purchase-container none" data-cy="lotto-purchase-container">
+            <h4 class="flex-auto js-lotto-announcement-message" data-cy="lotto-announcement-message"></h4>
+            <p class="js-lotto-current-purchased-status">(현재 구매: X, 남은 개수: Y)</p>
+            <form class="mt-9 js-lotto-self-buying-form" data-cy="lotto-self-buying-form">
+              <fieldset>
+                <legend>수동 구매</legend>
+                <label class="flex-auto d-inline-block mt-9 mb-3"
+                  >구매할 번호 6개와 보너스 넘버 1개를 입력해주세요.</label
+                >
+                <div class="d-flex">
+                  <div>
+                    <h4 class="mt-0 mb-3 text-center">구매 번호</h4>
+                    <div
+                      class="js-lotto-purchasing-number-input-wrapper"
+                      data-cy="lotto-purchasing-number-input-wrapper"
+                    >
+                      <input type="number" class="purchasing-number mx-1 text-center" min="1" max="45" required />
+                      <input type="number" class="purchasing-number mx-1 text-center" min="1" max="45" required />
+                      <input type="number" class="purchasing-number mx-1 text-center" min="1" max="45" required />
+                      <input type="number" class="purchasing-number mx-1 text-center" min="1" max="45" required />
+                      <input type="number" class="purchasing-number mx-1 text-center" min="1" max="45" required />
+                      <input type="number" class="purchasing-number mx-1 text-center" min="1" max="45" required />
+                    </div>
+                  </div>
+                  <div class="flex-grow">
+                    <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
+                    <div class="d-flex justify-center">
+                      <input
+                        type="number"
+                        class="bonus-number text-center js-lotto-purchasing-bonus-number-input"
+                        data-cy="lotto-purchasing-bonus-number-input"
+                        min="1"
+                        max="45"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  class="js-lotto-self-buying-button mt-5 btn btn-cyan w-100"
+                  data-cy="lotto-self-buying-button"
+                >
+                  수동 구매하기
+                </button>
+              </fieldset>
+            </form>
+
+            <form class="mt-9">
+              <fieldset>
+                <legend>자동 구매</legend>
+                <button
+                  type="button"
+                  class="js-lotto-auto-buying-button mt-5 btn btn-cyan w-100"
+                  data-cy="lotto-auto-buying-button"
+                >
+                  자동 구매하기
+                </button>
+              </fieldset>
+            </form>
+          </div>
+
           <section class="mt-9 js-purchased-lotto none" data-cy="purchased-lotto">
             <div class="d-flex">
               <label class="flex-auto my-0"
@@ -58,8 +122,8 @@
                 <div class="d-flex justify-center">
                   <input
                     type="number"
-                    class="bonus-number text-center js-bonus-number-input"
-                    data-cy="bonus-number-input"
+                    class="bonus-number text-center js-winning-bonus-number-input"
+                    data-cy="winning-bonus-number-input"
                     min="1"
                     max="45"
                     required

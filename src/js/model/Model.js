@@ -1,5 +1,6 @@
 import { LOTTO } from '../constants/index.js';
-import { generateLottoNumbersToArray, getLottoRank, getRateOfReturn } from '../service/lotto.js';
+import { getLottoRank, getRateOfReturn } from '../service/lotto.js';
+import { generateRandomNumbersToArray } from '../utils/index.js';
 
 class Model {
   #lottoPurchasePrice = 0;
@@ -22,8 +23,8 @@ class Model {
     return this.#lottoPurchasePrice;
   }
 
-  set lottoPurchasePrice(price) {
-    this.#lottoPurchasePrice = price;
+  set lottoPurchasePrice(Price) {
+    this.#lottoPurchasePrice = Price;
   }
 
   get lottoPurchaseCount() {
@@ -42,23 +43,30 @@ class Model {
     return this.#lottoWinningCount;
   }
 
-  set lottoWinningCount(price) {
-    this.#lottoWinningCount = price;
-  }
-
   get rateOfReturn() {
     return this.#rateOfReturn;
   }
 
-  buyLotto(price) {
-    this.#lottoPurchasePrice = price;
-    this.#lottoPurchaseCount = this.#lottoPurchasePrice / LOTTO.PRICE;
-    this.#lottos = generateLottoNumbersToArray(this.#lottoPurchaseCount);
+  buyLottoSelf(numbers) {
+    this.#lottos.push(numbers);
+  }
+
+  buyLottoAuto() {
+    this.#lottos.push(generateRandomNumbersToArray(LOTTO.MIN_NUMBER, LOTTO.MAX_NUMBER, LOTTO.NUMBER_AMOUNT));
   }
 
   calculateLottoWinningResult(winningNumbers, bonusNumber) {
+    this.#lottoWinningCount = {
+      3: 0,
+      4: 0,
+      5: 0,
+      '5_BONUS': 0,
+      6: 0,
+    };
+
     this.#lottos.forEach((lotto) => {
       const rank = getLottoRank(lotto, winningNumbers, bonusNumber);
+
       if (rank < LOTTO.WINNING_MINIMUM_NUMBER) return;
 
       this.#lottoWinningCount[rank]++;

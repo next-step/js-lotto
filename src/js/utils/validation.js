@@ -22,6 +22,6 @@ export const assertLottoPurchasePrice = (price) => {
   assert(isRemainderZero(price, LOTTO.PRICE), ERROR_MESSAGE.INVALID_LOTTO_PRICE_UNIT);
 };
 
-export const assertLottoWinningNumbers = (numbers) => {
+export const assertLottoNumbers = (numbers) => {
   assert(!isDuplicatedLottoNumber(numbers), ERROR_MESSAGE.DUPLICATED_LOTTO_WINNING_NUMBER);
 };
