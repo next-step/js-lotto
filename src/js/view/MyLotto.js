@@ -1,5 +1,5 @@
 import { initStore, resultStore } from '../store/ResultStore.js';
-import { checkIsSameElementInArray } from '../utils/utils.js';
+import { hasSameElementInArray } from '../utils/utils.js';
 
 const $MyLottoInputFormContainer = document.getElementById('lotto-input');
 const $numberInputCollection = Array.from($MyLottoInputFormContainer.getElementsByTagName('input'));
@@ -40,7 +40,7 @@ export function MyLotto({ lottos, isShow }) {
     e.preventDefault();
 
     const inputLottoNums = $numberInputCollection.map(($input) => Number($input.value));
-    if (checkIsSameElementInArray(inputLottoNums)) {
+    if (hasSameElementInArray(inputLottoNums)) {
       alert('로또 번호에는 중복된 숫자를 입력할 수 없습니다.');
       return;
     }
