@@ -13,7 +13,7 @@ $lottoPurchaseFormContainer.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const inputVal = $costInput.value;
-  if (!inputVal.match(/[\d]0{3,5}/)) {
+  if (!isNumberPlainThousandToTenThousand(inputVal)) {
     alert('구입 가격은 1000 단위로만 입력해주세요!');
     $costInput.value = null;
     return;
@@ -24,7 +24,11 @@ $lottoPurchaseFormContainer.addEventListener('submit', (e) => {
 
   lottoStore.dispatch('update', lottos);
   resultStore.dispatch('purchase', inputVal);
-})
+});
+
+function isNumberPlainThousandToTenThousand(num) {
+  return num.match(/[\d]0{3,5}/);
+}
 
 function createLotto(count) {
   const lottos = new Array(count)
