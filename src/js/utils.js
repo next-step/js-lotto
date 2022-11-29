@@ -14,13 +14,14 @@ export const toggleClass = ({ $element, className, flag }) => {
     : $element.classList.remove(className);
 };
 
-export const hasDuplicatedValueInputs = ($inputs, $bonusInput) => {
-  const values = Array.from([...$inputs, $bonusInput]).map(
-    ({ value }) => value
-  );
-  const removedDuplicatedValue = [...new Set(values)];
+export const getCombinedInputValues = ($inputs, $bonusInput) =>
+  Array.from([...$inputs, $bonusInput]).map(({ value }) => value);
 
-  return values.length !== removedDuplicatedValue.length;
+export const hasDuplicatedValueInputs = ($inputs, $bonusInput) => {
+  const values = getCombinedInputValues($inputs, $bonusInput);
+  const removedDuplicatedValues = [...new Set(values)];
+
+  return values.length !== removedDuplicatedValues.length;
 };
 
 export const hasClass = (target, className) =>
