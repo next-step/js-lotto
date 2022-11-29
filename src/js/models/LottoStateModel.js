@@ -11,7 +11,6 @@ export default class LottoStateModel {
     place4: 0,
     place5: 0,
   };
-  totalProfit = 0;
 
   constructor() {}
 
@@ -20,7 +19,7 @@ export default class LottoStateModel {
   }
 
   drawLotto(winningNumbers, bonusNumber) {
-    this.resetPlaces();
+    this.#resetPlaces();
     const bonusNum = bonusNumber[0];
     const lottos = this.getLottoNumbers();
     lottos.forEach((lotto) => {
@@ -43,12 +42,18 @@ export default class LottoStateModel {
   }
 
   calculateProfitRatio() {
-    Object.keys(this.places).forEach((key) => {
-      this.totalProfit += PRIZE_FOR_PLACE[key] * this.places[key];
-    });
+    // 리뷰 전 코드
+    // Object.keys(this.places).forEach((key) => {
+    //   this.totalProfit += PRIZE_FOR_PLACE[key] * this.places[key];
+    // });
 
-    if (!this.totalProfit) return 0;
-    return (this.purchasedAmount / this.totalProfit) * 100;
+    // if (!this.totalProfit) return 0;
+    // return (this.purchasedAmount / this.totalProfit) * 100;
+    const totalProfit = Object.entries(this.places).reduce(
+      (total, [key, value]) => total + PRIZE_FOR_PLACE[key] * value,
+      0
+    );
+    return totalProfit >= 0 ? (this.purchasedAmount / totalProfit) * 100 : 0;
   }
 
   initLottoState() {
@@ -56,7 +61,6 @@ export default class LottoStateModel {
     this.quantity = 0;
     this.lottos = [];
     this.#resetPlaces();
-    this.totalProfit = 0;
   }
 
   #resetPlaces() {
