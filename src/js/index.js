@@ -42,8 +42,8 @@ const handlePurchaseButton = (e) => {
     return;
   }
   initPurchaseLotto();
-  lottoState.setPurchasedAmount(+purchasedAmount);
-  lottoState.setQuantity(Number(purchasedAmount) / LOTTO_PURCHASE_UNIT);
+  lottoState.purchasedAmount = Number(purchasedAmount);
+  lottoState.quantity = Number(purchasedAmount) / LOTTO_PURCHASE_UNIT;
   displayDetails(lottoState.quantity);
   renderTotalQuantity(lottoState.quantity);
   generateLottos(lottoState.quantity);

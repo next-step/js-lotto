@@ -15,14 +15,6 @@ export default class LottoStateModel {
 
   constructor() {}
 
-  setPurchasedAmount(amount) {
-    this.purchasedAmount = amount;
-  }
-
-  setQuantity(quantity) {
-    this.quantity = quantity;
-  }
-
   getLottoNumbers() {
     return this.lottos.map((lotto) => lotto.winningNumbers);
   }
