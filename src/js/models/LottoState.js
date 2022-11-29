@@ -21,13 +21,12 @@ export default class LottoStateModel {
 
   drawLotto(winningNumbers, bonusNumber) {
     this.resetPlaces();
-    const winNumbers = winningNumbers.sort((a, b) => a - b);
     const bonusNum = bonusNumber[0];
     const lottos = this.getLottoNumbers();
     lottos.forEach((lotto) => {
-      const res = lotto.filter((val) => winNumbers.includes(val));
+      const res = lotto.filter((val) => winningNumbers.includes(val));
       const hasBonus = lotto.includes(bonusNum);
-      if (lotto.join('') === winNumbers.join('')) {
+      if (lotto.join('') === winningNumbers.join('')) {
         this.places['place1'] += 1;
       } else if (res.length === 5 && hasBonus) {
         this.places['place2'] += 1;

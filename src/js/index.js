@@ -70,7 +70,7 @@ const handleModalOpen = (e) => {
   }
   openModal();
   const places = lottoState.drawLotto(
-    winningNumbers.slice(0, winningNumbers.length - 1),
+    winningNumbers.slice(0, winningNumbers.length - 1).sort((a, b) => a - b),
     winningNumbers.slice(-1)
   );
   renderDrawLottoResult(places);
