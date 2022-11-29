@@ -1,5 +1,5 @@
 import { initStore, resultStore } from '../store/ResultStore.js';
-import { hasSameElementInArray } from '../utils/utils.js';
+import { hasSameElementInArray, countSameElementInBothArray } from '../utils/utils.js';
 import { MAX_LOTTO_NUMBER } from '../constants/lottoConstants';
 
 const $MyLottoInputFormContainer = document.getElementById('lotto-input');
@@ -64,14 +64,7 @@ export function MyLotto({ lottos, isShow }) {
 
 function calcLottoResult(lottos, myLottoNums, bonusNumber) {
   return lottos.map((lotto) => {
-    const sameNumberCount = lotto.reduce((prev, curr, i) => {
-      if (curr === myLottoNums[i]) {
-        return prev + 1;
-      }
-
-      return prev;
-    }, 0);
-
+    const sameNumberCount = countSameElementInBothArray(lotto, myLottoNums)
     const isBonusExist = lotto.some((num) => num === bonusNumber);
 
     if (sameNumberCount === 5 && isBonusExist) {
