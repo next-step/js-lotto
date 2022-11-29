@@ -2,8 +2,9 @@ import { LOTTO_LENGTH, LOTTO_NUMBER_RANGE_MAX, LOTTO_NUMBER_RANGE_MIN } from '..
 import { isAlreadyExist } from '../validators.js';
 
 export default class LottoTicketModel {
-  constructor() {
-    this.winningNumbers = []; // number[];
+  winningNumbers = []; // number[];
+  constructor(originLottos) {
+    this.generate(originLottos);
   }
 
   generate(originLottos) {

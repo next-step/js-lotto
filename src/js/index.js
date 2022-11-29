@@ -53,8 +53,7 @@ const handlePurchaseButton = (e) => {
 const generateLottos = (quantity) => {
   for (let i = 0; i < quantity; i++) {
     const lottoNumbers = lottoState.getLottoNumbers();
-    const lotto = new LottoTicketModel();
-    lotto.generate(lottoNumbers);
+    const lotto = new LottoTicketModel(lottoNumbers);
     lottoState.lottos.push(lotto);
   }
 };
