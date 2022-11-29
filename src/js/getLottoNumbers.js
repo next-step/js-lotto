@@ -1,4 +1,4 @@
-import { LOTTO_CONSTRAINT } from './constants/index.js';
+import { PRICE_UNIT, LOTTO_CONSTRAINT } from './constants/index.js';
 
 const generateRandomNumber = () => {
   return (
@@ -18,7 +18,7 @@ const generatePurchasedLottoToArray = () => {
 };
 
 export const getLottoNumbers = (priceInput) => {
-  const purchasedLottoCount = priceInput / LOTTO_CONSTRAINT.PRICE_UNIT;
+  const purchasedLottoCount = priceInput / PRICE_UNIT;
   return Array(purchasedLottoCount)
     .fill()
     .map(() => generatePurchasedLottoToArray());

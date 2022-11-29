@@ -1,6 +1,6 @@
 import { $ } from './utils/DOM.js';
 
-import { renderModal } from './viewWinningResult.js';
+import { renderModal } from './view/modal.js';
 
 export const openModal = (winningNumbersAndBonus) => {
   $('.modal').classList.add('open');

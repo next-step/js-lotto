@@ -1,14 +1,14 @@
 import { $, $$ } from './utils/DOM.js';
 
-import { getLottoNumbers } from './purchasedLottoNumbers.js';
+import { getLottoNumbers } from './getLottoNumbers.js';
 import { validatePriceInput } from './validatePrice.js';
 import {
-  showPurchasedLotto,
-  showWinningNumbersForm,
+  renderPurchasedLotto,
+  renderWinningNumbersForm,
   renderLottoCount,
   renderLottoItems,
-  showPurchasedLottoNumbers,
-} from './view.js';
+  renderPurchasedLottoNumbers,
+} from './view/purchasedLotto.js';
 import {
   validateWithinLottoNumberRange,
   hasDuplicatedNumber,
@@ -25,8 +25,8 @@ export const handleSubmit = (e) => {
     const lottoNumbersList = getLottoNumbers(priceInput);
     const purchasedLottoCount = lottoNumbersList.length;
 
-    showPurchasedLotto();
-    showWinningNumbersForm();
+    renderPurchasedLotto();
+    renderWinningNumbersForm();
 
     renderLottoCount(purchasedLottoCount);
     renderLottoItems(lottoNumbersList);
@@ -36,7 +36,7 @@ export const handleSubmit = (e) => {
   }
 };
 
-export const handleToggleBtn = (e) => showPurchasedLottoNumbers(e);
+export const handleToggleBtn = (e) => renderPurchasedLottoNumbers(e);
 
 export const handleOpenModal = (e) => {
   e.preventDefault();
@@ -45,7 +45,7 @@ export const handleOpenModal = (e) => {
     const $bonusNumber = $('.bonus-number');
 
     const winningNumbersAndBonus = [...$winningNumbers, $bonusNumber].map(
-      (ele) => ele.valueAsNumber
+      (ele) => ele.valueAsNumber,
     );
 
     validateWithinLottoNumberRange(winningNumbersAndBonus);

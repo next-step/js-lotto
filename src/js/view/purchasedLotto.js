@@ -1,14 +1,14 @@
-import { $, $$ } from './utils/DOM.js';
+import { $, $$ } from '../utils/DOM.js';
 
 const [$lottoCountAndToggle, $winningNumbers] = $$('.purchased-result');
 const $lottoCount = $('.purchased-lotto-count');
 const $lottoList = $('.purchased-lotto-list');
 
-export const showPurchasedLotto = () => {
+export const renderPurchasedLotto = () => {
   $lottoCountAndToggle.classList.remove('hidden');
 };
 
-export const showWinningNumbersForm = () => {
+export const renderWinningNumbersForm = () => {
   $winningNumbers.classList.remove('hidden');
 };
 
@@ -29,7 +29,7 @@ export const renderLottoItems = (lottoNumbersList) => {
   $lottoList.innerHTML = lottoItemTemplate;
 };
 
-export const showPurchasedLottoNumbers = ({ target }) => {
+export const renderPurchasedLottoNumbers = ({ target }) => {
   $$('.lotto-item-numbers').forEach((item) => {
     item.classList.toggle('hidden', !target.checked);
   });
