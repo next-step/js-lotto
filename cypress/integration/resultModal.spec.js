@@ -12,7 +12,7 @@ describe('Result Modal', () => {
     const lottoNumberInputsContainer = cy.get('[data-test-id="lotto-number-inputs-container"]');
     let counter = 1;
     lottoNumberInputsContainer.find('input').each((el) => cy.wrap(el).type(counter++));
-    const lottoSubmitButton = cy.get('[data-test-id="lotto-result-submit-button"]');
+    const lottoSubmitButton = cy.get('[data-test-id="lotto-input"]').get('button');
     lottoSubmitButton.click();
   });
 
