@@ -1,5 +1,6 @@
 import { ErrorPurchase, PurchaseInfo } from '../common/enum.js';
-import Util from '../../utils/util.js';
+import NumberUtil from '../../utils/number.util.js';
+import ArrayUtil from '../../utils/array.util.js';
 
 export default class PurchaseService {
   #value;
@@ -42,9 +43,9 @@ export default class PurchaseService {
     const numberSet = new Set();
 
     while (numberSet.size < 6) {
-      numberSet.add(Util.randomNumber(1, 45));
+      numberSet.add(NumberUtil.randomNumber(1, 45));
     }
 
-    return Util.toAscendingArr(Array.from(numberSet));
+    return ArrayUtil.toAscending(Array.from(numberSet));
   }
 }

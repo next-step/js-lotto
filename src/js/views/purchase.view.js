@@ -22,7 +22,7 @@ export default class PurchaseView extends View {
       {
         target: this.#input,
         event: 'input',
-        handler: this.#amountChanges,
+        handler: this.#numbersOnly,
       },
       {
         target: this.#input,
@@ -39,7 +39,7 @@ export default class PurchaseView extends View {
     super.setEventHandler();
   }
 
-  #amountChanges = (e) => {
+  #numbersOnly = (e) => {
     e.target.value = e.target.value.replace(/[^0-9]/g, '');
   };
 

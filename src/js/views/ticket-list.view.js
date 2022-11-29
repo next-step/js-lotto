@@ -12,6 +12,7 @@ export default class TicketListView extends View {
 
     this.#lottoState = lottoState;
     this.#lottoState.observers.push(this.#onStateChanged);
+    this.#lottoState.reset.push(this.#resetElement);
     this.#setEvent();
   }
 
@@ -49,6 +50,15 @@ export default class TicketListView extends View {
     this.#resultWrap.classList.remove('hide');
     this.#purchaseMessage.innerHTML = `총 ${lotto.length}개를 구매하였습니다.`;
   }
+
+  #resetElement = () => {
+    if (this.#btnViewNumber.checked) {
+      this.#btnViewNumber.checked = false;
+      this.#toggleViewNumbers();
+    }
+
+    this.#resultWrap.classList.add('hide');
+  };
 
   #render(lotto) {
     const list = lotto.map(item => `<li><span class="mx-1 text-4xl">🎟️</span><span class="numbers">${item.join(', ')}</span></li>`);
