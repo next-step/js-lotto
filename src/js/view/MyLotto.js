@@ -6,23 +6,25 @@ const $MyLottoInputFormContainer = document.getElementById('lotto-input');
 const $numberInputCollection = Array.from($MyLottoInputFormContainer.getElementsByTagName('input'));
 const $resultButton = $MyLottoInputFormContainer.getElementsByTagName('button')[0];
 
-$numberInputCollection.forEach(($input, i) => {
+$numberInputCollection.forEach(setLottoInputElement);
+function setLottoInputElement($input, i) {
   $input.setAttribute('required', true);
   $input.setAttribute('min', 1);
   $input.setAttribute('max', MAX_LOTTO_NUMBER);
   $input.setAttribute('aria-label', `$lottery-input-${i + 1}`);
-  $input.addEventListener('keyup', (e) => {
-    const value = e.target.value;
-    if (value.length > 1) {
-      if (i >= $numberInputCollection.length - 1) {
-        $resultButton.focus();
-        return;
-      }
-
-      $numberInputCollection[i + 1].focus();
+  $input.addEventListener('keyup', lottoInputKeyUpHandler);
+}
+function lottoInputKeyUpHandler(e) {
+  const value = e.target.value;
+  if (value.length > 1) {
+    if (i >= $numberInputCollection.length - 1) {
+      $resultButton.focus();
+      return;
     }
-  });
-});
+
+    $numberInputCollection[i + 1].focus();
+  }
+}
 
 let submitEventListener = null;
 
