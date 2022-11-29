@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/Cyjin-jani/js-lotto#readme",
   "devDependencies": {
+    "@babel/core": "^7.20.5",
+    "@babel/eslint-parser": "^7.19.1",
     "cypress": "^10.11.0",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",

@@ -7,9 +7,16 @@
   },
   "extends": ["eslint:recommended", "prettier", "plugin:cypress/recommended"],
   "plugins": ["cypress"],
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaVersion": 12,
-    "sourceType": "module"
+    "sourceType": "module",
+    "requireConfigFile": false,
+    "babelOptions": {
+      "babelrc": false,
+      "configFile": false
+    }
   },
+
   "rules": {}
 }
