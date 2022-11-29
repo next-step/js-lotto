@@ -14,7 +14,7 @@ const renderPrizeResult = (prizeCountState) => {
     )
     .join('');
 
-  $('.prize-result').insertAdjacentHTML('beforeend', template);
+  $('.prize-result').innerHTML = template;
 };
 
 const renderProfitRate = (profitRate) => {
