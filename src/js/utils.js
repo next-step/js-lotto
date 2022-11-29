@@ -22,3 +22,6 @@ export const hasDuplicatedValueInputs = ($inputs, $bonusInput) => {
 
   return values.length !== removedDuplicatedValue.length;
 };
+
+export const hasClass = (target, className) =>
+  target.classList.contains(className);

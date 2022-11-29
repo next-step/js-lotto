@@ -1,8 +1,10 @@
 import { MESSAGE_ABOUT_NOT_DEFINED_TYPE } from "./constants.js";
+import { hasClass } from "./utils.js";
 
 class App {
   #model;
   #view;
+
   constructor({ target, model, view }) {
     this.$target = document.querySelector(target);
     this.$amountInput = document.querySelector("#purchase-amount-input");
@@ -11,7 +13,23 @@ class App {
     this.#model = model;
     this.#view = view;
     this.setEvent();
+    this.handler = {
+      "view-numbers-checkbox": (e) => {
+        this.#view.onViewNumbers(e.target.checked);
+      },
+      modal: () => {
+        this.#view.onViewResult();
+      },
+      "modal-close": () => {
+        this.#view.onViewResult();
+      },
+    };
   }
+
+  onClick = (className) => (e) => {
+    e.stopPropagation();
+    return hasClass(e.target, className) && this.handler[className](e);
+  };
 
   onSubmit(form) {
     const submitHandlers = {
@@ -20,7 +38,14 @@ class App {
         this.render(this.#model.state);
       },
       "winning-number-confirmation-form": () => {
-        this.#model.checkResult(this.$winningInputs, this.$bonusInput);
+        const isValidNumbers = this.#model.isValidNumbers(
+          this.$winningInputs,
+          this.$bonusInput
+        );
+
+        if (!isValidNumbers) return;
+
+        this.#view.onViewResult();
       },
     };
 
@@ -44,11 +69,12 @@ class App {
       this.onSubmit(e.target.id);
     });
 
-    this.$target.addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (e.target.classList.contains("view-numbers-checkbox"))
-        this.#view.onViewNumbers(e.target.checked);
-    });
+    this.$target.addEventListener(
+      "click",
+      this.onClick("view-numbers-checkbox")
+    );
+    this.$target.addEventListener("click", this.onClick("modal"));
+    this.$target.addEventListener("click", this.onClick("modal-close"));
   }
 }
 export default App;

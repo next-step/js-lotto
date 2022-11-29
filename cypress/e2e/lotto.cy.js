@@ -11,6 +11,8 @@ const $lottoDetailSelector = ".lotto-detail";
 const $winningNumberInputSelector = ".winning-number";
 const $bonusNumberInputSelector = ".bonus-number";
 const $checkResultButtonSelector = ".check-result-button";
+const $modal = ".modal";
+const $modalCloseButton = ".modal-close";
 
 describe("행운의 로또 테스트", () => {
   const validateAmountUnit = ({ input, expectedMessage }) => {
@@ -234,6 +236,42 @@ describe("행운의 로또 테스트", () => {
             MESSAGE_ABOUT_DUPLICATION_NUMBER
           );
         });
+    });
+
+    it("결과 확인 버튼을 클릭하면 수익률을 확인할 수 있는 모달이 노출된다.", () => {
+      cy.get($winningNumberInputSelector).each(($number, index) =>
+        cy.get($number).type(`${index + 1}`)
+      );
+      cy.get($bonusNumberInputSelector).type("45");
+      cy.get($checkResultButtonSelector)
+        .click()
+        .then(() => {
+          cy.get($modal).should("have.class", "open");
+        });
+    });
+
+    describe("결과 확인 모달을 닫을 수 있다.", () => {
+      beforeEach(() => {
+        cy.get($winningNumberInputSelector).each(($number, index) =>
+          cy.get($number).type(`${index + 1}`)
+        );
+        cy.get($bonusNumberInputSelector).type("45");
+        cy.get($checkResultButtonSelector).click();
+      });
+      it("결과 확인 모달의 외부를 클릭했을때 모달은 사라진다.", () => {
+        cy.get($modalCloseButton)
+          .click()
+          .then(() => {
+            cy.get($modal).should("not.have.class", "open");
+          });
+      });
+      it("결과 확인 모달의 X 버튼을 클릭했을때 모달은 사라진다.", () => {
+        cy.get($modalCloseButton)
+          .click()
+          .then(() => {
+            cy.get($modal).should("not.have.class", "open");
+          });
+      });
     });
   });
 });

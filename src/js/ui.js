@@ -6,6 +6,7 @@ class Ui {
   #purchasedCount;
   #viewNumbersCheckbox;
   #checkWinningNumberArea;
+  #modal;
 
   constructor() {
     this.#lottoList = document.querySelector("#lotto-list");
@@ -17,6 +18,7 @@ class Ui {
     this.#checkWinningNumberArea = document.querySelector(
       "#check-winning-number-area"
     );
+    this.#modal = document.querySelector(".modal");
   }
 
   onViewNumbers(checked) {
@@ -24,6 +26,14 @@ class Ui {
       $element: this.#lottoList,
       className: "expanded",
       flag: checked,
+    });
+  }
+
+  onViewResult() {
+    toggleClass({
+      $element: this.#modal,
+      className: "open",
+      flag: !this.#modal.classList.contains("open"),
     });
   }
 

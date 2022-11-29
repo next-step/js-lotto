@@ -54,10 +54,12 @@ class Lotto {
     this.#generatorLotto(amount);
   }
 
-  checkResult($inputs, $bonusInput) {
+  isValidNumbers($inputs, $bonusInput) {
     if (hasDuplicatedValueInputs($inputs, $bonusInput)) {
       alert(MESSAGE_ABOUT_DUPLICATION_NUMBER);
+      return false;
     }
+    return true;
   }
 }
 
