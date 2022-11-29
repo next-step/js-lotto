@@ -3,6 +3,10 @@ import { LOTTO_LENGTH, LOTTO_NUMBER_RANGE_MAX, LOTTO_NUMBER_RANGE_MIN } from './
 const lottoNumbers = Array.from({ length: LOTTO_NUMBER_RANGE_MAX }).map(
   (_, i) => i + LOTTO_NUMBER_RANGE_MIN
 );
+// 아래와 같이도 사용이 가능함.
+// const lottoNumbers = Array(LOTTO_NUMBER_RANGE_MAX)
+//   .fill(LOTTO_NUMBER_RANGE_MIN)
+//   .map((min, index) => min + index);
 
 const generateLottoNumbers = () => {
   return lottoNumbers

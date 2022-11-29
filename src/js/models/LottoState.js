@@ -1,24 +1,19 @@
 import { PRIZE_FOR_PLACE } from '../constants.js';
 
 export default class LottoStateModel {
-  constructor() {
-    this.purchasedAmount = 0;
-    this.quantity = 0;
-    this.lottos = [];
-    this.isOpen = false;
-    this.places = {
-      place1: 0,
-      place2: 0,
-      place3: 0,
-      place4: 0,
-      place5: 0,
-    };
-    this.totalProfit = 0;
-  }
+  purchasedAmount = 0;
+  quantity = 0;
+  lottos = [];
+  places = {
+    place1: 0,
+    place2: 0,
+    place3: 0,
+    place4: 0,
+    place5: 0,
+  };
+  totalProfit = 0;
 
-  setIsOpen(openState) {
-    this.isOpen = openState;
-  }
+  constructor() {}
 
   setPurchasedAmount(amount) {
     this.purchasedAmount = amount;

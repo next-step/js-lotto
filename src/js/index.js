@@ -83,7 +83,7 @@ const handleModalClose = () => {
 };
 
 const handleToggleButton = () => {
-  handleToggle(lottoState);
+  handleToggle();
 };
 
 const initPurchaseLotto = () => {
