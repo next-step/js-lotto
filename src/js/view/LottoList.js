@@ -24,11 +24,11 @@ export function LottoList({ lottos, isShowLottoNumbers, isShow }) {
   $lottoListContainer.classList.remove('hide');
   $lottoCount.replaceChildren(`총 ${lottos.length}개를 구매하였습니다.`);
 
-  const Lottos = createElement('ul', { className: 'd-flex flex-wrap', children: lottos.map((lottoNumbers) => Lotto(lottoNumbers, isShowLottoNumbers)) });
+  const Lottos = createElement('ul', { className: 'd-flex flex-wrap', children: lottos.map((lottoNumbers) => createLottoElement(lottoNumbers, isShowLottoNumbers)) });
   $lottoListTable.replaceChildren(Lottos);
 }
 
-function Lotto(numbers, isNumberShow) {
+function createLottoElement(numbers, isNumberShow) {
   const ticket = createElement('span', { className: 'lotto-icon', children: [createTextNode('🎟️ ')] });
 
   const showClassName = isNumberShow ? '' : 'd-none';
