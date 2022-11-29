@@ -11,7 +11,7 @@ describe('Lotto Ticket Management', () => {
   });
 
   it('번호보기 토글버튼을 누르면 로또들의 번호가 옆에 표시된다.', () => {
-    const lottoNumberToggleButton = cy.get('[data-test-id="lotto-number-toggle-button"]');
+    const lottoNumberToggleButton = cy.get('[data-test-id="lotto-list"]').get('label');
     lottoNumberToggleButton.click();
     const lottoList = cy.get('[data-test-id="lotto-table"]').children().children();
 
