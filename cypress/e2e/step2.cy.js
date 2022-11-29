@@ -1,6 +1,6 @@
 import { ERROR_MESSAGE } from '../../src/js/constants/index.js';
 
-describe('로또 결과 확인 테스트', () => {
+describe('당첨 번호 & 보너스 번호 입력 테스트', () => {
   beforeEach(() => {
     cy.visit('../../index.html');
     cy.clickPurchaseBtn(3000);
@@ -42,60 +42,73 @@ describe('로또 결과 확인 테스트', () => {
         cy.get($ele).type(winningNumbers[idx]);
       });
       cy.get('.bonus-number').type(bonus);
+
       alertInvalidNumbers(ERROR_MESSAGE.INVALID_NUMBER_WITHIN_RANGE);
     });
 
     it('당첨 번호가 1 ~ 45 사이의 수가 아니면 alert 창이 뜬다.', () => {
-      const { winningNumbers, bonus } = INVALID_CASE.INVALID_WINNING_NUMBER_WITHIN_RANGE;
+      cy.typeWinningNumbersAndBonus(INVALID_CASE.INVALID_WINNING_NUMBER_WITHIN_RANGE);
 
-      cy.get('.winning-number').each(($ele, idx) => {
-        cy.get($ele).type(winningNumbers[idx]);
-      });
-      cy.get('.bonus-number').type(bonus);
       alertInvalidNumbers(ERROR_MESSAGE.INVALID_NUMBER_WITHIN_RANGE);
     });
 
     it('보너스 번호가 1 ~ 45 사이의 수가 아니면 alert 창이 뜬다.', () => {
-      const { winningNumbers, bonus } = INVALID_CASE.INVALID_BONUS_WITHIN_RANGE;
-      cy.get('.winning-number').each(($ele, idx) => {
-        cy.get($ele).type(winningNumbers[idx]);
-      });
-      cy.get('.bonus-number').type(bonus);
+      cy.typeWinningNumbersAndBonus(INVALID_CASE.INVALID_BONUS_WITHIN_RANGE);
+
       alertInvalidNumbers(ERROR_MESSAGE.INVALID_NUMBER_WITHIN_RANGE);
     });
 
     it('당첨 번호와 보너스 번호 중 중복되는 숫자가 있으면 alert창이 뜬다', () => {
-      const { winningNumbers, bonus } = INVALID_CASE.DUPLICATED;
+      cy.typeWinningNumbersAndBonus(INVALID_CASE.DUPLICATED);
 
-      cy.get('.winning-number').each(($ele, idx) => {
-        cy.get($ele).type(winningNumbers[idx]);
-      });
-      cy.get('.bonus-number').type(bonus);
       alertInvalidNumbers(ERROR_MESSAGE.DUPLICATED_NUMBER);
     });
   });
+});
 
-  context('결과 확인하기 버튼을 누르면 당첨 통계, 수익률 결과가 있는 모달창이 뜬다.', () => {
-    const winningNumbers = [1, 2, 3, 4, 5, 6];
-    const bonus = 7;
+describe('모달창 테스트', () => {
+  before(() => {
+    cy.visit('../../index.html');
 
-    beforeEach(() => {
-      cy.get('.winning-number').each(($ele, idx) => {
-        cy.get($ele).type(winningNumbers[idx]);
-      });
-      cy.get('.bonus-number').type(bonus);
-      cy.get('.open-result-modal-button').click();
-      cy.get('.modal').should('have.class', 'open');
+    cy.clickPurchaseBtn(3000);
+    cy.typeWinningNumbersAndBonus({ winningNumbers: [1, 2, 3, 4, 5, 6], bonus: 7 });
+
+    cy.get('.open-result-modal-button').click();
+  });
+
+  context('결과 확인하기 버튼 기능 테스트', () => {
+    it('결과 확인하기 버튼을 누르면 모달창이 뜬다.', () => {
+      cy.get('.modal').should('be.visible');
     });
 
-    it('당첨 갯수를 확인할 수 있다.', () => {
+    it('모달창에서 당첨 갯수를 확인할 수 있다.', () => {
       cy.get('.winning-count').each(($ele) => {
         cy.get($ele).invoke('text').should('match', /[0-9]/);
       });
     });
 
-    it('수익률을 확인할 수 있다.', () => {
+    it('모달창에서 수익률을 확인할 수 있다.', () => {
       cy.get('.profit-rate-result').invoke('text').should('match', /[0-9]/);
+    });
+  });
+
+  context('모달창의 다시 시작하기 버튼을 누르면 초기화된다.', () => {
+    before(() => {
+      cy.get('.restart-btn').click();
+    });
+
+    it('모달창이 화면에 보이지 않는다.', () => {
+      cy.get('.modal').should('not.be.visible');
+    });
+
+    it('로또 그림과 당첨 번호 input이 화면에 보이지 않는다.', () => {
+      cy.get('.purchased-result').each(($ele) => {
+        cy.get($ele).should('not.be.visible');
+      });
+    });
+
+    it('입력한 로또 구입 금액은 초기화된다.', () => {
+      cy.get('.purchasing-lotto-input').should('have.value', '');
     });
   });
 });
