@@ -4,8 +4,8 @@ describe('My Lotto Input', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5500/')
 
-    const lottoPurchaseInput = cy.get('[data-test-id="lotto-purchase-input"]');
-    const lottoPurchaseButton = cy.get('[data-test-id="lotto-purchase-button"]');
+    const lottoPurchaseInput = cy.get('[data-test-id="lotto-purchase"]').get('input');
+    const lottoPurchaseButton = cy.get('[data-test-id="lotto-purchase"]').get('button');
     lottoPurchaseInput.type('10000');
     lottoPurchaseButton.click();
   });

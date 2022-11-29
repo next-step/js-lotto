@@ -4,8 +4,8 @@ describe('Result Modal', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5500/')
 
-    const lottoPurchaseInput = cy.get('[data-test-id="lotto-purchase-input"]');
-    const lottoPurchaseButton = cy.get('[data-test-id="lotto-purchase-button"]');
+    const lottoPurchaseInput = cy.get('[data-test-id="lotto-purchase"]').get('input');
+    const lottoPurchaseButton = cy.get('[data-test-id="lotto-purchase"]').get('button');
     lottoPurchaseInput.type('10000');
     lottoPurchaseButton.click();
 
@@ -32,6 +32,6 @@ describe('Result Modal', () => {
     cy.get('[data-test-id="lotto-input"]').should('not.be.visible');
 
     cy.get('[data-test-id="lotto-purchase"]').should('be.visible');
-    cy.get('[data-test-id="lotto-purchase-input"]').should('have.value', '');
+    cy.get('[data-test-id="lotto-purchase"]').get('input').should('have.value', '');
   });
 });

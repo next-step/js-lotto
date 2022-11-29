@@ -7,8 +7,8 @@ describe('purchase Lotto', () => {
 
   it('로또 구입 금액을 입력하면 금액에 해당하는 로또를 발급해야 하고 내 로또 입력창이 나와야한다.', () => {
     const lottoPurchase = cy.get('[data-test-id="lotto-purchase"]');
-    const lottoPurchaseInput = cy.get('[data-test-id="lotto-purchase-input"]');
-    const lottoPurchaseButton = cy.get('[data-test-id="lotto-purchase-button"]');
+    const lottoPurchaseInput = cy.get('[data-test-id="lotto-purchase"]').get('input');
+    const lottoPurchaseButton = cy.get('[data-test-id="lotto-purchase"]').get('button');
     lottoPurchase.should('be.visible');
     lottoPurchaseInput.type('10000');
     lottoPurchaseButton.click();
