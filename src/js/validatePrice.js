@@ -1,8 +1,5 @@
-import { ERROR_MESSAGE, PRICE_UNIT } from './constants/index.js';
-
-const isPriceUnitCorrect = (priceInput) => priceInput % PRICE_UNIT === 0;
-
-const isOverMinPrice = (priceInput) => priceInput >= PRICE_UNIT;
+import { ERROR_MESSAGE } from './constants/index.js';
+import { isPriceUnitCorrect, isOverMinPrice } from './utils/validation.js';
 
 export const validatePriceInput = (priceInput) => {
   if (!isOverMinPrice(priceInput)) {

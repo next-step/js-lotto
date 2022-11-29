@@ -1,12 +1,5 @@
 import { LOTTO_CONSTRAINT, ERROR_MESSAGE } from './constants/index.js';
-
-const isEmpty = (number) => Number.isNaN(number);
-
-const isWithinLottoNumberRange = (number) => {
-  return (
-    number >= LOTTO_CONSTRAINT.MIN_IN_LOTTO_NUMBER && number <= LOTTO_CONSTRAINT.MAX_IN_LOTTO_NUMBER
-  );
-};
+import { isEmpty, isWithinLottoNumberRange } from './utils/validation.js';
 
 export const validateWithinLottoNumberRange = (winningNumbersAndBonus) => {
   winningNumbersAndBonus.forEach((number) => {
