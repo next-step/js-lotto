@@ -1,7 +1,7 @@
 import { lottoStore } from '../store/LottoStore.js';
 import { resultStore } from '../store/ResultStore.js';
 import { createRandomNumber } from '../utils/utils.js';
-import { MAX_LOTTO_NUMBER } from '../constants/lottoConstants';
+import { MAX_LOTTO_NUMBER } from '../constants/lottoConstants.js';
 
 const LOTTO_NUMBER_COUNT = 6;
 

@@ -1,6 +1,6 @@
 import { initStore, resultStore } from '../store/ResultStore.js';
 import { hasSameElementInArray, countSameElementInBothArray } from '../utils/utils.js';
-import { MAX_LOTTO_NUMBER } from '../constants/lottoConstants';
+import { MAX_LOTTO_NUMBER } from '../constants/lottoConstants.js';
 
 const $MyLottoInputFormContainer = document.getElementById('lotto-input');
 const $numberInputCollection = Array.from($MyLottoInputFormContainer.getElementsByTagName('input'));
