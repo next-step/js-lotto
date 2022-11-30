@@ -4,7 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^6.9.1"
+    "@faker-js/faker": "^7.6.0",
+    "cypress": "^6.9.1",
+    "cypress-plugin-tab": "^1.0.5",
+    "eslint": "^8.28.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
   },
   "dependencies": {
     "live-server": "^1.2.2"
