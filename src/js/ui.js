@@ -1,4 +1,10 @@
-import { removeAllChildNodes, toggleClass } from "./utils.js";
+import {
+  calculatorReturnLate,
+  getTotalSum,
+  removeAllChildNodes,
+  toggleClass,
+} from "./utils.js";
+import { PRICE_BY_RANK, RANK_BY_MATCHED_NUMBERS } from "./constants.js";
 
 class Ui {
   #lottoList;
@@ -6,6 +12,9 @@ class Ui {
   #purchasedCount;
   #viewNumbersCheckbox;
   #checkWinningNumberArea;
+  #totalReturnRate;
+  #restartButton;
+  #modal;
 
   constructor() {
     this.#lottoList = document.querySelector("#lotto-list");
@@ -17,6 +26,16 @@ class Ui {
     this.#checkWinningNumberArea = document.querySelector(
       "#check-winning-number-area"
     );
+    this.#totalReturnRate = document.querySelector(".total-return-rate");
+    this.#modal = document.querySelector(".modal");
+    this.#restartButton = document.querySelector(".restart-lotto-button");
+    this.$amountInput = document.querySelector("#purchase-amount-input");
+    this.$winningInputs = document.querySelectorAll(".winning-number");
+    this.$bonusInput = document.querySelector(".bonus-number");
+  }
+
+  get modal() {
+    return this.#modal;
   }
 
   onViewNumbers(checked) {
@@ -25,6 +44,10 @@ class Ui {
       className: "expanded",
       flag: checked,
     });
+  }
+
+  onCloseResultModal() {
+    this.#modal.classList.remove("open");
   }
 
   getLottoElement(lotto) {
@@ -44,6 +67,29 @@ class Ui {
     return $newListItem;
   }
 
+  #clearInputs() {
+    this.$amountInput.value = "";
+    this.$bonusInput.value = "";
+    this.$winningInputs.forEach((winningInput) => {
+      winningInput.value = "";
+    });
+  }
+
+  #initilizePurchasedView() {
+    this.#clearInputs();
+    this.#purchasedLottos.classList.remove("display");
+    this.#checkWinningNumberArea.classList.remove("display");
+  }
+
+  #initializeWinningCount() {
+    const $counts = document.querySelectorAll(".match-count");
+
+    $counts.forEach(($count) => {
+      $count.innerText = 0;
+      return $count;
+    });
+  }
+
   #renderLottoElements(lottos) {
     removeAllChildNodes(this.#lottoList);
 
@@ -57,18 +103,57 @@ class Ui {
     this.#purchasedCount.innerText = count;
   }
 
-  #initPurchasedView() {
+  #renderPurchasedView() {
     this.#purchasedLottos.classList.add("display");
     this.#checkWinningNumberArea.classList.add("display");
     this.#lottoList.classList.remove("expanded");
     this.#viewNumbersCheckbox.checked = false;
   }
 
-  render = (state) => {
-    this.#initPurchasedView();
+  renderTotalReturnRate(statistics) {
+    const convertedMatchCountsToArray = Object.entries(statistics);
+    const calculatedAmountByRank = convertedMatchCountsToArray.map(
+      ([key, value]) => PRICE_BY_RANK[key] * value
+    );
+
+    const totalPrizeMoney = getTotalSum(calculatedAmountByRank);
+
+    this.#totalReturnRate.innerText = calculatorReturnLate(
+      totalPrizeMoney,
+      Number(this.$amountInput.value)
+    );
+  }
+
+  renderWinningCount(statistics) {
+    this.#initializeWinningCount();
+
+    const convertedMatchCountsToArray = Object.entries(statistics);
+
+    convertedMatchCountsToArray.forEach(([key, value]) => {
+      const $matchCount = document.querySelector(
+        `.${RANK_BY_MATCHED_NUMBERS[key]}`
+      );
+      $matchCount.innerText = value;
+    });
+  }
+
+  renderModal(statistics) {
+    this.renderTotalReturnRate(statistics);
+    this.renderWinningCount(statistics);
+    this.#modal.classList.add("open");
+  }
+
+  render(state) {
+    this.#renderPurchasedView();
     this.#renderLottoElements(state.lottos);
     this.#renderLottoCount(state.gameCount);
-  };
+  }
+
+  reset() {
+    this.#initilizePurchasedView();
+    this.#initializeWinningCount();
+    this.onCloseResultModal();
+  }
 }
 
 export default Ui;
