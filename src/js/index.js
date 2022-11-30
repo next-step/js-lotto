@@ -4,13 +4,13 @@ import {
   handleShowNumber,
   handleWinningForm,
   handleCloseModal,
+  handleAllReset,
 } from "./eventHandler.js";
 
 const addEvent = () => {
   selector.paymentForm.addEventListener("submit", handlePaymentForm);
   selector.toggleBtn.addEventListener("change", handleShowNumber);
   selector.winningForm.addEventListener("submit", handleWinningForm);
-
   selector.modalClose.addEventListener("click", handleCloseModal);
 };
 
