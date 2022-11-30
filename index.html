@@ -14,11 +14,23 @@
     <link rel="stylesheet" href="./src/css/index.css" />
   </head>
   <body>
-    <!-- <style>
+    <style>
+      purchase-tickets:not(:defined) {
+        display: none;
+      }
+
+      purchase-tickets:defined {
+        display: block;
+      }
+
       purchase-ticket:not(:defined) {
         display: none;
       }
-    </style> -->
+
+      purchase-ticket:defined {
+        display: block;
+      }
+    </style>
     <div id="app" class="p-3">
       <div class="d-flex justify-center mt-5">
         <div class="w-100" id="target">

@@ -1,0 +1,23 @@
+.d-flex {
+  display: flex;
+}
+.lotto-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lotto-container span {
+  display: block;
+  margin-right: 20px;
+}
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+.lotto-detail {
+  font-size: 1.25rem;
+}
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}

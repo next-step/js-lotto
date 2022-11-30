@@ -36,7 +36,7 @@ export default class PurchaseTickets extends HTMLElement {
 
   init() {
     this.template.innerHTML = ` 
-		<link rel="stylesheet" href="./src/css/index.css" />
+		<link rel="stylesheet" href="./src/css/PurchaseTickets.css" />
       <section class="mt-9">
         <div class="d-flex">
           <label class="flex-auto my-0"

@@ -29,7 +29,7 @@ export default class PurchaseTicket extends HTMLElement {
 
   init() {
     this.template.innerHTML = `
-		<link rel="stylesheet" href="./src/css/index.css" />
+		<link rel="stylesheet" href="./src/css/PurchaseTicket.css" />
 		<div class='lotto-container'><span class="mx-1 text-4xl" data-cy="ticket-icon">🎟️ </span>
 		<div class="lotto-details"></div>`;
     this.shadow.appendChild(this.template.content.cloneNode(true));
@@ -37,7 +37,6 @@ export default class PurchaseTicket extends HTMLElement {
 
   render() {
     if (this.shadow.innerHTML === '') this.init();
-
     const lottoDetailElements = this.getDetailElements();
     const $tickets = this.shadow.querySelector('.lotto-details');
     $tickets.innerHTML = lottoDetailElements;
