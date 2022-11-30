@@ -19,7 +19,7 @@ class App {
       },
       modal: () => {
         if (!hasClass(this.#view.modal, "open")) {
-          this.#view.onOpenResultModal();
+          this.openModal();
         } else {
           this.#view.onCloseResultModal();
         }
@@ -29,11 +29,6 @@ class App {
       },
     };
   }
-
-  onClick = (className) => (e) => {
-    e.stopPropagation();
-    return hasClass(e.target, className) && this.handler[className](e);
-  };
 
   onSubmit(form) {
     const submitHandlers = {
@@ -49,7 +44,7 @@ class App {
 
         if (!isValidNumbers) return;
 
-        this.#view.onOpenResultModal();
+        this.openModal();
       },
     };
 
@@ -62,9 +57,10 @@ class App {
     );
   }
 
-  render(state) {
-    this.#view.render(state);
-  }
+  onClick = (className) => (e) => {
+    e.stopPropagation();
+    return hasClass(e.target, className) && this.handler[className](e);
+  };
 
   setEvent() {
     this.$target.addEventListener("submit", (e) => {
@@ -79,6 +75,15 @@ class App {
     );
     this.$target.addEventListener("click", this.onClick("modal"));
     this.$target.addEventListener("click", this.onClick("modal-close"));
+  }
+
+  openModal() {
+    this.#model.checkWinnerNumber(this.$winningInputs, this.$bonusInput);
+    this.#view.renderModal(this.#model.state.winningStatistics);
+  }
+
+  render(state) {
+    this.#view.render(state);
   }
 }
 export default App;

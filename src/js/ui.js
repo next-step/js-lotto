@@ -33,10 +33,6 @@ class Ui {
     });
   }
 
-  onOpenResultModal() {
-    this.#modal.classList.add("open");
-  }
-
   onCloseResultModal() {
     this.#modal.classList.remove("open");
   }
@@ -78,11 +74,16 @@ class Ui {
     this.#viewNumbersCheckbox.checked = false;
   }
 
-  render = (state) => {
+  renderModal(statistics) {
+    console.log("statistics", statistics);
+    this.#modal.classList.add("open");
+  }
+
+  render(state) {
     this.#initPurchasedView();
     this.#renderLottoElements(state.lottos);
     this.#renderLottoCount(state.gameCount);
-  };
+  }
 }
 
 export default Ui;

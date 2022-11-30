@@ -2,6 +2,8 @@ import {
   isValidAmountUnit,
   hasDuplicatedValueInputs,
   getRandomNumber,
+  getInputValues,
+  getMatchedValueCountInArray,
 } from "./utils.js";
 import {
   LOTTO_GAME_COUNT,
@@ -19,6 +21,7 @@ class Lotto {
     this.#state = {
       lottos: [],
       gameCount: 0,
+      winningStatistics: {},
     };
   }
 
@@ -43,6 +46,34 @@ class Lotto {
 
     this.#state.gameCount = gameCount;
     this.#state.lottos = games.map(this.#generateLottoNumbers);
+  }
+
+  checkWinnerNumber($winningNumbers, $bonusNumber) {
+    const winningNumbers = getInputValues($winningNumbers);
+    const bonusNumber = Number($bonusNumber.value);
+
+    const numberOfMatchedNumbers = this.#state.lottos.map((lotto) => {
+      const matchedValueCount = getMatchedValueCountInArray(
+        lotto,
+        winningNumbers
+      );
+      const hasBonusNumber = !!lotto.find((num) => num === bonusNumber);
+
+      if (matchedValueCount === 5 && hasBonusNumber) return "bonus";
+
+      return matchedValueCount >= 3 && hasBonusNumber
+        ? matchedValueCount + 1
+        : matchedValueCount;
+    });
+
+    const result = numberOfMatchedNumbers.reduce((acc, cur) => {
+      if (cur < 3) return acc;
+
+      acc[cur] = (acc[cur] || 0) + 1;
+      return acc;
+    }, {});
+
+    this.#state.winningStatistics = result;
   }
 
   purchaseLotto(amount) {

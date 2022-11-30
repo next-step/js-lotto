@@ -14,6 +14,9 @@ export const toggleClass = ({ $element, className, flag }) => {
     : $element.classList.remove(className);
 };
 
+export const getInputValues = ($inputs) =>
+  Array.from($inputs).map(({ value }) => Number(value));
+
 export const getCombinedInputValues = ($inputs, $bonusInput) =>
   Array.from([...$inputs, $bonusInput]).map(({ value }) => value);
 
@@ -23,6 +26,9 @@ export const hasDuplicatedValueInputs = ($inputs, $bonusInput) => {
 
   return values.length !== removedDuplicatedValues.length;
 };
+
+export const getMatchedValueCountInArray = (value1, value2) =>
+  value1.filter((val) => value2.includes(val)).length;
 
 export const hasClass = (target, className) =>
   target.classList.contains(className);
