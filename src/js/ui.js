@@ -1,4 +1,10 @@
-import { removeAllChildNodes, toggleClass } from "./utils.js";
+import {
+  calculatorReturnLate,
+  getTotalSum,
+  removeAllChildNodes,
+  toggleClass,
+} from "./utils.js";
+import { PRICE_BY_RANK, RANK_BY_MATCHED_NUMBERS } from "./constants.js";
 
 class Ui {
   #lottoList;
@@ -6,6 +12,7 @@ class Ui {
   #purchasedCount;
   #viewNumbersCheckbox;
   #checkWinningNumberArea;
+  #totalReturnRate;
   #modal;
 
   constructor() {
@@ -18,6 +25,7 @@ class Ui {
     this.#checkWinningNumberArea = document.querySelector(
       "#check-winning-number-area"
     );
+    this.#totalReturnRate = document.querySelector(".total-return-rate");
     this.#modal = document.querySelector(".modal");
   }
 
@@ -74,8 +82,45 @@ class Ui {
     this.#viewNumbersCheckbox.checked = false;
   }
 
-  renderModal(statistics) {
-    console.log("statistics", statistics);
+  renderTotalReturnRate(statistics, purchasePrice) {
+    const convertedMatchCountsToArray = Object.entries(statistics);
+    const calculatedAmountByRank = convertedMatchCountsToArray.map(
+      ([key, value]) => PRICE_BY_RANK[key] * value
+    );
+
+    const totalPrizeMoney = getTotalSum(calculatedAmountByRank);
+
+    this.#totalReturnRate.innerText = calculatorReturnLate(
+      totalPrizeMoney,
+      purchasePrice
+    );
+  }
+
+  initializeWinningCount() {
+    const $counts = document.querySelectorAll(".match-count");
+
+    $counts.forEach(($count) => {
+      $count.innerText = 0;
+      return $count;
+    });
+  }
+
+  renderWinningCount(statistics) {
+    this.initializeWinningCount();
+
+    const convertedMatchCountsToArray = Object.entries(statistics);
+
+    convertedMatchCountsToArray.forEach(([key, value]) => {
+      const $matchCount = document.querySelector(
+        `.${RANK_BY_MATCHED_NUMBERS[key]}`
+      );
+      $matchCount.innerText = value;
+    });
+  }
+
+  renderModal(statistics, purchasePrice) {
+    this.renderTotalReturnRate(statistics, purchasePrice);
+    this.renderWinningCount(statistics);
     this.#modal.classList.add("open");
   }
 

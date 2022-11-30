@@ -1,3 +1,5 @@
+import { PERCENT } from "./constants.js";
+
 export const isValidAmountUnit = (amount) => /000$/.test(amount);
 
 export const removeAllChildNodes = (parent) => {
@@ -32,3 +34,12 @@ export const getMatchedValueCountInArray = (value1, value2) =>
 
 export const hasClass = (target, className) =>
   target.classList.contains(className);
+
+export const calculatorReturnLate = (profits, investment) =>
+  Math.trunc(((profits - investment) / investment) * PERCENT);
+
+export const getTotalSum = (numbers) =>
+  numbers.reduce((acc, cur) => {
+    acc += cur;
+    return acc;
+  }, 0);

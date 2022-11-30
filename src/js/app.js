@@ -21,11 +21,11 @@ class App {
         if (!hasClass(this.#view.modal, "open")) {
           this.openModal();
         } else {
-          this.#view.onCloseResultModal();
+          this.closeModal();
         }
       },
       "modal-close": () => {
-        this.#view.onCloseResultModal();
+        this.closeModal();
       },
     };
   }
@@ -79,7 +79,14 @@ class App {
 
   openModal() {
     this.#model.checkWinnerNumber(this.$winningInputs, this.$bonusInput);
-    this.#view.renderModal(this.#model.state.winningStatistics);
+    this.#view.renderModal(
+      this.#model.state.winningStatistics,
+      this.$amountInput.value
+    );
+  }
+
+  closeModal() {
+    this.#view.onCloseResultModal();
   }
 
   render(state) {
