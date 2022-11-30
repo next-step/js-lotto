@@ -1,17 +1,30 @@
-const $showResultButton = document.querySelector('.open-result-modal-button')
-const $modalClose = document.querySelector('.modal-close')
-const $modal = document.querySelector('.modal')
-const $lottoNumbersToggleButton = document.querySelector(
-  '.lotto-numbers-toggle-button'
-)
+import { LottoList, initParmLottoList } from "./view/LottoList.js";
+import { MyLotto, initMyLottoParam } from './view/MyLotto.js';
+import { LottoPurchase, initLottoPurchase } from './view/LottoPurchase.js';
+import { ResultModal, initResultModalParam } from "./view/ResultModal.js";
 
-const onModalShow = () => {
-  $modal.classList.add('open')
-}
+import { lottoStore } from './store/LottoStore.js';
+import { resultStore } from './store/ResultStore.js';
 
-const onModalClose = () => {
-  $modal.classList.remove('open')
-}
+import { memoization } from './core/Memoization';
 
-$showResultButton.addEventListener('click', onModalShow)
-$modalClose.addEventListener('click', onModalClose)
+const memoizedLottoList = memoization(LottoList, initParmLottoList);
+const memoizedMyLotto = memoization(MyLotto, initMyLottoParam);
+
+lottoStore.subscribe((store) => {
+  memoizedLottoList(store);
+  memoizedMyLotto(store);
+});
+
+const memoizedLottoPurchase = memoization(LottoPurchase, initLottoPurchase);
+const memoizedResultModal = memoization(ResultModal, initResultModalParam);
+
+resultStore.subscribe((store) => {
+  memoizedLottoPurchase(store);
+  memoizedResultModal(store);
+});
+
+const lottoList = document.getElementById('lotto-list');
+const lottoInput = document.getElementById('lotto-input');
+lottoList.classList.add('hide');
+lottoInput.classList.add('hide');

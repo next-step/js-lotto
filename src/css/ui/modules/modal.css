@@ -28,12 +28,17 @@
 }
 
 .modal-close {
-  margin: 20px;
   width: 20px;
+  height: 20px;
+  margin: 20px;
   position: absolute;
   right: 10px;
   top: 10px;
   cursor: pointer;
+
+  border: none;
+  background: none;
+  box-sizing: content-box;
 }
 
 svg {

@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "test": "npm run dev & npm run cypress:run",
+    "dev": "live-server --open=./index.html --port=5000",
+    "cypress:run": "cypress run",
+    "cypress:open": "cypress open"
+  },
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^6.9.1",
+    "live-server": "^1.2.2"
   }
 }
