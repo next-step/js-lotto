@@ -5,10 +5,10 @@ export class ResultStatsView extends View {
   #lottoState;
   #winningNumberService;
   #result;
-  #btnClose = document.querySelector('.btn-close');
-  #btnReset = document.querySelector('.btn-reset');
-  #resultTable = document.querySelector('.result-table tbody');
-  #messageReturn = document.querySelector('.message-return');
+  #btnClose = this.element.querySelector('.btn-close');
+  #btnReset = this.element.querySelector('.btn-reset');
+  #resultTable = this.element.querySelector('.result-table tbody');
+  #messageReturn = this.element.querySelector('.message-return');
 
   constructor(lottoState, winningNumberService) {
     super('.result-stats');
@@ -55,14 +55,17 @@ export class ResultStatsView extends View {
     this.#result = this.#winningNumberService.getMatchResult();
   }
 
-  #render() {
+  #setTemplate() {
     const list = this.#result.map(item => `<tr class="text-center">
                   <td class="p-3">${item.numberOfMatches}개 ${item.allowBonus ? '+ 보너스볼' : ''}</td>
                   <td class="p-3">${NumberUtil.formatting(item.prize)}</td>
                   <td class="p-3">${item.count}개</td>
                 </tr>`);
+    return list.join('');
+  }
 
-    this.#resultTable.innerHTML = list.join('');
+  #render() {
+    this.#resultTable.innerHTML = this.#setTemplate();
     this.#messageReturn.innerHTML = `당신의 총 수익률은 ${this.#winningNumberService.getRateOfReturn()}%입니다.`;
   }
 }

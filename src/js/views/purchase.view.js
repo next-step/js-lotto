@@ -5,9 +5,9 @@ import { PurchaseInfo } from '../common/enum.js';
 export default class PurchaseView extends View {
   #lottoState;
   #purchaseService;
-  #input = document.getElementById('input-purchase');
-  #btnSubmit = document.getElementById('btn-purchase-submit');
-  #inputMessage = document.querySelector('#form-purchase .error-message');
+  #input = this.element.querySelector('#input-purchase');
+  #btnSubmit = this.element.querySelector('#btn-purchase-submit');
+  #inputMessage = this.element.querySelector('.error-message');
 
   constructor(lottoState) {
     super('#form-purchase');

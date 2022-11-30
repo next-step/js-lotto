@@ -3,9 +3,9 @@ import View from './view.js';
 export default class TicketListView extends View {
   #lottoState;
   #resultWrap = document.querySelector('.result-wrap');
-  #ticketList = document.querySelector('.ticket-list');
-  #purchaseMessage = document.querySelector('.message-purchase');
-  #btnViewNumber = document.querySelector('.btn-toggle-numbers');
+  #ticketList = this.element.querySelector('.ticket-list');
+  #purchaseMessage = this.element.querySelector('.message-purchase');
+  #btnViewNumber = this.element.querySelector('.btn-toggle-numbers');
 
   constructor(lottoState) {
     super('.ticket-list-wrap');
@@ -37,18 +37,17 @@ export default class TicketListView extends View {
       return;
     }
 
-    this.#setElement(state);
+    this.#setElement();
     this.#render(state);
   };
 
-  #setElement(lotto) {
+  #setElement() {
     if (this.#btnViewNumber.checked) {
       this.#btnViewNumber.checked = false;
       this.#toggleViewNumbers();
     }
 
     this.#resultWrap.classList.remove('hide');
-    this.#purchaseMessage.innerHTML = `총 ${lotto.length}개를 구매하였습니다.`;
   }
 
   #resetElement = () => {
@@ -60,9 +59,14 @@ export default class TicketListView extends View {
     this.#resultWrap.classList.add('hide');
   };
 
-  #render(lotto) {
+  #setTemplate(lotto) {
     const list = lotto.map(item => `<li><span class="mx-1 text-4xl">🎟️</span><span class="numbers">${item.join(', ')}</span></li>`);
 
-    this.#ticketList.innerHTML = list.join('');
+    return list.join('');
+  }
+
+  #render(lotto) {
+    this.#ticketList.innerHTML = this.#setTemplate(lotto);
+    this.#purchaseMessage.innerHTML = `총 ${lotto.length}개를 구매하였습니다.`;
   }
 }
