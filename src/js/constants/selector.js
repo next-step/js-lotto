@@ -20,7 +20,3 @@ export const selector = {
 
   allReset: $(".reset"),
 };
-
-export const winningSelector = {
-  earningRation: $(".profit"),
-};
