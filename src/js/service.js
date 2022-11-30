@@ -17,13 +17,9 @@ export const issueLotto = (number) => {
     ...generateRandomList(),
   ]);
 
-  // /**@TODO N회 렌더링 제거할 것 */
-  randomList.map((list) =>
-    selector.lottoContainer.insertAdjacentHTML(
-      "beforeend",
-      lottoAndNumberView(list)
-    )
-  );
+  const renderRandomList = randomList.map((list) => lottoAndNumberView(list));
+
+  selector.lottoContainer.insertAdjacentHTML("afterbegin", renderRandomList);
 };
 
 export const buyLotto = (payment) => {

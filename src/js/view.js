@@ -16,8 +16,7 @@ export const hideElement = (element) => {
   element.classList.add("d-none");
 };
 
-export const lottoAndNumberView = (randomList) =>
-  `
+export const lottoAndNumberView = (randomList) => `
 <div class="lotto-packet">
 <span class="mx-1 text-4xl">🎟️ </span>
 <span class="lotto-container-hidden lotto-number">${randomList}</span>
