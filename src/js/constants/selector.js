@@ -1,6 +1,8 @@
 import {$, $$} from "../utils/index.js";
 
 export const selector = {
+  purchaseSection: $(".purchase-section"),
+
   lottoContainer: $(".lotto-container"),
   lottoCounter: $(".lotto-amount"),
 
@@ -9,9 +11,8 @@ export const selector = {
 
   toggleBtn: $(".lotto-toggle-button"),
 
-  winningForm: $(".winning-number-form-submit"),
+  winningForm: $(".winning-number-form"),
   winningInput: $$(".winning-number"),
-
   bonusInput: $(".bonus-number"),
 
   modalOpen: $(".modal"),

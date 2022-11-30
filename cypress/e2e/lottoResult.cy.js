@@ -2,7 +2,7 @@ const buttonSelector = ".open-result-modal-button";
 const inputSelector = ".winning-number";
 const modalSelector = ".modal";
 const bonusInputSelector = ".bonus-number";
-const resetButtonSelector = ".btn-cyan";
+const resetButtonSelector = ".reset";
 const spanSelector = `.lotto-amount`;
 
 describe("당첨 결과기능 테스트", () => {
@@ -34,8 +34,14 @@ describe("당첨 결과기능 테스트", () => {
 
   context("다시하기 테스트", () => {
     it("다시하기 버튼을 누르면 초기화 된다.", () => {
+      cy.get(inputSelector).each((input, idx) => {
+        cy.wrap(input).type(idx + 1);
+      });
+      cy.get(bonusInputSelector).type(7);
+      cy.get(buttonSelector).click();
+      cy.get(modalSelector).should("have.class", "open");
       cy.get(resetButtonSelector).click();
-      cy.get(spanSelector).should("have.value", 0);
+      cy.get(spanSelector).should("be.not.visible");
     });
   });
 });

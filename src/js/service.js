@@ -3,8 +3,14 @@ import {selector} from "./constants/selector.js";
 import {generateRandomList} from "./utils/index.js";
 import {lottoAndNumberView} from "./view.js";
 
-export const issueLotto = (number) => {
+export const resetLotto = () => {
   selector.lottoContainer.innerHTML = null;
+  selector.lottoCounter.innerText = 0;
+};
+
+export const issueLotto = (number) => {
+  if (!number) resetLotto();
+
   selector.lottoCounter.innerText = number;
 
   const randomList = Array.from({length: number}, () => [

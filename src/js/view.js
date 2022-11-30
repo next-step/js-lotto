@@ -1,5 +1,21 @@
 import {$} from "./utils/index.js";
 
+export const showModal = (element) => {
+  element.classList.add("open");
+};
+
+export const hideModal = (element) => {
+  element.classList.remove("open");
+};
+
+export const showElement = (element) => {
+  element.classList.remove("d-none");
+};
+
+export const hideElement = (element) => {
+  element.classList.add("d-none");
+};
+
 export const lottoAndNumberView = (randomList) =>
   `
 <div class="lotto-packet">

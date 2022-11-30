@@ -1,14 +1,27 @@
-import {selector, winningSelector} from "./constants/selector.js";
-import {buyLotto, rankLotto, priceEarningRatio} from "./service.js";
-import {getWinningNumbers, getRandomNumbers} from "./utils/index.js";
+import {selector} from "./constants/selector.js";
+import {
+  issueLotto,
+  buyLotto,
+  rankLotto,
+  priceEarningRatio,
+  resetLotto,
+} from "./service.js";
+import {$$, getWinningNumbers, getRandomNumbers} from "./utils/index.js";
 import {isDuplicateNumber} from "./isValidation.js";
 import {MESSAGE} from "./constants/index.js";
-import {$$} from "./utils/index.js";
-
-import {paintRankLotto, paintRevenue} from "./view.js";
+import {
+  hideElement,
+  hideModal,
+  paintRankLotto,
+  paintRevenue,
+  showElement,
+  showModal,
+} from "./view.js";
 
 export const handlePaymentForm = (event) => {
   event.preventDefault();
+  showElement(selector.purchaseSection);
+  showElement(selector.winningForm);
 
   const payment = selector.paymentInput.valueAsNumber;
   buyLotto(payment);
@@ -30,7 +43,7 @@ export const handleWinningForm = (event) => {
   ];
 
   if (!isDuplicateNumber(winningAndBonusNumber)) {
-    selector.modalOpen.classList.add("open");
+    showModal(selector.modalOpen);
 
     const randomNumberList = getRandomNumbers(".lotto-number");
     const resultRankLotto = rankLotto(winningAndBonusNumber, randomNumberList);
@@ -45,5 +58,16 @@ export const handleWinningForm = (event) => {
 };
 
 export const handleCloseModal = () => {
-  selector.modalOpen.classList.remove("open");
+  hideModal(selector.modalOpen);
+};
+
+export const handleAllReset = () => {
+  hideElement(selector.purchaseSection);
+  hideElement(selector.winningForm);
+  handleCloseModal();
+
+  buyLotto();
+  issueLotto();
+  resetLotto();
+  $$("input").forEach((input) => (input.value = null));
 };
