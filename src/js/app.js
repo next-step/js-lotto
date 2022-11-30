@@ -7,9 +7,6 @@ class App {
 
   constructor({ target, model, view }) {
     this.$target = document.querySelector(target);
-    this.$amountInput = document.querySelector("#purchase-amount-input");
-    this.$winningInputs = document.querySelectorAll(".winning-number");
-    this.$bonusInput = document.querySelector(".bonus-number");
     this.#model = model;
     this.#view = view;
     this.setEvent();
@@ -27,19 +24,27 @@ class App {
       "modal-close": () => {
         this.closeModal();
       },
+      "reset-lotto-button": () => {
+        this.reset();
+      },
     };
   }
 
   onSubmit(form) {
     const submitHandlers = {
       "purchase-input-form": () => {
-        this.#model.purchaseLotto(this.$amountInput.value);
+        const isValid = this.#model.purchaseLotto(
+          this.#view.$amountInput.value
+        );
+
+        if (!isValid) return;
+
         this.render(this.#model.state);
       },
       "winning-number-confirmation-form": () => {
         const isValidNumbers = this.#model.isValidNumbers(
-          this.$winningInputs,
-          this.$bonusInput
+          this.#view.$winningInputs,
+          this.#view.$bonusInput
         );
 
         if (!isValidNumbers) return;
@@ -75,13 +80,17 @@ class App {
     );
     this.$target.addEventListener("click", this.onClick("modal"));
     this.$target.addEventListener("click", this.onClick("modal-close"));
+    this.$target.addEventListener("click", this.onClick("reset-lotto-button"));
   }
 
   openModal() {
-    this.#model.checkWinnerNumber(this.$winningInputs, this.$bonusInput);
+    this.#model.checkWinnerNumber(
+      this.#view.$winningInputs,
+      this.#view.$bonusInput
+    );
     this.#view.renderModal(
       this.#model.state.winningStatistics,
-      this.$amountInput.value
+      this.#view.$amountInput.value
     );
   }
 
@@ -91,6 +100,10 @@ class App {
 
   render(state) {
     this.#view.render(state);
+  }
+
+  reset() {
+    this.#view.reset();
   }
 }
 export default App;

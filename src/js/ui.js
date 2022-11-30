@@ -13,6 +13,7 @@ class Ui {
   #viewNumbersCheckbox;
   #checkWinningNumberArea;
   #totalReturnRate;
+  #restartButton;
   #modal;
 
   constructor() {
@@ -27,6 +28,10 @@ class Ui {
     );
     this.#totalReturnRate = document.querySelector(".total-return-rate");
     this.#modal = document.querySelector(".modal");
+    this.#restartButton = document.querySelector(".restart-lotto-button");
+    this.$amountInput = document.querySelector("#purchase-amount-input");
+    this.$winningInputs = document.querySelectorAll(".winning-number");
+    this.$bonusInput = document.querySelector(".bonus-number");
   }
 
   get modal() {
@@ -62,6 +67,29 @@ class Ui {
     return $newListItem;
   }
 
+  #clearInputs() {
+    this.$amountInput.value = "";
+    this.$bonusInput.value = "";
+    this.$winningInputs.forEach((winningInput) => {
+      winningInput.value = "";
+    });
+  }
+
+  #initilizePurchasedView() {
+    this.#clearInputs();
+    this.#purchasedLottos.classList.remove("display");
+    this.#checkWinningNumberArea.classList.remove("display");
+  }
+
+  #initializeWinningCount() {
+    const $counts = document.querySelectorAll(".match-count");
+
+    $counts.forEach(($count) => {
+      $count.innerText = 0;
+      return $count;
+    });
+  }
+
   #renderLottoElements(lottos) {
     removeAllChildNodes(this.#lottoList);
 
@@ -75,14 +103,14 @@ class Ui {
     this.#purchasedCount.innerText = count;
   }
 
-  #initPurchasedView() {
+  #renderPurchasedView() {
     this.#purchasedLottos.classList.add("display");
     this.#checkWinningNumberArea.classList.add("display");
     this.#lottoList.classList.remove("expanded");
     this.#viewNumbersCheckbox.checked = false;
   }
 
-  renderTotalReturnRate(statistics, purchasePrice) {
+  renderTotalReturnRate(statistics) {
     const convertedMatchCountsToArray = Object.entries(statistics);
     const calculatedAmountByRank = convertedMatchCountsToArray.map(
       ([key, value]) => PRICE_BY_RANK[key] * value
@@ -92,21 +120,12 @@ class Ui {
 
     this.#totalReturnRate.innerText = calculatorReturnLate(
       totalPrizeMoney,
-      purchasePrice
+      Number(this.$amountInput.value)
     );
   }
 
-  initializeWinningCount() {
-    const $counts = document.querySelectorAll(".match-count");
-
-    $counts.forEach(($count) => {
-      $count.innerText = 0;
-      return $count;
-    });
-  }
-
   renderWinningCount(statistics) {
-    this.initializeWinningCount();
+    this.#initializeWinningCount();
 
     const convertedMatchCountsToArray = Object.entries(statistics);
 
@@ -118,16 +137,22 @@ class Ui {
     });
   }
 
-  renderModal(statistics, purchasePrice) {
-    this.renderTotalReturnRate(statistics, purchasePrice);
+  renderModal(statistics) {
+    this.renderTotalReturnRate(statistics);
     this.renderWinningCount(statistics);
     this.#modal.classList.add("open");
   }
 
   render(state) {
-    this.#initPurchasedView();
+    this.#renderPurchasedView();
     this.#renderLottoElements(state.lottos);
     this.#renderLottoCount(state.gameCount);
+  }
+
+  reset() {
+    this.#initilizePurchasedView();
+    this.#initializeWinningCount();
+    this.onCloseResultModal();
   }
 }
 

@@ -79,10 +79,11 @@ class Lotto {
   purchaseLotto(amount) {
     if (!isValidAmountUnit(amount)) {
       alert(MESSAGE_ABOUT_UNIT_OF_AMOUNT);
-      return;
+      return false;
     }
 
     this.#generatorLotto(amount);
+    return true;
   }
 
   isValidNumbers($inputs, $bonusInput) {
