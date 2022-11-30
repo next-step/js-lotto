@@ -15,8 +15,8 @@ export const selector = {
   winningInput: $$(".winning-number"),
   bonusInput: $(".bonus-number"),
 
-  modalOpen: $(".modal"),
-  modalClose: $(".modal-close"),
+  modal: $(".modal"),
+  modalCloseBtn: $(".modal-close"),
 
   allReset: $(".reset"),
 };

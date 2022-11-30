@@ -43,7 +43,7 @@ export const handleWinningForm = (event) => {
   ];
 
   if (!isDuplicateNumber(winningAndBonusNumber)) {
-    showModal(selector.modalOpen);
+    showModal(selector.modal);
 
     const randomNumberList = getRandomNumbers(".lotto-number");
     const resultRankLotto = rankLotto(winningAndBonusNumber, randomNumberList);
@@ -58,7 +58,7 @@ export const handleWinningForm = (event) => {
 };
 
 export const handleCloseModal = () => {
-  hideModal(selector.modalOpen);
+  hideModal(selector.modal);
 };
 
 export const handleAllReset = () => {
