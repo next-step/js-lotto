@@ -14,13 +14,12 @@ import { INITIAL_STATE } from '../utils/constant.js';
 
 const actionCreator = newState => {
   store.setState(newState);
+  console.log(store.getState());
   subject.notifyAll();
 };
 
 export const setPurchasePrice = purchasePrice => {
-  const state = store.getState();
-  store.setState({ ...state, ...purchasePrice });
-  // actionCreator({ purchasePrice });
+  store.setState({ purchasePrice });
 };
 
 export const getTickets = purchasePrice => {
@@ -47,7 +46,7 @@ export const calculatePrize = () => {
 };
 
 export const toggleModal = isChecked => {
-  actionCreator({ showResult: isChecked });
+  actionCreator({ isModalShown: isChecked });
 };
 
 export const clearState = () => {

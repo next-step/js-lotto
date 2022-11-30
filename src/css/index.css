@@ -51,19 +51,3 @@ purchase-ticket:not(:defined) {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
 } */
-
-purchase-tickets:not(:defined) {
-  display: none;
-}
-
-purchase-tickets:defined {
-  display: block;
-}
-
-purchase-ticket:not(:defined) {
-  display: none;
-}
-
-purchase-ticket:defined {
-  display: block;
-}

@@ -3,7 +3,7 @@ export const MAX_PRICE = 100000;
 export const LOTTO_COUNT = 6;
 export const LOTTO_MIN = 1;
 export const LOTTO_MAX = 45;
-export const FIVE_BONUS = '5-bonus';
+export const FIVE_BONUS = '5.5';
 
 export const WINNING_NUMBER_COUNT = 7;
 
@@ -22,37 +22,29 @@ export const INITIAL_STATE = {
   tickets: [],
   isNumberVisible: false,
   winningNumbers: [],
-  showResult: false,
+  isModalShown: false,
   winningScore: {
     3: 0,
     4: 0,
     5: 0,
-    '5-bonus': 0,
+    5.5: 0,
     6: 0,
   },
   profit: 0,
 };
 
-export const WINNING_PRICE = {
-  5: '5_000',
-  4: '50_000',
-  3: '1_500_000',
-  2: '30_000_000',
-  1: '2_000_000_000',
+const PRIZE_TABLE = {
+  5: 5_000,
+  4: 50_000,
+  3: 1_500_000,
+  2: 30_000_000,
+  1: 2_000_000_000,
 };
 
 export const PRICE_STANDARD = {
-  3: '5_000',
-  4: '50_000',
-  5: '1_500_000',
-  '5-bonus': '30_000_000',
-  6: '2_000_000_000',
+  3: PRIZE_TABLE[5],
+  4: PRIZE_TABLE[4],
+  5: PRIZE_TABLE[3],
+  5.5: PRIZE_TABLE[2],
+  6: PRIZE_TABLE[1],
 };
-
-// export const PRICE_STANDARD = {
-//   3: WINNING_PRICE[5],
-//   4: '50_000',
-//   5: '1_500_000',
-//   '5-bonus': '30_000_000',
-//   6: '2_000_000_000',
-// };

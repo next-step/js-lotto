@@ -1,7 +1,7 @@
 import { store } from '../../store/state.js';
 import { subject } from '../../index.js';
 import { clearState, toggleModal } from '../../store/actions.js';
-import { PRICE_STANDARD } from '../../utils/constant.js';
+import { PRICE_STANDARD, FIVE_BONUS } from '../../utils/constant.js';
 
 export default class WinningResult extends HTMLElement {
   constructor() {
@@ -45,7 +45,6 @@ export default class WinningResult extends HTMLElement {
   }
 
   init() {
-    const { profit } = store.getState();
     this.template.innerHTML = `
 			<link rel="stylesheet" href="./src/css/WinningResult.css" />
 			<div class="modal" data-cy="result-modal">
@@ -66,12 +65,11 @@ export default class WinningResult extends HTMLElement {
 								</tr>
 							</thead>
 							<tbody>
-								${this.getResultElement()}
 							</tbody>
 						</table>
 					</div>
 					<p class="text-center font-bold">
-						당신의 총 수익률은 <span data-cy="profit-rate">${profit}</span>%입니다.
+						당신의 총 수익률은 <span data-cy="profit-rate"></span>%입니다.
 					</p>
 					<div class="d-flex justify-center mt-5">
 						<button type="button" class="btn btn-cyan" data-cy="reset-button">
@@ -87,27 +85,36 @@ export default class WinningResult extends HTMLElement {
 
   getResultElement() {
     const { winningScore } = store.getState();
-
     return Object.entries(PRICE_STANDARD)
-      .sort((a, b) => a[1].length - b[1].length)
+      .sort((a, b) => a[1] - b[1])
       .map(standard => {
         return `<tr class="text-center">
-				<td class="p-3">${standard[0] === '5-bonus' ? '5개 + 보너스볼' : `${standard[0]}개`}</td>
-				<td class="p-3">${standard[1].replaceAll('_', ',')}</td>
+				<td class="p-3">${standard[0] === FIVE_BONUS ? '5개 + 보너스볼' : `${standard[0]}개`}</td>
+				<td class="p-3">${standard[1].toLocaleString('ko-KR')}</td>
 				<td class="p-3" data-cy='winning-count'>${winningScore[standard[0]]}개</td>
 			</tr>`;
       })
       .join('');
   }
 
+  // <td class="p-3">${standard[1].replaceAll('_', ',')}</td> -->
+  // <td class="p-3">${standard[1].toLocaleString('ko-KR')}</td>
+
   render() {
-    // !: showResult 바꾸기 isVISIBLE 뭐 이런걸로
-    const { showResult } = store.getState();
+    const { isModalShown, profit } = store.getState();
     if (this.shadow.innerHTML === '') this.init();
     const $modal = this.shadow.querySelector('.modal');
 
-    if (showResult === false) $modal.classList.remove('open');
-    else $modal.classList.add('open');
+    if (!isModalShown) {
+      $modal.classList.remove('open');
+      return;
+    }
+
+    const $tbody = this.shadow.querySelector('table tbody');
+    $tbody.innerHTML = this.getResultElement();
+    const $profit = this.shadow.querySelector('span[data-cy="profit-rate"]');
+    $profit.innerHTML = profit;
+    $modal.classList.add('open');
   }
 }
 
