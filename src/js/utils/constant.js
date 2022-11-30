@@ -3,6 +3,7 @@ export const MAX_PRICE = 100000;
 export const LOTTO_COUNT = 6;
 export const LOTTO_MIN = 1;
 export const LOTTO_MAX = 45;
+export const FIVE_BONUS = '5-bonus';
 
 export const WINNING_NUMBER_COUNT = 7;
 
@@ -32,6 +33,14 @@ export const INITIAL_STATE = {
   profit: 0,
 };
 
+export const WINNING_PRICE = {
+  5: '5_000',
+  4: '50_000',
+  3: '1_500_000',
+  2: '30_000_000',
+  1: '2_000_000_000',
+};
+
 export const PRICE_STANDARD = {
   3: '5_000',
   4: '50_000',
@@ -39,3 +48,11 @@ export const PRICE_STANDARD = {
   '5-bonus': '30_000_000',
   6: '2_000_000_000',
 };
+
+// export const PRICE_STANDARD = {
+//   3: WINNING_PRICE[5],
+//   4: '50_000',
+//   5: '1_500_000',
+//   '5-bonus': '30_000_000',
+//   6: '2_000_000_000',
+// };

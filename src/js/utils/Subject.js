@@ -12,6 +12,7 @@ export default class Subject {
   }
 
   notifyAll() {
-    this.observers.forEach(observer => observer.onStateChange());
+    // this.observers.forEach(observer => observer.onStateChange());
+    this.observers.forEach(observer => observer.render());
   }
 }

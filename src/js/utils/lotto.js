@@ -8,7 +8,7 @@ export const getTicketCount = purchasePrice => {
 export const getRandomNumbers = () => {
   const set = new Set();
   while (set.size < LOTTO_COUNT) {
-    const value = Math.floor(Math.random() * (LOTTO_MAX - LOTTO_MIN + 1) + LOTTO_MIN);
+    const value = Math.floor(Math.random() * (LOTTO_MAX - LOTTO_MIN + 1) + 1);
     set.add(value);
   }
   return Array.from(set);
@@ -21,6 +21,7 @@ export const getTicketNumbers = ticketAmount => {
 export const getWinningNumbers = inputNumbers => {
   const winningNumbers = [];
   inputNumbers.forEach(element => winningNumbers.push(Number(element.value)));
+  console.log(winningNumbers);
   return winningNumbers;
 };
 

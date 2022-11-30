@@ -1,9 +1,26 @@
-let state = {};
+import { INITIAL_STATE } from '../utils/constant.js';
 
-export const setState = newState => {
-  state = newState;
-};
+// let state = {};
 
-export const getState = () => {
-  return state;
-};
+// export const setState = newState => {
+//   state = { ...state, ...newState };
+//   console.log(state);
+// };
+
+// export const getState = () => {
+//   return state;
+// };
+
+// setState(INITIAL_STATE);
+
+export const store = (() => {
+  let state = {};
+  return {
+    setState: newState => {
+      state = { ...state, ...newState };
+    },
+    getState: () => state,
+  };
+})();
+
+store.setState(INITIAL_STATE);

@@ -1,16 +1,12 @@
 import { subject } from '../index.js';
-import { getState } from '../store/state.js';
+import { store } from '../store/state.js';
 
 export default class PurchaseTicket extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: 'open' });
+    this.template = document.createElement('template');
     subject.subscribe(this);
-    this.index = Number(this.getAttribute('index'));
-  }
-
-  onStateChange() {
-    this.render();
   }
 
   disconnectedCallback() {
@@ -21,47 +17,31 @@ export default class PurchaseTicket extends HTMLElement {
     this.render();
   }
 
+  getDetailElements() {
+    const { isNumberVisible, tickets } = store.getState();
+    const index = Number(this.getAttribute('index'));
+
+    return isNumberVisible
+      ? `<span class="lotto-detail" data-cy="lotto-numbers"
+			>${tickets[index].join(', ')}</span>`
+      : '';
+  }
+
+  init() {
+    this.template.innerHTML = `
+		<link rel="stylesheet" href="./src/css/index.css" />
+		<div class='lotto-container'><span class="mx-1 text-4xl" data-cy="ticket-icon">🎟️ </span>
+		<div class="lotto-details"></div>`;
+    this.shadow.appendChild(this.template.content.cloneNode(true));
+  }
+
   render() {
-    const { isNumberVisible, tickets } = getState();
+    if (this.shadow.innerHTML === '') this.init();
 
-    const lottoNumberElements =
-      isNumberVisible === true
-        ? `<span class="lotto-detail" data-cy='lotto-numbers'>${tickets[this.index].join(
-            ', ',
-          )}</span>`
-        : '';
-
-    this.shadow.innerHTML = `
-			${style}
-			<div class='lotto-container'><span class="mx-1 text-4xl" data-cy="ticket-icon">🎟️ </span>
-			${lottoNumberElements}`;
+    const lottoDetailElements = this.getDetailElements();
+    const $tickets = this.shadow.querySelector('.lotto-details');
+    $tickets.innerHTML = lottoDetailElements;
   }
 }
-const style = `
-	<style>
-		.d-flex {
-				display: flex;
-		}
-		.lotto-container {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		.lotto-container span {
-				display: block;
-				margin-right: 20px;
-		}
-		.mx-1 {
-				margin-left: 0.25rem;
-				margin-right: 0.25rem;
-		}
-		.lotto-detail {
-				font-size: 1.25rem;
-		}
-		.text-4xl {
-				font-size: 2.25rem;
-				line-height: 2.5rem;
-		}
-	</style>
-`;
+
 customElements.define('purchase-ticket', PurchaseTicket);
