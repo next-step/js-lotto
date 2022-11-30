@@ -97,9 +97,6 @@ export default class WinningResult extends HTMLElement {
       .join('');
   }
 
-  // <td class="p-3">${standard[1].replaceAll('_', ',')}</td> -->
-  // <td class="p-3">${standard[1].toLocaleString('ko-KR')}</td>
-
   render() {
     const { isModalShown, profit } = store.getState();
     if (this.shadow.innerHTML === '') this.init();

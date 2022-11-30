@@ -1,5 +1,7 @@
 import { ERROR_MESSAGES, MAX_PRICE, UNIT_OF_PRICE, WINNING_NUMBER_COUNT } from './constant.js';
 
+const isPriceNegative = inputPrice => inputPrice && typeof inputPrice !== 'number';
+
 export const isValidatePrice = inputPrice => {
   try {
     if (inputPrice < 0) {
@@ -11,10 +13,8 @@ export const isValidatePrice = inputPrice => {
     if (inputPrice % UNIT_OF_PRICE > 0 || inputPrice === 0) {
       throw Error(ERROR_MESSAGES.INCORRECT_UNIT_OF_PRICE);
     }
-    if (inputPrice) {
-      if (typeof inputPrice !== 'number') {
-        throw Error(ERROR_MESSAGES.INCORRECT_TYPE_OF_PRICE);
-      }
+    if (isPriceNegative(inputPrice)) {
+      throw Error(ERROR_MESSAGES.INCORRECT_TYPE_OF_PRICE);
     }
   } catch (error) {
     return alert(error.message);
@@ -24,8 +24,7 @@ export const isValidatePrice = inputPrice => {
 
 const isUnique = winningNumbers => {
   const uniqueNumberCount = new Set(winningNumbers).size;
-  if (uniqueNumberCount === WINNING_NUMBER_COUNT) return true;
-  return false;
+  return uniqueNumberCount === WINNING_NUMBER_COUNT;
 };
 
 const isInValidRange = winningNumbers => {
@@ -43,8 +42,7 @@ export const checkWinningNumbers = winningNumbers => {
       throw Error(ERROR_MESSAGES.NOT_UNIQUE_WINNING_NUMBER);
     }
   } catch (error) {
-    alert(error.message);
-    return false;
+    return alert(error.message);
   }
   return true;
 };
