@@ -17,15 +17,30 @@ registry.add('counter', counterView);
 registry.add('lottoNumbers', lottoNumbersView);
 
 const state = {
-  purchaseAmount: 7000,
-  toggleOn: true,
-  modalOn: true,
+  purchaseAmount: 0,
+  toggleOn: false,
+  modalOn: false,
+};
+
+const events = {
+  toggleLottoNumbers: (isToggleOn) => {
+    state.toggleOn = isToggleOn;
+    render();
+  },
+  isShowModal: (isShowModal) => {
+    state.modalOn = isShowModal;
+    render();
+  },
+  purchaseLotto: (amount) => {
+    state.purchaseAmount = amount;
+    render();
+  },
 };
 
 const render = () => {
   window.requestAnimationFrame(() => {
     const main = $('#root');
-    const newMain = registry.renderRoot(main, state);
+    const newMain = registry.renderRoot(main, state, events);
     applyDiff(document.body, main, newMain);
   });
 };
