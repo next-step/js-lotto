@@ -16,20 +16,27 @@ export const generateRandomList = () => {
   return lottoNumbers;
 };
 
-export const getWinningNumbers = (element) => {
-  const numbers = new Set();
+export const getWinningNumbers = (number) => {
+  const winningNumberSet = new Set();
 
-  numbers.add(Array.from(element).map((el) => el.valueAsNumber));
+  winningNumberSet.add(Array.from(number).map((el) => el.valueAsNumber));
 
-  return [...numbers];
+  const winningNumberArr = [...winningNumberSet];
+
+  return winningNumberArr;
 };
 
-export const getRandomNumbers = (elements) => {
-  const numbers = new Set();
+export const getRandomNumbers = (lotto) => {
+  const lottoNumbersSet = new Set();
+  const lottoContainer = [...$$(lotto)];
 
-  [...$$(elements)].map((item) => [
-    ...numbers.add(item.textContent.split(",").map((string) => +string)),
+  lottoContainer.map((number) => [
+    ...lottoNumbersSet.add(
+      number.textContent.split(",").map((string) => +string)
+    ),
   ]);
 
-  return [...numbers];
+  const lottoNumberArr = [...lottoNumbersSet];
+
+  return lottoNumberArr;
 };

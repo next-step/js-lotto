@@ -1,3 +1,4 @@
+import {selector} from "./constants/selector.js";
 import {$} from "./utils/index.js";
 
 export const showModal = (element) => {
@@ -16,14 +17,18 @@ export const hideElement = (element) => {
   element.classList.add("d-none");
 };
 
-export const lottoAndNumberView = (randomList) => `
+export const viewLottoCount = (number) => {
+  selector.lottoCounter.innerText = number;
+};
+
+export const viewLottoAndNumber = (randomList) => `
 <div class="lotto-packet">
 <span class="mx-1 text-4xl">🎟️ </span>
 <span class="lotto-container-hidden lotto-number">${randomList}</span>
 </div>
 `;
 
-export const paintRankLotto = (rankLotto) => {
+export const viewRankLotto = (rankLotto) => {
   const {first, second, third, fourth, fifth} = rankLotto;
 
   $(".winning-count-3").textContent = fifth;
@@ -33,6 +38,6 @@ export const paintRankLotto = (rankLotto) => {
   $(".winning-count-6").textContent = first;
 };
 
-export const paintRevenue = (result) => {
+export const viewRevenue = (result) => {
   $(".profit").textContent = result;
 };

@@ -1,7 +1,7 @@
 import {LOTTO, LOTTO_REVENUE} from "./constants/index.js";
 import {selector} from "./constants/selector.js";
 import {generateRandomList} from "./utils/index.js";
-import {lottoAndNumberView} from "./view.js";
+import {viewLottoAndNumber, viewLottoCount} from "./view.js";
 
 export const resetLotto = () => {
   selector.lottoContainer.innerHTML = null;
@@ -10,14 +10,13 @@ export const resetLotto = () => {
 
 export const issueLotto = (number) => {
   if (!number) resetLotto();
-
-  selector.lottoCounter.innerText = number;
+  viewLottoCount(number);
 
   const randomList = Array.from({length: number}, () => [
     ...generateRandomList(),
   ]);
 
-  const renderRandomList = randomList.map((list) => lottoAndNumberView(list));
+  const renderRandomList = randomList.map((list) => viewLottoAndNumber(list));
 
   selector.lottoContainer.insertAdjacentHTML("afterbegin", renderRandomList);
 };

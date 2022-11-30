@@ -12,8 +12,8 @@ import {MESSAGE} from "./constants/index.js";
 import {
   hideElement,
   hideModal,
-  paintRankLotto,
-  paintRevenue,
+  viewRankLotto,
+  viewRevenue,
   showElement,
   showModal,
 } from "./view.js";
@@ -50,8 +50,8 @@ export const handleWinningForm = (event) => {
     const payment = selector.paymentInput.valueAsNumber;
     const earningRatio = priceEarningRatio(payment, resultRankLotto);
 
-    paintRankLotto(resultRankLotto);
-    paintRevenue(earningRatio);
+    viewRankLotto(resultRankLotto);
+    viewRevenue(earningRatio);
   } else {
     alert(MESSAGE.DUPLICATED_LOTTO_NUMBER);
   }
