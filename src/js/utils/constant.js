@@ -30,7 +30,7 @@ export const INITIAL_STATE = {
     5.5: 0,
     6: 0,
   },
-  profit: 0,
+  PROFIT: 0,
 };
 
 const PRIZE_TABLE = {
@@ -41,7 +41,7 @@ const PRIZE_TABLE = {
   1: 2_000_000_000,
 };
 
-export const PRICE_STANDARD = {
+export const PRIZE_STANDARD = {
   3: PRIZE_TABLE[5],
   4: PRIZE_TABLE[4],
   5: PRIZE_TABLE[3],

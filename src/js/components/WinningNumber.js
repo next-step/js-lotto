@@ -74,6 +74,7 @@ export default class WinningNumber extends HTMLElement {
 				결과 확인하기
 			</button>
 		</form>`;
+
     this.shadow.appendChild(this.template.content.cloneNode(true));
   }
 

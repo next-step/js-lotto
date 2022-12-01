@@ -37,8 +37,8 @@ export default class PurchaseTicket extends HTMLElement {
 
   render() {
     if (this.shadow.innerHTML === '') this.init();
-    const lottoDetailElements = this.getDetailElements();
     const $tickets = this.shadow.querySelector('.lotto-details');
+    const lottoDetailElements = this.getDetailElements();
     $tickets.innerHTML = lottoDetailElements;
   }
 }

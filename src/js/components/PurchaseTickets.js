@@ -1,4 +1,3 @@
-// import { getState } from '../store/state.js';
 import { store } from '../store/state.js';
 import { toggleShowNumbers } from '../store/actions.js';
 import { subject } from '../index.js';

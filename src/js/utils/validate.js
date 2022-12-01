@@ -35,10 +35,10 @@ const isInValidRange = winningNumbers => {
 
 export const checkWinningNumbers = winningNumbers => {
   try {
-    if (isInValidRange(winningNumbers) === false) {
+    if (!isInValidRange(winningNumbers)) {
       throw Error(ERROR_MESSAGES.INVALID_WINNING_NUMBER);
     }
-    if (isUnique(winningNumbers) === false) {
+    if (!isUnique(winningNumbers)) {
       throw Error(ERROR_MESSAGES.NOT_UNIQUE_WINNING_NUMBER);
     }
   } catch (error) {

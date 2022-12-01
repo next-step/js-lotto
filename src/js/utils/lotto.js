@@ -5,7 +5,7 @@ import {
   LOTTO_MAX,
   FIVE_BONUS,
   LOTTO_MIN,
-  PRICE_STANDARD,
+  PRIZE_STANDARD,
 } from './constant.js';
 
 export const getTicketCount = purchasePrice => {
@@ -31,14 +31,15 @@ export const getWinningNumbers = inputNumbers => {
   return winningNumbers;
 };
 
+const isFiveBonus = (ticket, count, bonusNumber) => count === 5 && ticket.includes(bonusNumber);
+
 export const countMatchingNumbers = (tickets, numbers) => {
   const winningNumbers = numbers;
   const bonusNumber = numbers.pop();
-  const isFiveBonus = (ticket, count) => count === 5 && ticket.includes(bonusNumber);
 
   return tickets.map(ticket => {
     const matchingCount = ticket.filter(number => winningNumbers.includes(number)).length;
-    if (isFiveBonus(ticket, matchingCount) === true) return FIVE_BONUS;
+    if (isFiveBonus(ticket, matchingCount, bonusNumber) === true) return FIVE_BONUS;
     return matchingCount;
   });
 };
@@ -60,7 +61,7 @@ export const convertWinningNumber = stringNumber => {
 
 export const getTotalPrize = winningScore => {
   return Object.keys(winningScore).reduce((acc, key) => {
-    const prize = PRICE_STANDARD[`${key}`];
+    const prize = PRIZE_STANDARD[`${key}`];
     const count = winningScore[key];
     return acc + prize * count;
   }, 0);

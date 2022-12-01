@@ -1,7 +1,7 @@
 import { store } from '../../store/state.js';
 import { subject } from '../../index.js';
 import { clearState, toggleModal } from '../../store/actions.js';
-import { PRICE_STANDARD, FIVE_BONUS } from '../../utils/constant.js';
+import { PRIZE_STANDARD, FIVE_BONUS } from '../../utils/constant.js';
 
 export default class WinningResult extends HTMLElement {
   constructor() {
@@ -15,7 +15,7 @@ export default class WinningResult extends HTMLElement {
     toggleModal(false);
   }
 
-  handlerReset() {
+  handleReset() {
     document
       .querySelector('purchase-price')
       .shadowRoot.querySelector('form[data-cy="purchase-form"]')
@@ -33,7 +33,8 @@ export default class WinningResult extends HTMLElement {
     $close.addEventListener('click', this.handleClose);
 
     const $resetBtn = this.shadow.querySelector('button[data-cy="reset-button"]');
-    $resetBtn.addEventListener('click', this.handlerReset);
+    $resetBtn.addEventListener('resetForms', this.handleReset);
+    $resetBtn.dispatchEvent(resetFormEvent);
   }
 
   disconnectedCallback() {
@@ -83,17 +84,21 @@ export default class WinningResult extends HTMLElement {
     this.setEvent();
   }
 
+  getPrizeName(name) {
+    return name === FIVE_BONUS ? '5개 + 보너스볼' : `${name}개`;
+  }
+
   getResultElement() {
     const { winningScore } = store.getState();
-    return Object.entries(PRICE_STANDARD)
+    return Object.entries(PRIZE_STANDARD)
       .sort((a, b) => a[1] - b[1])
-      .map(standard => {
-        return `<tr class="text-center">
-				<td class="p-3">${standard[0] === FIVE_BONUS ? '5개 + 보너스볼' : `${standard[0]}개`}</td>
+      .map(
+        standard => `<tr class="text-center">
+				<td class="p-3">${this.getPrizeName()}</td>
 				<td class="p-3">${standard[1].toLocaleString('ko-KR')}</td>
 				<td class="p-3" data-cy='winning-count'>${winningScore[standard[0]]}개</td>
-			</tr>`;
-      })
+			</tr>`,
+      )
       .join('');
   }
 

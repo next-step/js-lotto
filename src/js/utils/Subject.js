@@ -1,18 +1,21 @@
 export default class Subject {
   constructor() {
-    this.observers = [];
+    this.observers = new Set();
   }
 
   subscribe(observer) {
-    this.observers.push(observer);
+    this.observers.add(observer);
   }
 
   unsubscribe(observer) {
-    this.observers.splice(this.observers.indexOf(observer), 1);
+    this.observers.delete(observer);
+  }
+
+  notice(observer) {
+    observer.render();
   }
 
   notifyAll() {
-    // this.observers.forEach(observer => observer.onStateChange());
-    this.observers.forEach(observer => observer.render());
+    this.observers.forEach(observer => this.notice(observer));
   }
 }

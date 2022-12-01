@@ -1,6 +1,5 @@
 // import { getState, setState } from './state.js';
 import { store } from './state.js';
-
 import { subject } from '../index.js';
 import {
   getTicketCount,
@@ -14,7 +13,6 @@ import { INITIAL_STATE } from '../utils/constant.js';
 
 const actionCreator = newState => {
   store.setState(newState);
-  console.log(store.getState());
   subject.notifyAll();
 };
 
