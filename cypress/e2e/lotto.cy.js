@@ -1,4 +1,4 @@
-import { ERROR_MSSAGE, LOTTO } from '../../src/js/utils/constants.js';
+import { ERROR_MSSAGE, LOTTO, SELECTOR } from '../../src/js/utils/constants.js';
 
 const $purchaseInputSelector = '[data-cy="purchase-amount"]';
 
@@ -33,7 +33,7 @@ describe('LOTTO APLICATION을 테스트한다.', () => {
 
       cy.purchaseLotto(1234).then(() => {
         expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MSSAGE.AMOUNT);
-      })
+      });
     });
 
     it('1000원 단위의 금액이 입력되면 templates이 보여진다.', () => {

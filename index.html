@@ -15,60 +15,8 @@
       <span class="lotto-numbers d-none" data-component="lottoNumbers"></span>
     </li>
   </template>
-  <template id="lotto-app">
-    <div class="d-flex justify-center mt-5">
-      <div class="w-100">
-        <h1 class="text-center">🎱 행운의 로또</h1>
-        <form id="input-price-form" class="mt-5">
-          <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.
-          </label>
-          <div class="d-flex">
-            <input name="purchase-amount" type="number" class="purchase-amount w-100 mr-2 pl-2" placeholder="구입 금액"
-              min="1000" max="100000" required data-cy="purchase-amount" />
-            <button type="submit" class="purchase-button btn btn-cyan" data-cy="purchase-button">확인</button>
-          </div>
-        </form>
-        <section id="purchased-lottos" class="mt-9 d-none">
-          <div class="d-flex">
-            <label class="flex-auto my-0">총 <span id="total-purchased" data-component="counter">5</span>개를 구매하였습니다.</label>
-            <div class="flex-auto d-flex justify-end pr-1">
-              <label class="switch">
-                <input type="checkbox" class="lotto-numbers-toggle-button" />
-                <span class="text-base font-normal">번호보기</span>
-              </label>
-            </div>
-          </div>
-          <ul class="lotto-images d-flex flex-wrap" data-component="lotto"></ul>
-        </section>
-        <form id="input-lotto-nums" class="mt-9 d-none">
-          <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
-          <div class="d-flex">
-            <div>
-              <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
-              <div>
-                <input type="number" class="winning-number mx-1 text-center" />
-                <input type="number" class="winning-number mx-1 text-center" />
-                <input type="number" class="winning-number mx-1 text-center" />
-                <input type="number" class="winning-number mx-1 text-center" />
-                <input type="number" class="winning-number mx-1 text-center" />
-                <input type="number" class="winning-number mx-1 text-center" />
-              </div>
-            </div>
-            <div class="bonus-number-container flex-grow">
-              <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
-              <div class="d-flex justify-center">
-                <input type="number" class="bonus-number text-center" />
-              </div>
-            </div>
-          </div>
-          <button type="button" class="open-result-modal-button mt-5 btn btn-cyan w-100">
-            결과 확인하기
-          </button>
-        </form>
-      </div>
-    </div>
-  
-    <div class="modal">
+
+  <template id="lotto-modal">
       <div class="modal-inner p-10">
         <div class="modal-close">
           <svg viewbox="0 0 40 40">
@@ -119,6 +67,63 @@
         <div class="d-flex justify-center mt-5">
           <button type="button" class="btn btn-cyan">다시 시작하기</button>
         </div>
+      </div>
+  </template>
+
+  <template id="lotto-app">
+    <div>
+      <div class="d-flex justify-center mt-5">
+        <div class="w-100">
+          <h1 class="text-center">🎱 행운의 로또</h1>
+          <form id="input-price-form" class="mt-5">
+            <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.
+            </label>
+            <div class="d-flex">
+              <input name="purchase-amount" type="number" class="purchase-amount w-100 mr-2 pl-2" placeholder="구입 금액"
+                min="1000" max="100000" required data-cy="purchase-amount" />
+              <button type="submit" class="purchase-button btn btn-cyan" data-cy="purchase-button">확인</button>
+            </div>
+          </form>
+          <section id="purchased-lottos" class="mt-9 d-none">
+            <div class="d-flex">
+              <label class="flex-auto my-0">총 <span id="total-purchased" data-component="counter">5</span>개를 구매하였습니다.</label>
+              <div class="flex-auto d-flex justify-end pr-1">
+                <label class="switch">
+                  <input type="checkbox" class="lotto-numbers-toggle-button" />
+                  <span class="text-base font-normal">번호보기</span>
+                </label>
+              </div>
+            </div>
+            <ul class="lotto-images d-flex flex-wrap" data-component="lotto"></ul>
+          </section>
+          <form id="input-lotto-nums" class="mt-9 d-none">
+            <label class="flex-auto d-inline-block mb-3">지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label>
+            <div class="d-flex">
+              <div>
+                <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
+                <div>
+                  <input type="number" class="winning-number mx-1 text-center" min="1" max="45" required/>
+                  <input type="number" class="winning-number mx-1 text-center" min="1" max="45" required/>
+                  <input type="number" class="winning-number mx-1 text-center" min="1" max="45" required/>
+                  <input type="number" class="winning-number mx-1 text-center" min="1" max="45" required/>
+                  <input type="number" class="winning-number mx-1 text-center" min="1" max="45" required/>
+                  <input type="number" class="winning-number mx-1 text-center" min="1" max="45" required/>
+                </div>
+              </div>
+              <div class="bonus-number-container flex-grow">
+                <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
+                <div class="d-flex justify-center">
+                  <input type="number" class="bonus-number text-center" />
+                </div>
+              </div>
+            </div>
+            <button type="button" class="open-result-modal-button mt-5 btn btn-cyan w-100">
+              결과 확인하기
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="modal">
       </div>
     </div>
   </template>

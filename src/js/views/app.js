@@ -1,5 +1,6 @@
 import { $ } from '../utils/dom.js';
-import { SELECTOR } from '../utils/constants.js';
+import { SELECTOR, ERROR_MSSAGE } from '../utils/constants.js';
+import { isValidateAmount } from '../utils/validator.js';
 let template;
 
 const getTemplate = () => {
@@ -21,6 +22,10 @@ const addEvents = (targetElement, events) => {
       event.preventDefault();
       const formData = new FormData(event.target);
       const purchaseAmount = formData.get('purchase-amount');
+      if (!isValidateAmount(purchaseAmount)) {
+        alert(ERROR_MSSAGE.AMOUNT);
+        return;
+      }
       events.purchaseLotto(purchaseAmount);
     }
   );

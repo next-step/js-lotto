@@ -24,7 +24,7 @@ const SELECTOR = {
   LOTTO_NUM_TOGGLE: '.lotto-numbers-toggle-button',
   LOTTO_NUMS: '.lotto-numbers',
 
-  // Input Lotto Nums
+  //Lotto Input Form
   INPUT_LOTTO_NUMS: '#input-lotto-nums',
 };
 
