@@ -1,7 +1,8 @@
 import { $ } from './utils/dom.js';
-
+import { LOTTO } from './utils/constants.js';
 import registry from './registry.js';
 import applyDiff from './applyDiff.js';
+import Lotto from './Lotto.js';
 
 import appView from './views/app.js';
 import lottoView from './views/lotto.js';
@@ -16,6 +17,7 @@ registry.add('lottoNumbers', lottoNumbersView);
 
 const state = {
   purchaseAmount: 0,
+  lottos: [],
   toggleOn: false,
   modalOn: false,
 };
@@ -31,6 +33,8 @@ const events = {
   },
   purchaseLotto: (amount) => {
     state.purchaseAmount = amount;
+    const ticketCount = amount / LOTTO.PRICE_UNIT;
+    state.lottos = Array.from({ length: ticketCount }, () => new Lotto());
     render();
   },
 };

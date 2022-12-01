@@ -4,7 +4,7 @@ let template;
 
 const getTemplate = () => {
   if (!template) {
-    template = $('#lotto-app');
+    template = $(SELECTOR.LOTTO_APP);
   }
   return template.content.firstElementChild.cloneNode(true);
 };
@@ -43,6 +43,6 @@ export default (targetElement, state, events) => {
     showPurchaseResult(newApp);
   }
 
-  addEvents(newApp, events);
+  addEvents(newApp, events, state);
   return newApp;
 };

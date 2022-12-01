@@ -10,11 +10,14 @@ const LOTTO = {
 };
 
 const SELECTOR = {
+  // Lotto App
+  LOTTO_APP: '#lotto-app',
   //Purchase Form
   PURCHASE_FORM: '#input-price-form',
   PURCHASE_INPUT: '.purchase-amount',
 
   //Purchase Result
+  LOTTO_ITEM: '#lotto-item',
   PURCHASED_LOTTO: '#purchased-lottos',
   TOTAL_PURCHASED: '#total-purchased',
   LOTTO_IMAGES: '.lotto-images',

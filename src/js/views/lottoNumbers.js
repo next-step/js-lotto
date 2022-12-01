@@ -1,6 +1,3 @@
-import { SELECTOR } from '../utils/constants.js';
-import { $all } from '../utils/dom.js';
-
 const showLottoNums = (element) => {
   element.classList.remove('d-none');
 };
