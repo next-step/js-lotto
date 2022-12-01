@@ -23,13 +23,13 @@ body {
   height: 36px;
 }
 
-.lotto-conatiner {
+.lotto-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.lotto-conatiner span {
+.lotto-container span {
   display: block;
   margin-right: 20px;
 }
@@ -37,3 +37,17 @@ body {
 .lotto-detail {
   font-size: 1.25rem;
 }
+
+/* purchase-tickets:not(:defined) {
+  display: block;
+  height: 100vh;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+purchase-ticket:not(:defined) {
+  display: block;
+  height: 100vh;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+} */

@@ -26,6 +26,15 @@
 
 Cypress.Commands.add('getDataset', dataset => cy.get(`[data-cy=${dataset}]`));
 Cypress.Commands.add('purchaseLotto', price => {
-  cy.get('[data-cy="purchase-price-input"]').type(price);
-  cy.get('[data-cy="purchase-price-button"]').click();
+  cy.getDataset('purchase-price-input').type(price);
+  cy.getDataset('purchase-price-button').click();
+});
+
+Cypress.Commands.add('typeWinningNumbers', numbers => {
+  cy.getDataset('winning-number').each((number, index) => {
+    cy.wrap(number).type(numbers[index]);
+  });
+
+  const bonusNumber = numbers[numbers.length - 1];
+  cy.getDataset('bonus-number').type(bonusNumber);
 });

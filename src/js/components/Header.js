@@ -1,19 +1,21 @@
-// eslint-disable-next-line class-methods-use-this
-import Component from '../core/Component.js';
-
-export default class Header extends Component {
-  template() {
-    this.templateHTML = `
-		<div class="d-flex justify-center mt-5">
-			<div class="w-100" id="target">
-				<h1 class="text-center">🎱 행운의 로또</h1>
-			</div>
-		</div>
-		`;
+export default class Header extends HTMLElement {
+  constructor() {
+    super();
+    this.shadow = this.attachShadow({ mode: 'open' });
+    this.template = document.createElement('template');
   }
 
-  render() {
-    this.template();
-    this.$target.innerHTML = this.templateHTML;
+  connectedCallback() {
+    this.init();
+  }
+
+  init() {
+    this.template.innerHTML = `
+		<link rel="stylesheet" href="./src/css/index.css" />
+		<h1 class="text-center">🎱 행운의 로또</h1>`;
+
+    this.shadow.appendChild(this.template.content.cloneNode(true));
   }
 }
+
+customElements.define('lotto-header', Header);

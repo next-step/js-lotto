@@ -1,65 +1,51 @@
-import Component from '../core/Component.js';
-import { checkUnitOfPrice } from '../utils/validate.js';
+import { isValidatePrice } from '../utils/validate.js';
+import { setPurchasePrice, getTickets } from '../store/actions.js';
 
-export default class PurchasePrice extends Component {
-  constructor($target, state, issueTicket) {
-    super($target, state);
-    this.issueTicket = issueTicket;
+export default class PurchasePrice extends HTMLElement {
+  constructor() {
+    super();
+    this.template = document.createElement('template');
+    this.shadow = this.attachShadow({ mode: 'open' });
+  }
+
+  handleOnSubmit(event) {
+    event.preventDefault();
+    const { value: inputValue } = event.target.elements['purchase-price'];
+    const purchasePrice = Number(inputValue);
+    if (!isValidatePrice(purchasePrice)) return;
+    setPurchasePrice(purchasePrice);
+    getTickets(purchasePrice);
   }
 
   setEvent() {
-    const handleOnSubmit = event => {
-      event.preventDefault();
-      const inputValue = this.$target.querySelector(
-        'input[data-cy="purchase-price-input"]',
-      ).value;
-      const purchasePrice = Number(inputValue);
-
-      if (this.validatePrice(purchasePrice)) {
-        this.issueTicket(purchasePrice);
-      }
-    };
-
-    this.$target.addEventListener('submit', handleOnSubmit);
+    const $form = this.shadow.querySelector('form[data-cy="purchase-form"]');
+    $form.addEventListener('submit', this.handleOnSubmit);
   }
 
-  validatePrice(price) {
-    let flag = false;
-    try {
-      flag = checkUnitOfPrice(price);
-    } catch (error) {
-      alert(error.message);
-    }
-    return flag;
-  }
-
-  template() {
-    this.templateHTML = `
+  init() {
+    this.template.innerHTML = `
+		<link rel="stylesheet" href="./src/css/index.css" />
 		<form class="mt-5" data-cy="purchase-form">
-		<label class="mb-2 d-inline-block"
-			>구입할 금액을 입력해주세요.
-		</label>
-		<div class="d-flex">
-			<input
-				type="number"
-				class="w-100 mr-2 pl-2"
-				placeholder="구입 금액"
-				data-cy="purchase-price-input"
-			/>
-			<button
-				type="submit"
-				class="btn btn-cyan"
-				data-cy="purchase-price-button"
-			>
-				확인
-			</button>
-		</div>
-		</form>
-		`;
+			<label class="mb-2 d-inline-block">구입할 금액을 입력해주세요. </label>
+			<div class="d-flex">
+				<input
+					type="number"
+					class="w-100 mr-2 pl-2"
+					placeholder="구입 금액"
+					data-cy="purchase-price-input"
+					name="purchase-price"
+				/>
+				<button type="submit" class="btn btn-cyan" data-cy="purchase-price-button">확인</button>
+			</div>
+		</form>`;
+
+    this.shadow.appendChild(this.template.content.cloneNode(true));
   }
 
-  render() {
-    this.template();
-    this.$target.innerHTML = `${this.$target.innerHTML}${this.templateHTML}`;
+  connectedCallback() {
+    this.init();
+    this.setEvent();
   }
 }
+
+customElements.define('purchase-price', PurchasePrice);

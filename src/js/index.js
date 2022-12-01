@@ -1,29 +1,18 @@
-import App from './components/App.js';
+import Subject from './utils/Subject.js';
 
-const $app = document.querySelector('#app');
-const initialState = {
-  purchasePrice: 0,
-  ticketCount: 0,
-  tickets: [],
-  isNumberVisible: false,
-};
+export const subject = new Subject();
 
-new App($app, initialState || undefined);
+const template = `    
+<div class="d-flex justify-center mt-5">
+	<div class="w-100" id="target">
+		<lotto-header></lotto-header>
+		<purchase-price></purchase-price>
+		<purchase-tickets> </purchase-tickets>
+		<winning-number></winning-number>
+		<winning-result></winning-result>
+	</div>
+	</div>
+</div>
+`;
 
-// const $showResultButton = document.querySelector('.open-result-modal-button');
-// const $modalClose = document.querySelector('.modal-close');
-// const $modal = document.querySelector('.modal');
-// const $lottoNumbersToggleButton = document.querySelector(
-//   '.lotto-numbers-toggle-button',
-// );
-
-// const onModalShow = () => {
-//   $modal.classList.add('open');
-// };
-
-// const onModalClose = () => {
-//   $modal.classList.remove('open');
-// };
-
-// $showResultButton.addEventListener('click', onModalShow);
-// $modalClose.addEventListener('click', onModalClose);
+document.querySelector('#app').insertAdjacentHTML('afterbegin', template);
