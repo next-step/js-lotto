@@ -40,7 +40,7 @@
 
             </div>
           </section>
-          <form class="mt-9">
+          <form id="last-winning-numbers-form" class="mt-9">
             <label class="flex-auto d-inline-block mb-3"
               >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >
@@ -49,26 +49,32 @@
                 <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
                 <div>
                   <input
+                    id="lotto-number-1"
                     type="number"
                     class="winning-number mx-1 text-center"
                   />
                   <input
+                    id="lotto-number-2"
                     type="number"
                     class="winning-number mx-1 text-center"
                   />
                   <input
+                    id="lotto-number-3"
                     type="number"
                     class="winning-number mx-1 text-center"
                   />
                   <input
+                    id="lotto-number-4"
                     type="number"
                     class="winning-number mx-1 text-center"
                   />
                   <input
+                    id="lotto-number-5"
                     type="number"
                     class="winning-number mx-1 text-center"
                   />
                   <input
+                    id="lotto-number-6"
                     type="number"
                     class="winning-number mx-1 text-center"
                   />
@@ -77,12 +83,12 @@
               <div class="bonus-number-container flex-grow">
                 <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
                 <div class="d-flex justify-center">
-                  <input type="number" class="bonus-number text-center" />
+                  <input id="lotto-number-7" type="number" class="bonus-number text-center" />
                 </div>
               </div>
             </div>
             <button
-              type="button"
+              type="submit"
               class="open-result-modal-button mt-5 btn btn-cyan w-100"
             >
               결과 확인하기
@@ -91,56 +97,16 @@
         </div>
       </div>
 
-      <div class="modal">
+      <div id="modal" class="modal">
         <div class="modal-inner p-10">
-          <div class="modal-close">
+          <div id="modal-close-button" class="modal-close">
             <svg viewbox="0 0 40 40">
               <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
             </svg>
           </div>
 
-          <h2 class="text-center">🏆 당첨 통계 🏆</h2>
-          <div class="d-flex justify-center">
-            <table class="result-table border-collapse border border-black">
-              <thead>
-                <tr class="text-center">
-                  <th class="p-3">일치 갯수</th>
-                  <th class="p-3">당첨금</th>
-                  <th class="p-3">당첨 갯수</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="text-center">
-                  <td class="p-3">3개</td>
-                  <td class="p-3">5,000</td>
-                  <td class="p-3">n개</td>
-                </tr>
-                <tr class="text-center">
-                  <td class="p-3">4개</td>
-                  <td class="p-3">50,000</td>
-                  <td class="p-3">n개</td>
-                </tr>
-                <tr class="text-center">
-                  <td class="p-3">5개</td>
-                  <td class="p-3">1,500,000</td>
-                  <td class="p-3">n개</td>
-                </tr>
-                <tr class="text-center">
-                  <td class="p-3">5개 + 보너스볼</td>
-                  <td class="p-3">30,000,000</td>
-                  <td class="p-3">n개</td>
-                </tr>
-                <tr class="text-center">
-                  <td class="p-3">6개</td>
-                  <td class="p-3">2,000,000,000</td>
-                  <td class="p-3">n개</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
-          <div class="d-flex justify-center mt-5">
-            <button type="button" class="btn btn-cyan">다시 시작하기</button>
+          <div id="modal-template-container">
+
           </div>
         </div>
       </div>

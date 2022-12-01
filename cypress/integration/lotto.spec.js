@@ -125,4 +125,32 @@ describe("로또 계산기", () => {
       });
     });
   });
+
+  context("구매한 로또의 결과를 확인한다.", () => {
+    it("지난주 당첨 번호 6개와 보너스 번호 1개를 입력한다.", () => {
+      expect(false).to.be.eq(true);
+    });
+
+    it("숫자는 1~45까지 입력 가능하다.", () => {
+      expect(false).to.be.eq(true);
+    });
+  });
+
+  context("구매한 로또의 결과를 확인한다.", () => {
+    it("구매한 로또 번호로 통계를 계산한다.", () => {
+      expect(false).to.be.eq(true);
+    });
+    it("구매한 로또 번호로 수익률을 계산한다.", () => {
+      expect(false).to.be.eq(true);
+    });
+    it("통계 모달이 노출된다.", () => {
+      expect(false).to.be.eq(true);
+    });
+  });
+
+  context("다시 시작하기", () => {
+    it("다시 시작하기를 누르면 모든 데이터가 초기화된다.", () => {
+      expect(false).to.be.eq(true);
+    });
+  });
 });
