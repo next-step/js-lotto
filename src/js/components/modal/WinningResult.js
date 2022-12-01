@@ -33,8 +33,7 @@ export default class WinningResult extends HTMLElement {
     $close.addEventListener('click', this.handleClose);
 
     const $resetBtn = this.shadow.querySelector('button[data-cy="reset-button"]');
-    $resetBtn.addEventListener('resetForms', this.handleReset);
-    $resetBtn.dispatchEvent(resetFormEvent);
+    $resetBtn.addEventListener('click', this.handleReset);
   }
 
   disconnectedCallback() {
@@ -94,7 +93,7 @@ export default class WinningResult extends HTMLElement {
       .sort((a, b) => a[1] - b[1])
       .map(
         standard => `<tr class="text-center">
-				<td class="p-3">${this.getPrizeName()}</td>
+				<td class="p-3">${this.getPrizeName(standard[0])}</td>
 				<td class="p-3">${standard[1].toLocaleString('ko-KR')}</td>
 				<td class="p-3" data-cy='winning-count'>${winningScore[standard[0]]}개</td>
 			</tr>`,
