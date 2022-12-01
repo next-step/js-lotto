@@ -4,14 +4,12 @@ import registry from './registry.js';
 import applyDiff from './applyDiff.js';
 
 import appView from './views/app.js';
-import lottoTemplate from './views/lottoTemplate.js';
 import lottoView from './views/lotto.js';
 import counterView from './views/lottoCounter.js';
 import lottoNumbersView from './views/lottoNumbers.js';
 // import modalView from './view/modal.js';
 
 registry.add('app', appView);
-registry.add('lottoTemplate', lottoTemplate);
 registry.add('lotto', lottoView);
 registry.add('counter', counterView);
 registry.add('lottoNumbers', lottoNumbersView);

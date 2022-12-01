@@ -2,15 +2,11 @@ import { SELECTOR } from '../utils/constants.js';
 import { $all } from '../utils/dom.js';
 
 const showLottoNums = (element) => {
-  $all(SELECTOR.LOTTO_NUMS, element).forEach((lotto) => {
-    lotto.classList.remove('d-none');
-  });
+  element.classList.remove('d-none');
 };
 
 const hideLottoNums = (element) => {
-  $all(SELECTOR.LOTTO_NUMS, element).forEach((lotto) => {
-    lotto.classList.add('d-none');
-  });
+  element.classList.add('d-none');
 };
 
 export default (targetElement, { toggleOn }) => {
