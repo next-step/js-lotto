@@ -27,7 +27,7 @@ body {
   display: none;
 }
 
-ul[data-cy='purchased-lotto-list'] {
+.purchased-lotto-list {
   padding-left: 0;
 }
 

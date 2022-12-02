@@ -1,35 +1,72 @@
-import { $ } from './utils/DOM.js';
-import { getLottoNumbers } from './purchasedLottoNumbers.js';
-import { validatePriceInput } from './validatePrice.js';
+import { $, $$ } from './utils/DOM.js';
 
 import {
-  showPurchasedLotto,
-  showWinningNumbersForm,
+  renderPurchasedLotto,
+  renderWinningNumbersForm,
   renderLottoCount,
   renderLottoItems,
-  toggleLottoItems,
-} from './view.js';
+  renderPurchasedLottoNumbers,
+} from './view/purchasedLotto.js';
+import { getLottoNumbers } from './getLottoNumbers.js';
+import { validatePriceInput } from './validatePrice.js';
+import {
+  validateWithinLottoNumberRange,
+  hasDuplicatedNumber,
+} from './validateWinningNumbersAndBonus.js';
+import { openModal, closeModal } from './modal.js';
 
-export const handleSubmit = (e) => {
+export const handlePurchaseLotto = (e) => {
   e.preventDefault();
   try {
-    const priceInput = $('[data-cy="lotto-purchase-input"]').valueAsNumber;
+    const priceInput = $('.purchasing-lotto-input').valueAsNumber;
 
     validatePriceInput(priceInput);
 
     const lottoNumbersList = getLottoNumbers(priceInput);
     const purchasedLottoCount = lottoNumbersList.length;
 
-    showPurchasedLotto();
-    showWinningNumbersForm();
+    renderPurchasedLotto();
+    renderWinningNumbersForm();
 
     renderLottoCount(purchasedLottoCount);
     renderLottoItems(lottoNumbersList);
   } catch (error) {
     window.alert(error.message);
+    console.error(error);
   }
 };
 
-export const handleToggleBtn = (e) => {
-  toggleLottoItems(e);
+export const handleToggleBtn = (e) => renderPurchasedLottoNumbers(e);
+
+export const handleOpenModal = (e) => {
+  e.preventDefault();
+  try {
+    const $winningNumbers = $$('.winning-number');
+    const $bonusNumber = $('.bonus-number');
+
+    const winningNumbersAndBonus = [...$winningNumbers, $bonusNumber].map(
+      (ele) => ele.valueAsNumber,
+    );
+
+    validateWithinLottoNumberRange(winningNumbersAndBonus);
+    hasDuplicatedNumber(winningNumbersAndBonus);
+
+    openModal(winningNumbersAndBonus);
+  } catch (error) {
+    window.alert(error.message);
+    console.error(error);
+  }
+};
+
+export const handleRestart = () => {
+  try {
+    window.location.reload();
+  } catch (error) {
+    window.alert(error.message);
+    console.error(error);
+  }
+};
+
+export const handleCloseModal = () => {
+  closeModal();
 };

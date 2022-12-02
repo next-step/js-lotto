@@ -6,12 +6,12 @@ describe('구입 금액 입력 테스트', () => {
   });
 
   it('구입 금액을 입력할 input 태그가 있다.', () => {
-    cy.getByDataCy('lotto-purchase-form').should('exist');
+    cy.get('.purchasing-lotto-form').should('exist');
   });
 
   it('확인 버튼을 클릭할 수 있다.', () => {
-    cy.getByDataCy('lotto-purchase-btn').should('exist');
-    cy.getByDataCy('lotto-purchase-btn').click();
+    cy.get('.purchasing-lotto-btn').should('exist');
+    cy.get('.purchasing-lotto-btn').click();
   });
 
   const PRICE_INPUT_CASE = {

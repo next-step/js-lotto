@@ -1,15 +1,12 @@
-import { ERROR_MESSAGE, LOTTO_CONSTRAINT } from './constants/index.js';
-
-const isNotPriceUnit = (priceInput) => priceInput % LOTTO_CONSTRAINT.PRICE_UNIT !== 0;
-
-const isNotOverMinPrice = (priceInput) => priceInput < LOTTO_CONSTRAINT.PRICE_UNIT;
+import { ERROR_MESSAGE } from './constants/index.js';
+import { isPriceUnitCorrect, isOverMinPrice } from './utils/validation.js';
 
 export const validatePriceInput = (priceInput) => {
-  if (isNotOverMinPrice(priceInput)) {
+  if (!isOverMinPrice(priceInput)) {
     throw new Error(ERROR_MESSAGE.INVALID_OVER_MIN_PRICE);
   }
 
-  if (isNotPriceUnit(priceInput)) {
+  if (!isPriceUnitCorrect(priceInput)) {
     throw new Error(ERROR_MESSAGE.INVALID_PRICE_UNIT);
   }
 };

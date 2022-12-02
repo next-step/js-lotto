@@ -1,10 +1,13 @@
-Cypress.Commands.add('getByDataCy', (dataCy) => {
-  cy.get(`[data-cy="${dataCy}"]`);
-});
 Cypress.Commands.add('clickPurchaseBtn', (purchaseAmountInput) => {
-  cy.getByDataCy('lotto-purchase-input').type(purchaseAmountInput);
-  cy.getByDataCy('lotto-purchase-btn').click();
+  cy.get('.purchasing-lotto-input').type(purchaseAmountInput);
+  cy.get('.purchasing-lotto-btn').click();
 });
 Cypress.Commands.add('pressEnter', (purchaseAmountInput) => {
-  cy.getByDataCy('lotto-purchase-input').type(`${purchaseAmountInput}{enter}`);
+  cy.get('.purchasing-lotto-input').type(`${purchaseAmountInput}{enter}`);
+});
+Cypress.Commands.add('typeWinningNumbersAndBonus', ({ winningNumbers, bonus }) => {
+  cy.get('.winning-number').each(($ele, idx) => {
+    cy.get($ele).type(winningNumbers[idx]);
+  });
+  cy.get('.bonus-number').type(bonus);
 });
