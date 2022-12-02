@@ -1,30 +1,50 @@
-import LottoGenerator from "./Controller/LottoGenerator.js";
-import LottoInput from "./View/LottoInput.js";
-import LottoResult from "./View/LottoResult.js";
+import generateLottoRandomNumbers from "./Lotto/LottoGenerator.js";
+import LottoInput from "./Components/LottoInput.js";
+import LottoResult from "./Components/LottoResult.js";
 import { LOTTO } from "./constants.js";
 
-export default function LottoGame() {
-  this.$element = document.querySelector("#app");
+export default class LottoGame {
+  constructor() {
+    this.$element = document.querySelector("#app");
+    this.state = {
+      inputAmount: 0,
+      lottoCnt: 0,
+      lottoNumberArr: [],
+    };
 
-  const lottoGenerator = new LottoGenerator();
-  const lottoInput = new LottoInput({
-    $target: this.$element,
-    onSubmit: (inputAmount) => {
-      const [randomNumberArray, lottoCnt] = lottoGenerator({
-        moneyAmount: inputAmount,
-        min: LOTTO.LOTTO_NUMBER_MIN,
-        max: LOTTO.LOTTO_NUMBER_MAX,
-      });
-      lottoResult.setState({
-        lottoCnt: lottoCnt,
-        lottoNumberArr: randomNumberArray,
-        toggled: lottoResult.state.toggled,
-      });
-      lottoInput.setState("");
-    },
-  });
+    this.lottoInput = new LottoInput({
+      $target: this.$element,
+      onSubmit: (inputAmount) => {
+        const [randomNumberArray, lottoCnt] = generateLottoRandomNumbers({
+          moneyAmount: inputAmount,
+          min: LOTTO.LOTTO_NUMBER_MIN,
+          max: LOTTO.LOTTO_NUMBER_MAX,
+        });
 
-  const lottoResult = new LottoResult({
-    $target: this.$element,
-  });
+        this.setState({ inputAmount: 0, lottoCnt, randomNumberArray });
+      },
+    });
+
+    this.lottoResult = new LottoResult({
+      $target: this.$element,
+      lottoCnt: 0,
+      lottoNumberArr: [],
+    });
+  }
+
+  setState({ inputAmount = 0, lottoCnt, randomNumberArray }) {
+    this.state = {
+      inputAmount,
+      lottoCnt,
+      randomNumberArray,
+    };
+
+    this.lottoResult.setState({
+      lottoCnt: lottoCnt,
+      lottoNumberArr: randomNumberArray,
+      toggled: this.lottoResult.state.toggled,
+    });
+
+    this.lottoInput.setState(inputAmount);
+  }
 }
