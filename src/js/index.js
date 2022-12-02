@@ -18,4 +18,4 @@ import LottoGame from "./LottoGame.js";
 // $showResultButton.addEventListener("click", onModalShow);
 // $modalClose.addEventListener("click", onModalClose);
 
-const lottoGame = new LottoGame();
+new LottoGame();
