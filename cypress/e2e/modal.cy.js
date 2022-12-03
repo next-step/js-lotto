@@ -36,25 +36,25 @@ describe('LOTTO APLICATION의 Modal을 테스트한다.', () => {
         cy.wrap($el).type(3);
       });
 
+      cy.get('.bonus-number').type(3);
+
       cy.get(SELECTOR.INPUT_LOTTO_NUMS)
         .submit()
         .then(() => {
-          expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MSSAGE.AMOUNT);
+          expect(alertStub.getCall(0)).to.be.calledWith(ERROR_MESSAGE.DUPLICATED_NUMBER);
         });
     });
 
-    // it('모든 숫자가 다 입력되면, modal 창이 열린다.', () => {
-    //   const lottoNumbers = [1,34,23,33,7,8];
-    //   cy.get('.winning-number').each(($el, index) => {
-    //     cy.wrap($el).type(lottoNumbers[index]);
-    //   });
-    //   cy.get('.bonus-number').type(42);
+    it('모든 숫자가 다 입력되면, modal 창이 열린다.', () => {
+      const lottoNumbers = [1,34,23,33,7,8];
+      cy.get('.winning-number').each(($el, index) => {
+        cy.wrap($el).type(lottoNumbers[index]);
+      });
+      cy.get('.bonus-number').type(42);
 
-    //   cy.get(SELECTOR.INPUT_LOTTO_NUMS)
-    //   .submit();
-    //   cy.get('.modal').should('have.class', 'open');
-
-
-    // })
+      cy.get(SELECTOR.INPUT_LOTTO_NUMS)
+      .submit();
+      cy.get('.modal').should('have.class', 'open');
+    })
   });
 });

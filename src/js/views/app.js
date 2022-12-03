@@ -1,6 +1,6 @@
-import { $ } from '../utils/dom.js';
+import { $, $all } from '../utils/dom.js';
 import { SELECTOR, ERROR_MESSAGE } from '../utils/constants.js';
-import { isValidateAmount } from '../utils/validator.js';
+import { isValidateAmount, isDuplicatedNumber } from '../utils/validator.js';
 let template;
 
 const getTemplate = () => {
@@ -37,6 +37,19 @@ const addEvents = (targetElement, events) => {
       events.toggleLottoNumbers(event.target.checked);
     }
   );
+
+  //당첨 번호 submit event 등록
+  $(SELECTOR.INPUT_LOTTO_NUMS, targetElement).addEventListener('submit', (event) => {
+    event.preventDefault();
+    const lottoNumbers = Array.from($all(SELECTOR.WINNING_NUMS, event.target)).map(element => element.value);
+    const bonusNumber = $(SELECTOR.BONUS_NUM, event.target).value;
+    lottoNumbers.push(bonusNumber);
+
+    if(isDuplicatedNumber(lottoNumbers)){
+      alert(ERROR_MESSAGE.DUPLICATED_NUMBER);
+      return;
+    }
+  })
 };
 
 export default (targetElement, state, events) => {
@@ -48,6 +61,6 @@ export default (targetElement, state, events) => {
     showPurchaseResult(newApp);
   }
 
-  addEvents(newApp, events, state);
+  addEvents(newApp, events);
   return newApp;
 };

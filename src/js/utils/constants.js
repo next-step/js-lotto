@@ -27,6 +27,8 @@ const SELECTOR = {
 
   //Lotto Input Form
   INPUT_LOTTO_NUMS: '#input-lotto-nums',
+  WINNING_NUMS : '.winning-number',
+  BONUS_NUM : '.bonus-number'
 };
 
 export { ERROR_MESSAGE, LOTTO, SELECTOR };
