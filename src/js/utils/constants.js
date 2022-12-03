@@ -32,7 +32,8 @@ const SELECTOR = {
 
   //Modal
   MODAL : '.modal',
-  LOTTO_MODAL : '#lotto-modal'
+  LOTTO_MODAL : '#lotto-modal',
+  MODAL_CLOSE : '.modal-close'
 };
 
 export { ERROR_MESSAGE, LOTTO, SELECTOR };

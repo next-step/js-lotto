@@ -15,13 +15,17 @@ const getModalElement = () => {
     return element;
 }
 
-export default (targetElement, {modalOn}) => {
+export default (targetElement, {modalOn}, events) => {
     const newModal = targetElement.cloneNode(true);
     newModal.innerHTML = '';
 
     if(modalOn){
         newModal.insertAdjacentElement('beforeend', getModalElement());
         newModal.classList.add('open');
+
+        $(SELECTOR.MODAL_CLOSE, newModal).addEventListener('click', ()=> {
+            events.toggleModal();
+        });
     }
     return newModal;
 }

@@ -57,4 +57,21 @@ describe('LOTTO APLICATION의 Modal을 테스트한다.', () => {
       cy.get('.modal').should('have.class', 'open');
     })
   });
+
+  context('모달창을 테스트 한다.', () => {
+    beforeEach(() => {
+      const lottoNumbers = [1,34,23,33,7,8];
+      cy.get('.winning-number').each(($el, index) => {
+        cy.wrap($el).type(lottoNumbers[index]);
+      });
+      cy.get('.bonus-number').type(42);
+
+      cy.get(SELECTOR.INPUT_LOTTO_NUMS)
+      .submit();
+    })
+    it('x버튼을 클릭하면 모달창이 닫힌다.', ()=> {
+      cy.get('.modal-close').click();
+      cy.get('.modal').should('not.have.class', 'open');
+    })
+  })
 });
