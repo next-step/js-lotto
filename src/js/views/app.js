@@ -49,6 +49,7 @@ const addEvents = (targetElement, events) => {
       alert(ERROR_MESSAGE.DUPLICATED_NUMBER);
       return;
     }
+    events.toggleModal();
   })
 };
 

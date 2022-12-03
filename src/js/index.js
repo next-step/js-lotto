@@ -8,12 +8,13 @@ import appView from './views/app.js';
 import lottoView from './views/lotto.js';
 import counterView from './views/lottoCounter.js';
 import lottoNumbersView from './views/lottoNumbers.js';
-// import modalView from './view/modal.js';
+import modalView from './views/modal.js';
 
 registry.add('app', appView);
 registry.add('lotto', lottoView);
 registry.add('counter', counterView);
 registry.add('lottoNumbers', lottoNumbersView);
+registry.add('modal', modalView);
 
 const state = {
   purchaseAmount: 0,
@@ -27,8 +28,8 @@ const events = {
     state.toggleOn = isToggleOn;
     render();
   },
-  isShowModal: (isShowModal) => {
-    state.modalOn = isShowModal;
+  toggleModal: () => {
+    state.modalOn = !state.modalOn;
     render();
   },
   purchaseLotto: (amount) => {
