@@ -1,5 +1,6 @@
-const ERROR_MSSAGE = {
+const ERROR_MESSAGE = {
   AMOUNT: '로또 구입 금액을 1,000원 단위로 입력해 주세요.',
+  DUPLICATED_NUMBER: '로또 번호에는 중복된 숫자를 입력할 수 없습니다.'
 };
 
 const LOTTO = {
@@ -28,4 +29,4 @@ const SELECTOR = {
   INPUT_LOTTO_NUMS: '#input-lotto-nums',
 };
 
-export { ERROR_MSSAGE, LOTTO, SELECTOR };
+export { ERROR_MESSAGE, LOTTO, SELECTOR };

@@ -1,5 +1,5 @@
 import { $ } from '../utils/dom.js';
-import { SELECTOR, ERROR_MSSAGE } from '../utils/constants.js';
+import { SELECTOR, ERROR_MESSAGE } from '../utils/constants.js';
 import { isValidateAmount } from '../utils/validator.js';
 let template;
 
@@ -23,7 +23,7 @@ const addEvents = (targetElement, events) => {
       const formData = new FormData(event.target);
       const purchaseAmount = formData.get('purchase-amount');
       if (!isValidateAmount(purchaseAmount)) {
-        alert(ERROR_MSSAGE.AMOUNT);
+        alert(ERROR_MESSAGE.AMOUNT);
         return;
       }
       events.purchaseLotto(purchaseAmount);
