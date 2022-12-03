@@ -12,26 +12,26 @@ li {
   list-style: none;
 }
 
-#app {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-#form-purchase {
-  position: relative;
-}
-
 .hide {
   display: none;
 }
 
-#form-purchase .error-message {
+.error-message {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
   margin: 0;
   color: #e30000;
   font-size: 12px;
+}
+
+*:has(>.error-message) {
+  position: relative;
+}
+
+#app {
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .ticket-list {
@@ -62,3 +62,4 @@ li {
   width: 30px;
   height: 36px;
 }
+

@@ -5,9 +5,9 @@ import { PurchaseInfo } from '../common/enum.js';
 export default class PurchaseView extends View {
   #lottoState;
   #purchaseService;
-  #input = document.getElementById('input-purchase');
-  #btnSubmit = document.getElementById('btn-purchase-submit');
-  #inputMessage = document.querySelector('#form-purchase .error-message');
+  #input = this.element.querySelector('#input-purchase');
+  #btnSubmit = this.element.querySelector('#btn-purchase-submit');
+  #inputMessage = this.element.querySelector('.error-message');
 
   constructor(lottoState) {
     super('#form-purchase');
@@ -18,37 +18,32 @@ export default class PurchaseView extends View {
   }
 
   #setEvent() {
-    const events = [
+    this.events = [
       {
+        target: this.#input,
         event: 'input',
-        handler: this.#amountChanges,
+        handler: this.#numbersOnly,
       },
       {
+        target: this.#input,
         event: 'keypress',
         handler: this.#triggerSubmit,
       },
       {
+        target: this.#btnSubmit,
         event: 'click',
         handler: this.#purchase,
       },
     ];
 
-    super.setEventHandler(events);
+    super.setEventHandler();
   }
 
-  #amountChanges = (e) => {
-    if (e.target !== this.#input) {
-      return;
-    }
-
+  #numbersOnly = (e) => {
     e.target.value = e.target.value.replace(/[^0-9]/g, '');
   };
 
   #triggerSubmit = (e) => {
-    if (e.target !== this.#input) {
-      return;
-    }
-
     if ('Enter' === e.key) {
       this.#btnSubmit.click();
 
@@ -56,19 +51,15 @@ export default class PurchaseView extends View {
     }
   };
 
-  #purchase = (e) => {
+  #purchase = () => {
     const { value } = this.#input;
-
-    if (e.target !== this.#btnSubmit) {
-      return;
-    }
 
     if (this.#validateAmount(value)) {
       return;
     }
 
     this.#input.value = '';
-    this.#lottoState.setState(this.#purchaseService.getLotto(value / PurchaseInfo.UNIT));
+    this.#lottoState.list = this.#purchaseService.getLotto(value / PurchaseInfo.UNIT);
   };
 
   #validateAmount(value) {
