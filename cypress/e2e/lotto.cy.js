@@ -123,15 +123,10 @@ describe("행운의 로또 테스트", () => {
         });
 
         it("잘못된 값을 입력했을 경우 alert가 노출된다.", () => {
-          const alertStub = cy.stub();
-          cy.on("window:alert", alertStub);
-          cy.get($purchaseInputSelector)
-            .type("1001{enter}")
-            .then(() => {
-              expect(alertStub.getCall(0)).to.be.calledWith(
-                MESSAGE_ABOUT_UNIT_OF_AMOUNT
-              );
-            });
+          cy.alert({
+            action: () => cy.get($purchaseInputSelector).type("1001{enter}"),
+            message: MESSAGE_ABOUT_UNIT_OF_AMOUNT,
+          });
         });
       });
     });
@@ -226,16 +221,10 @@ describe("행운의 로또 테스트", () => {
       );
       cy.get($bonusNumberInputSelector).type("1");
 
-      const alertStub = cy.stub();
-      cy.on("window:alert", alertStub);
-
-      cy.get($checkResultButtonSelector)
-        .click()
-        .then(() => {
-          expect(alertStub.getCall(0)).to.be.calledWith(
-            MESSAGE_ABOUT_DUPLICATION_NUMBER
-          );
-        });
+      cy.alert({
+        action: () => cy.get($checkResultButtonSelector).click(),
+        message: MESSAGE_ABOUT_DUPLICATION_NUMBER,
+      });
     });
 
     it("결과 확인 버튼을 클릭하면 수익률을 확인할 수 있는 모달이 노출된다.", () => {
