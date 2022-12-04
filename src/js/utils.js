@@ -16,7 +16,7 @@ export const toggleClass = ({ $element, className, flag }) => {
     : $element.classList.remove(className);
 };
 
-export const getInputValues = ($inputs) =>
+export const getInputNumberValues = ($inputs) =>
   Array.from($inputs).map(({ value }) => Number(value));
 
 export const getCombinedInputValues = ($inputs, $bonusInput) =>
