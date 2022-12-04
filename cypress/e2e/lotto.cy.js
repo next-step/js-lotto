@@ -5,14 +5,14 @@ import {
 
 const $purchaseInputSelector = "#purchase-amount-input";
 const $purchaseSubmitButtonSelector = ".purchase-amount-submit-button";
-const $toggleSelector = ".view-numbers-checkbox";
+const $toggleSelector = "#view-numbers-checkbox";
 const $iconSelector = ".lotto-icon";
 const $lottoDetailSelector = ".lotto-detail";
 const $winningNumberInputSelector = ".winning-number";
 const $bonusNumberInputSelector = ".bonus-number";
 const $checkResultButtonSelector = ".check-result-button";
-const $modal = ".modal";
-const $modalCloseButton = ".modal-close";
+const $modal = "#modal";
+const $modalCloseButton = "#modal-close";
 
 describe("행운의 로또 테스트", () => {
   const validateAmountUnit = ({ input, expectedMessage }) => {

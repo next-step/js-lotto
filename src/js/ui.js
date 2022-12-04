@@ -21,13 +21,13 @@ class Ui {
     this.#purchasedLottos = document.querySelector("#purchased-lottos");
     this.#purchasedCount = document.querySelector(".purchased-count");
     this.#viewNumbersCheckbox = document.querySelector(
-      ".view-numbers-checkbox"
+      "#view-numbers-checkbox"
     );
     this.#checkWinningNumberArea = document.querySelector(
       "#check-winning-number-area"
     );
     this.#totalReturnRate = document.querySelector(".total-return-rate");
-    this.#modal = document.querySelector(".modal");
+    this.#modal = document.querySelector("#modal");
     this.#restartButton = document.querySelector(".restart-lotto-button");
     this.$amountInput = document.querySelector("#purchase-amount-input");
     this.$winningInputs = document.querySelectorAll(".winning-number");

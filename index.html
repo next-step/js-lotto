@@ -44,7 +44,7 @@
               </p>
               <div class="flex-auto d-flex justify-end pr-1">
                 <label class="switch">
-                  <input type="checkbox" class="view-numbers-checkbox" />
+                  <input type="checkbox" id="view-numbers-checkbox" />
                   <span class="text-base font-normal">번호보기</span>
                 </label>
               </div>
@@ -131,9 +131,9 @@
         </div>
       </div>
 
-      <div class="modal">
+      <div id="modal" class="">
         <div class="modal-inner p-10">
-          <button type="button" class="modal-close">
+          <button type="button" id="modal-close">
             <svg viewbox="0 0 40 40">
               <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
             </svg>
@@ -191,7 +191,9 @@
             <strong class="total-return-rate"></strong>%입니다.
           </p>
           <div class="d-flex justify-center mt-5">
-            <button type="button" class="btn btn-cyan reset-lotto-button">다시 시작하기</button>
+            <button type="button" id="reset-lotto-button" class="btn btn-cyan">
+              다시 시작하기
+            </button>
           </div>
         </div>
       </div>

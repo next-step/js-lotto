@@ -35,6 +35,14 @@ export const getMatchedValueCountInArray = (value1, value2) =>
 export const hasClass = (target, className) =>
   target.classList.contains(className);
 
+const hasId = (target, id) => target.getAttribute("id") === id;
+
+export const isValidEventTarget = (target) =>
+  hasId(target, "view-numbers-checkbox") ||
+  hasId(target, "modal-close") ||
+  hasId(target, "modal") ||
+  hasId(target, "reset-lotto-button");
+
 export const calculatorReturnLate = (profits, investment) =>
   Math.trunc(((profits - investment) / investment) * PERCENT);
 

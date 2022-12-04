@@ -1,5 +1,5 @@
 import { MESSAGE_ABOUT_NOT_DEFINED_TYPE } from "./constants.js";
-import { hasClass } from "./utils.js";
+import { hasClass, isValidEventTarget } from "./utils.js";
 
 class App {
   #model;
@@ -62,9 +62,11 @@ class App {
     );
   }
 
-  onClick = (className) => (e) => {
+  onClick = (e) => {
+    if (!isValidEventTarget(e.target)) return;
     e.stopPropagation();
-    return hasClass(e.target, className) && this.handler[className](e);
+
+    this.handler[e.target.id](e);
   };
 
   setEvent() {
@@ -74,13 +76,7 @@ class App {
       this.onSubmit(e.target.id);
     });
 
-    this.$target.addEventListener(
-      "click",
-      this.onClick("view-numbers-checkbox")
-    );
-    this.$target.addEventListener("click", this.onClick("modal"));
-    this.$target.addEventListener("click", this.onClick("modal-close"));
-    this.$target.addEventListener("click", this.onClick("reset-lotto-button"));
+    this.$target.addEventListener("click", this.onClick);
   }
 
   openModal() {
