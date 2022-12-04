@@ -36,7 +36,7 @@ function statsSpec() {
     it('지난 주 로또번호와 보너스 번호를 모두 입력해야 한다.', () => {
         const numbers = faker.random.numeric(5, { bannedDigits: ['0'] }).split('');
         cy.typeLastLottoNumbers(numbers);
-        checkAlert(cy.clickOpenResultModal(), ERROR_MESSAGE.StatsNumbersRequired);
+        checkAlert(cy.clickOpenResultModal(), ERROR_MESSAGE.NumbersRequired);
     })
 
     it('지난 주 로또번호와 보너스 번호는 중복될 수 없다.', () => {

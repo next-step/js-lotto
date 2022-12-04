@@ -34,7 +34,7 @@ export class Validator {
 
     #setStatsNumbersErrors = (numbers, includeBonus) => {
         const limitDigit = includeBonus ? LOTTO_LIMIT_DIGITS_BONUS_NUMBER : LOTTO_LIMIT_DIGITS;
-        if (numbers.length < limitDigit) throw new InputRequiredError(ERROR_MESSAGE.StatsNumbersRequired);
+        if (numbers.length < limitDigit) throw new InputRequiredError(ERROR_MESSAGE.NumbersRequired);
         if (new Set(numbers).size < limitDigit) throw new NotAllowedDuplicatedValueError(ERROR_MESSAGE.NotAllowedDuplicatedValue);
         if (numbers.some(row => row > LOTTO_RANGE_MAX || row < LOTTO_RANGE_MIN)) throw new OutOfNumberRangeError(ERROR_MESSAGE.OutOfNumberRange);
         return true;

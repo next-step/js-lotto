@@ -1,18 +1,31 @@
 const $purchaseInput = '[data-cy="purchase-amount"]';
-const $purchaseButton = '[data-cy="purchase-button"]';
+const $priceCheckButton = '[data-cy="purchase-button"]';
+const $purchaseButton = '.purchase-lotto-button';
 const $lottoTickets = '[data-cy="lotto-tickets"]';
 const $lottoNumbersToggleButton = '[data-cy="toggle-lotto-numbers"]';
 
+const $LottoManuelNumbers = '.manuel-number';
 const $lastLottoNumbers = '.winning-number';
 const $lastBonusNumbers = '.bonus-number';
 const $modalButton = '.open-stats-modal-button';
 
-Cypress.Commands.add('typePurchaseInput', (price) => {
+Cypress.Commands.add('typePriceInput', (price) => {
     cy.get($purchaseInput).type(price);
+})
+
+Cypress.Commands.add('clickPriceCheckButton', () => {
+    cy.get($priceCheckButton).click();
 })
 
 Cypress.Commands.add('clickPurchaseButton', () => {
     cy.get($purchaseButton).click();
+})
+
+Cypress.Commands.add('typeLottoManuelNumbers', (numbers) => {
+    numbers.forEach((number, i) => {
+        cy.get($LottoManuelNumbers).eq(i).type(number);
+        cy.get($LottoManuelNumbers).eq(i).tab();
+    })
 })
 
 Cypress.Commands.add('clickLottoNumbersToggleButton', () => {
