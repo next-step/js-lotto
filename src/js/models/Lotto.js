@@ -17,7 +17,7 @@ class Lotto {
 
   onGenerateLottoNumber() {
     const randomNumbers = new Set();
-    while (randomNumbers.size !== LOTTO.MAX_SIZE) {
+    while (randomNumbers.size !== LOTTO.NUMBER_COUNT) {
       const randomNumber = getLottoRandomNumber();
       randomNumbers.add(randomNumber);
     }

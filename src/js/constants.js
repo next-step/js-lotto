@@ -5,7 +5,8 @@ export const MESSAGES = {
 };
 
 export const LOTTO = {
-  MAX_SIZE: 6,
+  NUMBER_COUNT: 6,
+  NUMBER_COUNT_WITH_BONUS: 7,
   MAX_NUMBER: 45,
   MIN_NUMBER: 1,
 };

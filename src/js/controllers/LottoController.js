@@ -32,7 +32,7 @@ class LottoController {
       return;
     }
 
-    if (!this.isLastWinningLottoCorrectedRegistered(e.target)) {
+    if (!this.isLottoNumbersCorrectlyRegistered(e.target)) {
       window.alert(MESSAGES.WRONG_LOTTO_NUMBER);
       return;
     }
@@ -58,18 +58,31 @@ class LottoController {
     return this.lotto.getLottos().length > 0;
   }
 
-  // TODO 숫자도 중복이 되면 안돼
-  isLastWinningLottoCorrectedRegistered(target) {
-    return [...Array(7)].every((_, index) => {
-      console.log(+target[`lotto-number-${index + 1}`].value);
-      return this.isLottoNumberCorrect(
-        +target[`lotto-number-${index + 1}`].value
-      );
-    });
+  isLottoNumbersCorrectlyRegistered(target) {
+    const winningLottoNumbers = [...Array(7)].map(
+      (_, index) => +target[`lotto-number-${index + 1}`].value
+    );
+
+    if (this.isLottoNumberDuplicated(winningLottoNumbers)) {
+      return false;
+    }
+
+    return winningLottoNumbers.every((number) =>
+      this.isLottoNumberCorrect(number)
+    );
   }
 
   isLottoNumberCorrect(number) {
     return LOTTO.MIN_NUMBER <= number && number <= LOTTO.MAX_NUMBER;
+  }
+
+  isLottoNumberDuplicated(numbers) {
+    const unDuplicatedNumbers = new Set();
+    numbers.forEach((number) => {
+      unDuplicatedNumbers.add(number);
+    });
+
+    return unDuplicatedNumbers.size !== LOTTO.NUMBER_COUNT_WITH_BONUS;
   }
 
   render() {

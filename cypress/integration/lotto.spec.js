@@ -6,6 +6,12 @@ const purchaseTotalCount = "[data-cy='purchase-total-count']";
 const showNumberToggle = "[data-cy='show-lotto-number-toggle']";
 const lottoNumberLabel = "[data-cy='lotto-number']";
 
+const onInputLastWinningNumbers = (numbers) => {
+  numbers.forEach((number, index) => {
+    cy.get(`#lotto-number-${index + 1}`).type(number);
+  });
+};
+
 describe("로또 계산기", () => {
   beforeEach(() => {
     cy.visit("../../index.html");
@@ -126,13 +132,38 @@ describe("로또 계산기", () => {
     });
   });
 
-  context("구매한 로또의 결과를 확인한다.", () => {
-    it("지난주 당첨 번호 6개와 보너스 번호 1개를 입력한다.", () => {
-      expect(false).to.be.eq(true);
+  context("지난주 로또 당첨 번호를 입력한다.", () => {
+    let alertStub;
+    beforeEach(() => {
+      cy.get(purchaseAmountInput).type("1000");
+      cy.get(purchaseButton).click();
+
+      alertStub = cy.stub();
+      cy.on("window:alert", alertStub);
     });
 
-    it("숫자는 1~45까지 입력 가능하다.", () => {
-      expect(false).to.be.eq(true);
+    it("1~45까지의 숫자만 입력 가능하다.", () => {
+      onInputLastWinningNumbers([0, 2, 3, 4, 5, 6, 7]);
+
+      cy.get("#last-winning-numbers-form")
+        .submit()
+        .then(() => {
+          expect(alertStub.getCall(0)).to.be.calledWith(
+            MESSAGES.WRONG_LOTTO_NUMBER
+          );
+        });
+    });
+
+    it("숫자는 중복되어서는 안된다.", () => {
+      onInputLastWinningNumbers([1, 1, 1, 1, 1, 1, 1]);
+
+      cy.get("#last-winning-numbers-form")
+        .submit()
+        .then(() => {
+          expect(alertStub.getCall(0)).to.be.calledWith(
+            MESSAGES.WRONG_LOTTO_NUMBER
+          );
+        });
     });
   });
 
