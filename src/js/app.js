@@ -1,5 +1,4 @@
-import { MESSAGE_ABOUT_NOT_DEFINED_TYPE } from "./constants.js";
-import { isValidEventTarget } from "./utils.js";
+import { isValidClickEventTarget, isValidSubmitEventTarget } from "./utils.js";
 
 class App {
   #model;
@@ -9,8 +8,8 @@ class App {
     this.$target = document.querySelector(target);
     this.#model = model;
     this.#view = view;
-    this.setEvent();
-    this.handler = {
+
+    this.clickHandler = {
       "view-numbers-checkbox": (e) => {
         this.#view.onViewNumbers(e.target.checked);
       },
@@ -28,10 +27,7 @@ class App {
         this.reset();
       },
     };
-  }
-
-  onSubmit(form) {
-    const submitHandlers = {
+    this.submitHandler = {
       "purchase-input-form": () => {
         const isValid = this.#model.purchaseLotto(
           this.#view.$amountInput.value
@@ -53,30 +49,25 @@ class App {
       },
     };
 
-    return (
-      submitHandlers[form]() ||
-      (() => {
-        alert(MESSAGE_ABOUT_NOT_DEFINED_TYPE);
-        throw new Error(MESSAGE_ABOUT_NOT_DEFINED_TYPE);
-      })
-    );
+    this.setEvent();
   }
 
-  onClick = (e) => {
-    if (!isValidEventTarget(e.target)) return;
+  handledSubmit = (e) => {
+    e.preventDefault();
+    if (!isValidSubmitEventTarget(e.target)) return;
+    this.submitHandler[e.target.id]();
+  };
+
+  handledClick = (e) => {
+    if (!isValidClickEventTarget(e.target)) return;
     e.stopPropagation();
 
-    this.handler[e.target.id](e);
+    this.clickHandler[e.target.id](e);
   };
 
   setEvent() {
-    this.$target.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      this.onSubmit(e.target.id);
-    });
-
-    this.$target.addEventListener("click", this.onClick);
+    this.$target.addEventListener("submit", this.handledSubmit);
+    this.$target.addEventListener("click", this.handledClick);
   }
 
   openModal() {

@@ -1,4 +1,8 @@
-import { PERCENT } from "./constants.js";
+import {
+  CLICK_EVENT_TARGET_IDS,
+  PERCENT,
+  SUBMIT_EVENT_TARGET_IDS,
+} from "./constants.js";
 
 export const isValidAmountUnit = (amount) => /000$/.test(amount);
 
@@ -31,16 +35,11 @@ export const hasDuplicatedValueInputs = ($inputs, $bonusInput) => {
 export const getMatchedValueCountInArray = (value1, value2) =>
   value1.filter((val) => value2.includes(val)).length;
 
-export const hasClass = (target, className) =>
-  target.classList.contains(className);
+export const isValidSubmitEventTarget = (target) =>
+  SUBMIT_EVENT_TARGET_IDS.includes(target.getAttribute("id"));
 
-const hasId = (target, id) => target.getAttribute("id") === id;
-
-export const isValidEventTarget = (target) =>
-  hasId(target, "view-numbers-checkbox") ||
-  hasId(target, "modal-close") ||
-  hasId(target, "modal") ||
-  hasId(target, "reset-lotto-button");
+export const isValidClickEventTarget = (target) =>
+  CLICK_EVENT_TARGET_IDS.includes(target.getAttribute("id"));
 
 export const calculatorReturnLate = (profits, investment) =>
   Math.trunc(((profits - investment) / investment) * PERCENT);
