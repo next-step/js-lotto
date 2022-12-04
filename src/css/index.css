@@ -1,5 +1,5 @@
-@import './shared/index.css';
-@import './ui/index.css';
+@import "./shared/index.css";
+@import "./ui/index.css";
 
 html,
 body {
@@ -21,4 +21,17 @@ body {
 .bonus-number {
   width: 30px;
   height: 36px;
+}
+
+.purchase-result.hidden,
+.lotto-wrapper .hidden {
+  display: none;
+}
+
+.purchase-result .visible {
+  display: block;
+}
+
+.lotto-wrapper .visible {
+  display: inline;
 }

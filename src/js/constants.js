@@ -1,0 +1,12 @@
+const LOTTO = {
+  LOTTO_COUNT_PER_ONE_TICKET: 6,
+  LOTTO_PRICE_PER_ONE_TICKET: 1000,
+  LOTTO_NUMBER_MIN: 1,
+  LOTTO_NUMBER_MAX: 45,
+};
+
+const ERROR_MESSAGES = {
+  WRONG_INPUT: "입력하신 금액이 유효하지 않습니다.",
+};
+
+export { LOTTO, ERROR_MESSAGES };
