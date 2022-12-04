@@ -5,11 +5,15 @@ import {
     InputMinInsufficientError,
     InputRequiredError,
     NotAllowedDuplicatedValueError,
+    NotAllowedToAddInputError,
+    NotAllowedToDeleteInputError,
     OutOfNumberRangeError,
 } from "../utils/error.js";
 import {
-    ERROR_MESSAGE,
-    LOTTO_LIMIT_DIGITS_BONUS_NUMBER, LOTTO_RANGE_MAX, LOTTO_RANGE_MIN,
+    ACTIONTYPE,
+    ERROR_MESSAGE, LOTTO_LIMIT_DIGITS,
+    LOTTO_LIMIT_DIGITS_BONUS_NUMBER,
+    LOTTO_RANGE_MAX, LOTTO_RANGE_MIN,
     PRICE_MAX,
     PRICE_MIN,
     PRICE_PER_UNIT,
@@ -28,17 +32,25 @@ export class Validator {
         return true;
     }
 
-    #setStatsErrors = (numbers) => {
-        if (!numbers.length || (numbers.length < LOTTO_LIMIT_DIGITS_BONUS_NUMBER)) throw new InputRequiredError(ERROR_MESSAGE.StatsNumbersRequired);
-        if (new Set(numbers).size < LOTTO_LIMIT_DIGITS_BONUS_NUMBER) throw new NotAllowedDuplicatedValueError(ERROR_MESSAGE.NotAllowedDuplicatedValue);
+    #setStatsNumbersErrors = (numbers, includeBonus) => {
+        const limitDigit = includeBonus ? LOTTO_LIMIT_DIGITS_BONUS_NUMBER : LOTTO_LIMIT_DIGITS;
+        if (numbers.length < limitDigit) throw new InputRequiredError(ERROR_MESSAGE.StatsNumbersRequired);
+        if (new Set(numbers).size < limitDigit) throw new NotAllowedDuplicatedValueError(ERROR_MESSAGE.NotAllowedDuplicatedValue);
         if (numbers.some(row => row > LOTTO_RANGE_MAX || row < LOTTO_RANGE_MIN)) throw new OutOfNumberRangeError(ERROR_MESSAGE.OutOfNumberRange);
         return true;
     }
 
-    validate = (sectionType, value) => {
+    #setManuelInputErrors = (actionType, length, unit) => {
+        if (actionType === ACTIONTYPE.ADD && length === unit) throw new NotAllowedToAddInputError(ERROR_MESSAGE.NotAllowedToAddInput);
+        if (actionType === ACTIONTYPE.DELETE && length === unit) throw new NotAllowedToDeleteInputError(ERROR_MESSAGE.NotAllowedToDeleteInput);
+        return true;
+    }
+
+    validate = (params) => {
         try {
-            if (sectionType === SECTIONTYPE.PURCHASE) return this.#setPriceErrors(value);
-            if (sectionType === SECTIONTYPE.STATS) return this.#setStatsErrors(value);
+            if (params.sectionType === SECTIONTYPE.PURCHASE) return this.#setPriceErrors(params.value);
+            if (params.sectionType === SECTIONTYPE.NUMBERS) return this.#setStatsNumbersErrors(params.value, params.includeBonus);
+            if (params.sectionType === SECTIONTYPE.MANUEL_INPUT) return this.#setManuelInputErrors(params.actionType, params.length, params.unit);
         } catch (e) {
             this.#catchErrors(e);
         }

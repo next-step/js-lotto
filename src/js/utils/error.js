@@ -41,3 +41,15 @@ export class OutOfNumberRangeError extends CustomError {
         super(message, 'OutOfNumberRangeError');
     }
 }
+
+export class NotAllowedToAddInputError extends CustomError {
+    constructor(message) {
+        super(message, 'NotAllowedToAddInputError');
+    }
+}
+
+export class NotAllowedToDeleteInputError extends CustomError {
+    constructor(message) {
+        super(message, 'NotAllowedToDeleteInputError');
+    }
+}

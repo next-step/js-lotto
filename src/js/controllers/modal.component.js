@@ -29,15 +29,17 @@ export class ModalComponent extends Component {
     }
 
     _setEventListeners() {
-        $modal.resetButton.addEventListener('click', () => this.restart());
+        $modal.resetButton.addEventListener('click', () => this._restart());
         $modal.modalOuter.addEventListener('click', () => this.#closeStatsModal());
         $modal.closeButton.addEventListener('click', () => this.#closeStatsModal());
     }
 
-    restart() {
-        this._stateModel.setState({ reset: true });
+    _restart() {
+        this._stateModel.setState({ restart: true });
         this.#closeStatsModal();
         this._reset();
+        console.log('modal');
+        this._stateModel.init();
     }
 
     _reset() {

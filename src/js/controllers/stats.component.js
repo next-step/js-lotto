@@ -1,4 +1,4 @@
-import { $stats } from "../views/selector.js";
+import { $purchased, $stats } from "../views/selector.js";
 import { SECTIONTYPE } from "../utils/const.js";
 
 import { Component } from "./component.js";
@@ -10,14 +10,13 @@ export class StatsComponent extends Component {
 
     constructor(container) {
         super(container);
-        this.lastNumbers = [];
-        this.lastBonusNumber = 0;
         this.init();
+        this._view.displayBlock([$stats.lotto]);
     }
 
     init() {
         super.init();
-        this._view.displayBlock([$stats.lotto]);
+        this._view.displayNone([$stats.lotto]);
     }
 
     _setEventListeners() {
@@ -28,10 +27,23 @@ export class StatsComponent extends Component {
     }
 
     _subscribe() {
-        this._stateModel.register(() => this._reset());
+        this._stateModel.register({ restart: () => this._restart() });
+        this._stateModel.register({ reset: () => this._reset() });
+    }
+
+    _initElement() {
+        this.lastNumbers = [];
+        this.lastBonusNumber = 0;
+    }
+
+    _restart() {
+        super._restart();
+        this._reset();
+        this._stateModel.init();
     }
 
     _reset() {
+        this._view.displayNone([$stats.lotto]);
         [...$stats.lastNumbers].forEach(row => this._view.renderInputValue(row));
         this._view.renderInputValue($stats.lastBonusNumbers);
     }
@@ -40,8 +52,8 @@ export class StatsComponent extends Component {
         [...$stats.lastNumbers].forEach(($lastNumber, i) => {
             if ($lastNumber.value.length === $lastNumber.maxLength) {
                 i === $stats.lastNumbers.length - 1
-                    ? $stats.lastBonusNumbers.focus()
-                    : [...$stats.lastNumbers][i + 1].focus();
+                    ? this._view.renderToSetFocus($stats.lastBonusNumbers)
+                    : this._view.renderToSetFocus([...$stats.lastNumbers][i + 1]);
             }
         })
     }
@@ -55,9 +67,12 @@ export class StatsComponent extends Component {
     }
 
     #isValidated = () => {
-        return this._validator
-            .validate(SECTIONTYPE.STATS, [...this.lastNumbers, this.lastBonusNumber]
-                .filter(x => !!x));
+        const params = {
+            sectionType: SECTIONTYPE.NUMBERS,
+            value: [...this.lastNumbers, this.lastBonusNumber].filter(num => !!num),
+            includeBonus: true,
+        }
+        return this._validator.validate(params);
     }
 
     #openStatsModal() {

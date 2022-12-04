@@ -13,11 +13,18 @@ export class Component {
     _setEventHandler() {}
     _subscribe() {}
     _reset() {}
+    _submitByEnterKey(e) {}
+    _initElement() {}
+
+    _restart() {
+        this._initElement();
+    }
 
     init() {
         this._setEventListeners();
         this._setEventHandler();
         this._subscribe()
+        this._initElement();
     }
 
 }
