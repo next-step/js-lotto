@@ -1,4 +1,5 @@
 import { MESSAGES } from "../../src/js/constants.js";
+import { getAnalytics } from "../../src/js/utils.js";
 
 const purchaseAmountInput = "[data-cy='purchase-amount-input']";
 const purchaseButton = "[data-cy='purchase-button']";
@@ -79,6 +80,10 @@ describe("로또 계산기", () => {
     });
     it("1234를 입력한다.", () => {
       cy.get(purchaseAmountInput).type("1234");
+      cy.alertMessage(MESSAGES.WRONG_PURCHASE_PRICE);
+    });
+    it("10000000를 입력한다.", () => {
+      cy.get(purchaseAmountInput).type("10000000");
       cy.alertMessage(MESSAGES.WRONG_PURCHASE_PRICE);
     });
   });
@@ -167,7 +172,87 @@ describe("로또 계산기", () => {
     });
   });
 
+  context("당첨번호 [1, 2, 3, 4, 5, 6] 보너스 번호 [7]", () => {
+    const winningNumbers = [1, 2, 3, 4, 5, 6, 7];
+
+    it("3개 동일 - 로또 번호 [1, 2, 3, 10, 11, 12, 13]", () => {
+      const lottoNumbers = [[1, 2, 3, 10, 11, 12, 13]];
+
+      const [three] = getAnalytics(lottoNumbers, winningNumbers);
+
+      expect(three).to.be.eq(1);
+    });
+    it("4개 동일 - 로또 번호 [1, 2, 3, 4, 11, 12, 13]", () => {
+      const lottoNumbers = [[1, 2, 3, 4, 11, 12, 13]];
+
+      const [, four] = getAnalytics(lottoNumbers, winningNumbers);
+
+      expect(four).to.be.eq(1);
+    });
+    it("5개 동일 - 로또 번호 [1, 2, 3, 4, 5, 12, 13]", () => {
+      const lottoNumbers = [[1, 2, 3, 4, 5, 12, 13]];
+
+      const [, , five] = getAnalytics(lottoNumbers, winningNumbers);
+
+      expect(five).to.be.eq(1);
+    });
+    it("5개 동일 + 보너스 번호 - 로또 번호 [1, 2, 3, 4, 5, 10, 7]", () => {
+      const lottoNumbers = [[1, 2, 3, 4, 5, 10, 7]];
+
+      const [, , , fiveWithBonus] = getAnalytics(lottoNumbers, winningNumbers);
+
+      expect(fiveWithBonus).to.be.eq(1);
+    });
+    it("6개 동일 - 로또 번호 [1, 2, 3, 4, 5, 6, 14]", () => {
+      const lottoNumbers = [[1, 2, 3, 4, 5, 6, 14]];
+
+      const [, , , , six] = getAnalytics(lottoNumbers, winningNumbers);
+
+      expect(six).to.be.eq(1);
+    });
+
+    context("보너스 번호가 동일한 경우", () => {
+      it("로또 번호 [1, 2, 3, 4, 8, 9, 7]의 경우 보너스 번호 포함 5개가 동일로 처리된다.", () => {
+        const lottoNumbers = [[1, 2, 3, 4, 8, 9, 7]];
+
+        const [, , five] = getAnalytics(lottoNumbers, winningNumbers);
+
+        expect(five).to.be.eq(1);
+      });
+      it("로또 번호 [10, 2, 3, 4, 5, 6, 7]의 경우 5개 동일 + 보너스 동일로 처리된다.", () => {
+        const lottoNumbers = [[10, 2, 3, 4, 5, 6, 7]];
+
+        const [, , , fiveWithBonus] = getAnalytics(
+          lottoNumbers,
+          winningNumbers
+        );
+
+        expect(fiveWithBonus).to.be.eq(1);
+      });
+    });
+    it("로또 번호 [1, 2, 3, 4, 5, 7, 6]인 경우 7개의 숫자가 동일하지만 5개 동일로 처리된다.", () => {
+      const lottoNumbers = [[1, 2, 3, 4, 5, 7, 6]];
+
+      const [, , five] = getAnalytics(lottoNumbers, winningNumbers);
+
+      expect(five).to.be.eq(1);
+    });
+    it("로또 번호 [1, 2, 3, 4, 5, 7, 8]인 경우 6개의 숫자가 동일하지만 5개 동일로 처리된다.", () => {
+      const lottoNumbers = [[1, 2, 3, 4, 5, 7, 8]];
+
+      const [, , five] = getAnalytics(lottoNumbers, winningNumbers);
+
+      expect(five).to.be.eq(1);
+    });
+  });
+
   context("구매한 로또의 결과를 확인한다.", () => {
+    it("", () => {});
+    it("보너스 번호가 같은 경우 5개 + 보너스가 같은지, 같다면 바로 return한다.", () => {});
+    /**
+     * 예외 케이스가 어떤게 있을까?
+     */
+
     it("구매한 로또 번호로 통계를 계산한다.", () => {
       expect(false).to.be.eq(true);
     });

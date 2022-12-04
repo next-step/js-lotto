@@ -1,29 +1,26 @@
 import LottoAnalytics from "../models/LottoAnalytics.js";
 import LottoAnalyticsView from "../views/LottoAnalyticsView.js";
 import Modal from "../modals/index.js";
-import modalTemplates from "../modals/modalTemplates.js";
 import { LOTTO, MESSAGES } from "../constants.js";
 
 class LottoAnalyticsController {
   constructor(lottoNumbers) {
-    this.LottoAnalytics = new LottoAnalytics();
-    this.LottoAnalyticsView = new LottoAnalyticsView();
-
-    this.lottoNumbers = lottoNumbers;
+    this.lottoAnalytics = new LottoAnalytics(lottoNumbers);
+    this.lottoAnalyticsView = new LottoAnalyticsView();
 
     this.#subscribeEvents();
   }
 
   #subscribeEvents() {
-    this.LottoAnalyticsView.$lastWinningNumbersForm.addEventListener(
+    this.lottoAnalyticsView.$lastWinningNumbersForm.addEventListener(
       "submit",
       this.onCheckLottoResult.bind(this)
     );
   }
 
   onInputWinningNumbers() {
-    this.LottoAnalyticsView.onShowElement(
-      this.LottoAnalyticsView.$lastWinningNumbersForm
+    this.lottoAnalyticsView.onShowElement(
+      this.lottoAnalyticsView.$lastWinningNumbersForm
     );
   }
 
@@ -35,6 +32,12 @@ class LottoAnalyticsController {
       window.alert(MESSAGES.WRONG_LOTTO_NUMBER);
       return;
     }
+
+    this.lottoAnalytics.setWinningNumbers(winningNumbers);
+
+    const analytics = this.lottoAnalytics.getAnalytics();
+    const winningRates = this.lottoAnalytics.getWinningRates();
+    this.onAnalyticsModalShow(analytics, winningRates);
   }
 
   getWinningNumbers(target) {
@@ -66,17 +69,13 @@ class LottoAnalyticsController {
     return unDuplicatedNumbers.size !== LOTTO.NUMBER_COUNT_WITH_BONUS;
   }
 
-  onShow() {
+  onAnalyticsModalShow(analytics, winningRates) {
     Modal.getInstance()
-      .setTemplate(modalTemplates.winningGameAnalytics())
+      .setTemplate(
+        this.lottoAnalyticsView.templateAnalyticsModal(analytics, winningRates)
+      )
       .show();
   }
-
-  /**
-   * 각 로또 번호에 대한 계산
-   * 1. 등수 뱉어주는.
-   * 2. 이걸 가지고 통계 array 구성하면 되지 않나?
-   */
 }
 
 export default LottoAnalyticsController;
