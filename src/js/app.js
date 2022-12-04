@@ -1,5 +1,5 @@
 import { MESSAGE_ABOUT_NOT_DEFINED_TYPE } from "./constants.js";
-import { hasClass, isValidEventTarget } from "./utils.js";
+import { isValidEventTarget } from "./utils.js";
 
 class App {
   #model;
@@ -15,7 +15,7 @@ class App {
         this.#view.onViewNumbers(e.target.checked);
       },
       modal: () => {
-        if (!hasClass(this.#view.modal, "open")) {
+        if (!this.#view.isResultModalOpened) {
           this.openModal();
         } else {
           this.closeModal();

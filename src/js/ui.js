@@ -13,6 +13,7 @@ class Ui {
   #viewNumbersCheckbox;
   #checkWinningNumberArea;
   #totalReturnRate;
+  #isResultModalOpened;
   #restartButton;
   #modal;
 
@@ -28,6 +29,7 @@ class Ui {
     );
     this.#totalReturnRate = document.querySelector(".total-return-rate");
     this.#modal = document.querySelector("#modal");
+    this.#isResultModalOpened = false;
     this.#restartButton = document.querySelector(".restart-lotto-button");
     this.$amountInput = document.querySelector("#purchase-amount-input");
     this.$winningInputs = document.querySelectorAll(".winning-number");
@@ -38,6 +40,10 @@ class Ui {
     return this.#modal;
   }
 
+  get isResultModalOpened() {
+    return this.#isResultModalOpened;
+  }
+
   onViewNumbers(checked) {
     toggleClass({
       $element: this.#lottoList,
@@ -46,8 +52,14 @@ class Ui {
     });
   }
 
+  onOpenResultModal() {
+    this.#modal.classList.add("open");
+    this.#isResultModalOpened = true;
+  }
+
   onCloseResultModal() {
     this.#modal.classList.remove("open");
+    this.#isResultModalOpened = false;
   }
 
   getLottoElement(lotto) {
@@ -139,7 +151,7 @@ class Ui {
   renderModal(statistics) {
     this.renderTotalReturnRate(statistics);
     this.renderWinningCount(statistics);
-    this.#modal.classList.add("open");
+    this.onOpenResultModal();
   }
 
   render(state) {
