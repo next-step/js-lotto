@@ -1,12 +1,29 @@
 import {selector} from "./constants/selector.js";
-import {buyLotto} from "./service.js";
+import {
+  issueLotto,
+  buyLotto,
+  rankLotto,
+  priceEarningRatio,
+  resetLotto,
+} from "./service.js";
+import {$$, getWinningNumbers, getRandomNumbers} from "./utils/index.js";
+import {isDuplicateNumber} from "./isValidation.js";
+import {MESSAGE} from "./constants/index.js";
+import {
+  hideElement,
+  hideModal,
+  viewRankLotto,
+  viewRevenue,
+  showElement,
+  showModal,
+} from "./view.js";
 
-export const handlePaymentForm = ({target}) => {
+export const handlePaymentForm = (event) => {
   event.preventDefault();
+  showElement(selector.purchaseSection);
+  showElement(selector.winningForm);
 
-  const payment = target[0].valueAsNumber;
-  target[0].value = null;
-
+  const payment = selector.paymentInput.valueAsNumber;
   buyLotto(payment);
 };
 
@@ -15,4 +32,42 @@ export const handleShowNumber = ({target}) => {
     "lotto-container-hidden",
     !target.checked
   );
+};
+
+export const handleWinningForm = (event) => {
+  event.preventDefault();
+
+  const winningAndBonusNumber = [
+    ...getWinningNumbers(selector.winningInput)[0],
+    selector.bonusInput.valueAsNumber,
+  ];
+
+  if (!isDuplicateNumber(winningAndBonusNumber)) {
+    showModal(selector.modal);
+
+    const randomNumberList = getRandomNumbers(".lotto-number");
+    const resultRankLotto = rankLotto(winningAndBonusNumber, randomNumberList);
+    const payment = selector.paymentInput.valueAsNumber;
+    const earningRatio = priceEarningRatio(payment, resultRankLotto);
+
+    viewRankLotto(resultRankLotto);
+    viewRevenue(earningRatio);
+  } else {
+    alert(MESSAGE.DUPLICATED_LOTTO_NUMBER);
+  }
+};
+
+export const handleCloseModal = () => {
+  hideModal(selector.modal);
+};
+
+export const handleAllReset = () => {
+  hideElement(selector.purchaseSection);
+  hideElement(selector.winningForm);
+  handleCloseModal();
+
+  buyLotto();
+  issueLotto();
+  resetLotto();
+  $$("input").forEach((input) => (input.value = null));
 };

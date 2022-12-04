@@ -1,8 +1,8 @@
-const formSelector = `[data-cy="purchase-form"]`;
-const inputSelector = `[data-cy="purchase-amount"]`;
-const buttonSelector = `[data-cy="purchase-button"]`;
-const spanSelector = `[data-cy="purchase-span"]`;
-const listSelector = `.lotto-number`;
+const formSelector = '[data-cy="purchase-form"]';
+const inputSelector = '[data-cy="purchase-amount"]';
+const buttonSelector = '[data-cy="purchase-button"]';
+const spanSelector = '[data-cy="purchase-span"]';
+const listSelector = ".lotto-number";
 
 describe("로또 구매기능 테스트", () => {
   beforeEach(() => {

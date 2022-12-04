@@ -23,3 +23,12 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+const formSelector = `[data-cy="purchase-form"]`;
+const inputSelector = `[data-cy="purchase-amount"]`;
+const buttonSelector = `[data-cy="purchase-button"]`;
+
+Cypress.Commands.add("purchaseLotto", (money) => {
+  cy.get(inputSelector).type(money);
+  cy.get(formSelector).submit();
+});
