@@ -1,4 +1,4 @@
-import { MESSAGES } from "./constants.js";
+import { LOTTO, MESSAGES } from "./constants.js";
 import LottoController from "./controllers/LottoController.js";
 
 class LottoMachine {
@@ -27,6 +27,11 @@ class LottoMachine {
       return;
     }
 
+    if (this.isExceedPurchasePriceLimit(+purchasePrice)) {
+      window.alert(MESSAGES.WRONG_PURCHASE_PRICE);
+      return;
+    }
+
     const purchaseAmount = this.calculateAmountPer(purchasePrice);
     this.#lottoController.onGenerateLottosBy(purchaseAmount);
   }
@@ -37,6 +42,10 @@ class LottoMachine {
 
   isUnavailablePurchasePrice(purchasePrice) {
     return purchasePrice === 0 || purchasePrice % 1000 !== 0;
+  }
+
+  isExceedPurchasePriceLimit(purchasePrice) {
+    return purchasePrice > LOTTO.LIMIT_PURCHASE_PRICE;
   }
 }
 
