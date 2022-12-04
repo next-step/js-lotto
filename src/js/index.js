@@ -1,3 +1,3 @@
-import SlotMachine from "./SlotMachine.js";
+import LottoMachine from "./LottoMachine.js";
 
-new SlotMachine();
+new LottoMachine();

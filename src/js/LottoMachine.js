@@ -1,7 +1,7 @@
 import { MESSAGES } from "./constants.js";
 import LottoController from "./controllers/LottoController.js";
 
-class SlotMachine {
+class LottoMachine {
   #lottoController;
 
   constructor() {
@@ -40,4 +40,4 @@ class SlotMachine {
   }
 }
 
-export default SlotMachine;
+export default LottoMachine;
