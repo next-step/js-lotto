@@ -3,9 +3,6 @@ class LottoView {
     this.$purchaseTotalCount = document.getElementById("purchase-total-count");
     this.$lottoNumberVisible = document.getElementById("lotto-number-visible");
     this.$lottoListSection = document.getElementById("lotto-list-section");
-    this.$lastWinningNumbersForm = document.getElementById(
-      "last-winning-numbers-form"
-    );
   }
 
   render({ lottos, count, lottoNumberVisible }) {

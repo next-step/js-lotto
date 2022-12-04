@@ -11,6 +11,10 @@
   position: fixed;
 }
 
+.hide {
+  display: none;
+}
+
 /* Layout - Display */
 .d-flex {
   display: flex;
