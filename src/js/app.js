@@ -91,7 +91,7 @@ class App {
   }
 
   closeModal() {
-    this.#view.onCloseResultModal();
+    this.#view.handledCloseResultModal();
   }
 
   render(state) {

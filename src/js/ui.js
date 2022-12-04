@@ -52,12 +52,12 @@ class Ui {
     });
   }
 
-  onOpenResultModal() {
+  handledOpenResultModal() {
     this.#modal.classList.add("open");
     this.#isResultModalOpened = true;
   }
 
-  onCloseResultModal() {
+  handledCloseResultModal() {
     this.#modal.classList.remove("open");
     this.#isResultModalOpened = false;
   }
@@ -87,7 +87,7 @@ class Ui {
     });
   }
 
-  #initilizePurchasedView() {
+  #initializePurchasedView() {
     this.#clearInputs();
     this.#purchasedLottos.classList.remove("display");
     this.#checkWinningNumberArea.classList.remove("display");
@@ -151,7 +151,7 @@ class Ui {
   renderModal(statistics) {
     this.renderTotalReturnRate(statistics);
     this.renderWinningCount(statistics);
-    this.onOpenResultModal();
+    this.handledOpenResultModal();
   }
 
   render(state) {
@@ -161,9 +161,9 @@ class Ui {
   }
 
   reset() {
-    this.#initilizePurchasedView();
+    this.#initializePurchasedView();
     this.#initializeWinningCount();
-    this.onCloseResultModal();
+    this.handledCloseResultModal();
   }
 }
 
