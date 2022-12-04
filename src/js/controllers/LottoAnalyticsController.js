@@ -4,8 +4,8 @@ import Modal from "../modals/index.js";
 import { LOTTO, MESSAGES } from "../constants.js";
 
 class LottoAnalyticsController {
-  constructor(lottoNumbers) {
-    this.lottoAnalytics = new LottoAnalytics(lottoNumbers);
+  constructor(lottoNumbers, count) {
+    this.lottoAnalytics = new LottoAnalytics(lottoNumbers, count);
     this.lottoAnalyticsView = new LottoAnalyticsView();
 
     this.#subscribeEvents();
@@ -33,7 +33,7 @@ class LottoAnalyticsController {
       return;
     }
 
-    this.lottoAnalytics.setWinningNumbers(winningNumbers);
+    this.lottoAnalytics.onAnalyze();
 
     const analytics = this.lottoAnalytics.getAnalytics();
     const winningRates = this.lottoAnalytics.getWinningRates();

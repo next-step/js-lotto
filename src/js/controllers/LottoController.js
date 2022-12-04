@@ -28,7 +28,10 @@ class LottoController {
     this.lotto.onGenerateLottosBy(count);
 
     this.render();
-    const LottoAnalytics = new LottoAnalyticsController(this.lotto.getLottos());
+    const LottoAnalytics = new LottoAnalyticsController(
+      this.lotto.getLottos(),
+      count
+    );
     LottoAnalytics.onInputWinningNumbers();
   }
 

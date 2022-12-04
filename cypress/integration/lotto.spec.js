@@ -1,5 +1,5 @@
 import { MESSAGES } from "../../src/js/constants.js";
-import { getAnalytics } from "../../src/js/utils.js";
+import { calculateEarningRates, getAnalytics } from "../../src/js/utils.js";
 
 const purchaseAmountInput = "[data-cy='purchase-amount-input']";
 const purchaseButton = "[data-cy='purchase-button']";
@@ -246,27 +246,20 @@ describe("로또 계산기", () => {
     });
   });
 
-  context("구매한 로또의 결과를 확인한다.", () => {
-    it("", () => {});
-    it("보너스 번호가 같은 경우 5개 + 보너스가 같은지, 같다면 바로 return한다.", () => {});
-    /**
-     * 예외 케이스가 어떤게 있을까?
-     */
+  context("수익률을 계산한다.", () => {
+    it("수익 10만원, 투자 50만원인 경우 수익률은 -80%", () => {
+      const earningRates = calculateEarningRates(100_000, 500_000);
+      expect(earningRates).to.be.eq(-80);
+    });
 
-    it("구매한 로또 번호로 통계를 계산한다.", () => {
-      expect(false).to.be.eq(true);
+    it("수익 50만원, 투자 50만원인 경우 수익률은 0%", () => {
+      const earningRates = calculateEarningRates(500_000, 500_000);
+      expect(earningRates).to.be.eq(0);
     });
-    it("구매한 로또 번호로 수익률을 계산한다.", () => {
-      expect(false).to.be.eq(true);
-    });
-    it("통계 모달이 노출된다.", () => {
-      expect(false).to.be.eq(true);
-    });
-  });
 
-  context("다시 시작하기", () => {
-    it("다시 시작하기를 누르면 모든 데이터가 초기화된다.", () => {
-      expect(false).to.be.eq(true);
+    it("수익 100만원, 투자 50만원인 경우 수익률은 100%", () => {
+      const earningRates = calculateEarningRates(1_000_000, 500_000);
+      expect(earningRates).to.be.eq(100);
     });
   });
 });

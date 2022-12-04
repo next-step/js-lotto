@@ -1,19 +1,34 @@
-import { getAnalytics } from "../utils.js";
+import { calculateEarningRates, getAnalytics } from "../utils.js";
 
 class LottoAnalytics {
-  winningNumbers = [];
+  constructor(lottoNumbers, count) {
+    this.winningNumbers = [];
+    this.analytics = [];
+    this.winningRates = 0;
+    this.investments = count * 1000;
 
-  constructor(lottoNumbers) {
     this.setLottoNumbers(lottoNumbers);
   }
 
-  getAnalytics() {
-    const [three, four, five, fiveWithPlus, six] = getAnalytics(
+  onAnalyze() {
+    const analytics = getAnalytics(
       this.getLottoNumbers(),
       this.getWinningNumbers()
     );
 
-    return [
+    const winningPrice = [5_000, 50_000, 1_500_000, 30_000_000, 2_000_000_000];
+    const calculateEarnings = analytics
+      .map((count, index) => count * winningPrice[index])
+      .reduce((a, b) => a + b, 0);
+
+    this.setAnalytics(analytics);
+    this.setWinningRates(
+      calculateEarningRates(calculateEarnings, this.investments)
+    );
+  }
+
+  setAnalytics([three, four, five, fiveWithPlus, six]) {
+    this.analytics = [
       {
         correctCount: "3개",
         winningPrice: "5,000",
@@ -42,8 +57,16 @@ class LottoAnalytics {
     ];
   }
 
+  getAnalytics() {
+    return this.analytics;
+  }
+
+  setWinningRates(winningRates) {
+    this.winningRates = winningRates;
+  }
+
   getWinningRates() {
-    return 5;
+    return this.winningRates;
   }
 
   getLottoNumbers() {

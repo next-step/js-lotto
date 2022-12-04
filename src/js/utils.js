@@ -4,6 +4,9 @@ export const getLottoRandomNumber = () => {
   return Math.floor(Math.random() * (LOTTO.MAX_NUMBER - LOTTO.MIN_NUMBER) + 1);
 };
 
+export const calculateEarningRates = (earnings, investments) =>
+  Math.trunc(((earnings - investments) / investments) * 100);
+
 const getCorrectCount = (lottoNumbers, winningNumbers) => {
   let count = 0;
   lottoNumbers.forEach((number) => {
