@@ -86,7 +86,6 @@ class Ui {
 
     $counts.forEach(($count) => {
       $count.innerText = 0;
-      return $count;
     });
   }
 
