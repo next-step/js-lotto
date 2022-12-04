@@ -1,6 +1,5 @@
 import LottoView from "../views/LottoView.js";
 import Lotto from "../models/Lotto.js";
-import LottoAnalyticsController from "./LottoAnalyticsController.js";
 
 class LottoController {
   constructor() {
@@ -28,11 +27,7 @@ class LottoController {
     this.lotto.onGenerateLottosBy(count);
 
     this.render();
-    const LottoAnalytics = new LottoAnalyticsController(
-      this.lotto.getLottos(),
-      count
-    );
-    LottoAnalytics.onInputWinningNumbers();
+    return this.lotto.getLottos();
   }
 
   render() {

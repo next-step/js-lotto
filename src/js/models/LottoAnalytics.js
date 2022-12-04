@@ -1,20 +1,14 @@
 import { calculateEarningRates, getAnalytics } from "../utils.js";
 
+//TODO 상수 처리
 class LottoAnalytics {
-  constructor(lottoNumbers, count) {
-    this.winningNumbers = [];
+  constructor() {
     this.analytics = [];
     this.winningRates = 0;
-    this.investments = count * 1000;
-
-    this.setLottoNumbers(lottoNumbers);
   }
 
-  onAnalyze() {
-    const analytics = getAnalytics(
-      this.getLottoNumbers(),
-      this.getWinningNumbers()
-    );
+  onAnalyze({ winningNumbers, lottoNumbers, investments }) {
+    const analytics = getAnalytics(lottoNumbers, winningNumbers);
 
     const winningPrice = [5_000, 50_000, 1_500_000, 30_000_000, 2_000_000_000];
     const calculateEarnings = analytics
@@ -22,9 +16,7 @@ class LottoAnalytics {
       .reduce((a, b) => a + b, 0);
 
     this.setAnalytics(analytics);
-    this.setWinningRates(
-      calculateEarningRates(calculateEarnings, this.investments)
-    );
+    this.setWinningRates(calculateEarningRates(calculateEarnings, investments));
   }
 
   setAnalytics([three, four, five, fiveWithPlus, six]) {
@@ -67,22 +59,6 @@ class LottoAnalytics {
 
   getWinningRates() {
     return this.winningRates;
-  }
-
-  getLottoNumbers() {
-    return this.lottoNumbers;
-  }
-
-  setLottoNumbers(lottoNumbers) {
-    this.lottoNumbers = lottoNumbers;
-  }
-
-  getWinningNumbers() {
-    return this.winningNumbers;
-  }
-
-  setWinningNumbers(winningNumbers) {
-    this.winningNumbers = winningNumbers;
   }
 }
 

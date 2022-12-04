@@ -1,15 +1,16 @@
 class LottoAnalyticsView {
   constructor() {
-    this.$lastWinningNumbersForm = document.getElementById(
-      "last-winning-numbers-form"
-    );
     this.$initButton = document.getElementById("init-button"); //TODO
   }
 
-  onShowElement(target) {
-    target.classList.remove("hide");
-  }
-
+  /**
+   * @param analytics
+   * @param analytics.correctCount
+   * @param analytics.winningPrice
+   * @param analytics.winningCount
+   * @param winningRates
+   * @returns {string}
+   */
   templateAnalyticsModal(analytics, winningRates) {
     return `<div>
       <h2 class="text-center">🏆 당첨 통계 🏆</h2>
