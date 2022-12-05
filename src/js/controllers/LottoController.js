@@ -27,7 +27,6 @@ class LottoController {
     this.lotto.onGenerateLottosBy(count);
 
     this.render();
-    return this.lotto.getLottos();
   }
 
   render() {
@@ -36,6 +35,10 @@ class LottoController {
     const lottoNumberVisible = this.lotto.getLottoNumberVisible();
 
     this.lottoView.render({ lottos, count, lottoNumberVisible });
+  }
+
+  getLottoNumbers() {
+    return this.lotto.getLottos();
   }
 }
 

@@ -19,7 +19,6 @@ class LottoMachine {
     this.#lottoController = new LottoController();
     this.#lottoAnalyticsController = new LottoAnalyticsController();
 
-    this.lottoNumbers = [];
     this.purchasePrice = 0;
 
     this.#subscribeEvents();
@@ -50,8 +49,7 @@ class LottoMachine {
     this.purchasePrice = purchasePrice;
     const purchaseAmount = this.calculateAmountPer(purchasePrice);
 
-    this.lottoNumbers =
-      this.#lottoController.onGenerateLottosBy(purchaseAmount);
+    this.#lottoController.onGenerateLottosBy(purchaseAmount);
     this.$lastWinningNumbersForm.classList.remove("hide"); //TODO 함수로 네이밍 변경
   }
 
@@ -66,7 +64,7 @@ class LottoMachine {
 
     this.#lottoAnalyticsController.onAnalyzeLottoResults({
       winningNumbers,
-      lottoNumbers: this.lottoNumbers,
+      lottoNumbers: this.#lottoController.getLottoNumbers(),
       investments: this.purchasePrice,
     });
   }
