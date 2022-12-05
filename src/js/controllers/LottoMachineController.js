@@ -1,30 +1,32 @@
-import { LOTTO, MESSAGES } from "./constants.js";
-import LottoController from "./controllers/LottoController.js";
-import LottoAnalyticsController from "./controllers/LottoAnalyticsController.js";
+import LottoController from "./LottoController.js";
+import LottoAnalyticsController from "./LottoAnalyticsController.js";
+import LottoMachineView from "../views/LottoMachineView.js";
+import { LOTTO, MESSAGES } from "../constants.js";
+import LottoMachine from "../models/LottoMachine.js";
 
-class LottoMachine {
+class LottoMachineController {
+  #lottoMachine;
+  #lottoMachineView;
+
   #lottoController;
   #lottoAnalyticsController;
 
   constructor() {
-    this.$purchaseForm = document.getElementById("purchase-form");
-    this.$purchaseAmountInput = document.getElementById(
-      "purchase-amount-input"
-    );
-    this.$lastWinningNumbersForm = document.getElementById(
-      "last-winning-numbers-form"
-    );
-
     this.#lottoController = new LottoController();
     this.#lottoAnalyticsController = new LottoAnalyticsController();
 
-    this.clear();
+    this.#lottoMachine = new LottoMachine();
+    this.#lottoMachineView = new LottoMachineView();
+
     this.#subscribeEvents();
   }
 
   #subscribeEvents() {
-    this.$purchaseForm.addEventListener("submit", this.#onPurchase.bind(this));
-    this.$lastWinningNumbersForm.addEventListener(
+    this.#lottoMachineView.$purchaseForm.addEventListener(
+      "submit",
+      this.#onPurchase.bind(this)
+    );
+    this.#lottoMachineView.$lastWinningNumbersForm.addEventListener(
       "submit",
       this.#onCheckWinningLottoResult.bind(this)
     );
@@ -36,7 +38,7 @@ class LottoMachine {
   #onPurchase(event) {
     event.preventDefault();
 
-    const purchasePrice = this.$purchaseAmountInput.value;
+    const purchasePrice = this.#lottoMachineView.$purchaseAmountInput.value;
     if (this.isUnavailablePurchasePrice(+purchasePrice)) {
       window.alert(MESSAGES.WRONG_PURCHASE_PRICE);
       return;
@@ -47,11 +49,13 @@ class LottoMachine {
       return;
     }
 
-    this.purchasePrice = purchasePrice;
+    this.#lottoMachine.setPurchasePrice(purchasePrice);
     const purchaseAmount = this.calculateAmountPer(purchasePrice);
 
     this.#lottoController.onGenerateLottosBy(purchaseAmount);
-    this.$lastWinningNumbersForm.classList.remove("hide"); //TODO 함수로 네이밍 변경
+    this.#lottoMachineView.showElement(
+      this.#lottoMachineView.$lastWinningNumbersForm
+    );
   }
 
   #onCheckWinningLottoResult(e) {
@@ -63,18 +67,17 @@ class LottoMachine {
       return;
     }
 
+    this.#lottoMachine.setWinningNumbers(winningNumbers);
     this.#lottoAnalyticsController.onAnalyzeLottoResults({
-      winningNumbers,
+      winningNumbers: this.#lottoMachine.getWinningNumbers(),
       lottoNumbers: this.#lottoController.getLottoNumbers(),
-      investments: this.purchasePrice,
+      investments: this.#lottoMachine.getPurchasePrice(),
     });
   }
 
   clear() {
-    this.purchasePrice = 0;
-    this.$lastWinningNumbersForm.classList.add("hide");
-    this.$purchaseForm.reset();
-    this.$lastWinningNumbersForm.reset();
+    this.#lottoMachine.clear();
+    this.#lottoMachineView.clear();
   }
 
   isWinningNumberDuplicated(numbers) {
@@ -119,4 +122,4 @@ class LottoMachine {
   }
 }
 
-export default LottoMachine;
+export default LottoMachineController;
