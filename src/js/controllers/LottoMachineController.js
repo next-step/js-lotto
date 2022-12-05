@@ -62,7 +62,7 @@ class LottoMachineController {
     e.preventDefault();
 
     const winningNumbers = this.getWinningNumbers(e.target);
-    if (!this.isWinningNumbersCorrectlyRegistered(winningNumbers)) {
+    if (this.isWinningNumberDuplicated(winningNumbers)) {
       window.alert(MESSAGES.WRONG_LOTTO_NUMBER);
       return;
     }
@@ -87,20 +87,6 @@ class LottoMachineController {
     });
 
     return unDuplicatedNumbers.size !== LOTTO.NUMBER_COUNT_WITH_BONUS;
-  }
-
-  isWinningNumbersCorrectlyRegistered(winningLottoNumbers) {
-    if (this.isWinningNumberDuplicated(winningLottoNumbers)) {
-      return false;
-    }
-
-    return winningLottoNumbers.every((number) =>
-      this.isWinningNumberCorrect(number)
-    );
-  }
-
-  isWinningNumberCorrect(number) {
-    return LOTTO.MIN_NUMBER <= number && number <= LOTTO.MAX_NUMBER;
   }
 
   getWinningNumbers(target) {
