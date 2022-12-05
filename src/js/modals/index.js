@@ -1,8 +1,8 @@
 class Modal {
   constructor() {
-    this.$modal = document.getElementById("modal");
-    this.$modalCloseButton = document.getElementById("modal-close-button");
-    this.$modalTemplate = document.getElementById("modal-template-container");
+    this.$modal = document.querySelector("#modal");
+    this.$modalCloseButton = document.querySelector("#modal-close-button");
+    this.$modalTemplate = document.querySelector("#modal-template-container");
 
     this.#subscribeEvents();
   }
@@ -21,10 +21,20 @@ class Modal {
 
   show() {
     this.$modal.classList.add("open");
+
+    return this;
   }
 
   close() {
     this.$modal.classList.remove("open");
+
+    return this;
+  }
+
+  setAttributes(callback) {
+    callback?.(this.$modal);
+
+    return this;
   }
 
   setTemplate(template) {

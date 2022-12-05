@@ -30,7 +30,20 @@ class LottoAnalyticsController {
       .setTemplate(
         this.#lottoAnalyticsView.templateAnalyticsModal(analytics, winningRates)
       )
-      .show();
+      .show()
+      .setAttributes(this.#subscribeAnalyticsModalEvents.bind(this));
+  }
+
+  #subscribeAnalyticsModalEvents($modal) {
+    const closeModalButton = $modal.querySelector("#modal-close-button");
+    const initButton = $modal.querySelector("#init-button");
+
+    closeModalButton.addEventListener("click", () => {
+      console.log("hide");
+    });
+    initButton.addEventListener("click", () => {
+      console.log("initButton clicked");
+    });
   }
 }
 

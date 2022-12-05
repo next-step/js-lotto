@@ -5,14 +5,15 @@ class LottoAnalyticsView {
 
   /**
    * @param analytics
-   * @param analytics.correctCount
-   * @param analytics.winningPrice
-   * @param analytics.winningCount
+   * @param analytics[].correctCount
+   * @param analytics[].winningPrice
+   * @param analytics[].winningCount
    * @param winningRates
    * @returns {string}
    */
   templateAnalyticsModal(analytics, winningRates) {
-    return `<div>
+    return `
+    <div>
       <h2 class="text-center">🏆 당첨 통계 🏆</h2>
       <div class="d-flex justify-center">
         <table class="result-table border-collapse border border-black">
