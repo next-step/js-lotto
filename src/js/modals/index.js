@@ -8,7 +8,7 @@ class Modal {
   }
 
   #subscribeEvents() {
-    this.$modalCloseButton.addEventListener("click", this.close.bind(this));
+    this.$modalCloseButton.addEventListener("click", this.hide.bind(this));
   }
 
   static getInstance() {
@@ -25,7 +25,7 @@ class Modal {
     return this;
   }
 
-  close() {
+  hide() {
     this.$modal.classList.remove("open");
     this.setTemplate("");
 

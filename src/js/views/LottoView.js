@@ -1,17 +1,27 @@
 class LottoView {
   constructor() {
+    this.$container = document.getElementById("purchase-lotto-section");
     this.$purchaseTotalCount = document.getElementById("purchase-total-count");
     this.$lottoNumberVisible = document.getElementById("lotto-number-visible");
-    this.$lottoListSection = document.getElementById("lotto-list-section");
+    this.$lottoListContainer = document.getElementById("lotto-list-section");
+
+    this.clear();
+  }
+
+  clear() {
+    this.$container.classList.add("hide");
+    this.$purchaseTotalCount.innerHTML = "";
+    this.$lottoListContainer.innerHTML = "";
   }
 
   render({ lottos, count, lottoNumberVisible }) {
+    this.$container.classList.remove("hide");
     this.$purchaseTotalCount.innerHTML = this.templateTotalCount(count);
 
-    this.$lottoListSection.classList = lottoNumberVisible
+    this.$lottoListContainer.classList = lottoNumberVisible
       ? "d-block"
       : "d-flex flex-wrap";
-    this.$lottoListSection.innerHTML = lottos
+    this.$lottoListContainer.innerHTML = lottos
       .map((lotto) => this.templateLotto(lotto, lottoNumberVisible))
       .join("");
   }

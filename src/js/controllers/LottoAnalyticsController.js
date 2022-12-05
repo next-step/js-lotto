@@ -5,6 +5,7 @@ import Modal from "../modals/index.js";
 class LottoAnalyticsController {
   #lottoAnalytics;
   #lottoAnalyticsView;
+  #modal;
 
   constructor() {
     this.#lottoAnalytics = new LottoAnalytics();
@@ -26,7 +27,9 @@ class LottoAnalyticsController {
     const analytics = this.#lottoAnalytics.getAnalytics();
     const winningRates = this.#lottoAnalytics.getWinningRates();
 
-    Modal.getInstance()
+    this.#modal = Modal.getInstance();
+
+    this.#modal
       .setTemplate(
         this.#lottoAnalyticsView.templateAnalyticsModal(analytics, winningRates)
       )
@@ -42,7 +45,11 @@ class LottoAnalyticsController {
       this.#lottoAnalytics.clear();
     });
     initButton.addEventListener("click", () => {
-      console.log("clear");
+      this.#lottoAnalytics.clear();
+      this.#modal.hide();
+
+      const event = new CustomEvent("@clear");
+      document.dispatchEvent(event);
     });
   }
 }

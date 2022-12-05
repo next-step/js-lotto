@@ -2,7 +2,6 @@ import { LOTTO, MESSAGES } from "./constants.js";
 import LottoController from "./controllers/LottoController.js";
 import LottoAnalyticsController from "./controllers/LottoAnalyticsController.js";
 
-//TODO MVC로 변경
 class LottoMachine {
   #lottoController;
   #lottoAnalyticsController;
@@ -19,8 +18,7 @@ class LottoMachine {
     this.#lottoController = new LottoController();
     this.#lottoAnalyticsController = new LottoAnalyticsController();
 
-    this.purchasePrice = 0;
-
+    this.clear();
     this.#subscribeEvents();
   }
 
@@ -30,6 +28,9 @@ class LottoMachine {
       "submit",
       this.#onCheckWinningLottoResult.bind(this)
     );
+    document.addEventListener("@clear", () => {
+      this.clear();
+    });
   }
 
   #onPurchase(event) {
@@ -67,6 +68,13 @@ class LottoMachine {
       lottoNumbers: this.#lottoController.getLottoNumbers(),
       investments: this.purchasePrice,
     });
+  }
+
+  clear() {
+    this.purchasePrice = 0;
+    this.$lastWinningNumbersForm.classList.add("hide");
+    this.$purchaseForm.reset();
+    this.$lastWinningNumbersForm.reset();
   }
 
   isWinningNumberDuplicated(numbers) {

@@ -1,7 +1,5 @@
 class LottoAnalyticsView {
-  constructor() {
-    this.$initButton = document.getElementById("init-button"); //TODO
-  }
+  constructor() {}
 
   /**
    * @param analytics

@@ -10,7 +10,6 @@ class LottoController {
     this.#lotto = new Lotto();
 
     this.#subscribeEvents();
-    this.render();
   }
 
   #subscribeEvents() {
@@ -18,8 +17,9 @@ class LottoController {
       "change",
       this.onChangeLottoNumberVisible.bind(this)
     );
-    document.addEventListener("@clear", (e) => {
-      console.log("LottoController", e);
+    document.addEventListener("@clear", () => {
+      this.#lotto.clear();
+      this.#lottoView.clear();
     });
   }
 

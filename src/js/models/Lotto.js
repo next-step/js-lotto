@@ -2,11 +2,9 @@ import { LOTTO } from "../constants.js";
 import { getLottoRandomNumber } from "../utils.js";
 
 class Lotto {
-  purchaseCount = 0;
-  lottos = [];
-  lottoNumberVisible = false;
-
-  constructor() {}
+  constructor() {
+    this.clear();
+  }
 
   onGenerateLottosBy(count) {
     this.setPurchaseCount(count);
@@ -23,6 +21,12 @@ class Lotto {
     }
 
     return Array.from(randomNumbers);
+  }
+
+  clear() {
+    this.purchaseCount = 0;
+    this.lottos = [];
+    this.lottoNumberVisible = false;
   }
 
   getPurchaseCount() {
