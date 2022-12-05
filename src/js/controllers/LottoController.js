@@ -18,6 +18,9 @@ class LottoController {
       "change",
       this.onChangeLottoNumberVisible.bind(this)
     );
+    document.addEventListener("@clear", (e) => {
+      console.log("LottoController", e);
+    });
   }
 
   onChangeLottoNumberVisible(event) {

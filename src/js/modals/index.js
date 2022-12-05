@@ -27,6 +27,7 @@ class Modal {
 
   close() {
     this.$modal.classList.remove("open");
+    this.setTemplate("");
 
     return this;
   }

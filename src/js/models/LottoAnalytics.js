@@ -3,8 +3,7 @@ import { calculateEarningRates, getAnalytics } from "../utils.js";
 //TODO 상수 처리
 class LottoAnalytics {
   constructor() {
-    this.analytics = [];
-    this.winningRates = 0;
+    this.clear();
   }
 
   onAnalyze({ winningNumbers, lottoNumbers, investments }) {
@@ -15,11 +14,11 @@ class LottoAnalytics {
       .map((count, index) => count * winningPrice[index])
       .reduce((a, b) => a + b, 0);
 
-    this.setAnalytics(analytics);
+    this.#setAnalytics(analytics);
     this.setWinningRates(calculateEarningRates(calculateEarnings, investments));
   }
 
-  setAnalytics([three, four, five, fiveWithPlus, six]) {
+  #setAnalytics([three, four, five, fiveWithPlus, six]) {
     this.analytics = [
       {
         correctCount: "3개",
@@ -47,6 +46,11 @@ class LottoAnalytics {
         winningCount: six.toString(),
       },
     ];
+  }
+
+  clear() {
+    this.analytics = [];
+    this.winningRates = 0;
   }
 
   getAnalytics() {

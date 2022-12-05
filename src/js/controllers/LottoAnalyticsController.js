@@ -19,10 +19,10 @@ class LottoAnalyticsController {
   onAnalyzeLottoResults(params) {
     this.#lottoAnalytics.onAnalyze(params);
 
-    this.onAnalyticsModalShow();
+    this.#onAnalyticsModalShow();
   }
 
-  onAnalyticsModalShow() {
+  #onAnalyticsModalShow() {
     const analytics = this.#lottoAnalytics.getAnalytics();
     const winningRates = this.#lottoAnalytics.getWinningRates();
 
@@ -39,10 +39,10 @@ class LottoAnalyticsController {
     const initButton = $modal.querySelector("#init-button");
 
     closeModalButton.addEventListener("click", () => {
-      console.log("hide");
+      this.#lottoAnalytics.clear();
     });
     initButton.addEventListener("click", () => {
-      console.log("initButton clicked");
+      console.log("clear");
     });
   }
 }
