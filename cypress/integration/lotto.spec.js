@@ -1,5 +1,8 @@
 import { MESSAGES } from "../../src/js/constants.js";
-import { calculateEarningRates, getAnalytics } from "../../src/js/utils.js";
+import {
+  calculateEarningRates,
+  analyzeLottoResult,
+} from "../../src/js/utils.js";
 
 const purchaseAmountInput = "[data-cy='purchase-amount-input']";
 const purchaseButton = "[data-cy='purchase-button']";
@@ -178,35 +181,38 @@ describe("로또 계산기", () => {
     it("3개 동일 - 로또 번호 [1, 2, 3, 10, 11, 12, 13]", () => {
       const lottoNumbers = [[1, 2, 3, 10, 11, 12, 13]];
 
-      const [three] = getAnalytics(lottoNumbers, winningNumbers);
+      const [three] = analyzeLottoResult(lottoNumbers, winningNumbers);
 
       expect(three).to.be.eq(1);
     });
     it("4개 동일 - 로또 번호 [1, 2, 3, 4, 11, 12, 13]", () => {
       const lottoNumbers = [[1, 2, 3, 4, 11, 12, 13]];
 
-      const [, four] = getAnalytics(lottoNumbers, winningNumbers);
+      const [, four] = analyzeLottoResult(lottoNumbers, winningNumbers);
 
       expect(four).to.be.eq(1);
     });
     it("5개 동일 - 로또 번호 [1, 2, 3, 4, 5, 12, 13]", () => {
       const lottoNumbers = [[1, 2, 3, 4, 5, 12, 13]];
 
-      const [, , five] = getAnalytics(lottoNumbers, winningNumbers);
+      const [, , five] = analyzeLottoResult(lottoNumbers, winningNumbers);
 
       expect(five).to.be.eq(1);
     });
     it("5개 동일 + 보너스 번호 - 로또 번호 [1, 2, 3, 4, 5, 10, 7]", () => {
       const lottoNumbers = [[1, 2, 3, 4, 5, 10, 7]];
 
-      const [, , , fiveWithBonus] = getAnalytics(lottoNumbers, winningNumbers);
+      const [, , , fiveWithBonus] = analyzeLottoResult(
+        lottoNumbers,
+        winningNumbers
+      );
 
       expect(fiveWithBonus).to.be.eq(1);
     });
     it("6개 동일 - 로또 번호 [1, 2, 3, 4, 5, 6, 14]", () => {
       const lottoNumbers = [[1, 2, 3, 4, 5, 6, 14]];
 
-      const [, , , , six] = getAnalytics(lottoNumbers, winningNumbers);
+      const [, , , , six] = analyzeLottoResult(lottoNumbers, winningNumbers);
 
       expect(six).to.be.eq(1);
     });
@@ -215,14 +221,14 @@ describe("로또 계산기", () => {
       it("로또 번호 [1, 2, 3, 4, 8, 9, 7]의 경우 보너스 번호 포함 5개가 동일로 처리된다.", () => {
         const lottoNumbers = [[1, 2, 3, 4, 8, 9, 7]];
 
-        const [, , five] = getAnalytics(lottoNumbers, winningNumbers);
+        const [, , five] = analyzeLottoResult(lottoNumbers, winningNumbers);
 
         expect(five).to.be.eq(1);
       });
       it("로또 번호 [10, 2, 3, 4, 5, 6, 7]의 경우 5개 동일 + 보너스 동일로 처리된다.", () => {
         const lottoNumbers = [[10, 2, 3, 4, 5, 6, 7]];
 
-        const [, , , fiveWithBonus] = getAnalytics(
+        const [, , , fiveWithBonus] = analyzeLottoResult(
           lottoNumbers,
           winningNumbers
         );
@@ -233,14 +239,14 @@ describe("로또 계산기", () => {
     it("로또 번호 [1, 2, 3, 4, 5, 7, 6]인 경우 7개의 숫자가 동일하지만 5개 동일로 처리된다.", () => {
       const lottoNumbers = [[1, 2, 3, 4, 5, 7, 6]];
 
-      const [, , five] = getAnalytics(lottoNumbers, winningNumbers);
+      const [, , five] = analyzeLottoResult(lottoNumbers, winningNumbers);
 
       expect(five).to.be.eq(1);
     });
     it("로또 번호 [1, 2, 3, 4, 5, 7, 8]인 경우 6개의 숫자가 동일하지만 5개 동일로 처리된다.", () => {
       const lottoNumbers = [[1, 2, 3, 4, 5, 7, 8]];
 
-      const [, , five] = getAnalytics(lottoNumbers, winningNumbers);
+      const [, , five] = analyzeLottoResult(lottoNumbers, winningNumbers);
 
       expect(five).to.be.eq(1);
     });
