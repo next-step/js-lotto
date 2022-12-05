@@ -1,6 +1,8 @@
 import { $, $all } from '../utils/dom.js';
-import { SELECTOR, ERROR_MESSAGE } from '../utils/constants.js';
+import { SELECTOR, ERROR_MESSAGE, LOTTO } from '../utils/constants.js';
 import { isValidateAmount, isDuplicatedNumber } from '../utils/validator.js';
+import { calculateRankState } from '../utils/service.js';
+
 let template;
 
 const getTemplate = () => {
@@ -15,7 +17,7 @@ const showPurchaseResult = (element) => {
   $(SELECTOR.INPUT_LOTTO_NUMS, element).classList.remove('d-none');
 };
 
-const addEvents = (targetElement, events) => {
+const addEvents = (targetElement, events, state) => {
   $(SELECTOR.PURCHASE_FORM, targetElement).addEventListener(
     'submit',
     (event) => {
@@ -39,18 +41,29 @@ const addEvents = (targetElement, events) => {
   );
 
   //당첨 번호 submit event 등록
-  $(SELECTOR.INPUT_LOTTO_NUMS, targetElement).addEventListener('submit', (event) => {
-    event.preventDefault();
-    const lottoNumbers = Array.from($all(SELECTOR.WINNING_NUMS, event.target)).map(element => element.value);
-    const bonusNumber = $(SELECTOR.BONUS_NUM, event.target).value;
-    lottoNumbers.push(bonusNumber);
+  $(SELECTOR.INPUT_LOTTO_NUMS, targetElement).addEventListener(
+    'submit',
+    (event) => {
+      event.preventDefault();
+      const { lottos } = state;
+      const winLottoNumbers = Array.from(
+        $all(SELECTOR.WINNING_NUMS, event.target)
+      ).map((element) => element.valueAsNumber);
+      const bonusNumber = $(SELECTOR.BONUS_NUM, event.target).valueAsNumber;
 
-    if(isDuplicatedNumber(lottoNumbers)){
-      alert(ERROR_MESSAGE.DUPLICATED_NUMBER);
-      return;
+      if (isDuplicatedNumber(winLottoNumbers, bonusNumber)) {
+        alert(ERROR_MESSAGE.DUPLICATED_NUMBER);
+        return;
+      }
+
+      const currentRank = calculateRankState(lottos, {
+        winLottoNumbers,
+        bonusNumber,
+      });
+
+      events.openModal(currentRank);
     }
-    events.toggleModal();
-  })
+  );
 };
 
 export default (targetElement, state, events) => {
@@ -62,6 +75,6 @@ export default (targetElement, state, events) => {
     showPurchaseResult(newApp);
   }
 
-  addEvents(newApp, events);
+  addEvents(newApp, events, state);
   return newApp;
 };

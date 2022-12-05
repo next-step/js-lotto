@@ -1,6 +1,6 @@
 const ERROR_MESSAGE = {
   AMOUNT: '로또 구입 금액을 1,000원 단위로 입력해 주세요.',
-  DUPLICATED_NUMBER: '로또 번호에는 중복된 숫자를 입력할 수 없습니다.'
+  DUPLICATED_NUMBER: '로또 번호에는 중복된 숫자를 입력할 수 없습니다.',
 };
 
 const LOTTO = {
@@ -8,6 +8,7 @@ const LOTTO = {
   MIN_VALUE: 1,
   MAX_VALUE: 45,
   LENGTH: 6,
+  MIN_WIN_COUNT: 3,
 };
 
 const SELECTOR = {
@@ -27,13 +28,14 @@ const SELECTOR = {
 
   //Lotto Input Form
   INPUT_LOTTO_NUMS: '#input-lotto-nums',
-  WINNING_NUMS : '.winning-number',
-  BONUS_NUM : '.bonus-number',
+  WINNING_NUMS: '.winning-number',
+  BONUS_NUM: '.bonus-number',
 
   //Modal
-  MODAL : '.modal',
-  LOTTO_MODAL : '#lotto-modal',
-  MODAL_CLOSE : '.modal-close'
+  MODAL: '.modal',
+  LOTTO_MODAL: '#lotto-modal',
+  MODAL_CLOSE: '.modal-close',
+  LOTTO_WIN_COUNT: '.lotto-win-count',
 };
 
 export { ERROR_MESSAGE, LOTTO, SELECTOR };

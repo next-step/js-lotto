@@ -21,6 +21,13 @@ const state = {
   lottos: [],
   toggleOn: false,
   modalOn: false,
+  rank: {
+    3: 0,
+    4: 0,
+    5: 0,
+    BONUS_WIN: 0,
+    6: 0,
+  },
 };
 
 const events = {
@@ -28,8 +35,13 @@ const events = {
     state.toggleOn = isToggleOn;
     render();
   },
-  toggleModal: () => {
-    state.modalOn = !state.modalOn;
+  openModal: (rank) => {
+    state.modalOn = true;
+    state.rank = rank;
+    render();
+  },
+  closeModal: () => {
+    state.modalOn = false;
     render();
   },
   purchaseLotto: (amount) => {

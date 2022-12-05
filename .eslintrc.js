@@ -1,7 +1,6 @@
 module.exports = {
   plugins: ['prettier', 'cypress'],
   extends: ['eslint:recommended', 'plugin:prettier/recommended'],
-  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 7,
     sourceType: 'module',
@@ -12,6 +11,7 @@ module.exports = {
   env: {
     browser: true,
     node: true,
+    // es6: true,
     'cypress/globals': true,
   },
   ignorePatterns: ['node_modules/'],
