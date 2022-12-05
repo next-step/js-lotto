@@ -18,7 +18,7 @@ const getCorrectCount = (lottoNumbers, winningNumbers) => {
   return count;
 };
 
-export const getAnalytics = (lottoNumbers, winningNumbers) => {
+export const analyzeLottoResult = (lottoNumbers, winningNumbers) => {
   const result = [0, 0, 0, 0, 0, 0, 0, 0];
 
   lottoNumbers.forEach((lottoNumber) => {

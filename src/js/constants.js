@@ -10,4 +10,11 @@ export const LOTTO = {
   MAX_NUMBER: 45,
   MIN_NUMBER: 1,
   LIMIT_PURCHASE_PRICE: 100_000,
+  PRIZE: {
+    FIRST: 2_000_000_000,
+    SECOND: 30_000_000,
+    THIRD: 1_500_000,
+    FORTH: 50_000,
+    FIFTH: 5_000,
+  },
 };

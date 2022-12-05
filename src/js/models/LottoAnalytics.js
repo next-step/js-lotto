@@ -1,24 +1,30 @@
-import { calculateEarningRates, getAnalytics } from "../utils.js";
+import { calculateEarningRates, analyzeLottoResult } from "../utils.js";
+import { LOTTO } from "../constants.js";
 
-//TODO 상수 처리
+const { PRIZE } = LOTTO;
+
 class LottoAnalytics {
   constructor() {
     this.clear();
   }
 
   onAnalyze({ winningNumbers, lottoNumbers, investments }) {
-    const analytics = getAnalytics(lottoNumbers, winningNumbers);
+    const analytics = analyzeLottoResult(lottoNumbers, winningNumbers);
 
-    const winningPrice = [5_000, 50_000, 1_500_000, 30_000_000, 2_000_000_000];
-    const calculateEarnings = analytics
-      .map((count, index) => count * winningPrice[index])
-      .reduce((a, b) => a + b, 0);
+    const winningPrice = [
+      PRIZE.FIFTH,
+      PRIZE.FORTH,
+      PRIZE.THIRD,
+      PRIZE.SECOND,
+      PRIZE.FIRST,
+    ];
+    const calculateEarnings = this.onCalculateEarnings(analytics, winningPrice);
 
-    this.#setAnalytics(analytics);
+    this.setAnalytics(analytics);
     this.setWinningRates(calculateEarningRates(calculateEarnings, investments));
   }
 
-  #setAnalytics([three, four, five, fiveWithPlus, six]) {
+  setAnalytics([three, four, five, fiveWithPlus, six]) {
     this.analytics = [
       {
         correctCount: "3개",
@@ -46,6 +52,12 @@ class LottoAnalytics {
         winningCount: six.toString(),
       },
     ];
+  }
+
+  onCalculateEarnings(analytics, winningPrice) {
+    return analytics
+      .map((count, index) => count * winningPrice[index])
+      .reduce((a, b) => a + b, 0);
   }
 
   clear() {
