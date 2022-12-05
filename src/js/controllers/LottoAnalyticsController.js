@@ -3,9 +3,12 @@ import LottoAnalyticsView from "../views/LottoAnalyticsView.js";
 import Modal from "../modals/index.js";
 
 class LottoAnalyticsController {
+  #lottoAnalytics;
+  #lottoAnalyticsView;
+
   constructor() {
-    this.lottoAnalytics = new LottoAnalytics();
-    this.lottoAnalyticsView = new LottoAnalyticsView();
+    this.#lottoAnalytics = new LottoAnalytics();
+    this.#lottoAnalyticsView = new LottoAnalyticsView();
   }
 
   /**
@@ -14,18 +17,18 @@ class LottoAnalyticsController {
    * @param params.investments
    */
   onAnalyzeLottoResults(params) {
-    this.lottoAnalytics.onAnalyze(params);
+    this.#lottoAnalytics.onAnalyze(params);
 
     this.onAnalyticsModalShow();
   }
 
   onAnalyticsModalShow() {
-    const analytics = this.lottoAnalytics.getAnalytics();
-    const winningRates = this.lottoAnalytics.getWinningRates();
+    const analytics = this.#lottoAnalytics.getAnalytics();
+    const winningRates = this.#lottoAnalytics.getWinningRates();
 
     Modal.getInstance()
       .setTemplate(
-        this.lottoAnalyticsView.templateAnalyticsModal(analytics, winningRates)
+        this.#lottoAnalyticsView.templateAnalyticsModal(analytics, winningRates)
       )
       .show();
   }
