@@ -45,6 +45,11 @@ class App {
 
         if (!isValidNumbers) return;
 
+        this.#model.checkWinnerNumber(
+          this.#view.$winningInputs,
+          this.#view.$bonusInput
+        );
+
         this.openModal();
       },
     };
@@ -71,10 +76,6 @@ class App {
   }
 
   openModal() {
-    this.#model.checkWinnerNumber(
-      this.#view.$winningInputs,
-      this.#view.$bonusInput
-    );
     this.#view.renderModal(
       this.#model.state.winningStatistics,
       this.#view.$amountInput.value
