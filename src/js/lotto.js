@@ -6,10 +6,13 @@ import {
   getMatchedValueCountInArray,
 } from "./utils.js";
 import {
+  BOUNS_MATCHED_COUNT,
   LOTTO_GAME_COUNT,
   MAXIMUM_NUMBER,
   MESSAGE_ABOUT_DUPLICATION_NUMBER,
   MESSAGE_ABOUT_UNIT_OF_AMOUNT,
+  MINIMUM_MATCHED_COUNT_FOR_2TH,
+  MINIMUM_MATCHED_COUNT_FOR_5TH,
 } from "./constants.js";
 
 const UNIT_AMOUNT = 1000;
@@ -60,10 +63,12 @@ class Lotto {
       const hasBonusNumber =
         lotto.find((num) => num === bonusNumber) !== undefined;
 
-      if (matchedValueCount === 5 && hasBonusNumber) return "bonus";
+      if (matchedValueCount === MINIMUM_MATCHED_COUNT_FOR_2TH && hasBonusNumber)
+        return "bonus";
 
-      return matchedValueCount >= 3 && hasBonusNumber
-        ? matchedValueCount + 1
+      return matchedValueCount >= MINIMUM_MATCHED_COUNT_FOR_5TH &&
+        hasBonusNumber
+        ? matchedValueCount + BOUNS_MATCHED_COUNT
         : matchedValueCount;
     });
 

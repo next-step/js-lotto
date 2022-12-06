@@ -6,6 +6,9 @@ export const MESSAGE_ABOUT_DUPLICATION_NUMBER =
 export const LOTTO_GAME_COUNT = 6;
 export const MAXIMUM_NUMBER = 45;
 export const PERCENT = 100;
+export const MINIMUM_MATCHED_COUNT_FOR_2TH = 5;
+export const MINIMUM_MATCHED_COUNT_FOR_5TH = 3;
+export const BOUNS_MATCHED_COUNT = 1;
 
 const RANK = {
   RANK_5: "3",
