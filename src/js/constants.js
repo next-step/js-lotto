@@ -7,6 +7,16 @@ const LOTTO = {
 
 const ERROR_MESSAGES = {
   WRONG_INPUT: "입력하신 금액이 유효하지 않습니다.",
+  DUPLICATED_NUMBERS: "중복된 숫자들이 있습니다.",
 };
 
-export { LOTTO, ERROR_MESSAGES };
+const WINNING_AMOUNT = {
+  3: 5000,
+  4: 50000,
+  5: 1500000,
+  "5+": 30000000,
+  6: 2000000000,
+};
+Object.freeze(WINNING_AMOUNT);
+
+export { LOTTO, ERROR_MESSAGES, WINNING_AMOUNT };

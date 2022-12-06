@@ -1,9 +1,13 @@
 import { LOTTO } from "../constants.js";
 import { getOneRandomNumber } from "../utils/random-utils.js";
 
-const getRandomNumbers = (min, max) => {
+const getRandomNumbers = ({
+  min = 1,
+  max = 45,
+  count = LOTTO.LOTTO_COUNT_PER_ONE_TICKET,
+}) => {
   const randomNumbers = new Set();
-  while (randomNumbers.size < LOTTO.LOTTO_COUNT_PER_ONE_TICKET) {
+  while (randomNumbers.size < count) {
     randomNumbers.add(getOneRandomNumber(min, max));
   }
   return randomNumbers;
@@ -14,10 +18,10 @@ const generateLottoRandomNumbers = ({ moneyAmount, min, max }) => {
   const lottoCnt = Math.floor(moneyAmount / LOTTO.LOTTO_PRICE_PER_ONE_TICKET);
 
   while (randomNumberArray.length < lottoCnt) {
-    const randomNumSet = getRandomNumbers(min, max);
+    const randomNumSet = getRandomNumbers({});
     randomNumberArray.push(randomNumSet);
   }
   return [randomNumberArray, lottoCnt];
 };
 
-export default generateLottoRandomNumbers;
+export { generateLottoRandomNumbers, getRandomNumbers };
