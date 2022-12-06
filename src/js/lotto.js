@@ -57,7 +57,8 @@ class Lotto {
         lotto,
         winningNumbers
       );
-      const hasBonusNumber = !!lotto.find((num) => num === bonusNumber);
+      const hasBonusNumber =
+        lotto.find((num) => num === bonusNumber) !== undefined;
 
       if (matchedValueCount === 5 && hasBonusNumber) return "bonus";
 
