@@ -20,7 +20,7 @@ export const toggleClass = ({ $element, className, flag }) => {
     : $element.classList.remove(className);
 };
 
-export const getInputNumberValues = ($inputs) =>
+export const getInputValuesAsNumber = ($inputs) =>
   Array.from($inputs).map(({ value }) => Number(value));
 
 export const hasDuplicatedValueInputs = ($inputs, $bonusInput) => {

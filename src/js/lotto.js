@@ -2,7 +2,7 @@ import {
   isValidAmountUnit,
   hasDuplicatedValueInputs,
   getRandomNumber,
-  getInputNumberValues,
+  getInputValuesAsNumber,
   getMatchedValueCountInArray,
 } from "./utils.js";
 import {
@@ -49,7 +49,7 @@ class Lotto {
   }
 
   checkWinnerNumber($winningNumbers, $bonusNumber) {
-    const winningNumbers = getInputNumberValues($winningNumbers);
+    const winningNumbers = getInputValuesAsNumber($winningNumbers);
     const bonusNumber = Number($bonusNumber.value);
 
     const numberOfMatchedNumbers = this.#state.lottos.map((lotto) => {
