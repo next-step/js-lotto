@@ -6,13 +6,18 @@ import {
 const $purchaseInputSelector = "#purchase-amount-input";
 const $purchaseSubmitButtonSelector = ".purchase-amount-submit-button";
 const $toggleSelector = "#view-numbers-checkbox";
+const $purchasedLottosSelector = "#purchased-lottos";
+const $checkWinningNumberAreaSelector = "#check-winning-number-area";
 const $iconSelector = ".lotto-icon";
 const $lottoDetailSelector = ".lotto-detail";
 const $winningNumberInputSelector = ".winning-number";
 const $bonusNumberInputSelector = ".bonus-number";
 const $checkResultButtonSelector = ".check-result-button";
-const $modal = "#modal";
-const $modalCloseButton = "#modal-close";
+const $modalSelector = "#modal";
+const $modalCloseButtonSelector = "#modal-close";
+const $matchCountSelector = ".match-count";
+const $totalReturnRateSelector = ".total-return-rate";
+const $resetLottoButtonSelector = "#reset-lotto-button";
 
 describe("행운의 로또 테스트", () => {
   const validateAmountUnit = ({ input, expectedMessage }) => {
@@ -31,6 +36,13 @@ describe("행운의 로또 테스트", () => {
     cy.get($winningNumberInputSelector).then(($input) => {
       expect($input[0].validationMessage).to.eq(expectedMessage);
     });
+  };
+
+  const setWinningNumberAndBonusNumber = () => {
+    cy.get($winningNumberInputSelector).each(($number, index) =>
+      cy.get($number).type(`${index + 1}`)
+    );
+    cy.get($bonusNumberInputSelector).type("45");
   };
 
   beforeEach(() => {
@@ -227,39 +239,91 @@ describe("행운의 로또 테스트", () => {
       });
     });
 
-    it("결과 확인 버튼을 클릭하면 수익률을 확인할 수 있는 모달이 노출된다.", () => {
-      cy.get($winningNumberInputSelector).each(($number, index) =>
-        cy.get($number).type(`${index + 1}`)
-      );
-      cy.get($bonusNumberInputSelector).type("45");
-      cy.get($checkResultButtonSelector)
-        .click()
-        .then(() => {
-          cy.get($modal).should("have.class", "open");
-        });
+    describe("결과 확인 버튼을 클릭하면 수익률을 확인할 수 있다.", () => {
+      beforeEach(() => {
+        setWinningNumberAndBonusNumber();
+      });
+
+      it("수익률을 확인할 수 있는 모달이 노출된다.", () => {
+        cy.get($checkResultButtonSelector)
+          .click()
+          .then(() => {
+            cy.get($modalSelector).should("have.class", "open");
+          });
+      });
+
+      it("당첨 갯수를 확인할 수 있다", () => {
+        cy.get($checkResultButtonSelector)
+          .click()
+          .then(() => {
+            cy.get($modalSelector).should("have.class", "open");
+            cy.get($matchCountSelector).each(($count) => {
+              expect($count).to.have.not.text("");
+            });
+          });
+      });
+
+      it("수익률을 확인할 수 있다", () => {
+        cy.get($checkResultButtonSelector)
+          .click()
+          .then(() => {
+            cy.get($modalSelector).should("have.class", "open");
+            cy.get($totalReturnRateSelector).should("not.have.text", "");
+          });
+      });
     });
 
     describe("결과 확인 모달을 닫을 수 있다.", () => {
       beforeEach(() => {
-        cy.get($winningNumberInputSelector).each(($number, index) =>
-          cy.get($number).type(`${index + 1}`)
-        );
-        cy.get($bonusNumberInputSelector).type("45");
+        setWinningNumberAndBonusNumber();
         cy.get($checkResultButtonSelector).click();
       });
       it("결과 확인 모달의 외부를 클릭했을때 모달은 사라진다.", () => {
-        cy.get($modalCloseButton)
+        cy.get($modalCloseButtonSelector)
           .click()
           .then(() => {
-            cy.get($modal).should("not.have.class", "open");
+            cy.get($modalSelector).should("not.have.class", "open");
           });
       });
       it("결과 확인 모달의 X 버튼을 클릭했을때 모달은 사라진다.", () => {
-        cy.get($modalCloseButton)
+        cy.get($modalCloseButtonSelector)
           .click()
           .then(() => {
-            cy.get($modal).should("not.have.class", "open");
+            cy.get($modalSelector).should("not.have.class", "open");
           });
+      });
+    });
+  });
+
+  describe("다시 시작하기를 할 수 있다.", () => {
+    beforeEach(() => {
+      cy.get($purchaseInputSelector).type("5000{enter}");
+      setWinningNumberAndBonusNumber();
+      cy.get($checkResultButtonSelector).click();
+    });
+
+    it("모달에 다시 시작하기 버튼이 존재한다", () => {
+      cy.get($resetLottoButtonSelector).should("exist");
+    });
+
+    describe("다시 시작하기 버튼 클릭시", () => {
+      beforeEach(() => {
+        cy.get($resetLottoButtonSelector).click();
+      });
+
+      it("입력된 구입 금액은 초기화된다.", () => {
+        cy.get($purchaseInputSelector).should("have.value", "");
+      });
+
+      it("구매한 로또 내역이 화면에서 사라진다", () => {
+        cy.get($purchasedLottosSelector).should("not.have.class", "display");
+      });
+
+      it("당첨번호 조회영역이 화면에서 사라진다", () => {
+        cy.get($checkWinningNumberAreaSelector).should(
+          "not.have.class",
+          "display"
+        );
       });
     });
   });
