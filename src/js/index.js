@@ -1,5 +1,5 @@
 import { $ } from './utils/dom.js';
-import { LOTTO } from './utils/constants.js';
+import { LOTTO, DEFAULT_STATE } from './utils/constants.js';
 import registry from './registry.js';
 import applyDiff from './applyDiff.js';
 import Lotto from './Lotto.js';
@@ -16,28 +16,17 @@ registry.add('counter', counterView);
 registry.add('lottoNumbers', lottoNumbersView);
 registry.add('modal', modalView);
 
-const state = {
-  purchaseAmount: 0,
-  lottos: [],
-  toggleOn: false,
-  modalOn: false,
-  rank: {
-    3: 0,
-    4: 0,
-    5: 0,
-    BONUS_WIN: 0,
-    6: 0,
-  },
-};
+const state = DEFAULT_STATE;
 
 const events = {
   toggleLottoNumbers: (isToggleOn) => {
     state.toggleOn = isToggleOn;
     render();
   },
-  openModal: (rank) => {
+  openModal: (rank, profitRate) => {
     state.modalOn = true;
     state.rank = rank;
+    state.profitRate = profitRate;
     render();
   },
   closeModal: () => {
@@ -48,6 +37,12 @@ const events = {
     state.purchaseAmount = amount;
     const ticketCount = amount / LOTTO.PRICE_UNIT;
     state.lottos = Array.from({ length: ticketCount }, () => new Lotto());
+    render();
+  },
+  clear: () => {
+    state.purchaseAmount = 0;
+    state.toggleOn = false;
+    state.modalOn = false;
     render();
   },
 };

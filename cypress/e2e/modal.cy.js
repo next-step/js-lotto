@@ -1,4 +1,8 @@
-import { getRank } from '../../src/js/utils/service.js';
+import {
+  getRank,
+  calculateRankState,
+  calculateProfitRate,
+} from '../../src/js/utils/service.js';
 import { ERROR_MESSAGE, SELECTOR } from '../../src/js/utils/constants.js';
 
 describe('LOTTO APLICATION의 Modal을 테스트한다.', () => {
@@ -76,6 +80,29 @@ describe('LOTTO APLICATION의 Modal을 테스트한다.', () => {
     });
   });
 
+  context('다시 시작하기 버튼을 테스트한다. ', () => {
+    beforeEach(() => {
+      const lottoNumbers = [1, 34, 23, 33, 7, 8];
+      cy.get('.winning-number').each(($el, index) => {
+        cy.wrap($el).type(lottoNumbers[index]);
+      });
+      cy.get('.bonus-number').type(42);
+
+      cy.get(SELECTOR.INPUT_LOTTO_NUMS).submit();
+    });
+
+    it('다시 시작하기 버튼이 존재한다.', () => {
+      cy.get('.reset-button').should('exist');
+    });
+
+    it('다시 시작하기 버튼을 클릭하면 모달 창이 닫히고 로또 구매정보가 사라진다.', () => {
+      cy.get('.reset-button').click();
+      cy.get('.modal').should('not.have.class', 'open');
+      cy.get(SELECTOR.PURCHASED_LOTTO).should('have.class', 'd-none');
+      cy.get(SELECTOR.INPUT_LOTTO_NUMS).should('have.class', 'd-none');
+    });
+  });
+
   context('로또 당첨 결과를 테스트한다.', () => {
     it('모달창의 당첨 통계와 실제 당첨 통계가 일치하는지 테스트한다.', () => {
       const winLottoNumbers = [1, 2, 3, 4, 5, 6];
@@ -120,6 +147,39 @@ describe('LOTTO APLICATION의 Modal을 테스트한다.', () => {
           expect(JSON.stringify(lottoWinningRank)).to.equal(
             JSON.stringify(modalLottoWinningRank)
           );
+        });
+    });
+    it('당첨 수익률을 테스트한다.', () => {
+      const winLottoNumbers = [1, 2, 3, 4, 5, 6];
+      const bonusNumber = 7;
+
+      const lottoWinningRank = {
+        3: 0,
+        4: 0,
+        5: 0,
+        BONUS_WIN: 0,
+        6: 0,
+      };
+
+      cy.get('.lotto-numbers')
+        .each(($el) => {
+          const lottoNumbers = $el.text().split(',').map(Number);
+          const rank = getRank(winLottoNumbers, lottoNumbers, bonusNumber);
+          if (rank < 3) {
+            return;
+          }
+          lottoWinningRank[rank]++;
+        })
+        .then(() => {
+          cy.get('.winning-number').each(($el, index) => {
+            cy.wrap($el).type(winLottoNumbers[index]);
+          });
+          cy.get('.bonus-number').type(bonusNumber);
+          cy.get(SELECTOR.INPUT_LOTTO_NUMS).submit();
+
+          const profitRate = calculateProfitRate(lottoWinningRank, 7000);
+
+          cy.get('#profit-rate').should('have.text', profitRate);
         });
     });
   });

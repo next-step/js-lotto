@@ -32,4 +32,13 @@ const calculateRankState = (lottos, { winLottoNumbers, bonusNumber }) => {
   return rank;
 };
 
-export { getRank, calculateRankState };
+const calculateProfitRate = (rank, purchaseAmount) => {
+  const prizeKeys = Object.keys(rank);
+
+  const totalPrize = prizeKeys.reduce((acc, cur) => {
+    return acc + LOTTO.LOTTO_PRIZE[cur] * rank[cur];
+  }, 0);
+  return Math.round(((totalPrize - purchaseAmount) / purchaseAmount) * 100);
+};
+
+export { getRank, calculateRankState, calculateProfitRate };

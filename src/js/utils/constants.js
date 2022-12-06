@@ -9,6 +9,13 @@ const LOTTO = {
   MAX_VALUE: 45,
   LENGTH: 6,
   MIN_WIN_COUNT: 3,
+  LOTTO_PRIZE: {
+    3: 5000,
+    4: 50000,
+    5: 1500000,
+    BONUS_WIN: 3000000,
+    6: 2000000000,
+  },
 };
 
 const SELECTOR = {
@@ -36,6 +43,22 @@ const SELECTOR = {
   LOTTO_MODAL: '#lotto-modal',
   MODAL_CLOSE: '.modal-close',
   LOTTO_WIN_COUNT: '.lotto-win-count',
+  PROFIT_RATE: '#profit-rate',
+  RESET_BUTTON: '.reset-button',
 };
 
-export { ERROR_MESSAGE, LOTTO, SELECTOR };
+const DEFAULT_STATE = {
+  purchaseAmount: 0,
+  lottos: [],
+  toggleOn: false,
+  modalOn: false,
+  rank: {
+    3: 0,
+    4: 0,
+    5: 0,
+    BONUS_WIN: 0,
+    6: 0,
+  },
+};
+
+export { ERROR_MESSAGE, LOTTO, SELECTOR, DEFAULT_STATE };

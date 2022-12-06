@@ -1,5 +1,5 @@
 import { $, $all } from '../utils/dom.js';
-import { SELECTOR, ERROR_MESSAGE, LOTTO } from '../utils/constants.js';
+import { SELECTOR, ERROR_MESSAGE } from '../utils/constants.js';
 import { isValidateAmount, isDuplicatedNumber } from '../utils/validator.js';
 import { calculateRankState } from '../utils/service.js';
 
@@ -7,6 +7,7 @@ let template;
 
 const getTemplate = () => {
   if (!template) {
+    console.log('no Tamplate');
     template = $(SELECTOR.LOTTO_APP);
   }
   return template.content.firstElementChild.cloneNode(true);
@@ -17,7 +18,13 @@ const showPurchaseResult = (element) => {
   $(SELECTOR.INPUT_LOTTO_NUMS, element).classList.remove('d-none');
 };
 
+const hidePurchaseResult = (element) => {
+  $(SELECTOR.PURCHASED_LOTTO, element).classList.add('d-none');
+  $(SELECTOR.INPUT_LOTTO_NUMS, element).classList.add('d-none');
+};
+
 const addEvents = (targetElement, events, state) => {
+  console.log('addEvents', targetElement);
   $(SELECTOR.PURCHASE_FORM, targetElement).addEventListener(
     'submit',
     (event) => {
@@ -28,6 +35,7 @@ const addEvents = (targetElement, events, state) => {
         alert(ERROR_MESSAGE.AMOUNT);
         return;
       }
+      // $(SELECTOR.PURCHASE_INPUT, event.target).value = 5000;
       events.purchaseLotto(purchaseAmount);
     }
   );
@@ -71,7 +79,12 @@ export default (targetElement, state, events) => {
   newApp.innerHTML = '';
   newApp.appendChild(getTemplate());
 
-  if (state.purchaseAmount !== 0) {
+  if (state.purchaseAmount === 0) {
+    hidePurchaseResult(newApp);
+    const formData = new FormData($(SELECTOR.PURCHASE_FORM, newApp));
+    const purchaseAmount = formData.get('purchase-amount');
+    console.log('purchaseAmount', purchaseAmount);
+  } else {
     showPurchaseResult(newApp);
   }
 
