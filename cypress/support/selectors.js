@@ -1,0 +1,15 @@
+export const $purchaseInputSelector = "#purchase-amount-input";
+export const $purchaseSubmitButtonSelector = ".purchase-amount-submit-button";
+export const $toggleSelector = "#view-numbers-checkbox";
+export const $purchasedLottosSelector = "#purchased-lottos";
+export const $checkWinningNumberAreaSelector = "#check-winning-number-area";
+export const $iconSelector = ".lotto-icon";
+export const $lottoDetailSelector = ".lotto-detail";
+export const $winningNumberInputSelector = ".winning-number";
+export const $bonusNumberInputSelector = ".bonus-number";
+export const $checkResultButtonSelector = ".check-result-button";
+export const $modalSelector = "#modal";
+export const $modalCloseButtonSelector = "#modal-close";
+export const $matchCountSelector = ".match-count";
+export const $totalReturnRateSelector = ".total-return-rate";
+export const $resetLottoButtonSelector = "#reset-lotto-button";

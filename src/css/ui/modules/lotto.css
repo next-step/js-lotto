@@ -3,7 +3,7 @@
 }
 
 #purchased-lottos,
-#check-winning-number {
+#check-winning-number-area {
   display: none;
 }
 
@@ -22,6 +22,6 @@
 }
 
 #purchased-lottos.display,
-#check-winning-number.display {
+#check-winning-number-area.display {
   display: block;
 }

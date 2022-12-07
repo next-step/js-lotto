@@ -1,4 +1,4 @@
-.modal {
+#modal {
   opacity: 0;
   visibility: hidden;
   display: flex;
@@ -12,7 +12,7 @@
   z-index: 2;
 }
 
-.modal.open {
+#modal.open {
   opacity: 1;
   visibility: visible;
 }
@@ -27,7 +27,7 @@
   border-radius: 5px;
 }
 
-.modal-close {
+#modal-close {
   position: absolute;
   top: 30px;
   right: 30px;
@@ -42,6 +42,7 @@
 
 svg {
   display: block;
+  pointer-events: none;
 }
 
 .close-x {
@@ -49,6 +50,7 @@ svg {
   fill: transparent;
   stroke-linecap: round;
   stroke-width: 5;
+  pointer-events: none;
 }
 
 @media screen and (max-width: 768px) {
