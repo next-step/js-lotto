@@ -3,16 +3,14 @@ import {
   hasDuplicatedValueInputs,
   getRandomNumber,
   getInputValuesAsNumber,
-  getMatchedValueCountInArray,
+  getMatchedNumberCounts,
+  getWinningStatistics,
 } from "./utils.js";
 import {
-  BOUNS_MATCHED_COUNT,
   LOTTO_GAME_COUNT,
   MAXIMUM_NUMBER,
   MESSAGE_ABOUT_DUPLICATION_NUMBER,
   MESSAGE_ABOUT_UNIT_OF_AMOUNT,
-  MINIMUM_MATCHED_COUNT_FOR_2TH,
-  MINIMUM_MATCHED_COUNT_FOR_5TH,
 } from "./constants.js";
 
 const UNIT_AMOUNT = 1000;
@@ -43,43 +41,32 @@ class Lotto {
     return Array.from(numbers);
   }
 
+  setLottos(lottos) {
+    this.#state.lottos = lottos;
+  }
+
   #generatorLotto(amount) {
     const gameCount = amount / UNIT_AMOUNT;
     const games = new Array(gameCount).fill(0);
 
     this.#state.gameCount = gameCount;
-    this.#state.lottos = games.map(this.#generateLottoNumbers);
+    const generatedLottos = games.map(this.#generateLottoNumbers);
+    this.setLottos(generatedLottos);
   }
 
   checkWinnerNumber($winningNumbers, $bonusNumber) {
     const winningNumbers = getInputValuesAsNumber($winningNumbers);
     const bonusNumber = Number($bonusNumber.value);
 
-    const numberOfMatchedNumbers = this.#state.lottos.map((lotto) => {
-      const matchedValueCount = getMatchedValueCountInArray(
-        lotto,
-        winningNumbers
-      );
-      const hasBonusNumber =
-        lotto.find((num) => num === bonusNumber) !== undefined;
+    const numberOfMatchedNumbers = getMatchedNumberCounts(
+      this.#state.lottos,
+      winningNumbers,
+      bonusNumber
+    );
 
-      if (matchedValueCount === MINIMUM_MATCHED_COUNT_FOR_2TH && hasBonusNumber)
-        return "bonus";
-
-      return matchedValueCount >= MINIMUM_MATCHED_COUNT_FOR_5TH &&
-        hasBonusNumber
-        ? matchedValueCount + BOUNS_MATCHED_COUNT
-        : matchedValueCount;
-    });
-
-    const result = numberOfMatchedNumbers.reduce((acc, cur) => {
-      if (cur < 3) return acc;
-
-      acc[cur] = (acc[cur] || 0) + 1;
-      return acc;
-    }, {});
-
-    this.#state.winningStatistics = result;
+    this.#state.winningStatistics = getWinningStatistics(
+      numberOfMatchedNumbers
+    );
   }
 
   purchaseLotto(amount) {

@@ -76,10 +76,7 @@ class App {
   }
 
   openModal() {
-    this.#view.renderModal(
-      this.#model.state.winningStatistics,
-      this.#view.$amountInput.value
-    );
+    this.#view.renderModal(this.#model.state.winningStatistics);
   }
 
   closeModal() {

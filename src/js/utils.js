@@ -1,5 +1,8 @@
 import {
+  BOUNS_MATCHED_COUNT,
   CLICK_EVENT_TARGET_IDS,
+  MINIMUM_MATCHED_COUNT_FOR_2TH,
+  MINIMUM_MATCHED_COUNT_FOR_5TH,
   PERCENT,
   SUBMIT_EVENT_TARGET_IDS,
 } from "./constants.js";
@@ -49,3 +52,28 @@ export const getTotalSum = (numbers) =>
     acc += cur;
     return acc;
   }, 0);
+
+export const getMatchedNumberCounts = (lottos, winningNumbers, bonusNumber) =>
+  lottos.map((lotto) => {
+    const matchedValueCount = getMatchedValueCountInArray(
+      lotto,
+      winningNumbers
+    );
+    const hasBonusNumber =
+      lotto.find((num) => num === bonusNumber) !== undefined;
+
+    if (matchedValueCount === MINIMUM_MATCHED_COUNT_FOR_2TH && hasBonusNumber)
+      return "bonus";
+
+    return matchedValueCount >= MINIMUM_MATCHED_COUNT_FOR_5TH && hasBonusNumber
+      ? matchedValueCount + BOUNS_MATCHED_COUNT
+      : matchedValueCount;
+  });
+
+export const getWinningStatistics = (matchedNumbers) =>
+  matchedNumbers.reduce((acc, cur) => {
+    if (cur < 3) return acc;
+
+    acc[cur] = (acc[cur] || 0) + 1;
+    return acc;
+  }, {});
