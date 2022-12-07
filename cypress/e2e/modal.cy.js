@@ -1,8 +1,4 @@
-import {
-  getRank,
-  calculateRankState,
-  calculateProfitRate,
-} from '../../src/js/utils/service.js';
+import { getRank, calculateProfitRate } from '../../src/js/utils/service.js';
 import { ERROR_MESSAGE, SELECTOR } from '../../src/js/utils/constants.js';
 
 describe('LOTTO APLICATION의 Modal을 테스트한다.', () => {

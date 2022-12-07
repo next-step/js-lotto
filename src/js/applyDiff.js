@@ -1,6 +1,11 @@
 const isNodeChanged = (node1, node2) => {
   const n1Attributes = node1.attributes;
   const n2Attributes = node2.attributes;
+
+  if (node1.value || node2.value) {
+    return node1.value !== node2.value;
+  }
+
   if (n1Attributes.length !== n2Attributes.length) {
     return true;
   }
@@ -22,6 +27,7 @@ const isNodeChanged = (node1, node2) => {
   ) {
     return true;
   }
+
   return false;
 };
 
@@ -35,6 +41,7 @@ const applyDiff = (parentNode, realNode, virtualNode) => {
     parentNode.appendChild(virtualNode);
     return;
   }
+
   if (isNodeChanged(virtualNode, realNode)) {
     realNode.replaceWith(virtualNode);
     return;
