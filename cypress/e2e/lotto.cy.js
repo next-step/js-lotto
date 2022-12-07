@@ -4,7 +4,7 @@ import {
   PRICE_BY_RANK,
 } from "../../src/js/constants.js";
 import {
-  calculatorReturnLate,
+  calculatorReturnRate,
   getMatchedNumberCounts,
   getTotalSum,
   getWinningStatistics,
@@ -336,7 +336,7 @@ describe("행운의 로또 테스트", () => {
 
             cy.get($purchaseInputSelector).should(($input) => {
               const purchasePrice = $input.val();
-              totalReturnRate = calculatorReturnLate(
+              totalReturnRate = calculatorReturnRate(
                 totalPrizeMoney,
                 Number(purchasePrice)
               );

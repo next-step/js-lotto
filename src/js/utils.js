@@ -1,5 +1,5 @@
 import {
-  BOUNS_MATCHED_COUNT,
+  BONUS_MATCHED_COUNT,
   CLICK_EVENT_TARGET_IDS,
   MINIMUM_MATCHED_COUNT_FOR_2TH,
   MINIMUM_MATCHED_COUNT_FOR_5TH,
@@ -44,7 +44,7 @@ export const isValidSubmitEventTarget = (target) =>
 export const isValidClickEventTarget = (target) =>
   CLICK_EVENT_TARGET_IDS.includes(target.getAttribute("id"));
 
-export const calculatorReturnLate = (profits, investment) =>
+export const calculatorReturnRate = (profits, investment) =>
   Math.trunc(((profits - investment) / investment) * PERCENT);
 
 export const getTotalSum = (numbers) =>
@@ -66,7 +66,7 @@ export const getMatchedNumberCounts = (lottos, winningNumbers, bonusNumber) =>
       return "bonus";
 
     return matchedValueCount >= MINIMUM_MATCHED_COUNT_FOR_5TH && hasBonusNumber
-      ? matchedValueCount + BOUNS_MATCHED_COUNT
+      ? matchedValueCount + BONUS_MATCHED_COUNT
       : matchedValueCount;
   });
 

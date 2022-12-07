@@ -1,5 +1,5 @@
 import {
-  calculatorReturnLate,
+  calculatorReturnRate,
   getTotalSum,
   removeAllChildNodes,
   toggleClass,
@@ -129,7 +129,7 @@ class Ui {
 
     const totalPrizeMoney = getTotalSum(calculatedAmountByRank);
 
-    this.#totalReturnRate.innerText = calculatorReturnLate(
+    this.#totalReturnRate.innerText = calculatorReturnRate(
       totalPrizeMoney,
       Number(this.$amountInput.value)
     );
