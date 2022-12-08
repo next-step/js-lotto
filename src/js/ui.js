@@ -75,21 +75,13 @@ class Ui {
     );
   }
 
-  getLottoElement(lotto) {
-    const $newListItem = document.createElement("li");
-    const $listOfLottoNumber = document.createElement("span");
-    const $listOfLottoIcon = document.createElement("span");
-
-    $newListItem.className = "d-flex mx-1 text-4xl";
-    $listOfLottoIcon.className = "lotto-icon";
-    $listOfLottoNumber.className = "lotto-detail ml-1";
-    $listOfLottoIcon.innerText = "🎟";
-    $listOfLottoNumber.innerText = lotto.join(", ");
-
-    $newListItem.appendChild($listOfLottoIcon);
-    $newListItem.appendChild($listOfLottoNumber);
-
-    return $newListItem;
+  #createLotto(lotto) {
+    return `
+      <li class="d-flex mx-1 text-4xl">
+        <span class="lotto-icon">🎟</span>
+        <span class="lotto-detail ml-1">${lotto.join(", ")}</span>
+      </li>
+    `;
   }
 
   #clearInputs() {
@@ -116,11 +108,13 @@ class Ui {
 
   #renderLottoElements(lottos) {
     removeAllChildNodes(this.#lottoList);
+    let createdLottos = "";
 
     lottos.forEach((lotto) => {
-      const $lottoElement = this.getLottoElement(lotto);
-      this.#lottoList.appendChild($lottoElement);
+      createdLottos += this.#createLotto(lotto);
     });
+
+    this.#lottoList.insertAdjacentHTML("afterbegin", createdLottos);
   }
 
   #renderLottoCount(count) {
