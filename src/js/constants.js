@@ -2,12 +2,13 @@ export const MESSAGE_ABOUT_UNIT_OF_AMOUNT =
   "로또 구입 금액을 1,000원 단위로 입력해 주세요.";
 export const MESSAGE_ABOUT_DUPLICATION_NUMBER =
   "로또 번호에는 중복된 숫자를 입력할 수 없습니다.";
-export const MESSAGE_ABOUT_NOT_DEFINED_TYPE =
-  "해당하는 타입에 대한 정의가 존재하지 않습니다.";
 
 export const LOTTO_GAME_COUNT = 6;
 export const MAXIMUM_NUMBER = 45;
 export const PERCENT = 100;
+export const MINIMUM_MATCHED_COUNT_FOR_2TH = 5;
+export const MINIMUM_MATCHED_COUNT_FOR_5TH = 3;
+export const BONUS_MATCHED_COUNT = 1;
 
 const RANK = {
   RANK_5: "3",
@@ -32,3 +33,15 @@ export const PRICE_BY_RANK = {
   [RANK.RANK_2]: 30_000_000,
   [RANK.RANK_1]: 2_000_000_000,
 };
+
+export const SUBMIT_EVENT_TARGET_IDS = [
+  "purchase-input-form",
+  "winning-number-confirmation-form",
+];
+
+export const CLICK_EVENT_TARGET_IDS = [
+  "view-numbers-checkbox",
+  "modal-close",
+  "modal",
+  "reset-lotto-button",
+];

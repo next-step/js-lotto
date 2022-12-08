@@ -1,5 +1,4 @@
-import { MESSAGE_ABOUT_NOT_DEFINED_TYPE } from "./constants.js";
-import { hasClass } from "./utils.js";
+import { isValidClickEventTarget, isValidSubmitEventTarget } from "./utils.js";
 
 class App {
   #model;
@@ -9,13 +8,13 @@ class App {
     this.$target = document.querySelector(target);
     this.#model = model;
     this.#view = view;
-    this.setEvent();
-    this.handler = {
+
+    this.clickHandler = {
       "view-numbers-checkbox": (e) => {
         this.#view.onViewNumbers(e.target.checked);
       },
       modal: () => {
-        if (!hasClass(this.#view.modal, "open")) {
+        if (!this.#view.isResultModalOpened) {
           this.openModal();
         } else {
           this.closeModal();
@@ -28,10 +27,7 @@ class App {
         this.reset();
       },
     };
-  }
-
-  onSubmit(form) {
-    const submitHandlers = {
+    this.submitHandler = {
       "purchase-input-form": () => {
         const isValid = this.#model.purchaseLotto(
           this.#view.$amountInput.value
@@ -49,53 +45,42 @@ class App {
 
         if (!isValidNumbers) return;
 
+        this.#model.checkWinnerNumber(
+          this.#view.$winningInputs,
+          this.#view.$bonusInput
+        );
+
         this.openModal();
       },
     };
 
-    return (
-      submitHandlers[form]() ||
-      (() => {
-        alert(MESSAGE_ABOUT_NOT_DEFINED_TYPE);
-        throw new Error(MESSAGE_ABOUT_NOT_DEFINED_TYPE);
-      })
-    );
+    this.setEvent();
   }
 
-  onClick = (className) => (e) => {
+  handledSubmit = (e) => {
+    e.preventDefault();
+    if (!isValidSubmitEventTarget(e.target)) return;
+    this.submitHandler[e.target.id]();
+  };
+
+  handledClick = (e) => {
+    if (!isValidClickEventTarget(e.target)) return;
     e.stopPropagation();
-    return hasClass(e.target, className) && this.handler[className](e);
+
+    this.clickHandler[e.target.id](e);
   };
 
   setEvent() {
-    this.$target.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      this.onSubmit(e.target.id);
-    });
-
-    this.$target.addEventListener(
-      "click",
-      this.onClick("view-numbers-checkbox")
-    );
-    this.$target.addEventListener("click", this.onClick("modal"));
-    this.$target.addEventListener("click", this.onClick("modal-close"));
-    this.$target.addEventListener("click", this.onClick("reset-lotto-button"));
+    this.$target.addEventListener("submit", this.handledSubmit);
+    this.$target.addEventListener("click", this.handledClick);
   }
 
   openModal() {
-    this.#model.checkWinnerNumber(
-      this.#view.$winningInputs,
-      this.#view.$bonusInput
-    );
-    this.#view.renderModal(
-      this.#model.state.winningStatistics,
-      this.#view.$amountInput.value
-    );
+    this.#view.renderModal(this.#model.state.winningStatistics);
   }
 
   closeModal() {
-    this.#view.onCloseResultModal();
+    this.#view.handledCloseResultModal();
   }
 
   render(state) {

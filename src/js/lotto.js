@@ -2,8 +2,9 @@ import {
   isValidAmountUnit,
   hasDuplicatedValueInputs,
   getRandomNumber,
-  getInputValues,
-  getMatchedValueCountInArray,
+  getInputValuesAsNumber,
+  getMatchedNumberCounts,
+  getWinningStatistics,
 } from "./utils.js";
 import {
   LOTTO_GAME_COUNT,
@@ -40,40 +41,32 @@ class Lotto {
     return Array.from(numbers);
   }
 
+  setLottos(lottos) {
+    this.#state.lottos = lottos;
+  }
+
   #generatorLotto(amount) {
     const gameCount = amount / UNIT_AMOUNT;
     const games = new Array(gameCount).fill(0);
 
     this.#state.gameCount = gameCount;
-    this.#state.lottos = games.map(this.#generateLottoNumbers);
+    const generatedLottos = games.map(this.#generateLottoNumbers);
+    this.setLottos(generatedLottos);
   }
 
   checkWinnerNumber($winningNumbers, $bonusNumber) {
-    const winningNumbers = getInputValues($winningNumbers);
+    const winningNumbers = getInputValuesAsNumber($winningNumbers);
     const bonusNumber = Number($bonusNumber.value);
 
-    const numberOfMatchedNumbers = this.#state.lottos.map((lotto) => {
-      const matchedValueCount = getMatchedValueCountInArray(
-        lotto,
-        winningNumbers
-      );
-      const hasBonusNumber = !!lotto.find((num) => num === bonusNumber);
+    const numberOfMatchedNumbers = getMatchedNumberCounts(
+      this.#state.lottos,
+      winningNumbers,
+      bonusNumber
+    );
 
-      if (matchedValueCount === 5 && hasBonusNumber) return "bonus";
-
-      return matchedValueCount >= 3 && hasBonusNumber
-        ? matchedValueCount + 1
-        : matchedValueCount;
-    });
-
-    const result = numberOfMatchedNumbers.reduce((acc, cur) => {
-      if (cur < 3) return acc;
-
-      acc[cur] = (acc[cur] || 0) + 1;
-      return acc;
-    }, {});
-
-    this.#state.winningStatistics = result;
+    this.#state.winningStatistics = getWinningStatistics(
+      numberOfMatchedNumbers
+    );
   }
 
   purchaseLotto(amount) {
