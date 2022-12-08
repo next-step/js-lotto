@@ -25,6 +25,8 @@ import {
   $toggleSelector,
   $totalReturnRateSelector,
   $winningNumberInputSelector,
+  $createManualLottoButtonSelector,
+  $manualNumberInputSelector,
 } from "../support/selectors.js";
 import {
   BONUS_NUMBER,
@@ -159,13 +161,23 @@ describe("행운의 로또 테스트", () => {
   });
 
   describe("소비자는 수동 구매를 할 수 있어야 한다.", () => {
-    it("수동 입력 추가하기 버튼이 존재한다.", () => {});
+    it("수동 입력 추가하기 버튼이 존재한다.", () => {
+      cy.get($createManualLottoButtonSelector).should("exist");
+    });
 
     describe("수동 입력 추가하기 버튼을 클릭하면 수동으로 입력할 수 있는 게임이 생성된다", () => {
-      it("게임당 6개의 번호를 수동으로 입력할 수 있는 Input이 나타난다.", () => {});
+      beforeEach(() => {
+        cy.get($createManualLottoButtonSelector).click();
+      });
 
-      it("수동 입력 추가하기 버튼을 클릭할때마다 수동 게임이 추가된다.", () => {});
+      it("게임당 6개의 번호를 수동으로 입력할 수 있는 Input이 나타난다.", () => {
+        cy.get($manualNumberInputSelector).should("have.length", 6);
+      });
 
+      it("수동 입력 추가하기 버튼을 클릭할때마다 수동 게임이 추가된다.", () => {
+        cy.get($createManualLottoButtonSelector).click();
+        cy.get($manualNumberInputSelector).should("have.length", 12);
+      });
       describe("수동 번호는 1부터 45까지 입력이 가능하다.", () => {
         it("수동 번호는 1부터 입력이 가능하다.", () => {});
 

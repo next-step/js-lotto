@@ -10,6 +10,9 @@ class App {
     this.#view = view;
 
     this.clickHandler = {
+      "create-manual-lotto-button": () => {
+        this.#view.addManualLotto();
+      },
       "view-numbers-checkbox": (e) => {
         this.#view.onViewNumbers(e.target.checked);
       },

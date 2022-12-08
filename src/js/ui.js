@@ -4,10 +4,15 @@ import {
   removeAllChildNodes,
   toggleClass,
 } from "./utils.js";
-import { PRICE_BY_RANK, RANK_BY_MATCHED_NUMBERS } from "./constants.js";
+import {
+  MANUAL_LOTTO_LIST_TEMPLATE,
+  PRICE_BY_RANK,
+  RANK_BY_MATCHED_NUMBERS,
+} from "./constants.js";
 
 class Ui {
   #lottoList;
+  #manualLottoList;
   #purchasedLottos;
   #purchasedCount;
   #viewNumbersCheckbox;
@@ -19,6 +24,7 @@ class Ui {
 
   constructor() {
     this.#lottoList = document.querySelector("#lotto-list");
+    this.#manualLottoList = document.querySelector("#manual-lotto-list");
     this.#purchasedLottos = document.querySelector("#purchased-lottos");
     this.#purchasedCount = document.querySelector(".purchased-count");
     this.#viewNumbersCheckbox = document.querySelector(
@@ -60,6 +66,13 @@ class Ui {
   handledCloseResultModal() {
     this.#modal.classList.remove("open");
     this.#isResultModalOpened = false;
+  }
+
+  addManualLotto() {
+    this.#manualLottoList.insertAdjacentHTML(
+      "afterbegin",
+      MANUAL_LOTTO_LIST_TEMPLATE
+    );
   }
 
   getLottoElement(lotto) {

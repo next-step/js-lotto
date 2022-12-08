@@ -40,8 +40,56 @@ export const SUBMIT_EVENT_TARGET_IDS = [
 ];
 
 export const CLICK_EVENT_TARGET_IDS = [
+  "create-manual-lotto-button",
   "view-numbers-checkbox",
   "modal-close",
   "modal",
   "reset-lotto-button",
 ];
+
+export const MANUAL_LOTTO_LIST_TEMPLATE = `
+<li class="manual-lotto-list-item">
+    <input
+      type="number"
+      class="manual-number mx-1 text-center"
+      min="1"
+      max="45"
+      required
+    />
+    <input
+      type="number"
+      class="manual-number mx-1 text-center"
+      min="1"
+      max="45"
+      required
+    />
+    <input
+      type="number"
+      class="manual-number mx-1 text-center"
+      min="1"
+      max="45"
+      required
+    />
+    <input
+      type="number"
+      class="manual-number mx-1 text-center"
+      min="1"
+      max="45"
+      required
+    />
+    <input
+      type="number"
+      class="manual-number mx-1 text-center"
+      min="1"
+      max="45"
+      required
+    />
+    <input
+      type="number"
+      class="manual-number mx-1 text-center"
+      min="1"
+      max="45"
+      required
+    />
+  </li>
+`;
