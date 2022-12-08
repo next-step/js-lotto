@@ -12,26 +12,36 @@
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
           <section class="mt-9">
-            <h2 class="hidden-text">로또 구매 입력 영역</h2>
+            <h2 class="hidden-text">로또 구매 영역</h2>
             <form id="purchase-input-form">
-              <p class="mb-2">구입할 금액을 입력해주세요.</p>
-              <div class="d-flex">
-                <input
-                  type="number"
-                  class="w-100 mr-2 pl-2"
-                  min="1000"
-                  max="100000"
-                  id="purchase-amount-input"
-                  placeholder="구입 금액"
-                />
-                <button
-                  type="submit"
-                  class="purchase-amount-submit-button btn btn-cyan"
-                  form="purchase-input-form"
-                >
-                  확인
+              <fieldset form="purchase-input-form">
+                <legend class="hidden-text">수동 로또 입력 영역</legend>
+                <button type="button" id="create-manual-lotto-button">
+                  + 수동 게임 추가하기
                 </button>
-              </div>
+                <ul id="manual-lotto-list" class="mt-3"></ul>
+              </fieldset>
+              <fieldset class="mt-6">
+                <legend class="hidden-text">로또 구매 입력 영역</legend>
+                <p class="mb-2">구입할 금액을 입력해주세요.</p>
+                <div class="d-flex">
+                  <input
+                    type="number"
+                    class="w-100 mr-2 pl-2"
+                    min="1000"
+                    max="100000"
+                    id="purchase-amount-input"
+                    placeholder="구입 금액"
+                  />
+                  <button
+                    type="submit"
+                    class="purchase-amount-submit-button btn btn-cyan"
+                    form="purchase-input-form"
+                  >
+                    확인
+                  </button>
+                </div>
+              </fieldset>
             </form>
           </section>
 
