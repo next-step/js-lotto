@@ -18,9 +18,9 @@ export class LottoView {
         $input.value = value;
     }
 
-    renderToUpdateSelector(selector, className, isAll) {
-        selector = isAll ? document.querySelectorAll(className) : document.querySelector(className);
-        return selector;
+    renderToUpdateSelector(params) {
+        params.selector = params.isAll ? document.querySelectorAll(params.className) : document.querySelector(params.className);
+        return params.selector;
     }
 
     displayNone = ($elements) => $elements.forEach($el => $el.style.display = 'none');

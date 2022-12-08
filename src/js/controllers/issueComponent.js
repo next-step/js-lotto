@@ -3,7 +3,7 @@ import { StatsComponent } from "./stats.component.js";
 import { LottoModel } from "../models/lotto.model.js";
 import { $issued, $purchased } from "../views/selector.js";
 
-export class issueComponent extends Component {
+export class IssueComponent extends Component {
     #purchasedUnit;
     #numberSetManuel;
     #numberSetAuto;
@@ -16,8 +16,8 @@ export class issueComponent extends Component {
 
     init() {
         super.init();
-        this.#purchasedUnit = this._stateModel.getState('purchasedUnit') || 0;
-        this.#numberSetManuel = this._stateModel.getState('numberSetManuel') || [];
+        this.#purchasedUnit = this._stateModel.getState('purchasedUnit') ?? 0;
+        this.#numberSetManuel = this._stateModel.getState('numberSetManuel') ?? [];
     }
 
     _setEventListeners() {
@@ -40,7 +40,7 @@ export class issueComponent extends Component {
         this._view.renderCheckedButton($issued.numberToggleButton, false);
         this._view.removeChildNodes($issued.tickets);
         this._view.displayNone([$purchased.lotto]);
-        this._stateModel.init();
+        this._stateModel.reset();
     }
 
     _submitByEnterKey(e) {

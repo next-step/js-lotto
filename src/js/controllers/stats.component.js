@@ -39,7 +39,7 @@ export class StatsComponent extends Component {
     _restart() {
         super._restart();
         this._reset();
-        this._stateModel.init();
+        this._stateModel.reset();
     }
 
     _reset() {
@@ -51,9 +51,13 @@ export class StatsComponent extends Component {
     #setAutoFocus() {
         [...$stats.lastNumbers].forEach(($lastNumber, i) => {
             if ($lastNumber.value.length === $lastNumber.maxLength) {
-                i === $stats.lastNumbers.length - 1
-                    ? this._view.renderToSetFocus($stats.lastBonusNumbers)
-                    : this._view.renderToSetFocus([...$stats.lastNumbers][i + 1]);
+                if (i === $stats.lastNumbers.length - 1) {
+                    this._view.renderToSetFocus($stats.lastBonusNumbers);
+                }
+                if (!$lastNumber.value.length && $lastNumber.value.length === $lastNumber.maxLength) {
+                    this._view.renderToSetFocus([...$stats.lastNumbers][i + 1]);
+                }
+
             }
         })
     }
@@ -68,9 +72,8 @@ export class StatsComponent extends Component {
 
     #isValidated = () => {
         const params = {
-            sectionType: SECTIONTYPE.NUMBERS,
-            value: [...this.lastNumbers, this.lastBonusNumber].filter(num => !!num),
-            includeBonus: true,
+            sectionType: SECTIONTYPE.STATS_NUMBERS,
+            value: [...this.lastNumbers, this.lastBonusNumber].filter(num => !!num)
         }
         return this._validator.validate(params);
     }

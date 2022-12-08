@@ -2,7 +2,7 @@ import { Component } from "./component.js";
 import { $lottoManuel, $purchased, $purchasedManuel, $stats } from "../views/selector.js";
 import { ACTIONTYPE, LOTTO_MANUEL_INPUT_MIN, PRICE_PER_UNIT, SECTIONTYPE } from "../utils/const.js";
 import { stringParserToHTML } from "../utils/util.js";
-import { issueComponent } from './issueComponent.js';
+import { IssueComponent } from './issueComponent.js';
 
 export class purchaseComponent extends Component {
     #isInputChange;
@@ -47,13 +47,14 @@ export class purchaseComponent extends Component {
     _restart() {
         super._restart();
         this._reset();
-        this._stateModel.init();
+        this._stateModel.reset();
     }
 
     _reset() {
         this._view.displayNone([$purchasedManuel.lotto, $stats.lotto]);
         [...$purchasedManuel.numbers].forEach($number => this._view.renderInputValue($number));
         this.#removeNumbersValue();
+        this._stateModel.setState({ purchased: false });
     }
 
     _submitByEnterKey(e) {
@@ -64,7 +65,7 @@ export class purchaseComponent extends Component {
 
     renderManuelLotto() {
         if (!this.#isInputChange) return;
-        if (this.#isInputChange) this._stateModel.setState({ reset: true });
+        this._stateModel.setState({ reset: true });
 
         const params = {
             sectionType: SECTIONTYPE.PURCHASE,
@@ -81,8 +82,9 @@ export class purchaseComponent extends Component {
     }
 
     purchase() {
-        if (!this.#isValidated()) return this.#removeNumbersValue();
-        const issue = new issueComponent({
+        if (this._stateModel.getState('purchased') || !this.#isValidated()) return;
+        this._stateModel.setState({ purchased: true });
+        const issueComponent = new IssueComponent({
             view: this._view,
             state: this._stateModel,
             validator: this._validator
@@ -98,10 +100,11 @@ export class purchaseComponent extends Component {
         }
         if (!this._validator.validate(params)) return this.#renderToDeleteInput();
         this._view.renderToAppend($purchasedManuel.set, stringParserToHTML($lottoManuel));
-        $purchasedManuel.inputs = this._view.renderToUpdateSelector(
-            $purchasedManuel.inputs,
-            '.purchased-lotto-manuel-inputs',
-            true);
+        $purchasedManuel.inputs = this._view.renderToUpdateSelector({
+            selector: $purchasedManuel.inputs,
+            className: '.purchased-lotto-manuel-inputs',
+            isAll: true
+        });
     }
 
     #renderToDeleteInput() {
@@ -120,26 +123,21 @@ export class purchaseComponent extends Component {
         const elements = [...$purchasedManuel.numbers];
         elements.forEach(($number, i) => {
             if (i === elements.length - 1) return;
-            if ($number.value.length === $number.maxLength) this._view.renderToSetFocus(elements[i + 1])
+            if (!$number.value.length && $number.value.length === $number.maxLength) this._view.renderToSetFocus(elements[i + 1])
         })
     }
 
     #isValidated = () => {
-        this.numberSetManuel = this.#getNumberSetManuel();
+        this.numberSetManuel = this.#getManuelNumber();
         if (!this.#hasNumberSetManuel()) return true;
         this._stateModel.setState({ numberSetManuel: this.numberSetManuel });
 
         const params = {
-            sectionType: SECTIONTYPE.NUMBERS,
-            value: null,
-            includeBonus: false,
+            sectionType: SECTIONTYPE.MANUEL_NUMBERS,
+            value: this.numberSetManuel,
         }
 
-        return this.numberSetManuel
-            .reduce((isValidated, set) => {
-                params.value = set
-                return this._validator.validate(params);
-            }, true);
+        return this._validator.validate(params);
     }
 
     #removeNumbersValue = () => {
@@ -148,7 +146,7 @@ export class purchaseComponent extends Component {
                 .forEach(num => this._view.renderInputValue(num)));
     }
 
-    #getNumberSetManuel = () => {
+    #getManuelNumber = () => {
         return [...$purchasedManuel.inputs]
             .map(input => [...input.children].map(num => +num.value))
             .map(set => set.filter(num => !!num));

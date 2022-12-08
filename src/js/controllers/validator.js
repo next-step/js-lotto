@@ -32,11 +32,19 @@ export class Validator {
         return true;
     }
 
-    #setStatsNumbersErrors = (numbers, includeBonus) => {
-        const limitDigit = includeBonus ? LOTTO_LIMIT_DIGITS_BONUS_NUMBER : LOTTO_LIMIT_DIGITS;
-        if (numbers.length < limitDigit) throw new InputRequiredError(ERROR_MESSAGE.NumbersRequired);
-        if (new Set(numbers).size < limitDigit) throw new NotAllowedDuplicatedValueError(ERROR_MESSAGE.NotAllowedDuplicatedValue);
+    #setStatsNumbersErrors = (numbers) => {
+        if (numbers.length < LOTTO_LIMIT_DIGITS_BONUS_NUMBER) throw new InputRequiredError(ERROR_MESSAGE.NumbersRequired);
+        if (new Set(numbers).size < LOTTO_LIMIT_DIGITS_BONUS_NUMBER) throw new NotAllowedDuplicatedValueError(ERROR_MESSAGE.NotAllowedDuplicatedValue);
         if (numbers.some(row => row > LOTTO_RANGE_MAX || row < LOTTO_RANGE_MIN)) throw new OutOfNumberRangeError(ERROR_MESSAGE.OutOfNumberRange);
+        return true;
+    }
+
+    #setManuelNumbersErrors = (numberSet) => {
+        numberSet.forEach(set => {
+            if (set.length < LOTTO_LIMIT_DIGITS) throw new InputRequiredError(ERROR_MESSAGE.NumbersRequired);
+            if (new Set(set).size < LOTTO_LIMIT_DIGITS) throw new NotAllowedDuplicatedValueError(ERROR_MESSAGE.NotAllowedDuplicatedValue);
+            if (set.some(row => row > LOTTO_RANGE_MAX || row < LOTTO_RANGE_MIN)) throw new OutOfNumberRangeError(ERROR_MESSAGE.OutOfNumberRange);
+        })
         return true;
     }
 
@@ -49,7 +57,8 @@ export class Validator {
     validate = (params) => {
         try {
             if (params.sectionType === SECTIONTYPE.PURCHASE) return this.#setPriceErrors(params.value);
-            if (params.sectionType === SECTIONTYPE.NUMBERS) return this.#setStatsNumbersErrors(params.value, params.includeBonus);
+            if (params.sectionType === SECTIONTYPE.MANUEL_NUMBERS) return this.#setManuelNumbersErrors(params.value);
+            if (params.sectionType === SECTIONTYPE.STATS_NUMBERS) return this.#setStatsNumbersErrors(params.value);
             if (params.sectionType === SECTIONTYPE.MANUEL_INPUT) return this.#setManuelInputErrors(params.actionType, params.length, params.unit);
         } catch (e) {
             this.#catchErrors(e);

@@ -6,7 +6,7 @@ export class StateModel {
         this.#state = state;
     }
 
-    init() {
+    reset() {
         this.#state = {};
         this.#observers = new Set();
     }
