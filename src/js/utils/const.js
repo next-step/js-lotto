@@ -5,7 +5,6 @@ export const LOTTO_RANGE_MIN = 1;
 export const LOTTO_RANGE_MAX = 45;
 export const LOTTO_LIMIT_DIGITS = 6;
 export const LOTTO_LIMIT_DIGITS_BONUS_NUMBER = 7;
-export const LOTTO_MANUEL_INPUT_MIN = 1;
 
 export const ERROR_MESSAGE = {
     PriceRequired: '로또 구입 금액을 입력해 주세요.',
@@ -24,11 +23,6 @@ export const SECTIONTYPE = {
     MANUEL_NUMBERS: 'MANUEL_NUMBERS',
     STATS_NUMBERS: 'STATS_NUMBERS',
     MANUEL_INPUT: 'MANUEL_INPUT'
-}
-
-export const ACTIONTYPE = {
-    ADD: 'ADD',
-    DELETE: 'DELETE'
 }
 
 export const WINSTATS = [
@@ -65,5 +59,4 @@ export const WINSTATS = [
 ]
 
 Object.freeze(SECTIONTYPE);
-Object.freeze(ACTIONTYPE);
 Object.freeze(WINSTATS);

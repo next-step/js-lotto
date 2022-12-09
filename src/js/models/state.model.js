@@ -1,28 +1,35 @@
 export class StateModel {
-    #state;
+    state;
     #observers = new Set();
 
     constructor(state) {
-        this.#state = state;
+        this.state = state;
     }
 
     reset() {
-        this.#state = {};
+        this.state = {};
         this.#observers = new Set();
+    }
+
+    resetState() {
+        this.state = {};
     }
 
     register(subscriber) {
         this.#observers.add(subscriber);
     }
 
-    setState(newState) {
-        this.#state = { ...this.#state, ...newState };
-        this.notify(newState);
+    setState(props, value) {
+        Object.defineProperty(this.state, props,{
+            configurable: true,
+            writable: true,
+            value
+        });
+        this.notify(props, this.state[props]);
     }
 
-    notify(state) {
-        if (Object.values(state)[0] === true) {
-            const key = Object.keys(state)[0];
+    notify(key, value) {
+        if (value === true) {
             const fn = () => [...this.#observers]
                 .filter(observer => Object.keys(observer)[0] === key)
                 .forEach(observer => observer[key]());
@@ -31,6 +38,6 @@ export class StateModel {
     }
 
     getState(key) {
-        return this.#state[key];
+        return this.state[key];
     }
 }

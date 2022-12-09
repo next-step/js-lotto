@@ -6,11 +6,9 @@ import {
     InputRequiredError,
     NotAllowedDuplicatedValueError,
     NotAllowedToAddInputError,
-    NotAllowedToDeleteInputError,
     OutOfNumberRangeError,
 } from "../utils/error.js";
 import {
-    ACTIONTYPE,
     ERROR_MESSAGE, LOTTO_LIMIT_DIGITS,
     LOTTO_LIMIT_DIGITS_BONUS_NUMBER,
     LOTTO_RANGE_MAX, LOTTO_RANGE_MIN,
@@ -48,9 +46,8 @@ export class Validator {
         return true;
     }
 
-    #setManuelInputErrors = (actionType, length, unit) => {
-        if (actionType === ACTIONTYPE.ADD && length === unit) throw new NotAllowedToAddInputError(ERROR_MESSAGE.NotAllowedToAddInput);
-        if (actionType === ACTIONTYPE.DELETE && length === unit) throw new NotAllowedToDeleteInputError(ERROR_MESSAGE.NotAllowedToDeleteInput);
+    #setManuelInputErrors = (length, unit) => {
+        if (length === unit) throw new NotAllowedToAddInputError(ERROR_MESSAGE.NotAllowedToAddInput);
         return true;
     }
 
@@ -59,7 +56,7 @@ export class Validator {
             if (params.sectionType === SECTIONTYPE.PURCHASE) return this.#setPriceErrors(params.value);
             if (params.sectionType === SECTIONTYPE.MANUEL_NUMBERS) return this.#setManuelNumbersErrors(params.value);
             if (params.sectionType === SECTIONTYPE.STATS_NUMBERS) return this.#setStatsNumbersErrors(params.value);
-            if (params.sectionType === SECTIONTYPE.MANUEL_INPUT) return this.#setManuelInputErrors(params.actionType, params.length, params.unit);
+            if (params.sectionType === SECTIONTYPE.MANUEL_INPUT) return this.#setManuelInputErrors(params.length, params.unit);
         } catch (e) {
             this.#catchErrors(e);
         }

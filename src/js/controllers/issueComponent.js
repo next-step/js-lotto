@@ -26,7 +26,7 @@ export class IssueComponent extends Component {
 
     _subscribe() {
         this._stateModel.register({ restart: () => this._restart() });
-        this._stateModel.register({ reset: () => this._restart() });
+        this._stateModel.register({ reset: () => this._reset() });
     }
 
     _initElement() {
@@ -36,11 +36,16 @@ export class IssueComponent extends Component {
 
     _restart() {
         super._restart();
+        this._reset();
+        this._stateModel.reset();
+    }
+
+    _reset() {
         this.#numberSetAuto = this.#numberSetManuel = [];
         this._view.renderCheckedButton($issued.numberToggleButton, false);
         this._view.removeChildNodes($issued.tickets);
         this._view.displayNone([$purchased.lotto]);
-        this._stateModel.reset();
+        this._stateModel.resetState();
     }
 
     _submitByEnterKey(e) {
@@ -52,7 +57,7 @@ export class IssueComponent extends Component {
     #issue() {
         this._view.displayBlock([$purchased.lotto]);
 
-        const statsComponent = new StatsComponent({
+        new StatsComponent({
             view: this._view,
             state: this._stateModel,
             validator: this._validator
@@ -63,7 +68,7 @@ export class IssueComponent extends Component {
 
     #issueLotto() {
         const numberSet = this.#getNumberSet();
-        this._stateModel.setState({ numberSet });
+        this._stateModel.setState('numberSet', numberSet);
         this.#renderNumberSet(numberSet)
         this.#showLottoNumbers();
     }

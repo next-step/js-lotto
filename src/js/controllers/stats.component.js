@@ -21,8 +21,8 @@ export class StatsComponent extends Component {
 
     _setEventListeners() {
         $stats.openModalButton.addEventListener('click', () => this.#validate());
-        $stats.lastNumbers.forEach(($lastNumber, i) => {
-            $lastNumber.addEventListener('keyup', () => this.#setAutoFocus());
+        [...$stats.lastNumbers].forEach($lastNumber => {
+            $lastNumber.addEventListener('keyup', e => this.#setAutoFocus(e))
         });
     }
 
@@ -46,27 +46,24 @@ export class StatsComponent extends Component {
         this._view.displayNone([$stats.lotto]);
         [...$stats.lastNumbers].forEach(row => this._view.renderInputValue(row));
         this._view.renderInputValue($stats.lastBonusNumbers);
+        this._stateModel.resetState();
     }
 
-    #setAutoFocus() {
-        [...$stats.lastNumbers].forEach(($lastNumber, i) => {
-            if ($lastNumber.value.length === $lastNumber.maxLength) {
-                if (i === $stats.lastNumbers.length - 1) {
-                    this._view.renderToSetFocus($stats.lastBonusNumbers);
-                }
-                if (!$lastNumber.value.length && $lastNumber.value.length === $lastNumber.maxLength) {
-                    this._view.renderToSetFocus([...$stats.lastNumbers][i + 1]);
-                }
+    #setAutoFocus(e) {
+        const $InputNextSibling = e.target.nextElementSibling;
+        const $InputNextFocus = !!$InputNextSibling ? $InputNextSibling : $stats.lastBonusNumbers;
+        const isValueMaxLength = e.target.maxLength === e.target.value.length;
 
-            }
-        })
+        if (isValueMaxLength) {
+            this._view.renderToSetFocus($InputNextFocus);
+        }
     }
 
     #validate() {
         this.lastNumbers = [...$stats.lastNumbers].map(row => row.value);
         this.lastBonusNumber = $stats.lastBonusNumbers.value;
 
-        if (!this.#isValidated()) return this._reset();
+        if (!this.#isValidated()) return;
         this.#openStatsModal();
     }
 
@@ -79,12 +76,9 @@ export class StatsComponent extends Component {
     }
 
     #openStatsModal() {
-        this._stateModel.setState(
-            {
-                lastNumbers: this.lastNumbers.map(row => +row),
-                lastBonusNumber: +this.lastBonusNumber
-            });
-        const modalComponent = new ModalComponent({
+        this._stateModel.setState('lastNumbers', this.lastNumbers.map(row => +row));
+        this._stateModel.setState('lastBonusNumber', +this.lastBonusNumber);
+        new ModalComponent({
             view: this._view,
             state: this._stateModel,
             validator: this._validator

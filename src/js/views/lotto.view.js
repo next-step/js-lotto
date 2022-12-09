@@ -38,7 +38,8 @@ export class LottoView {
         }
     }
 
-    renderCheckedButton = ($element, isChecked) => $element.checked = isChecked;
+    renderCheckedButton = ($button, isChecked) => $button.checked = isChecked;
+    renderDisabledButton = ($buttons, isDisabled) => $buttons.forEach($button => $button.disabled = isDisabled);
 
-    renderToSetFocus = ($element) => $element.focus();
+    renderToSetFocus = $element => $element.focus();
 }

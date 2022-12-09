@@ -47,9 +47,3 @@ export class NotAllowedToAddInputError extends CustomError {
         super(message, 'NotAllowedToAddInputError');
     }
 }
-
-export class NotAllowedToDeleteInputError extends CustomError {
-    constructor(message) {
-        super(message, 'NotAllowedToDeleteInputError');
-    }
-}
