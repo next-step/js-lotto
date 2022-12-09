@@ -75,7 +75,7 @@ function purchaseSpec() {
         checkAlert(cy.get('.purchased-lotto-manuel-add').click(), ERROR_MESSAGE.NotAllowedToAddInput);
     })
 
-    it('삭제 버튼을 누르면 수둥 번호 입력칸은 최소 1줄까지 삭제할 수 있다. :: 1줄 이상일 때 삭제', () => {
+    it('삭제 버튼을 누르면 수동 번호 입력칸은 최소 1줄까지 삭제할 수 있다.', () => {
         cy.typePriceInput('2000');
         cy.clickPriceCheckButton();
         cy.get('.purchased-lotto-manuel-add').click();
@@ -83,14 +83,14 @@ function purchaseSpec() {
         cy.get('.purchased-lotto-manuel-inputs').should('have.length', 1);
     })
 
-    it('삭제 버튼을 누르면 수둥 번호 입력칸은 최소 1줄까지 삭제할 수 있다. :: 1줄일 때 삭제', () => {
+    it('삭제 버튼은 수동 버튼 입력칸이 1줄일 경우 disabled 된다', () => {
         cy.typePriceInput('1000');
         cy.clickPriceCheckButton();
-        checkAlert(cy.get('.purchased-lotto-manuel-delete').click(), ERROR_MESSAGE.NotAllowedToDeleteInput);
+        cy.get('.purchased-lotto-manuel-delete').should('be.disabled');
     })
 
     it('수동 구매 번호는 6자리 전부 입력해야 한다.', () => {
-        const numbers = getRandoms(2, 1, 45);
+        const numbers = [2, 34];
 
         cy.typePriceInput('1000');
         cy.clickPriceCheckButton();
@@ -122,6 +122,15 @@ function purchaseSpec() {
         cy.typeLottoManuelNumbers(numbers);
         cy.clickPurchaseButton();
         cy.get($lottoTickets).children('li').should('have.length', 3);
+    })
+
+    it('정상적으로 로또 구매하기 버튼을 누른 후 수동 로또 추가/삭제, 로또 구매하기 버튼이 disabled 된다.', () => {
+        cy.typePriceInput('2000');
+        cy.clickPriceCheckButton();
+        cy.clickPurchaseButton();
+        cy.get('.purchased-lotto-manuel-add').should('be.disabled');
+        cy.get('.purchased-lotto-manuel-delete').should('be.disabled');
+        cy.get('.purchase-lotto-button').should('be.disabled');
     })
 
     it('번호보기 버튼을 켜면 로또 번호를 확인할 수 있다.', () => {
