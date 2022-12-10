@@ -26,14 +26,11 @@ export const toggleClass = ({ $element, className, flag }) => {
 export const getInputValuesAsNumber = ($inputs) =>
   Array.from($inputs).map(({ value }) => Number(value));
 
-export const hasDuplicatedValueInputs = ($inputs, $bonusInput) => {
-  const values = Array.from([...$inputs, $bonusInput]).map(
-    ({ value }) => value
-  );
-  const removedDuplicatedValues = [...new Set(values)];
+export const getInputValuesWithArray = (inputArray) =>
+  inputArray.map(({ value }) => value);
 
-  return values.length !== removedDuplicatedValues.length;
-};
+export const hasDuplicatedValueInArray = (original) =>
+  original.length !== [...new Set(original)].length;
 
 export const getMatchedValueCountInArray = (value1, value2) =>
   value1.filter((val) => value2.includes(val)).length;

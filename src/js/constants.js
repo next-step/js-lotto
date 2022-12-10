@@ -2,6 +2,8 @@ export const MESSAGE_ABOUT_UNIT_OF_AMOUNT =
   "로또 구입 금액을 1,000원 단위로 입력해 주세요.";
 export const MESSAGE_ABOUT_DUPLICATION_NUMBER =
   "로또 번호에는 중복된 숫자를 입력할 수 없습니다.";
+export const MESSAGE_ABOUT_ENTERED_OUTSTANDING_AMOUNT =
+  "로또 구입 금액이 부족합니다.";
 
 export const LOTTO_GAME_COUNT = 6;
 export const MAXIMUM_NUMBER = 45;
@@ -40,8 +42,54 @@ export const SUBMIT_EVENT_TARGET_IDS = [
 ];
 
 export const CLICK_EVENT_TARGET_IDS = [
+  "create-manual-lotto-button",
   "view-numbers-checkbox",
   "modal-close",
   "modal",
   "reset-lotto-button",
 ];
+
+export const MANUAL_LOTTO_INPUTS_TEMPLATE = `
+    <input
+      type="number"
+      class="manual-number mx-1 text-center"
+      min="1"
+      max="45"
+      required
+    />
+    <input
+      type="number"
+      class="manual-number mx-1 text-center"
+      min="1"
+      max="45"
+      required
+    />
+    <input
+      type="number"
+      class="manual-number mx-1 text-center"
+      min="1"
+      max="45"
+      required
+    />
+    <input
+      type="number"
+      class="manual-number mx-1 text-center"
+      min="1"
+      max="45"
+      required
+    />
+    <input
+      type="number"
+      class="manual-number mx-1 text-center"
+      min="1"
+      max="45"
+      required
+    />
+    <input
+      type="number"
+      class="manual-number mx-1 text-center"
+      min="1"
+      max="45"
+      required
+    />
+`;

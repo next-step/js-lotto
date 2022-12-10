@@ -1,33 +1,47 @@
 import {
-  isValidAmountUnit,
-  hasDuplicatedValueInputs,
+  hasDuplicatedValueInArray,
   getRandomNumber,
   getInputValuesAsNumber,
   getMatchedNumberCounts,
   getWinningStatistics,
+  getInputValuesWithArray,
 } from "./utils.js";
 import {
   LOTTO_GAME_COUNT,
   MAXIMUM_NUMBER,
   MESSAGE_ABOUT_DUPLICATION_NUMBER,
-  MESSAGE_ABOUT_UNIT_OF_AMOUNT,
 } from "./constants.js";
 
 const UNIT_AMOUNT = 1000;
+const INITIAL_LOTTO_GAME = [0, 0, 0, 0, 0, 0];
+const INITIAL_LOTTO_STATE = {
+  manualLottos: [],
+  lottos: [],
+  gameCount: 0,
+  winningStatistics: {},
+};
 
 class Lotto {
   #state;
 
   constructor() {
-    this.#state = {
-      lottos: [],
-      gameCount: 0,
-      winningStatistics: {},
-    };
+    this.#state = JSON.parse(JSON.stringify(INITIAL_LOTTO_STATE));
   }
 
   get state() {
     return this.#state;
+  }
+
+  createManualLotto() {
+    this.#state.manualLottos.push([...INITIAL_LOTTO_GAME]);
+  }
+
+  onInputManualLottoNumber({ value, lottoIndex, numberIndex }) {
+    this.#state.manualLottos[lottoIndex][numberIndex] = value;
+  }
+
+  setLottos(lottos) {
+    this.#state.lottos = lottos;
   }
 
   #generateLottoNumbers() {
@@ -41,17 +55,25 @@ class Lotto {
     return Array.from(numbers);
   }
 
-  setLottos(lottos) {
-    this.#state.lottos = lottos;
+  #generatorLotto(autoMaticGameAmount) {
+    const autoMaticGameCount = autoMaticGameAmount / UNIT_AMOUNT;
+    const games = new Array(autoMaticGameCount).fill(0);
+    let generatedLottos = games.map(this.#generateLottoNumbers);
+
+    if (this.#state.manualLottos.length > 0) {
+      generatedLottos = generatedLottos.concat(this.#state.manualLottos);
+    }
+
+    this.#state.gameCount =
+      autoMaticGameCount + this.#state.manualLottos.length;
+    this.setLottos(generatedLottos);
   }
 
-  #generatorLotto(amount) {
-    const gameCount = amount / UNIT_AMOUNT;
-    const games = new Array(gameCount).fill(0);
+  purchaseLotto(amount) {
+    const amountForAutomaticPurchase =
+      amount - this.#state.manualLottos.length * UNIT_AMOUNT;
 
-    this.#state.gameCount = gameCount;
-    const generatedLottos = games.map(this.#generateLottoNumbers);
-    this.setLottos(generatedLottos);
+    this.#generatorLotto(amountForAutomaticPurchase);
   }
 
   checkWinnerNumber($winningNumbers, $bonusNumber) {
@@ -69,22 +91,31 @@ class Lotto {
     );
   }
 
-  purchaseLotto(amount) {
-    if (!isValidAmountUnit(amount)) {
-      alert(MESSAGE_ABOUT_UNIT_OF_AMOUNT);
-      return false;
-    }
-
-    this.#generatorLotto(amount);
-    return true;
+  isValidAmount(amount) {
+    const amountForAutomaticPurchase =
+      amount - this.#state.manualLottos.length * UNIT_AMOUNT;
+    return amountForAutomaticPurchase >= 0;
   }
 
-  isValidNumbers($inputs, $bonusInput) {
-    if (hasDuplicatedValueInputs($inputs, $bonusInput)) {
+  isValidManualLottoNumbers() {
+    return (
+      this.#state.manualLottos.map(hasDuplicatedValueInArray).includes(true) ===
+      false
+    );
+  }
+
+  isValidWinningNumbers($inputs, $bonusInput) {
+    const inputValues = getInputValuesWithArray([...$inputs, $bonusInput]);
+
+    if (hasDuplicatedValueInArray(inputValues)) {
       alert(MESSAGE_ABOUT_DUPLICATION_NUMBER);
       return false;
     }
     return true;
+  }
+
+  reset() {
+    this.#state = JSON.parse(JSON.stringify(INITIAL_LOTTO_STATE));
   }
 }
 

@@ -1,5 +1,6 @@
 import {
   MESSAGE_ABOUT_DUPLICATION_NUMBER,
+  MESSAGE_ABOUT_ENTERED_OUTSTANDING_AMOUNT,
   MESSAGE_ABOUT_UNIT_OF_AMOUNT,
   PRICE_BY_RANK,
 } from "../../src/js/constants.js";
@@ -25,6 +26,9 @@ import {
   $toggleSelector,
   $totalReturnRateSelector,
   $winningNumberInputSelector,
+  $createManualLottoButtonSelector,
+  $manualNumberInputSelector,
+  $manualLottoListItemSelector,
 } from "../support/selectors.js";
 import {
   BONUS_NUMBER,
@@ -43,11 +47,16 @@ describe("행운의 로또 테스트", () => {
     });
   };
 
-  const validateNumber = ({ input, expectedMessage }) => {
-    cy.get($winningNumberInputSelector).first().type(input);
-    cy.get($checkResultButtonSelector).click();
+  const validateNumber = ({
+    $selector,
+    $submitButton,
+    value,
+    expectedMessage,
+  }) => {
+    cy.get($selector).first().type(value);
+    cy.get($submitButton).click();
 
-    cy.get($winningNumberInputSelector).then(($input) => {
+    cy.get($selector).then(($input) => {
       expect($input[0].validationMessage).to.eq(expectedMessage);
     });
   };
@@ -158,6 +167,98 @@ describe("행운의 로또 테스트", () => {
     });
   });
 
+  describe("소비자는 수동 구매를 할 수 있어야 한다.", () => {
+    it("수동 입력 추가하기 버튼이 존재한다.", () => {
+      cy.get($createManualLottoButtonSelector).should("exist");
+    });
+
+    describe("수동 입력 추가하기 버튼을 클릭하면 수동으로 입력할 수 있는 게임이 생성된다", () => {
+      beforeEach(() => {
+        cy.get($createManualLottoButtonSelector).click();
+      });
+
+      it("게임당 6개의 번호를 수동으로 입력할 수 있는 Input이 나타난다.", () => {
+        cy.get($manualNumberInputSelector).should("have.length", 6);
+      });
+
+      it("수동 입력 추가하기 버튼을 클릭할때마다 수동 게임이 추가된다.", () => {
+        cy.get($createManualLottoButtonSelector).click();
+        cy.get($manualNumberInputSelector).should("have.length", 12);
+      });
+
+      describe("수동 번호는 1부터 45까지 입력이 가능하다.", () => {
+        it("수동 번호는 1부터 입력이 가능하다.", () => {
+          validateNumber({
+            $selector: $manualNumberInputSelector,
+            $submitButton: $purchaseSubmitButtonSelector,
+            value: "0",
+            expectedMessage: "값은 1 이상이어야 합니다.",
+          });
+        });
+
+        it("수동 번호는 45까지 입력이 가능하다.", () => {
+          validateNumber({
+            $selector: $manualNumberInputSelector,
+            $submitButton: $purchaseSubmitButtonSelector,
+            value: "46",
+            expectedMessage: "값은 45 이하여야 합니다.",
+          });
+        });
+      });
+
+      it("수동 번호 중 중복된 번호가 존재한다면 alert를 보여준다.", () => {
+        cy.get($manualNumberInputSelector).each(($number) =>
+          cy.get($number).type("1")
+        );
+
+        cy.get($purchaseInputSelector)
+          .type("1000{enter}")
+          .then(() => {
+            cy.alert({
+              action: () => cy.get($purchaseSubmitButtonSelector).click(),
+              message: MESSAGE_ABOUT_DUPLICATION_NUMBER,
+            });
+          });
+      });
+    });
+
+    it("구입 금액은 수동으로 입력된 로또의 갯수(게임당 1000원)보다 작으면 alert가 노출된다.", () => {
+      cy.get($createManualLottoButtonSelector)
+        .click()
+        .click()
+        .then(() => {
+          cy.get($manualNumberInputSelector).each(($number, index) =>
+            cy.get($number).type(index + 1)
+          );
+        });
+
+      cy.get($purchaseInputSelector)
+        .type("1000{enter}")
+        .then(() => {
+          cy.alert({
+            action: () => cy.get($purchaseSubmitButtonSelector).click(),
+            message: MESSAGE_ABOUT_ENTERED_OUTSTANDING_AMOUNT,
+          });
+        });
+    });
+
+    it("구입 금액이 수동으로 입력된 로또의 갯수(게임당 1000원)보다 많으면 나머지 금액은 자동으로 구매할 수 있어야한다.", () => {
+      cy.get($createManualLottoButtonSelector)
+        .click()
+        .then(() => {
+          cy.get($manualNumberInputSelector).each(($number, index) =>
+            cy.get($number).type(index + 1)
+          );
+        });
+
+      cy.get($purchaseInputSelector)
+        .type("5000{enter}")
+        .then(() => {
+          cy.get($lottoDetailSelector).should("have.length", 5);
+        });
+    });
+  });
+
   describe("소비자는 자동 구매를 할 수 있어야 한다.", () => {
     beforeEach(() => {
       cy.get($purchaseInputSelector).type("5000{enter}");
@@ -225,17 +326,23 @@ describe("행운의 로또 테스트", () => {
         });
     });
 
+    it("수동 게임이 존재한다면 결과를 확인하기 위해서는 수동번호가 모두 입력되어있어야한다. 그렇지않다면 alert가 노출된다.", () => {});
+
     describe("당첨 번호 또는 보너스 번호는 1부터 45까지 입력이 가능하다.", () => {
       it("당첨 번호 또는 보너스 번호는 1부터 입력이 가능하다.", () => {
         validateNumber({
-          input: "0",
+          $selector: $winningNumberInputSelector,
+          $submitButton: $checkResultButtonSelector,
+          value: "0",
           expectedMessage: "값은 1 이상이어야 합니다.",
         });
       });
 
       it("당첨 번호 또는 보너스 번호는 45까지 입력이 가능하다.", () => {
         validateNumber({
-          input: "46",
+          $selector: $winningNumberInputSelector,
+          $submitButton: $checkResultButtonSelector,
+          value: "46",
           expectedMessage: "값은 45 이하여야 합니다.",
         });
       });
@@ -396,6 +503,10 @@ describe("행운의 로또 테스트", () => {
 
       it("구매한 로또 내역이 화면에서 사라진다", () => {
         cy.get($purchasedLottosSelector).should("not.have.class", "display");
+      });
+
+      it("수동 게임 내역이 화면에서 사라진다", () => {
+        cy.get($manualLottoListItemSelector).should("have.length", 0);
       });
 
       it("당첨번호 조회영역이 화면에서 사라진다", () => {
