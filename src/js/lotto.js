@@ -12,12 +12,14 @@ import {
 } from "./constants.js";
 
 const UNIT_AMOUNT = 1000;
+const INITIAL_LOTTO_GAME = ["", "", "", "", "", ""];
 
 class Lotto {
   #state;
 
   constructor() {
     this.#state = {
+      manualLottos: [],
       lottos: [],
       gameCount: 0,
       winningStatistics: {},
@@ -26,6 +28,10 @@ class Lotto {
 
   get state() {
     return this.#state;
+  }
+
+  createManualLotto() {
+    this.#state.manualLottos.push(INITIAL_LOTTO_GAME);
   }
 
   #generateLottoNumbers() {

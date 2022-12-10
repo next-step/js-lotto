@@ -5,7 +5,7 @@ import {
   toggleClass,
 } from "./utils.js";
 import {
-  MANUAL_LOTTO_LIST_TEMPLATE,
+  MANUAL_LOTTO_INPUTS_TEMPLATE,
   PRICE_BY_RANK,
   RANK_BY_MATCHED_NUMBERS,
 } from "./constants.js";
@@ -68,11 +68,25 @@ class Ui {
     this.#isResultModalOpened = false;
   }
 
-  addManualLotto() {
-    this.#manualLottoList.insertAdjacentHTML(
-      "afterbegin",
-      MANUAL_LOTTO_LIST_TEMPLATE
+  #createManualLotto() {
+    const $manualListItem = document.createElement("li");
+
+    $manualListItem.className = "manual-lotto-list-item";
+    $manualListItem.setAttribute(
+      "index",
+      this.#manualLottoList.childElementCount
     );
+    $manualListItem.insertAdjacentHTML(
+      "afterbegin",
+      MANUAL_LOTTO_INPUTS_TEMPLATE
+    );
+
+    return $manualListItem;
+  }
+
+  addManualLotto() {
+    const $createdManualLotto = this.#createManualLotto();
+    this.#manualLottoList.prepend($createdManualLotto);
   }
 
   #createLotto(lotto) {

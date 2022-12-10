@@ -47,8 +47,7 @@ export const CLICK_EVENT_TARGET_IDS = [
   "reset-lotto-button",
 ];
 
-export const MANUAL_LOTTO_LIST_TEMPLATE = `
-<li class="manual-lotto-list-item">
+export const MANUAL_LOTTO_INPUTS_TEMPLATE = `
     <input
       type="number"
       class="manual-number mx-1 text-center"
