@@ -1,6 +1,6 @@
 import {
   isValidAmountUnit,
-  hasDuplicatedValueInputs,
+  hasDuplicatedValueInArray,
   getRandomNumber,
   getInputValuesAsNumber,
   getMatchedNumberCounts,
@@ -80,7 +80,7 @@ class Lotto {
   }
 
   isValidNumbers($inputs, $bonusInput) {
-    if (hasDuplicatedValueInputs($inputs, $bonusInput)) {
+    if (hasDuplicatedValueInArray([...$inputs, $bonusInput])) {
       alert(MESSAGE_ABOUT_DUPLICATION_NUMBER);
       return false;
     }
