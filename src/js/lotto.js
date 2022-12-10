@@ -4,6 +4,7 @@ import {
   getInputValuesAsNumber,
   getMatchedNumberCounts,
   getWinningStatistics,
+  getInputValuesWithArray,
 } from "./utils.js";
 import {
   LOTTO_GAME_COUNT,
@@ -77,8 +78,10 @@ class Lotto {
     this.#generatorLotto(amount);
   }
 
-  isValidNumbers($inputs, $bonusInput) {
-    if (hasDuplicatedValueInArray([...$inputs, $bonusInput])) {
+  isValidWinningNumbers($inputs, $bonusInput) {
+    const inputValues = getInputValuesWithArray([...$inputs, $bonusInput]);
+
+    if (hasDuplicatedValueInArray(inputValues)) {
       alert(MESSAGE_ABOUT_DUPLICATION_NUMBER);
       return false;
     }
