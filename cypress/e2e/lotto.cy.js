@@ -1,5 +1,6 @@
 import {
   MESSAGE_ABOUT_DUPLICATION_NUMBER,
+  MESSAGE_ABOUT_ENTERED_OUTSTANDING_AMOUNT,
   MESSAGE_ABOUT_UNIT_OF_AMOUNT,
   PRICE_BY_RANK,
 } from "../../src/js/constants.js";
@@ -45,9 +46,14 @@ describe("행운의 로또 테스트", () => {
     });
   };
 
-  const validateNumber = ({ $selector, value, expectedMessage }) => {
+  const validateNumber = ({
+    $selector,
+    $submitButton,
+    value,
+    expectedMessage,
+  }) => {
     cy.get($selector).first().type(value);
-    cy.get($checkResultButtonSelector).click();
+    cy.get($submitButton).click();
 
     cy.get($selector).then(($input) => {
       expect($input[0].validationMessage).to.eq(expectedMessage);
@@ -178,22 +184,78 @@ describe("행운의 로또 테스트", () => {
         cy.get($createManualLottoButtonSelector).click();
         cy.get($manualNumberInputSelector).should("have.length", 12);
       });
-      describe("수동 번호는 1부터 45까지 입력이 가능하다.", () => {
-        it("수동 번호는 1부터 입력이 가능하다.", () => {});
 
-        it("수동 번호는 45까지 입력이 가능하다.", () => {});
+      describe("수동 번호는 1부터 45까지 입력이 가능하다.", () => {
+        it("수동 번호는 1부터 입력이 가능하다.", () => {
+          validateNumber({
+            $selector: $manualNumberInputSelector,
+            $submitButton: $purchaseSubmitButtonSelector,
+            value: "0",
+            expectedMessage: "값은 1 이상이어야 합니다.",
+          });
+        });
+
+        it("수동 번호는 45까지 입력이 가능하다.", () => {
+          validateNumber({
+            $selector: $manualNumberInputSelector,
+            $submitButton: $purchaseSubmitButtonSelector,
+            value: "46",
+            expectedMessage: "값은 45 이하여야 합니다.",
+          });
+        });
       });
 
-      it("수동 번호 중 중복된 번호가 존재한다면 alert를 보여준다.", () => {});
+      it("수동 번호 중 중복된 번호가 존재한다면 alert를 보여준다.", () => {
+        cy.get($manualNumberInputSelector).each(($number) =>
+          cy.get($number).type("1")
+        );
+
+        cy.get($purchaseInputSelector)
+          .type("1000{enter}")
+          .then(() => {
+            cy.alert({
+              action: () => cy.get($purchaseSubmitButtonSelector).click(),
+              message: MESSAGE_ABOUT_DUPLICATION_NUMBER,
+            });
+          });
+      });
     });
 
-    it("구입 금액은 수동으로 입력된 로또의 갯수(게임당 1000원)보다 작으면 alert가 노출된다.", () => {});
+    it("구입 금액은 수동으로 입력된 로또의 갯수(게임당 1000원)보다 작으면 alert가 노출된다.", () => {
+      cy.get($createManualLottoButtonSelector)
+        .click()
+        .click()
+        .then(() => {
+          cy.get($manualNumberInputSelector).each(($number, index) =>
+            cy.get($number).type(index + 1)
+          );
+        });
 
-    it("구입 금액이 수동으로 입력된 로또의 갯수(게임당 1000원)보다 많으면 나머지 금액은 자동으로 구매할 수 있어야한다.", () => {});
+      cy.get($purchaseInputSelector)
+        .type("1000{enter}")
+        .then(() => {
+          cy.alert({
+            action: () => cy.get($purchaseSubmitButtonSelector).click(),
+            message: MESSAGE_ABOUT_ENTERED_OUTSTANDING_AMOUNT,
+          });
+        });
+    });
 
-    it("구매하였을때, 총 ~개를 구매하였습니다라는 텍스트가 노출된다.", () => {});
+    it("구입 금액이 수동으로 입력된 로또의 갯수(게임당 1000원)보다 많으면 나머지 금액은 자동으로 구매할 수 있어야한다.", () => {
+      cy.get($createManualLottoButtonSelector)
+        .click()
+        .then(() => {
+          cy.get($manualNumberInputSelector).each(($number, index) =>
+            cy.get($number).type(index + 1)
+          );
+        });
 
-    it("화면에 보여지는 로또 아이콘 개수가 구매한 복권의 수와 같아야 한다.", () => {});
+      cy.get($purchaseInputSelector)
+        .type("5000{enter}")
+        .then(() => {
+          cy.get($lottoDetailSelector).should("have.length", 5);
+        });
+    });
   });
 
   describe("소비자는 자동 구매를 할 수 있어야 한다.", () => {
@@ -269,6 +331,7 @@ describe("행운의 로또 테스트", () => {
       it("당첨 번호 또는 보너스 번호는 1부터 입력이 가능하다.", () => {
         validateNumber({
           $selector: $winningNumberInputSelector,
+          $submitButton: $checkResultButtonSelector,
           value: "0",
           expectedMessage: "값은 1 이상이어야 합니다.",
         });
@@ -277,6 +340,7 @@ describe("행운의 로또 테스트", () => {
       it("당첨 번호 또는 보너스 번호는 45까지 입력이 가능하다.", () => {
         validateNumber({
           $selector: $winningNumberInputSelector,
+          $submitButton: $checkResultButtonSelector,
           value: "46",
           expectedMessage: "값은 45 이하여야 합니다.",
         });
