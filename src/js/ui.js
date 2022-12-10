@@ -107,6 +107,8 @@ class Ui {
   }
 
   #initializePurchasedView() {
+    removeAllChildNodes(this.#manualLottoList);
+
     this.#clearInputs();
     this.#purchasedLottos.classList.remove("display");
     this.#checkWinningNumberArea.classList.remove("display");

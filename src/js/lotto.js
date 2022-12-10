@@ -25,7 +25,7 @@ class Lotto {
   #state;
 
   constructor() {
-    this.#state = INITIAL_LOTTO_STATE;
+    this.#state = JSON.parse(JSON.stringify(INITIAL_LOTTO_STATE));
   }
 
   get state() {
@@ -112,6 +112,10 @@ class Lotto {
       return false;
     }
     return true;
+  }
+
+  reset() {
+    this.#state = JSON.parse(JSON.stringify(INITIAL_LOTTO_STATE));
   }
 }
 

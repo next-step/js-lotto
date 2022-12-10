@@ -136,6 +136,7 @@ class App {
 
   reset() {
     this.#view.reset();
+    this.#model.reset();
   }
 }
 export default App;

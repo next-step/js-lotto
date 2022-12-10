@@ -28,6 +28,7 @@ import {
   $winningNumberInputSelector,
   $createManualLottoButtonSelector,
   $manualNumberInputSelector,
+  $manualLottoListItemSelector,
 } from "../support/selectors.js";
 import {
   BONUS_NUMBER,
@@ -502,6 +503,10 @@ describe("행운의 로또 테스트", () => {
 
       it("구매한 로또 내역이 화면에서 사라진다", () => {
         cy.get($purchasedLottosSelector).should("not.have.class", "display");
+      });
+
+      it("수동 게임 내역이 화면에서 사라진다", () => {
+        cy.get($manualLottoListItemSelector).should("have.length", 0);
       });
 
       it("당첨번호 조회영역이 화면에서 사라진다", () => {
