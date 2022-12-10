@@ -34,8 +34,8 @@
   box-sizing: border-box;
   height: 100px;
   padding: 0 10px;
-  background: url("/src/images/ticket_background.png") center center / contain
-    no-repeat;
+  background: url("../../../images/ticket_background.png") center center /
+    contain no-repeat;
 }
 
 .manual-number {
