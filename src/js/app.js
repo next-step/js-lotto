@@ -47,12 +47,12 @@ class App {
         this.render(this.#model.state);
       },
       "winning-number-confirmation-form": () => {
-        const isValidNumbers = this.#model.isValidNumbers(
+        const isValidWinningNumbers = this.#model.isValidWinningNumbers(
           this.#view.$winningInputs,
           this.#view.$bonusInput
         );
 
-        if (!isValidNumbers) return;
+        if (!isValidWinningNumbers) return;
 
         this.#model.checkWinnerNumber(
           this.#view.$winningInputs,
