@@ -1,5 +1,4 @@
 import {
-  isValidAmountUnit,
   hasDuplicatedValueInArray,
   getRandomNumber,
   getInputValuesAsNumber,
@@ -10,7 +9,6 @@ import {
   LOTTO_GAME_COUNT,
   MAXIMUM_NUMBER,
   MESSAGE_ABOUT_DUPLICATION_NUMBER,
-  MESSAGE_ABOUT_UNIT_OF_AMOUNT,
 } from "./constants.js";
 
 const UNIT_AMOUNT = 1000;
@@ -48,9 +46,9 @@ class Lotto {
   #generatorLotto(amount) {
     const gameCount = amount / UNIT_AMOUNT;
     const games = new Array(gameCount).fill(0);
+    const generatedLottos = games.map(this.#generateLottoNumbers);
 
     this.#state.gameCount = gameCount;
-    const generatedLottos = games.map(this.#generateLottoNumbers);
     this.setLottos(generatedLottos);
   }
 
@@ -70,13 +68,7 @@ class Lotto {
   }
 
   purchaseLotto(amount) {
-    if (!isValidAmountUnit(amount)) {
-      alert(MESSAGE_ABOUT_UNIT_OF_AMOUNT);
-      return false;
-    }
-
     this.#generatorLotto(amount);
-    return true;
   }
 
   isValidNumbers($inputs, $bonusInput) {

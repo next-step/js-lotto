@@ -1,4 +1,9 @@
-import { isValidClickEventTarget, isValidSubmitEventTarget } from "./utils.js";
+import {
+  isValidAmountUnit,
+  isValidClickEventTarget,
+  isValidSubmitEventTarget,
+} from "./utils.js";
+import { MESSAGE_ABOUT_UNIT_OF_AMOUNT } from "./constants.js";
 
 class App {
   #model;
@@ -32,12 +37,12 @@ class App {
     };
     this.submitHandler = {
       "purchase-input-form": () => {
-        const isValid = this.#model.purchaseLotto(
-          this.#view.$amountInput.value
-        );
+        if (!isValidAmountUnit(this.#view.$amountInput.value)) {
+          alert(MESSAGE_ABOUT_UNIT_OF_AMOUNT);
+          return;
+        }
 
-        if (!isValid) return;
-
+        this.#model.purchaseLotto(this.#view.$amountInput.value);
         this.render(this.#model.state);
       },
       "winning-number-confirmation-form": () => {
