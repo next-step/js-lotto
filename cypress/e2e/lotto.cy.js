@@ -181,7 +181,7 @@ describe("행운의 로또 테스트", () => {
         cy.get($manualNumberInputSelector).should("have.length", 6);
       });
 
-      it("수동 입력 추가하기 버튼을 클릭할때마다 수동 게임이 추가된다.", () => {
+      it("수동 입력 추가하기 버튼을 클릭하면 수동으로 로또를 입력할 수 있는 Input이 추가로 렌더링된다", () => {
         cy.get($createManualLottoButtonSelector).click();
         cy.get($manualNumberInputSelector).should("have.length", 12);
       });
@@ -325,8 +325,6 @@ describe("행운의 로또 테스트", () => {
           });
         });
     });
-
-    it("수동 게임이 존재한다면 결과를 확인하기 위해서는 수동번호가 모두 입력되어있어야한다. 그렇지않다면 alert가 노출된다.", () => {});
 
     describe("당첨 번호 또는 보너스 번호는 1부터 45까지 입력이 가능하다.", () => {
       it("당첨 번호 또는 보너스 번호는 1부터 입력이 가능하다.", () => {
