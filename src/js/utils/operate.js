@@ -1,16 +1,17 @@
 import { LOTTO } from "../constants/lotto.js";
 
 const makeRandomNumber = () =>
-	Math.floor(Math.random() * LOTTO.MAX_NUMBER) + LOTTO.MIN_NUMBER;
+  Math.floor(Math.random() * LOTTO.MAX_NUMBER) + LOTTO.MIN_NUMBER;
+
+const isDuplicated = (arr, length) => new Set(arr).size !== length;
 
 export const createRandomNumbers = () => {
-	let randomNumbers = [];
+  let randomNumbers = Array.from({ length: LOTTO.TOTAL_NUMBER_COUNT }, () =>
+    makeRandomNumber()
+  );
 
-	while (true) {
-		if (randomNumbers.length === LOTTO.TOTAL_NUMBER_COUNT) return randomNumbers;
-		const randomNumber = makeRandomNumber();
+  if (isDuplicated(randomNumbers, LOTTO.TOTAL_NUMBER_COUNT))
+    return createRandomNumbers();
 
-		if (randomNumbers.includes(randomNumber)) continue;
-		randomNumbers.push(randomNumber);
-	}
+  return randomNumbers;
 };
