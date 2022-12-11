@@ -11,11 +11,10 @@ import lotto from "./service/lotto.js";
 import { isInvalidPurchasePrice } from "./utils/validator.js";
 import {
   changeInnerText,
-  onModalClose,
   onModalShow,
   render,
-  toggleButtonClick,
   turnOffToggleButton,
+  uiInitialize,
 } from "./view/ui.js";
 import { lottosTemplate } from "./view/templates.js";
 import { LOTTO, ERROR_MESSAGE } from "./constants/index.js";
@@ -34,9 +33,9 @@ export const handleSumbit = (e) => {
   render($lottoPapers, lottosTemplate(currentLottos));
 };
 
-const getWinningNumbers = () => {
-  const winningNumbers = [...$allWinningNumberInputs].map(
-    (winningNumberInput) => Number(winningNumberInput.value)
+const getWinningNumbers = (allWinningNumberInputs) => {
+  const winningNumbers = [...allWinningNumberInputs].map((winningNumberInput) =>
+    Number(winningNumberInput.value)
   );
   lotto.setWinningOrBonusNumber(winningNumbers);
 };
@@ -50,7 +49,7 @@ export const handleWinningNumberFormSubmit = (e) => {
   e.preventDefault();
 
   lotto.clearResult();
-  getWinningNumbers();
+  getWinningNumbers($allWinningNumberInputs);
   getBonusNumber();
 
   const { lottoResult, earningTotal, inputTotal } = lotto.checkResult();
@@ -70,13 +69,5 @@ export const handleWinningNumberFormSubmit = (e) => {
 
 export const handleRestartButtonClick = () => {
   lotto.initialize();
-  turnOffToggleButton();
-  $purchaseInput.value = "";
-  changeInnerText($totalLottoCount, 0);
-  render($lottoPapers, "");
-  [...$allWinningNumberInputs].forEach(
-    ($winningNumberInput) => ($winningNumberInput.value = "")
-  );
-  $bonusNumber.value = "";
-  onModalClose();
+  uiInitialize();
 };

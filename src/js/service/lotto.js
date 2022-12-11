@@ -26,7 +26,7 @@ class Lotto {
       const rank = this.setRank(lotto);
       if (!rank) return;
       this.#result[rank] += 1;
-      this.calculateEarningTotal(rank);
+      this.#earningTotal += LOTTO.PRIZE_MONEY[rank];
     });
 
     return {
@@ -45,10 +45,6 @@ class Lotto {
     if (matchingNumberCount === 5 && lottoNumbers.includes(this.#bonusNumber))
       return lottoRank["5+1"];
     return lottoRank[matchingNumberCount];
-  }
-
-  calculateEarningTotal(rank) {
-    this.#earningTotal += LOTTO.PRIZE_MONEY[rank];
   }
 
   clearResult() {
