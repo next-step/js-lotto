@@ -1,7 +1,8 @@
-import { LOTTO } from "../../src/js/constants";
 import { makeRandomNumber } from "../../src/js/utils/operate";
 
 const HTML = "../../index.html";
+const purchaseInput = '[data-cy="purchaseInput"]';
+const confirmButton = '[data-cy="confirmButton"]';
 
 describe("로또 구입 금액을 입력하면 금액에 해당하는 로또를 발급해야 한다.", () => {
   beforeEach(() => {
@@ -9,7 +10,7 @@ describe("로또 구입 금액을 입력하면 금액에 해당하는 로또를 
   });
 
   it("로또 구입 금액을 입력한다", () => {
-    const $purchaseInput = cy.get('[data-cy="purchaseInput"]');
+    const $purchaseInput = cy.get(purchaseInput);
 
     $purchaseInput.type("5000");
     $purchaseInput.should("have.value", "5000");
@@ -24,8 +25,8 @@ describe("로또 구입 금액을 입력하면 금액에 해당하는 로또를 
     const stub = cy.stub();
     cy.on("window:alert", stub);
 
-    const $purchaseInput = cy.get('[data-cy="purchaseInput"]');
-    const $confirmButton = cy.get('[data-cy="confirmButton"]');
+    const $purchaseInput = cy.get(purchaseInput);
+    const $confirmButton = cy.get(confirmButton);
 
     // 1001원
     cy.getLottos($purchaseInput, $confirmButton, 1001).then(() => {
@@ -46,8 +47,8 @@ describe("로또 구입 금액을 입력하면 금액에 해당하는 로또를 
   });
 
   it("복권 번호는 번호보기 토글 버튼을 클릭하면, 볼 수 있어야 한다.", () => {
-    const $purchaseInput = cy.get('[data-cy="purchaseInput"]');
-    const $confirmButton = cy.get('[data-cy="confirmButton"]');
+    const $purchaseInput = cy.get(purchaseInput);
+    const $confirmButton = cy.get(confirmButton);
     const $switch = cy.get('[data-cy="switch"]');
 
     cy.getLottos($purchaseInput, $confirmButton, 5000);
@@ -66,8 +67,8 @@ describe("로또 구입 금액을 입력하면 금액에 해당하는 로또를 
   });
 
   it("결과 확인하기 버튼을 누르면 당첨 통계, 수익률을 모달로 확인할 수 있다.", () => {
-    const $purchaseInput = cy.get('[data-cy="purchaseInput"]');
-    const $confirmButton = cy.get('[data-cy="confirmButton"]');
+    const $purchaseInput = cy.get(purchaseInput);
+    const $confirmButton = cy.get(confirmButton);
     const $showResultButton = cy.get('[data-cy="showResultButton"]');
     cy.getLottos($purchaseInput, $confirmButton, 5000);
 
