@@ -23,13 +23,18 @@ class Lotto {
   }
 
   checkResult() {
-    for (const lotto of this.#lottos) {
+    this.#lottos.forEach((lotto) => {
       const rank = this.setRank(lotto);
-      if (!rank) continue;
+      if (!rank) return;
       this.#result[rank] += 1;
       this.calculateEarningTotal(rank);
-    }
-    return [this.#result, this.#earningTotal, this.#inputTotal];
+    });
+
+    return {
+      lottoResult: this.#result,
+      earningTotal: this.#earningTotal,
+      inputTotal: this.#inputTotal,
+    };
   }
 
   setRank(lottoNumbers) {

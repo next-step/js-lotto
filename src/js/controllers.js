@@ -53,7 +53,7 @@ export const handleWinningNumberFormSubmit = (e) => {
   getWinningNumbers();
   getBonusNumber();
 
-  const [lottoResult, earningTotal, inputTotal] = lotto.checkResult();
+  const { lottoResult, earningTotal, inputTotal } = lotto.checkResult();
 
   $allWinningLottoCount.forEach(($winningLottoCount, idx) =>
     changeInnerText($winningLottoCount, `${lottoResult[5 - idx]}개`)
