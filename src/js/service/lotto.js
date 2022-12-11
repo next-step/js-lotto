@@ -10,10 +10,9 @@ class Lotto {
   #earningTotal = 0;
 
   issueLottos(number) {
-    const lottos = Array.from(Array(number), () => createRandomNumbers());
-    this.#lottos = lottos;
+    this.#lottos = Array.from(Array(number), () => createRandomNumbers());
     this.#inputTotal += number * 1000;
-    return lottos;
+    return this.#lottos;
   }
 
   setWinningOrBonusNumber(numbers) {
