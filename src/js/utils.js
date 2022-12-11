@@ -1,13 +1,25 @@
 import {
   BONUS_MATCHED_COUNT,
   CLICK_EVENT_TARGET_IDS,
+  MESSAGE_ABOUT_UNIT_OF_AMOUNT,
   MINIMUM_MATCHED_COUNT_FOR_2TH,
   MINIMUM_MATCHED_COUNT_FOR_5TH,
   PERCENT,
   SUBMIT_EVENT_TARGET_IDS,
 } from "./constants.js";
 
-export const isValidAmountUnit = (amount) => /000$/.test(amount);
+export class ValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "ValidationError";
+  }
+}
+
+export const checkValidAmountUnit = (amount) => {
+  if (/000$/.test(amount) === false) {
+    throw new ValidationError(MESSAGE_ABOUT_UNIT_OF_AMOUNT);
+  }
+};
 
 export const removeAllChildNodes = (parent) => {
   while (parent.firstChild) {
