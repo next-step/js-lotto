@@ -1,6 +1,6 @@
 import { LOTTO } from "../constants/lotto.js";
 
-const makeRandomNumber = () =>
+export const makeRandomNumber = () =>
   Math.floor(Math.random() * LOTTO.MAX_NUMBER) + LOTTO.MIN_NUMBER;
 
 const isDuplicated = (arr, length) => new Set(arr).size !== length;

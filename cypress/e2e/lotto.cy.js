@@ -1,4 +1,5 @@
 import { LOTTO } from "../../src/js/constants";
+import { makeRandomNumber } from "../../src/js/utils/operate";
 
 const HTML = "../../index.html";
 
@@ -71,11 +72,7 @@ describe("로또 구입 금액을 입력하면 금액에 해당하는 로또를 
     cy.getLottos($purchaseInput, $confirmButton, 5000);
 
     cy.get(".winning-number").then((inputs) => {
-      [...inputs].forEach((input) =>
-        cy
-          .wrap(input)
-          .type(Math.floor(Math.random() * LOTTO.MAX_NUMBER) + LOTTO.MIN_NUMBER)
-      );
+      [...inputs].forEach((input) => cy.wrap(input).type(makeRandomNumber()));
     });
 
     cy.get(".bonus-number").type(45);
