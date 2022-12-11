@@ -38,10 +38,6 @@ class Lotto {
     this.#state.manualLottos.push([...INITIAL_LOTTO_GAME]);
   }
 
-  onInputManualLottoNumber({ value, lottoIndex, numberIndex }) {
-    this.#state.manualLottos[lottoIndex][numberIndex] = value;
-  }
-
   setLottos(lottos) {
     this.#state.lottos = lottos;
   }
@@ -69,6 +65,16 @@ class Lotto {
     this.#state.gameCount =
       autoMaticGameCount + this.#state.manualLottos.length;
     this.setLottos(generatedLottos);
+  }
+
+  setManualLottos(manualList) {
+    const manualLottos = Array.from(manualList.children);
+    const manualLottoValues = manualLottos
+      .map(($lotto) =>
+        Array.from($lotto.children).map(($input) => Number($input.value))
+      )
+      .reverse();
+    this.#state.manualLottos = manualLottoValues;
   }
 
   purchaseLotto(amount) {

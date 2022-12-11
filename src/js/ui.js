@@ -42,6 +42,10 @@ class Ui {
     this.$bonusInput = document.querySelector(".bonus-number");
   }
 
+  get manualLottoList() {
+    return this.#manualLottoList;
+  }
+
   get modal() {
     return this.#modal;
   }

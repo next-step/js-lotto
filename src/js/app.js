@@ -39,6 +39,7 @@ class App {
     this.submitHandler = {
       "purchase-input-form": () => {
         try {
+          this.#model.setManualLottos(this.#view.manualLottoList);
           this.validationCheckForSubmit();
           this.#model.purchaseLotto(Number(this.#view.$amountInput.value));
           this.render(this.#model.state);
@@ -89,26 +90,9 @@ class App {
     this.clickHandler[e.target.id](e);
   }
 
-  handledKeyup(e) {
-    const { value, parentElement: $parentLiElement, classList } = e.target;
-    const isManualInput = classList.contains("manual-number");
-    const lottoIndex = Number($parentLiElement.getAttribute("index"));
-
-    const numberIndex = Array.from($parentLiElement.children).indexOf(e.target);
-
-    if (!isManualInput) return;
-
-    this.#model.onInputManualLottoNumber({
-      value: Number(value),
-      lottoIndex,
-      numberIndex,
-    });
-  }
-
   setEvent() {
     this.$target.addEventListener("submit", this.handledSubmit.bind(this));
     this.$target.addEventListener("click", this.handledClick.bind(this));
-    this.$target.addEventListener("keyup", this.handledKeyup.bind(this));
   }
 
   openModal() {
