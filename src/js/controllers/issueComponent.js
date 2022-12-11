@@ -16,8 +16,8 @@ export class IssueComponent extends Component {
 
     init() {
         super.init();
-        this.#purchasedUnit = this._stateModel.getState('purchasedUnit') ?? 0;
-        this.#numberSetManuel = this._stateModel.getState('numberSetManuel') ?? [];
+        this.#purchasedUnit = this._stateModel.purchasedState.purchasedUnit ?? 0;
+        this.#numberSetManuel = this._stateModel.numbersState.numberSetManuel ?? [];
     }
 
     _setEventListeners() {
@@ -42,7 +42,7 @@ export class IssueComponent extends Component {
 
     _reset() {
         this.#numberSetAuto = this.#numberSetManuel = [];
-        this._view.renderCheckedButton($issued.numberToggleButton, false);
+        this._view.checkButton($issued.numberToggleButton, false);
         this._view.removeChildNodes($issued.tickets);
         this._view.displayNone([$purchased.lotto]);
         this._stateModel.resetState();
@@ -62,13 +62,13 @@ export class IssueComponent extends Component {
             state: this._stateModel,
             validator: this._validator
         });
-        this._view.renderToReplaceInnerHTML($purchased.total, `총 ${this.#purchasedUnit}개를 구매하였습니다.`);
+        this._view.replaceInnerHTML($purchased.total, `총 ${this.#purchasedUnit}개를 구매하였습니다.`);
         this.#issueLotto();
     }
 
     #issueLotto() {
         const numberSet = this.#getNumberSet();
-        this._stateModel.setState('numberSet', numberSet);
+        this._stateModel.setNumbersState('numberSet', numberSet);
         this.#renderNumberSet(numberSet)
         this.#showLottoNumbers();
     }
@@ -96,7 +96,7 @@ export class IssueComponent extends Component {
 
     #renderNumberSet(numberSet) {
         numberSet.forEach(unit => {
-            this._view.renderToAddInnerHTML(
+            this._view.addInnerHTML(
                 $issued.tickets,
                 `<li class="mx-1 text-4xl">
                     <span>🎟️ </span>

@@ -2,23 +2,23 @@ export class LottoView {
     constructor() {
     }
 
-    renderToReplaceInnerHTML($element, value = null) {
+    replaceInnerHTML($element, value = null) {
         $element.innerHTML = value;
     }
 
-    renderToAddInnerHTML($element, value = null) {
+    addInnerHTML($element, value = null) {
         $element.innerHTML += value;
     }
 
-    renderToAppend($element, value) {
+    appendElement($element, value) {
         $element.append(value);
     }
 
-    renderInputValue($input, value = null) {
+    setInputValue($input, value = null) {
         $input.value = value;
     }
 
-    renderToUpdateSelector(params) {
+    updateSelector(params) {
         params.selector = params.isAll ? document.querySelectorAll(params.className) : document.querySelector(params.className);
         return params.selector;
     }
@@ -38,8 +38,8 @@ export class LottoView {
         }
     }
 
-    renderCheckedButton = ($button, isChecked) => $button.checked = isChecked;
-    renderDisabledButton = ($buttons, isDisabled) => $buttons.forEach($button => $button.disabled = isDisabled);
+    checkButton = ($button, isChecked) => $button.checked = isChecked;
+    disableButton = ($buttons, isDisabled) => $buttons.forEach($button => $button.disabled = isDisabled);
 
-    renderToSetFocus = $element => $element.focus();
+    setFocus = $element => $element.focus();
 }

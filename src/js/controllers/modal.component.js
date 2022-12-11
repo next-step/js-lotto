@@ -13,10 +13,10 @@ export class ModalComponent extends Component {
 
     constructor(container) {
         super(container);
-        this.numberSet = this._stateModel.getState('numberSet');
-        this.lastNumbers = this._stateModel.getState('lastNumbers');
-        this.lastBonusNumber = this._stateModel.getState('lastBonusNumber');
-        this.price = this._stateModel.getState('price');
+        this.numberSet = this._stateModel.numbersState.numberSet;
+        this.lastNumbers = this._stateModel.numbersState.lastNumbers;
+        this.lastBonusNumber = this._stateModel.numbersState.lastBonusNumber;
+        this.price = this._stateModel.purchasedState.price;
         this.#winStats = arrDeepCopy(WINSTATS);
         this.#rateOfReturn = 0;
         this.init();
@@ -35,15 +35,15 @@ export class ModalComponent extends Component {
     }
 
     _restart() {
-        this._stateModel.setState('restart', true);
+        this._stateModel.setRefreshState('restart', true);
         this.#closeStatsModal();
         this._reset();
         this._stateModel.reset();
     }
 
     _reset() {
-        this._view.renderToReplaceInnerHTML($modal.resultTable);
-        this._view.renderToReplaceInnerHTML($modal.totalRateOfReturn);
+        this._view.replaceInnerHTML($modal.resultTable);
+        this._view.replaceInnerHTML($modal.totalRateOfReturn);
         this.#winStats = arrDeepCopy(WINSTATS);
         this.#rateOfReturn = 0;
     }
@@ -65,9 +65,9 @@ export class ModalComponent extends Component {
                                 <td class="p-3">${ prize }</td>
                                 <td class="p-3">${ stats.tickets }개</td>
                             </tr>`;
-            this._view.renderToAddInnerHTML($modal.resultTable, element);
+            this._view.addInnerHTML($modal.resultTable, element);
         })
-        this._view.renderToReplaceInnerHTML($modal.totalRateOfReturn, `당신의 총 수익률은 ${this.#rateOfReturn}%입니다.`);
+        this._view.replaceInnerHTML($modal.totalRateOfReturn, `당신의 총 수익률은 ${this.#rateOfReturn}%입니다.`);
     }
 
     #getStats() {

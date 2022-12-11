@@ -41,7 +41,7 @@ export class purchaseComponent extends Component {
     _initElement() {
         this.#isInputChange = false;
         this.numberSetManuel = [];
-        this._view.renderInputValue($purchased.amount);
+        this._view.setInputValue($purchased.amount);
     }
 
     _restart() {
@@ -52,11 +52,11 @@ export class purchaseComponent extends Component {
 
     _reset() {
         this._view.displayNone([$purchasedManuel.lotto, $stats.lotto]);
-        [...$purchasedManuel.numbers].forEach($number => this._view.renderInputValue($number));
+        [...$purchasedManuel.numbers].forEach($number => this._view.setInputValue($number));
         this.#initNumbersValue();
-        this._stateModel.setState('purchased', false);
+        this._stateModel.setPurchasedState('purchased', false);
 
-        this._view.renderDisabledButton([
+        this._view.disableButton([
             $purchasedManuel.button,
             $purchasedManuel.addButton,
             $purchasedManuel.deleteButton
@@ -75,7 +75,7 @@ export class purchaseComponent extends Component {
 
     renderManuelLotto() {
         if (!this.#isInputChange) return;
-        this._stateModel.setState('reset', true);
+        this._stateModel.setRefreshState('reset', true);
 
         const params = {
             sectionType: SECTIONTYPE.PURCHASE,
@@ -83,22 +83,21 @@ export class purchaseComponent extends Component {
         }
         if (!this._validator.validate(params)) return;
 
-        this._stateModel.setState('price', $purchased.amount.value);
-        this._stateModel.setState('purchasedUnit', $purchased.amount.value / PRICE_PER_UNIT);
+        this._stateModel.setPurchasedState('price', $purchased.amount.value);
+        this._stateModel.setPurchasedState('purchasedUnit', $purchased.amount.value / PRICE_PER_UNIT);
         this._view.displayBlock([$purchasedManuel.lotto]);
         this.#isInputChange = false;
         this.#setDisabledDeleteButton();
     }
 
     purchase() {
-        if (this._stateModel.getState('purchased') || !this.#isValidated()) return;
-
-        this._stateModel.setState('purchased', true);
+        if (this._stateModel.purchasedState.purchased || !this.#isValidated()) return;
+        this._stateModel.setPurchasedState('purchased', true);
         if (this.#hasNumberSetManuel()) {
-            this._stateModel.setState('numberSetManuel', this.numberSetManuel);
+            this._stateModel.setNumbersState('numberSetManuel', this.numberSetManuel);
         }
 
-        this._view.renderDisabledButton([
+        this._view.disableButton([
             $purchasedManuel.button,
             $purchasedManuel.addButton,
             $purchasedManuel.deleteButton
@@ -118,9 +117,9 @@ export class purchaseComponent extends Component {
             unit: $purchased.amount.value / PRICE_PER_UNIT
         }
         if (!this._validator.validate(params)) return this.#renderToDeleteInput();
-        this._view.renderToAppend($purchasedManuel.set, stringParserToHTML($lottoManuel));
+        this._view.appendElement($purchasedManuel.set, stringParserToHTML($lottoManuel));
         this.#setDisabledDeleteButton();
-        $purchasedManuel.inputs = this._view.renderToUpdateSelector({
+        $purchasedManuel.inputs = this._view.updateSelector({
             selector: $purchasedManuel.inputs,
             className: '.purchased-lotto-manuel-inputs',
             isAll: true
@@ -135,18 +134,18 @@ export class purchaseComponent extends Component {
 
     #setDisabledDeleteButton() {
         if ($purchasedManuel.set.children.length < 2) {
-            this._view.renderDisabledButton([$purchasedManuel.deleteButton], true);
+            this._view.disableButton([$purchasedManuel.deleteButton], true);
             return;
         }
 
-        return this._view.renderDisabledButton([$purchasedManuel.deleteButton], false);
+        return this._view.disableButton([$purchasedManuel.deleteButton], false);
     }
 
     #setAutoFocus(e) {
         const $InputNextSibling = e.target.nextElementSibling;
         const isValueMaxLength = e.target.maxLength === e.target.value.length;
-        if (!!$InputNextSibling && isValueMaxLength) {
-            this._view.renderToSetFocus($InputNextSibling);
+        if ($InputNextSibling !== null && isValueMaxLength) {
+            this._view.setFocus($InputNextSibling);
         }
     }
 
@@ -164,7 +163,7 @@ export class purchaseComponent extends Component {
     #initNumbersValue = () => {
         [...$purchasedManuel.inputs]
             .forEach($input => [...$input.children]
-                .forEach($input => this._view.renderInputValue($input)));
+                .forEach($input => this._view.setInputValue($input)));
     }
 
     #getManuelNumber = () => {

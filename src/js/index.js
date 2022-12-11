@@ -6,7 +6,7 @@ import { purchaseComponent } from "./controllers/purchase.component.js";
 window.onload = () => {
     const container = {
         view: new LottoView(),
-        state: new StateModel({}),
+        state: new StateModel(),
         validator: new Validator()
     }
     const purchase = new purchaseComponent(container);

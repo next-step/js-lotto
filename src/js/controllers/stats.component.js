@@ -44,18 +44,18 @@ export class StatsComponent extends Component {
 
     _reset() {
         this._view.displayNone([$stats.lotto]);
-        [...$stats.lastNumbers].forEach(row => this._view.renderInputValue(row));
-        this._view.renderInputValue($stats.lastBonusNumbers);
+        [...$stats.lastNumbers].forEach(row => this._view.setInputValue(row));
+        this._view.setInputValue($stats.lastBonusNumbers);
         this._stateModel.resetState();
     }
 
     #setAutoFocus(e) {
         const $InputNextSibling = e.target.nextElementSibling;
-        const $InputNextFocus = !!$InputNextSibling ? $InputNextSibling : $stats.lastBonusNumbers;
+        const $InputNextFocus = $InputNextSibling !== null ? $InputNextSibling : $stats.lastBonusNumbers;
         const isValueMaxLength = e.target.maxLength === e.target.value.length;
 
         if (isValueMaxLength) {
-            this._view.renderToSetFocus($InputNextFocus);
+            this._view.setFocus($InputNextFocus);
         }
     }
 
@@ -76,8 +76,8 @@ export class StatsComponent extends Component {
     }
 
     #openStatsModal() {
-        this._stateModel.setState('lastNumbers', this.lastNumbers.map(row => +row));
-        this._stateModel.setState('lastBonusNumber', +this.lastBonusNumber);
+        this._stateModel.setNumbersState('lastNumbers', this.lastNumbers.map(row => +row));
+        this._stateModel.setNumbersState('lastBonusNumber', +this.lastBonusNumber);
         new ModalComponent({
             view: this._view,
             state: this._stateModel,

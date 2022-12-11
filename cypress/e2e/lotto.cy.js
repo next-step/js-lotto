@@ -99,7 +99,7 @@ function purchaseSpec() {
     })
 
     it('수동 구매 번호는 1 이상 45 이하의 숫자를 입력받는다.', () => {
-        const numbers = getRandoms(6, 45, 50);
+        const numbers = [10, 2, 44, 67, 89, 4];
 
         cy.typePriceInput('1000');
         cy.clickPriceCheckButton();
@@ -115,7 +115,7 @@ function purchaseSpec() {
     })
 
     it('수동 번호 입력 후 로또 구매하기 버튼을 누르면 수동 로또 번호와 나머지 자동 로또 번호가 발급된다.', () => {
-        const numbers = getRandoms(6, 1, 45);
+        const numbers = [2, 34, 45, 10, 11, 37];
 
         cy.typePriceInput('3000');
         cy.clickPriceCheckButton();
@@ -151,15 +151,6 @@ function purchaseSpec() {
         cy.get($lottoTickets).children().children('.lotto-numbers').should('not.be.visible');
     })
 
-}
-
-const getRandoms = (length, min, max) => {
-    const numbers = new Set();
-    while (numbers.size < length) {
-        numbers.add(getRandom(min, max));
-    }
-
-    return [...numbers];
 }
 
 function checkAlert(scenario, message) {
