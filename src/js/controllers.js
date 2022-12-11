@@ -1,83 +1,82 @@
 import {
-	$allWinningLottoCount,
-	$allWinningNumberInputs,
-	$bonusNumber,
-	$earningTotalRate,
-	$lottoPapers,
-	$purchaseInput,
-	$totalLottoCount,
+  $allWinningLottoCount,
+  $allWinningNumberInputs,
+  $bonusNumber,
+  $earningTotalRate,
+  $lottoPapers,
+  $purchaseInput,
+  $totalLottoCount,
 } from "./view/elements.js";
-import { ERROR_MESSAGE } from "./constants/errorMessage.js";
-import { LOTTO } from "./constants/lotto.js";
 import lotto from "./service/lotto.js";
 import { isInvalidPurchasePrice } from "./utils/validator.js";
 import {
-	changeInnerText,
-	onModalClose,
-	onModalShow,
-	render,
-	toggleButtonClick,
-	turnOffToggleButton,
+  changeInnerText,
+  onModalClose,
+  onModalShow,
+  render,
+  toggleButtonClick,
+  turnOffToggleButton,
 } from "./view/ui.js";
 import { lottosTemplate } from "./view/templates.js";
+import { LOTTO, ERROR_MESSAGE } from "./constants/index.js";
 
 export const handleSumbit = (e) => {
-	e.preventDefault();
-	if (isInvalidPurchasePrice($purchaseInput.value, LOTTO.LOTTO_UNIT))
-		return alert(ERROR_MESSAGE.INVALID_LOTTO_PRICE);
+  e.preventDefault();
+  if (isInvalidPurchasePrice($purchaseInput.value, LOTTO.LOTTO_UNIT))
+    return alert(ERROR_MESSAGE.INVALID_LOTTO_PRICE);
 
-	turnOffToggleButton();
+  turnOffToggleButton();
 
-	const totalLottoCount = $purchaseInput.value / LOTTO.LOTTO_UNIT;
-	const currentLottos = lotto.issueLottos(totalLottoCount);
+  const totalLottoCount = $purchaseInput.value / LOTTO.LOTTO_UNIT;
+  const currentLottos = lotto.issueLottos(totalLottoCount);
 
-	changeInnerText($totalLottoCount, totalLottoCount);
-	render($lottoPapers, lottosTemplate(currentLottos));
+  changeInnerText($totalLottoCount, totalLottoCount);
+  render($lottoPapers, lottosTemplate(currentLottos));
 };
 
 const getWinningNumbers = () => {
-	const winningNumbers = [...$allWinningNumberInputs].map(
-		(winningNumberInput) => Number(winningNumberInput.value)
-	);
-	lotto.setWinningOrBonusNumber(winningNumbers);
+  const winningNumbers = [...$allWinningNumberInputs].map(
+    (winningNumberInput) => Number(winningNumberInput.value)
+  );
+  lotto.setWinningOrBonusNumber(winningNumbers);
 };
 
 const getBonusNumber = () => {
-	const bonusNumber = Number($bonusNumber.value);
-	lotto.setWinningOrBonusNumber(bonusNumber);
+  const bonusNumber = Number($bonusNumber.value);
+  lotto.setWinningOrBonusNumber(bonusNumber);
 };
 
 export const handleWinningNumberFormSubmit = (e) => {
-	e.preventDefault();
+  e.preventDefault();
 
-	lotto.clearResult();
-	getWinningNumbers();
-	getBonusNumber();
+  lotto.clearResult();
+  getWinningNumbers();
+  getBonusNumber();
 
-	const [lottoResult, earningTotal, inputTotal] = lotto.checkResult();
+  const [lottoResult, earningTotal, inputTotal] = lotto.checkResult();
 
-	$allWinningLottoCount.forEach(($winningLottoCount, idx) =>
-		changeInnerText($winningLottoCount, `${lottoResult[5 - idx]}개`)
-	);
+  $allWinningLottoCount.forEach(($winningLottoCount, idx) =>
+    changeInnerText($winningLottoCount, `${lottoResult[5 - idx]}개`)
+  );
 
-	const earningTotalRate = (earningTotal / inputTotal) * 100;
-	changeInnerText(
-		$earningTotalRate,
-		`당신의 총 수익률은 ${earningTotalRate}%입니다.`
-	);
+  const earningTotalRate = (earningTotal / inputTotal) * 100;
+  changeInnerText(
+    $earningTotalRate,
+    `당신의 총 수익률은 ${earningTotalRate}%입니다.`
+  );
 
-	onModalShow();
+  onModalShow();
 };
 
 export const handleRestartButtonClick = () => {
-	lotto.initialize();
-	turnOffToggleButton();
-	$purchaseInput.value = "";
-	changeInnerText($totalLottoCount, 0);
-	render($lottoPapers, "");
-	[...$allWinningNumberInputs].forEach(
-		($winningNumberInput) => ($winningNumberInput.value = "")
-	);
-	$bonusNumber.value = "";
-	onModalClose();
+  lotto.initialize();
+  turnOffToggleButton();
+  $purchaseInput.value = "";
+  changeInnerText($totalLottoCount, 0);
+  render($lottoPapers, "");
+  [...$allWinningNumberInputs].forEach(
+    ($winningNumberInput) => ($winningNumberInput.value = "")
+  );
+  $bonusNumber.value = "";
+  onModalClose();
 };
