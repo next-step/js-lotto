@@ -76,20 +76,20 @@ class App {
     this.#model.checkValidAmount(Number(this.#view.$amountInput.value));
   }
 
-  handledSubmit = (e) => {
+  handledSubmit(e) {
     e.preventDefault();
     if (!isValidSubmitEventTarget(e.target)) return;
     this.submitHandler[e.target.id]();
-  };
+  }
 
-  handledClick = (e) => {
+  handledClick(e) {
     if (!isValidClickEventTarget(e.target)) return;
     e.stopPropagation();
 
     this.clickHandler[e.target.id](e);
-  };
+  }
 
-  handledKeyup = (e) => {
+  handledKeyup(e) {
     const { value, parentElement: $parentLiElement, classList } = e.target;
     const isManualInput = classList.contains("manual-number");
     const lottoIndex = Number($parentLiElement.getAttribute("index"));
@@ -103,12 +103,12 @@ class App {
       lottoIndex,
       numberIndex,
     });
-  };
+  }
 
   setEvent() {
-    this.$target.addEventListener("submit", this.handledSubmit);
-    this.$target.addEventListener("click", this.handledClick);
-    this.$target.addEventListener("keyup", this.handledKeyup);
+    this.$target.addEventListener("submit", this.handledSubmit.bind(this));
+    this.$target.addEventListener("click", this.handledClick.bind(this));
+    this.$target.addEventListener("keyup", this.handledKeyup.bind(this));
   }
 
   openModal() {
