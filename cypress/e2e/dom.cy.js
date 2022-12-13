@@ -83,6 +83,11 @@ describe('로또 요구사항을 테스트한다', () => {
       cy.get(selectors.btnConfirm).click();
     });
 
+    it.only('금액을 입력 후 입력상자에서 엔터를 눌렀을 때 확인 버튼을 누른 것과 동일한 효과를 발생시킨다', () => {
+      cy.get(selectors.inputAmount).clear().type('1000').type('{enter}');
+      cy.get(selectors.btnConfirm).click();
+    });
+
     it('로또 구입 금액은 1000원 단위가 아닌 경우의 수에 대한 예외 발생', () => {
       ['1500', '1501', '1999', '59990'].forEach((invalidInput) => {
         const alertStub = getAlertStub();
