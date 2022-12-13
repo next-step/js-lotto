@@ -34,3 +34,8 @@ li {
 .hidden {
   display: none;
 }
+
+.lotto-icons > ul > li {
+  display: flex;
+  align-items: center;
+}

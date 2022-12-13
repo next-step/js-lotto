@@ -1,6 +1,7 @@
 import { LOTTO_NUMBER, LOTTO_PRICE } from '../service/Constant.js';
 import { MANUAL_NUMBER_INPUT } from './Element.js';
-import { $manualNumberList } from './Selector.js';
+import { onLottoNumberInput } from './Listener.js';
+import { $manualNumberList, querySelectorAll } from './Selector.js';
 
 /**
  *
@@ -21,7 +22,7 @@ export const getPriceOfBuyingManually = (manualNumberItemLength) => {
 
 export const appendLottoNumberInputs = () => {
   const inputs = Array.from({ length: LOTTO_NUMBER.LENGTH }).map(
-    () => `<input type="number" class="manual-number mx-1 mb-3 text-center" required />`
+    () => `<input type="text" class="manual-number mx-1 mb-3 text-center" required />`
   );
   const button = `<button type="button" class="btn btn-pink w-10 mx-1">삭제</button>`;
   const li = document.createElement('li');
@@ -33,6 +34,7 @@ export const appendLottoNumberInputs = () => {
     this.parentElement.remove();
   });
   $manualNumberList.appendChild(li);
+  querySelectorAll('.manual-number').forEach((input) => input.addEventListener('keypress', onLottoNumberInput));
 };
 
 export const truncateLottoNumberInput = () => {

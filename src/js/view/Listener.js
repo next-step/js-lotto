@@ -1,7 +1,7 @@
-import { LOTTO_PRICE } from '../service/Constant.js';
+import { LOTTO_NUMBER, LOTTO_PRICE } from '../service/Constant.js';
 import { buy, getLottoInfo } from '../service/LottoBuyer.js';
-import { AUTO_N_MESSAGE, MESSAGE } from '../util/Constant.js';
-import { validateNumbers, validatePurchasingAmount } from '../util/Validator.js';
+import { AUTO_N_MESSAGE, ENTER_KEY, MESSAGE } from '../util/Constant.js';
+import { isNumber, validateNumbers, validatePurchasingAmount } from '../util/Validator.js';
 import { setVisibleAreas } from './Element.js';
 import { setLottos } from './Lotto.js';
 import { getMyLottoResult, updateLottoResult } from './LottoResult.js';
@@ -42,9 +42,17 @@ export const onLottoRestart = () => {
   onModalClose();
 };
 
-export const onPurchasingAmountEntered = () => {
+export const onPurchasingAmountEntered = (event) => {
+  if (event.key === ENTER_KEY) {
+    onPurchasingAmount();
+    event.preventDefault();
+  }
+};
+
+export const onPurchasingAmount = () => {
   try {
     const purchasingAmount = $purchasingAmountInput.value;
+    if (purchasingAmount % LOTTO_PRICE) throw new Error(MESSAGE.INVALID_AMOUNT_UNIT);
     validatePurchasingAmount(purchasingAmount);
     setVisibleAreas($purchasingManuallyForm, true);
     truncateLottoNumberInput();
@@ -80,5 +88,13 @@ export const onLottosBought = () => {
   } catch (error) {
     alert(error.message);
     console.error(error);
+  }
+};
+
+export const onLottoNumberInput = function (event) {
+  const key = Number(event.key);
+  if (!(!isNaN(key) && key >= LOTTO_NUMBER.MIN && this.value.length < String(LOTTO_NUMBER.MAX).length)) {
+    event.preventDefault();
+    return;
   }
 };

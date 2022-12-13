@@ -23,11 +23,22 @@ export const isWithInRangedNumber = (numbers, greaterThan = 1, lessThan = 45) =>
   return rangedNumber.length === numbers.length;
 };
 
+/**
+ *
+ * @param {string} s
+ */
 export const validatePurchasingAmount = (s) => {
   if (!isNumber(s) || Number(s) < 1000) {
     throw new Error(MESSAGE.INVALID_AMOUNT_MIN);
   }
 };
+
+/**
+ *
+ * @param {string} s
+ * @returns {boolean}
+ */
+export const isLottoNumberInput = (s) => !s.length === 1 && !isNumber(s);
 
 /**
  * @param {string[]|number[]} inputNumbers

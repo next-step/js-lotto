@@ -1,4 +1,3 @@
-import { MESSAGE } from '../util/Constant.js';
 import { LOTTO_NUMBER, LOTTO_PRICE } from './Constant.js';
 
 /**
@@ -13,7 +12,6 @@ import { LOTTO_NUMBER, LOTTO_PRICE } from './Constant.js';
  * @param {?number[][]} manualNumberLottos
  */
 export const buy = (purchasingAmount, manualNumberLottos) => {
-  if (purchasingAmount % LOTTO_PRICE) throw new Error(MESSAGE.INVALID_AMOUNT_UNIT);
   const { auto } = getLottoInfo(purchasingAmount, manualNumberLottos.length);
 
   const automaticallyGeneratedLottos = Array.from({ length: auto }).map(() => generateLottoNumbers());
