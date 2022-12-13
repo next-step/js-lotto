@@ -1,5 +1,5 @@
 const querySelector = (selector) => document.querySelector(selector);
-export const querySelectorAll = (selector) => document.querySelectorAll(selector);
+const querySelectorAll = (selector) => document.querySelectorAll(selector);
 
 // 로또 구입 금액 영역
 export const $startButton = querySelector('.btn-start');

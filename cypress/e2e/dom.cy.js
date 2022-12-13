@@ -29,6 +29,12 @@ describe('로또 요구사항을 테스트한다', () => {
     BONUS_NUMBER: 7,
   };
 
+  const getAlertStub = () => {
+    const alertStub = cy.stub();
+    cy.on('window:alert', alertStub);
+    return alertStub;
+  };
+
   beforeEach(() => {
     cy.visit(URL);
   });
@@ -58,14 +64,13 @@ describe('로또 요구사항을 테스트한다', () => {
     });
 
     it('금액은 양수 1,000원부터 가능하다', () => {
-      const stub = cy.stub();
-      cy.on('window:alert', stub);
+      const alertStub = getAlertStub();
 
       ['-1000', '0', '100'].forEach((type) => {
         cy.get(selectors.inputAmount).clear().type(type);
         cy.get(selectors.btnStart).click();
         cy.get(selectors.btnConfirm).then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_AMOUNT_MIN);
+          expect(alertStub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_AMOUNT_MIN);
         });
       });
     });
@@ -78,22 +83,18 @@ describe('로또 요구사항을 테스트한다', () => {
       cy.get(selectors.btnConfirm).click();
     });
 
-    it.each(['1500', '1501', '1999', '59990'])(
-      '로또 구입 금액은 1000원 단위가 아닌 경우의 수에 대한 예외 발생',
-      (invalidInput) => {
-        const stub = cy.stub();
-        cy.on('window:alert', stub);
+    it('로또 구입 금액은 1000원 단위가 아닌 경우의 수에 대한 예외 발생', () => {
+      ['1500', '1501', '1999', '59990'].forEach((invalidInput) => {
+        const alertStub = getAlertStub();
 
         cy.get(selectors.inputAmount).clear().type(invalidInput);
-        cy.get(selectors.btnStart).click();
-        cy.get(selectors.btnConfirm)
+        cy.get(selectors.btnStart)
           .click()
           .then(() => {
-            expect(stub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_AMOUNT_UNIT);
+            expect(alertStub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_AMOUNT_UNIT);
           });
-        cy.get(selectors.btnConfirm).click();
-      }
-    );
+      });
+    });
 
     it('확인 버튼을 클릭했을 때 입력한 금액에 맞는 로또 개수가 발급되어야 한다', () => {
       const amount = 3;
@@ -112,14 +113,13 @@ describe('로또 요구사항을 테스트한다', () => {
     });
 
     it('5,000원을 구매하면 수동 추가는 5개 항목까지만 가능하다', () => {
-      const stub = cy.stub();
-      cy.on('window:alert', stub);
+      const alertStub = getAlertStub();
 
       Array.from({ length: LENGTH }).forEach(() => cy.get(selectors.btnManualAdd).click());
       cy.get(selectors.btnManualAdd)
         .click()
         .then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(MESSAGE.EXCEEDED_MANUAL_LOTTO);
+          expect(alertStub.getCall(0)).to.be.calledWith(MESSAGE.EXCEEDED_MANUAL_LOTTO);
         });
     });
 
@@ -183,20 +183,18 @@ describe('로또 요구사항을 테스트한다', () => {
     });
 
     it('당첨 번호와 보너스 번호 필드가 모두 입력되어야 결과를 확인할 수 있다', () => {
-      const stub = cy.stub();
-      cy.on('window:alert', stub);
+      const alertStub = getAlertStub();
 
       cy.get(selectors.btnWinning)
         .click()
         .then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_WINNING_MODAL);
+          expect(alertStub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_WINNING_MODAL);
         });
     });
 
     it('당첨 번호와 보너스 번호에 입력할 수 있는 숫자의 범위는 1~45까지이다', () => {
-      const invalidNumbers = [-1, 49, 100, 0];
-      const stub = cy.stub();
-      cy.on('window:alert', stub);
+      const invalidNumbers = [49, 100, 0];
+      const alertStub = getAlertStub();
 
       const testInvalidNumber = (invalidNumber) => {
         const myWinnings = [invalidNumber, ...TEST_NUMBER.WINNING_NUMBERS];
@@ -207,7 +205,7 @@ describe('로또 요구사항을 테스트한다', () => {
         cy.get(selectors.btnWinning)
           .click()
           .then(() => {
-            expect(stub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_WINNING_NUMBER_RANGE);
+            expect(alertStub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_WINNING_NUMBER_RANGE);
           });
       };
 
@@ -216,8 +214,7 @@ describe('로또 요구사항을 테스트한다', () => {
 
     it('당첨 번호와 보너스 번호의 필드는 서로 겹치지 않아야 한다', () => {
       const numbers = [1, 1, 2, 3, 4, 5];
-      const stub = cy.stub();
-      cy.on('window:alert', stub);
+      const alertStub = getAlertStub();
 
       cy.get(selectors.inputWinningNumber).each(($el, index) => {
         cy.wrap($el).clear().type(numbers[index]);
@@ -226,7 +223,7 @@ describe('로또 요구사항을 테스트한다', () => {
       cy.get(selectors.btnWinning)
         .click()
         .then(() => {
-          expect(stub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_WINNING_NUMBER_DUPLICATED);
+          expect(alertStub.getCall(0)).to.be.calledWith(MESSAGE.INVALID_WINNING_NUMBER_DUPLICATED);
         });
     });
   });

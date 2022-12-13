@@ -1,7 +1,7 @@
 import { LOTTO_NUMBER, LOTTO_PRICE } from '../service/Constant.js';
 import { MANUAL_NUMBER_INPUT } from './Element.js';
 import { onLottoNumberInput } from './Listener.js';
-import { $manualNumberList, querySelectorAll } from './Selector.js';
+import { $manualNumberList } from './Selector.js';
 
 /**
  *
@@ -34,7 +34,7 @@ export const appendLottoNumberInputs = () => {
     this.parentElement.remove();
   });
   $manualNumberList.appendChild(li);
-  querySelectorAll('.manual-number').forEach((input) => input.addEventListener('keypress', onLottoNumberInput));
+  li.querySelectorAll('.manual-number').forEach((input) => input.addEventListener('keypress', onLottoNumberInput));
 };
 
 export const truncateLottoNumberInput = () => {

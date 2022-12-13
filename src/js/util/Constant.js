@@ -8,5 +8,4 @@ export const MESSAGE = {
 };
 
 export const AUTO_N_MESSAGE = (n) => `자동으로 ${n}개 구매합니다`;
-
 export const ENTER_KEY = 'Enter';

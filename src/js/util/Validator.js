@@ -1,3 +1,4 @@
+import { ValidationError } from '../service/ValidationError.js';
 import { MESSAGE } from './Constant.js';
 
 /** @type {number} */
@@ -29,7 +30,7 @@ export const isWithInRangedNumber = (numbers, greaterThan = 1, lessThan = 45) =>
  */
 export const validatePurchasingAmount = (s) => {
   if (!isNumber(s) || Number(s) < 1000) {
-    throw new Error(MESSAGE.INVALID_AMOUNT_MIN);
+    throw new ValidationError(MESSAGE.INVALID_AMOUNT_MIN);
   }
 };
 
@@ -53,12 +54,12 @@ export const isEmptyNumberFields = (inputNumbers) => {
  * */
 export const validateNumbers = (inputNumbers) => {
   if (isEmptyNumberFields(inputNumbers)) {
-    throw new Error(MESSAGE.INVALID_WINNING_MODAL);
+    throw new ValidationError(MESSAGE.INVALID_WINNING_MODAL);
   }
   if (!isUniqueNumbers(inputNumbers)) {
-    throw new Error(MESSAGE.INVALID_WINNING_NUMBER_DUPLICATED);
+    throw new ValidationError(MESSAGE.INVALID_WINNING_NUMBER_DUPLICATED);
   }
   if (!isWithInRangedNumber(inputNumbers)) {
-    throw new Error(MESSAGE.INVALID_WINNING_NUMBER_RANGE);
+    throw new ValidationError(MESSAGE.INVALID_WINNING_NUMBER_RANGE);
   }
 };
