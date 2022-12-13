@@ -1,4 +1,4 @@
-import { $stats } from "../views/selector.js";
+import { $purchased, $stats } from "../views/selector.js";
 import { SECTIONTYPE } from "../utils/const.js";
 
 import { Component } from "./component.js";
@@ -10,63 +10,75 @@ export class StatsComponent extends Component {
 
     constructor(container) {
         super(container);
-        this.lastNumbers = [];
-        this.lastBonusNumber = 0;
         this.init();
+        this._view.displayBlock([$stats.lotto]);
     }
 
     init() {
         super.init();
-        this._view.displayBlock([$stats.lotto]);
+        this._view.displayNone([$stats.lotto]);
     }
 
     _setEventListeners() {
         $stats.openModalButton.addEventListener('click', () => this.#validate());
-        $stats.lastNumbers.forEach(($lastNumber, i) => {
-            $lastNumber.addEventListener('keyup', () => this.#setAutoFocus());
+        [...$stats.lastNumbers].forEach($lastNumber => {
+            $lastNumber.addEventListener('keyup', e => this.#setAutoFocus(e))
         });
     }
 
     _subscribe() {
-        this._stateModel.register(() => this._reset());
+        this._stateModel.register({ restart: () => this._restart() });
+        this._stateModel.register({ reset: () => this._reset() });
+    }
+
+    _initElement() {
+        this.lastNumbers = [];
+        this.lastBonusNumber = 0;
+    }
+
+    _restart() {
+        super._restart();
+        this._reset();
+        this._stateModel.reset();
     }
 
     _reset() {
-        [...$stats.lastNumbers].forEach(row => this._view.renderInputValue(row));
-        this._view.renderInputValue($stats.lastBonusNumbers);
+        this._view.displayNone([$stats.lotto]);
+        [...$stats.lastNumbers].forEach(row => this._view.setInputValue(row));
+        this._view.setInputValue($stats.lastBonusNumbers);
+        this._stateModel.resetState();
     }
 
-    #setAutoFocus() {
-        [...$stats.lastNumbers].forEach(($lastNumber, i) => {
-            if ($lastNumber.value.length === $lastNumber.maxLength) {
-                i === $stats.lastNumbers.length - 1
-                    ? $stats.lastBonusNumbers.focus()
-                    : [...$stats.lastNumbers][i + 1].focus();
-            }
-        })
+    #setAutoFocus(e) {
+        const $InputNextSibling = e.target.nextElementSibling;
+        const $InputNextFocus = $InputNextSibling !== null ? $InputNextSibling : $stats.lastBonusNumbers;
+        const isValueMaxLength = e.target.maxLength === e.target.value.length;
+
+        if (isValueMaxLength) {
+            this._view.setFocus($InputNextFocus);
+        }
     }
 
     #validate() {
         this.lastNumbers = [...$stats.lastNumbers].map(row => row.value);
         this.lastBonusNumber = $stats.lastBonusNumbers.value;
 
-        if (!this.#isValidated()) return this._reset();
+        if (!this.#isValidated()) return;
         this.#openStatsModal();
     }
 
     #isValidated = () => {
-        return this._validator
-            .validate(SECTIONTYPE.STATS, [...this.lastNumbers, this.lastBonusNumber]
-                .filter(x => !!x));
+        const params = {
+            sectionType: SECTIONTYPE.STATS_NUMBERS,
+            value: [...this.lastNumbers, this.lastBonusNumber].filter(num => !!num)
+        }
+        return this._validator.validate(params);
     }
 
     #openStatsModal() {
-        this._stateModel.setState(
-            {
-                lastNumbers: this.lastNumbers.map(row => +row),
-                lastBonusNumber: +this.lastBonusNumber
-            });
-        const modalComponent = new ModalComponent({
+        this._stateModel.setNumbersState('lastNumbers', this.lastNumbers.map(row => +row));
+        this._stateModel.setNumbersState('lastBonusNumber', +this.lastBonusNumber);
+        new ModalComponent({
             view: this._view,
             state: this._stateModel,
             validator: this._validator

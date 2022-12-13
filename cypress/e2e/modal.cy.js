@@ -18,7 +18,8 @@ describe('로또 구현 테스트 :: 모달', () => {
     })
 
     beforeEach('로또 구입', () => {
-        cy.typePurchaseInput(priceLotto).type('{enter}');
+        cy.typePriceInput(priceLotto).type('{enter}');
+        cy.clickPurchaseButton();
     })
 
     beforeEach('지난 주 로또 번호와 보너스번호 입력 후 결과 확인하기 버튼 클릭', () => {

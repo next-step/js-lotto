@@ -13,7 +13,8 @@ describe('로또 구현 테스트 :: 지난주 로또 번호 입력', () => {
     })
 
     beforeEach('로또 구입', () => {
-        cy.typePurchaseInput('3000').type('{enter}');
+        cy.typePriceInput('3000').type('{enter}');
+        cy.clickPurchaseButton();
     })
 
     statsSpec();
@@ -36,7 +37,7 @@ function statsSpec() {
     it('지난 주 로또번호와 보너스 번호를 모두 입력해야 한다.', () => {
         const numbers = faker.random.numeric(5, { bannedDigits: ['0'] }).split('');
         cy.typeLastLottoNumbers(numbers);
-        checkAlert(cy.clickOpenResultModal(), ERROR_MESSAGE.StatsNumbersRequired);
+        checkAlert(cy.clickOpenResultModal(), ERROR_MESSAGE.NumbersRequired);
     })
 
     it('지난 주 로또번호와 보너스 번호는 중복될 수 없다.', () => {

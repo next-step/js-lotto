@@ -13,21 +13,32 @@ body {
   margin: 0 auto;
 }
 
-.winning-number {
+.winning-number,
+.bonus-number,
+.manuel-number {
   width: 30px;
   height: 36px;
 }
 
-.bonus-number {
-  width: 30px;
-  height: 36px;
+.purchased-lotto-manuel > div {
+  align-items: center;
+}
+
+.purchased-lotto-manuel-inputs {
+  padding: 5px 0;
+}
+
+.manuel-icons  {
+  display: flex;
+  gap: 5px;
+  padding: 5px 0;
 }
 
 ul {
-  list-style: none;
-  padding: 0;
+list-style: none;
+padding: 0;
 }
 
 .purchased-lotto {
-  display: none;
+display: none;
 }
