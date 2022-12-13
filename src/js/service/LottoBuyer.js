@@ -19,7 +19,7 @@ export const buy = (purchasingAmount, manualNumberLottos) => {
 };
 
 /** @returns {number[]} */
-function generateLottoNumbers() {
+export function generateLottoNumbers() {
   const numbers = Array.from({ length: LOTTO_NUMBER.MAX }).map((_, n) => n + 1);
   const lottoNumbers = numbers.sort(() => Math.random() - 0.5).slice(0, LOTTO_NUMBER.LENGTH);
   return lottoNumbers.sort((a, b) => a - b);
