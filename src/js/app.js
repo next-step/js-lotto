@@ -1,4 +1,9 @@
-import { isValidClickEventTarget, isValidSubmitEventTarget } from "./utils.js";
+import {
+  checkValidAmountUnit,
+  isValidClickEventTarget,
+  isValidSubmitEventTarget,
+  ValidationError,
+} from "./utils.js";
 
 class App {
   #model;
@@ -10,6 +15,10 @@ class App {
     this.#view = view;
 
     this.clickHandler = {
+      "create-manual-lotto-button": () => {
+        this.#view.addManualLotto();
+        this.#model.createManualLotto();
+      },
       "view-numbers-checkbox": (e) => {
         this.#view.onViewNumbers(e.target.checked);
       },
@@ -29,21 +38,26 @@ class App {
     };
     this.submitHandler = {
       "purchase-input-form": () => {
-        const isValid = this.#model.purchaseLotto(
-          this.#view.$amountInput.value
-        );
-
-        if (!isValid) return;
-
-        this.render(this.#model.state);
+        try {
+          this.#model.setManualLottos(this.#view.manualLottoList);
+          this.validationCheckForSubmit();
+          this.#model.purchaseLotto(Number(this.#view.$amountInput.value));
+          this.render(this.#model.state);
+        } catch (error) {
+          if (error instanceof ValidationError) {
+            alert(error.message);
+          } else {
+            throw error;
+          }
+        }
       },
       "winning-number-confirmation-form": () => {
-        const isValidNumbers = this.#model.isValidNumbers(
+        const isValidWinningNumbers = this.#model.isValidWinningNumbers(
           this.#view.$winningInputs,
           this.#view.$bonusInput
         );
 
-        if (!isValidNumbers) return;
+        if (!isValidWinningNumbers) return;
 
         this.#model.checkWinnerNumber(
           this.#view.$winningInputs,
@@ -57,22 +71,28 @@ class App {
     this.setEvent();
   }
 
-  handledSubmit = (e) => {
+  validationCheckForSubmit() {
+    checkValidAmountUnit(this.#view.$amountInput.value);
+    this.#model.checkValidManualLottoNumbers();
+    this.#model.checkValidAmount(Number(this.#view.$amountInput.value));
+  }
+
+  handledSubmit(e) {
     e.preventDefault();
     if (!isValidSubmitEventTarget(e.target)) return;
     this.submitHandler[e.target.id]();
-  };
+  }
 
-  handledClick = (e) => {
+  handledClick(e) {
     if (!isValidClickEventTarget(e.target)) return;
     e.stopPropagation();
 
     this.clickHandler[e.target.id](e);
-  };
+  }
 
   setEvent() {
-    this.$target.addEventListener("submit", this.handledSubmit);
-    this.$target.addEventListener("click", this.handledClick);
+    this.$target.addEventListener("submit", this.handledSubmit.bind(this));
+    this.$target.addEventListener("click", this.handledClick.bind(this));
   }
 
   openModal() {
@@ -89,6 +109,7 @@ class App {
 
   reset() {
     this.#view.reset();
+    this.#model.reset();
   }
 }
 export default App;

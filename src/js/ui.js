@@ -4,10 +4,15 @@ import {
   removeAllChildNodes,
   toggleClass,
 } from "./utils.js";
-import { PRICE_BY_RANK, RANK_BY_MATCHED_NUMBERS } from "./constants.js";
+import {
+  MANUAL_LOTTO_INPUTS_TEMPLATE,
+  PRICE_BY_RANK,
+  RANK_BY_MATCHED_NUMBERS,
+} from "./constants.js";
 
 class Ui {
   #lottoList;
+  #manualLottoList;
   #purchasedLottos;
   #purchasedCount;
   #viewNumbersCheckbox;
@@ -19,6 +24,7 @@ class Ui {
 
   constructor() {
     this.#lottoList = document.querySelector("#lotto-list");
+    this.#manualLottoList = document.querySelector("#manual-lotto-list");
     this.#purchasedLottos = document.querySelector("#purchased-lottos");
     this.#purchasedCount = document.querySelector(".purchased-count");
     this.#viewNumbersCheckbox = document.querySelector(
@@ -34,6 +40,10 @@ class Ui {
     this.$amountInput = document.querySelector("#purchase-amount-input");
     this.$winningInputs = document.querySelectorAll(".winning-number");
     this.$bonusInput = document.querySelector(".bonus-number");
+  }
+
+  get manualLottoList() {
+    return this.#manualLottoList;
   }
 
   get modal() {
@@ -62,21 +72,34 @@ class Ui {
     this.#isResultModalOpened = false;
   }
 
-  getLottoElement(lotto) {
-    const $newListItem = document.createElement("li");
-    const $listOfLottoNumber = document.createElement("span");
-    const $listOfLottoIcon = document.createElement("span");
+  #createManualLotto() {
+    const $manualListItem = document.createElement("li");
 
-    $newListItem.className = "d-flex mx-1 text-4xl";
-    $listOfLottoIcon.className = "lotto-icon";
-    $listOfLottoNumber.className = "lotto-detail ml-1";
-    $listOfLottoIcon.innerText = "🎟";
-    $listOfLottoNumber.innerText = lotto.join(", ");
+    $manualListItem.className = "manual-lotto-list-item";
+    $manualListItem.setAttribute(
+      "index",
+      this.#manualLottoList.childElementCount
+    );
+    $manualListItem.insertAdjacentHTML(
+      "afterbegin",
+      MANUAL_LOTTO_INPUTS_TEMPLATE
+    );
 
-    $newListItem.appendChild($listOfLottoIcon);
-    $newListItem.appendChild($listOfLottoNumber);
+    return $manualListItem;
+  }
 
-    return $newListItem;
+  addManualLotto() {
+    const $createdManualLotto = this.#createManualLotto();
+    this.#manualLottoList.prepend($createdManualLotto);
+  }
+
+  #createLotto(lotto) {
+    return `
+      <li class="d-flex mx-1 text-4xl">
+        <span class="lotto-icon">🎟</span>
+        <span class="lotto-detail ml-1">${lotto.join(", ")}</span>
+      </li>
+    `;
   }
 
   #clearInputs() {
@@ -88,6 +111,8 @@ class Ui {
   }
 
   #initializePurchasedView() {
+    removeAllChildNodes(this.#manualLottoList);
+
     this.#clearInputs();
     this.#purchasedLottos.classList.remove("display");
     this.#checkWinningNumberArea.classList.remove("display");
@@ -103,11 +128,13 @@ class Ui {
 
   #renderLottoElements(lottos) {
     removeAllChildNodes(this.#lottoList);
+    let createdLottos = "";
 
     lottos.forEach((lotto) => {
-      const $lottoElement = this.getLottoElement(lotto);
-      this.#lottoList.appendChild($lottoElement);
+      createdLottos += this.#createLotto(lotto);
     });
+
+    this.#lottoList.insertAdjacentHTML("afterbegin", createdLottos);
   }
 
   #renderLottoCount(count) {
