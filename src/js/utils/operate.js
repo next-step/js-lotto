@@ -1,12 +1,17 @@
 import { LOTTO } from "../constants/lotto.js";
 
+export const makeRandomNumber = () =>
+  Math.floor(Math.random() * LOTTO.MAX_NUMBER) + LOTTO.MIN_NUMBER;
+
+const isDuplicated = (arr, length) => new Set(arr).size !== length;
+
 export const createRandomNumbers = () => {
-	let randomNumbers = [];
-	for (let i = 0; i < 6; i++) {
-		randomNumbers.push(
-			Math.floor(Math.random() * LOTTO.MAX_NUMBER) + LOTTO.MIN_NUMBER
-		);
-	}
-	// 중복체크 로직
-	return randomNumbers;
+  let randomNumbers = Array.from({ length: LOTTO.TOTAL_NUMBER_COUNT }, () =>
+    makeRandomNumber()
+  );
+
+  if (isDuplicated(randomNumbers, LOTTO.TOTAL_NUMBER_COUNT))
+    return createRandomNumbers();
+
+  return randomNumbers;
 };

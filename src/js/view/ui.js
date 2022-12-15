@@ -1,31 +1,42 @@
-import {
-	$lottoNumbersToggleButton,
-	$lottoPapers,
-	$modal,
-	$totalLottoCount,
-} from "./elements.js";
+import { $lottoNumbersToggleButton, $lottoPapers, $modal } from "./elements.js";
 
-export const render = (target, text) => {
-	target.innerHTML = text;
+export const render = (target, html) => {
+  target.innerHTML = html;
 };
 
-export const showTotalLottoCount = (totalLottoCount) => {
-	$totalLottoCount.innerText = totalLottoCount;
+export const changeInnerText = (target, text) => {
+  target.innerText = text;
 };
 
 export const toggleButtonClick = () => {
-	const { classList } = $lottoPapers;
-	classList.toggle("hide");
+  const { classList } = $lottoPapers;
+  classList.toggle("hide");
 };
 
 export const onModalShow = () => {
-	$modal.classList.add("open");
+  $modal.classList.add("open");
 };
 
 export const onModalClose = () => {
-	$modal.classList.remove("open");
+  $modal.classList.remove("open");
 };
 
 export const turnOffToggleButton = () => {
-	$lottoNumbersToggleButton.checked = false;
+  $lottoNumbersToggleButton.checked = false;
+  const { classList } = $lottoPapers;
+  classList.add("hide");
+};
+
+export const uiInitialize = () => {
+  turnOffToggleButton();
+
+  changeInnerText($totalLottoCount, 0);
+  $purchaseInput.value = "";
+  $bonusNumber.value = "";
+  render($lottoPapers, "");
+  [...$allWinningNumberInputs].forEach(
+    ($winningNumberInput) => ($winningNumberInput.value = "")
+  );
+
+  onModalClose();
 };

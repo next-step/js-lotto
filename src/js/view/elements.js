@@ -1,4 +1,4 @@
-import { get } from "../utils/dom.js";
+import { get, getAll } from "../utils/dom.js";
 
 export const $purchaseForm = get(".purchase-form");
 export const $purchaseInput = get(".purchase-input");
@@ -9,3 +9,10 @@ export const $totalPurchaseMessage = get(".total-purchase-message");
 export const $showResultButton = get(".open-result-modal-button");
 export const $modalClose = get(".modal-close");
 export const $modal = get(".modal");
+export const $allWinningNumberInputs = getAll(".winning-number");
+export const $bonusNumber = get(".bonus-number");
+export const $allWinningLottoCount = getAll(".winning-lotto-count");
+export const $earningTotalRate = get(".earning-total-rate");
+export const $restartButton = get(".restart-button");
+export const $winningNumberForm = get(".winning-number-form");
+
