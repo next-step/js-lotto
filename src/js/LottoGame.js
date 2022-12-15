@@ -1,8 +1,9 @@
 import { generateLottoRandomNumbers } from "./Lotto/LottoGenerator.js";
 import LottoInput from "./Components/LottoInput.js";
 import LottoResult from "./Components/LottoResult.js";
+import LottoModal from "./Components/LottoWinForm.js";
+import LottoWinForm from "./Components/LottoWinForm.js";
 import { LOTTO } from "./constants.js";
-
 export default class LottoGame {
   constructor() {
     this.$element = document.querySelector("#app");
@@ -30,6 +31,15 @@ export default class LottoGame {
       lottoCnt: 0,
       lottoNumberArr: [],
     });
+
+    this.lottoModal = new LottoModal({
+      $target: this.$element,
+    });
+
+    this.lottoWinForm = new LottoWinForm({
+      $target: this.$element,
+      lottoNumberArrays: this.lottoNumberArr,
+    });
   }
 
   setState({ inputAmount = 0, lottoCnt, randomNumberArray }) {
@@ -46,5 +56,7 @@ export default class LottoGame {
     });
 
     this.lottoInput.setState(inputAmount);
+
+    this.lottoWinForm.setState({ randomNumberArray: randomNumberArray });
   }
 }

@@ -96,6 +96,9 @@ describe("로또", () => {
   context("당첨번호와 보너스번호를 입력한 후 폼을 제출하면,", () => {
     it("중복된 로또번호가 있을 때는 제출되지 않고 사용자에게 알린다.", () => {
       const doubledNumbers = [22, 22, 22, 23, 23, 23];
+      const invalidAlertStub = cy.stub();
+      cy.on("window:alert", invalidAlertStub);
+
       cy.get(winningNumberSelector).each(($inputEl, i) => {
         cy.wrap($inputEl).type(doubledNumbers[i]);
       });
@@ -104,9 +107,6 @@ describe("로또", () => {
       cy.get(".open-result-modal-button")
         .click()
         .then(() => {
-          const invalidAlertStub = cy.stub();
-          cy.on("window:alert", invalidAlertStub);
-
           expect(invalidAlertStub.getCall(0)).to.be.calledWith(
             ERROR_MESSAGES.DUPLICATED_NUMBERS
           );
