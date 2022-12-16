@@ -86,6 +86,23 @@ export default class LottoGame {
 
         this.lottoWinForm.setState(this.state);
       },
+      onClickRestartButton: () => {
+        this.setState({ inputAmount: 0, lottoCnt: 0, lottoNumberArr: [] });
+        this.lottoWinForm.setState({
+          modalOpened: false,
+          statisticsMade: false,
+          lottoProfitRate: 0,
+          lottoWinNumberCountMap: {},
+          lottoNumberArr: [],
+        });
+
+        this.lottoResult.setState({
+          lottoCnt: 0,
+          lottoNumberArr: [],
+          toggled: false,
+          visible: false,
+        });
+      },
     });
   }
 
@@ -100,9 +117,10 @@ export default class LottoGame {
       lottoCnt: lottoCnt,
       lottoNumberArr,
       toggled: this.lottoResult.state.toggled,
+      visible: true,
     });
 
-    //this.lottoInput.setState(inputAmount);
+    this.lottoInput.setState(inputAmount);
     this.lottoWinForm.setState({ lottoNumberArr });
   }
 }

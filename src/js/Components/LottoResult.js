@@ -5,6 +5,7 @@ export default class LottoResult {
       lottoCnt: lottoCnt,
       lottoNumberArr: lottoNumberArr,
       toggled: false,
+      visible: false,
     };
 
     this.$purchasResultCntTxt = this.$element.querySelector(
@@ -33,13 +34,19 @@ export default class LottoResult {
       lottoCnt: this.state.lottoCnt,
       lottoNumberArr: this.state.lottoNumberArr,
       toggled: !this.state.toggled,
+      visible: this.state.visible,
     });
   };
 
   render() {
-    const { lottoCnt, lottoNumberArr, toggled } = this.state;
-    this.$element.classList.remove("hidden");
-    this.$element.classList.add("visible");
+    const { lottoCnt, lottoNumberArr, toggled, visible } = this.state;
+    if (visible) {
+      this.$element.classList.remove("hidden");
+      this.$element.classList.add("visible");
+    } else {
+      this.$element.classList.add("hidden");
+      this.$element.classList.remove("visible");
+    }
 
     this.$purchasResultCntTxt.textContent = lottoCnt;
     this.$lottoIconsUl.innerHTML = lottoNumberArr

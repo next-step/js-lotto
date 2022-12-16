@@ -129,7 +129,6 @@ describe("로또", () => {
           cy.get($modal).should("have.class", "open");
         });
 
-      //당첨개수와 당첨금
       for (const [key, value] of Object.entries(LOTTO.LOTTO_WINNING_CNT)) {
         cy.get(`.winning-count-${value}`).should("not.have.text", "n");
       }

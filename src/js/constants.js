@@ -12,7 +12,7 @@ const LOTTO = {
   }),
   LOTTO_WINNING_CNT_NUM: Object.freeze({
     3: "THREE",
-    4: "TOUR",
+    4: "FOUR",
     5: "FIVE",
     "5bonus": "FIVEPLUS",
     6: "SIX",

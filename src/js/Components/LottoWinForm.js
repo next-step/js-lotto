@@ -4,7 +4,7 @@ import { lottoWinningNumberCounter } from "../../js/Lotto/LottoWinningDataMaker.
 import { ERROR_MESSAGES } from "../../js/constants.js";
 
 export default class LottoWinForm {
-  constructor({ $target, lottoNumberArr, onSubmit }) {
+  constructor({ $target, lottoNumberArr, onSubmit, onClickRestartButton }) {
     this.$target = $target;
     this.lottoNumberArr = lottoNumberArr;
     this.$form = $target.querySelector("#lotto-win-form");
@@ -12,12 +12,14 @@ export default class LottoWinForm {
     this.$openResultModalButton = this.$form.querySelector(
       ".open-result-modal-button"
     );
+    this.$restartButton = $target.querySelector(".restart");
     this.$profitRateSpan = $target.querySelector(".profit-rate");
 
     this.$openResultModalButton.addEventListener("click", onSubmit);
     this.$modal
       .querySelector($modalClose)
       .addEventListener("click", this.handleModalClose);
+    this.$restartButton.addEventListener("click", onClickRestartButton);
 
     this.state = {
       modalOpened: false,
