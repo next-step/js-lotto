@@ -8,4 +8,8 @@ const isWinningBonusNumberDuplicated = (numArray) => {
   );
 };
 
-export { getOneRandomNumber, isWinningBonusNumberDuplicated };
+const getLottoProfit = (inputAmount, profitAmount) => {
+  return Math.floor(profitAmount - inputAmount / inputAmount) * 100;
+};
+
+export { getOneRandomNumber, isWinningBonusNumberDuplicated, getLottoProfit };

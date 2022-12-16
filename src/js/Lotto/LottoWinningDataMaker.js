@@ -10,7 +10,7 @@ const lottoWinningNumberCounter = ({
 }) => {
   const winNumberMap = {
     [LOTTO.LOTTO_WINNING_CNT.THREE]: 0,
-    [LOTTO.LOTTO_WINNING_CNT.TOUR]: 0,
+    [LOTTO.LOTTO_WINNING_CNT.FOUR]: 0,
     [LOTTO.LOTTO_WINNING_CNT.FIVE]: 0,
     [LOTTO.LOTTO_WINNING_CNT.FIVEPLUS]: 0,
     [LOTTO.LOTTO_WINNING_CNT.SIX]: 0,

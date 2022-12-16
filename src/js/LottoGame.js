@@ -1,5 +1,8 @@
 import { generateLottoRandomNumbers } from "./Lotto/LottoGenerator.js";
-import { isWinningBonusNumberDuplicated } from "./utils/random-utils.js";
+import {
+  isWinningBonusNumberDuplicated,
+  getLottoProfit,
+} from "./utils/random-utils.js";
 import { lottoWinningNumberCounter } from "../js/Lotto/LottoWinningDataMaker.js";
 import { ERROR_MESSAGES } from "../js/constants.js";
 
@@ -7,7 +10,7 @@ import LottoInput from "./Components/LottoInput.js";
 import LottoResult from "./Components/LottoResult.js";
 import LottoModal from "./Components/LottoWinForm.js";
 import LottoWinForm from "./Components/LottoWinForm.js";
-import { LOTTO } from "./constants.js";
+import { LOTTO, WINNING_AMOUNT } from "./constants.js";
 export default class LottoGame {
   constructor() {
     this.$element = document.querySelector("#app");
@@ -27,6 +30,7 @@ export default class LottoGame {
         });
 
         this.setState({
+          inputAmount,
           lottoCnt,
           lottoNumberArr: randomNumberArray,
         });
@@ -59,16 +63,24 @@ export default class LottoGame {
           alert(ERROR_MESSAGES.DUPLICATED_NUMBERS);
           return;
         }
-        const lottoNumberArr = this.state.lottoNumberArr;
-
         const lottoWinNumberCountMap = lottoWinningNumberCounter({
-          lottoNumberArrays: lottoNumberArr,
+          lottoNumberArrays: this.state.lottoNumberArr,
           lottoWinningsNumberArray: winningNumbers,
           lottoBonusNumber: bonusNumber,
         });
 
+        const totalProfitAmount = Array.from(
+          Object.entries(lottoWinNumberCountMap)
+        ).reduce((prev, cur, i) => prev + WINNING_AMOUNT[cur[0]] * cur[1], 0);
+
+        const lottoProfitRate = getLottoProfit(
+          totalProfitAmount,
+          this.state.inputAmount
+        );
+
         this.lottoWinForm.state["lottoWinNumberCountMap"] =
           lottoWinNumberCountMap;
+        this.lottoWinForm.state["lottoProfitRate"] = lottoProfitRate;
         this.lottoWinForm.state["statisticsMade"] = true;
         this.lottoWinForm.state["modalOpened"] = true;
 
@@ -77,8 +89,9 @@ export default class LottoGame {
     });
   }
 
-  setState({ lottoCnt, lottoNumberArr }) {
+  setState({ inputAmount, lottoCnt, lottoNumberArr }) {
     this.state = {
+      inputAmount,
       lottoCnt,
       lottoNumberArr,
     };

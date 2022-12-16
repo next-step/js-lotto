@@ -12,6 +12,7 @@ export default class LottoWinForm {
     this.$openResultModalButton = this.$form.querySelector(
       ".open-result-modal-button"
     );
+    this.$profitRateSpan = $target.querySelector(".profit-rate");
 
     this.$openResultModalButton.addEventListener("click", onSubmit);
     this.$modal
@@ -21,6 +22,7 @@ export default class LottoWinForm {
     this.state = {
       modalOpened: false,
       statisticsMade: false,
+      lottoProfitRate: 0,
       lottoWinNumberCountMap: {},
       lottoNumberArr: [],
     };
@@ -41,6 +43,8 @@ export default class LottoWinForm {
         `winning-count-${key}`
       )[0].textContent = value;
     }
+
+    this.$profitRateSpan.textContent = this.state.lottoProfitRate;
 
     if (this.state.modalOpened) {
       this.$modal.classList.add("open");
