@@ -9,21 +9,27 @@ const lottoWinningNumberCounter = ({
   lottoBonusNumber,
 }) => {
   const winNumberMap = {
-    [LOTTO.LOTTO_WINNING_CNT.TREE]: 0,
+    [LOTTO.LOTTO_WINNING_CNT.THREE]: 0,
     [LOTTO.LOTTO_WINNING_CNT.TOUR]: 0,
     [LOTTO.LOTTO_WINNING_CNT.FIVE]: 0,
     [LOTTO.LOTTO_WINNING_CNT.FIVEPLUS]: 0,
     [LOTTO.LOTTO_WINNING_CNT.SIX]: 0,
   };
-  Array.from(lottoNumberArrays).forEach((lottoArray) => {
-    const matchedCnt = lottoArray
+  Array.from(lottoNumberArrays).forEach((lottoSet) => {
+    const matchedCnt = Array.from(lottoSet)
       .filter((lottoNum) => lottoWinningsNumberArray.includes(lottoNum))
       .reduce((cnt) => cnt + 1, 0);
 
-    if (matchedCnt == 5 && lottoArray.includes(lottoBonusNumber)) {
+    if (matchedCnt < 3) return;
+    else if (
+      matchedCnt == 5 &&
+      Array.from(lottoSet).includes(lottoBonusNumber)
+    ) {
       winNumberMap[LOTTO.LOTTO_WINNING_CNT.FIVEPLUS] += 1;
     } else {
-      winNumberMap[LOTTO.LOTTO_WINNING_CNT[matchedCnt]] += 1;
+      winNumberMap[
+        LOTTO.LOTTO_WINNING_CNT[LOTTO.LOTTO_WINNING_CNT_NUM[matchedCnt]]
+      ] += 1;
     }
   });
 

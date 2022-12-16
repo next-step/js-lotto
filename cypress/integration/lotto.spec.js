@@ -13,6 +13,7 @@ describe("로또", () => {
   const $modal = ".modal";
   const $modalClose = ".modal-close";
   const $winningCount = ".winning-count";
+  const $openResultModalButton = ".open-result-modal-button";
 
   before(() => {
     cy.visit("../../../index.html");
@@ -117,26 +118,29 @@ describe("로또", () => {
     });
 
     it("일치된 로또 번호 개수에 따라 당첨개수와 당첨금을 모달창에 보여준다.", () => {
-      const randomNumbers = getRandomNumbers({ count: 7 });
+      const randomNumbers = Array.from(getRandomNumbers({ count: 7 }));
       cy.get(winningNumberSelector).each(($inputEl, i) => {
         cy.wrap($inputEl).type(randomNumbers[i]);
       });
       cy.get(bonusNumberSelector).type(randomNumbers[6]);
 
-      // 당첨금을 보여준다.
-      expect($modal).to.have.class("open");
+      cy.get($openResultModalButton)
+        .click()
+        .then(() => {
+          cy.get($modal).should("have.class", "open");
+        });
 
       //당첨개수와 당첨금
-      cy.get($winningCount).each((winCountEl) => {
-        cy.wrap(winCountEl).to.not.have.text("n");
-      });
+      for (const [key, value] of Object.entries(LOTTO.LOTTO_WINNING_CNT)) {
+        cy.get(`.winning-count-${value}`).should("not.have.text", "n");
+      }
     });
 
     it("모달창에 닫기 버튼을 누르면 모달창을 닫는다.", () => {
       cy.get($modalClose)
         .click()
         .then(() => {
-          expect($modal).to.not.have.class("open");
+          cy.get($modal).should("not.have.class", "open");
         });
     });
   });

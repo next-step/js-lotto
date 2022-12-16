@@ -10,6 +10,13 @@ const LOTTO = {
     FIVEPLUS: "5+",
     SIX: "6",
   }),
+  LOTTO_WINNING_CNT_NUM: Object.freeze({
+    3: "THREE",
+    4: "TOUR",
+    5: "FIVE",
+    "5+": "FIVEPLUS",
+    6: "SIX",
+  }),
 };
 
 const ERROR_MESSAGES = {

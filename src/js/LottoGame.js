@@ -1,4 +1,8 @@
 import { generateLottoRandomNumbers } from "./Lotto/LottoGenerator.js";
+import { isWinningBonusNumberDuplicated } from "./utils/random-utils.js";
+import { lottoWinningNumberCounter } from "../js/Lotto/LottoWinningDataMaker.js";
+import { ERROR_MESSAGES } from "../js/constants.js";
+
 import LottoInput from "./Components/LottoInput.js";
 import LottoResult from "./Components/LottoResult.js";
 import LottoModal from "./Components/LottoWinForm.js";
@@ -22,7 +26,10 @@ export default class LottoGame {
           max: LOTTO.LOTTO_NUMBER_MAX,
         });
 
-        this.setState({ inputAmount: 0, lottoCnt, randomNumberArray });
+        this.setState({
+          lottoCnt,
+          lottoNumberArr: randomNumberArray,
+        });
       },
     });
 
@@ -38,25 +45,51 @@ export default class LottoGame {
 
     this.lottoWinForm = new LottoWinForm({
       $target: this.$element,
-      lottoNumberArrays: this.lottoNumberArr,
+      lottoNumberArrays: this.state.lottoNumberArr,
+      onSubmit: () => {
+        const winningNumbers = Array.from(
+          this.lottoWinForm.$form.querySelectorAll(".winning-number")
+        ).map((el) => Number(el.value));
+
+        const bonusNumber = Number(
+          this.lottoWinForm.$form.querySelector(".bonus-number").value
+        );
+
+        if (isWinningBonusNumberDuplicated([...winningNumbers, bonusNumber])) {
+          alert(ERROR_MESSAGES.DUPLICATED_NUMBERS);
+          return;
+        }
+        const lottoNumberArr = this.state.lottoNumberArr;
+
+        const lottoWinNumberCountMap = lottoWinningNumberCounter({
+          lottoNumberArrays: lottoNumberArr,
+          lottoWinningsNumberArray: winningNumbers,
+          lottoBonusNumber: bonusNumber,
+        });
+
+        this.lottoWinForm.state["lottoWinNumberCountMap"] =
+          lottoWinNumberCountMap;
+        this.lottoWinForm.state["statisticsMade"] = true;
+        this.lottoWinForm.state["modalOpened"] = true;
+
+        this.lottoWinForm.setState(this.state);
+      },
     });
   }
 
-  setState({ inputAmount = 0, lottoCnt, randomNumberArray }) {
+  setState({ lottoCnt, lottoNumberArr }) {
     this.state = {
-      inputAmount,
       lottoCnt,
-      randomNumberArray,
+      lottoNumberArr,
     };
 
     this.lottoResult.setState({
       lottoCnt: lottoCnt,
-      lottoNumberArr: randomNumberArray,
+      lottoNumberArr,
       toggled: this.lottoResult.state.toggled,
     });
 
-    this.lottoInput.setState(inputAmount);
-
-    this.lottoWinForm.setState({ randomNumberArray: randomNumberArray });
+    //this.lottoInput.setState(inputAmount);
+    this.lottoWinForm.setState({ lottoNumberArr });
   }
 }
