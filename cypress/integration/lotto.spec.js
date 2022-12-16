@@ -12,7 +12,6 @@ describe("로또", () => {
   const bonusNumberSelector = ".bonus-number";
   const $modal = ".modal";
   const $modalClose = ".modal-close";
-  const $winningCount = ".winning-count";
   const $openResultModalButton = ".open-result-modal-button";
 
   before(() => {
