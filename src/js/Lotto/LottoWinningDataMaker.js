@@ -15,6 +15,7 @@ const lottoWinningNumberCounter = ({
     [LOTTO.LOTTO_WINNING_CNT.FIVEPLUS]: 0,
     [LOTTO.LOTTO_WINNING_CNT.SIX]: 0,
   };
+
   Array.from(lottoNumberArrays).forEach((lottoSet) => {
     const matchedCnt = Array.from(lottoSet)
       .filter((lottoNum) => lottoWinningsNumberArray.includes(lottoNum))

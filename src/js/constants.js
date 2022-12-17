@@ -33,4 +33,23 @@ const WINNING_AMOUNT = {
 };
 Object.freeze(WINNING_AMOUNT);
 
-export { LOTTO, ERROR_MESSAGES, WINNING_AMOUNT };
+const INITIAL_STATE = {
+  LOTTO_GAME: Object.freeze({
+    inputAmount: 0,
+    lottoCnt: 0,
+    lottoNumberArr: [],
+  }),
+  LOTTO_WIN_FORM: Object.freeze({
+    modalOpened: false,
+    lottoProfitRate: 0,
+    lottoWinNumberCountMap: {},
+  }),
+  LOTTO_RESULT: Object.freeze({
+    lottoCnt: 0,
+    lottoNumberArr: [],
+    toggled: false,
+    visible: false,
+  }),
+};
+
+export { LOTTO, ERROR_MESSAGES, WINNING_AMOUNT, INITIAL_STATE };

@@ -13,6 +13,7 @@ describe("로또", () => {
   const $modal = ".modal";
   const $modalClose = ".modal-close";
   const $openResultModalButton = ".open-result-modal-button";
+  const $restartButton = ".restart";
 
   before(() => {
     cy.visit("../../../index.html");
@@ -145,6 +146,8 @@ describe("로또", () => {
 
   context("모달창에 있는 다시 시작하기 버튼을 누르면 ", () => {
     it("구매금액, 구매한 로또번호 정보(개수와 숫자), 당첨통계들이 초기화된다.", () => {
+      cy.get($restartButton).click();
+
       expect(inputAmounSelector).to.be.empty;
       expect(purchaseResultSectionSelector).to.have("hidden");
       expect(purchaseResultLottoIconSelector).to.be.empty;

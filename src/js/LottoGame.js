@@ -1,16 +1,11 @@
 import { generateLottoRandomNumbers } from "./Lotto/LottoGenerator.js";
-import {
-  isWinningBonusNumberDuplicated,
-  getLottoProfit,
-} from "./utils/random-utils.js";
+import { getLottoProfit } from "./utils/random-utils.js";
 import { lottoWinningNumberCounter } from "../js/Lotto/LottoWinningDataMaker.js";
-import { ERROR_MESSAGES } from "../js/constants.js";
 
 import LottoInput from "./Components/LottoInput.js";
 import LottoResult from "./Components/LottoResult.js";
-import LottoModal from "./Components/LottoWinForm.js";
 import LottoWinForm from "./Components/LottoWinForm.js";
-import { LOTTO, WINNING_AMOUNT } from "./constants.js";
+import { LOTTO, WINNING_AMOUNT, INITIAL_STATE } from "./constants.js";
 export default class LottoGame {
   constructor() {
     this.$element = document.querySelector("#app");
@@ -43,26 +38,10 @@ export default class LottoGame {
       lottoNumberArr: [],
     });
 
-    this.lottoModal = new LottoModal({
-      $target: this.$element,
-    });
-
     this.lottoWinForm = new LottoWinForm({
       $target: this.$element,
       lottoNumberArrays: this.state.lottoNumberArr,
-      onSubmit: () => {
-        const winningNumbers = Array.from(
-          this.lottoWinForm.$form.querySelectorAll(".winning-number")
-        ).map((el) => Number(el.value));
-
-        const bonusNumber = Number(
-          this.lottoWinForm.$form.querySelector(".bonus-number").value
-        );
-
-        if (isWinningBonusNumberDuplicated([...winningNumbers, bonusNumber])) {
-          alert(ERROR_MESSAGES.DUPLICATED_NUMBERS);
-          return;
-        }
+      onSubmit: (winningNumbers, bonusNumber) => {
         const lottoWinNumberCountMap = lottoWinningNumberCounter({
           lottoNumberArrays: this.state.lottoNumberArr,
           lottoWinningsNumberArray: winningNumbers,
@@ -78,30 +57,16 @@ export default class LottoGame {
           this.state.inputAmount
         );
 
-        this.lottoWinForm.state["lottoWinNumberCountMap"] =
-          lottoWinNumberCountMap;
-        this.lottoWinForm.state["lottoProfitRate"] = lottoProfitRate;
-        this.lottoWinForm.state["statisticsMade"] = true;
-        this.lottoWinForm.state["modalOpened"] = true;
-
-        this.lottoWinForm.setState(this.state);
+        this.lottoWinForm.setState({
+          lottoWinNumberCountMap: lottoWinNumberCountMap,
+          lottoProfitRate: lottoProfitRate,
+          modalOpened: true,
+        });
       },
       onClickRestartButton: () => {
-        this.setState({ inputAmount: 0, lottoCnt: 0, lottoNumberArr: [] });
-        this.lottoWinForm.setState({
-          modalOpened: false,
-          statisticsMade: false,
-          lottoProfitRate: 0,
-          lottoWinNumberCountMap: {},
-          lottoNumberArr: [],
-        });
-
-        this.lottoResult.setState({
-          lottoCnt: 0,
-          lottoNumberArr: [],
-          toggled: false,
-          visible: false,
-        });
+        this.setState(INITIAL_STATE.LOTTO_GAME);
+        this.lottoWinForm.setState(INITIAL_STATE.LOTTO_WIN_FORM);
+        this.lottoResult.setState(INITIAL_STATE.LOTTO_RESULT);
       },
     });
   }
@@ -121,6 +86,5 @@ export default class LottoGame {
     });
 
     this.lottoInput.setState(inputAmount);
-    this.lottoWinForm.setState({ lottoNumberArr });
   }
 }

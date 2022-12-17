@@ -1,33 +1,34 @@
 const $modalClose = ".modal-close";
+const $modal = ".modal";
 
-import { lottoWinningNumberCounter } from "../../js/Lotto/LottoWinningDataMaker.js";
-import { ERROR_MESSAGES } from "../../js/constants.js";
+import { ERROR_MESSAGES, INITIAL_STATE } from "../constants.js";
+import { isWinningBonusNumberDuplicated } from "../utils/random-utils.js";
+
+const $lottoWinForm = "#lotto-win-form";
+const $openResultModalButton = ".open-result-modal-button";
+const $profitRateSpan = ".profit-rate";
+const $restartButton = ".restart";
 
 export default class LottoWinForm {
   constructor({ $target, lottoNumberArr, onSubmit, onClickRestartButton }) {
     this.$target = $target;
     this.lottoNumberArr = lottoNumberArr;
-    this.$form = $target.querySelector("#lotto-win-form");
-    this.$modal = $target.querySelector(".modal");
+    this.$form = $target.querySelector($lottoWinForm);
+    this.$modal = $target.querySelector($modal);
     this.$openResultModalButton = this.$form.querySelector(
-      ".open-result-modal-button"
+      $openResultModalButton
     );
-    this.$restartButton = $target.querySelector(".restart");
-    this.$profitRateSpan = $target.querySelector(".profit-rate");
+    this.onSubmit = onSubmit;
+    this.$restartButton = $target.querySelector($restartButton);
+    this.$profitRateSpan = $target.querySelector($profitRateSpan);
 
-    this.$openResultModalButton.addEventListener("click", onSubmit);
+    this.$openResultModalButton.addEventListener("click", this.handleSubmit);
     this.$modal
       .querySelector($modalClose)
       .addEventListener("click", this.handleModalClose);
     this.$restartButton.addEventListener("click", onClickRestartButton);
 
-    this.state = {
-      modalOpened: false,
-      statisticsMade: false,
-      lottoProfitRate: 0,
-      lottoWinNumberCountMap: {},
-      lottoNumberArr: [],
-    };
+    this.state = Object.assign({}, INITIAL_STATE.LOTTO_WIN_FORM);
   }
 
   setState(newState) {
@@ -36,6 +37,21 @@ export default class LottoWinForm {
     }
     this.render();
   }
+
+  handleSubmit = () => {
+    const winningNumbers = Array.from(
+      this.$form.querySelectorAll(".winning-number")
+    ).map((el) => Number(el.value));
+
+    const bonusNumber = Number(this.$form.querySelector(".bonus-number").value);
+
+    if (isWinningBonusNumberDuplicated([...winningNumbers, bonusNumber])) {
+      alert(ERROR_MESSAGES.DUPLICATED_NUMBERS);
+      return;
+    }
+
+    this.onSubmit(winningNumbers, bonusNumber);
+  };
 
   render() {
     for (const [key, value] of Object.entries(
@@ -56,7 +72,8 @@ export default class LottoWinForm {
   }
 
   handleModalClose = () => {
-    this.state["modalOpened"] = false;
-    this.setState(this.state);
+    this.setState({
+      modalOpened: false,
+    });
   };
 }
