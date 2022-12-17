@@ -1,1 +1,1 @@
-import './modules/lotto/index.js'
+import './views/index.js'

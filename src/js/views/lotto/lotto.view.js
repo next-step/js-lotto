@@ -1,23 +1,25 @@
-import { objectToArray } from '../../../helper/calc.js'
-import { DOM_ELEMENT } from '../lotto.constant.js'
-import selectors from '../lotto.selector.js'
-
-export const showLottoList = (lottoList) =>
-  lottoList.forEach((lotto, idx) => {
-    selectors.lottoImgList[idx].insertAdjacentHTML('beforeend', `<span style="font-size:15px">${lotto}</span>`)
-    selectors.listLotto.style = `
-      flex-direction: column;
-      align-items: flex-start;
-    `
-  })
+import { render } from '../../util/render.js'
+import { DOM_ELEMENT } from './lotto.constant.js'
+import selectors from './lotto.selector.js'
 
 export const updateLottoState = (lottoCnt) => {
-  selectors.toggleLottoNumbers.checked = false
+  selectors.toggle.checked = false
   selectors.listLotto.innerText = ''
-  selectors.listLotto.style = ``
-
+  selectors.listLotto.style = ''
   selectors.labelBuyCnt.innerText = `총 ${lottoCnt}개를 구매하였습니다.`
-  new Array(lottoCnt).fill().forEach(() => selectors.listLotto.insertAdjacentHTML('beforeend', DOM_ELEMENT.lottoImg))
+  const lottoImgList = Array.from({ length: lottoCnt }, () => DOM_ELEMENT.lottoImg)
+  render(selectors.listLotto, lottoImgList)
+}
+
+export const showLottoList = (lottoList) => {
+  const imgWithNumber = lottoList.map((lotto) => `<span style="font-size:15px">🎟️ ${lotto}</span>`)
+  selectors.listLotto.style = 'flex-direction: column;align-items: flex-start;'
+  render(selectors.listLotto, imgWithNumber)
+}
+
+export const onClickToggle = (lottoList) => {
+  const isCheck = selectors.toggle.checked
+  isCheck ? showLottoList(lottoList) : updateLottoState(lottoList.length)
 }
 
 const updateResultData = (winningNumberList, rate) => {
@@ -26,11 +28,12 @@ const updateResultData = (winningNumberList, rate) => {
 }
 
 export const showModal = (winningNumberCnt, rate) => {
-  const tempWinningNumberArray = objectToArray(winningNumberCnt)
+  const tempWinningNumberArray = Object.values(winningNumberCnt)
 
   selectors.resultModal.classList.add('open')
   updateResultData(tempWinningNumberArray, rate)
 }
+
 export const closeModal = () => selectors.resultModal.classList.remove('open')
 
 export const resetState = () => {

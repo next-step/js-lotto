@@ -1,0 +1,1 @@
+import './lotto/index.js'

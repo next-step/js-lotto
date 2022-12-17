@@ -1,3 +1,12 @@
+export const INITIAL_STATE = {
+  numberList: [],
+  numberMin: 0,
+  numberMax: 0,
+  price: 0,
+  winningNumberCnt: 0,
+  lottoList: [],
+}
+
 export const LOTTO_MACHINE_CONFIG = {
   price: 1000,
   winningNumberCnt: 6,
@@ -15,9 +24,9 @@ export const ERROR_TEXT = {
 }
 
 export const LOTTO_REVENUE_PRICE = {
-  three: 5000,
+  three: 5_000,
   four: 50000,
-  five: 1500000,
-  fiveBonus: 30000000,
-  six: 2000000000,
+  five: 1_500_000,
+  fiveBonus: 30_000_000,
+  six: 2_000_000_000,
 }
