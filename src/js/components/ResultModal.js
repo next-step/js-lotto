@@ -1,37 +1,18 @@
-import {
-  CLICK_EVENT_MAP,
-  ELEMENT_DATA_ID,
-  ELEMENT_DATA_ID_FORM,
-  TITLE_WITH_VALUE_MAP,
-} from '../../constants.js';
-import {
-  generateTtitleAndValueArray,
-  getWinningCount,
-  makeRateOfReturn,
-} from '../../utils/index.js';
+import { CLICK_EVENT_MAP, ELEMENT_DATA_ID, ELEMENT_DATA_ID_FORM, TITLE_WITH_VALUE_MAP } from '../../constants.js';
+import { generateTtitleAndValueArray, getWinningCount, makeRateOfReturn } from '../../utils/index.js';
 class ResultModal {
   constructor({ $target, props = {} }) {
     this.$target = $target;
     this.props = props;
     this.$modal = $target.querySelector('.modal');
-    this.$modalTableBody = $target.querySelector(
-      ELEMENT_DATA_ID_FORM.MODAL_RESULT_TABLE_BODY
-    );
-    this.$investmentReturnSpan = $target.querySelector(
-      ELEMENT_DATA_ID_FORM.INVESTMENT_RETURN
-    );
+    this.$modalTableBody = $target.querySelector(ELEMENT_DATA_ID_FORM.MODAL_RESULT_TABLE_BODY);
+    this.$investmentReturnSpan = $target.querySelector(ELEMENT_DATA_ID_FORM.INVESTMENT_RETURN);
     this.render();
     this.addEventListener();
   }
 
   render() {
-    const {
-      isVisibleModal,
-      lottoNumbers,
-      winningNumbers,
-      bonusNumber,
-      moneyAmount,
-    } = this.props.state;
+    const { isVisibleModal, lottoNumbers, winningNumbers, bonusNumber, moneyAmount } = this.props.state;
 
     if (isVisibleModal) {
       console.log({ lottoNumbers }, { winningNumbers });
@@ -49,11 +30,7 @@ class ResultModal {
               <tr class="text-center" data-id=${title}>
                 <td class="p-3">${title}</td>
                 <td class="p-3">${value.toLocaleString()}</td>
-                <td class="p-3">${
-                  countedLottoNumbersMap.has(title)
-                    ? countedLottoNumbersMap.get(title)
-                    : 0
-                }개</td>
+                <td class="p-3">${countedLottoNumbersMap.has(title) ? countedLottoNumbersMap.get(title) : 0}개</td>
               </tr>
               `;
               })

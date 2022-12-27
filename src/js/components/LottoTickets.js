@@ -8,12 +8,7 @@ class LottoTickets {
   render() {
     this.$target
       .querySelectorAll('.lotto-number')
-      .forEach(
-        (element) =>
-          (element.style.display = this.props.state.isToggle
-            ? 'inline'
-            : 'none')
-      );
+      .forEach((element) => (element.style.display = this.props.state.isToggle ? 'inline' : 'none'));
   }
 }
 

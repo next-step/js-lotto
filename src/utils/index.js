@@ -15,8 +15,7 @@ const makeLottoNumber = () => {
 };
 
 export const makeLottoNumbers = (moneyAmount) => {
-  if (!Number.isInteger(moneyAmount))
-    throw new Error('난수생성을 위해 1000원 단위로 입력되어야 합니다.');
+  if (!Number.isInteger(moneyAmount)) throw new Error('난수생성을 위해 1000원 단위로 입력되어야 합니다.');
 
   return new Array(moneyAmount).fill(0).map(makeLottoNumber);
 };
@@ -24,24 +23,16 @@ export const makeLottoNumbers = (moneyAmount) => {
 export const checkNumbersDuplidate = (randomNumberArray) => {
   if (randomNumberArray.length <= 1) return randomNumberArray;
 
-  const veirifiedLottoNumbers = randomNumberArray.map(
-    (currentRow, rowIndex) => {
-      const currentSet = new Set(currentRow);
+  const veirifiedLottoNumbers = randomNumberArray.map((currentRow, rowIndex) => {
+    const currentSet = new Set(currentRow);
 
-      for (
-        let start = rowIndex + 1;
-        start < randomNumberArray.length;
-        start++
-      ) {
-        const isDuplicated = randomNumberArray[start].every((currentNumber) =>
-          currentSet.has(currentNumber)
-        );
+    for (let start = rowIndex + 1; start < randomNumberArray.length; start++) {
+      const isDuplicated = randomNumberArray[start].every((currentNumber) => currentSet.has(currentNumber));
 
-        if (isDuplicated) return { isDuplicated: true, numbers: currentRow };
-      }
-      return { isDuplicated: false, numbers: currentRow };
+      if (isDuplicated) return { isDuplicated: true, numbers: currentRow };
     }
-  );
+    return { isDuplicated: false, numbers: currentRow };
+  });
 
   const filteredNumbers = veirifiedLottoNumbers
     .filter(({ isDuplicated }) => isDuplicated === false)
@@ -64,11 +55,7 @@ export const isDuplicatedInArray = (numberArray) => {
   return numberSet.size !== numberArray.length;
 };
 
-export const generateWinningCount = ({
-  lottoNumbers,
-  winningInput,
-  bonusNumber,
-}) => {
+export const generateWinningCount = ({ lottoNumbers, winningInput, bonusNumber }) => {
   const winningSet = new Set(winningInput);
 
   return lottoNumbers.map((lottoNumber) => {
@@ -106,11 +93,7 @@ const filteringNameByCount = ({ winningCount, isBonusNumber }) => {
   };
 };
 
-export const getWinningCount = ({
-  lottoNumbers,
-  winningInput,
-  bonusNumber,
-}) => {
+export const getWinningCount = ({ lottoNumbers, winningInput, bonusNumber }) => {
   let totalAdvantage = 0;
   const countedLottoNumbersMap = new Map();
   const countedLottoNumbers = generateWinningCount({
@@ -118,32 +101,27 @@ export const getWinningCount = ({
     winningInput,
     bonusNumber,
   })
-    .reduce(
-      (accumulator, { winningCount, isBonusNumber }, index, originArray) => {
-        const isEnd = index === originArray.length - 1;
-        const { title, value } = filteringNameByCount({
-          winningCount,
-          isBonusNumber,
-        });
+    .reduce((accumulator, { winningCount, isBonusNumber }, index, originArray) => {
+      const isEnd = index === originArray.length - 1;
+      const { title, value } = filteringNameByCount({
+        winningCount,
+        isBonusNumber,
+      });
 
-        accumulator[title] = {
-          title,
-          value,
-          count: (accumulator[title] ? accumulator[title].count : 0) + 1,
-        };
-        totalAdvantage += value;
+      accumulator[title] = {
+        title,
+        value,
+        count: (accumulator[title] ? accumulator[title].count : 0) + 1,
+      };
+      totalAdvantage += value;
 
-        if (isEnd) return Object.values(accumulator);
+      if (isEnd) return Object.values(accumulator);
 
-        return accumulator;
-      },
-      {}
-    )
+      return accumulator;
+    }, {})
     .filter((el) => el.title !== 'none');
 
-  countedLottoNumbers.forEach((element) =>
-    countedLottoNumbersMap.set(element.title, element.count)
-  );
+  countedLottoNumbers.forEach((element) => countedLottoNumbersMap.set(element.title, element.count));
 
   return {
     countedLottoNumbersMap,
@@ -171,8 +149,6 @@ export const isRerender = ({ currentState, nextState }) => {
 
 export const makeDataAttributeIdForm = (dataIdsObject) => {
   const formedObject = {};
-  Object.entries(dataIdsObject).forEach(
-    ([key, value]) => (formedObject[key] = `[data-id=${value}]`)
-  );
+  Object.entries(dataIdsObject).forEach(([key, value]) => (formedObject[key] = `[data-id=${value}]`));
   return formedObject;
 };

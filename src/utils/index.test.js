@@ -1,10 +1,5 @@
 import { TITLE_WITH_VALUE_MAP } from '../constants.js';
-import {
-  checkNumbersDuplidate,
-  generateWinningCount,
-  getWinningCount,
-  makeLottoNumbers,
-} from './index.js';
+import { checkNumbersDuplidate, generateWinningCount, getWinningCount, makeLottoNumbers } from './index.js';
 
 describe('난수 배열을 만드는 유틸리티 함수에 대한 테스트', () => {
   it('천원 단위가 아닌 경우 에러 발생시킴', () => {
@@ -27,9 +22,7 @@ describe('난수 배열을 만드는 유틸리티 함수에 대한 테스트', (
         [19, 20, 21, 22, 23, 24],
       ];
 
-      expect(checkNumbersDuplidate([...randomNumbers])).toEqual([
-        ...randomNumbers,
-      ]);
+      expect(checkNumbersDuplidate([...randomNumbers])).toEqual([...randomNumbers]);
     });
 
     it('중복이 있는 경우 난수로 생긴 새로운 별도의 배열을 넣어주고 반환해주며 동일한 길이를 가진다', () => {
@@ -40,12 +33,8 @@ describe('난수 배열을 만드는 유틸리티 함수에 대한 테스트', (
         [13, 14, 15, 16, 17, 18],
       ];
 
-      expect(checkNumbersDuplidate([...randomNumbers])).not.toEqual([
-        ...randomNumbers,
-      ]);
-      expect(checkNumbersDuplidate([...randomNumbers]).length).toEqual(
-        [...randomNumbers].length
-      );
+      expect(checkNumbersDuplidate([...randomNumbers])).not.toEqual([...randomNumbers]);
+      expect(checkNumbersDuplidate([...randomNumbers]).length).toEqual([...randomNumbers].length);
     });
   });
 });

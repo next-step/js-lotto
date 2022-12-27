@@ -1,15 +1,5 @@
-import {
-  ALERT,
-  CLICK_EVENT_MAP,
-  DEFAULT_LOTTO_STATE,
-  ELEMENT_DATA_ID,
-  LOTTO_VALUE,
-} from '../constants.js';
-import {
-  isDuplicatedInArray,
-  isRerender,
-  makeLottoNumbers,
-} from '../utils/index.js';
+import { ALERT, CLICK_EVENT_MAP, DEFAULT_LOTTO_STATE, ELEMENT_DATA_ID, LOTTO_VALUE } from '../constants.js';
+import { isDuplicatedInArray, isRerender, makeLottoNumbers } from '../utils/index.js';
 import ConfirmButton from './components/buttons/ConfirmButton.js';
 import OpenModalButton from './components/buttons/OpenModalButton.js';
 import PurchaseInput from './components/input/PurchaseInput.js';
@@ -20,12 +10,8 @@ class Lotto {
   constructor({ $target }) {
     this.$target = $target;
     this.$bonusNumberInput = $target.querySelector('.bonus-number');
-    this.$manualInput = Array.from(
-      $target.getElementsByClassName('manual-number')
-    );
-    this.$winningNumbersInput = Array.from(
-      $target.getElementsByClassName('winning-number')
-    );
+    this.$manualInput = Array.from($target.getElementsByClassName('manual-number'));
+    this.$winningNumbersInput = Array.from($target.getElementsByClassName('winning-number'));
 
     this.state = {
       ...DEFAULT_LOTTO_STATE,
@@ -49,9 +35,7 @@ class Lotto {
   onConfirm = () => {
     const { moneyAmount } = this.state;
     const isOverPirce = moneyAmount > LOTTO_VALUE.MAX_PRICE;
-    const isConfirm =
-      moneyAmount >= LOTTO_VALUE.MIN_PRICE &&
-      moneyAmount <= LOTTO_VALUE.MAX_PRICE;
+    const isConfirm = moneyAmount >= LOTTO_VALUE.MIN_PRICE && moneyAmount <= LOTTO_VALUE.MAX_PRICE;
     const isThousandUnit = moneyAmount % LOTTO_VALUE.MIN_PRICE === 0;
 
     if (isOverPirce) {
@@ -67,8 +51,7 @@ class Lotto {
     }
 
     if (isConfirm) {
-      if (moneyAmount % 1000 !== 0)
-        throw new Error('난수생성을 위해 1000원 단위로 입력되어야 합니다.');
+      if (moneyAmount % 1000 !== 0) throw new Error('난수생성을 위해 1000원 단위로 입력되어야 합니다.');
 
       this.setState({
         ...this.state,
@@ -91,13 +74,11 @@ class Lotto {
   onModalShow = ({ isVisibleModal }) => {
     const isValidBonusNumber = Boolean(this.state.bonusNumber);
     const isAllTyped =
-      this.state.winningNumbers.filter((number) => Boolean(number)).length ===
-        LOTTO_VALUE.WINNIN_INPUT_LENGTH && isValidBonusNumber;
+      this.state.winningNumbers.filter((number) => Boolean(number)).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH &&
+      isValidBonusNumber;
     const isValidNumbers =
       this.state.winningNumbers.filter(
-        (number) =>
-          Number(number) >= LOTTO_VALUE.MIN_NUMBER &&
-          Number(number) <= LOTTO_VALUE.MAX_NUMBER
+        (number) => Number(number) >= LOTTO_VALUE.MIN_NUMBER && Number(number) <= LOTTO_VALUE.MAX_NUMBER
       ).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH && isValidBonusNumber;
 
     if (!isAllTyped) {
@@ -110,9 +91,7 @@ class Lotto {
       return;
     }
 
-    if (
-      isDuplicatedInArray([this.state.winningNumbers, this.state.bonusNumber])
-    ) {
+    if (isDuplicatedInArray([this.state.winningNumbers, this.state.bonusNumber])) {
       alert(ALERT.DUPLICATE_VALUE_EXIST);
       return;
     }
@@ -125,8 +104,7 @@ class Lotto {
       LAST_WINNING_INPUT_INDEX = 5;
     if (value.length > TYPE_MAX_LENGTH) return;
 
-    const isNextWinningInput =
-      value.length >= TYPE_MAX_LENGTH && index < LAST_WINNING_INPUT_INDEX;
+    const isNextWinningInput = value.length >= TYPE_MAX_LENGTH && index < LAST_WINNING_INPUT_INDEX;
 
     if (isNextWinningInput) {
       const nextInputIndex = index + 1;
@@ -135,20 +113,13 @@ class Lotto {
 
     this.setState({
       ...this.state,
-      typedManualNumber: this.state.typedManualNumber.map((el, originIndex) =>
-        index === originIndex ? value : el
-      ),
+      typedManualNumber: this.state.typedManualNumber.map((el, originIndex) => (index === originIndex ? value : el)),
     });
   };
 
   onSubmitManualNumber = (event) => {
     event.preventDefault();
-    const {
-      manualPurchaseNumber,
-      manualNumbers,
-      typedManualNumber,
-      moneyAmount,
-    } = this.state;
+    const { manualPurchaseNumber, manualNumbers, typedManualNumber, moneyAmount } = this.state;
     const maxPurchaseCount = moneyAmount / LOTTO_VALUE.MIN_PRICE;
 
     if (manualPurchaseNumber >= maxPurchaseCount) {
@@ -157,10 +128,7 @@ class Lotto {
 
     this.setState({
       ...this.state,
-      manualNumbers: [
-        ...manualNumbers,
-        typedManualNumber.map((el) => Number(el)),
-      ],
+      manualNumbers: [...manualNumbers, typedManualNumber.map((el) => Number(el))],
       typedManualNumber: Array.from({ length: 6 }, (value, index) => null),
       manualPurchaseNumber: manualPurchaseNumber + 1,
     });
@@ -170,17 +138,13 @@ class Lotto {
     event.preventDefault();
     const { moneyAmount } = this.state;
 
-    if (moneyAmount % 1000 !== 0)
-      throw new Error('난수생성을 위해 1000원 단위로 입력되어야 합니다.');
+    if (moneyAmount % 1000 !== 0) throw new Error('난수생성을 위해 1000원 단위로 입력되어야 합니다.');
     const { manualPurchaseNumber } = this.state;
     const autoCount = moneyAmount / 1000 - manualPurchaseNumber;
 
     this.setState({
       ...this.state,
-      lottoNumbers: [
-        ...makeLottoNumbers(autoCount),
-        ...this.state.manualNumbers,
-      ],
+      lottoNumbers: [...makeLottoNumbers(autoCount), ...this.state.manualNumbers],
       isVisibleResult: true,
     });
   };
@@ -190,10 +154,8 @@ class Lotto {
       LAST_WINNING_INPUT_INDEX = 5;
     if (value.length > TYPE_MAX_LENGTH) return;
 
-    const isNextWinningInput =
-        value.length >= TYPE_MAX_LENGTH && index < LAST_WINNING_INPUT_INDEX,
-      isBonusInput =
-        value.length >= TYPE_MAX_LENGTH && index === LAST_WINNING_INPUT_INDEX;
+    const isNextWinningInput = value.length >= TYPE_MAX_LENGTH && index < LAST_WINNING_INPUT_INDEX,
+      isBonusInput = value.length >= TYPE_MAX_LENGTH && index === LAST_WINNING_INPUT_INDEX;
 
     if (isNextWinningInput) {
       const nextInputIndex = index + 1;
@@ -202,9 +164,7 @@ class Lotto {
 
     this.setState({
       ...this.state,
-      winningNumbers: this.state.winningNumbers.map((el, originIndex) =>
-        index === originIndex ? value : el
-      ),
+      winningNumbers: this.state.winningNumbers.map((el, originIndex) => (index === originIndex ? value : el)),
     });
 
     if (isBonusInput) this.$bonusNumberInput.focus();
@@ -291,10 +251,7 @@ class Lotto {
     });
 
     this.$target.addEventListener('keydown', (event) => {
-      if (
-        event.target.dataset.id === ELEMENT_DATA_ID.LOTTO_NUMBER_INPUT &&
-        event.key === 'Enter'
-      ) {
+      if (event.target.dataset.id === ELEMENT_DATA_ID.LOTTO_NUMBER_INPUT && event.key === 'Enter') {
         this.onEnter(event);
       }
     });

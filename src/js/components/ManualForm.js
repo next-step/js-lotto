@@ -7,12 +7,8 @@ class ManualForm {
 
     this.$manualWrapper = $target.querySelector('#manual-form');
     this.$countManual = $target.querySelector('.count-manual-auto');
-    this.$manualNumbersInput = Array.from(
-      $target.getElementsByClassName('manual-number')
-    );
-    this.$doneManualButton = $target.querySelector(
-      '.done-manual-number-button'
-    );
+    this.$manualNumbersInput = Array.from($target.getElementsByClassName('manual-number'));
+    this.$doneManualButton = $target.querySelector('.done-manual-number-button');
 
     this.render();
     this.addEventListener();
@@ -35,10 +31,7 @@ class ManualForm {
   }
 
   addEventListener() {
-    CLICK_EVENT_MAP.set(
-      ELEMENT_DATA_ID.MANUAL_SUBMIT_BUTTON,
-      this.props.onSubmitManualNumber
-    );
+    CLICK_EVENT_MAP.set(ELEMENT_DATA_ID.MANUAL_SUBMIT_BUTTON, this.props.onSubmitManualNumber);
 
     this.$doneManualButton.addEventListener('click', (event) => {
       this.props.onConfirmManual(event);

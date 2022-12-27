@@ -3,9 +3,7 @@ class WinningNumberInput {
     this.$target = $target;
     this.props = props;
     this.state = {};
-    this.$winningNumbersInput = Array.from(
-      $target.getElementsByClassName('winning-number')
-    );
+    this.$winningNumbersInput = Array.from($target.getElementsByClassName('winning-number'));
     this.$bonusNumberInput = $target.querySelector('.bonus-number');
     this.render();
   }
