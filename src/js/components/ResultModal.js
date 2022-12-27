@@ -34,6 +34,8 @@ class ResultModal {
     } = this.props.state;
 
     if (isVisibleModal) {
+      console.log({ lottoNumbers }, { winningNumbers });
+
       const { countedLottoNumbersMap, totalAdvantage } = getWinningCount({
         lottoNumbers,
         winningInput: winningNumbers.map((el) => Number(el)),

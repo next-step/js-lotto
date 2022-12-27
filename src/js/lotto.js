@@ -13,12 +13,16 @@ import {
 import ConfirmButton from './components/buttons/ConfirmButton.js';
 import OpenModalButton from './components/buttons/OpenModalButton.js';
 import PurchaseInput from './components/input/PurchaseInput.js';
+import ManualForm from './components/ManualForm.js';
 import ResultForm from './components/ResultForm.js';
 import ResultModal from './components/ResultModal.js';
 class Lotto {
   constructor({ $target }) {
     this.$target = $target;
     this.$bonusNumberInput = $target.querySelector('.bonus-number');
+    this.$manualInput = Array.from(
+      $target.getElementsByClassName('manual-number')
+    );
     this.$winningNumbersInput = Array.from(
       $target.getElementsByClassName('winning-number')
     );
@@ -63,13 +67,13 @@ class Lotto {
     }
 
     if (isConfirm) {
-      const lottoNumbers = makeLottoNumbers(moneyAmount);
+      if (moneyAmount % 1000 !== 0)
+        throw new Error('난수생성을 위해 1000원 단위로 입력되어야 합니다.');
 
       this.setState({
         ...this.state,
         lottoPurchaseNumber: moneyAmount / LOTTO_VALUE.MIN_PRICE,
-        lottoNumbers,
-        isVisibleResult: true,
+        isVisibleAutoInput: true,
       });
     }
   };
@@ -116,6 +120,71 @@ class Lotto {
     this.setState({ ...this.state, isVisibleModal });
   };
 
+  onTypeManualNumber = ({ value, index }) => {
+    const TYPE_MAX_LENGTH = 2,
+      LAST_WINNING_INPUT_INDEX = 5;
+    if (value.length > TYPE_MAX_LENGTH) return;
+
+    const isNextWinningInput =
+      value.length >= TYPE_MAX_LENGTH && index < LAST_WINNING_INPUT_INDEX;
+
+    if (isNextWinningInput) {
+      const nextInputIndex = index + 1;
+      this.$manualInput[nextInputIndex].focus();
+    }
+
+    this.setState({
+      ...this.state,
+      typedManualNumber: this.state.typedManualNumber.map((el, originIndex) =>
+        index === originIndex ? value : el
+      ),
+    });
+  };
+
+  onSubmitManualNumber = (event) => {
+    event.preventDefault();
+    const {
+      manualPurchaseNumber,
+      manualNumbers,
+      typedManualNumber,
+      moneyAmount,
+    } = this.state;
+    const maxPurchaseCount = moneyAmount / LOTTO_VALUE.MIN_PRICE;
+
+    if (manualPurchaseNumber >= maxPurchaseCount) {
+      //자동 구매 불가능
+    }
+
+    this.setState({
+      ...this.state,
+      manualNumbers: [
+        ...manualNumbers,
+        typedManualNumber.map((el) => Number(el)),
+      ],
+      typedManualNumber: Array.from({ length: 6 }, (value, index) => null),
+      manualPurchaseNumber: manualPurchaseNumber + 1,
+    });
+  };
+
+  onConfirmManual = (event) => {
+    event.preventDefault();
+    const { moneyAmount } = this.state;
+
+    if (moneyAmount % 1000 !== 0)
+      throw new Error('난수생성을 위해 1000원 단위로 입력되어야 합니다.');
+    const { manualPurchaseNumber } = this.state;
+    const autoCount = moneyAmount / 1000 - manualPurchaseNumber;
+
+    this.setState({
+      ...this.state,
+      lottoNumbers: [
+        ...makeLottoNumbers(autoCount),
+        ...this.state.manualNumbers,
+      ],
+      isVisibleResult: true,
+    });
+  };
+
   onTypeWinning = ({ value, index }) => {
     const TYPE_MAX_LENGTH = 2,
       LAST_WINNING_INPUT_INDEX = 5;
@@ -158,6 +227,16 @@ class Lotto {
       $target: this.$target,
       props: {
         state: this.state,
+      },
+    });
+
+    new ManualForm({
+      $target: this.$target,
+      props: {
+        state: this.state,
+        onTypeManualNumber: this.onTypeManualNumber,
+        onSubmitManualNumber: this.onSubmitManualNumber,
+        onConfirmManual: this.onConfirmManual,
       },
     });
 
@@ -206,6 +285,9 @@ class Lotto {
       if (event.target.dataset.id === ELEMENT_DATA_ID.LOTTO_NUMBER_INPUT) {
         this.onTypeAmount(event.target.value);
       }
+      // if (event.target.classList.contains('manual-number')) {
+      //   this.onTypeManualNumber(event.target.value);
+      // }
     });
 
     this.$target.addEventListener('keydown', (event) => {
@@ -222,6 +304,15 @@ class Lotto {
         this.onTypeWinning({
           value: event.target.value,
           index: winningNumbersIndex,
+        });
+      });
+    });
+
+    this.$manualInput.forEach((eachInput, manualNumbersIndex) => {
+      eachInput.addEventListener('keyup', (event) => {
+        this.onTypeManualNumber({
+          value: event.target.value,
+          index: manualNumbersIndex,
         });
       });
     });

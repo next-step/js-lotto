@@ -22,3 +22,9 @@ body {
   width: 30px;
   height: 36px;
 }
+
+#manual-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

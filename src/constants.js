@@ -9,6 +9,10 @@ export const DEFAULT_LOTTO_STATE = {
   isVisibleModal: false,
   winningNumbers: Array.from({ length: 6 }, (value, index) => null),
   bonusNumber: null,
+  isVisibleAutoInput: false,
+  typedManualNumber: Array.from({ length: 6 }, (value, index) => null),
+  manualPurchaseNumber: 0,
+  manualNumbers: [],
 };
 
 export const LOTTO_VALUE = {
@@ -47,6 +51,7 @@ export const ELEMENT_DATA_ID = {
   INVESTMENT_RETURN: 'investment-return',
   RESTART_BUTTON: 'restart-button',
   MODAL_CLOSE_BUTTON: 'modal-close-button',
+  MANUAL_SUBMIT_BUTTON: 'submit-manual-number-button',
 };
 
 export const ELEMENT_DATA_ID_FORM = makeDataAttributeIdForm(ELEMENT_DATA_ID);

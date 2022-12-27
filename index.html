@@ -22,10 +22,35 @@
             <button type="button" class="btn btn-cyan" data-id="lotto-submit-button">확인</button>
           </div>
         </form>
+        <form class="mt-9 d-flex" id="manual-form">
+          <span class="count-manual-auto"></span>
+          <label class="flex-auto d-inline-block mb-3">수동으로 번호를 입력해주세요.</label>
+          <div class="d-flex">
+            <div>
+              <h4 class="mt-0 mb-3 text-center">수동 입력 번호</h4>
+              <div>
+                <input type="number" class="manual-number mx-1 text-center" required min="1" max="45" maxlength="2" />
+                <input type="number" class="manual-number mx-1 text-center" required min="1" max="45" maxlength="2" />
+                <input type="number" class="manual-number mx-1 text-center" required min="1" max="45" maxlength="2" />
+                <input type="number" class="manual-number mx-1 text-center" required min="1" max="45" maxlength="2" />
+                <input type="number" class="manual-number mx-1 text-center" required min="1" max="45" maxlength="2" />
+                <input type="number" class="manual-number mx-1 text-center" required min="1" max="45" maxlength="2" />
+              </div>
+            </div>
+          </div>
+          <button type="button" class="open-result-modal-button mt-5 btn btn-cyan w-100"
+            data-id="submit-manual-number-button">
+            수동번호 제출하기
+          </button>
+          <button type="button" class="done-manual-number-button mt-5 btn btn-pink w-100"
+            data-id="done-manual-number-button">
+            자동 구매 하기
+          </button>
+        </form>
         <section class="mt-9" id="purchased-result">
           <div class="d-flex">
             <label class="flex-auto my-0" data-id="result-text">
-              <!-- 총 5개를 구매하였습니다. -->
+
             </label>
             <div class="flex-auto d-flex justify-end pr-1">
               <label class="switch">
