@@ -119,11 +119,12 @@ class Lotto {
 
   onSubmitManualNumber = (event) => {
     event.preventDefault();
-    const { manualPurchaseNumber, manualNumbers, typedManualNumber, moneyAmount } = this.state;
-    const maxPurchaseCount = moneyAmount / LOTTO_VALUE.MIN_PRICE;
+    const { manualPurchaseNumber, manualNumbers, typedManualNumber } = this.state;
 
-    if (manualPurchaseNumber >= maxPurchaseCount) {
-      //자동 구매 불가능
+    //*TODO : 중복체크
+    if (isDuplicatedInArray(typedManualNumber)) {
+      alert(ALERT.DUPLICATE_VALUE_EXIST);
+      return;
     }
 
     this.setState({
