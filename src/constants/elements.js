@@ -2,6 +2,8 @@ export const ELEMENT = {
   MODAL: '.modal',
   LOTTO_NUMBER_INPUT: '.lotto-number-input',
   LOTTO_IMAGE_WRAPPER: '.lotto-image-wrapper',
+  LOTTO_IMAGE: '.lotto-image',
+  LOTTO_NUMBER: '.lotto-number',
 
   RESULT_TEXT: '.result-text',
   NUMBER_TOGGLE_BUTTON: '.number-toggle-button',

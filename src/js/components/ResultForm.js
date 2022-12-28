@@ -26,8 +26,8 @@ class ResultForm {
           .map((lottoNumber) => {
             return `
               <li class="lotto-list">
-                <span class="mx-1 text-4xl" data-id="lotto-image">🎟️</span>
-                <span class="lotto-number" data-id="lotto-number">
+                <span class="mx-1 text-4xl lotto-image">🎟️</span>
+                <span class="lotto-number">
                   ${lottoNumber.join(' ')}
                 </span>
               </li>
