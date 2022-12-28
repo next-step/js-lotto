@@ -1,4 +1,4 @@
-import { CLICK_EVENT_MAP, ELEMENT_DATA_ID } from '../../constants.js';
+import { CLICK_EVENT_MAP, ELEMENT_DATA_ID } from '../../constants/elements.js';
 
 class ManualForm {
   constructor({ $target, props = {} }) {

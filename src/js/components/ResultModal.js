@@ -1,4 +1,6 @@
-import { CLICK_EVENT_MAP, ELEMENT_DATA_ID, ELEMENT_DATA_ID_FORM, TITLE_WITH_VALUE_MAP } from '../../constants.js';
+
+import { CLICK_EVENT_MAP,ELEMENT_DATA_ID, ELEMENT_DATA_ID_FORM } from '../../constants/elements.js';
+import { TITLE_WITH_VALUE_MAP } from '../../constants/modal.js';
 import { generateTtitleAndValueArray, getWinningCount, makeRateOfReturn } from '../../utils/index.js';
 class ResultModal {
   constructor({ $target, props = {} }) {
@@ -15,14 +17,14 @@ class ResultModal {
     const { isVisibleModal, lottoNumbers, winningNumbers, bonusNumber, moneyAmount } = this.props.state;
 
     if (isVisibleModal) {
-      console.log({ lottoNumbers }, { winningNumbers });
-
       const { countedLottoNumbersMap, totalAdvantage } = getWinningCount({
         lottoNumbers,
         winningInput: winningNumbers.map((el) => Number(el)),
         bonusNumber,
       });
+
       const profit = makeRateOfReturn(moneyAmount, totalAdvantage);
+
       this.$modalTableBody.innerHTML = `
             ${generateTtitleAndValueArray(TITLE_WITH_VALUE_MAP)
               .map(({ title, value }) => {

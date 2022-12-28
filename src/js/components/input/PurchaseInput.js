@@ -1,4 +1,4 @@
-import { ELEMENT_DATA_ID_FORM } from '../../../constants.js';
+import { ELEMENT_DATA_ID_FORM } from '../../../constants/elements.js';
 class PurchaseInput {
   constructor({ $target, props = {} }) {
     this.$target = $target;

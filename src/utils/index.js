@@ -1,4 +1,5 @@
-import { LOTTO_VALUE, TITLE_WITH_VALUE_MAP } from '../constants.js';
+import { TITLE_WITH_VALUE_MAP } from '../constants/modal.js';
+import { LOTTO_VALUE } from '../constants/validation.js';
 
 const makeRandomNumber = (minValue = 1, maxValue = 45) => {
   return Math.floor(Math.random() * maxValue + minValue);

@@ -1,4 +1,7 @@
-import { ALERT, CLICK_EVENT_MAP, DEFAULT_LOTTO_STATE, ELEMENT_DATA_ID, LOTTO_VALUE } from '../constants.js';
+import { ALERT } from '../constants/alerts.js';
+import { CLICK_EVENT_MAP, ELEMENT_DATA_ID } from '../constants/elements.js';
+import { DEFAULT_LOTTO_STATE, DEFAULT_TYPED_NUMBERS } from '../constants/state.js';
+import { LOTTO_VALUE } from '../constants/validation.js';
 import { isDuplicatedInArray, isRerender, makeLottoNumbers } from '../utils/index.js';
 import ConfirmButton from './components/buttons/ConfirmButton.js';
 import OpenModalButton from './components/buttons/OpenModalButton.js';
@@ -6,6 +9,7 @@ import PurchaseInput from './components/input/PurchaseInput.js';
 import ManualForm from './components/ManualForm.js';
 import ResultForm from './components/ResultForm.js';
 import ResultModal from './components/ResultModal.js';
+
 class Lotto {
   constructor({ $target }) {
     this.$target = $target;
@@ -130,7 +134,7 @@ class Lotto {
     this.setState({
       ...this.state,
       manualNumbers: [...manualNumbers, typedManualNumber.map((el) => Number(el))],
-      typedManualNumber: Array.from({ length: 6 }, (value, index) => null),
+      typedManualNumber: DEFAULT_TYPED_NUMBERS,
       manualPurchaseNumber: manualPurchaseNumber + 1,
     });
   };

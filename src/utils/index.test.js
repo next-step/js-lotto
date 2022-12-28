@@ -1,4 +1,4 @@
-import { TITLE_WITH_VALUE_MAP } from '../constants.js';
+import { TITLE_WITH_VALUE_MAP } from '../constants/modal.js';
 import { checkNumbersDuplidate, generateWinningCount, getWinningCount, makeLottoNumbers } from './index.js';
 
 describe('난수 배열을 만드는 유틸리티 함수에 대한 테스트', () => {

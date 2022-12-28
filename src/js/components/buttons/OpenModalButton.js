@@ -1,4 +1,5 @@
-import { CLICK_EVENT_MAP, ELEMENT_DATA_ID, ELEMENT_DATA_ID_FORM, LOTTO_VALUE } from '../../../constants.js';
+import { CLICK_EVENT_MAP, ELEMENT_DATA_ID, ELEMENT_DATA_ID_FORM } from '../../../constants/elements.js';
+import { LOTTO_VALUE } from '../../../constants/validation.js';
 
 class OpenModalButton {
   constructor({ $target, props = {} }) {

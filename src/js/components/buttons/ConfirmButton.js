@@ -1,4 +1,4 @@
-import { CLICK_EVENT_MAP, ELEMENT_DATA_ID, ELEMENT_DATA_ID_FORM } from '../../../constants.js';
+import { CLICK_EVENT_MAP, ELEMENT_DATA_ID, ELEMENT_DATA_ID_FORM } from '../../../constants/elements.js';
 class ConfirmButton {
   constructor({ $target, props = {} }) {
     this.$target = $target;
