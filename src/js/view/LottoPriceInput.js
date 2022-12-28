@@ -5,14 +5,14 @@ import { MAX_LOTTO_NUMBER } from '../constants/lottoConstants.js';
 
 const LOTTO_NUMBER_COUNT = 6;
 
-const $lottoPurchaseFormContainer = document.getElementById('lotto-purchase');
-const $costInput = $lottoPurchaseFormContainer.getElementsByTagName('input')[0];
+const $lottoPriceInputFormContainer = document.getElementById('lotto-price-input');
+const $costInput = $lottoPriceInputFormContainer.getElementsByTagName('input')[0];
 
 $costInput.setAttribute('required', true);
 $costInput.setAttribute('min', 1000);
 $costInput.setAttribute('max', 100000);
 
-$lottoPurchaseFormContainer.addEventListener('submit', (e) => {
+$lottoPriceInputFormContainer.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const inputVal = $costInput.value;
@@ -22,10 +22,11 @@ $lottoPurchaseFormContainer.addEventListener('submit', (e) => {
     return;
   }
 
+  // TODO: 이걸 수동, 자동 로또 구입하는 곳에서 갱신하도록 하기
   const purchaseLottoCount = Math.floor( Number(inputVal) / 1000);
   const lottos = createLotto(purchaseLottoCount);
 
-  lottoStore.dispatch('update', lottos);
+  lottoStore.dispatch('update', []);
   resultStore.dispatch('purchase', inputVal);
 });
 
@@ -44,9 +45,9 @@ function createLotto(count) {
   return lottos;
 }
 
-export const initLottoPurchase = { purchaseCost: 0 };
+export const initLottoPriceInput = { purchaseCost: 0 };
 
-export function LottoPurchase({ purchaseCost } = initLottoPurchase) {
+export function LottoPriceInput({ purchaseCost } = initLottoPriceInput) {
   if (!purchaseCost) {
     $lottoPurchaseFormContainer.reset()
   }
