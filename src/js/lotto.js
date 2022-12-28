@@ -134,6 +134,21 @@ class Lotto {
   onSubmitManualNumber = (event) => {
     event.preventDefault();
     const { manualPurchaseNumber, manualNumbers, typedManualNumber } = this.state;
+    const isAllTyped = typedManualNumber.filter((number) => Boolean(number)).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH;
+    const isValidNumbers =
+      typedManualNumber.filter(
+        (number) => Number(number) >= LOTTO_VALUE.MIN_NUMBER && Number(number) <= LOTTO_VALUE.MAX_NUMBER
+      ).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH;
+
+    if (!isAllTyped) {
+      alert(ALERT.NOT_ALL_TYPED_WINNING_INPUT);
+      return;
+    }
+
+    if (!isValidNumbers) {
+      alert(ALERT.IN_RANGE_WINNING_INPUT);
+      return;
+    }
 
     if (isDuplicatedInArray(typedManualNumber)) {
       alert(ALERT.DUPLICATE_VALUE_EXIST);
@@ -148,12 +163,8 @@ class Lotto {
     });
   };
 
-  onConfirmManual = (event) => {
-    event.preventDefault();
-    const { moneyAmount } = this.state;
-
-    if (moneyAmount % 1000 !== 0) throw new Error('난수생성을 위해 1000원 단위로 입력되어야 합니다.');
-    const { manualPurchaseNumber } = this.state;
+  onConfirmManual = () => {
+    const { manualPurchaseNumber, moneyAmount } = this.state;
     const autoCount = moneyAmount / 1000 - manualPurchaseNumber;
 
     this.setState({
@@ -262,8 +273,8 @@ class Lotto {
       this.onSubmitManualNumber(event);
     });
 
-    this.$moveAutoNumberButton.addEventListener('click', (event) => {
-      this.onConfirmManual(event);
+    this.$moveAutoNumberButton.addEventListener('click', () => {
+      this.onConfirmManual();
     });
 
     this.$doneManualButton.addEventListener('click', (event) => {

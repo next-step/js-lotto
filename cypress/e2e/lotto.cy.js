@@ -1,4 +1,5 @@
-import { ELEMENT } from '../../src/constants/elements';
+import { ALERT } from '../../src/constants/alerts.js';
+import { ELEMENT } from '../../src/constants/elements.js';
 
 describe('로또 사이트 E2E 테스트', () => {
   beforeEach(() => {
@@ -22,7 +23,7 @@ describe('로또 사이트 E2E 테스트', () => {
       cy.get(ELEMENT.LOTTO_SUBMIT_BUTTON).click();
 
       cy.on('window:alert', (text) => {
-        expect(text).to.contains('최대 구매가능 금액은 100,000원 입니다.');
+        expect(text).to.contains(ALERT.OVER_MAX_VALUE);
       });
       cy.on('window:confirm', () => true);
       cy.get(ELEMENT.LOTTO_NUMBER_INPUT).should('have.value', '');
@@ -35,7 +36,7 @@ describe('로또 사이트 E2E 테스트', () => {
       cy.get(ELEMENT.LOTTO_SUBMIT_BUTTON).click();
 
       cy.on('window:alert', (text) => {
-        expect(text).to.contains('로또 구입 금액을 1,000원 단위로 입력해 주세요.');
+        expect(text).to.contains(ALERT.TYPE_THOUSAND_UNIT);
       });
       cy.on('window:confirm', () => true);
       cy.get(ELEMENT.LOTTO_NUMBER_INPUT).should('have.value', '');
@@ -211,6 +212,7 @@ describe('로또 사이트 E2E 테스트', () => {
   context('소비자는 수동 구매를 할 수 있어야한다.', () => {
     const [PURCHASE_VALUE] = ['5000'];
     const MANUAL_NUMBERS = [11, 12, 13, 14, 15, 16];
+    const INVALID_MANUAL_NUMBERS = [11, 12, 13, 14, 15, 46];
     const MANUAL_NUMBERS_LIST = [
       MANUAL_NUMBERS,
       MANUAL_NUMBERS,
@@ -236,6 +238,13 @@ describe('로또 사이트 E2E 테스트', () => {
 
     it('남은 구매 개수를 자동구매로 진행할 버튼이 존재해야 한다.', () => {
       cy.get(ELEMENT.MOVE_AUTO_NUMBER_BUTTON).should('exist');
+    });
+
+    it('범위를 넘어가는 숫자로 수동 구매시 경고창이 떠야한다.', () => {
+      cy.addManualNumbers(INVALID_MANUAL_NUMBERS);
+      cy.on('window:alert', (text) => {
+        expect(text).to.contains(ALERT.IN_RANGE_WINNING_INPUT);
+      });
     });
 
     it('자동구매로 진행 버튼 클릭 시 로또 티켓들이 생성 되어야 한다.', () => {
