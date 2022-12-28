@@ -1,10 +1,13 @@
+import { ELEMENT } from '../../../constants/elements.js';
+
 class WinningNumberInput {
   constructor({ $target, props = {} }) {
     this.$target = $target;
     this.props = props;
     this.state = {};
-    this.$winningNumbersInput = Array.from($target.getElementsByClassName('winning-number'));
-    this.$bonusNumberInput = $target.querySelector('.bonus-number');
+    this.$winningNumbersInput = Array.from($target.querySelectorAll(ELEMENT.WINNING_NUMBERS_INPUT));
+    this.$bonusNumberInput = $target.querySelector(ELEMENT.BONUS_NUMBER_INPUT);
+
     this.render();
   }
 

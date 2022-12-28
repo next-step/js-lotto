@@ -1,19 +1,19 @@
-import { CLICK_EVENT_MAP, ELEMENT_DATA_ID } from '../../constants/elements.js';
+import { ELEMENT } from '../../constants/elements.js';
 
 class ManualForm {
   constructor({ $target, props = {} }) {
     this.$target = $target;
     this.props = props;
 
-    this.$manualWrapper = $target.querySelector('#manual-form');
-    this.$countManual = $target.querySelector('.count-manual-auto');
-    this.$moveAutoNumberButton = $target.querySelector('.move-auto-number-button');
-    this.$submitManualButton = $target.querySelector('.submit-manual-number-button');
-    this.$doneManualButton = $target.querySelector('.done-manual-button');
-    this.$manualNumbersInput = Array.from($target.getElementsByClassName('manual-number'));
+    this.$countManual = $target.querySelector(ELEMENT.COUNT_MANUAL);
+    this.$manualWrapper = $target.querySelector(ELEMENT.MANUAL_WRAPPER);
+    this.$manualNumbersInput = Array.from($target.querySelectorAll(ELEMENT.MANUAL_NUMBERS_INPUT));
+    this.$submitManualButton = $target.querySelector(ELEMENT.SUBMIT_MANUAL_BUTTON);
+    this.$doneManualButton = $target.querySelector(ELEMENT.DONE_MANUAL_BUTTON);
+    this.$manualSubmitButton = $target.querySelector(ELEMENT.MANUAL_SUBMIT_BUTTON);
+    this.$moveAutoNumberButton = $target.querySelector(ELEMENT.MOVE_AUTO_NUMBER_BUTTON);
 
     this.render();
-    this.addEventListener();
   }
 
   render() {
@@ -44,18 +44,6 @@ class ManualForm {
       this.$moveAutoNumberButton.style.display = 'none';
       this.$doneManualButton.style.display = 'block';
     }
-  }
-
-  addEventListener() {
-    CLICK_EVENT_MAP.set(ELEMENT_DATA_ID.MANUAL_SUBMIT_BUTTON, this.props.onSubmitManualNumber);
-
-    this.$moveAutoNumberButton.addEventListener('click', (event) => {
-      this.props.onConfirmManual(event);
-    });
-
-    this.$doneManualButton.addEventListener('click', (event) => {
-      this.props.onConfirmManual(event);
-    });
   }
 }
 

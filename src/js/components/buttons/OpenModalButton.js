@@ -1,13 +1,11 @@
-import { CLICK_EVENT_MAP, ELEMENT_DATA_ID, ELEMENT_DATA_ID_FORM } from '../../../constants/elements.js';
+import { ELEMENT } from '../../../constants/elements.js';
 import { LOTTO_VALUE } from '../../../constants/validation.js';
-
 class OpenModalButton {
   constructor({ $target, props = {} }) {
     this.$target = $target;
     this.props = props;
-    this.$openModalButton = $target.querySelector(ELEMENT_DATA_ID_FORM.OPEN_RESULT_MODAL_BUTTON);
+    this.$openModalButton = $target.querySelector(ELEMENT.OPEN_RESULT_MODAL_BUTTON);
     this.render();
-    this.addEventListener();
   }
 
   render() {
@@ -19,13 +17,6 @@ class OpenModalButton {
 
     if (isValid) this.$openModalButton.removeAttribute('disabled');
     if (!isValid) this.$openModalButton.setAttribute('disabled', '');
-  }
-
-  addEventListener() {
-    CLICK_EVENT_MAP.set(ELEMENT_DATA_ID.OPEN_RESULT_MODAL_BUTTON, (event) => {
-      event.preventDefault();
-      this.props.onModalShow({ isVisibleModal: true });
-    });
   }
 }
 

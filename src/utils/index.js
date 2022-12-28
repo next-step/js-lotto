@@ -147,9 +147,3 @@ export const isRerender = ({ currentState, nextState }) => {
 
   return false;
 };
-
-export const makeDataAttributeIdForm = (dataIdsObject) => {
-  const formedObject = {};
-  Object.entries(dataIdsObject).forEach(([key, value]) => (formedObject[key] = `[data-id=${value}]`));
-  return formedObject;
-};

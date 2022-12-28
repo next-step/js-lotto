@@ -17,9 +17,9 @@
           <label class="mb-2 d-inline-block">구입할 금액을 입력해주세요.
           </label>
           <div class="d-flex">
-            <input type="number" class="w-100 mr-2 pl-2" placeholder="구입 금액" data-id="lotto-number-input" required
-              min="1000" max="100000" />
-            <button type="button" class="btn btn-cyan" data-id="lotto-submit-button">확인</button>
+            <input type="number" class="w-100 mr-2 pl-2 lotto-number-input" placeholder="구입 금액"
+              data-id="lotto-number-input" required min="1000" max="100000" />
+            <button type="button" class="btn btn-cyan lotto-submit-button">확인</button>
           </div>
         </form>
         <form class="mt-9 d-flex" id="manual-form">
@@ -38,8 +38,7 @@
               </div>
             </div>
           </div>
-          <button type="button" class="submit-manual-number-button mt-5 btn btn-cyan w-100"
-            data-id="submit-manual-number-button">
+          <button type="button" class="submit-manual-number-button mt-5 btn btn-cyan w-100">
             수동번호 제출하기
           </button>
           <button type="button" class="move-auto-number-button mt-5 btn btn-pink w-100"
@@ -52,17 +51,16 @@
         </form>
         <section class="mt-9" id="purchased-result">
           <div class="d-flex">
-            <label class="flex-auto my-0" data-id="result-text">
-
+            <label class="flex-auto my-0 result-text" data-id="result-text">
             </label>
             <div class="flex-auto d-flex justify-end pr-1">
               <label class="switch">
-                <input type="checkbox" class="lotto-numbers-toggle-button" data-id="number-toggle-button" />
+                <input type="checkbox" class="number-toggle-button" data-id="number-toggle-button" />
                 <span class="text-base font-normal">번호보기</span>
               </label>
             </div>
           </div>
-          <ul class="d-flex flex-wrap" data-id="lotto-image-wrapper">
+          <ul class="d-flex flex-wrap lotto-image-wrapper" data-id="lotto-image-wrapper">
             <!-- <span class="mx-1 text-4xl">🎟️ </span>
             <span class="mx-1 text-4xl">🎟️ </span>
             <span class="mx-1 text-4xl">🎟️ </span>
@@ -101,7 +99,7 @@
 
     <div class="modal">
       <div class="modal-inner p-10">
-        <button class="modal-close" data-id="modal-close-button">
+        <button class="modal-close">
           <svg viewbox="0 0 40 40">
             <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
           </svg>
@@ -117,7 +115,7 @@
                 <th class="p-3">당첨 갯수</th>
               </tr>
             </thead>
-            <tbody data-id="modal-result-table-body">
+            <tbody class="modal-result-table-body">
               <!-- <tr class="text-center" data-id="win-count-three">
                 <td class="p-3">3개</td>
                 <td class="p-3">5,000</td>
@@ -146,11 +144,11 @@
             </tbody>
           </table>
         </div>
-        <p class="text-center font-bold" data-id="investment-return">
+        <p class="text-center font-bold investment-return">
           <!-- 당신의 총 수익률은 %입니다. -->
         </p>
         <div class="d-flex justify-center mt-5">
-          <button type="button" class="btn btn-cyan" data-id="restart-button">다시 시작하기</button>
+          <button type="button" class="btn btn-cyan restart-button">다시 시작하기</button>
         </div>
       </div>
     </div>

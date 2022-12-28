@@ -1,5 +1,5 @@
 import { ALERT } from '../constants/alerts.js';
-import { CLICK_EVENT_MAP, ELEMENT_DATA_ID } from '../constants/elements.js';
+import { ELEMENT } from '../constants/elements.js';
 import { DEFAULT_LOTTO_STATE, DEFAULT_TYPED_NUMBERS } from '../constants/state.js';
 import { LOTTO_VALUE } from '../constants/validation.js';
 import { isDuplicatedInArray, isRerender, makeLottoNumbers } from '../utils/index.js';
@@ -13,9 +13,18 @@ import ResultModal from './components/ResultModal.js';
 class Lotto {
   constructor({ $target }) {
     this.$target = $target;
-    this.$bonusNumberInput = $target.querySelector('.bonus-number');
-    this.$manualInput = Array.from($target.getElementsByClassName('manual-number'));
-    this.$winningNumbersInput = Array.from($target.getElementsByClassName('winning-number'));
+    this.$bonusNumberInput = $target.querySelector(ELEMENT.BONUS_NUMBER_INPUT);
+    this.$manualInput = $target.querySelectorAll(ELEMENT.MANUAL_NUMBERS_INPUT);
+    this.$winningNumbersInput = Array.from($target.querySelectorAll(ELEMENT.WINNING_NUMBERS_INPUT));
+    this.$numberInput = $target.querySelector(ELEMENT.LOTTO_NUMBER_INPUT);
+    this.$doneManualButton = $target.querySelector(ELEMENT.DONE_MANUAL_BUTTON);
+    this.$manualSubmitButton = $target.querySelector(ELEMENT.MANUAL_SUBMIT_BUTTON);
+    this.$moveAutoNumberButton = $target.querySelector(ELEMENT.MOVE_AUTO_NUMBER_BUTTON);
+    this.$numberToggleButton = $target.querySelector(ELEMENT.NUMBER_TOGGLE_BUTTON);
+    this.$submitButton = $target.querySelector(ELEMENT.LOTTO_SUBMIT_BUTTON);
+    this.$restartButton = $target.querySelector(ELEMENT.RESTART_BUTTON);
+    this.$modalCloseButton = $target.querySelector(ELEMENT.MODAL_CLOSE_BUTTON);
+    this.$openModalButton = $target.querySelector(ELEMENT.OPEN_RESULT_MODAL_BUTTON);
 
     this.state = {
       ...DEFAULT_LOTTO_STATE,
@@ -125,7 +134,6 @@ class Lotto {
     event.preventDefault();
     const { manualPurchaseNumber, manualNumbers, typedManualNumber } = this.state;
 
-    //*TODO : 중복체크
     if (isDuplicatedInArray(typedManualNumber)) {
       alert(ALERT.DUPLICATE_VALUE_EXIST);
       return;
@@ -199,9 +207,6 @@ class Lotto {
       $target: this.$target,
       props: {
         state: this.state,
-        onTypeManualNumber: this.onTypeManualNumber,
-        onSubmitManualNumber: this.onSubmitManualNumber,
-        onConfirmManual: this.onConfirmManual,
       },
     });
 
@@ -209,7 +214,6 @@ class Lotto {
       $target: this.$target,
       props: {
         state: this.state,
-        onToggle: this.onToggle,
       },
     });
 
@@ -217,7 +221,6 @@ class Lotto {
       $target: this.$target,
       props: {
         state: this.state,
-        onConfirm: this.onConfirm,
       },
     });
 
@@ -225,8 +228,6 @@ class Lotto {
       $target: this.$target,
       props: {
         state: this.state,
-        onModalShow: this.onModalShow,
-        onRestart: this.onRestart,
       },
     });
 
@@ -234,31 +235,44 @@ class Lotto {
       $target: this.$target,
       props: {
         state: this.state,
-        onModalShow: this.onModalShow,
       },
     });
   }
 
   addEventListener() {
-    this.$target.addEventListener('click', (event) => {
-      if (CLICK_EVENT_MAP.has(event.target.dataset.id)) {
-        CLICK_EVENT_MAP.get(event.target.dataset.id)(event);
-      }
+    this.$restartButton.addEventListener('click', (event) => {
+      this.onRestart(event);
     });
 
-    this.$target.addEventListener('input', (event) => {
-      if (event.target.dataset.id === ELEMENT_DATA_ID.LOTTO_NUMBER_INPUT) {
-        this.onTypeAmount(event.target.value);
-      }
-      // if (event.target.classList.contains('manual-number')) {
-      //   this.onTypeManualNumber(event.target.value);
-      // }
+    this.$modalCloseButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      this.onModalShow({ isVisibleModal: false });
     });
 
-    this.$target.addEventListener('keydown', (event) => {
-      if (event.target.dataset.id === ELEMENT_DATA_ID.LOTTO_NUMBER_INPUT && event.key === 'Enter') {
+    this.$numberInput.addEventListener('input', (event) => {
+      this.onTypeAmount(event.target.value);
+    });
+
+    this.$numberInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
         this.onEnter(event);
       }
+    });
+
+    this.$manualSubmitButton.addEventListener('click', (event) => {
+      this.onSubmitManualNumber(event);
+    });
+
+    this.$moveAutoNumberButton.addEventListener('click', (event) => {
+      this.onConfirmManual(event);
+    });
+
+    this.$doneManualButton.addEventListener('click', (event) => {
+      this.onConfirmManual(event);
+    });
+
+    this.$numberToggleButton.addEventListener('click', (event) => {
+      this.onToggle(event);
     });
 
     this.$winningNumbersInput.forEach((eachInput, winningNumbersIndex) => {
@@ -277,6 +291,15 @@ class Lotto {
           index: manualNumbersIndex,
         });
       });
+    });
+
+    this.$openModalButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      this.onModalShow({ isVisibleModal: true });
+    });
+
+    this.$submitButton.addEventListener('click', (event) => {
+      this.onConfirm(event);
     });
 
     this.$target.addEventListener('keyup', (event) => {
