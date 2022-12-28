@@ -11,7 +11,7 @@
       <div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
-          <form class="mt-5" id="lotto-purchase" data-test-id="lotto-purchase">
+          <form class="mt-5" id="lotto-price-input" data-test-id="lotto-price-input">
             <label class="mb-2 d-inline-block"
               >구입할 금액을 입력해주세요.
             </label>
@@ -24,6 +24,49 @@
               <button type="submit" class="btn btn-cyan">확인</button>
             </div>
           </form>
+          <section class="mt-9" id="lotto-purchase" data-test-id="lotto-purchase">
+            <div class="d-flex" data-test-id="lotto-number-inputs-container">
+              <div>
+                <h4 class="mt-0 mb-3 text-center">로또 번호 입력</h4>
+                <div>
+                  <input
+                    type="number"
+                    class="winning-number mx-1 text-center"
+                  />
+                  <input
+                    type="number"
+                    class="winning-number mx-1 text-center"
+                  />
+                  <input
+                    type="number"
+                    class="winning-number mx-1 text-center"
+                  />
+                  <input
+                    type="number"
+                    class="winning-number mx-1 text-center"
+                  />
+                  <input
+                    type="number"
+                    class="winning-number mx-1 text-center"
+                  />
+                  <input
+                    type="number"
+                    class="winning-number mx-1 text-center"
+                  />
+                </div>
+              </div>
+              <div class="bonus-number-container flex-grow">
+                <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
+                <div class="d-flex justify-center">
+                  <input type="number" class="bonus-number text-center" />
+                </div>
+              </div>
+            </div>
+            <div class="w-100 d-flex mt-5 gap-10">
+              <button type="button" class="btn btn-cyan flex-1 font-bold">나머지 자동 구입</button>
+              <button type="button" class="btn btn-cyan font-bold" style="width: 65%;" >수동구입</button>
+            </div>
+          </section>
           <section class="mt-9" id="lotto-list" data-test-id="lotto-list">
             <div class="d-flex">
               <span id="lotto-count" class="flex-auto my-0">총 5개를 구매하였습니다.</span>
