@@ -79,12 +79,12 @@ describe('로또 사이트 E2E 테스트', () => {
       cy.get(ELEMENT.NUMBER_TOGGLE_BUTTON).should('exist');
     });
 
-    // it('엔터키를 누르는 경우 확인버튼 클릭과 동일하게 작동하여야 한다.', () => {
-    //   cy.get(ELEMENT.LOTTO_NUMBER_INPUT).type(purchasePrice).type('{enter}');
-    //   cy.moveAutoPurchase();
-    //   checkText(result);
-    //   cy.get(ELEMENT.NUMBER_TOGGLE_BUTTON).should('exist');
-    // });
+    it('엔터키를 누르는 경우 확인버튼 클릭과 동일하게 작동하여야 한다.', () => {
+      cy.get(ELEMENT.LOTTO_NUMBER_INPUT).type(purchasePrice).type('{enter}');
+      cy.moveAutoPurchase();
+      checkText(result);
+      cy.get(ELEMENT.NUMBER_TOGGLE_BUTTON).should('exist');
+    });
   });
 
   context('로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.', () => {
@@ -208,12 +208,17 @@ describe('로또 사이트 E2E 테스트', () => {
   });
 
   context('소비자는 수동 구매를 할 수 있어야한다.', () => {
-    const [PURCHASE_VALUE, RESULT] = ['5000', '총 5개를 구매하였습니다.'];
-
+    const [PURCHASE_VALUE] = ['5000'];
+    const MANUAL_NUMBERS = [11, 12, 13, 14, 15, 16];
+    const MANUAL_NUMBERS_LIST = [
+      MANUAL_NUMBERS,
+      MANUAL_NUMBERS,
+      [21, 22, 23, 24, 25, 26],
+      [31, 32, 33, 34, 35, 36],
+      [41, 42, 43, 44, 45, 40],
+    ];
     beforeEach(() => {
       cy.buyNewLottoWithValue(PURCHASE_VALUE);
-      // cy.moveAutoPurchase();
-      // cy.winLottoInFirstPlace();
     });
 
     it('수동 구매를 위한 입력창이 있어야 한다', () => {
@@ -232,12 +237,36 @@ describe('로또 사이트 E2E 테스트', () => {
       cy.get(ELEMENT.MOVE_AUTO_NUMBER_BUTTON).should('exist');
     });
 
-    it('자동구매로 진행 버튼 클릭 시 로또 티켓들이 생성 되어야 한다.', () => {});
+    it('자동구매로 진행 버튼 클릭 시 로또 티켓들이 생성 되어야 한다.', () => {
+      cy.get(ELEMENT.MOVE_AUTO_NUMBER_BUTTON).should('exist');
+      cy.get(ELEMENT.MOVE_AUTO_NUMBER_BUTTON).click({ force: true });
+      cy.get(ELEMENT.LOTTO_NUMBER).should('have.css', 'display', 'none');
+      cy.get(ELEMENT.NUMBER_TOGGLE_BUTTON).click({ force: true });
+      cy.get(ELEMENT.LOTTO_NUMBER).should('have.css', 'display', 'inline');
+    });
 
-    it('수동 구매한 숫자는 결과보기 진행 시 로또 티켓에 존재해야 한다');
+    it('수동 구매한 숫자는 결과보기 진행 시 로또 티켓에 존재해야 한다', () => {
+      cy.addManualNumbers(MANUAL_NUMBERS);
+      cy.moveAutoPurchase();
+      cy.get(ELEMENT.NUMBER_TOGGLE_BUTTON).click({ force: true });
+      cy.get(ELEMENT.LOTTO_NUMBER).should('have.css', 'display', 'inline');
+      cy.contains(ELEMENT.LOTTO_NUMBER, MANUAL_NUMBERS.join(' '));
+    });
 
-    it('수동구매의 개수가 총 구매 개수와 동일한 경우 결과 보기 버튼으로 변경 되어야 한다.');
+    it('수동구매의 개수가 총 구매 개수와 동일한 경우 결과 보기 버튼으로 변경 되어야 한다.', () => {
+      MANUAL_NUMBERS_LIST.forEach((numbers) => {
+        cy.addManualNumbers(numbers);
+      });
+      cy.get(ELEMENT.DONE_MANUAL_BUTTON).should('exist');
+    });
 
-    it('수동구매를 완료하여 생성된 결과보기 버튼 클릭 시 로또 티켓들이 생성 되어야한다.');
+    it('수동구매를 완료하여 생성된 결과보기 버튼 클릭 시 로또 티켓들이 생성 되어야한다.', () => {
+      MANUAL_NUMBERS_LIST.forEach((numbers) => {
+        cy.addManualNumbers(numbers);
+      });
+      cy.get(ELEMENT.DONE_MANUAL_BUTTON).click({ force: true });
+      cy.get(ELEMENT.NUMBER_TOGGLE_BUTTON).click({ force: true });
+      cy.get(ELEMENT.LOTTO_NUMBER).should('have.css', 'display', 'inline');
+    });
   });
 });

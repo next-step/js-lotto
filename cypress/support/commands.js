@@ -64,4 +64,9 @@ Cypress.Commands.add('makeResult', (price) => {
   cy.get(ELEMENT.LOTTO_SUBMIT_BUTTON).click();
 });
 
-Cypress.Commands.add('addManualNumbers', () => {});
+Cypress.Commands.add('addManualNumbers', (manualNumbers) => {
+  cy.get(ELEMENT.MANUAL_NUMBERS_INPUT).each((manualInput, index) => {
+    cy.get(manualInput).type(manualNumbers[index]);
+  });
+  cy.get(ELEMENT.SUBMIT_MANUAL_BUTTON).click({ force: true });
+});
