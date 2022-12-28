@@ -55,35 +55,8 @@ describe('로또 사이트 E2E 테스트', () => {
     });
   });
 
-  context('소비자는 수동 구매를 할 수 있어야한다.', () => {
-    const [purchasePrice, result] = ['5000', '총 5개를 구매하였습니다.'];
-    const makeResult = (price) => {
-      cy.get(ELEMENT.LOTTO_NUMBER_INPUT).type(price);
-      cy.get(ELEMENT.LOTTO_SUBMIT_BUTTON).click();
-    };
-    it('수동 구매를 위한 입력창이 있어야 한다');
-
-    it('수동 구매를 위한 제출버튼이 있어야 한다');
-
-    it('수동 구매한 개수를 알려주는 문자가 렌더 되어야 한다.');
-
-    it('남은 구매 개수를 자동구매로 진행할 버튼이 존재해야 한다.');
-
-    it('자동구매로 진행 버튼 클릭 시 로또 티켓들이 생성 되어야 한다.');
-
-    it('수동 구매한 숫자는 결과보기 진행 시 로또 티켓에 존재해야 한다');
-
-    it('수동구매의 개수가 총 구매 개수와 동일한 경우 결과 보기 버튼으로 변경 되어야 한다.');
-
-    it('수동구매를 완료하여 생성된 결과보기 버튼 클릭 시 로또 티켓들이 생성 되어야한다.');
-  });
-
   context('소비자는 자동 구매를 할 수 있어야 한다.', () => {
     const [purchasePrice, result] = ['5000', '총 5개를 구매하였습니다.'];
-    const makeResult = (price) => {
-      cy.get(ELEMENT.LOTTO_NUMBER_INPUT).type(price);
-      cy.get(ELEMENT.LOTTO_SUBMIT_BUTTON).click();
-    };
 
     const checkText = (expectedResult) => {
       cy.get(ELEMENT.RESULT_TEXT).should('have.text', expectedResult);
@@ -94,21 +67,24 @@ describe('로또 사이트 E2E 테스트', () => {
     });
 
     it('확인(제출)버튼 클릭 시 구매한 갯수를 알려주는 문자가 렌더되어야 한다.', () => {
-      makeResult(purchasePrice);
+      cy.makeResult(purchasePrice);
+      cy.moveAutoPurchase();
       checkText(result);
     });
 
     it('확인(제출)버튼 클릭 시 번호보기 버튼이 렌더되어야 한다.', () => {
-      makeResult(purchasePrice);
+      cy.makeResult(purchasePrice);
+      cy.moveAutoPurchase();
       checkText(result);
       cy.get(ELEMENT.NUMBER_TOGGLE_BUTTON).should('exist');
     });
 
-    it('엔터키를 누르는 경우 확인버튼 클릭과 동일하게 작동하여야 한다.', () => {
-      cy.get(ELEMENT.LOTTO_NUMBER_INPUT).type(purchasePrice).type('{enter}');
-      checkText(result);
-      cy.get(ELEMENT.NUMBER_TOGGLE_BUTTON).should('exist');
-    });
+    // it('엔터키를 누르는 경우 확인버튼 클릭과 동일하게 작동하여야 한다.', () => {
+    //   cy.get(ELEMENT.LOTTO_NUMBER_INPUT).type(purchasePrice).type('{enter}');
+    //   cy.moveAutoPurchase();
+    //   checkText(result);
+    //   cy.get(ELEMENT.NUMBER_TOGGLE_BUTTON).should('exist');
+    // });
   });
 
   context('로또 구입 금액을 입력하면, 금액에 해당하는 로또를 발급해야 한다.', () => {
@@ -117,6 +93,7 @@ describe('로또 사이트 E2E 테스트', () => {
     beforeEach(() => {
       cy.get(ELEMENT.LOTTO_NUMBER_INPUT).type(purchaseValue);
       cy.get(ELEMENT.LOTTO_SUBMIT_BUTTON).click();
+      cy.moveAutoPurchase();
     });
 
     it('금액만큼(1000원당 1개)의 로또 이미지가 생성되어야 한다.', () => {
@@ -137,6 +114,7 @@ describe('로또 사이트 E2E 테스트', () => {
       cy.get(ELEMENT.LOTTO_NUMBER_INPUT).type(purchaseValue);
       cy.get(ELEMENT.LOTTO_SUBMIT_BUTTON).click();
       cy.get(ELEMENT.NUMBER_TOGGLE_BUTTON).should('not.be.checked');
+      cy.moveAutoPurchase();
     });
 
     it('토글버튼이 비활성화 상태일 때 복권의 번호가 보이지 않아야 한다.', () => {
@@ -156,6 +134,7 @@ describe('로또 사이트 E2E 테스트', () => {
       cy.buyNewLottoWithValue(PURCHASE_VALUE);
 
       cy.get(ELEMENT.NUMBER_TOGGLE_BUTTON).should('not.be.checked');
+      cy.moveAutoPurchase();
     });
 
     it('결과 확인하기 버튼이 존재 해야한다.', () => {
@@ -199,6 +178,7 @@ describe('로또 사이트 E2E 테스트', () => {
     const PURCHASE_VALUE = '5000';
     beforeEach(() => {
       cy.buyNewLottoWithValue(PURCHASE_VALUE);
+      cy.moveAutoPurchase();
       cy.winLottoInFirstPlace();
     });
     it('결과 모달이 생성되면 다시시작하기 버튼과 닫기 버튼이 생성되어야 한다.', () => {
@@ -225,5 +205,39 @@ describe('로또 사이트 E2E 테스트', () => {
       cy.get(ELEMENT.RESULT_WRAPPER).should('have.css', 'display', 'none');
       cy.get(ELEMENT.CHECK_WRAPPER).should('have.css', 'display', 'none');
     });
+  });
+
+  context('소비자는 수동 구매를 할 수 있어야한다.', () => {
+    const [PURCHASE_VALUE, RESULT] = ['5000', '총 5개를 구매하였습니다.'];
+
+    beforeEach(() => {
+      cy.buyNewLottoWithValue(PURCHASE_VALUE);
+      // cy.moveAutoPurchase();
+      // cy.winLottoInFirstPlace();
+    });
+
+    it('수동 구매를 위한 입력창이 있어야 한다', () => {
+      cy.get(ELEMENT.MANUAL_NUMBERS_INPUT).should('exist');
+    });
+
+    it('수동 구매를 위한 제출버튼이 있어야 한다', () => {
+      cy.get(ELEMENT.MANUAL_SUBMIT_BUTTON).should('exist');
+    });
+
+    it('수동 구매한 개수를 알려주는 문자가 렌더 되어야 한다.', () => {
+      cy.get(ELEMENT.RESULT_TEXT).should('exist');
+    });
+
+    it('남은 구매 개수를 자동구매로 진행할 버튼이 존재해야 한다.', () => {
+      cy.get(ELEMENT.MOVE_AUTO_NUMBER_BUTTON).should('exist');
+    });
+
+    it('자동구매로 진행 버튼 클릭 시 로또 티켓들이 생성 되어야 한다.', () => {});
+
+    it('수동 구매한 숫자는 결과보기 진행 시 로또 티켓에 존재해야 한다');
+
+    it('수동구매의 개수가 총 구매 개수와 동일한 경우 결과 보기 버튼으로 변경 되어야 한다.');
+
+    it('수동구매를 완료하여 생성된 결과보기 버튼 클릭 시 로또 티켓들이 생성 되어야한다.');
   });
 });
