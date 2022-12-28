@@ -1,5 +1,6 @@
 export const ELEMENT = {
   MODAL: '.modal',
+  PURCHASE_WRAPPER: '.purchase-wrapper',
   LOTTO_NUMBER_INPUT: '.lotto-number-input',
   LOTTO_IMAGE_WRAPPER: '.lotto-image-wrapper',
   LOTTO_IMAGE: '.lotto-image',

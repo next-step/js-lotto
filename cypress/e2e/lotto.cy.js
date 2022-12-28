@@ -161,7 +161,8 @@ describe('로또 사이트 E2E 테스트', () => {
 
     it('당첨 된 개수에 따라 모달에 개수가 표시 된다', () => {
       cy.winLottoInFirstPlace();
-      cy.get('[data-id=6개]').children().last().should('have.text', '1개');
+      const firstPrize = cy.get('[data-id=6개]').children().last();
+      firstPrize.should('have.text', '1개');
     });
 
     it('당첨 된 개수에 따라 모달에 수익률이 표시 된다', () => {

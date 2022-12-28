@@ -25,6 +25,7 @@ class Lotto {
     this.$restartButton = $target.querySelector(ELEMENT.RESTART_BUTTON);
     this.$modalCloseButton = $target.querySelector(ELEMENT.MODAL_CLOSE_BUTTON);
     this.$openModalButton = $target.querySelector(ELEMENT.OPEN_RESULT_MODAL_BUTTON);
+    this.$purchaseWrapper = $target.querySelector(ELEMENT.PURCHASE_WRAPPER);
 
     this.state = {
       ...DEFAULT_LOTTO_STATE,
@@ -240,6 +241,10 @@ class Lotto {
   }
 
   addEventListener() {
+    this.$purchaseWrapper.addEventListener('submit', (event) => {
+      this.onEnter(event);
+    });
+
     this.$restartButton.addEventListener('click', (event) => {
       this.onRestart(event);
     });
@@ -251,12 +256,6 @@ class Lotto {
 
     this.$numberInput.addEventListener('input', (event) => {
       this.onTypeAmount(event.target.value);
-    });
-
-    this.$numberInput.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter') {
-        this.onEnter(event);
-      }
     });
 
     this.$manualSubmitButton.addEventListener('click', (event) => {
