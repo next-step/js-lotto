@@ -6,7 +6,7 @@ import { ResultModal, initResultModalParam } from "./view/ResultModal.js";
 import { lottoStore } from './store/LottoStore.js';
 import { resultStore } from './store/ResultStore.js';
 
-import { memoization } from './core/Memoization';
+import { memoization } from './core/Memoization.js';
 
 const memoizedLottoList = memoization(LottoList, initParmLottoList);
 const memoizedMyLotto = memoization(MyLotto, initMyLottoParam);
