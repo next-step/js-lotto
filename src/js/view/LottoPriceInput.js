@@ -19,7 +19,7 @@ $lottoPriceInputFormContainer.addEventListener('submit', (e) => {
   }
 
   const inputPrice = Number(inputVal);
-  // TODO: 변화된 store action에 따라 맞춰 넣어주기
+
   lottoStore.dispatch('show');
   lottoStore.dispatch('updateBalance', inputPrice);
   resultStore.dispatch('purchase', inputPrice);

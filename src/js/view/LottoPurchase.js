@@ -55,9 +55,6 @@ function createLotto(count) {
   return lottos;
 }
 
-// 사실상 이건 Controller네....
-// ㅋㅋㅋㅋㅋ 제왕적 Controller
-// TODO: 역할별로 나누기
 export function LottoPurchase({ isShow, balance }) {
   if (!isShow) {
     $lottoPurchaseContainer.classList.add('hide');
@@ -68,5 +65,3 @@ export function LottoPurchase({ isShow, balance }) {
   $balance.textContent = balance;
   localBalance = balance;
 }
-
-// FIXME: 우선 기능 만들고, 테스트 코드 만들고 리팩토링 및 클린코드
