@@ -64,8 +64,8 @@
               </div>
             </div>
             <div class="w-100 d-flex mt-5 gap-10" id="lotto-purchase-button-container">
-              <button type="button" class="btn btn-cyan flex-1 font-bold">나머지 자동 구입</button>
-              <button type="button" class="btn btn-cyan font-bold" style="width: 65%;" >수동구입</button>
+              <button type="button" class="btn btn-cyan flex-1 font-bold" data-test-id="lotto-purchase-button-auto">나머지 자동 구입</button>
+              <button type="button" class="btn btn-cyan font-bold" style="width: 65%;" data-test-id="lotto-purchase-button-manual">수동구입</button>
             </div>
           </section>
           <section class="mt-9" id="lotto-list" data-test-id="lotto-list">
@@ -73,7 +73,7 @@
               <span id="lotto-count" class="flex-auto my-0">총 5개를 구매하였습니다.</span>
               <div class="flex-auto d-flex justify-end pr-1">
                 <label for="lotto-switch" class="switch">
-                  <input type="checkbox" class="lotto-numbers-toggle-button" id="lotto-switch" />
+                  <input type="checkbox" class="lotto-numbers-toggle-button" id="lotto-switch" data-test-id="lotto-switch" />
                   <span class="text-base font-normal">번호보기</span>
                 </label>
               </div>
