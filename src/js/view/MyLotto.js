@@ -13,17 +13,20 @@ function setLottoInputElement($input, i) {
   $input.setAttribute('min', 1);
   $input.setAttribute('max', MAX_LOTTO_NUMBER);
   $input.setAttribute('aria-label', `$lottery-input-${i + 1}`);
-  $input.addEventListener('keyup', lottoInputKeyUpHandler);
+  $input.addEventListener('keyup', createLottoInputKeyUpHandler(i));
 }
-function lottoInputKeyUpHandler(e) {
-  const value = e.target.value;
-  if (value.length > 1) {
-    if (i >= $numberInputCollection.length - 1) {
-      $resultButton.focus();
-      return;
-    }
 
-    $numberInputCollection[i + 1].focus();
+function createLottoInputKeyUpHandler(i) {
+  return (e) => {
+    const value = e.target.value;
+    if (value.length > 1) {
+      if (i >= $numberInputCollection.length - 1) {
+        $resultButton.focus();
+        return;
+      }
+
+      $numberInputCollection[i + 1].focus();
+    }
   }
 }
 
