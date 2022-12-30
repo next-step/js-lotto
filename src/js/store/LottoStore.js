@@ -1,6 +1,7 @@
 import { createStore } from '../core/Store.js';
 
 const initStore = {
+  balance: 0,
   lottos: [],
   isShow: false,
   isShowLottoNumbers: false,
@@ -8,11 +9,18 @@ const initStore = {
 
 const reducer = (actionType, payload, store) => {
   const newStore = { ...store };
-  // store를 변환시킨 뒤 return한다.
+
   switch (actionType) {
-    case ('update'): {
-      newStore.lottos = payload;
+    case ('show'): {
       newStore.isShow = true;
+      break;
+    }
+  case ('updateBalance'): {
+      newStore.balance = payload;
+      break;
+    }
+    case ('addLotto'): {
+      newStore.lottos = [...newStore.lottos, ...payload];
       break;
     }
     case ('toggleLottoNumber'): {

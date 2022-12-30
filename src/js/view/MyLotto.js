@@ -1,3 +1,4 @@
+import { lottoStore } from '../store/LottoStore.js';
 import { initStore, resultStore } from '../store/ResultStore.js';
 import { hasSameElementInArray, countSameElementInBothArray } from '../utils/utils.js';
 import { MAX_LOTTO_NUMBER } from '../constants/lottoConstants.js';
@@ -31,7 +32,6 @@ let submitEventListener = null;
 export const initMyLottoParam = { lottos: [], isShow: false };
 
 export function MyLotto({ lottos, isShow } = initMyLottoParam) {
-  console.log('MyLotto : ', isShow)
   if (!isShow) {
     $MyLottoInputFormContainer.classList.add('hide');
     $MyLottoInputFormContainer.reset();
@@ -60,6 +60,7 @@ export function MyLotto({ lottos, isShow } = initMyLottoParam) {
     });
 
     resultStore.dispatch('showResult', { result });
+    lottoStore.dispatch('updateBalance', 0);
   };
 
   $MyLottoInputFormContainer.addEventListener('submit', submitEventListener);
