@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "test": "npm run dev & npm run cypress:run",
-    "dev": "live-server --open=./index.html --port=5000",
+    "dev": "live-server --open=./index.html --port=5500",
     "cypress:run": "cypress run",
     "cypress:open": "cypress open"
   },
