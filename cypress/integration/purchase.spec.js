@@ -1,34 +1,67 @@
 /// <reference types="cypress" />
 
-describe('purchase Lotto', () => {
+describe('로또 구입', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:5500/')
-  });
+    cy.visit('http://localhost:5500/');
 
-  it('로또 구입 금액을 입력하면 금액에 해당하는 로또를 발급해야 하고 내 로또 입력창이 나와야한다.', () => {
-    const lottoPurchase = cy.get('[data-test-id="lotto-purchase"]');
-    const lottoPurchaseInput = cy.get('[data-test-id="lotto-purchase"]').get('input');
-    const lottoPurchaseButton = cy.get('[data-test-id="lotto-purchase"]').get('button');
-    lottoPurchase.should('be.visible');
+    const lottoPurchaseInput = cy.get('[data-test-id="lotto-price-input"]').find('input');
     lottoPurchaseInput.type('10000');
-    lottoPurchaseButton.click();
 
-    cy.get('[data-test-id="lotto-list"]').should('be.visible');
-    cy.get('[data-test-id="lotto-input"]').should('be.visible');
-    cy.get('[data-test-id="lotto-table"]').children().children().should('have.length', 10);
+    const lottoPurchaseButton = cy.get('[data-test-id="lotto-price-input"]').find('button');
+    lottoPurchaseButton.click();
   });
 
-  it('로또 구입 금액은 1000원 단위만 가능하고 다른 값 입력시 경고창을 띄운다.', () => {
+  it('로또 수동구입 input에 번호를 기입하지 않으면 경고창을 띄운다.', () => {
     cy.on('window:alert', (str) => {
-      expect(str).to.equal('구입 가격은 1000 단위로만 입력해주세요!');
+      expect(str).to.equal('로또 번호를 모두 입력해주세요!');
+    });
+    const lottoManualPurchaseButton = cy.get('[data-test-id="lotto-purchase-button-manual"]');
+    lottoManualPurchaseButton.click();
+  });
+
+  it('로또 수동구입 input에 번호를 모두 기입하지 않으면 경고창을 띄운다.', () => {
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('로또 번호를 모두 입력해주세요!');
     });
 
-    const lottoPurchaseInput = cy.get('[data-test-id="lotto-purchase-input"]');
-    const lottoPurchaseButton = cy.get('[data-test-id="lotto-purchase-button"]');
-    lottoPurchaseInput.type('12343');
-    lottoPurchaseButton.click();
+    const lottoNumberInputs = cy.get('#new-lotto-number-inputs-container').find('input');
+    const number = 1;
+    lottoNumberInputs.each((el, i) => {
+      if (i < 3) {
+        cy.wrap(el[0]).type(number + i);
+      }
+    });
 
-    cy.get('[data-test-id="lotto-list"]').should('not.be.visible');
-    cy.get('[data-test-id="lotto-input"]').should('not.be.visible');
+    const lottoManualPurchaseButton = cy.get('[data-test-id="lotto-purchase-button-manual"]');
+    lottoManualPurchaseButton.click();
+  });
+
+  it('로또를 수동으로 구입했을 경우, 로또 리스트에 1개가 추가되고 로또 1개 값 만큼 잔액에서 빠지고 입력한 번호가 그대로 로또 리스트에 등록되어야한다.', () => {
+    const lottoNumberInputs = cy.get('#new-lotto-number-inputs-container').find('input');
+    const number = 1;
+    lottoNumberInputs.each((el, i) => cy.wrap(el[0]).type(number + i));
+
+    const lottoManualPurchaseButton = cy.get('[data-test-id="lotto-purchase-button-manual"]');
+    lottoManualPurchaseButton.click();
+
+    cy.get('#balance').should('have.text', '9000');
+
+    cy.get('#lotto-switch').parent().click();
+    cy.get('#lotto-count').should('have.text', '총 1개를 구매하였습니다.');
+    cy.get('[data-test-id="lotto-table"]').should('have.length', 1);
+    cy.get('[data-test-id="lotto-table"]').children().each((el, i) => {
+      const element = cy.wrap(el[0]);
+      element.should('have.text', '🎟️ 1, 2, 3, 4, 5, 6, 7');
+    });
+  });
+
+  it('자동 구매 버튼 클릭 시, 잔액만큼의 로또를 구입하고 자동으로 로또를 생성해준다.', () => {
+    const lottoAutoPurchaseButton = cy.get('[data-test-id="lotto-purchase-button-auto"]');
+    lottoAutoPurchaseButton.click();
+
+    cy.get('#balance').should('have.text', '0');
+
+    cy.get('#lotto-count').should('have.text', '총 10개를 구매하였습니다.');
+    cy.get('[data-test-id="lotto-table"]').children().children().should('have.length', 10);
   });
 });

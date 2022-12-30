@@ -4,15 +4,18 @@ describe('My Lotto Input', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5500/')
 
-    const lottoPurchaseInput = cy.get('[data-test-id="lotto-purchase"]').get('input');
-    const lottoPurchaseButton = cy.get('[data-test-id="lotto-purchase"]').get('button');
+    const lottoPurchaseInput = cy.get('[data-test-id="lotto-price-input"]').find('input');
+    const lottoPurchaseButton = cy.get('[data-test-id="lotto-price-input"]').find('button');
     lottoPurchaseInput.type('10000');
     lottoPurchaseButton.click();
+
+    const lottoAutoPurchaseButton = cy.get('[data-test-id="lotto-purchase-button-auto"]');
+    lottoAutoPurchaseButton.click();
   });
 
   it('내 복권 번호를 모두 입력해야 한다.', () => {
-    const lottoNumberInputsContainer = cy.get('[data-test-id="lotto-input"]').get('[data-test-id="lotto-number-inputs-container"]');
-    const lottoSubmitButton = cy.get('[data-test-id="lotto-input"]').get('button');
+    const lottoNumberInputsContainer = cy.get('[data-test-id="lotto-input"]').find('[data-test-id="lotto-number-inputs-container"]');
+    const lottoSubmitButton = cy.get('[data-test-id="lotto-input"]').find('button');
     lottoSubmitButton.click();
 
     cy.get('[data-test-id="modal"]').should('not.be.visible');
@@ -23,9 +26,9 @@ describe('My Lotto Input', () => {
       expect(str).to.equal('로또 번호에는 중복된 숫자를 입력할 수 없습니다.');
     });
 
-    const lottoNumberInputsContainer = cy.get('[data-test-id="lotto-input"]').get('[data-test-id="lotto-number-inputs-container"]');
+    const lottoNumberInputsContainer = cy.get('[data-test-id="lotto-input"]').find('[data-test-id="lotto-number-inputs-container"]');
     lottoNumberInputsContainer.find('input').each((el) => cy.wrap(el).type('2'));
-    const lottoSubmitButton = cy.get('[data-test-id="lotto-input"]').get('button');
+    const lottoSubmitButton = cy.get('[data-test-id="lotto-input"]').find('button');
     lottoSubmitButton.click();
 
     cy.get('[data-test-id="modal"]').should('not.be.visible');
@@ -33,14 +36,14 @@ describe('My Lotto Input', () => {
 
   it('복권 번호 2자리를 입력하면 그 다음 Input으로 focus되어야 한다.', () => {
     const lottoNumberInputsContainer = cy.get('[data-test-id="lotto-number-inputs-container"]');
-    lottoNumberInputsContainer.find('input').first().type('32').next().should('be.focused');
+    lottoNumberInputsContainer.find('input').first().type(32).next().should('be.focused');
   });
 
   it('결과 확인하기를 누르면 결과 모달을 띄워 결과를 보여준다.', () => {
-    const lottoNumberInputsContainer = cy.get('[data-test-id="lotto-input"]').get('[data-test-id="lotto-number-inputs-container"]');
+    const lottoNumberInputsContainer = cy.get('[data-test-id="lotto-input"]').find('[data-test-id="lotto-number-inputs-container"]');
     let counter = 1;
     lottoNumberInputsContainer.find('input').each((el) => cy.wrap(el).type(counter++));
-    const lottoSubmitButton = cy.get('[data-test-id="lotto-input"]').get('button');
+    const lottoSubmitButton = cy.get('[data-test-id="lotto-input"]').find('button');
     lottoSubmitButton.click();
 
     cy.get('[data-test-id="modal"]').should('be.visible');
