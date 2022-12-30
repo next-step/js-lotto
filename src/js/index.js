@@ -1,10 +1,10 @@
-import { LottoList, initParmLottoList } from "./view/LottoList.js";
-import { MyLotto, initMyLottoParam } from './view/MyLotto.js';
-import { LottoPriceInput, initLottoPriceInput } from './view/LottoPriceInput.js';
-import { LottoPurchase } from "./view/LottoPurchase.js";
-import { ResultModal, initResultModalParam } from "./view/ResultModal.js";
+import { LottoList, initParmLottoList } from "./controller/LottoList.js";
+import { MyLotto, initMyLottoParam } from './controller/MyLotto.js';
+import { LottoPriceInput, initLottoPriceInput } from './controller/LottoPriceInput.js';
+import { LottoPurchase } from "./controller/LottoPurchase.js";
+import { ResultModal, initResultModalParam } from "./controller/ResultModal.js";
 
-import './view/LottoPurchase.js';
+import './controller/LottoPurchase.js';
 
 import { lottoStore } from './store/LottoStore.js';
 import { resultStore } from './store/ResultStore.js';

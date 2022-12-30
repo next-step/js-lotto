@@ -21,7 +21,7 @@ $lottoPurchaseButton.addEventListener('click', () => {
   }
 
   const newLottoNumbers = newLottoNumberInputs.map((el) => Number(el.value));
-  // TODO: Lotto번호들을 검증하는 로직은 MyLotto와 동일 따라서 refactoring 필요
+
   if (hasSameElementInArray(newLottoNumbers)) {
     alert('로또 번호에는 중복된 숫자를 입력할 수 없습니다.');
     return;
@@ -33,9 +33,8 @@ $lottoPurchaseButton.addEventListener('click', () => {
 });
 
 $buyAutoButton.addEventListener('click', () => {
-  // 나머지 금액으로 자동생성 (금액 없으면 걍 return)
   if (localBalance <= 0) return;
-  // TODO: 단위 로또 가격 상수로 관리하기
+
   const purchaseLottoCount = Math.floor( Number(localBalance) / 1000);
   const autoCreatedLottos = createLotto(purchaseLottoCount);
 
