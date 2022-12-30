@@ -24,8 +24,9 @@
               <button type="submit" class="btn btn-cyan">확인</button>
             </div>
           </form>
-          <section class="mt-9" id="lotto-purchase" data-test-id="lotto-purchase">
-            <div class="d-flex" data-test-id="lotto-number-inputs-container">
+          <section class="mt-9 hide" id="lotto-purchase" data-test-id="lotto-purchase">
+            <div class="text-center font-bold">잔액 : <span id="balance">0</span></div>
+            <div class="d-flex mt-5" id="new-lotto-number-inputs-container" data-test-id="new-lotto-number-inputs-container">
               <div>
                 <h4 class="mt-0 mb-3 text-center">로또 번호 입력</h4>
                 <div>
@@ -62,7 +63,7 @@
                 </div>
               </div>
             </div>
-            <div class="w-100 d-flex mt-5 gap-10">
+            <div class="w-100 d-flex mt-5 gap-10" id="lotto-purchase-button-container">
               <button type="button" class="btn btn-cyan flex-1 font-bold">나머지 자동 구입</button>
               <button type="button" class="btn btn-cyan font-bold" style="width: 65%;" >수동구입</button>
             </div>
