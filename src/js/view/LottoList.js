@@ -23,13 +23,6 @@ export function LottoList({ lottos, isShowLottoNumbers, isShow } = initParmLotto
     return null;
   }
 
-  // 구입 금액을 받아서 수동 혹은 자동으로 구매할 수 있어야한다.
-  // 수동으로 하나씩 구매하면서 나머지는 자동으로 뽑아주도록하는 버튼을 만든다.
-  // 수동으로 하나를 구매하면, 입력한 금액에서 하나씩 뺀다.
-  // 구입금액을 새로 입력하면 완전히 새로 초기화 한다.
-
-  // TODO: 수동, 자동 구입 컴포넌트 View 추가, 이 컴포넌트 내에선 local적으로 가지고 있는다.
-
   // lotto 결과 rendering하는 부분
   $lottoListContainer.classList.remove('hide');
   $lottoCount.replaceChildren(`총 ${lottos?.length || 0}개를 구매하였습니다.`);
