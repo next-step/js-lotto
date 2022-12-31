@@ -16,8 +16,10 @@ export function createStore(initStore, reducer) {
       // reducer를 통해 store를 갱신하고
       store = reducer(actionType, payload, store);
       // 구독자들에게 새로운 store를 알린다.
-      // TODO: 특정 action에 발동하도록 바꾸기.
       subscribeList.forEach((subscriber) => subscriber(store))
+    },
+    getStore: () => {
+      return store;
     }
   }
 }

@@ -28,11 +28,13 @@ const reducer = (actionType, payload, store) => {
       break;
     }
     default: {
-      return initStore;
+      store = initStore;
+      return store;
     }
   }
 
-  return newStore;
+  store = newStore;
+  return store;
 }
 
 export const lottoStore = createStore(initStore, reducer);
