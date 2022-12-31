@@ -20,9 +20,9 @@ $lottoPriceInputFormContainer.addEventListener('submit', (e) => {
 
   const inputPrice = Number(inputVal);
 
-  lottoStore.dispatch('show');
   lottoStore.dispatch('updateBalance', inputPrice);
   resultStore.dispatch('purchase', inputPrice);
+  lottoStore.dispatch('show');
 });
 
 function isNumberPlainThousandToTenThousand(num) {

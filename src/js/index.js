@@ -1,7 +1,7 @@
 import { LottoList, initParmLottoList } from "./controller/LottoList.js";
 import { MyLotto, initMyLottoParam } from './controller/MyLotto.js';
 import { LottoPriceInput, initLottoPriceInput } from './controller/LottoPriceInput.js';
-import { LottoPurchase } from "./controller/LottoPurchase.js";
+import { LottoPurchase, initLottoPurchaseParam } from "./controller/LottoPurchase.js";
 import { ResultModal, initResultModalParam } from "./controller/ResultModal.js";
 
 import './controller/LottoPurchase.js';
@@ -13,18 +13,19 @@ import { memoization } from './core/Memoization.js';
 
 const memoizedLottoList = memoization(LottoList, initParmLottoList);
 const memoizedMyLotto = memoization(MyLotto, initMyLottoParam);
+const memoizedLottoPurchase = memoization(LottoPurchase, initLottoPurchaseParam)
 
 lottoStore.subscribe((store) => {
   memoizedLottoList(store);
   memoizedMyLotto(store);
-  LottoPurchase(store);
+  memoizedLottoPurchase(store);
 });
 
-const memoizedLottoPurchase = memoization(LottoPriceInput, initLottoPriceInput);
+const memoizedLottoPriceInput = memoization(LottoPriceInput, initLottoPriceInput);
 const memoizedResultModal = memoization(ResultModal, initResultModalParam);
 
 resultStore.subscribe((store) => {
-  memoizedLottoPurchase(store);
+  memoizedLottoPriceInput(store);
   memoizedResultModal(store);
 });
 
