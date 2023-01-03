@@ -8,7 +8,7 @@ class ManualForm {
     this.$countManual = $target.querySelector(ELEMENT.COUNT_MANUAL);
     this.$manualWrapper = $target.querySelector(ELEMENT.MANUAL_WRAPPER);
     this.$manualNumbersInput = Array.from($target.querySelectorAll(ELEMENT.MANUAL_NUMBERS_INPUT));
-    this.$submitManualButton = $target.querySelector(ELEMENT.SUBMIT_MANUAL_BUTTON);
+    this.$submitManualButton = $target.querySelector(ELEMENT.MANUAL_SUBMIT_BUTTON);
     this.$doneManualButton = $target.querySelector(ELEMENT.DONE_MANUAL_BUTTON);
     this.$manualSubmitButton = $target.querySelector(ELEMENT.MANUAL_SUBMIT_BUTTON);
     this.$moveAutoNumberButton = $target.querySelector(ELEMENT.MOVE_AUTO_NUMBER_BUTTON);

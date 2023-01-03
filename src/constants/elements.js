@@ -28,7 +28,6 @@ export const ELEMENT = {
   MANUAL_WRAPPER: '#manual-form',
   COUNT_MANUAL: '.count-manual-auto',
   MOVE_AUTO_NUMBER_BUTTON: '.move-auto-number-button',
-  SUBMIT_MANUAL_BUTTON: '.submit-manual-number-button',
   DONE_MANUAL_BUTTON: '.done-manual-button',
   MANUAL_NUMBERS_INPUT: '.manual-number',
 };
