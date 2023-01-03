@@ -15,6 +15,7 @@ class Lotto {
     this.$target = $target;
     this.$bonusNumberInput = $target.querySelector(ELEMENT.BONUS_NUMBER_INPUT);
     this.$manualForm = $target.querySelector(ELEMENT.MANUAL_WRAPPER);
+    this.$checkResultForm = $target.querySelector(ELEMENT.CHECK_WRAPPER);
     this.$manualInput = $target.querySelectorAll(ELEMENT.MANUAL_NUMBERS_INPUT);
     this.$winningNumbersInput = Array.from($target.querySelectorAll(ELEMENT.WINNING_NUMBERS_INPUT));
     this.$numberInput = $target.querySelector(ELEMENT.LOTTO_NUMBER_INPUT);
@@ -87,25 +88,6 @@ class Lotto {
   };
 
   onModalShow = ({ isVisibleModal }) => {
-    const isValidBonusNumber = Boolean(this.state.bonusNumber);
-    const isAllTyped =
-      this.state.winningNumbers.filter((number) => Boolean(number)).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH &&
-      isValidBonusNumber;
-    // const isValidNumbers =
-    //   this.state.winningNumbers.filter(
-    //     (number) => Number(number) >= LOTTO_VALUE.MIN_NUMBER && Number(number) <= LOTTO_VALUE.MAX_NUMBER
-    //   ).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH && isValidBonusNumber;
-
-    if (!isAllTyped) {
-      alert(ALERT.NOT_ALL_TYPED_WINNING_INPUT);
-      return;
-    }
-
-    // if (!isValidNumbers) {
-    //   alert(ALERT.IN_RANGE_WINNING_INPUT);
-    //   return;
-    // }
-
     if (isDuplicatedInArray([this.state.winningNumbers, this.state.bonusNumber])) {
       alert(ALERT.DUPLICATE_VALUE_EXIST);
       return;
@@ -114,17 +96,19 @@ class Lotto {
     this.setState({ ...this.state, isVisibleModal });
   };
 
+  onNextInput = ({ element, event }) => {
+    const isTypeInput =
+      event.key === 'Shift' ||
+      event.key === 'Tab' ||
+      event.key === 'Enter' ||
+      element.value.length !== LOTTO_VALUE.TYPE_MAX_LENGTH;
+    if (isTypeInput) return;
+
+    if (element.nextElementSibling) element.nextElementSibling.focus();
+  };
+
   onTypeManualNumber = ({ value, index }) => {
-    const TYPE_MAX_LENGTH = 2,
-      LAST_WINNING_INPUT_INDEX = 5;
-    if (value.length > TYPE_MAX_LENGTH) return;
-
-    const isNextWinningInput = value.length >= TYPE_MAX_LENGTH && index < LAST_WINNING_INPUT_INDEX;
-
-    if (isNextWinningInput) {
-      const nextInputIndex = index + 1;
-      this.$manualInput[nextInputIndex].focus();
-    }
+    if (value.length > LOTTO_VALUE.TYPE_MAX_LENGTH) return;
 
     this.setState({
       ...this.state,
@@ -135,21 +119,6 @@ class Lotto {
   onSubmitManualNumber = (event) => {
     event.preventDefault();
     const { manualPurchaseNumber, manualNumbers, typedManualNumber } = this.state;
-    const isAllTyped = typedManualNumber.filter((number) => Boolean(number)).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH;
-    // const isValidNumbers =
-    //   typedManualNumber.filter(
-    //     (number) => Number(number) >= LOTTO_VALUE.MIN_NUMBER && Number(number) <= LOTTO_VALUE.MAX_NUMBER
-    //   ).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH;
-
-    if (!isAllTyped) {
-      alert(ALERT.NOT_ALL_TYPED_WINNING_INPUT);
-      return;
-    }
-
-    // if (!isValidNumbers) {
-    //   alert(ALERT.IN_RANGE_WINNING_INPUT);
-    //   return;
-    // }
 
     if (isDuplicatedInArray(typedManualNumber)) {
       alert(ALERT.DUPLICATE_VALUE_EXIST);
@@ -158,7 +127,7 @@ class Lotto {
 
     this.setState({
       ...this.state,
-      manualNumbers: [...manualNumbers, typedManualNumber.map((el) => Number(el))],
+      manualNumbers: [...manualNumbers, typedManualNumber.map(Number)],
       typedManualNumber: DEFAULT_TYPED_NUMBERS,
       manualPurchaseNumber: manualPurchaseNumber + 1,
     });
@@ -166,7 +135,7 @@ class Lotto {
 
   onConfirmManual = () => {
     const { manualPurchaseNumber, moneyAmount } = this.state;
-    const autoCount = moneyAmount / 1000 - manualPurchaseNumber;
+    const autoCount = moneyAmount / LOTTO_VALUE.MIN_PRICE - manualPurchaseNumber;
 
     this.setState({
       ...this.state,
@@ -175,18 +144,17 @@ class Lotto {
     });
   };
 
-  onTypeWinning = ({ value, index }) => {
-    const TYPE_MAX_LENGTH = 2,
-      LAST_WINNING_INPUT_INDEX = 5;
-    if (value.length > TYPE_MAX_LENGTH) return;
+  onTypeWinning = ({ event, index }) => {
+    const LAST_WINNING_INPUT_INDEX = 5;
+    const { value } = event.target;
+    if (value.length > LOTTO_VALUE.TYPE_MAX_LENGTH) return;
 
-    const isNextWinningInput = value.length >= TYPE_MAX_LENGTH && index < LAST_WINNING_INPUT_INDEX,
-      isBonusInput = value.length >= TYPE_MAX_LENGTH && index === LAST_WINNING_INPUT_INDEX;
-
-    if (isNextWinningInput) {
-      const nextInputIndex = index + 1;
-      this.$winningNumbersInput[nextInputIndex].focus();
-    }
+    const isBonusInput =
+      event.key !== 'Shift' &&
+      event.key !== 'Tab' &&
+      event.key !== 'Enter' &&
+      value.length >= LOTTO_VALUE.TYPE_MAX_LENGTH &&
+      index === LAST_WINNING_INPUT_INDEX;
 
     this.setState({
       ...this.state,
@@ -270,12 +238,7 @@ class Lotto {
       this.onTypeAmount(event.target.value);
     });
 
-    // this.$manualSubmitButton.addEventListener('click', (event) => {
-    //   this.onSubmitManualNumber(event);
-    // });
-
     this.$manualForm.addEventListener('submit', (event) => {
-      console.log('manual submit event!');
       this.onSubmitManualNumber(event);
     });
 
@@ -293,8 +256,9 @@ class Lotto {
 
     this.$winningNumbersInput.forEach((eachInput, winningNumbersIndex) => {
       eachInput.addEventListener('keyup', (event) => {
+        this.onNextInput({ element: eachInput, event });
         this.onTypeWinning({
-          value: event.target.value,
+          event,
           index: winningNumbersIndex,
         });
       });
@@ -302,6 +266,7 @@ class Lotto {
 
     this.$manualInput.forEach((eachInput, manualNumbersIndex) => {
       eachInput.addEventListener('keyup', (event) => {
+        this.onNextInput({ element: eachInput, event });
         this.onTypeManualNumber({
           value: event.target.value,
           index: manualNumbersIndex,
@@ -309,7 +274,7 @@ class Lotto {
       });
     });
 
-    this.$openModalButton.addEventListener('click', (event) => {
+    this.$checkResultForm.addEventListener('submit', (event) => {
       event.preventDefault();
       this.onModalShow({ isVisibleModal: true });
     });
@@ -322,7 +287,7 @@ class Lotto {
       if (event.target.classList.contains('bonus-number')) {
         const BONUS_NUMBER_STATE_INDEX = 6;
         this.onTypeWinning({
-          value: event.target.value,
+          event,
           index: BONUS_NUMBER_STATE_INDEX,
         });
       }
