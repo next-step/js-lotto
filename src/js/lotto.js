@@ -14,6 +14,7 @@ class Lotto {
   constructor({ $target }) {
     this.$target = $target;
     this.$bonusNumberInput = $target.querySelector(ELEMENT.BONUS_NUMBER_INPUT);
+    this.$manualForm = $target.querySelector(ELEMENT.MANUAL_WRAPPER);
     this.$manualInput = $target.querySelectorAll(ELEMENT.MANUAL_NUMBERS_INPUT);
     this.$winningNumbersInput = Array.from($target.querySelectorAll(ELEMENT.WINNING_NUMBERS_INPUT));
     this.$numberInput = $target.querySelector(ELEMENT.LOTTO_NUMBER_INPUT);
@@ -90,20 +91,20 @@ class Lotto {
     const isAllTyped =
       this.state.winningNumbers.filter((number) => Boolean(number)).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH &&
       isValidBonusNumber;
-    const isValidNumbers =
-      this.state.winningNumbers.filter(
-        (number) => Number(number) >= LOTTO_VALUE.MIN_NUMBER && Number(number) <= LOTTO_VALUE.MAX_NUMBER
-      ).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH && isValidBonusNumber;
+    // const isValidNumbers =
+    //   this.state.winningNumbers.filter(
+    //     (number) => Number(number) >= LOTTO_VALUE.MIN_NUMBER && Number(number) <= LOTTO_VALUE.MAX_NUMBER
+    //   ).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH && isValidBonusNumber;
 
     if (!isAllTyped) {
       alert(ALERT.NOT_ALL_TYPED_WINNING_INPUT);
       return;
     }
 
-    if (!isValidNumbers) {
-      alert(ALERT.IN_RANGE_WINNING_INPUT);
-      return;
-    }
+    // if (!isValidNumbers) {
+    //   alert(ALERT.IN_RANGE_WINNING_INPUT);
+    //   return;
+    // }
 
     if (isDuplicatedInArray([this.state.winningNumbers, this.state.bonusNumber])) {
       alert(ALERT.DUPLICATE_VALUE_EXIST);
@@ -135,20 +136,20 @@ class Lotto {
     event.preventDefault();
     const { manualPurchaseNumber, manualNumbers, typedManualNumber } = this.state;
     const isAllTyped = typedManualNumber.filter((number) => Boolean(number)).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH;
-    const isValidNumbers =
-      typedManualNumber.filter(
-        (number) => Number(number) >= LOTTO_VALUE.MIN_NUMBER && Number(number) <= LOTTO_VALUE.MAX_NUMBER
-      ).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH;
+    // const isValidNumbers =
+    //   typedManualNumber.filter(
+    //     (number) => Number(number) >= LOTTO_VALUE.MIN_NUMBER && Number(number) <= LOTTO_VALUE.MAX_NUMBER
+    //   ).length === LOTTO_VALUE.WINNIN_INPUT_LENGTH;
 
     if (!isAllTyped) {
       alert(ALERT.NOT_ALL_TYPED_WINNING_INPUT);
       return;
     }
 
-    if (!isValidNumbers) {
-      alert(ALERT.IN_RANGE_WINNING_INPUT);
-      return;
-    }
+    // if (!isValidNumbers) {
+    //   alert(ALERT.IN_RANGE_WINNING_INPUT);
+    //   return;
+    // }
 
     if (isDuplicatedInArray(typedManualNumber)) {
       alert(ALERT.DUPLICATE_VALUE_EXIST);
@@ -269,7 +270,12 @@ class Lotto {
       this.onTypeAmount(event.target.value);
     });
 
-    this.$manualSubmitButton.addEventListener('click', (event) => {
+    // this.$manualSubmitButton.addEventListener('click', (event) => {
+    //   this.onSubmitManualNumber(event);
+    // });
+
+    this.$manualForm.addEventListener('submit', (event) => {
+      console.log('manual submit event!');
       this.onSubmitManualNumber(event);
     });
 
