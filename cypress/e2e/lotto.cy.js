@@ -240,11 +240,9 @@ describe('로또 사이트 E2E 테스트', () => {
       cy.get(ELEMENT.MOVE_AUTO_NUMBER_BUTTON).should('exist');
     });
 
-    it('범위를 넘어가는 숫자로 수동 구매시 경고창이 떠야한다.', () => {
+    it('범위를 넘어가는 숫자로 수동 구매시 유효하지 않은 값임을 알려줘야 한다.', () => {
       cy.addManualNumbers(INVALID_MANUAL_NUMBERS);
-      cy.on('window:alert', (text) => {
-        expect(text).to.contains(ALERT.IN_RANGE_WINNING_INPUT);
-      });
+      cy.get(ELEMENT.MANUAL_WRAPPER).then(($form) => expect($form[0].checkValidity()).to.be.false);
     });
 
     it('자동구매로 진행 버튼 클릭 시 로또 티켓들이 생성 되어야 한다.', () => {
