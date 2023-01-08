@@ -1,37 +1,33 @@
-import {
-  CLICK_EVENT_MAP,
-  ELEMENT_DATA_ID,
-  ELEMENT_DATA_ID_FORM,
-} from '../../constants.js';
+import { ELEMENT } from '../../constants/elements.js';
 import WinningNumberInput from './input/WinningNumberInput.js';
 import LottoTickets from './LottoTickets.js';
 class ResultForm {
   constructor({ $target, props = {} }) {
     this.$target = $target;
     this.props = props;
-    this.$resultWrapper = $target.querySelector('#purchased-result');
-    this.$checkWrapper = $target.querySelector('#check-result');
+    this.$resultWrapper = $target.querySelector(ELEMENT.RESULT_WRAPPER);
+    this.$checkWrapper = $target.querySelector(ELEMENT.CHECK_WRAPPER);
+    this.$numberToggleButton = $target.querySelector(ELEMENT.NUMBER_TOGGLE_BUTTON);
+    this.$resultText = $target.querySelector(ELEMENT.RESULT_TEXT);
+    this.$lottoImageWrapper = $target.querySelector(ELEMENT.LOTTO_IMAGE_WRAPPER);
+
     this.render();
-    this.addEventListener();
   }
 
   render() {
-    if (!this.props.state.isVisibleResult) {
+    const { isVisibleResult, lottoPurchaseNumber, lottoNumbers } = this.props.state;
+    if (!isVisibleResult) {
       this.$resultWrapper.style.display = 'none';
     } else {
-      this.$resultWrapper.querySelector(
-        ELEMENT_DATA_ID_FORM.RESULT_TEXT
-      ).innerText = `총 ${this.props.state.lottoPurchaseNumber}개를 구매하였습니다.`;
+      this.$resultText.innerText = `총 ${lottoPurchaseNumber}개를 구매하였습니다.`;
 
-      this.$resultWrapper.querySelector(
-        ELEMENT_DATA_ID_FORM.LOTTO_IMAGE_WRAPPER
-      ).innerHTML = `
-        ${this.props.state.lottoNumbers
+      this.$lottoImageWrapper.innerHTML = `
+        ${lottoNumbers
           .map((lottoNumber) => {
             return `
               <li class="lotto-list">
-                <span class="mx-1 text-4xl" data-id="lotto-image">🎟️</span>
-                <span class="lotto-number" data-id="lotto-number">
+                <span class="mx-1 text-4xl lotto-image">🎟️</span>
+                <span class="lotto-number">
                   ${lottoNumber.join(' ')}
                 </span>
               </li>
@@ -47,8 +43,7 @@ class ResultForm {
     if (!this.props.state.isVisibleResult) {
       this.$checkWrapper.style.display = 'none';
     } else {
-      this.$checkWrapper.style.display !== 'block' &&
-        (this.$checkWrapper.style.display = 'block');
+      this.$checkWrapper.style.display !== 'block' && (this.$checkWrapper.style.display = 'block');
     }
 
     new LottoTickets({
@@ -64,13 +59,6 @@ class ResultForm {
         state: this.props.state,
       },
     });
-  }
-
-  addEventListener() {
-    CLICK_EVENT_MAP.set(
-      ELEMENT_DATA_ID.NUMBER_TOGGLE_BUTTON,
-      this.props.onToggle
-    );
   }
 }
 

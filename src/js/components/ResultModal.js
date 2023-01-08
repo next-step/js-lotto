@@ -1,37 +1,21 @@
-import {
-  CLICK_EVENT_MAP,
-  ELEMENT_DATA_ID,
-  ELEMENT_DATA_ID_FORM,
-  TITLE_WITH_VALUE_MAP,
-} from '../../constants.js';
-import {
-  generateTtitleAndValueArray,
-  getWinningCount,
-  makeRateOfReturn,
-} from '../../utils/index.js';
+import { ELEMENT } from '../../constants/elements.js';
+import { TITLE_WITH_VALUE_MAP } from '../../constants/modal.js';
+import { generateTtitleAndValueArray, getWinningCount, makeRateOfReturn } from '../../utils/index.js';
 class ResultModal {
   constructor({ $target, props = {} }) {
     this.$target = $target;
     this.props = props;
-    this.$modal = $target.querySelector('.modal');
-    this.$modalTableBody = $target.querySelector(
-      ELEMENT_DATA_ID_FORM.MODAL_RESULT_TABLE_BODY
-    );
-    this.$investmentReturnSpan = $target.querySelector(
-      ELEMENT_DATA_ID_FORM.INVESTMENT_RETURN
-    );
+    this.$modal = $target.querySelector(ELEMENT.MODAL);
+    this.$modalTableBody = $target.querySelector(ELEMENT.MODAL_RESULT_TABLE_BODY);
+    this.$investmentReturnSpan = $target.querySelector(ELEMENT.INVESTMENT_RETURN);
+    this.$restartButton = $target.querySelector(ELEMENT.RESTART_BUTTON);
+    this.$modalCloseButton = $target.querySelector(ELEMENT.MODAL_CLOSE_BUTTON);
+
     this.render();
-    this.addEventListener();
   }
 
   render() {
-    const {
-      isVisibleModal,
-      lottoNumbers,
-      winningNumbers,
-      bonusNumber,
-      moneyAmount,
-    } = this.props.state;
+    const { isVisibleModal, lottoNumbers, winningNumbers, bonusNumber, moneyAmount } = this.props.state;
 
     if (isVisibleModal) {
       const { countedLottoNumbersMap, totalAdvantage } = getWinningCount({
@@ -39,7 +23,9 @@ class ResultModal {
         winningInput: winningNumbers.map((el) => Number(el)),
         bonusNumber,
       });
+
       const profit = makeRateOfReturn(moneyAmount, totalAdvantage);
+
       this.$modalTableBody.innerHTML = `
             ${generateTtitleAndValueArray(TITLE_WITH_VALUE_MAP)
               .map(({ title, value }) => {
@@ -47,11 +33,7 @@ class ResultModal {
               <tr class="text-center" data-id=${title}>
                 <td class="p-3">${title}</td>
                 <td class="p-3">${value.toLocaleString()}</td>
-                <td class="p-3">${
-                  countedLottoNumbersMap.has(title)
-                    ? countedLottoNumbersMap.get(title)
-                    : 0
-                }개</td>
+                <td class="p-3">${countedLottoNumbersMap.has(title) ? countedLottoNumbersMap.get(title) : 0}개</td>
               </tr>
               `;
               })
@@ -67,14 +49,6 @@ class ResultModal {
     if (!isVisibleModal) {
       this.$modal.classList.remove('open');
     }
-  }
-
-  addEventListener() {
-    CLICK_EVENT_MAP.set(ELEMENT_DATA_ID.RESTART_BUTTON, this.props.onRestart);
-    CLICK_EVENT_MAP.set(ELEMENT_DATA_ID.MODAL_CLOSE_BUTTON, (event) => {
-      event.preventDefault();
-      this.props.onModalShow({ isVisibleModal: false });
-    });
   }
 }
 

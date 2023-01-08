@@ -24,24 +24,17 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+import { ELEMENT } from '../../src/constants/elements';
+
 Cypress.Commands.add('buyNewLottoWithValue', (spendMoney) => {
-  const $lottoInput = '[data-id=lotto-number-input]';
-  const $lottoButton = '[data-id=lotto-submit-button]';
-  const $numberToggleButton = '[data-id=number-toggle-button]';
-  cy.get($lottoInput).type(spendMoney);
-  cy.get($lottoButton).click();
-  cy.get($numberToggleButton).should('not.be.checked');
+  cy.get(ELEMENT.LOTTO_NUMBER_INPUT).type(spendMoney);
+  cy.get(ELEMENT.LOTTO_SUBMIT_BUTTON).click();
+  cy.get(ELEMENT.NUMBER_TOGGLE_BUTTON).should('not.be.checked');
 });
 
 Cypress.Commands.add('winLottoInFirstPlace', () => {
-  const $numberToggleButton = '[data-id=number-toggle-button]';
-  const $lottoNumber = '[data-id=lotto-number]';
-  const $winningNumberInput = '.winning-number';
-  const $bonusNumberInput = '.bonus-number';
-  const $submitButton = '.open-result-modal-button';
-
-  cy.get($numberToggleButton).click({ force: true });
-  cy.get($lottoNumber)
+  cy.get(ELEMENT.NUMBER_TOGGLE_BUTTON).click({ force: true });
+  cy.get(ELEMENT.LOTTO_NUMBER)
     .first()
     .invoke('text')
     .then((text) => {
@@ -50,14 +43,30 @@ Cypress.Commands.add('winLottoInFirstPlace', () => {
         .map((el) => el.replace(/(\r\n|\n|\r)/gm, ''))
         .filter((el) => el !== '');
 
-      cy.get($winningNumberInput).each((eachInput, index) => {
+      cy.get(ELEMENT.WINNING_NUMBERS_INPUT).each((eachInput, index) => {
         cy.get(eachInput).type(firstRowLottoNumbers[index]);
       });
 
-      cy.get($bonusNumberInput).type(firstRowLottoNumbers[0]);
-      cy.get($submitButton).should('not.be.disabled');
-      cy.get($submitButton).click();
+      cy.get(ELEMENT.BONUS_NUMBER_INPUT).type(firstRowLottoNumbers[0]);
+      cy.get(ELEMENT.OPEN_RESULT_MODAL_BUTTON).should('not.be.disabled');
+      cy.get(ELEMENT.OPEN_RESULT_MODAL_BUTTON).click();
       cy.wait(1000);
       cy.get('.modal').should('exist');
     });
+});
+
+Cypress.Commands.add('moveAutoPurchase', () => {
+  cy.get(ELEMENT.DONE_MANUAL_BUTTON).click({ force: true });
+});
+
+Cypress.Commands.add('makeResult', (price) => {
+  cy.get(ELEMENT.LOTTO_NUMBER_INPUT).type(price);
+  cy.get(ELEMENT.LOTTO_SUBMIT_BUTTON).click();
+});
+
+Cypress.Commands.add('addManualNumbers', (manualNumbers) => {
+  cy.get(ELEMENT.MANUAL_NUMBERS_INPUT).each((manualInput, index) => {
+    cy.get(manualInput).type(manualNumbers[index]);
+  });
+  cy.get(ELEMENT.MANUAL_SUBMIT_BUTTON).click({ force: true });
 });
