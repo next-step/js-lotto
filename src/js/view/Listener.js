@@ -1,5 +1,5 @@
 import { LOTTO_NUMBER, LOTTO_PRICE } from '../service/Constant.js';
-import { buy, getLottoInfo } from '../service/lottoShop';
+import { buy, getLottoInfo } from '../service/lottoShop.js';
 import { AUTO_N_MESSAGE } from '../service/lottoShop.js';
 import { ValidationError } from '../service/ValidationError.js';
 import { ENTER_KEY, MESSAGE } from '../util/Constant.js';
@@ -15,6 +15,7 @@ import {
 } from './ManualInput.js';
 import {
   $autoPurchasingInformationPhrase,
+  $bonusNumber,
   $confirmButton,
   $lottoNumbersToggleButton,
   $manualAddButton,
@@ -64,8 +65,8 @@ export const setEnterListener = (selector, callback) => {
      */
     (event) => {
       if (event.key === ENTER_KEY) {
-        validationErrorHandler(callback);
         event.preventDefault();
+        validationErrorHandler(callback);
       }
     }
   );
@@ -130,6 +131,15 @@ export const onLottosBought = () =>
   });
 
 export const onLottoNumberInput = function (event) {
+  if (this.value.length > 0 && event.key === ENTER_KEY) {
+    event.preventDefault();
+    const children = this.parentNode.children;
+    const myIndex = Array.prototype.indexOf.call(children, this);
+    const hasNext = myIndex < children.length - 1;
+    hasNext && children[myIndex + 1].focus();
+    return;
+  }
+
   const key = Number(event.key);
   if (!(!isNaN(key) && this.value.length < String(LOTTO_NUMBER.MAX).length)) {
     event.preventDefault();
@@ -143,6 +153,7 @@ export const onLottoNumberInput = function (event) {
  */
 export const setListeners = (lottos) => {
   $winningNumbers.forEach((input) => input.addEventListener('keypress', onLottoNumberInput));
+  $bonusNumber.addEventListener('keypress', onLottoNumberInput);
   setEnterListener($purchasingAmountInput, onPurchasingAmount);
   setClickListener($startButton, onPurchasingAmount);
   setClickListener($manualAddButton, handleAddManual);

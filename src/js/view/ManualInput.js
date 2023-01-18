@@ -1,4 +1,4 @@
-import { LOTTO_LENGTH, LOTTO_NUMBER, LOTTO_PRICE } from '../service/Constant.js';
+import { LOTTO_LENGTH, LOTTO_PRICE } from '../service/Constant.js';
 import { MANUAL_NUMBER_INPUT } from './Element.js';
 import { onLottoNumberInput } from './Listener.js';
 import { $manualNumberList } from './Selector.js';
