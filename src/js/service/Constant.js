@@ -1,9 +1,9 @@
 export const LOTTO_NUMBER = {
   MIN: 1,
   MAX: 45,
-  LENGTH: 6,
 };
 
+export const LOTTO_LENGTH = 6;
 export const LOTTO_ICON = '🎟️';
 export const LOTTO_PRICE = 1000;
 export const LOTTO_KEYS = {
@@ -31,4 +31,6 @@ export const LOTTO_HIT_COUNT = Object.freeze(
   Object.keys(LOTTO_KEYS).reduce((result, key) => ({ ...result, [key]: 0 }), {})
 );
 
-export const canIGetAwards = (hit, bonus) => (hit === 5 && bonus === 1) || hit >= 3;
+export const canIGetAwards = (hit, bonus) =>
+  (hit === LOTTO_PRIZE_CONDITION.SECOND.hit && bonus === LOTTO_PRIZE_CONDITION.SECOND.bonus) ||
+  hit >= LOTTO_PRIZE_CONDITION.FIFTH;

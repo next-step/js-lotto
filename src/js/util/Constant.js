@@ -7,5 +7,4 @@ export const MESSAGE = {
   EXCEEDED_MANUAL_LOTTO: '로또 금액에 맞는 최대치로 수동을 설정하였습니다.',
 };
 
-export const AUTO_N_MESSAGE = (n) => `자동으로 ${n}개 구매합니다`;
 export const ENTER_KEY = 'Enter';

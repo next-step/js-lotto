@@ -1,4 +1,4 @@
-import { LOTTO_NUMBER, LOTTO_PRICE } from './Constant.js';
+import { LOTTO_LENGTH, LOTTO_NUMBER, LOTTO_PRICE } from './Constant.js';
 
 /**
  * @typedef {Object} LottoInfo
@@ -14,14 +14,14 @@ import { LOTTO_NUMBER, LOTTO_PRICE } from './Constant.js';
 export const buy = (purchasingAmount, manualNumberLottos) => {
   const { auto } = getLottoInfo(purchasingAmount, manualNumberLottos.length);
 
-  const automaticallyGeneratedLottos = Array.from({ length: auto }).map(() => generateLottoNumbers());
+  const automaticallyGeneratedLottos = Array.from({ length: auto }).map(generateLottoNumbers);
   return [...manualNumberLottos, ...automaticallyGeneratedLottos];
 };
 
 /** @returns {number[]} */
 export function generateLottoNumbers() {
   const numbers = Array.from({ length: LOTTO_NUMBER.MAX }).map((_, n) => n + 1);
-  const lottoNumbers = numbers.sort(() => Math.random() - 0.5).slice(0, LOTTO_NUMBER.LENGTH);
+  const lottoNumbers = numbers.sort(() => Math.random() - 0.5).slice(0, LOTTO_LENGTH);
   return lottoNumbers.sort((a, b) => a - b);
 }
 
@@ -38,3 +38,5 @@ export function getLottoInfo(purchasingAmount, manualCount) {
     auto: purchasingAmount / LOTTO_PRICE - manualCount,
   };
 }
+
+export const AUTO_N_MESSAGE = (n) => `자동으로 ${n}개 구매합니다`;

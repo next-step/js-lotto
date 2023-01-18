@@ -1,5 +1,6 @@
 import 'cypress-each';
-import { AUTO_N_MESSAGE, MESSAGE } from '../../src/js/util/Constant.js';
+import { AUTO_N_MESSAGE } from '../../src/js/service/lottoShop.js';
+import { MESSAGE } from '../../src/js/util/Constant.js';
 
 describe('로또 요구사항을 테스트한다', () => {
   const URL = '../../index.html';

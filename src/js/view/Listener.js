@@ -1,7 +1,8 @@
 import { LOTTO_NUMBER, LOTTO_PRICE } from '../service/Constant.js';
-import { buy, getLottoInfo } from '../service/LottoBuyer.js';
+import { buy, getLottoInfo } from '../service/lottoShop';
+import { AUTO_N_MESSAGE } from '../service/lottoShop.js';
 import { ValidationError } from '../service/ValidationError.js';
-import { AUTO_N_MESSAGE, ENTER_KEY, MESSAGE } from '../util/Constant.js';
+import { ENTER_KEY, MESSAGE } from '../util/Constant.js';
 import { validateNumbers, validatePurchasingAmount } from '../util/Validator.js';
 import { setVisibleAreas } from './Element.js';
 import { setLottoNumberToggle, setLottos } from './Lotto.js';
@@ -104,7 +105,7 @@ export const onPurchasingAmount = () => {
   });
 };
 
-export const onManualAdd = () => {
+export const handleAddManual = () => {
   const purchasingAmount = $purchasingAmountInput.value;
   const { total, manual, auto } = getLottoInfo(purchasingAmount, getCountOfBuyingManually());
 
@@ -144,7 +145,7 @@ export const setListeners = (lottos) => {
   $winningNumbers.forEach((input) => input.addEventListener('keypress', onLottoNumberInput));
   setEnterListener($purchasingAmountInput, onPurchasingAmount);
   setClickListener($startButton, onPurchasingAmount);
-  setClickListener($manualAddButton, onManualAdd);
+  setClickListener($manualAddButton, handleAddManual);
   setClickListener($lottoNumbersToggleButton, setLottoNumberToggle);
   setClickListener($confirmButton, () => {
     lottos = onLottosBought();
