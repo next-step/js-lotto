@@ -1,9 +1,76 @@
-import { buy } from '../service/LottoBuyer.js';
-import { validatePurchasingAmount } from '../util/Validator.js';
-import { setVisibleResultAreas } from './Element.js';
-import { setLottos } from './Lotto.js';
+import { LOTTO_NUMBER, LOTTO_PRICE } from '../service/Constant.js';
+import { buy, getLottoInfo } from '../service/lottoShop.js';
+import { AUTO_N_MESSAGE } from '../service/lottoShop.js';
+import { ValidationError } from '../service/ValidationError.js';
+import { ENTER_KEY, MESSAGE } from '../util/Constant.js';
+import { validateNumbers, validatePurchasingAmount } from '../util/Validator.js';
+import { setVisibleAreas } from './Element.js';
+import { setLottoNumberToggle, setLottos } from './Lotto.js';
 import { getMyLottoResult, updateLottoResult } from './LottoResult.js';
-import { $checkPurchasingManually, $modal, $purchasingAmountInput } from './Selector.js';
+import {
+  appendLottoNumberInputs,
+  getCountOfBuyingManually,
+  getLottoManualNumberLottos,
+  truncateLottoNumberInput,
+} from './ManualInput.js';
+import {
+  $autoPurchasingInformationPhrase,
+  $bonusNumber,
+  $confirmButton,
+  $lottoNumbersToggleButton,
+  $manualAddButton,
+  $modal,
+  $modalClose,
+  $purchasingAmountInput,
+  $purchasingManuallyForm,
+  $restart,
+  $resultAreas,
+  $showResultButton,
+  $startButton,
+  $winningNumbers,
+} from './Selector.js';
+
+/**
+ *
+ * @param {function} callback
+ */
+export const validationErrorHandler = (callback) => {
+  try {
+    return callback();
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      alert(error.message);
+      return;
+    }
+    console.error(error);
+  }
+};
+
+/**
+ *
+ * @param {HTMLElement} selector
+ * @param {function} callback
+ * @returns
+ */
+export const setClickListener = (selector, callback) => {
+  selector.addEventListener('click', () => validationErrorHandler(callback));
+};
+
+export const setEnterListener = (selector, callback) => {
+  selector.addEventListener(
+    'keypress',
+    /**
+     *
+     * @param {KeyboardEvent} event
+     */
+    (event) => {
+      if (event.key === ENTER_KEY) {
+        event.preventDefault();
+        validationErrorHandler(callback);
+      }
+    }
+  );
+};
 
 /**
  * @param {number[]} lottos
@@ -24,23 +91,77 @@ export const onModalClose = () => {
 
 export const onLottoRestart = () => {
   $purchasingAmountInput.value = '';
-  setVisibleResultAreas(false);
+  setVisibleAreas($resultAreas, false);
   onModalClose();
 };
 
-export const onLottosBought = () => {
-  try {
+export const onPurchasingAmount = () => {
+  validationErrorHandler(() => {
     const purchasingAmount = $purchasingAmountInput.value;
+    if (purchasingAmount % LOTTO_PRICE) throw new ValidationError(MESSAGE.INVALID_AMOUNT_UNIT);
     validatePurchasingAmount(purchasingAmount);
-    // TODO: 기능 작성 후 역할 분리하기
-    const isPurchasingManually = $checkPurchasingManually.checked;
-    // 로또 구매 로직
-    const lottos = buy(parseInt(purchasingAmount));
-    setLottos(lottos);
-    setVisibleResultAreas();
-    return lottos;
-  } catch (error) {
-    alert(error.message);
-    console.error(error);
+    setVisibleAreas($purchasingManuallyForm, true);
+    truncateLottoNumberInput();
+    $autoPurchasingInformationPhrase.innerText = AUTO_N_MESSAGE(purchasingAmount / LOTTO_PRICE);
+  });
+};
+
+export const handleAddManual = () => {
+  const purchasingAmount = $purchasingAmountInput.value;
+  const { total, manual, auto } = getLottoInfo(purchasingAmount, getCountOfBuyingManually());
+
+  if (total - manual <= 0) {
+    alert(MESSAGE.EXCEEDED_MANUAL_LOTTO);
+    return;
   }
+  appendLottoNumberInputs();
+  $autoPurchasingInformationPhrase.innerText = AUTO_N_MESSAGE(auto - 1);
+};
+
+export const onLottosBought = () =>
+  validationErrorHandler(() => {
+    // 로또 구매 로직
+    const manualNumberLottos = getLottoManualNumberLottos();
+    manualNumberLottos.forEach((manualNumber) => validateNumbers(manualNumber));
+    const purchasingAmount = $purchasingAmountInput.value;
+    const lottos = buy(parseInt(purchasingAmount), manualNumberLottos);
+    setLottos(lottos);
+    setVisibleAreas($resultAreas);
+    return lottos;
+  });
+
+export const onLottoNumberInput = function (event) {
+  if (this.value.length > 0 && event.key === ENTER_KEY) {
+    event.preventDefault();
+    const children = this.parentNode.children;
+    const myIndex = Array.prototype.indexOf.call(children, this);
+    const hasNext = myIndex < children.length - 1;
+    hasNext && children[myIndex + 1].focus();
+    return;
+  }
+
+  const key = Number(event.key);
+  if (!(!isNaN(key) && this.value.length < String(LOTTO_NUMBER.MAX).length)) {
+    event.preventDefault();
+    return;
+  }
+};
+
+/**
+ *
+ * @param {number[]} lottos
+ */
+export const setListeners = (lottos) => {
+  $winningNumbers.forEach((input) => input.addEventListener('keypress', onLottoNumberInput));
+  $bonusNumber.addEventListener('keypress', onLottoNumberInput);
+  setEnterListener($purchasingAmountInput, onPurchasingAmount);
+  setClickListener($startButton, onPurchasingAmount);
+  setClickListener($manualAddButton, handleAddManual);
+  setClickListener($lottoNumbersToggleButton, setLottoNumberToggle);
+  setClickListener($confirmButton, () => {
+    lottos = onLottosBought();
+  });
+  setClickListener($showResultButton, () => onModalShow(lottos));
+  setClickListener($modalClose, onModalClose);
+  setClickListener($restart, onLottoRestart);
 };

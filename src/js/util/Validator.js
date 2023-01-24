@@ -1,5 +1,5 @@
+import { ValidationError } from '../service/ValidationError.js';
 import { MESSAGE } from './Constant.js';
-import { convertToNumbers } from './Util.js';
 
 /** @type {number} */
 export const isNumber = (s) => !isNaN(Number(s));
@@ -24,11 +24,22 @@ export const isWithInRangedNumber = (numbers, greaterThan = 1, lessThan = 45) =>
   return rangedNumber.length === numbers.length;
 };
 
+/**
+ *
+ * @param {string} s
+ */
 export const validatePurchasingAmount = (s) => {
   if (!isNumber(s) || Number(s) < 1000) {
-    throw new Error(MESSAGE.INVALID_AMOUNT_MIN);
+    throw new ValidationError(MESSAGE.INVALID_AMOUNT_MIN);
   }
 };
+
+/**
+ *
+ * @param {string} s
+ * @returns {boolean}
+ */
+export const isLottoNumberInput = (s) => !s.length === 1 && !isNumber(s);
 
 /**
  * @param {string[]|number[]} inputNumbers
@@ -43,13 +54,12 @@ export const isEmptyNumberFields = (inputNumbers) => {
  * */
 export const validateNumbers = (inputNumbers) => {
   if (isEmptyNumberFields(inputNumbers)) {
-    throw new Error(MESSAGE.INVALID_WINNING_MODAL);
+    throw new ValidationError(MESSAGE.INVALID_WINNING_MODAL);
   }
-  const winningNumbers = convertToNumbers(inputNumbers).slice(0, 6);
-  if (!isUniqueNumbers(winningNumbers)) {
-    throw new Error(MESSAGE.INVALID_WINNING_NUMBER_DUPLICATED);
+  if (!isUniqueNumbers(inputNumbers)) {
+    throw new ValidationError(MESSAGE.INVALID_WINNING_NUMBER_DUPLICATED);
   }
-  if (!isWithInRangedNumber(winningNumbers)) {
-    throw new Error(MESSAGE.INVALID_WINNING_NUMBER_RANGE);
+  if (!isWithInRangedNumber(inputNumbers)) {
+    throw new ValidationError(MESSAGE.INVALID_WINNING_NUMBER_RANGE);
   }
 };
