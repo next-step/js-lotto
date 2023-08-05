@@ -1,0 +1,22 @@
+{
+  "env": {
+    "es2021": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": ["airbnb-base", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    // const만 사용 할 수 있도록 설정
+    "prefer-const": "error",
+    // 들여쓰기 깊이 제한
+    "max-depth": ["error", 1],
+    // 함수의 매개변수 개수 제한
+    "max-params": ["error", 2],
+    // // 함수의 길이 제한
+    "max-lines-per-function": ["error", { "max": 10 }]
+  }
+}

@@ -1,9 +1,27 @@
 {
   "name": "lotto",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
+  "scripts": {
+    "start-step1": "node src/step1-index.js",
+    "test": "jest --watch"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/utils/"
+    ]
+  },
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.4.8",
+    "cypress": "^6.3.0",
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-plugin-import": "^2.25.2",
+    "jest": "^29.6.2",
+    "prettier": "^3.0.1"
   }
 }
