@@ -9,11 +9,17 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "<rootDir>/__tests__/utils/"
-    ]
+      "<rootDir>/__tests__/utils/",
+      "<rootDir>/node_modules"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.mjs$": "babel-jest"
+    }
   },
   "license": "MIT",
   "devDependencies": {
+    "@babel/preset-env": "^7.22.9",
     "@types/jest": "^29.5.3",
     "@types/node": "^20.4.8",
     "cypress": "^6.3.0",
