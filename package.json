@@ -10,6 +10,7 @@
   "jest": {
     "testPathIgnorePatterns": [
       "<rootDir>/__tests__/utils/",
+      "<rootDir>/__tests__/constants/",
       "<rootDir>/node_modules"
     ],
     "transform": {
