@@ -10,13 +10,23 @@
     "sourceType": "module"
   },
   "rules": {
+    // 인스턴스 미 참조 하는 class method 제한
+    "class-methods-use-this": [0],
+    // import시 from './~.js' 사용 제한
+    "import/extensions": [0],
+    // 함수 내 매개변수 재할당 제한
+    "no-param-reassign": [0],
+    // single export 제한
+    "import/prefer-default-export": [0],
+    // node:process 에러 방지
+    "import/no-unresolved": [0],
     // const만 사용 할 수 있도록 설정
-    "prefer-const": "error",
+    "prefer-const": ["error"],
     // 들여쓰기 깊이 제한
     "max-depth": ["error", 1],
     // 함수의 매개변수 개수 제한
-    "max-params": ["error", 2],
+    "max-params": ["error", 2]
     // // 함수의 길이 제한
-    "max-lines-per-function": ["error", { "max": 10 }]
+    // "max-lines-per-function": ["error", { "max": 10 }]
   }
 }
