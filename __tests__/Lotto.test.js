@@ -1,10 +1,10 @@
+import { DEFAULT_LIMIT_LOTTO_COUNT, MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER } from '../src/step1/constants/lotto.js';
+import { LottoCalculator, LottoMerchant } from '../src/step1/model/index.js';
 import {
-  DEFAULT_LIMIT_LOTTO_COUNT,
-  MAX_LOTTO_NUMBER,
-  MIN_LOTTO_NUMBER,
-} from '../src/step1/constants/lotto.js';
-import { LottoMerchant } from '../src/step1/model/index.js';
-import { isAllLottoValidRange, isSixNumberInLotto } from './utils/index.js';
+  ONE_LOTTO_RATE_OF_RETURNS_TEST_CASE,
+  ONE_LOTTO_WINNING_RESULT_TEST_CASE,
+} from './constants/winningLottoFeature.js';
+import { isAllLottoValidRange, isSixNumberInLotto } from './utils/createLottoFeature.js';
 
 describe('로또 발행 기능 testing', () => {
   const createLottos = (amount) => {
@@ -43,13 +43,10 @@ describe('로또 발행 기능 testing', () => {
     [6, 6000],
     [2, 2000],
     [8, 8000],
-  ])(
-    `%i개의 로또 번호는 모두 ${DEFAULT_LIMIT_LOTTO_COUNT}개여야 한다.`,
-    (_, amount) => {
-      const lottos = createLottos(amount);
-      expect(lottos.every((lotto) => isSixNumberInLotto(lotto))).toBeTruthy();
-    },
-  );
+  ])(`%i개의 로또 번호는 모두 ${DEFAULT_LIMIT_LOTTO_COUNT}개여야 한다.`, (_, amount) => {
+    const lottos = createLottos(amount);
+    expect(lottos.every((lotto) => isSixNumberInLotto(lotto))).toBeTruthy();
+  });
 
   test.each([
     [3, 3000],
@@ -57,11 +54,31 @@ describe('로또 발행 기능 testing', () => {
     [6, 6000],
     [2, 2000],
     [8, 8000],
-  ])(
-    `%i개의 로또 번호는 모두 ${MIN_LOTTO_NUMBER} ~ ${MAX_LOTTO_NUMBER}의 범위를 가진다.`,
-    (_, amount) => {
-      const lottos = createLottos(amount);
-      expect(lottos.every((lotto) => isAllLottoValidRange(lotto))).toBeTruthy();
-    },
-  );
+  ])(`%i개의 로또 번호는 모두 ${MIN_LOTTO_NUMBER} ~ ${MAX_LOTTO_NUMBER}의 범위를 가진다.`, (_, amount) => {
+    const lottos = createLottos(amount);
+    expect(lottos.every((lotto) => isAllLottoValidRange(lotto))).toBeTruthy();
+  });
+});
+
+describe('로또 당첨 기능 testing', () => {
+  const createLotto = (params) => {
+    const calculator = new LottoCalculator();
+    const [lottoResult, rateOfReturn] = calculator.calculateResult(params);
+    return [lottoResult, rateOfReturn];
+  };
+  test.each(ONE_LOTTO_WINNING_RESULT_TEST_CASE)('로또 1개의 당첨 결과는 %s와 같다', (result, params) => {
+    const [lottoResult] = createLotto(params);
+    expect(lottoResult).toStrictEqual(result);
+  });
+
+  test.each(ONE_LOTTO_WINNING_RESULT_TEST_CASE)('로또 1개의 당첨 갯수는 1개 이다.', (_, params) => {
+    const [lottoResult] = createLotto(params);
+    const winningSum = Object.values(lottoResult).reduce((acc, cur) => acc + cur, 0);
+    expect(winningSum).toBe(1);
+  });
+
+  test.each(ONE_LOTTO_RATE_OF_RETURNS_TEST_CASE)('로또 1개의 수익률은 %i% 이다.', (rateOfReturn, params) => {
+    const [, _rateOfReturn] = createLotto(params);
+    expect(_rateOfReturn === rateOfReturn).toBeTruthy();
+  });
 });
