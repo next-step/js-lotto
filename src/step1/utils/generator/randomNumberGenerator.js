@@ -1,4 +1,4 @@
-import { MAX_LOTTO_NUMBER } from '../../constants/lotto';
+import { MAX_LOTTO_NUMBER } from '../../constants/lotto.js';
 
 export const RandomNumberGenerator = {
   generateRandomNumber() {

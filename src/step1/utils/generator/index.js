@@ -1,1 +1,1 @@
-export * from './randomNumberGenerator';
+export * from './randomNumberGenerator.js';

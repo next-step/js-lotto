@@ -27,20 +27,17 @@ export default class Lotto {
     }
   }
 
-  #organizeLottos() {
-    this.#lottos = this.#lottos.reduce((acc, cur, arrayIndex) => {
-      const lottoIndex = Math.floor(arrayIndex / DEFAULT_LIMIT_LOTTO_COUNT);
-      const isCreateNewLotto = !acc[lottoIndex];
-      if (isCreateNewLotto) acc[lottoIndex] = [];
-      acc[lottoIndex].push(cur);
-      return acc;
-    }, []);
+  #organizeLottos(lottos, chunkSize) {
+    const results = [];
+    while (lottos.length) {
+      results.push(lottos.splice(0, chunkSize));
+    }
+    this.#lottos = results;
   }
 
-  // 메서드 리팩터링 필요
   createLotto(cycle = 1) {
     this.#addLottoNumbers(cycle);
-    this.#organizeLottos();
+    this.#organizeLottos(this.#lottos, DEFAULT_LIMIT_LOTTO_COUNT);
     return this.#lottos;
   }
 }
