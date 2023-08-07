@@ -11,6 +11,11 @@ export default class LottoCalculator {
     '6_NUMBERS': ['6개 일치 (2,000,000,000원)', 2_000_000_000],
   };
 
+  static #convertToRateOfReturn(rateOfReturn) {
+    if (Number.isInteger(rateOfReturn)) return rateOfReturn;
+    return rateOfReturn.toFixed(1);
+  }
+
   constructor() {
     this.#lottoResult = this.#initLottoResult();
     this.#lottoBuyerStatus = { winningCount: 0, isBonusNumber: false, accumulateWinAmount: 0 };
@@ -51,7 +56,7 @@ export default class LottoCalculator {
   calculateResult({ investmentAmount, winningNumbers, bonusNumber, lottos }) {
     this.#compareLottos({ winningNumbers, bonusNumber, lottos });
     this.#updateResult();
-    const rateOfReturn = this.#calculateRateOfReturn(investmentAmount);
-    return [this.#lottoResult, Number.isInteger(rateOfReturn) ? rateOfReturn : rateOfReturn.toFixed(1)];
+    const rateOfReturn = LottoCalculator.#convertToRateOfReturn(this.#calculateRateOfReturn(investmentAmount));
+    return [this.#lottoResult, rateOfReturn];
   }
 }
