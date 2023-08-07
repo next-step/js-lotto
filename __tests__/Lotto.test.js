@@ -1,6 +1,8 @@
 import { DEFAULT_LIMIT_LOTTO_COUNT, MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER } from '../src/step1/constants/lotto.js';
 import { LottoCalculator, LottoMerchant } from '../src/step1/model/index.js';
 import {
+  LOTTOS_RATE_OF_RETURNS_TEST_CASE,
+  LOTTOS_WINNING_RESULT_TEST_CASE,
   ONE_LOTTO_RATE_OF_RETURNS_TEST_CASE,
   ONE_LOTTO_WINNING_RESULT_TEST_CASE,
 } from './constants/winningLottoFeature.js';
@@ -66,19 +68,35 @@ describe('로또 당첨 기능 testing', () => {
     const [lottoResult, rateOfReturn] = calculator.calculateResult(params);
     return [lottoResult, rateOfReturn];
   };
-  test.each(ONE_LOTTO_WINNING_RESULT_TEST_CASE)('로또 1개의 당첨 결과는 %s와 같다', (result, params) => {
-    const [lottoResult] = createLotto(params);
-    expect(lottoResult).toStrictEqual(result);
+  test.each(ONE_LOTTO_WINNING_RESULT_TEST_CASE)(`로또 1개의 당첨 결과는 $output과 같다`, ({ input, output }) => {
+    const [lottoResult] = createLotto(input);
+    expect(lottoResult).toStrictEqual(output);
   });
 
-  test.each(ONE_LOTTO_WINNING_RESULT_TEST_CASE)('로또 1개의 당첨 갯수는 1개 이다.', (_, params) => {
-    const [lottoResult] = createLotto(params);
+  test.each(ONE_LOTTO_WINNING_RESULT_TEST_CASE)('$description의 로또 1개의 당첨 갯수는 1개 이다.', ({ input }) => {
+    const [lottoResult] = createLotto(input);
     const winningSum = Object.values(lottoResult).reduce((acc, cur) => acc + cur, 0);
     expect(winningSum).toBe(1);
   });
 
   test.each(ONE_LOTTO_RATE_OF_RETURNS_TEST_CASE)('로또 1개의 수익률은 %i% 이다.', (rateOfReturn, params) => {
     const [, _rateOfReturn] = createLotto(params);
-    expect(_rateOfReturn === rateOfReturn).toBeTruthy();
+    expect(_rateOfReturn === `${rateOfReturn}%`).toBeTruthy();
   });
+
+  test.each(LOTTOS_WINNING_RESULT_TEST_CASE)(
+    '로또 $input.lottos.length개의 당첨 결과는 $output과 같다',
+    ({ input, output }) => {
+      const [lottoResult] = createLotto(input);
+      expect(lottoResult).toStrictEqual(output);
+    },
+  );
+
+  test.each(LOTTOS_RATE_OF_RETURNS_TEST_CASE)(
+    '$description에서 로또 구매자의 수익율은 $output.rateOfReturns 이다.',
+    ({ input, output }) => {
+      const [, rateOfReturn] = createLotto(input);
+      expect(rateOfReturn).toBe(output.rateOfReturns);
+    },
+  );
 });
