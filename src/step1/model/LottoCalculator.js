@@ -3,6 +3,8 @@ export default class LottoCalculator {
 
   #lottoBuyerStatus;
 
+  #accumulateWinAmount;
+
   static #WIN_TABLE = {
     '3_NUMBERS': ['3개 일치 (5,000원)', 5_000],
     '4_NUMBERS': ['4개 일치 (50,000원)', 50_000],
@@ -12,13 +14,14 @@ export default class LottoCalculator {
   };
 
   static #convertToRateOfReturn(rateOfReturn) {
-    if (Number.isInteger(rateOfReturn)) return rateOfReturn;
-    return rateOfReturn.toFixed(1);
+    if (Number.isInteger(rateOfReturn)) return `${rateOfReturn}%`;
+    return `${rateOfReturn.toFixed(1)}%`;
   }
 
   constructor() {
     this.#lottoResult = this.#initLottoResult();
-    this.#lottoBuyerStatus = { winningCount: 0, isBonusNumber: false, accumulateWinAmount: 0 };
+    this.#lottoBuyerStatus = { winningCounts: [], isBonusNumber: [] };
+    this.#accumulateWinAmount = 0;
   }
 
   #initLottoResult() {
@@ -29,28 +32,48 @@ export default class LottoCalculator {
     }, {});
   }
 
-  #compareLottos({ winningNumbers, bonusNumber, lottos }) {
-    lottos.forEach((lotto) => {
-      lotto.forEach((lottoNumber, i) => {
-        const winningNumber = winningNumbers[i];
-        if (lottoNumber === winningNumber) this.#lottoBuyerStatus.winningCount += 1;
-        if (lottoNumber === bonusNumber) this.#lottoBuyerStatus.isBonusNumber = true;
-      });
+  #initLottoBuyerStatus() {
+    this.#lottoBuyerStatus.winningCounts.push(0);
+    this.#lottoBuyerStatus.isBonusNumber.push(false);
+  }
+
+  #addLottoBuyerStatus({ lotto, lottoIndex, winningNumbers, bonusNumber }) {
+    lotto.forEach((lottoNumber, lottoNumberIndex) => {
+      const winningNumber = winningNumbers[lottoNumberIndex];
+      if (lottoNumber === winningNumber) this.#lottoBuyerStatus.winningCounts[lottoIndex] += 1;
+      if (lottoNumber === bonusNumber) this.#lottoBuyerStatus.isBonusNumber[lottoIndex] = true;
     });
   }
 
-  #updateResult() {
-    const { winningCount, isBonusNumber } = this.#lottoBuyerStatus;
-    const winTableKey = `${winningCount}_NUMBERS${isBonusNumber && winningCount === 5 ? '_WITH_BONUS' : ''}`;
+  #compareLottos({ winningNumbers, bonusNumber, lottos }) {
+    lottos.forEach((lotto, lottoIndex) => {
+      this.#initLottoBuyerStatus();
+      this.#addLottoBuyerStatus({ lotto, lottoIndex, winningNumbers, bonusNumber });
+    });
+  }
+
+  #createWinTableKey({ winningCount, isBonusNumber, lottoIndex }) {
+    return `${winningCount}_NUMBERS${isBonusNumber[lottoIndex] && winningCount === 5 ? '_WITH_BONUS' : ''}`;
+  }
+
+  #addLottoResult(winTableKey) {
     if (winTableKey in LottoCalculator.#WIN_TABLE) {
       const [lottoResultKey, lottoWinningAmount] = LottoCalculator.#WIN_TABLE[winTableKey];
       this.#lottoResult[lottoResultKey] += 1;
-      this.#lottoBuyerStatus.accumulateWinAmount += lottoWinningAmount;
+      this.#accumulateWinAmount += lottoWinningAmount;
     }
   }
 
+  #updateResult() {
+    const { winningCounts, isBonusNumber } = this.#lottoBuyerStatus;
+    winningCounts.forEach((winningCount, lottoIndex) => {
+      const winTableKey = this.#createWinTableKey({ winningCount, lottoIndex, isBonusNumber });
+      this.#addLottoResult(winTableKey);
+    });
+  }
+
   #calculateRateOfReturn(investmentAmount) {
-    return Math.floor(this.#lottoBuyerStatus.accumulateWinAmount / investmentAmount) * 100;
+    return (this.#accumulateWinAmount / investmentAmount) * 100;
   }
 
   calculateResult({ investmentAmount, winningNumbers, bonusNumber, lottos }) {
