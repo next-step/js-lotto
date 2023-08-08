@@ -1,6 +1,6 @@
 import { END_GAME, RESTART_GAME } from '../constants/controller.js';
 import { INPUT_MESSAGE, OUTPUT_MESSAGE } from '../constants/message.js';
-import { LottoBuyer } from '../model/index.js';
+import { Lotto, LottoMerchant } from '../model/index.js';
 import { InputView, OutputView } from '../view/index.js';
 
 export default class LottoGameController {
@@ -23,7 +23,7 @@ export default class LottoGameController {
 
   async #initalizeWinningNumbers() {
     const winningNumbers = await InputView.inputByUser(INPUT_MESSAGE.WINNING_NUMBERS);
-    return winningNumbers.split(',').map(Number);
+    return winningNumbers;
   }
 
   async #initializeBonusNumber() {
@@ -43,8 +43,8 @@ export default class LottoGameController {
   }
 
   #requestBuyingLotto(amount) {
-    const lottoBuyer = LottoBuyer.fromGiveAmount(amount);
-    return lottoBuyer.buyLotto();
+    const lottoBuyer = LottoMerchant.fromPay(amount);
+    return lottoBuyer.sellLotto();
   }
 
   #printLottos(lottos) {
@@ -70,7 +70,8 @@ export default class LottoGameController {
 
   async #processPrintLottoResults(investmentAmount, lottos) {
     const [winningNumbers, bonusNumber] = await this.#initializeNumbers();
-    const [lottoResult, rateOfReturn] = this.#requestResults({ investmentAmount, lottos, winningNumbers, bonusNumber });
+    const winningLotto = Lotto.createLottoByString(winningNumbers, ',');
+    const [lottoResult, rateOfReturn] = this.#requestResults({ investmentAmount, lottos, winningLotto, bonusNumber });
     this.#printLottoResults(
       LottoGameController.#convertLottoResultForPrint(lottoResult),
       LottoGameController.#convertRateOfReturnForPrint(rateOfReturn),

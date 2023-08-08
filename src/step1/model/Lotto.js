@@ -1,40 +1,25 @@
+import { DEFAULT_LIMIT_LOTTO_COUNT, MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER } from '../constants/lotto.js';
 import { RandomNumberGenerator } from '../utils/generator/index.js';
-import { DEFAULT_LIMIT_LOTTO_COUNT, EXIT_GENERATE_LOTTO_COUNT } from '../constants/lotto.js';
 
 export default class Lotto {
-  #lottos;
-
-  #limitCount;
-
-  constructor() {
-    this.#lottos = [];
-    this.#limitCount = DEFAULT_LIMIT_LOTTO_COUNT;
+  constructor(lottoNumbers) {
+    this.lottoNumbers = lottoNumbers;
   }
 
-  #setLimitCount(cycle) {
-    this.#limitCount *= cycle;
+  static createLottoByRandomNumber(count = 1) {
+    return Array(count)
+      .fill(0)
+      .map(() => {
+        const randomNumbers = RandomNumberGenerator.pickNumbersInRange({
+          startNumber: MIN_LOTTO_NUMBER,
+          endNumber: MAX_LOTTO_NUMBER,
+          count: DEFAULT_LIMIT_LOTTO_COUNT,
+        });
+        return new Lotto(randomNumbers);
+      });
   }
 
-  #addLottoNumbers() {
-    while (this.#limitCount !== EXIT_GENERATE_LOTTO_COUNT) {
-      const randomNumber = RandomNumberGenerator.generateRandomNumber();
-      this.#lottos.push(randomNumber);
-      this.#limitCount -= 1;
-    }
-  }
-
-  #organizeLottos(lottos, chunkSize) {
-    const results = [];
-    while (lottos.length) {
-      results.push(lottos.splice(0, chunkSize));
-    }
-    this.#lottos = results;
-  }
-
-  createLotto(count) {
-    this.#setLimitCount(count);
-    this.#addLottoNumbers();
-    this.#organizeLottos(this.#lottos, DEFAULT_LIMIT_LOTTO_COUNT);
-    return this.#lottos;
+  static createLottoByString(string, seperator) {
+    return new Lotto(string.split(seperator));
   }
 }

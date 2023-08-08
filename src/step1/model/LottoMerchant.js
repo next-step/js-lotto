@@ -18,7 +18,6 @@ export default class LottoMerchant {
   }
 
   sellLotto() {
-    const lotto = new Lotto();
-    return lotto.createLotto(this.#createLottoCount());
+    return Lotto.createLottoByRandomNumber(this.#createLottoCount());
   }
 }

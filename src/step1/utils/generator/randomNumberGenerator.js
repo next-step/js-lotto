@@ -1,7 +1,13 @@
-import { MAX_LOTTO_NUMBER } from '../../constants/lotto.js';
-
 export const RandomNumberGenerator = {
-  generateRandomNumber() {
-    return Math.floor(Math.random() * MAX_LOTTO_NUMBER) + 1;
+  shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+  },
+  pickNumbersInRange({ startNumber, endNumber, count }) {
+    const result = [];
+    for (let i = startNumber; i <= endNumber; i += 1) {
+      result.push(i);
+    }
+    console.log(this.shuffle(result).slice(0, count));
+    return this.shuffle(result).slice(0, count);
   },
 };
