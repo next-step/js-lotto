@@ -1,21 +1,24 @@
 import { LottoCalculator, LottoMerchant } from './index.js';
 
 export default class LottoBuyer {
-  #lottoMerchant;
+  #amount;
 
-  #lottoCalculator;
-
-  constructor() {
-    this.#lottoMerchant = new LottoMerchant();
-    this.#lottoCalculator = new LottoCalculator();
+  constructor(amount) {
+    this.#amount = amount;
   }
 
-  buyLotto(amount) {
-    return this.#lottoMerchant.sellLotto(amount);
+  static fromGiveAmount(amount) {
+    return new LottoBuyer(amount);
+  }
+
+  buyLotto() {
+    const lottoMerchant = new LottoMerchant();
+    return lottoMerchant.sellLotto(this.#amount);
   }
 
   confirmResult({ investmentAmount, winningNumbers, bonusNumber, lottos }) {
-    return this.#lottoCalculator.calculateResult({
+    const lottoCalculator = new LottoCalculator();
+    return lottoCalculator.calculateResult({
       investmentAmount,
       winningNumbers,
       bonusNumber,

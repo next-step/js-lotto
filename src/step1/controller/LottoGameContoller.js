@@ -6,10 +6,6 @@ import { InputView, OutputView } from '../view/index.js';
 export default class LottoGameController {
   #lottoBuyer;
 
-  constructor() {
-    this.#init();
-  }
-
   static #convertLottoResultForPrint(result) {
     return Object.entries(result)
       .map((element) => `${element.join(' - ')}개`)
@@ -18,10 +14,6 @@ export default class LottoGameController {
 
   static #convertRateOfReturnForPrint(rateOfReturn) {
     return `총 수익률은 ${rateOfReturn}입니다.`;
-  }
-
-  #init() {
-    this.#lottoBuyer = new LottoBuyer();
   }
 
   async #initializeAmount() {
@@ -51,7 +43,8 @@ export default class LottoGameController {
   }
 
   #requestBuyingLotto(amount) {
-    return this.#lottoBuyer.buyLotto(amount);
+    const lottoBuyer = LottoBuyer.fromGiveAmount(amount);
+    return lottoBuyer.buyLotto();
   }
 
   #printLottos(lottos) {
@@ -93,7 +86,6 @@ export default class LottoGameController {
   async #processEndGame(endCount) {
     if (endCount === END_GAME) process.exit();
     if (endCount === RESTART_GAME) {
-      this.#init();
       await this.run();
     }
   }
