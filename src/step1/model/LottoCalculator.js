@@ -1,7 +1,7 @@
 export default class LottoCalculator {
   #lottoResult;
 
-  #lottoBuyerStatus;
+  #winningInfo;
 
   #accumulateWinAmount;
 
@@ -13,15 +13,15 @@ export default class LottoCalculator {
     '6_NUMBERS': ['6개 일치 (2,000,000,000원)', 2_000_000_000],
   };
 
+  constructor() {
+    this.#lottoResult = this.#initLottoResult();
+    this.#winningInfo = { winningCounts: [], isBonusNumber: [] };
+    this.#accumulateWinAmount = 0;
+  }
+
   static #convertToRateOfReturn(rateOfReturn) {
     if (Number.isInteger(rateOfReturn)) return `${rateOfReturn}%`;
     return `${rateOfReturn.toFixed(1)}%`;
-  }
-
-  constructor() {
-    this.#lottoResult = this.#initLottoResult();
-    this.#lottoBuyerStatus = { winningCounts: [], isBonusNumber: [] };
-    this.#accumulateWinAmount = 0;
   }
 
   #initLottoResult() {
@@ -32,23 +32,23 @@ export default class LottoCalculator {
     }, {});
   }
 
-  #initLottoBuyerStatus() {
-    this.#lottoBuyerStatus.winningCounts.push(0);
-    this.#lottoBuyerStatus.isBonusNumber.push(false);
+  #initWinningInfo() {
+    this.#winningInfo.winningCounts.push(0);
+    this.#winningInfo.isBonusNumber.push(false);
   }
 
-  #addLottoBuyerStatus({ lotto, lottoIndex, winningNumbers, bonusNumber }) {
+  #addWinningInfo({ lotto, lottoIndex, winningNumbers, bonusNumber }) {
     lotto.forEach((lottoNumber, lottoNumberIndex) => {
       const winningNumber = winningNumbers[lottoNumberIndex];
-      if (lottoNumber === winningNumber) this.#lottoBuyerStatus.winningCounts[lottoIndex] += 1;
-      if (lottoNumber === bonusNumber) this.#lottoBuyerStatus.isBonusNumber[lottoIndex] = true;
+      if (lottoNumber === winningNumber) this.#winningInfo.winningCounts[lottoIndex] += 1;
+      if (lottoNumber === bonusNumber) this.#winningInfo.isBonusNumber[lottoIndex] = true;
     });
   }
 
-  #compareLottos({ winningNumbers, bonusNumber, lottos }) {
+  #compareLottosToWinningInfo({ winningNumbers, bonusNumber, lottos }) {
     lottos.forEach((lotto, lottoIndex) => {
-      this.#initLottoBuyerStatus();
-      this.#addLottoBuyerStatus({ lotto, lottoIndex, winningNumbers, bonusNumber });
+      this.#initWinningInfo();
+      this.#addWinningInfo({ lotto, lottoIndex, winningNumbers, bonusNumber });
     });
   }
 
@@ -64,8 +64,8 @@ export default class LottoCalculator {
     }
   }
 
-  #updateResult() {
-    const { winningCounts, isBonusNumber } = this.#lottoBuyerStatus;
+  #updateResultsByWinningTableKey() {
+    const { winningCounts, isBonusNumber } = this.#winningInfo;
     winningCounts.forEach((winningCount, lottoIndex) => {
       const winTableKey = this.#createWinTableKey({ winningCount, lottoIndex, isBonusNumber });
       this.#addLottoResult(winTableKey);
@@ -77,8 +77,8 @@ export default class LottoCalculator {
   }
 
   calculateResult({ investmentAmount, winningNumbers, bonusNumber, lottos }) {
-    this.#compareLottos({ winningNumbers, bonusNumber, lottos });
-    this.#updateResult();
+    this.#compareLottosToWinningInfo({ winningNumbers, bonusNumber, lottos });
+    this.#updateResultsByWinningTableKey();
     const rateOfReturn = LottoCalculator.#convertToRateOfReturn(this.#calculateRateOfReturn(investmentAmount));
     return [this.#lottoResult, rateOfReturn];
   }
