@@ -1,18 +1,24 @@
-import { PRICE_PER_LOTTO } from '../constants/lotto.js';
 import Lotto from './Lotto.js';
 
 export default class LottoMerchant {
-  #lotto;
+  #receivedAmount;
 
-  constructor() {
-    this.#lotto = new Lotto();
+  static #PRICE_PER_LOTTO = 1000;
+
+  constructor(receivedAmount) {
+    this.#receivedAmount = receivedAmount;
   }
 
-  #createLottoGenerationCycle(amount) {
-    return Math.floor(amount / PRICE_PER_LOTTO);
+  static fromPay(receivedAmount) {
+    return new LottoMerchant(receivedAmount);
   }
 
-  sellLotto(amount) {
-    return this.#lotto.createLotto(this.#createLottoGenerationCycle(amount));
+  #createLottoCount() {
+    return Math.floor(this.#receivedAmount / LottoMerchant.#PRICE_PER_LOTTO);
+  }
+
+  sellLotto() {
+    const lotto = new Lotto();
+    return lotto.createLotto(this.#createLottoCount());
   }
 }

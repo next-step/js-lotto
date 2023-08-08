@@ -12,8 +12,8 @@ export default class LottoBuyer {
   }
 
   buyLotto() {
-    const lottoMerchant = new LottoMerchant();
-    return lottoMerchant.sellLotto(this.#amount);
+    const lottoMerchant = LottoMerchant.fromPay(this.#amount);
+    return lottoMerchant.sellLotto();
   }
 
   confirmResult({ investmentAmount, winningNumbers, bonusNumber, lottos }) {

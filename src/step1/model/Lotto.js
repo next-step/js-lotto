@@ -1,8 +1,5 @@
 import { RandomNumberGenerator } from '../utils/generator/index.js';
-import {
-  DEFAULT_LIMIT_LOTTO_COUNT,
-  EXIT_GENERATE_LOTTO_COUNT,
-} from '../constants/lotto.js';
+import { DEFAULT_LIMIT_LOTTO_COUNT, EXIT_GENERATE_LOTTO_COUNT } from '../constants/lotto.js';
 
 export default class Lotto {
   #lottos;
@@ -18,8 +15,7 @@ export default class Lotto {
     this.#limitCount *= cycle;
   }
 
-  #addLottoNumbers(cycle) {
-    this.#setLimitCount(cycle);
+  #addLottoNumbers() {
     while (this.#limitCount !== EXIT_GENERATE_LOTTO_COUNT) {
       const randomNumber = RandomNumberGenerator.generateRandomNumber();
       this.#lottos.push(randomNumber);
@@ -35,8 +31,9 @@ export default class Lotto {
     this.#lottos = results;
   }
 
-  createLotto(cycle = 1) {
-    this.#addLottoNumbers(cycle);
+  createLotto(count) {
+    this.#setLimitCount(count);
+    this.#addLottoNumbers();
     this.#organizeLottos(this.#lottos, DEFAULT_LIMIT_LOTTO_COUNT);
     return this.#lottos;
   }
