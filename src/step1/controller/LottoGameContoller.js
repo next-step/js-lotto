@@ -10,16 +10,6 @@ export default class LottoGameController {
     this.#lottoGame = new LottoGame();
   }
 
-  static #convertLottoResultForPrint(result) {
-    return Object.entries(result)
-      .map((element) => `${element.join(' - ')}개`)
-      .join('\n');
-  }
-
-  static #convertRateOfReturnForPrint(rateOfReturn) {
-    return `총 수익률은 ${rateOfReturn}입니다.`;
-  }
-
   async #initializeAmount() {
     const amount = await InputView.inputByUser(INPUT_MESSAGE.BUY_AMOUNT);
     return Number(amount);
@@ -80,10 +70,7 @@ export default class LottoGameController {
       winningLottoNumber,
       bonusNumber,
     });
-    this.#printLottoResults(
-      LottoGameController.#convertLottoResultForPrint(lottoResult),
-      LottoGameController.#convertRateOfReturnForPrint(rateOfReturn),
-    );
+    this.#printLottoResults(OUTPUT_MESSAGE.RESULT(lottoResult), OUTPUT_MESSAGE.RATE_OF_RETURN(rateOfReturn));
   }
 
   async #startGame() {
