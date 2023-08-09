@@ -1,10 +1,14 @@
 import { END_GAME, RESTART_GAME } from '../constants/controller.js';
 import { INPUT_MESSAGE, OUTPUT_MESSAGE } from '../constants/message.js';
-import { Lotto, LottoMerchant } from '../model/index.js';
+import { LottoGame } from '../model/index.js';
 import { InputView, OutputView } from '../view/index.js';
 
 export default class LottoGameController {
-  #lottoBuyer;
+  #lottoGame;
+
+  constructor() {
+    this.#lottoGame = new LottoGame();
+  }
 
   static #convertLottoResultForPrint(result) {
     return Object.entries(result)
@@ -43,8 +47,7 @@ export default class LottoGameController {
   }
 
   #requestBuyingLotto(amount) {
-    const lottoBuyer = LottoMerchant.fromPay(amount);
-    return lottoBuyer.sellLotto();
+    return this.#lottoGame.createLottoNumbers(amount);
   }
 
   #printLottos(lottos) {
@@ -52,8 +55,8 @@ export default class LottoGameController {
     OutputView.printFor(OUTPUT_MESSAGE.LOTTO_LIST(lottos));
   }
 
-  #requestResults({ investmentAmount, lottos, winningNumbers, bonusNumber }) {
-    return this.#lottoBuyer.confirmResult({ investmentAmount, lottos, winningNumbers, bonusNumber });
+  #requestResults({ investmentAmount, lottoNumbers, winningLottoNumber, bonusNumber }) {
+    return this.#lottoGame.createResults({ investmentAmount, lottoNumbers, winningLottoNumber, bonusNumber });
   }
 
   #printLottoResults(result, rateOfReturn) {
@@ -64,14 +67,19 @@ export default class LottoGameController {
 
   async #processLottos() {
     const investmentAmount = await this.#initializeAmount();
-    const lottos = this.#requestBuyingLotto(investmentAmount);
-    return [investmentAmount, lottos];
+    const lottoNumbers = this.#requestBuyingLotto(investmentAmount);
+    return [investmentAmount, lottoNumbers];
   }
 
-  async #processPrintLottoResults(investmentAmount, lottos) {
+  async #processPrintLottoResults(investmentAmount, lottoNumbers) {
     const [winningNumbers, bonusNumber] = await this.#initializeNumbers();
-    const winningLotto = Lotto.createLottoByString(winningNumbers, ',');
-    const [lottoResult, rateOfReturn] = this.#requestResults({ investmentAmount, lottos, winningLotto, bonusNumber });
+    const winningLottoNumber = this.#lottoGame.createWinningLottoNumbers(winningNumbers);
+    const { lottoResult, rateOfReturn } = this.#requestResults({
+      investmentAmount,
+      lottoNumbers,
+      winningLottoNumber,
+      bonusNumber,
+    });
     this.#printLottoResults(
       LottoGameController.#convertLottoResultForPrint(lottoResult),
       LottoGameController.#convertRateOfReturnForPrint(rateOfReturn),
@@ -79,9 +87,9 @@ export default class LottoGameController {
   }
 
   async #startGame() {
-    const [investmentAmount, lottos] = await this.#processLottos();
-    this.#printLottos(lottos);
-    await this.#processPrintLottoResults(investmentAmount, lottos);
+    const [investmentAmount, lottoNumbers] = await this.#processLottos();
+    this.#printLottos(lottoNumbers);
+    await this.#processPrintLottoResults(investmentAmount, lottoNumbers);
   }
 
   async #processEndGame(endCount) {

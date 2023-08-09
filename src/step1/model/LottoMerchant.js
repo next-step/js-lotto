@@ -9,7 +9,7 @@ export default class LottoMerchant {
     this.#receivedAmount = receivedAmount;
   }
 
-  static fromPay(receivedAmount) {
+  static fromLottoMerchantForPay(receivedAmount) {
     return new LottoMerchant(receivedAmount);
   }
 
@@ -18,6 +18,6 @@ export default class LottoMerchant {
   }
 
   sellLotto() {
-    return Lotto.createLottoByRandomNumber(this.#createLottoCount());
+    return Lotto.fromLottoByRandomNumber({ count: this.#createLottoCount() });
   }
 }
