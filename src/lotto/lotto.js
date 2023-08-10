@@ -7,17 +7,17 @@ import { REGEX_NUMBERS } from '../constants/regex.const.js';
 import { ERROR_WRONG_PURCHASE_AMOUNT_MESSAGE } from '../constants/error.const.js';
 
 class Lotto {
-  readline = null;
+  #readline = null;
 
   constructor(readline) {
-    this.readline = readline;
+    this.#readline = readline;
   }
 
   start() {
-    this.readline.question(QUESTION_PURCHASE_AMOUNT, (purchaseAmount) => {
+    this.#readline.question(QUESTION_PURCHASE_AMOUNT, (purchaseAmount) => {
       if (!this.validatePurchaseAmount(purchaseAmount)) {
         print(ERROR_WRONG_PURCHASE_AMOUNT_MESSAGE);
-        this.readline.close();
+        this.#readline.close();
       }
     });
   }
