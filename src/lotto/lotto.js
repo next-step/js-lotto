@@ -16,6 +16,7 @@ import {
   ERROR_WRONG_LOTTO_BONUS_MESSAGE,
   ERROR_WRONG_PURCHASE_AMOUNT_MESSAGE,
 } from '../constants/error.const.js';
+import { getSortedArray } from '../utils/sort.util.js';
 
 class Lotto {
   #readline = null;
@@ -241,7 +242,10 @@ class Lotto {
         lottoNumbers[idx] = randomNumber;
       });
 
-      totalLottoNumbers[idx] = lottoNumbers;
+      const sortedLottoNumbers = getSortedArray(lottoNumbers, {
+        isAscending: true,
+      });
+      totalLottoNumbers[idx] = sortedLottoNumbers;
     });
 
     return totalLottoNumbers;

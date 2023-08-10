@@ -5,6 +5,7 @@ import {
   LOTTO_NUMBER_COUNT,
 } from '../../src/constants/lotto.const.js';
 import Lotto from '../../src/lotto/lotto.js';
+import { getSortedArray } from '../../src/utils/sort.util.js';
 
 const lotto = new Lotto();
 
@@ -231,4 +232,21 @@ describe('당첨 통계 및 수익률', () => {
     );
     expect(lotto.getStatistics()['5등']).toBe(1);
   });
+});
+
+describe('Step 2 - 재시작 기능 및 UX 개선', () => {
+  // 로또 번호는 오름차순으로 정렬하여 보여준다.
+  test('my lotto numbers sorted ASC -> true', () => {
+    lotto.setMyLottos(3);
+    lotto.getMyLottos().forEach((myLotto) => {
+      expect(
+        JSON.stringify(getSortedArray(myLotto, { isAscending: true })) ===
+          JSON.stringify(myLotto)
+      ).toBe(true);
+    });
+  });
+
+  // 당첨 통계를 출력한 뒤에는 재시작/종료 여부를 입력받는다.
+  // 재시작할 경우 구입 금액 입력부터 게임을 다시 시작하고, 종료하는 경우 그대로 프로그램을 종료시킨다.
+  // 사용자가 잘못된 값을 입력한 경우 throw문을 사용해 예외를 발생시키고, 에러 메시지를 출력 후 그 부분부터 입력을 다시 받는다.
 });
