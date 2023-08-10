@@ -1,7 +1,21 @@
+import Lotto from '../../src/lotto/lotto.js';
+
+const lotto = new Lotto();
+
 describe('로또 구입', () => {
-  // 로또 구입 금액 입력 (로또 1장 가격: 1,000원)
-  //  - 1,000원 단위
-  //  - 숫자만 입력 가능
+  // 로또 구입 금액 입력 시 숫자로만 입력이 가능하고 1,000 단위이다.
+  test('Purchase Amount input 3000 -> true', () => {
+    expect(lotto.validatePurchaseAmount(3000)).toBe(true);
+  });
+
+  test('Purchase Amount input "wrong input" -> false', () => {
+    expect(lotto.validatePurchaseAmount('wrong input')).toBe(false);
+  });
+
+  test('Purchase Amount input 1234 -> false', () => {
+    expect(lotto.validatePurchaseAmount(1234)).toBe(false);
+  });
+
   // 로또 구입 금액에 해당하는 만큼의 로또 발행
   //  - (1000 / 입력 금액) 만큼의 발행되는 로또 개수
   // 내가 발행받은 로또 번호의 숫자 범위는 1~45 사이이다.
