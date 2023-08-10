@@ -1,0 +1,12 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true
+  },
+  "rules": {
+    "no-console": "off",
+    "import/extensions": "off"
+  },
+  "extends": "airbnb-base"
+}
