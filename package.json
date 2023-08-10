@@ -12,7 +12,7 @@
     "jest": "^29.6.2"
   },
   "scripts": {
-    "dev": "node src/js/index.js",
-    "test": "jest"
+    "start-step1": "node src/js/start-step1.js",
+    "test": "jest --watch"
   }
 }
