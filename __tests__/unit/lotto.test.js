@@ -147,12 +147,88 @@ describe('로또 당첨 번호/보너스 번호', () => {
 });
 
 describe('당첨 통계 및 수익률', () => {
-  // 사용자가 구매한 로또 번호와 당첨 번호 비교
-  // 당첨 내역 출력
-  //  - 1등: 6개 번호 일치 / 2,000,000,000원
-  //  - 2등: 5개 번호 + 보너스 번호 일치 / 30,000,000원
-  //  - 3등: 5개 번호 일치 / 1,500,000원
-  //  - 4등: 4개 번호 일치 / 50,000원
-  //  - 5등: 3개 번호 일치 / 5,000원
-  // 수익률 출력
+  test('print statistics spy', () => {
+    const spyFn = jest.spyOn(lotto, 'printWinStatistics');
+
+    const purchasedLottoCounts = 5;
+
+    const statistics = {
+      '1등': 0,
+      '2등': 1,
+      '3등': 1,
+      '4등': 0,
+      '5등': 0,
+      꽝: 3,
+    };
+
+    lotto.printWinStatistics(statistics, purchasedLottoCounts);
+
+    expect(spyFn).toBeCalledTimes(1);
+    expect(spyFn).toBeCalledWith(statistics, purchasedLottoCounts);
+  });
+
+  // 1등 당첨
+  test('calculate lotto rank 1 -> true', () => {
+    lotto.setStatistics(
+      [
+        [1, 2, 3, 4, 5, 6],
+        [10, 11, 12, 13, 14, 7],
+      ],
+      [1, 2, 3, 4, 5, 6],
+      7
+    );
+    expect(lotto.getStatistics()['1등']).toBe(1);
+  });
+
+  // 2등 당첨
+  test('calculate lotto rank 2 -> true', () => {
+    lotto.setStatistics(
+      [
+        [1, 2, 3, 4, 5, 6],
+        [10, 11, 12, 13, 14, 7],
+      ],
+      [10, 11, 12, 13, 14, 42],
+      7
+    );
+    expect(lotto.getStatistics()['2등']).toBe(1);
+  });
+
+  // 3등 당첨
+  test('calculate lotto rank 3 -> true', () => {
+    lotto.setStatistics(
+      [
+        [1, 2, 3, 4, 5, 6],
+        [10, 11, 12, 13, 14, 32],
+      ],
+      [10, 11, 12, 13, 14, 42],
+      7
+    );
+    expect(lotto.getStatistics()['3등']).toBe(1);
+  });
+
+  // 4등 당첨
+  test('calculate lotto rank 4 -> true', () => {
+    lotto.setStatistics(
+      [
+        [1, 2, 3, 4, 5, 6],
+        [10, 11, 12, 13, 41, 7],
+      ],
+      [10, 11, 12, 13, 14, 42],
+      7
+    );
+    expect(lotto.getStatistics()['4등']).toBe(1);
+  });
+
+  // 5등 당첨
+  test('calculate lotto rank 5 -> true', () => {
+    lotto.setStatistics(
+      [
+        [1, 2, 3, 4, 5, 6],
+        [10, 11, 12, 30, 31, 32],
+      ],
+      [10, 11, 12, 13, 14, 42],
+      7
+    );
+    expect(lotto.getStatistics()['5등']).toBe(1);
+  });
 });

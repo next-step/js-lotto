@@ -7,6 +7,8 @@ import {
   LOTTO_NUMBER_COUNT,
   QUESTION_LOTTO_ANSWER,
   QUESTION_LOTTO_BONUS,
+  LOTTO_SECOND_PLACE_DEFAULT_COUNT,
+  LOTTO_CALCULATED_RANK,
 } from '../constants/lotto.const.js';
 import { REGEX_NUMBERS } from '../constants/regex.const.js';
 import {
@@ -22,6 +24,14 @@ class Lotto {
   #myLottos = [];
   #lottoAnswer = null;
   #lottoBonus = null;
+  #statistics = {
+    '1등': 0,
+    '2등': 0,
+    '3등': 0,
+    '4등': 0,
+    '5등': 0,
+    꽝: 0,
+  };
 
   constructor(readline) {
     this.#readline = readline;
@@ -55,6 +65,15 @@ class Lotto {
           }
 
           this.setLottoBonus(lottoBonus);
+
+          this.setStatistics(
+            this.#myLottos,
+            this.#lottoAnswer,
+            this.#lottoBonus
+          );
+          this.printWinStatistics(this.#statistics, this.#purchasedLottoCounts);
+
+          this.#readline.close();
         });
       });
     });
@@ -76,6 +95,10 @@ class Lotto {
     return this.#lottoBonus;
   }
 
+  getStatistics() {
+    return this.#statistics;
+  }
+
   setPurchasedLottoCounts(amount) {
     this.#purchasedLottoCounts = parseInt(amount) / LOTTO_AMOUNT_UNIT;
   }
@@ -90,6 +113,34 @@ class Lotto {
 
   setLottoBonus(lottoBonus) {
     this.#lottoBonus = parseInt(lottoBonus);
+  }
+
+  setStatistics(myLottos, lottoAnswer, lottoBonus) {
+    myLottos.forEach((myLotto) => {
+      let answerCount = 0;
+      lottoAnswer.forEach((answer) => {
+        if (myLotto.includes(answer)) {
+          answerCount += 1;
+        }
+      });
+      if (
+        answerCount === LOTTO_SECOND_PLACE_DEFAULT_COUNT &&
+        myLotto.includes(lottoBonus)
+      ) {
+        this.#statistics['2등'] += 1;
+      } else {
+        const rank = this.calculateRank(answerCount);
+        this.#statistics[rank] += 1;
+      }
+    });
+  }
+
+  calculateRank(count) {
+    if (count in LOTTO_CALCULATED_RANK) {
+      return LOTTO_CALCULATED_RANK[count];
+    }
+
+    return '꽝';
   }
 
   validatePurchaseAmount(amount) {
@@ -204,6 +255,31 @@ class Lotto {
     lottos.forEach((lotto) => {
       print(lotto);
     });
+    print('');
+  }
+
+  printWinStatistics(statistics, purchasedLottoCounts) {
+    print('\n당첨 통계');
+    print('--------------------');
+
+    let profitRate = 0;
+
+    const purchaseAmount = purchasedLottoCounts * LOTTO_AMOUNT_UNIT;
+    const totalProfit =
+      2_000_000_000 * statistics['1등'] +
+      30_000_000 * statistics['2등'] +
+      1_500_000 * statistics['3등'] +
+      50_000 * statistics['4등'] +
+      5_000 * statistics['5등'];
+
+    profitRate = ((totalProfit - purchaseAmount) / purchaseAmount) * 100;
+
+    print(`3개 일치 (5,000원) - ${statistics['5등']}개`);
+    print(`4개 일치 (50,000원) - ${statistics['4등']}개`);
+    print(`5개 일치 (1,500,000원) - ${statistics['3등']}개`);
+    print(`5개 일치, 보너스 볼 일치 (30,000,000원) - ${statistics['2등']}개`);
+    print(`6개 일치 (2,000,000,000원) - ${statistics['1등']}개`);
+    print(`총 수익률은 ${profitRate}%입니다.`);
     print('');
   }
 }

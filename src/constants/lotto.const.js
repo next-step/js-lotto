@@ -8,3 +8,11 @@ export const LOTTO_MIN_NUMBER = 1;
 export const LOTTO_MAX_NUMBER = 45;
 
 export const LOTTO_NUMBER_COUNT = 6;
+export const LOTTO_SECOND_PLACE_DEFAULT_COUNT = 5;
+
+export const LOTTO_CALCULATED_RANK = {
+  3: '5등',
+  4: '4등',
+  5: '3등',
+  6: '1등',
+};
