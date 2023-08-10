@@ -9,6 +9,7 @@ import {
   QUESTION_LOTTO_BONUS,
   LOTTO_SECOND_PLACE_DEFAULT_COUNT,
   LOTTO_CALCULATED_RANK,
+  QUESTION_RESTART,
 } from '../constants/lotto.const.js';
 import { REGEX_NUMBERS } from '../constants/regex.const.js';
 import {
@@ -74,7 +75,9 @@ class Lotto {
           );
           this.printWinStatistics(this.#statistics, this.#purchasedLottoCounts);
 
-          this.#readline.close();
+          this.#readline.question(QUESTION_RESTART, (command) => {
+            this.restartOrExit(command);
+          });
         });
       });
     });
@@ -285,6 +288,16 @@ class Lotto {
     print(`6개 일치 (2,000,000,000원) - ${statistics['1등']}개`);
     print(`총 수익률은 ${profitRate}%입니다.`);
     print('');
+  }
+
+  restartOrExit(command) {
+    const c = command.toLowerCase();
+    if (c === 'y') {
+      print('');
+      this.start();
+    } else {
+      this.#readline.close();
+    }
   }
 }
 
