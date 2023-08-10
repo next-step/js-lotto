@@ -36,9 +36,7 @@ describe('로또 구입', () => {
     const purchaseAmount = 5000;
 
     lotto.setPurchasedLottoCounts(purchaseAmount);
-    lotto.setMyLottos(
-      lotto.createLottoNumbers(lotto.getPurchasedLottoCounts())
-    );
+    lotto.setMyLottos(lotto.getPurchasedLottoCounts());
 
     expect(lotto.getMyLottos().length).toBe(purchaseAmount / LOTTO_AMOUNT_UNIT);
   });
@@ -72,9 +70,7 @@ describe('로또 구입', () => {
     const purchaseAmount = 1000;
 
     lotto.setPurchasedLottoCounts(purchaseAmount);
-    lotto.setMyLottos(
-      lotto.createLottoNumbers(lotto.getPurchasedLottoCounts())
-    );
+    lotto.setMyLottos(lotto.getPurchasedLottoCounts());
 
     expect(lotto.getMyLottos()[0].length).toBe(LOTTO_NUMBER_COUNT);
   });
@@ -84,9 +80,7 @@ describe('로또 구입', () => {
     const purchaseAmount = 1000;
 
     lotto.setPurchasedLottoCounts(purchaseAmount);
-    lotto.setMyLottos(
-      lotto.createLottoNumbers(lotto.getPurchasedLottoCounts())
-    );
+    lotto.setMyLottos(lotto.getPurchasedLottoCounts());
 
     expect(
       lotto.getMyLottos().length === new Set(lotto.getMyLottos()).size
@@ -95,11 +89,61 @@ describe('로또 구입', () => {
 });
 
 describe('로또 당첨 번호/보너스 번호', () => {
-  // 당첨 번호와 보너스 번호 입력
+  // 공백이 아니다.
+  test('lotto answer blank -> false', () => {
+    const lottoAnswer = '';
+
+    expect(lotto.validateLottoAnswer(lottoAnswer)).toBe(false);
+  });
+
+  // ,를 구분자로 모든 값은 숫자이다.
+  test('lotto answer include string -> false', () => {
+    const lottoAnswer = '1,2,3,4,5,A';
+
+    expect(lotto.validateLottoAnswer(lottoAnswer)).toBe(false);
+  });
+  test('lotto answer all number -> true', () => {
+    const lottoAnswer = '1,2,3,4,5,6';
+
+    expect(lotto.validateLottoAnswer(lottoAnswer)).toBe(true);
+  });
+
   // 당첨 번호의 숫자 범위는 1~45 사이이다.
+  test('lotto answer over 45 -> false', () => {
+    const lottoAnswer = '1,2,3,4,5,48';
+
+    expect(lotto.validateLottoAnswer(lottoAnswer)).toBe(false);
+  });
+
   // 당첨 번호는 총 6개이다.
+  test('lotto answer counts over 6 -> false', () => {
+    const lottoAnswer = '1,2,3,4,5,6,7';
+
+    expect(lotto.validateLottoAnswer(lottoAnswer)).toBe(false);
+  });
+  test('lotto answer counts 6 -> true', () => {
+    const lottoAnswer = '1,2,3,4,5,6';
+
+    expect(lotto.validateLottoAnswer(lottoAnswer)).toBe(true);
+  });
+
   // 당첨 번호는 중복이 발생하지 않는다.
-  // 보너스 번호는 1~45 사이 숫자 중 당첨 번호와 다른 번호이다.
+  test('lotto answer counts 6 -> true', () => {
+    const lottoAnswer = '1,2,3,4,5,6';
+    const lottoBonus = '6';
+
+    lotto.setLottoAnswer(lottoAnswer);
+
+    expect(lotto.validateLottoBonus(lottoBonus)).toBe(false);
+  });
+  test('lotto answer counts 6 -> true', () => {
+    const lottoAnswer = '1,2,3,4,5,6';
+    const lottoBonus = 7;
+
+    lotto.setLottoAnswer(lottoAnswer);
+
+    expect(lotto.validateLottoBonus(lottoBonus)).toBe(true);
+  });
 });
 
 describe('당첨 통계 및 수익률', () => {
