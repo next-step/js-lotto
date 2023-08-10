@@ -1,3 +1,9 @@
+import {
+  LOTTO_AMOUNT_UNIT,
+  LOTTO_MAX_NUMBER,
+  LOTTO_MIN_NUMBER,
+  LOTTO_NUMBER_COUNT,
+} from '../../src/constants/lotto.const.js';
 import Lotto from '../../src/lotto/lotto.js';
 
 const lotto = new Lotto();
@@ -17,10 +23,75 @@ describe('로또 구입', () => {
   });
 
   // 로또 구입 금액에 해당하는 만큼의 로또 발행
-  //  - (1000 / 입력 금액) 만큼의 발행되는 로또 개수
+  test('(purchaseAmount / 1000) -> Purchased Lotto Counts', () => {
+    const purchaseAmount = 5000;
+
+    lotto.setPurchasedLottoCounts(purchaseAmount);
+
+    expect(lotto.getPurchasedLottoCounts()).toBe(
+      purchaseAmount / LOTTO_AMOUNT_UNIT
+    );
+  });
+  test('PurchasedLottoCounts -> the number of myLottos length', () => {
+    const purchaseAmount = 5000;
+
+    lotto.setPurchasedLottoCounts(purchaseAmount);
+    lotto.setMyLottos(
+      lotto.createLottoNumbers(lotto.getPurchasedLottoCounts())
+    );
+
+    expect(lotto.getMyLottos().length).toBe(purchaseAmount / LOTTO_AMOUNT_UNIT);
+  });
+
   // 내가 발행받은 로또 번호의 숫자 범위는 1~45 사이이다.
+  test.each(lotto.createLottoNumbers(5))(
+    'My Lotto Numbers -> 1~45',
+    (num1, num2, num3, num4, num5, num6) => {
+      expect(num1).toBeGreaterThanOrEqual(LOTTO_MIN_NUMBER);
+      expect(num1).toBeLessThanOrEqual(LOTTO_MAX_NUMBER);
+
+      expect(num2).toBeGreaterThanOrEqual(LOTTO_MIN_NUMBER);
+      expect(num2).toBeLessThanOrEqual(LOTTO_MAX_NUMBER);
+
+      expect(num3).toBeGreaterThanOrEqual(LOTTO_MIN_NUMBER);
+      expect(num3).toBeLessThanOrEqual(LOTTO_MAX_NUMBER);
+
+      expect(num4).toBeGreaterThanOrEqual(LOTTO_MIN_NUMBER);
+      expect(num4).toBeLessThanOrEqual(LOTTO_MAX_NUMBER);
+
+      expect(num5).toBeGreaterThanOrEqual(LOTTO_MIN_NUMBER);
+      expect(num5).toBeLessThanOrEqual(LOTTO_MAX_NUMBER);
+
+      expect(num6).toBeGreaterThanOrEqual(LOTTO_MIN_NUMBER);
+      expect(num6).toBeLessThanOrEqual(LOTTO_MAX_NUMBER);
+    }
+  );
+
   // 내가 발행받은 로또 번호는 총 6개이다.
+  test('My Lotto Numbers -> 6 counts', () => {
+    const purchaseAmount = 1000;
+
+    lotto.setPurchasedLottoCounts(purchaseAmount);
+    lotto.setMyLottos(
+      lotto.createLottoNumbers(lotto.getPurchasedLottoCounts())
+    );
+
+    expect(lotto.getMyLottos()[0].length).toBe(LOTTO_NUMBER_COUNT);
+  });
+
   // 내가 발행받은 로또 번호는 중복이 발생하지 않는다.
+  test('My Lotto Numbers -> Not Duplicated', () => {
+    const purchaseAmount = 1000;
+
+    lotto.setPurchasedLottoCounts(purchaseAmount);
+    lotto.setMyLottos(
+      lotto.createLottoNumbers(lotto.getPurchasedLottoCounts())
+    );
+
+    expect(
+      lotto.getMyLottos().length === new Set(lotto.getMyLottos()).size
+    ).toBe(true);
+  });
 });
 
 describe('로또 당첨 번호/보너스 번호', () => {
