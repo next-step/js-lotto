@@ -7,6 +7,7 @@
     "cypress": "^6.3.0"
   },
   "scripts": {
-    "start-step1": "node src/step1-index.js"
+    "start-step1": "node src/step1-index.js",
+    "start-step2": "node src/step2-index.js"
   }
 }
