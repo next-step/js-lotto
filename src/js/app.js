@@ -1,6 +1,15 @@
+import LottoGame from './controller/LottoGame.js';
+
 class App {
-  init() {
-    console.log('app');
+  games = {};
+
+  #addGame(game) {
+    if (game === 'lotto') this.games[game] = new LottoGame();
+  }
+
+  startGame(game) {
+    if (!this.games[game]) this.#addGame(game);
+    this.games[game].start();
   }
 }
 
