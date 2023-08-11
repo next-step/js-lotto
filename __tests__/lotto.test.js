@@ -1,6 +1,7 @@
 import { LOTTO_PRIZE_TABLE } from '../src/js/constants/lotto-config.js';
 import Exchange from '../src/js/domain/Exchange.js';
 import Lotto from '../src/js/domain/Lotto.js';
+import LottoMachine from '../src/js/domain/LottoMachine.js';
 
 const DEFAULT_LOTTO_NUMBERS = [1, 2, 3, 4, 5, 6];
 
@@ -10,7 +11,7 @@ describe('로또 구매 테스트', () => {
     [10_000, 10],
   ])('금액을 입력하면 장당 가격에 비례한 로또를 발급받는다.', (money, sheets) => {
     const lottoMachine = new LottoMachine();
-    const lottos = lottoMachine.publish(money);
+    const lottos = lottoMachine.buy(money);
 
     expect(lottos.length).toBe(sheets);
   });
