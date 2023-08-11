@@ -4,6 +4,18 @@ import Lotto from '../src/js/domain/Lotto.js';
 
 const DEFAULT_LOTTO_NUMBERS = [1, 2, 3, 4, 5, 6];
 
+describe('로또 구매 테스트', () => {
+  it.each([
+    [1_000, 1],
+    [10_000, 10],
+  ])('금액을 입력하면 장당 가격에 비례한 로또를 발급받는다.', (money, sheets) => {
+    const lottoMachine = new LottoMachine();
+    const lottos = lottoMachine.publish(money);
+
+    expect(lottos.length).toBe(sheets);
+  });
+});
+
 describe('로또 테스트', () => {
   it('로또는 여섯개의 숫자로 이루어진 배열을 매개변수로 받으며 그 값을 필드에 소유한다.', () => {
     const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
