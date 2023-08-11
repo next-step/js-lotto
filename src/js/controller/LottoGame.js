@@ -10,13 +10,21 @@ class LottoGame {
 
   #recentLottos = [];
 
+  #winningNumbers = [];
+
   async start() {
-    this.#recentPurchaseMoney = await this.#view.purchase();
-    this.buyLotto();
+    await this.buyLotto();
+    await this.setWinningNumbers();
   }
 
-  buyLotto() {
+  async buyLotto() {
+    this.#recentPurchaseMoney = await this.#view.purchase();
     this.#recentLottos = this.#lottoMachine.buy(this.#recentPurchaseMoney);
+  }
+
+  async setWinningNumbers() {
+    this.#winningNumbers = await this.#view.winningNumbers();
+    console.log(this.#winningNumbers);
   }
 }
 
