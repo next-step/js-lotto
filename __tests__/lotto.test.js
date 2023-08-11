@@ -1,3 +1,4 @@
+import Exchange from '../src/js/domain/Exchange.js';
 import Lotto from '../src/js/domain/Lotto.js';
 
 describe('로또 테스트', () => {
@@ -47,6 +48,7 @@ describe('로또 테스트', () => {
     const winningNumbers = [...input][0];
     const bonus = [...input][1];
     const rank = [...input][2];
+
     lotto.setRank(winningNumbers, bonus);
 
     expect(lotto.rank).toBe(rank);
@@ -61,7 +63,7 @@ describe('로또 테스트', () => {
     [[1, 2, 9, 9, 9, 9], 6, 0],
     [[1, 9, 9, 9, 9, 9], 6, 0],
     [[9, 9, 9, 9, 9, 9], 6, 0],
-  ])('거래소에 로또를 제출할 시 등수에 맞는 당첨금을 받는다', (input) => {
+  ])('거래소에 로또를 제출할 시 등수에 맞는 당첨금을 받는다', (...input) => {
     const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
     const winningNumbers = [...input][0];
     const bonus = [...input][1];
