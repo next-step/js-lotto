@@ -23,7 +23,7 @@ class Lotto {
     return this.#numbers.includes(bonus);
   }
 
-  setRank(winningNumbers, bonus) {
+  check(winningNumbers, bonus) {
     const correctCount = this.compare(winningNumbers);
     const hasBonus = this.hasBonus(bonus);
     const rank = this.#numbers.length - correctCount + 1;

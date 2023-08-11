@@ -14,6 +14,16 @@ class LottoView extends View {
     const result = await this.getUserInput('보너스 번호를 입력해 주세요');
     return Number(result.trim());
   }
+
+  renderBuyLottos(lottos) {
+    this.renderComment(`${lottos.length}개를 구매했습니다.`);
+  }
+
+  renderLottos(lottos) {
+    lottos.forEach((lotto) => {
+      this.renderComment(lotto.numbers);
+    });
+  }
 }
 
 export default LottoView;

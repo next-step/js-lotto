@@ -15,15 +15,16 @@ describe('로또 구매 테스트', () => {
 
     expect(lottos.length).toBe(sheets);
   });
-});
 
-describe('로또 테스트', () => {
   it('로또는 여섯개의 숫자로 이루어진 배열을 매개변수로 받으며 그 값을 필드에 소유한다.', () => {
-    const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
+    const lottoMachine = new LottoMachine();
+    const [lotto] = lottoMachine.buy(1000);
 
     expect(lotto.numbers.length).toBe(6);
   });
+});
 
+describe('로또 결과 확인 테스트', () => {
   it.each([
     [DEFAULT_LOTTO_NUMBERS, 6],
     [[1, 2, 3, 4, 5, 9], 5],
@@ -62,7 +63,7 @@ describe('로또 테스트', () => {
   ])('로또는 당첨번호와 보너스 번호를 입력받으면 자신의 등수를 알 수 있다.', (winningNumbers, bonus, rank) => {
     const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
 
-    lotto.setRank(winningNumbers, bonus);
+    lotto.check(winningNumbers, bonus);
 
     expect(lotto.rank).toBe(rank);
   });
@@ -79,7 +80,7 @@ describe('로또 테스트', () => {
   ])('거래소에 로또를 제출할 시 등수에 맞는 당첨금을 받는다', (winningNumbers, bonus, prize) => {
     const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
 
-    lotto.setRank(winningNumbers, bonus);
+    lotto.check(winningNumbers, bonus);
 
     const exchange = new Exchange();
 
