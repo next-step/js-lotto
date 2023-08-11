@@ -12,9 +12,12 @@ class LottoGame {
 
   #winningNumbers = [];
 
+  #bonus = 0;
+
   async start() {
     await this.buyLotto();
     await this.setWinningNumbers();
+    await this.setBonus();
   }
 
   async buyLotto() {
@@ -25,6 +28,11 @@ class LottoGame {
   async setWinningNumbers() {
     this.#winningNumbers = await this.#view.winningNumbers();
     console.log(this.#winningNumbers);
+  }
+
+  async setBonus() {
+    this.#bonus = await this.#view.bonus();
+    console.log(this.#bonus);
   }
 }
 
