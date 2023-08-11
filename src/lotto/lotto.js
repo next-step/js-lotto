@@ -1,4 +1,3 @@
-import { getRandomNumber, print } from '../utils/common.util.js';
 import {
   QUESTION_PURCHASE_AMOUNT,
   LOTTO_AMOUNT_UNIT,
@@ -18,6 +17,8 @@ import {
   ERROR_WRONG_PURCHASE_AMOUNT_MESSAGE,
 } from '../constants/error.const.js';
 import { getSortedArray } from '../utils/sort.util.js';
+import { getRandomNumber } from '../utils/random.util.js';
+import { print } from '../utils/common.util.js';
 
 class Lotto {
   #readline = null;
