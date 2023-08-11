@@ -29,7 +29,7 @@ class LottoGame {
     await this.buyLotto();
     await this.setWinningNumbers();
     await this.setBonus();
-    this.scratchLottos();
+    this.checkLottos();
     this.getRateOfReturn();
   }
 
@@ -49,17 +49,16 @@ class LottoGame {
   }
 
   checkLottos() {
-    this.#prizes.forEach((lotto) => {
+    this.#prizes = this.#recentLottos.map((lotto) => {
       lotto.check(this.#winningNumbers, this.#bonus);
       return this.#exchange.getLottoPrize(lotto);
     });
   }
 
   getRateOfReturn() {
-    const totalPrize = this.#prizes.reduce((total, cur) => (total += cur), 0);
-    console.log(totalPrize);
+    console.log(this.#prizes);
+    const totalPrize = this.#prizes.reduce((total, cur) => total + cur, 0);
     this.#rateOfReturn = Exchange.calculateRateOfReturn(this.#recentPurchaseMoney, totalPrize);
-    console.log(this.#rateOfReturn);
   }
 }
 
