@@ -20,4 +20,16 @@ describe('로또 테스트', () => {
 
     expect(lotto.compare([...input][0])).toBe([...input][1]);
   });
+
+  it.each([1, 2, 3, 4, 5, 6])('로또는 보너스 번호가 자신의 번호에 포함되는지 알 수 있다.', (input) => {
+    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
+
+    expect(lotto.hasBonus(input)).toBeTruthy();
+  });
+
+  it.each([7, 8, 9])('로또는 보너스 번호가 자신의 번호에 포함되지 않는지 알 수 있다.', (input) => {
+    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
+
+    expect(lotto.hasBonus(input)).toBeFalsy();
+  });
 });
