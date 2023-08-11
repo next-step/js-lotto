@@ -1,12 +1,18 @@
 class Lotto {
   #numbers;
 
+  #rank;
+
   constructor(numbers) {
     this.#numbers = numbers;
   }
 
   get numbers() {
     return this.#numbers;
+  }
+
+  get rank() {
+    return this.#rank;
   }
 
   compare(winningNumbers) {
@@ -17,13 +23,12 @@ class Lotto {
     return this.#numbers.includes(bonus);
   }
 
-  getRank(winningNumbers, bonus) {
+  setRank(winningNumbers, bonus) {
     const correctCount = this.compare(winningNumbers);
     const hasBonus = this.hasBonus(bonus);
     const rank = this.#numbers.length - correctCount + 1;
 
-    if ((rank === 2 && !hasBonus) || rank > 2) return rank + 1;
-    return rank;
+    this.#rank = (rank === 2 && !hasBonus) || rank > 2 ? rank + 1 : rank;
   }
 }
 
