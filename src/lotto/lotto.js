@@ -9,6 +9,7 @@ import {
   LOTTO_SECOND_PLACE_DEFAULT_COUNT,
   LOTTO_CALCULATED_RANK,
   QUESTION_RESTART,
+  LOTTO_AMOUNT_SEPARATOR,
 } from '../constants/lotto.const.js';
 import { REGEX_NUMBERS } from '../constants/regex.const.js';
 import {
@@ -113,7 +114,7 @@ class Lotto {
   }
 
   setLottoAnswer(lottoAnswer) {
-    this.#lottoAnswer = lottoAnswer.split(',').map(Number);
+    this.#lottoAnswer = lottoAnswer.split(LOTTO_AMOUNT_SEPARATOR).map(Number);
   }
 
   setLottoBonus(lottoBonus) {
@@ -166,7 +167,7 @@ class Lotto {
       return false;
     }
 
-    const lottoNumbers = lottoAnswer.split(',');
+    const lottoNumbers = lottoAnswer.split(LOTTO_AMOUNT_SEPARATOR);
 
     const isNumbers = lottoNumbers.every((number) =>
       REGEX_NUMBERS.test(number)
