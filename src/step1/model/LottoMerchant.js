@@ -1,11 +1,14 @@
-import Lotto from './Lotto.js';
+import { PRICE_PER_LOTTO } from '../constants/lotto.js';
+import { ERROR_MESSAGE } from '../constants/message.js';
+import { LottoError } from '../errors/index.js';
+import { isLessThenPricePerLotto } from '../utils/validate/lotto/lottoValidate.js';
+import { Lotto } from './index.js';
 
 export default class LottoMerchant {
   #receivedAmount;
 
-  static #PRICE_PER_LOTTO = 1000;
-
   constructor(receivedAmount) {
+    this.#validate(receivedAmount);
     this.#receivedAmount = receivedAmount;
   }
 
@@ -13,8 +16,17 @@ export default class LottoMerchant {
     return new LottoMerchant(receivedAmount);
   }
 
+  #validate(receivedAmount) {
+    if (isLessThenPricePerLotto(receivedAmount)) {
+      throw new LottoError(ERROR_MESSAGE.GREATER_THEN_PRICE_PER_LOTTO);
+    }
+    if (receivedAmount % PRICE_PER_LOTTO > 0) {
+      throw new LottoError(ERROR_MESSAGE.NO_CHANGES);
+    }
+  }
+
   #createLottoCount() {
-    return Math.floor(this.#receivedAmount / LottoMerchant.#PRICE_PER_LOTTO);
+    return Math.floor(this.#receivedAmount / PRICE_PER_LOTTO);
   }
 
   sellLotto() {
