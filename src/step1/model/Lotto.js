@@ -1,5 +1,4 @@
-import { DEFAULT_LIMIT_LOTTO_COUNT, MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER } from '../constants/lotto.js';
-import { RandomNumberGenerator } from '../utils/generator/index.js';
+import LottoNumberMaker from '../utils/LottoMaker.js';
 import LottoValidator from '../utils/validate/validator/LottoValidator.js';
 
 export default class Lotto {
@@ -18,19 +17,15 @@ export default class Lotto {
   }
 
   static fromLottoByRandomNumber(
-    { randomNumberMaker = RandomNumberGenerator, count = 1 } = {
-      randomNumberMaker: RandomNumberGenerator,
+    { randomNumberMaker = LottoNumberMaker, count = 1 } = {
+      randomNumberMaker: LottoNumberMaker,
       count: 1,
     },
   ) {
     return Array(count)
       .fill(null)
       .map(() => {
-        const randomNumbers = randomNumberMaker.pickNumbersInRange({
-          startNumber: MIN_LOTTO_NUMBER,
-          endNumber: MAX_LOTTO_NUMBER,
-          count: DEFAULT_LIMIT_LOTTO_COUNT,
-        });
+        const randomNumbers = randomNumberMaker.createNumbers();
         return new Lotto(randomNumbers);
       });
   }
