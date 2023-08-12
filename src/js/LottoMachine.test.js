@@ -1,4 +1,4 @@
-import { LottoMachine } from './LottoMachine.js';
+import LottoMachine from './LottoMachine.js';
 
 describe('LottoMachine', () => {
   describe('로또 번호 생성', () => {
@@ -19,6 +19,14 @@ describe('LottoMachine', () => {
       const lottoNumbers = lottoMachine.generateLottoNumbers();
 
       expect(lottoNumbers.length).toBe([...new Set(lottoNumbers)].length);
+    });
+
+    it('생성된 로또 번호는 총 7개이다', () => {
+      const lottoMachine = new LottoMachine();
+
+      const lottoNumbers = lottoMachine.generateLottoNumbers();
+
+      expect(lottoNumbers.length).toBe(7);
     });
   });
 });
