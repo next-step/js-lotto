@@ -1,6 +1,7 @@
 import { PRICE_PER_LOTTO } from '../constants/lotto.js';
 import { ERROR_MESSAGE } from '../constants/message.js';
 import { LottoError } from '../errors/index.js';
+import { isValidTypeOfNumber } from '../utils/validate/common/number.js';
 import { isLessThenPricePerLotto } from '../utils/validate/lotto/lottoValidate.js';
 import { Lotto } from './index.js';
 
@@ -17,6 +18,9 @@ export default class LottoMerchant {
   }
 
   #validate(receivedAmount) {
+    if (!isValidTypeOfNumber(receivedAmount)) {
+      throw new LottoError(ERROR_MESSAGE.TYPE_OF_NUMBER);
+    }
     if (isLessThenPricePerLotto(receivedAmount)) {
       throw new LottoError(ERROR_MESSAGE.GREATER_THEN_PRICE_PER_LOTTO);
     }
