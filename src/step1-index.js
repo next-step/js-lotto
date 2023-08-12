@@ -8,7 +8,7 @@ class App {
   }
 
   play() {
-    this.#controller.play();
+    this.#controller.visitStore();
   }
 }
 
