@@ -23,12 +23,10 @@ export default class Bank {
     return new Set(lottoNumbers).has(this.#winningLottoInfo.bonusNumber);
   }
 
-  #isWinningLottoNumber(lottoNumber) {
-    return new Set(this.#winningLottoInfo.winningLottoNumbers).has(lottoNumber);
-  }
-
-  #calculateWinningCount(lottoNumbers) {
-    return lottoNumbers.reduce((count, lottoNumber) => count + (this.#isWinningLottoNumber(lottoNumber) ? 1 : 0), 0);
+  #calculateWinningCount(lottoNumbers, index = 0) {
+    if (index === lottoNumbers.length) return 0;
+    const count = this.#winningLottoInfo.winningLottoNumbers[index] === lottoNumbers[index] ? 1 : 0;
+    return count + this.#calculateWinningCount(lottoNumbers, index + 1);
   }
 
   #calculateLottoResult(lottoNumbers) {
