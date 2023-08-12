@@ -6,12 +6,21 @@ export const LOTTO_AMOUNT = 5;
 export class LottoCompany {
     #lottoPrice;
     #issuedLottoList = [];
+    #sellerList = [];
     constructor(lottoPrice) {
         this.#lottoPrice = lottoPrice;
     }
 
     get lottoPrice() {
         return this.#lottoPrice;
+    }
+
+    get sellerList () {
+        return this.#sellerList;
+    }
+
+    addSeller(lottoSeller) {
+        this.#sellerList.push(lottoSeller);
     }
 
     issueLotto(lottoCustomer, lottoAmount) {
