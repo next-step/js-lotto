@@ -26,8 +26,8 @@ export default class LottoReward {
       }, {});
   }
 
-  #createWinTableKey({ winningCount, isBonusNumber }) {
-    return `${winningCount}_NUMBER${isBonusNumber && winningCount === 5 ? '_WITH_BONUS' : ''}`;
+  #createWinTableKey({ winningCount, hasBonusNumber }) {
+    return `${winningCount}_NUMBER${hasBonusNumber && winningCount === 5 ? '_WITH_BONUS' : ''}`;
   }
 
   #updateLottoResult(lottoResult, winTableKey) {
@@ -46,8 +46,8 @@ export default class LottoReward {
     return winningAmount;
   }
 
-  #updateWinningInfo({ winningCount, isBonusNumber, lottoResult, winningAmount }) {
-    const winTableKey = this.#createWinTableKey({ winningCount, isBonusNumber });
+  #updateWinningInfo({ winningCount, hasBonusNumber, lottoResult, winningAmount }) {
+    const winTableKey = this.#createWinTableKey({ winningCount, hasBonusNumber });
     return {
       lottoResult: this.#updateLottoResult(lottoResult, winTableKey),
       winningAmount: this.#calculateWinningAmount(winningAmount, winTableKey),
@@ -56,8 +56,8 @@ export default class LottoReward {
 
   calculateWinningInfo() {
     return this.#lottoResults.reduce(
-      ({ lottoResult, winningAmount }, [winningCount, isBonusNumber]) =>
-        this.#updateWinningInfo({ winningCount, isBonusNumber, lottoResult, winningAmount }),
+      ({ lottoResult, winningAmount }, [winningCount, hasBonusNumber]) =>
+        this.#updateWinningInfo({ winningCount, hasBonusNumber, lottoResult, winningAmount }),
       { lottoResult: this.#initLottoResult(), winningAmount: 0 },
     );
   }
