@@ -20,7 +20,7 @@ export const OUTPUT_MESSAGE = Object.freeze({
       message += `[${lotto.join(', ')}]\n`;
       return message;
     }, ''),
-  BUY_COUNT: (lottos) => `${lottos.length}개를 구매했습니다.`,
+  BUY_COUNT: (count) => `${count}개를 구매했습니다.`,
   RESULT_TITLE: `\n당첨 통계\n--------------------`,
   RATE_OF_RETURN: (rateOfReturn) => `총 수익률은 ${rateOfReturn}입니다.`,
   RESULT: (result) =>

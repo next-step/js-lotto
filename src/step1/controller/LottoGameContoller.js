@@ -25,12 +25,6 @@ export default class LottoGameController {
     return Number(bonusNumber);
   }
 
-  async #initializeNumbers() {
-    const winningNumbers = await this.#initalizeWinningNumbers();
-    const bonusNumber = await this.#initializeBonusNumber();
-    return [winningNumbers, bonusNumber];
-  }
-
   async #initializeEndCount() {
     const endCount = await InputView.inputByUser(INPUT_MESSAGE.END_COUNT);
     return endCount;
@@ -41,7 +35,7 @@ export default class LottoGameController {
   }
 
   #printLottos(lottos) {
-    OutputView.printFor(OUTPUT_MESSAGE.BUY_COUNT(lottos));
+    OutputView.printFor(OUTPUT_MESSAGE.BUY_COUNT(lottos.length));
     OutputView.printFor(OUTPUT_MESSAGE.LOTTO_LIST(lottos));
   }
 
@@ -49,10 +43,10 @@ export default class LottoGameController {
     return this.#lottoGame.createResults({ investmentAmount, lottoNumbers, winningLottoNumber, bonusNumber });
   }
 
-  #printLottoResults(result, rateOfReturn) {
+  #printLottoResults(lottoResult, rateOfReturn) {
     OutputView.printFor(OUTPUT_MESSAGE.RESULT_TITLE);
-    OutputView.printFor(result);
-    OutputView.printFor(rateOfReturn);
+    OutputView.printFor(OUTPUT_MESSAGE.RESULT(lottoResult));
+    OutputView.printFor(OUTPUT_MESSAGE.RATE_OF_RETURN(rateOfReturn));
   }
 
   async #processLottos() {
@@ -62,15 +56,16 @@ export default class LottoGameController {
   }
 
   async #processPrintLottoResults(investmentAmount, lottoNumbers) {
-    const [winningNumbers, bonusNumber] = await this.#initializeNumbers();
+    const winningNumbers = await this.#initalizeWinningNumbers();
     const winningLottoNumber = this.#lottoGame.createWinningLottoNumbers(winningNumbers);
+    const bonusNumber = await this.#initializeBonusNumber();
     const { lottoResult, rateOfReturn } = this.#requestResults({
       investmentAmount,
       lottoNumbers,
       winningLottoNumber,
       bonusNumber,
     });
-    this.#printLottoResults(OUTPUT_MESSAGE.RESULT(lottoResult), OUTPUT_MESSAGE.RATE_OF_RETURN(rateOfReturn));
+    this.#printLottoResults(lottoResult, rateOfReturn);
   }
 
   async #startGame() {
