@@ -1,10 +1,18 @@
+import BonusNumberValidator from '../utils/validate/validator/BonusNumberValidator.js';
 import { LottoCalculator, LottoReward } from './index.js';
 
 export default class Bank {
   #winningLottoInfo;
 
   constructor({ winningLottoNumbers, bonusNumber }) {
+    this.#validate(winningLottoNumbers, bonusNumber);
     this.#winningLottoInfo = { winningLottoNumbers, bonusNumber };
+  }
+
+  #validate(winningLottoNumbers, bonusNumber) {
+    BonusNumberValidator.validateBonusNumberType(bonusNumber);
+    BonusNumberValidator.validateDuplicateBonusNumber(winningLottoNumbers, bonusNumber);
+    BonusNumberValidator.validateBonusNumberInRange(bonusNumber);
   }
 
   static fromBank(winningLottoNumbers, bonusNumber) {
