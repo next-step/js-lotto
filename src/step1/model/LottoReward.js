@@ -1,3 +1,5 @@
+import { LottoValidator } from '../utils/validate/validator/index.js';
+
 export default class LottoReward {
   #lottoResults;
 
@@ -10,7 +12,12 @@ export default class LottoReward {
   };
 
   constructor(lottoResults) {
+    this.#validate(lottoResults);
     this.#lottoResults = lottoResults;
+  }
+
+  #validate(lottoResults) {
+    LottoValidator.validateWinningCountInRange(lottoResults);
   }
 
   static fromLottoReward(lottoResults) {
