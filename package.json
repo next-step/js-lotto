@@ -9,7 +9,7 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "<rootDir>/__tests__/utils/",
+      "<rootDir>/__tests__/controller/LottoGameController/util.js",
       "<rootDir>/__tests__/constants/",
       "<rootDir>/node_modules"
     ],
