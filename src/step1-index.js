@@ -2,10 +2,11 @@ import {getDividedInteger} from './utils/getDividedInteger';
 import {getLintInput} from './view/getLineInput';
 import {Lotto} from './domain/Lotto';
 import {splitNumbers} from './utils/splitNumbers';
-import {LottoPrize} from './domain/LottoPrize';
 import {PRIZE_MAP} from './domain/constants/prizeMap';
 import {formatPrizeKR} from './domain/formatPrizeKR';
 import {getPercentage} from './utils/getPercentage';
+import {getLottoResult} from './domain/getLottoResult';
+import {getTotalBenefit} from './domain/getTotalBenefit';
 
 const LOTTERY_PRICE = 1000;
 
@@ -26,22 +27,7 @@ const start = async () => {
   const bonusNumberInput = await getLintInput('보너스 번호를 입력해 주세요.');
   const bonusNumber = Number(bonusNumberInput);
 
-  const lottoPrize = new LottoPrize({winningNumbers, bonusNumber});
-  const lottoResult = lotto.lotteries.reduce(
-    (acc, lottery) => {
-      const prize = lottoPrize.getLottoPrize(lottery);
-      acc[prize] += 1;
-      return acc;
-    },
-    {
-      FIRST: 0,
-      SECOND: 0,
-      THIRD: 0,
-      FOURTH: 0,
-      FIFTH: 0,
-      LOSS: 0,
-    },
-  );
+  const lottoResult = getLottoResult({lotteries: lotto.lotteries, winningNumbers, bonusNumber});
 
   console.log('당첨 통계');
   console.log('--------------------');
@@ -51,12 +37,9 @@ const start = async () => {
     console.log(`${formatPrizeKR(prize)} - ${lottoResult[prize]}개`);
   });
 
-  const totalPrizePrice = Object.entries(lottoResult).reduce((acc, [prize, count]) => {
-    const prizePrice = PRIZE_MAP[prize] * count;
-    return acc + prizePrice;
-  }, 0);
+  const benefit = getTotalBenefit(lottoResult);
 
-  console.log(`총 수익률은 ${getPercentage({total: lotteryCount * LOTTERY_PRICE, value: totalPrizePrice}, 1)}%입니다.`);
+  console.log(`총 수익률은 ${getPercentage({total: lotteryCount * LOTTERY_PRICE, value: benefit}, 1)}%입니다.`);
 };
 
 start();

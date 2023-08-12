@@ -1,6 +1,6 @@
 import {LottoPrize} from '../LottoPrize';
 
-describe('getLottoResult 함수 test', () => {
+describe('LottoPrize class test', () => {
   const winningNumbers = [1, 2, 3, 4, 5, 6];
   const bonusNumber = 7;
   const results = [
