@@ -1,0 +1,38 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "extends": ["airbnb-base", "plugin:prettier/recommended", "prettier"],
+  "rules": {
+    "max-lines-per-function": ["error", 16],
+    "no-unused-expressions": ["error", { "allowTernary": true }],
+    "max-depth": ["error", 1], // 들여쓰기 깊이 제한
+    "max-params": ["error", 2], // 함수 매개변수 개수 제한
+    "prefer-const": "error", // const 선호 규칙 적용
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "always" // 'js' 확장자 항상 허용
+      }
+    ],
+    "quotes": "off",
+    // Prettier의 코드 포맷팅 규칙 적용
+    "prettier/prettier": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.js", "**/*.spec.js"],
+      "rules": {
+        "max-lines-per-function": "off"
+      }
+    }
+  ]
+}
