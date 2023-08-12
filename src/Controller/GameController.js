@@ -5,7 +5,11 @@ export class GameController {
     this.#view = view;
   }
 
-  async visitStore() {
+  configStore() {
+    this.#visitStore();
+  }
+
+  async #visitStore() {
     const purchaseAmount = await this.#view.readPurchaseAmount();
   }
 }
