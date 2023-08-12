@@ -1,7 +1,10 @@
+import {Lotto} from "./Lotto";
+import {LOTTO_PRICE, LottoCompany} from "../LottoCompany/LottoCompany";
+
 const LOTTO_NUMBERS = [1, 2, 3, 4, 5, 6];
 
 describe('로또', () => {
-    const lottoCompany = new LottoCompany();
+    const lottoCompany = new LottoCompany(LOTTO_PRICE);
     const lottoCustomer = new LottoCustomer();
 
 

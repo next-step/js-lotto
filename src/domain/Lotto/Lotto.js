@@ -8,4 +8,16 @@ export class Lotto {
         this.#lottoCustomer = lottoCustomer;
         this.#lottoNumbers = lottoNumbers;
     }
+
+    get lottoCompany() {
+        return this.#lottoCompany;
+    }
+
+    get lottoCustomer() {
+        return this.#lottoCustomer;
+    }
+
+    get lottoNumbers() {
+        return this.#lottoNumbers;
+    }
 }
