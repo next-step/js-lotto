@@ -1,3 +1,4 @@
+import { View } from './View';
 import { GameController } from './Controller/GameController';
 
 class App {
@@ -12,5 +13,5 @@ class App {
   }
 }
 
-const app = new App(new GameController());
+const app = new App(new GameController(new View()));
 app.play();
