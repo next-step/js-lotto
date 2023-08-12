@@ -1,17 +1,21 @@
+import Lotto from './Lotto.js';
+import { ERROR_MESSAGES, RULES } from './constants.js';
+
+function validatePurchaseMoney(money) {
+  if (Number.isNaN(money)) {
+    throw new Error(ERROR_MESSAGES.INVALID_PURCHASE_MONEY_TYPE);
+  }
+  if (!money || money % RULES.LOTTO_PRICE !== 0) {
+    throw new Error(ERROR_MESSAGES.INVALID_PURCHASE_MONEY_UNIT);
+  }
+}
 class LottoMachine {
-  generateLottoNumbers() {
-    const lottoNumbers = [];
+  lottos = [];
 
-    const numbers = Array(45)
-      .fill(1)
-      .map((v, i) => v + i);
+  purchaseLottos(money) {
+    validatePurchaseMoney(money);
 
-    for (let i = 0; i < 7; i += 1) {
-      const randomIndex = Math.floor(Math.random * numbers.length);
-      lottoNumbers.push(numbers.splice(randomIndex, 1)[0]);
-    }
-
-    return lottoNumbers;
+    this.lottos = Array(money / RULES.LOTTO_PRICE).fill(Lotto.of);
   }
 }
 
