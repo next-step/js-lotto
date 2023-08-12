@@ -3,20 +3,20 @@ import { LottoCalculator, LottoReward } from './index.js';
 export default class Bank {
   #winningLottoInfo;
 
-  constructor({ winningLotto, bounsNumber }) {
-    this.#winningLottoInfo = { winningLotto, bounsNumber };
+  constructor({ winningLottoNumbers, bonusNumber }) {
+    this.#winningLottoInfo = { winningLottoNumbers, bonusNumber };
   }
 
-  static fromBank(winningLotto, bounsNumber) {
-    return new Bank({ winningLotto, bounsNumber });
+  static fromBank(winningLottoNumbers, bonusNumber) {
+    return new Bank({ winningLottoNumbers, bonusNumber });
   }
 
-  #isBonusNumber(lottoNumbers) {
-    return new Set(lottoNumbers).has(this.#winningLottoInfo.bounsNumber);
+  #hasBonusNumber(lottoNumbers) {
+    return new Set(lottoNumbers).has(this.#winningLottoInfo.bonusNumber);
   }
 
   #isWinningLottoNumber(lottoNumber) {
-    return new Set(this.#winningLottoInfo.winningLotto).has(lottoNumber);
+    return new Set(this.#winningLottoInfo.winningLottoNumbers).has(lottoNumber);
   }
 
   #calculateWinningCount(lottoNumbers) {
@@ -25,7 +25,7 @@ export default class Bank {
 
   #calculateLottoResult(lottoNumbers) {
     const winningCount = this.#calculateWinningCount(lottoNumbers);
-    const bonusNumberStatus = this.#isBonusNumber(lottoNumbers);
+    const bonusNumberStatus = this.#hasBonusNumber(lottoNumbers);
     return [winningCount, bonusNumberStatus];
   }
 
