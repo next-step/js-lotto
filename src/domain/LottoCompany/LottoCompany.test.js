@@ -1,5 +1,6 @@
 import {LOTTO_AMOUNT, LOTTO_PRICE, LottoCompany} from "./LottoCompany";
 import {LottoSeller} from "../LottoSeller/LottoSeller";
+import {LottoCustomer} from "../LottoCustomer/LottoCustomer";
 
 
 describe('로또 회사', () => {

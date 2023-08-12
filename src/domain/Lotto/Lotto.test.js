@@ -1,5 +1,6 @@
 import {Lotto} from "./Lotto";
 import {LOTTO_PRICE, LottoCompany} from "../LottoCompany/LottoCompany";
+import {LottoCustomer} from "../LottoCustomer/LottoCustomer";
 
 const LOTTO_NUMBERS = [1, 2, 3, 4, 5, 6];
 

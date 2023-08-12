@@ -3,6 +3,10 @@ import {Lotto} from "../Lotto/Lotto";
 export const LOTTO_PRICE = 1000;
 export const LOTTO_AMOUNT = 5;
 
+const LOTTO_SIZE = 6;
+const LOTTO_NUMBER_MIN = 1;
+const LOTTO_NUMBER_MAX = 45;
+
 export class LottoCompany {
     #lottoPrice;
     #issuedLottoList = [];
@@ -39,8 +43,8 @@ export class LottoCompany {
 
     #makeLottoNumbers() {
         const lottoNumbers = [];
-        while (lottoNumbers.length < 6) {
-            const lottoNumber = Math.floor(Math.random() * 45) + 1;
+        while (lottoNumbers.length < LOTTO_SIZE) {
+            const lottoNumber = Math.floor(Math.random() * LOTTO_NUMBER_MAX) + LOTTO_NUMBER_MIN;
             if (!lottoNumbers.includes(lottoNumber)) {
                 lottoNumbers.push(lottoNumber);
             }

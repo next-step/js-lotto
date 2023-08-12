@@ -7,8 +7,8 @@ export class LottoSeller{
         lottoCompany.addSeller(this);
     }
 
-    askLottoPrice() {
-        return this.#lottoCompany.lottoPrice;
+    calculateLottoAmount(money) {
+        return Math.floor(money / this.#lottoCompany.lottoPrice);
     }
 
     requestLotto(lottoCustomer, lottoAmount) {
