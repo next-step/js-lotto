@@ -46,9 +46,11 @@ describe('LottoMerchant 관련 기능 테스트', () => {
       // given
       const lottoMerchant = LottoMerchant.fromLottoMerchantForPay(investmentAmount);
       // when
-      const lottos = lottoMerchant.sellLotto();
+      const isValidLottoNumbers = lottoMerchant
+        .sellLotto()
+        .every((lotto) => isValidLottoNumbersRange(lotto.getLottoNumbers()));
       // then
-      expect(isValidLottoNumbersRange(lottos)).toBeTruthy();
+      expect(isValidLottoNumbers).toBeTruthy();
     },
   );
 });

@@ -33,7 +33,7 @@ describe('Lotto 관련 기능 테스트', () => {
       // given
       const lottos = Lotto.fromLottoByRandomNumber(count);
       // when
-      const isValidRange = isValidLottoNumbersRange(lottos.map((lotto) => lotto.getLottoNumbers()));
+      const isValidRange = lottos.every((lotto) => isValidLottoNumbersRange(lotto.getLottoNumbers()));
       // then
       expect(isValidRange).toBeTruthy();
     },
