@@ -32,7 +32,7 @@
  */
 
 /**
- * "로또 당첨 테이블"에 대한 객체
+ * "당첨 정보"에 대한 객체
  * @typedef {Object} WinningInfo
  * @property {LottoResult} lottoResult - 로또 당첨 결과
  * @property {number} winningAmount - 당첨 된 총 금액
