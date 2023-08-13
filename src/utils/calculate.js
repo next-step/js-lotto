@@ -4,3 +4,8 @@ import { SINGLE_LOTTO_PRICE } from "../data/constant.js";
 export const calcLottoCount = (price) => {
   return price / SINGLE_LOTTO_PRICE;
 };
+
+// 1부터 45까지의 랜덤 숫자 생성
+export const createRandomLottoNumber = () => {
+  return Math.floor(Math.random() * 45) + 1;
+};
