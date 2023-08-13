@@ -34,6 +34,6 @@ export default class LottoMerchant {
   }
 
   sellLotto() {
-    return Lotto.fromLottoByRandomNumber({ count: this.#createLottoCount() });
+    return Lotto.fromLottoByRandomNumber(this.#createLottoCount());
   }
 }
