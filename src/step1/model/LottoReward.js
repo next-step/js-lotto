@@ -35,7 +35,7 @@ export default class LottoReward {
     LottoValidator.validateWinningCountInRange(lottoMatchingInfo.map(({ winningCount }) => winningCount));
   }
 
-  static fromLottoReward(lottoMatchingInfo) {
+  static from(lottoMatchingInfo) {
     return new LottoReward(lottoMatchingInfo);
   }
 

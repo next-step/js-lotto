@@ -37,7 +37,7 @@ export default class Bank {
 
   calculateResults(lottoNumbers, investmentAmount) {
     const lottoMatchingInfo = lottoNumbers.map((lottoNumber) => this.#getLottoMatchingInfo(lottoNumber));
-    const { lottoResult, winningAmount } = LottoReward.fromLottoReward(lottoMatchingInfo).calculateWinningInfo();
+    const { lottoResult, winningAmount } = LottoReward.from(lottoMatchingInfo).calculateWinningInfo();
     const rateOfReturn = LottoCalculator.from(winningAmount, investmentAmount).calculateRateOfReturn();
     return { lottoResult, rateOfReturn };
   }
