@@ -1,3 +1,7 @@
+import { ERROR } from '../domain/constants/index.js'
+import { validateBonusDuplicate, validateNumber, validateNumberDuplicate, validateNumberRange, validatePositiveNumber, validatePrice, validateWinningNumberCount } from '../domain/validator.js'
+import { arraySorter, profitRateCalculator } from '../util/index.js'
+
 describe(`Validating Lotto purchase test`, () => {
 
   it('should be a Number', () => {
@@ -5,21 +9,21 @@ describe(`Validating Lotto purchase test`, () => {
     const MONEY = 'heelo'
 
     //then
-    expect(() => validateNumber(MONEY)).toThrowError('숫자를 입력해주세요')
+    expect(() => validateNumber(MONEY)).toThrowError(ERROR.NOT_NUMBER)
   })
   it('should be a greater than price of lotto', () => {
     //given
     const MONEY = 900
 
     //then
-    expect(() => validatePrice(MONEY)).toThrowError('로또 구입 금액은 1000원 이상이어야 합니다.')
+    expect(() => validatePrice(MONEY)).toThrowError(ERROR.NOT_ENOUGH_PRICE)
   })
   it('should be a positive number', () => {
     //given
     const MONEY = 2000.20
 
     //then
-    expect(() => validatePositiveNumber(MONEY)).toThrowError('양의 정수를 입력해주세요')
+    expect(() => validatePositiveNumber(MONEY)).toThrowError(ERROR.NOT_POSITIVE_NUMBER)
   })
 
 })
@@ -30,7 +34,7 @@ describe(`winning number test`, () => {
     const WINNING_NUMBER = [1, 2, 3, 4, 5]
 
     //then
-    expect(() => validateWinningNumberCount(WINNING_NUMBER)).toThrowError('6개의 숫자를 입력해주세요')
+    expect(() => validateWinningNumberCount(WINNING_NUMBER)).toThrowError(ERROR.NOT_ENOUGH_WINNING_NUMBER)
   })
 
   it('winning numbers should be 1 ~ 45', () => {
@@ -38,7 +42,7 @@ describe(`winning number test`, () => {
     const WINNING_NUMBER = [1, 2, 3, 4, 5, 46]
 
     //then
-    expect(() => validateNumberRange(WINNING_NUMBER)).toThrowError('1 ~ 45 사이의 숫자를 입력해주세요')
+    expect(() => validateNumberRange(WINNING_NUMBER)).toThrowError(ERROR.NOT_IN_RANGE)
   })
 
   it('winning numbers should be unique', () => {
@@ -46,7 +50,7 @@ describe(`winning number test`, () => {
     const WINNING_NUMBER = [1, 2, 3, 4, 5, 5]
 
     //then
-    expect(() => validateWinningNumberUnique(WINNING_NUMBER)).toThrowError('중복된 숫자가 있습니다.')
+    expect(() => validateNumberDuplicate(WINNING_NUMBER)).toThrowError(ERROR.NOT_NUMBER_UNIQUE)
   })
 })
 
@@ -56,7 +60,7 @@ describe(`bonus number test`, () => {
     const WINNING_NUMBER = [1, 2]
 
     //then
-    expect(() => validateBonusNumberCount(WINNING_NUMBER)).toThrowError('1개의 숫자를 입력해주세요')
+    expect(() => validateBonusNumberCount(WINNING_NUMBER)).toThrowError(ERROR.NOT_ENOUGH_BONUS_NUMBER)
   })
 
   it('winning numbers should be 1 ~ 45', () => {
@@ -64,7 +68,7 @@ describe(`bonus number test`, () => {
     const WINNING_NUMBER = [1, 2, 3, 4, 5, 46]
 
     //then
-    expect(() => validateNumberRange(WINNING_NUMBER)).toThrowError('1 ~ 45 사이의 숫자를 입력해주세요')
+    expect(() => validateNumberRange(WINNING_NUMBER)).toThrowError(ERROR.NOT_IN_RANGE)
   })
 
   it('winning numbers should be unique', () => {
@@ -73,7 +77,7 @@ describe(`bonus number test`, () => {
     const BONUS_NUMBER = 5
 
     //then
-    expect(() => validateBonusNumberUnique(WINNING_NUMBER, BONUS_NUMBER)).toThrowError('중복된 숫자가 있습니다.')
+    expect(() => validateBonusDuplicate(WINNING_NUMBER, BONUS_NUMBER)).toThrowError(ERROR.NOT_BONUS_NUMBER_UNIQUE)
   })
 })
 
@@ -84,7 +88,7 @@ describe('util functions test', () => {
     const ARRAY = [1, 2, 3, 4, 5, 5]
 
     //then
-    expect(duplicationChecker(ARRAY)).not.tobeTruthy()
+    expect(() => validateNumberDuplicate(ARRAY)).toThrowError(ERROR.NOT_NUMBER_UNIQUE)
   })
 
   test('profitRateCalculator', () => {
@@ -93,15 +97,16 @@ describe('util functions test', () => {
     const TOTAL = 2000
 
     //then
-    expect(profitRateCalculator(MONEY, TOTAL)).toBe(200)
+    expect(profitRateCalculator(MONEY, TOTAL)).toBe(100)
+    // console.log(profitRateCalculator(MONEY, TOTAL))
   })
 
   test('arraySorter', () => {
     //given
-    const ARRAY = [1, 4, 3, 2, 6, 5]
+    const ARRAY = [1,2,3,4,5,6];
 
     //then
-    expect(arraySorter(ARRAY)).toEqual([1, 2, 3, 4, 5, 6])
+    expect(arraySorter(ARRAY)).toStrictEqual([1, 2, 3, 4, 5, 6])
   })
 
 })

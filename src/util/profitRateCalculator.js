@@ -1,0 +1,1 @@
+export const profitRateCalculator = (initialBudget, totalAmount) => Math.floor((totalAmount - initialBudget) / initialBudget * 100);
