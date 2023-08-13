@@ -2,7 +2,7 @@ import { Bank, Lotto, LottoMerchant } from './index.js';
 
 export default class LottoGame {
   createWinningLottoNumbers(winningNumbers) {
-    return Lotto.fromLottoByString(winningNumbers, ',').getLottoNumbers();
+    return Lotto.fromByString(winningNumbers, ',').getLottoNumbers();
   }
 
   createLottoNumbers(amount) {

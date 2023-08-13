@@ -44,7 +44,7 @@ describe('Lotto 관련 기능 테스트', () => {
     { lottoString: '1.22.33.4.43.12', seperator: '.' },
     { lottoString: '1:22:33:4:43:12', seperator: ':' },
   ])('문자열로 만들어진 로또가 생성될 수 있다.', ({ lottoString, seperator }) => {
-    const lotto = Lotto.fromLottoByString(lottoString, seperator);
+    const lotto = Lotto.fromByString(lottoString, seperator);
     const isLotto = lotto instanceof Lotto;
     expect(isLotto).toBeTruthy();
   });
@@ -56,7 +56,7 @@ describe('Lotto 관련 기능 테스트', () => {
   ])(
     `문자열로 만들어진 로또는 총 ${DEFAULT_LIMIT_LOTTO_COUNT}개의 로또 번호를 갖는다.`,
     ({ lottoString, seperator }) => {
-      const lotto = Lotto.fromLottoByString(lottoString, seperator);
+      const lotto = Lotto.fromByString(lottoString, seperator);
       const isValid = isDefaultLottoCount(lotto.getLottoNumbers());
       expect(isValid).toBeTruthy();
     },
@@ -69,7 +69,7 @@ describe('Lotto 관련 기능 테스트', () => {
   ])(
     `문자열로 만들어진 로또는 모두 ${MIN_LOTTO_NUMBER}에서 ${MAX_LOTTO_NUMBER}의 숫자 범위를 갖는다.`,
     ({ lottoString, seperator }) => {
-      const lotto = Lotto.fromLottoByString(lottoString, seperator);
+      const lotto = Lotto.fromByString(lottoString, seperator);
       const isValid = isValidLottoNumbersRange(lotto.getLottoNumbers());
       expect(isValid).toBeTruthy();
     },

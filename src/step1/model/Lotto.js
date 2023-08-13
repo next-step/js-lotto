@@ -21,7 +21,7 @@ export default class Lotto {
     return Array.from({ length: count }, () => new Lotto(lottoNumberMaker.createLottoNumbers()));
   }
 
-  static fromLottoByString(string, seperator) {
+  static fromByString(string, seperator = ',') {
     return new Lotto(string.split(seperator).map(Number));
   }
 
