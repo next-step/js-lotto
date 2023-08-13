@@ -4,26 +4,22 @@ import { RandomNumberGenerator } from '../utils/generator/randomNumberGenerator.
 export default class LottoNumberMaker {
   #lottoNumberGenerator;
 
-  #lottoRangeInfo;
+  static #lottoRangeInfo = {
+    startNumber: MIN_LOTTO_NUMBER,
+    endNumber: MAX_LOTTO_NUMBER,
+    count: DEFAULT_LIMIT_LOTTO_COUNT,
+  };
 
-  constructor(
-    { startNumber, endNumber, count, lottoNumberGenerator = RandomNumberGenerator } = {
-      startNumber: MIN_LOTTO_NUMBER,
-      endNumber: MAX_LOTTO_NUMBER,
-      count: DEFAULT_LIMIT_LOTTO_COUNT,
-      lottoNumberGenerator: RandomNumberGenerator,
-    },
-  ) {
+  constructor(lottoNumberGenerator = RandomNumberGenerator) {
     this.#lottoNumberGenerator = lottoNumberGenerator;
-    this.#lottoRangeInfo = { startNumber, endNumber, count };
   }
 
-  static fromByLottoRangeInfo({ startNumber, endNumber, count }) {
-    return new LottoNumberMaker({ startNumber, endNumber, count });
+  static from() {
+    return new LottoNumberMaker();
   }
 
   createLottoNumbers() {
-    const { startNumber, endNumber, count } = this.#lottoRangeInfo;
+    const { startNumber, endNumber, count } = LottoNumberMaker.#lottoRangeInfo;
     return this.#lottoNumberGenerator.pickNumbersInRange({
       startNumber,
       endNumber,
