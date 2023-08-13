@@ -16,8 +16,9 @@ export default class Lotto {
     LottoValidator.validateLottoNumbersInRange(lottoNumbers);
   }
 
-  static fromLottoByRandomNumber(count = 1) {
-    return Array.from({ length: count }, () => new Lotto(LottoNumberMaker.from().createLottoNumbers()));
+  static fromByRandomNumberMaker(count = 1) {
+    const lottoNumberMaker = LottoNumberMaker.from();
+    return Array.from({ length: count }, () => new Lotto(lottoNumberMaker.createLottoNumbers()));
   }
 
   static fromLottoByString(string, seperator) {

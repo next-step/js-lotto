@@ -7,7 +7,7 @@ describe('Lotto 관련 기능 테스트', () => {
     '랜덤 숫자들로 만들어진 로또는 총 $count개가 생성되어야 한다.',
     ({ count }) => {
       // given
-      const lottos = Lotto.fromLottoByRandomNumber(count);
+      const lottos = Lotto.fromByRandomNumberMaker(count);
       // when
       const lottosLength = lottos.map((lotto) => lotto.getLottoNumbers()).length;
       // then
@@ -19,7 +19,7 @@ describe('Lotto 관련 기능 테스트', () => {
     `랜덤 숫자들로 만들어진 로또들은 모두 ${DEFAULT_LIMIT_LOTTO_COUNT}개의 로또 번호를 가지고 있다.`,
     ({ count }) => {
       // given
-      const lottos = Lotto.fromLottoByRandomNumber(count);
+      const lottos = Lotto.fromByRandomNumberMaker(count);
       // when
       const hasSixLottoNumbers = lottos.every((lotto) => isDefaultLottoCount(lotto.getLottoNumbers()));
       // then
@@ -31,7 +31,7 @@ describe('Lotto 관련 기능 테스트', () => {
     `랜덤 숫자들로 만들어진 로또들은 모두 ${MIN_LOTTO_NUMBER}에서 ${MAX_LOTTO_NUMBER}의 숫자 범위를 가지고 있다.`,
     ({ count }) => {
       // given
-      const lottos = Lotto.fromLottoByRandomNumber(count);
+      const lottos = Lotto.fromByRandomNumberMaker(count);
       // when
       const isValidRange = lottos.every((lotto) => isValidLottoNumbersRange(lotto.getLottoNumbers()));
       // then
