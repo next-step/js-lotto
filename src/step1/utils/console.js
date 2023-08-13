@@ -1,19 +1,13 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 
-const createReadMachine = () => {
-  const readMachine = readline.createInterface({
-    input,
-    output,
-  });
-  return readMachine;
-};
+const createReadlineInterface = () => readline.createInterface({ input, output });
 
 const Console = {
   async readLine(message) {
-    const readMachine = createReadMachine();
-    const userInput = await readMachine.question(message);
-    readMachine.close();
+    const readLineInterface = createReadlineInterface();
+    const userInput = await readLineInterface.question(message);
+    readLineInterface.close();
     return userInput;
   },
   print(message) {
