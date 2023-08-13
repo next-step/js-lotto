@@ -27,4 +27,5 @@ yarn install
 ```
 1. `yarn` 혹은 `yarn install`로 설치 한다.
 2. `yarn start-step1`으로 앱을 실행 한다.
+3. `yarn test`로 테스트 결과를 확인 한다.
 ```
