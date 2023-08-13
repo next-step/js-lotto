@@ -10,6 +10,7 @@ import {getLottoResult} from './domain/getLottoResult';
 import {getTotalBenefit} from './domain/getTotalBenefit';
 import {validateWinningNumbers} from './domain/validateWinningNumbers';
 import {validateBonusNumber} from './domain/validateBonusNumber';
+import {validateRetryType} from './domain/validateRetryType';
 
 const LOTTERY_PRICE = 1000;
 
@@ -45,6 +46,12 @@ const start = async () => {
   const benefit = getTotalBenefit(lottoResult);
 
   console.log(`총 수익률은 ${getPercentage({total: lotteryCount * LOTTERY_PRICE, value: benefit}, 1)}%입니다.`);
+
+  const retryType = await queryValidInput('다시 시작하시겠습니까? (y/n)', validateRetryType);
+
+  if (retryType === 'y') {
+    start();
+  }
 };
 
 start();
