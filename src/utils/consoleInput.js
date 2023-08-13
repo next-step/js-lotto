@@ -1,4 +1,4 @@
-const readline = require("readline");
+import readline from "readline";
 
 const readlineInterface = readline.createInterface({
   input: process.stdin,
