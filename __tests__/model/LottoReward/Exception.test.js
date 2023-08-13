@@ -41,7 +41,7 @@ describe('LottoReward 예외 관련 테스트', () => {
     'TestCase %#번에서 lottoResults 내 winningCount가 문제가 있기 때문에 에러가 발생한다.',
     ({ lottoResults, expectedErrorType, expectedErrorMessage }) => {
       // given - when
-      const createLottoReward = () => LottoReward.fromLottoReward(lottoResults);
+      const createLottoReward = () => LottoReward.from(lottoResults);
       // then
       expect(() => createLottoReward()).toThrow(expectedErrorType);
       expect(() => createLottoReward()).toThrow(expectedErrorMessage);

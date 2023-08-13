@@ -77,7 +77,7 @@ describe('LottoReward 관련 기능 테스트', () => {
       },
     },
   ])('TestCase %#번에서 lottoMatchingInfo를 통해 winningInfo을 얻을 수 있다.', ({ lottoMatchingInfo, expected }) => {
-    const lottoReward = LottoReward.fromLottoReward(lottoMatchingInfo);
+    const lottoReward = LottoReward.from(lottoMatchingInfo);
     const { lottoResult, winningAmount } = lottoReward.calculateWinningInfo();
     expect(lottoResult).toStrictEqual(expected.lottoResult);
     expect(winningAmount).toBe(expected.winningAmount);
