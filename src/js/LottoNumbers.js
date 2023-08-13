@@ -1,3 +1,5 @@
+const { RESULT_MESSAGE } = require('./constants.js')
+
 const LottoNumbers = {
     // 1부터 45까지의 숫자 중 6개를 랜덤으로 선택하는 함수
     generateRandomNumbers() {
@@ -12,13 +14,16 @@ const LottoNumbers = {
 
         return randomNumbers.sort((a, b) => a - b);
     },
+
     getNumbers(numLottos) {
+        let list = [];
         for (let i = 0; i < numLottos; i++) {
             const lottoNumbers = this.generateRandomNumbers(numLottos);
             console.log(lottoNumbers)
-            this.lottos.push(lottoNumbers);
+            list.push(lottoNumbers)
         }
-        console.log(`${numLottos}개를 구매했습니다.`);
+        console.log(RESULT_MESSAGE.PURCHASE(numLottos));
+        return list
     }
 }
 
