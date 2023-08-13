@@ -1,10 +1,11 @@
-const randomNumber = () => Math.floor(Math.random() * 45) + 1
+export const generateSingleLottoNumber = () =>
+  Math.floor(Math.random() * 45) + 1
 
 export const generateLottoNumbers = (count = 6) => {
   let randomNumbers = new Set()
 
   while (randomNumbers.size < count) {
-    const number = randomNumber()
+    const number = generateSingleLottoNumber()
 
     if (!randomNumbers.has(number)) {
       randomNumbers.add(number)

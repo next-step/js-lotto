@@ -1,31 +1,40 @@
 import { ERROR_MESSAGE } from '../../constants/errorMessage.js'
-import { generateLottoNumbers } from '../utils/generateLottoNumbers.js'
+import {
+  generateSingleLottoNumber,
+  generateLottoNumbers,
+} from '../utils/generateLottoNumbers.js'
 import { validate } from '../utils/validate.js'
 
 class LottoVendingMachine {
   #purchaseAmount
   #issuedCount
   #lottos
-
-  constructor() {}
+  static MIN_AMOUNT = 1000
 
   purchase(amount) {
     this.#validateAmount(amount)
 
     this.#purchaseAmount = amount
-    this.#issuedCount = Math.floor(amount / 1000)
+    this.#issuedCount = Math.floor(amount / LottoVendingMachine.MIN_AMOUNT)
 
     this.#setLottos()
   }
 
   #setLottos() {
-    this.#lottos = Array.from({ length: this.#issuedCount }).map((_) =>
-      generateLottoNumbers(),
-    )
+    this.#lottos = Array.from({ length: this.#issuedCount }).map((_) => {
+      return {
+        selectedNums: generateLottoNumbers(),
+        extraNum: generateSingleLottoNumber(),
+      }
+    })
   }
-
   #validateAmount(amount) {
-    if (!(validate.isValidPositiveNumber(amount) && amount >= 1000))
+    if (
+      !(
+        validate.isValidPositiveNumber(amount) &&
+        amount >= LottoVendingMachine.MIN_AMOUNT
+      )
+    )
       throw new Error(ERROR_MESSAGE.INVALID_AMOUNT)
   }
 

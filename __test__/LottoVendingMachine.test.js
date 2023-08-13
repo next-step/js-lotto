@@ -26,13 +26,14 @@ describe('LottoVendingMachine', () => {
     expect(lottos.length).toBe(3)
   })
 
-  test('로또는 6개의 번호가 한 줄이어야 한다.', () => {
+  test('로또는 7개의 번호가 한 줄이어야 한다.', () => {
     // When
     vendingMachine.purchase(1000)
-    const lottos = vendingMachine.lottos
+    const { selectedNums, extraNum } = vendingMachine.lottos[0]
+    const lottos = [...selectedNums, extraNum]
 
     // Then
-    expect(lottos[0].length).toBe(6)
+    expect(lottos.length).toBe(7)
   })
 
   describe('- 로또 번호 %s는 1 ~ 45의 범위 이내여야 한다.', () => {
@@ -41,9 +42,12 @@ describe('LottoVendingMachine', () => {
 
     // When
     vendingMachine.purchase(3000)
-    const lottos = vendingMachine.lottos
+    const lottos = vendingMachine.lottos.flatMap((lotto) => {
+      const { selectedNums, extraNum } = lotto
+      return [...selectedNums, extraNum]
+    })
 
-    test.each(lottos.flat())('%s', (lotto) => {
+    test.each(lottos)('%s', (lotto) => {
       expect(lotto >= 1 && lotto <= 45).toBe(true)
     })
   })
