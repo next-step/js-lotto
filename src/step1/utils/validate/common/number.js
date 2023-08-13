@@ -1,4 +1,3 @@
-export const isValidTypeOfNumber = (value) =>
-  !Number.isNaN(value) && Object.prototype.toString.call(value) === '[object Number]';
+export const isValidTypeOfNumber = (value) => !Number.isNaN(value) && typeof value === 'number';
 
-export const isValidTypeOfNumbers = (values) => !values.some((value) => !isValidTypeOfNumber(value));
+export const isValidTypeOfNumbers = (values) => values.every((value) => isValidTypeOfNumber(value));
