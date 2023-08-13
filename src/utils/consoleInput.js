@@ -5,8 +5,12 @@ const readlineInterface = readline.createInterface({
   output: process.stdout,
 });
 
-export const getUserInput = (consoleMessage, fn) => {
-  readlineInterface.question(consoleMessage, fn);
+export const getUserInput = (consoleMessage) => {
+  return new Promise((resolve) => {
+    readlineInterface.question(consoleMessage, (inputValue) => {
+      resolve(inputValue);
+    });
+  });
 };
 
 export const closeUserInput = () => {
