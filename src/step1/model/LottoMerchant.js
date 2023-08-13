@@ -13,7 +13,7 @@ export default class LottoMerchant {
     this.#receivedAmount = receivedAmount;
   }
 
-  static fromLottoMerchantForPay(receivedAmount) {
+  static from(receivedAmount) {
     return new LottoMerchant(receivedAmount);
   }
 

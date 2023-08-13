@@ -11,7 +11,7 @@ describe('LottoMerchant 관련 기능 테스트', () => {
     { investmentAmount: 8000, lottosLength: 8 },
   ])('$investmentAmount원치의 로또는 총 $lottosLength개가 생성되어야 한다.', ({ investmentAmount, lottosLength }) => {
     // given
-    const lottoMerchant = LottoMerchant.fromLottoMerchantForPay(investmentAmount);
+    const lottoMerchant = LottoMerchant.from(investmentAmount);
     // when
     const expectLottoLength = lottoMerchant.sellLotto().length;
     // then
@@ -26,7 +26,7 @@ describe('LottoMerchant 관련 기능 테스트', () => {
     { investmentAmount: 8000, lottosLength: 8 },
   ])(`$lottosLength개의 로또 번호는 모두 ${DEFAULT_LIMIT_LOTTO_COUNT}개여야 한다.`, ({ investmentAmount }) => {
     // given
-    const lottoMerchant = LottoMerchant.fromLottoMerchantForPay(investmentAmount);
+    const lottoMerchant = LottoMerchant.from(investmentAmount);
     // when
     const lottos = lottoMerchant.sellLotto();
     const hasSixNumbersInLotto = lottos.every((lotto) => lotto.getLottoNumbers().length === DEFAULT_LIMIT_LOTTO_COUNT);
@@ -44,7 +44,7 @@ describe('LottoMerchant 관련 기능 테스트', () => {
     `$lottosLength개의 로또 번호는 모두 ${MIN_LOTTO_NUMBER} ~ ${MAX_LOTTO_NUMBER}의 범위를 가진다.`,
     ({ investmentAmount }) => {
       // given
-      const lottoMerchant = LottoMerchant.fromLottoMerchantForPay(investmentAmount);
+      const lottoMerchant = LottoMerchant.from(investmentAmount);
       // when
       const isValidLottoNumbers = lottoMerchant
         .sellLotto()

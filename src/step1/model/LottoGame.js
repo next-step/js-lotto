@@ -6,7 +6,7 @@ export default class LottoGame {
   }
 
   createLottoNumbers(amount) {
-    return LottoMerchant.fromLottoMerchantForPay(amount)
+    return LottoMerchant.from(amount)
       .sellLotto()
       .map((lotto) => lotto.getLottoNumbers());
   }
