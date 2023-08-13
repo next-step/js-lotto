@@ -10,6 +10,7 @@
     "sourceType": "module"
   },
   "rules": {
+    "import/no-cycle": [0],
     // 인스턴스 미 참조 하는 class method 제한
     "class-methods-use-this": [0],
     // import시 from './~.js' 사용 제한
