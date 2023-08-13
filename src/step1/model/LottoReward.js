@@ -4,11 +4,26 @@ export default class LottoReward {
   #lottoMatchingInfo;
 
   static #WIN_TABLE = {
-    '3_NUMBER': ['3개 일치 (5,000원)', 5_000],
-    '4_NUMBER': ['4개 일치 (50,000원)', 50_000],
-    '5_NUMBER': ['5개 일치 (1,500,000원)', 1_500_000],
-    '5_NUMBER_WITH_BONUS': ['5개 일치, 보너스 볼 일치 (30,000,000원)', 30_000_000],
-    '6_NUMBER': ['6개 일치 (2,000,000,000원)', 2_000_000_000],
+    '3_NUMBER': {
+      description: '3개 일치 (5,000원)',
+      amount: 5_000,
+    },
+    '4_NUMBER': {
+      description: '4개 일치 (50,000원)',
+      amount: 50_000,
+    },
+    '5_NUMBER': {
+      description: '5개 일치 (1,500,000원)',
+      amount: 1_500_000,
+    },
+    '5_NUMBER_WITH_BONUS': {
+      description: '5개 일치, 보너스 볼 일치 (30,000,000원)',
+      amount: 30_000_000,
+    },
+    '6_NUMBER': {
+      description: '6개 일치 (2,000,000,000원)',
+      amount: 2_000_000_000,
+    },
   };
 
   constructor(lottoMatchingInfo) {
@@ -25,12 +40,10 @@ export default class LottoReward {
   }
 
   #initLottoResult() {
-    return Object.values(LottoReward.#WIN_TABLE)
-      .map(([key]) => key)
-      .reduce((lottoResult, resultKey) => {
-        lottoResult[resultKey] = 0;
-        return lottoResult;
-      }, {});
+    return Object.values(LottoReward.#WIN_TABLE).reduce((result, { description }) => {
+      result[description] = 0;
+      return result;
+    }, {});
   }
 
   #createWinTableKey({ winningCount, hasBonusNumber }) {
@@ -39,16 +52,16 @@ export default class LottoReward {
 
   #updateLottoResult(lottoResult, winTableKey) {
     if (winTableKey in LottoReward.#WIN_TABLE) {
-      const [lottoResultKey] = LottoReward.#WIN_TABLE[winTableKey];
-      lottoResult[lottoResultKey] += 1;
+      const { description } = LottoReward.#WIN_TABLE[winTableKey];
+      lottoResult[description] += 1;
     }
     return lottoResult;
   }
 
   #calculateWinningAmount(winningAmount, winTableKey) {
     if (winTableKey in LottoReward.#WIN_TABLE) {
-      const [, lottoWinningAmount] = LottoReward.#WIN_TABLE[winTableKey];
-      winningAmount += lottoWinningAmount;
+      const { amount } = LottoReward.#WIN_TABLE[winTableKey];
+      winningAmount += amount;
     }
     return winningAmount;
   }
