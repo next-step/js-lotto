@@ -7,7 +7,6 @@ export const RandomNumberGenerator = {
     for (let i = startNumber; i <= endNumber; i += 1) {
       result.push(i);
     }
-    console.log(this.shuffle(result).slice(0, count));
     return this.shuffle(result).slice(0, count);
   },
 };
