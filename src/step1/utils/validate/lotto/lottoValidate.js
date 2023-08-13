@@ -15,11 +15,11 @@ export const isDuplicateLottoNumber = (lottoNumbers, targetNumber) => lottoNumbe
 
 export const isDefaultLottoCount = (lottoNumbers) => lottoNumbers.length === DEFAULT_LIMIT_LOTTO_COUNT;
 
-export const isValidLottoNumbersRange = (lottoNumbers) =>
-  !lottoNumbers.some((lottoNumber) => lottoNumber < MIN_LOTTO_NUMBER || lottoNumber > MAX_LOTTO_NUMBER);
-
 export const isValidLottoNumberRange = (lottoNumber) =>
   lottoNumber >= MIN_LOTTO_NUMBER && lottoNumber <= MAX_LOTTO_NUMBER;
+
+export const isValidLottoNumbersRange = (lottoNumbers) =>
+  lottoNumbers.every((lottoNumber) => isValidLottoNumberRange(lottoNumber));
 
 export const isValidWinningCountRange = (winningCount) =>
   winningCount >= MIN_WINNING_COUNT && winningCount <= MAX_WINNING_COUNT;
