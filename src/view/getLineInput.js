@@ -1,6 +1,6 @@
 import readline from 'readline';
 
-export const getLintInput = question => {
+export const getLineInput = question => {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
