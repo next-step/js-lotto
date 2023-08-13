@@ -15,7 +15,7 @@ export default class Bank {
     BonusNumberValidator.validateBonusNumberInRange(bonusNumber);
   }
 
-  static fromBank(winningLottoNumbers, bonusNumber) {
+  static from(winningLottoNumbers, bonusNumber) {
     return new Bank({ winningLottoNumbers, bonusNumber });
   }
 

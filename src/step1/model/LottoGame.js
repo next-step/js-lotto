@@ -12,6 +12,6 @@ export default class LottoGame {
   }
 
   createResults({ winningLottoNumber, bonusNumber, lottoNumbers, investmentAmount }) {
-    return Bank.fromBank(winningLottoNumber, bonusNumber).calculateResults(lottoNumbers, investmentAmount);
+    return Bank.from(winningLottoNumber, bonusNumber).calculateResults(lottoNumbers, investmentAmount);
   }
 }

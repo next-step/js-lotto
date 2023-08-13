@@ -51,10 +51,10 @@ describe('Bank 관련 기능 테스트', () => {
       },
     },
   ])(
-    '랜덤 숫자들로 만들어진 로또는 총 $count개가 생성되어야 한다.',
+    'calculateResults를 통해 얻은 수익률은 $expected.rateOfReturn이며 lottoResult는 $expected.lottoResult이다.',
     ({ inputs: { winningLottoNumbers, lottoNumbers, bonusNumber, investmentAmounts }, expected }) => {
       // given
-      const bank = Bank.fromBank(winningLottoNumbers, bonusNumber);
+      const bank = Bank.from(winningLottoNumbers, bonusNumber);
       // when
       const { rateOfReturn, lottoResult } = bank.calculateResults(lottoNumbers, investmentAmounts);
       // then

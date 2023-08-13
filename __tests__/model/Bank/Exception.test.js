@@ -41,7 +41,7 @@ describe('Bank 관련 예외 테스트', () => {
     '$bonusNumber는 $winningLottoNumbers에 이미 존재하므로 에러가 발생한다.',
     ({ winningLottoNumbers, bonusNumber }) => {
       // given - when
-      const createBanks = () => Bank.fromBank(winningLottoNumbers, bonusNumber);
+      const createBanks = () => Bank.from(winningLottoNumbers, bonusNumber);
       // then
       expect(() => createBanks()).toThrow(BonusNumberError);
       expect(() => createBanks()).toThrow(ERROR_MESSAGE.DUPLICATE_BONUS_NUMBER);
