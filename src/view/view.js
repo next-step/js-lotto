@@ -1,5 +1,4 @@
 import {
-  getPrizeKey,
   getTotalInvestgatePrice,
   getTotalWinningPrice,
 } from "../controller/lottoController.js";
