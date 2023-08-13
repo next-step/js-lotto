@@ -24,7 +24,7 @@ export default class LottoMerchant {
     if (isLessThenPricePerLotto(receivedAmount)) {
       throw new LottoError(ERROR_MESSAGE.GREATER_THEN_PRICE_PER_LOTTO);
     }
-    if (receivedAmount % PRICE_PER_LOTTO > 0) {
+    if (receivedAmount % PRICE_PER_LOTTO !== 0) {
       throw new LottoError(ERROR_MESSAGE.NO_CHANGES);
     }
   }
