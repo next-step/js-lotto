@@ -27,9 +27,9 @@ const LottoValidator = {
   validateTypeOfNumbers(lottoNumbers) {
     throwIfInvalid(!isValidTypeOfNumbers(lottoNumbers), ERROR_MESSAGE.TYPE_OF_NUMBER);
   },
-  validateWinningCountInRange(lottoResults) {
+  validateWinningCountInRange(winningCounts) {
     throwIfInvalid(
-      lottoResults.some(([winningCount]) => !isValidWinningCountRange(winningCount)),
+      winningCounts.some((winningCount) => !isValidWinningCountRange(winningCount)),
       ERROR_MESSAGE.INVALID_WINNING_COUNT,
     );
   },

@@ -3,12 +3,12 @@ import { LottoReward } from '../../../src/step1/model';
 describe('LottoReward 관련 기능 테스트', () => {
   test.each([
     {
-      lottoResults: [
-        [3, false],
-        [4, false],
-        [5, false],
-        [5, true],
-        [6, false],
+      lottoMatchingInfo: [
+        { winningCount: 3, hasBonusNumber: false },
+        { winningCount: 4, hasBonusNumber: false },
+        { winningCount: 5, hasBonusNumber: false },
+        { winningCount: 5, hasBonusNumber: true },
+        { winningCount: 6, hasBonusNumber: false },
       ],
       expected: {
         lottoResult: {
@@ -22,12 +22,12 @@ describe('LottoReward 관련 기능 테스트', () => {
       },
     },
     {
-      lottoResults: [
-        [4, false],
-        [4, false],
-        [3, false],
-        [4, true],
-        [3, false],
+      lottoMatchingInfo: [
+        { winningCount: 4, hasBonusNumber: false },
+        { winningCount: 4, hasBonusNumber: false },
+        { winningCount: 3, hasBonusNumber: false },
+        { winningCount: 3, hasBonusNumber: true },
+        { winningCount: 4, hasBonusNumber: false },
       ],
       expected: {
         lottoResult: {
@@ -41,12 +41,12 @@ describe('LottoReward 관련 기능 테스트', () => {
       },
     },
     {
-      lottoResults: [
-        [5, true],
-        [5, false],
-        [5, true],
-        [4, false],
-        [3, false],
+      lottoMatchingInfo: [
+        { winningCount: 5, hasBonusNumber: true },
+        { winningCount: 5, hasBonusNumber: true },
+        { winningCount: 5, hasBonusNumber: false },
+        { winningCount: 4, hasBonusNumber: true },
+        { winningCount: 3, hasBonusNumber: false },
       ],
       expected: {
         lottoResult: {
@@ -60,10 +60,10 @@ describe('LottoReward 관련 기능 테스트', () => {
       },
     },
     {
-      lottoResults: [
-        [1, true],
-        [0, false],
-        [2, true],
+      lottoMatchingInfo: [
+        { winningCount: 1, hasBonusNumber: true },
+        { winningCount: 0, hasBonusNumber: false },
+        { winningCount: 2, hasBonusNumber: true },
       ],
       expected: {
         lottoResult: {
@@ -76,8 +76,8 @@ describe('LottoReward 관련 기능 테스트', () => {
         winningAmount: 0,
       },
     },
-  ])('TestCase %#번에서 lottoResults를 통해 winningInfo을 얻을 수 있다.', ({ lottoResults, expected }) => {
-    const lottoReward = LottoReward.fromLottoReward(lottoResults);
+  ])('TestCase %#번에서 lottoMatchingInfo를 통해 winningInfo을 얻을 수 있다.', ({ lottoMatchingInfo, expected }) => {
+    const lottoReward = LottoReward.fromLottoReward(lottoMatchingInfo);
     const { lottoResult, winningAmount } = lottoReward.calculateWinningInfo();
     expect(lottoResult).toStrictEqual(expected.lottoResult);
     expect(winningAmount).toBe(expected.winningAmount);

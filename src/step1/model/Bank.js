@@ -29,15 +29,15 @@ export default class Bank {
     return count + this.#calculateWinningCount(lottoNumbers, index + 1);
   }
 
-  #calculateLottoResult(lottoNumbers) {
+  #getLottoMatchingInfo(lottoNumbers) {
     const winningCount = this.#calculateWinningCount(lottoNumbers);
-    const bonusNumberStatus = this.#hasBonusNumber(lottoNumbers);
-    return [winningCount, bonusNumberStatus];
+    const hasBonusNumber = this.#hasBonusNumber(lottoNumbers);
+    return { winningCount, hasBonusNumber };
   }
 
   calculateResults(lottoNumbers, investmentAmount) {
-    const lottoResults = lottoNumbers.map((lottoNumber) => this.#calculateLottoResult(lottoNumber));
-    const { lottoResult, winningAmount } = LottoReward.fromLottoReward(lottoResults).calculateWinningInfo();
+    const lottoMatchingInfo = lottoNumbers.map((lottoNumber) => this.#getLottoMatchingInfo(lottoNumber));
+    const { lottoResult, winningAmount } = LottoReward.fromLottoReward(lottoMatchingInfo).calculateWinningInfo();
     const rateOfReturn = LottoCalculator.fromLottoCalculator(winningAmount, investmentAmount).calculateRateOfReturn();
     return { lottoResult, rateOfReturn };
   }
