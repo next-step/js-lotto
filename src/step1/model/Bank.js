@@ -20,7 +20,7 @@ export default class Bank {
   }
 
   #hasBonusNumber(lottoNumbers) {
-    return new Set(lottoNumbers).has(this.#winningLottoInfo.bonusNumber);
+    return lottoNumbers.includes(this.#winningLottoInfo.bonusNumber);
   }
 
   #calculateWinningCount(lottoNumbers, index = 0) {
