@@ -24,7 +24,7 @@ export default class LottoCalculator {
     return `${rateOfReturn.toFixed(1)}%`;
   }
 
-  static fromLottoCalculator(winningAmount, investmentAmount) {
+  static from(winningAmount, investmentAmount) {
     return new LottoCalculator(winningAmount, investmentAmount);
   }
 
