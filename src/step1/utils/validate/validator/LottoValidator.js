@@ -8,31 +8,30 @@ import {
   isValidWinningCountRange,
 } from '../lotto/lottoValidate.js';
 
+const throwIfInvalid = (condition, errorMessage) => {
+  if (condition) {
+    throw new LottoError(errorMessage);
+  }
+};
+
 const LottoValidator = {
   validateLottoNumbersInRange(lottoNumbers) {
-    if (!isValidLottoNumbersRange(lottoNumbers)) {
-      throw new LottoError(ERROR_MESSAGE.INVALID_LOTTO_NUMBER_RANGE);
-    }
+    throwIfInvalid(!isValidLottoNumbersRange(lottoNumbers), ERROR_MESSAGE.INVALID_LOTTO_NUMBER_RANGE);
   },
   validateDuplicateLottoNumbers(lottoNumbers) {
-    if (isDuplicateLottoNumbers(lottoNumbers)) {
-      throw new LottoError(ERROR_MESSAGE.DUPLICATE_LOTTO_NUMBERS);
-    }
+    throwIfInvalid(isDuplicateLottoNumbers(lottoNumbers), ERROR_MESSAGE.DUPLICATE_LOTTO_NUMBERS);
   },
   validateDefaultLottoCount(lottoNumbers) {
-    if (!isDefaultLottoCount(lottoNumbers)) {
-      throw new LottoError(ERROR_MESSAGE.NOT_DEFAULT_LIMIT_LOTTO_COUNT);
-    }
+    throwIfInvalid(!isDefaultLottoCount(lottoNumbers), ERROR_MESSAGE.NOT_DEFAULT_LIMIT_LOTTO_COUNT);
   },
   validateTypeOfNumbers(lottoNumbers) {
-    if (!isValidTypeOfNumbers(lottoNumbers)) {
-      throw new LottoError(ERROR_MESSAGE.TYPE_OF_NUMBER);
-    }
+    throwIfInvalid(!isValidTypeOfNumbers(lottoNumbers), ERROR_MESSAGE.TYPE_OF_NUMBER);
   },
   validateWinningCountInRange(lottoResults) {
-    if (lottoResults.some(([winningCount]) => !isValidWinningCountRange(winningCount))) {
-      throw new LottoError(ERROR_MESSAGE.INVALID_WINNING_COUNT);
-    }
+    throwIfInvalid(
+      lottoResults.some(([winningCount]) => !isValidWinningCountRange(winningCount)),
+      ERROR_MESSAGE.INVALID_WINNING_COUNT,
+    );
   },
 };
 
