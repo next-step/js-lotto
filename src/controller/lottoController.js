@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { SINGLE_LOTTO_PRICE } from "../data/constant.js";
 import { LOTTO_PRIZE } from "../data/lotto.js";
 import { createRandomLottoNumber } from "../utils/calculate.js";
@@ -19,6 +20,35 @@ export const checkInputPrice = (price) => {
   return true;
 };
 
+=======
+import { calcLottoCount, createRandomLottoNumber } from "../utils/calculate.js";
+import { showBuyedLottoCountMessage } from "../utils/consoleMessage.js";
+import {
+  checkInputValueType,
+  checkInputValueUnit,
+  isValidAmount,
+} from "../utils/validate.js";
+
+export const processLottoPurchase = (price) => {
+  const lottoCount = calcLottoCount(price);
+  return showBuyedLottoCountMessage(lottoCount);
+};
+
+export const validateInputPrice = (price) => {
+  try {
+    checkInputValueType(price);
+    isValidAmount(price);
+    checkInputValueUnit(price);
+
+    return true;
+  } catch (error) {
+    console.log(error.message);
+    return false;
+  }
+};
+
+// 살 수 있는 갯수만큼 로또 생성하기
+>>>>>>> c479370 ([feat] 로또 controller 생성)
 export const createLottosForAmount = (lottoCount) => {
   let lottoNumbers = [];
 
@@ -29,6 +59,10 @@ export const createLottosForAmount = (lottoCount) => {
   return lottoNumbers;
 };
 
+<<<<<<< HEAD
+=======
+// 로또 만들고 출력하기
+>>>>>>> c479370 ([feat] 로또 controller 생성)
 export const createLottoNumbers = () => {
   let lottoNumbers = [];
 
@@ -42,6 +76,7 @@ export const createLottoNumbers = () => {
 
   return lottoNumbers;
 };
+<<<<<<< HEAD
 
 export const validateInputWinningNumbers = (winningNumbers) => {
   try {
@@ -144,3 +179,5 @@ export const formatWinningNumbers = (winningNumbers, bonusNumber) => {
     .map((number) => Number(number.trim()))
     .concat(bonusNumber);
 };
+=======
+>>>>>>> c479370 ([feat] 로또 controller 생성)
