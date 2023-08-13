@@ -11,6 +11,7 @@ const PRIZES = [
 ];
 
 const ERROR_MESSAGE = {
+    NONUMBER: '유효하지 않은 입력입니다. 1000 이상의 숫자를 입력해주세요.',
     AMOUNT_MIN: `최소 금액은 ${LOTTO_PRICE}원 이상의 숫자를 입력해주세요`,
     PUT_WIN_NUMBER_COUNT: `숫자는  ${WIN_NUMBER_COUNT}개를 입력해주세요.`,
     PUT_BONUS_NUMBER_COUNT: `숫자는  ${BONUS_NUMBER_COUNT}개를 입력해주세요.`

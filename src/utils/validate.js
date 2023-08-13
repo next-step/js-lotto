@@ -2,7 +2,7 @@ const { LOTTO_PRICE, ERROR_MESSAGE, WIN_NUMBER_COUNT, BONUS_NUMBER_COUNT } = req
 const LottoValidator = {
     amountValidate(amount) {
         if (isNaN(amount) || amount <= 0) {
-            throw new Error("유효하지 않은 입력입니다. 1 이상의 숫자를 입력해주세요.")
+            throw new Error(ERROR_MESSAGE.NONUMBER)
         }
         if (amount < LOTTO_PRICE) {
             throw new Error(ERROR_MESSAGE.AMOUNT_MIN)
