@@ -154,12 +154,12 @@ describe('당첨 통계 및 수익률', () => {
     const purchasedLottoCounts = 5;
 
     const statistics = {
-      '1등': 0,
-      '2등': 1,
-      '3등': 1,
-      '4등': 0,
-      '5등': 0,
-      꽝: 3,
+      'first place': 0,
+      'second place': 1,
+      'third place': 1,
+      'fourth place': 0,
+      'fifth place': 0,
+      'no luck': 3,
     };
 
     lotto.printWinStatistics(statistics, purchasedLottoCounts);
@@ -178,7 +178,7 @@ describe('당첨 통계 및 수익률', () => {
       [1, 2, 3, 4, 5, 6],
       7
     );
-    expect(lotto.getStatistics()['1등']).toBe(1);
+    expect(lotto.getStatistics()['first place']).toBe(1);
   });
 
   // 2등 당첨
@@ -191,7 +191,7 @@ describe('당첨 통계 및 수익률', () => {
       [10, 11, 12, 13, 14, 42],
       7
     );
-    expect(lotto.getStatistics()['2등']).toBe(1);
+    expect(lotto.getStatistics()['second place']).toBe(1);
   });
 
   // 3등 당첨
@@ -204,7 +204,7 @@ describe('당첨 통계 및 수익률', () => {
       [10, 11, 12, 13, 14, 42],
       7
     );
-    expect(lotto.getStatistics()['3등']).toBe(1);
+    expect(lotto.getStatistics()['third place']).toBe(1);
   });
 
   // 4등 당첨
@@ -217,7 +217,7 @@ describe('당첨 통계 및 수익률', () => {
       [10, 11, 12, 13, 14, 42],
       7
     );
-    expect(lotto.getStatistics()['4등']).toBe(1);
+    expect(lotto.getStatistics()['fourth place']).toBe(1);
   });
 
   // 5등 당첨
@@ -230,7 +230,7 @@ describe('당첨 통계 및 수익률', () => {
       [10, 11, 12, 13, 14, 42],
       7
     );
-    expect(lotto.getStatistics()['5등']).toBe(1);
+    expect(lotto.getStatistics()['fifth place']).toBe(1);
   });
 });
 

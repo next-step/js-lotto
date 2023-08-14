@@ -29,12 +29,12 @@ class Lotto {
   #lottoAnswer = null;
   #lottoBonus = null;
   #statistics = {
-    '1등': 0,
-    '2등': 0,
-    '3등': 0,
-    '4등': 0,
-    '5등': 0,
-    꽝: 0,
+    'first place': 0,
+    'second place': 0,
+    'third place': 0,
+    'fourth place': 0,
+    'fifth place': 0,
+    'no luck': 0,
   };
 
   constructor(readline) {
@@ -133,7 +133,7 @@ class Lotto {
         answerCount === LOTTO_SECOND_PLACE_DEFAULT_COUNT &&
         myLotto.includes(lottoBonus)
       ) {
-        this.#statistics['2등'] += 1;
+        this.#statistics['second place'] += 1;
       } else {
         const rank = this.calculateRank(answerCount);
         this.#statistics[rank] += 1;
@@ -146,7 +146,7 @@ class Lotto {
       return LOTTO_CALCULATED_RANK[count];
     }
 
-    return '꽝';
+    return 'no luck';
   }
 
   validatePurchaseAmount(amount) {
@@ -275,19 +275,21 @@ class Lotto {
 
     const purchaseAmount = purchasedLottoCounts * LOTTO_AMOUNT_UNIT;
     const totalProfit =
-      2_000_000_000 * statistics['1등'] +
-      30_000_000 * statistics['2등'] +
-      1_500_000 * statistics['3등'] +
-      50_000 * statistics['4등'] +
-      5_000 * statistics['5등'];
+      2_000_000_000 * statistics['first place'] +
+      30_000_000 * statistics['second place'] +
+      1_500_000 * statistics['third place'] +
+      50_000 * statistics['fourth place'] +
+      5_000 * statistics['fifth place'];
 
     profitRate = ((totalProfit - purchaseAmount) / purchaseAmount) * 100;
 
-    print(`3개 일치 (5,000원) - ${statistics['5등']}개`);
-    print(`4개 일치 (50,000원) - ${statistics['4등']}개`);
-    print(`5개 일치 (1,500,000원) - ${statistics['3등']}개`);
-    print(`5개 일치, 보너스 볼 일치 (30,000,000원) - ${statistics['2등']}개`);
-    print(`6개 일치 (2,000,000,000원) - ${statistics['1등']}개`);
+    print(`3개 일치 (5,000원) - ${statistics['fifth place']}개`);
+    print(`4개 일치 (50,000원) - ${statistics['fourth place']}개`);
+    print(`5개 일치 (1,500,000원) - ${statistics['third place']}개`);
+    print(
+      `5개 일치, 보너스 볼 일치 (30,000,000원) - ${statistics['second place']}개`
+    );
+    print(`6개 일치 (2,000,000,000원) - ${statistics['first place']}개`);
     print(`총 수익률은 ${profitRate}%입니다.`);
     print('');
   }
