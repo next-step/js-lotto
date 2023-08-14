@@ -10,15 +10,18 @@ import { getSortedArray } from '../../src/utils/sort.util.js';
 const lotto = new Lotto();
 
 describe('로또 구입', () => {
-  // 로또 구입 금액 입력 시 숫자로만 입력이 가능하고 1,000 단위이다.
-  test('Purchase Amount input 3000 -> true', () => {
-    expect(lotto.validatePurchaseAmount(3000)).toBe(true);
+  // 로또 구입 금액 입력 시 숫자로만 입력이 가능하다.
+  test('Purchase Amount input 4000 -> true', () => {
+    expect(lotto.validatePurchaseAmount(4000)).toBe(true);
   });
-
   test('Purchase Amount input "wrong input" -> false', () => {
     expect(lotto.validatePurchaseAmount('wrong input')).toBe(false);
   });
 
+  // 로또 구입 금액 입력 시 1,000 단위이다.
+  test('Purchase Amount input 3000 -> true', () => {
+    expect(lotto.validatePurchaseAmount(3000)).toBe(true);
+  });
   test('Purchase Amount input 1234 -> false', () => {
     expect(lotto.validatePurchaseAmount(1234)).toBe(false);
   });
