@@ -17,5 +17,10 @@
   "scripts": {
     "start-step1": "node src/js/start-step1.js",
     "test": "jest --watch"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "__tests__/constants"
+    ]
   }
 }

@@ -1,15 +1,19 @@
 import { LOTTO_REWARD_CODE } from '../src/js/constants/lotto-config.js';
 import Lotto from '../src/js/domain/Lotto.js';
 import LottoChecker from '../src/js/domain/LottoChecker.js';
-
-const DEFAULT_LOTTO_NUMBERS = [1, 2, 3, 4, 5, 6];
+import {
+  DEFAULT_LOTTO_NUMBERS,
+  LOTTO_REWARD_DUMMY,
+  MATCHED_BONUS,
+  UNMATCHED_BONUS,
+} from './constants/lotto.js';
 
 describe('로또 등수 확인 테스트', () => {
   it('로또는 당첨번호와 보너스 번호를 입력받으면 자신의 등수를 알 수 있다.', () => {
     const lottoChecker = new LottoChecker();
 
     const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check(DEFAULT_LOTTO_NUMBERS, 9);
+    lotto.check(DEFAULT_LOTTO_NUMBERS, MATCHED_BONUS);
 
     const lottoRewardBoard = lottoChecker.getLottoRewardBoard([lotto]);
 
@@ -26,7 +30,7 @@ describe('로또 등수 확인 테스트', () => {
     const lottoChecker = new LottoChecker();
 
     const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check([1, 2, 3, 4, 5, 8], 6);
+    lotto.check(LOTTO_REWARD_DUMMY.SECOND, MATCHED_BONUS);
 
     const lottoRewardBoard = lottoChecker.getLottoRewardBoard([lotto]);
 
@@ -43,7 +47,7 @@ describe('로또 등수 확인 테스트', () => {
     const lottoChecker = new LottoChecker();
 
     const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check([1, 2, 3, 4, 5, 0], 0);
+    lotto.check(LOTTO_REWARD_DUMMY.THIRD, UNMATCHED_BONUS);
 
     const lottoRewardBoard = lottoChecker.getLottoRewardBoard([lotto]);
 
@@ -60,7 +64,7 @@ describe('로또 등수 확인 테스트', () => {
     const lottoChecker = new LottoChecker();
 
     const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check([1, 2, 3, 4, 0, 0], 0);
+    lotto.check(LOTTO_REWARD_DUMMY.FOURTH, MATCHED_BONUS);
 
     const lottoRewardBoard = lottoChecker.getLottoRewardBoard([lotto]);
 
@@ -77,7 +81,7 @@ describe('로또 등수 확인 테스트', () => {
     const lottoChecker = new LottoChecker();
 
     const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check([1, 2, 3, 0, 0, 0], 0);
+    lotto.check(LOTTO_REWARD_DUMMY.FIFTH, MATCHED_BONUS);
 
     const lottoRewardBoard = lottoChecker.getLottoRewardBoard([lotto]);
 
@@ -90,15 +94,11 @@ describe('로또 등수 확인 테스트', () => {
     });
   });
 
-  it.each([
-    [1, 2, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-  ])('낙첨 테스트.', (...winningNumber) => {
+  it('낙첨 테스트.', () => {
     const lottoChecker = new LottoChecker();
 
     const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check(winningNumber, 0);
+    lotto.check(LOTTO_REWARD_DUMMY.LOST, MATCHED_BONUS);
 
     const lottoRewardBoard = lottoChecker.getLottoRewardBoard([lotto]);
 

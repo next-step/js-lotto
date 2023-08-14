@@ -1,7 +1,11 @@
 import Lotto from '../src/js/domain/Lotto.js';
 import LottoMachine from '../src/js/domain/LottoMachine.js';
-
-const DEFAULT_LOTTO_NUMBERS = [1, 2, 3, 4, 5, 6];
+import {
+  DEFAULT_LOTTO_NUMBERS,
+  LOTTO_REWARD_DUMMY,
+  MATCHED_BONUS,
+  UNMATCHED_BONUS,
+} from './constants/lotto.js';
 
 describe('로또 구매 테스트', () => {
   it.each([
@@ -24,30 +28,32 @@ describe('로또 구매 테스트', () => {
 
 describe('로또 결과 확인 테스트', () => {
   it.each([
-    [DEFAULT_LOTTO_NUMBERS, 6],
-    [[1, 2, 3, 4, 5, 9], 5],
-    [[1, 2, 3, 4, 9, 9], 4],
-    [[1, 2, 3, 9, 9, 9], 3],
-    [[1, 2, 9, 9, 9, 9], 2],
-    [[1, 9, 9, 9, 9, 9], 1],
-    [[9, 9, 9, 9, 9, 9], 0],
-  ])('로또는 입력받은 배열과 비교하여 몇개가 동일한지 알 수 있다.', (winningNumbers, matchCount) => {
-    const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check(winningNumbers, 9);
+    [LOTTO_REWARD_DUMMY.FIRST, 6],
+    [LOTTO_REWARD_DUMMY.SECOND, 5],
+    [LOTTO_REWARD_DUMMY.THIRD, 5],
+    [LOTTO_REWARD_DUMMY.FOURTH, 4],
+    [LOTTO_REWARD_DUMMY.FIFTH, 3],
+    [LOTTO_REWARD_DUMMY.LOST, 0],
+  ])(
+    '로또는 입력받은 배열과 비교하여 몇개가 동일한지 알 수 있다.',
+    (winningNumbers, matchCount) => {
+      const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
+      lotto.check(winningNumbers, MATCHED_BONUS);
 
-    expect(lotto.matchCount).toBe(matchCount);
-  });
+      expect(lotto.matchCount).toBe(matchCount);
+    }
+  );
 
-  it.each(DEFAULT_LOTTO_NUMBERS)('로또는 보너스 번호가 자신의 번호에 포함되는지 알 수 있다.', () => {
+  it('로또는 보너스 번호가 자신의 번호에 포함되는지 알 수 있다.', () => {
     const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check([11, 12, 13, 14, 15, 16], 4);
+    lotto.check(DEFAULT_LOTTO_NUMBERS, MATCHED_BONUS);
 
     expect(lotto.hasBonus).toBeTruthy();
   });
 
-  it.each([7, 8, 9])('로또는 보너스 번호가 자신의 번호에 포함되지 않는지 알 수 있다.', () => {
+  it('로또는 보너스 번호가 자신의 번호에 포함되지 않는지 알 수 있다.', () => {
     const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check([11, 12, 13, 14, 15, 16], 9);
+    lotto.check(DEFAULT_LOTTO_NUMBERS, UNMATCHED_BONUS);
 
     expect(lotto.hasBonus).toBeFalsy();
   });
