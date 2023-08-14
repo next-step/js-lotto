@@ -9,7 +9,6 @@ export class LottoClerk {
 
   constructor() {
     this.view = LottoView;
-    this.machine = new LottoMachine();
   }
 
   purchaseLotto(money) {
