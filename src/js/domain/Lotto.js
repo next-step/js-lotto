@@ -1,7 +1,9 @@
 class Lotto {
   #numbers;
 
-  #rank;
+  #hasBonus;
+
+  #matchCount;
 
   constructor(numbers) {
     this.#numbers = numbers;
@@ -11,24 +13,25 @@ class Lotto {
     return this.#numbers;
   }
 
-  get rank() {
-    return this.#rank;
+  get hasBonus() {
+    return this.#hasBonus;
   }
 
-  compare(winningNumbers) {
-    return this.#numbers.filter((num) => winningNumbers.includes(num)).length;
+  get matchCount() {
+    return this.#matchCount;
   }
 
-  hasBonus(bonus) {
-    return this.#numbers.includes(bonus);
+  #compare(winningNumbers) {
+    this.#matchCount = this.#numbers.filter((num) => winningNumbers.includes(num)).length;
+  }
+
+  #checkBonus(bonus) {
+    this.hasBonus = this.#numbers.includes(bonus);
   }
 
   check(winningNumbers, bonus) {
-    const correctCount = this.compare(winningNumbers);
-    const hasBonus = this.hasBonus(bonus);
-    const rank = this.#numbers.length - correctCount + 1;
-
-    this.#rank = (rank === 2 && !hasBonus) || rank > 2 ? rank + 1 : rank;
+    this.#compare(winningNumbers);
+    this.#hasBonus(bonus);
   }
 }
 
