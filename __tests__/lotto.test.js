@@ -31,11 +31,11 @@ describe('로또 결과 확인 테스트', () => {
     [[1, 2, 9, 9, 9, 9], 2],
     [[1, 9, 9, 9, 9, 9], 1],
     [[9, 9, 9, 9, 9, 9], 0],
-  ])('로또는 입력받은 배열과 비교하여 몇개가 동일한지 알 수 있다.', (winningNumbers, correctCount) => {
+  ])('로또는 입력받은 배열과 비교하여 몇개가 동일한지 알 수 있다.', (winningNumbers, matchCount) => {
     const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
     lotto.check(winningNumbers, 9);
 
-    expect(lotto.matchCount).toBe(correctCount);
+    expect(lotto.matchCount).toBe(matchCount);
   });
 
   it.each(DEFAULT_LOTTO_NUMBERS)('로또는 보너스 번호가 자신의 번호에 포함되는지 알 수 있다.', () => {

@@ -26,12 +26,12 @@ class Lotto {
   }
 
   #checkBonus(bonus) {
-    this.hasBonus = this.#numbers.includes(bonus);
+    this.#hasBonus = this.#numbers.includes(bonus);
   }
 
   check(winningNumbers, bonus) {
     this.#compare(winningNumbers);
-    this.#hasBonus(bonus);
+    this.#checkBonus(bonus);
   }
 }
 
