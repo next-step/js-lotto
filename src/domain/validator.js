@@ -1,11 +1,5 @@
-import {
-  BONUS_NUMBER,
-  ERRORS,
-  LOTTO_PRICE,
-  MAX_ATTEMPT,
-  WINNING_NUMBER,
-} from './constants/index.js';
-import { stringSplitter } from '../util/index.js';
+import { ERRORS, LOTTO_PRICE, MAX_ATTEMPT, WINNING_NUMBER } from './constants/index.js';
+import { splitString } from '../util/index.js';
 
 export const validateInputPrice = (price) => {
   const PRICE = Number(price);
@@ -15,7 +9,7 @@ export const validateInputPrice = (price) => {
 };
 
 export const validateWinningNumber = (winningNumbers) => {
-  const splittedWinningNumbers = stringSplitter(winningNumbers);
+  const splittedWinningNumbers = splitString(winningNumbers);
   // @ts-ignore
   splittedWinningNumbers.forEach((number) => {
     validateNumber(Number(number));
