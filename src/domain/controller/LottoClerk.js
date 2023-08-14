@@ -1,45 +1,41 @@
-import { LottoView } from '../view/LottoView.js';
-import { LOTTO_PRICE, LOTTO_WINNIG_PRIZE } from '../constants/index.js';
+import { getProfitRate, manipulateReadline } from '../../util/index.js';
+import { LOTTO_PRICE } from '../constants/index.js';
+import { Customer } from '../model/Customer.js';
 import { LottoMachine } from '../model/LottoMachine.js';
-import { profitRateCalculator, readlineController } from '../../util/index.js';
+import { LottoView } from '../view/LottoView.js';
 
 export class LottoClerk {
-  view;
   lotto_price = LOTTO_PRICE;
-  machine;
 
   constructor() {
     this.view = LottoView;
+    this.machine = new LottoMachine();
   }
 
   purchaseLotto(money) {
     const count = Math.floor(money / this.lotto_price);
 
+    this.customer = new Customer(count * this.lotto_price);
     this.view.LOTTO_COUNT(count);
     this.machine = new LottoMachine(count);
   }
 
-  askResults(winning, bonus) {
-    this.machine.lottos.forEach((lotto) => {
-      const count = this.#countWinningNumber(lotto, [...winning, bonus]);
-      count === 5 && lotto.includes(bonus)
-        ? this.machine.recordResult(6)
-        : this.machine.recordResult(count);
-    });
-
-    this.view.LOTTO_RESULT(this.results, this.#calculateProfit());
-
-    readlineController.closeReadline();
+  checkoutLotto(winning, bonus) {
+    const totalCounts = this.machine.lottos.map((lotto) =>
+      this.#countWinningNumber(lotto, winning, bonus),
+    );
+    totalCounts.forEach((count) => this.customer.countResult(count));
+    this.announceResult();
+  }
+  announceResult() {
+    const profitRate = getProfitRate(this.customer.money, this.customer.amount);
+    this.view.LOTTO_RESULT(this.customer.results, profitRate);
+    manipulateReadline.closeReadline();
   }
 
-  #countWinningNumber(lotto, numbers) {
-    return numbers.filter((number) => lotto.includes(number)).length;
-  }
-
-  #calculateProfit() {
-    const totalAmount = this.machine.results.reduce((acc, cur, idx) => acc + cur * LOTTO_WINNIG_PRIZE[idx],0);
-    const initialBudget = this.machine.lottos.length * LOTTO_PRICE;
-
-    return profitRateCalculator(initialBudget, totalAmount);
+  #countWinningNumber(lotto, winning, bonus) {
+    const winningCount = winning.filter((number) => lotto.includes(number)).length;
+    const bonusCount = lotto.includes(bonus) ? 2 : 0;
+    return winningCount + bonusCount;
   }
 }
