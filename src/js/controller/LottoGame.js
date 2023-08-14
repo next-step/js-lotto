@@ -5,7 +5,7 @@ import LottoView from '../view/LottoView.js';
 class LottoGame {
   #view = new LottoView();
 
-  #exchange = null;
+  #exchange = new Exchange();
 
   #lottoMachine = new LottoMachine();
 
@@ -20,10 +20,6 @@ class LottoGame {
   #prizes = [];
 
   #rateOfReturn = 0;
-
-  constructor(exchange) {
-    this.#exchange = exchange;
-  }
 
   async start() {
     await this.buyLotto();
@@ -56,7 +52,6 @@ class LottoGame {
   }
 
   getRateOfReturn() {
-    console.log(this.#prizes);
     const totalPrize = this.#prizes.reduce((total, cur) => total + cur, 0);
     this.#rateOfReturn = Exchange.calculateRateOfReturn(this.#recentPurchaseMoney, totalPrize);
   }
