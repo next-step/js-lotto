@@ -1,4 +1,4 @@
-import { getProfitRate, manipulateReadline } from '../../util/index.js';
+import { getProfitRate, readlineUtils } from '../../util/index.js';
 import { LOTTO_PRICE } from '../constants/index.js';
 import { Customer } from '../model/Customer.js';
 import { LottoMachine } from '../model/LottoMachine.js';
@@ -30,7 +30,7 @@ export class LottoClerk {
   announceResult() {
     const profitRate = getProfitRate(this.customer.money, this.customer.amount);
     this.view.LOTTO_RESULT(this.customer.results, profitRate);
-    manipulateReadline.closeReadline();
+    readlineUtils.closeReadline();
   }
 
   #countWinningNumber(lotto, winning, bonus) {

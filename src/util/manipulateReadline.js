@@ -2,7 +2,7 @@ import { stdin as input, stdout as output } from 'process';
 import readline from 'readline';
 import { isMaxAttempt } from '../domain/validator.js';
 
-export const manipulateReadline = {
+export const readlineUtils = {
   rl: readline.createInterface({
     input,
     output,

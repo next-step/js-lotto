@@ -1,4 +1,4 @@
-import { getProfitRate, sortNumberArray, splitString } from '../index.js';
+import { getProfitRate, parseSeparatedNumbers, sortNumberArray } from '../index.js';
 
 describe('util functions test', () => {
   test('profitRateCalculator', () => {
@@ -19,11 +19,11 @@ describe('util functions test', () => {
     expect(sortNumberArray(ARRAY)).toStrictEqual([1, 2, 3, 4, 5, 6]);
   });
 
-  test('splitString', () => {
+  test('parseSeparatedNumbers', () => {
     //given
     const INPUT = '1,2,3,4,5,6';
 
     //then
-    expect(splitString(INPUT)).toStrictEqual([1, 2, 3, 4, 5, 6]);
+    expect(parseSeparatedNumbers(INPUT)).toStrictEqual([1, 2, 3, 4, 5, 6]);
   });
 });
