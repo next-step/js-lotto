@@ -10,44 +10,41 @@ import { getSortedArray } from '../../src/utils/sort.util.js';
 const lotto = new Lotto();
 
 describe('로또 구입', () => {
-  // 로또 구입 금액 입력 시 숫자로만 입력이 가능하다.
-  test('Purchase Amount input 4000 -> true', () => {
+  // Purchase Amount input 4000 -> true
+  test('로또 구입 금액 입력 시 숫자로만 입력이 가능하다. (true)', () => {
     expect(lotto.validatePurchaseAmount(4000)).toBe(true);
   });
-  test('Purchase Amount input "wrong input" -> false', () => {
+  // Purchase Amount input "wrong input" -> false
+  test('로또 구입 금액 입력 시 숫자로만 입력이 가능하다. (false)', () => {
     expect(lotto.validatePurchaseAmount('wrong input')).toBe(false);
   });
 
-  // 로또 구입 금액 입력 시 1,000 단위이다.
-  test('Purchase Amount input 3000 -> true', () => {
+  // Purchase Amount input 3000 -> true
+  test('로또 구입 금액 입력 시 1,000 단위이다. (true)', () => {
     expect(lotto.validatePurchaseAmount(3000)).toBe(true);
   });
-  test('Purchase Amount input 1234 -> false', () => {
+  // Purchase Amount input 1234 -> false
+  test('로또 구입 금액 입력 시 1,000 단위이다. (false)', () => {
     expect(lotto.validatePurchaseAmount(1234)).toBe(false);
   });
 
-  // 로또 구입 금액에 해당하는 만큼의 로또 발행
-  test('(purchaseAmount / 1000) -> Purchased Lotto Counts', () => {
-    const purchaseAmount = 5000;
-
-    lotto.setPurchasedLottoCounts(purchaseAmount);
-
-    expect(lotto.getPurchasedLottoCounts()).toBe(
-      purchaseAmount / LOTTO_AMOUNT_UNIT
-    );
-  });
-  test('PurchasedLottoCounts -> the number of myLottos length', () => {
+  // (purchaseAmount / 1000) -> Purchased Lotto Counts
+  // PurchasedLottoCounts -> the number of myLottos length
+  test('로또 구입 금액에 해당하는 만큼의 로또 발행', () => {
     const purchaseAmount = 5000;
 
     lotto.setPurchasedLottoCounts(purchaseAmount);
     lotto.setMyLottos(lotto.getPurchasedLottoCounts());
 
+    expect(lotto.getPurchasedLottoCounts()).toBe(
+      purchaseAmount / LOTTO_AMOUNT_UNIT
+    );
     expect(lotto.getMyLottos().length).toBe(purchaseAmount / LOTTO_AMOUNT_UNIT);
   });
 
-  // 내가 발행받은 로또 번호의 숫자 범위는 1~45 사이이다.
+  // My Lotto Numbers -> 1~45
   test.each(lotto.createLottoNumbers(5))(
-    'My Lotto Numbers -> 1~45',
+    '내가 발행받은 로또 번호의 숫자 범위는 1~45 사이이다.',
     (num1, num2, num3, num4, num5, num6) => {
       expect(num1).toBeGreaterThanOrEqual(LOTTO_MIN_NUMBER);
       expect(num1).toBeLessThanOrEqual(LOTTO_MAX_NUMBER);
@@ -69,8 +66,8 @@ describe('로또 구입', () => {
     }
   );
 
-  // 내가 발행받은 로또 번호는 총 6개이다.
-  test('My Lotto Numbers -> 6 counts', () => {
+  // My Lotto Numbers -> 6 counts
+  test('내가 발행받은 로또 번호는 총 6개이다.', () => {
     const purchaseAmount = 1000;
 
     lotto.setPurchasedLottoCounts(purchaseAmount);
@@ -79,8 +76,8 @@ describe('로또 구입', () => {
     expect(lotto.getMyLottos()[0].length).toBe(LOTTO_NUMBER_COUNT);
   });
 
-  // 내가 발행받은 로또 번호는 중복이 발생하지 않는다.
-  test('My Lotto Numbers -> Not Duplicated', () => {
+  // My Lotto Numbers -> Not Duplicated
+  test('내가 발행받은 로또 번호는 중복이 발생하지 않는다.', () => {
     const purchaseAmount = 1000;
 
     lotto.setPurchasedLottoCounts(purchaseAmount);
@@ -93,46 +90,48 @@ describe('로또 구입', () => {
 });
 
 describe('로또 당첨 번호/보너스 번호', () => {
-  // 공백이 아니다.
-  test('lotto answer blank -> false', () => {
+  // lotto answer blank -> false
+  test('공백이 아니다.', () => {
     const lottoAnswer = '';
 
     expect(lotto.validateLottoAnswer(lottoAnswer)).toBe(false);
   });
 
-  // ,를 구분자로 모든 값은 숫자이다.
-  test('lotto answer include string -> false', () => {
+  // lotto answer include string -> false
+  test(',를 구분자로 모든 값은 숫자이다. (false)', () => {
     const lottoAnswer = '1,2,3,4,5,A';
 
     expect(lotto.validateLottoAnswer(lottoAnswer)).toBe(false);
   });
-  test('lotto answer all number -> true', () => {
+  // lotto answer all number -> true
+  test(',를 구분자로 모든 값은 숫자이다. (true)', () => {
     const lottoAnswer = '1,2,3,4,5,6';
 
     expect(lotto.validateLottoAnswer(lottoAnswer)).toBe(true);
   });
 
-  // 당첨 번호의 숫자 범위는 1~45 사이이다.
-  test('lotto answer over 45 -> false', () => {
+  // lotto answer over 45 -> false
+  test('당첨 번호의 숫자 범위는 1~45 사이이다.', () => {
     const lottoAnswer = '1,2,3,4,5,48';
 
     expect(lotto.validateLottoAnswer(lottoAnswer)).toBe(false);
   });
 
-  // 당첨 번호는 총 6개이다.
-  test('lotto answer counts over 6 -> false', () => {
+  // lotto answer counts over 6 -> false
+  test('당첨 번호는 총 6개이다. (false)', () => {
     const lottoAnswer = '1,2,3,4,5,6,7';
 
     expect(lotto.validateLottoAnswer(lottoAnswer)).toBe(false);
   });
-  test('lotto answer counts 6 -> true', () => {
+  // lotto answer counts 6 -> true
+  test('당첨 번호는 총 6개이다. (true)', () => {
     const lottoAnswer = '1,2,3,4,5,6';
 
     expect(lotto.validateLottoAnswer(lottoAnswer)).toBe(true);
   });
 
-  // 당첨 번호는 중복이 발생하지 않는다.
-  test('lotto answer counts 6 -> true', () => {
+  // lotto answer counts 6 -> false
+  test('당첨 번호는 중복이 발생하지 않는다. (false)', () => {
     const lottoAnswer = '1,2,3,4,5,6';
     const lottoBonus = '6';
 
@@ -140,7 +139,8 @@ describe('로또 당첨 번호/보너스 번호', () => {
 
     expect(lotto.validateLottoBonus(lottoBonus)).toBe(false);
   });
-  test('lotto answer counts 6 -> true', () => {
+  // lotto answer counts 6 -> true
+  test('당첨 번호는 중복이 발생하지 않는다. (true)', () => {
     const lottoAnswer = '1,2,3,4,5,6';
     const lottoBonus = 7;
 
@@ -171,8 +171,8 @@ describe('당첨 통계 및 수익률', () => {
     expect(spyFn).toBeCalledWith(statistics, purchasedLottoCounts);
   });
 
-  // 1등 당첨
-  test('calculate lotto rank 1 -> true', () => {
+  // calculate lotto rank 1 -> true
+  test('1등 당첨', () => {
     lotto.setStatistics(
       [
         [1, 2, 3, 4, 5, 6],
@@ -184,8 +184,8 @@ describe('당첨 통계 및 수익률', () => {
     expect(lotto.getStatistics()['first place']).toBe(1);
   });
 
-  // 2등 당첨
-  test('calculate lotto rank 2 -> true', () => {
+  // calculate lotto rank 2 -> true
+  test('2등 당첨', () => {
     lotto.setStatistics(
       [
         [1, 2, 3, 4, 5, 6],
@@ -197,8 +197,8 @@ describe('당첨 통계 및 수익률', () => {
     expect(lotto.getStatistics()['second place']).toBe(1);
   });
 
-  // 3등 당첨
-  test('calculate lotto rank 3 -> true', () => {
+  // calculate lotto rank 3 -> true
+  test('3등 당첨', () => {
     lotto.setStatistics(
       [
         [1, 2, 3, 4, 5, 6],
@@ -210,8 +210,8 @@ describe('당첨 통계 및 수익률', () => {
     expect(lotto.getStatistics()['third place']).toBe(1);
   });
 
-  // 4등 당첨
-  test('calculate lotto rank 4 -> true', () => {
+  // calculate lotto rank 4 -> true
+  test('4등 당첨', () => {
     lotto.setStatistics(
       [
         [1, 2, 3, 4, 5, 6],
@@ -223,8 +223,8 @@ describe('당첨 통계 및 수익률', () => {
     expect(lotto.getStatistics()['fourth place']).toBe(1);
   });
 
-  // 5등 당첨
-  test('calculate lotto rank 5 -> true', () => {
+  // calculate lotto rank 5 -> true
+  test('5등 당첨', () => {
     lotto.setStatistics(
       [
         [1, 2, 3, 4, 5, 6],
@@ -238,8 +238,8 @@ describe('당첨 통계 및 수익률', () => {
 });
 
 describe('Step 2 - 재시작 기능 및 UX 개선', () => {
-  // 로또 번호는 오름차순으로 정렬하여 보여준다.
-  test('my lotto numbers sorted ASC -> true', () => {
+  // my lotto numbers sorted ASC -> true
+  test('로또 번호는 오름차순으로 정렬하여 보여준다.', () => {
     lotto.setMyLottos(3);
     lotto.getMyLottos().forEach((myLotto) => {
       expect(
