@@ -1,11 +1,11 @@
-import Exchange from '../domain/Exchange.js';
+import LottoChecker from '../domain/LottoChecker.js';
 import LottoMachine from '../domain/LottoMachine.js';
 import LottoView from '../view/LottoView.js';
 
 class LottoGame {
   #view = new LottoView();
 
-  #exchange = new Exchange();
+  #lottoChecker = new LottoChecker();
 
   #lottoMachine = new LottoMachine();
 
@@ -17,16 +17,13 @@ class LottoGame {
 
   #bonus = 0;
 
-  #prizes = [];
-
-  #rateOfReturn = 0;
+  #result = 0;
 
   async start() {
     await this.buyLotto();
     await this.setWinningNumbers();
     await this.setBonus();
     this.checkLottos();
-    this.getRateOfReturn();
   }
 
   async buyLotto() {
@@ -45,15 +42,11 @@ class LottoGame {
   }
 
   checkLottos() {
-    this.#prizes = this.#recentLottos.map((lotto) => {
+    this.#recentLottos.forEach((lotto) => {
       lotto.check(this.#winningNumbers, this.#bonus);
-      return this.#exchange.getLottoPrize(lotto);
     });
-  }
-
-  getRateOfReturn() {
-    const totalPrize = this.#prizes.reduce((total, cur) => total + cur, 0);
-    this.#rateOfReturn = Exchange.calculateRateOfReturn(this.#recentPurchaseMoney, totalPrize);
+    this.#result = this.#lottoChecker.getLottoRewardBoard(this.#recentLottos);
+    this.#view.renderLottoResult(this.#result);
   }
 }
 

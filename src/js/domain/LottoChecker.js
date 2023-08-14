@@ -1,15 +1,15 @@
-import { LOTTO_REWARD_CODE } from '../constants/lotto-config';
+import { LOTTO_REWARD_CODE, LOTTO_REWARD_CONDITION } from '../constants/lotto-config.js';
 
 class LottoChecker {
-  #firstMatchCount = 6;
+  #firstMatchCount = LOTTO_REWARD_CONDITION[LOTTO_REWARD_CODE.FIRST].matchedCount;
 
-  #secondMatchCount = 5;
+  #secondMatchCount = LOTTO_REWARD_CONDITION[LOTTO_REWARD_CODE.SECOND].matchedCount;
 
-  #thirdMatchCount = 5;
+  #thirdMatchCount = LOTTO_REWARD_CONDITION[LOTTO_REWARD_CODE.THIRD].matchedCount;
 
-  #fourthMatchCount = 4;
+  #fourthMatchCount = LOTTO_REWARD_CONDITION[LOTTO_REWARD_CODE.FOURTH].matchedCount;
 
-  #fifthMatchCount = 3;
+  #fifthMatchCount = LOTTO_REWARD_CONDITION[LOTTO_REWARD_CODE.FIFTH].matchedCount;
 
   static makeLottoRewardBoard() {
     return Object.values(LOTTO_REWARD_CODE).reduce((acc, currentValue) => {
