@@ -9,8 +9,13 @@ const READ = Object.freeze({
   PURCHASE_AMOUNT: '구입금액을 입력해 주세요.',
 });
 
+const PRINT = Object.freeze({
+  PURCHASED_AMOUNT: (amount) => `${amount}개를 구매했습니다.`,
+});
+
 export const MESSAGE = Object.freeze({
   PREFIX: (message) => `> ${message}`,
   READ,
+  PRINT,
   ERROR,
 });
