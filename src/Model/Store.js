@@ -3,11 +3,11 @@ export class Store {
 
   constructor() {}
 
-  addProduct(productName, product) {
+  setProduct(productName, product) {
     this.#products.set(productName, product);
   }
 
-  sellProduct(productName, purchaseAmount) {
+  getProduct(productName, purchaseAmount) {
     const product = this.#products.get(productName);
     const productAmount = calculateProductAmount(product, purchaseAmount);
 
