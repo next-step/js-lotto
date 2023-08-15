@@ -1,6 +1,6 @@
-import { LOTTO_REWARD_CODE } from '../src/js/constants/lotto-config.js';
-import { LottoChecker, Lotto } from '../src/js/domain/index.js';
-import { DEFAULT_LOTTO_NUMBERS, LOTTO_REWARD_DUMMY, MATCHED_BONUS, UNMATCHED_BONUS } from './constants/lotto.js';
+import { LOTTO_REWARD_CODE } from '../../src/js/constants/lotto-config.js';
+import { LottoChecker, Lotto } from '../../src/js/domain/index.js';
+import { DEFAULT_LOTTO_NUMBERS, LOTTO_REWARD_DUMMY, MATCHED_BONUS, UNMATCHED_BONUS } from '../constants/lotto.js';
 
 describe('로또 등수 확인 테스트', () => {
   it('로또는 당첨번호와 보너스 번호를 입력받으면 자신의 등수를 알 수 있다.', () => {

@@ -1,6 +1,6 @@
-import { LOTTO_REWARD_CODE, LOTTO_REWARD } from '../src/js/constants/lotto-config.js';
-import { Exchange, Lotto, LottoChecker } from '../src/js/domain/index.js';
-import { DEFAULT_LOTTO_NUMBERS, LOTTO_REWARD_DUMMY, MATCHED_BONUS, UNMATCHED_BONUS } from './constants/lotto.js';
+import { LOTTO_REWARD_CODE, LOTTO_REWARD } from '../../src/js/constants/lotto-config.js';
+import { Exchange, Lotto, LottoChecker } from '../../src/js/domain/index.js';
+import { DEFAULT_LOTTO_NUMBERS, LOTTO_REWARD_DUMMY, MATCHED_BONUS, UNMATCHED_BONUS } from '../constants/lotto.js';
 
 describe('교환소 테스트', () => {
   it.each([

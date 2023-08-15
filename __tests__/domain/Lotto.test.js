@@ -1,6 +1,6 @@
-import { LOTTO_REWARD, LOTTO_REWARD_CODE } from '../src/js/constants/lotto-config.js';
-import { LottoMachine, Lotto } from '../src/js/domain/index.js';
-import { DEFAULT_LOTTO_NUMBERS, LOTTO_REWARD_DUMMY, MATCHED_BONUS, UNMATCHED_BONUS } from './constants/lotto.js';
+import { LOTTO_REWARD, LOTTO_REWARD_CODE } from '../../src/js/constants/lotto-config.js';
+import { LottoMachine, Lotto } from '../../src/js/domain/index.js';
+import { DEFAULT_LOTTO_NUMBERS, LOTTO_REWARD_DUMMY, MATCHED_BONUS, UNMATCHED_BONUS } from '../constants/lotto.js';
 
 describe('로또 구매 테스트', () => {
   it('로또는 여섯개의 숫자로 이루어진 배열을 매개변수로 받으며 그 값을 필드에 소유한다.', () => {
