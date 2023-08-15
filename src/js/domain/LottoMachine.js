@@ -8,10 +8,10 @@ class LottoMachine {
 
   #maxNumber = 45;
 
-  #pricePerSheet = 1_000;
+  static pricePerSheet = 1_000;
 
   buy(money) {
-    const sheetsCount = money / this.#pricePerSheet;
+    const sheetsCount = money / LottoMachine.pricePerSheet;
     return Array.from({ length: sheetsCount }, () => new Lotto(this.#makeLottoNumbers()));
   }
 
