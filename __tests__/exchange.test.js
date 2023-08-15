@@ -66,22 +66,22 @@ describe('교환소 테스트', () => {
     {
       investment: 10000,
       proceeds: 1000,
-      result: '10.0',
+      result: 10.0,
     },
     {
       investment: 2000,
       proceeds: 6000,
-      result: '300.0',
+      result: 300.0,
     },
     {
       investment: 3,
       proceeds: 1,
-      result: '33.3',
+      result: 33.3,
     },
     {
       investment: 10000,
       proceeds: 0,
-      result: '0.0',
+      result: 0.0,
     },
   ])('수익률을 계산한다', ({ investment, proceeds, result }) => {
     const exchange = new Exchange();

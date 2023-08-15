@@ -13,7 +13,7 @@ class Exchange {
   }
 
   calculateRateOfReturn(investment, proceeds) {
-    return ((proceeds / investment) * this.#multiple).toFixed(this.#rateOfReturnDigit);
+    return Number(((proceeds / investment) * this.#multiple).toFixed(this.#rateOfReturnDigit));
   }
 }
 
