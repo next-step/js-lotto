@@ -1,13 +1,14 @@
 import { isPositiveNumber } from '.';
+import { MESSAGE, STRING } from '../../constants';
 
 /* View */
 export const View = {
   readUserInput(value) {
-    if (value === '') throw new Error('빈 공백은 입력이 불가능합니다.');
+    if (value === STRING.EMPTY) throw new Error(MESSAGE.ERROR.EMPTY_STRING);
   },
 
   readPurchaseAmount(value) {
     if (!isPositiveNumber(value))
-      throw new Error('0 이상의 정수만 입력이 가능합니다.');
+      throw new Error(MESSAGE.ERROR.IS_NOT_POSITIVE_NUMBER);
   },
 };

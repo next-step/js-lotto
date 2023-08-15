@@ -1,5 +1,6 @@
 import { InputView } from '.';
 import { Validator } from '../utils/Validator';
+import { MESSAGE } from '../constants';
 
 export class View {
   #inputView;
@@ -11,7 +12,7 @@ export class View {
 
   async readPurchaseAmount() {
     const userInput = await this.#inputView.readUserInput(
-      '> 구입금액을 입력해 주세요.'
+      MESSAGE.PREFIX(MESSAGE.READ.PURCHASE_AMOUNT)
     );
     this.#validator.readPurchaseAmount(userInput);
 
