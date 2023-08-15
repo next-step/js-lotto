@@ -1,4 +1,5 @@
 import { getRandomIntInRange } from '../utils';
+import { NUMBER } from '../constants';
 
 export class LottoTicket {
   #numbers = [];
@@ -9,7 +10,10 @@ export class LottoTicket {
   }
 
   #getRandomLottoNumber() {
-    return getRandomIntInRange(1, 43);
+    return getRandomIntInRange(
+      NUMBER.LOTTO_TICKET.MIN_RANGE,
+      NUMBER.LOTTO_TICKET.MAX_RANGE
+    );
   }
 
   #setLottoNumbers() {
@@ -19,7 +23,7 @@ export class LottoTicket {
 
   #createMainNumber() {
     const uniqueNumbers = new Set();
-    while (uniqueNumbers.size !== 6) {
+    while (uniqueNumbers.size !== NUMBER.LOTTO_TICKET.NUMBERS_LENGTH) {
       const randomNumber = this.#getRandomLottoNumber();
 
       uniqueNumbers.add(randomNumber);
