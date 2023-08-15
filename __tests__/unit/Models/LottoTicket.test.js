@@ -4,7 +4,6 @@ import { NUMBER } from '../../../src/constants';
 /**
  * 로또 티켓의 번호는 1-43 사이의 숫자들로 구성된다.
  * 당첨 번호는 6개이다.
- * 보너스 번호는 1개이다.
  */
 
 describe('LottoTicket은 1-43 사이의 번호와 보너스 번호로 이루어져있다.', () => {
@@ -16,8 +15,7 @@ describe('LottoTicket은 1-43 사이의 번호와 보너스 번호로 이루어�
 
   test('로또 티켓의 번호는 1-43 사이의 숫자들로 구성된다.', () => {
     const ticket = new LottoTicket();
-    const { numbers, bonusNumber } = ticket.getTicketNumbers();
-    const ticketNumbers = [...numbers, bonusNumber];
+    const ticketNumbers = ticket.getTicketNumbers();
     const validTicketNumbers = ticketNumbers.every(
       (number) =>
         NUMBER.LOTTO_TICKET.MIN_RANGE <= number &&
@@ -29,18 +27,8 @@ describe('LottoTicket은 1-43 사이의 번호와 보너스 번호로 이루어�
 
   test('로또 티켓의 당첨 번호는 6개이다.', () => {
     const ticket = new LottoTicket();
-    const { numbers } = ticket.getTicketNumbers();
+    const numbers = ticket.getTicketNumbers();
 
     expect(numbers.length).toBe(6);
-  });
-
-  test('로또 티켓의 보너스 번호는 1개이다.', () => {
-    const ticket = new LottoTicket();
-    const { bonusNumber } = ticket.getTicketNumbers();
-    const validBonusNumber =
-      NUMBER.LOTTO_TICKET.MIN_RANGE <= bonusNumber &&
-      bonusNumber <= NUMBER.LOTTO_TICKET.MAX_RANGE;
-
-    expect(validBonusNumber).toBe(true);
   });
 });

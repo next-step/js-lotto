@@ -3,7 +3,6 @@ import { NUMBER } from '../constants';
 
 export class LottoTicket {
   #numbers = [];
-  #bonusNumber;
 
   constructor() {
     this.#setLottoNumbers();
@@ -18,7 +17,6 @@ export class LottoTicket {
 
   #setLottoNumbers() {
     this.#numbers = this.#createNumbers();
-    this.#bonusNumber = this.#createBonusNumber();
   }
 
   #createNumbers() {
@@ -32,17 +30,7 @@ export class LottoTicket {
     return [...uniqueNumbers];
   }
 
-  #createBonusNumber() {
-    const bonusNumber = this.#getRandomLottoNumber();
-
-    if (this.#numbers.includes(bonusNumber)) {
-      return this.#createBonusNumber();
-    }
-
-    return bonusNumber;
-  }
-
   getTicketNumbers() {
-    return { numbers: this.#numbers, bonusNumber: this.#bonusNumber };
+    return this.#numbers;
   }
 }
