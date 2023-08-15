@@ -1,4 +1,4 @@
-import LottoMachine from '../src/js/domain/LottoMachine';
+import { LottoMachine } from '../src/js/domain/index.js';
 
 describe('로또 머신 테스트', () => {
   it.each([

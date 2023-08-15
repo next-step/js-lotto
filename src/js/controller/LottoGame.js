@@ -1,8 +1,5 @@
-import Exchange from '../domain/Exchange.js';
-import LottoChecker from '../domain/LottoChecker.js';
-import LottoMachine from '../domain/LottoMachine.js';
-import LottoInputView from '../view/Lotto/LottoInputView.js';
-import LottoOutputView from '../view/Lotto/LottoOutputView.js';
+import { Exchange, LottoChecker, LottoMachine } from '../domain/index.js';
+import { LottoInputView, LottoOutputView } from '../view/Lotto/index.js';
 
 class LottoGame {
   #inputView = new LottoInputView();

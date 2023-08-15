@@ -1,5 +1,4 @@
-import Lotto from '../src/js/domain/Lotto.js';
-import LottoMachine from '../src/js/domain/LottoMachine.js';
+import { LottoMachine, Lotto } from '../src/js/domain/index.js';
 import { DEFAULT_LOTTO_NUMBERS, LOTTO_REWARD_DUMMY, MATCHED_BONUS, UNMATCHED_BONUS } from './constants/lotto.js';
 
 describe('로또 구매 테스트', () => {

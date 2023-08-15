@@ -1,7 +1,5 @@
 import { LOTTO_REWARD_CODE, LOTTO_REWARD_CONDITION } from '../src/js/constants/lotto-config.js';
-import Exchange from '../src/js/domain/Exchange.js';
-import Lotto from '../src/js/domain/Lotto.js';
-import LottoChecker from '../src/js/domain/LottoChecker.js';
+import { Exchange, Lotto, LottoChecker } from '../src/js/domain/index.js';
 import { DEFAULT_LOTTO_NUMBERS, LOTTO_REWARD_DUMMY, MATCHED_BONUS } from './constants/lotto.js';
 
 describe('교환소 테스트', () => {
