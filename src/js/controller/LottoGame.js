@@ -1,10 +1,13 @@
 import Exchange from '../domain/Exchange.js';
 import LottoChecker from '../domain/LottoChecker.js';
 import LottoMachine from '../domain/LottoMachine.js';
-import LottoView from '../view/LottoView.js';
+import LottoInputView from '../view/Lotto/LottoInputView.js';
+import LottoOutputView from '../view/Lotto/LottoOutputView.js';
 
 class LottoGame {
-  #view = new LottoView();
+  #inputView = new LottoInputView();
+
+  #outputView = new LottoOutputView();
 
   #lottoChecker = new LottoChecker();
 
@@ -37,18 +40,18 @@ class LottoGame {
   }
 
   async buyLotto() {
-    this.#recentPurchaseMoney = await this.#view.purchase();
+    this.#recentPurchaseMoney = await this.#inputView.purchase();
     this.#recentLottos = this.#lottoMachine.buy(this.#recentPurchaseMoney);
-    this.#view.renderBuyLottos(this.#recentLottos);
-    this.#view.renderLottos(this.#recentLottos);
+    this.#outputView.buyLottos(this.#recentLottos);
+    this.#outputView.lottos(this.#recentLottos);
   }
 
   async setWinningNumbers() {
-    this.#winningNumbers = await this.#view.winningNumbers();
+    this.#winningNumbers = await this.#inputView.winningNumbers();
   }
 
   async setBonus() {
-    this.#bonus = await this.#view.bonus();
+    this.#bonus = await this.#inputView.bonus();
   }
 
   checkLottos() {
@@ -56,7 +59,7 @@ class LottoGame {
       lotto.check(this.#winningNumbers, this.#bonus);
     });
     this.#result = this.#lottoChecker.getLottoRewardBoard(this.#recentLottos);
-    this.#view.renderLottoResult(this.#result);
+    this.#outputView.lottoResult(this.#result);
   }
 
   setTotalPrize() {
@@ -65,7 +68,7 @@ class LottoGame {
 
   setRateOfReturn() {
     this.#rateOfReturn = this.#exchange.calculateRateOfReturn(this.#recentPurchaseMoney, this.#totalPrize);
-    this.#view.renderRateOfReturn(this.#rateOfReturn);
+    this.#outputView.rateOfReturn(this.#rateOfReturn);
   }
 
   stopGame() {
