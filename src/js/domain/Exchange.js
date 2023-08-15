@@ -1,12 +1,19 @@
-import { LOTTO_PRIZE_TABLE } from '../constants/lotto-config.js';
+import { LOTTO_REWARD_CONDITION } from '../constants/lotto-config.js';
 
 class Exchange {
-  getLottoPrize({ rank }) {
-    return LOTTO_PRIZE_TABLE[rank] ? LOTTO_PRIZE_TABLE[rank] : 0;
+  #multiple = 100;
+
+  #rateOfReturnDigit = 1;
+
+  static getLottoPrize(result) {
+    return Object.keys(result).reduce((acc, code) => {
+      const reward = result[code] ? LOTTO_REWARD_CONDITION[code].prize : 0;
+      return acc + reward;
+    }, 0);
   }
 
-  static calculateRateOfReturn(investment, proceeds) {
-    return (proceeds / investment) * 100;
+  calculateRateOfReturn(investment, proceeds) {
+    return ((proceeds / investment) * this.#multiple).toFixed(this.#rateOfReturnDigit);
   }
 }
 

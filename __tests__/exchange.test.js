@@ -13,16 +13,31 @@ describe('교환소 테스트', () => {
 
     const lottoRewardBoard = lottoChecker.getLottoRewardBoard([lotto]);
 
-    const exchange = new Exchange();
-
-    const prize = exchange.getLottoPrize(lottoRewardBoard);
+    const prize = Exchange.getLottoPrize(lottoRewardBoard);
 
     expect(prize).toBe(LOTTO_REWARD_CONDITION[LOTTO_REWARD_CODE.SECOND].prize);
   });
 
-  it('수익률을 계산한다', () => {
-    const rateOfReturn = Exchange.calculateRateOfReturn(10000, 1000);
+  it.each([
+    {
+      investment: 10000,
+      proceeds: 1000,
+      result: '10.0',
+    },
+    {
+      investment: 2000,
+      proceeds: 6000,
+      result: '300.0',
+    },
+    {
+      investment: 3,
+      proceeds: 1,
+      result: '33.3',
+    },
+  ])('수익률을 계산한다', ({ investment, proceeds, result }) => {
+    const exchange = new Exchange();
+    const rateOfReturn = exchange.calculateRateOfReturn(investment, proceeds);
 
-    expect(rateOfReturn).toBe(10);
+    expect(rateOfReturn).toBe(result);
   });
 });
