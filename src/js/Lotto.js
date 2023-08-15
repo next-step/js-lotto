@@ -14,12 +14,9 @@ function generateLottoNumbers() {
 
   return lottoNumbers;
 }
+
 class Lotto {
   numbers = [];
-
-  static of() {
-    return new Lotto();
-  }
 
   constructor() {
     this.numbers = generateLottoNumbers();
