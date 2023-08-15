@@ -64,4 +64,12 @@ export default class Lotto {
   getMatchBonus() {
     return this.#matchBonus;
   }
+
+  setMatchCount(count) {
+    this.#matchCount = count;
+  }
+
+  setMatchBonus(isMatched) {
+    this.#matchBonus = isMatched;
+  }
 }
