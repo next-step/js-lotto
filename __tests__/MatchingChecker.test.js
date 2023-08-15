@@ -44,6 +44,10 @@ const testCases = [
   },
 ];
 
+describe("로또 당첨 번호 설정 유효성 검사 테스트", () => {});
+
+describe("로또 보너스 번호 설정 유효성 검사 테스트", () => {});
+
 describe("로또 당첨 여부 확인 테스트", () => {
   MatchingChecker.setWinningNumbers([1, 2, 3, 4, 5, 6]);
   MatchingChecker.setBonusNumber(7);
