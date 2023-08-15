@@ -1,6 +1,6 @@
 import Lotto from './Lotto.js';
 import { ERROR_MESSAGES, LOTTO_WINNING_MAP, RULES } from './constants.js';
-import { getIntersection } from './utils/utils.js';
+import { getIntersection } from '../utils/utils.js';
 
 export function validatePurchaseMoney(money) {
   if (Number.isNaN(money)) {
