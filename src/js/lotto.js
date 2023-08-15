@@ -7,14 +7,11 @@ const Lotto = {
     lottos: [],
     prize: PRIZES,
 
-    // 로또 구입 금액을 입력 받는 함수
     getLottoPurchaseAmount(amount) {
-        this.amount = amount;
         this.amount = LottoValidator.amountValidate(amount)
         this.buyLotto(this.amount);
     },
 
-    // 구입 금액에 해당하는 만큼 로또를 발행하는 함수
     buyLotto(purchaseAmount) {
         const numLottos = Math.floor(purchaseAmount / LOTTO_PRICE);
         this.lottos = LottoNumbers.getNumbers(numLottos);

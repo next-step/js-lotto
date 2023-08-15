@@ -1,6 +1,8 @@
 const LOTTO_PRICE = 1000;
 const WIN_NUMBER_COUNT = 6;
 const BONUS_NUMBER_COUNT = 1;
+const LOTTO_RANDOM_MAX = 45;
+const LOTTO_RANDOM_LENGTH = 6;
 
 const PRIZES = [
     { rank: 5, text: "3개 일치 (5,000원)", prize: 5000, count: 0 },
@@ -33,5 +35,7 @@ module.exports = {
     ERROR_MESSAGE,
     RESULT_MESSAGE,
     WIN_NUMBER_COUNT,
-    BONUS_NUMBER_COUNT
+    BONUS_NUMBER_COUNT,
+    LOTTO_RANDOM_MAX,
+    LOTTO_RANDOM_LENGTH
 };

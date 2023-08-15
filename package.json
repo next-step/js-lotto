@@ -11,11 +11,5 @@
   "devDependencies": {
     "cypress": "^6.3.0",
     "jest": "^29.6.2"
-  },
-  "jest": {
-    "transform": {
-      "\\.[jt]sx?$": "babel-jest"
-    }
-  },
-  "type": "module"
+  }
 }
