@@ -1,5 +1,8 @@
+import { Validator } from '../utils/Validator';
+
 export class Store {
   #products = new Map();
+  #validator = Validator.Store;
 
   constructor(products) {
     Object.entries(products).forEach(([productName, productData]) => {
@@ -8,7 +11,9 @@ export class Store {
   }
 
   buyProduct(productName, purchaseAmount) {
+    this.#validator.validateProductName(this.#products, productName);
     const { price: productPrice, product } = this.#products.get(productName);
+    this.#validator.validatePurchaseAmount(purchaseAmount, productPrice);
 
     const productAmount = this.#calculateProductAmount(
       productPrice,
