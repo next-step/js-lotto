@@ -40,4 +40,52 @@ describe('LottoMachine', () => {
       expect(() => validateLottoNumbers([1, 2, 3, 4, 5, 6, 6])).toThrow();
     });
   });
+
+  describe('로또 당첨 결과 계산', () => {
+    it('6개 일치 시 1 등', () => {
+      const lottoMachine = new LottoMachine();
+
+      lottoMachine.setWinNumbers([1, 2, 3, 4, 5, 6], 7);
+
+      const { rank } = lottoMachine.calculateWinningResult([1, 2, 3, 4, 5, 6]);
+
+      expect(rank).toBe(1);
+    });
+    it('5개 + 보너스 볼 일치 시 2 등', () => {
+      const lottoMachine = new LottoMachine();
+
+      lottoMachine.setWinNumbers([1, 2, 3, 4, 5, 6], 7);
+      const { rank } = lottoMachine.calculateWinningResult([1, 2, 3, 4, 5, 7]);
+
+      expect(rank).toBe(2);
+    });
+    it('5개 일치 시 3 등', () => {
+      const lottoMachine = new LottoMachine();
+
+      lottoMachine.setWinNumbers([1, 2, 3, 4, 5, 6], 7);
+      const { rank } = lottoMachine.calculateWinningResult([1, 2, 3, 4, 5, 45]);
+
+      expect(rank).toBe(3);
+    });
+    it('4개 일치 시 4 등', () => {
+      const lottoMachine = new LottoMachine();
+
+      lottoMachine.setWinNumbers([1, 2, 3, 4, 5, 6], 7);
+      const { rank } = lottoMachine.calculateWinningResult([
+        1, 2, 3, 4, 44, 45,
+      ]);
+
+      expect(rank).toBe(3);
+    });
+    it('3개 일치 시 5 등', () => {
+      const lottoMachine = new LottoMachine();
+
+      lottoMachine.setWinNumbers([1, 2, 3, 4, 5, 6], 7);
+      const { rank } = lottoMachine.calculateWinningResult([
+        1, 2, 3, 43, 44, 45,
+      ]);
+
+      expect(rank).toBe(3);
+    });
+  });
 });
