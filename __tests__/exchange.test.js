@@ -34,6 +34,11 @@ describe('교환소 테스트', () => {
       proceeds: 1,
       result: '33.3',
     },
+    {
+      investment: 10000,
+      proceeds: 0,
+      result: '0.0',
+    },
   ])('수익률을 계산한다', ({ investment, proceeds, result }) => {
     const exchange = new Exchange();
     const rateOfReturn = exchange.calculateRateOfReturn(investment, proceeds);

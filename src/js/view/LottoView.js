@@ -42,6 +42,10 @@ class LottoView extends View {
       this.renderPrize({ code, quantity, hasBonus });
     });
   }
+
+  renderRateOfReturn(tateOfReturn) {
+    this.renderComment(`총 수익률은 ${tateOfReturn}%입니다.`);
+  }
 }
 
 export default LottoView;

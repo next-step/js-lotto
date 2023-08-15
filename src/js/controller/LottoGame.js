@@ -1,3 +1,4 @@
+import Exchange from '../domain/Exchange.js';
 import LottoChecker from '../domain/LottoChecker.js';
 import LottoMachine from '../domain/LottoMachine.js';
 import LottoView from '../view/LottoView.js';
@@ -9,6 +10,8 @@ class LottoGame {
 
   #lottoMachine = new LottoMachine();
 
+  #exchange = new Exchange();
+
   #recentPurchaseMoney = 0;
 
   #recentLottos = [];
@@ -19,11 +22,18 @@ class LottoGame {
 
   #result = 0;
 
+  #totalPrize = 0;
+
+  #rateOfReturn = null;
+
   async start() {
     await this.buyLotto();
     await this.setWinningNumbers();
     await this.setBonus();
     this.checkLottos();
+    this.setTotalPrize();
+    this.setRateOfReturn();
+    this.stopGame();
   }
 
   async buyLotto() {
@@ -47,6 +57,33 @@ class LottoGame {
     });
     this.#result = this.#lottoChecker.getLottoRewardBoard(this.#recentLottos);
     this.#view.renderLottoResult(this.#result);
+  }
+
+  setTotalPrize() {
+    this.#totalPrize = Exchange.getLottoPrize(this.#result);
+  }
+
+  setRateOfReturn() {
+    this.#rateOfReturn = this.#exchange.calculateRateOfReturn(
+      this.#recentPurchaseMoney,
+      this.#totalPrize
+    );
+    this.#view.renderRateOfReturn(this.#rateOfReturn);
+  }
+
+  stopGame() {
+    this.reset();
+    process.exit();
+  }
+
+  reset() {
+    this.#recentPurchaseMoney = 0;
+    this.#recentLottos = [];
+    this.#winningNumbers = [];
+    this.#bonus = 0;
+    this.#result = 0;
+    this.#totalPrize = 0;
+    this.#rateOfReturn = null;
   }
 }
 
