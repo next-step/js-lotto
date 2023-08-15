@@ -2,6 +2,11 @@
   "name": "lotto",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "start-step1": "npm run build-step-1 && node dist/bundle.js",
+    "build-step1": "webpack --mode development --entry ./src/step1-index.js",
+    "test": "jest --watch"
+  },
   "license": "MIT",
   "devDependencies": {
     "cypress": "^6.3.0"
