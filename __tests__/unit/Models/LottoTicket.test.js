@@ -7,7 +7,7 @@ import { NUMBER } from '../../../src/constants';
  * 보너스 번호는 1개이다.
  */
 
-describe('LottoTicket', () => {
+describe('LottoTicket은 1-43 사이의 번호와 보너스 번호로 이루어져있다.', () => {
   test('로또 티켓이 정상적으로 생성되는지 확인한다.', () => {
     const ticket = new LottoTicket();
 
