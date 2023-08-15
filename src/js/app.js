@@ -1,10 +1,11 @@
+import GAME_CODE from './constants/game-code.js';
 import LottoGame from './controller/LottoGame.js';
 
 class App {
   games = {};
 
   #addGame(game) {
-    if (game === 'lotto') this.games[game] = new LottoGame();
+    if (game === GAME_CODE.LOTTO) this.games[game] = new LottoGame();
   }
 
   startGame(game) {
