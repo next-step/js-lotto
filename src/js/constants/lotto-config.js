@@ -6,7 +6,7 @@ const LOTTO_REWARD_CODE = Object.freeze({
   FIRST: 'MATCH_6',
 });
 
-const LOTTO_REWARD_CONDITION = Object.freeze({
+const LOTTO_REWARD = Object.freeze({
   [LOTTO_REWARD_CODE.FIFTH]: {
     matchedCount: 3,
     hasBonus: false,
@@ -34,4 +34,4 @@ const LOTTO_REWARD_CONDITION = Object.freeze({
   },
 });
 
-export { LOTTO_REWARD_CODE, LOTTO_REWARD_CONDITION };
+export { LOTTO_REWARD_CODE, LOTTO_REWARD };

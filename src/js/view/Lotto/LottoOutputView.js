@@ -1,4 +1,4 @@
-import { LOTTO_REWARD_CONDITION } from '../../constants/lotto-config.js';
+import { LOTTO_REWARD } from '../../constants/lotto-config.js';
 import OutputView from '../OutputView.js';
 
 class LottoOutputView extends OutputView {
@@ -13,7 +13,7 @@ class LottoOutputView extends OutputView {
   }
 
   prize({ code, quantity, hasBonus }) {
-    const { matchedCount, prize } = LOTTO_REWARD_CONDITION[code];
+    const { matchedCount, prize } = LOTTO_REWARD[code];
     this._message(
       `${matchedCount}개 일치${hasBonus ? ', 보너스 볼 일치' : ''} (${prize.toLocaleString()}원) - ${quantity}개`
     );
@@ -22,7 +22,7 @@ class LottoOutputView extends OutputView {
   lottoResult(result) {
     Object.keys(result).forEach((code) => {
       const quantity = result[code];
-      const { hasBonus } = LOTTO_REWARD_CONDITION[code];
+      const { hasBonus } = LOTTO_REWARD[code];
       this.prize({ code, quantity, hasBonus });
     });
   }

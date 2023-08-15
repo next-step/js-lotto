@@ -1,4 +1,4 @@
-import { LOTTO_REWARD_CONDITION } from '../constants/lotto-config.js';
+import { LOTTO_REWARD } from '../constants/lotto-config.js';
 
 class Exchange {
   #multiple = 100;
@@ -7,7 +7,7 @@ class Exchange {
 
   static getLottoPrize(result) {
     return Object.keys(result).reduce((acc, code) => {
-      const reward = result[code] ? LOTTO_REWARD_CONDITION[code].prize : 0;
+      const reward = result[code] ? LOTTO_REWARD[code].prize : 0;
       return acc + reward;
     }, 0);
   }
