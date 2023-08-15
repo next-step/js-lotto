@@ -36,7 +36,7 @@ describe('LottoVendingMachine', () => {
     expect(lottos.length).toBe(7)
   })
 
-  describe('- 로또 번호 %s는 1 ~ 45의 범위 이내여야 한다.', () => {
+  describe('- 로또 번호는 1 ~ 45의 범위 이내여야 한다.', () => {
     // Given
     const vendingMachine = new LottoVendingMachine()
 
@@ -47,9 +47,26 @@ describe('LottoVendingMachine', () => {
       return [...selectedNums, extraNum]
     })
 
+    // Then
     test.each(lottos)('%s', (lotto) => {
       expect(lotto >= 1 && lotto <= 45).toBe(true)
     })
+  })
+
+  test('- 로또 번호는 서로 중복되지 않는다.', () => {
+    // Given
+    const vendingMachine = new LottoVendingMachine()
+
+    // When
+    vendingMachine.purchase(1000)
+    const lottos = vendingMachine.lottos.flatMap((lotto) => {
+      const { selectedNums, extraNum } = lotto
+      return [...selectedNums, extraNum]
+    })
+
+    console.log(new Set(lottos), lottos)
+    // Then
+    expect(new Set(lottos).size).toBe(lottos.length)
   })
 
   describe('- 한 줄의 로또를 구매 금액에 맞게 여러번 생성한다.', () => {
