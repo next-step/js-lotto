@@ -11,7 +11,7 @@ class App {
   }
 
   play() {
-    this.#controller.configStore();
+    this.#controller.buyTickets();
   }
 }
 
