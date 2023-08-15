@@ -54,6 +54,21 @@ class LottoMachine {
     this.bonusNumber = bonusNumber;
   }
 
+  getTotalWinningResult() {
+    return this.lottos.reduce((acc, cur) => {
+      const res = this.calculateWinningResult(cur.numbers);
+      return { [res.rank]: res.rank + 1, ...acc };
+    }, {});
+  }
+
+  getRateOfReturn(totalWinningResult) {
+    const totalEarning = LOTTO_WINNING_MAP.reduce((acc, cur) => {
+      return acc + cur.prize * totalWinningResult[cur.rank];
+    }, 0);
+
+    return (totalEarning / (this.lottos.length * RULES.LOTTO_PRICE)) * 100;
+  }
+
   calculateWinningResult(numbers) {
     const matchCount = getIntersection(this.winNumbers, numbers).length;
     const isBonus = numbers.includes(this.bonusNumber);
