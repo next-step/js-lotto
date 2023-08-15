@@ -1,3 +1,5 @@
+import Lotto from "./Lotto";
+
 const LotteryMachine = (function () {
   const TOTAL_LOTTO_NUMBER = 6;
   const LOTTO_NUMBER_RANGE = 45;
@@ -11,7 +13,7 @@ const LotteryMachine = (function () {
     while (lotto.size < TOTAL_LOTTO_NUMBER) {
       lotto.add(getRandomNumber());
     }
-    return Array.from(lotto);
+    return Lotto.from(Array.from(lotto));
   }
 
   return {
