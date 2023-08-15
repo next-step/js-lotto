@@ -6,6 +6,7 @@
     "jest": true
   },
   "rules": {
+    "max-len": "off",
     "no-console": "off",
     "import/extensions": "off"
   },

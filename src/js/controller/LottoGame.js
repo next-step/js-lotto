@@ -64,10 +64,7 @@ class LottoGame {
   }
 
   setRateOfReturn() {
-    this.#rateOfReturn = this.#exchange.calculateRateOfReturn(
-      this.#recentPurchaseMoney,
-      this.#totalPrize
-    );
+    this.#rateOfReturn = this.#exchange.calculateRateOfReturn(this.#recentPurchaseMoney, this.#totalPrize);
     this.#view.renderRateOfReturn(this.#rateOfReturn);
   }
 
