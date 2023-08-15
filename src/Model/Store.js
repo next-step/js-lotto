@@ -1,22 +1,25 @@
 export class Store {
   #products = new Map();
 
-  constructor() {}
-
-  setProduct(productName, product) {
-    this.#products.set(productName, product);
+  constructor(products) {
+    Object.entries(products).forEach(([productName, productData]) => {
+      this.#products.set(productName, productData);
+    });
   }
 
-  getProduct(productName, purchaseAmount) {
-    const product = this.#products.get(productName);
-    const productAmount = calculateProductAmount(product, purchaseAmount);
+  sell(productName, purchaseAmount) {
+    const { price: productPrice, product } = this.#products.get(productName);
+    const productAmount = this.#calculateProductAmount(
+      productPrice,
+      purchaseAmount
+    );
 
-    return Array.from({ length: productAmount }, () => product.create());
+    return Array.from({ length: productAmount }, () => {
+      return new product();
+    });
   }
 
-  calculateProductAmount(product, purchaseAmount) {
-    const productPrice = product.getPrice();
-
+  #calculateProductAmount(productPrice, purchaseAmount) {
     return parseInt(purchaseAmount / productPrice);
   }
 }
