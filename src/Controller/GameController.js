@@ -12,7 +12,7 @@ export class GameController {
 
   async buyTickets() {
     const purchaseAmount = await this.#view.readPurchaseAmount();
-    const tickets = this.#store.sell(
+    const tickets = this.#store.buyProduct(
       PRODUCTS_NAME.LOTTO_TICKET,
       purchaseAmount
     );

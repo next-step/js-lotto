@@ -7,8 +7,9 @@ export class Store {
     });
   }
 
-  sell(productName, purchaseAmount) {
+  buyProduct(productName, purchaseAmount) {
     const { price: productPrice, product } = this.#products.get(productName);
+
     const productAmount = this.#calculateProductAmount(
       productPrice,
       purchaseAmount
