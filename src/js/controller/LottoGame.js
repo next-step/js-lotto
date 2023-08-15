@@ -18,7 +18,7 @@ class LottoGame {
 
   #winningNumbers = [];
 
-  #bonus = 0;
+  #bonus = null;
 
   #result = null;
 
@@ -105,8 +105,8 @@ class LottoGame {
     this.#recentPurchaseMoney = 0;
     this.#recentLottos = [];
     this.#winningNumbers = [];
-    this.#bonus = 0;
-    this.#result = 0;
+    this.#bonus = null;
+    this.#result = null;
     this.#totalPrize = 0;
     this.#rateOfReturn = null;
   }

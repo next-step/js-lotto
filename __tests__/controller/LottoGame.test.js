@@ -15,6 +15,7 @@ describe('로또 구매 과정 테스트', () => {
 
   beforeAll(() => {
     lottoGame = new LottoGame();
+    process.exit = jest.fn();
     LottoInputView.prototype.purchase.mockResolvedValue('1000');
     LottoInputView.prototype.winningNumbers.mockResolvedValue(LOTTO_REWARD_DUMMY.SECOND);
     LottoInputView.prototype.bonus.mockResolvedValue(MATCHED_BONUS);
@@ -79,5 +80,19 @@ describe('로또 구매 과정 테스트', () => {
 
     expect(lottoGame.rateOfReturn).toBe(3000000);
     expect(logSpy).toHaveBeenNthCalledWith(10, '총 수익률은 3,000,000%입니다.');
+  });
+
+  it('게임을 종료한다.', async () => {
+    lottoGame.stopGame();
+
+    expect(lottoGame.recentPurchaseMoney).toBe(0);
+    expect(lottoGame.recentLottos).toEqual([]);
+    expect(lottoGame.winningNumbers).toEqual([]);
+    expect(lottoGame.bonus).toBe(null);
+    expect(lottoGame.result).toBe(null);
+    expect(lottoGame.totalPrize).toBe(0);
+    expect(lottoGame.rateOfReturn).toBe(null);
+
+    expect(process.exit).toHaveBeenCalled();
   });
 });
