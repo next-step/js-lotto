@@ -20,11 +20,39 @@ class LottoGame {
 
   #bonus = 0;
 
-  #result = 0;
+  #result = null;
 
   #totalPrize = 0;
 
   #rateOfReturn = null;
+
+  get recentPurchaseMoney() {
+    return this.#recentPurchaseMoney;
+  }
+
+  get recentLottos() {
+    return this.#recentLottos;
+  }
+
+  get winningNumbers() {
+    return this.#winningNumbers;
+  }
+
+  get bonus() {
+    return this.#bonus;
+  }
+
+  get result() {
+    return this.#result;
+  }
+
+  get totalPrize() {
+    return this.#totalPrize;
+  }
+
+  get rateOfReturn() {
+    return this.#rateOfReturn;
+  }
 
   async start() {
     await this.buyLotto();
@@ -37,7 +65,7 @@ class LottoGame {
   }
 
   async buyLotto() {
-    this.#recentPurchaseMoney = await this.#inputView.purchase();
+    this.#recentPurchaseMoney = Number(await this.#inputView.purchase());
     this.#recentLottos = this.#lottoMachine.buy(this.#recentPurchaseMoney);
     this.#outputView.buyLottos(this.#recentLottos);
     this.#outputView.lottos(this.#recentLottos);
