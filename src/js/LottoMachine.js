@@ -1,5 +1,5 @@
 import Lotto from './Lotto.js';
-import { ERROR_MESSAGES, RULES } from './constants.js';
+import { ERROR_MESSAGES, LOTTO_WINNING_MAP, RULES } from './constants.js';
 
 export function validatePurchaseMoney(money) {
   if (Number.isNaN(money)) {
@@ -44,13 +44,26 @@ class LottoMachine {
   purchaseLottos(money) {
     validatePurchaseMoney(money);
 
-    this.lottos = Array(money / RULES.LOTTO_PRICE).fill(Lotto.of);
+    this.lottos = Array(money / RULES.LOTTO_PRICE).fill(Lotto.of());
   }
 
   setWinNumbers(numbers, bonusNumber) {
     validateLottoNumbers([...numbers, bonusNumber]);
     this.winNumbers = numbers;
     this.bonusNumber = bonusNumber;
+  }
+
+  calculateWinningResult(numbers) {
+    const matchCount = numbers.reduce((acc, cur) => {
+      return this.winNumbers.includes(cur) ? acc + 1 : acc;
+    }, 0);
+    const isBonus = numbers.includes(this.bonusNumber);
+
+    const matched = LOTTO_WINNING_MAP.filter(
+      v => v.condition.n === matchCount && v.condition.b == isBonus,
+    )[0];
+
+    return matched;
   }
 }
 

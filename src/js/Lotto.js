@@ -17,8 +17,6 @@ function generateLottoNumbers() {
 class Lotto {
   numbers = [];
 
-  bonusNumber;
-
   static of() {
     return new Lotto();
   }

@@ -12,3 +12,11 @@ export const ERROR_MESSAGES = {
   INVALID_LOTTO_NUMBERS_LENGTH:
     '당첨번호 6자리 + 보너스 번호 1자리로 설정해주세요.',
 };
+
+export const LOTTO_WINNING_MAP = [
+  { rank: 1, prize: 2_000_000_000, condition: { n: 6, b: 0 } },
+  { rank: 2, prize: 30_000_000, condition: { n: 5, b: 1 } },
+  { rank: 3, prize: 1_500_000, condition: { n: 5, b: 0 } },
+  { rank: 4, prize: 50_000, condition: { n: 4, b: 0 } },
+  { rank: 5, prize: 5_000, condition: { n: 3, b: 0 } },
+];

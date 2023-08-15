@@ -75,7 +75,7 @@ describe('LottoMachine', () => {
         1, 2, 3, 4, 44, 45,
       ]);
 
-      expect(rank).toBe(3);
+      expect(rank).toBe(4);
     });
     it('3개 일치 시 5 등', () => {
       const lottoMachine = new LottoMachine();
@@ -85,7 +85,7 @@ describe('LottoMachine', () => {
         1, 2, 3, 43, 44, 45,
       ]);
 
-      expect(rank).toBe(3);
+      expect(rank).toBe(5);
     });
   });
 });
