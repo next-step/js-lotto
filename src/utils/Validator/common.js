@@ -1,2 +1,3 @@
-export const isNumber = (value) => /^-?\d+$/.test(value);
-export const isPositiveNumber = (value) => /^[1-9]\d*$/.test(value);
+import { REGEX } from '../../constants';
+
+export const isPositiveNumber = (value) => REGEX.POSITIVE_NUMBER.test(value);
