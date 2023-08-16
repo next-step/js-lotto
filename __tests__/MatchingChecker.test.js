@@ -102,7 +102,32 @@ describe("로또 당첨 번호 설정 유효성 검사 테스트", () => {
   });
 });
 
-// describe("로또 보너스 번호 설정 유효성 검사 테스트", () => {});
+describe("로또 보너스 번호 설정 유효성 검사 테스트", () => {
+  it.each(["1", "erica", true, null, undefined, function () {}, {}])(
+    "숫자 형태가 아니면, 에러를 발생시킨다.",
+    (input) => {
+      expect(() => MatchingChecker.setBonusNumber(input)).toThrow(
+        ERROR_MESSAGE.BONUS_NUMBER_NOT_NUMBER
+      );
+    }
+  );
+
+  it.each([-1, 0, 46])(
+    "[1, 45] 범위를 벗어난 숫자면, 에러를 발생시킨다.",
+    (input) => {
+      expect(() => MatchingChecker.setBonusNumber(input)).toThrow(
+        ERROR_MESSAGE.BONUS_NUMBER_OUT_OF_RANGE
+      );
+    }
+  );
+
+  it("당첨 번호와 보너스 번호가 중복되면, 에러를 발생시킨다.", () => {
+    MatchingChecker.setWinningNumbers([1, 2, 3, 4, 5, 6]);
+    expect(() => MatchingChecker.setBonusNumber(1)).toThrow(
+      ERROR_MESSAGE.BONUS_NUMBER_DUPLICATED
+    );
+  });
+});
 
 describe("로또 당첨 여부 확인 테스트", () => {
   beforeAll(() => {

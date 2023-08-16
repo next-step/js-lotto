@@ -10,6 +10,9 @@ const MatchingChecker = (function () {
     ELEMENT_NOT_NUMBER: "당첨 번호는 모두 숫자여야합니다.",
     ELEMENT_OUT_OF_RANGE: "당첨 번호는 모두 [1, 45] 사이의 숫자여야합니다.",
     ELEMENT_DUPLICATED: "당첨 번호는 모두 중복되지 않아야합니다.",
+    BONUS_NUMBER_NOT_NUMBER: "보너스 번호는 숫자여야합니다.",
+    BONUS_NUMBER_OUT_OF_RANGE: "보너스 번호는 [1, 45] 사이의 숫자여야합니다.",
+    BONUS_NUMBER_DUPLICATED: "보너스 번호는 당첨 번호와 중복되지 않아야합니다.",
   });
 
   // > > 💡보너스 번호 out-of-range.
@@ -19,7 +22,11 @@ const MatchingChecker = (function () {
   }
 
   function hasOutOfRangeElement(numbers) {
-    return numbers.some((num) => num < LOW_BOUND || num > HIGH_BOUND);
+    return numbers.some(isOutOfRange);
+  }
+
+  function isOutOfRange(number) {
+    return number < LOW_BOUND || number > HIGH_BOUND;
   }
 
   function hasDuplicatedElement(numbers) {
@@ -42,7 +49,21 @@ const MatchingChecker = (function () {
     winningNumbers = numbers;
   }
 
+  function isDuplicateBonusNumber(number) {
+    return winningNumbers.includes(number);
+  }
+
+  function validateBonusNumber(number) {
+    if (typeof number !== "number")
+      throw new Error(ERROR_MESSAGE.BONUS_NUMBER_NOT_NUMBER);
+    if (isOutOfRange(number))
+      throw new Error(ERROR_MESSAGE.BONUS_NUMBER_OUT_OF_RANGE);
+    if (isDuplicateBonusNumber(number))
+      throw new Error(ERROR_MESSAGE.BONUS_NUMBER_DUPLICATED);
+  }
+
   function setBonusNumber(number) {
+    validateBonusNumber(number);
     bonusNumber = number;
   }
 
