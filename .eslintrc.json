@@ -3,7 +3,8 @@
   "env": {
     "es6": true,
     "node": true,
-    "jest": true
+    "jest": true,
+    "jest/globals": true
   },
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -11,6 +12,8 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:cypress/recommended",
+    "plugin:jest/recommended"
   ]
 }

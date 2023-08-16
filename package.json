@@ -6,13 +6,25 @@
   "scripts": {
     "start-step1": "node ./src/step1-index.js",
     "start-step2": "node ./src/step2-index.js",
-    "test": "jest --watch"
+    "test:unit": "jest --watch",
+    "test:e2e": "cypress open"
   },
   "devDependencies": {
     "cypress": "^6.3.0",
-    "prettier": "^3.0.0",
     "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^5.0.0"
+    "eslint-plugin-cypress": "^2.14.0",
+    "eslint-plugin-jest": "^27.2.3",
+    "eslint-plugin-prettier": "^5.0.0",
+    "jest": "^29.6.2",
+    "prettier": "^3.0.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/cypress"
+    ],
+    "roots": [
+      "<rootDir>/src/__test__"
+    ]
   }
 }
