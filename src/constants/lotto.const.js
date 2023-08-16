@@ -20,3 +20,11 @@ export const LOTTO_CALCULATED_RANK = {
   5: 'third place',
   6: 'first place',
 };
+
+export const FIRST_PLACE_AMOUNT = 2_000_000_000;
+export const SECOND_PLACE_AMOUNT = 30_000_000;
+export const THIRD_PLACE_AMOUNT = 1_500_000;
+export const FOURTH_PLACE_AMOUNT = 50_000;
+export const FIFTH_PLACE_AMOUNT = 5_000;
+
+export const PROFIT_RATE_PERCENTAGE_UNIT = 100;

@@ -1,7 +1,13 @@
 import {
+  FIFTH_PLACE_AMOUNT,
+  FIRST_PLACE_AMOUNT,
+  FOURTH_PLACE_AMOUNT,
   LOTTO_AMOUNT_UNIT,
   LOTTO_CALCULATED_RANK,
   LOTTO_SECOND_PLACE_DEFAULT_COUNT,
+  PROFIT_RATE_PERCENTAGE_UNIT,
+  SECOND_PLACE_AMOUNT,
+  THIRD_PLACE_AMOUNT,
 } from '../constants/lotto.const.js';
 
 class LottoStatistics {
@@ -53,13 +59,15 @@ class LottoStatistics {
 
     const purchaseAmount = purchasedLottoCounts * LOTTO_AMOUNT_UNIT;
     const totalProfit =
-      2_000_000_000 * this.#statistics['first place'] +
-      30_000_000 * this.#statistics['second place'] +
-      1_500_000 * this.#statistics['third place'] +
-      50_000 * this.#statistics['fourth place'] +
-      5_000 * this.#statistics['fifth place'];
+      FIRST_PLACE_AMOUNT * this.#statistics['first place'] +
+      SECOND_PLACE_AMOUNT * this.#statistics['second place'] +
+      THIRD_PLACE_AMOUNT * this.#statistics['third place'] +
+      FOURTH_PLACE_AMOUNT * this.#statistics['fourth place'] +
+      FIFTH_PLACE_AMOUNT * this.#statistics['fifth place'];
 
-    profitRate = ((totalProfit - purchaseAmount) / purchaseAmount) * 100;
+    profitRate =
+      ((totalProfit - purchaseAmount) / purchaseAmount) *
+      PROFIT_RATE_PERCENTAGE_UNIT;
 
     return profitRate;
   }
