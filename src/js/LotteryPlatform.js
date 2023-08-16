@@ -43,6 +43,10 @@ const LotteryPlatform = (function () {
     MatchingChecker.setBonusNumber(bonusNumber);
   }
 
+  function requestMatchCheck() {
+    return MatchingChecker.setMatchInfo(lotto);
+  }
+
   return {
     ERROR_MESSAGE,
     issueLottoOf,
@@ -50,6 +54,7 @@ const LotteryPlatform = (function () {
     clearLotto,
     getLottoNumbers,
     setUpMatchingChecker,
+    requestMatchCheck,
   };
 })();
 

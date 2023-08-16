@@ -90,8 +90,16 @@ describe("로또 당첨 번호, 보너스 번호 설정 요청 테스트", () =>
   });
 });
 
-// describe("로또 당첨 확인 요청 테스트", () => {
-//   it("저장한 lotto를 인자로 로또 당첨 확인을 요청한다.", () => {});
-// });
+describe("로또 당첨 확인 요청 테스트", () => {
+  LotteryPlatform.clearLotto();
+  LotteryPlatform.issueLottoOf(1);
+
+  it("저장한 lotto를 인자로 로또 당첨 확인을 요청한다.", () => {
+    const spySetMatchInfo = jest.spyOn(MatchingChecker, "setMatchInfo");
+    LotteryPlatform.requestMatchCheck(LotteryPlatform.getLotto());
+    expect(spySetMatchInfo).toHaveBeenCalledTimes(1);
+    expect(spySetMatchInfo).toHaveBeenCalledWith(LotteryPlatform.getLotto());
+  });
+});
 
 // describe("발행 로또 당첨 여부, 당첨 등수, 당첨 금액 반환 테스트", () => {});
