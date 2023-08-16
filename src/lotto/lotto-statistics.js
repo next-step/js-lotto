@@ -66,8 +66,10 @@ class LottoStatistics {
       FIFTH_PLACE_AMOUNT * this.#statistics['fifth place'];
 
     profitRate =
-      ((totalProfit - purchaseAmount) / purchaseAmount) *
-      PROFIT_RATE_PERCENTAGE_UNIT;
+      profitRate > 0
+        ? ((totalProfit - purchaseAmount) / purchaseAmount) *
+          PROFIT_RATE_PERCENTAGE_UNIT
+        : 0;
 
     return profitRate;
   }
