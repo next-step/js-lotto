@@ -18,6 +18,10 @@ function generateLottoNumbers() {
 class Lotto {
   numbers = [];
 
+  static of(numbers) {
+    return new Lotto(numbers);
+  }
+
   constructor(numbers) {
     this.numbers = numbers || generateLottoNumbers();
   }

@@ -45,20 +45,25 @@ class LottoMachine {
   purchaseLottos(money) {
     validatePurchaseMoney(money);
 
-    this.lottos = Array(money / RULES.LOTTO_PRICE).fill(new Lotto());
+    this.lottos = Array(money / RULES.LOTTO_PRICE)
+      .fill(0)
+      .map(Lotto.of);
   }
 
   setWinNumbers(numbers, bonusNumber) {
     validateLottoNumbers([...numbers, bonusNumber]);
-    this.winNumbers = numbers;
-    this.bonusNumber = bonusNumber;
+    this.winNumbers = numbers.map(Number);
+    this.bonusNumber = Number(bonusNumber);
   }
 
   getTotalWinningResult() {
-    return this.lottos.reduce((acc, cur) => {
-      const res = this.calculateWinningResult(cur.numbers);
-      return { [res.rank]: res.rank + 1, ...acc };
-    }, {});
+    return this.lottos.reduce(
+      (acc, cur) => {
+        const res = this.calculateWinningResult(cur.numbers);
+        return res?.rank ? { ...acc, [res.rank]: acc[res.rank] + 1 } : acc;
+      },
+      { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+    );
   }
 
   getRateOfReturn(totalWinningResult) {
@@ -72,7 +77,6 @@ class LottoMachine {
   calculateWinningResult(numbers) {
     const matchCount = getIntersection(this.winNumbers, numbers).length;
     const isBonus = numbers.includes(this.bonusNumber);
-
     const isMatchWinningCondition = ({ condition }) =>
       condition.n === matchCount && Boolean(condition.b) === isBonus;
 
@@ -80,4 +84,6 @@ class LottoMachine {
   }
 }
 
-export default LottoMachine;
+const lottoMachine = new LottoMachine();
+
+export default lottoMachine;
