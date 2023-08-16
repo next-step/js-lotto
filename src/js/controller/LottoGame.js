@@ -65,10 +65,14 @@ class LottoGame {
   }
 
   async buyLotto() {
-    this.#recentPurchaseMoney = Number(await this.#inputView.purchase());
-    this.#recentLottos = this.#lottoMachine.buy(this.#recentPurchaseMoney);
-    this.#outputView.buyLottos(this.#recentLottos);
-    this.#outputView.lottos(this.#recentLottos);
+    try {
+      this.#recentPurchaseMoney = Number((await this.#inputView.purchase()).trim());
+      this.#recentLottos = this.#lottoMachine.buy(this.#recentPurchaseMoney);
+      this.#outputView.buyLottos(this.#recentLottos);
+      this.#outputView.lottos(this.#recentLottos);
+    } catch (err) {
+      this.showError(err);
+    }
   }
 
   async setWinningNumbers() {
@@ -109,6 +113,11 @@ class LottoGame {
     this.#result = null;
     this.#totalPrize = 0;
     this.#rateOfReturn = null;
+  }
+
+  showError({ message }) {
+    this.#outputView.error(message);
+    this.stopGame();
   }
 }
 

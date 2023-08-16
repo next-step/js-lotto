@@ -34,4 +34,6 @@ const LOTTO_REWARD = Object.freeze({
   },
 });
 
-export { LOTTO_REWARD_CODE, LOTTO_REWARD };
+const LOTTO_PRICE = 1_000;
+
+export { LOTTO_REWARD_CODE, LOTTO_REWARD, LOTTO_PRICE };

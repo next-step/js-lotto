@@ -32,6 +32,10 @@ class LottoOutputView extends OutputView {
   rateOfReturn(tateOfReturn) {
     this._message(`총 수익률은 ${tateOfReturn.toLocaleString()}%입니다.`);
   }
+
+  error(err) {
+    this._error(err);
+  }
 }
 
 export default LottoOutputView;

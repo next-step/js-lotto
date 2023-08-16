@@ -1,9 +1,9 @@
 import LottoGame from '../../src/js/controller/LottoGame.js';
-import LottoInputView from '../../src/js/view/Lotto/LottoInputView.js';
 import LottoMachine from '../../src/js/domain/LottoMachine.js';
 import Lotto from '../../src/js/domain/Lotto.js';
 import { DEFAULT_LOTTO_NUMBERS, LOTTO_REWARD_DUMMY, MATCHED_BONUS } from '../constants/lotto.js';
 import { LOTTO_REWARD_CODE } from '../../src/js/constants/lotto-config.js';
+import LottoInputView from '../../src/js/view/Lotto/LottoInputView.js';
 
 jest.mock('../../src/js/view/Lotto/LottoInputView.js');
 jest.mock('../../src/js/domain/LottoMachine.js');
@@ -31,7 +31,6 @@ describe('로또 구매 과정 테스트', () => {
 
     expect(logSpy).toHaveBeenNthCalledWith(1, '1개를 구매했습니다.');
     expect(logSpy).toHaveBeenNthCalledWith(2, DEFAULT_LOTTO_NUMBERS);
-
     expect(lottoGame.recentPurchaseMoney).toBe(1000);
     expect(lottoGame.recentLottos).toEqual([new Lotto(DEFAULT_LOTTO_NUMBERS)]);
     expect(lottoGame.recentLottos.length).toBe(1);

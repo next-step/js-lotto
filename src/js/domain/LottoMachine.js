@@ -1,4 +1,6 @@
+import { LOTTO_PRICE } from '../constants/lotto-config.js';
 import getRandomNumber from '../utils/getRandomNumber.js';
+import checkValidPurchase from '../validator/purchase.js';
 import Lotto from './Lotto.js';
 
 class LottoMachine {
@@ -8,10 +10,11 @@ class LottoMachine {
 
   #maxNumber = 45;
 
-  static pricePerSheet = 1_000;
+  #pricePerSheet = LOTTO_PRICE;
 
   buy(money) {
-    const sheetsCount = money / LottoMachine.pricePerSheet;
+    checkValidPurchase(money);
+    const sheetsCount = money / this.#pricePerSheet;
     return Array.from({ length: sheetsCount }, () => new Lotto(this.#makeLottoNumbers()));
   }
 
