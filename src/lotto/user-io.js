@@ -66,7 +66,7 @@ class UserIO {
       `5개 일치, 보너스 볼 일치 (30,000,000원) - ${statistics['second place']}개`
     );
     print(`6개 일치 (2,000,000,000원) - ${statistics['first place']}개`);
-    print(`총 수익률은 ${profitRate}%입니다.`);
+    print(`총 수익률은 ${profitRate.toFixed(0)}%입니다.`);
     print('');
   }
 
