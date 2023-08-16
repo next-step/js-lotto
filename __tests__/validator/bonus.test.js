@@ -1,29 +1,20 @@
 import ERROR from '../../src/js/constants/error.js';
-import { LOTTO_NUMBER_QUANTITY, LOTTO_NUMBER_RANGE } from '../../src/js/constants/lotto-config.js';
-import checkValidWinningNumbers from '../../src/js/validator/winningNumbers.js';
+import { LOTTO_NUMBER_RANGE } from '../../src/js/constants/lotto-config.js';
+import { DEFAULT_LOTTO_NUMBERS } from '../constants/lotto.js';
 
-describe('당첨 번호 예외 테스트', () => {
-  it.each([
-    [1, 2, 3, 4, 5],
-    [1, 2, 3],
-    [1, 2, 3, 4, 5, 6, 7],
-  ])(`${LOTTO_NUMBER_QUANTITY}개가 아닌 숫자를 입력할 시 에러가 발생한다.`, (...winningNumbers) => {
-    expect(() => {
-      checkValidWinningNumbers([...winningNumbers]);
-    }).toThrow(ERROR.WINNING_NUMBERS.UNMATCHED_QUANTITY);
-  });
-
-  it.each([
-    [0, 1, 2, 3, 4, 5],
-    [-1, 2, 3, 4, 5, 6],
-    [1, 2, 3, 4, 5, 46],
-    ['한글', 1, 2, 3, 4, 5],
-  ])(
+describe('보너스 번호 예외 테스트', () => {
+  it.each([0, -3, 48, '한글'])(
     `${LOTTO_NUMBER_RANGE.MIN}-${LOTTO_NUMBER_RANGE.MAX} 범위를 벗어난 숫자를 입력할 시 에러가 발생한다.`,
-    (...winningNumbers) => {
+    (bonus) => {
       expect(() => {
-        checkValidWinningNumbers([...winningNumbers]);
-      }).toThrow(ERROR.WINNING_NUMBERS.BEYOND_NUMBER_RANGE);
+        checkValidBonus(bonus, DEFAULT_LOTTO_NUMBERS);
+      }).toThrow(ERROR.NUMBER.BEYOND_NUMBER_RANGE);
     }
   );
+
+  it('당첨번호와 중복된 숫자를 입력할 시 에러가 발생한다.', () => {
+    expect(() => {
+      checkValidBonus(DEFAULT_LOTTO_NUMBERS[0], DEFAULT_LOTTO_NUMBERS);
+    }).toThrow(ERROR.BONUS.DUPLICATED_WITH_WINNING_NUMBER);
+  });
 });

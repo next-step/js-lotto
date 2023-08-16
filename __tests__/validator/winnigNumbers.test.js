@@ -23,7 +23,7 @@ describe('당첨 번호 예외 테스트', () => {
     (...winningNumbers) => {
       expect(() => {
         checkValidWinningNumbers([...winningNumbers]);
-      }).toThrow(ERROR.WINNING_NUMBERS.BEYOND_NUMBER_RANGE);
+      }).toThrow(ERROR.NUMBER.BEYOND_NUMBER_RANGE);
     }
   );
 
