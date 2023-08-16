@@ -3,9 +3,9 @@ export const VALIDATE_ONLY_NUMBER_ERROR = {
 };
 
 export const validateOnlyNumber = text => {
-  const isOnlyNumber = /^\d+$/.test(text);
+  const onlyNumbers = /^\d+$/.test(text);
 
-  if (!isOnlyNumber) {
+  if (onlyNumbers) {
     throw new Error(VALIDATE_ONLY_NUMBER_ERROR.NOT_NUMBER);
   }
 };
