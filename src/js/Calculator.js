@@ -1,3 +1,16 @@
+function roundToSecondDecimalPlace(number) {
+  const DECIMAL_PLACES = 2;
+  return (
+    Math.round(number * Math.pow(10, DECIMAL_PLACES)) /
+    Math.pow(10, DECIMAL_PLACES)
+  );
+}
+
+export function transferToPercent(number) {
+  const percentage = number / 100;
+  return roundToSecondDecimalPlace(percentage);
+}
+
 const Calculator = (function () {
   const ERROR_MESSAGE = Object.freeze({
     LESS_THAN_ZERO: "구매 금액은 0 이상의 양수여야합니다.",
@@ -11,18 +24,12 @@ const Calculator = (function () {
       throw new Error(ERROR_MESSAGE.NOT_MULTIPLE_OF_1000);
   }
 
-  function roundToSecondDecimalPlace(number) {
-    const DECIMAL_PLACES = 2;
-    return (
-      Math.round(number * Math.pow(10, DECIMAL_PLACES)) /
-      Math.pow(10, DECIMAL_PLACES)
-    );
-  }
-
-  function getReturnOfPurchased(prizes, purchased) {
+  function getReturnOfPurchased(prize, purchased) {
     validatePurchase(purchased);
-    const accumulatedPrize = prizes.reduce((acc, prize) => acc + prize, 0);
-    return roundToSecondDecimalPlace(accumulatedPrize / purchased);
+
+    const accumulatedPrize = prize;
+
+    return transferToPercent(accumulatedPrize / purchased);
   }
 
   return {
