@@ -4,10 +4,13 @@ import {
   LOTTO_MIN_NUMBER,
   LOTTO_NUMBER_COUNT,
 } from '../../src/constants/lotto.const.js';
-import Lotto from '../../src/lotto/lotto.js';
+import { UserIO, Lotto, LottoStatistics } from '../../src/lotto/index.js';
+import { readline } from '../../src/utils/readline.util.js';
 import { getSortedArray } from '../../src/utils/sort.util.js';
 
+const userIO = new UserIO(readline);
 const lotto = new Lotto();
+const lottoStatistics = new LottoStatistics();
 
 describe('로또 구입', () => {
   // Purchase Amount input 4000 -> true
@@ -43,7 +46,7 @@ describe('로또 구입', () => {
   });
 
   // My Lotto Numbers -> 1~45
-  test.each(lotto.createLottoNumbers(5))(
+  test.each(lotto.publishLottoNumbers(5))(
     '내가 발행받은 로또 번호의 숫자 범위는 1~45 사이이다.',
     (num1, num2, num3, num4, num5, num6) => {
       expect(num1).toBeGreaterThanOrEqual(LOTTO_MIN_NUMBER);
@@ -151,8 +154,8 @@ describe('로또 당첨 번호/보너스 번호', () => {
 });
 
 describe('당첨 통계 및 수익률', () => {
-  test('print statistics spy', () => {
-    const spyFn = jest.spyOn(lotto, 'printWinStatistics');
+  test('output statistics spy', () => {
+    const spyFn = jest.spyOn(userIO, 'outputWinStatistics');
 
     const purchasedLottoCounts = 5;
 
@@ -165,7 +168,7 @@ describe('당첨 통계 및 수익률', () => {
       'no luck': 3,
     };
 
-    lotto.printWinStatistics(statistics, purchasedLottoCounts);
+    userIO.outputWinStatistics(statistics, purchasedLottoCounts);
 
     expect(spyFn).toBeCalledTimes(1);
     expect(spyFn).toBeCalledWith(statistics, purchasedLottoCounts);
@@ -173,7 +176,7 @@ describe('당첨 통계 및 수익률', () => {
 
   // calculate lotto rank 1 -> true
   test('1등 당첨', () => {
-    lotto.setStatistics(
+    lottoStatistics.setStatistics(
       [
         [1, 2, 3, 4, 5, 6],
         [10, 11, 12, 13, 14, 7],
@@ -181,12 +184,12 @@ describe('당첨 통계 및 수익률', () => {
       [1, 2, 3, 4, 5, 6],
       7
     );
-    expect(lotto.getStatistics()['first place']).toBe(1);
+    expect(lottoStatistics.getStatistics()['first place']).toBe(1);
   });
 
   // calculate lotto rank 2 -> true
   test('2등 당첨', () => {
-    lotto.setStatistics(
+    lottoStatistics.setStatistics(
       [
         [1, 2, 3, 4, 5, 6],
         [10, 11, 12, 13, 14, 7],
@@ -194,12 +197,12 @@ describe('당첨 통계 및 수익률', () => {
       [10, 11, 12, 13, 14, 42],
       7
     );
-    expect(lotto.getStatistics()['second place']).toBe(1);
+    expect(lottoStatistics.getStatistics()['second place']).toBe(1);
   });
 
   // calculate lotto rank 3 -> true
   test('3등 당첨', () => {
-    lotto.setStatistics(
+    lottoStatistics.setStatistics(
       [
         [1, 2, 3, 4, 5, 6],
         [10, 11, 12, 13, 14, 32],
@@ -207,12 +210,12 @@ describe('당첨 통계 및 수익률', () => {
       [10, 11, 12, 13, 14, 42],
       7
     );
-    expect(lotto.getStatistics()['third place']).toBe(1);
+    expect(lottoStatistics.getStatistics()['third place']).toBe(1);
   });
 
   // calculate lotto rank 4 -> true
   test('4등 당첨', () => {
-    lotto.setStatistics(
+    lottoStatistics.setStatistics(
       [
         [1, 2, 3, 4, 5, 6],
         [10, 11, 12, 13, 41, 7],
@@ -220,12 +223,12 @@ describe('당첨 통계 및 수익률', () => {
       [10, 11, 12, 13, 14, 42],
       7
     );
-    expect(lotto.getStatistics()['fourth place']).toBe(1);
+    expect(lottoStatistics.getStatistics()['fourth place']).toBe(1);
   });
 
   // calculate lotto rank 5 -> true
   test('5등 당첨', () => {
-    lotto.setStatistics(
+    lottoStatistics.setStatistics(
       [
         [1, 2, 3, 4, 5, 6],
         [10, 11, 12, 30, 31, 32],
@@ -233,7 +236,7 @@ describe('당첨 통계 및 수익률', () => {
       [10, 11, 12, 13, 14, 42],
       7
     );
-    expect(lotto.getStatistics()['fifth place']).toBe(1);
+    expect(lottoStatistics.getStatistics()['fifth place']).toBe(1);
   });
 });
 

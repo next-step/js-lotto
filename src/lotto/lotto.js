@@ -1,89 +1,21 @@
 import {
-  QUESTION_PURCHASE_AMOUNT,
   LOTTO_AMOUNT_UNIT,
   LOTTO_MIN_NUMBER,
   LOTTO_MAX_NUMBER,
   LOTTO_NUMBER_COUNT,
-  QUESTION_LOTTO_ANSWER,
-  QUESTION_LOTTO_BONUS,
-  LOTTO_SECOND_PLACE_DEFAULT_COUNT,
-  LOTTO_CALCULATED_RANK,
-  QUESTION_RESTART,
   LOTTO_AMOUNT_SEPARATOR,
 } from '../constants/lotto.const.js';
 import { REGEX_NUMBERS } from '../constants/regex.const.js';
-import {
-  ERROR_WRONG_LOTTO_ANSWER_MESSAGE,
-  ERROR_WRONG_LOTTO_BONUS_MESSAGE,
-  ERROR_WRONG_PURCHASE_AMOUNT_MESSAGE,
-} from '../constants/error.const.js';
-import { getSortedArray } from '../utils/sort.util.js';
 import { getRandomNumber } from '../utils/random.util.js';
-import { print } from '../utils/common.util.js';
+import { getSortedArray } from '../utils/sort.util.js';
 
 class Lotto {
-  #readline = null;
-
   #purchasedLottoCounts = 0;
   #myLottos = [];
   #lottoAnswer = null;
   #lottoBonus = null;
-  #statistics = {
-    'first place': 0,
-    'second place': 0,
-    'third place': 0,
-    'fourth place': 0,
-    'fifth place': 0,
-    'no luck': 0,
-  };
 
-  constructor(readline) {
-    this.#readline = readline;
-  }
-
-  start() {
-    this.#readline.question(QUESTION_PURCHASE_AMOUNT, (purchaseAmount) => {
-      if (!this.validatePurchaseAmount(purchaseAmount)) {
-        print(ERROR_WRONG_PURCHASE_AMOUNT_MESSAGE);
-        this.#readline.close();
-      }
-
-      this.setPurchasedLottoCounts(purchaseAmount);
-      this.printAmount(this.#purchasedLottoCounts);
-
-      this.setMyLottos(this.#purchasedLottoCounts);
-      this.printMyLottos(this.#myLottos);
-
-      this.#readline.question(QUESTION_LOTTO_ANSWER, (lottoAnswer) => {
-        if (!this.validateLottoAnswer(lottoAnswer)) {
-          print(ERROR_WRONG_LOTTO_ANSWER_MESSAGE);
-          this.#readline.close();
-        }
-
-        this.setLottoAnswer(lottoAnswer);
-
-        this.#readline.question(`\n${QUESTION_LOTTO_BONUS}`, (lottoBonus) => {
-          if (!this.validateLottoBonus(lottoBonus)) {
-            print(ERROR_WRONG_LOTTO_BONUS_MESSAGE);
-            this.#readline.close();
-          }
-
-          this.setLottoBonus(lottoBonus);
-
-          this.setStatistics(
-            this.#myLottos,
-            this.#lottoAnswer,
-            this.#lottoBonus
-          );
-          this.printWinStatistics(this.#statistics, this.#purchasedLottoCounts);
-
-          this.#readline.question(QUESTION_RESTART, (command) => {
-            this.restartOrExit(command);
-          });
-        });
-      });
-    });
-  }
+  constructor() {}
 
   getPurchasedLottoCounts() {
     return this.#purchasedLottoCounts;
@@ -101,16 +33,12 @@ class Lotto {
     return this.#lottoBonus;
   }
 
-  getStatistics() {
-    return this.#statistics;
-  }
-
   setPurchasedLottoCounts(amount) {
     this.#purchasedLottoCounts = parseInt(amount) / LOTTO_AMOUNT_UNIT;
   }
 
   setMyLottos(purchasedLottoCounts) {
-    this.#myLottos = this.createLottoNumbers(purchasedLottoCounts);
+    this.#myLottos = this.publishLottoNumbers(purchasedLottoCounts);
   }
 
   setLottoAnswer(lottoAnswer) {
@@ -119,34 +47,6 @@ class Lotto {
 
   setLottoBonus(lottoBonus) {
     this.#lottoBonus = parseInt(lottoBonus);
-  }
-
-  setStatistics(myLottos, lottoAnswer, lottoBonus) {
-    myLottos.forEach((myLotto) => {
-      let answerCount = 0;
-      lottoAnswer.forEach((answer) => {
-        if (myLotto.includes(answer)) {
-          answerCount += 1;
-        }
-      });
-      if (
-        answerCount === LOTTO_SECOND_PLACE_DEFAULT_COUNT &&
-        myLotto.includes(lottoBonus)
-      ) {
-        this.#statistics['second place'] += 1;
-      } else {
-        const rank = this.calculateRank(answerCount);
-        this.#statistics[rank] += 1;
-      }
-    });
-  }
-
-  calculateRank(count) {
-    if (count in LOTTO_CALCULATED_RANK) {
-      return LOTTO_CALCULATED_RANK[count];
-    }
-
-    return 'no luck';
   }
 
   validatePurchaseAmount(amount) {
@@ -232,7 +132,7 @@ class Lotto {
     return true;
   }
 
-  createLottoNumbers(lottoCounts) {
+  publishLottoNumbers(lottoCounts) {
     const totalLottoNumbers = Array(lottoCounts).fill([]);
 
     totalLottoNumbers.forEach((_, idx) => {
@@ -254,54 +154,6 @@ class Lotto {
     });
 
     return totalLottoNumbers;
-  }
-
-  printAmount(lottoCounts) {
-    print(`${lottoCounts}개를 구매했습니다.`);
-  }
-
-  printMyLottos(lottos) {
-    lottos.forEach((lotto) => {
-      print(lotto);
-    });
-    print('');
-  }
-
-  printWinStatistics(statistics, purchasedLottoCounts) {
-    print('\n당첨 통계');
-    print('--------------------');
-
-    let profitRate = 0;
-
-    const purchaseAmount = purchasedLottoCounts * LOTTO_AMOUNT_UNIT;
-    const totalProfit =
-      2_000_000_000 * statistics['first place'] +
-      30_000_000 * statistics['second place'] +
-      1_500_000 * statistics['third place'] +
-      50_000 * statistics['fourth place'] +
-      5_000 * statistics['fifth place'];
-
-    profitRate = ((totalProfit - purchaseAmount) / purchaseAmount) * 100;
-
-    print(`3개 일치 (5,000원) - ${statistics['fifth place']}개`);
-    print(`4개 일치 (50,000원) - ${statistics['fourth place']}개`);
-    print(`5개 일치 (1,500,000원) - ${statistics['third place']}개`);
-    print(
-      `5개 일치, 보너스 볼 일치 (30,000,000원) - ${statistics['second place']}개`
-    );
-    print(`6개 일치 (2,000,000,000원) - ${statistics['first place']}개`);
-    print(`총 수익률은 ${profitRate}%입니다.`);
-    print('');
-  }
-
-  restartOrExit(command) {
-    const c = command.toLowerCase();
-    if (c === 'y') {
-      print('');
-      this.start();
-    } else {
-      this.#readline.close();
-    }
   }
 }
 
