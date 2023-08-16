@@ -22,10 +22,10 @@ export function validateLottoNumber(number) {
 }
 
 export function validateLottoNumbers(numbers) {
-  if (
-    !Array.isArray(numbers) ||
-    numbers.length !== RULES.LOTTO_NUMBERS_LENGTH + 1
-  ) {
+  if (!Array.isArray(numbers) || numbers.some(Number.isNaN)) {
+    throw new Error(ERROR_MESSAGES.INVALID_LOTTO_NUMBERS_TYPE);
+  }
+  if (numbers.length !== RULES.LOTTO_NUMBERS_LENGTH + 1) {
     throw new Error(ERROR_MESSAGES.INVALID_LOTTO_NUMBERS_LENGTH);
   }
   const NUMBERS_SET = [...new Set(numbers)];
@@ -52,8 +52,8 @@ class LottoMachine {
 
   setWinNumbers(numbers, bonusNumber) {
     validateLottoNumbers([...numbers, bonusNumber]);
-    this.winNumbers = numbers.map(Number);
-    this.bonusNumber = Number(bonusNumber);
+    this.winNumbers = numbers;
+    this.bonusNumber = bonusNumber;
   }
 
   getTotalWinningResult() {

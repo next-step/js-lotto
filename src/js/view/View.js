@@ -12,17 +12,17 @@ const rl = createInterface({ input: stdin, output: stdout });
 export default class View {
   static async askPrice() {
     const price = await View.#ask(GAME_MESSAGES.ASK_PRICE);
-    return price;
+    return Number(price);
   }
 
   static async askWinNumbers() {
     const winNumbers = await View.#ask(GAME_MESSAGES.ASK_WIN_NUMBERS);
-    return winNumbers.split(',');
+    return winNumbers.split(',').map(Number);
   }
 
   static async askBonusNumber() {
     const bonusNumber = await View.#ask(GAME_MESSAGES.ASK_BONUS_NUMBER);
-    return bonusNumber;
+    return Number(bonusNumber);
   }
 
   static printPurchasedLottos(lottos) {
