@@ -2,9 +2,43 @@ const MatchingChecker = (function () {
   let winningNumbers = [];
   let bonusNumber = null;
   const CHECK_BONUS_COUNT = 5;
+  const LOW_BOUND = 1;
+  const HIGH_BOUND = 45;
+  const ERROR_MESSAGE = Object.freeze({
+    NOT_ARRAY: "당첨 번호는 배열 형태여야합니다.",
+    NOT_LENGTH_SIX: "당첨 번호는 길이가 6인 배열 형태여야합니다.",
+    ELEMENT_NOT_NUMBER: "당첨 번호는 모두 숫자여야합니다.",
+    ELEMENT_OUT_OF_RANGE: "당첨 번호는 모두 [1, 45] 사이의 숫자여야합니다.",
+    ELEMENT_DUPLICATED: "당첨 번호는 모두 중복되지 않아야합니다.",
+  });
+
+  // > > 💡보너스 번호 out-of-range.
+
+  function hasNonNumericElement(numbers) {
+    return numbers.some((num) => typeof num !== "number");
+  }
+
+  function hasOutOfRangeElement(numbers) {
+    return numbers.some((num) => num < LOW_BOUND || num > HIGH_BOUND);
+  }
+
+  function hasDuplicatedElement(numbers) {
+    return new Set(numbers).size !== numbers.length;
+  }
+
+  function validateWinningNumbers(numbers) {
+    if (!Array.isArray(numbers)) throw new Error(ERROR_MESSAGE.NOT_ARRAY);
+    if (numbers.length !== 6) throw new Error(ERROR_MESSAGE.NOT_LENGTH_SIX);
+    if (hasNonNumericElement(numbers))
+      throw new Error(ERROR_MESSAGE.ELEMENT_NOT_NUMBER);
+    if (hasOutOfRangeElement(numbers))
+      throw new Error(ERROR_MESSAGE.ELEMENT_OUT_OF_RANGE);
+    if (hasDuplicatedElement(numbers))
+      throw new Error(ERROR_MESSAGE.ELEMENT_DUPLICATED);
+  }
 
   function setWinningNumbers(numbers) {
-    // TODO 유효성 검사 추가할지 생각해보기
+    validateWinningNumbers(numbers);
     winningNumbers = numbers;
   }
 
@@ -40,6 +74,7 @@ const MatchingChecker = (function () {
   }
 
   return {
+    ERROR_MESSAGE,
     setWinningNumbers,
     setBonusNumber,
     setMatchInfo,
