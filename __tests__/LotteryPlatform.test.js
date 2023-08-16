@@ -102,4 +102,24 @@ describe("로또 당첨 확인 요청 테스트", () => {
   });
 });
 
-// describe("발행 로또 당첨 여부, 당첨 등수, 당첨 금액 반환 테스트", () => {});
+describe("발행 로또 당첨 여부, 당첨 등수, 당첨 금액 반환 테스트", () => {
+  // TODO null 예외처리
+  // TODO MatchBonus 변수명 변경
+
+  it("로또 당첨 번호 일치 개수 반환 메소드를 호출한다.", () => {
+    const spyGetMatchCount = jest.spyOn(Lotto.prototype, "getMatchCount");
+    LotteryPlatform.getMatchResult();
+    expect(spyGetMatchCount).toHaveBeenCalledTimes(1);
+  });
+
+  it("로또 보너스 번호 반환 메소드를 호출한다.", () => {
+    const spyGetMatchBonus = jest.spyOn(Lotto.prototype, "getMatchBonus");
+    LotteryPlatform.getMatchResult();
+    expect(spyGetMatchBonus).toHaveBeenCalledTimes(1);
+  });
+
+  it("등수와 당첨 금액을 속성으로 가진 객체를 반환한다.", () => {
+    expect(LotteryPlatform.getMatchResult()).toHaveProperty("rank");
+    expect(LotteryPlatform.getMatchResult()).toHaveProperty("prize");
+  });
+});
