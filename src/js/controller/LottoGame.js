@@ -1,4 +1,5 @@
 import { Exchange, LottoChecker, LottoMachine } from '../domain/index.js';
+import checkValidBonus from '../validator/bonus.js';
 import checkValidWinningNumbers from '../validator/winningNumbers.js';
 import { LottoInputView, LottoOutputView } from '../view/Lotto/index.js';
 
@@ -78,12 +79,14 @@ class LottoGame {
 
   async setWinningNumbers() {
     const winningNumbers = await this.#inputView.winningNumbers();
-    this.checkValidation(checkValidWinningNumbers, winningNumbers);
+    this.checkValidation(() => checkValidWinningNumbers(winningNumbers));
     this.#winningNumbers = winningNumbers;
   }
 
   async setBonus() {
-    this.#bonus = await this.#inputView.bonus();
+    const bonus = await this.#inputView.bonus();
+    this.checkValidation(() => checkValidBonus(bonus, this.#winningNumbers));
+    this.#bonus = bonus;
   }
 
   checkLottos() {
@@ -118,9 +121,9 @@ class LottoGame {
     this.#rateOfReturn = null;
   }
 
-  checkValidation(validator, target) {
+  checkValidation(validator) {
     try {
-      validator(target);
+      validator();
     } catch (err) {
       this.showError(err);
     }

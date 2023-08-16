@@ -15,7 +15,7 @@ const ERROR = Object.freeze({
   },
 
   BONUS: {
-    DUPLICATED_WITH_WINNING_NUMBER: '당첨번호와 중복되지 않는 보너스 숫자를 입력해주세요',
+    DUPLICATED_WITH_WINNING_NUMBER: '당첨번호와 중복되지 않는 보너스 숫자를 입력해주세요!',
   },
 });
 

@@ -1,8 +1,13 @@
-import ERROR from '../constants/error';
-import { isBeyondNumberRange } from './common';
+import ERROR from '../constants/error.js';
+import { isBeyondNumberRange } from './common.js';
 
-const checkValidBonus = (bonus) => {
-  if (isBeyondNumberRange(bonus)) throw new Error(ERROR.WINNING_NUMBERS.BEYOND_NUMBER_RANGE);
+const isDuplicatedWithWinningNumbers = (bonus, winningNumbers) => winningNumbers.includes(bonus);
+
+const checkValidBonus = (bonus, winningNumbers) => {
+  if (isBeyondNumberRange(bonus)) throw new Error(ERROR.NUMBER.BEYOND_NUMBER_RANGE);
+  if (isDuplicatedWithWinningNumbers(bonus, winningNumbers)) {
+    throw new Error(ERROR.BONUS.DUPLICATED_WITH_WINNING_NUMBER);
+  }
 };
 
 export default checkValidBonus;

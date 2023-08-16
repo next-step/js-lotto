@@ -1,5 +1,6 @@
 import ERROR from '../../src/js/constants/error.js';
 import { LOTTO_NUMBER_RANGE } from '../../src/js/constants/lotto-config.js';
+import checkValidBonus from '../../src/js/validator/bonus.js';
 import { DEFAULT_LOTTO_NUMBERS } from '../constants/lotto.js';
 
 describe('보너스 번호 예외 테스트', () => {
