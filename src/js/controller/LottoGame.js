@@ -57,20 +57,16 @@ class LottoGame {
 
   async start() {
     await this.buyLotto();
-    await this.setWinningNumbers();
-    await this.setBonus();
-    this.checkLottos();
-    this.setTotalPrize();
-    this.setRateOfReturn();
-    this.stopGame();
   }
 
   async buyLotto() {
     try {
-      this.#recentPurchaseMoney = Number((await this.#inputView.purchase()).trim());
+      const money = Number((await this.#inputView.purchase()).trim());
+      this.#recentPurchaseMoney = money;
       this.#recentLottos = this.#lottoMachine.buy(this.#recentPurchaseMoney);
       this.#outputView.buyLottos(this.#recentLottos);
       this.#outputView.lottos(this.#recentLottos);
+      await this.setWinningNumbers();
     } catch (err) {
       this.showError(err);
     }
@@ -80,12 +76,14 @@ class LottoGame {
     const winningNumbers = await this.#inputView.winningNumbers();
     this.checkValidation(() => checkValidWinningNumbers(winningNumbers));
     this.#winningNumbers = winningNumbers;
+    await this.setBonus();
   }
 
   async setBonus() {
     const bonus = await this.#inputView.bonus();
     this.checkValidation(() => checkValidBonus(bonus, this.#winningNumbers));
     this.#bonus = bonus;
+    this.checkLottos();
   }
 
   checkLottos() {
@@ -94,30 +92,22 @@ class LottoGame {
     });
     this.#result = this.#lottoChecker.getLottoRewardBoard(this.#recentLottos);
     this.#outputView.lottoResult(this.#result);
+    this.setTotalPrize();
   }
 
   setTotalPrize() {
     this.#totalPrize = Exchange.getLottoPrize(this.#result);
+    this.setRateOfReturn();
   }
 
   setRateOfReturn() {
     this.#rateOfReturn = this.#exchange.calculateRateOfReturn(this.#recentPurchaseMoney, this.#totalPrize);
     this.#outputView.rateOfReturn(this.#rateOfReturn);
+    this.stopGame();
   }
 
   stopGame() {
-    this.reset();
     process.exit();
-  }
-
-  reset() {
-    this.#recentPurchaseMoney = 0;
-    this.#recentLottos = [];
-    this.#winningNumbers = [];
-    this.#bonus = null;
-    this.#result = null;
-    this.#totalPrize = 0;
-    this.#rateOfReturn = null;
   }
 
   checkValidation(validator) {

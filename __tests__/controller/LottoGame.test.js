@@ -21,7 +21,6 @@ describe('로또 구매 과정 테스트', () => {
   let lottoGame;
 
   beforeAll(() => {
-    lottoGame = new LottoGame();
     process.exit = jest.fn();
     mockInput({
       purchase: '1000',
@@ -29,6 +28,8 @@ describe('로또 구매 과정 테스트', () => {
       bonus: MATCHED_BONUS,
       returnedLottos: [new Lotto(DEFAULT_LOTTO_NUMBERS)],
     });
+    lottoGame = new LottoGame();
+    lottoGame.start();
   });
 
   afterAll(() => {
@@ -36,8 +37,6 @@ describe('로또 구매 과정 테스트', () => {
   });
 
   it('로또를 1,000원에 한 장 구매한다', async () => {
-    await lottoGame.buyLotto();
-
     expect(logSpy).toHaveBeenNthCalledWith(1, '1개를 구매했습니다.');
     expect(logSpy).toHaveBeenNthCalledWith(2, DEFAULT_LOTTO_NUMBERS);
     expect(lottoGame.recentPurchaseMoney).toBe(1000);
@@ -46,20 +45,14 @@ describe('로또 구매 과정 테스트', () => {
   });
 
   it('당첨번호를 입력한다', async () => {
-    await lottoGame.setWinningNumbers();
-
     expect(lottoGame.winningNumbers).toEqual(LOTTO_REWARD_DUMMY.SECOND);
   });
 
   it('보너스번호를 입력한다', async () => {
-    await lottoGame.setBonus();
-
     expect(lottoGame.bonus).toBe(MATCHED_BONUS);
   });
 
   it('당첨 결과를 확인한다.', async () => {
-    lottoGame.checkLottos();
-
     expect(lottoGame.result).toEqual({
       [LOTTO_REWARD_CODE.FIRST]: 0,
       [LOTTO_REWARD_CODE.SECOND]: 1,
@@ -78,29 +71,15 @@ describe('로또 구매 과정 테스트', () => {
   });
 
   it('전체 상금을 설정한다.', async () => {
-    lottoGame.setTotalPrize();
-
     expect(lottoGame.totalPrize).toBe(30000000);
   });
 
   it('수익률을 확인한다.', async () => {
-    lottoGame.setRateOfReturn();
-
     expect(lottoGame.rateOfReturn).toBe(3000000);
     expect(logSpy).toHaveBeenNthCalledWith(10, '총 수익률은 3,000,000%입니다.');
   });
 
   it('게임을 종료한다.', async () => {
-    lottoGame.stopGame();
-
-    expect(lottoGame.recentPurchaseMoney).toBe(0);
-    expect(lottoGame.recentLottos).toEqual([]);
-    expect(lottoGame.winningNumbers).toEqual([]);
-    expect(lottoGame.bonus).toBe(null);
-    expect(lottoGame.result).toBe(null);
-    expect(lottoGame.totalPrize).toBe(0);
-    expect(lottoGame.rateOfReturn).toBe(null);
-
     expect(process.exit).toHaveBeenCalled();
   });
 });
