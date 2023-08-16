@@ -55,21 +55,9 @@ class UserIO {
     print('');
   }
 
-  outputWinStatistics(statistics, purchasedLottoCounts) {
+  outputWinStatistics(statistics, profitRate) {
     print('\n당첨 통계');
     print('--------------------');
-
-    let profitRate = 0;
-
-    const purchaseAmount = purchasedLottoCounts * LOTTO_AMOUNT_UNIT;
-    const totalProfit =
-      2_000_000_000 * statistics['first place'] +
-      30_000_000 * statistics['second place'] +
-      1_500_000 * statistics['third place'] +
-      50_000 * statistics['fourth place'] +
-      5_000 * statistics['fifth place'];
-
-    profitRate = ((totalProfit - purchaseAmount) / purchaseAmount) * 100;
 
     print(`3개 일치 (5,000원) - ${statistics['fifth place']}개`);
     print(`4개 일치 (50,000원) - ${statistics['fourth place']}개`);

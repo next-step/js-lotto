@@ -52,8 +52,9 @@ const startLotto = async () => {
 
     const statistics = lottoStatistics.getStatistics();
     const purchaseLottoCounts = lotto.getPurchasedLottoCounts();
+    const profitRate = lottoStatistics.calculateProfitRate(purchaseLottoCounts);
 
-    userIO.outputWinStatistics(statistics, purchaseLottoCounts);
+    userIO.outputWinStatistics(statistics, profitRate);
   });
 
   await userIO.inputRestart().then((command) => {
