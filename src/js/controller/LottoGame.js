@@ -1,6 +1,5 @@
 import { Exchange, LottoChecker, LottoMachine } from '../domain/index.js';
-import checkValidBonus from '../validator/bonus.js';
-import checkValidWinningNumbers from '../validator/winningNumbers.js';
+import { checkValidWinningNumbers, checkValidBonus } from '../validator/index.js';
 import { LottoInputView, LottoOutputView } from '../view/Lotto/index.js';
 
 class LottoGame {

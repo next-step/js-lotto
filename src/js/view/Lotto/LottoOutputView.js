@@ -19,9 +19,13 @@ class LottoOutputView extends OutputView {
     );
   }
 
+  divider() {
+    this._message('--------------------');
+  }
+
   lottoResult(result) {
     this._message('당첨 통계');
-    this._message('--------------------');
+    this.divider();
     Object.keys(result).forEach((code) => {
       const quantity = result[code];
       const { hasBonus } = LOTTO_REWARD[code];
