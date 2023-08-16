@@ -1,9 +1,10 @@
 import LotteryPlatform from "../src/js/LotteryPlatform";
 import Lotto from "../src/js/Lotto";
+import MatchingChecker from "../src/js/MatchingChecker";
 
 const ERROR_MESSAGE = LotteryPlatform.ERROR_MESSAGE;
 
-describe.skip("로또 발행 요청 테스트", () => {
+describe("로또 발행 요청 테스트", () => {
   describe("발행 개수 유효성 테스트", () => {
     it.each(["1", "erica", true, null, undefined, function () {}, {}])(
       "숫자 형태가 아닌 경우, 에러를 반환한다.",
@@ -59,15 +60,38 @@ describe.skip("로또 발행 요청 테스트", () => {
 
 describe("발행 로또 번호 반환 테스트", () => {
   // TODO 외부에서 고정 로또 번호 전략 주입받으면 테스트 코드 변경
-  it("발행 로또 번호는 숫자 6개로 구성된 배열 형태이다.", () => {
-    LotteryPlatform.issueLottoOf(1);
-    const lotto = LotteryPlatform.getLotto();
-    const lottoNumbers = lotto.getLottoNumbers();
-    expect(lottoNumbers).toBeInstanceOf(Array);
-    expect(lottoNumbers.some((num) => typeof num !== "number")).toBe(false);
+  it("로또 번호 반환 메소드를 호출한다.", () => {
+    const spyGetLottoNumbers = jest.spyOn(Lotto.prototype, "getLottoNumbers");
+    LotteryPlatform.getLottoNumbers();
+    expect(spyGetLottoNumbers).toHaveBeenCalledTimes(1);
+  });
+
+  it("반환값은 6개의 숫자로 이뤄진 배열이다.", () => {
+    const lotto = LotteryPlatform.getLottoNumbers();
+    expect(lotto).toBeInstanceOf(Array);
+    expect(lotto.length).toBe(6);
+    expect(lotto.every((number) => typeof number === "number")).toBe(true);
   });
 });
 
-// describe("로또 당첨 확인 요청 테스트", () => {});
+describe("로또 당첨 번호, 보너스 번호 설정 요청 테스트", () => {
+  const spySetWinningNumbers = jest.spyOn(MatchingChecker, "setWinningNumbers");
+  const spySetBonusNumber = jest.spyOn(MatchingChecker, "setBonusNumber");
+  LotteryPlatform.setUpMatchingChecker([1, 2, 3, 4, 5, 6], 7);
+
+  it("MatchingChecker에 당첨 번호 설정 요청을 보낸다.", () => {
+    expect(spySetWinningNumbers).toHaveBeenCalledTimes(1);
+    expect(spySetWinningNumbers).toHaveBeenCalledWith([1, 2, 3, 4, 5, 6]);
+  });
+
+  it("MatchingChecker에 보너스 번호 설정 요청을 보낸다.", () => {
+    expect(spySetBonusNumber).toHaveBeenCalledTimes(1);
+    expect(spySetBonusNumber).toHaveBeenCalledWith(7);
+  });
+});
+
+// describe("로또 당첨 확인 요청 테스트", () => {
+//   it("저장한 lotto를 인자로 로또 당첨 확인을 요청한다.", () => {});
+// });
 
 // describe("발행 로또 당첨 여부, 당첨 등수, 당첨 금액 반환 테스트", () => {});

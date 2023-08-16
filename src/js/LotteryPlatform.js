@@ -1,4 +1,5 @@
 import LotteryMachine from "./LotteryMachine";
+import MatchingChecker from "./MatchingChecker";
 
 const LotteryPlatform = (function () {
   let lotto = null;
@@ -37,12 +38,18 @@ const LotteryPlatform = (function () {
     return lotto.getLottoNumbers();
   }
 
+  function setUpMatchingChecker(winningNumbers, bonusNumber) {
+    MatchingChecker.setWinningNumbers(winningNumbers);
+    MatchingChecker.setBonusNumber(bonusNumber);
+  }
+
   return {
     ERROR_MESSAGE,
     issueLottoOf,
     getLotto,
     clearLotto,
     getLottoNumbers,
+    setUpMatchingChecker,
   };
 })();
 
