@@ -2,6 +2,7 @@ import LotteryPlatform from "../src/js/LotteryPlatform";
 import Lotto from "../src/js/Lotto";
 import MatchingChecker from "../src/js/MatchingChecker";
 import ResultChecker from "../src/js/ResultChecker";
+import Calculator from "../src/js/Calculator";
 
 const ERROR_MESSAGE = LotteryPlatform.ERROR_MESSAGE;
 
@@ -109,5 +110,17 @@ describe("로또 결과 요청 테스트", () => {
     LotteryPlatform.requestResultCheck();
     expect(spyGetResult).toHaveBeenCalledTimes(1);
     expect(spyGetResult).toHaveBeenCalledWith(LotteryPlatform.getLotto());
+  });
+});
+
+describe("로또 누적 수익률 계산 요청 테스트", () => {
+  it("누적 수익률 반환 메소드를 요청한다.", () => {
+    const spyGetReturnOfPurchased = jest.spyOn(
+      Calculator,
+      "getReturnOfPurchased"
+    );
+    LotteryPlatform.requestCalculate();
+    expect(spyGetReturnOfPurchased).toHaveBeenCalledTimes(1);
+    expect(spyGetReturnOfPurchased).toHaveBeenCalledWith(0, 1_000);
   });
 });

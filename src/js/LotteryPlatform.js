@@ -1,6 +1,7 @@
 import LotteryMachine from "./LotteryMachine";
 import MatchingChecker from "./MatchingChecker";
 import ResultChecker from "./ResultChecker";
+import Calculator from "./Calculator";
 
 const LotteryPlatform = (function () {
   let lotto = null;
@@ -52,6 +53,12 @@ const LotteryPlatform = (function () {
     return ResultChecker.getResult(lotto);
   }
 
+  function requestCalculate() {
+    const { prize } = requestResultCheck(lotto);
+    const purchased = 1_000;
+    return Calculator.getReturnOfPurchased(prize, purchased);
+  }
+
   return {
     ERROR_MESSAGE,
     issueLottoOf,
@@ -61,6 +68,7 @@ const LotteryPlatform = (function () {
     setUpMatchingChecker,
     requestMatchCheck,
     requestResultCheck,
+    requestCalculate,
   };
 })();
 
