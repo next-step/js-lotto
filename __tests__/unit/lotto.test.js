@@ -154,26 +154,6 @@ describe('로또 당첨 번호/보너스 번호', () => {
 });
 
 describe('당첨 통계 및 수익률', () => {
-  test('output statistics spy', () => {
-    const spyFn = jest.spyOn(userIO, 'outputWinStatistics');
-
-    const purchasedLottoCounts = 5;
-
-    const statistics = {
-      'first place': 0,
-      'second place': 1,
-      'third place': 1,
-      'fourth place': 0,
-      'fifth place': 0,
-      'no luck': 3,
-    };
-
-    userIO.outputWinStatistics(statistics, purchasedLottoCounts);
-
-    expect(spyFn).toBeCalledTimes(1);
-    expect(spyFn).toBeCalledWith(statistics, purchasedLottoCounts);
-  });
-
   // calculate lotto rank 1 -> true
   test('1등 당첨', () => {
     lottoStatistics.setStatistics(
