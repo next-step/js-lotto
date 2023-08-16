@@ -1,7 +1,7 @@
 import LotteryMachine from "./LotteryMachine";
 
 const LotteryPlatform = (function () {
-  let lottos = [];
+  let lotto = null;
   // const UPPER_LIMIT = 10;
   const ERROR_MESSAGE = Object.freeze({
     NOT_NUMBER: "발행 개수는 숫자 형태여야합니다.",
@@ -22,22 +22,27 @@ const LotteryPlatform = (function () {
   // TODO 우선 한 개만 발행. [phase2] issueCount개 발행으로 확장.
   function issueLottoOf(issueCount) {
     validateLotteryIssueCount(issueCount);
-    lottos.push(LotteryMachine.issueLotto(issueCount));
+    lotto = LotteryMachine.issueLotto(1);
   }
 
-  function getLottos() {
-    return lottos;
+  function getLotto() {
+    return lotto;
   }
 
-  function clearLottos() {
-    lottos = [];
+  function clearLotto() {
+    lotto = null;
+  }
+
+  function getLottoNumbers() {
+    return lotto.getLottoNumbers();
   }
 
   return {
     ERROR_MESSAGE,
     issueLottoOf,
-    getLottos,
-    clearLottos,
+    getLotto,
+    clearLotto,
+    getLottoNumbers,
   };
 })();
 
