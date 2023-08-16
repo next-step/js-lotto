@@ -9,7 +9,7 @@ const LotteryMachine = (function () {
     return Math.floor(Math.random() * LOTTO_NUMBER_RANGE) + 1;
   }
 
-  function issueLotto() {
+  function issueLotto(issueCount = 1) {
     while (lotto.size < TOTAL_LOTTO_NUMBER) {
       lotto.add(getRandomNumber());
     }

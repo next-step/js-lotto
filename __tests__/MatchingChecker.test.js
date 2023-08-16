@@ -1,5 +1,5 @@
 import Lotto from "../src/js/Lotto";
-import MatchingChecker from "../src/js/MacthingChecker";
+import MatchingChecker from "../src/js/MatchingChecker";
 
 const testCases = [
   {
