@@ -43,14 +43,15 @@ const testCases = [
     isBonusMatched: false,
   },
 ];
-const ERROR_MESSAGE = MatchingChecker.ERROR_MESSAGE;
+const LOTTO_ERROR_MESSAGE = Lotto.ERROR_MESSAGE;
+const BONUS_NUMBER_ERROR_MESSAGE = MatchingChecker.ERROR_MESSAGE;
 
 describe("로또 당첨 번호 설정 유효성 검사 테스트", () => {
   it.each([1, "erica", true, null, undefined, function () {}, {}])(
     "배열 형태가 아니면, 에러를 발생시킨다.",
     (input) => {
       expect(() => MatchingChecker.setWinningNumbers(input)).toThrow(
-        ERROR_MESSAGE.NOT_ARRAY
+        LOTTO_ERROR_MESSAGE.NOT_ARRAY
       );
     }
   );
@@ -67,7 +68,7 @@ describe("로또 당첨 번호 설정 유효성 검사 테스트", () => {
     [{}, 1, 1, 1, 1, 1],
   ])("배열 요소가 숫자가 아니면 에러를 발생시킨다.", (...input) => {
     expect(() => MatchingChecker.setWinningNumbers(input)).toThrow(
-      ERROR_MESSAGE.ELEMENT_NOT_NUMBER
+      LOTTO_ERROR_MESSAGE.ELEMENT_NOT_NUMBER
     );
   });
 
@@ -75,7 +76,7 @@ describe("로또 당첨 번호 설정 유효성 검사 테스트", () => {
     "배열 길이가 6이 아니라면, 에러를 발생시킨다.",
     (...input) => {
       expect(() => MatchingChecker.setWinningNumbers(input)).toThrow(
-        ERROR_MESSAGE.NOT_LENGTH_SIX
+        LOTTO_ERROR_MESSAGE.NOT_LENGTH_SIX
       );
     }
   );
@@ -88,7 +89,7 @@ describe("로또 당첨 번호 설정 유효성 검사 테스트", () => {
     "배열 요소 중 [1, 45]를 벗어난 숫자가 있다면, 에러를 발생시킨다.",
     (...input) => {
       expect(() => MatchingChecker.setWinningNumbers(input)).toThrow(
-        ERROR_MESSAGE.ELEMENT_OUT_OF_RANGE
+        LOTTO_ERROR_MESSAGE.ELEMENT_OUT_OF_RANGE
       );
     }
   );
@@ -99,7 +100,7 @@ describe("로또 당첨 번호 설정 유효성 검사 테스트", () => {
     [1, 2, 3, 4, 5, 1],
   ])("배열 요소 중 중복된 숫자가 있다면, 에러를 발생시킨다.", (...input) => {
     expect(() => MatchingChecker.setWinningNumbers(input)).toThrow(
-      ERROR_MESSAGE.ELEMENT_DUPLICATED
+      LOTTO_ERROR_MESSAGE.ELEMENT_DUPLICATED
     );
   });
 
@@ -116,7 +117,7 @@ describe("로또 보너스 번호 설정 유효성 검사 테스트", () => {
     "숫자 형태가 아니면, 에러를 발생시킨다.",
     (input) => {
       expect(() => MatchingChecker.setBonusNumber(input)).toThrow(
-        ERROR_MESSAGE.BONUS_NUMBER_NOT_NUMBER
+        BONUS_NUMBER_ERROR_MESSAGE.NOT_NUMBER
       );
     }
   );
@@ -125,7 +126,7 @@ describe("로또 보너스 번호 설정 유효성 검사 테스트", () => {
     "[1, 45] 범위를 벗어난 숫자면, 에러를 발생시킨다.",
     (input) => {
       expect(() => MatchingChecker.setBonusNumber(input)).toThrow(
-        ERROR_MESSAGE.BONUS_NUMBER_OUT_OF_RANGE
+        BONUS_NUMBER_ERROR_MESSAGE.OUT_OF_RANGE
       );
     }
   );
@@ -133,7 +134,7 @@ describe("로또 보너스 번호 설정 유효성 검사 테스트", () => {
   it("당첨 번호와 보너스 번호가 중복되면, 에러를 발생시킨다.", () => {
     MatchingChecker.setWinningNumbers([1, 2, 3, 4, 5, 6]);
     expect(() => MatchingChecker.setBonusNumber(1)).toThrow(
-      ERROR_MESSAGE.BONUS_NUMBER_DUPLICATED
+      BONUS_NUMBER_ERROR_MESSAGE.DUPLICATED
     );
   });
 });

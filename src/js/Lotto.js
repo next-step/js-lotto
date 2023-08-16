@@ -29,10 +29,12 @@ export default class Lotto {
     return numbers.some((num) => typeof num !== "number");
   }
 
+  isOutOfRange(number) {
+    return number < Lotto.LOW_BOUND || number > Lotto.HIGH_BOUND;
+  }
+
   hasOutOfRangeElement(numbers) {
-    return numbers.some(
-      (num) => num < Lotto.LOW_BOUND || num > Lotto.HIGH_BOUND
-    );
+    return numbers.some(this.isOutOfRange);
   }
 
   hasDuplicatedElement(numbers) {
