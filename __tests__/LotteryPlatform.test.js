@@ -103,7 +103,7 @@ describe("로또 당첨 확인 요청 테스트", () => {
   });
 });
 
-describe("발행 로또 당첨 등수, 당첨 금액 반환 테스트", () => {
+describe("로또 결과 요청 테스트", () => {
   it("로또 결과 반환 메소드를 요청한다.", () => {
     const spyGetResult = jest.spyOn(ResultChecker, "getResult");
     LotteryPlatform.requestResultCheck();
