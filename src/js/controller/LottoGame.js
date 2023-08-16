@@ -76,7 +76,11 @@ class LottoGame {
   }
 
   async setWinningNumbers() {
-    this.#winningNumbers = await this.#inputView.winningNumbers();
+    try {
+      this.#winningNumbers = await this.#inputView.winningNumbers();
+    } catch (err) {
+      this.showError(err);
+    }
   }
 
   async setBonus() {
@@ -113,6 +117,14 @@ class LottoGame {
     this.#result = null;
     this.#totalPrize = 0;
     this.#rateOfReturn = null;
+  }
+
+  checkValidation(validator, target) {
+    try {
+      validator(target);
+    } catch (err) {
+      this.showError(err);
+    }
   }
 
   showError({ message }) {

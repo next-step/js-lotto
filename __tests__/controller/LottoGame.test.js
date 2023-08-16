@@ -4,11 +4,19 @@ import Lotto from '../../src/js/domain/Lotto.js';
 import { DEFAULT_LOTTO_NUMBERS, LOTTO_REWARD_DUMMY, MATCHED_BONUS } from '../constants/lotto.js';
 import { LOTTO_REWARD_CODE } from '../../src/js/constants/lotto-config.js';
 import LottoInputView from '../../src/js/view/Lotto/LottoInputView.js';
+import ERROR from '../../src/js/constants/error.js';
 
 jest.mock('../../src/js/view/Lotto/LottoInputView.js');
 jest.mock('../../src/js/domain/LottoMachine.js');
 
 const logSpy = jest.spyOn(console, 'log');
+
+const mockInput = ({ purchase, winningNumbers, bonus, returnedLottos }) => {
+  LottoInputView.prototype.purchase.mockResolvedValue(purchase);
+  LottoInputView.prototype.winningNumbers.mockResolvedValue(winningNumbers);
+  LottoInputView.prototype.bonus.mockResolvedValue(bonus);
+  LottoMachine.prototype.buy.mockReturnValue(returnedLottos);
+};
 
 describe('로또 구매 과정 테스트', () => {
   let lottoGame;
@@ -16,10 +24,12 @@ describe('로또 구매 과정 테스트', () => {
   beforeAll(() => {
     lottoGame = new LottoGame();
     process.exit = jest.fn();
-    LottoInputView.prototype.purchase.mockResolvedValue('1000');
-    LottoInputView.prototype.winningNumbers.mockResolvedValue(LOTTO_REWARD_DUMMY.SECOND);
-    LottoInputView.prototype.bonus.mockResolvedValue(MATCHED_BONUS);
-    LottoMachine.prototype.buy.mockReturnValue([new Lotto(DEFAULT_LOTTO_NUMBERS)]);
+    mockInput({
+      purchase: '1000',
+      winningNumbers: LOTTO_REWARD_DUMMY.SECOND,
+      bonus: MATCHED_BONUS,
+      returnedLottos: [new Lotto(DEFAULT_LOTTO_NUMBERS)],
+    });
   });
 
   afterAll(() => {
@@ -93,5 +103,46 @@ describe('로또 구매 과정 테스트', () => {
     expect(lottoGame.rateOfReturn).toBe(null);
 
     expect(process.exit).toHaveBeenCalled();
+  });
+});
+
+describe('당첨 번호 예외 테스트', () => {
+  beforeAll(() => {
+    process.exit = jest.fn();
+  });
+
+  it('6개가 아닌 당첨 번호를 입력시 에러가 발생한다.', async () => {
+    mockInput({
+      purchase: '1000',
+      winningNumbers: [1, 2, 3, 4, 5],
+      bonus: MATCHED_BONUS,
+      returnedLottos: [new Lotto(DEFAULT_LOTTO_NUMBERS)],
+    });
+
+    expect(async () => {
+      const lottoGame = new LottoGame();
+      await lottoGame.buyLotto();
+      await lottoGame.setWinningNumbers();
+    }).toThrow(ERROR.WINNING_NUMBERS.UNMATCHED_QUANTITY);
+  });
+
+  it.each([
+    [1, 2, 3, 4, 5, 46],
+    [0, 2, 3, 4, 5, 6],
+    [-1, 2, 3, 4, 5, 6],
+    ['한글', 2, 3, 4, 5, 6],
+  ])('범위 외의 당첨 번호를 입력시 에러가 발생한다.', async (winningNumbers) => {
+    mockInput({
+      purchase: '1000',
+      winningNumbers,
+      bonus: MATCHED_BONUS,
+      returnedLottos: [new Lotto(DEFAULT_LOTTO_NUMBERS)],
+    });
+
+    expect(async () => {
+      const lottoGame = new LottoGame();
+      await lottoGame.buyLotto();
+      await lottoGame.setWinningNumbers();
+    }).toThrow(ERROR.WINNING_NUMBERS.UNMATCHED_QUANTITY);
   });
 });

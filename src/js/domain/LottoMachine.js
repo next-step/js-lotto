@@ -1,10 +1,10 @@
-import { LOTTO_PRICE } from '../constants/lotto-config.js';
+import { LOTTO_NUMBER_QUANTITY, LOTTO_PRICE } from '../constants/lotto-config.js';
 import getRandomNumber from '../utils/getRandomNumber.js';
 import checkValidPurchase from '../validator/purchase.js';
 import Lotto from './Lotto.js';
 
 class LottoMachine {
-  #lottoDigit = 6;
+  #numberQuantity = LOTTO_NUMBER_QUANTITY;
 
   #minNumber = 1;
 
@@ -20,7 +20,7 @@ class LottoMachine {
 
   #makeLottoNumbers() {
     const result = new Set();
-    while (result.size < this.#lottoDigit) {
+    while (result.size < this.#numberQuantity) {
       const randomNumber = getRandomNumber(this.#minNumber, this.#maxNumber);
       result.add(randomNumber);
     }
