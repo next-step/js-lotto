@@ -71,6 +71,15 @@ describe("로또 당첨 번호 설정 유효성 검사 테스트", () => {
     );
   });
 
+  it.each([[], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6, 7]])(
+    "배열 길이가 6이 아니라면, 에러를 발생시킨다.",
+    (...input) => {
+      expect(() => MatchingChecker.setWinningNumbers(input)).toThrow(
+        ERROR_MESSAGE.NOT_LENGTH_SIX
+      );
+    }
+  );
+
   it.each([
     [-1, 2, 3, 4, 5, 6],
     [0, 2, 3, 4, 5, 6],
