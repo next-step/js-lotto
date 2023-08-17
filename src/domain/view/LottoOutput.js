@@ -1,20 +1,12 @@
 import { MESSAGES, LOTTO_WINNIG_PRIZE } from '../constants/index.js';
 
-export const LottoView = {
+export const LottoOutput = {
   LOTTO_COUNT(count) {
     console.log(`${count}개를 구매했습니다.`);
   },
 
   LOTTO_NUMBERS(numbers) {
     console.log(numbers);
-  },
-
-  LOTTO_WINNING_NUMBER() {
-    console.log(`${MESSAGES.ASK_WINNING_NUMBER}`);
-  },
-
-  LOTTO_BONUS_NUMBER() {
-    console.log(`${MESSAGES.ASK_BONUS_NUMBER}`);
   },
 
   LOTTO_RESULT(RESULT, PROFIT) {
