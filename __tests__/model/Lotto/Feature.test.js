@@ -1,3 +1,4 @@
+import { SYMBOLS } from '../../../src/step1/constants/commons';
 import { LOTTO_TERMS } from '../../../src/step1/constants/lotto';
 import { Lotto } from '../../../src/step1/model';
 import { isDefaultLottoCount, isValidLottoNumbersRange } from '../../../src/step1/utils/validate/lotto/lottoValidate';
@@ -40,9 +41,9 @@ describe('Lotto 관련 기능 테스트', () => {
   );
 
   test.each([
-    { lottoString: '1,22,33,4,43,12', seperator: ',' },
-    { lottoString: '1.22.33.4.43.12', seperator: '.' },
-    { lottoString: '1:22:33:4:43:12', seperator: ':' },
+    { lottoString: '1,22,33,4,43,12', seperator: SYMBOLS.COMMA },
+    { lottoString: '1.22.33.4.43.12', seperator: SYMBOLS.DOT },
+    { lottoString: '1:22:33:4:43:12', seperator: SYMBOLS.COLON },
   ])('문자열로 만들어진 로또가 생성될 수 있다.', ({ lottoString, seperator }) => {
     const lotto = Lotto.fromByString(lottoString, seperator);
     const isLotto = lotto instanceof Lotto;
@@ -50,9 +51,9 @@ describe('Lotto 관련 기능 테스트', () => {
   });
 
   test.each([
-    { lottoString: '1,22,33,4,43,12', seperator: ',' },
-    { lottoString: '1.22.33.4.43.12', seperator: '.' },
-    { lottoString: '1:22:33:4:43:12', seperator: ':' },
+    { lottoString: '1,22,33,4,43,12', seperator: SYMBOLS.COMMA },
+    { lottoString: '1.22.33.4.43.12', seperator: SYMBOLS.DOT },
+    { lottoString: '1:22:33:4:43:12', seperator: SYMBOLS.COLON },
   ])(
     `문자열로 만들어진 로또는 총 ${LOTTO_TERMS.DEFAULT_LIMIT_LOTTO_COUNT}개의 로또 번호를 갖는다.`,
     ({ lottoString, seperator }) => {
@@ -63,9 +64,9 @@ describe('Lotto 관련 기능 테스트', () => {
   );
 
   test.each([
-    { lottoString: '1,22,33,4,43,12', seperator: ',' },
-    { lottoString: '1.22.33.4.43.12', seperator: '.' },
-    { lottoString: '1:22:33:4:43:12', seperator: ':' },
+    { lottoString: '1,22,33,4,43,12', seperator: SYMBOLS.COMMA },
+    { lottoString: '1.22.33.4.43.12', seperator: SYMBOLS.DOT },
+    { lottoString: '1:22:33:4:43:12', seperator: SYMBOLS.COLON },
   ])(
     `문자열로 만들어진 로또는 모두 ${LOTTO_TERMS.MIN_LOTTO_NUMBER}에서 ${LOTTO_TERMS.MAX_LOTTO_NUMBER}의 숫자 범위를 갖는다.`,
     ({ lottoString, seperator }) => {

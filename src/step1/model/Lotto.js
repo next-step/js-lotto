@@ -1,3 +1,4 @@
+import { SYMBOLS } from '../constants/commons.js';
 import LottoValidator from '../utils/validate/validator/LottoValidator.js';
 import LottoNumberMaker from './LottoNumberMaker.js';
 
@@ -42,7 +43,7 @@ export default class Lotto {
    * @param {string} seperator - string을 split할 구분자
    * @returns {Lotto} 로또 인스턴스
    */
-  static fromByString(string, seperator = ',') {
+  static fromByString(string, seperator = SYMBOLS.COMMA) {
     return new Lotto(string.split(seperator).map(Number));
   }
 
