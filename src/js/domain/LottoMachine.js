@@ -24,7 +24,7 @@ class LottoMachine {
       const randomNumber = getRandomNumber(this.#minNumber, this.#maxNumber);
       result.add(randomNumber);
     }
-    return [...result];
+    return [...result].sort((a, b) => a - b);
   }
 }
 
