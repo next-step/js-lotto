@@ -10,7 +10,6 @@ export const validateInputPrice = (price) => {
 
 export const validateWinningNumber = (winningNumbers) => {
   const splittedWinningNumbers = parseSeparatedNumbers(winningNumbers);
-  // @ts-ignore
   splittedWinningNumbers.forEach((number) => {
     validateNumber(Number(number));
     validatePositiveNumber(Number(number));

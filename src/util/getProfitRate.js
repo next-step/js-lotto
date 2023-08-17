@@ -1,2 +1,4 @@
+import { DECIMAL_POINT, PERCENTAGE } from '../domain/constants/index.js';
+
 export const getProfitRate = (initialBudget, totalAmount) =>
-  (((totalAmount - initialBudget) / initialBudget) * 100).toFixed(1);
+  (((totalAmount - initialBudget) / initialBudget) * PERCENTAGE).toFixed(DECIMAL_POINT);
