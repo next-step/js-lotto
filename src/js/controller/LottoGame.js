@@ -67,23 +67,34 @@ class LottoGame {
       this.#outputView.buyLottos(this.#recentLottos);
       this.#outputView.lottos(this.#recentLottos);
       await this.setWinningNumbers();
-    } catch (err) {
-      this.showError(err);
+    } catch ({ message }) {
+      this.#outputView.error(message);
+      this.buyLotto();
     }
   }
 
   async setWinningNumbers() {
-    const winningNumbers = await this.#inputView.winningNumbers();
-    this.checkValidation(() => checkValidWinningNumbers(winningNumbers));
-    this.#winningNumbers = winningNumbers;
-    await this.setBonus();
+    try {
+      const winningNumbers = await this.#inputView.winningNumbers();
+      checkValidWinningNumbers(winningNumbers);
+      this.#winningNumbers = winningNumbers;
+      await this.setBonus();
+    } catch ({ message }) {
+      this.#outputView.error(message);
+      this.setWinningNumbers();
+    }
   }
 
   async setBonus() {
-    const bonus = await this.#inputView.bonus();
-    this.checkValidation(() => checkValidBonus(bonus, this.#winningNumbers));
-    this.#bonus = bonus;
-    this.checkLottos();
+    try {
+      const bonus = await this.#inputView.bonus();
+      checkValidBonus(bonus, this.#winningNumbers);
+      this.#bonus = bonus;
+      this.checkLottos();
+    } catch ({ message }) {
+      this.#outputView.error(message);
+      this.setBonus();
+    }
   }
 
   checkLottos() {
@@ -108,19 +119,6 @@ class LottoGame {
 
   stopGame() {
     process.exit();
-  }
-
-  checkValidation(validator) {
-    try {
-      validator();
-    } catch (err) {
-      this.showError(err);
-    }
-  }
-
-  showError({ message }) {
-    this.#outputView.error(message);
-    this.stopGame();
   }
 }
 
