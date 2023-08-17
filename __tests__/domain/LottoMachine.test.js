@@ -21,10 +21,10 @@ describe('오름차순 확인 테스트', () => {
 
 describe('로또 머신 테스트', () => {
   it.each([
-    [1_000, 1],
-    [10_000, 10],
-    [30_000, 30],
-  ])('금액을 입력하면 장당 가격에 비례한 로또를 발급받는다.', (money, sheets) => {
+    { money: 1_000, sheets: 1 },
+    { money: 10_000, sheets: 10 },
+    { money: 30_000, sheets: 30 },
+  ])('$money원을 입력하면 장당 가격에 비례한 $sheets장의 로또를 발급받는다.', ({ money, sheets }) => {
     const lottoMachine = new LottoMachine();
     const lottos = lottoMachine.buy(money);
 

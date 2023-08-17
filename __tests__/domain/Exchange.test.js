@@ -83,7 +83,7 @@ describe('교환소 테스트', () => {
       proceeds: 0,
       result: 0.0,
     },
-  ])('수익률을 계산한다', ({ investment, proceeds, result }) => {
+  ])('지출이 $investment원이고 수익이 $proceeds원일떼 수익률은 $result%이다.', ({ investment, proceeds, result }) => {
     const exchange = new Exchange();
     const rateOfReturn = exchange.calculateRateOfReturn(investment, proceeds);
 
