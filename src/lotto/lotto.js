@@ -6,8 +6,8 @@ import {
   LOTTO_AMOUNT_SEPARATOR,
 } from '../constants/lotto.const.js';
 import { REGEX_NUMBERS } from '../constants/regex.const.js';
-import { getRandomNumber } from '../utils/random.util.js';
 import { getSortedArray } from '../utils/sort.util.js';
+import { getRandomNumber } from '../utils/number.util.js';
 
 class Lotto {
   #purchasedLottoCounts = 0;
