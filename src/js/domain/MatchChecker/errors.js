@@ -1,0 +1,25 @@
+import RuntimeError from "../../RuntimeError";
+
+export class BonusNumberNotNumberError extends RuntimeError {
+  static MESSAGE = "보너스 번호는 숫자여야합니다.";
+
+  constructor() {
+    super(NotNumberError.MESSAGE);
+  }
+}
+
+export class BonusNumberOutOfRangeError extends RuntimeError {
+  static MESSAGE = "보너스 번호는 [1, 45] 사이의 숫자여야합니다.";
+
+  constructor() {
+    super(BonusNumberOutOfRangeError.MESSAGE);
+  }
+}
+
+export class BonusNumberDuplicatedError extends RuntimeError {
+  static MESSAGE = "보너스 번호는 당첨 번호와 중복되지 않아야합니다.";
+
+  constructor() {
+    super(BonusNumberDuplicatedError.MESSAGE);
+  }
+}
