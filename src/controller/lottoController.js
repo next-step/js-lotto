@@ -24,9 +24,13 @@ export const checkInputPrice = (price) => {
 import { calcLottoCount, createRandomLottoNumber } from "../utils/calculate.js";
 import { showBuyedLottoCountMessage } from "../utils/consoleMessage.js";
 import {
-  checkInputValueType,
-  checkInputValueUnit,
+  checkInputPriceType,
+  checkInputPriceUnit,
   isValidAmount,
+  isValidWinningNumberLength,
+  isValidWinningNumberRange,
+  isWinningNumbersDuplicate,
+  isWinningAndBonusNumberDuplicate,
 } from "../utils/validate.js";
 
 export const processLottoPurchase = (price) => {
@@ -36,9 +40,9 @@ export const processLottoPurchase = (price) => {
 
 export const validateInputPrice = (price) => {
   try {
-    checkInputValueType(price);
+    checkInputPriceType(price);
     isValidAmount(price);
-    checkInputValueUnit(price);
+    checkInputPriceUnit(price);
 
     return true;
   } catch (error) {
@@ -77,6 +81,9 @@ export const createLottoNumbers = () => {
   return lottoNumbers;
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a1722de ([feat] controller 추가)
 
 export const validateInputWinningNumbers = (winningNumbers) => {
   try {
@@ -93,7 +100,10 @@ export const validateInputWinningNumbers = (winningNumbers) => {
 
 export const validateInputBonusNumber = (winningNumbers, bonusNumber) => {
   try {
+<<<<<<< HEAD
     isValidWinningNumberRange(winningNumbers);
+=======
+>>>>>>> a1722de ([feat] controller 추가)
     isWinningAndBonusNumberDuplicate(winningNumbers, bonusNumber);
     return true;
   } catch (error) {
@@ -101,6 +111,7 @@ export const validateInputBonusNumber = (winningNumbers, bonusNumber) => {
     return false;
   }
 };
+<<<<<<< HEAD
 
 export const getWinningPrizeResult = (lottoNumbers, winningNumbers) => {
   const bonusNumber = Number(winningNumbers[winningNumbers.length - 1]);
@@ -181,3 +192,5 @@ export const formatWinningNumbers = (winningNumbers, bonusNumber) => {
 };
 =======
 >>>>>>> c479370 ([feat] 로또 controller 생성)
+=======
+>>>>>>> a1722de ([feat] controller 추가)
