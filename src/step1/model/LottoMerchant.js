@@ -1,4 +1,4 @@
-import { PRICE_PER_LOTTO } from '../constants/lotto.js';
+import { LOTTO_TERMS } from '../constants/lotto.js';
 import { ERROR_MESSAGE } from '../constants/message.js';
 import { LottoError } from '../errors/index.js';
 import { isValidTypeOfNumber } from '../utils/validate/common/number.js';
@@ -39,7 +39,7 @@ export default class LottoMerchant {
     if (isLessThenPricePerLotto(receivedAmount)) {
       throw new LottoError(ERROR_MESSAGE.GREATER_THEN_PRICE_PER_LOTTO);
     }
-    if (receivedAmount % PRICE_PER_LOTTO !== 0) {
+    if (receivedAmount % LOTTO_TERMS.PRICE_PER_LOTTO !== 0) {
       throw new LottoError(ERROR_MESSAGE.NO_CHANGES);
     }
   }
@@ -49,7 +49,7 @@ export default class LottoMerchant {
    * @returns {number} 로또 생성 횟수
    */
   #createLottoCount() {
-    return Math.floor(this.#receivedAmount / PRICE_PER_LOTTO);
+    return Math.floor(this.#receivedAmount / LOTTO_TERMS.PRICE_PER_LOTTO);
   }
 
   /**

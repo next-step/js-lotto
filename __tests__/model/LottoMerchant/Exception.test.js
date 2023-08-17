@@ -1,4 +1,4 @@
-import { PRICE_PER_LOTTO } from '../../../src/step1/constants/lotto';
+import { LOTTO_TERMS } from '../../../src/step1/constants/lotto';
 import { ERROR_MESSAGE } from '../../../src/step1/constants/message';
 import { LottoError } from '../../../src/step1/errors';
 import { LottoMerchant } from '../../../src/step1/model';
@@ -26,7 +26,7 @@ describe('LottoMerchant 관련 예외 테스트', () => {
     { receivedAmount: 230 },
     { receivedAmount: 442 },
   ])(
-    `로또 판매자가 받은 $receivedAmount원은 ${PRICE_PER_LOTTO}원 이하이므로 에러가 발생된다.`,
+    `로또 판매자가 받은 $receivedAmount원은 ${LOTTO_TERMS.PRICE_PER_LOTTO}원 이하이므로 에러가 발생된다.`,
     ({ receivedAmount }) => {
       // given - when
       const createLottoMerchant = () => new LottoMerchant(receivedAmount);

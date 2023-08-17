@@ -1,4 +1,4 @@
-import { DEFAULT_LIMIT_LOTTO_COUNT, MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER } from '../../../src/step1/constants/lotto';
+import { LOTTO_TERMS } from '../../../src/step1/constants/lotto';
 import LottoNumberMaker from '../../../src/step1/model/LottoNumberMaker';
 import {
   isDuplicateLottoNumbers,
@@ -12,10 +12,10 @@ describe('LottoNumberMaker 기능 테스트', () => {
     // when
     const lottoNumbers = lottoNumberMaker.createLottoNumbers();
     // then
-    expect(lottoNumbers.length).toBe(DEFAULT_LIMIT_LOTTO_COUNT);
+    expect(lottoNumbers.length).toBe(LOTTO_TERMS.DEFAULT_LIMIT_LOTTO_COUNT);
   });
 
-  test(`TestCase %#번에서 LottoNumberMaker가 생성한 로또는 ${MIN_LOTTO_NUMBER}에서 ${MAX_LOTTO_NUMBER}의 숫자 범위를 가진다.`, () => {
+  test(`TestCase %#번에서 LottoNumberMaker가 생성한 로또는 ${LOTTO_TERMS.MIN_LOTTO_NUMBER}에서 ${LOTTO_TERMS.MAX_LOTTO_NUMBER}의 숫자 범위를 가진다.`, () => {
     // given
     const lottoNumberMaker = LottoNumberMaker.from();
     // when

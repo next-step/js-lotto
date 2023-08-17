@@ -1,4 +1,4 @@
-import { DEFAULT_LIMIT_LOTTO_COUNT, MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER } from '../../../src/step1/constants/lotto';
+import { LOTTO_TERMS } from '../../../src/step1/constants/lotto';
 import { Lotto } from '../../../src/step1/model';
 import { isDefaultLottoCount, isValidLottoNumbersRange } from '../../../src/step1/utils/validate/lotto/lottoValidate';
 
@@ -16,7 +16,7 @@ describe('Lotto 관련 기능 테스트', () => {
   );
 
   test.each([{ count: 5 }, { count: 4 }, { count: 3 }, { count: 1 }])(
-    `랜덤 숫자들로 만들어진 로또들은 모두 ${DEFAULT_LIMIT_LOTTO_COUNT}개의 로또 번호를 가지고 있다.`,
+    `랜덤 숫자들로 만들어진 로또들은 모두 ${LOTTO_TERMS.DEFAULT_LIMIT_LOTTO_COUNT}개의 로또 번호를 가지고 있다.`,
     ({ count }) => {
       // given
       const lottos = Lotto.fromByRandomNumberMaker(count);
@@ -28,7 +28,7 @@ describe('Lotto 관련 기능 테스트', () => {
   );
 
   test.each([{ count: 5 }, { count: 4 }, { count: 3 }, { count: 1 }])(
-    `랜덤 숫자들로 만들어진 로또들은 모두 ${MIN_LOTTO_NUMBER}에서 ${MAX_LOTTO_NUMBER}의 숫자 범위를 가지고 있다.`,
+    `랜덤 숫자들로 만들어진 로또들은 모두 ${LOTTO_TERMS.MIN_LOTTO_NUMBER}에서 ${LOTTO_TERMS.MAX_LOTTO_NUMBER}의 숫자 범위를 가지고 있다.`,
     ({ count }) => {
       // given
       const lottos = Lotto.fromByRandomNumberMaker(count);
@@ -54,7 +54,7 @@ describe('Lotto 관련 기능 테스트', () => {
     { lottoString: '1.22.33.4.43.12', seperator: '.' },
     { lottoString: '1:22:33:4:43:12', seperator: ':' },
   ])(
-    `문자열로 만들어진 로또는 총 ${DEFAULT_LIMIT_LOTTO_COUNT}개의 로또 번호를 갖는다.`,
+    `문자열로 만들어진 로또는 총 ${LOTTO_TERMS.DEFAULT_LIMIT_LOTTO_COUNT}개의 로또 번호를 갖는다.`,
     ({ lottoString, seperator }) => {
       const lotto = Lotto.fromByString(lottoString, seperator);
       const isValid = isDefaultLottoCount(lotto.getLottoNumbers());
@@ -67,7 +67,7 @@ describe('Lotto 관련 기능 테스트', () => {
     { lottoString: '1.22.33.4.43.12', seperator: '.' },
     { lottoString: '1:22:33:4:43:12', seperator: ':' },
   ])(
-    `문자열로 만들어진 로또는 모두 ${MIN_LOTTO_NUMBER}에서 ${MAX_LOTTO_NUMBER}의 숫자 범위를 갖는다.`,
+    `문자열로 만들어진 로또는 모두 ${LOTTO_TERMS.MIN_LOTTO_NUMBER}에서 ${LOTTO_TERMS.MAX_LOTTO_NUMBER}의 숫자 범위를 갖는다.`,
     ({ lottoString, seperator }) => {
       const lotto = Lotto.fromByString(lottoString, seperator);
       const isValid = isValidLottoNumbersRange(lotto.getLottoNumbers());

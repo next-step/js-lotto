@@ -1,4 +1,4 @@
-import { DEFAULT_LIMIT_LOTTO_COUNT, MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER } from '../../../src/step1/constants/lotto';
+import { LOTTO_TERMS } from '../../../src/step1/constants/lotto';
 import { ERROR_MESSAGE } from '../../../src/step1/constants/message';
 import { LottoError } from '../../../src/step1/errors';
 import { Lotto } from '../../../src/step1/model';
@@ -25,7 +25,7 @@ describe('Lotto 관련 예외 테스트', () => {
     { lottoNumbers: [45, 2, 3, 47, 22, 13] },
     { lottoNumbers: [45, 2, 3, 43, 66, 13] },
     { lottoNumbers: [45, 2, 3, 43, 22, 99] },
-  ])(`$lottoNumbers의 범위는 ${MAX_LOTTO_NUMBER}보다 큰 값이 있어 에러가 발생한다.`, ({ lottoNumbers }) => {
+  ])(`$lottoNumbers의 범위는 ${LOTTO_TERMS.MAX_LOTTO_NUMBER}보다 큰 값이 있어 에러가 발생한다.`, ({ lottoNumbers }) => {
     // given - when
     const createLottos = () => new Lotto(lottoNumbers);
     // then
@@ -40,13 +40,16 @@ describe('Lotto 관련 예외 테스트', () => {
     { lottoNumbers: [5, 6, 7, -3, 44, 9] },
     { lottoNumbers: [10, 11, 12, 13, -4, 15] },
     { lottoNumbers: [16, 17, 18, 19, 20, -5] },
-  ])(`$lottoNumbers의 범위는 ${MIN_LOTTO_NUMBER}보다 작은 값이 있어 에러가 발생한다.`, ({ lottoNumbers }) => {
-    // given - when
-    const createLottos = () => new Lotto(lottoNumbers);
-    // then
-    expect(() => createLottos()).toThrow(LottoError);
-    expect(() => createLottos()).toThrow(ERROR_MESSAGE.INVALID_LOTTO_NUMBER_RANGE);
-  });
+  ])(
+    `$lottoNumbers의 범위는 ${LOTTO_TERMS.MIN_LOTTO_NUMBER}보다 작은 값이 있어 에러가 발생한다.`,
+    ({ lottoNumbers }) => {
+      // given - when
+      const createLottos = () => new Lotto(lottoNumbers);
+      // then
+      expect(() => createLottos()).toThrow(LottoError);
+      expect(() => createLottos()).toThrow(ERROR_MESSAGE.INVALID_LOTTO_NUMBER_RANGE);
+    },
+  );
 
   test.each([
     { lottoNumbers: [33, 33, 34, 35, 36, 37] },
@@ -70,11 +73,14 @@ describe('Lotto 관련 예외 테스트', () => {
     { lottoNumbers: [5, 6, 7, 44, 9, 10, 11, 12] },
     { lottoNumbers: [10, 11, 12] },
     { lottoNumbers: [16, 17] },
-  ])(`$lottoNumbers의 길이가 ${DEFAULT_LIMIT_LOTTO_COUNT}개가 아니므로 에러가 발생한다.`, ({ lottoNumbers }) => {
-    // given - when
-    const createLottos = () => new Lotto(lottoNumbers);
-    // then
-    expect(() => createLottos()).toThrow(LottoError);
-    expect(() => createLottos()).toThrow(ERROR_MESSAGE.NOT_DEFAULT_LIMIT_LOTTO_COUNT);
-  });
+  ])(
+    `$lottoNumbers의 길이가 ${LOTTO_TERMS.DEFAULT_LIMIT_LOTTO_COUNT}개가 아니므로 에러가 발생한다.`,
+    ({ lottoNumbers }) => {
+      // given - when
+      const createLottos = () => new Lotto(lottoNumbers);
+      // then
+      expect(() => createLottos()).toThrow(LottoError);
+      expect(() => createLottos()).toThrow(ERROR_MESSAGE.NOT_DEFAULT_LIMIT_LOTTO_COUNT);
+    },
+  );
 });
