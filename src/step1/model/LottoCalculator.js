@@ -1,6 +1,7 @@
-import { ERROR_MESSAGE } from '../constants/message.js';
 import LottoValidator from '../utils/validate/validator/LottoValidator.js';
-
+import { formatWithSuffix } from '../utils/string.js';
+import NumberValidator from '../utils/validate/validator/NumberValidator.js';
+import { SYMBOLS } from '../constants/commons.js';
 /**
  * "수익율 계산"이라는 도메인에 대한 클래스
  */
@@ -13,16 +14,6 @@ export default class LottoCalculator {
     this.#validate(winningAmount, investmentAmount);
     this.#winningAmount = winningAmount;
     this.#investmentAmount = investmentAmount;
-  }
-
-  /**
-   * 수익율을 "%"형태로 포맷팅 하여 반환하는 메서드
-   * @param {number} rateOfReturn - 수익율
-   * @returns {string} 수익율의 형태로 포맷팅한 문자열
-   */
-  static #convertToRateOfReturn(rateOfReturn) {
-    if (Number.isInteger(rateOfReturn)) return `${rateOfReturn}%`;
-    return `${rateOfReturn.toFixed(1)}%`;
   }
 
   /**
@@ -42,9 +33,7 @@ export default class LottoCalculator {
    */
   #validate(winningAmount, investmentAmount) {
     LottoValidator.validateTypeOfNumbers([winningAmount, investmentAmount]);
-    if (investmentAmount === 0) {
-      throw TypeError(ERROR_MESSAGE.INVALID_AMOUNT);
-    }
+    NumberValidator.validateZero(investmentAmount);
   }
 
   /**
@@ -52,6 +41,8 @@ export default class LottoCalculator {
    * @returns {string} 문자열로 포맷팅된 수익율
    */
   calculateRateOfReturn() {
-    return LottoCalculator.#convertToRateOfReturn((this.#winningAmount / this.#investmentAmount) * 100);
+    const rateOfReturn = (this.#winningAmount / this.#investmentAmount) * 100;
+    if (Number.isInteger(rateOfReturn)) return formatWithSuffix(rateOfReturn, SYMBOLS.PERCENT);
+    return formatWithSuffix(rateOfReturn.toFixed(1), SYMBOLS.PERCENT);
   }
 }

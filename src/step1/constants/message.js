@@ -30,6 +30,6 @@ export const ERROR_MESSAGE = Object.freeze({
   INVALID_LOTTO_NUMBER_RANGE: `로또 번호가 ${LOTTO_TERMS.MIN_LOTTO_NUMBER}에서 ${LOTTO_TERMS.MAX_LOTTO_NUMBER}사이의 숫자가 아닙니다.`,
   INVALID_BONUS_NUMBER_RANGE: `보너스 번호가 ${LOTTO_TERMS.MIN_LOTTO_NUMBER}에서 ${LOTTO_TERMS.MAX_LOTTO_NUMBER}사이의 숫자가 아닙니다.`,
   DUPLICATE_BONUS_NUMBER: '보너스 번호가 당첨 번호와 중복됩니다.',
-  INVALID_AMOUNT: '유효하지 않은 금액 입니다.',
+  INVALID_NUMBER: (number) => `${number}는 유효하지 않은 숫자 입니다.`,
   INVALID_WINNING_COUNT: `로또의 정답 갯수는 ${LOTTO_TERMS.MIN_WINNING_COUNT}~${LOTTO_TERMS.MAX_WINNING_COUNT}개 사이 입니다.`,
 });
