@@ -16,12 +16,26 @@ export class View {
     this.#inputView = InputView;
   }
 
+  async validateUserInput(message, validator) {
+    try {
+      const userInput = await this.#inputView.readUserInput(
+        MESSAGE.PREFIX(message)
+      );
+
+      validator(userInput);
+      return userInput;
+    } catch (error) {
+      this.#outputView.print(error.message);
+      return this.validateUserInput(message, validator);
+    }
+  }
+
   /* Input */
   async readPurchaseAmount() {
-    const userInput = await this.#inputView.readUserInput(
-      MESSAGE.PREFIX(MESSAGE.READ.PURCHASE_AMOUNT)
+    const userInput = await this.validateUserInput(
+      MESSAGE.READ.PURCHASE_AMOUNT,
+      this.#validator.readPurchaseAmount
     );
-    this.#validator.readPurchaseAmount(userInput);
 
     return userInput;
   }
@@ -34,33 +48,33 @@ export class View {
   }
 
   async #readLottoNumbers() {
-    const lottoNumbersInput = await this.#inputView.readUserInput(
-      MESSAGE.PREFIX(MESSAGE.READ.LOTTO_NUMBERS)
+    const lottoNumbersInput = await this.validateUserInput(
+      MESSAGE.READ.LOTTO_NUMBERS,
+      (input) => {
+        const lottoNumbers = input.split(',').map(Number);
+        this.#validator.readLottoNumbers(lottoNumbers);
+      }
     );
-    const lottoNumbers = lottoNumbersInput.split(',').map(Number);
-    this.#validator.readLottoNumbers(lottoNumbers);
 
-    return lottoNumbers;
+    return lottoNumbersInput.split(',').map(Number);
   }
 
   async #readBonusNumber(lottoNumbers) {
-    const bonusNumberInput = await this.#inputView.readUserInput(
-      MESSAGE.PREFIX(MESSAGE.READ.BONUS_NUMBER)
+    const bonusNumberInput = await this.validateUserInput(
+      MESSAGE.READ.BONUS_NUMBER,
+      (input) => this.#validator.readBonusNumber(input, lottoNumbers)
     );
-    this.#validator.readBonusNumber(bonusNumberInput, lottoNumbers);
 
     return Number(bonusNumberInput);
   }
 
   async readRestart() {
-    const restartInput = await this.#inputView.readUserInput(
-      MESSAGE.PREFIX(MESSAGE.READ.RESTART)
+    const restartInput = await this.validateUserInput(
+      MESSAGE.READ.RESTART,
+      Validator.View.readRestart
     );
-    Validator.View.readRestart(restartInput);
 
-    if (restartInput === STRING.RESTART_INPUT.YES) return true;
-
-    return false;
+    return restartInput === STRING.RESTART_INPUT.YES;
   }
 
   /* Output */
