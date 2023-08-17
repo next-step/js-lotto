@@ -9,4 +9,14 @@ const LOTTO_PRIZE = Object.freeze({
   BONUS_MATCH_THRESHOLD: 5,
 });
 
-export const NUMBER = Object.freeze({ LOTTO_TICKET, LOTTO_PRIZE });
+const LOTTO_PROFIT_FIXED = 2;
+const DEFAULT_TICKET_PRICE = 1000;
+const INITIAL_TOTAL_RPIZE = 0;
+
+export const NUMBER = Object.freeze({
+  LOTTO_TICKET,
+  LOTTO_PRIZE,
+  LOTTO_PROFIT_FIXED,
+  DEFAULT_TICKET_PRICE,
+  INITIAL_TOTAL_RPIZE,
+});
