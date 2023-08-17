@@ -35,7 +35,6 @@ describe('로또 머신 테스트', () => {
     const lottoMachine = new LottoMachine();
     const lottos = lottoMachine.buy(10_000);
     lottos.forEach((lotto) => {
-      console.log(isAscending(lotto.numbers));
       expect(isAscending(lotto.numbers)).toBeTruthy();
     });
   });
