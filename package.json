@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start-step1": "node src/js/start-step1.js",
-    "test": "jest --watch"
+    "test": "jest --watchAll --verbose"
   },
   "jest": {
     "testPathIgnorePatterns": [
