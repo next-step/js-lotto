@@ -24,6 +24,13 @@ export const validateBonusNumer = (winningNumbers, bonusNumber) => {
   validateBonusDuplicate(winningNumbers, bonusNumber);
 };
 
+export const validateRetry = (retry) => {
+  retry = retry.toLowerCase();
+  if (retry !== 'y' && retry !== 'n') {
+    throw new Error(ERRORS.NOT_RETRY_ANSWER);
+  }
+};
+
 export const validateNumber = (number) => {
   if (isNaN(number)) {
     throw new Error(ERRORS.NOT_NUMBER);

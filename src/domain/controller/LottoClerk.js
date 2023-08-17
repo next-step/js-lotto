@@ -41,7 +41,16 @@ export class LottoClerk {
   announceResult() {
     const profitRate = getProfitRate(this.customer.money, this.customer.amount);
     this.output.LOTTO_RESULT(this.customer.results, profitRate);
-    this.input.EXIT_LOTTO_STORE();
+    this.askRetry();
+  }
+
+  async askRetry() {
+    const retry = await this.input.ASK_RETRY();
+    if (retry === 'y') {
+      this.enterLottoStore();
+    } else {
+      this.input.EXIT_LOTTO_STORE();
+    }
   }
 
   #countWinningNumber(lotto, winning, bonus) {

@@ -1,15 +1,15 @@
 import { parseSeparatedNumbers, readlineUtils } from '../../util/index.js';
 import { MESSAGES } from '../constants/index.js';
-import { validateWinningNumber, validateInputPrice, validateBonusNumer } from '../validator.js';
+import {
+  validateWinningNumber,
+  validateInputPrice,
+  validateBonusNumer,
+  validateRetry,
+} from '../validator.js';
 
 export class LottoInput {
   static async ASK_MONEY() {
-    const budget = await readlineUtils.questionReadline(
-      MESSAGES.ASK_PURCHASE_MONEY,
-      validateInputPrice,
-    );
-
-    return budget;
+    return await readlineUtils.questionReadline(MESSAGES.ASK_PURCHASE_MONEY, validateInputPrice);
   }
 
   static async ASK_WINNING_NUMBERS() {
@@ -22,13 +22,20 @@ export class LottoInput {
   }
 
   static async ASK_BONUS_NUMBER(winningNumbers) {
-    const bonusNumber = await readlineUtils.questionReadline(MESSAGES.ASK_BONUS_NUMBER, (BONUS) =>
+    return await readlineUtils.questionReadline(MESSAGES.ASK_BONUS_NUMBER, (BONUS) =>
       validateBonusNumer(winningNumbers, BONUS),
     );
-    return bonusNumber;
+  }
+
+  static async ASK_RETRY() {
+    const retry = await readlineUtils.questionReadline(MESSAGES.ASK_RETRY, (RETRY) =>
+      validateRetry(RETRY),
+    );
+
+    return retry.toLowerCase();
   }
 
   static EXIT_LOTTO_STORE() {
-    readlineUtils.closeReadline();
+    return readlineUtils.closeReadline();
   }
 }
