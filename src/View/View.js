@@ -1,6 +1,6 @@
 import { InputView, OutputView } from '.';
 import { Validator } from '../utils/Validator';
-import { MESSAGE } from '../constants';
+import { MESSAGE, STRING } from '../constants';
 import {
   calculatePrizeCount,
   calculateProfitRate,
@@ -52,6 +52,17 @@ export class View {
     return Number(bonusNumberInput);
   }
 
+  async readRestart() {
+    const restartInput = await this.#inputView.readUserInput(
+      MESSAGE.PREFIX(MESSAGE.READ.RESTART)
+    );
+    Validator.View.readRestart(restartInput);
+
+    if (restartInput === STRING.RESTART_INPUT.YES) return true;
+
+    return false;
+  }
+
   /* Output */
   printPurchasedTickets(tickets) {
     const amount = tickets.length;
@@ -75,5 +86,10 @@ export class View {
 
   #displayPrize(prizeCount) {
     this.#outputView.print(MESSAGE.PRINT.PRIZE(prizeCount));
+  }
+
+  /* Close Readline */
+  close() {
+    this.#inputView.close();
   }
 }

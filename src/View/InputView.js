@@ -8,4 +8,8 @@ export const InputView = {
 
     return userInput;
   },
+
+  close() {
+    Console.close();
+  },
 };

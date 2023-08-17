@@ -42,4 +42,13 @@ export const View = {
     if (lottoNumbers.includes(Number(bonusNumber)))
       throw new Error('보너스 번호는 로또 번호와 중복될 수 없습니다.');
   },
+
+  readRestart(restartInput) {
+    if (
+      restartInput !== STRING.RESTART_INPUT.YES &&
+      restartInput !== STRING.RESTART_INPUT.NO
+    ) {
+      throw new Error(MESSAGE.ERROR.INVALID_RESTART_INPUT);
+    }
+  },
 };

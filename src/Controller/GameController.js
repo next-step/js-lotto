@@ -13,6 +13,7 @@ export class GameController {
     const winningNumbers = await this.#readWinningNumbers();
     const ticketResults = this.#checkTicketsResult(tickets, winningNumbers);
     this.#printTicketsResult(ticketResults);
+    this.#readRestart();
   }
 
   /* Get Lotto Tickets */
@@ -54,5 +55,18 @@ export class GameController {
   /* Print Tickets Result */
   #printTicketsResult(ticketResults) {
     this.#view.printTicketsResult(ticketResults);
+  }
+
+  /* Read Restart */
+  async #readRestart() {
+    const restart = await this.#view.readRestart();
+
+    if (restart) return this.LottoGameProcess();
+
+    this.#endGame();
+  }
+
+  #endGame() {
+    this.#view.close();
   }
 }
