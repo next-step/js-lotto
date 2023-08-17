@@ -1,4 +1,4 @@
-import { INPUT_MESSAGE, OUTPUT_MESSAGE } from '../constants/message.js';
+import { INPUT_MESSAGE, OUTPUT_MESSAGE_METHOD, OUTPUT_MESSAGE_TEXT } from '../constants/message.js';
 import { LottoGame } from '../model/index.js';
 import { InputView, OutputView } from '../view/index.js';
 import { GAME_PROMPT } from '../constants/controller.js';
@@ -60,8 +60,8 @@ export default class LottoGameController {
    * @param {number[][]} lottoNumbers - 로또 내 존재하는 로또 번호들
    */
   #printLottos(lottoNumbers) {
-    OutputView.printFor(OUTPUT_MESSAGE.BUY_COUNT(lottoNumbers.length));
-    OutputView.printFor(OUTPUT_MESSAGE.LOTTO_LIST(lottoNumbers));
+    OutputView.printFor(OUTPUT_MESSAGE_TEXT.BUY_COUNT(lottoNumbers.length));
+    OutputView.printFor(OUTPUT_MESSAGE_METHOD.LOTTO_LIST(lottoNumbers));
   }
 
   /**
@@ -83,9 +83,9 @@ export default class LottoGameController {
    * @param {string} rateOfReturn - 수익률에 대해 포맷팅 된 문자열
    */
   #printLottoResults(lottoResult, rateOfReturn) {
-    OutputView.printFor(OUTPUT_MESSAGE.RESULT_TITLE);
-    OutputView.printFor(OUTPUT_MESSAGE.RESULT(lottoResult));
-    OutputView.printFor(OUTPUT_MESSAGE.RATE_OF_RETURN(rateOfReturn));
+    OutputView.printFor(OUTPUT_MESSAGE_TEXT.RESULT_TITLE);
+    OutputView.printFor(OUTPUT_MESSAGE_METHOD.RESULT(lottoResult));
+    OutputView.printFor(OUTPUT_MESSAGE_TEXT.RATE_OF_RETURN(rateOfReturn));
   }
 
   /**

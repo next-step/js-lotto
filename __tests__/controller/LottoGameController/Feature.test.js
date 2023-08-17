@@ -1,4 +1,4 @@
-import { INPUT_MESSAGE, OUTPUT_MESSAGE } from '../../../src/step1/constants/message';
+import { INPUT_MESSAGE, OUTPUT_MESSAGE_METHOD, OUTPUT_MESSAGE_TEXT } from '../../../src/step1/constants/message';
 import { InputView, OutputView } from '../../../src/step1/view';
 import { mockCreateLottoNumbers, mockInputView, runLottoGameController } from './util';
 
@@ -26,13 +26,13 @@ describe('LottoGameController 관련 기능 테스트', () => {
       input: {
         investmentAmount: '1000',
       },
-      expected: OUTPUT_MESSAGE.BUY_COUNT(1),
+      expected: OUTPUT_MESSAGE_TEXT.BUY_COUNT(1),
     },
     {
       input: {
         investmentAmount: '8000',
       },
-      expected: OUTPUT_MESSAGE.BUY_COUNT(8),
+      expected: OUTPUT_MESSAGE_TEXT.BUY_COUNT(8),
     },
   ])(
     '구매금액이 $input.investmentAmount원 일 때 "$expected"가 출력되어야 한다.',
@@ -77,14 +77,14 @@ describe('LottoGameController 관련 기능 테스트', () => {
           ],
         },
         output: {
-          lottoResult: OUTPUT_MESSAGE.RESULT({
+          lottoResult: OUTPUT_MESSAGE_METHOD.RESULT({
             '3개 일치 (5,000원)': 1,
             '4개 일치 (50,000원)': 1,
             '5개 일치 (1,500,000원)': 1,
             '5개 일치, 보너스 볼 일치 (30,000,000원)': 1,
             '6개 일치 (2,000,000,000원)': 1,
           }),
-          rateOfReturn: OUTPUT_MESSAGE.RATE_OF_RETURN('40631100%'),
+          rateOfReturn: OUTPUT_MESSAGE_TEXT.RATE_OF_RETURN('40631100%'),
         },
       },
     ],
@@ -102,14 +102,14 @@ describe('LottoGameController 관련 기능 테스트', () => {
           ],
         },
         output: {
-          lottoResult: OUTPUT_MESSAGE.RESULT({
+          lottoResult: OUTPUT_MESSAGE_METHOD.RESULT({
             '3개 일치 (5,000원)': 3,
             '4개 일치 (50,000원)': 1,
             '5개 일치 (1,500,000원)': 0,
             '5개 일치, 보너스 볼 일치 (30,000,000원)': 0,
             '6개 일치 (2,000,000,000원)': 0,
           }),
-          rateOfReturn: OUTPUT_MESSAGE.RATE_OF_RETURN('1625%'),
+          rateOfReturn: OUTPUT_MESSAGE_TEXT.RATE_OF_RETURN('1625%'),
         },
       },
     ],
@@ -126,7 +126,7 @@ describe('LottoGameController 관련 기능 테스트', () => {
         .spyOn(OutputView, 'printFor')
         .mock.calls.slice(2)
         .map((messageArray) => messageArray.join());
-      expect(resultTitleMessage).toMatch(OUTPUT_MESSAGE.RESULT_TITLE);
+      expect(resultTitleMessage).toMatch(OUTPUT_MESSAGE_TEXT.RESULT_TITLE);
       expect(resultMessage).toMatch(output.lottoResult);
       expect(rateOfReturnMessage).toMatch(output.rateOfReturn);
     },

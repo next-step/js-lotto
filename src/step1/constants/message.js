@@ -7,15 +7,17 @@ export const INPUT_MESSAGE = Object.freeze({
   END_COUNT: '\n> 다시 시작하시겠습니까? (y/n) ',
 });
 
-export const OUTPUT_MESSAGE = Object.freeze({
-  LOTTO_LIST: (lottos) => lottos.reduce((message, lotto) => `${message}[${lotto.join(', ')}]\n`, ''),
-  BUY_COUNT: (count) => `${count}개를 구매했습니다.`,
+export const OUTPUT_MESSAGE_TEXT = Object.freeze({
   RESULT_TITLE: `\n당첨 통계\n--------------------`,
+  LOTTO_ENTRY: (lotto) => `[${lotto.join(', ')}]`,
+  RESULT_ENTRY: ([key, value]) => `${key} - ${value}개`,
+  BUY_COUNT: (count) => `${count}개를 구매했습니다.`,
   RATE_OF_RETURN: (rateOfReturn) => `총 수익률은 ${rateOfReturn}입니다.`,
-  RESULT: (result) =>
-    Object.entries(result)
-      .map(([key, value]) => `${key} - ${value}개`)
-      .join('\n'),
+});
+
+export const OUTPUT_MESSAGE_METHOD = Object.freeze({
+  LOTTO_LIST: (lottos) => lottos.map(OUTPUT_MESSAGE_TEXT.LOTTO_ENTRY).join('\n'),
+  RESULT: (result) => Object.entries(result).map(OUTPUT_MESSAGE_TEXT.RESULT_ENTRY).join('\n'),
 });
 
 export const ERROR_MESSAGE = Object.freeze({
