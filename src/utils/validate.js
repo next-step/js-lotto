@@ -2,6 +2,7 @@ import {
   LOTTO_LENGTH,
   MAX_LOTTO_NUMBER,
   MIN_LOTTO_NUMBER,
+<<<<<<< HEAD
   MIN_LOTTO_PRICE_LENGTH,
   SINGLE_LOTTO_PRICE,
 } from "../data/constant.js";
@@ -13,13 +14,34 @@ export const validateInputPriceType = (price) => {
 };
 
 export const validateAmount = (price) => {
+=======
+  SINGLE_LOTTO_PRICE,
+} from "../data/constant.js";
+
+export const checkInputPriceType = (price) => {
+  if (isNaN(price)) {
+    throw new Error("금액은 숫자만 입력 가능합니다.");
+  }
+};
+
+export const isValidAmount = (price) => {
+  if (String(price).includes(" ")) {
+    throw new Error("금액 입력 시 공백을 포함할 수 없습니다.");
+  }
+
+>>>>>>> 8f4c27a ([feat] validation 추가)
   if (price <= 0) {
     throw new Error("입력한 금액은 0보다 커야합니다.");
   }
 };
 
+<<<<<<< HEAD
 export const validateInputPriceUnit = (price) => {
   if (price.length < MIN_LOTTO_PRICE_LENGTH) {
+=======
+export const checkInputPriceUnit = (price) => {
+  if (price.length < 4) {
+>>>>>>> 8f4c27a ([feat] validation 추가)
     throw new Error(`금액은 ${SINGLE_LOTTO_PRICE}원 단위로 입력 가능합니다.`);
   }
 
@@ -40,7 +62,11 @@ export const isValidWinningNumberRange = (winningNumbers) => {
   const inputValue = winningNumbers.split(",");
 
   inputValue.forEach((value) => {
+<<<<<<< HEAD
     if (value < MIN_LOTTO_NUMBER || value > MAX_LOTTO_NUMBER) {
+=======
+    if (!(value >= MIN_LOTTO_NUMBER && value <= MAX_LOTTO_NUMBER)) {
+>>>>>>> 8f4c27a ([feat] validation 추가)
       throw new Error(
         `로또 번호는 ${MIN_LOTTO_NUMBER}부터 ${MAX_LOTTO_NUMBER}까지의 숫자만 입력 가능합니다.`
       );
