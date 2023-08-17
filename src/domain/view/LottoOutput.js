@@ -1,4 +1,5 @@
 import { MESSAGES, LOTTO_WINNIG_PRIZE } from '../constants/index.js';
+import { sortNumberArray } from '../../util/index.js';
 
 export const LottoOutput = {
   LOTTO_COUNT(count) {
@@ -6,7 +7,7 @@ export const LottoOutput = {
   },
 
   LOTTO_NUMBERS(numbers) {
-    console.log(numbers);
+    console.log(sortNumberArray(numbers));
   },
 
   LOTTO_RESULT(RESULT, PROFIT) {
