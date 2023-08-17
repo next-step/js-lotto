@@ -10,18 +10,39 @@ export class GameController {
     this.#store = new Store(PRODUCTS);
   }
 
-  async buyTickets() {
-    const purchaseAmount = await this.#view.readPurchaseAmount();
+  /* Lotto Game Process */
+  async LottoGameProcess() {
+    const tickets = await this.#getTickets();
+    const winningNumbers = await this.#readWinningNumbers();
+    this.#checkTicketsResult(tickets, winningNumbers);
+  }
 
+  /* Get Lotto Tickets */
+  async #getTickets() {
+    const purchaseAmount = await this.#view.readPurchaseAmount();
+    const tickets = this.#buyTickets(purchaseAmount);
+
+    this.#printTickets(tickets);
+
+    return tickets;
+  }
+
+  #buyTickets(purchaseAmount) {
     const tickets = this.#store.buyProduct(
       PRODUCTS_NAME.LOTTO_TICKET,
       purchaseAmount
     );
 
-    this.#printTickets(tickets);
+    return tickets;
   }
 
   #printTickets(tickets) {
     this.#view.printPurchasedTickets(tickets);
   }
+
+  /* Read Lotto Winning numbers */
+  async #readWinningNumbers() {}
+
+  /* Check Tickets Result */
+  async #checkTicketsResult() {}
 }

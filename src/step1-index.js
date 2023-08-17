@@ -11,7 +11,7 @@ class App {
   }
 
   play() {
-    this.#controller.buyTickets();
+    this.#controller.LottoGameProcess();
   }
 }
 
