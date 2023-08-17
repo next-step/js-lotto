@@ -21,10 +21,10 @@ const startLotto = async () => {
 
     const purchaseLottoCounts = lotto.getPurchasedLottoCounts();
     userIO.outputAmount(purchaseLottoCounts);
-    lotto.setMyLottos(purchaseLottoCounts);
+    lotto.setLottoCandidates(purchaseLottoCounts);
 
-    const myLottos = lotto.getMyLottos();
-    userIO.outputMyLottos(myLottos);
+    const lottoCandidates = lotto.getLottoCandidates();
+    userIO.outputLottoCandidates(lottoCandidates);
   });
 
   await userIO.inputLottoAnswer().then((lottoAnswer) => {
@@ -44,11 +44,15 @@ const startLotto = async () => {
 
     lotto.setLottoBonus(lottoBonus);
 
-    const myLottos = lotto.getMyLottos();
+    const lottoCandidates = lotto.getLottoCandidates();
     const lottoAnswer = lotto.getLottoAnswer();
     const currentLottoBonus = lotto.getLottoBonus();
 
-    lottoStatistics.setStatistics(myLottos, lottoAnswer, currentLottoBonus);
+    lottoStatistics.setStatistics(
+      lottoCandidates,
+      lottoAnswer,
+      currentLottoBonus
+    );
 
     const statistics = lottoStatistics.getStatistics();
     const purchaseLottoCounts = lotto.getPurchasedLottoCounts();

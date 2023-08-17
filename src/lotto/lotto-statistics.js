@@ -26,8 +26,8 @@ class LottoStatistics {
     return this.#statistics;
   }
 
-  setStatistics(myLottos, lottoAnswer, lottoBonus) {
-    myLottos.forEach((myLotto) => {
+  setStatistics(lottoCandidates, lottoAnswer, lottoBonus) {
+    lottoCandidates.forEach((myLotto) => {
       let answerCount = 0;
       lottoAnswer.forEach((answer) => {
         if (myLotto.includes(answer)) {

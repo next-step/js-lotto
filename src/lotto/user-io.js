@@ -48,8 +48,8 @@ class UserIO {
     print(`${purchasedLottoCounts}개를 구매했습니다.`);
   }
 
-  outputMyLottos(myLottos) {
-    myLottos.forEach((myLotto) => {
+  outputLottoCandidates(lottoCandidates) {
+    lottoCandidates.forEach((myLotto) => {
       print(myLotto);
     });
     print('');
