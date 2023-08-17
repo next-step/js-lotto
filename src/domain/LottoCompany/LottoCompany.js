@@ -7,14 +7,16 @@ const LOTTO_SIZE = 6;
 const LOTTO_NUMBER_MIN = 1;
 const LOTTO_NUMBER_MAX = 45;
 
+export const DEFAULT_LOTTO_PRIZE = {
+    1 : 2_000_000_000,
+    2 : 30_000_000,
+    3 : 1_500_000,
+    4 : 50_000,
+    5 : 5_000,
+}
+
 export class LottoCompany {
-    #LOTTO_PRIZE = {
-        1 : 2_000_000_000,
-        2 : 30_000_000,
-        3 : 1_500_000,
-        4 : 50_000,
-        5 : 5_000,
-    }
+    #LOTTO_PRIZE = DEFAULT_LOTTO_PRIZE;
     #lottoPrice;
     #issuedLottoList = [];
     #sellerList = [];
@@ -94,5 +96,8 @@ export class LottoCompany {
         this.#issuedLottoList.forEach(lotto => {
             this.#checkLotto(lotto, winningNumbers, bonusNumber);
         })
+    }
+    getPrize(winningRank) {
+        return this.#LOTTO_PRIZE[winningRank] ?? 0;
     }
 }

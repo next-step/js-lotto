@@ -1,11 +1,11 @@
-import {LOTTO_AMOUNT, LOTTO_PRICE, LottoCompany} from "./LottoCompany";
+import {DEFAULT_LOTTO_PRIZE, LOTTO_AMOUNT, LOTTO_PRICE, LottoCompany} from "./LottoCompany";
 import {LottoSeller} from "../LottoSeller/LottoSeller";
 import {LottoCustomer} from "../LottoCustomer/LottoCustomer";
 import {Lotto} from "../Lotto/Lotto";
 
-const WINNER_NUMBERS = [1, 2, 3, 4, 5, 6];
-const BONUS_NUMBER = 7;
-const LOTTO_LIST = [
+export const WINNER_NUMBERS = [1, 2, 3, 4, 5, 6];
+export const BONUS_NUMBER = 7;
+export const LOTTO_LIST = [
     [1, 2, 3, 4, 5, 6], //1등
     [1, 2, 3, 4, 5, 7], //2등
     [1, 2, 3, 4, 5, 8], //3등
@@ -13,6 +13,8 @@ const LOTTO_LIST = [
     [1, 2, 3, 7, 8, 9], //5등
     [1, 2, 8, 9, 10, 11], //꽝
 ]
+
+export const EXPECTED_TOTAL_PRIZE = DEFAULT_LOTTO_PRIZE[1] + DEFAULT_LOTTO_PRIZE[2] + DEFAULT_LOTTO_PRIZE[3] + DEFAULT_LOTTO_PRIZE[4] + DEFAULT_LOTTO_PRIZE[5];
 
 describe('로또 회사', () => {
     const lottoCompany = new LottoCompany(LOTTO_PRICE);
@@ -59,4 +61,15 @@ describe('로또 회사', () => {
             expect(lottoCompany.issuedLottoList[5].winningRank).toBe(0);
         })
     });
+
+    context('로또 당첨 등수를 입력받으면', () => {
+        it('로또 회사는 당첨금을 지급한다.', () => {
+            expect(lottoCompany.getPrize(1)).toBe(DEFAULT_LOTTO_PRIZE[1]);
+            expect(lottoCompany.getPrize(2)).toBe(DEFAULT_LOTTO_PRIZE[2]);
+            expect(lottoCompany.getPrize(3)).toBe(DEFAULT_LOTTO_PRIZE[3]);
+            expect(lottoCompany.getPrize(4)).toBe(DEFAULT_LOTTO_PRIZE[4]);
+            expect(lottoCompany.getPrize(5)).toBe(DEFAULT_LOTTO_PRIZE[5]);
+            expect(lottoCompany.getPrize(0)).toBe(0);
+        });
+    })
 });
