@@ -8,6 +8,7 @@ import {
   validatePositiveNumber,
   validatePrice,
   validateWinningNumberCount,
+  validateRetry,
 } from '../domain/validator.js';
 
 describe(`Validating Lotto purchase test`, () => {
@@ -90,5 +91,23 @@ describe(`bonus number test`, () => {
     expect(() => validateBonusDuplicate(WINNING_NUMBER, BONUS_NUMBER)).toThrowError(
       ERRORS.NOT_BONUS_NUMBER_UNIQUE,
     );
+  });
+});
+
+describe(`retry test`, () => {
+  it('should be a y or n', () => {
+    //given
+    const RETRY = 'hello';
+
+    //then
+    expect(() => validateRetry(RETRY)).toThrowError(ERRORS.NOT_RETRY_ANSWER);
+  });
+
+  it('should be pass if answer is right', () => {
+    //given
+    const RETRY = 'Y';
+
+    //then
+    expect(() => validateRetry(RETRY)).not.toThrowError(ERRORS.NOT_RETRY_ANSWER);
   });
 });
