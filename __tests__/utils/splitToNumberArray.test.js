@@ -1,4 +1,6 @@
-describe(() => {
+import splitToNumberArray from '../../src/js/utils/splitToNumberArray';
+
+describe('입력값 숫자 배열로 쪼개기 테스트', () => {
   it.each([
     {
       input: '1, 2, 3, 4',
@@ -12,8 +14,8 @@ describe(() => {
       input: '1',
       output: [1],
     },
-  ])('$input을 입력할시 $output으로 변환된다.', ({ input, output }) => {
+  ])('$input을 입력할시 $output로 변환된다.', ({ input, output }) => {
     const result = splitToNumberArray(input);
-    expect(result).toBe(output);
+    expect(result).toEqual(output);
   });
 });

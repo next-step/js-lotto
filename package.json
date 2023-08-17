@@ -21,7 +21,7 @@
   "jest": {
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/__tests__/utils/",
+      "/__tests__/controller/utils/",
       "/__tests__/constants/"
     ]
   }

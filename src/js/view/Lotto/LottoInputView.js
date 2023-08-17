@@ -1,4 +1,5 @@
 import { LOTTO_RETRY_CODE } from '../../constants/lotto-config.js';
+import splitToNumberArray from '../../utils/splitToNumberArray.js';
 import InputView from '../InputView.js';
 
 class LottoInputView extends InputView {
@@ -12,7 +13,7 @@ class LottoInputView extends InputView {
 
   async winningNumbers() {
     const result = await this._getUserInput('당첨번호를 입력해주세요');
-    return result.split(',').map((number) => Number(number.trim()));
+    return splitToNumberArray(result);
   }
 
   async bonus() {
