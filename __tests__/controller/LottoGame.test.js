@@ -2,7 +2,7 @@ import LottoGame from '../../src/js/controller/LottoGame.js';
 import LottoMachine from '../../src/js/domain/LottoMachine.js';
 import Lotto from '../../src/js/domain/Lotto.js';
 import { DEFAULT_LOTTO_NUMBERS, LOTTO_REWARD_DUMMY, MATCHED_BONUS } from '../constants/lotto.js';
-import { LOTTO_REWARD_CODE } from '../../src/js/constants/lotto-config.js';
+import { LOTTO_RETRY_CODE, LOTTO_REWARD_CODE } from '../../src/js/constants/lotto-config.js';
 import LottoInputView from '../../src/js/view/Lotto/LottoInputView.js';
 
 jest.mock('../../src/js/view/Lotto/LottoInputView.js');
@@ -10,10 +10,11 @@ jest.mock('../../src/js/domain/LottoMachine.js');
 
 const logSpy = jest.spyOn(console, 'log');
 
-const mockInput = ({ purchase, winningNumbers, bonus, returnedLottos }) => {
+const mockInput = ({ purchase, winningNumbers, bonus, returnedLottos, retry }) => {
   LottoInputView.prototype.purchase.mockResolvedValue(purchase);
   LottoInputView.prototype.winningNumbers.mockResolvedValue(winningNumbers);
   LottoInputView.prototype.bonus.mockResolvedValue(bonus);
+  LottoInputView.prototype.retry.mockReturnValue(retry);
   LottoMachine.prototype.buy.mockReturnValue(returnedLottos);
 };
 
@@ -27,6 +28,7 @@ describe('로또 구매 과정 테스트', () => {
       winningNumbers: LOTTO_REWARD_DUMMY.SECOND,
       bonus: MATCHED_BONUS,
       returnedLottos: [new Lotto(DEFAULT_LOTTO_NUMBERS)],
+      retry: LOTTO_RETRY_CODE.REJECT,
     });
     lottoGame = new LottoGame();
     lottoGame.start();
