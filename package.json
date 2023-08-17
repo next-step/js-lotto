@@ -20,7 +20,9 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "__tests__/constants"
+      "/node_modules/",
+      "/__tests__/utils/",
+      "/__tests__/constants/"
     ]
   }
 }
