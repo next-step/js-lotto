@@ -4,4 +4,9 @@ const LOTTO_TICKET = Object.freeze({
   NUMBERS_LENGTH: 6,
 });
 
-export const NUMBER = Object.freeze({ LOTTO_TICKET });
+const LOTTO_PRIZE = Object.freeze({
+  DEFAULT: 0,
+  BONUS_MATCH_THRESHOLD: 5,
+});
+
+export const NUMBER = Object.freeze({ LOTTO_TICKET, LOTTO_PRIZE });

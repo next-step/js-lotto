@@ -12,6 +12,7 @@ export class GameController {
     const tickets = await this.#getTickets();
     const winningNumbers = await this.#readWinningNumbers();
     const ticketResults = this.#checkTicketsResult(tickets, winningNumbers);
+    this.#printTicketsResult(ticketResults);
   }
 
   /* Get Lotto Tickets */
@@ -48,5 +49,10 @@ export class GameController {
     );
 
     return ticketResults;
+  }
+
+  /* Print Tickets Result */
+  #printTicketsResult(ticketResults) {
+    this.#view.printTicketsResult(ticketResults);
   }
 }

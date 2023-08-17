@@ -59,4 +59,8 @@ export class View {
       this.#outputView.print(ticketNumbers);
     }
   }
+
+  printTicketsResult(ticketResults) {
+    this.#outputView.print(ticketResults);
+  }
 }
