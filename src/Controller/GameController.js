@@ -41,8 +41,12 @@ export class GameController {
   }
 
   /* Read Lotto Winning numbers */
-  async #readWinningNumbers() {}
+  async #readWinningNumbers() {
+    const winningNumbers = await this.#view.readWinningNumbers();
+
+    return winningNumbers;
+  }
 
   /* Check Tickets Result */
-  async #checkTicketsResult() {}
+  async #checkTicketsResult(tickets, winningNumbers) {}
 }

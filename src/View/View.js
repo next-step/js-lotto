@@ -12,6 +12,7 @@ export class View {
     this.#inputView = InputView;
   }
 
+  /* Input */
   async readPurchaseAmount() {
     const userInput = await this.#inputView.readUserInput(
       MESSAGE.PREFIX(MESSAGE.READ.PURCHASE_AMOUNT)
@@ -21,6 +22,33 @@ export class View {
     return userInput;
   }
 
+  async readWinningNumbers() {
+    const lottoNumbers = await this.#readLottoNumbers();
+    const bonusNumber = await this.#readBonusNumber(lottoNumbers);
+
+    return { lottoNumbers, bonusNumber };
+  }
+
+  async #readLottoNumbers() {
+    const lottoNumbersInput = await this.#inputView.readUserInput(
+      MESSAGE.PREFIX(MESSAGE.READ.LOTTO_NUMBERS)
+    );
+    const lottoNumbers = lottoNumbersInput.split(',').map(Number);
+    this.#validator.readLottoNumbers(lottoNumbers);
+
+    return lottoNumbers;
+  }
+
+  async #readBonusNumber(lottoNumbers) {
+    const bonusNumberInput = await this.#inputView.readUserInput(
+      MESSAGE.PREFIX(MESSAGE.READ.BONUS_NUMBER)
+    );
+    this.#validator.readBonusNumber(bonusNumberInput, lottoNumbers);
+
+    return Number(bonusNumberInput);
+  }
+
+  /* Output */
   printPurchasedTickets(tickets) {
     const amount = tickets.length;
     this.#outputView.print(MESSAGE.PRINT.PURCHASED_AMOUNT(amount));
