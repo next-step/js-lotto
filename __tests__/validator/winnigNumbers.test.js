@@ -2,7 +2,17 @@ import ERROR from '../../src/js/constants/error.js';
 import { LOTTO_NUMBER_QUANTITY, LOTTO_NUMBER_RANGE } from '../../src/js/constants/lotto-config.js';
 import checkValidWinningNumbers from '../../src/js/validator/winningNumbers.js';
 
-describe('당첨 번호 예외 테스트', () => {
+describe('당첨 번호 유효성 테스트', () => {
+  it.each([
+    [1, 2, 3, 4, 5, 6],
+    [1, 2, 3, 11, 23, 45],
+    [3, 2, 4, 44, 43, 45],
+  ])(`${LOTTO_NUMBER_QUANTITY}개의 중복되지 않은 숫자를 입력할 시 에러가 발생하지 않는다.`, (...winningNumbers) => {
+    expect(() => {
+      checkValidWinningNumbers([...winningNumbers]);
+    }).not.toThrow();
+  });
+
   it.each([
     [1, 2, 3, 4, 5],
     [1, 2, 3],
