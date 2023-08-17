@@ -1,4 +1,4 @@
-import { LottoInputView } from '../../src/js/view/Lotto';
+import { LottoInputView } from '../../../src/js/view/Lotto';
 
 const mockInput = ({ purchase, winningNumbers, bonus, retry }) => {
   purchase.forEach(LottoInputView.prototype.purchase.mockResolvedValueOnce);

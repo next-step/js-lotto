@@ -25,7 +25,7 @@ import {
   LOTTO_REWARD_CODE,
 } from '../../src/js/constants/lotto-config.js';
 import ERROR from '../../src/js/constants/error.js';
-import mockInput from '../utils/mockInput.js';
+import mockInput from './utils/mockInput.js';
 
 jest.mock('../../src/js/view/Lotto/LottoInputView.js');
 jest.mock('../../src/js/domain/LottoMachine.js');
