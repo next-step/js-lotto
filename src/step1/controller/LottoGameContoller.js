@@ -1,7 +1,7 @@
-import { END_GAME, RESTART_GAME } from '../constants/controller.js';
 import { INPUT_MESSAGE, OUTPUT_MESSAGE } from '../constants/message.js';
 import { LottoGame } from '../model/index.js';
 import { InputView, OutputView } from '../view/index.js';
+import { GAME_PROMPT } from '../constants/controller.js';
 
 export default class LottoGameController {
   #lottoGame;
@@ -130,8 +130,8 @@ export default class LottoGameController {
    * @param {string} endPrompt - 종료 명령어
    */
   async #processEndGame(endPrompt) {
-    if (endPrompt === END_GAME) process.exit();
-    if (endPrompt === RESTART_GAME) {
+    if (endPrompt === GAME_PROMPT.END_GAME) process.exit();
+    if (endPrompt === GAME_PROMPT.RESTART_GAME) {
       await this.run();
     }
   }

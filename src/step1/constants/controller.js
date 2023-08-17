@@ -1,2 +1,4 @@
-export const END_GAME = 'n';
-export const RESTART_GAME = 'y';
+export const GAME_PROMPT = Object.freeze({
+  END_GAME: 'n',
+  RESTART_GAME: 'y',
+});
