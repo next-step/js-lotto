@@ -39,7 +39,7 @@ export const View = {
         `보너스 번호는 ${NUMBER.LOTTO_TICKET.MIN_RANGE}~${NUMBER.LOTTO_TICKET.MAX_RANGE} 사이의 숫자만 가능합니다.`
       );
 
-    if (lottoNumbers.includes(bonusNumber))
+    if (lottoNumbers.includes(Number(bonusNumber)))
       throw new Error('보너스 번호는 로또 번호와 중복될 수 없습니다.');
   },
 };
