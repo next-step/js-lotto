@@ -1,9 +1,13 @@
 import { calcLottoCount, createRandomLottoNumber } from "../utils/calculate.js";
 import { showBuyedLottoCountMessage } from "../utils/consoleMessage.js";
 import {
-  checkInputValueType,
-  checkInputValueUnit,
+  checkInputPriceType,
+  checkInputPriceUnit,
   isValidAmount,
+  isValidWinningNumberLength,
+  isValidWinningNumberRange,
+  isWinningNumbersDuplicate,
+  isWinningAndBonusNumberDuplicate,
 } from "../utils/validate.js";
 
 export const processLottoPurchase = (price) => {
@@ -13,9 +17,9 @@ export const processLottoPurchase = (price) => {
 
 export const validateInputPrice = (price) => {
   try {
-    checkInputValueType(price);
+    checkInputPriceType(price);
     isValidAmount(price);
-    checkInputValueUnit(price);
+    checkInputPriceUnit(price);
 
     return true;
   } catch (error) {
@@ -48,4 +52,27 @@ export const createLottoNumbers = () => {
   }
 
   return lottoNumbers;
+};
+
+export const validateInputWinningNumbers = (winningNumbers) => {
+  try {
+    isValidWinningNumberLength(winningNumbers);
+    isValidWinningNumberRange(winningNumbers);
+    isWinningNumbersDuplicate(winningNumbers);
+
+    return true;
+  } catch (error) {
+    console.log(error.message);
+    return false;
+  }
+};
+
+export const validateInputBonusNumber = (winningNumbers, bonusNumber) => {
+  try {
+    isWinningAndBonusNumberDuplicate(winningNumbers, bonusNumber);
+    return true;
+  } catch (error) {
+    console.log(error.message);
+    return false;
+  }
 };
