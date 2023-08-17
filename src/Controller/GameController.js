@@ -1,20 +1,17 @@
-import { Store } from '../Model';
-import { PRODUCTS, PRODUCTS_NAME } from '../constants';
-
 export class GameController {
   #view;
-  #store;
+  #lottoCorporation;
 
-  constructor(view) {
+  constructor(view, lottoCorporation) {
     this.#view = view;
-    this.#store = new Store(PRODUCTS);
+    this.#lottoCorporation = lottoCorporation;
   }
 
   /* Lotto Game Process */
   async LottoGameProcess() {
     const tickets = await this.#getTickets();
     const winningNumbers = await this.#readWinningNumbers();
-    this.#checkTicketsResult(tickets, winningNumbers);
+    const ticketResults = this.#checkTicketsResult(tickets, winningNumbers);
   }
 
   /* Get Lotto Tickets */
@@ -28,10 +25,7 @@ export class GameController {
   }
 
   #buyTickets(purchaseAmount) {
-    const tickets = this.#store.buyProduct(
-      PRODUCTS_NAME.LOTTO_TICKET,
-      purchaseAmount
-    );
+    const tickets = this.#lottoCorporation.buyTickets(purchaseAmount);
 
     return tickets;
   }
@@ -48,5 +42,11 @@ export class GameController {
   }
 
   /* Check Tickets Result */
-  async #checkTicketsResult(tickets, winningNumbers) {}
+  #checkTicketsResult(tickets, winningNumbers) {
+    const ticketResults = tickets.map((ticket) =>
+      this.#lottoCorporation.checkTicketResult(ticket, winningNumbers)
+    );
+
+    return ticketResults;
+  }
 }
