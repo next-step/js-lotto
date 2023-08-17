@@ -1,62 +1,76 @@
-import Lotto from "../src/js/Lotto";
-
-const ERROR_MESSAGE = Lotto.ERROR_MESSAGE;
+import Lotto from "../src/js/domain/Lotto";
+import {
+  NotArrayError,
+  LengthNotSixError,
+  ElementNotNumberError,
+  ElementOutOfRangeError,
+  ElementDuplicatedError,
+} from "../src/js/domain/Lotto/errors";
 
 describe("로또 객체 생성 테스트", () => {
   describe("생성자 유효성 검사 테스트", () => {
-    it.each([1, "erica", true, null, undefined, function () {}, {}])(
-      "배열 형태가 아니면, 에러를 발생시킨다.",
-      (input) => {
-        expect(() => new Lotto(input)).toThrow(ERROR_MESSAGE.NOT_ARRAY);
-      }
-    );
-    it.each([[], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6, 7]])(
-      "배열 길이가 6이 아니라면, 에러를 발생시킨다.",
-      (...input) => {
-        expect(() => new Lotto(input)).toThrow(ERROR_MESSAGE.NOT_LENGTH_SIX);
-      }
-    );
-
-    it.each([
-      ["erica", 1, 1, 1, 1, 1],
-      [" ", 1, 1, 1, 1, 1],
-      ["", 1, 1, 1, 1, 1],
-      ["1", 1, 1, 1, 1, 1],
-      [true, 1, 1, 1, 1, 1],
-      [null, 1, 1, 1, 1, 1],
-      [undefined, 1, 1, 1, 1, 1],
-      [function () {}, 1, 1, 1, 1, 1],
-      [{}, 1, 1, 1, 1, 1],
-    ])("배열 요소가 숫자가 아니면 에러를 발생시킨다.", (...input) => {
-      expect(() => new Lotto(input)).toThrow(ERROR_MESSAGE.ELEMENT_NOT_NUMBER);
+    describe("배열 형태가 아니면, 에러를 발생시킨다.", () => {
+      it.each([1, "erica", true, null, undefined, function () {}, {}])(
+        "%p",
+        (lottoNumbers) => {
+          expect(() => new Lotto(lottoNumbers)).toThrow(NotArrayError);
+        }
+      );
     });
 
-    it.each([
-      [-1, 2, 3, 4, 5, 6],
-      [0, 2, 3, 4, 5, 6],
-      [1, 2, 3, 4, 5, 46],
-    ])(
-      "배열 요소 중 [1, 45]를 벗어난 숫자가 있다면, 에러를 발생시킨다.",
-      (...input) => {
-        expect(() => new Lotto(input)).toThrow(
-          ERROR_MESSAGE.ELEMENT_OUT_OF_RANGE
-        );
-      }
-    );
-
-    it.each([
-      [1, 1, 1, 1, 1, 1],
-      [1, 2, 3, 4, 5, 5],
-      [1, 2, 3, 4, 5, 1],
-    ])("배열 요소 중 중복된 숫자가 있다면, 에러를 발생시킨다.", (...input) => {
-      expect(() => new Lotto(input)).toThrow(ERROR_MESSAGE.ELEMENT_DUPLICATED);
+    describe("배열 길이가 6이 아니라면, 에러를 발생시킨다.", () => {
+      it.each([
+        { lottoNumbers: [] },
+        { lottoNumbers: [1, 2, 3, 4, 5] },
+        { lottoNumbers: [1, 2, 3, 4, 5, 6, 7] },
+      ])("$lottoNumbers", ({ lottoNumbers }) => {
+        expect(() => new Lotto(lottoNumbers)).toThrow(LengthNotSixError);
+      });
     });
 
-    it.each([
-      [1, 2, 3, 4, 5, 6],
-      [1, 2, 3, 4, 5, 45],
-    ])("유효한 입력값이면, 에러를 발생시키지 않는다.", (...input) => {
-      expect(() => new Lotto(input)).not.toThrow();
+    describe("배열 요소가 숫자가 아니면 에러를 발생시킨다.", () => {
+      it.each([
+        { lottoNumbers: ["erica", 1, 1, 1, 1, 1] },
+        { lottoNumbers: [" ", 1, 1, 1, 1, 1] },
+        { lottoNumbers: ["", 1, 1, 1, 1, 1] },
+        { lottoNumbers: ["1", 1, 1, 1, 1, 1] },
+        { lottoNumbers: [true, 1, 1, 1, 1, 1] },
+        { lottoNumbers: [null, 1, 1, 1, 1, 1] },
+        { lottoNumbers: [undefined, 1, 1, 1, 1, 1] },
+        { lottoNumbers: [function () {}, 1, 1, 1, 1, 1] },
+        { lottoNumbers: [{}, 1, 1, 1, 1, 1] },
+      ])("$lottoNumbers", ({ lottoNumbers }) => {
+        expect(() => new Lotto(lottoNumbers)).toThrow(ElementNotNumberError);
+      });
+    });
+
+    describe("배열 요소 중 [1, 45]를 벗어난 숫자가 있다면, 에러를 발생시킨다.", () => {
+      it.each([
+        { lottoNumbers: [-1, 2, 3, 4, 5, 6] },
+        { lottoNumbers: [0, 2, 3, 4, 5, 6] },
+        { lottoNumbers: [1, 2, 3, 4, 5, 46] },
+      ])("$lottoNumbers", ({ lottoNumbers }) => {
+        expect(() => new Lotto(lottoNumbers)).toThrow(ElementOutOfRangeError);
+      });
+    });
+
+    describe("배열 요소 중 중복된 숫자가 있다면, 에러를 발생시킨다.", () => {
+      it.each([
+        { lottoNumbers: [1, 1, 1, 1, 1, 1] },
+        { lottoNumbers: [1, 2, 3, 4, 5, 5] },
+        { lottoNumbers: [1, 2, 3, 4, 5, 1] },
+      ])("$lottoNumbers", ({ lottoNumbers }) => {
+        expect(() => new Lotto(lottoNumbers)).toThrow(ElementDuplicatedError);
+      });
+    });
+
+    describe("유효한 입력값이면, 에러를 발생시키지 않는다.", () => {
+      it.each([
+        { lottoNumbers: [1, 2, 3, 4, 5, 6] },
+        { lottoNumbers: [1, 2, 3, 4, 5, 45] },
+      ])("$lottoNumbers", ({ lottoNumbers }) => {
+        expect(() => new Lotto(lottoNumbers)).not.toThrow();
+      });
     });
   });
 
