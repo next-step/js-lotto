@@ -1,5 +1,6 @@
+import { LOTTO_RETRY_CODE } from '../constants/lotto-config.js';
 import { Exchange, LottoChecker, LottoMachine } from '../domain/index.js';
-import { checkValidWinningNumbers, checkValidBonus } from '../validator/index.js';
+import { checkValidWinningNumbers, checkValidBonus, checkValidRetry } from '../validator/index.js';
 import { LottoInputView, LottoOutputView } from '../view/Lotto/index.js';
 
 class LottoGame {
@@ -114,11 +115,34 @@ class LottoGame {
   setRateOfReturn() {
     this.#rateOfReturn = this.#exchange.calculateRateOfReturn(this.#recentPurchaseMoney, this.#totalPrize);
     this.#outputView.rateOfReturn(this.#rateOfReturn);
-    this.stopGame();
+    this.askRetry();
   }
 
-  stopGame() {
-    process.exit();
+  async askRetry() {
+    try {
+      const retry = await this.#inputView.retry();
+      checkValidRetry(retry);
+      if (retry === LOTTO_RETRY_CODE.CONFIRM) this.retryGame();
+      process.exit();
+    } catch ({ message }) {
+      this.#outputView.error(message);
+      this.askRetry();
+    }
+  }
+
+  retryGame() {
+    this.reset();
+    this.start();
+  }
+
+  reset() {
+    this.#recentPurchaseMoney = 0;
+    this.#recentLottos = [];
+    this.#winningNumbers = [];
+    this.#bonus = null;
+    this.#result = null;
+    this.#totalPrize = 0;
+    this.#rateOfReturn = null;
   }
 }
 

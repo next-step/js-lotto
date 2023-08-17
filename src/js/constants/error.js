@@ -19,7 +19,7 @@ const ERROR = Object.freeze({
   },
 
   RETRY: {
-    INVALID_CODE: `${LOTTO_RETRY_CODE}나 ${LOTTO_RETRY_CODE.REJECT}를 입력해주세요`,
+    INVALID_CODE: `${LOTTO_RETRY_CODE.CONFIRM}나 ${LOTTO_RETRY_CODE.REJECT}를 입력해주세요`,
   },
 });
 
