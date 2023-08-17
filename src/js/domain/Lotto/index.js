@@ -53,7 +53,6 @@ export default class Lotto {
     return this.#lottoNumbers;
   }
 
-  // TODO getMatchInfo로 통합 여부 결정하기
   getMatchResult() {
     return {
       matchedCount: this.#matchedCount,

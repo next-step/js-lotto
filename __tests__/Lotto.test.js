@@ -75,16 +75,16 @@ describe("로또 객체 생성 테스트", () => {
   });
 
   describe("생성자 내부 로직 테스트", () => {
-    it("유효한 입력값이면, lotto 인스턴스의 lottoNumbers에 저장한다.", () => {
-      const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
+    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
+
+    it("유효한 입력값이면, lottoNumbers에 저장한다.", () => {
       expect(lotto.getLottoNumbers()).toEqual([1, 2, 3, 4, 5, 6]);
     });
 
-    it("lotto 인스턴스 생성시 matchCount와 isBonusMatched를 null로 초기화한다.", () => {
-      const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
+    it("matchCount와 isBonusMatched를 null로 초기화한다.", () => {
       const { matchedCount, isBonusMatched } = lotto.getMatchResult();
-      expect(matchedCount).toBe(null);
-      expect(isBonusMatched).toBe(null);
+      expect(matchedCount).toBeNull();
+      expect(isBonusMatched).toBeNull();
     });
   });
 
@@ -95,8 +95,8 @@ describe("로또 객체 생성 테스트", () => {
     });
   });
 
-  describe("from 메소드 테스트", () => {
-    it("from 메소드는 lotto 객체를 생성해 반환한다.", () => {
+  describe("of 메소드 테스트", () => {
+    it("lotto 객체를 생성해 반환한다.", () => {
       const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
       expect(lotto).toBeInstanceOf(Lotto);
     });
