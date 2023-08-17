@@ -7,6 +7,6 @@ export default class RuntimeError extends Error {
   }
 
   getMessage() {
-    return this.message;
+    return this.#message;
   }
 }
