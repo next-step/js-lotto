@@ -12,6 +12,8 @@ export class LottoSeller{
     }
 
     requestLotto(lottoCustomer, lottoAmount) {
-        return this.#lottoCompany.issueLotto(lottoCustomer, lottoAmount);
+        const lottoList = this.#lottoCompany.makeLottoList(lottoCustomer, lottoAmount);
+        this.#lottoCompany.storeLottoList(lottoList);
+        return lottoList;
     }
 }
