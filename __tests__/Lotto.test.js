@@ -28,7 +28,7 @@ describe("로또 객체 생성 테스트", () => {
       });
     });
 
-    describe("배열 요소가 숫자가 아니면 에러를 발생시킨다.", () => {
+    describe("요소가 숫자가 아니면 에러를 발생시킨다.", () => {
       it.each([
         { lottoNumbers: ["erica", 1, 1, 1, 1, 1] },
         { lottoNumbers: [" ", 1, 1, 1, 1, 1] },
@@ -44,7 +44,7 @@ describe("로또 객체 생성 테스트", () => {
       });
     });
 
-    describe("배열 요소 중 [1, 45]를 벗어난 숫자가 있다면, 에러를 발생시킨다.", () => {
+    describe("요소 중 [1, 45]를 벗어난 숫자가 있다면, 에러를 발생시킨다.", () => {
       it.each([
         { lottoNumbers: [-1, 2, 3, 4, 5, 6] },
         { lottoNumbers: [0, 2, 3, 4, 5, 6] },
@@ -54,7 +54,7 @@ describe("로또 객체 생성 테스트", () => {
       });
     });
 
-    describe("배열 요소 중 중복된 숫자가 있다면, 에러를 발생시킨다.", () => {
+    describe("요소 중 중복된 숫자가 있다면, 에러를 발생시킨다.", () => {
       it.each([
         { lottoNumbers: [1, 1, 1, 1, 1, 1] },
         { lottoNumbers: [1, 2, 3, 4, 5, 5] },
@@ -64,7 +64,7 @@ describe("로또 객체 생성 테스트", () => {
       });
     });
 
-    describe("유효한 입력값이면, 에러를 발생시키지 않는다.", () => {
+    describe("유효하면, 에러를 발생시키지 않는다.", () => {
       it.each([
         { lottoNumbers: [1, 2, 3, 4, 5, 6] },
         { lottoNumbers: [1, 2, 3, 4, 5, 45] },
@@ -89,14 +89,14 @@ describe("로또 객체 생성 테스트", () => {
   });
 
   describe("생성자 반환값 테스트", () => {
-    it("생성자는 로또 객체를 반환한다.", () => {
+    it("Lotto 인스턴스를 반환한다.", () => {
       const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
       expect(lotto).toBeInstanceOf(Lotto);
     });
   });
 
   describe("of 메소드 테스트", () => {
-    it("lotto 객체를 생성해 반환한다.", () => {
+    it("lotto 인스턴스를 반환한다.", () => {
       const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
       expect(lotto).toBeInstanceOf(Lotto);
     });
