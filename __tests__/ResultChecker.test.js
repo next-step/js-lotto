@@ -101,24 +101,16 @@ describe("등수, 상금 반환 테스트", () => {
   MatchingChecker.setWinningNumbers([1, 2, 3, 4, 5, 6]);
   MatchingChecker.setBonusNumber(7);
 
-  it("로또 당첨 번호 일치 개수 반환 메소드를 호출한다.", () => {
-    const lotto = Lotto.from([1, 2, 3, 4, 5, 6]);
+  it("로또 당첨 정보 반환 메소드를 호출한다.", () => {
+    const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
     MatchingChecker.setMatchInfo(lotto);
-    const spyGetMatchCount = jest.spyOn(Lotto.prototype, "getMatchCount");
+    const spyGetMatchResult = jest.spyOn(Lotto.prototype, "getMatchResult");
     ResultChecker.getResult(lotto);
-    expect(spyGetMatchCount).toHaveBeenCalledTimes(1);
-  });
-
-  it("로또 보너스 번호 반환 메소드를 호출한다.", () => {
-    const lotto = Lotto.from([1, 2, 3, 4, 5, 6]);
-    MatchingChecker.setMatchInfo(lotto);
-    const spyGetMatchBonus = jest.spyOn(Lotto.prototype, "getMatchBonus");
-    ResultChecker.getResult(lotto);
-    expect(spyGetMatchBonus).toHaveBeenCalledTimes(1);
+    expect(spyGetMatchResult).toHaveBeenCalledTimes(1);
   });
 
   it("등수와 당첨 금액을 속성으로 가진 객체를 반환한다.", () => {
-    const lotto = Lotto.from([1, 2, 3, 4, 5, 6]);
+    const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
     MatchingChecker.setMatchInfo(lotto);
     expect(ResultChecker.getResult(lotto)).toHaveProperty("rank");
     expect(ResultChecker.getResult(lotto)).toHaveProperty("prize");
@@ -128,7 +120,7 @@ describe("등수, 상금 반환 테스트", () => {
   it.each(testCases)(
     "올바른 등수와 당첨 금액을 반환한다.",
     ({ lotto: lottoNumbers, rank: expectedRank, prize: expectedPrize }) => {
-      const lotto = Lotto.from(lottoNumbers);
+      const lotto = Lotto.of(lottoNumbers);
       MatchingChecker.setMatchInfo(lotto);
       const result = ResultChecker.getResult(lotto);
       expect(result.rank).toBe(expectedRank);

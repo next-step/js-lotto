@@ -48,18 +48,19 @@ const MatchingChecker = (function () {
     lotto.setMatchCount(matchCount);
   }
 
-  function setMatchBonus(lotto) {
+  function setIsBonusMatched(lotto) {
     const lottoNumbers = lotto.getLottoNumbers();
     const isMatched = lottoNumbers.includes(bonusNumber);
 
-    lotto.setMatchBonus(isMatched);
+    lotto.setIsBonusMatched(isMatched);
   }
 
   function setMatchInfo(lotto) {
     setMatchCount(lotto);
 
-    if (lotto.getMatchCount() === CHECK_BONUS_COUNT) {
-      setMatchBonus(lotto);
+    const { matchedCount } = lotto.getMatchResult();
+    if (matchedCount === CHECK_BONUS_COUNT) {
+      setIsBonusMatched(lotto);
     }
   }
 

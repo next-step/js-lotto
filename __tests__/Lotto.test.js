@@ -66,10 +66,11 @@ describe("로또 객체 생성 테스트", () => {
       expect(lotto.getLottoNumbers()).toEqual([1, 2, 3, 4, 5, 6]);
     });
 
-    it("lotto 인스턴스 생성시 matchCount와 matchBonus를 null로 초기화한다.", () => {
+    it("lotto 인스턴스 생성시 matchCount와 isBonusMatched를 null로 초기화한다.", () => {
       const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
-      expect(lotto.getMatchCount()).toBe(null);
-      expect(lotto.getMatchBonus()).toBe(null);
+      const { matchedCount, isBonusMatched } = lotto.getMatchResult();
+      expect(matchedCount).toBe(null);
+      expect(isBonusMatched).toBe(null);
     });
   });
 
@@ -82,7 +83,7 @@ describe("로또 객체 생성 테스트", () => {
 
   describe("from 메소드 테스트", () => {
     it("from 메소드는 lotto 객체를 생성해 반환한다.", () => {
-      const lotto = Lotto.from([1, 2, 3, 4, 5, 6]);
+      const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
       expect(lotto).toBeInstanceOf(Lotto);
     });
   });

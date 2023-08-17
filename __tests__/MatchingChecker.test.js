@@ -149,9 +149,10 @@ describe("로또 당첨 여부 확인 테스트", () => {
     it.each(testCases)(
       "당첨 번호와 일치하는 로또 번호 개수를 구해 Lotto 객체에 저장한다.",
       ({ lotto: lottoNumbers, matchedCount: expectedMatchedCount }) => {
-        const lotto = Lotto.from(lottoNumbers);
+        const lotto = Lotto.of(lottoNumbers);
         MatchingChecker.setMatchInfo(lotto);
-        expect(lotto.getMatchCount()).toBe(expectedMatchedCount);
+        const { matchedCount } = lotto.getMatchResult();
+        expect(matchedCount).toBe(expectedMatchedCount);
       }
     );
 
@@ -165,27 +166,20 @@ describe("로또 당첨 여부 확인 테스트", () => {
     it.each(nonFiveMatchedTestCases)(
       "당첨 번호 일치 개수가 5개가 아닌 경우, 보너스 번호 일치 여부를 확인하지 않는다.",
       ({ lotto: lottoNumbers }) => {
-        const lotto = Lotto.from(lottoNumbers);
+        const lotto = Lotto.of(lottoNumbers);
         MatchingChecker.setMatchInfo(lotto);
-        expect(lotto.getMatchBonus()).toBeNull();
+        const { isBonusMatched } = lotto.getMatchResult();
+        expect(isBonusMatched).toBeNull();
       }
     );
 
     it.each(fiveMatchedTestCases)(
       "당첨 번호 일치 개수가 5개인 경우만, 보너스 번호 일치 여부를 확인한다.",
       ({ lotto: lottoNumbers }) => {
-        const lotto = Lotto.from(lottoNumbers);
+        const lotto = Lotto.of(lottoNumbers);
         MatchingChecker.setMatchInfo(lotto);
-        expect(typeof lotto.getMatchBonus() === "boolean").toBe(true);
-      }
-    );
-
-    it.each(fiveMatchedTestCases)(
-      "당첨 번호 일치 개수가 5개인 경우, 보너스 번호 일치 여부를 확인한다.",
-      ({ lotto: lottoNumbers }) => {
-        const lotto = Lotto.from(lottoNumbers);
-        MatchingChecker.setMatchInfo(lotto);
-        expect(typeof lotto.getMatchBonus() === "boolean").toBe(true);
+        const { isBonusMatched } = lotto.getMatchResult();
+        expect(typeof isBonusMatched === "boolean").toBe(true);
       }
     );
   });
@@ -197,10 +191,11 @@ describe("로또 당첨 여부 확인 테스트", () => {
 
     it.each(fiveMatchedTestCases)(
       "보너스 번호 일치 여부를 확인하여 Lotto 객체에 저장한다.",
-      ({ lotto: lottoNumbers, isBonusMatched }) => {
-        const lotto = Lotto.from(lottoNumbers);
+      ({ lotto: lottoNumbers, isBonusMatched: expectedIsBonusMatched }) => {
+        const lotto = Lotto.of(lottoNumbers);
         MatchingChecker.setMatchInfo(lotto);
-        expect(lotto.getMatchBonus()).toBe(isBonusMatched);
+        const { isBonusMatched } = lotto.getMatchResult();
+        expect(isBonusMatched).toBe(expectedIsBonusMatched);
       }
     );
   });

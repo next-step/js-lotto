@@ -13,7 +13,7 @@ const LotteryMachine = (function () {
     while (lotto.size < TOTAL_LOTTO_NUMBER) {
       lotto.add(getRandomNumber());
     }
-    return Lotto.from(Array.from(lotto));
+    return Lotto.of(Array.from(lotto));
   }
 
   return {

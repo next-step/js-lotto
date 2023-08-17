@@ -25,10 +25,9 @@ const ResultChecker = (function () {
   }
 
   function getResult(lotto) {
-    const matchCount = lotto.getMatchCount();
-    const isBonusMatched = lotto.getMatchBonus();
+    const { matchedCount, isBonusMatched } = lotto.getMatchResult();
 
-    const rank = getRank(matchCount, isBonusMatched);
+    const rank = getRank(matchedCount, isBonusMatched);
     const prize = PRIZE[rank];
 
     return {

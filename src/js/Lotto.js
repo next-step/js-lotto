@@ -1,7 +1,7 @@
 export default class Lotto {
   #lottoNumbers;
-  #matchCount;
-  #matchBonus;
+  #matchedCount;
+  #isBonusMatched;
 
   static LOW_BOUND = 1;
   static HIGH_BOUND = 45;
@@ -13,16 +13,15 @@ export default class Lotto {
     ELEMENT_DUPLICATED: "로또 번호는 모두 중복되지 않아야합니다.",
   });
 
-  static from(numbers) {
+  static of(numbers) {
     return new Lotto(numbers);
   }
 
-  // TODO 전략 패턴으로 삽입할지 고민하기
   constructor(numbers) {
     this.validateLottoNumbers(numbers);
     this.#lottoNumbers = numbers;
-    this.#matchCount = null;
-    this.#matchBonus = null;
+    this.#matchedCount = null;
+    this.#isBonusMatched = null;
   }
 
   hasNonNumericElement(numbers) {
@@ -58,19 +57,26 @@ export default class Lotto {
   }
 
   // TODO getMatchInfo로 통합 여부 결정하기
-  getMatchCount() {
-    return this.#matchCount;
+  getMatchResult() {
+    return {
+      matchedCount: this.#matchedCount,
+      isBonusMatched: this.#isBonusMatched,
+    };
   }
 
-  getMatchBonus() {
-    return this.#matchBonus;
-  }
+  // getMatchCount() {
+  //   return this.#matchCount;
+  // }
 
   setMatchCount(count) {
-    this.#matchCount = count;
+    this.#matchedCount = count;
   }
 
-  setMatchBonus(isMatched) {
-    this.#matchBonus = isMatched;
+  // getIsBonusMatched() {
+  //   return this.#isBonusMatched;
+  // }
+
+  setIsBonusMatched(isMatched) {
+    this.#isBonusMatched = isMatched;
   }
 }
