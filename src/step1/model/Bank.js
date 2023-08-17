@@ -17,16 +17,6 @@ export default class Bank {
   }
 
   /**
-   * 보너스 번호가 숫자 타입인지, 당첨 로또 번호와 중복 되는 번호가 존재하는지, 1~45의 숫자 범위를 갖는지 검증하는 메서드
-   * @param {import('../utils/jsDoc.js').WinningLottoInfo} WinningLottoInfo - 당첨 로또 번호와 보너스 번호에 대한 객체
-   */
-  #validate({ winningLottoNumbers, bonusNumber }) {
-    BonusNumberValidator.validateBonusNumberType(bonusNumber);
-    BonusNumberValidator.validateDuplicateBonusNumber(winningLottoNumbers, bonusNumber);
-    BonusNumberValidator.validateBonusNumberInRange(bonusNumber);
-  }
-
-  /**
    * 네이밍을 위한 정적 팩토리 메서드
    * @param {number[]} winningLottoNumbers - 1등 당첨 번호
    * @param {number} bonusNumber - 보너스 번호
@@ -34,6 +24,16 @@ export default class Bank {
    */
   static from(winningLottoNumbers, bonusNumber) {
     return new Bank({ winningLottoNumbers, bonusNumber });
+  }
+
+  /**
+   * 보너스 번호가 숫자 타입인지, 당첨 로또 번호와 중복 되는 번호가 존재하는지, 1~45의 숫자 범위를 갖는지 검증하는 메서드
+   * @param {import('../utils/jsDoc.js').WinningLottoInfo} WinningLottoInfo - 당첨 로또 번호와 보너스 번호에 대한 객체
+   */
+  #validate({ winningLottoNumbers, bonusNumber }) {
+    BonusNumberValidator.validateBonusNumberType(bonusNumber);
+    BonusNumberValidator.validateDuplicateBonusNumber(winningLottoNumbers, bonusNumber);
+    BonusNumberValidator.validateBonusNumberInRange(bonusNumber);
   }
 
   /**

@@ -38,20 +38,20 @@ export default class LottoReward {
   }
 
   /**
-   * "로또 당첨 정보"내 "당첨 횟수"가 0~6 사이의 값을 가지고 있는지 검증하는 메서드
-   * @param {LottoMatchingInfo} lottoMatchingInfo - "당첨 횟수, 보너스 번호 일치 여부"에 대한 객체
-   */
-  #validate(lottoMatchingInfo) {
-    LottoValidator.validateWinningCountInRange(lottoMatchingInfo.map(({ winningCount }) => winningCount));
-  }
-
-  /**
    * 네이밍을 위한 정적 팩토리 메서드
    * @param {import('../utils/jsDoc.js').LottoMatchingInfo} lottoMatchingInfo - 로또 당첨 정보
    * @returns {LottoReward} LottoReward 인스턴스
    */
   static from(lottoMatchingInfo) {
     return new LottoReward(lottoMatchingInfo);
+  }
+
+  /**
+   * "로또 당첨 정보"내 "당첨 횟수"가 0~6 사이의 값을 가지고 있는지 검증하는 메서드
+   * @param {LottoMatchingInfo} lottoMatchingInfo - "당첨 횟수, 보너스 번호 일치 여부"에 대한 객체
+   */
+  #validate(lottoMatchingInfo) {
+    LottoValidator.validateWinningCountInRange(lottoMatchingInfo.map(({ winningCount }) => winningCount));
   }
 
   /**

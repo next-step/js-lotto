@@ -16,6 +16,16 @@ export default class Lotto {
   }
 
   /**
+   * count를 받아 Lotto - LottoMerchant 간 "로또 번호 생성"에 대한 협력을 위한 정적 팩토리 메서드
+   * @param {number} count - 로또 생성 횟수
+   * @returns {Lotto[]} 생성 횟수 만큼의 로또 인스턴스 배열
+   */
+  static fromByRandomNumberMaker(count = 1) {
+    const lottoNumberMaker = LottoNumberMaker.from();
+    return Array.from({ length: count }, () => new Lotto(lottoNumberMaker.createLottoNumbers()));
+  }
+
+  /**
    * 생성한 로또 번호들이 숫자 타입인지, 번호의 갯수가 6개인지, 로또 번호 내 중복된 값이 존재하는지, 1 ~ 45의 숫자 범위를 갖는지 검증하는 메서드
    * @param {number[]} lottoNumbers - 로또 번호
    */
@@ -24,16 +34,6 @@ export default class Lotto {
     LottoValidator.validateDefaultLottoCount(lottoNumbers);
     LottoValidator.validateDuplicateLottoNumbers(lottoNumbers);
     LottoValidator.validateLottoNumbersInRange(lottoNumbers);
-  }
-
-  /**
-   * count를 받아 Lotto - LottoMerchant 간 "로또 번호 생성"에 대한 협력을 위한 정적 팩토리 메서드
-   * @param {number} count - 로또 생성 횟수
-   * @returns {Lotto[]} 생성 횟수 만큼의 로또 인스턴스 배열
-   */
-  static fromByRandomNumberMaker(count = 1) {
-    const lottoNumberMaker = LottoNumberMaker.from();
-    return Array.from({ length: count }, () => new Lotto(lottoNumberMaker.createLottoNumbers()));
   }
 
   /**

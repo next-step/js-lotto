@@ -16,18 +16,6 @@ export default class LottoCalculator {
   }
 
   /**
-   * 총 당첨 금액, 로또 구매 금액이 숫자인지, 구매 금액이 0원이 아닌지 검증하는 메서드
-   * @param {number} winningAmount - 총 당첨 금액
-   * @param {number} investmentAmount - 로또 구매 금액
-   */
-  #validate(winningAmount, investmentAmount) {
-    LottoValidator.validateTypeOfNumbers([winningAmount, investmentAmount]);
-    if (investmentAmount === 0) {
-      throw TypeError(ERROR_MESSAGE.INVALID_AMOUNT);
-    }
-  }
-
-  /**
    * 수익율을 "%"형태로 포맷팅 하여 반환하는 메서드
    * @param {number} rateOfReturn - 수익율
    * @returns {string} 수익율의 형태로 포맷팅한 문자열
@@ -45,6 +33,18 @@ export default class LottoCalculator {
    */
   static from(winningAmount, investmentAmount) {
     return new LottoCalculator(winningAmount, investmentAmount);
+  }
+
+  /**
+   * 총 당첨 금액, 로또 구매 금액이 숫자인지, 구매 금액이 0원이 아닌지 검증하는 메서드
+   * @param {number} winningAmount - 총 당첨 금액
+   * @param {number} investmentAmount - 로또 구매 금액
+   */
+  #validate(winningAmount, investmentAmount) {
+    LottoValidator.validateTypeOfNumbers([winningAmount, investmentAmount]);
+    if (investmentAmount === 0) {
+      throw TypeError(ERROR_MESSAGE.INVALID_AMOUNT);
+    }
   }
 
   /**
