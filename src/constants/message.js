@@ -7,6 +7,14 @@ const ERROR = Object.freeze({
   PRODUCT_NOT_FOUND: '제품을 찾을 수 없습니다.',
   INSUFFICIENT_PURCHASE_AMOUNT: '구입 금액보다 상품의 가격이 높습니다.',
   INVALID_RESTART_INPUT: '"y" 또는 "n"만 입력해주세요.',
+
+  INVALID_LOTTO_LENGTH: (length) => `로또는 ${length}자리 숫자입니다.`,
+  INVALID_LOTTO_RANGE: (min, max) =>
+    `로또 번호는 ${min}~${max} 사이의 숫자만 가능합니다.`,
+  DUPLICATE_LOTTO_NUMBERS: '로또 번호에 중복된 숫자가 있습니다.',
+  INVALID_BONUS_NUMBER_RANGE: (min, max) =>
+    `보너스 번호는 ${min}~${max} 사이의 숫자만 가능합니다.`,
+  DUPLICATE_BONUS_NUMBER: '보너스 번호는 로또 번호와 중복될 수 없습니다.',
 });
 
 const READ = Object.freeze({
