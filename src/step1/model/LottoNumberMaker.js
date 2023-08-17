@@ -8,7 +8,7 @@ export default class LottoNumberMaker {
   #lottoNumberGenerator;
 
   /**
-   * @type {LottoRangeInfo}
+   * @type {import('../utils/jsDoc.js').LottoRangeInfo}
    */
   static #lottoRangeInfo = {
     startNumber: MIN_LOTTO_NUMBER,
@@ -26,6 +26,7 @@ export default class LottoNumberMaker {
 
   /**
    * 네이밍을 위한 정적 팩토리 메서드
+   * @returns {LottoNumberMaker} LottoNumberMaker 인스턴스
    */
   static from() {
     return new LottoNumberMaker();

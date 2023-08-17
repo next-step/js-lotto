@@ -7,7 +7,7 @@ export default class LottoReward {
   #lottoMatchingInfo;
 
   /**
-   * @type {WinTable}
+   * @type {import('../utils/jsDoc.js').WinTable}
    */
   static #WIN_TABLE = {
     '3_NUMBER': {
@@ -47,7 +47,8 @@ export default class LottoReward {
 
   /**
    * 네이밍을 위한 정적 팩토리 메서드
-   * @param {LottoMatchingInfo} 로또 당첨 정보
+   * @param {import('../utils/jsDoc.js').LottoMatchingInfo} lottoMatchingInfo - 로또 당첨 정보
+   * @returns {LottoReward} LottoReward 인스턴스
    */
   static from(lottoMatchingInfo) {
     return new LottoReward(lottoMatchingInfo);
@@ -55,7 +56,7 @@ export default class LottoReward {
 
   /**
    * LottoResult 객체의 형태로 초기화 하는 메서드
-   * @returns {LottoResult}
+   * @returns {import('../utils/jsDoc.js').LottoResult} 로또 당첨 조건 - 당첨 횟수로 이루어진 객체
    */
   #initLottoResult() {
     return Object.values(LottoReward.#WIN_TABLE).reduce((result, { description }) => {
@@ -66,7 +67,8 @@ export default class LottoReward {
 
   /**
    * lottoMatchingInfo를 통해 WIN_TABLE에 접근 하기 위한 key를 생성하는 메서드
-   * @param {LottoMatchingInfo} LottoMatchingInfo
+   * @param {import('../utils/jsDoc.js').LottoMatchingInfo} LottoMatchingInfo - 당첨 횟수, 보너스 번호 일치 여부에 대한 객체
+   * @returns {import('../utils/jsDoc.js').WinTableKey} WinTable에 접근하기 위한 key
    */
   #createWinTableKey({ winningCount, hasBonusNumber }) {
     return `${winningCount}_NUMBER${hasBonusNumber && winningCount === 5 ? '_WITH_BONUS' : ''}`;
@@ -74,9 +76,9 @@ export default class LottoReward {
 
   /**
    * winTable 키를 통해 만약 해당 키가 WIN_TABLE에 존재한다면 해당 description 값에 1을 더하는 메서드
-   * @param {LottoResult} lottoResult - "로또 당첨 조건 - 당첨 횟수"로 이루어진 객체
+   * @param {import('../utils/jsDoc.js').LottoResult} lottoResult - "로또 당첨 조건 - 당첨 횟수"로 이루어진 객체
    * @param {string} winTableKey - createWinTableKey로 생성한 key
-   * @returns {LottoResult} update된 lottoResult
+   * @returns {import('../utils/jsDoc.js').LottoResult} update된 lottoResult
    */
   #updateLottoResult(lottoResult, winTableKey) {
     if (winTableKey in LottoReward.#WIN_TABLE) {
@@ -102,7 +104,8 @@ export default class LottoReward {
 
   /**
    * lottoMatchInfo를 통해 WIN_TABLE에 접근할 key를 생성 후 WinningInfo를 update하는 메서드
-   * @returns {WinningInfo}
+   * @param {import('../utils/jsDoc.js').WinningInfo & import('../utils/jsDoc.js').LottoMatchingInfo} details - 당첨 정보를 업데이트 하기 위한 object
+   * @returns {import('../utils/jsDoc.js').WinningInfo} 업데이트 된 당첨 정보
    */
   #updateWinningInfo({ winningCount, hasBonusNumber, lottoResult, winningAmount }) {
     const winTableKey = this.#createWinTableKey({ winningCount, hasBonusNumber });
@@ -114,7 +117,7 @@ export default class LottoReward {
 
   /**
    * Bank - LottoReward 간 "로또 당첨 결과 확인" 이라는 협력을 위해 lottoMatchingInfo를 통해 당첨 정보를 계산 후 반환하는 메서드
-   * @returns {WinningInfo}
+   * @returns {import('../utils/jsDoc.js').WinningInfo} 수익율과 로또 당첨결과가 포함된 당첨 정보 객체
    */
   calculateWinningInfo() {
     return this.#lottoMatchingInfo.reduce(
