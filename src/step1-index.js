@@ -1,10 +1,17 @@
 import {
+<<<<<<< HEAD
   checkInputPrice,
   createLottosForAmount,
   formatWinningNumbers,
   getWinningPrizeResult,
   updateLottoPrizeCount,
   validateInputBonusNumber,
+=======
+  createLottosForAmount,
+  processLottoPurchase,
+  validateInputBonusNumber,
+  validateInputPrice,
+>>>>>>> a7c387c ([feat] 기능 실행 부분 로직 작성)
   validateInputWinningNumbers,
 } from "./controller/lottoController.js";
 import { calcLottoCount } from "./utils/calculate.js";
@@ -13,6 +20,7 @@ import {
   inputBonusNumberMessage,
   inputLottoNumberMessage,
   inputLottoPriceMessage,
+<<<<<<< HEAD
 } from "./data/constant.js";
 import {
   displayAvailableLottoCount,
@@ -52,10 +60,24 @@ async function lottoGame() {
   const inputPrice = await getInputPrice();
 
   if (!inputPrice) {
+=======
+} from "./utils/consoleMessage.js";
+import {
+  displayAvailableLottoCount,
+  displayLottoNumbers,
+} from "./view/view.js";
+
+async function lottoGame() {
+  const inputPrice = await getUserInput(inputLottoPriceMessage);
+  const isAvaliablePrice = validateInputPrice(inputPrice);
+
+  if (!isAvaliablePrice) {
+>>>>>>> a7c387c ([feat] 기능 실행 부분 로직 작성)
     closeUserInput();
     return false;
   }
 
+<<<<<<< HEAD
   const avaliableCount = calcLottoCount(inputPrice);
   displayAvailableLottoCount(avaliableCount);
 
@@ -65,10 +87,26 @@ async function lottoGame() {
   const inputWinningNumbers = await getInputWinningNumbers();
 
   if (!inputWinningNumbers) {
+=======
+  // 몇개 살 수 있는 지 출력
+  const avaliableCount = processLottoPurchase(inputPrice);
+  displayAvailableLottoCount(avaliableCount);
+
+  // 로또 번호 출력
+  const lottoNumbers = createLottosForAmount(calcLottoCount(inputPrice));
+  displayLottoNumbers(lottoNumbers);
+
+  // 사용자의 당첨 번호 입력
+  const inputWinningNumbers = await getUserInput(inputLottoNumberMessage);
+  const isAvaliableNumbers = validateInputWinningNumbers(inputWinningNumbers);
+
+  if (!isAvaliableNumbers) {
+>>>>>>> a7c387c ([feat] 기능 실행 부분 로직 작성)
     closeUserInput();
     return false;
   }
 
+<<<<<<< HEAD
   const inputBonusNumber = await getInputBonusNumber(inputWinningNumbers);
 
   if (!inputBonusNumber) {
@@ -77,10 +115,16 @@ async function lottoGame() {
   }
 
   const winningNumbers = formatWinningNumbers(
+=======
+  // 보너스 번호 입력
+  const inputBonusNumber = await getUserInput(inputBonusNumberMessage);
+  const isAvaliableBonusNumber = validateInputBonusNumber(
+>>>>>>> a7c387c ([feat] 기능 실행 부분 로직 작성)
     inputWinningNumbers,
     inputBonusNumber
   );
 
+<<<<<<< HEAD
   const winningResult = getWinningPrizeResult(lottoNumbers, winningNumbers);
 
   updateLottoPrizeCount(winningResult);
@@ -89,6 +133,12 @@ async function lottoGame() {
   displayTotalProfitRate(avaliableCount);
 
   closeUserInput();
+=======
+  if (!isAvaliableBonusNumber) {
+    closeUserInput();
+    return false;
+  }
+>>>>>>> a7c387c ([feat] 기능 실행 부분 로직 작성)
 }
 
 lottoGame();
