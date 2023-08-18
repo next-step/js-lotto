@@ -1,10 +1,17 @@
 import {
   IssueStrategyIsAbstractClassError,
-  getNumberNotImplementedError,
+  GetNumberNotImplementedError,
+  FixedNumberNotArrayError,
+  FixedNumberLengthNotSixError,
+  FixedNumberElementNotNumberError,
+  FixedNumberElementOutOfRangeError,
+  FixedNumberElementDuplicatedError,
 } from "./errors";
 
 class IssueStrategy {
   static LOTTO_DIGITS = 6;
+  static LOWER_BOUND = 1;
+  static UPPER_BOUND = 45;
 
   #lottoNumbers;
 
@@ -16,7 +23,7 @@ class IssueStrategy {
   }
 
   getNumber() {
-    throw new getNumberNotImplementedError();
+    throw new GetNumberNotImplementedError();
   }
 
   getLottoNumbers() {
@@ -28,15 +35,12 @@ class IssueStrategy {
 }
 
 export class RandomIssueStrategy extends IssueStrategy {
-  static LOWER_BOUND = 1;
-  static UPPER_BOUND = 45;
-
   #lowerBound;
   #upperBound;
 
   constructor(
-    lowerBound = RandomIssueStrategy.LOWER_BOUND,
-    upperBound = RandomIssueStrategy.UPPER_BOUND
+    lowerBound = IssueStrategy.LOWER_BOUND,
+    upperBound = IssueStrategy.UPPER_BOUND
   ) {
     super();
     this.#lowerBound = lowerBound;
@@ -49,14 +53,44 @@ export class RandomIssueStrategy extends IssueStrategy {
 }
 
 export class FixedIssueStrategy extends IssueStrategy {
-  #numbers;
+  #fixedNumbers;
 
   constructor(numbers) {
     super();
-    this.#numbers = numbers;
+    this.#validateNumbers(numbers);
+    this.#fixedNumbers = numbers;
+  }
+
+  #hasNonNumericElement(numbers) {
+    return numbers.some((num) => typeof num !== "number");
+  }
+
+  #isOutOfRange(number) {
+    return (
+      number < IssueStrategy.LOWER_BOUND || number > IssueStrategy.UPPER_BOUND
+    );
+  }
+
+  #hasOutOfRangeElement(numbers) {
+    return numbers.some(this.#isOutOfRange);
+  }
+
+  #hasDuplicatedElement(numbers) {
+    return new Set(numbers).size !== numbers.length;
+  }
+
+  #validateNumbers(numbers) {
+    if (!Array.isArray(numbers)) throw new FixedNumberNotArrayError();
+    if (numbers.length !== 6) throw new FixedNumberLengthNotSixError();
+    if (this.#hasNonNumericElement(numbers))
+      throw new FixedNumberElementNotNumberError();
+    if (this.#hasOutOfRangeElement(numbers))
+      throw new FixedNumberElementOutOfRangeError();
+    if (this.#hasDuplicatedElement(numbers))
+      throw new FixedNumberElementDuplicatedError();
   }
 
   getNumber() {
-    return this.#numbers.shift();
+    return this.#fixedNumbers.shift();
   }
 }

@@ -6,6 +6,8 @@ import {
 } from "./errors";
 
 export default class WinningLotto extends Lotto {
+  static LOWER_BOUND = 1;
+  static UPPER_BOUND = 45;
   #bonusNumber;
 
   static from(numbers, bonusNumber) {
@@ -23,11 +25,16 @@ export default class WinningLotto extends Lotto {
     return winningNumbers.includes(number);
   }
 
+  isOutOfRange(number) {
+    return (
+      number < WinningLotto.LOWER_BOUND || number > WinningLotto.UPPER_BOUND
+    );
+  }
+
   validateBonusNumber(number) {
     if (typeof number !== "number") throw new BonusNumberNotNumberError();
     // CHECK 아래 코드 이렇게 재사용해도 될지 고민해보기
-    if (Lotto.prototype.isOutOfRange(number))
-      throw new BonusNumberOutOfRangeError();
+    if (this.isOutOfRange(number)) throw new BonusNumberOutOfRangeError();
     if (this.isDuplicateBonusNumber(number))
       throw new BonusNumberDuplicatedError();
   }
