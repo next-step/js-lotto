@@ -4,7 +4,7 @@ export class BonusNumberNotNumberError extends RuntimeError {
   static MESSAGE = "보너스 번호는 숫자여야합니다.";
 
   constructor() {
-    super(NotNumberError.MESSAGE);
+    super(BonusNumberNotNumberError.MESSAGE);
   }
 }
 

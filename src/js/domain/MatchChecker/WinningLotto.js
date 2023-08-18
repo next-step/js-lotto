@@ -9,7 +9,7 @@ export default class WinningLotto extends Lotto {
   #bonusNumber;
 
   static from(numbers, bonusNumber) {
-    new WinningLotto(numbers, bonusNumber);
+    return new WinningLotto(numbers, bonusNumber);
   }
 
   constructor(numbers, bonusNumber) {
