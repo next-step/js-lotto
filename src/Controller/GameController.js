@@ -45,9 +45,14 @@ export class GameController {
 
   /* Check Tickets Result */
   #checkTicketsResult(tickets, winningNumbers) {
-    const ticketResults = tickets.map((ticket) =>
-      this.#lottoCorporation.checkTicketResult(ticket, winningNumbers)
-    );
+    const ticketResults = tickets.map((ticket) => {
+      const ticketNumbers = ticket.getTicketNumbers();
+
+      return this.#lottoCorporation.checkTicketResult(
+        ticketNumbers,
+        winningNumbers
+      );
+    });
 
     return ticketResults;
   }

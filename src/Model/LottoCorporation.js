@@ -19,9 +19,8 @@ export class LottoCorporation {
     return tickets;
   }
 
-  checkTicketResult(ticket, winningNumbers) {
+  checkTicketResult(ticketNumbers, winningNumbers) {
     const { lottoNumbers, bonusNumber } = winningNumbers;
-    const ticketNumbers = ticket.getTicketNumbers();
 
     const matchingCount = ticketNumbers.filter((number) =>
       lottoNumbers.includes(number)
