@@ -6,7 +6,8 @@ import {
   getLottoScore,
   getLottoResult,
   calcTotalPrize,
-  getReturnRate
+  getReturnRate,
+  getLottoStats
 } from '../../src/js/helper/lotto'
 
 describe('helper - lotto', () => {
@@ -453,6 +454,59 @@ describe('helper - lotto', () => {
 
       // Then
       expect(returnRate).toBe('5000.0')
+    })
+  })
+
+  describe('getLottoStats()', () => {
+    it('6개가 일치한 로또 1개가 있는 당첨 결과를 인자로 받고 당첨 통계가 담긴 배열을 반환해야 한다.', () => {
+      // Given
+      const result = { 6: 1 }
+
+      // When
+      const stats = getLottoStats(result)
+
+      // Then
+      expect(stats).toEqual([
+        '3개 일치 (5,000원) - 0개',
+        '4개 일치 (50,000원) - 0개',
+        '5개 일치 (1,500,000원) - 0개',
+        '5개 일치, 보너스 볼 일치 (30,000,000원) - 0개',
+        '6개 일치 (2,000,000,000원) - 1개'
+      ])
+    })
+
+    it('3개가 일치한 로또 3개, 4개가 일치한 로또 4개, 5개가 일치한 로또 1개가 있는 당첨 결과를 인자로 받고 당첨 통계가 담긴 배열을 반환해야 한다.', () => {
+      // Given
+      const result = { 3: 3, 4: 4, 5: 1 }
+
+      // When
+      const stats = getLottoStats(result)
+
+      // Then
+      expect(stats).toEqual([
+        '3개 일치 (5,000원) - 3개',
+        '4개 일치 (50,000원) - 4개',
+        '5개 일치 (1,500,000원) - 1개',
+        '5개 일치, 보너스 볼 일치 (30,000,000원) - 0개',
+        '6개 일치 (2,000,000,000원) - 0개'
+      ])
+    })
+
+    it('3개가 일치한 로또 3개, 5개와 보너스 번호가 일치한 로또 1개가 있는 당첨 결과를 인자로 받고 당첨 통계가 담긴 배열을 반환해야 한다.', () => {
+      // Given
+      const result = { 3: 3, '5+': 1 }
+
+      // When
+      const stats = getLottoStats(result)
+
+      // Then
+      expect(stats).toEqual([
+        '3개 일치 (5,000원) - 3개',
+        '4개 일치 (50,000원) - 0개',
+        '5개 일치 (1,500,000원) - 0개',
+        '5개 일치, 보너스 볼 일치 (30,000,000원) - 1개',
+        '6개 일치 (2,000,000,000원) - 0개'
+      ])
     })
   })
 })

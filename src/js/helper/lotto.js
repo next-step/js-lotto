@@ -56,8 +56,8 @@ export const getLottoResult = (winNumberList, bonusNumber, lottoList) => {
   }, {})
 }
 
-export const calcTotalPrize = result =>
-  Object.entries(result).reduce(
+export const calcTotalPrize = lottoResult =>
+  Object.entries(lottoResult).reduce(
     (acc, [key, count]) => acc + LOTTO_PRIZE[key] * count,
     0
   )
@@ -65,4 +65,29 @@ export const calcTotalPrize = result =>
 export const getReturnRate = (totalPrize, payment) => {
   const TO_PERCENT = 100
   return ((totalPrize / payment) * TO_PERCENT).toFixed(1)
+}
+
+const getSortedPrizeEntries = () => {
+  const order = [
+    LOTTO_RANK.FIFTH,
+    LOTTO_RANK.FOURTH,
+    LOTTO_RANK.THIRD,
+    LOTTO_RANK.SECOND,
+    LOTTO_RANK.FIRST
+  ]
+
+  return Object.entries(LOTTO_PRIZE).sort(
+    (a, b) => order.indexOf(a[0]) - order.indexOf(b[0])
+  )
+}
+
+export const getLottoStats = lottoResult => {
+  const lottoPrizeEntires = getSortedPrizeEntries()
+
+  return lottoPrizeEntires.map(([key, prize]) => {
+    const rank = key === '5+' ? '5개 일치, 보너스 볼 일치' : `${key}개 일치`
+    const matchCount = lottoResult[key] || 0
+
+    return `${rank} (${prize.toLocaleString()}원) - ${matchCount}개`
+  })
 }
