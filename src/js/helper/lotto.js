@@ -1,4 +1,4 @@
-import { DEFAULT_PRICE } from '../constants/lotto'
+import { DEFAULT_PRICE, LOTTO_RANK } from '../constants/lotto'
 import { isNumber } from '../utils/validator'
 import { generateRandomNumber } from '../utils/number'
 
@@ -25,7 +25,7 @@ export const generateLotto = () => {
     }
   }
 
-  return [...numberList]
+  return [...numberList].sort((a, b) => a - b)
 }
 
 export const getMatchCount = (winNumberList, lotto) => {
@@ -33,3 +33,13 @@ export const getMatchCount = (winNumberList, lotto) => {
 }
 
 export const hasBonusMatch = (bonusNumber, lotto) => lotto.includes(bonusNumber)
+
+export const getLottoScore = (winNumberList, bonusNumber, lotto) => {
+  const matchCount = getMatchCount(winNumberList, lotto)
+
+  if (matchCount === 5 && hasBonusMatch(bonusNumber, lotto)) {
+    return LOTTO_RANK.SECOND
+  }
+
+  return matchCount.toString()
+}
