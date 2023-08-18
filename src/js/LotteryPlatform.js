@@ -1,3 +1,5 @@
+// Controller로 기능
+
 import LotteryMachine from "./LotteryMachine";
 import MatchingChecker from "./MatchingChecker";
 import ResultChecker from "./ResultChecker";

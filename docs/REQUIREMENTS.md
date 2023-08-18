@@ -78,7 +78,7 @@
 
 [feature2] 로또 당첨 여부 확인.
 [X] 로또 - 당첨 로또 상속 구조 도입.
-[ ] Lotto에도 유효성 체크 다시 추가.
+[X] Lotto에도 유효성 체크 다시 추가.
 
 [feature3] 당첨 등수와 금액 반환.
 [X] 올바른 등수와 금액이 반환되는지 확인하는 테스트 코드 추가.
@@ -86,9 +86,12 @@
 
 [feature4] 수익률 계산해 반환.
 
-[Controller][ ] LotteryPlatform 메소드명 의도 드러나게 변경.
+[Controller] LotteryPlatform
+[ ] LotteryPlatform 유효성 검사 분리.
+[ ] Lotto 구매액 검증 로직 LotteryMachine으초 분리 여부 결정.
 
-[View][ ] View 객체 생성.
+[View]PromptView
+[ ] View 객체 생성.
 
 ## ❓ 4. 기능별 질문 사항
 
