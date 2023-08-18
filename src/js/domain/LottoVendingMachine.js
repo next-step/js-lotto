@@ -1,9 +1,6 @@
 import { ERROR_MESSAGE } from '../../constants/errorMessage.js'
-import {
-  generateLottoNumbers,
-  generateNodDuplicatedExtraNumber,
-} from '../utils/generateLottoNumbers.js'
 import { validate } from '../utils/validate.js'
+import Lotto from '../domain/Lotto.js'
 
 class LottoVendingMachine {
   #purchaseAmount
@@ -21,12 +18,9 @@ class LottoVendingMachine {
   }
 
   #setLottos() {
-    this.#lottos = Array.from({ length: this.#issuedCount }).map((_) => {
-      return {
-        selectedNums: generateLottoNumbers(),
-        extraNum: generateNodDuplicatedExtraNumber(this.selectedNums),
-      }
-    })
+    this.#lottos = Array.from({ length: this.#issuedCount }).map(
+      (_) => new Lotto(),
+    )
   }
   #validateAmount(amount) {
     if (

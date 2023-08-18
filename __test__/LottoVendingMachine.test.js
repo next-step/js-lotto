@@ -1,3 +1,4 @@
+import Lotto from '../src/js/domain/Lotto'
 import LottoVendingMachine from '../src/js/domain/LottoVendingMachine'
 
 describe('LottoVendingMachine', () => {
@@ -17,56 +18,30 @@ describe('LottoVendingMachine', () => {
     expect(purchaseAmount).toBe(1000)
   })
 
-  test('금액에 맞게 로또 발행을 요청하고, 현재까지 발행된 로또 번호 목록을 기억한다.', () => {
+  describe('- 금액에 맞게 로또 발행을 요청하고, 현재까지 발행된 로또 번호 목록을 기억한다.', () => {
+    //Given
+    const vendingMachine = new LottoVendingMachine()
     // When
     vendingMachine.purchase(3000)
     const lottos = vendingMachine.lottos
 
-    // Then
-    expect(lottos.length).toBe(3)
-  })
-
-  test('로또는 7개의 번호가 한 줄이어야 한다.', () => {
-    // When
-    vendingMachine.purchase(1000)
-    const { selectedNums, extraNum } = vendingMachine.lottos[0]
-    const lottos = [...selectedNums, extraNum]
-
-    // Then
-    expect(lottos.length).toBe(7)
-  })
-
-  describe('- 로또 번호는 1 ~ 45의 범위 이내여야 한다.', () => {
-    // Given
-    const vendingMachine = new LottoVendingMachine()
-
-    // When
-    vendingMachine.purchase(3000)
-    const lottos = vendingMachine.lottos.flatMap((lotto) => {
-      const { selectedNums, extraNum } = lotto
-      return [...selectedNums, extraNum]
+    it('로또 목록의 길이가 현재 발행된 금액과 일치하는지 확인', () => {
+      // Then
+      expect(lottos.length).toBe(3)
     })
 
-    // Then
-    test.each(lottos)('%s', (lotto) => {
-      expect(lotto >= 1 && lotto <= 45).toBe(true)
+    it('Lotto Class의 인스턴스인지 확인', () => {
+      // Then
+      lottos.forEach((lotto) => {
+        expect(lotto).toBeInstanceOf(Lotto)
+      })
     })
   })
 
-  test('- 로또 번호는 서로 중복되지 않는다.', () => {
-    // Given
-    const vendingMachine = new LottoVendingMachine()
-
-    // When
-    vendingMachine.purchase(1000)
-    const lottos = vendingMachine.lottos.flatMap((lotto) => {
-      const { selectedNums, extraNum } = lotto
-      return [...selectedNums, extraNum]
+  it('Car 객체의 인스턴스인지 확인', () => {
+    cars.entries.forEach((car) => {
+      expect(car).toBeInstanceOf(Car)
     })
-
-    console.log(new Set(lottos), lottos)
-    // Then
-    expect(new Set(lottos).size).toBe(lottos.length)
   })
 
   describe('- 한 줄의 로또를 구매 금액에 맞게 여러번 생성한다.', () => {
