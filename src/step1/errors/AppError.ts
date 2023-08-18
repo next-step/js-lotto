@@ -3,8 +3,8 @@ export default class AppError extends Error {
 
   name;
 
-  constructor(message, ...args) {
-    super(`${AppError.PREFIX} : ${message} ${args}`);
+  constructor(message: string) {
+    super(`${AppError.PREFIX} : ${message}`);
     this.name = this.constructor.name;
   }
 }
