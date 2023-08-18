@@ -5,7 +5,8 @@ import {
   hasBonusMatch,
   getLottoScore,
   getLottoResult,
-  calcTotalPrize
+  calcTotalPrize,
+  getReturnRate
 } from '../../src/js/helper/lotto'
 
 describe('helper - lotto', () => {
@@ -414,6 +415,44 @@ describe('helper - lotto', () => {
 
       // Then
       expect(prize).toBe(160000)
+    })
+  })
+
+  describe('getReturnRate()', () => {
+    it('투자 금액과 상금을 인자로 받고 수익률인 400을 반환해야 한다.', () => {
+      // Given
+      const totalPrize = 10000
+      const payment = 2500
+
+      // When
+      const returnRate = getReturnRate(totalPrize, payment)
+
+      // Then
+      expect(returnRate).toBe('400.0')
+    })
+
+    it('투자 금액과 상금을 인자로 받고 수익률인 4000을 반환해야 한다.', () => {
+      // Given
+      const totalPrize = 100000
+      const payment = 2500
+
+      // When
+      const returnRate = getReturnRate(totalPrize, payment)
+
+      // Then
+      expect(returnRate).toBe('4000.0')
+    })
+
+    it('투자 금액과 상금을 인자로 받고 수익률인 5000을 반환해야 한다.', () => {
+      // Given
+      const totalPrize = 100000
+      const payment = 2000
+
+      // When
+      const returnRate = getReturnRate(totalPrize, payment)
+
+      // Then
+      expect(returnRate).toBe('5000.0')
     })
   })
 })

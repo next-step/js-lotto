@@ -61,3 +61,8 @@ export const calcTotalPrize = result =>
     (acc, [key, count]) => acc + LOTTO_PRIZE[key] * count,
     0
   )
+
+export const getReturnRate = (totalPrize, payment) => {
+  const TO_PERCENT = 100
+  return ((totalPrize / payment) * TO_PERCENT).toFixed(1)
+}
