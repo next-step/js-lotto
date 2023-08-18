@@ -15,7 +15,7 @@ describe('LottoNumberMaker 기능 테스트', () => {
     expect(lottoNumbers.length).toBe(LOTTO_TERMS.DEFAULT_LIMIT_LOTTO_COUNT);
   });
 
-  test(`TestCase %#번에서 LottoNumberMaker가 생성한 로또는 ${LOTTO_TERMS.MIN_LOTTO_NUMBER}에서 ${LOTTO_TERMS.MAX_LOTTO_NUMBER}의 숫자 범위를 가진다.`, () => {
+  test(`LottoNumberMaker가 생성한 로또는 ${LOTTO_TERMS.MIN_LOTTO_NUMBER}에서 ${LOTTO_TERMS.MAX_LOTTO_NUMBER}의 숫자 범위를 가진다.`, () => {
     // given
     const lottoNumberMaker = LottoNumberMaker.from();
     // when
@@ -24,7 +24,7 @@ describe('LottoNumberMaker 기능 테스트', () => {
     expect(isValidRange).toBeTruthy();
   });
 
-  test(`TestCase %#번에서 LottoNumberMaker가 생성한 로또 내 로또 번호들은 중복된 값을 가지지 않는다.`, () => {
+  test(`LottoNumberMaker가 생성한 로또 내 로또 번호들은 중복된 값을 가지지 않는다.`, () => {
     // given
     const lottoNumberMaker = LottoNumberMaker.from();
     // when

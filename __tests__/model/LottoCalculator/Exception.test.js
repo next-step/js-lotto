@@ -41,7 +41,7 @@ describe('LottoCalculator 예외 관련 테스트', () => {
       expectedErrorMessage: ERROR_MESSAGE.INVALID_AMOUNT,
     },
   ])(
-    '당첨 금액이 $winningAmount의 형태이고 투자 금액이 $investmentAmount의 형태일때, 에러가 발생한다.',
+    '당첨 금액이 $winningAmount이고 투자 금액이 $investmentAmount일때, $expectedErrorType.name가 발생한다.',
     ({ winningAmount, investmentAmount, expectedErrorType, expectedErrorMessage }) => {
       // given - when
       const createLottoCalculator = () => new LottoCalculator(winningAmount, investmentAmount);
