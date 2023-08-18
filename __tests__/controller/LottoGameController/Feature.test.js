@@ -62,59 +62,55 @@ describe('LottoGameController 관련 기능 테스트', () => {
   });
 
   test.each([
-    [
-      {
-        input: {
-          investmentAmount: '5000',
-          winningLottoNumbers: '1,2,3,4,5,6',
-          bonusNumber: '7',
-          lottos: [
-            [1, 2, 3, 8, 11, 22],
-            [1, 2, 3, 4, 11, 22],
-            [1, 2, 3, 4, 5, 22],
-            [1, 2, 3, 4, 5, 7],
-            [1, 2, 3, 4, 5, 6],
-          ],
-        },
-        output: {
-          lottoResult: OUTPUT_MESSAGE_METHOD.RESULT({
-            '3개 일치 (5,000원)': 1,
-            '4개 일치 (50,000원)': 1,
-            '5개 일치 (1,500,000원)': 1,
-            '5개 일치, 보너스 볼 일치 (30,000,000원)': 1,
-            '6개 일치 (2,000,000,000원)': 1,
-          }),
-          rateOfReturn: OUTPUT_MESSAGE_TEXT.RATE_OF_RETURN('40631100%'),
-        },
+    {
+      input: {
+        investmentAmount: '5000',
+        winningLottoNumbers: '1,2,3,4,5,6',
+        bonusNumber: '7',
+        lottos: [
+          [1, 2, 3, 8, 11, 22],
+          [1, 2, 3, 4, 11, 22],
+          [1, 2, 3, 4, 5, 22],
+          [1, 2, 3, 4, 5, 7],
+          [1, 2, 3, 4, 5, 6],
+        ],
       },
-    ],
-    [
-      {
-        input: {
-          investmentAmount: '4000',
-          winningLottoNumbers: '1,2,3,4,5,6',
-          bonusNumber: '7',
-          lottos: [
-            [1, 2, 3, 8, 11, 22],
-            [1, 2, 6, 4, 11, 22],
-            [1, 2, 23, 4, 5, 22],
-            [1, 2, 19, 11, 5, 7],
-          ],
-        },
-        output: {
-          lottoResult: OUTPUT_MESSAGE_METHOD.RESULT({
-            '3개 일치 (5,000원)': 3,
-            '4개 일치 (50,000원)': 1,
-            '5개 일치 (1,500,000원)': 0,
-            '5개 일치, 보너스 볼 일치 (30,000,000원)': 0,
-            '6개 일치 (2,000,000,000원)': 0,
-          }),
-          rateOfReturn: OUTPUT_MESSAGE_TEXT.RATE_OF_RETURN('1625%'),
-        },
+      output: {
+        lottoResult: OUTPUT_MESSAGE_METHOD.RESULT({
+          '3개 일치 (5,000원)': 1,
+          '4개 일치 (50,000원)': 1,
+          '5개 일치 (1,500,000원)': 1,
+          '5개 일치, 보너스 볼 일치 (30,000,000원)': 1,
+          '6개 일치 (2,000,000,000원)': 1,
+        }),
+        rateOfReturn: OUTPUT_MESSAGE_TEXT.RATE_OF_RETURN('40631100%'),
       },
-    ],
+    },
+    {
+      input: {
+        investmentAmount: '4000',
+        winningLottoNumbers: '1,2,3,4,5,6',
+        bonusNumber: '7',
+        lottos: [
+          [1, 2, 3, 8, 11, 22],
+          [1, 2, 6, 4, 11, 22],
+          [1, 2, 23, 4, 5, 22],
+          [1, 2, 19, 11, 5, 7],
+        ],
+      },
+      output: {
+        lottoResult: OUTPUT_MESSAGE_METHOD.RESULT({
+          '3개 일치 (5,000원)': 3,
+          '4개 일치 (50,000원)': 1,
+          '5개 일치 (1,500,000원)': 0,
+          '5개 일치, 보너스 볼 일치 (30,000,000원)': 0,
+          '6개 일치 (2,000,000,000원)': 0,
+        }),
+        rateOfReturn: OUTPUT_MESSAGE_TEXT.RATE_OF_RETURN('1625%'),
+      },
+    },
   ])(
-    '당첨 번호가 $input.winningLottoNumbers이고 보너스 번호가 $input.bonusNumber일 때 당첨 결과가 올바르게 출력되어야 한다.',
+    '당첨 번호가 $input.winningLottoNumbers이고 보너스 번호가 $input.bonusNumber일때 당첨 결과가 올바르게 출력되어야 한다.',
     async ({ input: { lottos, investmentAmount, winningLottoNumbers, bonusNumber }, output }) => {
       // given
       mockCreateLottoNumbers(lottos);
