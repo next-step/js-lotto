@@ -1,4 +1,4 @@
-const ResultChecker = (function () {
+export const createResultChecker = () => {
   const PRIZE = Object.freeze({
     1: 2_000_000_000,
     2: 30_000_000,
@@ -39,6 +39,4 @@ const ResultChecker = (function () {
   return {
     getResult,
   };
-})();
-
-export default ResultChecker;
+};

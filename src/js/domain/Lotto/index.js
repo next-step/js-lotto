@@ -1,7 +1,9 @@
+import { LottoMatchResultNotSetError } from "./errors";
+
 export default class Lotto {
   #lottoNumbers;
-  #matchedCount;
-  #isBonusMatched;
+  #matchCount;
+  #isBonusMatch;
 
   static of(numbers) {
     return new Lotto(numbers);
@@ -9,8 +11,8 @@ export default class Lotto {
 
   constructor(numbers) {
     this.#lottoNumbers = numbers;
-    this.#matchedCount = null;
-    this.#isBonusMatched = null;
+    this.#matchCount = null;
+    this.#isBonusMatch = null;
   }
 
   getLottoNumbers() {
@@ -18,17 +20,19 @@ export default class Lotto {
   }
 
   getMatchResult() {
+    if (this.#matchCount === null) throw new LottoMatchResultNotSetError();
+
     return {
-      matchedCount: this.#matchedCount,
-      isBonusMatched: this.#isBonusMatched,
+      matchCount: this.#matchCount,
+      isBonusMatch: this.#isBonusMatch,
     };
   }
 
   setMatchCount(count) {
-    this.#matchedCount = count;
+    this.#matchCount = count;
   }
 
-  setIsBonusMatched(isMatched) {
-    this.#isBonusMatched = isMatched;
+  setIsBonusMatch(isMatch) {
+    this.#isBonusMatch = isMatch;
   }
 }

@@ -23,13 +23,13 @@ export default createMatchChecker = () => {
     lotto.setMatchCount(matchCount);
   }
 
-  function checkIsBonusMatched(lotto) {
+  function checkIsBonusMatch(lotto) {
     const bonusNumber = winningLotto.getBonusNumber();
     const lottoNumbers = lotto.getLottoNumbers();
 
-    const isMatched = lottoNumbers.includes(bonusNumber);
+    const isMatch = lottoNumbers.includes(bonusNumber);
 
-    lotto.setIsBonusMatched(isMatched);
+    lotto.setIsBonusMatch(isMatch);
   }
 
   function checkWinningLottoDefined() {
@@ -41,10 +41,10 @@ export default createMatchChecker = () => {
 
     checkMatchCount(lotto);
 
-    const { matchedCount } = lotto.getMatchResult();
+    const { matchCount } = lotto.getMatchResult();
 
-    if (matchedCount === CHECK_BONUS_COUNT) {
-      checkIsBonusMatched(lotto);
+    if (matchCount === CHECK_BONUS_COUNT) {
+      checkIsBonusMatch(lotto);
     }
   }
 
