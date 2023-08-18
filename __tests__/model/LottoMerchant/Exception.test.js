@@ -1,6 +1,6 @@
 import { LOTTO_TERMS } from '../../../src/step1/constants/lotto';
 import { ERROR_MESSAGE } from '../../../src/step1/constants/message';
-import { LottoError } from '../../../src/step1/errors';
+import { PurchaseLottoError } from '../../../src/step1/errors';
 import { LottoMerchant } from '../../../src/step1/model';
 
 describe('LottoMerchant 관련 예외 테스트', () => {
@@ -14,7 +14,7 @@ describe('LottoMerchant 관련 예외 테스트', () => {
     // given - when
     const createLottoMerchant = () => new LottoMerchant(receivedAmount);
     // then
-    expect(() => createLottoMerchant()).toThrow(LottoError);
+    expect(() => createLottoMerchant()).toThrow(PurchaseLottoError);
     expect(() => createLottoMerchant()).toThrow(ERROR_MESSAGE.NO_CHANGES);
   });
   test.each([
@@ -31,7 +31,7 @@ describe('LottoMerchant 관련 예외 테스트', () => {
       // given - when
       const createLottoMerchant = () => new LottoMerchant(receivedAmount);
       // then
-      expect(() => createLottoMerchant()).toThrow(LottoError);
+      expect(() => createLottoMerchant()).toThrow(PurchaseLottoError);
       expect(() => createLottoMerchant()).toThrow(ERROR_MESSAGE.GREATER_THEN_PRICE_PER_LOTTO);
     },
   );

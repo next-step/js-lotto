@@ -1,8 +1,5 @@
 import { LOTTO_TERMS } from '../constants/lotto.js';
-import { ERROR_MESSAGE } from '../constants/message.js';
-import { LottoError } from '../errors/index.js';
-import { isValidTypeOfNumber } from '../utils/validate/common/number.js';
-import { isLessThenPricePerLotto } from '../utils/validate/lotto/lottoValidate.js';
+import { PurchaseLottoValidator } from '../utils/validate/validator/index.js';
 import { Lotto } from './index.js';
 
 /**
@@ -33,15 +30,9 @@ export default class LottoMerchant {
    * @param {number} receivedAmount - 구매 금액
    */
   #validate(receivedAmount) {
-    if (!isValidTypeOfNumber(receivedAmount)) {
-      throw new LottoError(ERROR_MESSAGE.TYPE_OF_NUMBER);
-    }
-    if (isLessThenPricePerLotto(receivedAmount)) {
-      throw new LottoError(ERROR_MESSAGE.GREATER_THEN_PRICE_PER_LOTTO);
-    }
-    if (receivedAmount % LOTTO_TERMS.PRICE_PER_LOTTO !== 0) {
-      throw new LottoError(ERROR_MESSAGE.NO_CHANGES);
-    }
+    PurchaseLottoValidator.validateTypeOfNumber(receivedAmount);
+    PurchaseLottoValidator.validateLessThanPricePerLotto(receivedAmount);
+    PurchaseLottoValidator.validateChangeFromReceivedAmount(receivedAmount);
   }
 
   /**
