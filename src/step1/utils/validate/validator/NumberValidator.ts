@@ -1,8 +1,8 @@
-import { ERROR_MESSAGE } from '../../../constants/message.js';
-import { NUMBER_TERMS } from '../../../constants/number.js';
+import { ERROR_MESSAGE } from '../../../constants/message';
+import { NUMBER_TERMS } from '../../../constants/number';
 
 const NumberValidator = {
-  validateZero(value) {
+  validateZero(value: number) {
     if (value === NUMBER_TERMS.ZERO) {
       throw new TypeError(ERROR_MESSAGE.INVALID_NUMBER(value));
     }
