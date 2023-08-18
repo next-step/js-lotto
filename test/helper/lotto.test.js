@@ -3,7 +3,8 @@ import {
   generateLotto,
   getMatchCount,
   hasBonusMatch,
-  getLottoScore
+  getLottoScore,
+  getLottoResult
 } from '../../src/js/helper/lotto'
 
 describe('helper - lotto', () => {
@@ -296,6 +297,87 @@ describe('helper - lotto', () => {
 
       // Then
       expect(score).toBe('0')
+    })
+  })
+
+  describe('getLottoResult()', () => {
+    it('당첨 번호, 보너스 번호, 로또 배열을 인자로 받고 당첨 번호와 5개가 일치한 로또가 2개인 경우, 해당 score와 로또 개수를 나타내는 객체를 반환합니다.', () => {
+      // Given
+      const winNumberList = [1, 2, 3, 4, 5, 7]
+      const bonusNumber = 6
+      const lottoList = [
+        [1, 2, 3, 4, 5, 8],
+        [2, 3, 4, 5, 7, 8],
+        [10, 11, 12, 13, 14, 15],
+        [16, 17, 18, 19, 20, 21]
+      ]
+
+      // When
+      const result = getLottoResult(winNumberList, bonusNumber, lottoList)
+
+      // Then
+      expect(result).toEqual({ 5: 2 })
+    })
+
+    it('당첨 번호, 보너스 번호, 로또 배열을 인자로 받고 당첨 번호와 5개가 일치한 로또가 2개, 4개 일치한 로또가 1개인 경우, 해당 score와 로또 개수를 나타내는 객체를 반환합니다.', () => {
+      // Given
+      const winNumberList = [1, 2, 3, 4, 5, 7]
+      const bonusNumber = 6
+      const lottoList = [
+        [1, 2, 3, 4, 5, 8],
+        [2, 3, 4, 5, 7, 8],
+        [2, 3, 4, 5, 8, 9],
+        [10, 11, 12, 13, 14, 15],
+        [16, 17, 18, 19, 20, 21]
+      ]
+
+      // When
+      const result = getLottoResult(winNumberList, bonusNumber, lottoList)
+
+      // // Then
+      expect(result).toEqual({ 5: 2, 4: 1 })
+    })
+
+    it('당첨 번호, 보너스 번호, 로또 배열을 인자로 받고 당첨 번호와 5개가 일치한 로또가 2개, 4개 일치한 로또가 1개, 3개 일치한 로또가 2개인 경우, 해당 score와 로또 개수를 나타내는 객체를 반환합니다.', () => {
+      // Given
+      const winNumberList = [1, 2, 3, 4, 5, 7]
+      const bonusNumber = 6
+      const lottoList = [
+        [1, 2, 3, 4, 5, 8],
+        [2, 3, 4, 5, 7, 8],
+        [2, 3, 4, 5, 8, 9],
+        [11, 21, 3, 4, 5, 8],
+        [12, 22, 3, 4, 5, 8],
+        [10, 11, 12, 13, 14, 15],
+        [16, 17, 18, 19, 20, 21]
+      ]
+
+      // When
+      const result = getLottoResult(winNumberList, bonusNumber, lottoList)
+
+      // Then
+      expect(result).toEqual({ 5: 2, 4: 1, 3: 2 })
+    })
+
+    it('당첨 번호, 보너스 번호, 로또 배열을 인자로 받고 당첨 번호와 로또가 모두 일치하지 않는 경우, 빈 객체를 반환합니다.', () => {
+      // Given
+      const winNumberList = [1, 2, 3, 4, 5, 7]
+      const bonusNumber = 6
+      const lottoList = [
+        [12, 23, 34, 44, 15, 18],
+        [22, 43, 14, 15, 17, 28],
+        [23, 33, 24, 15, 18, 29],
+        [11, 21, 34, 43, 52, 38],
+        [12, 22, 33, 34, 35, 38],
+        [10, 11, 12, 13, 14, 15],
+        [16, 17, 18, 19, 20, 21]
+      ]
+
+      // When
+      const result = getLottoResult(winNumberList, bonusNumber, lottoList)
+
+      // Then
+      expect(result).toEqual({})
     })
   })
 })
