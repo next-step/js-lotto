@@ -81,7 +81,8 @@ export class FixedIssueStrategy extends IssueStrategy {
 
   #validateNumbers(numbers) {
     if (!Array.isArray(numbers)) throw new FixedNumberNotArrayError();
-    if (numbers.length !== 6) throw new FixedNumberLengthNotSixError();
+    if (numbers.length !== IssueStrategy.LOTTO_DIGITS)
+      throw new FixedNumberLengthNotSixError();
     if (this.#hasNonNumericElement(numbers))
       throw new FixedNumberElementNotNumberError();
     if (this.#hasOutOfRangeElement(numbers))

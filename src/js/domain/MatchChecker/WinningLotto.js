@@ -33,7 +33,6 @@ export default class WinningLotto extends Lotto {
 
   validateBonusNumber(number) {
     if (typeof number !== "number") throw new BonusNumberNotNumberError();
-    // CHECK 아래 코드 이렇게 재사용해도 될지 고민해보기
     if (this.isOutOfRange(number)) throw new BonusNumberOutOfRangeError();
     if (this.isDuplicateBonusNumber(number))
       throw new BonusNumberDuplicatedError();
