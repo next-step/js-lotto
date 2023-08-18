@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "ES6",
+    "outDir": "./dist",
+    "preserveValueImports": false,
+    "module": "CommonJS",
+    "lib": ["ES2015", "DOM", "DOM.Iterable"]
+  },
+  "ts-node": { "esm": true },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "dist"],
+  "strict": true,
+  "strictNullChecks": true,
+  "strictFunctionTypes": true,
+  "strictBindCallApply": true,
+  "strictPropertyInitialization": true,
+  "noImplicitThis": true,
+  "alwaysStrict": true
+}

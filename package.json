@@ -1,26 +1,27 @@
 {
   "name": "lotto",
   "version": "1.0.0",
-  "type": "module",
   "main": "index.js",
   "scripts": {
-    "start-step1": "node src/step1-index.js",
+    "start-step1": "ts-node src/step1-index.ts",
     "test": "jest --watch"
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "<rootDir>/__tests__/controller/LottoGameController/util.js",
+      "<rootDir>/__tests__/controller/LottoGameController/LottoGameController.util.ts",
       "<rootDir>/__tests__/constants/",
       "<rootDir>/node_modules"
     ],
     "transform": {
       "^.+\\.js$": "babel-jest",
-      "^.+\\.mjs$": "babel-jest"
+      "^.+\\.mjs$": "babel-jest",
+      "^.+\\.tsx?$": "babel-jest"
     }
   },
   "license": "MIT",
   "devDependencies": {
     "@babel/preset-env": "^7.22.9",
+    "@babel/preset-typescript": "^7.22.5",
     "@types/jest": "^29.5.3",
     "@types/node": "^20.4.8",
     "cypress": "^6.3.0",
@@ -30,6 +31,8 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jsdoc": "^46.4.6",
     "jest": "^29.6.2",
-    "prettier": "^3.0.1"
+    "prettier": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
   }
 }
