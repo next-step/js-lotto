@@ -3,24 +3,6 @@ import { BonusNumberError } from '../../../src/step1/errors';
 import { Bank } from '../../../src/step1/model';
 
 describe('Bank 관련 예외 테스트', () => {
-  describe('보너스 번호가 숫자가 아닌 값이 입력된 case 테스트', () => {
-    test.each([
-      { winningLottoNumbers: [1, 2, 3, 4, 5, 6], bonusNumber: '6' },
-      { winningLottoNumbers: [1, 2, 3, 4, 5, 6], bonusNumber: null },
-      { winningLottoNumbers: [1, 2, 3, 4, 5, 6], bonusNumber: undefined },
-      { winningLottoNumbers: [1, 2, 3, 4, 5, 6], bonusNumber: Symbol('1') },
-      { winningLottoNumbers: [1, 2, 3, 4, 5, 6], bonusNumber: true },
-      { winningLottoNumbers: [1, 2, 3, 4, 5, 6], bonusNumber: [] },
-      { winningLottoNumbers: [1, 2, 3, 4, 5, 6], bonusNumber: {} },
-    ])('$bonusNumber는 숫자가 아니므로 에러가 발생한다.', ({ winningLottoNumbers, bonusNumber }) => {
-      // given - when
-      const createBanks = () => new Bank({ winningLottoNumbers, bonusNumber });
-      // then
-      expect(() => createBanks()).toThrow(BonusNumberError);
-      expect(() => createBanks()).toThrow(ERROR_MESSAGE.TYPE_OF_NUMBER);
-    });
-  });
-
   describe('보너스 번호가 유효한 범위에 없는 값인 case 테스트', () => {
     test.each([
       { winningLottoNumbers: [1, 2, 3, 4, 5, 6], bonusNumber: -1 },

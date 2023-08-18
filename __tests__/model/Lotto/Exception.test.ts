@@ -4,24 +4,6 @@ import { LottoError } from '../../../src/step1/errors';
 import { Lotto } from '../../../src/step1/model';
 
 describe('Lotto 관련 예외 테스트', () => {
-  describe('로또 번호 내 다른 타입이 존재하는 case 테스트', () => {
-    test.each([
-      { lottoNumbers: [null, 33, 1, 4, 22, 34] },
-      { lottoNumbers: [true, false, 5, 3, 11, 22] },
-      { lottoNumbers: ['7', 4, 5, 3, 11, 22] },
-      { lottoNumbers: [2, 22, {}, [], 23, 44] },
-      { lottoNumbers: [undefined, 12, 22, 13, 44, 33] },
-      { lottoNumbers: [Symbol('1'), Symbol('3'), '👍', 12, 22, 13] },
-      { lottoNumbers: [NaN, Infinity, 1, 5, 3, 11] },
-    ])('$lottoNumbers는 숫자 타입이 아니므로 에러가 발생한다.', ({ lottoNumbers }) => {
-      // given - when
-      const createLottos = () => new Lotto(lottoNumbers);
-      // then
-      expect(() => createLottos()).toThrow(LottoError);
-      expect(() => createLottos()).toThrow(ERROR_MESSAGE.TYPE_OF_NUMBER);
-    });
-  });
-
   describe('생성된 로또 번호 중 유효하지 않은 로또 번호 범위의 값이 존재하는 case 테스트', () => {
     test.each([{ lottoNumbers: [47, 33, 1, 4, 22, 34] }])(
       `$lottoNumbers의 범위는 ${LOTTO_TERMS.MAX_LOTTO_NUMBER}보다 큰 값이 있어 에러가 발생한다.`,

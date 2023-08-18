@@ -1,8 +1,8 @@
 import { INPUT_MESSAGE, OUTPUT_MESSAGE_METHOD, OUTPUT_MESSAGE_TEXT } from '../../../src/step1/constants/message';
 import { InputView, OutputView } from '../../../src/step1/view';
-import { mockCreateLottoNumbers, mockInputView, runLottoGameController } from './util';
+import { mockCreateLottoNumbers, mockInputView, runLottoGameController } from './LottoGameController.util';
 
-jest.mock('../../../src/step1/view/outputView.js');
+jest.mock('../../../src/step1/view/outputView');
 
 describe('LottoGameController 관련 기능 테스트', () => {
   afterEach(() => {
@@ -17,7 +17,7 @@ describe('LottoGameController 관련 기능 테스트', () => {
     await runLottoGameController();
 
     // then
-    const startMessageLog = jest.spyOn(InputView, 'inputByUser').mock.calls.at(0).join();
+    const startMessageLog = (jest.spyOn(InputView, 'inputByUser').mock.calls.at(0) as string[]).join();
     expect(startMessageLog).toMatch(INPUT_MESSAGE.BUY_AMOUNT);
   });
 
@@ -42,7 +42,7 @@ describe('LottoGameController 관련 기능 테스트', () => {
       // when
       await runLottoGameController();
       // then
-      const buyMessageLog = jest.spyOn(OutputView, 'printFor').mock.calls.at(0).join();
+      const buyMessageLog = (jest.spyOn(OutputView, 'printFor').mock.calls.at(0) as string[]).join();
       expect(buyMessageLog).toMatch(expected);
     },
   );
