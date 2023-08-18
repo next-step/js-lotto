@@ -7,10 +7,7 @@ export default createRevenueCalculator = () => {
   const DECIMAL_PLACES = 2;
 
   function roundUp(number, decimalPlace = DECIMAL_PLACES) {
-    return (
-      Math.round(number * Math.pow(10, decimalPlace)) /
-      Math.pow(10, decimalPlace)
-    );
+    return Math.round(number * Math.pow(10, decimalPlace));
   }
 
   function toPercent(number) {
@@ -30,7 +27,7 @@ export default createRevenueCalculator = () => {
 
     const accumulatedPrize = prize;
 
-    return toPercent(accumulatedPrize / purchased);
+    return `${toPercent(accumulatedPrize / purchased)}%`;
   }
 
   return {
