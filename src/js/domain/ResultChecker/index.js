@@ -1,4 +1,4 @@
-export const createResultChecker = () => {
+export default createResultChecker = () => {
   const PRIZE = Object.freeze({
     1: 2_000_000_000,
     2: 30_000_000,
@@ -8,12 +8,12 @@ export const createResultChecker = () => {
     6: 0,
   });
 
-  function getRank(matchCount, isBonusMatched) {
+  function getRank(matchCount, isBonusMatch) {
     switch (matchCount) {
       case 6:
         return 1;
       case 5:
-        if (isBonusMatched) return 2;
+        if (isBonusMatch) return 2;
         return 3;
       case 4:
         return 4;
@@ -25,9 +25,9 @@ export const createResultChecker = () => {
   }
 
   function getResult(lotto) {
-    const { matchedCount, isBonusMatched } = lotto.getMatchResult();
+    const { matchCount, isBonusMatch } = lotto.getMatchResult();
 
-    const rank = getRank(matchedCount, isBonusMatched);
+    const rank = getRank(matchCount, isBonusMatch);
     const prize = PRIZE[rank];
 
     return {

@@ -1,130 +1,91 @@
-import Lotto from "../src/js/Lotto";
-import MatchingChecker from "../src/js/MatchingChecker";
-import ResultChecker from "../src/js/ResultChecker";
+import Lotto from "../src/js/domain/Lotto";
 
-const testCases = [
-  {
-    lotto: [1, 2, 3, 4, 5, 6],
-    matchedCount: 6,
-    isBonusMatched: null,
-    rank: 1,
-    prize: 2_000_000_000,
-  },
-  {
-    lotto: [1, 2, 3, 4, 5, 7],
-    matchedCount: 5,
-    isBonusMatched: true,
-    rank: 2,
-    prize: 30_000_000,
-  },
-  {
-    lotto: [1, 2, 3, 4, 5, 16],
-    matchedCount: 5,
-    isBonusMatched: false,
-    rank: 3,
-    prize: 1_500_000,
-  },
-  {
-    lotto: [1, 2, 3, 4, 15, 16],
-    matchedCount: 4,
-    isBonusMatched: null,
-    rank: 4,
-    prize: 50_000,
-  },
-  {
-    lotto: [1, 2, 3, 4, 15, 7],
-    matchedCount: 4,
-    isBonusMatched: null,
-    rank: 4,
-    prize: 50_000,
-  },
+import createMatchChecker from "../src/js/domain/MatchChecker";
+import createResultChecker from "../src/js/domain/ResultChecker";
 
-  {
-    lotto: [1, 2, 3, 14, 15, 16],
-    matchedCount: 4,
-    isBonusMatched: null,
-    rank: 5,
-    prize: 5_000,
-  },
-  {
-    lotto: [1, 2, 3, 14, 15, 7],
-    matchedCount: 4,
-    isBonusMatched: null,
-    rank: 5,
-    prize: 5_000,
-  },
-  {
-    lotto: [1, 2, 13, 14, 15, 16],
-    matchedCount: 2,
-    isBonusMatched: null,
-    rank: 6,
-    prize: 0,
-  },
-  {
-    lotto: [1, 2, 13, 14, 15, 7],
-    matchedCount: 2,
-    isBonusMatched: null,
-    rank: 6,
-    prize: 0,
-  },
-  {
-    lotto: [1, 12, 13, 14, 15, 16],
-    matchedCount: 1,
-    isBonusMatched: null,
-    rank: 6,
-    prize: 0,
-  },
-  {
-    lotto: [1, 12, 13, 14, 15, 7],
-    matchedCount: 1,
-    isBonusMatched: null,
-    rank: 6,
-    prize: 0,
-  },
-  {
-    lotto: [11, 12, 13, 14, 15, 16],
-    matchedCount: 0,
-    isBonusMatched: null,
-    rank: 6,
-    prize: 0,
-  },
-  {
-    lotto: [11, 12, 13, 14, 15, 7],
-    matchedCount: 0,
-    isBonusMatched: null,
-    rank: 6,
-    prize: 0,
-  },
-];
+describe("getResult() 테스트", () => {
+  const testCases = [
+    {
+      lotto: [1, 2, 3, 4, 5, 6],
+      rank: 1,
+      prize: 2_000_000_000,
+    },
+    {
+      lotto: [1, 2, 3, 4, 5, 7],
+      rank: 2,
+      prize: 30_000_000,
+    },
+    {
+      lotto: [1, 2, 3, 4, 5, 16],
+      rank: 3,
+      prize: 1_500_000,
+    },
+    {
+      lotto: [1, 2, 3, 4, 15, 16],
+      rank: 4,
+      prize: 50_000,
+    },
+    {
+      lotto: [1, 2, 3, 4, 15, 7],
+      rank: 4,
+      prize: 50_000,
+    },
+    {
+      lotto: [1, 2, 3, 14, 15, 16],
+      rank: 5,
+      prize: 5_000,
+    },
+    {
+      lotto: [1, 2, 3, 14, 15, 7],
+      rank: 5,
+      prize: 5_000,
+    },
+    {
+      lotto: [1, 2, 13, 14, 15, 16],
+      rank: 6,
+      prize: 0,
+    },
+    {
+      lotto: [1, 2, 13, 14, 15, 7],
+      rank: 6,
+      prize: 0,
+    },
+    {
+      lotto: [1, 12, 13, 14, 15, 16],
+      rank: 6,
+      prize: 0,
+    },
+    {
+      lotto: [1, 12, 13, 14, 15, 7],
+      rank: 6,
+      prize: 0,
+    },
+    {
+      lotto: [11, 12, 13, 14, 15, 16],
+      rank: 6,
+      prize: 0,
+    },
+    {
+      lotto: [11, 12, 13, 14, 15, 7],
+      rank: 6,
+      prize: 0,
+    },
+  ];
 
-describe("등수, 상금 반환 테스트", () => {
-  MatchingChecker.setWinningNumbers([1, 2, 3, 4, 5, 6]);
-  MatchingChecker.setBonusNumber(7);
+  describe("올바른 등수와 당첨 금액을 반환한다. (winningLotto: [1, 2, 3, 4, 5, 6], 7)", () => {
+    const { setWinningLotto, checkMatch } = createMatchChecker();
+    const { getResult } = createResultChecker();
+    setWinningLotto([1, 2, 3, 4, 5, 6], 7);
 
-  it("로또 당첨 정보 반환 메소드를 호출한다.", () => {
-    const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
-    MatchingChecker.setMatchInfo(lotto);
-    const spyGetMatchResult = jest.spyOn(Lotto.prototype, "getMatchResult");
-    ResultChecker.getResult(lotto);
-    expect(spyGetMatchResult).toHaveBeenCalledTimes(1);
+    it.each(testCases)(
+      "lotto: $lotto, rank: $rank, prize: $prize",
+      ({ lotto: lottoNumbers, rank: expectedRank, prize: expectedPrize }) => {
+        const lotto = Lotto.of(lottoNumbers);
+        checkMatch(lotto);
+        const { rank, prize } = getResult(lotto);
+        expect(rank).toBe(expectedRank);
+        expect(prize).toBe(expectedPrize);
+      }
+    );
   });
-
-  it("등수와 당첨 금액을 속성으로 가진 객체를 반환한다.", () => {
-    const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
-    MatchingChecker.setMatchInfo(lotto);
-    expect(ResultChecker.getResult(lotto)).toHaveProperty("rank");
-    expect(ResultChecker.getResult(lotto)).toHaveProperty("prize");
-  });
-
-  // TODO 컨트롤러 추상화 함수로 처리
-  it.each(testCases)(
-    "올바른 등수와 당첨 금액을 반환한다.",
-    ({ lotto: lottoNumbers, rank: expectedRank, prize: expectedPrize }) => {
-      const lotto = Lotto.of(lottoNumbers);
-      MatchingChecker.setMatchInfo(lotto);
-      const result = ResultChecker.getResult(lotto);
-      expect(result.rank).toBe(expectedRank);
-      expect(result.prize).toBe(expectedPrize);
-    }
-  );
 });
