@@ -1,6 +1,7 @@
 import { ERROR_MESSAGE } from '../constants/error-message';
-import { LOTTO_AMOUNT_UNIT } from '../constants/lotto';
+import { LOTTO_AMOUNT_UNIT, LOTTO_NUMBERS_LENGTH } from '../constants/lotto';
 import { getNullArray } from '../utils/array';
+import { getRandomNumber } from '../utils/number';
 import { Lotto } from './Lotto';
 
 export class LottoMachine {
@@ -11,11 +12,24 @@ export class LottoMachine {
 
     const nullArray = getNullArray(this.#getNumberOfLotto(amount));
 
-    return nullArray.map(() => new Lotto());
+    return nullArray.map(() => new Lotto(this.#generateLottoNumbers()));
   }
 
   #getNumberOfLotto(amount) {
     return amount / LOTTO_AMOUNT_UNIT;
+  }
+
+  #generateLottoNumbers() {
+    const numbers = [];
+
+    while (numbers.length < LOTTO_NUMBERS_LENGTH) {
+      const randomNumber = getRandomNumber(1, 45);
+      if (!numbers.includes(randomNumber)) {
+        numbers.push(randomNumber);
+      }
+    }
+
+    return numbers.sort((a, b) => a - b);
   }
 
   #validateMoneyUnit(amount, unit) {
