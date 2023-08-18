@@ -40,11 +40,11 @@ export default class Lotto {
   /**
    * 로또 번호에 대한 string을 받아 "로또 번호 생성"에 대한 협력을 위한 정적 팩토리 메서드
    * @param {string} string 특정 구분자로 나타낸 로또 번호 string
-   * @param {string} seperator - string을 split할 구분자
+   * @param {string} separator - string을 split할 구분자
    * @returns {Lotto} 로또 인스턴스
    */
-  static fromByString(string, seperator = SYMBOLS.COMMA) {
-    return new Lotto(string.split(seperator).map(Number));
+  static fromByString(string, separator = SYMBOLS.COMMA) {
+    return new Lotto(string.split(separator).map(Number));
   }
 
   /**
