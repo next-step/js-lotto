@@ -1,14 +1,14 @@
 import {
   FixedIssueStrategy,
   RandomIssueStrategy,
-} from "../src/js/domain/LotteryMachine/IssueStrategy";
+} from "../../src/js/domain/LotteryMachine/IssueStrategy";
 import {
   FixedNumberElementDuplicatedError,
   FixedNumberElementNotNumberError,
   FixedNumberElementOutOfRangeError,
   FixedNumberLengthNotSixError,
   FixedNumberNotArrayError,
-} from "../src/js/domain/LotteryMachine/errors";
+} from "../../src/js/domain/LotteryMachine/errors";
 
 describe("RandomIssueStrategy	테스트", () => {
   describe("getNumber() 테스트", () => {

@@ -1,75 +1,75 @@
-import createMatchChecker from "../src/js/domain/MatchChecker";
-import WinningLotto from "../src/js/domain/MatchChecker/WinningLotto";
-import Lotto from "../src/js/domain/Lotto";
-import { WinningLottoNotDefinedError } from "../src/js/domain/MatchChecker/errors";
+import createMatchChecker from "../../src/js/domain/MatchChecker";
+import WinningLotto from "../../src/js/domain/MatchChecker/WinningLotto";
+import Lotto from "../../src/js/domain/Lotto";
+import { WinningLottoNotDefinedError } from "../../src/js/domain/MatchChecker/errors";
 
 const testCases = [
   // winningLotto: [1, 2, 3, 4, 5, 6], 7
   {
     lotto: [1, 2, 3, 4, 5, 6],
-    matchedCount: 6,
-    isBonusMatched: null,
+    matchCount: 6,
+    isBonusMatch: null,
   },
   {
     lotto: [1, 2, 3, 4, 5, 7],
-    matchedCount: 5,
-    isBonusMatched: true,
+    matchCount: 5,
+    isBonusMatch: true,
   },
   {
     lotto: [1, 2, 3, 4, 5, 16],
-    matchedCount: 5,
-    isBonusMatched: false,
+    matchCount: 5,
+    isBonusMatch: false,
   },
   {
     lotto: [1, 2, 3, 4, 15, 16],
-    matchedCount: 4,
-    isBonusMatched: null,
+    matchCount: 4,
+    isBonusMatch: null,
   },
   {
     lotto: [1, 2, 3, 4, 15, 7],
-    matchedCount: 4,
-    isBonusMatched: null,
+    matchCount: 4,
+    isBonusMatch: null,
   },
 
   {
     lotto: [1, 2, 3, 14, 15, 16],
-    matchedCount: 3,
-    isBonusMatched: null,
+    matchCount: 3,
+    isBonusMatch: null,
   },
   {
     lotto: [1, 2, 3, 14, 15, 7],
-    matchedCount: 3,
-    isBonusMatched: null,
+    matchCount: 3,
+    isBonusMatch: null,
   },
   {
     lotto: [1, 2, 13, 14, 15, 16],
-    matchedCount: 2,
-    isBonusMatched: null,
+    matchCount: 2,
+    isBonusMatch: null,
   },
   {
     lotto: [1, 2, 13, 14, 15, 7],
-    matchedCount: 2,
-    isBonusMatched: null,
+    matchCount: 2,
+    isBonusMatch: null,
   },
   {
     lotto: [1, 12, 13, 14, 15, 16],
-    matchedCount: 1,
-    isBonusMatched: null,
+    matchCount: 1,
+    isBonusMatch: null,
   },
   {
     lotto: [1, 12, 13, 14, 15, 7],
-    matchedCount: 1,
-    isBonusMatched: null,
+    matchCount: 1,
+    isBonusMatch: null,
   },
   {
     lotto: [11, 12, 13, 14, 15, 16],
-    matchedCount: 0,
-    isBonusMatched: null,
+    matchCount: 0,
+    isBonusMatch: null,
   },
   {
     lotto: [11, 12, 13, 14, 15, 7],
-    matchedCount: 0,
-    isBonusMatched: null,
+    matchCount: 0,
+    isBonusMatch: null,
   },
 ];
 
@@ -110,12 +110,12 @@ describe("로또 당첨 여부 확인 테스트", () => {
 
     describe("당첨 로또: [1, 2, 3, 4, 5, 6]와 일치 개수를 구해 Lotto 인스턴스에 저장한다.", () => {
       it.each(testCases)(
-        "로또 번호: $lotto, 일치 개수: $matchedCount",
-        ({ lotto: lottoNumbers, matchedCount: expectedMatchedCount }) => {
+        "로또 번호: $lotto, 일치 개수: $matchCount",
+        ({ lotto: lottoNumbers, matchCount: expectedmatchCount }) => {
           const lotto = Lotto.of(lottoNumbers);
           checkMatch(lotto);
-          const { matchedCount } = lotto.getMatchResult();
-          expect(matchedCount).toBe(expectedMatchedCount);
+          const { matchCount } = lotto.getMatchResult();
+          expect(matchCount).toBe(expectedmatchCount);
         }
       );
     });
@@ -123,10 +123,10 @@ describe("로또 당첨 여부 확인 테스트", () => {
 
   describe("로또 보너스 번호 일치 여부 확인 테스트", () => {
     const notFiveMatchedTestCases = testCases.filter(
-      (testCase) => testCase.matchedCount !== 5
+      (testCase) => testCase.matchCount !== 5
     );
     const fiveMatchedTestCases = testCases.filter(
-      (testCase) => testCase.matchedCount === 5
+      (testCase) => testCase.matchCount === 5
     );
 
     const { setWinningLotto, checkMatch } = createMatchChecker();
@@ -134,39 +134,39 @@ describe("로또 당첨 여부 확인 테스트", () => {
 
     describe("일치 개수가 5개가 아닌 경우, 보너스 번호 일치 여부를 확인하지 않는다.", () => {
       it.each(notFiveMatchedTestCases)(
-        "일치 개수: $matchedCount",
+        "일치 개수: $matchCount",
         ({ lotto: lottoNumbers }) => {
           const lotto = Lotto.of(lottoNumbers);
           checkMatch(lotto);
-          const { isBonusMatched } = lotto.getMatchResult();
-          expect(isBonusMatched).toBeNull();
+          const { isBonusMatch } = lotto.getMatchResult();
+          expect(isBonusMatch).toBeNull();
         }
       );
     });
 
     describe("일치 개수가 5개인 경우, 보너스 번호 일치 여부를 확인한다.", () => {
       it.each(fiveMatchedTestCases)(
-        "일치 개수: $matchedCount",
+        "일치 개수: $matchCount",
         ({ lotto: lottoNumbers }) => {
           const lotto = Lotto.of(lottoNumbers);
           checkMatch(lotto);
-          const { isBonusMatched } = lotto.getMatchResult();
-          expect(typeof isBonusMatched === "boolean").toBe(true);
+          const { isBonusMatch } = lotto.getMatchResult();
+          expect(typeof isBonusMatch === "boolean").toBe(true);
         }
       );
     });
 
     describe("보너스 번호: 7 일치 여부를 Lotto 인스턴스에 저장한다.", () => {
       const fiveMatchedTestCases = testCases.filter(
-        (testCase) => testCase.matchedCount === 5
+        (testCase) => testCase.matchCount === 5
       );
       it.each(fiveMatchedTestCases)(
-        "로또 번호: $lotto, 보너스 번호 일치 여부: $isBonusMatched",
-        ({ lotto: lottoNumbers, isBonusMatched: expectedIsBonusMatched }) => {
+        "로또 번호: $lotto, 보너스 번호 일치 여부: $isBonusMatch",
+        ({ lotto: lottoNumbers, isBonusMatch: expectedisBonusMatch }) => {
           const lotto = Lotto.of(lottoNumbers);
           checkMatch(lotto);
-          const { isBonusMatched } = lotto.getMatchResult();
-          expect(isBonusMatched).toBe(expectedIsBonusMatched);
+          const { isBonusMatch } = lotto.getMatchResult();
+          expect(isBonusMatch).toBe(expectedisBonusMatch);
         }
       );
     });
