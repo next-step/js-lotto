@@ -1,6 +1,6 @@
-import createLotteryMachine from "../../src/js/domain/LotteryMachine";
-import { FixedIssueStrategy } from "../../src/js/domain/LotteryMachine/IssueStrategy";
-import Lotto from "../../src/js/domain/Lotto";
+import createLotteryMachine from "../src/js/domain/LotteryMachine";
+import { FixedIssueStrategy } from "../src/js/domain/LotteryMachine/IssueStrategy";
+import Lotto from "../src/js/domain/Lotto";
 
 const { issueLotto } = createLotteryMachine();
 

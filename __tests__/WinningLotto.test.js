@@ -1,9 +1,9 @@
-import WinningLotto from "../../src/js/domain/MatchChecker/WinningLotto";
+import WinningLotto from "../src/js/domain/MatchChecker/WinningLotto";
 import {
   BonusNumberNotNumberError,
   BonusNumberOutOfRangeError,
   BonusNumberDuplicatedError,
-} from "../../src/js/domain/MatchChecker/errors";
+} from "../src/js/domain/MatchChecker/errors";
 
 describe("당첨 로또 객체 생성 테스트", () => {
   describe("보너스 번호 유효성 검사 테스트", () => {

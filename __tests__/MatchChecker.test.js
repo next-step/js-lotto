@@ -1,7 +1,7 @@
-import createMatchChecker from "../../src/js/domain/MatchChecker";
-import WinningLotto from "../../src/js/domain/MatchChecker/WinningLotto";
-import Lotto from "../../src/js/domain/Lotto";
-import { WinningLottoNotDefinedError } from "../../src/js/domain/MatchChecker/errors";
+import createMatchChecker from "../src/js/domain/MatchChecker";
+import WinningLotto from "../src/js/domain/MatchChecker/WinningLotto";
+import Lotto from "../src/js/domain/Lotto";
+import { WinningLottoNotDefinedError } from "../src/js/domain/MatchChecker/errors";
 
 const testCases = [
   // winningLotto: [1, 2, 3, 4, 5, 6], 7

@@ -1,6 +1,6 @@
-import Lotto from "../../src/js/domain/Lotto";
-import createMatchChecker from "../../src/js/domain/MatchChecker";
-import { LottoMatchResultNotSetError } from "../../src/js/domain/Lotto/errors";
+import Lotto from "../src/js/domain/Lotto";
+import createMatchChecker from "../src/js/domain/MatchChecker";
+import { LottoMatchResultNotSetError } from "../src/js/domain/Lotto/errors";
 
 describe("로또 객체 생성 테스트", () => {
   describe("생성자 내부 로직 테스트", () => {
