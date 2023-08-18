@@ -83,7 +83,7 @@
 [X] 보너스 번호 유효성 검사 시, 로또 숫자 범위 검증 함수 재사용.
 [X] 로또 - 당첨 로또 상속 구조 도입.
 [X] WinningLotto Bonus 범위 처리 함수 재사용 방법 고민하기.
-[ ] test case 수정!
+[X] test case 수정.
 
 [feature3] 당첨 등수와 금액 반환.
 [ ] Lotto MathBonus, LotteryPlatform 메소드명 의도 드러나게 변경.
