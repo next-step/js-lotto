@@ -9,7 +9,7 @@
  * "당첨 횟수, 보너스 번호 일치 여부"에 대한 객체
  * @typedef {object} LottoMatchingInfo
  * @property {number} winningCount - 당첨 횟수
- * @property {number} hasBonusNumber - 보너스 번호가 일치하는지의 여부
+ * @property {boolean} hasBonusNumber - 보너스 번호가 일치하는지의 여부
  */
 
 /**
@@ -37,8 +37,8 @@
  */
 
 /**
- * "당첨 정보"에 대한 객체
- * @typedef {object} WinningInfo
+ * "당첨 보상 정보"에 대한 객체
+ * @typedef {object} WinningRewardInfo
  * @property {LottoResult} lottoResult - 로또 당첨 결과
  * @property {number} winningAmount - 당첨 된 총 금액
  */
