@@ -1,7 +1,7 @@
-import Console from '../utils/console.js';
+import Console from '../utils/console';
 
 const OutputView = {
-  printFor(message) {
+  printFor(message: string) {
     Console.print(message);
   },
 };
