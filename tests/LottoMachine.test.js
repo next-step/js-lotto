@@ -1,3 +1,4 @@
+import { Lotto } from '../src/js/domain/Lotto';
 import { LottoMachine } from '../src/js/domain/LottoMachine';
 
 describe('LottoMachine', () => {
@@ -33,6 +34,60 @@ describe('LottoMachine', () => {
 
         expect(numberOfLotto).toBe(lottos.length);
       });
+    });
+  });
+
+  describe('로또 당첨', () => {
+    describe('구매한 로또와 당첨 로또를 비교해서 맞춘 숫자를 계산한다.', () => {
+      test.each([
+        [[2, 4, 10, 23, 43, 45], [2, 4, 10, 23, 43, 45], 6],
+        [[1, 2, 4, 10, 23, 43], [2, 4, 10, 23, 43, 45], 5],
+        [[3, 5, 10, 23, 43, 45], [2, 4, 10, 23, 43, 45], 4],
+        [[3, 5, 11, 23, 43, 45], [2, 4, 10, 23, 43, 45], 3],
+        [[3, 5, 11, 24, 43, 45], [2, 4, 10, 23, 43, 45], 2],
+        [[3, 5, 11, 24, 44, 45], [2, 4, 10, 23, 43, 45], 1],
+      ])(
+        '.getNumberOfMatchNumber(%p, %p)',
+        (lottoNumbers, winningNumbers, matchNumber) => {
+          const lottoMachine = new LottoMachine();
+          const lotto = new Lotto(lottoNumbers);
+          const winningLotto = new WinningLotto(winningNumbers);
+
+          const numberOfMatchNumber = lottoMachine.getNumberOfMatchNumber({
+            lotto,
+            winningLotto,
+          });
+
+          expect(numberOfMatchNumber).toBe(matchNumber);
+        }
+      );
+    });
+
+    it('구매한 로또와 당첨번호, 보너스 번호를 입력하면 각 등수에 해당하는 로또를 반환한다', () => {
+      const lottoMachine = new LottoMachine();
+
+      const lotto1 = new Lotto([2, 4, 10, 23, 43, 45]);
+      const lotto2 = new Lotto([1, 2, 4, 10, 23, 43]);
+      const lotto3 = new Lotto([2, 4, 10, 23, 43, 44]);
+      const lotto4 = new Lotto([3, 5, 10, 23, 43, 45]);
+      const lotto5 = new Lotto([3, 5, 11, 23, 43, 45]);
+      const lotto6 = new Lotto([3, 5, 11, 24, 44, 45]);
+
+      const winningLotto = new WinningLotto([2, 4, 10, 23, 43, 45]);
+
+      const bonusNumber = 1;
+
+      const result = lottoMachine.checkWinningLotto({
+        lottos: [lotto1, lotto2, lotto3, lotto4, lotto5, lotto6],
+        winningLotto,
+        bonusNumber,
+      });
+
+      expect(result.FIRST.length).toBe(1);
+      expect(result.SECOND.length).toBe(1);
+      expect(result.THIRD.length).toBe(1);
+      expect(result.FOURTH.length).toBe(1);
+      expect(result.FIFTH.length).toBe(1);
     });
   });
 });
