@@ -1,49 +1,59 @@
+import { ERROR_MESSAGE } from '../src/js/constants/error-message';
 import { Lotto } from '../src/js/domain/Lotto';
 
 describe('Lotto', () => {
-  describe('로또 숫자는 6자리이다.', () => {
-    test.each([6, 6, 6, 6])('.numbers.length', (lengthOfNumbers) => {
-      expect(lengthOfNumbers).toBe(new Lotto().numbers.length);
+  describe('로또 숫자는 6개이다', () => {
+    test.each([
+      [1, 2, 3, 4, 5, 6],
+      [2, 7, 8, 14, 44, 45],
+      [3, 8, 9, 15, 20, 26],
+    ])('new Lotto(numbers)', (numbers) => {
+      expect(new Lotto(numbers)).toBeDefined();
     });
   });
 
-  describe('로또 숫자는 1이상이다.', () => {
-    test.each([1, 1, 1, 1, 1])('number', (minimumNumber) => {
-      const numbers = new Lotto().numbers;
-
-      if (!numbers.length) {
-        throw new Error('lotto 숫자 없음');
-      }
-
-      new Lotto().numbers.forEach((number) => {
-        expect(number).toBeGreaterThanOrEqual(1);
-      });
+  describe('로또 숫자가 6개가 아니면 에러를 발생한다.', () => {
+    test.each([
+      [1, 2, 3, 4, 5],
+      [2, 7, 8, 14, 15, 44, 45],
+      [3, 8, 9, 15],
+    ])('new Lotto(numbers)', (numbers) => {
+      expect(() => new Lotto(numbers)).toThrowError(
+        ERROR_MESSAGE.NOT_VALID_LOTTO_NUMBER_LENGTH
+      );
     });
   });
 
-  describe('로또 숫자는 45이하이다.', () => {
-    test.each([45, 45, 45, 45, 45])('number', (minimumNumber) => {
-      const numbers = new Lotto().numbers;
-
-      if (!numbers.length) {
-        throw new Error('lotto 숫자 없음');
-      }
-
-      new Lotto().numbers.forEach((number) => {
-        expect(number).toBeLessThanOrEqual(45);
-      });
+  describe('로또 숫자는 1이상 45이하이다', () => {
+    test.each([
+      [1, 2, 3, 4, 5, 6],
+      [2, 7, 8, 14, 44, 45],
+      [3, 8, 9, 15, 20, 26],
+    ])('new Lotto(numbers)', (numbers) => {
+      expect(new Lotto(numbers)).toBeDefined();
     });
   });
 
-  it('로또는 중복없는 6개의 숫자이다', () => {
-    const numbers = new Lotto().numbers;
+  describe('로또 숫자 중에 1미만 45초과인 숫자가 있으면 에러를 발생한다.', () => {
+    test.each([
+      [-1, 2, 3, 4, 5, 6],
+      [2, 7, 8, 14, 44, 46],
+      [3, 8, 9, 15, 20, 100],
+    ])('new Lotto(numbers)', (numbers) => {
+      expect(() => new Lotto(numbers)).toThrowError(
+        ERROR_MESSAGE.NOT_VALID_LOTTO_NUMBER_RANGE
+      );
+    });
+  });
 
-    if (!numbers.length) {
-      throw new Error('lotto 숫자 없음');
-    }
-
-    const notDuplicatedNumbers = [...new Set(numbers)];
-
-    expect(numbers.length).toBe(notDuplicatedNumbers.length);
+  describe('로또 숫자 중 중복이 있으면 에러가 발생한다. ', () => {
+    test.each([
+      [1, 1, 3, 4, 5, 6],
+      [2, 7, 8, 14, 44, 44],
+    ])('new Lotto(numbers)', (numbers) => {
+      expect(() => new Lotto(numbers)).toThrowError(
+        ERROR_MESSAGE.DUPLICATED_LOTTO_NUMBER
+      );
+    });
   });
 });
