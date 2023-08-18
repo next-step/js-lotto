@@ -1,7 +1,7 @@
-import LottoGameController from './step1/controller/LottoGameContoller.js';
+import LottoGameController from './step1/controller/LottoGameController';
 
 class App {
-  #lottoGameController;
+  #lottoGameController: LottoGameController;
 
   constructor() {
     this.#lottoGameController = new LottoGameController();
