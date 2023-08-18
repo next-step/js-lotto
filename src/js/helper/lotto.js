@@ -55,3 +55,9 @@ export const getLottoResult = (winNumberList, bonusNumber, lottoList) => {
     return acc
   }, {})
 }
+
+export const calcTotalPrize = result =>
+  Object.entries(result).reduce(
+    (acc, [key, count]) => acc + LOTTO_PRIZE[key] * count,
+    0
+  )
