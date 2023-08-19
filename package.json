@@ -9,6 +9,8 @@
   "jest": {
     "testPathIgnorePatterns": [
       "<rootDir>/__tests__/controller/LottoGameController/LottoGameController.util.ts",
+      "<rootDir>/__tests__/controller/LottoGameController/LottoGameController.type.ts",
+      "<rootDir>/__tests__/controller/LottoGameController/index.ts",
       "<rootDir>/node_modules"
     ],
     "transform": {
