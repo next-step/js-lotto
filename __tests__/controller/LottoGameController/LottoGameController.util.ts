@@ -1,17 +1,24 @@
+import { GAME_PROMPT } from '@step1/constants/controller/controller.constants';
 import LottoGameController from '@step1/controller/LottoGameController';
 import { LottoGame } from '@step1/model';
 import { InputView } from '@step1/view';
+import { MockInputViewParams } from '@test/controller/LottoGameController';
 
 export const runLottoGameController = async () => {
   await new LottoGameController().run();
 };
 
-export const mockInputView = (
-  { investmentAmount = '1000', winningLottoNumbers = '1,2,3,4,5,6', bonusNumber = '7', gameCommand = 'end' } = {
+export const mockInputView: (params?: MockInputViewParams) => void = (
+  {
+    investmentAmount = '1000',
+    winningLottoNumbers = '1,2,3,4,5,6',
+    bonusNumber = '7',
+    gameCommand = GAME_PROMPT.END_GAME,
+  } = {
     investmentAmount: '1000',
     winningLottoNumbers: '1,2,3,4,5,6',
     bonusNumber: '7',
-    gameCommand: 'end',
+    gameCommand: GAME_PROMPT.END_GAME,
   },
 ) => {
   InputView.inputByUser = jest
