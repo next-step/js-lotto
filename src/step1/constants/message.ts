@@ -1,5 +1,6 @@
 import { LottoResult } from '@step1/utils/jsDoc';
 import { LOTTO_TERMS } from '@step1/constants/lotto';
+import { GAME_PROMPT } from './controller';
 
 export const INPUT_MESSAGE = {
   BUY_AMOUNT: '> 구입금액을 입력해 주세요.',
@@ -22,6 +23,7 @@ export const OUTPUT_MESSAGE_METHOD = {
 } as const;
 
 export const ERROR_MESSAGE = {
+  NOT_SPACES: '공백은 입력할 수 없습니다.',
   TYPE_OF_NUMBER: '숫자만 입력해주세요.',
   GREATER_THEN_PRICE_PER_LOTTO: `${LOTTO_TERMS.PRICE_PER_LOTTO}원 이상 입력해주세요.`,
   NO_CHANGES: `현재 앱에서는 잔돈이 존재할 수 없습니다. ${LOTTO_TERMS.PRICE_PER_LOTTO}원 단위로 입력해주세요.`,
@@ -32,5 +34,7 @@ export const ERROR_MESSAGE = {
   INVALID_BONUS_NUMBER_RANGE: `보너스 번호가 ${LOTTO_TERMS.MIN_LOTTO_NUMBER}에서 ${LOTTO_TERMS.MAX_LOTTO_NUMBER}사이의 숫자가 아닙니다.`,
   DUPLICATE_BONUS_NUMBER: '보너스 번호가 당첨 번호와 중복됩니다.',
   INVALID_NUMBER: (number: number) => `${number}는 유효하지 않은 숫자 입니다.`,
+  INVALID_INPUT: '값을 입력해주세요.',
   INVALID_WINNING_COUNT: `로또의 정답 갯수는 ${LOTTO_TERMS.MIN_WINNING_COUNT}~${LOTTO_TERMS.MAX_WINNING_COUNT}개 사이 입니다.`,
+  INVALID_END_COUNT: `${GAME_PROMPT.RESTART_GAME} 또는 ${GAME_PROMPT.END_GAME}을 입력해주세요.`,
 } as const;
