@@ -1,6 +1,6 @@
 import {
   generateLottoNumbers,
-  generateNodDuplicatedExtraNumber,
+  generateNotDuplicatedExtraNumber,
 } from '../utils/generateLottoNumbers.js'
 
 class Lotto {
@@ -8,9 +8,12 @@ class Lotto {
   #status
 
   constructor() {
+    const selectedNums = generateLottoNumbers()
+    const extraNum = generateNotDuplicatedExtraNumber(selectedNums)
+
     this.#numbers = {
-      selectedNums: generateLottoNumbers(),
-      extraNum: generateNodDuplicatedExtraNumber(this.selectedNums),
+      selectedNums: selectedNums,
+      extraNum: extraNum,
     }
 
     this.#status = {}

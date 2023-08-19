@@ -1,6 +1,6 @@
 const generateSingleLottoNumber = () => Math.floor(Math.random() * 45) + 1
 
-export const generateNodDuplicatedExtraNumber = (selectedNumbers) => {
+export const generateNotDuplicatedExtraNumber = (selectedNumbers) => {
   const numSet = new Set(selectedNumbers)
   let extraNum = generateSingleLottoNumber()
 
