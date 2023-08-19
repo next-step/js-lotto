@@ -1,3 +1,5 @@
+import {PRIZE} from './constants';
+
 export class LottoPrize {
   #winningNumbers;
   #bonusNumber;
@@ -19,20 +21,20 @@ export class LottoPrize {
     const bonusMatched = this.#isBonusMatched(lottery);
 
     if (matchedCount === 6) {
-      return 'FIRST';
+      return PRIZE.FIRST;
     }
     if (matchedCount === 5 && bonusMatched) {
-      return 'SECOND';
+      return PRIZE.SECOND;
     }
     if (matchedCount === 5) {
-      return 'THIRD';
+      return PRIZE.THIRD;
     }
     if (matchedCount === 4) {
-      return 'FOURTH';
+      return PRIZE.FOURTH;
     }
     if (matchedCount === 3) {
-      return 'FIFTH';
+      return PRIZE.FIFTH;
     }
-    return 'LOSS';
+    return PRIZE.LOSS;
   }
 }
