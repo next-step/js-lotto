@@ -1,13 +1,13 @@
 import {generateLottoNumbers} from '../generateLottoNumbers';
-import {LOTTO_NUMBERS} from '../constants';
+import {MAX_LOTTO_NUMBER, MIN_LOTTO_NUMBER} from '../constants';
 
 describe('generateLottoNumber 함수 test', () => {
-  test(`로또 발급 번호는 ${LOTTO_NUMBERS[0]}~${LOTTO_NUMBERS[LOTTO_NUMBERS.length - 1]} 사이의 숫자이다.`, () => {
+  test(`로또 발급 번호는 ${MIN_LOTTO_NUMBER}~${MAX_LOTTO_NUMBER} 사이의 숫자이다.`, () => {
     const lottoNumbers = generateLottoNumbers();
 
     lottoNumbers.forEach(number => {
-      expect(number).toBeGreaterThanOrEqual(LOTTO_NUMBERS[0]);
-      expect(number).toBeLessThanOrEqual(LOTTO_NUMBERS[LOTTO_NUMBERS.length - 1]);
+      expect(number).toBeGreaterThanOrEqual(MIN_LOTTO_NUMBER);
+      expect(number).toBeLessThanOrEqual(MAX_LOTTO_NUMBER);
     });
   });
 
