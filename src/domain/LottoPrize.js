@@ -16,12 +16,12 @@ export class LottoPrize {
 
   getLottoPrize(lottery) {
     const matchedCount = this.#getMatchedCount(lottery);
-    const isBonusMatched = this.#isBonusMatched(lottery);
+    const bonusMatched = this.#isBonusMatched(lottery);
 
     if (matchedCount === 6) {
       return 'FIRST';
     }
-    if (matchedCount === 5 && isBonusMatched) {
+    if (matchedCount === 5 && bonusMatched) {
       return 'SECOND';
     }
     if (matchedCount === 5) {
