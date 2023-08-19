@@ -38,12 +38,6 @@ describe('LottoVendingMachine', () => {
     })
   })
 
-  it('Car 객체의 인스턴스인지 확인', () => {
-    cars.entries.forEach((car) => {
-      expect(car).toBeInstanceOf(Car)
-    })
-  })
-
   describe('- 한 줄의 로또를 구매 금액에 맞게 여러번 생성한다.', () => {
     // Given
     const vendingMachine = new LottoVendingMachine()
