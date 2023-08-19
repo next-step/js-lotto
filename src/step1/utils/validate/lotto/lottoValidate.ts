@@ -1,4 +1,5 @@
 import { LOTTO_TERMS } from '@step1/constants/lotto';
+import { IsAscendingOrderParams } from '@step1/utils/validate/lotto/lottoValidate.type';
 
 export const isLessThenPricePerLotto = (value: number) => value < LOTTO_TERMS.PRICE_PER_LOTTO;
 
@@ -18,3 +19,9 @@ export const isValidLottoNumbersRange = (lottoNumbers: number[]) =>
 
 export const isValidWinningCountRange = (winningCount: number) =>
   winningCount >= LOTTO_TERMS.MIN_WINNING_COUNT && winningCount <= LOTTO_TERMS.MAX_WINNING_COUNT;
+
+export const isAscendingOrder = ({ currentLottoNumber, index, lottoNumbers }: IsAscendingOrderParams) => {
+  const isLastIndex = index === lottoNumbers.length - 1;
+  if (isLastIndex) return true;
+  return currentLottoNumber < lottoNumbers[index + 1];
+};
