@@ -1,4 +1,4 @@
-import {queryValidInput} from './view';
+import {queryValidInput, validateRetryType, isRetry} from './view';
 import {PRIZE, PRIZE_BENEFIT} from './domain/constants';
 import {
   validateBonusNumber,
@@ -48,7 +48,7 @@ const start = async () => {
 
   const retryType = await queryValidInput('다시 시작하시겠습니까? (y/n)', validateRetryType);
 
-  if (retryType === 'y') {
+  if (isRetry(retryType)) {
     start();
   }
 };
