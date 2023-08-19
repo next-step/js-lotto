@@ -36,10 +36,12 @@ export default class LottoNumberMaker {
    */
   createLottoNumbers(): number[] {
     const { startNumber, endNumber, count } = LottoNumberMaker.#lottoRangeInfo;
-    return this.#lottoNumberGenerator.pickNumbersInRange({
-      startNumber,
-      endNumber,
-      count,
-    });
+    return this.#lottoNumberGenerator
+      .pickNumbersInRange({
+        startNumber,
+        endNumber,
+        count,
+      })
+      .sort((a, b) => a - b);
   }
 }
