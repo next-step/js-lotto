@@ -12,6 +12,10 @@ export class Lotto {
     return this.#numbers;
   }
 
+  has(number) {
+    return this.#numbers.includes(number);
+  }
+
   #valiateLottoNumbers(numbers) {
     this.#valiateLottoNumberLength(numbers);
     this.#validateLottoNumberRange(numbers);

@@ -1,5 +1,6 @@
 import { Lotto } from '../src/js/domain/Lotto';
 import { LottoMachine } from '../src/js/domain/LottoMachine';
+import { WinningLotto } from '../src/js/domain/WinningLotto';
 
 describe('LottoMachine', () => {
   describe('로또 발급', () => {
@@ -51,7 +52,7 @@ describe('LottoMachine', () => {
         (lottoNumbers, winningNumbers, matchNumber) => {
           const lottoMachine = new LottoMachine();
           const lotto = new Lotto(lottoNumbers);
-          const winningLotto = new WinningLotto(winningNumbers);
+          const winningLotto = new WinningLotto(new Lotto(winningNumbers), 1);
 
           const numberOfMatchNumber = lottoMachine.getNumberOfMatchNumber({
             lotto,
@@ -73,14 +74,14 @@ describe('LottoMachine', () => {
       const lotto5 = new Lotto([3, 5, 11, 23, 43, 45]);
       const lotto6 = new Lotto([3, 5, 11, 24, 44, 45]);
 
-      const winningLotto = new WinningLotto([2, 4, 10, 23, 43, 45]);
-
-      const bonusNumber = 1;
+      const winningLotto = new WinningLotto(
+        new Lotto([2, 4, 10, 23, 43, 45]),
+        1
+      );
 
       const result = lottoMachine.checkWinningLotto({
         lottos: [lotto1, lotto2, lotto3, lotto4, lotto5, lotto6],
         winningLotto,
-        bonusNumber,
       });
 
       expect(result.FIRST.length).toBe(1);
