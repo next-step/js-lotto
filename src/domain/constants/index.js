@@ -1,1 +1,1 @@
-export {PRIZE_MAP} from './prizeMap';
+export {PRIZE, PRIZE_BENEFIT} from './prize';

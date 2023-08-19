@@ -1,5 +1,5 @@
 import {queryValidInput} from './view';
-import {PRIZE_MAP} from './domain/constants';
+import {PRIZE, PRIZE_BENEFIT} from './domain/constants';
 import {
   validateBonusNumber,
   validateWinningNumbers,
@@ -37,7 +37,7 @@ const start = async () => {
   console.log('당첨 통계');
   console.log('--------------------');
 
-  const winningPrizes = Object.keys(PRIZE_MAP).filter(prize => prize !== 'LOSS');
+  const winningPrizes = Object.keys(PRIZE_BENEFIT).filter(prize => prize !== PRIZE.LOSS);
   winningPrizes.forEach(prize => {
     console.log(`${formatPrizeKR(prize)} - ${lottoResult[prize]}개`);
   });
