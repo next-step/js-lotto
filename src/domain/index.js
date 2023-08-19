@@ -1,5 +1,5 @@
 export {Lotto} from './Lotto';
-
+export {generateLottoNumbers} from './generateLottoNumbers';
 export {LottoPrize} from './LottoPrize';
 export {formatPrizeKR} from './formatPrizeKR';
 export {getLottoResult} from './getLottoResult';
