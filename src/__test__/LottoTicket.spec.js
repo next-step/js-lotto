@@ -1,8 +1,11 @@
+import LottoTicket from "../class/LottoTicket";
+
 describe("LottoTicket 클래스 테스트", () => {
   let lottoNumbers;
+  let lottoTicket;
 
   beforeEach(() => {
-    const lottoTicket = new LottoTicket();
+    lottoTicket = new LottoTicket();
 
     lottoNumbers = lottoTicket.numbers;
   });
@@ -10,13 +13,14 @@ describe("LottoTicket 클래스 테스트", () => {
   test("로또 번호는 1~43 사이의 정수이다.", () => {
     expect(
       lottoNumbers.every(
-        (number) => number >= LottoRules.min && LottoRules.max,
+        (number) =>
+          number >= lottoTicket.rule.min && number <= lottoTicket.rule.max,
       ),
     ).toBe(true);
   });
 
   test("로또 번호는 6개이다.", () => {
-    expect(lottoNumbers.length).toBe(LottoRules.length);
+    expect(lottoNumbers.length).toBe(lottoTicket.rule.length);
   });
 
   test("로또 번호는 서로 중복되지 않는다.", () => {
