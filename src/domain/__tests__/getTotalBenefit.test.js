@@ -11,13 +11,8 @@ describe('getTotalBenefit function', () => {
       FIFTH: 0,
       LOSS: 1,
     };
-    expect(getTotalBenefit(result)).toBe(
-      PRIZE_MAP.FIRST * result.FIRST +
-        PRIZE_MAP.SECOND * result.SECOND +
-        PRIZE_MAP.THIRD * result.THIRD +
-        PRIZE_MAP.FOURTH * result.FOURTH +
-        PRIZE_MAP.FIFTH * result.FIFTH +
-        PRIZE_MAP.LOSS * result.LOSS,
-    );
+    const totalBenefit = 2_150_150_000;
+
+    expect(getTotalBenefit(result)).toBe(totalBenefit);
   });
 });
