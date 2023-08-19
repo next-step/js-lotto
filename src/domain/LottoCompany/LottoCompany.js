@@ -1,4 +1,4 @@
-import {Lotto} from "../Lotto/Lotto";
+import {Lotto} from "../Lotto/Lotto.js";
 
 export const LOTTO_PRICE = 1000;
 export const LOTTO_AMOUNT = 5;
