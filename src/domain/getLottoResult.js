@@ -1,4 +1,4 @@
-import {LottoPrize} from './LottoPrize';
+import {LottoPrize} from '.';
 
 export const getLottoResult = ({lotteries, winningNumbers, bonusNumber}) => {
   const lottoPrize = new LottoPrize({winningNumbers, bonusNumber});

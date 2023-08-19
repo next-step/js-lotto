@@ -1,4 +1,3 @@
-import {PRIZE_MAP} from '../constants/prizeMap';
 import {getTotalBenefit} from '../getTotalBenefit';
 
 describe('getTotalBenefit function', () => {

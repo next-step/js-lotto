@@ -1,4 +1,4 @@
-import {PRIZE_MAP} from './constants/prizeMap';
+import {PRIZE_MAP} from './constants';
 
 export const formatPrizeKR = prize => {
   if (prize === 'FIRST') {

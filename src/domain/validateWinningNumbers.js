@@ -1,4 +1,4 @@
-import {validateOnlyNumber} from '../utils/validateOnlyNumber';
+import {validateOnlyNumber} from '../utils';
 
 export const VALIDATE_WINNING_NUMBERS_ERROR = {
   INVALID_LENGTH: '6개의 숫자를 ,로 구분해서 입력해주세요.',

@@ -1,16 +1,15 @@
-import {getDividedInteger} from './utils/getDividedInteger';
-import {queryValidInput} from './view/queryValidInput';
-import {Lotto} from './domain/Lotto';
-import {splitNumbers} from './utils/splitNumbers';
-import {PRIZE_MAP} from './domain/constants/prizeMap';
-import {formatPrizeKR} from './domain/formatPrizeKR';
-import {getPercentage} from './utils/getPercentage';
-import {validateOnlyNumber} from './utils/validateOnlyNumber';
-import {getLottoResult} from './domain/getLottoResult';
-import {getTotalBenefit} from './domain/getTotalBenefit';
-import {validateWinningNumbers} from './domain/validateWinningNumbers';
-import {validateBonusNumber} from './domain/validateBonusNumber';
-import {validateRetryType} from './domain/validateRetryType';
+import {queryValidInput} from './view';
+import {PRIZE_MAP} from './domain/constants';
+import {
+  validateBonusNumber,
+  validateWinningNumbers,
+  validateRetryType,
+  formatPrizeKR,
+  Lotto,
+  getLottoResult,
+  getTotalBenefit,
+} from './domain';
+import {splitNumbers, getDividedInteger, getPercentage, validateOnlyNumber} from './utils';
 
 const LOTTERY_PRICE = 1000;
 

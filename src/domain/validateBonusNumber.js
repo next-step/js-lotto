@@ -1,4 +1,4 @@
-import {validateOnlyNumber} from '../utils/validateOnlyNumber';
+import {validateOnlyNumber} from '../utils';
 
 export const VALIDATE_BONUS_NUMBER_ERROR = {
   NOT_IN_RANGE: '1~45사이의 숫자를 입력해주세요.',
