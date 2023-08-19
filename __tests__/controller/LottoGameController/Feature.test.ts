@@ -9,6 +9,10 @@ import {
 jest.mock('@step1/view/outputView');
 
 describe('LottoGameController 관련 기능 테스트', () => {
+  beforeAll(() => {
+    jest.spyOn(global.process, 'exit').mockImplementation();
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
