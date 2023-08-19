@@ -1,7 +1,7 @@
-import { SYMBOLS } from '../../../src/step1/constants/commons';
-import { LOTTO_TERMS } from '../../../src/step1/constants/lotto';
-import { Lotto } from '../../../src/step1/model';
-import { isDefaultLottoCount, isValidLottoNumbersRange } from '../../../src/step1/utils/validate/lotto/lottoValidate';
+import { SYMBOLS } from '@step1/constants/commons';
+import { LOTTO_TERMS } from '@step1/constants/lotto';
+import { Lotto } from '@step1/model';
+import { isDefaultLottoCount, isValidLottoNumbersRange } from '@step1/utils/validate/lotto/lottoValidate';
 
 describe('Lotto 관련 기능 테스트', () => {
   describe('랜덤 번호를 통한 로또 생성 테스트', () => {

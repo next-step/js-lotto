@@ -1,8 +1,12 @@
-import { INPUT_MESSAGE, OUTPUT_MESSAGE_METHOD, OUTPUT_MESSAGE_TEXT } from '../../../src/step1/constants/message';
-import { InputView, OutputView } from '../../../src/step1/view';
-import { mockCreateLottoNumbers, mockInputView, runLottoGameController } from './LottoGameController.util';
+import { INPUT_MESSAGE, OUTPUT_MESSAGE_METHOD, OUTPUT_MESSAGE_TEXT } from '@step1/constants/message';
+import { InputView, OutputView } from '@step1/view';
+import {
+  mockCreateLottoNumbers,
+  mockInputView,
+  runLottoGameController,
+} from '@test/controller/LottoGameController/LottoGameController.util';
 
-jest.mock('../../../src/step1/view/outputView');
+jest.mock('@step1/view/outputView');
 
 describe('LottoGameController 관련 기능 테스트', () => {
   afterEach(() => {

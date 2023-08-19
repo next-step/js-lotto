@@ -1,6 +1,6 @@
-import { LOTTO_TERMS } from '../constants/lotto';
-import { PurchaseLottoValidator } from '../utils/validate/validator/index';
-import { Lotto } from '.';
+import { LOTTO_TERMS } from '@step1/constants/lotto';
+import { PurchaseLottoValidator } from '@step1/utils/validate/validator/index';
+import { Lotto } from '@step1/model';
 
 /**
  * "로또 판매"라는 도메인을 갖는 클래스

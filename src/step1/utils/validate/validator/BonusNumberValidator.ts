@@ -1,7 +1,7 @@
-import { ERROR_MESSAGE } from '../../../constants/message';
-import { BonusNumberError } from '../../../errors/index';
-import { isValidTypeOfNumber } from '../common/number';
-import { isDuplicateLottoNumber, isValidLottoNumberRange } from '../lotto/lottoValidate';
+import { ERROR_MESSAGE } from '@step1/constants/message';
+import { BonusNumberError } from '@step1/errors/index';
+import { isValidTypeOfNumber } from '@step1/utils/validate/common/number';
+import { isDuplicateLottoNumber, isValidLottoNumberRange } from '@step1/utils/validate/lotto/lottoValidate';
 
 const throwIfInvalid = (condition: boolean, errorMessage: string) => {
   if (condition) {

@@ -1,5 +1,5 @@
-import { LottoResult } from '../utils/jsDoc';
-import { LOTTO_TERMS } from './lotto';
+import { LottoResult } from '@step1/utils/jsDoc';
+import { LOTTO_TERMS } from '@step1/constants/lotto';
 
 export const INPUT_MESSAGE = {
   BUY_AMOUNT: '> 구입금액을 입력해 주세요.',

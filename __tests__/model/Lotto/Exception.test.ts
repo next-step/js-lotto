@@ -1,7 +1,7 @@
-import { LOTTO_TERMS } from '../../../src/step1/constants/lotto';
-import { ERROR_MESSAGE } from '../../../src/step1/constants/message';
-import { LottoError } from '../../../src/step1/errors';
-import { Lotto } from '../../../src/step1/model';
+import { LOTTO_TERMS } from '@step1/constants/lotto';
+import { ERROR_MESSAGE } from '@step1/constants/message';
+import { LottoError } from '@step1/errors';
+import { Lotto } from '@step1/model';
 
 describe('Lotto 관련 예외 테스트', () => {
   describe('생성된 로또 번호 중 유효하지 않은 로또 번호 범위의 값이 존재하는 case 테스트', () => {

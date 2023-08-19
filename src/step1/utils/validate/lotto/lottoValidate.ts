@@ -1,4 +1,4 @@
-import { LOTTO_TERMS } from '../../../constants/lotto';
+import { LOTTO_TERMS } from '@step1/constants/lotto';
 
 export const isLessThenPricePerLotto = (value: number) => value < LOTTO_TERMS.PRICE_PER_LOTTO;
 

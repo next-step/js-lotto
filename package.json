@@ -9,13 +9,16 @@
   "jest": {
     "testPathIgnorePatterns": [
       "<rootDir>/__tests__/controller/LottoGameController/LottoGameController.util.ts",
-      "<rootDir>/__tests__/constants/",
       "<rootDir>/node_modules"
     ],
     "transform": {
       "^.+\\.js$": "babel-jest",
       "^.+\\.mjs$": "babel-jest",
       "^.+\\.tsx?$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "^@step1(.*)$": "<rootDir>/src/step1$1",
+      "^@test(.*)$": "<rootDir>/__tests__$1"
     }
   },
   "license": "MIT",

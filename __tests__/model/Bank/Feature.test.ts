@@ -1,4 +1,4 @@
-import { Bank } from '../../../src/step1/model';
+import { Bank } from '@step1/model';
 
 describe('Bank 관련 기능 테스트', () => {
   test.each([

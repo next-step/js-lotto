@@ -1,9 +1,9 @@
-import { INPUT_MESSAGE, OUTPUT_MESSAGE_METHOD, OUTPUT_MESSAGE_TEXT } from '../constants/message';
-import { LottoGame } from '../model/index';
-import { InputView, OutputView } from '../view/index';
-import { GAME_PROMPT } from '../constants/controller';
-import { CreateResultsParams } from './LottoGameController.type';
-import { LottoResult, WinningInfo } from '../utils/jsDoc';
+import { INPUT_MESSAGE, OUTPUT_MESSAGE_METHOD, OUTPUT_MESSAGE_TEXT } from '@step1/constants/message';
+import { LottoGame } from '@step1/model';
+import { InputView, OutputView } from '@step1/view';
+import { GAME_PROMPT } from '@step1/constants/controller';
+import { CreateResultsParams } from '@step1/controller/LottoGameController.type';
+import { LottoResult, WinningInfo } from '@step1/utils/jsDoc';
 
 export default class LottoGameController {
   #lottoGame: LottoGame;

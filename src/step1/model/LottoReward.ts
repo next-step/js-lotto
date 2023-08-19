@@ -1,5 +1,5 @@
-import { LottoMatchingInfo, LottoResult, WinTable, WinTableKey, WinningRewardInfo } from '../utils/jsDoc.js';
-import { LottoValidator } from '../utils/validate/validator';
+import { LottoMatchingInfo, LottoResult, WinTable, WinTableKey, WinningRewardInfo } from '@step1/utils/jsDoc.js';
+import { LottoValidator } from '@step1/utils/validate/validator';
 
 /**
  * "로또 당첨"이라는 도메인에 대한 클래스

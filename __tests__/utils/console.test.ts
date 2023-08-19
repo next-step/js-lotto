@@ -1,4 +1,4 @@
-import Console from '../../src/step1/utils/console';
+import Console from '@step1/utils/console';
 
 const INPUT_TEST = '입력 테스트';
 const INPUT_MESSAGE = '입력 메시지 : ';

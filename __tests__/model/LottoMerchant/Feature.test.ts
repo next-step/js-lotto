@@ -1,4 +1,4 @@
-import { LottoMerchant } from '../../../src/step1/model';
+import { LottoMerchant } from '@step1/model';
 
 describe('LottoMerchant 관련 기능 테스트', () => {
   test.each([

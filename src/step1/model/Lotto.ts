@@ -1,6 +1,6 @@
-import { SYMBOLS } from '../constants/commons';
-import LottoValidator from '../utils/validate/validator/LottoValidator';
-import LottoNumberMaker from './LottoNumberMaker';
+import { SYMBOLS } from '@step1/constants/commons';
+import LottoValidator from '@step1/utils/validate/validator/LottoValidator';
+import { LottoNumberMaker } from '@step1/model';
 
 /**
  * "로또 생성"이라는 도메인을 갖는 클래스

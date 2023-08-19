@@ -1,9 +1,6 @@
-import { LOTTO_TERMS } from '../../../src/step1/constants/lotto';
-import LottoNumberMaker from '../../../src/step1/model/LottoNumberMaker';
-import {
-  isDuplicateLottoNumbers,
-  isValidLottoNumbersRange,
-} from '../../../src/step1/utils/validate/lotto/lottoValidate';
+import { LOTTO_TERMS } from '@step1/constants/lotto';
+import LottoNumberMaker from '@step1/model/LottoNumberMaker';
+import { isDuplicateLottoNumbers, isValidLottoNumbersRange } from '@step1/utils/validate/lotto/lottoValidate';
 
 describe('LottoNumberMaker 기능 테스트', () => {
   test('LottoNumberMaker가 생성한 로또는 6개의 로또 번호를 가진다.', () => {
