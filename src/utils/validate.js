@@ -19,17 +19,20 @@ export const validateAmount = (price) => {
 } from "../data/constant.js";
 
 export const checkInputPriceType = (price) => {
-  if (isNaN(price)) {
-    throw new Error("금액은 숫자만 입력 가능합니다.");
+  if (typeof price !== "number" || isNaN(price)) {
+    throw new Error("금액은 숫자만 입력 가능하며 빈 값은 허용되지 않습니다.");
   }
 };
 
 export const isValidAmount = (price) => {
+<<<<<<< HEAD
   if (String(price).includes(" ")) {
     throw new Error("금액 입력 시 공백을 포함할 수 없습니다.");
   }
 
 >>>>>>> 8f4c27a ([feat] validation 추가)
+=======
+>>>>>>> db0f31c ([feat] 테스트 코드 일부 작성)
   if (price <= 0) {
     throw new Error("입력한 금액은 0보다 커야합니다.");
   }
