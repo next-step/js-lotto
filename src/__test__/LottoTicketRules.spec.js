@@ -1,6 +1,6 @@
-import LottoRules from "../class/LottoRules";
+import LottoTicketRules from "../class/LottoTicketRules";
 
-describe("LottoRules 클래스 테스트", () => {
+describe("LottoTicketRules 클래스 테스트", () => {
   const LOTTO_DEFAULT_VALUE = Object.freeze({ MIN: 1, MAX: 43, LENGTH: 6 });
 
   test.each`
@@ -15,7 +15,7 @@ describe("LottoRules 클래스 테스트", () => {
   `(
     "최소값: $min, 최대값: $max, 번호개수 : $length로 설정하면 LottoRules의 min,max,length는 각각 $expectedMin, $expectedMax $expectedLength 이다",
     ({ min, max, length, expectedMin, expectedMax, expectedLength }) => {
-      const rule = new LottoRules(min, max, length);
+      const rule = new LottoTicketRules(min, max, length);
 
       expect(rule.max).toBe(expectedMax);
       expect(rule.min).toBe(expectedMin);

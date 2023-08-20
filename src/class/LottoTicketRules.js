@@ -1,11 +1,11 @@
-export default class LottoRules {
+export default class LottoTicketRules {
   static #DEFAULT_MIN = 1;
   static #DEFAULT_MAX = 43;
   static #DEFAULT_LENGTH = 6;
 
-  #min = LottoRules.#DEFAULT_MIN;
-  #max = LottoRules.#DEFAULT_MAX;
-  #length = LottoRules.#DEFAULT_LENGTH;
+  #min = LottoTicketRules.#DEFAULT_MIN;
+  #max = LottoTicketRules.#DEFAULT_MAX;
+  #length = LottoTicketRules.#DEFAULT_LENGTH;
 
   constructor(min, max, length) {
     const isLengthValidFormat =

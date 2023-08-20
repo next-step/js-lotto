@@ -1,11 +1,12 @@
-import LottoRules from "./LottoRules";
+import LottoTicketRules from "./LottoTicketRules";
 
 export default class LottoTicket {
   #rule;
   #numbers = new Set([]);
 
   constructor(rule) {
-    this.#rule = rule instanceof LottoRules ? rule : new LottoRules();
+    this.#rule =
+      rule instanceof LottoTicketRules ? rule : new LottoTicketRules();
     this.initializeTicket();
   }
 
