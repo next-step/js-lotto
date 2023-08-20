@@ -43,10 +43,10 @@ describe('LottoMachine', () => {
       test.each([
         [[2, 4, 10, 23, 43, 45], [2, 4, 10, 23, 43, 45], 6],
         [[1, 2, 4, 10, 23, 43], [2, 4, 10, 23, 43, 45], 5],
-        [[3, 5, 10, 23, 43, 45], [2, 4, 10, 23, 43, 45], 4],
-        [[3, 5, 11, 23, 43, 45], [2, 4, 10, 23, 43, 45], 3],
-        [[3, 5, 11, 24, 43, 45], [2, 4, 10, 23, 43, 45], 2],
-        [[3, 5, 11, 24, 44, 45], [2, 4, 10, 23, 43, 45], 1],
+        [[3, 5, 10, 23, 43, 4], [2, 4, 10, 23, 43, 45], 4],
+        [[3, 5, 11, 23, 43, 4], [2, 4, 10, 23, 43, 45], 3],
+        [[3, 5, 11, 24, 43, 4], [2, 4, 10, 23, 43, 45], 2],
+        [[3, 5, 11, 24, 44, 4], [2, 4, 10, 23, 43, 45], 1],
       ])(
         '.getNumberOfMatchNumber(%p, %p)',
         (lottoNumbers, winningNumbers, matchNumber) => {
@@ -54,10 +54,10 @@ describe('LottoMachine', () => {
           const lotto = new Lotto(lottoNumbers);
           const winningLotto = new WinningLotto(new Lotto(winningNumbers), 1);
 
-          const numberOfMatchNumber = lottoMachine.getNumberOfMatchNumber({
+          const numberOfMatchNumber = lottoMachine.getNumberOfMatchNumber(
             lotto,
-            winningLotto,
-          });
+            winningLotto
+          );
 
           expect(numberOfMatchNumber).toBe(matchNumber);
         }
@@ -79,10 +79,10 @@ describe('LottoMachine', () => {
         1
       );
 
-      const result = lottoMachine.checkWinningLotto({
-        lottos: [lotto1, lotto2, lotto3, lotto4, lotto5, lotto6],
-        winningLotto,
-      });
+      const result = lottoMachine.checkWinningLotto(
+        [lotto1, lotto2, lotto3, lotto4, lotto5, lotto6],
+        winningLotto
+      );
 
       expect(result.FIRST.length).toBe(1);
       expect(result.SECOND.length).toBe(1);

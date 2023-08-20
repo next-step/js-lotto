@@ -5,6 +5,17 @@ import { getRandomNumber } from '../utils/number';
 import { Lotto } from './Lotto';
 
 export class LottoMachine {
+  #winningLottoResult;
+
+  constructor() {
+    this.#winningLottoResult = {
+      FIRST: [],
+      SECOND: [],
+      THIRD: [],
+      FOURTH: [],
+      FIFTH: [],
+    };
+  }
   issueLotto(money) {
     const amount = parseInt(money, 10);
 
@@ -13,6 +24,44 @@ export class LottoMachine {
     const nullArray = getNullArray(this.#getNumberOfLotto(amount));
 
     return nullArray.map(() => new Lotto(this.#generateLottoNumbers()));
+  }
+
+  getNumberOfMatchNumber(lotto, winningLotto) {
+    const matchNumbers = lotto.numbers.filter((number) =>
+      winningLotto.numbers.includes(number)
+    );
+    return matchNumbers.length;
+  }
+
+  checkWinningLotto(lottos, winningLotto) {
+    lottos.forEach((lotto) => {
+      const matchCount = this.getNumberOfMatchNumber(lotto, winningLotto);
+      this.#setWinningLottoResult(matchCount, lotto, winningLotto);
+    });
+    return this.#winningLottoResult;
+  }
+
+  #setWinningLottoResult(matchCount, lotto, winningLotto) {
+    if (matchCount === 6) {
+      this.#winningLottoResult.FIRST.push(lotto);
+      return;
+    }
+    if (matchCount === 5 && lotto.numbers.includes(winningLotto.bonusNumber)) {
+      this.#winningLottoResult.SECOND.push(lotto);
+      return;
+    }
+    if (matchCount === 5) {
+      this.#winningLottoResult.THIRD.push(lotto);
+      return;
+    }
+    if (matchCount === 4) {
+      this.#winningLottoResult.FOURTH.push(lotto);
+      return;
+    }
+    if (matchCount === 3) {
+      this.#winningLottoResult.FIFTH.push(lotto);
+      return;
+    }
   }
 
   #getNumberOfLotto(amount) {

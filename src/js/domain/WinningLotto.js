@@ -1,17 +1,17 @@
 import { ERROR_MESSAGE } from '../constants/error-message';
 
 export class WinningLotto {
-  #winningLotto;
+  #lotto;
   #bonusNumber;
 
   constructor(winningLotto, bonusNumber) {
     this.validateDuplicatedBonusNumber(winningLotto, bonusNumber);
-    this.#winningLotto = winningLotto;
+    this.#lotto = winningLotto;
     this.#bonusNumber = bonusNumber;
   }
 
-  get winningLotto() {
-    return this.#winningLotto;
+  get numbers() {
+    return this.#lotto.numbers;
   }
 
   get bonusNumber() {
