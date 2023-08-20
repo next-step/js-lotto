@@ -1,16 +1,13 @@
-import { PRODUCTS } from '../../../src/constants';
-import { LottoCorporation, Store } from '../../../src/Model';
+import { LottoCorporation } from '../../../src/Model';
 
 describe('LottoCorporation', () => {
-  const lottoCorporation = new LottoCorporation(new Store(PRODUCTS));
+  const lottoCorporation = new LottoCorporation();
 
   test('로또회사가 인수한 상점에서 로또를 구매할 수 있다.', () => {
     const purchaseAmount = 5_000;
     const tickets = lottoCorporation.buyTickets(purchaseAmount);
 
-    tickets.forEach((ticket) =>
-      expect(ticket).toBeInstanceOf(PRODUCTS.LottoTicket.product)
-    );
+    expect(ticket).toBe('구현하기');
   });
 
   test('로또 티켓의 결과를 확인한다.', () => {

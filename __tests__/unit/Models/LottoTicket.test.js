@@ -22,7 +22,7 @@ describe('LottoTicket은 1-43 사이의 번호와 보너스 번호로 이루어�
         number <= NUMBER.LOTTO_TICKET.MAX_RANGE
     );
 
-    expect(validTicketNumbers).toBe(true);
+    expect(validTicketNumbers).toBeTruthy();
   });
 
   test('로또 티켓의 당첨 번호는 6개이다.', () => {
