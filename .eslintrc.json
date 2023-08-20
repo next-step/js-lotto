@@ -4,12 +4,15 @@
     "node": true,
     "jest": true
   },
-  "extends": ["airbnb-base", "prettier", "plugin:jsdoc/recommended"],
+  "extends": ["airbnb-base", "plugin:jsdoc/recommended", "prettier", "plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "rules": {
+    "@typescript-eslint/no-var-requires": ["off"],
     "import/no-extraneous-dependencies": ["off"],
     "import/no-cycle": ["off"],
     // 인스턴스 미 참조 하는 class method 제한
