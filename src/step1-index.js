@@ -8,7 +8,7 @@ import {
   validateInputBonusNumber,
 =======
   createLottosForAmount,
-  processLottoPurchase,
+  getWinningPrizeResult,
   validateInputBonusNumber,
   validateInputPrice,
 >>>>>>> a7c387c ([feat] 기능 실행 부분 로직 작성)
@@ -65,6 +65,8 @@ async function lottoGame() {
 import {
   displayAvailableLottoCount,
   displayLottoNumbers,
+  displayTotalProfitRate,
+  displayWinningStats,
 } from "./view/view.js";
 
 async function lottoGame() {
@@ -89,7 +91,7 @@ async function lottoGame() {
   if (!inputWinningNumbers) {
 =======
   // 몇개 살 수 있는 지 출력
-  const avaliableCount = processLottoPurchase(inputPrice);
+  const avaliableCount = calcLottoCount(inputPrice);
   displayAvailableLottoCount(avaliableCount);
 
   // 로또 번호 출력
@@ -138,7 +140,20 @@ async function lottoGame() {
     closeUserInput();
     return false;
   }
+<<<<<<< HEAD
 >>>>>>> a7c387c ([feat] 기능 실행 부분 로직 작성)
+=======
+
+  const winningNumbers = inputWinningNumbers
+    .split(",")
+    .map((number) => Number(number.trim()))
+    .concat(inputBonusNumber);
+
+  const winningResult = getWinningPrizeResult(lottoNumbers, winningNumbers);
+
+  displayWinningStats(winningResult);
+  displayTotalProfitRate(avaliableCount);
+>>>>>>> 3b7c1b7 ([feat] 1차 기능 구현 완료)
 }
 
 lottoGame();

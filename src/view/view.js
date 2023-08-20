@@ -1,8 +1,16 @@
 import {
+<<<<<<< HEAD
   getTotalInvestgatePrice,
   getTotalWinningPrice,
 } from "../controller/lottoController.js";
 import { LOTTO_PRIZE } from "../data/lotto.js";
+=======
+  getPrizeKey,
+  getTotalInvestgatePrice,
+  getTotalWinningPrice,
+} from "../controller/lottoController.js";
+import { LOTTO_PRIZE } from "../data/constant.js";
+>>>>>>> 3b7c1b7 ([feat] 1차 기능 구현 완료)
 import { priceWithCommas } from "../utils/calculate.js";
 
 export const displayAvailableLottoCount = (lottoCount) => {
@@ -13,7 +21,19 @@ export const displayLottoNumbers = (lottoNumbers) => {
   lottoNumbers.forEach((lotto) => console.log(lotto));
 };
 
+<<<<<<< HEAD
 export const displayWinningStats = () => {
+=======
+export const displayWinningStats = (winningResult) => {
+  winningResult.forEach((result) => {
+    const key = getPrizeKey(result.matchCount, result.hasBonus);
+
+    if (key) {
+      LOTTO_PRIZE[key].count += 1;
+    }
+  });
+
+>>>>>>> 3b7c1b7 ([feat] 1차 기능 구현 완료)
   console.log("당첨 통계");
   console.log("======================");
 

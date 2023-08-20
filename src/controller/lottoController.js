@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { SINGLE_LOTTO_PRICE } from "../data/constant.js";
 import { LOTTO_PRIZE } from "../data/lotto.js";
 import { createRandomLottoNumber } from "../utils/calculate.js";
@@ -23,6 +24,10 @@ export const checkInputPrice = (price) => {
 =======
 import { calcLottoCount, createRandomLottoNumber } from "../utils/calculate.js";
 import { showBuyedLottoCountMessage } from "../utils/consoleMessage.js";
+=======
+import { SINGLE_LOTTO_PRICE, LOTTO_PRIZE } from "../data/constant.js";
+import { createRandomLottoNumber } from "../utils/calculate.js";
+>>>>>>> 3b7c1b7 ([feat] 1차 기능 구현 완료)
 import {
   checkInputPriceType,
   checkInputPriceUnit,
@@ -32,11 +37,6 @@ import {
   isWinningNumbersDuplicate,
   isWinningAndBonusNumberDuplicate,
 } from "../utils/validate.js";
-
-export const processLottoPurchase = (price) => {
-  const lottoCount = calcLottoCount(price);
-  return showBuyedLottoCountMessage(lottoCount);
-};
 
 export const validateInputPrice = (price) => {
   try {
@@ -51,8 +51,11 @@ export const validateInputPrice = (price) => {
   }
 };
 
+<<<<<<< HEAD
 // 살 수 있는 갯수만큼 로또 생성하기
 >>>>>>> c479370 ([feat] 로또 controller 생성)
+=======
+>>>>>>> 3b7c1b7 ([feat] 1차 기능 구현 완료)
 export const createLottosForAmount = (lottoCount) => {
   let lottoNumbers = [];
 
@@ -64,9 +67,12 @@ export const createLottosForAmount = (lottoCount) => {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 // 로또 만들고 출력하기
 >>>>>>> c479370 ([feat] 로또 controller 생성)
+=======
+>>>>>>> 3b7c1b7 ([feat] 1차 기능 구현 완료)
 export const createLottoNumbers = () => {
   let lottoNumbers = [];
 
@@ -112,6 +118,7 @@ export const validateInputBonusNumber = (winningNumbers, bonusNumber) => {
   }
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 export const getWinningPrizeResult = (lottoNumbers, winningNumbers) => {
   const bonusNumber = Number(winningNumbers[winningNumbers.length - 1]);
@@ -153,6 +160,34 @@ export const updateLottoPrizeCount = (winningResult) => {
   if (key) {
     LOTTO_PRIZE[key].count += 1;
   }
+=======
+
+export const getWinningPrizeResult = (lottoNumbers, winningNumbers) => {
+  const bonusNumber = winningNumbers[winningNumbers.length - 1];
+  const numberForMatch = winningNumbers.slice(0, -1);
+
+  const matchResult = lottoNumbers.map((number) => {
+    const matchCount = getLottoNumberMatchCount(number, numberForMatch);
+    const hasBonus = getBonusNumberMatchCount(number, bonusNumber);
+
+    return { matchCount, hasBonus };
+  });
+
+  const filteredMatchCountResult = matchResult.filter(
+    (result) => result.matchCount >= 3
+  );
+
+  return filteredMatchCountResult;
+};
+
+export const getLottoNumberMatchCount = (lottoNumbers, numberForMatch) => {
+  return lottoNumbers.filter((number) => numberForMatch.includes(number))
+    .length;
+};
+
+export const getBonusNumberMatchCount = (lottoNumbers, bonusNumber) => {
+  return lottoNumbers.includes(Number(bonusNumber));
+>>>>>>> 3b7c1b7 ([feat] 1차 기능 구현 완료)
 };
 
 export const getPrizeKey = (matchCount, hasBonus) => {
@@ -183,6 +218,7 @@ export const getTotalWinningPrice = () => {
 export const getTotalInvestgatePrice = (avaliableCount) => {
   return SINGLE_LOTTO_PRICE * Number(avaliableCount);
 };
+<<<<<<< HEAD
 
 export const formatWinningNumbers = (winningNumbers, bonusNumber) => {
   return winningNumbers
@@ -194,3 +230,5 @@ export const formatWinningNumbers = (winningNumbers, bonusNumber) => {
 >>>>>>> c479370 ([feat] 로또 controller 생성)
 =======
 >>>>>>> a1722de ([feat] controller 추가)
+=======
+>>>>>>> 3b7c1b7 ([feat] 1차 기능 구현 완료)

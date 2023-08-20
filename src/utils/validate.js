@@ -63,10 +63,14 @@ export const isValidWinningNumberRange = (winningNumbers) => {
 
   inputValue.forEach((value) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (value < MIN_LOTTO_NUMBER || value > MAX_LOTTO_NUMBER) {
 =======
     if (!(value >= MIN_LOTTO_NUMBER && value <= MAX_LOTTO_NUMBER)) {
 >>>>>>> 8f4c27a ([feat] validation 추가)
+=======
+    if (value < MIN_LOTTO_NUMBER || value > MAX_LOTTO_NUMBER) {
+>>>>>>> 3b7c1b7 ([feat] 1차 기능 구현 완료)
       throw new Error(
         `로또 번호는 ${MIN_LOTTO_NUMBER}부터 ${MAX_LOTTO_NUMBER}까지의 숫자만 입력 가능합니다.`
       );
