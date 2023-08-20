@@ -1,4 +1,5 @@
-import { PRODUCTS_NAME, LOTTO_PRIZE_BOARD, NUMBER } from '../constants';
+import { LOTTO_PRIZE_BOARD, NUMBER } from '../constants';
+import { LottoStore } from '../Model';
 
 /**
  * 로또의 판매 및 Ticket 결과를 확인하는 객체입니다.
@@ -6,15 +7,12 @@ import { PRODUCTS_NAME, LOTTO_PRIZE_BOARD, NUMBER } from '../constants';
 export class LottoCorporation {
   #lottoStore;
 
-  constructor(lottoStore) {
-    this.#lottoStore = lottoStore;
+  constructor() {
+    this.#lottoStore = new LottoStore();
   }
 
   buyTickets(purchaseAmount) {
-    const tickets = this.#lottoStore.buyProduct(
-      PRODUCTS_NAME.LOTTO_TICKET,
-      purchaseAmount
-    );
+    const tickets = this.#lottoStore.buyTickets(purchaseAmount);
 
     return tickets;
   }

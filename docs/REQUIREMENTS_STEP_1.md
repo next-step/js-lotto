@@ -121,9 +121,9 @@ class Store {
     - 전략 패턴 / 팩토리 패턴 등
     - 그냥 setStore 메서드에서 new Lotto() 바로 넣어줘도 될 듯? 일단 상점을 만들어뒀으니, 이를 상속받아 LottoStore하나 만들고, Lotto인데, 이 정도 결합도는 괜찮지 않나..!
   - [x] 블로그 글 간단하게 정리하기.
-  - [ ] 불필요한 Store 객체 및 PRODUCT 상수 제거하기.
-  - [ ] Store를 LottoStore로 대체하기.
-    - [ ] 해당 객체는 LottoCorporation에 바로 할당 해주기.
+  - [x] 불필요한 Store 객체 및 PRODUCT 상수 제거하기.
+  - [x] Store를 LottoStore로 대체하기.
+    - [x] 해당 객체는 LottoCorporation에 바로 할당 해주기.
 
 - Class를 잘 사용하는지 점검하기.
 

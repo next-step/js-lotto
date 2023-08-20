@@ -1,4 +1,4 @@
 export * from './common';
 export * from './View';
-export * from './Store';
+export * from './LottoStore';
 export * from './Validator';

@@ -1,8 +1,8 @@
-import { View, Store, Lotto } from './';
+import { View, LottoStore, Lotto } from './';
 
 /* Validator */
 export const Validator = {
   View,
-  Store,
+  LottoStore,
   Lotto,
 };

@@ -1,10 +1,11 @@
+import { LottoCorporation } from '../Model';
+
 export class GameController {
   #view;
-  #lottoCorporation;
+  #lottoCorporation = new LottoCorporation();
 
-  constructor(view, lottoCorporation) {
+  constructor(view) {
     this.#view = view;
-    this.#lottoCorporation = lottoCorporation;
   }
 
   /* Lotto Game Process */
