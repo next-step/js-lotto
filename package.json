@@ -3,7 +3,37 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start-step1": "npm run build-step-1 && node dist/bundle.js",
+    "start-step2": "npm run build-step-2 && node dist/bundle.js",
+    "build-step-1": "webpack --mode development --entry ./src/step1-index.js",
+    "build-step-2": "webpack --mode development --entry ./src/step2-index.js",
+    "test": "jest --watch"
+  },
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "^6.3.0",
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "@types/jest": "^29.2.5",
+    "babel-jest": "^29.3.1",
+    "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "eslint": "^8.31.0",
+    "esm": "^3.2.25",
+    "jest": "^29.3.1",
+    "prettier": "^2.8.2",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "jest": {
+    "transform": {
+      "\\.[jt]sx?$": "babel-jest"
+    }
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
   }
 }
