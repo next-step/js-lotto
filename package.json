@@ -3,19 +3,24 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start-step1": "ts-node src/step1-index.ts",
+    "start-step1": "ts-node -r tsconfig-paths/register src/step1-index.ts",
     "test": "jest --watch"
   },
   "jest": {
     "testPathIgnorePatterns": [
       "<rootDir>/__tests__/controller/LottoGameController/LottoGameController.util.ts",
-      "<rootDir>/__tests__/constants/",
+      "<rootDir>/__tests__/controller/LottoGameController/LottoGameController.type.ts",
+      "<rootDir>/__tests__/controller/LottoGameController/index.ts",
       "<rootDir>/node_modules"
     ],
     "transform": {
       "^.+\\.js$": "babel-jest",
       "^.+\\.mjs$": "babel-jest",
       "^.+\\.tsx?$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "^@step1(.*)$": "<rootDir>/src/step1$1",
+      "^@test(.*)$": "<rootDir>/__tests__$1"
     }
   },
   "license": "MIT",
@@ -33,6 +38,7 @@
     "jest": "^29.6.2",
     "prettier": "^3.0.1",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.1.6"
   }
 }

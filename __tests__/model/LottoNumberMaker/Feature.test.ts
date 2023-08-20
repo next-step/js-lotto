@@ -1,9 +1,10 @@
-import { LOTTO_TERMS } from '../../../src/step1/constants/lotto';
-import LottoNumberMaker from '../../../src/step1/model/LottoNumberMaker';
+import { LOTTO_TERMS } from '@step1/constants/lotto';
+import LottoNumberMaker from '@step1/model/LottoNumberMaker';
 import {
+  isAscendingOrder,
   isDuplicateLottoNumbers,
   isValidLottoNumbersRange,
-} from '../../../src/step1/utils/validate/lotto/lottoValidate';
+} from '@step1/utils/validate/lotto/lottoValidate';
 
 describe('LottoNumberMaker 기능 테스트', () => {
   test('LottoNumberMaker가 생성한 로또는 6개의 로또 번호를 가진다.', () => {
@@ -31,5 +32,16 @@ describe('LottoNumberMaker 기능 테스트', () => {
     const isDuplicate = isDuplicateLottoNumbers(lottoNumberMaker.createLottoNumbers());
     // then
     expect(isDuplicate).toBeFalsy();
+  });
+
+  test('LottoNumberMaker가 생성한 로또 내 로또 번호들은 오름차순으로 정렬되어 있다.', () => {
+    // given
+    const lottoNumberMaker = LottoNumberMaker.from();
+    // when
+    const lottoNumbers = lottoNumberMaker.createLottoNumbers();
+    // then
+    expect(
+      lottoNumbers.every((currentLottoNumber, index) => isAscendingOrder({ currentLottoNumber, index, lottoNumbers })),
+    ).toBeTruthy();
   });
 });

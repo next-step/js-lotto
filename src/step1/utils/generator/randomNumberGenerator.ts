@@ -1,4 +1,4 @@
-import { LottoRangeInfo } from '../jsDoc';
+import { LottoRangeInfo } from '@step1/utils/jsDoc';
 
 export const RandomNumberGenerator = {
   shuffle(array: number[]) {

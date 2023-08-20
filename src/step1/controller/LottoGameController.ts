@@ -1,9 +1,10 @@
-import { INPUT_MESSAGE, OUTPUT_MESSAGE_METHOD, OUTPUT_MESSAGE_TEXT } from '../constants/message';
-import { LottoGame } from '../model/index';
-import { InputView, OutputView } from '../view/index';
-import { GAME_PROMPT } from '../constants/controller';
-import { CreateResultsParams } from './LottoGameController.type';
-import { LottoResult, WinningInfo } from '../utils/jsDoc';
+import { INPUT_MESSAGE, OUTPUT_MESSAGE_METHOD, OUTPUT_MESSAGE_TEXT } from '@step1/constants/message';
+import { LottoGame } from '@step1/model';
+import { InputView, OutputView } from '@step1/view';
+import { GAME_PROMPT } from '@step1/constants/controller';
+import { CreateResultsParams } from '@step1/controller';
+import { LottoResult, WinningInfo } from '@step1/utils/jsDoc';
+import LottoGameControllerValidator from '@step1/utils/validate/validator/LottoControllerValidator';
 
 export default class LottoGameController {
   #lottoGame: LottoGame;
@@ -12,12 +13,22 @@ export default class LottoGameController {
     this.#lottoGame = new LottoGame();
   }
 
+  async #retryOnErrors<T>(retryFunction: () => Promise<T>): Promise<T> {
+    try {
+      return await retryFunction();
+    } catch (error) {
+      OutputView.printFor(error.message);
+      return this.#retryOnErrors(retryFunction);
+    }
+  }
+
   /**
    * 구입할 로또 금액을 입력 받는 메서드
    * @returns {Promise<number>} 입력 받은 로또 금액의 Promise
    */
   async #initializeAmount(): Promise<number> {
     const amount = await InputView.inputByUser(INPUT_MESSAGE.BUY_AMOUNT);
+    LottoGameControllerValidator.validateInitializeValue(amount);
     return Number(amount);
   }
 
@@ -27,6 +38,7 @@ export default class LottoGameController {
    */
   async #initializeWinningNumbers(): Promise<string> {
     const winningNumbers = await InputView.inputByUser(INPUT_MESSAGE.WINNING_NUMBERS);
+    LottoGameControllerValidator.validateInitializeValue(winningNumbers);
     return winningNumbers;
   }
 
@@ -36,6 +48,7 @@ export default class LottoGameController {
    */
   async #initializeBonusNumber(): Promise<number> {
     const bonusNumber = await InputView.inputByUser(INPUT_MESSAGE.BONUS_NUMBER);
+    LottoGameControllerValidator.validateInitializeValue(bonusNumber);
     return Number(bonusNumber);
   }
 
@@ -44,8 +57,11 @@ export default class LottoGameController {
    * @returns {Promise<string>} 게임 종료 또는 재시작 관련 선택에 대한 문자열의 Promise
    */
   async #initializeEndCount(): Promise<string> {
-    const endCount = await InputView.inputByUser(INPUT_MESSAGE.END_COUNT);
-    return endCount;
+    return this.#retryOnErrors<string>(async () => {
+      const endCount = await InputView.inputByUser(INPUT_MESSAGE.END_COUNT);
+      LottoGameControllerValidator.validateEndCount(endCount);
+      return endCount;
+    });
   }
 
   /**
@@ -55,6 +71,10 @@ export default class LottoGameController {
    */
   #requestBuyingLotto(amount: number): number[][] {
     return this.#lottoGame.createLottoNumbers(amount);
+  }
+
+  #requestWinningLottoNumber(winningNumbers: string) {
+    return this.#lottoGame.createWinningLottoNumbers(winningNumbers);
   }
 
   /**
@@ -100,9 +120,30 @@ export default class LottoGameController {
    * @returns {Promise<[number, number[][]]>} 당첨 금액, 로또 번호에 대한 배열의 Promise
    */
   async #processLottos(): Promise<[number, number[][]]> {
-    const investmentAmount = await this.#initializeAmount();
-    const lottoNumbers = this.#requestBuyingLotto(investmentAmount);
-    return [investmentAmount, lottoNumbers];
+    return this.#retryOnErrors(async () => {
+      const investmentAmount = await this.#initializeAmount();
+      const lottoNumbers = this.#requestBuyingLotto(investmentAmount);
+      return [investmentAmount, lottoNumbers];
+    });
+  }
+
+  async #processWinningLottoNumber() {
+    return await this.#retryOnErrors(async () => {
+      const winningNumbers = await this.#initializeWinningNumbers();
+      return this.#requestWinningLottoNumber(winningNumbers);
+    });
+  }
+
+  async #processWinningInfo(investmentAmount: number, lottoNumbers: number[][], winningLottoNumber: number[]) {
+    return await this.#retryOnErrors(async () => {
+      const bonusNumber = await this.#initializeBonusNumber();
+      return this.#requestResults({
+        investmentAmount,
+        lottoNumbers,
+        winningLottoNumber,
+        bonusNumber,
+      });
+    });
   }
 
   /**
@@ -111,15 +152,12 @@ export default class LottoGameController {
    * @param {number[][]} lottoNumbers - 로또 당첨 번호들
    */
   async #processPrintLottoResults(investmentAmount: number, lottoNumbers: number[][]) {
-    const winningNumbers = await this.#initializeWinningNumbers();
-    const winningLottoNumber = this.#lottoGame.createWinningLottoNumbers(winningNumbers);
-    const bonusNumber = await this.#initializeBonusNumber();
-    const { lottoResult, rateOfReturn } = this.#requestResults({
+    const winningLottoNumber = await this.#processWinningLottoNumber();
+    const { lottoResult, rateOfReturn } = await this.#processWinningInfo(
       investmentAmount,
       lottoNumbers,
       winningLottoNumber,
-      bonusNumber,
-    });
+    );
     this.#printLottoResults(lottoResult, rateOfReturn);
   }
 

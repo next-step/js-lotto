@@ -1,7 +1,7 @@
-import { LOTTO_TERMS } from '../constants/lotto';
-import { RandomNumberGeneratorInterface } from '../utils/generator/generator.type';
-import { RandomNumberGenerator } from '../utils/generator/randomNumberGenerator';
-import { LottoRangeInfo } from '../utils/jsDoc';
+import { LOTTO_TERMS } from '@step1/constants/lotto';
+import { RandomNumberGeneratorInterface } from '@step1/utils/generator/generator.type';
+import { RandomNumberGenerator } from '@step1/utils/generator/randomNumberGenerator';
+import { LottoRangeInfo } from '@step1/utils/jsDoc';
 
 /**
  * "로또 번호 생성"이라는 도메인을 가진 클래스
@@ -36,10 +36,12 @@ export default class LottoNumberMaker {
    */
   createLottoNumbers(): number[] {
     const { startNumber, endNumber, count } = LottoNumberMaker.#lottoRangeInfo;
-    return this.#lottoNumberGenerator.pickNumbersInRange({
-      startNumber,
-      endNumber,
-      count,
-    });
+    return this.#lottoNumberGenerator
+      .pickNumbersInRange({
+        startNumber,
+        endNumber,
+        count,
+      })
+      .sort((a, b) => a - b);
   }
 }

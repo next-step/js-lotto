@@ -1,4 +1,4 @@
-import { LottoReward } from '../../../src/step1/model';
+import { LottoReward } from '@step1/model';
 
 describe('LottoReward 관련 기능 테스트', () => {
   test.each([

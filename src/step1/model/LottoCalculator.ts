@@ -1,6 +1,6 @@
-import { formatWithSuffix } from '../utils/string';
-import NumberValidator from '../utils/validate/validator/NumberValidator';
-import { SYMBOLS } from '../constants/commons';
+import { formatWithSuffix } from '@step1/utils/string';
+import NumberValidator from '@step1/utils/validate/validator/NumberValidator';
+import { SYMBOLS } from '@step1/constants/commons';
 /**
  * "수익율 계산"이라는 도메인에 대한 클래스
  */

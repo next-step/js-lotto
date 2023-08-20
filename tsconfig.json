@@ -5,10 +5,16 @@
     "outDir": "./dist",
     "preserveValueImports": false,
     "module": "CommonJS",
-    "lib": ["ES2015", "DOM", "DOM.Iterable"]
+    "lib": ["ES2015", "DOM", "DOM.Iterable"],
+    "baseUrl": ".",
+    "paths": {
+      "@step1/*": ["src/step1/*"],
+      "@src/*": ["src/*"],
+      "@test/*": ["__tests__/*"]
+    }
   },
   "ts-node": { "esm": true },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "__tests__"],
   "exclude": ["node_modules", "dist"],
   "strict": true,
   "strictNullChecks": true,

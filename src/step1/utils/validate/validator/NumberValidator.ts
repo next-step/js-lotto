@@ -1,5 +1,5 @@
-import { ERROR_MESSAGE } from '../../../constants/message';
-import { NUMBER_TERMS } from '../../../constants/number';
+import { ERROR_MESSAGE } from '@step1/constants/message';
+import { NUMBER_TERMS } from '@step1/constants/number';
 
 const NumberValidator = {
   validateZero(value: number) {

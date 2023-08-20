@@ -1,4 +1,4 @@
-import Console from '../utils/console';
+import Console from '@step1/utils/console';
 
 const InputView = {
   async inputByUser(message: string) {

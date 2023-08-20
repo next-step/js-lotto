@@ -1,4 +1,4 @@
-import LottoGameController from './step1/controller/LottoGameController';
+import LottoGameController from '@step1/controller/LottoGameController';
 
 class App {
   #lottoGameController: LottoGameController;

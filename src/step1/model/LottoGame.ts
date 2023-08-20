@@ -1,6 +1,6 @@
-import { SYMBOLS } from '../constants/commons';
-import { CreateResultsParams } from '../controller/LottoGameController.type';
-import { Bank, Lotto, LottoMerchant } from './index';
+import { SYMBOLS } from '@step1/constants/commons';
+import { CreateResultsParams } from '@step1/controller/LottoGameController.type';
+import { Bank, Lotto, LottoMerchant } from '@step1/model';
 
 export default class LottoGame {
   createWinningLottoNumbers(winningNumbers: string) {

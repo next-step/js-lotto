@@ -3,4 +3,5 @@ export const SYMBOLS = {
   COMMA: ',',
   COLON: ':',
   DOT: '.',
+  SPACE: ' ',
 } as const;

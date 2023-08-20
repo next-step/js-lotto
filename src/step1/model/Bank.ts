@@ -1,6 +1,6 @@
-import { LottoMatchingInfo, WinningInfo, WinningLottoInfo } from '../utils/jsDoc';
-import BonusNumberValidator from '../utils/validate/validator/BonusNumberValidator';
-import { LottoCalculator, LottoReward } from './index';
+import { LottoMatchingInfo, WinningInfo, WinningLottoInfo } from '@step1/utils/jsDoc';
+import BonusNumberValidator from '@step1/utils/validate/validator/BonusNumberValidator';
+import { LottoCalculator, LottoReward } from '@step1/model';
 
 /**
  * "로또 당첨 결과 및 수익률 계산"이라는 도메인을 갖는 클래스
