@@ -6,16 +6,12 @@ import {
 } from "../data/constant.js";
 
 export const checkInputPriceType = (price) => {
-  if (isNaN(price)) {
-    throw new Error("금액은 숫자만 입력 가능합니다.");
+  if (typeof price !== "number" || isNaN(price)) {
+    throw new Error("금액은 숫자만 입력 가능하며 빈 값은 허용되지 않습니다.");
   }
 };
 
 export const isValidAmount = (price) => {
-  if (String(price).includes(" ")) {
-    throw new Error("금액 입력 시 공백을 포함할 수 없습니다.");
-  }
-
   if (price <= 0) {
     throw new Error("입력한 금액은 0보다 커야합니다.");
   }

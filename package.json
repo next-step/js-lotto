@@ -5,10 +5,25 @@
   "license": "MIT",
   "type": "module",
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "@babel/core": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
+    "babel-jest": "^29.6.2",
+    "cypress": "^6.3.0",
+    "jest": "^29.6.2"
   },
   "scripts": {
     "start-step1": "node src/step1-index.js",
-    "start-step2": "node src/step2-index.js"
+    "start-step2": "node src/step2-index.js",
+    "jest": "jest --watch"
+  },
+  "jest": {
+    "transform": {
+      "\\.[jt]sx?$": "babel-jest"
+    }
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
   }
 }
