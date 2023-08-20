@@ -59,13 +59,13 @@ class LottoWinningCalculator {
       6: 2000000000,
     }
 
-    let totalPrize = 0
+    let totalPofit = 0
     for (const rank in ranks) {
-      totalPrize += prizeMoney[rank] * ranks[rank]
+      totalPofit += prizeMoney[rank] * ranks[rank]
     }
 
     const totalCost = 1000 * statuses.length
-    const profitRate = (totalPrize / totalCost) * 100
+    const profitRate = (totalPofit / totalCost) * 100
 
     return profitRate
   }
