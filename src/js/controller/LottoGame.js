@@ -107,7 +107,10 @@ class LottoGame {
   async askRetry() {
     const retry = await this.#inputView.retry();
     checkValidRetry(retry);
-    if (retry === LOTTO_RETRY_CODE.CONFIRM) this.retryGame();
+    if (retry === LOTTO_RETRY_CODE.CONFIRM) {
+      this.retryGame();
+      return;
+    }
     process.exit();
   }
 
