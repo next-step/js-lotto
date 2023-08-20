@@ -9,3 +9,7 @@ export const calcLottoCount = (price) => {
 export const createRandomLottoNumber = () => {
   return Math.floor(Math.random() * 45) + 1;
 };
+
+export const priceWithCommas = (price) => {
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};

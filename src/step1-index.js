@@ -1,6 +1,6 @@
 import {
   createLottosForAmount,
-  processLottoPurchase,
+  getWinningPrizeResult,
   validateInputBonusNumber,
   validateInputPrice,
   validateInputWinningNumbers,
@@ -15,6 +15,8 @@ import {
 import {
   displayAvailableLottoCount,
   displayLottoNumbers,
+  displayTotalProfitRate,
+  displayWinningStats,
 } from "./view/view.js";
 
 async function lottoGame() {
@@ -27,7 +29,7 @@ async function lottoGame() {
   }
 
   // 몇개 살 수 있는 지 출력
-  const avaliableCount = processLottoPurchase(inputPrice);
+  const avaliableCount = calcLottoCount(inputPrice);
   displayAvailableLottoCount(avaliableCount);
 
   // 로또 번호 출력
@@ -54,6 +56,16 @@ async function lottoGame() {
     closeUserInput();
     return false;
   }
+
+  const winningNumbers = inputWinningNumbers
+    .split(",")
+    .map((number) => Number(number.trim()))
+    .concat(inputBonusNumber);
+
+  const winningResult = getWinningPrizeResult(lottoNumbers, winningNumbers);
+
+  displayWinningStats(winningResult);
+  displayTotalProfitRate(avaliableCount);
 }
 
 lottoGame();
