@@ -1,3 +1,10 @@
+import {
+  LOTTO_FIFTH_PRIZE,
+  LOTTO_FIRST_PRIZE,
+  LOTTO_FOURTH_PRIZE,
+  LOTTO_SECOND_PRIZE,
+  LOTTO_THIRD_PRIZE,
+} from '../src/js/constants/lotto';
 import { Lotto } from '../src/js/domain/Lotto';
 import { LottoMachine } from '../src/js/domain/LottoMachine';
 import { WinningLotto } from '../src/js/domain/WinningLotto';
@@ -89,6 +96,65 @@ describe('LottoMachine', () => {
       expect(result.THIRD.length).toBe(1);
       expect(result.FOURTH.length).toBe(1);
       expect(result.FIFTH.length).toBe(1);
+    });
+
+    describe('총 당첨금을 반환한다.', () => {
+      test.each([
+        [
+          [[2, 4, 10, 23, 43, 45]],
+          [2, 4, 10, 23, 43, 45],
+          1,
+          LOTTO_FIRST_PRIZE,
+        ],
+        [
+          [[1, 2, 4, 10, 23, 43]],
+          [2, 4, 10, 23, 43, 45],
+          1,
+          LOTTO_SECOND_PRIZE,
+        ],
+        [
+          [[2, 4, 10, 23, 43, 44]],
+          [2, 4, 10, 23, 43, 45],
+          1,
+          LOTTO_THIRD_PRIZE,
+        ],
+        [
+          [[3, 5, 10, 23, 43, 45]],
+          [2, 4, 10, 23, 43, 45],
+          1,
+          LOTTO_FOURTH_PRIZE,
+        ],
+        [
+          [[3, 5, 11, 23, 43, 45]],
+          [2, 4, 10, 23, 43, 45],
+          1,
+          LOTTO_FIFTH_PRIZE,
+        ],
+        [[[3, 5, 11, 24, 44, 4]], [2, 4, 10, 23, 43, 45], 1, 0],
+        [
+          [
+            [2, 4, 10, 23, 43, 45],
+            [1, 2, 4, 10, 23, 43],
+          ],
+          [2, 4, 10, 23, 43, 45],
+          1,
+          LOTTO_FIRST_PRIZE + LOTTO_SECOND_PRIZE,
+        ],
+      ])(
+        '.checkWinningLotto(%p, %p)',
+        (lottoNumbers, winningNumbers, bonusNumber, winningPrize) => {
+          const lottoMachine = new LottoMachine();
+          const lottos = lottoNumbers.map((numbers) => new Lotto(numbers));
+          const winningLotto = new WinningLotto(
+            new Lotto(winningNumbers),
+            bonusNumber
+          );
+
+          const result = lottoMachine.checkWinningLotto(lottos, winningLotto);
+
+          expect(result.TOTAL_WINNING_PRIZE).toBe(winningPrize);
+        }
+      );
     });
   });
 });

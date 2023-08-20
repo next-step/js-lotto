@@ -1,8 +1,16 @@
-import { ERROR_MESSAGE } from '../constants/error-message';
-import { LOTTO_AMOUNT_UNIT, LOTTO_NUMBERS_LENGTH } from '../constants/lotto';
-import { getNullArray } from '../utils/array';
-import { getRandomNumber } from '../utils/number';
-import { Lotto } from './Lotto';
+import { ERROR_MESSAGE } from '../constants/error-message.js';
+import {
+  LOTTO_AMOUNT_UNIT,
+  LOTTO_FIFTH_PRIZE,
+  LOTTO_FIRST_PRIZE,
+  LOTTO_FOURTH_PRIZE,
+  LOTTO_NUMBERS_LENGTH,
+  LOTTO_SECOND_PRIZE,
+  LOTTO_THIRD_PRIZE,
+} from '../constants/lotto.js';
+import { getNullArray } from '../utils/array.js';
+import { getRandomNumber } from '../utils/number.js';
+import { Lotto } from './Lotto.js';
 
 export class LottoMachine {
   #winningLottoResult;
@@ -14,6 +22,7 @@ export class LottoMachine {
       THIRD: [],
       FOURTH: [],
       FIFTH: [],
+      TOTAL_WINNING_PRIZE: 0,
     };
   }
   issueLotto(money) {
@@ -38,6 +47,7 @@ export class LottoMachine {
       const matchCount = this.getNumberOfMatchNumber(lotto, winningLotto);
       this.#setWinningLottoResult(matchCount, lotto, winningLotto);
     });
+    this.#setWinningPrize();
     return this.#winningLottoResult;
   }
 
@@ -62,6 +72,19 @@ export class LottoMachine {
       this.#winningLottoResult.FIFTH.push(lotto);
       return;
     }
+  }
+
+  #setWinningPrize() {
+    const { FIRST, SECOND, THIRD, FOURTH, FIFTH } = this.#winningLottoResult;
+
+    const firstPrize = FIRST.length * LOTTO_FIRST_PRIZE;
+    const secondPrize = SECOND.length * LOTTO_SECOND_PRIZE;
+    const thirdPrize = THIRD.length * LOTTO_THIRD_PRIZE;
+    const fourthPrize = FOURTH.length * LOTTO_FOURTH_PRIZE;
+    const fifthPrize = FIFTH.length * LOTTO_FIFTH_PRIZE;
+
+    this.#winningLottoResult.TOTAL_WINNING_PRIZE =
+      firstPrize + secondPrize + thirdPrize + fourthPrize + fifthPrize;
   }
 
   #getNumberOfLotto(amount) {

@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE } from '../constants/error-message';
+import { ERROR_MESSAGE } from '../constants/error-message.js';
 
 export const getRandomNumber = (from, to) => {
   if (from > to) {

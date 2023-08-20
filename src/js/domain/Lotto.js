@@ -1,5 +1,5 @@
-import { ERROR_MESSAGE } from '../constants/error-message';
-import { LOTTO_MAX_NUMBER, LOTTO_MIN_NUMBER } from '../constants/lotto';
+import { ERROR_MESSAGE } from '../constants/error-message.js';
+import { LOTTO_MAX_NUMBER, LOTTO_MIN_NUMBER } from '../constants/lotto.js';
 
 export class Lotto {
   #numbers;
