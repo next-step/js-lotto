@@ -82,7 +82,7 @@ export class View {
     const amount = tickets.length;
     this.#outputView.print(MESSAGE.PRINT.PURCHASED_AMOUNT(amount));
 
-    for (let ticket of tickets) {
+    for (const ticket of tickets) {
       const ticketNumbers = ticket.getTicketNumbers();
 
       this.#outputView.print(ticketNumbers);
