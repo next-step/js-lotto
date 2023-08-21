@@ -1,4 +1,5 @@
 import { createStore } from '../../src/js/utils/createStore'
+import { ERROR_MESSAGE } from '../../src/js/constants/message'
 
 describe('utils/createStore', () => {
   let store
@@ -87,7 +88,7 @@ describe('utils/createStore', () => {
         keyA: 'key A',
         keyB: 'key B'
       })
-    }).toThrow(new Error('존재하지 않는 action입니다!'))
+    }).toThrow(new Error(ERROR_MESSAGE.INVALID_ACTIONS))
   })
 
   it('store에 존재하지 않는 mutation의 경우, 애러를 발생시킨다.', () => {
@@ -96,6 +97,6 @@ describe('utils/createStore', () => {
       store.commit('inValidMutation', {
         keyA: 'key A'
       })
-    }).toThrow(new Error('존재하지 않는 mutation입니다!'))
+    }).toThrow(new Error(ERROR_MESSAGE.INVALID_MUTATIONS))
   })
 })

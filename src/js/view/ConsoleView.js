@@ -1,10 +1,12 @@
 import { prompt } from '../utils/prompt'
 import { lottoStore } from '../store/index'
+import { INFO_MESSAGE } from '../constants/message'
+import { LOTTO_ACTIONS_TYPE, LOTTO_STATE_KEY } from '../constants/store'
 
 export const ConsoleView = () => {
   const renderPaymentPrompt = () => {
-    prompt.question('구입금액을 입력해 주세요.\n', paymentText => {
-      lottoStore.dispatch('updatePayment', {
+    prompt.question(INFO_MESSAGE.REQUEST_PAYMENT, paymentText => {
+      lottoStore.dispatch(LOTTO_ACTIONS_TYPE.UPDATE_PAYMENT, {
         paymentText,
         onSuccess: renderWinNumberPrompt,
         onError: renderPaymentPrompt
@@ -13,8 +15,8 @@ export const ConsoleView = () => {
   }
 
   const renderWinNumberPrompt = () => {
-    prompt.question('당첨 번호를 입력해 주세요.\n', winNumberText => {
-      lottoStore.dispatch('updateWinNumber', {
+    prompt.question(INFO_MESSAGE.REQUEST_WIN_NUMBER, winNumberText => {
+      lottoStore.dispatch(LOTTO_ACTIONS_TYPE.UPDATE_WIN_NUMBER, {
         winNumberText,
         onSuccess: renderBonusNumberPrompt,
         onError: renderWinNumberPrompt
@@ -23,8 +25,8 @@ export const ConsoleView = () => {
   }
 
   const renderBonusNumberPrompt = () => {
-    prompt.question('보너스 번호를 입력해 주세요.\n', bonusNumberText => {
-      lottoStore.dispatch('updateBonusNumber', {
+    prompt.question(INFO_MESSAGE.REQUEST_BONUS_NUMBER, bonusNumberText => {
+      lottoStore.dispatch(LOTTO_ACTIONS_TYPE.UPDATE_BONUS_NUMBER, {
         bonusNumberText,
         onSuccess: renderRetryPrompt,
         onError: renderBonusNumberPrompt
@@ -33,8 +35,8 @@ export const ConsoleView = () => {
   }
 
   const renderRetryPrompt = () => {
-    prompt.question('다시 시작하시겠습니까? (y/n)\n', answer => {
-      lottoStore.dispatch('updateRetry', {
+    prompt.question(INFO_MESSAGE.REQUEST_RETRY, answer => {
+      lottoStore.dispatch(LOTTO_ACTIONS_TYPE.UPDATE_RETRY, {
         answer,
         onSuccess: renderPaymentPrompt,
         onClose: closePrompt
@@ -54,10 +56,10 @@ export const ConsoleView = () => {
     const key = Object.keys(payload)[0]
 
     switch (key) {
-      case 'count':
+      case LOTTO_STATE_KEY.COUNT:
         console.log(`${payload.count}개를 구매했습니다.`)
         return
-      case 'lottoResult':
+      case LOTTO_STATE_KEY.LOTTO_RESULT:
         console.log(
           '당첨 통계\n' +
             '--------------------\n' +
@@ -65,8 +67,8 @@ export const ConsoleView = () => {
             `총 수익률은 ${payload.lottoResult.rate}%입니다.`
         )
         return
-      case 'winNumberList':
-      case 'bonusNumber':
+      case LOTTO_STATE_KEY.WIN_NUMBER_LIST:
+      case LOTTO_STATE_KEY.BONUS_NUMBER:
         return
       default:
         console.log(payload[key])

@@ -1,33 +1,30 @@
 import { isNumber, isInRange } from '../../utils/validator'
 import { DEFAULT_PRICE } from '../../constants/lotto'
+import { ERROR_MESSAGE } from '../../constants/message'
 
 export const isInLottoRange = num => isInRange(num, 1, 45)
 
 export const checkPayment = payment => {
   if (!isNumber(payment)) {
-    throw new Error('⚠️ 구입 금액은 숫자여야만 합니다! ⚠️\n')
+    throw new Error(ERROR_MESSAGE.INVALID_LOTTO_PAYMENT_TYPE)
   }
 
   if (payment < DEFAULT_PRICE) {
-    throw new Error('⚠️ 구입 금액은 기본 금액인 1000원 이상이어야 합니다! ⚠️\n')
+    throw new Error(ERROR_MESSAGE.INVALID_LOTTO_PAYMENT)
   }
 }
 
 export const checkBonusNumber = (bonusNumber, winNumberList) => {
   if (!isNumber(bonusNumber)) {
-    throw new Error('⚠️ 보너스 번호는 숫자로만 입력해야 합니다! ⚠️\n')
+    throw new Error(ERROR_MESSAGE.INVALID_LOTTO_BONUS_NUMBER_TYPE)
   }
 
   if (!isInLottoRange(bonusNumber)) {
-    throw new Error(
-      '⚠️ 보너스 번호는 1부터 45 이하로만 입력이 가능합니다! ⚠️\n'
-    )
+    throw new Error(ERROR_MESSAGE.INVALID_LOTTO_BONUS_NUMBER_RANGE)
   }
 
   if (winNumberList.includes(bonusNumber)) {
-    throw new Error(
-      '⚠️ 보너스 번호는 당첨 번호에 없는 숫자로만 입력해야 합니다! ⚠️\n'
-    )
+    throw new Error(ERROR_MESSAGE.DUPLICATED_LOTTO_BONUS_NUMBER)
   }
 }
 
@@ -37,15 +34,15 @@ export const checkValidWinNumberList = winNumberText => {
 
   const isValidType = winNumberList.every(num => isNumber(num))
   if (!isValidType) {
-    throw new Error('⚠️ 딩첨 번호는 숫자로만 입력해야 합니다! ⚠️\n')
+    throw new Error(ERROR_MESSAGE.INVALID_LOTTO_WIN_NUMBER_TYPE)
   }
 
   if (uniqueWinNumberList.size !== 6) {
-    throw new Error('⚠️ 당첨 번호는 중복 없이 6개를 입력해야 합니다! ⚠️\n')
+    throw new Error(ERROR_MESSAGE.DUPLICATED_LOTTO_WIN_NUMBER)
   }
 
   const hasValidNumber = winNumberList.every(isInLottoRange)
   if (!hasValidNumber) {
-    throw new Error('⚠️ 당첨 번호는 1부터 45 이하로만 입력이 가능합니다! ⚠️\n')
+    throw new Error(ERROR_MESSAGE.INVALID_LOTTO_WIN_NUMBER_RANGE)
   }
 }

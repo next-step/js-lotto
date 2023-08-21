@@ -1,3 +1,5 @@
+import { ERROR_MESSAGE } from '../constants/message'
+
 export const createStore = ({ state: getState, actions, mutations }) => {
   let state = getState()
   let listeners = []
@@ -6,7 +8,7 @@ export const createStore = ({ state: getState, actions, mutations }) => {
     const mutation = mutations[type]
 
     if (!mutation) {
-      throw new Error('존재하지 않는 mutation입니다!')
+      throw new Error(ERROR_MESSAGE.INVALID_MUTATIONS)
     }
 
     mutation(state, payload)
@@ -17,7 +19,7 @@ export const createStore = ({ state: getState, actions, mutations }) => {
     const action = actions[type]
 
     if (!action) {
-      throw new Error('존재하지 않는 action입니다!')
+      throw new Error(ERROR_MESSAGE.INVALID_ACTIONS)
     }
 
     action({ state, commit, dispatch }, payload)
@@ -44,7 +46,7 @@ export const createStore = ({ state: getState, actions, mutations }) => {
       return state
     },
     set state(_) {
-      console.warn('mutation을 통해 state를 변경할 수 있습니다.')
+      console.warn(ERROR_MESSAGE.NOT_ACCESS_STATE)
     }
   }
 }

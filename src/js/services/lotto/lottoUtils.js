@@ -1,10 +1,11 @@
 import { DEFAULT_PRICE, LOTTO_PRIZE, LOTTO_RANK } from '../../constants/lotto'
+import { ERROR_MESSAGE } from '../../constants/message'
 import { isNumber } from '../../utils/validator'
 import { generateRandomNumber } from '../../utils/number'
 
 export const getCountOfPurchase = (amount, price = DEFAULT_PRICE) => {
   if (!isNumber(amount) || !isNumber(price)) {
-    throw new Error('올바른 숫자가 아닙니다!')
+    throw new Error(ERROR_MESSAGE.INVALID_NUMBER)
   }
 
   if (amount < price) {

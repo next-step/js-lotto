@@ -1,4 +1,5 @@
 import { actions } from '../../src/js/store/actions'
+import { LOTTO_MUTATIONS_TYPE } from '../../src/js/constants/store'
 import * as lottoUtils from '../../src/js/services/lotto/lottoUtils'
 
 describe('store/actions', () => {
@@ -24,13 +25,25 @@ describe('store/actions', () => {
       actions.updatePayment({ commit }, { paymentText, onSuccess, onError })
 
       // Then
-      expect(commit).toHaveBeenNthCalledWith(1, 'setCount', { count: 2 })
-      expect(commit).toHaveBeenNthCalledWith(2, 'addLotto', {
-        lotto: mockLotto
-      })
-      expect(commit).toHaveBeenNthCalledWith(3, 'addLotto', {
-        lotto: mockLotto
-      })
+      expect(commit).toHaveBeenNthCalledWith(
+        1,
+        LOTTO_MUTATIONS_TYPE.SET_COUNT,
+        { count: 2 }
+      )
+      expect(commit).toHaveBeenNthCalledWith(
+        2,
+        LOTTO_MUTATIONS_TYPE.ADD_LOTTO,
+        {
+          lotto: mockLotto
+        }
+      )
+      expect(commit).toHaveBeenNthCalledWith(
+        3,
+        LOTTO_MUTATIONS_TYPE.ADD_LOTTO,
+        {
+          lotto: mockLotto
+        }
+      )
 
       expect(onSuccess).toBeCalled()
       expect(onError).not.toBeCalled()
@@ -61,7 +74,7 @@ describe('store/actions', () => {
       actions.updateWinNumber({ commit }, { winNumberText, onSuccess, onError })
 
       // Then
-      expect(commit).toBeCalledWith('setWinNumberList', {
+      expect(commit).toBeCalledWith(LOTTO_MUTATIONS_TYPE.SET_WIN_NUMBER_LIST, {
         winNumberList: [1, 2, 3, 4, 5, 6]
       })
       expect(onSuccess).toBeCalled()
@@ -100,19 +113,27 @@ describe('store/actions', () => {
       )
 
       // Then
-      expect(commit).toHaveBeenNthCalledWith(1, 'setBonusNumber', 7)
-      expect(commit).toHaveBeenNthCalledWith(2, 'setLottoResult', {
-        lottoResult: {
-          rate: '200000000.0',
-          stats: [
-            '3개 일치 (5,000원) - 0개',
-            '4개 일치 (50,000원) - 0개',
-            '5개 일치 (1,500,000원) - 0개',
-            '5개 일치, 보너스 볼 일치 (30,000,000원) - 0개',
-            '6개 일치 (2,000,000,000원) - 1개'
-          ]
+      expect(commit).toHaveBeenNthCalledWith(
+        1,
+        LOTTO_MUTATIONS_TYPE.SET_BONUS_NUMBER,
+        7
+      )
+      expect(commit).toHaveBeenNthCalledWith(
+        2,
+        LOTTO_MUTATIONS_TYPE.SET_LOTTO_RESULT,
+        {
+          lottoResult: {
+            rate: '200000000.0',
+            stats: [
+              '3개 일치 (5,000원) - 0개',
+              '4개 일치 (50,000원) - 0개',
+              '5개 일치 (1,500,000원) - 0개',
+              '5개 일치, 보너스 볼 일치 (30,000,000원) - 0개',
+              '6개 일치 (2,000,000,000원) - 1개'
+            ]
+          }
         }
-      })
+      )
       expect(onSuccess).toBeCalled()
       expect(onError).not.toBeCalled()
     })
@@ -150,7 +171,7 @@ describe('store/actions', () => {
       actions.updateRetry({ commit }, { answer, onSuccess, onClose })
 
       // Then
-      expect(commit).toBeCalledWith('reset')
+      expect(commit).toBeCalledWith(LOTTO_MUTATIONS_TYPE.RESET)
       expect(onSuccess).toBeCalled()
       expect(onClose).not.toBeCalled()
     })

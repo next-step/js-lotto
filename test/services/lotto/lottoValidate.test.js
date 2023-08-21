@@ -4,6 +4,7 @@ import {
   checkValidWinNumberList,
   checkPayment
 } from '../../../src/js/services/lotto/lottoValidate'
+import { ERROR_MESSAGE } from '../../../src/js/constants/message'
 
 describe('services/lottoValidate', () => {
   describe('isInLottoRange()', () => {
@@ -47,7 +48,7 @@ describe('services/lottoValidate', () => {
         // When, Then
         expect(() => {
           checkPayment(payment)
-        }).toThrow('⚠️ 구입 금액은 숫자여야만 합니다! ⚠️\n')
+        }).toThrow(ERROR_MESSAGE.INVALID_LOTTO_PAYMENT_TYPE)
       }
     )
 
@@ -57,7 +58,7 @@ describe('services/lottoValidate', () => {
         // When, Then
         expect(() => {
           checkPayment(payment)
-        }).toThrow('⚠️ 구입 금액은 기본 금액인 1000원 이상이어야 합니다! ⚠️\n')
+        }).toThrow(ERROR_MESSAGE.INVALID_LOTTO_PAYMENT)
       }
     )
   })
@@ -82,7 +83,7 @@ describe('services/lottoValidate', () => {
         // When, Then
         expect(() => {
           checkBonusNumber(bonusNumber, [])
-        }).toThrow(new Error('⚠️ 보너스 번호는 숫자로만 입력해야 합니다! ⚠️\n'))
+        }).toThrow(new Error(ERROR_MESSAGE.INVALID_LOTTO_BONUS_NUMBER_TYPE))
       }
     )
 
@@ -92,11 +93,7 @@ describe('services/lottoValidate', () => {
         // When, Then
         expect(() => {
           checkBonusNumber(bonusNumber, [])
-        }).toThrow(
-          new Error(
-            '⚠️ 보너스 번호는 1부터 45 이하로만 입력이 가능합니다! ⚠️\n'
-          )
-        )
+        }).toThrow(new Error(ERROR_MESSAGE.INVALID_LOTTO_BONUS_NUMBER_RANGE))
       }
     )
 
@@ -109,11 +106,7 @@ describe('services/lottoValidate', () => {
         // When, Then
         expect(() => {
           checkBonusNumber(bonusNumber, winNumberList)
-        }).toThrow(
-          new Error(
-            '⚠️ 보너스 번호는 당첨 번호에 없는 숫자로만 입력해야 합니다! ⚠️\n'
-          )
-        )
+        }).toThrow(new Error(ERROR_MESSAGE.DUPLICATED_LOTTO_BONUS_NUMBER))
       }
     )
   })
@@ -142,7 +135,7 @@ describe('services/lottoValidate', () => {
         // When, Then
         expect(() => {
           checkValidWinNumberList(winNumberText)
-        }).toThrow(new Error('⚠️ 딩첨 번호는 숫자로만 입력해야 합니다! ⚠️\n'))
+        }).toThrow(new Error(ERROR_MESSAGE.INVALID_LOTTO_WIN_NUMBER_TYPE))
       }
     )
 
@@ -152,9 +145,7 @@ describe('services/lottoValidate', () => {
         // When, Then
         expect(() => {
           checkValidWinNumberList(winNumberText)
-        }).toThrow(
-          new Error('⚠️ 당첨 번호는 중복 없이 6개를 입력해야 합니다! ⚠️\n')
-        )
+        }).toThrow(new Error(ERROR_MESSAGE.DUPLICATED_LOTTO_WIN_NUMBER))
       }
     )
 
@@ -164,9 +155,7 @@ describe('services/lottoValidate', () => {
         // When, Then
         expect(() => {
           checkValidWinNumberList(winNumberText)
-        }).toThrow(
-          new Error('⚠️ 당첨 번호는 중복 없이 6개를 입력해야 합니다! ⚠️\n')
-        )
+        }).toThrow(new Error(ERROR_MESSAGE.DUPLICATED_LOTTO_WIN_NUMBER))
       }
     )
 
@@ -176,9 +165,7 @@ describe('services/lottoValidate', () => {
         // When, Then
         expect(() => {
           checkValidWinNumberList(winNumberText)
-        }).toThrow(
-          new Error('⚠️ 당첨 번호는 1부터 45 이하로만 입력이 가능합니다! ⚠️\n')
-        )
+        }).toThrow(new Error(ERROR_MESSAGE.INVALID_LOTTO_WIN_NUMBER_RANGE))
       }
     )
   })

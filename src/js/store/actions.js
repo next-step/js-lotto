@@ -7,6 +7,7 @@ import {
   generateLottoList
 } from '../services/lotto/lottoUtils'
 import { DEFAULT_PRICE } from '../constants/lotto'
+import { LOTTO_MUTATIONS_TYPE } from '../constants/store'
 import {
   checkBonusNumber,
   checkPayment,
@@ -20,8 +21,10 @@ export const actions = {
       checkPayment(payment)
 
       const count = getCountOfPurchase(payment)
-      commit('setCount', { count })
-      generateLottoList(count).forEach(lotto => commit('addLotto', { lotto }))
+      commit(LOTTO_MUTATIONS_TYPE.SET_COUNT, { count })
+      generateLottoList(count).forEach(lotto =>
+        commit(LOTTO_MUTATIONS_TYPE.ADD_LOTTO, { lotto })
+      )
 
       onSuccess()
     } catch (e) {
@@ -34,7 +37,7 @@ export const actions = {
       checkValidWinNumberList(winNumberText)
 
       const winNumberList = winNumberText.split(',').map(num => Number(num))
-      commit('setWinNumberList', { winNumberList })
+      commit(LOTTO_MUTATIONS_TYPE.SET_WIN_NUMBER_LIST, { winNumberList })
 
       onSuccess()
     } catch (e) {
@@ -51,7 +54,7 @@ export const actions = {
       const { winNumberList, lottoList } = state
       checkBonusNumber(bonusNumber, winNumberList)
 
-      commit('setBonusNumber', bonusNumber)
+      commit(LOTTO_MUTATIONS_TYPE.SET_BONUS_NUMBER, bonusNumber)
 
       const lottoResultList = getLottoResult(
         winNumberList,
@@ -63,7 +66,9 @@ export const actions = {
       const rate = getReturnRate(totalPrize, payment)
       const stats = getLottoStats(lottoResultList)
 
-      commit('setLottoResult', { lottoResult: { rate, stats } })
+      commit(LOTTO_MUTATIONS_TYPE.SET_LOTTO_RESULT, {
+        lottoResult: { rate, stats }
+      })
       onSuccess()
     } catch (e) {
       console.log(e.message)
@@ -72,7 +77,7 @@ export const actions = {
   },
   updateRetry: ({ commit }, { answer, onSuccess, onClose }) => {
     if (answer === 'y') {
-      commit('reset')
+      commit(LOTTO_MUTATIONS_TYPE.RESET)
       onSuccess()
       return
     }
