@@ -42,7 +42,7 @@ export class GameController {
   }
 
   #checkTicketsResult(tickets, winningNumbers) {
-    const ticketResults = tickets.map((ticket) => {
+    return tickets.map((ticket) => {
       const ticketNumbers = ticket.getTicketNumbers();
 
       return this.#lottoCorporation.checkTicketResult(
@@ -50,8 +50,6 @@ export class GameController {
         winningNumbers
       );
     });
-
-    return ticketResults;
   }
 
   #printTicketsResult(ticketResults) {
