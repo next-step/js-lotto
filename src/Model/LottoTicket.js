@@ -1,4 +1,4 @@
-import { getRandomIntInRange, sortAscending } from '../utils';
+import { getRandomIntInRange } from '../utils';
 import { NUMBER } from '../constants';
 
 export class LottoTicket {
@@ -27,7 +27,7 @@ export class LottoTicket {
       uniqueNumbers.add(randomNumber);
     }
 
-    return sortAscending([...uniqueNumbers]);
+    return [...uniqueNumbers].sort((a, b) => a - b);
   }
 
   getTicketNumbers() {
