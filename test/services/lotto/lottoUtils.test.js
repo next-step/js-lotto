@@ -8,9 +8,9 @@ import {
   calcTotalPrize,
   getReturnRate,
   getLottoStats
-} from '../../src/js/helper/lotto'
+} from '../../../src/js/services/lotto/lottoUtils'
 
-describe('helper - lotto', () => {
+describe('services/lottoUtils', () => {
   describe('getCountOfPurchase', () => {
     it('구입 금액이 1000원인 경우, 10000을 입력하면 구매 가능한 개수인 10으로 반환해야 한다.', () => {
       // Given

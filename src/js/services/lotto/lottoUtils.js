@@ -1,6 +1,6 @@
-import { DEFAULT_PRICE, LOTTO_PRIZE, LOTTO_RANK } from '../constants/lotto'
-import { isNumber } from '../utils/validator'
-import { generateRandomNumber } from '../utils/number'
+import { DEFAULT_PRICE, LOTTO_PRIZE, LOTTO_RANK } from '../../constants/lotto'
+import { isNumber } from '../../utils/validator'
+import { generateRandomNumber } from '../../utils/number'
 
 export const getCountOfPurchase = (amount, price = DEFAULT_PRICE) => {
   if (!isNumber(amount) || !isNumber(price)) {
