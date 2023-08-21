@@ -1,8 +1,8 @@
-import { LottoView } from '../view/LottoView.js';
+import { LottoOutput } from '../view/LottoOutput.js';
 
 export class LottoMachine {
   constructor(count) {
-    this.view = LottoView;
+    this.output = LottoOutput;
     this.lottos = Array.from({ length: count }, () => this.issueLotto());
   }
 
@@ -14,7 +14,7 @@ export class LottoMachine {
         lottoNumbers.push(number);
       }
     }
-    this.view.LOTTO_NUMBERS(lottoNumbers);
+    this.output.LOTTO_NUMBERS(lottoNumbers);
     return lottoNumbers;
   }
 }

@@ -10,7 +10,6 @@ export const validateInputPrice = (price) => {
 
 export const validateWinningNumber = (winningNumbers) => {
   const splittedWinningNumbers = parseSeparatedNumbers(winningNumbers);
-  // @ts-ignore
   splittedWinningNumbers.forEach((number) => {
     validateNumber(Number(number));
     validatePositiveNumber(Number(number));
@@ -23,6 +22,13 @@ export const validateBonusNumer = (winningNumbers, bonusNumber) => {
   validateNumber(bonusNumber);
   validateNumberRange(bonusNumber);
   validateBonusDuplicate(winningNumbers, bonusNumber);
+};
+
+export const validateRetry = (retry) => {
+  retry = retry.toLowerCase();
+  if (retry !== 'y' && retry !== 'n') {
+    throw new Error(ERRORS.NOT_RETRY_ANSWER);
+  }
 };
 
 export const validateNumber = (number) => {
