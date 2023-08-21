@@ -23,12 +23,9 @@ export const View = {
 
     // 로또 번호는 1 - 43 사이의 수이다.
     const { MIN_RANGE, MAX_RANGE } = NUMBER.LOTTO_TICKET;
-    lottoNumbers.forEach((lottoNumber) => {
-      if (!isLottoNumber(lottoNumber))
-        throw new Error(
-          MESSAGE.ERROR.INVALID_LOTTO_RANGE(MIN_RANGE, MAX_RANGE)
-        );
-    });
+    const isValidNumbers = lottoNumbers.every(isLottoNumber);
+    if (!isValidNumbers)
+      throw new Error(MESSAGE.ERROR.INVALID_LOTTO_RANGE(MIN_RANGE, MAX_RANGE));
 
     // 로또 번호는 중복될 수 없다.
     if (!isNumbersUnique(lottoNumbers))
@@ -46,6 +43,7 @@ export const View = {
     if (lottoNumbers.includes(Number(bonusNumber)))
       throw new Error(MESSAGE.ERROR.DUPLICATE_BONUS_NUMBER);
   },
+
   readRestart(restartInput) {
     if (
       restartInput !== RESTART_INPUT.YES &&
