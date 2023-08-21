@@ -16,13 +16,13 @@ describe('LottoTicket은 1-43 사이의 번호와 보너스 번호로 이루어�
   test('로또 티켓의 번호는 1-43 사이의 숫자들로 구성된다.', () => {
     const ticket = new LottoTicket();
     const ticketNumbers = ticket.getTicketNumbers();
-    const validTicketNumbers = ticketNumbers.every(
+    const toBevalidTicketNumbers = ticketNumbers.every(
       (number) =>
         NUMBER.LOTTO_TICKET.MIN_RANGE <= number &&
         number <= NUMBER.LOTTO_TICKET.MAX_RANGE
     );
 
-    expect(validTicketNumbers).toBeTruthy();
+    expect(toBevalidTicketNumbers).toBeTruthy();
   });
 
   test('로또 티켓의 당첨 번호는 6개이다.', () => {

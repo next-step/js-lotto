@@ -19,9 +19,9 @@ describe('LottoCorporation', () => {
     '발급된 로또의 숫자 범위가 유효한지 확인한다.',
     (ticket) => {
       const numbers = ticket.getTicketNumbers();
-      const numberValidation = numbers.every(isLottoNumber);
+      const toBeValidNumbers = numbers.every(isLottoNumber);
 
-      expect(numberValidation).toBeTruthy();
+      expect(toBeValidNumbers).toBeTruthy();
     }
   );
 
@@ -30,8 +30,9 @@ describe('LottoCorporation', () => {
     (ticket) => {
       const ticketNumbers = ticket.getTicketNumbers();
       const uniqueNumbers = new Set(ticketNumbers);
+      const toBeSameSize = uniqueNumbers.size === ticketNumbers.length;
 
-      expect(uniqueNumbers.size === ticketNumbers.length).toBeTruthy();
+      expect(toBeSameSize).toBeTruthy();
     }
   );
 
