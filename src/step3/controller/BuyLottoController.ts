@@ -2,6 +2,7 @@ import { CUSTOM_EVENT, EVENT } from '@step3/constants/event';
 import { SELECTOR_NAME } from '@step3/constants/selector';
 import { $ } from '@step3/utils/dom';
 import { LottoPurchaseFormView, PurchasedLottoView } from '@step3/view';
+import { LottoGame } from '@step1/model';
 import LottoApplicationController from './LottoApplicationController';
 
 export default class BuyLottoController extends LottoApplicationController {
@@ -9,8 +10,8 @@ export default class BuyLottoController extends LottoApplicationController {
 
   private purchasedLottoView: PurchasedLottoView;
 
-  constructor() {
-    super();
+  constructor(lottoGame?: LottoGame) {
+    super(lottoGame);
     this.lottoPurchaseFormView = new LottoPurchaseFormView($<HTMLFormElement>(SELECTOR_NAME.LOTTO_PURCHASE_FORM));
     this.purchasedLottoView = new PurchasedLottoView(
       $<HTMLTableSectionElement>(SELECTOR_NAME.PURCHASED_LOTTOS_SECTION),
@@ -31,7 +32,7 @@ export default class BuyLottoController extends LottoApplicationController {
 
   private handleToggleButton() {
     const isChecked = $<HTMLInputElement>(SELECTOR_NAME.LOTTO_NUMBERS_TOGGLE_BUTTON).checked;
-    const lottoNumbers = isChecked ? this.lottoGame.lottos.map((lotto) => lotto.getLottoNumbers()) : null;
+    const lottoNumbers = isChecked ? this.lottoGame.buyerInfo.lottos.map((lotto) => lotto.getLottoNumbers()) : null;
     this.purchasedLottoView.renderLottoNumberInPurchasedLotto(lottoNumbers);
   }
 
