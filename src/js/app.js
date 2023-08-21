@@ -1,3 +1,4 @@
+import { LOTTO_AMOUNT_UNIT } from './constants/lotto.js';
 import { Lotto } from './domain/Lotto.js';
 import { LottoMachine } from './domain/LottoMachine.js';
 import { WinningLotto } from './domain/WinningLotto.js';
@@ -44,6 +45,8 @@ export class App {
       this.#lottos,
       this.#winningLotto
     );
-    this.#lottoView.printLottoResult(lottoResult);
+
+    const purchaseAmount = this.#lottos.length * LOTTO_AMOUNT_UNIT;
+    this.#lottoView.printLottoResult(lottoResult, purchaseAmount);
   }
 }

@@ -1,4 +1,5 @@
 import { askQuestion, closeReadLine } from '../utils/console.js';
+import { calculateRateOfReturn } from '../utils/number.js';
 
 export default class LottoView {
   async inputPurchaseAmount() {
@@ -24,16 +25,21 @@ export default class LottoView {
     return answer;
   }
 
-  printLottoResult(winningLottoResult, totalReturn) {
-    const { FIRST, SECOND, THIRD, FOURTH, FIFTH } = winningLottoResult;
+  printLottoResult(winningLottoResult, purchaseAmount) {
+    const { FIRST, SECOND, THIRD, FOURTH, FIFTH, TOTAL_WINNING_PRIZE } =
+      winningLottoResult;
+    const rateOfReturn = calculateRateOfReturn(
+      TOTAL_WINNING_PRIZE,
+      purchaseAmount
+    );
     console.log('당첨 통계 \n');
     console.log('--------------------\n');
-    console.log(`3개 일치 (5,000원) - ${FIRST.length}개`);
-    console.log(`4개 일치 (50,000원) - ${SECOND.length}개`);
+    console.log(`3개 일치 (5,000원) - ${FIFTH.length}개`);
+    console.log(`4개 일치 (50,000원) - ${FOURTH.length}개`);
     console.log(`5개 일치 (1,500,000원) - ${THIRD.length}개`);
-    console.log(`5개 일치, 보너스 볼 일치 (30,000,000원) - ${FOURTH.length}개`);
-    console.log(`6개 일치 (2,000,000,000원) - ${FIFTH.length}개`);
-    console.log(`총 수익률은 ${totalReturn}입니다.`);
+    console.log(`5개 일치, 보너스 볼 일치 (30,000,000원) - ${SECOND.length}개`);
+    console.log(`6개 일치 (2,000,000,000원) - ${FIRST.length}개`);
+    console.log(`총 수익률은 ${rateOfReturn}%입니다.`);
     closeReadLine();
   }
 }
