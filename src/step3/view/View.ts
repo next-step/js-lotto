@@ -1,4 +1,4 @@
-export default abstract class View<T extends HTMLElement = HTMLElement> {
+export default class View<T extends HTMLElement = HTMLElement> {
   protected $element: T;
 
   constructor(element: T) {
@@ -10,7 +10,7 @@ export default abstract class View<T extends HTMLElement = HTMLElement> {
     if (!element) throw this.$element;
   }
 
-  protected abstract init(element: T): void;
+  protected init(): void {}
 
   protected setEvent(): void {}
 
