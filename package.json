@@ -7,35 +7,44 @@
     "start": "npm run build-prod && node dist/bundle.js",
     "build-dev": "webpack --mode development",
     "build-prod": "webpack --mode production",
-    "test": "jest --watch",
+    "test": "jest --watch --no-cache",
     "format": "prettier --write \"src/**/*.js\"",
-    "fix": "eslint --fix src/**/*.js"
+    "fix": "eslint --fix src/**/*.js",
+    "build-step1": "webpack --config step1.config.js",
+    "start-step1": "npm run build-step1 && node dist/step1-bundle.js",
+    "start-step2": "npm run build-step2 && node dist/step2-bundle.js",
+    "build-step3": "webpack --mode production --config step3.config.js",
+    "start-step3": "webpack serve --open --config step3.config.js",
+    "start-step4": "webpack serve --open --config step4.config.js"
+
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
     "@types/jest": "^29.2.5",
+    "jest": "^29.3.1",
     "babel-jest": "^29.3.1",
     "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
-    "eslint": "^8.45.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^5.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "css-loader": "^6.6.0",
+    "style-loader": "^3.3.1",
+    "eslint": "^8.31.0",
+    "prettier": "^2.8.2",
     "esm": "^3.2.25",
-    "jest": "^29.3.1",
-    "prettier": "^3.0.0",
     "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.7.4"
   },
   "jest": {
     "transform": {
-      "\\.[jt]sx?$": "babel-jest"
+      "^.+\\.js$": "babel-jest"
     }
   },
   "babel": {
     "presets": [
       "@babel/preset-env"
     ]
-  },
-  "type": "module"
+  }
 }
