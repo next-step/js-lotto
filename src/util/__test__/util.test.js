@@ -1,7 +1,7 @@
 import { getProfitRate, parseSeparatedNumbers, sortNumberArray } from '../index.js';
 
 describe('util functions test', () => {
-  test('profitRateCalculator', () => {
+  test('getProfitRate util', () => {
     //given
     const MONEY = 1000;
     const TOTAL = 2000;
@@ -11,7 +11,7 @@ describe('util functions test', () => {
     // console.log(profitRateCalculator(MONEY, TOTAL))
   });
 
-  test('arraySorter', () => {
+  test('SortArray util', () => {
     //given
     const ARRAY = [6, 5, 4, 3, 2, 1];
 
@@ -19,7 +19,7 @@ describe('util functions test', () => {
     expect(sortNumberArray(ARRAY)).toStrictEqual([1, 2, 3, 4, 5, 6]);
   });
 
-  test('parseSeparatedNumbers', () => {
+  test('parseSeperateNumbers util', () => {
     //given
     const INPUT = '1,2,3,4,5,6';
 

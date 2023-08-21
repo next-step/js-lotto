@@ -2,6 +2,7 @@ import { LOTTO_PRICE } from './index.js';
 
 export const ERRORS = Object.freeze({
   NOT_NUMBER: '숫자를 입력해주세요.',
+  NOT_RETRY_ANSWER: '"y" 혹은 "n" 을 입력해주세요.',
   NOT_ENOUGH_MONEY: `로또 구입 금액은 ${LOTTO_PRICE}원 이상이어야 합니다.`,
   NOT_POSITIVE_NUMBER: '양의 정수를 입력해주세요.',
   NOT_WINNING_NUMBER_QTY: '당첨 번호는 6개여야 합니다.',
@@ -17,4 +18,5 @@ export const MESSAGES = Object.freeze({
   ASK_WINNING_NUMBER: '\n당첨 번호를 입력해 주세요.',
   ASK_BONUS_NUMBER: '\n보너스 번호를 입력해 주세요.',
   LOTTO_RESULT: '\n당첨 통계',
+  ASK_RETRY: '\n다시 시작하시겠습니까? (y/n) ',
 });

@@ -1,21 +1,33 @@
-import { getProfitRate, readlineUtils } from '../../util/index.js';
+import { getProfitRate } from '../../util/index.js';
 import { LOTTO_PRICE } from '../constants/index.js';
 import { Customer } from '../model/Customer.js';
 import { LottoMachine } from '../model/LottoMachine.js';
-import { LottoView } from '../view/LottoView.js';
+import { LottoInput } from '../view/LottoInput.js';
+import { LottoOutput } from '../view/LottoOutput.js';
 
 export class LottoClerk {
-  lotto_price = LOTTO_PRICE;
+  lottoPrice = LOTTO_PRICE;
+  output = LottoOutput;
+  input = LottoInput;
 
   constructor() {
-    this.view = LottoView;
+    this.enterLottoStore();
+  }
+
+  async enterLottoStore() {
+    const money = await this.input.ASK_MONEY();
+    this.purchaseLotto(money);
+
+    const winningNumbers = await this.input.ASK_WINNING_NUMBERS();
+    const bonus = await this.input.ASK_BONUS_NUMBER(winningNumbers);
+    this.checkoutLotto(winningNumbers, bonus);
   }
 
   purchaseLotto(money) {
-    const count = Math.floor(money / this.lotto_price);
+    const count = Math.floor(money / this.lottoPrice);
 
-    this.customer = new Customer(count * this.lotto_price);
-    this.view.LOTTO_COUNT(count);
+    this.customer = new Customer(count * this.lottoPrice);
+    this.output.LOTTO_COUNT(count);
     this.machine = new LottoMachine(count);
   }
 
@@ -28,8 +40,17 @@ export class LottoClerk {
   }
   announceResult() {
     const profitRate = getProfitRate(this.customer.money, this.customer.amount);
-    this.view.LOTTO_RESULT(this.customer.results, profitRate);
-    readlineUtils.closeReadline();
+    this.output.LOTTO_RESULT(this.customer.results, profitRate);
+    this.askRetry();
+  }
+
+  async askRetry() {
+    const retry = await this.input.ASK_RETRY();
+    if (retry === 'y') {
+      this.enterLottoStore();
+    } else {
+      this.input.EXIT_LOTTO_STORE();
+    }
   }
 
   #countWinningNumber(lotto, winning, bonus) {
