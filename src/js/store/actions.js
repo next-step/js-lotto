@@ -54,7 +54,7 @@ export const actions = {
       const { winNumberList, lottoList } = state
       checkBonusNumber(bonusNumber, winNumberList)
 
-      commit(LOTTO_MUTATIONS_TYPE.SET_BONUS_NUMBER, bonusNumber)
+      commit(LOTTO_MUTATIONS_TYPE.SET_BONUS_NUMBER, { bonusNumber })
 
       const lottoResultList = getLottoResult(
         winNumberList,
