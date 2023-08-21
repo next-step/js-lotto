@@ -1,6 +1,6 @@
 import { createStore } from '../../src/js/utils/createStore'
 
-describe('utils/createStore()', () => {
+describe('utils/createStore', () => {
   let store
 
   beforeEach(() => {
