@@ -5,17 +5,23 @@ const makeLottoPrizeRule = (
   matchingNumberCount,
   requiresBonusNumber,
   prizeAmount,
-) => ({ rank, requiresBonusNumber, matchingNumberCount, prizeAmount });
+) => {
+  const rule = { rank, requiresBonusNumber, matchingNumberCount, prizeAmount };
+
+  return Object.fromEntries(
+    Object.entries(rule).filter(([, value]) => value !== undefined),
+  );
+};
 
 describe("LottoPrizeRules 클래스 테스트", () => {
   test("규칙 형식에 맞지 않는 초기값을 전달하면 기본값으로 설정된다.", () => {
     const prizeRules = new LottoPrizeRules([makeLottoPrizeRule(1, 6, false)]);
 
-    expect(prizeRules.rules).toBe(prizeRules.defaultRules);
+    expect(prizeRules.rules).toStrictEqual(prizeRules.defaultRules);
   });
 
-  test.each([-1, 2])(
-    "matchingNumberCount가 $d 이면 에러가 발생한다.",
+  test.each([-1, 1.2])(
+    "matchingNumberCount가 %f 이면 에러가 발생한다.",
     (matchingNumberCount) => {
       expect(
         () =>
@@ -56,7 +62,7 @@ describe("LottoPrizeRules 클래스 테스트", () => {
   test("rule getter로 존재하지 않는 규칙 조회시 에러가 반환된다.", () => {
     const prizeRules = new LottoPrizeRules();
 
-    expect(prizeRules.getSingleRule(7)).toThrowError(
+    expect(() => prizeRules.getSingleRule(7)).toThrowError(
       "존재하지 않는 규칙입니다.",
     );
   });

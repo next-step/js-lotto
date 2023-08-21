@@ -36,6 +36,10 @@ export default class LottoPrizeRules {
   static #REQUIRED_KEYS = ["rank", "matchingNumberCount", "prizeAmount"];
 
   #validateRulesProperty = (rules) => {
+    if (!Array.isArray(rules)) {
+      return false;
+    }
+
     return rules.every((rule) =>
       LottoPrizeRules.#REQUIRED_KEYS.every((key) => rule.hasOwnProperty(key)),
     );
@@ -92,5 +96,23 @@ export default class LottoPrizeRules {
           ? rule.requiresBonusNumber
           : false,
     }));
+  }
+
+  get rules() {
+    return [...this.#rules];
+  }
+
+  get defaultRules() {
+    return [...this.#defaultRules];
+  }
+
+  getSingleRule(rank) {
+    const rule = this.#rules.find((rule) => rule.rank === rank);
+
+    if (rule === undefined) {
+      throw new Error("존재하지 않는 규칙입니다.");
+    }
+
+    return { ...rule };
   }
 }
