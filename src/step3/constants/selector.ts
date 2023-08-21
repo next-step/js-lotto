@@ -6,4 +6,5 @@ export const SELECTOR_NAME = {
   PURCHASED_LOTTO: '#purchased-lotto',
   PURCHASED_LOTTO_NUMBERS: '#purchased-lotto-numbers',
   LOTTO_NUMBERS_TOGGLE_BUTTON: '.lotto-numbers-toggle-button',
+  WINNING_LOTTO_INFO_FORM: '#winning-lotto-info-form',
 } as const;
