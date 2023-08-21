@@ -7,7 +7,8 @@ import {
   getLottoResult,
   calcTotalPrize,
   getReturnRate,
-  getLottoStats
+  getLottoStats,
+  generateLottoList
 } from '../../../src/js/services/lotto/lottoUtils'
 
 describe('services/lottoUtils', () => {
@@ -71,6 +72,19 @@ describe('services/lottoUtils', () => {
       expect(result.length).toBe(6)
       expect(uniqueArray.size).toBe(6)
     })
+  })
+
+  describe('generateLottoList()', () => {
+    it.each([[1], [2], [5], [10]])(
+      '로또의 개수를 인자로 입력받고 해당 개수만큼 로또를 생성해서 반환한다.',
+      count => {
+        // When
+        const lottoList = generateLottoList(count)
+
+        // Then
+        expect(lottoList.length).toBe(count)
+      }
+    )
   })
 
   describe('getMatchCount()', () => {

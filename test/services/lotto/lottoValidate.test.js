@@ -1,7 +1,8 @@
 import {
   isInLottoRange,
   checkBonusNumber,
-  checkValidWinNumberList
+  checkValidWinNumberList,
+  checkPayment
 } from '../../../src/js/services/lotto/lottoValidate'
 
 describe('services/lottoValidate', () => {
@@ -25,6 +26,38 @@ describe('services/lottoValidate', () => {
 
         // Then
         expect(result).toBe(false)
+      }
+    )
+  })
+
+  describe('checkPayment()', () => {
+    it.each([[1000], [2000], [3500], [10000]])(
+      '구입 금액이 숫자이고 로또 1장의 금액보다 큰 경우, 에러가 발생하지 않는다.',
+      payment => {
+        // When, Then
+        expect(() => {
+          checkPayment(payment)
+        }).not.toThrow()
+      }
+    )
+
+    it.each([[NaN], [undefined], [null], [{}], [[]], ['string']])(
+      '구입 금액이 숫자가 아닌 경우, 에러가 발생한다.',
+      payment => {
+        // When, Then
+        expect(() => {
+          checkPayment(payment)
+        }).toThrow('⚠️ 구입 금액은 숫자여야만 합니다! ⚠️\n')
+      }
+    )
+
+    it.each([[-1000], [999], [800], [0]])(
+      '구입 금액이 로또 1장의 금액보다 적은 경우 에러가 발생한다.',
+      payment => {
+        // When, Then
+        expect(() => {
+          checkPayment(payment)
+        }).toThrow('⚠️ 구입 금액은 기본 금액인 1000원 이상이어야 합니다! ⚠️\n')
       }
     )
   })

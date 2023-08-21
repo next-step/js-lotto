@@ -28,6 +28,17 @@ export const generateLotto = () => {
   return [...numberList].sort((a, b) => a - b)
 }
 
+export const generateLottoList = count => {
+  const result = []
+
+  while (result.length < count) {
+    const lotto = generateLotto()
+    result.push(lotto)
+  }
+
+  return result
+}
+
 export const getMatchCount = (winNumberList, lotto) => {
   return lotto.filter(number => winNumberList.includes(number)).length
 }

@@ -1,6 +1,17 @@
 import { isNumber, isInRange } from '../../utils/validator'
+import { DEFAULT_PRICE } from '../../constants/lotto'
 
 export const isInLottoRange = num => isInRange(num, 1, 45)
+
+export const checkPayment = payment => {
+  if (!isNumber(payment)) {
+    throw new Error('⚠️ 구입 금액은 숫자여야만 합니다! ⚠️\n')
+  }
+
+  if (payment < DEFAULT_PRICE) {
+    throw new Error('⚠️ 구입 금액은 기본 금액인 1000원 이상이어야 합니다! ⚠️\n')
+  }
+}
 
 export const checkBonusNumber = (bonusNumber, winNumberList) => {
   if (!isNumber(bonusNumber)) {
