@@ -11,3 +11,8 @@ export const LOTTO_INITIAL_PRIZE_COUNT = {
   5: { withBonus: 0, withoutBonus: 0 },
   6: 0,
 };
+
+export const RESTART_INPUT = Object.freeze({
+  YES: 'y',
+  NO: 'n',
+});

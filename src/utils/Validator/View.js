@@ -1,11 +1,13 @@
 import { isPositiveNumber } from '.';
-import { MESSAGE, STRING, NUMBER } from '../../constants';
+import { MESSAGE, RESTART_INPUT, NUMBER } from '../../constants';
 import { isLottoNumber, isNumbersUnique } from './';
+
+const EMPTY_INPUT = '';
 
 /* View */
 export const View = {
   readUserInput(value) {
-    if (value === STRING.EMPTY) throw new Error(MESSAGE.ERROR.EMPTY_STRING);
+    if (value === EMPTY_INPUT) throw new Error(MESSAGE.ERROR.EMPTY_STRING);
   },
 
   readPurchaseAmount(value) {
@@ -46,8 +48,8 @@ export const View = {
   },
   readRestart(restartInput) {
     if (
-      restartInput !== STRING.RESTART_INPUT.YES &&
-      restartInput !== STRING.RESTART_INPUT.NO
+      restartInput !== RESTART_INPUT.YES &&
+      restartInput !== RESTART_INPUT.NO
     ) {
       throw new Error(MESSAGE.ERROR.INVALID_RESTART_INPUT);
     }

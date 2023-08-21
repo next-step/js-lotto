@@ -1,6 +1,6 @@
 import { InputView, OutputView } from '.';
 import { Validator } from '../utils/Validator';
-import { MESSAGE, STRING } from '../constants';
+import { MESSAGE, RESTART_INPUT } from '../constants';
 import {
   calculatePrizeCount,
   calculateProfitRate,
@@ -74,7 +74,7 @@ export class View {
       Validator.View.readRestart
     );
 
-    return restartInput === STRING.RESTART_INPUT.YES;
+    return restartInput === RESTART_INPUT.YES;
   }
 
   /* Output */
