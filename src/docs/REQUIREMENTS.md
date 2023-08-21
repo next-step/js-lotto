@@ -19,20 +19,20 @@
 
 
 - LottoPrizeRules
-  - 로또 당첨 기준의 배열을 constructor에서 전달 받는다.
-    - 각 당첨기준은 객체이다.
+  - 로또 당첨 규칙의 배열을 constructor에서 전달 받는다.
+    - 각 당첨 규칙은 객체이다.
       - rank, matchingNumberCount, requiresBonusNumber, prizeAmount의 필드값을 가진다
       - requiresBonusNumber는 boolean이며 나머지는 number이다.
+      - requireBonusNumber의 타입이 boolean이 아니면 false로 간주한다 (undefined 가능).
+      - 모든 객체가 필드 값 조건을 만족해야한다. 만족하지 못하면 기본값을 할당한다.
     - matchingNumberCount는 0이상의 정수형식이다
       - 형식에 맞지 않으면 "번호 일치 개수의 형식이 올바르지 않습니다."라는 에러를 반환한다.
     - rank는 중복되지 않는다.
       - 중복시 "규칙의 등수는 중복될 수 없습니다." 라는 에러를 반환한다.
-    - requireBonusNumber의 타입이 boolean이 아니면 false로 간주한다.
+  - rank를 변수로 주입하면 해당하는 당첨 규칙을 반환하는 메소드를 구현한다.
 
 
 - LottoPrizeCalculator -> 당첨 기준으로 등수를 계산
-  - 인스턴스 생성시 등수 별 당첨 기준, 당첨 금액을 지정가능하다.
-    - 당첨 기준과 금액 유효성 검사 통과시만 지정, 통과 못하면 기본값 지정
   - 로또 번호를 배열로 전달 받으면 등수와 상금을 반환하는 메소드
     - 로또 번호 배열길이가 LottoTicketRules의 length가 아닌 경우 에러 반환 
       - 로또 번호의 개수가 규칙과 일치하지 않습니다.
