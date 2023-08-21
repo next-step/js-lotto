@@ -12,6 +12,7 @@
     "sourceType": "module"
   },
   "rules": {
+    "no-new": ["off"],
     "@typescript-eslint/no-var-requires": ["off"],
     "import/no-extraneous-dependencies": ["off"],
     "import/no-cycle": ["off"],

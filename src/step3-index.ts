@@ -1,16 +1,4 @@
 import '@src/css/index.css';
-import LottoApplicationController from '@step3/controller/LottoApplicationController';
+import BuyLottoController from '@step3/controller/BuyLottoController';
 
-class WebApp {
-  private controller: LottoApplicationController;
-
-  constructor() {
-    this.controller = new LottoApplicationController();
-  }
-
-  play() {
-    this.controller.run();
-  }
-}
-
-new WebApp().play();
+new BuyLottoController();
