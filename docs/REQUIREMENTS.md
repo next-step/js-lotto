@@ -82,7 +82,16 @@
 - state의 lottoResult를 변경할 수 있다.
 - state를 lotto 기본값으로 초기화할 수 있다.
 
-## actions
+### actions
+
+- 구입 금액이 유효한 값인 경우, setCount commit과 addLotto commit을 실행하고 onSuccess를 실행한다.
+- 구입 금액이 유효하지 않은 값인 경우, onError를 실행한다.
+- 당첨번호가 유효한 값인 경우, setWinNumberList commit을 실행하고 onSuccess를 실행한다.
+- 당첨번호가 유효하지 않은 값인 경우, onError를 실행한다.
+- 보너스 번호가 유효한 값인 경우, setBonusNumber commit과 setLottoResult commit을 실행하고 onSuccess를 실행한다.
+- 보너스 번호가 유효하지 않은 값인 경우, onError를 실행한다.
+- retry 응답이 y인 경우, rest commit과 onSuccess를 실행한다.
+- retry 응답이 y가 아닌 경우, onClose를 실행한다.
 
 ## lotto
 
