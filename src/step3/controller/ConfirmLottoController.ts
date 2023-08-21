@@ -1,6 +1,6 @@
-import { SELECTOR_NAME } from '@step3/constants/selector';
+import { CLASS_NAME, SELECTOR_NAME } from '@step3/constants/selector';
 import { $ } from '@step3/utils/dom';
-import { WinningLottoInfoFormView } from '@step3/view';
+import { WinningLottoInfoFormView, WinningInfoModalView } from '@step3/view';
 import { CUSTOM_EVENT } from '@step3/constants/event';
 import { LottoGame } from '@step1/model';
 import LottoApplicationController from './LottoApplicationController';
@@ -8,11 +8,14 @@ import LottoApplicationController from './LottoApplicationController';
 export default class ConfirmLottoController extends LottoApplicationController {
   private winningLottoInfoFormView: WinningLottoInfoFormView;
 
+  private winningInfoModalView: WinningInfoModalView;
+
   constructor(lottoGame?: LottoGame) {
     super(lottoGame);
     this.winningLottoInfoFormView = new WinningLottoInfoFormView(
       $<HTMLFormElement>(SELECTOR_NAME.WINNING_LOTTO_INFO_FORM),
     );
+    this.winningInfoModalView = new WinningInfoModalView($<HTMLDivElement>(SELECTOR_NAME.MODAL));
     this.initEvent();
   }
 
@@ -23,8 +26,9 @@ export default class ConfirmLottoController extends LottoApplicationController {
   }
 
   private handleSubmitWinningLottoInfo(event: CustomEvent) {
+    $(SELECTOR_NAME.MODAL).classList.add(CLASS_NAME.OPEN);
     const { rateOfReturn, lottoResult } = this.createWinningInfo(event);
-    console.log(rateOfReturn, lottoResult);
+    this.winningInfoModalView.renderWinningInfoModal({ rateOfReturn, lottoResult });
   }
 
   private createWinningInfo(event: CustomEvent) {
