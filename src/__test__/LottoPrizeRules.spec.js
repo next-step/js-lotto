@@ -26,6 +26,12 @@ describe("LottoPrizeRules 클래스 테스트", () => {
     },
   );
 
+  test("rank가 1이상의 양의 정수가 아니면 에러가 발생한다.", () => {
+    expect(
+      () => new LottoPrizeRules([makeLottoPrizeRule(0, 6, false, 100)]),
+    ).toThrowError("등수의 형식이 올바르지 않습니다.");
+  });
+
   test("rank 가 중복되면 에러가 발생한다.", () => {
     expect(
       () =>
@@ -45,5 +51,13 @@ describe("LottoPrizeRules 클래스 테스트", () => {
       matchingNumberCount: 5,
       prizeAmount: 30000000,
     });
+  });
+
+  test("rule getter로 존재하지 않는 규칙 조회시 에러가 반환된다.", () => {
+    const prizeRules = new LottoPrizeRules();
+
+    expect(prizeRules.getSingleRule(7)).toThrowError(
+      "존재하지 않는 규칙입니다.",
+    );
   });
 });
