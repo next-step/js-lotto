@@ -1,6 +1,6 @@
 import { isPositiveNumber } from '.';
 import { MESSAGE, STRING, NUMBER } from '../../constants';
-import { isNumbersUnique, isLottoNumber } from './common';
+import { isLottoNumber, isNumbersUnique } from './';
 
 /* View */
 export const View = {
