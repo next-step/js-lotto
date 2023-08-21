@@ -1,7 +1,8 @@
-import {LOTTO_PRICE, LottoCompany} from "./domain/LottoCompany/LottoCompany.js";
+import {LottoCompany} from "./domain/LottoCompany/LottoCompany.js";
 import {LottoSeller} from "./domain/LottoSeller/LottoSeller.js";
 import {Console} from "./util/Console.js";
 import {LottoCustomer} from "./domain/LottoCustomer/LottoCustomer.js";
+import {DEFAULT_LOTTO_INFO} from "./consts/lotto/lotto.const.js";
 
 
 
@@ -10,7 +11,7 @@ const inputWinningNumbers = () => new Promise((resolve) => Console.readLine("\n>
 const inputBonusNumber = () => new Promise((resolve) => Console.readLine("\n> 보너스 번호를 입력해 주세요. ", (userInput) => resolve(userInput)));
 
 const setLottoGame = () => {
-    const lottoCompany = new LottoCompany(LOTTO_PRICE);
+    const lottoCompany = new LottoCompany(DEFAULT_LOTTO_INFO.PRICE, DEFAULT_LOTTO_INFO.PRIZE);
     const lottoSeller = new LottoSeller();
     const lottoCustomer = new LottoCustomer();
     lottoSeller.joinLottoCompany(lottoCompany);
