@@ -62,3 +62,22 @@
 - store의 이벤트를 청취 해제할 수 있다.
 - store에 존재하지 않는 action의 경우, 애러를 발생시킨다.
 - store에 존재하지 않는 mutation의 경우, 애러를 발생시킨다.
+
+### state
+
+- count
+- lottoList
+- winNumberList
+- bonusNumber
+- lottoResult
+  - rate
+  - stats
+
+### mutations
+
+- state의 lottoList에 lotto를 추가할 수 있다.
+- state의 count를 변경할 수 있다.
+- state의 winNumberList를 변경할 수 있다.
+- state의 bonusNumber를 변경할 수 있다.
+- state의 lottoResult를 변경할 수 있다.
+- state를 lotto 기본값으로 초기화할 수 있다.
