@@ -3,6 +3,7 @@ import {
   generateLottoNumbers,
   generateNotDuplicatedExtraNumber,
 } from '../utils/generateLottoNumbers.js'
+import { validate } from '../utils/validate.js'
 
 class LottoBase {
   numbers
@@ -46,29 +47,16 @@ class LottoBase {
   #validate(selectedNums, extraNum) {
     const setSelectedNums = new Set(selectedNums)
 
-    // selectedNums 가 당첨번호 길이 조건을 만족하는지
-    if (setSelectedNums.size !== LottoBase.SELECTED_NUMS_LENGTH) {
-      throw new Error(ERROR_MESSAGE.INVALID_SELECTED_NUMS)
+    if (!validate.length(selectedNums)) {
+      throw new Error(ERROR_MESSAGE.INVALID_NUMS_LENGTH)
     }
-    // selectedNums 에 중복은 없는지
-    if (setSelectedNums.size !== selectedNums.length) {
-      throw new Error(ERROR_MESSAGE.DUPLICATED_SELECTED_NUMS)
+
+    if (!validate.isNotDuplicated([...selectedNums, extraNum])) {
+      throw new Error(ERROR_MESSAGE.DUPLICATED_NUMS)
     }
-    // selectedNums 의 각 번호가 범위와 일치하는지
-    if (
-      !selectedNums.every(
-        (num) => typeof num === 'number' && 1 <= num && num <= 45,
-      )
-    ) {
-      throw new Error(ERROR_MESSAGE.INVALID_SELECTED_NUMS)
-    }
-    // selectedNums 와 extraNum이 중복되지 않는지
-    if (setSelectedNums.has(extraNum)) {
-      throw new Error(ERROR_MESSAGE.DUPLICATED_EXTRA_NUMS)
-    }
-    // extraNum이 1 ~ 45 의 범위 내에 있는지
-    if (!(typeof extraNum === 'number' && 1 <= extraNum && extraNum <= 45)) {
-      throw new Error(ERROR_MESSAGE.INVALID_EXTRA_NUM)
+
+    if (!validate.numberRange([...selectedNums, extraNum])) {
+      throw new Error(ERROR_MESSAGE.INVALID_NUMS_RANGE)
     }
   }
 }

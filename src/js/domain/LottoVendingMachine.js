@@ -25,7 +25,7 @@ class LottoVendingMachine {
   #validateAmount(amount) {
     if (
       !(
-        validate.isValidPositiveNumber(amount) &&
+        validate.isPositiveNumber(amount) &&
         amount >= LottoVendingMachine.MIN_AMOUNT
       )
     )

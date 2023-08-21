@@ -73,8 +73,6 @@ class LottoGameController {
 
     let output = ''
 
-    console.log(result)
-
     for (const key in mapping) {
       output += `${mapping[key]} - ${result[key]}개\n`
     }
