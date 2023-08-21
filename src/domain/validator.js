@@ -25,11 +25,17 @@ export const validateBonusNumer = (winningNumbers, bonusNumber) => {
 };
 
 export const validateRetry = (retry) => {
-  retry = retry.toLowerCase();
-  if (retry !== 'y' && retry !== 'n') {
+  validateRetryKeyword(retry);
+};
+
+export const validateRetryKeyword = (retry) => {
+  if (!isValidRetryKeyword(retry)) {
     throw new Error(ERRORS.NOT_RETRY_ANSWER);
   }
 };
+
+export const isValidRetryKeyword = (retry) =>
+  retry === 'y' || retry === 'n' || retry === 'Y' || retry === 'N';
 
 export const validateNumber = (number) => {
   if (isNaN(number)) {
