@@ -11,6 +11,7 @@ export const SELECTOR_NAME = {
   CLOSE_MODAL: '.close-x',
   OPEN_MODAL: 'open',
   RATE_OF_RETURN_TEXT: '#rate-of-return-text',
+  RESET_BUTTON: '#reset-button',
 } as const;
 
 export const CLASS_NAME = {

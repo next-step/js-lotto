@@ -38,4 +38,8 @@ export default class PurchasedLottoView extends View<HTMLTableSectionElement> {
     this.renderPurchasedLottoLabel(lottoNumbers.length);
     this.renderPurchasedLotto(lottoNumbers);
   }
+
+  public resetCheckboxStatus() {
+    this.$element.querySelector<HTMLInputElement>(SELECTOR_NAME.LOTTO_NUMBERS_TOGGLE_BUTTON).checked = false;
+  }
 }

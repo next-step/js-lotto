@@ -15,11 +15,11 @@ export default class LottoGame {
     bonusNumber: 0,
   };
 
-  #setWinningLottoInfo({ winningLottoNumbers, bonusNumber }: WinningLottoInfo) {
+  setWinningLottoInfo({ winningLottoNumbers, bonusNumber }: WinningLottoInfo) {
     this.winningLottoInfo = { winningLottoNumbers, bonusNumber };
   }
 
-  #setBuyerInfo({ lottos, investmentAmount }: BuyerInfo) {
+  setBuyerInfo({ lottos, investmentAmount }: BuyerInfo) {
     this.buyerInfo = { lottos, investmentAmount };
   }
 
@@ -29,12 +29,12 @@ export default class LottoGame {
 
   createLottoNumbers(amount: number) {
     const lottos = LottoMerchant.from(amount).sellLotto();
-    this.#setBuyerInfo({ lottos, investmentAmount: amount });
+    this.setBuyerInfo({ lottos, investmentAmount: amount });
     return lottos.map((lotto) => lotto.getLottoNumbers());
   }
 
   createResults({ winningLottoNumber, bonusNumber, lottoNumbers, investmentAmount }: CreateResultsParams) {
-    this.#setWinningLottoInfo({ winningLottoNumbers: winningLottoNumber, bonusNumber });
+    this.setWinningLottoInfo({ winningLottoNumbers: winningLottoNumber, bonusNumber });
     return Bank.from(winningLottoNumber, bonusNumber).calculateResults(lottoNumbers, investmentAmount);
   }
 }

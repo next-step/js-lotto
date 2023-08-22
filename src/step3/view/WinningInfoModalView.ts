@@ -1,5 +1,5 @@
 import { LottoResult, WinningInfo } from '@step1/utils/jsDoc';
-import { EVENT } from '@step3/constants/event';
+import { CUSTOM_EVENT, EVENT } from '@step3/constants/event';
 import { VIEW_MESSAGE_METHOD } from '@step3/constants/message';
 import { CLASS_NAME, SELECTOR_NAME } from '@step3/constants/selector';
 import { SEMANTIC_TAG } from '@step3/constants/semanticTag';
@@ -15,7 +15,15 @@ export default class WinningInfoModalView extends View<HTMLDivElement> {
     this.$element
       .querySelector(SELECTOR_NAME.CLOSE_MODAL)
       .addEventListener(EVENT.CLICK, (event) => this.handleOnClose(event));
+    this.$element
+      .querySelector(SELECTOR_NAME.RESET_BUTTON)
+      .addEventListener(EVENT.CLICK, (event) => this.handleResetButton(event));
   }
+
+  private handleResetButton = (event: Event) => {
+    event.preventDefault();
+    this.emit(CUSTOM_EVENT.RESET, {});
+  };
 
   private handleOnClose = (event: Event) => {
     event.preventDefault();
