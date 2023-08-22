@@ -2,6 +2,7 @@ import LottoGameView from './LottoGameView.js'
 import LottoVendingMachine from '../domain/LottoVendingMachine.js'
 import LottoWinningCalculator from '../domain/LottoWinningCalculator.js'
 import LottoWinningNumbers from '../domain/LottoWinningNumbers.js'
+import { PROMPT } from '../../constants/prompt.js'
 
 class LottoGameController {
   #view
@@ -64,11 +65,11 @@ class LottoGameController {
 
   #formatLottoResults(result) {
     const mapping = {
-      3: '3개 일치 (5,000원)',
-      4: '4개 일치 (50,000원)',
-      5: '5개 일치 (1,500,000원)',
-      5.5: '5개 일치, 보너스 볼 일치 (30,000,000원)',
-      6: '6개 일치 (2,000,000,000원)',
+      3: PROMPT.LOTTO_MATCHING_RESULTS[3],
+      4: PROMPT.LOTTO_MATCHING_RESULTS[4],
+      5: PROMPT.LOTTO_MATCHING_RESULTS[5],
+      5.5: PROMPT.LOTTO_MATCHING_RESULTS[5.5],
+      6: PROMPT.LOTTO_MATCHING_RESULTS[6],
     }
 
     let output = ''

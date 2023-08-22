@@ -1,3 +1,5 @@
+import { LOTTO_PRIZE } from '../../constants/conditions.js'
+
 class LottoWinningCalculator {
   #result
 
@@ -21,13 +23,7 @@ class LottoWinningCalculator {
   // FIXME: 로직 간소화
   // 등수를 계산하는 메서드
   #calculateRank(statuses) {
-    const ranks = {
-      3: 0,
-      4: 0,
-      5: 0,
-      5.5: 0,
-      6: 0,
-    }
+    const ranks = Object.assign(LOTTO_RANKS)
 
     statuses.forEach((status) => {
       const { matchSelectedNums, matchExtraNum } = status
@@ -51,17 +47,9 @@ class LottoWinningCalculator {
   // FIXME: 로직 간소화
   // 수익률을 계산하는 메서드
   #calculateProfitRate(statuses, ranks) {
-    const prizeMoney = {
-      3: 5000,
-      4: 50000,
-      5: 1500000,
-      5.5: 30000000,
-      6: 2000000000,
-    }
-
     let totalPofit = 0
     for (const rank in ranks) {
-      totalPofit += prizeMoney[rank] * ranks[rank]
+      totalPofit += LOTTO_PRIZE[rank] * ranks[rank]
     }
 
     const totalCost = 1000 * statuses.length

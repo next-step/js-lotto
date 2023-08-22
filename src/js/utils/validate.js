@@ -1,4 +1,4 @@
-import { SELECTED_NUMS_LENGTH } from '../../constants/conditions'
+import { SELECTED_NUMS_LENGTH } from '../../constants/conditions.js'
 
 export const validate = {
   isPositiveNumber(value) {

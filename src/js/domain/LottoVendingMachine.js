@@ -1,6 +1,7 @@
 import { ERROR_MESSAGE } from '../../constants/errorMessage.js'
 import { validate } from '../utils/validate.js'
 import Lotto from '../domain/Lotto.js'
+import { LOTTO_MIN_PRICE } from '../../constants/conditions.js'
 
 class LottoVendingMachine {
   #purchaseAmount
@@ -12,7 +13,7 @@ class LottoVendingMachine {
     this.#validateAmount(amount)
 
     this.#purchaseAmount = amount
-    this.#issuedCount = Math.floor(amount / LottoVendingMachine.MIN_AMOUNT)
+    this.#issuedCount = Math.floor(amount / LOTTO_MIN_PRICE)
 
     this.#setLottos()
   }

@@ -1,5 +1,6 @@
 import * as readline from 'node:readline/promises'
 import { stdin as input, stdout as output } from 'node:process'
+import { PROMPT } from '../../constants/prompt.js'
 
 class LottoGameView {
   constructor() {
@@ -10,15 +11,15 @@ class LottoGameView {
   }
 
   async getPurchaseAmount() {
-    return await this.#getUserInput('> 구입금액을 입력해 주세요. ')
+    return await this.#getUserInput(PROMPT.PURCHASE_AMOUNT)
   }
 
   async getLottoWinningNumbers() {
-    return await this.#getUserInput('> 당첨 번호를 입력해 주세요. ')
+    return await this.#getUserInput(PROMPT.LOTTO_WINNING_NUMBERS)
   }
 
   async getExtraNumber() {
-    return await this.#getUserInput('> 보너스 번호를 입력해 주세요. ')
+    return await this.#getUserInput(PROMPT.EXTRA_NUMBER)
   }
 
   async #getUserInput(prompt) {
