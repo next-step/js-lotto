@@ -7,4 +7,5 @@ export const CUSTOM_EVENT = {
 export const EVENT = {
   SUBMIT: 'submit',
   CLICK: 'click',
+  INPUT: 'input',
 };
