@@ -9,7 +9,10 @@ export const ConsoleView = () => {
       lottoStore.dispatch(LOTTO_ACTIONS_TYPE.UPDATE_PAYMENT, {
         paymentText,
         onSuccess: renderWinNumberPrompt,
-        onError: renderPaymentPrompt
+        onError: error => {
+          console.log(error.message)
+          renderPaymentPrompt()
+        }
       })
     })
   }
@@ -19,7 +22,10 @@ export const ConsoleView = () => {
       lottoStore.dispatch(LOTTO_ACTIONS_TYPE.UPDATE_WIN_NUMBER, {
         winNumberText,
         onSuccess: renderBonusNumberPrompt,
-        onError: renderWinNumberPrompt
+        onError: error => {
+          console.log(error.message)
+          renderWinNumberPrompt()
+        }
       })
     })
   }
@@ -29,7 +35,10 @@ export const ConsoleView = () => {
       lottoStore.dispatch(LOTTO_ACTIONS_TYPE.UPDATE_BONUS_NUMBER, {
         bonusNumberText,
         onSuccess: renderRetryPrompt,
-        onError: renderBonusNumberPrompt
+        onError: error => {
+          console.log(error.message)
+          renderBonusNumberPrompt()
+        }
       })
     })
   }
