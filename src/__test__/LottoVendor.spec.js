@@ -1,11 +1,12 @@
 import LottoVendor from "../class/LottoVendor";
+import LottoTicket from "../class/LottoTicket";
 
 describe("LottoVendor 클래스 테스트", () => {
   test.each(["test", {}, () => {}])(
     "로또 가격이 number가 아니면 에러가 발생한다",
     (price) => {
       expect(() => new LottoVendor(price)).toThrowError(
-        "가격은 number이어야 합니다",
+        "가격은 number 이어야 합니다.",
       );
     },
   );
@@ -16,22 +17,22 @@ describe("LottoVendor 클래스 테스트", () => {
     expect(vendor.price).toBe(vendor.defaultPrice);
   });
 
-  test.each(["test", {}, () => {}])(
+  test.each(["test", {}, () => {}, undefined])(
     "지불 금액이 number가 아니면 에러가 발생한다",
     (payment) => {
       const vendor = new LottoVendor();
 
       expect(() => vendor.buy(payment)).toThrowError(
-        "지불 금액은 number 이어야 합니다",
+        "지불 금액은 number 이어야 합니다.",
       );
     },
   );
 
-  test("지불 금액이 number가 아니면 에러가 발생한다", () => {
+  test("지불 금액이 number 0보다 작으면 에러가 발생한다.", () => {
     const vendor = new LottoVendor();
 
     expect(() => vendor.buy(-1)).toThrowError(
-      "지불 금액은 0이상 이어야 합니다",
+      "지불 금액은 0이상 이어야 합니다.",
     );
   });
 
@@ -50,6 +51,10 @@ describe("LottoVendor 클래스 테스트", () => {
       expect(receipt.price).toBe(price);
       expect(receipt.amount).toBe(amount);
       expect(receipt.change).toBe(change);
+      expect(receipt.tickets.length).toBe(amount);
+      expect(
+        receipt.tickets.every((ticket) => ticket instanceof LottoTicket),
+      ).toBe(true);
     },
   );
 });
