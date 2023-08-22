@@ -1,8 +1,13 @@
 import { CUSTOM_EVENT, EVENT } from '@step3/constants/event';
-import { SEMANTIC_TAG } from '@step3/constants/semanticTag';
+import { SELECTOR_NAME } from '@step3/constants/selector';
+
 import { View } from '@step3/view';
 
 export default class LottoPurchaseFormView extends View<HTMLFormElement> {
+  private $inputPriceLabel = this.$element.querySelector<HTMLLabelElement>(SELECTOR_NAME.INPUT_PRICE.LABEL);
+
+  private $inputPriceInput = this.$element.querySelector<HTMLInputElement>(SELECTOR_NAME.INPUT_PRICE.INPUT);
+
   constructor($element: HTMLFormElement) {
     super($element);
     this.init();
@@ -11,8 +16,7 @@ export default class LottoPurchaseFormView extends View<HTMLFormElement> {
 
   protected init() {
     this.$element.reset();
-    const labelNode = this.$element.querySelector(SEMANTIC_TAG.LABEL);
-    labelNode.focus();
+    this.$inputPriceLabel.focus();
   }
 
   protected setEvent() {
@@ -21,8 +25,8 @@ export default class LottoPurchaseFormView extends View<HTMLFormElement> {
 
   private handleOnSubmit = (event: Event) => {
     event.preventDefault();
-    const amount = this.$element.querySelector(SEMANTIC_TAG.INPUT).value;
+    const amount = this.$inputPriceInput.value;
     this.emit(CUSTOM_EVENT.SUBMIT_PURCHASE_AMOUNT, Number(amount));
-    this.$element.querySelector(SEMANTIC_TAG.INPUT).value = null;
+    this.$inputPriceInput.value = null;
   };
 }

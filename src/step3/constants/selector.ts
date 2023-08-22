@@ -14,6 +14,10 @@ export const SELECTOR_NAME = {
   RESET_BUTTON: '#reset-button',
   WINNING_NUMBER_INPUT: '.winning-number',
   BONUS_NUMBER_INPUT: '.bonus-number',
+  INPUT_PRICE: {
+    LABEL: '#input-price-label',
+    INPUT: '#input-price-input',
+  },
 } as const;
 
 export const CLASS_NAME = {
