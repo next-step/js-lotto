@@ -8,6 +8,11 @@
   cursor: pointer;
 }
 
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .btn-cyan {
   background-color: #00bcd4 !important;
   border-color: #00bcd4 !important;
