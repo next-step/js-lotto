@@ -22,6 +22,7 @@ export const actions = {
 
       const count = getCountOfPurchase(payment)
       commit(LOTTO_MUTATIONS_TYPE.SET_COUNT, { count })
+
       generateLottoList(count).forEach(lotto =>
         commit(LOTTO_MUTATIONS_TYPE.ADD_LOTTO, { lotto })
       )
@@ -52,8 +53,6 @@ export const actions = {
       const { winNumberList, lottoList } = state
       checkValidBonusNumber(bonusNumber, winNumberList)
 
-      commit(LOTTO_MUTATIONS_TYPE.SET_BONUS_NUMBER, { bonusNumber })
-
       const lottoResultList = getLottoResult(
         winNumberList,
         bonusNumber,
@@ -64,9 +63,11 @@ export const actions = {
       const rate = getReturnRate(totalPrize, payment)
       const stats = getLottoStats(lottoResultList)
 
+      commit(LOTTO_MUTATIONS_TYPE.SET_BONUS_NUMBER, { bonusNumber })
       commit(LOTTO_MUTATIONS_TYPE.SET_LOTTO_RESULT, {
         lottoResult: { rate, stats }
       })
+
       onSuccess()
     } catch (error) {
       onError(error)
