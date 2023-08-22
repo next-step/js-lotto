@@ -29,7 +29,7 @@ export default class WinningLottoInfoFormView extends View<HTMLFormElement> {
   }
 
   private createWinningNumberInputNode() {
-    return this.$element.querySelectorAll<HTMLInputElement>(SELECTOR_NAME.WINNING_NUMBER_INPUT);
+    return this.$element.querySelectorAll<HTMLInputElement>(SELECTOR_NAME.WINNING_NUMBER);
   }
 
   private createBonusNumberInputNode() {
@@ -38,7 +38,7 @@ export default class WinningLottoInfoFormView extends View<HTMLFormElement> {
 
   private createWinningLottoInfo() {
     return {
-      winningLottoNumbers: [...this.createWinningNumberInputNode()]
+      winningLottoNumbers: [...this.$element.querySelectorAll<HTMLInputElement>(SELECTOR_NAME.WINNING_NUMBER_INPUT)]
         .map((inputNode) => inputNode.value)
         .join(SYMBOLS.COMMA),
       bonusNumber: this.createBonusNumberInputNode().value,
@@ -52,9 +52,11 @@ export default class WinningLottoInfoFormView extends View<HTMLFormElement> {
   };
 
   public resetWinningLottoInfoForm() {
-    this.createWinningNumberInputNode().forEach((winningNumberInputNode) => {
-      winningNumberInputNode.value = null;
-    });
+    this.$element
+      .querySelectorAll<HTMLInputElement>(SELECTOR_NAME.WINNING_NUMBER_INPUT)
+      .forEach((winningNumberInputNode) => {
+        winningNumberInputNode.value = null;
+      });
     this.createBonusNumberInputNode().value = null;
   }
 }
