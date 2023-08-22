@@ -2,11 +2,14 @@ import { ERROR_MESSAGE } from '../constants/index';
 import { isPositiveNumber } from '../../utils/index';
 
 class LottoCustomer {
+  #lottoTickets = [];
+  #wantedLottoMode = null;
   #amount = 0;
 
-  constructor(amount) {
+  constructor(amount, wantedLottoMode) {
     LottoCustomer.validateAmount(amount);
     this.#amount = Number(amount);
+    this.#wantedLottoMode = wantedLottoMode;
   }
 
   static validateAmount(amount) {
@@ -17,6 +20,23 @@ class LottoCustomer {
 
   get amount() {
     return this.#amount;
+  }
+
+  get tickets() {
+    return this.#lottoTickets;
+  }
+
+  #setLottoTickets(lottoTickets) {
+    this.#lottoTickets = lottoTickets;
+  }
+  #setAmount(amount) {
+    this.#amount = amount;
+  }
+
+  buyLottoTicket(lottoSeller) {
+    const { changeAMount, lottoTickets } = lottoSeller.sellToLottoTicket(this.#amount, this.#wantedLottoMode);
+    this.#setAmount(changeAMount);
+    this.#setLottoTickets(lottoTickets);
   }
 }
 
