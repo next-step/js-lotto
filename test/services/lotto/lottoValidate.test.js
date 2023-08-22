@@ -1,8 +1,8 @@
 import {
   isInLottoRange,
-  checkBonusNumber,
+  checkValidBonusNumber,
   checkValidWinNumberList,
-  checkPayment
+  checkValidPayment
 } from '../../../src/js/services/lotto/lottoValidate'
 import { ERROR_MESSAGE } from '../../../src/js/constants/message'
 
@@ -31,13 +31,13 @@ describe('services/lottoValidate', () => {
     )
   })
 
-  describe('checkPayment()', () => {
+  describe('checkValidPayment()', () => {
     it.each([[1000], [2000], [3500], [10000]])(
       '구입 금액이 숫자이고 로또 1장의 금액보다 큰 경우, 에러가 발생하지 않는다.',
       payment => {
         // When, Then
         expect(() => {
-          checkPayment(payment)
+          checkValidPayment(payment)
         }).not.toThrow()
       }
     )
@@ -47,7 +47,7 @@ describe('services/lottoValidate', () => {
       payment => {
         // When, Then
         expect(() => {
-          checkPayment(payment)
+          checkValidPayment(payment)
         }).toThrow(ERROR_MESSAGE.INVALID_LOTTO_PAYMENT_TYPE)
       }
     )
@@ -57,13 +57,13 @@ describe('services/lottoValidate', () => {
       payment => {
         // When, Then
         expect(() => {
-          checkPayment(payment)
+          checkValidPayment(payment)
         }).toThrow(ERROR_MESSAGE.INVALID_LOTTO_PAYMENT)
       }
     )
   })
 
-  describe('checkBonusNumber()', () => {
+  describe('checkValidBonusNumber()', () => {
     it.each([[1], [45], [20], [33], [42]])(
       '보너스 번호가 1 ~ 45내에 존재하고 당첨 번호에 없는 유효한 숫자인 경우 에러가 발생하지 않는다.',
       bonusNumber => {
@@ -72,7 +72,7 @@ describe('services/lottoValidate', () => {
 
         // When, Then
         expect(() => {
-          checkBonusNumber(bonusNumber, winNumberList)
+          checkValidBonusNumber(bonusNumber, winNumberList)
         }).not.toThrow()
       }
     )
@@ -82,7 +82,7 @@ describe('services/lottoValidate', () => {
       bonusNumber => {
         // When, Then
         expect(() => {
-          checkBonusNumber(bonusNumber, [])
+          checkValidBonusNumber(bonusNumber, [])
         }).toThrow(new Error(ERROR_MESSAGE.INVALID_LOTTO_BONUS_NUMBER_TYPE))
       }
     )
@@ -92,7 +92,7 @@ describe('services/lottoValidate', () => {
       bonusNumber => {
         // When, Then
         expect(() => {
-          checkBonusNumber(bonusNumber, [])
+          checkValidBonusNumber(bonusNumber, [])
         }).toThrow(new Error(ERROR_MESSAGE.INVALID_LOTTO_BONUS_NUMBER_RANGE))
       }
     )
@@ -105,7 +105,7 @@ describe('services/lottoValidate', () => {
 
         // When, Then
         expect(() => {
-          checkBonusNumber(bonusNumber, winNumberList)
+          checkValidBonusNumber(bonusNumber, winNumberList)
         }).toThrow(new Error(ERROR_MESSAGE.DUPLICATED_LOTTO_BONUS_NUMBER))
       }
     )

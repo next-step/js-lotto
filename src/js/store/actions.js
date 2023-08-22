@@ -9,8 +9,8 @@ import {
 import { DEFAULT_PRICE } from '../constants/lotto'
 import { LOTTO_MUTATIONS_TYPE } from '../constants/store'
 import {
-  checkBonusNumber,
-  checkPayment,
+  checkValidBonusNumber,
+  checkValidPayment,
   checkValidWinNumberList
 } from '../services/lotto/lottoValidate'
 
@@ -18,7 +18,7 @@ export const actions = {
   updatePayment: ({ commit }, { paymentText, onSuccess, onError }) => {
     try {
       const payment = Number(paymentText)
-      checkPayment(payment)
+      checkValidPayment(payment)
 
       const count = getCountOfPurchase(payment)
       commit(LOTTO_MUTATIONS_TYPE.SET_COUNT, { count })
@@ -52,7 +52,7 @@ export const actions = {
     try {
       const bonusNumber = Number(bonusNumberText)
       const { winNumberList, lottoList } = state
-      checkBonusNumber(bonusNumber, winNumberList)
+      checkValidBonusNumber(bonusNumber, winNumberList)
 
       commit(LOTTO_MUTATIONS_TYPE.SET_BONUS_NUMBER, { bonusNumber })
 

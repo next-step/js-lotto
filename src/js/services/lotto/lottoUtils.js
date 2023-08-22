@@ -40,9 +40,8 @@ export const generateLottoList = count => {
   return result
 }
 
-export const getMatchCount = (winNumberList, lotto) => {
-  return lotto.filter(number => winNumberList.includes(number)).length
-}
+export const getMatchCount = (winNumberList, lotto) =>
+  lotto.filter(number => winNumberList.includes(number)).length
 
 export const hasBonusMatch = (bonusNumber, lotto) => lotto.includes(bonusNumber)
 

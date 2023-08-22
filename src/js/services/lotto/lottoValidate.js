@@ -4,7 +4,7 @@ import { ERROR_MESSAGE } from '../../constants/message'
 
 export const isInLottoRange = num => isInRange(num, 1, 45)
 
-export const checkPayment = payment => {
+export const checkValidPayment = payment => {
   if (!isNumber(payment)) {
     throw new Error(ERROR_MESSAGE.INVALID_LOTTO_PAYMENT_TYPE)
   }
@@ -14,7 +14,7 @@ export const checkPayment = payment => {
   }
 }
 
-export const checkBonusNumber = (bonusNumber, winNumberList) => {
+export const checkValidBonusNumber = (bonusNumber, winNumberList) => {
   if (!isNumber(bonusNumber)) {
     throw new Error(ERROR_MESSAGE.INVALID_LOTTO_BONUS_NUMBER_TYPE)
   }
