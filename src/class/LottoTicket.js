@@ -4,9 +4,11 @@ export default class LottoTicket {
   #rule;
   #numbers = new Set([]);
 
-  constructor(rule) {
+  constructor(ticketRules) {
     this.#rule =
-      rule instanceof LottoTicketRules ? rule : new LottoTicketRules();
+      ticketRules instanceof LottoTicketRules
+        ? ticketRules
+        : new LottoTicketRules();
     this.initializeTicket();
   }
 

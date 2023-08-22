@@ -1,3 +1,5 @@
+import LottoGame from "../class/LottoGame";
+
 describe("LottoGame 클래스 테스트", () => {
   test.each`
     payment | prize   | profitRate

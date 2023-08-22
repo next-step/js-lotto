@@ -21,7 +21,7 @@ export default class LottoVendor {
     return this.#defaultPrice;
   }
 
-  buy(payment, ticketRule) {
+  buy(payment, ticketRules) {
     if (typeof payment !== "number") {
       throw new Error("지불 금액은 number 이어야 합니다.");
     }
@@ -34,7 +34,7 @@ export default class LottoVendor {
     const change = payment - amount * this.#price;
     const tickets = Array.from(
       { length: amount },
-      () => new LottoTicket(ticketRule),
+      () => new LottoTicket(ticketRules),
     );
 
     return { amount, change, price: this.#price, tickets };
