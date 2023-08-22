@@ -20,10 +20,10 @@ export default class LottoPurchaseFormView extends View<HTMLFormElement> {
   }
 
   protected setEvent() {
-    this.$element.addEventListener(EVENT.SUBMIT, (event) => this.handleOnSubmit(event));
+    this.$element.addEventListener(EVENT.SUBMIT, (event) => this.handleActionInputPrice(event));
   }
 
-  private handleOnSubmit = (event: Event) => {
+  private handleActionInputPrice = (event: Event) => {
     event.preventDefault();
     const amount = this.$inputPriceInput.value;
     this.emit(CUSTOM_EVENT.SUBMIT_PURCHASE_AMOUNT, Number(amount));

@@ -20,16 +20,16 @@ export default class WinningInfoModalView extends View<HTMLDivElement> {
   }
 
   protected setEvent() {
-    this.$closeModalButton.addEventListener(EVENT.CLICK, (event) => this.handleOnClose(event));
-    this.$resetButton.addEventListener(EVENT.CLICK, (event) => this.handleResetButton(event));
+    this.$closeModalButton.addEventListener(EVENT.CLICK, (event) => this.handleActionClose(event));
+    this.$resetButton.addEventListener(EVENT.CLICK, (event) => this.handleActionResetButton(event));
   }
 
-  private handleResetButton = (event: Event) => {
+  private handleActionResetButton = (event: Event) => {
     event.preventDefault();
     this.emit(CUSTOM_EVENT.RESET, {});
   };
 
-  private handleOnClose = (event: Event) => {
+  private handleActionClose = (event: Event) => {
     event.preventDefault();
     this.$element.classList.remove(CLASS_NAME.OPEN);
   };
