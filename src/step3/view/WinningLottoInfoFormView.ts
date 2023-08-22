@@ -1,5 +1,6 @@
 import { SYMBOLS } from '@step1/constants/commons';
 import { CUSTOM_EVENT, EVENT } from '@step3/constants/event';
+import { SELECTOR_NAME } from '@step3/constants/selector';
 import { View } from '@step3/view';
 
 export default class WinningLottoInfoFormView extends View<HTMLFormElement> {
@@ -13,11 +14,11 @@ export default class WinningLottoInfoFormView extends View<HTMLFormElement> {
   }
 
   private createWinningNumberInputNode() {
-    return this.$element.querySelectorAll<HTMLInputElement>('.winning-number');
+    return this.$element.querySelectorAll<HTMLInputElement>(SELECTOR_NAME.WINNING_NUMBER_INPUT);
   }
 
   private createBonusNumberInputNode() {
-    return this.$element.querySelector<HTMLInputElement>('.bonus-number');
+    return this.$element.querySelector<HTMLInputElement>(SELECTOR_NAME.BONUS_NUMBER_INPUT);
   }
 
   private createWinningLottoInfo() {

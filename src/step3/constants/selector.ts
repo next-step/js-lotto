@@ -12,6 +12,8 @@ export const SELECTOR_NAME = {
   OPEN_MODAL: 'open',
   RATE_OF_RETURN_TEXT: '#rate-of-return-text',
   RESET_BUTTON: '#reset-button',
+  WINNING_NUMBER_INPUT: '.winning-number',
+  BONUS_NUMBER_INPUT: '.bonus-number',
 } as const;
 
 export const CLASS_NAME = {
