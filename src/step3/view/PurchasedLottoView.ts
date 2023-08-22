@@ -1,23 +1,32 @@
 import { SELECTOR_NAME } from '@step3/constants/selector';
 import { NODE_TEMPLATE } from '@step3/constants/template';
 import { VIEW_MESSAGE_METHOD } from '@step3/constants/message';
-
-import { View } from '@step3/view';
 import { SYMBOLS } from '@step1/constants/commons';
 
+import { View } from '@step3/view';
+
 export default class PurchasedLottoView extends View<HTMLTableSectionElement> {
+  private $purchasedLottoLabel = this.$element.querySelector<HTMLLabelElement>(SELECTOR_NAME.PURCHASED_LOTTOS_LABEL);
+
+  private $purchasedLottoContainer = this.$element.querySelector<HTMLUListElement>(SELECTOR_NAME.PURCHASED_LOTTOS);
+
+  private $purchasedLottos: NodeListOf<HTMLLIElement> | null;
+
+  private $lottoNumbersToggleButton = this.$element.querySelector<HTMLInputElement>(
+    SELECTOR_NAME.LOTTO_NUMBERS_TOGGLE_BUTTON,
+  );
+
   private renderPurchasedLottoLabel(lottoNumberLength: number) {
-    this.$element.querySelector(SELECTOR_NAME.PURCHASED_LOTTOS_LABEL).innerHTML =
-      VIEW_MESSAGE_METHOD.PURCHASED_LOTTO(lottoNumberLength);
+    this.$purchasedLottoLabel.innerHTML = VIEW_MESSAGE_METHOD.PURCHASED_LOTTO(lottoNumberLength);
   }
 
   private renderPurchasedLotto(lottoNumbers: number[][]) {
-    this.$element.querySelector(SELECTOR_NAME.PURCHASED_LOTTOS).innerHTML = lottoNumbers.reduce(
-      (purchasedLottoNode) => {
-        purchasedLottoNode += NODE_TEMPLATE.LOTTO;
-        return purchasedLottoNode;
-      },
-      '',
+    this.$purchasedLottoContainer.innerHTML = lottoNumbers.reduce((purchasedLottoNode) => {
+      purchasedLottoNode += NODE_TEMPLATE.LOTTO;
+      return purchasedLottoNode;
+    }, '');
+    this.$purchasedLottos = this.$purchasedLottoContainer.querySelectorAll<HTMLLIElement>(
+      SELECTOR_NAME.PURCHASED_LOTTO,
     );
   }
 
@@ -27,9 +36,8 @@ export default class PurchasedLottoView extends View<HTMLTableSectionElement> {
   }
 
   public renderLottoNumberInPurchasedLotto(lottoNumbers?: number[][]) {
-    const purchaseLottoNode = this.$element.querySelectorAll(SELECTOR_NAME.PURCHASED_LOTTO);
-    purchaseLottoNode.forEach((childNode, index) => {
-      const lottoNumberNode = childNode.querySelector(SELECTOR_NAME.PURCHASED_LOTTO_NUMBERS);
+    this.$purchasedLottos.forEach((lottoNode, index) => {
+      const lottoNumberNode = lottoNode.querySelector(SELECTOR_NAME.PURCHASED_LOTTO_NUMBERS);
       this.renderLottoNumber(lottoNumberNode, lottoNumbers ? lottoNumbers[index] : null);
     });
   }
@@ -40,6 +48,6 @@ export default class PurchasedLottoView extends View<HTMLTableSectionElement> {
   }
 
   public resetCheckboxStatus() {
-    this.$element.querySelector<HTMLInputElement>(SELECTOR_NAME.LOTTO_NUMBERS_TOGGLE_BUTTON).checked = false;
+    this.$lottoNumbersToggleButton.checked = false;
   }
 }
