@@ -11,6 +11,21 @@ export default class WinningLottoInfoFormView extends View<HTMLFormElement> {
 
   protected setEvent() {
     this.$element.addEventListener(EVENT.SUBMIT, (event) => this.handleOnSubmit(event));
+    this.$element.addEventListener('input', () => this.handleWinningInputsFocus());
+  }
+
+  private handleWinningInputsFocus() {
+    const winningNumberInputNodes = this.createWinningNumberInputNode();
+    winningNumberInputNodes.forEach((winningNumberInputNode, index) =>
+      this.focusNextWinningNumberInputAfterMove({ winningNumberInputNode, index, winningNumberInputNodes }),
+    );
+  }
+
+  private focusNextWinningNumberInputAfterMove({ winningNumberInputNode, index, winningNumberInputNodes }) {
+    const isLastInputNode = index === winningNumberInputNodes.length - 1;
+    const isLastInputValue = winningNumberInputNode.value.length > 1;
+    if (isLastInputNode) return;
+    if (isLastInputValue) winningNumberInputNodes[index + 1].focus();
   }
 
   private createWinningNumberInputNode() {
