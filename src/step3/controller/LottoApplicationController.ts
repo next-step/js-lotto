@@ -6,17 +6,17 @@ import { LottoGame } from '@step1/model';
 import Controller from './Controller';
 
 export default class LottoApplicationController extends Controller {
-  private lottoPurchaseFormView = new LottoPurchaseFormView($<HTMLFormElement>(SELECTOR_NAME.LOTTO_PURCHASE_FORM));
+  private lottoPurchaseFormView = new LottoPurchaseFormView($<HTMLFormElement>(SELECTOR_NAME.INPUT_PRICE.FORM));
 
   private purchasedLottoView = new PurchasedLottoView(
-    $<HTMLTableSectionElement>(SELECTOR_NAME.PURCHASED_LOTTOS_SECTION),
+    $<HTMLTableSectionElement>(SELECTOR_NAME.PURCHASED.LOTTOS_SECTION),
   );
 
   private winningLottoInfoFormView = new WinningLottoInfoFormView(
-    $<HTMLFormElement>(SELECTOR_NAME.WINNING_LOTTO_INFO_FORM),
+    $<HTMLFormElement>(SELECTOR_NAME.WINNING_LOTTO_INFO.FORM),
   );
 
-  private winningInfoModalView = new WinningInfoModalView($<HTMLDivElement>(SELECTOR_NAME.MODAL));
+  private winningInfoModalView = new WinningInfoModalView($<HTMLDivElement>(SELECTOR_NAME.WINNING_INFO.MODAL));
 
   constructor(lottoGame?: LottoGame) {
     super(lottoGame);
@@ -29,7 +29,7 @@ export default class LottoApplicationController extends Controller {
       this.handlePurchaseLotto(event.detail),
     );
     this.purchasedLottoView.on(EVENT.CLICK, (event) => {
-      if (event.target === $(SELECTOR_NAME.LOTTO_NUMBERS_TOGGLE_BUTTON)) {
+      if (event.target === $(SELECTOR_NAME.PURCHASED.LOTTOS_TOGGLE_BUTTON)) {
         this.handleToggleButton();
       }
     });
@@ -55,7 +55,7 @@ export default class LottoApplicationController extends Controller {
     this.lottoPurchaseFormView.show();
     this.purchasedLottoView.hide();
     this.winningLottoInfoFormView.hide();
-    $(SELECTOR_NAME.MODAL).classList.remove(CLASS_NAME.OPEN);
+    $(SELECTOR_NAME.WINNING_INFO.MODAL).classList.remove(CLASS_NAME.OPEN);
   }
 
   private resetWinningLottoForm() {
@@ -67,7 +67,7 @@ export default class LottoApplicationController extends Controller {
   }
 
   private handleToggleButton() {
-    const isChecked = $<HTMLInputElement>(SELECTOR_NAME.LOTTO_NUMBERS_TOGGLE_BUTTON).checked;
+    const isChecked = $<HTMLInputElement>(SELECTOR_NAME.PURCHASED.LOTTOS_TOGGLE_BUTTON).checked;
     const lottoNumbers = isChecked ? this.lottoGame.buyerInfo.lottos.map((lotto) => lotto.getLottoNumbers()) : null;
     this.purchasedLottoView.renderLottoNumberInPurchasedLotto(lottoNumbers);
   }
@@ -80,7 +80,7 @@ export default class LottoApplicationController extends Controller {
   }
 
   private handleSubmitWinningLottoInfo(event: CustomEvent) {
-    $(SELECTOR_NAME.MODAL).classList.add(CLASS_NAME.OPEN);
+    $(SELECTOR_NAME.WINNING_INFO.MODAL).classList.add(CLASS_NAME.OPEN);
     const { rateOfReturn, lottoResult } = this.createWinningInfo(event);
     this.winningInfoModalView.renderWinningInfoModal({ rateOfReturn, lottoResult });
   }

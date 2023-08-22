@@ -6,14 +6,14 @@ import { SYMBOLS } from '@step1/constants/commons';
 import { View } from '@step3/view';
 
 export default class PurchasedLottoView extends View<HTMLTableSectionElement> {
-  private $purchasedLottoLabel = this.$element.querySelector<HTMLLabelElement>(SELECTOR_NAME.PURCHASED_LOTTOS_LABEL);
+  private $purchasedLottoLabel = this.$element.querySelector<HTMLLabelElement>(SELECTOR_NAME.PURCHASED.LOTTOS_LABEL);
 
-  private $purchasedLottoContainer = this.$element.querySelector<HTMLUListElement>(SELECTOR_NAME.PURCHASED_LOTTOS);
+  private $purchasedLottoContainer = this.$element.querySelector<HTMLUListElement>(SELECTOR_NAME.PURCHASED.LOTTOS);
 
   private $purchasedLottos: NodeListOf<HTMLLIElement> | null;
 
   private $lottoNumbersToggleButton = this.$element.querySelector<HTMLInputElement>(
-    SELECTOR_NAME.LOTTO_NUMBERS_TOGGLE_BUTTON,
+    SELECTOR_NAME.PURCHASED.LOTTOS_TOGGLE_BUTTON,
   );
 
   private renderPurchasedLottoLabel(lottoNumberLength: number) {
@@ -26,7 +26,7 @@ export default class PurchasedLottoView extends View<HTMLTableSectionElement> {
       return purchasedLottoNode;
     }, '');
     this.$purchasedLottos = this.$purchasedLottoContainer.querySelectorAll<HTMLLIElement>(
-      SELECTOR_NAME.PURCHASED_LOTTO,
+      SELECTOR_NAME.PURCHASED.LOTTO,
     );
   }
 
@@ -37,7 +37,7 @@ export default class PurchasedLottoView extends View<HTMLTableSectionElement> {
 
   public renderLottoNumberInPurchasedLotto(lottoNumbers?: number[][]) {
     this.$purchasedLottos.forEach((lottoNode, index) => {
-      const lottoNumberNode = lottoNode.querySelector(SELECTOR_NAME.PURCHASED_LOTTO_NUMBERS);
+      const lottoNumberNode = lottoNode.querySelector(SELECTOR_NAME.PURCHASED.LOTTO_NUMBERS);
       this.renderLottoNumber(lottoNumberNode, lottoNumbers ? lottoNumbers[index] : null);
     });
   }

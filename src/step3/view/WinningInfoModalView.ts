@@ -6,11 +6,11 @@ import { SEMANTIC_TAG } from '@step3/constants/semanticTag';
 import { View } from '@step3/view';
 
 export default class WinningInfoModalView extends View<HTMLDivElement> {
-  private $closeModalButton = this.$element.querySelector<HTMLButtonElement>(SELECTOR_NAME.CLOSE_MODAL);
+  private $closeModalButton = this.$element.querySelector<HTMLButtonElement>(SELECTOR_NAME.WINNING_INFO.CLOSE_MODAL);
 
-  private $resetButton = this.$element.querySelector<HTMLButtonElement>(SELECTOR_NAME.RESET_BUTTON);
+  private $resetButton = this.$element.querySelector<HTMLButtonElement>(SELECTOR_NAME.WINNING_INFO.RESET_BUTTON);
 
-  private $rateOfReturnText = this.$element.querySelector(SELECTOR_NAME.RATE_OF_RETURN_TEXT);
+  private $rateOfReturnText = this.$element.querySelector(SELECTOR_NAME.WINNING_INFO.RATE_OF_RETURN_TEXT);
 
   private $winningInfoTable = this.$element.querySelectorAll(`${SEMANTIC_TAG.TBODY} ${SEMANTIC_TAG.TR}`);
 
