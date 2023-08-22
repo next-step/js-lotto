@@ -6,18 +6,22 @@ import { SEMANTIC_TAG } from '@step3/constants/semanticTag';
 import { View } from '@step3/view';
 
 export default class WinningInfoModalView extends View<HTMLDivElement> {
+  private $closeModalButton = this.$element.querySelector<HTMLButtonElement>(SELECTOR_NAME.CLOSE_MODAL);
+
+  private $resetButton = this.$element.querySelector<HTMLButtonElement>(SELECTOR_NAME.RESET_BUTTON);
+
+  private $rateOfReturnText = this.$element.querySelector(SELECTOR_NAME.RATE_OF_RETURN_TEXT);
+
+  private $winningInfoTable = this.$element.querySelectorAll(`${SEMANTIC_TAG.TBODY} ${SEMANTIC_TAG.TR}`);
+
   constructor($element: HTMLDivElement) {
     super($element);
     this.setEvent();
   }
 
   protected setEvent() {
-    this.$element
-      .querySelector(SELECTOR_NAME.CLOSE_MODAL)
-      .addEventListener(EVENT.CLICK, (event) => this.handleOnClose(event));
-    this.$element
-      .querySelector(SELECTOR_NAME.RESET_BUTTON)
-      .addEventListener(EVENT.CLICK, (event) => this.handleResetButton(event));
+    this.$closeModalButton.addEventListener(EVENT.CLICK, (event) => this.handleOnClose(event));
+    this.$resetButton.addEventListener(EVENT.CLICK, (event) => this.handleResetButton(event));
   }
 
   private handleResetButton = (event: Event) => {
@@ -31,15 +35,13 @@ export default class WinningInfoModalView extends View<HTMLDivElement> {
   };
 
   private renderRateOfReturn(rateOfReturn: string) {
-    const rateOfReturnElement = this.$element.querySelector(SELECTOR_NAME.RATE_OF_RETURN_TEXT);
-    if (rateOfReturnElement) {
-      rateOfReturnElement.textContent = VIEW_MESSAGE_METHOD.RATE_OF_RETURN(rateOfReturn);
+    if (this.$rateOfReturnText) {
+      this.$rateOfReturnText.textContent = VIEW_MESSAGE_METHOD.RATE_OF_RETURN(rateOfReturn);
     }
   }
 
   private renderWinningInfoTable(lottoResult: LottoResult) {
-    const rows = this.$element.querySelectorAll(`${SEMANTIC_TAG.TBODY} ${SEMANTIC_TAG.TR}`);
-    rows.forEach((row) => {
+    this.$winningInfoTable.forEach((row) => {
       const [correctCountCell, winningAmountCell, winningCountCell] = row.querySelectorAll(SEMANTIC_TAG.TD);
       const winningInfoKey = this.createWinningInfoKey(correctCountCell.textContent, winningAmountCell.textContent);
       winningCountCell.textContent = VIEW_MESSAGE_METHOD.CORRECT_COUNT(lottoResult, winningInfoKey);
