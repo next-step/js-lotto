@@ -1,4 +1,3 @@
-import { parseSeparatedNumbers } from '../util/index.js';
 import { ERRORS, LOTTO_PRICE, MAX_ATTEMPT, WINNING_NUMBER } from './constants/index.js';
 
 export const validateInputPrice = (price) => {
@@ -9,14 +8,13 @@ export const validateInputPrice = (price) => {
 };
 
 export const validateWinningNumber = (winningNumbers) => {
-  const splittedWinningNumbers = parseSeparatedNumbers(winningNumbers);
-  splittedWinningNumbers.forEach((number) => {
+  winningNumbers.forEach((number) => {
     validateNumber(Number(number));
     validatePositiveNumber(Number(number));
     validateNumberRange(Number(number));
   });
-  validateWinningNumberCount(splittedWinningNumbers);
-  validateNumberDuplicate(splittedWinningNumbers);
+  validateWinningNumberCount(winningNumbers);
+  validateNumberDuplicate(winningNumbers);
 };
 export const validateBonusNumer = (winningNumbers, bonusNumber) => {
   validateNumber(bonusNumber);
