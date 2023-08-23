@@ -3,15 +3,15 @@ export class LottoNumber {
 
   static MAX = 45;
 
-  #number;
+  #value;
 
   constructor(number) {
     LottoNumber.#validate(number);
-    this.#number = number;
+    this.#value = number;
   }
 
-  get number() {
-    return this.#number;
+  get value() {
+    return this.#value;
   }
 
   static #validate(number) {

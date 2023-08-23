@@ -1,6 +1,7 @@
 import { LOTTO_RETRY_CODE } from '../constants/lotto-config.js';
+import { WinningLotto } from '../domain/WinningLotto.js';
 import { Exchange, LottoChecker, LottoMachine } from '../domain/index.js';
-import { checkValidWinningNumbers, checkValidBonus, checkValidRetry, checkValidPurchase } from '../validator/index.js';
+import { checkValidRetry } from '../validator/index.js';
 import { LottoInputView, LottoOutputView } from '../view/Lotto/index.js';
 
 class LottoGame {
@@ -18,15 +19,13 @@ class LottoGame {
 
   #recentLottos = [];
 
-  #winningNumbers = [];
-
-  #bonus = null;
-
   #result = null;
 
   #totalPrize = 0;
 
   #rateOfReturn = null;
+
+  #winningLotto = null;
 
   get recentPurchaseMoney() {
     return this.#recentPurchaseMoney;
@@ -34,14 +33,6 @@ class LottoGame {
 
   get recentLottos() {
     return this.#recentLottos;
-  }
-
-  get winningNumbers() {
-    return this.#winningNumbers;
-  }
-
-  get bonus() {
-    return this.#bonus;
   }
 
   get result() {
@@ -61,32 +52,27 @@ class LottoGame {
   }
 
   async buyLotto() {
-    const money = Number((await this.#inputView.purchase()).trim());
-    checkValidPurchase(money);
+    const money = await this.#inputView.purchase();
     this.#recentPurchaseMoney = money;
-    this.#recentLottos = this.#lottoMachine.buy(this.#recentPurchaseMoney);
+    this.#recentLottos = this.#lottoMachine.buy(money);
     this.#outputView.buyLottos(this.#recentLottos);
-    this.#outputView.lottos(this.#recentLottos);
-    await this.withRetry(() => this.setWinningNumbers());
+    this.#recentLottos.forEach((lotto) => {
+      const numbers = lotto.numbers.map((number) => number.value);
+      this.#outputView.lotto(numbers);
+    });
+    await this.withRetry(() => this.setWinningLotto());
   }
 
-  async setWinningNumbers() {
+  async setWinningLotto() {
     const winningNumbers = await this.#inputView.winningNumbers();
-    checkValidWinningNumbers(winningNumbers);
-    this.#winningNumbers = winningNumbers;
-    await this.withRetry(() => this.setBonus());
-  }
-
-  async setBonus() {
     const bonus = await this.#inputView.bonus();
-    checkValidBonus(bonus, this.#winningNumbers);
-    this.#bonus = bonus;
-    this.checkLottos();
+    this.#winningLotto = new WinningLotto(winningNumbers, bonus);
+    await this.withRetry(() => this.checkLottos());
   }
 
   checkLottos() {
     this.#recentLottos.forEach((lotto) => {
-      lotto.check(this.#winningNumbers, this.#bonus);
+      lotto.check(this.#winningLotto);
     });
     this.#result = this.#lottoChecker.getLottoRewardBoard(this.#recentLottos);
     this.#outputView.lottoResult(this.#result);
@@ -122,8 +108,6 @@ class LottoGame {
   reset() {
     this.#recentPurchaseMoney = 0;
     this.#recentLottos = [];
-    this.#winningNumbers = [];
-    this.#bonus = null;
     this.#result = null;
     this.#totalPrize = 0;
     this.#rateOfReturn = null;

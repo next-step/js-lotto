@@ -6,10 +6,8 @@ class LottoOutputView extends OutputView {
     this._message(`${lottos.length}개를 구매했습니다.`);
   }
 
-  lottos(lottos) {
-    lottos.forEach((lotto) => {
-      this._message(lotto.numbers);
-    });
+  lotto(numbers) {
+    this._message(numbers);
   }
 
   prize({ code, quantity, hasBonus }) {

@@ -3,11 +3,12 @@ import splitToNumberArray from '../../utils/splitToNumberArray.js';
 import InputView from '../InputView.js';
 
 class LottoInputView extends InputView {
-  purchase() {
-    return this._getUserInput('구입금액을 입력해 주세요.');
+  async purchase() {
+    const result = await this._getUserInput('구입금액을 입력해 주세요.');
+    return Number(result.trim());
   }
 
-  retry() {
+  async retry() {
     return this._getUserInput(`다시 시작하시겠습니까? (${LOTTO_RETRY_CODE.CONFIRM}/${LOTTO_RETRY_CODE.REJECT})`);
   }
 

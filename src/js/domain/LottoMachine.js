@@ -1,28 +1,50 @@
-import { LOTTO_NUMBER_QUANTITY, LOTTO_NUMBER_RANGE, LOTTO_PRICE } from '../constants/lotto-config.js';
-import getRandomNumber from '../utils/getRandomNumber.js';
 import Lotto from './Lotto.js';
+import { LottoNumber } from './LottoNumber.js';
 
 class LottoMachine {
-  #numberQuantity = LOTTO_NUMBER_QUANTITY;
+  static LOTTO_NUMBER_QUANTITY = 6;
 
-  #minNumber = LOTTO_NUMBER_RANGE.MIN;
+  static PRICE = 1_000;
 
-  #maxNumber = LOTTO_NUMBER_RANGE.MAX;
+  #balls;
 
-  #pricePerSheet = LOTTO_PRICE;
-
-  buy(money) {
-    const sheetsCount = money / this.#pricePerSheet;
-    return Array.from({ length: sheetsCount }, () => new Lotto(this.#makeLottoNumbers()));
+  constructor() {
+    this.#addBalls();
+    this.#shuffle();
   }
 
-  #makeLottoNumbers() {
-    const result = new Set();
-    while (result.size < this.#numberQuantity) {
-      const randomNumber = getRandomNumber(this.#minNumber, this.#maxNumber);
-      result.add(randomNumber);
+  buy(money) {
+    LottoMachine.#validate(money);
+    const sheets = LottoMachine.#calculateSheet(money);
+    const lottos = Array.from({ length: sheets }).map(() => {
+      const result = new Lotto(this.#pickBalls());
+      this.#addBalls();
+      this.#shuffle();
+      return result;
+    });
+    return lottos;
+  }
+
+  static #validate(money) {
+    if (money % LottoMachine.PRICE !== 0 || money <= 0) {
+      throw new Error(`${LottoMachine.PRICE}원 단위의 금액을 입력해주세요!`);
     }
-    return [...result].sort((a, b) => a - b);
+  }
+
+  static #calculateSheet(money) {
+    return money / LottoMachine.PRICE;
+  }
+
+  #addBalls() {
+    this.#balls = Array.from({ length: LottoNumber.MAX }, (_, i) => i + 1);
+  }
+
+  #shuffle() {
+    this.#balls = this.#balls.sort(() => 0.5 - Math.random());
+  }
+
+  #pickBalls() {
+    return this.#balls.slice(0, LottoMachine.LOTTO_NUMBER_QUANTITY);
   }
 }
 
