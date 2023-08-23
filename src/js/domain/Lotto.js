@@ -10,7 +10,7 @@ export class Lotto {
   }
 
   get numbers() {
-    return this._numbers;
+    return this._numbers.map(({ value }) => value);
   }
 
   match(number) {

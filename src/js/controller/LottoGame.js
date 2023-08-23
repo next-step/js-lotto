@@ -37,10 +37,7 @@ class LottoGame {
   async buyLotto() {
     this.#lottos = this.#lottoMachine.buy(this.#money);
     this.#outputView.buyLottos(this.#lottos);
-    this.#lottos.forEach((lotto) => {
-      const numbers = lotto.numbers.map((number) => number.value);
-      this.#outputView.lotto(numbers);
-    });
+    this.#lottos.forEach(({ numbers }) => this.#outputView.lotto(numbers));
     await this.withRetry(() => this.setWinningLotto());
   }
 
@@ -53,6 +50,7 @@ class LottoGame {
 
   checkLottos() {
     this.#prizes = this.#lottos.map((lotto) => LottoReward.getReward(this.#winningLotto, lotto));
+    console.log(this.#prizes);
     this.setTotalPrize();
   }
 
