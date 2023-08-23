@@ -1,4 +1,6 @@
-export { default as Lotto } from './Lotto.js';
-export { default as Exchange } from './Exchange.js';
-export { default as LottoChecker } from './LottoChecker.js';
-export { default as LottoMachine } from './LottoMachine.js';
+export * from './LottoNumber.js';
+export * from './Lotto.js';
+export * from './Exchange.js';
+export * from './LottoChecker.js';
+export * from './LottoMachine.js';
+export * from './WinningLotto.js';

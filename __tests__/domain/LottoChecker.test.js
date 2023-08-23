@@ -1,107 +1,79 @@
-import { LOTTO_REWARD_CODE } from '../../src/js/constants/lotto-config.js';
-import { LottoChecker, Lotto } from '../../src/js/domain/index.js';
-import { DEFAULT_LOTTO_NUMBERS, LOTTO_REWARD_DUMMY, MATCHED_BONUS, UNMATCHED_BONUS } from '../constants/lotto.js';
+import {
+  FifthPrize,
+  FirstPrize,
+  FourthPrize,
+  LottoPrize,
+  SecondPrize,
+  ThirdPrize,
+} from '../../src/js/domain/LottoPrize/index.js';
+import { LottoChecker, Lotto, WinningLotto } from '../../src/js/domain/index.js';
 
 describe('로또 등수 확인 테스트', () => {
-  it('로또는 당첨번호와 보너스 번호를 입력받으면 자신의 등수를 알 수 있다.', () => {
-    const lottoChecker = new LottoChecker();
+  it('당첨로또와 6개가 동일하면 1등이다.', () => {
+    const numbers = [1, 2, 3, 4, 5, 6];
+    const lotto = new Lotto(numbers);
+    const winningLotto = new WinningLotto(numbers, 7);
 
-    const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check(DEFAULT_LOTTO_NUMBERS, MATCHED_BONUS);
+    const prize = LottoChecker.getPrize(winningLotto, lotto);
 
-    const lottoRewardBoard = lottoChecker.getLottoRewardBoard([lotto]);
-
-    expect(lottoRewardBoard).toEqual({
-      [LOTTO_REWARD_CODE.FIRST]: 1,
-      [LOTTO_REWARD_CODE.SECOND]: 0,
-      [LOTTO_REWARD_CODE.THIRD]: 0,
-      [LOTTO_REWARD_CODE.FOURTH]: 0,
-      [LOTTO_REWARD_CODE.FIFTH]: 0,
-    });
+    expect(prize instanceof FirstPrize).toBeTruthy();
+    expect(prize.getPrize()).toBe(2_000_000_000);
   });
 
-  it('2등 테스트.', () => {
-    const lottoChecker = new LottoChecker();
+  it('당첨로또와 5개가 동일하며 보너스번호를 포함하면 2등이다.', () => {
+    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
+    const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 7], 6);
 
-    const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check(LOTTO_REWARD_DUMMY.SECOND, MATCHED_BONUS);
+    const prize = LottoChecker.getPrize(winningLotto, lotto);
 
-    const lottoRewardBoard = lottoChecker.getLottoRewardBoard([lotto]);
-
-    expect(lottoRewardBoard).toEqual({
-      [LOTTO_REWARD_CODE.FIRST]: 0,
-      [LOTTO_REWARD_CODE.SECOND]: 1,
-      [LOTTO_REWARD_CODE.THIRD]: 0,
-      [LOTTO_REWARD_CODE.FOURTH]: 0,
-      [LOTTO_REWARD_CODE.FIFTH]: 0,
-    });
+    expect(prize instanceof SecondPrize).toBeTruthy();
+    expect(prize.getPrize()).toBe(30_000_000);
   });
 
-  it('3등 테스트.', () => {
-    const lottoChecker = new LottoChecker();
+  it('당첨로또와 5개가 동일하며 보너스번호를 미포함하면 3등이다.', () => {
+    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
+    const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 7], 8);
 
-    const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check(LOTTO_REWARD_DUMMY.THIRD, UNMATCHED_BONUS);
+    const prize = LottoChecker.getPrize(winningLotto, lotto);
 
-    const lottoRewardBoard = lottoChecker.getLottoRewardBoard([lotto]);
-
-    expect(lottoRewardBoard).toEqual({
-      [LOTTO_REWARD_CODE.FIRST]: 0,
-      [LOTTO_REWARD_CODE.SECOND]: 0,
-      [LOTTO_REWARD_CODE.THIRD]: 1,
-      [LOTTO_REWARD_CODE.FOURTH]: 0,
-      [LOTTO_REWARD_CODE.FIFTH]: 0,
-    });
+    expect(prize instanceof ThirdPrize).toBeTruthy();
+    expect(prize.getPrize()).toBe(1_500_000);
   });
 
-  it('4등 테스트.', () => {
-    const lottoChecker = new LottoChecker();
+  it('당첨로또와 4개가 동일하면 4등이다.', () => {
+    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
+    const winningLotto = new WinningLotto([1, 2, 3, 4, 7, 8], 9);
 
-    const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check(LOTTO_REWARD_DUMMY.FOURTH, MATCHED_BONUS);
+    const prize = LottoChecker.getPrize(winningLotto, lotto);
 
-    const lottoRewardBoard = lottoChecker.getLottoRewardBoard([lotto]);
-
-    expect(lottoRewardBoard).toEqual({
-      [LOTTO_REWARD_CODE.FIRST]: 0,
-      [LOTTO_REWARD_CODE.SECOND]: 0,
-      [LOTTO_REWARD_CODE.THIRD]: 0,
-      [LOTTO_REWARD_CODE.FOURTH]: 1,
-      [LOTTO_REWARD_CODE.FIFTH]: 0,
-    });
+    expect(prize instanceof FourthPrize).toBeTruthy();
   });
 
-  it('5등 테스트.', () => {
-    const lottoChecker = new LottoChecker();
+  it('당첨로또와 3개가 동일하면 5등이다.', () => {
+    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
+    const winningLotto = new WinningLotto([1, 2, 3, 7, 8, 9], 10);
 
-    const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check(LOTTO_REWARD_DUMMY.FIFTH, MATCHED_BONUS);
+    const prize = LottoChecker.getPrize(winningLotto, lotto);
 
-    const lottoRewardBoard = lottoChecker.getLottoRewardBoard([lotto]);
-
-    expect(lottoRewardBoard).toEqual({
-      [LOTTO_REWARD_CODE.FIRST]: 0,
-      [LOTTO_REWARD_CODE.SECOND]: 0,
-      [LOTTO_REWARD_CODE.THIRD]: 0,
-      [LOTTO_REWARD_CODE.FOURTH]: 0,
-      [LOTTO_REWARD_CODE.FIFTH]: 1,
-    });
+    expect(prize instanceof FifthPrize).toBeTruthy();
   });
 
-  it('낙첨 테스트.', () => {
-    const lottoChecker = new LottoChecker();
+  it.each([
+    {
+      numbers: [1, 2, 13, 14, 15, 16],
+    },
+    {
+      numbers: [1, 12, 13, 14, 15, 16],
+    },
+    {
+      numbers: [11, 12, 13, 14, 15, 16],
+    },
+  ])('당첨로또와 2개 이하로 동일하면 낙첨이다.', ({ numbers }) => {
+    const lotto = new Lotto(numbers);
+    const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 6], 7);
 
-    const lotto = new Lotto(DEFAULT_LOTTO_NUMBERS);
-    lotto.check(LOTTO_REWARD_DUMMY.LOST, MATCHED_BONUS);
+    const prize = LottoChecker.getPrize(winningLotto, lotto);
 
-    const lottoRewardBoard = lottoChecker.getLottoRewardBoard([lotto]);
-
-    expect(lottoRewardBoard).toEqual({
-      [LOTTO_REWARD_CODE.FIRST]: 0,
-      [LOTTO_REWARD_CODE.SECOND]: 0,
-      [LOTTO_REWARD_CODE.THIRD]: 0,
-      [LOTTO_REWARD_CODE.FOURTH]: 0,
-      [LOTTO_REWARD_CODE.FIFTH]: 0,
-    });
+    expect(prize instanceof LottoPrize).toBeTruthy();
   });
 });

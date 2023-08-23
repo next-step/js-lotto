@@ -1,40 +1,30 @@
-import { LOTTO_REWARD_CODE, LOTTO_REWARD } from '../constants/lotto-config.js';
+import { FifthPrize, FourthPrize, LottoPrize, SecondPrize, ThirdPrize, FirstPrize } from './LottoPrize/index.js';
 
-class LottoChecker {
-  #firstMatchCount = LOTTO_REWARD[LOTTO_REWARD_CODE.FIRST].matchedCount;
+export class LottoChecker {
+  static FIRST = 6;
 
-  #secondMatchCount = LOTTO_REWARD[LOTTO_REWARD_CODE.SECOND].matchedCount;
+  static SECOND = 5;
 
-  #thirdMatchCount = LOTTO_REWARD[LOTTO_REWARD_CODE.THIRD].matchedCount;
+  static THIRD = 5;
 
-  #fourthMatchCount = LOTTO_REWARD[LOTTO_REWARD_CODE.FOURTH].matchedCount;
+  static FOURTH = 4;
 
-  #fifthMatchCount = LOTTO_REWARD[LOTTO_REWARD_CODE.FIFTH].matchedCount;
+  static FIFTH = 3;
 
-  static makeLottoRewardBoard() {
-    return Object.values(LOTTO_REWARD_CODE).reduce((acc, currentValue) => {
-      acc[currentValue] = 0;
-      return acc;
-    }, {});
-  }
-
-  getLottoReward({ matchCount, hasBonus }) {
-    if (matchCount === this.#firstMatchCount) return LOTTO_REWARD_CODE.FIRST;
-    if (matchCount === this.#secondMatchCount && hasBonus) return LOTTO_REWARD_CODE.SECOND;
-    if (matchCount === this.#thirdMatchCount) return LOTTO_REWARD_CODE.THIRD;
-    if (matchCount === this.#fourthMatchCount) return LOTTO_REWARD_CODE.FOURTH;
-    if (matchCount === this.#fifthMatchCount) return LOTTO_REWARD_CODE.FIFTH;
-    return null;
-  }
-
-  getLottoRewardBoard(lottos) {
-    const lottoRewardBoard = LottoChecker.makeLottoRewardBoard();
-    lottos.forEach((lotto) => {
-      const reward = this.getLottoReward(lotto);
-      if (reward) lottoRewardBoard[reward] += 1;
-    });
-    return lottoRewardBoard;
+  static getPrize(winningLotto, lotto) {
+    const matched = winningLotto.getMatchedCount(lotto);
+    const hasBonus = winningLotto.hasBonus(lotto);
+    switch (matched) {
+      case LottoChecker.FIRST:
+        return new FirstPrize();
+      case LottoChecker.SECOND:
+        return hasBonus ? new SecondPrize() : new ThirdPrize();
+      case LottoChecker.FOURTH:
+        return new FourthPrize();
+      case LottoChecker.FIFTH:
+        return new FifthPrize();
+      default:
+        return new LottoPrize();
+    }
   }
 }
-
-export default LottoChecker;

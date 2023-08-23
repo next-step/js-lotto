@@ -1,6 +1,6 @@
 import ERROR from '../../src/js/constants/error.js';
 import { LOTTO_RETRY_CODE } from '../../src/js/constants/lotto-config.js';
-import { checkValidRetry } from '../../src/js/validator/index.js';
+import checkValidRetry from '../../src/js/validator/retry.js';
 
 describe('재시작 유효성 테스트', () => {
   it.each([

@@ -1,6 +1,6 @@
 import { LottoNumber } from './LottoNumber.js';
 
-class Lotto {
+export class Lotto {
   static NUMBER_QUANTITY = 6;
 
   _numbers;
@@ -38,5 +38,3 @@ class Lotto {
     this.#checkBonus(bonus);
   }
 }
-
-export default Lotto;

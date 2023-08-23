@@ -1,7 +1,7 @@
-import Lotto from './Lotto.js';
+import { Lotto } from './Lotto.js';
 import { LottoNumber } from './LottoNumber.js';
 
-class LottoMachine {
+export class LottoMachine {
   static LOTTO_NUMBER_QUANTITY = 6;
 
   static PRICE = 1_000;
@@ -47,5 +47,3 @@ class LottoMachine {
     return this.#balls.slice(0, LottoMachine.LOTTO_NUMBER_QUANTITY);
   }
 }
-
-export default LottoMachine;
