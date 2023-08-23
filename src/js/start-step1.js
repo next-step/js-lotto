@@ -1,5 +1,3 @@
-import App from './app.js';
-import GAME_CODE from './constants/game-code.js';
+import app from './app.js';
 
-const app = new App();
-app.startGame(GAME_CODE.LOTTO);
+app();
