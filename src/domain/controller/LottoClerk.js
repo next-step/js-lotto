@@ -39,10 +39,9 @@ export class LottoClerk {
     delete this.machine;
     delete this.customer;
   };
-  
+
   initRender = () => {
-    this.winningForm.querySelectorAll('input')
-    .forEach((input) => (input.value = ''));
+    this.winningForm.querySelectorAll('input').forEach((input) => (input.value = ''));
     this.winningForm.classList.add('hidden');
     this.lottoToggleWrapper.classList.add('hidden');
     this.lottoSection.classList.add('hidden');
@@ -56,19 +55,8 @@ export class LottoClerk {
   };
 
   bindEvent() {
-    this.budgetForm.addEventListener('submit', this.enterLottoStore);
-
-    this.winningForm.addEventListener('submit', (event) => {
-      event.preventDefault();
-      try {
-        validateWinningNumber(this.winningNumber);
-        validateBonusNumer(this.winningNumber, this.bonusNumber);
-        this.winningError.innerHTML = '';
-        this.checkoutLotto();
-      } catch (error) {
-        this.winningError.innerHTML = error.message;
-      }
-    });
+    this.budgetForm.addEventListener('submit', this.onPurchaseLotto);
+    this.winningForm.addEventListener('submit', this.onSubmitWinningNumber);
 
     this.winningForm.querySelectorAll('input').forEach((input, index) => {
       input.addEventListener('input', (event) => {
@@ -78,73 +66,28 @@ export class LottoClerk {
       });
     });
 
-    this.budgetInput.addEventListener('input', (event) => {
-      try {
-        validateInputPrice(event.target.value);
-        this.budgetError.innerHTML = '';
-        this.budgetButton.disabled = false;
-      } catch (error) {
-        this.budgetError.innerHTML = error.message;
-        this.budgetButton.disabled = true;
-      } finally {
-        this.budget = Math.round(event.target.value / 1000) * 1000;
-        this.lottoCount = this.budget / this.lottoPrice;
-      }
-    });
+    this.budgetInput.addEventListener('input', this.onChangeBudget);
 
-    this.budgetButton.addEventListener('click', this.enterLottoStore);
+    this.budgetButton.addEventListener('click', this.onPurchaseLotto);
+    this.retryButton.addEventListener('click', this.onRetryLotto);
+    this.modalCloseButton.addEventListener('click', this.onCloseModal);
 
-    this.lottoToggle.addEventListener('change', this.toggleLotto);
-
-    this.retryButton.addEventListener('click', this.retryLotto);
-
-    this.modalCloseButton.addEventListener('click', this.closeModal);
+    this.lottoToggle.addEventListener('change', this.onToggleLotto);
   }
 
-  enterLottoStore = (event) => {
-    event.preventDefault();
-
-    this.machine = new LottoMachine(app, Math.floor(this.budget / this.lottoPrice));
-    this.customer = new Customer(this.budget);
-
-    this.winningForm.classList.remove('hidden');
-    this.budgetInput.disabled = true;
-    this.budgetButton.disabled = true;
-  };
-
-  toggleLotto = (event) => {
-    const { target } = event;
-    this.icons = document.querySelectorAll(SELECTOR.LOTTO_TICKET);
-
-    const addClass = target.checked;
-    this.lottoList.classList.toggle('flex-col', addClass);
-    this.icons.forEach((child) => child.classList.toggle('hidden', !addClass));
-  };
-
-  checkoutLotto = () => {
+  askCheckoutResult = () => {
     const totalCounts = this.machine.lottos.map((lotto) => this.#countWinningNumber(lotto));
     totalCounts.forEach((count) => this.customer.countResult(count));
-    this.announceResult();
+    this.showResultToCustomer();
   };
 
-  announceResult() {
+  showResultToCustomer() {
     if (!this.lottoCycle) {
       const profitRate = getProfitRate(this.customer.money, this.customer.amount);
       this.modalBody.innerHTML = this.output.LOTTO_RESULT(this.customer.results, profitRate);
     }
     this.modal.classList.add('open');
   }
-
-  retryLotto = () => {
-    this.modal.classList.remove('open');
-    this.initState();
-    this.initRender();
-  };
-
-  closeModal = () => {
-    this.modal.classList.remove('open');
-    this.lottoCycle = true;
-  };
 
   #countWinningNumber(lotto) {
     const winningCount = this.winningNumber.filter((number) => lotto.includes(number));
@@ -155,4 +98,61 @@ export class LottoClerk {
     }
     return winningCount.length === 6 ? 7 : winningCount.length;
   }
+
+  onPurchaseLotto = (event) => {
+    event.preventDefault();
+
+    this.machine = new LottoMachine(app, Math.floor(this.budget / this.lottoPrice));
+    this.customer = new Customer(this.budget);
+
+    this.winningForm.classList.remove('hidden');
+    this.budgetInput.disabled = true;
+    this.budgetButton.disabled = true;
+  };
+
+  onSubmitWinningNumber = (event) => {
+    event.preventDefault();
+    try {
+      validateWinningNumber(this.winningNumber);
+      validateBonusNumer(this.winningNumber, this.bonusNumber);
+      this.winningError.innerHTML = '';
+      this.askCheckoutResult();
+    } catch (error) {
+      this.winningError.innerHTML = error.message;
+    }
+  };
+
+  onChangeBudget = (event) => {
+    try {
+      validateInputPrice(event.target.value);
+      this.budgetError.innerHTML = '';
+      this.budgetButton.disabled = false;
+    } catch (error) {
+      this.budgetError.innerHTML = error.message;
+      this.budgetButton.disabled = true;
+    } finally {
+      this.budget = Math.round(event.target.value / 1000) * 1000;
+      this.lottoCount = this.budget / this.lottoPrice;
+    }
+  };
+
+  onToggleLotto = (event) => {
+    const { target } = event;
+    this.icons = document.querySelectorAll(SELECTOR.LOTTO_TICKET);
+
+    const addClass = target.checked;
+    this.lottoList.classList.toggle('flex-col', addClass);
+    this.icons.forEach((child) => child.classList.toggle('hidden', !addClass));
+  };
+
+  onRetryLotto = () => {
+    this.modal.classList.remove('open');
+    this.initState();
+    this.initRender();
+  };
+
+  onCloseModal = () => {
+    this.modal.classList.remove('open');
+    this.lottoCycle = true;
+  };
 }
