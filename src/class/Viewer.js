@@ -1,6 +1,6 @@
 import * as readline from "node:readline/promises";
 
-export default class Viewer {
+export class ConsoleViewer {
   static #PAYMENT_INPUT_GUIDE = "> 구입금액을 입력해 주세요.";
   static #AMOUNT_MESSAGE = (amount) => `${amount}개를 구매했습니다.\n`;
   static #WINNING_NUMBERS_INPUT_GUIDE = "> 당첨 번호를 입력해 주세요.";
@@ -36,35 +36,35 @@ export default class Viewer {
   }
 
   getPaymentInput() {
-    return this.getUserInput(Viewer.#PAYMENT_INPUT_GUIDE);
+    return this.getUserInput(ConsoleViewer.#PAYMENT_INPUT_GUIDE);
   }
 
   getWinningNumbers() {
-    return this.getUserInput(Viewer.#WINNING_NUMBERS_INPUT_GUIDE);
+    return this.getUserInput(ConsoleViewer.#WINNING_NUMBERS_INPUT_GUIDE);
   }
 
   getBonusNumber() {
-    return this.getUserInput(Viewer.#BONUS_NUMBER_INPUT_GUIDE);
+    return this.getUserInput(ConsoleViewer.#BONUS_NUMBER_INPUT_GUIDE);
   }
 
   printAmount(amount) {
-    this.printContent(Viewer.#AMOUNT_MESSAGE(amount));
+    this.printContent(ConsoleViewer.#AMOUNT_MESSAGE(amount));
   }
 
   printLottoNumbers(tickets) {
     tickets.forEach((ticket) => {
-      this.printContent(Viewer.#TICKET_FORMAT(ticket));
+      this.printContent(ConsoleViewer.#TICKET_FORMAT(ticket));
     });
 
     this.printContent("");
   }
 
   printPrizeSummary(totalPrize) {
-    this.printContent(Viewer.#PRIZE_SUMMARY_HEADER);
+    this.printContent(ConsoleViewer.#PRIZE_SUMMARY_HEADER);
 
     totalPrize.forEach((prize) => {
       this.printContent(
-        Viewer.#PRIZE_DETAIL_MESSAGE(
+        ConsoleViewer.#PRIZE_DETAIL_MESSAGE(
           prize.matchingNumberCount,
           prize.prizeAmount,
           prize.count,
@@ -75,7 +75,7 @@ export default class Viewer {
   }
 
   printProfitRatio(ratio) {
-    this.printContent(Viewer.#PROFIT_RATIO_MESSAGE(ratio));
+    this.printContent(ConsoleViewer.#PROFIT_RATIO_MESSAGE(ratio));
   }
 
   closeViewer() {

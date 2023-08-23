@@ -83,4 +83,25 @@ export default class LottoGame {
 
     return totalPrize;
   }
+
+  getLottoAmount() {
+    return this.#purchaseInfo.amount;
+  }
+
+  getProfitRatio() {
+    if (this.#purchaseInfo === undefined) {
+      throw new Error("먼저 로또를 구매해야 합니다.");
+    }
+
+    if (this.#purchaseInfo.amount < 1) {
+      return 0;
+    }
+
+    const totalPrize = this.getTotalPrize().reduce(
+      (prev, curr) => prev + curr.count * curr.prizeAmount,
+      0,
+    );
+
+    return totalPrize / this.#purchaseInfo.amount;
+  }
 }
