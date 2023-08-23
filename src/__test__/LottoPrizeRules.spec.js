@@ -1,4 +1,4 @@
-import LottoPrizeRules from "../class/LottoPrizeRules";
+import LottoPrizeRules from "../class/LottoPrizeRules.js";
 
 const makeLottoPrizeRule = (
   rank,

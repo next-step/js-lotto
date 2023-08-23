@@ -1,5 +1,5 @@
-import LottoPrizeRules from "./LottoPrizeRules";
-import LottoTicketRules from "./LottoTicketRules";
+import LottoPrizeRules from "./LottoPrizeRules.js";
+import LottoTicketRules from "./LottoTicketRules.js";
 
 export default class LottoPrizeCalculator {
   #prizeRules;

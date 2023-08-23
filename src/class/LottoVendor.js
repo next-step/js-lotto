@@ -1,4 +1,4 @@
-import LottoTicket from "./LottoTicket";
+import LottoTicket from "./LottoTicket.js";
 
 export default class LottoVendor {
   #price;

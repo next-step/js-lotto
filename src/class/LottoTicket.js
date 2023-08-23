@@ -1,4 +1,4 @@
-import LottoTicketRules from "./LottoTicketRules";
+import LottoTicketRules from "./LottoTicketRules.js";
 
 export default class LottoTicket {
   #rule;

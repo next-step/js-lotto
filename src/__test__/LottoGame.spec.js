@@ -1,4 +1,4 @@
-import LottoGame from "../class/LottoGame";
+import LottoGame from "../class/LottoGame.js";
 
 describe("LottoGame 클래스 테스트", () => {
   test.each`

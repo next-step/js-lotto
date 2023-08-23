@@ -1,5 +1,5 @@
-import LottoVendor from "../class/LottoVendor";
-import LottoTicket from "../class/LottoTicket";
+import LottoVendor from "../class/LottoVendor.js";
+import LottoTicket from "../class/LottoTicket.js";
 
 describe("LottoVendor 클래스 테스트", () => {
   test.each(["test", {}, () => {}])(

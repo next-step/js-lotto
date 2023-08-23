@@ -1,4 +1,4 @@
-import LottoTicket from "../class/LottoTicket";
+import LottoTicket from "../class/LottoTicket.js";
 
 describe("LottoTicket 클래스 테스트", () => {
   let lottoNumbers;

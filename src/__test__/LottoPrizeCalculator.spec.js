@@ -1,4 +1,4 @@
-import LottoPrizeCalculator from "../class/LottoPrizeCalculator";
+import LottoPrizeCalculator from "../class/LottoPrizeCalculator.js";
 
 describe("LottoPrizeCalculator 클래스 테스트", () => {
   let calculator;

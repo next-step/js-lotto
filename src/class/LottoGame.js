@@ -1,7 +1,7 @@
-import LottoTicketRules from "./LottoTicketRules";
-import LottoPrizeRules from "./LottoPrizeRules";
-import LottoVendor from "./LottoVendor";
-import LottoPrizeCalculator from "./LottoPrizeCalculator";
+import LottoTicketRules from "./LottoTicketRules.js";
+import LottoPrizeRules from "./LottoPrizeRules.js";
+import LottoVendor from "./LottoVendor.js";
+import LottoPrizeCalculator from "./LottoPrizeCalculator.js";
 
 export default class LottoGame {
   #ticketRules;

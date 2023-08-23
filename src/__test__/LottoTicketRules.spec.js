@@ -1,4 +1,4 @@
-import LottoTicketRules from "../class/LottoTicketRules";
+import LottoTicketRules from "../class/LottoTicketRules.js";
 
 describe("LottoTicketRules 클래스 테스트", () => {
   const LOTTO_DEFAULT_VALUE = Object.freeze({ MIN: 1, MAX: 43, LENGTH: 6 });
