@@ -56,6 +56,7 @@ export class LottoClerk {
 
   bindEvent() {
     this.budgetForm.addEventListener(E.SUBMIT, this.onPurchaseLotto);
+
     this.winningForm.addEventListener(E.SUBMIT, this.onSubmitWinningNumber);
 
     this.winningForm.querySelectorAll(E.INPUT).forEach((input, index) => {
@@ -69,7 +70,9 @@ export class LottoClerk {
     this.budgetInput.addEventListener(E.INPUT, this.onChangeBudget);
 
     this.budgetButton.addEventListener(E.CLICK, this.onPurchaseLotto);
+    
     this.retryButton.addEventListener(E.CLICK, this.onRetryLotto);
+    
     this.modalCloseButton.addEventListener(E.CLICK, this.onCloseModal);
 
     this.lottoToggle.addEventListener(E.CHANGE, this.onToggleLotto);
@@ -104,7 +107,6 @@ export class LottoClerk {
 
     this.machine = new LottoMachine(app, Math.floor(this.budget / this.lottoPrice));
     this.customer = new Customer(this.budget);
-
     this.winningForm.classList.remove(CLASS.HIDDEN);
     this.budgetInput.disabled = STATE.TRUE;
     this.budgetButton.disabled = STATE.TRUE;
