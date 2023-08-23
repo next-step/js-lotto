@@ -43,6 +43,7 @@ export default class PurchasedLottoView extends View<HTMLTableSectionElement> {
   }
 
   public renderPurchasedLottoView(lottoNumbers: number[][]) {
+    this.resetCheckboxStatus();
     this.renderPurchasedLottoLabel(lottoNumbers.length);
     this.renderPurchasedLotto(lottoNumbers);
   }
