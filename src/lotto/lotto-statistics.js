@@ -55,6 +55,10 @@ class LottoStatistics {
   }
 
   calculateProfitRate(purchasedLottoCounts) {
+    if (purchasedLottoCounts === 0) {
+      return 0;
+    }
+
     let profitRate = 0;
 
     const purchaseAmount = purchasedLottoCounts * LOTTO_AMOUNT_UNIT;
@@ -66,10 +70,8 @@ class LottoStatistics {
       FIFTH_PLACE_AMOUNT * this.#statistics['fifth place'];
 
     profitRate =
-      profitRate > 0
-        ? ((totalProfit - purchaseAmount) / purchaseAmount) *
-          PROFIT_RATE_PERCENTAGE_UNIT
-        : 0;
+      ((totalProfit - purchaseAmount) / purchaseAmount) *
+      PROFIT_RATE_PERCENTAGE_UNIT;
 
     return profitRate;
   }
