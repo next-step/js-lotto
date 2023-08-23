@@ -89,7 +89,7 @@ export default class LottoApplicationController extends Controller {
   private handleToggleButton() {
     const isChecked = $<HTMLInputElement>(SELECTOR_NAME.PURCHASED.LOTTOS_TOGGLE_BUTTON).checked;
     const lottoNumbers = isChecked ? this.lottoGame.buyerInfo?.lottos?.map((lotto) => lotto?.getLottoNumbers()) : null;
-    this.purchasedLottoView.renderLottoNumberInPurchasedLotto(lottoNumbers);
+    this.purchasedLottoView.renderLottoNumbersInPurchasedLotto(lottoNumbers);
   }
 
   private handlePurchaseLotto(purchaseAmount: number) {

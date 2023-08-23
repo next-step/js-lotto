@@ -35,7 +35,7 @@ export default class PurchasedLottoView extends View<HTMLTableSectionElement> {
     lottoNumberNode.className = lottoNumbers ? 'text-xl ml-2' : null;
   }
 
-  public renderLottoNumberInPurchasedLotto(lottoNumbers?: number[][]) {
+  public renderLottoNumbersInPurchasedLotto(lottoNumbers?: number[][]) {
     this.$purchasedLottos.forEach((lottoNode, index) => {
       const lottoNumberNode = lottoNode.querySelector(SELECTOR_NAME.PURCHASED.LOTTO_NUMBERS);
       this.renderLottoNumber(lottoNumberNode, lottoNumbers ? lottoNumbers[index] : null);

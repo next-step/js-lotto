@@ -20,7 +20,7 @@ export default class WinningInfoModalView extends View<HTMLDivElement> {
   }
 
   protected setEvent() {
-    this.$closeModalButton.addEventListener(EVENT.CLICK, (event) => this.handleActionClose(event));
+    this.$closeModalButton.addEventListener(EVENT.CLICK, (event) => this.handleActionCloseModal(event));
     this.$resetButton.addEventListener(EVENT.CLICK, (event) => this.handleActionResetButton(event));
   }
 
@@ -29,7 +29,7 @@ export default class WinningInfoModalView extends View<HTMLDivElement> {
     this.emit(CUSTOM_EVENT.RESET, {});
   };
 
-  private handleActionClose = (event: Event) => {
+  private handleActionCloseModal = (event: Event) => {
     event.preventDefault();
     this.$element.classList.remove(CLASS_NAME.OPEN);
   };
