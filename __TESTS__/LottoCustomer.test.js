@@ -28,7 +28,7 @@ describe('로또 구매 테스트', () => {
       const lottoSeller = new LottoSeller(lottoOrganizer);
       const lottoCustomer = new LottoCustomer(amount, LOTTO_MODE.AUTO);
       lottoCustomer.buyLottoTicket(lottoSeller);
-      expect(lottoCustomer.tickets).toHaveLength(lottoSeller.sellCount);
+      expect(lottoCustomer.lottoTickets).toHaveLength(lottoSeller.sellCount);
     }
   );
 

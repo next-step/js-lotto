@@ -22,7 +22,7 @@ class LottoCustomer {
     return this.#amount;
   }
 
-  get tickets() {
+  get lottoTickets() {
     return this.#lottoTickets;
   }
 
