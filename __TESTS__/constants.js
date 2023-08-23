@@ -24,3 +24,24 @@ export const DUMMY_NOT_PURCHASABLE_AMOUNT = [
   { amount: 500 },
   { amount: 900 }
 ];
+
+/** LottoTickets */
+export const DUMMY_LOTTO_TICKETS = [
+  { lottoNumber: '1, 2, 3, 4, 5, 6' },
+  { lottoNumber: '9, 10, 22, 33, 44, 45' },
+  { lottoNumber: '9, 5, 13, 24, 36, 38' },
+  { lottoNumber: '14, 27, 6, 24, 44, 45' },
+  { lottoNumber: '40, 41, 42, 43, 44, 45' }
+];
+
+export const DUMMY_DUPLICATE_NUMBER_LOTTO_TICKETS = [
+  { lottoNumber: '1, 2, 3, 4, 5, 5' },
+  { lottoNumber: '10, 10, 33, 44, 45, 10' },
+  { lottoNumber: '9, 9, 9, 9, 9, 9' }
+];
+
+export const DUMMY_INVALID_RANGE_NUMBER_LOTTO_TICKETS = [
+  { lottoNumber: '1, 2, 3, 4, 5, 50' },
+  { lottoNumber: '100, 200, 300, 400, 1, 0' },
+  { lottoNumber: '41, 42, 43, 44, 45, 46' }
+];
