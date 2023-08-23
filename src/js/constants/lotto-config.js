@@ -1,4 +1,6 @@
-const LOTTO_REWARD_CODE = Object.freeze({
+import deepFreeze from '../utils/deepFreeze.js';
+
+const LOTTO_REWARD_CODE = deepFreeze({
   FIFTH: 'MATCH_3',
   FOURTH: 'MATCH_4',
   THIRD: 'MATCH_5',
@@ -6,7 +8,7 @@ const LOTTO_REWARD_CODE = Object.freeze({
   FIRST: 'MATCH_6',
 });
 
-const LOTTO_REWARD = Object.freeze({
+const LOTTO_REWARD = deepFreeze({
   [LOTTO_REWARD_CODE.FIFTH]: {
     matchedCount: 3,
     hasBonus: false,
@@ -38,12 +40,12 @@ const LOTTO_PRICE = 1_000;
 
 const LOTTO_NUMBER_QUANTITY = 6;
 
-const LOTTO_NUMBER_RANGE = Object.freeze({
+const LOTTO_NUMBER_RANGE = deepFreeze({
   MIN: 1,
   MAX: 45,
 });
 
-const LOTTO_RETRY_CODE = Object.freeze({
+const LOTTO_RETRY_CODE = deepFreeze({
   CONFIRM: 'y',
   REJECT: 'n',
 });

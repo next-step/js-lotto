@@ -1,6 +1,7 @@
+import deepFreeze from '../utils/deepFreeze.js';
 import { LOTTO_NUMBER_QUANTITY, LOTTO_NUMBER_RANGE, LOTTO_PRICE, LOTTO_RETRY_CODE } from './lotto-config.js';
 
-const ERROR = Object.freeze({
+const ERROR = deepFreeze({
   PURCHASE: {
     UNMATCHED_PRICE_PER_SHEET: `${LOTTO_PRICE.toLocaleString()}원 단위의 금액을 입력해주세요!`,
   },

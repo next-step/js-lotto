@@ -1,4 +1,6 @@
-const GAME_CODE = Object.freeze({
+import deepFreeze from '../utils/deepFreeze.js';
+
+const GAME_CODE = deepFreeze({
   LOTTO: 'LOTTO',
 });
 

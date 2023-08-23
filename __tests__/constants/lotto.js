@@ -1,8 +1,9 @@
 import { LOTTO_PRICE, LOTTO_RETRY_CODE } from '../../src/js/constants/lotto-config.js';
+import deepFreeze from '../../src/js/utils/deepFreeze.js';
 
 export const DEFAULT_LOTTO_NUMBERS = [1, 2, 3, 4, 5, 6];
 
-export const LOTTO_REWARD_DUMMY = Object.freeze({
+export const LOTTO_REWARD_DUMMY = deepFreeze({
   FIRST: [1, 2, 3, 4, 5, 6],
   SECOND: [1, 2, 3, 4, 5, 7],
   THIRD: [1, 2, 3, 4, 5, 7],
