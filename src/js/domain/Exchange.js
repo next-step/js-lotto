@@ -1,12 +1,10 @@
-import { LOTTO_REWARD } from '../constants/lotto-config.js';
-
 export class Exchange {
   #multiple = 100;
 
   #rateOfReturnDigit = 1;
 
   static getTotalPrize(prizes) {
-    return prizes.reduce((acc, prize) => acc + prize.getPrize(), 0);
+    return prizes.reduce((acc, { prize }) => acc + prize, 0);
   }
 
   calculateRateOfReturn(investment, proceeds) {

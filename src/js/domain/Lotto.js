@@ -12,4 +12,8 @@ export class Lotto {
   get numbers() {
     return this._numbers;
   }
+
+  match(number) {
+    return this._numbers.some(({ value }) => value === number);
+  }
 }

@@ -26,12 +26,10 @@ export class WinningLotto extends Lotto {
   }
 
   getMatchedCount(lotto) {
-    const targetNumbers = lotto.numbers.map(({ value }) => value);
-    return this._numbers.reduce((acc, { value }) => (targetNumbers.includes(value) ? acc + 1 : acc), 0);
+    return this._numbers.reduce((acc, { value }) => (lotto.match(value) ? acc + 1 : acc), 0);
   }
 
   hasBonus(lotto) {
-    const targetNumbers = lotto.numbers.map(({ value }) => value);
-    return targetNumbers.includes(this.#bonus.value);
+    return lotto.match(this.#bonus.value);
   }
 }

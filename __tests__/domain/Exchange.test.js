@@ -1,25 +1,10 @@
-import {
-  FifthPrize,
-  FirstPrize,
-  FourthPrize,
-  LottoPrize,
-  SecondPrize,
-  ThirdPrize,
-} from '../../src/js/domain/LottoPrize/index.js';
-import { Exchange } from '../../src/js/domain/index.js';
+import { Exchange, LottoReward } from '../../src/js/domain/index.js';
 
 describe('교환소 테스트', () => {
   it('다수의 로또 당첨금을 한번에 반환한다', () => {
-    const prizes = [
-      new FirstPrize(),
-      new SecondPrize(),
-      new ThirdPrize(),
-      new FourthPrize(),
-      new FifthPrize(),
-      new LottoPrize(),
-    ];
+    const prizes = [new LottoReward(6, 2_000_000_000), new LottoReward(5, 30_000_000)];
 
-    expect(Exchange.getTotalPrize(prizes)).toBe(2031555000);
+    expect(Exchange.getTotalPrize(prizes)).toBe(2030000000);
   });
 
   it.each([

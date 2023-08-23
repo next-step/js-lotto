@@ -52,7 +52,7 @@ class LottoGame {
   }
 
   checkLottos() {
-    this.#prizes = this.#lottos.map((lotto) => LottoReward.getPrize(this.#winningLotto, lotto));
+    this.#prizes = this.#lottos.map((lotto) => LottoReward.getReward(this.#winningLotto, lotto));
     this.setTotalPrize();
   }
 

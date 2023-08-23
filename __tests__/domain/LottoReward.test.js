@@ -1,11 +1,3 @@
-import {
-  FifthPrize,
-  FirstPrize,
-  FourthPrize,
-  LottoPrize,
-  SecondPrize,
-  ThirdPrize,
-} from '../../src/js/domain/LottoPrize/index.js';
 import { LottoReward, Lotto, WinningLotto } from '../../src/js/domain/index.js';
 
 describe('로또 등수 확인 테스트', () => {
@@ -14,48 +6,50 @@ describe('로또 등수 확인 테스트', () => {
     const lotto = new Lotto(numbers);
     const winningLotto = new WinningLotto(numbers, 7);
 
-    const prize = LottoReward.getPrize(winningLotto, lotto);
+    const prize = LottoReward.getReward(winningLotto, lotto);
 
-    expect(prize instanceof FirstPrize).toBeTruthy();
-    expect(prize.getPrize()).toBe(2_000_000_000);
+    expect(prize.prize).toBe(2_000_000_000);
+    expect(prize.matched).toBe(6);
   });
 
   it('당첨로또와 5개가 동일하며 보너스번호를 포함하면 2등이다.', () => {
     const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
     const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 7], 6);
 
-    const prize = LottoReward.getPrize(winningLotto, lotto);
+    const prize = LottoReward.getReward(winningLotto, lotto);
 
-    expect(prize instanceof SecondPrize).toBeTruthy();
-    expect(prize.getPrize()).toBe(30_000_000);
+    expect(prize.prize).toBe(30_000_000);
+    expect(prize.matched).toBe(5);
   });
 
   it('당첨로또와 5개가 동일하며 보너스번호를 미포함하면 3등이다.', () => {
     const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
     const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 7], 8);
 
-    const prize = LottoReward.getPrize(winningLotto, lotto);
+    const prize = LottoReward.getReward(winningLotto, lotto);
 
-    expect(prize instanceof ThirdPrize).toBeTruthy();
-    expect(prize.getPrize()).toBe(1_500_000);
+    expect(prize.prize).toBe(1_500_000);
+    expect(prize.matched).toBe(5);
   });
 
   it('당첨로또와 4개가 동일하면 4등이다.', () => {
     const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
     const winningLotto = new WinningLotto([1, 2, 3, 4, 7, 8], 9);
 
-    const prize = LottoReward.getPrize(winningLotto, lotto);
+    const prize = LottoReward.getReward(winningLotto, lotto);
 
-    expect(prize instanceof FourthPrize).toBeTruthy();
+    expect(prize.prize).toBe(50_000);
+    expect(prize.matched).toBe(4);
   });
 
   it('당첨로또와 3개가 동일하면 5등이다.', () => {
     const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
     const winningLotto = new WinningLotto([1, 2, 3, 7, 8, 9], 10);
 
-    const prize = LottoReward.getPrize(winningLotto, lotto);
+    const prize = LottoReward.getReward(winningLotto, lotto);
 
-    expect(prize instanceof FifthPrize).toBeTruthy();
+    expect(prize.prize).toBe(5_000);
+    expect(prize.matched).toBe(3);
   });
 
   it.each([
@@ -72,8 +66,8 @@ describe('로또 등수 확인 테스트', () => {
     const lotto = new Lotto(numbers);
     const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 6], 7);
 
-    const prize = LottoReward.getPrize(winningLotto, lotto);
+    const prize = LottoReward.getReward(winningLotto, lotto);
 
-    expect(prize instanceof LottoPrize).toBeTruthy();
+    expect(prize.matched).toBeLessThan(3);
   });
 });
