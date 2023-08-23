@@ -6,7 +6,7 @@ import {
   SecondPrize,
   ThirdPrize,
 } from '../../src/js/domain/LottoPrize/index.js';
-import { LottoChecker, Lotto, WinningLotto } from '../../src/js/domain/index.js';
+import { LottoReward, Lotto, WinningLotto } from '../../src/js/domain/index.js';
 
 describe('로또 등수 확인 테스트', () => {
   it('당첨로또와 6개가 동일하면 1등이다.', () => {
@@ -14,7 +14,7 @@ describe('로또 등수 확인 테스트', () => {
     const lotto = new Lotto(numbers);
     const winningLotto = new WinningLotto(numbers, 7);
 
-    const prize = LottoChecker.getPrize(winningLotto, lotto);
+    const prize = LottoReward.getPrize(winningLotto, lotto);
 
     expect(prize instanceof FirstPrize).toBeTruthy();
     expect(prize.getPrize()).toBe(2_000_000_000);
@@ -24,7 +24,7 @@ describe('로또 등수 확인 테스트', () => {
     const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
     const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 7], 6);
 
-    const prize = LottoChecker.getPrize(winningLotto, lotto);
+    const prize = LottoReward.getPrize(winningLotto, lotto);
 
     expect(prize instanceof SecondPrize).toBeTruthy();
     expect(prize.getPrize()).toBe(30_000_000);
@@ -34,7 +34,7 @@ describe('로또 등수 확인 테스트', () => {
     const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
     const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 7], 8);
 
-    const prize = LottoChecker.getPrize(winningLotto, lotto);
+    const prize = LottoReward.getPrize(winningLotto, lotto);
 
     expect(prize instanceof ThirdPrize).toBeTruthy();
     expect(prize.getPrize()).toBe(1_500_000);
@@ -44,7 +44,7 @@ describe('로또 등수 확인 테스트', () => {
     const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
     const winningLotto = new WinningLotto([1, 2, 3, 4, 7, 8], 9);
 
-    const prize = LottoChecker.getPrize(winningLotto, lotto);
+    const prize = LottoReward.getPrize(winningLotto, lotto);
 
     expect(prize instanceof FourthPrize).toBeTruthy();
   });
@@ -53,7 +53,7 @@ describe('로또 등수 확인 테스트', () => {
     const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
     const winningLotto = new WinningLotto([1, 2, 3, 7, 8, 9], 10);
 
-    const prize = LottoChecker.getPrize(winningLotto, lotto);
+    const prize = LottoReward.getPrize(winningLotto, lotto);
 
     expect(prize instanceof FifthPrize).toBeTruthy();
   });
@@ -72,7 +72,7 @@ describe('로또 등수 확인 테스트', () => {
     const lotto = new Lotto(numbers);
     const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 6], 7);
 
-    const prize = LottoChecker.getPrize(winningLotto, lotto);
+    const prize = LottoReward.getPrize(winningLotto, lotto);
 
     expect(prize instanceof LottoPrize).toBeTruthy();
   });

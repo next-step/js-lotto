@@ -6,9 +6,8 @@ const rl = createInterface({
 });
 
 class InputView {
-  async _getUserInput(question) {
-    const answer = await rl.question(question);
-    return answer;
+  _getUserInput(question) {
+    return rl.question(question);
   }
 }
 

@@ -1,6 +1,6 @@
 import { LOTTO_RETRY_CODE } from '../constants/lotto-config.js';
 import { WinningLotto } from '../domain/WinningLotto.js';
-import { Exchange, LottoChecker, LottoMachine } from '../domain/index.js';
+import { Exchange, LottoReward, LottoMachine } from '../domain/index.js';
 import checkValidRetry from '../validator/retry.js';
 import { LottoInputView, LottoOutputView } from '../view/Lotto/index.js';
 
@@ -26,7 +26,7 @@ class LottoGame {
   #rateOfReturn = null;
 
   async start() {
-    await this.withRetry(() => this.buyLotto());
+    await this.withRetry(() => this.setMoney());
   }
 
   async setMoney() {
@@ -52,7 +52,7 @@ class LottoGame {
   }
 
   checkLottos() {
-    this.#prizes = this.#lottos.map((lotto) => LottoChecker.getPrize(this.#winningLotto, lotto));
+    this.#prizes = this.#lottos.map((lotto) => LottoReward.getPrize(this.#winningLotto, lotto));
     this.setTotalPrize();
   }
 

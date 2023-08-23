@@ -1,6 +1,6 @@
 import { FifthPrize, FourthPrize, LottoPrize, SecondPrize, ThirdPrize, FirstPrize } from './LottoPrize/index.js';
 
-export class LottoChecker {
+export class LottoReward {
   static FIRST = 6;
 
   static SECOND = 5;
@@ -15,13 +15,13 @@ export class LottoChecker {
     const matched = winningLotto.getMatchedCount(lotto);
     const hasBonus = winningLotto.hasBonus(lotto);
     switch (matched) {
-      case LottoChecker.FIRST:
+      case LottoReward.FIRST:
         return new FirstPrize();
-      case LottoChecker.SECOND:
+      case LottoReward.SECOND:
         return hasBonus ? new SecondPrize() : new ThirdPrize();
-      case LottoChecker.FOURTH:
+      case LottoReward.FOURTH:
         return new FourthPrize();
-      case LottoChecker.FIFTH:
+      case LottoReward.FIFTH:
         return new FifthPrize();
       default:
         return new LottoPrize();

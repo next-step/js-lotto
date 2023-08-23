@@ -1,3 +1,7 @@
-const splitToNumberArray = (input) => input.split(',').map((number) => Number(number.trim()));
+const splitToNumberArray = (input, separator = ',') =>
+  input
+    .split(separator)
+    .map((number) => number.trim())
+    .map(Number);
 
 export default splitToNumberArray;
