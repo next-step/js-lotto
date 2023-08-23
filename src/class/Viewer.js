@@ -13,7 +13,7 @@ export class ConsoleViewer {
     requiresBonusNumber,
   ) =>
     `${matchingNumberCount}개 일치${
-      requiresBonusNumber && ", 보너스 볼 일치"
+      requiresBonusNumber ? ", 보너스 볼 일치" : ""
     } (${prizeAmount.toLocaleString()}원) - ${count}개\n`;
   static #PROFIT_RATIO_MESSAGE = (ratio) =>
     `총 수익률은 ${(ratio * 100).toFixed(1)}%입니다.\n`;

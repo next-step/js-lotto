@@ -59,7 +59,7 @@ export default class LottoGame {
     }
 
     return this.#purchaseInfo.tickets.map((ticket) =>
-      this.calculatePrize(ticket),
+      this.calculatePrize(ticket.numbers),
     );
   }
 

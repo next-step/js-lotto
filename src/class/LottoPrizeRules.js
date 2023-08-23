@@ -5,7 +5,7 @@ export default class LottoPrizeRules {
       rank: 1,
       requiresBonusNumber: false,
       matchingNumberCount: 6,
-      prizeAmount: 30000000,
+      prizeAmount: 2000000000,
     }),
     Object.freeze({
       rank: 2,
@@ -17,19 +17,19 @@ export default class LottoPrizeRules {
       rank: 3,
       requiresBonusNumber: false,
       matchingNumberCount: 5,
-      prizeAmount: 30000000,
+      prizeAmount: 1500000,
     }),
     Object.freeze({
       rank: 4,
       requiresBonusNumber: false,
       matchingNumberCount: 4,
-      prizeAmount: 30000000,
+      prizeAmount: 50000,
     }),
     Object.freeze({
       rank: 5,
       requiresBonusNumber: false,
       matchingNumberCount: 3,
-      prizeAmount: 30000000,
+      prizeAmount: 5000,
     }),
   ];
 
