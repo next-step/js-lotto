@@ -29,17 +29,33 @@ export default class LottoApplicationController extends Controller {
   }
 
   protected initEvent() {
+    this.initLottoPurchaseFormSubmitEvent();
+    this.initPurchasedLottosToggleButtonClickEvent();
+    this.initWinningLottoInfoFormSubmitEvent();
+    this.initWinningInfoModalResetEvent();
+  }
+
+  private initLottoPurchaseFormSubmitEvent() {
     this.lottoPurchaseFormView.on(CUSTOM_EVENT.SUBMIT_PURCHASE_AMOUNT, (event: CustomEvent<number>) =>
       this.handlePurchaseLotto(event?.detail),
     );
+  }
+
+  private initPurchasedLottosToggleButtonClickEvent() {
     this.purchasedLottoView.on(EVENT.CLICK, ({ target }) => {
       if (target && target === $(SELECTOR_NAME.PURCHASED.LOTTOS_TOGGLE_BUTTON)) {
         this.handleToggleButton();
       }
     });
+  }
+
+  private initWinningLottoInfoFormSubmitEvent() {
     this.winningLottoInfoFormView.on(CUSTOM_EVENT.SUBMIT_WINNING_LOTTO_INFO, (event: CustomEvent) =>
       this.handleSubmitWinningLottoInfo(event),
     );
+  }
+
+  private initWinningInfoModalResetEvent() {
     this.winningInfoModalView.on(CUSTOM_EVENT.RESET, () => this.reset());
   }
 
@@ -47,7 +63,7 @@ export default class LottoApplicationController extends Controller {
     this.resetLottoGame();
     this.resetViews();
     this.resetWinningLottoForm();
-    this.resetPurchasedCheckbox();
+    this.resetPurchasedCheckboxStatus();
   }
 
   private resetLottoGame() {
@@ -66,7 +82,7 @@ export default class LottoApplicationController extends Controller {
     this.winningLottoInfoFormView.resetWinningLottoInfoForm();
   }
 
-  private resetPurchasedCheckbox() {
+  private resetPurchasedCheckboxStatus() {
     this.purchasedLottoView.resetCheckboxStatus();
   }
 
