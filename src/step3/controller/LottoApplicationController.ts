@@ -1,9 +1,13 @@
 import { CUSTOM_EVENT, EVENT } from '@step3/constants/event';
 import { CLASS_NAME, SELECTOR_NAME } from '@step3/constants/selector';
+
 import { $ } from '@step3/utils/dom';
+
 import { LottoPurchaseFormView, PurchasedLottoView, WinningInfoModalView, WinningLottoInfoFormView } from '@step3/view';
+
 import { LottoGame } from '@step1/model';
-import Controller from './Controller';
+
+import { Controller } from '@step3/controller';
 
 export default class LottoApplicationController extends Controller {
   private lottoPurchaseFormView = new LottoPurchaseFormView($<HTMLFormElement>(SELECTOR_NAME.INPUT_PRICE.FORM));
@@ -26,10 +30,10 @@ export default class LottoApplicationController extends Controller {
 
   protected initEvent() {
     this.lottoPurchaseFormView.on(CUSTOM_EVENT.SUBMIT_PURCHASE_AMOUNT, (event: CustomEvent<number>) =>
-      this.handlePurchaseLotto(event.detail),
+      this.handlePurchaseLotto(event?.detail),
     );
-    this.purchasedLottoView.on(EVENT.CLICK, (event) => {
-      if (event.target === $(SELECTOR_NAME.PURCHASED.LOTTOS_TOGGLE_BUTTON)) {
+    this.purchasedLottoView.on(EVENT.CLICK, ({ target }) => {
+      if (target && target === $(SELECTOR_NAME.PURCHASED.LOTTOS_TOGGLE_BUTTON)) {
         this.handleToggleButton();
       }
     });
@@ -68,21 +72,25 @@ export default class LottoApplicationController extends Controller {
 
   private handleToggleButton() {
     const isChecked = $<HTMLInputElement>(SELECTOR_NAME.PURCHASED.LOTTOS_TOGGLE_BUTTON).checked;
-    const lottoNumbers = isChecked ? this.lottoGame.buyerInfo.lottos.map((lotto) => lotto.getLottoNumbers()) : null;
+    const lottoNumbers = isChecked ? this.lottoGame.buyerInfo?.lottos?.map((lotto) => lotto?.getLottoNumbers()) : null;
     this.purchasedLottoView.renderLottoNumberInPurchasedLotto(lottoNumbers);
   }
 
   private handlePurchaseLotto(purchaseAmount: number) {
-    this.purchasedLottoView.show();
-    this.winningLottoInfoFormView.show();
-    const lottoNumbers = this.lottoGame.createLottoNumbers(purchaseAmount);
-    this.purchasedLottoView.renderPurchasedLottoView(lottoNumbers);
+    this.processWithAlertIfThrowError(() => {
+      const lottoNumbers = this.lottoGame.createLottoNumbers(purchaseAmount);
+      this.purchasedLottoView.renderPurchasedLottoView(lottoNumbers);
+      this.purchasedLottoView.show();
+      this.winningLottoInfoFormView.show();
+    });
   }
 
   private handleSubmitWinningLottoInfo(event: CustomEvent) {
-    $(SELECTOR_NAME.WINNING_INFO.MODAL).classList.add(CLASS_NAME.OPEN);
-    const { rateOfReturn, lottoResult } = this.createWinningInfo(event);
-    this.winningInfoModalView.renderWinningInfoModal({ rateOfReturn, lottoResult });
+    this.processWithAlertIfThrowError(() => {
+      const { rateOfReturn, lottoResult } = this.createWinningInfo(event);
+      this.winningInfoModalView.renderWinningInfoModal({ rateOfReturn, lottoResult });
+      $(SELECTOR_NAME.WINNING_INFO.MODAL).classList.add(CLASS_NAME.OPEN);
+    });
   }
 
   private createWinningInfo(event: CustomEvent) {
@@ -96,8 +104,8 @@ export default class LottoApplicationController extends Controller {
   }
 
   private createResultParams(event: CustomEvent) {
-    const { winningLottoNumber, bonusNumber } = this.createWinningLottoInfo(event.detail);
-    const { lottos, investmentAmount } = this.lottoGame.buyerInfo;
+    const { winningLottoNumber = [], bonusNumber = 0 } = this.createWinningLottoInfo(event?.detail);
+    const { lottos = [], investmentAmount = 0 } = this.lottoGame.buyerInfo;
     const lottoNumbers = lottos.map((lotto) => lotto.getLottoNumbers());
     return { winningLottoNumber, bonusNumber, lottoNumbers, investmentAmount };
   }
@@ -108,5 +116,13 @@ export default class LottoApplicationController extends Controller {
       winningLottoNumber: this.lottoGame.createWinningLottoNumbers(winningLottoNumbers),
       bonusNumber: Number(bonusNumber),
     };
+  }
+
+  private processWithAlertIfThrowError<T, U>(executeFunction: (arg?: U) => T, arg?: U): void {
+    try {
+      executeFunction(arg);
+    } catch (error) {
+      alert(error.message);
+    }
   }
 }

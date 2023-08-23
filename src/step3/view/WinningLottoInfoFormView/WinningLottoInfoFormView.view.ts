@@ -54,7 +54,7 @@ export default class WinningLottoInfoFormView extends View<HTMLFormElement> {
   private createWinningLottoInfo() {
     return {
       winningLottoNumbers: [...this.$winningLottoNumberInputs]
-        .map((winningLottoNumberInput) => winningLottoNumberInput.value)
+        .map((winningLottoNumberInput) => winningLottoNumberInput?.value)
         .join(SYMBOLS.COMMA),
       bonusNumber: this.$bonusNumberInput.value,
     };
