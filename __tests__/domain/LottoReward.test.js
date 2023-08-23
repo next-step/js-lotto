@@ -1,6 +1,6 @@
 import { LottoReward, Lotto, WinningLotto } from '../../src/js/domain/index.js';
 
-describe('로또 등수 확인 테스트', () => {
+describe('로또 상금 테스트', () => {
   it('당첨로또와 6개가 동일하면 1등이다.', () => {
     const numbers = [1, 2, 3, 4, 5, 6];
     const lotto = new Lotto(numbers);
