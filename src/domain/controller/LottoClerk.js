@@ -1,4 +1,4 @@
-import { LOTTO_PRICE, SELECTOR } from '../constants/index.js';
+import { LOTTO_PRICE, SELECTOR, CLASS, STATE, EVENT as E, EMPTY_STRING } from '../constants/index.js';
 import { getProfitRate } from '../../util/index.js';
 import { Customer } from '../model/Customer.js';
 import { LottoMachine } from '../model/LottoMachine.js';
@@ -35,44 +35,44 @@ export class LottoClerk {
     this.lottoPrice = LOTTO_PRICE;
     this.winningNumber = Array.from({ length: 6 });
     this.lottoCount = 0;
-    this.lottoCycle = false;
+    this.lottoCycle = STATE.FALSE;
     delete this.machine;
     delete this.customer;
   };
 
   initRender = () => {
-    this.winningForm.querySelectorAll('input').forEach((input) => (input.value = ''));
-    this.winningForm.classList.add('hidden');
-    this.lottoToggleWrapper.classList.add('hidden');
-    this.lottoSection.classList.add('hidden');
-    this.lottoList.classList.remove('flex-col');
-    this.lottoToggle.checked = false;
-    this.budgetInput.disabled = false;
-    this.budgetButton.disabled = false;
-    this.budgetButton.disabled = true;
-    this.lottoList.innerHTML = '';
-    this.budgetInput.value = '';
+    this.winningForm.querySelectorAll(E.INPUT).forEach((input) => (input.value = EMPTY_STRING));
+    this.winningForm.classList.add(CLASS.HIDDEN);
+    this.lottoToggleWrapper.classList.add(CLASS.HIDDEN);
+    this.lottoSection.classList.add(CLASS.HIDDEN);
+    this.lottoList.classList.remove(CLASS.FLEX_COL);
+    this.lottoToggle.checked = STATE.FALSE;
+    this.budgetInput.disabled = STATE.FALSE;
+    this.budgetButton.disabled = STATE.FALSE;
+    this.budgetButton.disabled = STATE.TRUE;
+    this.lottoList.innerHTML = EMPTY_STRING;
+    this.budgetInput.value = EMPTY_STRING;
   };
 
   bindEvent() {
-    this.budgetForm.addEventListener('submit', this.onPurchaseLotto);
-    this.winningForm.addEventListener('submit', this.onSubmitWinningNumber);
+    this.budgetForm.addEventListener(E.SUBMIT, this.onPurchaseLotto);
+    this.winningForm.addEventListener(E.SUBMIT, this.onSubmitWinningNumber);
 
-    this.winningForm.querySelectorAll('input').forEach((input, index) => {
-      input.addEventListener('input', (event) => {
+    this.winningForm.querySelectorAll(E.INPUT).forEach((input, index) => {
+      input.addEventListener(E.INPUT, (event) => {
         index === 6
           ? (this.bonusNumber = Number(event.target.value))
           : (this.winningNumber[index] = Number(event.target.value));
       });
     });
 
-    this.budgetInput.addEventListener('input', this.onChangeBudget);
+    this.budgetInput.addEventListener(E.INPUT, this.onChangeBudget);
 
-    this.budgetButton.addEventListener('click', this.onPurchaseLotto);
-    this.retryButton.addEventListener('click', this.onRetryLotto);
-    this.modalCloseButton.addEventListener('click', this.onCloseModal);
+    this.budgetButton.addEventListener(E.CLICK, this.onPurchaseLotto);
+    this.retryButton.addEventListener(E.CLICK, this.onRetryLotto);
+    this.modalCloseButton.addEventListener(E.CLICK, this.onCloseModal);
 
-    this.lottoToggle.addEventListener('change', this.onToggleLotto);
+    this.lottoToggle.addEventListener(E.CHANGE, this.onToggleLotto);
   }
 
   askCheckoutResult = () => {
@@ -86,7 +86,7 @@ export class LottoClerk {
       const profitRate = getProfitRate(this.customer.money, this.customer.amount);
       this.modalBody.innerHTML = this.output.LOTTO_RESULT(this.customer.results, profitRate);
     }
-    this.modal.classList.add('open');
+    this.modal.classList.add(CLASS.OPEN);
   }
 
   #countWinningNumber(lotto) {
@@ -105,9 +105,9 @@ export class LottoClerk {
     this.machine = new LottoMachine(app, Math.floor(this.budget / this.lottoPrice));
     this.customer = new Customer(this.budget);
 
-    this.winningForm.classList.remove('hidden');
-    this.budgetInput.disabled = true;
-    this.budgetButton.disabled = true;
+    this.winningForm.classList.remove(CLASS.HIDDEN);
+    this.budgetInput.disabled = STATE.TRUE;
+    this.budgetButton.disabled = STATE.TRUE;
   };
 
   onSubmitWinningNumber = (event) => {
@@ -115,7 +115,7 @@ export class LottoClerk {
     try {
       validateWinningNumber(this.winningNumber);
       validateBonusNumer(this.winningNumber, this.bonusNumber);
-      this.winningError.innerHTML = '';
+      this.winningError.innerHTML = EMPTY_STRING;
       this.askCheckoutResult();
     } catch (error) {
       this.winningError.innerHTML = error.message;
@@ -125,13 +125,13 @@ export class LottoClerk {
   onChangeBudget = (event) => {
     try {
       validateInputPrice(event.target.value);
-      this.budgetError.innerHTML = '';
-      this.budgetButton.disabled = false;
+      this.budgetError.innerHTML = EMPTY_STRING;
+      this.budgetButton.disabled = STATE.FALSE;
     } catch (error) {
       this.budgetError.innerHTML = error.message;
-      this.budgetButton.disabled = true;
+      this.budgetButton.disabled = STATE.TRUE;
     } finally {
-      this.budget = Math.round(event.target.value / 1000) * 1000;
+      this.budget = Math.round(event.target.value / LOTTO_PRICE) * LOTTO_PRICE;
       this.lottoCount = this.budget / this.lottoPrice;
     }
   };
@@ -141,18 +141,18 @@ export class LottoClerk {
     this.icons = document.querySelectorAll(SELECTOR.LOTTO_TICKET);
 
     const addClass = target.checked;
-    this.lottoList.classList.toggle('flex-col', addClass);
-    this.icons.forEach((child) => child.classList.toggle('hidden', !addClass));
+    this.lottoList.classList.toggle(CLASS.FLEX_COL, addClass);
+    this.icons.forEach((child) => child.classList.toggle(CLASS.HIDDEN, !addClass));
   };
 
   onRetryLotto = () => {
-    this.modal.classList.remove('open');
+    this.modal.classList.remove(CLASS.OPEN);
     this.initState();
     this.initRender();
   };
 
   onCloseModal = () => {
-    this.modal.classList.remove('open');
-    this.lottoCycle = true;
+    this.modal.classList.remove(CLASS.OPEN);
+    this.lottoCycle = STATE.TRUE;
   };
 }
