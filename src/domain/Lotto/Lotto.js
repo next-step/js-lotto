@@ -1,3 +1,5 @@
+import {LOTTO_INFO} from "../consts/Lotto.js";
+
 export class Lotto {
     #lottoNumbers
     #winningRank
@@ -25,26 +27,16 @@ export class Lotto {
     setWinningRank(winningNumbers, bonusNumber) {
         const winningNumberMatchSize = this.#matchedWinningNumberSize(winningNumbers);
         const bonusNumberMatch = this.#matchBonusNumber(bonusNumber);
-        if(winningNumberMatchSize === 6) {
-            this.#winningRank = 1;
-            return;
-        }
-        if(winningNumberMatchSize === 5 && bonusNumberMatch) {
-            this.#winningRank = 2;
-            return;
-        }
-        if(winningNumberMatchSize === 5) {
-            this.#winningRank = 3;
-            return;
-        }
-        if(winningNumberMatchSize === 4) {
-            this.#winningRank = 4;
-            return;
-        }
-        if(winningNumberMatchSize === 3) {
-            this.#winningRank = 5;
+
+        const winningCondition = LOTTO_INFO.WINNING_CONDITION.find((CONDITION) =>
+            (CONDITION.MATCH === winningNumberMatchSize && CONDITION.BONUS === bonusNumberMatch)
+        )
+
+        if(winningCondition) {
+            this.#winningRank = winningCondition.RANK;
             return;
         }
         this.#winningRank = 0;
+
     }
 }
