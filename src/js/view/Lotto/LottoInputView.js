@@ -8,11 +8,11 @@ class LottoInputView extends InputView {
   }
 
   winningNumbers() {
-    return this.input('당첨번호를 입력해주세요');
+    return this.input('당첨번호를 입력해주세요.');
   }
 
   bonus() {
-    return this.input('보너스 번호를 입력해 주세요');
+    return this.input('보너스 번호를 입력해 주세요.');
   }
 
   async retry() {
