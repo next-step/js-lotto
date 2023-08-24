@@ -1,4 +1,4 @@
-export default function convertValue(input) {
+export const convertToTypedData = (input) => {
   if (input === "null") {
     return null;
   } else if (input === "undefined") {
@@ -12,4 +12,8 @@ export default function convertValue(input) {
       return input; // 그대로 반환 (문자열 유지)
     }
   }
-}
+};
+
+export const convertToArray = (str) => {
+  return str.split(",").map((item) => convertToTypedData(item));
+};
