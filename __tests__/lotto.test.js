@@ -36,3 +36,17 @@ test.each([
     expect(result).toEqual(expectedResult);
   }
 );
+
+test.each([
+  [1, 2000000000],
+  [2, 30000000],
+  [3, 1500000],
+  [4, 50000],
+  [5, 5000],
+  [0, 0],
+])(
+  "getPrizeByResult function should return a correct prize for the given result",
+  (result, expectedPrize) => {
+    expect(getPrizeByResult(result)).toEqual(expectedPrize);
+  }
+);
