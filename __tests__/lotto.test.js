@@ -3,7 +3,7 @@ import {
   MIN_LOTTO_NUMBER,
   MAX_LOTTO_NUMBER,
 } from "../src/js/constants";
-import { generateRandomLottoNumbers } from "../src/js/lotto";
+import { checkLottoResult, generateRandomLottoNumbers } from "../src/js/lotto";
 
 test.each(Array.from({ length: 20 }))(
   "generateRandomLottoNumbers function should generate correct lotto numbers",
@@ -24,7 +24,7 @@ test.each([
   [[1, 2, 3, 4, 5, 7], [1, 2, 3, 4, 5, 6], 7, 2],
   [[1, 2, 3, 4, 5, 43], [1, 2, 3, 4, 5, 6], 43, 2],
   [[1, 2, 3, 4, 5, 43], [1, 2, 3, 4, 5, 6], 7, 3],
-  [[1, 2, 3, 4, 5, 7], [1, 2, 3, 4, 5, 6], 7, 3],
+  [[1, 2, 3, 4, 5, 7], [1, 2, 3, 4, 5, 6], 43, 3],
   [[1, 2, 3, 4, 42, 43], [1, 2, 3, 4, 5, 6], 7, 4],
   [[1, 2, 3, 4, 42, 7], [1, 2, 3, 4, 5, 6], 7, 4],
   [[1, 2, 3, 41, 42, 43], [1, 2, 3, 4, 5, 6], 7, 5],
