@@ -1,4 +1,4 @@
-import createMatchChecker from "../src/js/domain/MatchChecker";
+import createMatchChecker from "../src/js/domain/MatchChecker/createMatchChecker";
 import WinningLotto from "../src/js/domain/MatchChecker/WinningLotto";
 import Lotto from "../src/js/domain/Lotto";
 import { WinningLottoNotDefinedError } from "../src/js/domain/MatchChecker/errors";

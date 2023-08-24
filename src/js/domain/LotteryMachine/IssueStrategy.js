@@ -6,7 +6,7 @@ import {
   FixedNumberElementNotNumberError,
   FixedNumberElementOutOfRangeError,
   FixedNumberElementDuplicatedError,
-} from "./errors";
+} from "./errors.js";
 
 class IssueStrategy {
   static LOTTO_DIGITS = 6;

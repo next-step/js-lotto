@@ -1,4 +1,4 @@
-import createRevenueCalculator from "../src/js/domain/RevenueCalculator";
+import createRevenueCalculator from "../src/js/domain/RevenueCalculator/createRevenueCalculator";
 import {
   PurchasedShouldPositiveError,
   PurchasedShouldMultipleOfThousandError,

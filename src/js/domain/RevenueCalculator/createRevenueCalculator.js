@@ -1,9 +1,9 @@
 import {
   PurchasedShouldPositiveError,
   PurchasedShouldMultipleOfThousandError,
-} from "./errors";
+} from "./errors.js";
 
-export default createRevenueCalculator = () => {
+const createRevenueCalculator = () => {
   const DECIMAL_PLACES = 2;
 
   function roundUp(number, decimalPlace = DECIMAL_PLACES) {
@@ -34,3 +34,5 @@ export default createRevenueCalculator = () => {
     getRevenueOverPurchased,
   };
 };
+
+export default createRevenueCalculator;

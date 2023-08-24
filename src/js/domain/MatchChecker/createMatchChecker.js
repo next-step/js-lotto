@@ -1,7 +1,7 @@
-import WinningLotto from "./WinningLotto";
-import { WinningLottoNotDefinedError } from "./errors";
+import WinningLotto from "./WinningLotto.js";
+import { WinningLottoNotDefinedError } from "./errors.js";
 
-export default createMatchChecker = () => {
+const createMatchChecker = () => {
   let winningLotto = null;
   const CHECK_BONUS_COUNT = 5;
 
@@ -53,3 +53,5 @@ export default createMatchChecker = () => {
     checkMatch,
   };
 };
+
+export default createMatchChecker;

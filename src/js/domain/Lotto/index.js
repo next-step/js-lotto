@@ -5,7 +5,7 @@ import {
   LottoNumbersElementOutOfRangeError,
   LottoNumbersElementDuplicatedError,
   LottoMatchResultNotSetError,
-} from "./errors";
+} from "./errors.js";
 
 export default class Lotto {
   #lottoNumbers;

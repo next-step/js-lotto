@@ -1,7 +1,7 @@
 import Lotto from "../src/js/domain/Lotto";
 
-import createMatchChecker from "../src/js/domain/MatchChecker";
-import createResultChecker from "../src/js/domain/ResultChecker";
+import createMatchChecker from "../src/js/domain/MatchChecker/createMatchChecker";
+import createResultChecker from "../src/js/domain/ResultChecker/createResultChecker";
 
 describe("getResult() 테스트", () => {
   const testCases = [

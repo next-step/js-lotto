@@ -1,4 +1,4 @@
-import RuntimeError from "../../RuntimeError";
+import RuntimeError from "../../RuntimeError.js";
 
 export class LottoNumbersNotArrayError extends RuntimeError {
   static MESSAGE = "로또 번호는 배열 형태여야합니다.";

@@ -1,5 +1,5 @@
 import Lotto from "../src/js/domain/Lotto";
-import createMatchChecker from "../src/js/domain/MatchChecker";
+import createMatchChecker from "../src/js/domain/MatchChecker/createMatchChecker";
 import {
   LottoNumbersNotArrayError,
   LottoNumbersLengthNotSixError,

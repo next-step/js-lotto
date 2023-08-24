@@ -1,14 +1,15 @@
-import Lotto from "../Lotto";
+import Lotto from "../Lotto/index.js";
 import {
   BonusNumberNotNumberError,
   BonusNumberOutOfRangeError,
   BonusNumberDuplicatedError,
-} from "./errors";
+} from "./errors.js";
 
 export default class WinningLotto extends Lotto {
+  #bonusNumber;
+
   static LOWER_BOUND = 1;
   static UPPER_BOUND = 45;
-  #bonusNumber;
 
   static from(numbers, bonusNumber) {
     return new WinningLotto(numbers, bonusNumber);
@@ -16,25 +17,25 @@ export default class WinningLotto extends Lotto {
 
   constructor(numbers, bonusNumber) {
     super(numbers);
-    this.validateBonusNumber(bonusNumber);
+    this.#validateBonusNumber(bonusNumber);
     this.#bonusNumber = bonusNumber;
   }
 
-  isDuplicateBonusNumber(number) {
+  #isDuplicateBonusNumber(number) {
     const winningNumbers = this.getLottoNumbers();
     return winningNumbers.includes(number);
   }
 
-  isOutOfRange(number) {
+  #isOutOfRange(number) {
     return (
       number < WinningLotto.LOWER_BOUND || number > WinningLotto.UPPER_BOUND
     );
   }
 
-  validateBonusNumber(number) {
+  #validateBonusNumber(number) {
     if (typeof number !== "number") throw new BonusNumberNotNumberError();
-    if (this.isOutOfRange(number)) throw new BonusNumberOutOfRangeError();
-    if (this.isDuplicateBonusNumber(number))
+    if (this.#isOutOfRange(number)) throw new BonusNumberOutOfRangeError();
+    if (this.#isDuplicateBonusNumber(number))
       throw new BonusNumberDuplicatedError();
   }
 

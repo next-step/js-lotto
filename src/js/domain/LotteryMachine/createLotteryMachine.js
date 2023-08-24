@@ -1,18 +1,17 @@
-import Lotto from "../Lotto";
-import { RandomIssueStrategy } from "./IssueStrategy";
+import Lotto from "../Lotto/index.js";
+import { RandomIssueStrategy } from "./IssueStrategy.js";
 import {
   PurchasingNotNumberError,
   PurchasingShouldAboveZeroError,
   PurchasingNotIntegerError,
-} from "./errors";
+} from "./errors.js";
 
-export default createLotteryMachine = (
-  issueStrategy = new RandomIssueStrategy()
-) => {
+const createLotteryMachine = (issueStrategy = new RandomIssueStrategy()) => {
   // const LOTTO_PRICE = 1_000;
 
   function issueLotto(purchasing) {
     validatePurchasing(purchasing);
+    // [phase1] 우선 한 장 만 구매
     const lottoNumbers = issueStrategy.getLottoNumbers();
     return Lotto.of(lottoNumbers);
   }
@@ -29,3 +28,5 @@ export default createLotteryMachine = (
     issueLotto,
   };
 };
+
+export default createLotteryMachine;

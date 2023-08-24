@@ -1,4 +1,4 @@
-import RuntimeError from "../../RuntimeError";
+import RuntimeError from "../../RuntimeError.js";
 
 export class BonusNumberNotNumberError extends RuntimeError {
   static MESSAGE = "보너스 번호는 숫자여야합니다.";

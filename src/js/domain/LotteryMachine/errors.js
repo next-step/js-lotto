@@ -1,4 +1,4 @@
-import RuntimeError from "../../RuntimeError";
+import RuntimeError from "../../RuntimeError.js";
 
 export class PurchasingNotNumberError extends RuntimeError {
   static MESSAGE = "구매 금액은 숫자여야합니다.";
