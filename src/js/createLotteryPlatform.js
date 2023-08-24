@@ -26,8 +26,9 @@ const createLotteryPlatform = () => {
   async function run() {
     try {
       await getPurchasingPriceFromView((purchasingPrice) => {
-        lottos = issueLotto(purchasingPrice);
-        lottos.forEach((lotto) => logLottoNumbers(lotto.getNumbers()));
+        const lotto = issueLotto(purchasingPrice);
+        lottos = [lotto];
+        lottos.forEach((lotto) => logLottoNumbers(lotto.getLottoNumbers()));
       });
 
       await getWinningLottoNumbersFromView((winningNumbers, bonusNumber) => {

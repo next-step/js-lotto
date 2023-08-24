@@ -5,7 +5,6 @@ import {
   PurchasingShouldAboveZeroError,
   PurchasingNotIntegerError,
 } from "./errors.js";
-import { isNumber } from "../../utils/index.js";
 
 const createLotteryMachine = (issueStrategy = new RandomIssueStrategy()) => {
   // const LOTTO_PRICE = 1_000;
@@ -20,13 +19,10 @@ const createLotteryMachine = (issueStrategy = new RandomIssueStrategy()) => {
   function validateInput(money) {
     // const PURCHASING_UPPER_LIMIT = 100_000;
 
-    console.log(typeof JSON.parse(money));
-    if (isNumber(money)) throw new PurchasingNotNumberError();
-
-    const purchasing = Number(money);
-    if (purchasing <= 0) throw new PurchasingShouldAboveZeroError();
-    if (!Number.isInteger(purchasing)) throw new PurchasingNotIntegerError();
-    // if (purchasing > PURCHASING_UPPER_LIMIT) throw new Error();
+    if (typeof money !== "number") throw new PurchasingNotNumberError();
+    if (money <= 0) throw new PurchasingShouldAboveZeroError();
+    if (!Number.isInteger(money)) throw new PurchasingNotIntegerError();
+    // if (money > PURCHASING_UPPER_LIMIT) throw new Error();
   }
 
   return {
