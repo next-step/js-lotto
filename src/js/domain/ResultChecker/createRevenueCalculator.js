@@ -4,16 +4,11 @@ import {
 } from "./errors.js";
 
 const createRevenueCalculator = () => {
-  const DECIMAL_PLACES = 2;
+  const LOWER_DECIMAL_PLACE = 2;
   const LOTTO_PRICE = 1_000;
 
-  function roundUp(number, decimalPlace = DECIMAL_PLACES) {
-    return Math.round(number * Math.pow(10, decimalPlace));
-  }
-
   function toPercent(number) {
-    const percentage = number / 100;
-    return roundUp(percentage);
+    return number.toFixed(LOWER_DECIMAL_PLACE);
   }
 
   function validatePurchased(purchased) {
@@ -22,14 +17,14 @@ const createRevenueCalculator = () => {
       throw new PurchasedShouldMultipleOfThousandError();
   }
 
-  function getRevenueOnPurchased(revenue, purchased) {
+  function getRevenuePercentage(prize, purchased) {
     validatePurchased(purchased);
 
-    return `${toPercent(revenue / purchased)}%`;
+    return `${toPercent(prize / purchased)}%`;
   }
 
   return {
-    getRevenueOnPurchased,
+    getRevenuePercentage,
   };
 };
 

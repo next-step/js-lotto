@@ -10,7 +10,7 @@ const createResultChecker = () => {
     6: 0,
   });
 
-  const { getRevenueOnPurchased } = createRevenueCalculator();
+  const { getRevenuePercentage } = createRevenueCalculator();
 
   function getRank(matchCount, isBonusMatch) {
     switch (matchCount) {
@@ -79,10 +79,11 @@ const createResultChecker = () => {
     const statistics = getStatistics(lottos);
     const accumulatedPrize = getAccumulatedPrize(statistics);
     const accumulatedPurchased = getAccumulatedPurchased(lottos);
-    const revenuePercentage = getRevenueOnPurchased(
+    const revenuePercentage = getRevenuePercentage(
       accumulatedPrize,
       accumulatedPurchased
     );
+
     return { statistics, revenuePercentage };
   }
 

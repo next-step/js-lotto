@@ -4,12 +4,12 @@ import {
   PurchasedShouldMultipleOfThousandError,
 } from "../src/js/domain/ResultChecker/errors";
 
-const { getRevenueOnPurchased } = createRevenueCalculator();
+const { getRevenuePercentage } = createRevenueCalculator();
 describe("수익률 계산 테스트", () => {
   describe("계산 예외 케이스 테스트", () => {
     describe("구매 금액이 0 보다 작거나 같으면, 에러를 발생시킨다.", () => {
       it.each([-10_000, -5_000, -1_000, 0])("purchased: %p", (purchased) => {
-        expect(() => getRevenueOnPurchased(2_000_000_000, purchased)).toThrow(
+        expect(() => getRevenuePercentage(2_000_000_000, purchased)).toThrow(
           PurchasedShouldPositiveError
         );
       });
@@ -17,7 +17,7 @@ describe("수익률 계산 테스트", () => {
 
     describe("구매 금액이 1_000의 배수가 아니면, 에러를 발생시킨다.", () => {
       it.each([1, 2_500, 17_777])("purchased: %p", (purchased) => {
-        expect(() => getRevenueOnPurchased(2_000_000_000, purchased)).toThrow(
+        expect(() => getRevenuePercentage(2_000_000_000, purchased)).toThrow(
           PurchasedShouldMultipleOfThousandError
         );
       });
@@ -25,15 +25,15 @@ describe("수익률 계산 테스트", () => {
     describe("유효한 구매금액이라면, 에러를 발생시키지 않는다.", () => {
       it.each([1_000, 5_000, 10_000.0])("purchased: %p", (purchased) => {
         expect(() =>
-          getRevenueOnPurchased(2_000_000_000, purchased)
+          getRevenuePercentage(2_000_000_000, purchased)
         ).not.toThrow();
       });
     });
   });
 
-  describe("getRevenueOnPurchased() 테스트", () => {
-    it("미당첨 시, 0%를 반환한다.", () => {
-      expect(getRevenueOnPurchased(0, 1_000)).toBe("0%");
+  describe("getRevenuePercentage() 테스트", () => {
+    it("미당첨 시, 0.00%를 반환한다.", () => {
+      expect(getRevenuePercentage(0, 1_000)).toBe("0.00%");
     });
 
     describe("올바른 수익률을 반환한다. (purchased: 1000)", () => {
@@ -47,8 +47,8 @@ describe("수익률 계산 테스트", () => {
       it.each(testCases)(
         "누적 수익: $revenue, 수익률: $percentage%",
         ({ revenue, percentage: expectedPercentage }) => {
-          expect(getRevenueOnPurchased(revenue, 1_000)).toBe(
-            `${expectedPercentage}%`
+          expect(getRevenuePercentage(revenue, 1_000)).toBe(
+            `${expectedPercentage}.00%`
           );
         }
       );
