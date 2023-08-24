@@ -3,7 +3,7 @@ import {
   GetNumberNotImplementedError,
 } from "./errors.js";
 
-class IssueStrategy {
+export class IssueStrategy {
   static LOTTO_DIGITS = 6;
   static LOWER_BOUND = 1;
   static UPPER_BOUND = 45;
