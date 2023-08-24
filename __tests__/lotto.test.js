@@ -17,3 +17,22 @@ test.each(Array.from({ length: 20 }))(
     });
   }
 );
+
+test.each([
+  [[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6], 7, 1],
+  [[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6], 43, 1],
+  [[1, 2, 3, 4, 5, 7], [1, 2, 3, 4, 5, 6], 7, 2],
+  [[1, 2, 3, 4, 5, 43], [1, 2, 3, 4, 5, 6], 43, 2],
+  [[1, 2, 3, 4, 5, 43], [1, 2, 3, 4, 5, 6], 7, 3],
+  [[1, 2, 3, 4, 5, 7], [1, 2, 3, 4, 5, 6], 7, 3],
+  [[1, 2, 3, 4, 42, 43], [1, 2, 3, 4, 5, 6], 7, 4],
+  [[1, 2, 3, 4, 42, 7], [1, 2, 3, 4, 5, 6], 7, 4],
+  [[1, 2, 3, 41, 42, 43], [1, 2, 3, 4, 5, 6], 7, 5],
+  [[1, 2, 3, 41, 42, 7], [1, 2, 3, 4, 5, 6], 7, 5],
+])(
+  "checkLottoResult function should return a correct result",
+  (numbers, winningNumbers, bonusNumber, expectedResult) => {
+    const result = checkLottoResult(numbers, winningNumbers, bonusNumber);
+    expect(result).toEqual(expectedResult);
+  }
+);
