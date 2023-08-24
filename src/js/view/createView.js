@@ -25,15 +25,19 @@ const createView = () => {
     );
 
     cbFunc(purchasingPrice);
+    logDivider();
   }
 
   async function getWinningLottoNumbersFromView(cbFunc) {
     const winningNumbers = await readlineFromConsole(
       GUIDE_MESSAGES.WINNING_NUMBERS_INPUT
     );
+    logDivider();
+
     const bonusNumber = await readlineFromConsole(
       GUIDE_MESSAGES.BONUS_NUMBER_INPUT
     );
+    logDivider();
 
     cbFunc(winningNumbers, bonusNumber);
   }
@@ -83,6 +87,7 @@ const createView = () => {
     getPurchasingPriceFromView,
     getWinningLottoNumbersFromView,
     logLottoNumbers,
+    logDivider,
     logLottoResult,
     logErrorMessage,
     closeView,

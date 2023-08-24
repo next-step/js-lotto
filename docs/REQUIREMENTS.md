@@ -122,4 +122,4 @@
 
 - [x] Test layer와 product layer 분리.
 - [x] View에서 데이터 타입 변환로직을 Controller로 옯기기.
-- [ ] 누적 수익률 테스트 코드 추가.
+- [x] 누적 수익률 테스트 코드 추가.
