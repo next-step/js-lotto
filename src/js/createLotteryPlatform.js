@@ -12,7 +12,7 @@ const createLotteryPlatform = () => {
     logErrorMessage,
     closeView,
   } = createView();
-  const { issueLotto } = createLotteryMachine();
+  const { issueLottosWith } = createLotteryMachine();
   const { setWinningLotto, checkMatch } = createMatchChecker();
   const { getSummarizedInfo } = createResultChecker();
 
@@ -26,8 +26,7 @@ const createLotteryPlatform = () => {
   async function run() {
     try {
       await getPurchasingPriceFromView((purchasingPrice) => {
-        const lotto = issueLotto(purchasingPrice);
-        lottos = [lotto];
+        lottos = issueLottosWith(purchasingPrice);
         lottos.forEach((lotto) => logLottoNumbers(lotto.getLottoNumbers()));
       });
 

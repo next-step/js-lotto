@@ -13,13 +13,10 @@ class IssueStrategy {
   static LOWER_BOUND = 1;
   static UPPER_BOUND = 45;
 
-  #lottoNumbers;
-
   constructor() {
     if (new.target === IssueStrategy) {
       throw new IssueStrategyIsAbstractClassError();
     }
-    this.#lottoNumbers = new Set();
   }
 
   getNumber() {
@@ -27,10 +24,13 @@ class IssueStrategy {
   }
 
   getLottoNumbers() {
-    while (this.#lottoNumbers.size < IssueStrategy.LOTTO_DIGITS) {
-      this.#lottoNumbers.add(this.getNumber());
+    const lottoNumbers = new Set();
+
+    while (lottoNumbers.size < IssueStrategy.LOTTO_DIGITS) {
+      lottoNumbers.add(this.getNumber());
     }
-    return Array.from(this.#lottoNumbers);
+
+    return Array.from(lottoNumbers);
   }
 }
 

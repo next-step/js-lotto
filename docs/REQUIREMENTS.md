@@ -122,3 +122,4 @@
 ## 🔧 2. 기능별 리팩토링 고려 지점
 
 - [ ] View에서 데이터 타입 변환로직을 Controller로 옯기기.
+- [ ] Test layer와 product layer 분리.
