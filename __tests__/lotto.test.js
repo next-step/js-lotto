@@ -3,7 +3,11 @@ import {
   MIN_LOTTO_NUMBER,
   MAX_LOTTO_NUMBER,
 } from "../src/js/constants";
-import { checkLottoResult, generateRandomLottoNumbers } from "../src/js/lotto";
+import {
+  checkLottoResult,
+  generateRandomLottoNumbers,
+  getPrizeByResult,
+} from "../src/js/lotto";
 
 test.each(Array.from({ length: 20 }))(
   "generateRandomLottoNumbers function should generate correct lotto numbers",

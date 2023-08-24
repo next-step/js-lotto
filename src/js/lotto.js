@@ -1,6 +1,9 @@
-const NUMBER_OF_LOTTO_NUMBERS = 6;
-const MIN_LOTTO_NUMBER = 1;
-const MAX_LOTTO_NUMBER = 45;
+import {
+  NUMBER_OF_LOTTO_NUMBERS,
+  MIN_LOTTO_NUMBER,
+  MAX_LOTTO_NUMBER,
+  LOTTO_PRIZE_MAP,
+} from "./constants";
 
 const ALL_LOTTO_NUMBERS = Array.from(
   {
@@ -52,4 +55,8 @@ export const checkLottoResult = (lottoNumbers, winningNumbers, bonusNumber) => {
     return 5;
   }
   return 0;
+};
+
+export const getPrizeByResult = (rank) => {
+  return LOTTO_PRIZE_MAP[rank] || 0;
 };
