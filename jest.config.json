@@ -1,4 +1,13 @@
 {
   "verbose": true,
-  "collectCoverage": true
+  "collectCoverage": true,
+  "modulePathIgnorePatterns": ["./__tests__/utils/"],
+  "coverageThreshold": {
+    "./src/js/domain/": {
+      "statements": 95,
+      "branches": 95,
+      "functions": 95,
+      "lines": 95
+    }
+  }
 }
