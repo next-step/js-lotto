@@ -1,10 +1,19 @@
 class OutputView {
-  _message(comment) {
-    console.log(comment);
+  #outputView;
+
+  #outputError;
+
+  constructor(outputView = console.log, outputError = console.error) {
+    this.#outputView = outputView;
+    this.#outputError = outputError;
   }
 
-  _error(err) {
-    console.error(err);
+  message(content) {
+    return this.#outputView(content);
+  }
+
+  error(err) {
+    return this.#outputError(err);
   }
 }
 

@@ -20,18 +20,18 @@ class LottoGame {
   #rewards;
 
   async start() {
-    await this.withRetry(() => this.setMoney());
-  }
-
-  async setMoney() {
-    this.#money = await this.#inputView.purchase();
-
-    this.buyLotto();
+    await this.withRetry(() => this.buyLotto());
   }
 
   async buyLotto() {
+    this.#money = await this.#inputView.purchase();
     this.#lottos = this.#lottoMachine.buy(this.#money);
-    this.#outputView.buyLottos(this.#lottos);
+
+    this.showLottos();
+  }
+
+  async showLottos() {
+    this.#outputView.buyLottos(this.#lottos.length);
     this.#lottos.forEach(({ numbers }) => this.#outputView.lotto(numbers));
 
     await this.withRetry(() => this.setWinningLotto());
@@ -52,6 +52,7 @@ class LottoGame {
   }
 
   showResult() {
+    this.#outputView.lottoResult();
     Object.keys(this.#rewards.prizeTable).forEach((rank) => {
       this.#outputView.prize(this.#rewards.prizeTable[rank]);
     });
@@ -81,7 +82,7 @@ class LottoGame {
       await action();
     } catch ({ message }) {
       this.#outputView.error(message);
-      await this.withRetry(action);
+      await this.withRetry(() => action());
     }
   }
 }

@@ -1,4 +1,4 @@
-import ERROR from '../constants/error';
+import ERROR from '../constants/error.js';
 
 export class LottoNumber {
   static MIN = 1;

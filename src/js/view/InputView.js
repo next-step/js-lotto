@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import { createInterface } from 'node:readline/promises';
 
 const rl = createInterface({
@@ -6,8 +7,14 @@ const rl = createInterface({
 });
 
 class InputView {
-  _getUserInput(question) {
-    return rl.question(question);
+  #inputView;
+
+  constructor(inputView = (question) => rl.question(question)) {
+    this.#inputView = inputView;
+  }
+
+  input(question) {
+    return this.#inputView(question);
   }
 }
 
