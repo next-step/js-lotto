@@ -10,7 +10,7 @@ const ERROR = Object.freeze({
 
   DUPLICATED_WITH_WINNING_NUMBER: '당첨번호와 중복되지 않는 보너스 숫자를 입력해주세요!',
 
-  INVALID_RETRY_CODE: `${LOTTO_RETRY_CODE.CONFIRM}나 ${LOTTO_RETRY_CODE.REJECT}를 입력해주세요`,
+  INVALID_RETRY_CODE: `${LOTTO_RETRY_CODE.CONFIRM}나 ${LOTTO_RETRY_CODE.REJECT}를 입력해주세요!`,
 });
 
 export default ERROR;

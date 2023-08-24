@@ -1,8 +1,5 @@
-import { LOTTO_RETRY_CODE } from '../constants/lotto-config.js';
-import { WinningLotto } from '../domain/WinningLotto.js';
-import { LottoMachine, LottoRewards } from '../domain/index.js';
+import { LottoMachine, LottoRewards, WinningLotto } from '../domain/index.js';
 import { splitToNumberArray } from '../utils/splitToNumberArray.js';
-import checkValidRetry from '../validator/retry.js';
 import { LottoInputView, LottoOutputView } from '../view/Lotto/index.js';
 
 class LottoGame {
@@ -70,11 +67,9 @@ class LottoGame {
 
   async askRetry() {
     const retry = await this.#inputView.retry();
-    checkValidRetry(retry);
-    if (retry === LOTTO_RETRY_CODE.REJECT) {
+    if (!retry) {
       process.exit();
     }
-
     this.start();
   }
 
