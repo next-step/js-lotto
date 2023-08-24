@@ -1,3 +1,5 @@
+import createRevenueCalculator from "./createRevenueCalculator.js";
+
 const createResultChecker = () => {
   const PRIZE = Object.freeze({
     1: 2_000_000_000,
@@ -7,6 +9,8 @@ const createResultChecker = () => {
     5: 5_000,
     6: 0,
   });
+
+  const { getRevenueOnPurchased } = createRevenueCalculator();
 
   function getRank(matchCount, isBonusMatch) {
     switch (matchCount) {
@@ -24,20 +28,66 @@ const createResultChecker = () => {
     }
   }
 
-  function getResult(lotto) {
-    const { matchCount, isBonusMatch } = lotto.getMatchResult();
+  function getStatistics(lottos) {
+    const rankCountMap = new Map();
+    const matchCountMap = new Map();
+    const isBonusMatchMap = new Map();
 
-    const rank = getRank(matchCount, isBonusMatch);
-    const prize = PRIZE[rank];
+    const LOWEST_MATCHING_COUNT = 3;
+    const winningLottos = lottos.filter(
+      (lotto) => lotto.getMatchResult().matchCount >= LOWEST_MATCHING_COUNT
+    );
 
-    return {
-      rank,
-      prize,
-    };
+    winningLottos.forEach((lotto) => {
+      const { matchCount, isBonusMatch } = lotto.getMatchResult();
+      const rank = getRank(matchCount, isBonusMatch);
+      if (!rankCountMap.has(rank)) {
+        rankCountMap.set(rank, 1);
+        matchCountMap.set(rank, matchCount);
+        isBonusMatchMap.set(rank, isBonusMatch);
+      } else {
+        rankCountMap.set(rank, rankCountMap.get(rank) + 1);
+      }
+    });
+
+    const statistics = [];
+    for (const [rank, count] of rankCountMap.entries()) {
+      statistics.push({
+        matchCount: matchCountMap.get(rank),
+        isBonusMatch: isBonusMatchMap.get(rank),
+        prize: PRIZE[rank],
+        lottoCount: count,
+      });
+    }
+
+    return statistics;
+  }
+
+  function getAccumulatedPrize(statistics) {
+    return statistics.reduce(
+      (acc, { prize, lottoCount }) => acc + prize * lottoCount,
+      0
+    );
+  }
+
+  function getAccumulatedPurchased(lottos) {
+    const LOTTO_PRICE = 1_000;
+    return LOTTO_PRICE * lottos.length;
+  }
+
+  function getSummarizedInfo(lottos) {
+    const statistics = getStatistics(lottos);
+    const accumulatedPrize = getAccumulatedPrize(statistics);
+    const accumulatedPurchased = getAccumulatedPurchased(lottos);
+    const revenuePercentage = getRevenueOnPurchased(
+      accumulatedPrize,
+      accumulatedPurchased
+    );
+    return { statistics, revenuePercentage };
   }
 
   return {
-    getResult,
+    getSummarizedInfo,
   };
 };
 

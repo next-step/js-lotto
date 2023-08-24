@@ -48,6 +48,10 @@
 [X] 당첨 등수와 당첨 금액 반환.
 [X] 예외 케이스 처리하기.
 
+[feature4] 당첨 통계와 수익률 반환.
+[ ] 일치 개수, 금액, 당첨 로또 개수 반환.
+[ ] 누적 수익률 반환.
+
 > > 💡당첨 되지 않은 경우, 6등 당첨 금액 0원.
 
 [feature4] 수익률 계산해 반환.
@@ -87,16 +91,15 @@
 [feature4] 수익률 계산해 반환.
 
 [Controller] LotteryPlatform
-[ ] LotteryPlatform 유효성 검사 분리.
-[ ] Lotto 구매액 검증 로직 LotteryMachine으초 분리 여부 결정.
+[X] LotteryPlatform 유효성 검사 LotteryMachine으로 이동.
 
 [View]PromptView
-[ ] View 객체 생성.
+[X] View 객체 생성.
 
 ## ❓ 4. 기능별 질문 사항
 
 [feature1] 로또 한 장 발행.
-[ ] 단위 테스트의 범위 (LotteryMachine.test.js - CHECK)
+[ ] 단위 테스트의 범위
 
 [feature2] 로또 당첨 여부 확인.
 [ ] 예측 불가능한 부분 분리의 순기능 <-> 배보다 배꼽이 큰가?

@@ -1,4 +1,3 @@
-import { create } from "domain";
 import readline from "readline";
 
 const readlineInterface = readline.createInterface({
@@ -45,23 +44,31 @@ const createView = () => {
     log("");
   }
 
-  function logLottoNumbers(lotto) {
-    log(lotto.getLottoNumbers());
+  function logLottoNumbers(lottoNumbers) {
+    log(lottoNumbers);
   }
 
-  function logStatisticsGuideMessage() {
+  function logRankInfo(info) {
+    const { matchCount, isBonusMatch, prize, lottoCount } = info;
+    const bonusMatchInfo = isBonusMatch ? ", 보너스 볼 일치" : "";
+    const formattedPrize = prize
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    log(
+      `${matchCount}개 일치${bonusMatchInfo} (${formattedPrize}원) - ${lottoCount}개`
+    );
+  }
+
+  function logLottoResult(statistics, revenuePercentage) {
     logDivider();
 
     log(GUIDE_MESSAGES.WINNING_STATISTICS);
     log("-".repeat(18));
-  }
 
-  function logLottoStatistics(lotto, revenue) {
-    logStatisticsGuideMessage();
+    statistics.forEach(logRankInfo);
 
-    log(`등수: ${lotto.rank}, 금액: ${lotto.prize}원`);
-
-    log(`총 수익률은 ${revenue}입니다.`);
+    log(`총 수익률은 ${revenuePercentage}입니다.`);
   }
 
   function logErrorMessage(errorMessage) {
@@ -76,7 +83,7 @@ const createView = () => {
     getPurchasingPriceFromView,
     getWinningLottoNumbersFromView,
     logLottoNumbers,
-    logLottoStatistics,
+    logLottoResult,
     logErrorMessage,
     closeView,
   };

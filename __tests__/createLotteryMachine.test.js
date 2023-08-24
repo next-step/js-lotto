@@ -8,7 +8,7 @@ const { issueLotto } = createLotteryMachine();
 
 describe("로또 발행 테스트", () => {
   describe("로또 구매 금액 유효성 테스트", () => {
-    describe("숫자가 아니라면, 에러를 발생시킨다.", () => {
+    describe("숫자 형태가 아니라면, 에러를 발생시킨다.", () => {
       it.each(["1", "erica", true, null, undefined, function () {}, {}])(
         "%p",
         (purchasing) => {
