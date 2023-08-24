@@ -1,5 +1,5 @@
-@import 'src/web/css/shared/index.css';
-@import 'src/web/css/ui/index.css';
+@import '@web/css/shared/index.css';
+@import '@web/css/ui/index.css';
 
 html,
 body {
