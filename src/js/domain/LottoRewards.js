@@ -1,32 +1,38 @@
 import { LottoReward } from './LottoReward.js';
 
+const first = Symbol.for('first');
+const second = Symbol.for('second');
+const third = Symbol.for('third');
+const fourth = Symbol.for('fourth');
+const fifth = Symbol.for('fifth');
+
 export class LottoRewards {
   #prizeTable = {
-    first: {
+    [first]: {
       match: 6,
       prize: 2_000_000_000,
       hasBonus: false,
       quantity: 0,
     },
-    second: {
+    [second]: {
       match: 5,
       prize: 30_000_000,
       hasBonus: true,
       quantity: 0,
     },
-    third: {
+    [third]: {
       match: 5,
       prize: 1_500_000,
       hasBonus: false,
       quantity: 0,
     },
-    fourth: {
+    [fourth]: {
       match: 4,
       prize: 50_000,
       hasBonus: false,
       quantity: 0,
     },
-    fifth: {
+    [fifth]: {
       match: 3,
       prize: 5_000,
       hasBonus: false,
@@ -59,10 +65,12 @@ export class LottoRewards {
   }
 
   #getRank(match, hasBonus) {
-    if (match === this.#prizeTable.third.match && !hasBonus) {
-      return 'third';
+    if (match === this.#prizeTable[third].match && !hasBonus) {
+      return third;
     }
-    const prizeRank = Object.keys(this.#prizeTable).find((rank) => this.#prizeTable[rank].match === match);
+    const prizeRank = Object.getOwnPropertySymbols(this.#prizeTable).find(
+      (rank) => this.#prizeTable[rank].match === match
+    );
 
     return prizeRank;
   }

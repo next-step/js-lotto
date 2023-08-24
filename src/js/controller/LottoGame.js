@@ -51,7 +51,7 @@ class LottoGame {
 
   showResult() {
     this.#outputView.lottoResult();
-    Object.keys(this.#rewards.prizeTable).forEach((rank) => {
+    Object.getOwnPropertySymbols(this.#rewards.prizeTable).forEach((rank) => {
       this.#outputView.prize(this.#rewards.prizeTable[rank]);
     });
 

@@ -6,7 +6,7 @@ describe('로또 상금 목록 테스트', () => {
     const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 6], 7);
     const lottoReward = new LottoRewards([lotto], winningLotto);
 
-    expect(lottoReward.prizeTable.first.quantity).toBe(1);
+    expect(lottoReward.prizeTable[Symbol.for('first')].quantity).toBe(1);
   });
 
   it('당첨로또와 5개가 동일하며 보너스번호를 포함하면 2등이다.', () => {
@@ -14,7 +14,7 @@ describe('로또 상금 목록 테스트', () => {
     const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 7], 6);
     const lottoReward = new LottoRewards([lotto], winningLotto);
 
-    expect(lottoReward.prizeTable.second.quantity).toBe(1);
+    expect(lottoReward.prizeTable[Symbol.for('second')].quantity).toBe(1);
   });
 
   it('당첨로또와 5개가 동일하며 보너스번호를 미포함하면 3등이다.', () => {
@@ -22,7 +22,7 @@ describe('로또 상금 목록 테스트', () => {
     const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 7], 8);
     const lottoReward = new LottoRewards([lotto], winningLotto);
 
-    expect(lottoReward.prizeTable.third.quantity).toBe(1);
+    expect(lottoReward.prizeTable[Symbol.for('third')].quantity).toBe(1);
   });
 
   it('당첨로또와 4개가 동일하면 4등이다.', () => {
@@ -30,7 +30,7 @@ describe('로또 상금 목록 테스트', () => {
     const winningLotto = new WinningLotto([1, 2, 3, 4, 7, 8], 9);
     const lottoReward = new LottoRewards([lotto], winningLotto);
 
-    expect(lottoReward.prizeTable.fourth.quantity).toBe(1);
+    expect(lottoReward.prizeTable[Symbol.for('fourth')].quantity).toBe(1);
   });
 
   it('당첨로또와 3개가 동일하면 5등이다.', () => {
@@ -38,7 +38,7 @@ describe('로또 상금 목록 테스트', () => {
     const winningLotto = new WinningLotto([1, 2, 3, 7, 8, 9], 10);
     const lottoReward = new LottoRewards([lotto], winningLotto);
 
-    expect(lottoReward.prizeTable.fifth.quantity).toBe(1);
+    expect(lottoReward.prizeTable[Symbol.for('fifth')].quantity).toBe(1);
   });
 
   it.each([
@@ -56,7 +56,7 @@ describe('로또 상금 목록 테스트', () => {
     const winningLotto = new WinningLotto([1, 2, 3, 4, 5, 6], 7);
     const lottoReward = new LottoRewards([lotto], winningLotto);
 
-    Object.keys(lottoReward.prizeTable).forEach((rank) => {
+    Object.getOwnPropertySymbols(lottoReward.prizeTable).forEach((rank) => {
       expect(lottoReward.prizeTable[rank].quantity).toBe(0);
     });
   });
