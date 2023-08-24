@@ -1,8 +1,6 @@
-import {
-  IssueStrategy,
-  RandomIssueStrategy,
-} from "../src/js/domain/LotteryMachine/IssueStrategy";
-import { EmptyIssueStrategy } from "./utils/EmptyIssueStrategy";
+import IssueStrategy from "../src/js/domain/LotteryMachine/IssueStrategy";
+import RandomIssueStrategy from "../src/js/domain/LotteryMachine/RandomIssueStrategy";
+import EmptyIssueStrategy from "./utils/EmptyIssueStrategy";
 import {
   IssueStrategyIsAbstractClassError,
   GetNumberNotImplementedError,

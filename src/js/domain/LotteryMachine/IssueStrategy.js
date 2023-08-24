@@ -3,7 +3,7 @@ import {
   GetNumberNotImplementedError,
 } from "./errors.js";
 
-export class IssueStrategy {
+export default class IssueStrategy {
   static LOTTO_DIGITS = 6;
   static LOWER_BOUND = 1;
   static UPPER_BOUND = 45;
@@ -26,23 +26,5 @@ export class IssueStrategy {
     }
 
     return Array.from(lottoNumbers);
-  }
-}
-
-export class RandomIssueStrategy extends IssueStrategy {
-  #lowerBound;
-  #upperBound;
-
-  constructor(
-    lowerBound = IssueStrategy.LOWER_BOUND,
-    upperBound = IssueStrategy.UPPER_BOUND
-  ) {
-    super();
-    this.#lowerBound = lowerBound;
-    this.#upperBound = upperBound;
-  }
-
-  getNumber() {
-    return Math.floor(Math.random() * this.#upperBound) + this.#lowerBound;
   }
 }

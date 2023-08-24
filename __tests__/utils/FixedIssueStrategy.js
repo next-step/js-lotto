@@ -1,4 +1,4 @@
-import { IssueStrategy } from "../../src/js/domain/LotteryMachine/IssueStrategy";
+import IssueStrategy from "../../src/js/domain/LotteryMachine/IssueStrategy";
 import {
   FixedNumberLengthNotSixError,
   FixedNumberElementNotNumberError,
@@ -6,7 +6,7 @@ import {
   FixedNumberElementDuplicatedError,
 } from "./errors";
 
-export class FixedIssueStrategy extends IssueStrategy {
+export default class FixedIssueStrategy extends IssueStrategy {
   #fixedNumbers;
 
   constructor(numbers) {

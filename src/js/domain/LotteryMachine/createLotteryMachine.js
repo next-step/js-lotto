@@ -1,5 +1,5 @@
 import Lotto from "../Lotto/index.js";
-import { RandomIssueStrategy } from "./IssueStrategy.js";
+import RandomIssueStrategy from "./RandomIssueStrategy.js";
 import {
   PurchasingPriceNotNumberError,
   PurchasingPriceShouldAboveZeroError,
