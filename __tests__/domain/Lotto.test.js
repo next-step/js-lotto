@@ -1,4 +1,5 @@
-import { LottoMachine } from '../../src/js/domain/index.js';
+import ERROR from '../../src/js/constants/error.js';
+import { Lotto, LottoMachine } from '../../src/js/domain/index.js';
 
 const isAscending = (arr) => arr.every((item, idx) => (idx === 0 ? true : item >= arr[idx - 1]));
 
@@ -34,4 +35,26 @@ it('로또는 오름차순으로 정렬된다', () => {
   lottos.forEach((lotto) => {
     expect(isAscending(lotto.numbers)).toBeTruthy();
   });
+});
+
+describe('로또 생성 테스트', () => {
+  it.each([{ numbers: [1, 2, 3, 4, 5] }, { numbers: [1, 2, 3, 11, 23, 34, 44, 12] }, { numbers: [3, 2, 4, 44] }])(
+    '6개가 아닌 숫자를 입력할 시 에러가 발생한다.',
+    ({ numbers }) => {
+      expect(() => {
+        // eslint-disable-next-line no-new
+        new Lotto(numbers);
+      }).toThrow(ERROR.UNMATCHED_QUANTITY(Lotto.NUMBER_QUANTITY));
+    }
+  );
+
+  it.each([{ numbers: [1, 2, 3, 4, 5, 5] }, { numbers: [1, 2, 3, 11, 23, 23] }, { numbers: [3, 2, 4, 44, 43, 3] }])(
+    '중복된 당첨번호를 입력할 시 에러가 발생한다.',
+    ({ numbers }) => {
+      expect(() => {
+        // eslint-disable-next-line no-new
+        new Lotto(numbers);
+      }).toThrow(ERROR.DO_NOT_ENTER_DUPLICATED_NUMBER);
+    }
+  );
 });

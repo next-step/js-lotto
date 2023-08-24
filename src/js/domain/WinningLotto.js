@@ -12,14 +12,6 @@ export class WinningLotto extends Lotto {
   }
 
   static #validate(numbers, bonus) {
-    if (numbers.length !== Lotto.NUMBER_QUANTITY) {
-      throw new Error(ERROR.UNMATCHED_QUANTITY(Lotto.NUMBER_QUANTITY));
-    }
-
-    if (new Set(numbers).size !== numbers.length) {
-      throw new Error(ERROR.DO_NOT_ENTER_DUPLICATED_NUMBER);
-    }
-
     if (numbers.includes(bonus)) {
       throw new Error(ERROR.DUPLICATED_WITH_WINNING_NUMBER);
     }
