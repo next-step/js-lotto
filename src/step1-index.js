@@ -1,3 +1,5 @@
 import { App } from './js/app.js';
 
-new App();
+const lottoApp = new App();
+
+lottoApp.run();

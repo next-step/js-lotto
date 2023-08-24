@@ -2,51 +2,17 @@ import { LOTTO_AMOUNT_UNIT } from './constants/lotto.js';
 import { Lotto } from './domain/Lotto.js';
 import { LottoMachine } from './domain/LottoMachine.js';
 import { WinningLotto } from './domain/WinningLotto.js';
+import { LottoController } from './view/LottoController.js';
 import LottoView from './view/LottoVIew.js';
 
 export class App {
-  #lottoView;
-  #lottoMachine;
-  #lottos;
-  #winningLotto;
+  #controller;
 
   constructor() {
-    this.#lottoMachine = new LottoMachine();
-    this.#lottoView = new LottoView();
-    this.#init().then(() => this.start());
+    this.#controller = new LottoController();
   }
 
-  async #init() {
-    await this.#setLotto();
-    await this.#setWinningLotto();
-  }
-
-  async #setLotto() {
-    const purchaseAmount = await this.#lottoView.inputPurchaseAmount();
-    this.#lottos = this.#lottoMachine.issueLotto(purchaseAmount);
-    this.#lottoView.printPurchaseAmount(this.#lottos);
-  }
-
-  async #setWinningLotto() {
-    const winningLottoNunbers =
-      await await this.#lottoView.inputWinningNumber();
-    const winningLottoArray = winningLottoNunbers
-      .split(',')
-      .map((string) => parseInt(string));
-    const bonusNumber = await this.#lottoView.inputBonusNumber();
-    this.#winningLotto = new WinningLotto(
-      new Lotto(winningLottoArray),
-      bonusNumber
-    );
-  }
-
-  start() {
-    const lottoResult = this.#lottoMachine.checkWinningLotto(
-      this.#lottos,
-      this.#winningLotto
-    );
-
-    const purchaseAmount = this.#lottos.length * LOTTO_AMOUNT_UNIT;
-    this.#lottoView.printLottoResult(lottoResult, purchaseAmount);
+  run() {
+    this.#controller.start();
   }
 }
