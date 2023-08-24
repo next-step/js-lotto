@@ -32,3 +32,24 @@ const getRandomIntInclusive = (min, max) => {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
 };
+
+export const checkLottoResult = (lottoNumbers, winningNumbers, bonusNumber) => {
+  const matchingNumbers = lottoNumbers.filter((number) =>
+    winningNumbers.includes(number)
+  );
+
+  const matchingNumbersCount = matchingNumbers.length;
+  if (matchingNumbersCount == 6) {
+    return 1;
+  } else if (matchingNumbersCount == 5) {
+    if (lottoNumbers.includes(bonusNumber)) {
+      return 2;
+    }
+    return 3;
+  } else if (matchingNumbersCount == 4) {
+    return 4;
+  } else if (matchingNumbersCount == 3) {
+    return 5;
+  }
+  return 0;
+};
