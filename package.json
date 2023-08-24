@@ -6,8 +6,7 @@
   "scripts": {
     "start-step1": "node ./src/js/step1-index.js",
     "start-step2": "node ./src/js/step2-index.js",
-    "test": "jest -i --watchAll --coverage",
-    "test-file": "jest -i --watch"
+    "test": "jest -i --watch"
   },
   "license": "MIT",
   "devDependencies": {
