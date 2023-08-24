@@ -1,6 +1,7 @@
 import { LOTTO_RETRY_CODE } from '../constants/lotto-config.js';
 import { WinningLotto } from '../domain/WinningLotto.js';
 import { LottoMachine, LottoRewards } from '../domain/index.js';
+import { splitToNumberArray } from '../utils/splitToNumberArray.js';
 import checkValidRetry from '../validator/retry.js';
 import { LottoInputView, LottoOutputView } from '../view/Lotto/index.js';
 
@@ -24,7 +25,7 @@ class LottoGame {
   }
 
   async buyLotto() {
-    this.#money = await this.#inputView.purchase();
+    this.#money = Number((await this.#inputView.purchase()).trim());
     this.#lottos = this.#lottoMachine.buy(this.#money);
 
     this.showLottos();
@@ -38,8 +39,8 @@ class LottoGame {
   }
 
   async setWinningLotto() {
-    const winningNumbers = await this.#inputView.winningNumbers();
-    const bonus = await this.#inputView.bonus();
+    const winningNumbers = splitToNumberArray(await this.#inputView.winningNumbers());
+    const bonus = Number(await this.#inputView.bonus());
     this.#winningLotto = new WinningLotto(winningNumbers, bonus);
 
     await this.withRetry(() => this.setRewards());
