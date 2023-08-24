@@ -8,7 +8,6 @@ import {
   LOTTO_SECOND_PRIZE,
   LOTTO_THIRD_PRIZE,
 } from '../constants/lotto.js';
-import { getNullArray } from '../utils/array.js';
 import { getRandomNumber } from '../utils/number.js';
 import { Lotto } from './Lotto.js';
 
@@ -30,9 +29,10 @@ export class LottoMachine {
 
     this.#validateMoneyUnit(amount, LOTTO_AMOUNT_UNIT);
 
-    const nullArray = getNullArray(this.#getNumberOfLotto(amount));
-
-    return nullArray.map(() => new Lotto(this.#generateLottoNumbers()));
+    return Array.from(
+      { length: this.#getNumberOfLotto(amount) },
+      () => new Lotto(this.#generateLottoNumbers())
+    );
   }
 
   getNumberOfMatchNumber(lotto, winningLotto) {
