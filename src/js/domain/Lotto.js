@@ -3,7 +3,8 @@ import { LOTTO_MAX_NUMBER, LOTTO_MIN_NUMBER } from '../constants/lotto.js';
 
 export class Lotto {
   #numbers;
-  constructor(numbers) {
+  constructor(nums) {
+    const numbers = nums?.map((num) => parseInt(num, 10));
     this.#valiateLottoNumbers(numbers);
     this.#numbers = numbers;
   }
@@ -17,6 +18,7 @@ export class Lotto {
   }
 
   #valiateLottoNumbers(numbers) {
+    this.#validateLottoNubers(numbers);
     this.#valiateLottoNumberLength(numbers);
     this.#validateLottoNumberRange(numbers);
     this.#validateDuplicatedLottoNumber(numbers);
@@ -41,6 +43,12 @@ export class Lotto {
       )
     ) {
       throw new Error(ERROR_MESSAGE.NOT_VALID_LOTTO_NUMBER_RANGE);
+    }
+  }
+
+  #validateLottoNubers(numbers) {
+    if (numbers.some((number) => !Number.isInteger(number))) {
+      throw new Error(ERROR_MESSAGE.NOT_VALID_LOTTO_NUMBER);
     }
   }
 }

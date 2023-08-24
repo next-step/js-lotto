@@ -36,12 +36,9 @@ export class LottoController {
 
   async #setWinningLotto() {
     const winningLottoNunbers = await this.#lottoView.inputWinningNumber();
-    const winningLottoArray = winningLottoNunbers
-      .split(',')
-      .map((string) => parseInt(string));
     const bonusNumber = await this.#lottoView.inputBonusNumber();
     this.#winningLotto = new WinningLotto(
-      new Lotto(winningLottoArray),
+      new Lotto(winningLottoNunbers.split(',')),
       bonusNumber
     );
   }

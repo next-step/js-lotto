@@ -56,4 +56,15 @@ describe('Lotto', () => {
       }
     );
   });
+
+  describe('로또 번호가 숫자 혹은 숫자로 변형 가능한 문자가 아닐 경우 에러가 납니다.', () => {
+    test.each([[['string', 1, 3, 4, 5, 6]], [['#', 7, 8, 14, 44, 44]]])(
+      'new Lotto(numbers)',
+      (numbers) => {
+        expect(() => new Lotto(numbers)).toThrowError(
+          ERROR_MESSAGE.NOT_VALID_LOTTO_NUMBER
+        );
+      }
+    );
+  });
 });
