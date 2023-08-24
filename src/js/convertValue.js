@@ -1,4 +1,4 @@
-export const convertToTypedData = (input) => {
+export const convertToMatchingDataType = (input) => {
   if (input === "null") {
     return null;
   } else if (input === "undefined") {
@@ -15,5 +15,5 @@ export const convertToTypedData = (input) => {
 };
 
 export const convertToArray = (str) => {
-  return str.split(",").map((item) => convertToTypedData(item));
+  return str.split(",").map((item) => convertToMatchingDataType(item));
 };

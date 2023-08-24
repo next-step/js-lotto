@@ -1,3 +1,5 @@
+import RuntimeError from "../../src/js/RuntimeError";
+
 export class FixedNumberNotArrayError extends RuntimeError {
   static MESSAGE = "고정 숫자는 배열이어야합니다.";
 

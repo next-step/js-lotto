@@ -1,5 +1,4 @@
 import readline from "readline";
-import { convertToTypedData, convertToArray } from "./convertValue.js";
 
 const readlineInterface = readline.createInterface({
   input: process.stdin,
@@ -25,7 +24,7 @@ const createView = () => {
       GUIDE_MESSAGES.PURCHASING_PRICE_INPUT
     );
 
-    cbFunc(convertToTypedData(purchasingPrice));
+    cbFunc(purchasingPrice);
   }
 
   async function getWinningLottoNumbersFromView(cbFunc) {
@@ -36,7 +35,7 @@ const createView = () => {
       GUIDE_MESSAGES.BONUS_NUMBER_INPUT
     );
 
-    cbFunc(convertToArray(winningNumbers), convertToTypedData(bonusNumber));
+    cbFunc(winningNumbers, bonusNumber);
   }
 
   const log = console.log;

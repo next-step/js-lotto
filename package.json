@@ -6,7 +6,7 @@
   "scripts": {
     "start-step1": "node ./src/js/step1-index.js",
     "start-step2": "node ./src/js/step2-index.js",
-    "test": "jest -i --watch"
+    "test": "jest -i --watch --testPathIgnorePatterns=__tests__/utils"
   },
   "license": "MIT",
   "devDependencies": {

@@ -2,6 +2,7 @@ import createView from "./view/createView.js";
 import createLotteryMachine from "./domain/LotteryMachine/createLotteryMachine.js";
 import createMatchChecker from "./domain/MatchChecker/createMatchChecker.js";
 import createResultChecker from "./domain/ResultChecker/createResultChecker.js";
+import { convertToArray, convertToMatchingDataType } from "./convertValue.js";
 
 const createLotteryPlatform = () => {
   const {
@@ -25,12 +26,15 @@ const createLotteryPlatform = () => {
 
   async function run() {
     try {
-      await getPurchasingPriceFromView((purchasingPrice) => {
+      await getPurchasingPriceFromView((userInput) => {
+        const purchasingPrice = convertToMatchingDataType(userInput);
         lottos = issueLottosWith(purchasingPrice);
         lottos.forEach((lotto) => logLottoNumbers(lotto.getLottoNumbers()));
       });
 
-      await getWinningLottoNumbersFromView((winningNumbers, bonusNumber) => {
+      await getWinningLottoNumbersFromView((commaSeperatedNumbers, number) => {
+        const winningNumbers = convertToArray(commaSeperatedNumbers);
+        const bonusNumber = convertToMatchingDataType(number);
         setWinningLotto(winningNumbers, bonusNumber);
         lottos.forEach(checkMatch);
       });

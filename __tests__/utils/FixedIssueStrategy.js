@@ -1,3 +1,4 @@
+import { IssueStrategy } from "../../src/js/domain/LotteryMachine/IssueStrategy";
 import {
   FixedNumberLengthNotSixError,
   FixedNumberElementNotNumberError,
