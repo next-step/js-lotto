@@ -1,3 +1,4 @@
+import ERROR from '../constants/error.js';
 import { Lotto } from './Lotto.js';
 import { LottoNumber } from './LottoNumber.js';
 
@@ -27,7 +28,7 @@ export class LottoMachine {
 
   static #validate(money) {
     if (money % LottoMachine.PRICE !== 0 || money <= 0) {
-      throw new Error(`${LottoMachine.PRICE}원 단위의 금액을 입력해주세요!`);
+      throw new Error(ERROR.UNMATCHED_PRICE_PER_SHEET(LottoMachine.PRICE));
     }
   }
 

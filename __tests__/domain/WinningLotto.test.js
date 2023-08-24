@@ -21,7 +21,7 @@ describe('당첨 로또 테스트', () => {
     expect(() => {
       // eslint-disable-next-line no-new
       new WinningLotto(numbers, bonus);
-    }).toThrow(ERROR.WINNING_NUMBERS.UNMATCHED_QUANTITY);
+    }).toThrow(ERROR.UNMATCHED_QUANTITY(Lotto.NUMBER_QUANTITY));
   });
 
   it.each([
@@ -32,7 +32,7 @@ describe('당첨 로또 테스트', () => {
     expect(() => {
       // eslint-disable-next-line no-new
       new WinningLotto(numbers, bonus);
-    }).toThrow(ERROR.WINNING_NUMBERS.DO_NOT_ENTER_DUPLICATED_NUMBER);
+    }).toThrow(ERROR.DO_NOT_ENTER_DUPLICATED_NUMBER);
   });
 
   it.each([
@@ -43,7 +43,7 @@ describe('당첨 로또 테스트', () => {
     expect(() => {
       // eslint-disable-next-line no-new
       new WinningLotto(numbers, bonus);
-    }).toThrow(ERROR.BONUS.DUPLICATED_WITH_WINNING_NUMBER);
+    }).toThrow(ERROR.DUPLICATED_WITH_WINNING_NUMBER);
   });
 
   it.each([

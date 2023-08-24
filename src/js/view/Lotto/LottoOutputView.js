@@ -10,10 +10,8 @@ class LottoOutputView extends OutputView {
     this._message(numbers);
   }
 
-  prize({ matched, hasBonus, prize, quantity }) {
-    this._message(
-      `${matched}개 일치${hasBonus ? ', 보너스 볼 일치' : ''} (${prize.toLocaleString()}원) - ${quantity}개`
-    );
+  prize({ match, hasBonus, prize, quantity }) {
+    this._message(`${match}개 일치${hasBonus ? ', 보너스 볼 일치' : ''} (${prize.toLocaleString()}원) - ${quantity}개`);
   }
 
   divider() {

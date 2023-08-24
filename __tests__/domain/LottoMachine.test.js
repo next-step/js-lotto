@@ -1,3 +1,4 @@
+import ERROR from '../../src/js/constants/error.js';
 import { LottoMachine } from '../../src/js/domain/index.js';
 
 describe('로또 머신 테스트', () => {
@@ -16,6 +17,6 @@ describe('로또 머신 테스트', () => {
     expect(() => {
       const lottoMachine = new LottoMachine();
       lottoMachine.buy(money);
-    }).toThrow();
+    }).toThrow(ERROR.UNMATCHED_PRICE_PER_SHEET(LottoMachine.PRICE));
   });
 });

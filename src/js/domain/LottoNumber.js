@@ -1,3 +1,5 @@
+import ERROR from '../constants/error';
+
 export class LottoNumber {
   static MIN = 1;
 
@@ -16,7 +18,7 @@ export class LottoNumber {
 
   static #validate(number) {
     if (number < LottoNumber.MIN || number > LottoNumber.MAX || typeof number !== 'number') {
-      throw new Error(`${LottoNumber.MIN} ~ ${LottoNumber.MAX} 사이의 숫자를 입력해주세요!}`);
+      throw new Error(ERROR.BEYOND_NUMBER_RANGE(LottoNumber.MIN, LottoNumber.MAX));
     }
   }
 }

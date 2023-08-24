@@ -25,6 +25,7 @@ class LottoGame {
 
   async setMoney() {
     this.#money = await this.#inputView.purchase();
+
     this.buyLotto();
   }
 
@@ -41,11 +42,19 @@ class LottoGame {
     const bonus = await this.#inputView.bonus();
     this.#winningLotto = new WinningLotto(winningNumbers, bonus);
 
-    await this.withRetry(() => this.checkLottos());
+    await this.withRetry(() => this.setRewards());
   }
 
-  async checkLottos() {
+  async setRewards() {
     this.#rewards = new LottoRewards(this.#lottos, this.#winningLotto);
+
+    this.showResult();
+  }
+
+  showResult() {
+    Object.keys(this.#rewards.prizeTable).forEach((rank) => {
+      this.#outputView.prize(this.#rewards.prizeTable[rank]);
+    });
 
     this.calculateRateOfReturn();
   }

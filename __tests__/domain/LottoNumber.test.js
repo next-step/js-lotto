@@ -1,3 +1,4 @@
+import ERROR from '../../src/js/constants/error.js';
 import { LottoNumber } from '../../src/js/domain/LottoNumber.js';
 
 describe('로또 번호 테스트', () => {
@@ -10,6 +11,6 @@ describe('로또 번호 테스트', () => {
     expect(() => {
       // eslint-disable-next-line no-new
       new LottoNumber(number);
-    }).toThrow(`${LottoNumber.MIN} ~ ${LottoNumber.MAX} 사이의 숫자를 입력해주세요!}`);
+    }).toThrow(ERROR.BEYOND_NUMBER_RANGE(LottoNumber.MIN, LottoNumber.MAX));
   });
 });

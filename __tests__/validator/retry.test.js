@@ -37,7 +37,7 @@ describe('재시작 유효성 테스트', () => {
     ({ code }) => {
       expect(() => {
         checkValidRetry(code);
-      }).toThrow(ERROR.RETRY.INVALID_CODE);
+      }).toThrow(ERROR.INVALID_CODE);
     }
   );
 });

@@ -5,33 +5,34 @@ export class LottoRewards {
     first: {
       match: 6,
       prize: 2_000_000_000,
+      hasBonus: false,
       quantity: 0,
     },
     second: {
       match: 5,
       prize: 30_000_000,
+      hasBonus: true,
       quantity: 0,
     },
     third: {
       match: 5,
       prize: 1_500_000,
+      hasBonus: false,
       quantity: 0,
     },
     fourth: {
       match: 4,
       prize: 50_000,
+      hasBonus: false,
       quantity: 0,
     },
     fifth: {
       match: 3,
       prize: 5_000,
+      hasBonus: false,
       quantity: 0,
     },
   };
-
-  #multiple = 100;
-
-  #rateOfReturnDigit = 1;
 
   #rewards = [];
 
@@ -70,7 +71,7 @@ export class LottoRewards {
     this.#totalPrize = this.#rewards.reduce((acc, { prize }) => acc + prize, 0);
   }
 
-  getRateOfReturn(proceeds) {
-    return Number(((this.#totalPrize / proceeds) * this.#multiple).toFixed(this.#rateOfReturnDigit));
+  getRateOfReturn(proceeds, digit = 1) {
+    return Number(((this.#totalPrize / proceeds) * 100).toFixed(digit));
   }
 }
