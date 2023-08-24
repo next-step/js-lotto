@@ -1,5 +1,5 @@
 import { LOTTO_RETRY_CODE } from '../../constants/lotto-config.js';
-import splitToNumberArray from '../../utils/splitToNumberArray.js';
+import { splitToNumberArray } from '../../utils/index.js';
 import InputView from '../InputView.js';
 
 class LottoInputView extends InputView {

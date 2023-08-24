@@ -1,4 +1,5 @@
 import ERROR from '../constants/error.js';
+import { shuffle } from '../utils/index.js';
 import { Lotto } from './Lotto.js';
 import { LottoNumber } from './LottoNumber.js';
 
@@ -41,7 +42,7 @@ export class LottoMachine {
   }
 
   #shuffle() {
-    this.#balls = this.#balls.sort(() => 0.5 - Math.random());
+    this.#balls = shuffle(this.#balls);
   }
 
   #pickBalls() {

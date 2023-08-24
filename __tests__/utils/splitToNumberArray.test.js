@@ -1,4 +1,4 @@
-import splitToNumberArray from '../../src/js/utils/splitToNumberArray';
+import { splitToNumberArray } from '../../src/js/utils/index.js';
 
 describe('입력값 숫자 배열로 쪼개기 테스트', () => {
   it.each([

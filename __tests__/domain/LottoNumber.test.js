@@ -1,5 +1,5 @@
 import ERROR from '../../src/js/constants/error.js';
-import { LottoNumber } from '../../src/js/domain/LottoNumber.js';
+import { LottoNumber } from '../../src/js/domain/index.js';
 
 describe('로또 번호 테스트', () => {
   it.each([1, 20, 45])('로또 번호는 1~45 사이의 값을 부여받는다.', (number) => {
