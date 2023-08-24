@@ -28,7 +28,7 @@ export class PurchasingPriceUpperLimitError extends RuntimeError {
   static MESSAGE = "한 회차의 구매 금액은 10만원을 넘을 수 없습니다.";
 
   constructor() {
-    super(PurchasingPriceNotIntegerError.MESSAGE);
+    super(PurchasingPriceUpperLimitError.MESSAGE);
   }
 }
 

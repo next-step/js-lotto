@@ -104,8 +104,7 @@
 [feature2] 로또 당첨 여부 확인.
 [ ] 예측 불가능한 부분 분리의 순기능 <-> 배보다 배꼽이 큰가?
 [ ] test code에서 식별자 유효 범위.
-[ ] issueStrategy, Lotto의 중복 체크.
-[ ] Lotto 객체에서도 유효성 검증. issue에서도 유효성 검증.
+[ ] issueStrategy, Lotto의 중복 체크. -> Lotto 객체에서도 유효성 검증. issue에서도 유효성 검증 필요하다고 생각.
 
 # 📍 [phase2] 기능 확장
 
@@ -122,4 +121,5 @@
 ## 🔧 2. 기능별 리팩토링 고려 지점
 
 - [ ] View에서 데이터 타입 변환로직을 Controller로 옯기기.
-- [ ] Test layer와 product layer 분리.
+- [x] Test layer와 product layer 분리.
+- [ ] 누적 수익률 체크.
