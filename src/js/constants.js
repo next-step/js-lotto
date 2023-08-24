@@ -10,3 +10,5 @@ export const LOTTO_PRIZE_MAP = {
   5: 5000,
 };
 Object.freeze(LOTTO_PRIZE_MAP);
+
+export const LOTTO_TICKET_PRICE = 1000;
