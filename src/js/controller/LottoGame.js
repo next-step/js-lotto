@@ -38,7 +38,7 @@ class LottoGame {
   async setWinningLotto() {
     const winningNumbers = splitToNumberArray(await this.#inputView.winningNumbers());
     const bonus = Number(await this.#inputView.bonus());
-    this.#winningLotto = new WinningLotto(new Lotto(winningNumbers), bonus);
+    this.#winningLotto = new WinningLotto(Lotto.of(winningNumbers), bonus);
 
     await this.withRetry(() => this.setRewards());
   }

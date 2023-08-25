@@ -11,7 +11,7 @@ describe('로또 테스트', () => {
     { numbers: [12, 42, 16, 8, 45, 1] },
     { numbers: [32, 42, 16, 23, 9, 3] },
   ])('로또는 여섯개의 숫자로 이루어진 배열을 매개변수로 받으며 그 값을 필드에 소유한다.', ({ numbers }) => {
-    const lotto = new Lotto(numbers);
+    const lotto = Lotto.of(numbers);
 
     expect(lotto.numbers.length).toBe(6);
   });
@@ -23,7 +23,7 @@ describe('로또 테스트', () => {
     { numbers: [12, 42, 16, 8, 45, 1] },
     { numbers: [32, 42, 16, 23, 9, 3] },
   ])('로또는 오름차순으로 정렬된다', ({ numbers }) => {
-    const lotto = new Lotto(numbers);
+    const lotto = Lotto.of(numbers);
     expect(isAscending(lotto.numbers)).toBeTruthy();
   });
 
@@ -32,7 +32,7 @@ describe('로또 테스트', () => {
     ({ numbers }) => {
       expect(() => {
         // eslint-disable-next-line no-new
-        new Lotto(numbers);
+        Lotto.of(numbers);
       }).toThrow(ERROR.UNMATCHED_QUANTITY(Lotto.NUMBER_QUANTITY));
     }
   );
@@ -42,19 +42,19 @@ describe('로또 테스트', () => {
     ({ numbers }) => {
       expect(() => {
         // eslint-disable-next-line no-new
-        new Lotto(numbers);
+        Lotto.of(numbers);
       }).toThrow(ERROR.DO_NOT_ENTER_DUPLICATED_NUMBER);
     }
   );
 
   it.each([1, 2, 3, 4, 5, 6])('로또는 입력받은 번호가 포함되는지 판별할 수 있다.', (number) => {
-    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
+    const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
 
     expect(lotto.match(number)).toBeTruthy();
   });
 
   it.each([1, 2, 3, 4, 5, 6])('로또는 입력받은 번호가 포함되지 않는지 판별할 수 있다.', (number) => {
-    const lotto = new Lotto([11, 12, 13, 14, 15, 16]);
+    const lotto = Lotto.of([11, 12, 13, 14, 15, 16]);
 
     expect(lotto.match(number)).toBeFalsy();
   });

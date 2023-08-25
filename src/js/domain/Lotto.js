@@ -9,12 +9,16 @@ export class Lotto {
   #numbers;
 
   constructor(numbers) {
-    this.#numbers = numbers.map((number) => new LottoNumber(number)).sort((a, b) => a.value - b.value);
     Lotto.#validate(numbers);
+    this.#numbers = numbers.map((number) => new LottoNumber(number)).sort((a, b) => a.value - b.value);
   }
 
   get numbers() {
     return this.#numbers.map(({ value }) => value);
+  }
+
+  static of(numbers) {
+    return new Lotto(numbers);
   }
 
   static #validate(numbers) {

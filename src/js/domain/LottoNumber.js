@@ -5,10 +5,13 @@ export class LottoNumber {
 
   static MAX = 45;
 
+  static #numbers = Object.fromEntries(
+    Array.from({ length: LottoNumber.MAX }, (_, i) => [i + 1, new LottoNumber(i + 1)])
+  );
+
   #value;
 
   constructor(number) {
-    LottoNumber.#validate(number);
     this.#value = number;
   }
 
@@ -16,9 +19,11 @@ export class LottoNumber {
     return this.#value;
   }
 
-  static #validate(number) {
-    if (number < LottoNumber.MIN || number > LottoNumber.MAX || typeof number !== 'number') {
+  static valueOf(number) {
+    const lottoNumber = LottoNumber.#numbers[number];
+    if (!lottoNumber) {
       throw new Error(ERROR.BEYOND_NUMBER_RANGE(LottoNumber.MIN, LottoNumber.MAX));
     }
+    return lottoNumber;
   }
 }

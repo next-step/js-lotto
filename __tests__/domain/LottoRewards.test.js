@@ -8,22 +8,22 @@ describe('로또 상금 목록 테스트', () => {
   it('로또 상금 목록은 로또들의 최종 결과를 반환한다.', () => {
     const bonus = 7;
 
-    const first = new Lotto([1, 2, 3, 4, 5, 6]);
+    const first = Lotto.of([1, 2, 3, 4, 5, 6]);
     const firstQuantity = 2;
 
-    const second = new Lotto([1, 2, 3, 4, 5, bonus]);
+    const second = Lotto.of([1, 2, 3, 4, 5, bonus]);
     const secondQuantity = 4;
 
-    const third = new Lotto([1, 2, 3, 4, 5, 8]);
+    const third = Lotto.of([1, 2, 3, 4, 5, 8]);
     const thirdQuantity = 6;
 
-    const fourth = new Lotto([1, 2, 3, 4, 7, 8]);
+    const fourth = Lotto.of([1, 2, 3, 4, 7, 8]);
     const fourthQuantity = 1;
 
-    const fifth = new Lotto([1, 2, 3, 7, 8, 9]);
+    const fifth = Lotto.of([1, 2, 3, 7, 8, 9]);
     const fifthQuantity = 3;
 
-    const lost = new Lotto([1, 2, 7, 8, 9, 10]);
+    const lost = Lotto.of([1, 2, 7, 8, 9, 10]);
 
     const winningLotto = new WinningLotto(first, bonus);
 
@@ -49,35 +49,35 @@ describe('로또 상금 목록 테스트', () => {
 
   it.each([
     {
-      lottos: [new Lotto([1, 2, 3, 4, 5, 6])],
+      lottos: [Lotto.of([1, 2, 3, 4, 5, 6])],
       proceed: 1_000,
       result: 200000000.0,
     },
     {
       lottos: [
-        new Lotto([1, 2, 3, 8, 9, 10]), // 5등
-        new Lotto([1, 2, 3, 10, 11, 12]), // 5등
-        new Lotto([1, 2, 3, 4, 9, 10]), // 4등
-        new Lotto([11, 12, 13, 14, 15, 16]), // 낙첨 총 수익 60,000원 수익률 = 60,000 / 10,000 = 60
+        Lotto.of([1, 2, 3, 8, 9, 10]), // 5등
+        Lotto.of([1, 2, 3, 10, 11, 12]), // 5등
+        Lotto.of([1, 2, 3, 4, 9, 10]), // 4등
+        Lotto.of([11, 12, 13, 14, 15, 16]), // 낙첨 총 수익 60,000원 수익률 = 60,000 / 10,000 = 60
       ],
       proceed: 10_000,
       result: 600.0,
     },
     {
       lottos: [
-        new Lotto([1, 2, 3, 8, 9, 10]), // 5등
-        new Lotto([1, 2, 3, 10, 11, 12]), // 5등 총 수익 10,000원 수익률 = 10,000 / 30,000 = 33.3
+        Lotto.of([1, 2, 3, 8, 9, 10]), // 5등
+        Lotto.of([1, 2, 3, 10, 11, 12]), // 5등 총 수익 10,000원 수익률 = 10,000 / 30,000 = 33.3
       ],
       proceed: 30_000,
       result: 33.3,
     },
     {
-      lottos: [new Lotto([10, 11, 12, 13, 14, 15])],
+      lottos: [Lotto.of([10, 11, 12, 13, 14, 15])],
       proceed: 1_000,
       result: 0.0,
     },
   ])('수익률을 계산한다.', ({ lottos, result, proceed }) => {
-    const winningLotto = new WinningLotto(new Lotto([1, 2, 3, 4, 5, 6]), 7);
+    const winningLotto = new WinningLotto(Lotto.of([1, 2, 3, 4, 5, 6]), 7);
     const lottoRewards = new LottoRewards(lottos, winningLotto);
     const rateOfReturn = lottoRewards.computeRateOfReturn(proceed);
 

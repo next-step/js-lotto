@@ -15,7 +15,7 @@ export class LottoMachine {
     LottoMachine.#validate(money);
     const sheets = LottoMachine.#calculateSheet(money);
     const lottos = Array.from({ length: sheets }).map(() => {
-      const result = new Lotto(this.#pickBalls());
+      const result = Lotto.of(this.#pickBalls());
       this.#addBalls();
       this.#shuffle();
       return result;

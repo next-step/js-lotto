@@ -9,7 +9,7 @@ describe('당첨 로또 테스트', () => {
   ])('6개의 중복되지 않은 숫자와 보너스를 입력할 시 에러가 발생하지 않는다.', ({ numbers, bonus }) => {
     expect(() => {
       // eslint-disable-next-line no-new
-      new WinningLotto(new Lotto(numbers), bonus);
+      new WinningLotto(Lotto.of(numbers), bonus);
     }).not.toThrow();
   });
 
@@ -20,7 +20,7 @@ describe('당첨 로또 테스트', () => {
   ])('중복된 보너스를 입력할 시 에러가 발생한다.', ({ numbers, bonus }) => {
     expect(() => {
       // eslint-disable-next-line no-new
-      new WinningLotto(new Lotto(numbers), bonus);
+      new WinningLotto(Lotto.of(numbers), bonus);
     }).toThrow(ERROR.DUPLICATED_WITH_WINNING_NUMBER);
   });
 
@@ -29,8 +29,8 @@ describe('당첨 로또 테스트', () => {
     { buy: [1, 2, 3, 4, 5, 6], numbers: [1, 2, 3, 11, 23, 45], matched: 3 },
     { buy: [1, 2, 3, 4, 5, 6], numbers: [40, 41, 42, 43, 44, 45], matched: 0 },
   ])('당첨 로또는 입력된 로또와 몇개가 동일한지 알 수 있다.', ({ buy, numbers, matched }) => {
-    const lotto = new Lotto(buy);
-    const winningLotto = new WinningLotto(new Lotto(numbers), 7);
+    const lotto = Lotto.of(buy);
+    const winningLotto = new WinningLotto(Lotto.of(numbers), 7);
 
     expect(winningLotto.getMatchedCount(lotto)).toBe(matched);
   });
@@ -39,8 +39,8 @@ describe('당첨 로또 테스트', () => {
     { buy: [1, 2, 3, 4, 5, 6], numbers: [1, 2, 3, 4, 5, 10], result: true },
     { buy: [7, 8, 9, 10, 11, 12], numbers: [1, 2, 3, 11, 23, 45], result: false },
   ])('당첨 로또는 입력된 로또가 보너스를 보유하는지 알 수 있다.', ({ buy, numbers, result }) => {
-    const lotto = new Lotto(buy);
-    const winningLotto = new WinningLotto(new Lotto(numbers), 6);
+    const lotto = Lotto.of(buy);
+    const winningLotto = new WinningLotto(Lotto.of(numbers), 6);
 
     expect(winningLotto.hasBonus(lotto)).toEqual(result);
   });
