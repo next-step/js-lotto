@@ -45,3 +45,52 @@ export const DUMMY_INVALID_RANGE_NUMBER_LOTTO_TICKETS = [
   { lottoNumber: '100, 200, 300, 400, 1, 0' },
   { lottoNumber: '41, 42, 43, 44, 45, 46' }
 ];
+
+/** WinningLotto */
+export const DUMMY_WINNING_LOTTO = [
+  { winningLottoNumber: '1,2,3,4,5,6', bonusNumber: 7 },
+  { winningLottoNumber: '4,7,17,18,26,28', bonusNumber: 10 },
+  { winningLottoNumber: '2,4,6,10,39,44', bonusNumber: 29 },
+  { winningLottoNumber: '8,18,26,28,30,38', bonusNumber: 45 },
+  { winningLottoNumber: '1,14,23,24,31,33', bonusNumber: 17 }
+];
+
+export const DUMMY_INCORRECT_WINNING_LOTTO_BY_NOT_ENOUGH_LENGTH = [
+  { winningLottoNumber: '1,2,3,4,5', bonusNumber: 7 },
+  { winningLottoNumber: '4,7,17,18,26', bonusNumber: 10 },
+  { winningLottoNumber: '2,4,6,10,39', bonusNumber: 29 },
+  { winningLottoNumber: '8,18,26,28,30', bonusNumber: 45 },
+  { winningLottoNumber: '1,14,23,24,31', bonusNumber: 17 }
+];
+
+export const DUMMY_INCORRECT_WINNING_LOTTO_BY_NOT_POSITIVE_NUMBER = [
+  { winningLottoNumber: '1,2,3,4,5,99', bonusNumber: 7 },
+  { winningLottoNumber: '-1,-2,0,1,2,3', bonusNumber: 10 },
+  { winningLottoNumber: 'NaN,1,{},2,3,4', bonusNumber: 29 },
+  { winningLottoNumber: '8,18,0,28,30,40', bonusNumber: 45 },
+  { winningLottoNumber: '41,42,43,44,45,46', bonusNumber: 17 }
+];
+
+export const DUMMY_INCORRECT_WINNING_LOTTO_BY_DUPLICATE_NUMBER = [
+  { winningLottoNumber: '1,2,3,4,5,5', bonusNumber: 7 },
+  { winningLottoNumber: '4,7,17,18,26,4', bonusNumber: 10 },
+  { winningLottoNumber: '2,4,6,10,39,10', bonusNumber: 29 },
+  { winningLottoNumber: '8,18,28,28,30,30', bonusNumber: 45 },
+  { winningLottoNumber: '14,14,14,14,14,14', bonusNumber: 17 }
+];
+
+export const DUMMY_INCORRECT_WINNING_LOTTO_BY_DUPLICATE_BONUS_NUMBER = [
+  { winningLottoNumber: '1,2,3,4,5,6', bonusNumber: 6 },
+  { winningLottoNumber: '4,7,17,18,26,28', bonusNumber: 4 },
+  { winningLottoNumber: '2,4,6,10,39,44', bonusNumber: 10 },
+  { winningLottoNumber: '8,18,26,28,30,38', bonusNumber: 8 },
+  { winningLottoNumber: '1,14,23,24,31,33', bonusNumber: 1 }
+];
+
+export const DUMMY_INCORRECT_BONUS_NUMBER = [
+  { winningLottoNumber: '1,2,3,4,5,6', bonusNumber: 46 },
+  { winningLottoNumber: '4,7,17,18,26,28', bonusNumber: 0 },
+  { winningLottoNumber: '2,4,6,10,39,44', bonusNumber: NaN },
+  { winningLottoNumber: '8,18,26,28,30,38', bonusNumber: {} },
+  { winningLottoNumber: '1,14,23,24,31,33', bonusNumber: -1 }
+];
