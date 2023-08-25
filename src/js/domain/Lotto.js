@@ -10,7 +10,7 @@ export class Lotto {
 
   constructor(numbers) {
     Lotto.#validate(numbers);
-    this.#numbers = numbers.map((number) => new LottoNumber(number)).sort((a, b) => a.value - b.value);
+    this.#numbers = numbers.map((number) => LottoNumber.valueOf(number)).sort((a, b) => a.value - b.value);
   }
 
   get numbers() {

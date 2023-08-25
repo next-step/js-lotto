@@ -10,7 +10,7 @@ export class WinningLotto {
   constructor(lotto, bonus) {
     WinningLotto.#validate(lotto, bonus);
     this.#lotto = lotto;
-    this.#bonus = new LottoNumber(bonus);
+    this.#bonus = LottoNumber.valueOf(bonus);
   }
 
   static #validate(lotto, bonus) {
