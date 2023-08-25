@@ -1,6 +1,7 @@
 import { Lotto, LottoMachine, LottoRewards, WinningLotto } from '../domain/index.js';
 import { LottoOutputView } from '../view/Lotto/index.js';
 import { LottoListView } from '../view/Lotto/LottoListView.js';
+import { LottoResultView } from '../view/Lotto/LottoResultView.js';
 import { PurchaseView } from '../view/Lotto/PurchaseView.js';
 import { WinningLottoView } from '../view/Lotto/WinningLottoView.js';
 
@@ -9,19 +10,22 @@ class LottoGame {
     purchaseForm: new PurchaseView(),
     lottoList: new LottoListView(),
     winningLotto: new WinningLottoView(),
+    lottoResult: new LottoResultView(),
   };
 
   #outputView = new LottoOutputView();
 
   #lottoMachine = new LottoMachine();
 
+  #money = 0;
+
   #lottos = [];
 
   #winningLotto = null;
 
-  #isShowNumbers = false;
-
   #rewards;
+
+  #isShowNumbers = false;
 
   constructor() {
     this.bindEvents();
@@ -35,10 +39,13 @@ class LottoGame {
     this.#view.winningLotto.bindWinningLottoSubmitEvent(() => {
       this.withRetry(() => this.setWinningLotto());
     });
+    this.#view.lottoResult.bindModalCloseEvent();
+    this.#view.lottoResult.bindRestartEvent();
   }
 
   buyLotto(money) {
-    this.#lottos = this.#lottoMachine.buy(Number(money.trim()));
+    this.#money = Number(money.trim());
+    this.#lottos = this.#lottoMachine.buy(this.#money);
     this.showLottos(this.#isShowNumbers);
     this.#view.winningLotto.show();
   }
@@ -63,39 +70,25 @@ class LottoGame {
       .filter((number) => number);
     const bonus = Number(this.#view.winningLotto.getBonusNumber());
     this.#winningLotto = new WinningLotto(Lotto.of(winningNumbers.map(Number)), Number(bonus));
+    this.computeRewards();
+    this.computeRateOfReturn();
+    this.showResult();
   }
 
-  // async setRewards() {
-  //   this.#rewards = new LottoRewards(this.#lottos, this.#winningLotto);
+  computeRewards() {
+    this.#rewards = new LottoRewards(this.#lottos, this.#winningLotto);
+    const rankResult = this.#rewards.getRankList();
+    this.#view.lottoResult.setResult(rankResult);
+  }
 
-  //   this.showResult();
-  // }
+  computeRateOfReturn() {
+    const rateOfReturn = this.#rewards.computeRateOfReturn(this.#money);
+    this.#view.lottoResult.setRateOfReturn(rateOfReturn);
+  }
 
-  // showResult() {
-  //   this.#outputView.lottoResult();
-  //   const rankResult = this.#rewards.getRankList();
-
-  //   rankResult.forEach(({ reward, quantity }) => {
-  //     this.#outputView.prize(reward, quantity);
-  //   });
-
-  //   this.calculateRateOfReturn();
-  // }
-
-  // async calculateRateOfReturn() {
-  //   const rateOfReturn = this.#rewards.computeRateOfReturn(this.#money);
-  //   this.#outputView.rateOfReturn(rateOfReturn);
-
-  //   await this.withRetry(() => this.askRetry());
-  // }
-
-  // async askRetry() {
-  //   const retry = await this.#inputView.retry();
-  //   if (!retry) {
-  //     process.exit();
-  //   }
-  //   this.start();
-  // }
+  showResult() {
+    this.#view.lottoResult.show();
+  }
 
   withRetry(action) {
     try {
