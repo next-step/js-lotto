@@ -3,7 +3,7 @@ class OutputView {
 
   #outputError;
 
-  constructor(outputView = console.log, outputError = console.error) {
+  constructor(outputView = console.log, outputError = alert.bind(window)) {
     this.#outputView = outputView;
     this.#outputError = outputError;
   }

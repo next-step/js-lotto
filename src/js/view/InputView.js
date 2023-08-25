@@ -1,11 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
-import { createInterface } from 'node:readline/promises';
-
-const rl = createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
 class InputView {
   #inputView;
 

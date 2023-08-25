@@ -1,9 +1,14 @@
 import { Lotto, LottoMachine, LottoRewards, WinningLotto } from '../domain/index.js';
 import { splitToNumberArray } from '../utils/splitToNumberArray.js';
 import { LottoInputView, LottoOutputView } from '../view/Lotto/index.js';
+import { LottoListView } from '../view/Lotto/LottoListView.js';
+import { PurchaseView } from '../view/Lotto/PurchaseView.js';
 
 class LottoGame {
-  #inputView = new LottoInputView();
+  #view = {
+    purchaseForm: new PurchaseView(),
+    lottoList: new LottoListView(),
+  };
 
   #outputView = new LottoOutputView();
 
@@ -15,72 +20,84 @@ class LottoGame {
 
   #winningLotto = null;
 
+  #isShowNumbers = false;
+
   #rewards;
 
-  async start() {
-    await this.withRetry(() => this.buyLotto());
+  constructor() {
+    this.bindEvents();
   }
 
-  async buyLotto() {
-    this.#money = Number((await this.#inputView.purchase()).trim());
-    this.#lottos = this.#lottoMachine.buy(this.#money);
-
-    this.showLottos();
-  }
-
-  async showLottos() {
-    this.#outputView.buyLottos(this.#lottos.length);
-    this.#lottos.forEach(({ numbers }) => this.#outputView.lotto(numbers));
-
-    await this.withRetry(() => this.setWinningLotto());
-  }
-
-  async setWinningLotto() {
-    const winningNumbers = splitToNumberArray(await this.#inputView.winningNumbers());
-    const bonus = Number(await this.#inputView.bonus());
-    this.#winningLotto = new WinningLotto(Lotto.of(winningNumbers), bonus);
-
-    await this.withRetry(() => this.setRewards());
-  }
-
-  async setRewards() {
-    this.#rewards = new LottoRewards(this.#lottos, this.#winningLotto);
-
-    this.showResult();
-  }
-
-  showResult() {
-    this.#outputView.lottoResult();
-    const rankResult = this.#rewards.getRankList();
-
-    rankResult.forEach(({ reward, quantity }) => {
-      this.#outputView.prize(reward, quantity);
+  bindEvents() {
+    this.#view.purchaseForm.bindPurchaseSubmitEvent((money) => {
+      this.withRetry(() => this.buyLotto(money));
     });
-
-    this.calculateRateOfReturn();
+    this.#view.lottoList.bindToggleEvent(() => this.toggleShowNumbers());
   }
 
-  async calculateRateOfReturn() {
-    const rateOfReturn = this.#rewards.computeRateOfReturn(this.#money);
-    this.#outputView.rateOfReturn(rateOfReturn);
-
-    await this.withRetry(() => this.askRetry());
+  buyLotto(money) {
+    this.#lottos = this.#lottoMachine.buy(Number(money.trim()));
+    this.showLottos(this.#isShowNumbers);
   }
 
-  async askRetry() {
-    const retry = await this.#inputView.retry();
-    if (!retry) {
-      process.exit();
-    }
-    this.start();
+  showLottos(visibleNumbers = false) {
+    this.#view.lottoList.setLottoQuantity(this.#lottos.length);
+    this.#view.lottoList.showLottos(
+      this.#lottos.map(({ numbers }) => numbers),
+      visibleNumbers
+    );
   }
 
-  async withRetry(action) {
+  toggleShowNumbers() {
+    this.#isShowNumbers = !this.#isShowNumbers;
+    this.showLottos(this.#isShowNumbers);
+  }
+
+  // async setWinningLotto() {
+  //   const winningNumbers = splitToNumberArray(await this.#inputView.winningNumbers());
+  //   const bonus = Number(await this.#inputView.bonus());
+  //   this.#winningLotto = new WinningLotto(Lotto.of(winningNumbers), bonus);
+
+  //   await this.withRetry(() => this.setRewards());
+  // }
+
+  // async setRewards() {
+  //   this.#rewards = new LottoRewards(this.#lottos, this.#winningLotto);
+
+  //   this.showResult();
+  // }
+
+  // showResult() {
+  //   this.#outputView.lottoResult();
+  //   const rankResult = this.#rewards.getRankList();
+
+  //   rankResult.forEach(({ reward, quantity }) => {
+  //     this.#outputView.prize(reward, quantity);
+  //   });
+
+  //   this.calculateRateOfReturn();
+  // }
+
+  // async calculateRateOfReturn() {
+  //   const rateOfReturn = this.#rewards.computeRateOfReturn(this.#money);
+  //   this.#outputView.rateOfReturn(rateOfReturn);
+
+  //   await this.withRetry(() => this.askRetry());
+  // }
+
+  // async askRetry() {
+  //   const retry = await this.#inputView.retry();
+  //   if (!retry) {
+  //     process.exit();
+  //   }
+  //   this.start();
+  // }
+
+  withRetry(action) {
     try {
-      await action();
+      action();
     } catch ({ message }) {
       this.#outputView.error(message);
-      await this.withRetry(() => action());
     }
   }
 }

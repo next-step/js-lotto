@@ -8,6 +8,14 @@ body {
   font-size: 16px;
 }
 
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+}
+
 #app {
   max-width: 400px;
   margin: 0 auto;
