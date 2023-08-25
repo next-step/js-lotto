@@ -32,17 +32,20 @@
 ### Controller
 
 [LotteryPlatform] Models와 View 중개자
-[x] View readLine 인터페이스에서 string으로 받은 데이터 적절한 타입 변환 수행.
+[X] View readLine 인터페이스에서 string으로 받은 데이터 적절한 타입 변환 수행.
 
 ## ❓ 기능별 질문 사항
 
 [feature1] 로또 한 장 발행.
-[ ] 단위 테스트의 범위
+[V] 단위 테스트의 범위
 
 [feature2] 로또 당첨 여부 확인.
-[ ] 예측 불가능한 부분 분리의 순기능 <-> 배보다 배꼽이 큰가?
-[ ] test code에서 식별자 유효 범위.
-[ ] issueStrategy, Lotto의 중복 체크. -> Lotto 객체에서도 유효성 검증. issue에서도 유효성 검증 필요하다고 생각.
+[V] 예측 불가능한 부분 분리의 순기능 <-> 배보다 배꼽이 큰가?
+[V] test code에서 식별자 유효 범위.
+[V] issueStrategy, Lotto의 중복 체크. -> Lotto 객체에서도 유효성 검증. issue에서도 유효성 검증 필요하다고 생각.
+
+[Controller] LotteryPlatform.
+[X] View readLine 인터페이스에서 string으로 받은 데이터 변환 위치 적절한지.
 
 ## 🤔 개선하고 싶은 부분
 

@@ -1,7 +1,7 @@
 import createMatchChecker from "../src/js/domain/MatchChecker/createMatchChecker";
 import WinningLotto from "../src/js/domain/MatchChecker/WinningLotto";
 import Lotto from "../src/js/domain/Lotto";
-import { WinningLottoNotDefinedError } from "../src/js/domain/MatchChecker/errors";
+import { WinningLottoNotSetError } from "../src/js/domain/MatchChecker/errors";
 
 const testCases = [
   // winningLotto: [1, 2, 3, 4, 5, 6], 7
@@ -75,11 +75,11 @@ const testCases = [
 
 describe("당첨 로또 설정 테스트", () => {
   const { setWinningLotto } = createMatchChecker();
-
   it("당첨 로또 생성 함수를 1번 호출한다.", () => {
     const spyWinningLottoFrom = jest.spyOn(WinningLotto, "from");
     setWinningLotto([1, 2, 3, 4, 5, 6], 7);
     expect(spyWinningLottoFrom).toBeCalledTimes(1);
+    // jest.clearAllMocks();
   });
 
   it("당첨 번호와 보너스 번호를 인자로 전달한다.", () => {
@@ -95,14 +95,12 @@ describe("로또 당첨 여부 확인 테스트", () => {
     const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
 
     it("당첨 로또 설정되어 있지 않으면, 에러를 발생시킨다.", () => {
-      expect(() => setMatchResult(lotto)).toThrow(WinningLottoNotDefinedError);
+      expect(() => setMatchResult(lotto)).toThrow(WinningLottoNotSetError);
     });
 
     it("당첨 로또가 설정되어 있으면 에러를 발생시키지 않는다.", () => {
       setWinningLotto([1, 2, 3, 4, 5, 6], 7);
-      expect(() => setMatchResult(lotto)).not.toThrow(
-        WinningLottoNotDefinedError
-      );
+      expect(() => setMatchResult(lotto)).not.toThrow(WinningLottoNotSetError);
     });
   });
 
