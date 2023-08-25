@@ -17,29 +17,29 @@ const createLotteryPlatform = () => {
   const { setWinningLotto, checkMatch } = createMatchChecker();
   const { getSummarizedInfo } = createResultChecker();
 
-  let lottos = [];
-
-  function getGameResult() {
+  function getGameResult(lottos) {
     const { statistics, revenuePercentage } = getSummarizedInfo(lottos);
     logLottoResult(statistics, revenuePercentage);
   }
 
   async function run() {
     try {
+      let lottos = [];
+
       await getPurchasingPriceFromView((userInput) => {
         const purchasingPrice = convertToMatchingDataType(userInput);
         lottos = issueLottosWith(purchasingPrice);
         lottos.forEach((lotto) => logLottoNumbers(lotto.getLottoNumbers()));
       });
 
-      await getWinningLottoNumbersFromView((commaSeperatedNumbers, number) => {
-        const winningNumbers = convertToArray(commaSeperatedNumbers);
+      await getWinningLottoNumbersFromView((commaSeparatedNumbers, number) => {
+        const winningNumbers = convertToArray(commaSeparatedNumbers);
         const bonusNumber = convertToMatchingDataType(number);
         setWinningLotto(winningNumbers, bonusNumber);
         lottos.forEach(checkMatch);
       });
 
-      getGameResult();
+      getGameResult(lottos);
     } catch (error) {
       logErrorMessage(error.message);
     } finally {
