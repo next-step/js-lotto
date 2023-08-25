@@ -1,9 +1,5 @@
 import { Lotto, LottoMachine, LottoRewards, WinningLotto } from '../domain/index.js';
-import { LottoOutputView } from '../view/Lotto/index.js';
-import { LottoListView } from '../view/Lotto/LottoListView.js';
-import { LottoResultView } from '../view/Lotto/LottoResultView.js';
-import { PurchaseView } from '../view/Lotto/PurchaseView.js';
-import { WinningLottoView } from '../view/Lotto/WinningLottoView.js';
+import { LottoListView, LottoResultView, PurchaseView, WinningLottoView } from '../view/index.js';
 
 class LottoGame {
   #view = {
@@ -13,22 +9,32 @@ class LottoGame {
     lottoResult: new LottoResultView(),
   };
 
-  #outputView = new LottoOutputView();
+  #errorView = alert.bind(window);
 
-  #lottoMachine = new LottoMachine();
+  #lottoMachine;
 
-  #money = 0;
+  #money;
 
-  #lottos = [];
+  #lottos;
 
-  #winningLotto = null;
+  #winningLotto;
 
   #rewards;
 
-  #isShowNumbers = false;
+  #isShowNumbers;
 
   constructor() {
+    this.init();
     this.bindEvents();
+  }
+
+  init() {
+    this.#lottoMachine = new LottoMachine();
+    this.#money = 0;
+    this.#lottos = [];
+    this.#winningLotto = null;
+    this.#rewards = null;
+    this.#isShowNumbers = false;
   }
 
   bindEvents() {
@@ -40,7 +46,7 @@ class LottoGame {
       this.withRetry(() => this.setWinningLotto());
     });
     this.#view.lottoResult.bindModalCloseEvent();
-    this.#view.lottoResult.bindRestartEvent();
+    this.#view.lottoResult.bindRestartEvent(() => this.restart());
   }
 
   buyLotto(money) {
@@ -56,6 +62,7 @@ class LottoGame {
       this.#lottos.map(({ numbers }) => numbers),
       visibleNumbers
     );
+    this.#view.lottoList.show();
   }
 
   toggleShowNumbers() {
@@ -90,11 +97,18 @@ class LottoGame {
     this.#view.lottoResult.show();
   }
 
+  restart() {
+    Object.values(this.#view).forEach((view) => {
+      view.reset();
+    });
+    this.init();
+  }
+
   withRetry(action) {
     try {
       action();
     } catch ({ message }) {
-      this.#outputView.error(message);
+      this.#errorView(message);
     }
   }
 }

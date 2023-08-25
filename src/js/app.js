@@ -1,8 +1,8 @@
 import LottoGame from './controller/LottoGame.js';
 
 const app = () => {
-  const lottoGame = new LottoGame();
-  lottoGame.start();
+  // eslint-disable-next-line no-new
+  new LottoGame();
 };
 
 export default app;

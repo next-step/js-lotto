@@ -1,6 +1,6 @@
-import { EVENT, SELECTOR } from '../../constants/dom';
-import { $, $All } from '../../utils';
-import { View } from '../View';
+import { EVENT, SELECTOR } from '../constants/dom.js';
+import { $, $All } from '../utils/index.js';
+import { View } from './View.js';
 
 export class WinningLottoView extends View {
   $winningNumbers;
@@ -30,5 +30,14 @@ export class WinningLottoView extends View {
 
   getBonusNumber() {
     return this.$bonus.value;
+  }
+
+  reset() {
+    this.hide();
+    this.$winningNumbers.forEach((input) => {
+      // eslint-disable-next-line no-param-reassign
+      input.value = '';
+    });
+    this.$bonus.value = '';
   }
 }

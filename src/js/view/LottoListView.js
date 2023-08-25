@@ -1,6 +1,6 @@
-import { EVENT, SELECTOR } from '../../constants/dom.js';
-import { $ } from '../../utils/index.js';
-import { View } from '../View.js';
+import { EVENT, SELECTOR } from '../constants/dom.js';
+import { $ } from '../utils/querySelector.js';
+import { View } from './View.js';
 
 export class LottoListView extends View {
   $quantity;
@@ -25,7 +25,6 @@ export class LottoListView extends View {
   }
 
   setLottoQuantity(quantity) {
-    this.show();
     this.$quantity.textContent = `총 ${quantity}개를 구매하였습니다`;
   }
 
@@ -44,7 +43,9 @@ export class LottoListView extends View {
   }
 
   reset() {
+    this.hide();
     this.setLottoQuantity(0);
     this.$boughtLottos.innerHTML = '';
+    this.$toggle.checked = false;
   }
 }

@@ -1,6 +1,6 @@
-import { EVENT, SELECTOR } from '../../constants/dom';
-import { $ } from '../../utils';
-import { View } from '../View.js';
+import { EVENT, SELECTOR } from '../constants/dom.js';
+import { $ } from '../utils/index.js';
+import { View } from './View.js';
 
 export class LottoResultView extends View {
   $resultTableBody;
@@ -23,6 +23,14 @@ export class LottoResultView extends View {
     this.$restart = $(SELECTOR.RESTART);
   }
 
+  show() {
+    this.$element.classList.add('open');
+  }
+
+  hide() {
+    this.$element.classList.remove('open');
+  }
+
   bindModalCloseEvent() {
     this.$element.addEventListener(EVENT.CLICK, (e) => {
       if (e.target.classList.contains(SELECTOR.RESULT_MODAL.replace('.', ''))) {
@@ -37,14 +45,6 @@ export class LottoResultView extends View {
       this.hide();
       handler();
     });
-  }
-
-  show() {
-    this.$element.classList.add('open');
-  }
-
-  hide() {
-    this.$element.classList.remove('open');
   }
 
   setResult(result) {
@@ -63,5 +63,11 @@ export class LottoResultView extends View {
 
   setRateOfReturn(value) {
     this.$rateOfReturn.textContent = `당신의 총 수익률은 ${value}%입니다.`;
+  }
+
+  reset() {
+    this.hide();
+    this.$resultTableBody.innerHTML = '';
+    this.$rateOfReturn.innerHTML = '';
   }
 }

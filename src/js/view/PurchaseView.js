@@ -1,6 +1,6 @@
-import { EVENT, SELECTOR } from '../../constants/dom.js';
-import { $ } from '../../utils/index.js';
-import { View } from '../View.js';
+import { EVENT, SELECTOR } from '../constants/dom.js';
+import { $ } from '../utils/index.js';
+import { View } from './View.js';
 
 export class PurchaseView extends View {
   $input;
@@ -18,5 +18,9 @@ export class PurchaseView extends View {
       e.preventDefault();
       handler(this.$input.value);
     });
+  }
+
+  reset() {
+    this.$input.value = '';
   }
 }
