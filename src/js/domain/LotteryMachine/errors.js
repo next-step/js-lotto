@@ -42,7 +42,7 @@ export class IssueStrategyIsAbstractClassError extends RuntimeError {
 
 export class GetNumberNotImplementedError extends RuntimeError {
   static MESSAGE =
-    "IssueStrategy를 상속하는 클래스는 getNumber()를 구현해야합니다.";
+    "IssueStrategy를 상속하는 클래스는 _getNumber()를 구현해야합니다.";
 
   constructor() {
     super(GetNumberNotImplementedError.MESSAGE);

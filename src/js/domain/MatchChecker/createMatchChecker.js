@@ -1,5 +1,5 @@
 import WinningLotto from "./WinningLotto.js";
-import { WinningLottoNotDefinedError } from "./errors.js";
+import { WinningLottoNotSetError } from "./errors.js";
 
 const createMatchChecker = () => {
   let winningLotto = null;
@@ -9,7 +9,7 @@ const createMatchChecker = () => {
     winningLotto = WinningLotto.from(winningNumbers, bonusNumber);
   }
 
-  function checkMatchCount(lotto) {
+  function setMatchCount(lotto) {
     const winningNumbers = winningLotto.getLottoNumbers();
     const lottoNumbers = lotto.getLottoNumbers();
 
@@ -23,7 +23,7 @@ const createMatchChecker = () => {
     lotto.setMatchCount(matchCount);
   }
 
-  function checkIsBonusMatch(lotto) {
+  function setIsBonusMatch(lotto) {
     const bonusNumber = winningLotto.getBonusNumber();
     const lottoNumbers = lotto.getLottoNumbers();
 
@@ -32,25 +32,25 @@ const createMatchChecker = () => {
     lotto.setIsBonusMatch(isMatch);
   }
 
-  function checkWinningLottoDefined() {
-    if (!winningLotto) throw new WinningLottoNotDefinedError();
+  function isWinningLottoSet() {
+    if (!winningLotto) throw new WinningLottoNotSetError();
   }
 
-  function checkMatch(lotto) {
-    checkWinningLottoDefined();
+  function setMatchResult(lotto) {
+    isWinningLottoSet();
 
-    checkMatchCount(lotto);
+    setMatchCount(lotto);
 
     const { matchCount } = lotto.getMatchResult();
 
     if (matchCount === CHECK_BONUS_COUNT) {
-      checkIsBonusMatch(lotto);
+      setIsBonusMatch(lotto);
     }
   }
 
   return {
     setWinningLotto,
-    checkMatch,
+    setMatchResult,
   };
 };
 

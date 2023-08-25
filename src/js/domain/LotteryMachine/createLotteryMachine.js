@@ -11,18 +11,6 @@ const createLotteryMachine = (issueStrategy = new RandomIssueStrategy()) => {
   const LOTTO_PRICE = 1_000;
   const PURCHASING_UPPER_LIMIT = 100_000;
 
-  function issueLottosWith(purchasingPrice) {
-    validateInput(purchasingPrice);
-
-    const lottos = [];
-    let maximumPurchaseCount = Math.floor(purchasingPrice / LOTTO_PRICE);
-    while (maximumPurchaseCount--) {
-      lottos.push(issueLotto());
-    }
-
-    return lottos;
-  }
-
   function validateInput(purchasingPrice) {
     if (typeof purchasingPrice !== "number")
       throw new PurchasingPriceNotNumberError();
@@ -36,6 +24,18 @@ const createLotteryMachine = (issueStrategy = new RandomIssueStrategy()) => {
   function issueLotto() {
     const lottoNumbers = issueStrategy.getLottoNumbers();
     return Lotto.of(lottoNumbers);
+  }
+
+  function issueLottosWith(purchasingPrice) {
+    validateInput(purchasingPrice);
+
+    const lottos = [];
+    let maximumPurchaseCount = Math.floor(purchasingPrice / LOTTO_PRICE);
+    while (maximumPurchaseCount--) {
+      lottos.push(issueLotto());
+    }
+
+    return lottos;
   }
 
   return {

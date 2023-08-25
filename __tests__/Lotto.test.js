@@ -98,6 +98,7 @@ describe("로또 객체 생성 테스트", () => {
     it("Lotto 인스턴스를 반환한다.", () => {
       const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
       expect(lotto).toBeInstanceOf(Lotto);
+      expect(lotto.getLottoNumbers()).toEqual([1, 2, 3, 4, 5, 6]);
     });
   });
 
@@ -105,6 +106,7 @@ describe("로또 객체 생성 테스트", () => {
     it("Lotto 인스턴스를 반환한다.", () => {
       const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
       expect(lotto).toBeInstanceOf(Lotto);
+      expect(lotto.getLottoNumbers()).toEqual([1, 2, 3, 4, 5, 6]);
     });
   });
 });
@@ -118,7 +120,7 @@ describe("getLottoNumbers() 테스트", () => {
 
 describe("getMatchResult() 테스트", () => {
   const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
-  const { setWinningLotto, checkMatch } = createMatchChecker();
+  const { setWinningLotto, setMatchResult } = createMatchChecker();
 
   it("로또 매치 결과가 설정되지 않은 경우, 에러를 발생시킨다.", () => {
     expect(() => lotto.getMatchResult()).toThrow(LottoMatchResultNotSetError);
@@ -127,7 +129,7 @@ describe("getMatchResult() 테스트", () => {
   setWinningLotto([1, 2, 3, 4, 5, 6], 7);
 
   it("로또 매치 결과가 설정된 경우, 에러를 발생시키지 않는다.", () => {
-    checkMatch(lotto);
+    setMatchResult(lotto);
     expect(() => lotto.getMatchResult()).not.toThrow();
   });
 
@@ -210,7 +212,7 @@ describe("getMatchResult() 테스트", () => {
         isBonusMatch: expectedIsBonusMatch,
       }) => {
         const lotto = Lotto.of(lottoNumbers);
-        checkMatch(lotto);
+        setMatchResult(lotto);
         const { matchCount, isBonusMatch } = lotto.getMatchResult();
         expect(matchCount).toBe(expectedMatchCount);
         expect(isBonusMatch).toBe(expectedIsBonusMatch);

@@ -4,7 +4,7 @@ import createResultChecker from "../src/js/domain/ResultChecker/createResultChec
 
 describe("getSummarizedInfo() 테스트", () => {
   describe("올바른 요약 당첨 통계와 누적 수익률을 반환한다. (winningLotto: [1, 2, 3, 4, 5, 6], 7)", () => {
-    const { setWinningLotto, checkMatch } = createMatchChecker();
+    const { setWinningLotto, setMatchResult } = createMatchChecker();
     const { getSummarizedInfo } = createResultChecker();
     setWinningLotto([1, 2, 3, 4, 5, 6], 7);
 
@@ -98,7 +98,7 @@ describe("getSummarizedInfo() 테스트", () => {
           percentage: expectedPercentage,
         }) => {
           const lotto = Lotto.of(lottoNumbers);
-          checkMatch(lotto);
+          setMatchResult(lotto);
 
           const { statistics, revenuePercentage } = getSummarizedInfo([lotto]);
 
@@ -122,7 +122,7 @@ describe("getSummarizedInfo() 테스트", () => {
         "lotto: $lotto revenuePercentage: 0%",
         ({ lotto: lottoNumbers }) => {
           const lotto = Lotto.of(lottoNumbers);
-          checkMatch(lotto);
+          setMatchResult(lotto);
 
           const { statistics, revenuePercentage } = getSummarizedInfo([lotto]);
 
@@ -359,7 +359,7 @@ describe("getSummarizedInfo() 테스트", () => {
             Lotto.of(lottoNumbers)
           );
 
-          lottos.map(checkMatch);
+          lottos.map(setMatchResult);
 
           const { statistics, revenuePercentage } = getSummarizedInfo(lottos);
 

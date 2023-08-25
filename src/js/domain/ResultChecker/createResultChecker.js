@@ -1,53 +1,62 @@
 import createRevenueCalculator from "./createRevenueCalculator.js";
 
 const createResultChecker = () => {
+  const RANK = Object.freeze({
+    FIRST: 1,
+    SECOND: 2,
+    THIRD: 3,
+    FOURTH: 4,
+    FIFTH: 5,
+    NONE: 6,
+  });
+
+  const PRIZE = Object.freeze({
+    [RANK.FIRST]: 2_000_000_000,
+    [RANK.SECOND]: 30_000_000,
+    [RANK.THIRD]: 1_500_000,
+    [RANK.FOURTH]: 50_000,
+    [RANK.FIFTH]: 5_000,
+  });
+
+  const MATCH_COUNT = Object.freeze({
+    [RANK.FIRST]: 6,
+    [RANK.SECOND]: 5,
+    [RANK.THIRD]: 5,
+    [RANK.FOURTH]: 4,
+    [RANK.FIFTH]: 3,
+  });
+
+  const LOWEST_MATCHING_COUNT = 3;
+
   const { getRevenuePercentage } = createRevenueCalculator();
 
   function getRank(matchCount, isBonusMatch) {
     switch (matchCount) {
       case 6:
-        return 1;
+        return RANK.FIRST;
       case 5:
-        if (isBonusMatch) return 2;
-        return 3;
+        if (isBonusMatch) return RANK.SECOND;
+        return RANK.THIRD;
       case 4:
-        return 4;
+        return RANK.FOURTH;
       case 3:
-        return 5;
+        return RANK.FIFTH;
       default:
-        return 6;
+        return RANK.NONE;
     }
   }
 
   function getStatistics(lottos) {
-    const PRIZE = Object.freeze({
-      1: 2_000_000_000,
-      2: 30_000_000,
-      3: 1_500_000,
-      4: 50_000,
-      5: 5_000,
-    });
-
-    const MATCH_COUNT = Object.freeze({
-      1: 6,
-      2: 5,
-      3: 5,
-      4: 4,
-      5: 3,
-    });
-
-    const LOWEST_MATCHING_COUNT = 3;
-
     const winningLottos = lottos.filter(
       (lotto) => lotto.getMatchResult().matchCount >= LOWEST_MATCHING_COUNT
     );
 
     const rankCountMap = new Map([
-      [1, 0],
-      [2, 0],
-      [3, 0],
-      [4, 0],
-      [5, 0],
+      [RANK.FIRST, 0],
+      [RANK.SECOND, 0],
+      [RANK.THIRD, 0],
+      [RANK.FOURTH, 0],
+      [RANK.FIFTH, 0],
     ]);
 
     winningLottos.forEach((lotto) => {
@@ -58,7 +67,8 @@ const createResultChecker = () => {
 
     const statistics = [];
     for (const [rank, count] of rankCountMap.entries()) {
-      const isBonusMatch = rank === 2 ? true : rank === 3 ? false : null;
+      const isBonusMatch =
+        rank === RANK.SECOND ? true : rank === RANK.THIRD ? false : null;
 
       statistics.push({
         matchCount: MATCH_COUNT[rank],

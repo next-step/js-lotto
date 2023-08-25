@@ -45,7 +45,7 @@ export default class FixedIssueStrategy extends IssueStrategy {
       throw new FixedNumberElementDuplicatedError();
   }
 
-  getNumber() {
+  _getNumber() {
     return this.#fixedNumbers.shift();
   }
 }

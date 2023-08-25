@@ -11,31 +11,32 @@ export default class WinningLotto extends Lotto {
   static LOWER_BOUND = 1;
   static UPPER_BOUND = 45;
 
-  static from(numbers, bonusNumber) {
-    return new WinningLotto(numbers, bonusNumber);
+  static from(winningNumbers, bonusNumber) {
+    return new WinningLotto(winningNumbers, bonusNumber);
   }
 
-  constructor(numbers, bonusNumber) {
-    super(numbers);
+  constructor(winningNumbers, bonusNumber) {
+    super(winningNumbers);
     this.#validateBonusNumber(bonusNumber);
     this.#bonusNumber = bonusNumber;
   }
 
-  #isDuplicateBonusNumber(number) {
+  #isDuplicateBonusNumber(bonusNumber) {
     const winningNumbers = this.getLottoNumbers();
-    return winningNumbers.includes(number);
+    return winningNumbers.includes(bonusNumber);
   }
 
-  #isOutOfRange(number) {
+  #isOutOfRange(bonusNumber) {
     return (
-      number < WinningLotto.LOWER_BOUND || number > WinningLotto.UPPER_BOUND
+      bonusNumber < WinningLotto.LOWER_BOUND ||
+      bonusNumber > WinningLotto.UPPER_BOUND
     );
   }
 
-  #validateBonusNumber(number) {
-    if (typeof number !== "number") throw new BonusNumberNotNumberError();
-    if (this.#isOutOfRange(number)) throw new BonusNumberOutOfRangeError();
-    if (this.#isDuplicateBonusNumber(number))
+  #validateBonusNumber(bonusNumber) {
+    if (typeof bonusNumber !== "number") throw new BonusNumberNotNumberError();
+    if (this.#isOutOfRange(bonusNumber)) throw new BonusNumberOutOfRangeError();
+    if (this.#isDuplicateBonusNumber(bonusNumber))
       throw new BonusNumberDuplicatedError();
   }
 

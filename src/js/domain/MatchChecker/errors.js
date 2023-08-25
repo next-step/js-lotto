@@ -24,10 +24,10 @@ export class BonusNumberDuplicatedError extends RuntimeError {
   }
 }
 
-export class WinningLottoNotDefinedError extends RuntimeError {
+export class WinningLottoNotSetError extends RuntimeError {
   static MESSAGE = "당첨 로또가 설정되지 않았습니다.";
 
   constructor() {
-    super(WinningLottoNotDefinedError.MESSAGE);
+    super(WinningLottoNotSetError.MESSAGE);
   }
 }

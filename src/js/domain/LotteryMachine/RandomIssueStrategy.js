@@ -13,7 +13,7 @@ export default class RandomIssueStrategy extends IssueStrategy {
     this.#upperBound = upperBound;
   }
 
-  getNumber() {
+  _getNumber() {
     return Math.floor(Math.random() * this.#upperBound) + this.#lowerBound;
   }
 }

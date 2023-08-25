@@ -14,7 +14,7 @@ const createLotteryPlatform = () => {
     closeView,
   } = createView();
   const { issueLottosWith } = createLotteryMachine();
-  const { setWinningLotto, checkMatch } = createMatchChecker();
+  const { setWinningLotto, setMatchResult } = createMatchChecker();
   const { getSummarizedInfo } = createResultChecker();
 
   function getGameResult(lottos) {
@@ -36,7 +36,7 @@ const createLotteryPlatform = () => {
         const winningNumbers = convertToArray(commaSeparatedNumbers);
         const bonusNumber = convertToMatchingDataType(number);
         setWinningLotto(winningNumbers, bonusNumber);
-        lottos.forEach(checkMatch);
+        lottos.forEach(setMatchResult);
       });
 
       getGameResult(lottos);

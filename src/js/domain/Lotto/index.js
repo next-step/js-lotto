@@ -26,7 +26,7 @@ export default class Lotto {
     this.#isBonusMatch = null;
   }
 
-  #hasNonNumericElement(numbers) {
+  #hasNonNumberElement(numbers) {
     return numbers.some((number) => typeof number !== "number");
   }
 
@@ -45,7 +45,7 @@ export default class Lotto {
   #validateLottoNumbers(numbers) {
     if (!Array.isArray(numbers)) throw new LottoNumbersNotArrayError();
     if (numbers.length !== 6) throw new LottoNumbersLengthNotSixError();
-    if (this.#hasNonNumericElement(numbers))
+    if (this.#hasNonNumberElement(numbers))
       throw new LottoNumbersElementNotNumberError();
     if (this.#hasOutOfRangeElement(numbers))
       throw new LottoNumbersElementOutOfRangeError();
@@ -57,8 +57,12 @@ export default class Lotto {
     return this.#lottoNumbers;
   }
 
-  getMatchResult() {
+  #isMatchCountSet() {
     if (this.#matchCount === null) throw new LottoMatchResultNotSetError();
+  }
+
+  getMatchResult() {
+    this.#isMatchCountSet();
 
     return {
       matchCount: this.#matchCount,
@@ -66,11 +70,11 @@ export default class Lotto {
     };
   }
 
-  setMatchCount(count) {
-    this.#matchCount = count;
+  setMatchCount(matchCount) {
+    this.#matchCount = matchCount;
   }
 
-  setIsBonusMatch(isMatch) {
-    this.#isBonusMatch = isMatch;
+  setIsBonusMatch(isBonusMatch) {
+    this.#isBonusMatch = isBonusMatch;
   }
 }

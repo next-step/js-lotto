@@ -14,7 +14,7 @@ export default class IssueStrategy {
     }
   }
 
-  getNumber() {
+  _getNumber() {
     throw new GetNumberNotImplementedError();
   }
 
@@ -22,7 +22,7 @@ export default class IssueStrategy {
     const lottoNumbers = new Set();
 
     while (lottoNumbers.size < IssueStrategy.LOTTO_DIGITS) {
-      lottoNumbers.add(this.getNumber());
+      lottoNumbers.add(this._getNumber());
     }
 
     return Array.from(lottoNumbers);
