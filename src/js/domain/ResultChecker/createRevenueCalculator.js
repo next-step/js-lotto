@@ -4,11 +4,15 @@ import {
 } from "./errors.js";
 
 const createRevenueCalculator = () => {
-  const LOWER_DECIMAL_PLACE = 2;
   const LOTTO_PRICE = 1_000;
 
+  function roundToTwoDecimalPlaces(number) {
+    return Math.round(number * 100) / 100;
+  }
+
   function toPercent(number) {
-    return number.toFixed(LOWER_DECIMAL_PLACE);
+    const percentage = number * 100;
+    return roundToTwoDecimalPlaces(percentage);
   }
 
   function validatePurchased(purchased) {

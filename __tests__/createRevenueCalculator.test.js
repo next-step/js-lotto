@@ -32,23 +32,23 @@ describe("수익률 계산 테스트", () => {
   });
 
   describe("getRevenuePercentage() 테스트", () => {
-    it("미당첨 시, 0.00%를 반환한다.", () => {
-      expect(getRevenuePercentage(0, 1_000)).toBe("0.00%");
+    it("미당첨 시, 0%를 반환한다.", () => {
+      expect(getRevenuePercentage(0, 1_000)).toBe("0%");
     });
 
     describe("올바른 수익률을 반환한다. (purchased: 1000)", () => {
       const testCases = [
-        { revenue: 2_000_000_000, percentage: 2_000_000 },
-        { revenue: 30_000_000, percentage: 30_000 },
-        { revenue: 1_500_000, percentage: 1_500 },
-        { revenue: 50_000, percentage: 50 },
-        { revenue: 5_000, percentage: 5 },
+        { revenue: 2_000_000_000, percentage: 200_000_000 },
+        { revenue: 30_000_000, percentage: 3_000_000 },
+        { revenue: 1_500_000, percentage: 150_000 },
+        { revenue: 50_000, percentage: 5_000 },
+        { revenue: 5_000, percentage: 500 },
       ];
       it.each(testCases)(
         "누적 수익: $revenue, 수익률: $percentage%",
         ({ revenue, percentage: expectedPercentage }) => {
           expect(getRevenuePercentage(revenue, 1_000)).toBe(
-            `${expectedPercentage}.00%`
+            `${expectedPercentage}%`
           );
         }
       );

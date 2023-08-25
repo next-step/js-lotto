@@ -34,7 +34,7 @@ describe("getSummarizedInfo() 테스트", () => {
             { matchCount: 4, isBonusMatch: null, prize: 50_000, lottoCount: 0 },
             { matchCount: 3, isBonusMatch: null, prize: 5_000, lottoCount: 0 },
           ],
-          percentage: 2_000_000,
+          percentage: 200_000_000,
         },
         {
           lotto: [1, 2, 3, 4, 5, 7],
@@ -60,7 +60,7 @@ describe("getSummarizedInfo() 테스트", () => {
             { matchCount: 4, isBonusMatch: null, prize: 50_000, lottoCount: 0 },
             { matchCount: 3, isBonusMatch: null, prize: 5_000, lottoCount: 0 },
           ],
-          percentage: 30_000,
+          percentage: 3_000_000,
         },
         {
           lotto: [1, 2, 3, 4, 5, 16],
@@ -86,7 +86,7 @@ describe("getSummarizedInfo() 테스트", () => {
             { matchCount: 4, isBonusMatch: null, prize: 50_000, lottoCount: 0 },
             { matchCount: 3, isBonusMatch: null, prize: 5_000, lottoCount: 0 },
           ],
-          percentage: 1_500,
+          percentage: 150_000,
         },
       ];
 
@@ -103,7 +103,7 @@ describe("getSummarizedInfo() 테스트", () => {
           const { statistics, revenuePercentage } = getSummarizedInfo([lotto]);
 
           expect(statistics).toEqual(expectedStatistics);
-          expect(revenuePercentage).toBe(`${expectedPercentage}.00%`);
+          expect(revenuePercentage).toBe(`${expectedPercentage}%`);
         }
       );
     });
@@ -119,7 +119,7 @@ describe("getSummarizedInfo() 테스트", () => {
       ];
 
       it.each(nonWinningTestCases)(
-        "lotto: $lotto revenuePercentage: 0.00%",
+        "lotto: $lotto revenuePercentage: 0%",
         ({ lotto: lottoNumbers }) => {
           const lotto = Lotto.of(lottoNumbers);
           checkMatch(lotto);
@@ -148,7 +148,7 @@ describe("getSummarizedInfo() 테스트", () => {
             { matchCount: 4, isBonusMatch: null, prize: 50_000, lottoCount: 0 },
             { matchCount: 3, isBonusMatch: null, prize: 5_000, lottoCount: 0 },
           ]);
-          expect(revenuePercentage).toBe("0.00%");
+          expect(revenuePercentage).toBe("0%");
         }
       );
     });
@@ -156,7 +156,7 @@ describe("getSummarizedInfo() 테스트", () => {
     describe("당첨된 로또 여러 개와 당첨되지 않은 로또 여러 개", () => {
       const testCases = [
         {
-          lottoNumbers: [
+          lottos: [
             [1, 2, 3, 4, 5, 6],
             [1, 2, 3, 4, 5, 7],
             [1, 2, 3, 4, 5, 16],
@@ -193,10 +193,10 @@ describe("getSummarizedInfo() 테스트", () => {
             { matchCount: 4, isBonusMatch: null, prize: 50_000, lottoCount: 2 },
             { matchCount: 3, isBonusMatch: null, prize: 5_000, lottoCount: 2 },
           ],
-          percentage: "156277.69%",
+          percentage: 15_627_769.23,
         },
         {
-          lottoNumbers: [
+          lottos: [
             [1, 2, 3, 4, 15, 16],
             [1, 2, 3, 4, 15, 16],
             [1, 2, 3, 4, 15, 7],
@@ -231,10 +231,10 @@ describe("getSummarizedInfo() 테스트", () => {
             { matchCount: 4, isBonusMatch: null, prize: 50_000, lottoCount: 6 },
             { matchCount: 3, isBonusMatch: null, prize: 5_000, lottoCount: 0 },
           ],
-          percentage: "27.27%",
+          percentage: 2_727.27,
         },
         {
-          lottoNumbers: [
+          lottos: [
             [1, 2, 3, 4, 15, 7],
             [1, 2, 3, 14, 15, 7],
             [11, 12, 13, 14, 15, 7],
@@ -269,10 +269,10 @@ describe("getSummarizedInfo() 테스트", () => {
             { matchCount: 4, isBonusMatch: null, prize: 50_000, lottoCount: 1 },
             { matchCount: 3, isBonusMatch: null, prize: 5_000, lottoCount: 1 },
           ],
-          percentage: "5.00%",
+          percentage: 500,
         },
         {
-          lottoNumbers: [
+          lottos: [
             [1, 2, 3, 14, 15, 16],
             [1, 2, 13, 14, 15, 16],
             [1, 2, 13, 14, 15, 7],
@@ -309,14 +309,49 @@ describe("getSummarizedInfo() 테스트", () => {
             { matchCount: 4, isBonusMatch: null, prize: 50_000, lottoCount: 0 },
             { matchCount: 3, isBonusMatch: null, prize: 5_000, lottoCount: 1 },
           ],
-          percentage: "0.38%",
+          percentage: 38.46,
+        },
+        {
+          lottos: [
+            [8, 21, 23, 41, 42, 43],
+            [3, 5, 11, 16, 32, 38],
+            [7, 11, 16, 35, 36, 44],
+            [1, 8, 11, 31, 41, 42],
+            [13, 14, 16, 38, 42, 45],
+            [7, 11, 30, 40, 42, 43],
+            [2, 13, 22, 32, 38, 45],
+            [1, 3, 5, 14, 22, 45],
+          ],
+          statistics: [
+            {
+              matchCount: 6,
+              isBonusMatch: null,
+              prize: 2_000_000_000,
+              lottoCount: 0,
+            },
+            {
+              matchCount: 5,
+              isBonusMatch: true,
+              prize: 30_000_000,
+              lottoCount: 0,
+            },
+            {
+              matchCount: 5,
+              isBonusMatch: false,
+              prize: 1_500_000,
+              lottoCount: 0,
+            },
+            { matchCount: 4, isBonusMatch: null, prize: 50_000, lottoCount: 0 },
+            { matchCount: 3, isBonusMatch: null, prize: 5_000, lottoCount: 1 },
+          ],
+          percentage: 62.5,
         },
       ];
 
       it.each(testCases)(
-        "lottoCounts: $lottoNumbers.length revenuePercentage: $percentage",
+        "lottoCounts: $lottos.length revenuePercentage: $percentage%",
         ({
-          lottoNumbers,
+          lottos: lottoNumbers,
           statistics: expectedStatistics,
           percentage: expectedRevenuePercentage,
         }) => {
@@ -329,7 +364,7 @@ describe("getSummarizedInfo() 테스트", () => {
           const { statistics, revenuePercentage } = getSummarizedInfo(lottos);
 
           expect(statistics).toEqual(expectedStatistics);
-          expect(revenuePercentage).toBe(expectedRevenuePercentage);
+          expect(revenuePercentage).toBe(`${expectedRevenuePercentage}%`);
         }
       );
     });
