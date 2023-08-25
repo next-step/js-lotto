@@ -1,24 +1,25 @@
 import ERROR from '../constants/error.js';
-import { Lotto } from './Lotto.js';
 import { LottoNumber } from './LottoNumber.js';
 
-export class WinningLotto extends Lotto {
+export class WinningLotto {
+  #lotto;
+
   #bonus;
 
-  constructor(numbers, bonus) {
-    super(numbers);
-    WinningLotto.#validate(numbers, bonus);
+  constructor(lotto, bonus) {
+    WinningLotto.#validate(lotto, bonus);
+    this.#lotto = lotto;
     this.#bonus = new LottoNumber(bonus);
   }
 
-  static #validate(numbers, bonus) {
-    if (numbers.includes(bonus)) {
+  static #validate(lotto, bonus) {
+    if (lotto.match(bonus)) {
       throw new Error(ERROR.DUPLICATED_WITH_WINNING_NUMBER);
     }
   }
 
   getMatchedCount(lotto) {
-    return this._numbers.reduce((acc, { value }) => (lotto.match(value) ? acc + 1 : acc), 0);
+    return lotto.numbers.reduce((acc, cur) => (this.#lotto.match(cur) ? acc + 1 : acc), 0);
   }
 
   hasBonus(lotto) {
