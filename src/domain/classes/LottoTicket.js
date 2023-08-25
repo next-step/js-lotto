@@ -1,4 +1,4 @@
-import { isPositiveNumber, isDuplicateArray, shuffleArray } from '../../utils/index';
+import { isPositiveNumber, isDuplicateArray, shuffleArray, convertStringToNumber } from '../../utils/index';
 import {
   LOTTO_BALLS,
   ERROR_MESSAGE,
@@ -18,7 +18,10 @@ class LottoTicket {
     LottoTicket.validateLottoNumber(mode, lottoNumber);
 
     this.#mode = mode;
-    this.#lottoNumber = mode === LOTTO_MODE.AUTO ? this.#generateLottoNumber() : this.#convertNumber(lottoNumber);
+    this.#lottoNumber =
+      mode === LOTTO_MODE.AUTO
+        ? this.#generateLottoNumber()
+        : convertStringToNumber(lottoNumber, LOTTO_NUMBER_SEPARATOR);
   }
 
   static validateLottoMode(mode) {
@@ -60,10 +63,6 @@ class LottoTicket {
 
   get lottoNumber() {
     return this.#lottoNumber;
-  }
-
-  #convertNumber(lottoNumber) {
-    return lottoNumber.split(LOTTO_NUMBER_SEPARATOR).map((number) => Number(number));
   }
 
   #generateLottoNumber() {
