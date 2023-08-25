@@ -12,6 +12,10 @@ export class Lotto {
         return this.#lottoNumbers;
     }
 
+    getSortedLottoNumbers() {
+        return this.#lottoNumbers.sort((a, b) => a - b);
+    }
+
     get winningRank() {
         return this.#winningRank;
     }

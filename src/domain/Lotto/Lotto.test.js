@@ -3,6 +3,10 @@ import {BONUS_NUMBER, LOTTO_LIST, WINNING_NUMBERS} from "../../consts/Lotto.test
 
 describe('로또', () => {
     context('로또 생성 시', () => {
+        it("정렬된 로또 번호를 알 수 있다.", () => {
+            const lotto = new Lotto([1, 3, 2, 4, 5, 6]);
+            expect(lotto.getSortedLottoNumbers()).toEqual([1, 2, 3, 4, 5, 6]);
+        });
     });
     context('당첨 번호와 보너스 번호가 주어졌을 때,', () => {
         LOTTO_LIST.forEach(LOTTO => {

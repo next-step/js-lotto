@@ -7,6 +7,8 @@ class BonusNumberInputView {
         return value;
     }
 
+
+
     static #validateValue(value) {
         if(!BonusNumberInputView.#isNaturalNumber(value))
             throw new Error("보너스 번호 입력은 자연수만 가능합니다.");
