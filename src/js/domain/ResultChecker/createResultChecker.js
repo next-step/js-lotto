@@ -1,15 +1,6 @@
 import createRevenueCalculator from "./createRevenueCalculator.js";
 
 const createResultChecker = () => {
-  const PRIZE = Object.freeze({
-    1: 2_000_000_000,
-    2: 30_000_000,
-    3: 1_500_000,
-    4: 50_000,
-    5: 5_000,
-    6: 0,
-  });
-
   const { getRevenuePercentage } = createRevenueCalculator();
 
   function getRank(matchCount, isBonusMatch) {
@@ -29,32 +20,49 @@ const createResultChecker = () => {
   }
 
   function getStatistics(lottos) {
-    const rankCountMap = new Map();
-    const matchCountMap = new Map();
-    const isBonusMatchMap = new Map();
+    const PRIZE = Object.freeze({
+      1: 2_000_000_000,
+      2: 30_000_000,
+      3: 1_500_000,
+      4: 50_000,
+      5: 5_000,
+    });
+
+    const MATCH_COUNT = Object.freeze({
+      1: 6,
+      2: 5,
+      3: 5,
+      4: 4,
+      5: 3,
+    });
 
     const LOWEST_MATCHING_COUNT = 3;
+
     const winningLottos = lottos.filter(
       (lotto) => lotto.getMatchResult().matchCount >= LOWEST_MATCHING_COUNT
     );
 
+    const rankCountMap = new Map([
+      [1, 0],
+      [2, 0],
+      [3, 0],
+      [4, 0],
+      [5, 0],
+    ]);
+
     winningLottos.forEach((lotto) => {
       const { matchCount, isBonusMatch } = lotto.getMatchResult();
       const rank = getRank(matchCount, isBonusMatch);
-      if (!rankCountMap.has(rank)) {
-        rankCountMap.set(rank, 1);
-        matchCountMap.set(rank, matchCount);
-        isBonusMatchMap.set(rank, isBonusMatch);
-      } else {
-        rankCountMap.set(rank, rankCountMap.get(rank) + 1);
-      }
+      rankCountMap.set(rank, rankCountMap.get(rank) + 1);
     });
 
     const statistics = [];
     for (const [rank, count] of rankCountMap.entries()) {
+      const isBonusMatch = rank === 2 ? true : rank === 3 ? false : null;
+
       statistics.push({
-        matchCount: matchCountMap.get(rank),
-        isBonusMatch: isBonusMatchMap.get(rank),
+        matchCount: MATCH_COUNT[rank],
+        isBonusMatch,
         prize: PRIZE[rank],
         lottoCount: count,
       });
