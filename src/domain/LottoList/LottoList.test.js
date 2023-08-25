@@ -4,7 +4,7 @@ import {
     EXPECTED_PROFIT_RATE,
     LOTTO_LIST,
     WINNING_NUMBERS
-} from "../consts/Lotto.test.const.js";
+} from "../../consts/Lotto.test.const.js";
 import {Lotto} from "../Lotto/Lotto.js";
 import {LottoList} from "./LottoList.js";
 

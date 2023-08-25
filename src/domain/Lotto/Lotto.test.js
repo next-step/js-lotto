@@ -1,5 +1,5 @@
 import {Lotto} from "./Lotto.js";
-import {BONUS_NUMBER, LOTTO_LIST, WINNING_NUMBERS} from "../consts/Lotto.test.const.js";
+import {BONUS_NUMBER, LOTTO_LIST, WINNING_NUMBERS} from "../../consts/Lotto.test.const.js";
 
 describe('로또', () => {
     context('로또 생성 시', () => {

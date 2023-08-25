@@ -1,19 +1,17 @@
-import readline from "readline";
+import { createInterface } from 'node:readline/promises';
 
-export const rl = readline.createInterface({
+const rl = createInterface({
     input: process.stdin,
     output: process.stdout,
 });
 
-export const Console = {
-    /** 입력 받기*/
-    readLine(question, callback) {
-        rl.question(question, (input) => {
-            callback(input);
-        });
+const Console = {
+    async readLine(question) {
+        return await rl.question(question);
     },
-    /** 출력하기*/
     print(...message) {
         console.log(...message);
     },
 };
+
+export default Console;

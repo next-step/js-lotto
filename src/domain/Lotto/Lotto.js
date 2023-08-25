@@ -1,4 +1,4 @@
-import {LOTTO_INFO} from "../consts/Lotto.js";
+import {LOTTO_INFO} from "../../consts/Lotto.js";
 
 export class Lotto {
     #lottoNumbers
