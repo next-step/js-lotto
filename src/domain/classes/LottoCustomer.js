@@ -3,13 +3,11 @@ import { isPositiveNumber } from '../../utils/index';
 
 class LottoCustomer {
   #lottoTickets = [];
-  #wantedLottoMode = null;
   #amount = 0;
 
-  constructor(amount, wantedLottoMode) {
+  constructor(amount) {
     LottoCustomer.validateAmount(amount);
     this.#amount = Number(amount);
-    this.#wantedLottoMode = wantedLottoMode;
   }
 
   static validateAmount(amount) {
@@ -33,8 +31,14 @@ class LottoCustomer {
     this.#amount = amount;
   }
 
-  buyLottoTicket(lottoSeller) {
-    const { changeAMount, lottoTickets } = lottoSeller.sellToLottoTicket(this.#amount, this.#wantedLottoMode);
+  buyManualLottoTicket(lottoSeller, lottoNumber) {
+    const { changeAMount, lottoTickets } = lottoSeller.sellToManualLottoTicket(this.#amount, lottoNumber);
+    this.#setAmount(changeAMount);
+    this.#setLottoTickets(lottoTickets);
+  }
+
+  buyAutoLottoTicket(lottoSeller) {
+    const { changeAMount, lottoTickets } = lottoSeller.sellToAutoLottoTicket(this.#amount);
     this.#setAmount(changeAMount);
     this.#setLottoTickets(lottoTickets);
   }
