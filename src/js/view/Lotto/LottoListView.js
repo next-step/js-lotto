@@ -14,10 +14,6 @@ export class LottoListView extends View {
     this.#setElements();
   }
 
-  #show() {
-    this.$element.style.display = 'block';
-  }
-
   #setElements() {
     this.$quantity = $(SELECTOR.LOTTO_QUANTITY);
     this.$toggle = $(SELECTOR.LOTTO_LIST_TOGGLE);
@@ -29,7 +25,7 @@ export class LottoListView extends View {
   }
 
   setLottoQuantity(quantity) {
-    this.#show();
+    this.show();
     this.$quantity.textContent = `총 ${quantity}개를 구매하였습니다`;
   }
 
@@ -45,5 +41,10 @@ export class LottoListView extends View {
       `
       )
       .join('');
+  }
+
+  reset() {
+    this.setLottoQuantity(0);
+    this.$boughtLottos.innerHTML = '';
   }
 }

@@ -1,20 +1,19 @@
 import { Lotto, LottoMachine, LottoRewards, WinningLotto } from '../domain/index.js';
-import { splitToNumberArray } from '../utils/splitToNumberArray.js';
-import { LottoInputView, LottoOutputView } from '../view/Lotto/index.js';
+import { LottoOutputView } from '../view/Lotto/index.js';
 import { LottoListView } from '../view/Lotto/LottoListView.js';
 import { PurchaseView } from '../view/Lotto/PurchaseView.js';
+import { WinningLottoView } from '../view/Lotto/WinningLottoView.js';
 
 class LottoGame {
   #view = {
     purchaseForm: new PurchaseView(),
     lottoList: new LottoListView(),
+    winningLotto: new WinningLottoView(),
   };
 
   #outputView = new LottoOutputView();
 
   #lottoMachine = new LottoMachine();
-
-  #money = 0;
 
   #lottos = [];
 
@@ -33,11 +32,15 @@ class LottoGame {
       this.withRetry(() => this.buyLotto(money));
     });
     this.#view.lottoList.bindToggleEvent(() => this.toggleShowNumbers());
+    this.#view.winningLotto.bindWinningLottoSubmitEvent(() => {
+      this.withRetry(() => this.setWinningLotto());
+    });
   }
 
   buyLotto(money) {
     this.#lottos = this.#lottoMachine.buy(Number(money.trim()));
     this.showLottos(this.#isShowNumbers);
+    this.#view.winningLotto.show();
   }
 
   showLottos(visibleNumbers = false) {
@@ -53,13 +56,14 @@ class LottoGame {
     this.showLottos(this.#isShowNumbers);
   }
 
-  // async setWinningLotto() {
-  //   const winningNumbers = splitToNumberArray(await this.#inputView.winningNumbers());
-  //   const bonus = Number(await this.#inputView.bonus());
-  //   this.#winningLotto = new WinningLotto(Lotto.of(winningNumbers), bonus);
-
-  //   await this.withRetry(() => this.setRewards());
-  // }
+  setWinningLotto() {
+    const winningNumbers = this.#view.winningLotto
+      .getWinningNumbers()
+      .map(Number)
+      .filter((number) => number);
+    const bonus = Number(this.#view.winningLotto.getBonusNumber());
+    this.#winningLotto = new WinningLotto(Lotto.of(winningNumbers.map(Number)), Number(bonus));
+  }
 
   // async setRewards() {
   //   this.#rewards = new LottoRewards(this.#lottos, this.#winningLotto);

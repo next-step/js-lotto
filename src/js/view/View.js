@@ -6,4 +6,8 @@ export class View {
   constructor(selector) {
     this.$element = $(selector);
   }
+
+  show(display = 'block') {
+    this.$element.style.display = display;
+  }
 }
