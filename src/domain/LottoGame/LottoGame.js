@@ -8,6 +8,7 @@ import ProfitRateOutputView from "../../@cli/@views/OutputViews/ProfitRateOutput
 import LottoListOutputView from "../../@cli/@views/OutputViews/LottoListOutputView.js";
 import WinningConditionInputView
   from "../../@cli/@views/InputViews/WinningConditionInputView/WinningConditionInputView.js";
+import ReplayInputView from "../../@cli/@views/InputViews/ReplayInputView/ReplayInputView.js";
 
 class LottoGame {
   async play () {
@@ -27,6 +28,12 @@ class LottoGame {
 
     const profitRate = createdLottoList.getProfitRate();
     ProfitRateOutputView.render(profitRate);
+
+    const answer = await ReplayInputView.readInput();
+    if (answer === 'y') {
+      await this.play();
+    }
+    process.exit(0);
   }
 }
 
