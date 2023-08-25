@@ -26,8 +26,10 @@ export const ERROR_MESSAGE = Object.freeze({
   INVALID_LOTTO_NUMBER_BY_RANGE: `로또 번호는 ${LOTTO_MIN_NUMBER} ~ ${LOTTO_MAX_NUMBER} 사이의 숫자만 입력 가능합니다.`,
   INVALID_LOTTO_NUMBER_BY_DUPLICATE: '로또 번호는 중복되지 않아야 합니다.',
   INVALID_LOTTO_NUMBER_BY_NOT_ENOUGH_LENGTH: '로또 번호는 6개의 숫자로 이루어져야 합니다.',
-  INVALID_LOTTO_NUMBER_BY_NOT_POSITIVE_NUMBER: '로또 번호는 숫자만 입력 가능합니다.',
+  INVALID_LOTTO_NUMBER_BY_NOT_POSITIVE_NUMBER: '로또 번호는 양수만 입력 가능합니다.',
   INVALID_BONUS_NUMBER_BY_RANGE: `보너스 번호는 ${LOTTO_MIN_NUMBER} ~ ${LOTTO_MAX_NUMBER} 사이의 숫자만 입력 가능합니다.`,
   INVALID_BONUS_NUMBER_BY_DUPLICATE: '보너스 번호는 당첨 번호와 중복되지 않아야합니다.',
-  INVALID_WINNING_LOTTO_NUMBER: `로또 당첨 번호는 중복되지 않는 ${LOTTO_NUMBER_LENGTH}개의 숫자로 이루어져야 합니다.`
+  INVALID_WINNING_LOTTO_NUMBER: `로또 당첨 번호는 ${LOTTO_NUMBER_LENGTH}개의 숫자로 이루어져야 합니다.`,
+  INVALID_WINNING_LOTTO_NUMBER_BY_DUPLICATE: '로또 당첨 번호는 중복되지 않는 숫자로 이루어져야 합니다.',
+  INVALID_WINNING_LOTTO_NUMBER_BY_RANGE: `로또 당첨 번호는 ${LOTTO_MIN_NUMBER} ~ ${LOTTO_MAX_NUMBER} 사이의 숫자로만 이루어져야 합니다.`
 });
