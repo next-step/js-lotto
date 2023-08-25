@@ -4,10 +4,6 @@ import { Lotto } from './Lotto.js';
 import { LottoNumber } from './LottoNumber.js';
 
 export class LottoMachine {
-  static LOTTO_NUMBER_QUANTITY = 6;
-
-  static PRICE = 1_000;
-
   #balls;
 
   constructor() {
@@ -28,13 +24,13 @@ export class LottoMachine {
   }
 
   static #validate(money) {
-    if (money % LottoMachine.PRICE !== 0 || money <= 0) {
-      throw new Error(ERROR.UNMATCHED_PRICE_PER_SHEET(LottoMachine.PRICE));
+    if (money % Lotto.PRICE !== 0 || money <= 0) {
+      throw new Error(ERROR.UNMATCHED_PRICE_PER_SHEET(Lotto.PRICE));
     }
   }
 
   static #calculateSheet(money) {
-    return money / LottoMachine.PRICE;
+    return money / Lotto.PRICE;
   }
 
   #addBalls() {
@@ -46,6 +42,6 @@ export class LottoMachine {
   }
 
   #pickBalls() {
-    return this.#balls.slice(0, LottoMachine.LOTTO_NUMBER_QUANTITY);
+    return this.#balls.slice(0, Lotto.NUMBER_QUANTITY);
   }
 }

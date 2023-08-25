@@ -61,7 +61,7 @@ class LottoGame {
   }
 
   async calculateRateOfReturn() {
-    const rateOfReturn = this.#rewards.getRateOfReturn(this.#money);
+    const rateOfReturn = this.#rewards.computeRateOfReturn(this.#money);
     this.#outputView.rateOfReturn(rateOfReturn);
 
     await this.withRetry(() => this.askRetry());

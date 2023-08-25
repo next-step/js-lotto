@@ -2,17 +2,19 @@ import ERROR from '../constants/error.js';
 import { LottoNumber } from './LottoNumber.js';
 
 export class Lotto {
+  static PRICE = 1_000;
+
   static NUMBER_QUANTITY = 6;
 
-  _numbers;
+  #numbers;
 
   constructor(numbers) {
-    this._numbers = numbers.map((number) => new LottoNumber(number)).sort((a, b) => a.value - b.value);
+    this.#numbers = numbers.map((number) => new LottoNumber(number)).sort((a, b) => a.value - b.value);
     Lotto.#validate(numbers);
   }
 
   get numbers() {
-    return this._numbers.map(({ value }) => value);
+    return this.#numbers.map(({ value }) => value);
   }
 
   static #validate(numbers) {
@@ -26,6 +28,6 @@ export class Lotto {
   }
 
   match(number) {
-    return this._numbers.some(({ value }) => value === number);
+    return this.numbers.includes(number);
   }
 }

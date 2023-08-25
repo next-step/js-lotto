@@ -26,7 +26,7 @@ export class LottoRewards {
     return rankList;
   }
 
-  getRateOfReturn(proceeds, digit = 1) {
+  computeRateOfReturn(proceeds, digit = 1) {
     return Number(((this.#totalPrize / proceeds) * 100).toFixed(digit));
   }
 }

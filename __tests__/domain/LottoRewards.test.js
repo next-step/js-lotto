@@ -49,19 +49,37 @@ describe('로또 상금 목록 테스트', () => {
 
   it.each([
     {
-      lotto: [1, 2, 3, 4, 5, 6],
+      lottos: [new Lotto([1, 2, 3, 4, 5, 6])],
+      proceed: 1_000,
       result: 200000000.0,
     },
     {
-      lotto: [10, 11, 12, 13, 14, 15],
+      lottos: [
+        new Lotto([1, 2, 3, 8, 9, 10]), // 5등
+        new Lotto([1, 2, 3, 10, 11, 12]), // 5등
+        new Lotto([1, 2, 3, 4, 9, 10]), // 4등
+        new Lotto([11, 12, 13, 14, 15, 16]), // 낙첨 총 수익 60,000원 수익률 = 60,000 / 10,000 = 60
+      ],
+      proceed: 10_000,
+      result: 600.0,
+    },
+    {
+      lottos: [
+        new Lotto([1, 2, 3, 8, 9, 10]), // 5등
+        new Lotto([1, 2, 3, 10, 11, 12]), // 5등 총 수익 10,000원 수익률 = 10,000 / 30,000 = 33.3
+      ],
+      proceed: 30_000,
+      result: 33.3,
+    },
+    {
+      lottos: [new Lotto([10, 11, 12, 13, 14, 15])],
+      proceed: 1_000,
       result: 0.0,
     },
-  ])('수익률을 계산한다.', ({ lotto, result }) => {
-    const lottos = [new Lotto(lotto)];
+  ])('수익률을 계산한다.', ({ lottos, result, proceed }) => {
     const winningLotto = new WinningLotto(new Lotto([1, 2, 3, 4, 5, 6]), 7);
     const lottoRewards = new LottoRewards(lottos, winningLotto);
-    const proceed = 1_000;
-    const rateOfReturn = lottoRewards.getRateOfReturn(proceed);
+    const rateOfReturn = lottoRewards.computeRateOfReturn(proceed);
 
     expect(rateOfReturn).toBe(result);
   });
