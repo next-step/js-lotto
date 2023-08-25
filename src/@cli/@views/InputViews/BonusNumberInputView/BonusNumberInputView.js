@@ -2,12 +2,16 @@ import Console from "../../../util/Console.js";
 
 class BonusNumberInputView {
     static async readInput() {
-        const value = await Console.readLine("\n> 보너스 번호를 입력해 주세요. ");
-        BonusNumberInputView.#validateValue(value);
-        return value;
+        while (true) {
+            try {
+                const value = await Console.readLine("\n> 보너스 번호를 입력해 주세요. ");
+                BonusNumberInputView.#validateValue(value);
+                return value;
+            } catch (e) {
+                Console.print(e.message);
+            }
+        }
     }
-
-
 
     static #validateValue(value) {
         if(!BonusNumberInputView.#isNaturalNumber(value))

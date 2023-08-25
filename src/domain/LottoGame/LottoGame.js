@@ -1,13 +1,13 @@
 import {LOTTO_INFO} from "../../consts/Lotto.js";
 import MoneyInputView from "../../@cli/@views/InputViews/MoneyInputView/MoneyInputView.js";
-import WinningNumberInputView from "../../@cli/@views/InputViews/WinningNumberInputView/WinningNumberInputView.js";
-import BonusNumberInputView from "../../@cli/@views/InputViews/BonusNumberInputView/BonusNumberInputView.js";
 import LottoFactory from "../LottoFactory/LottoFactory.js";
 import LottoWinningCondition from "../LottoWinningCondition/LottoWinningCondition.js";
 import LottoResultOutputView from "../../@cli/@views/OutputViews/LottoResultOutputView.js";
 import LottoAmountOutputView from "../../@cli/@views/OutputViews/LottoAmountOutputView.js";
 import ProfitRateOutputView from "../../@cli/@views/OutputViews/ProfitRateOutputView.js";
 import LottoListOutputView from "../../@cli/@views/OutputViews/LottoListOutputView.js";
+import WinningConditionInputView
+  from "../../@cli/@views/InputViews/WinningConditionInputView/WinningConditionInputView.js";
 
 class LottoGame {
   async play () {
@@ -18,9 +18,8 @@ class LottoGame {
     const createdLottoList = LottoFactory.createLottoList(lottoAmount);
     LottoListOutputView.render(createdLottoList);
 
-    const winningNumbers = await WinningNumberInputView.readInput();
-    const bonusNumber = await BonusNumberInputView.readInput();
-    const lottoWinningCondition = new LottoWinningCondition(winningNumbers, bonusNumber);
+    const {winningNumbersString,bonusNumberString} = await WinningConditionInputView.readInput();
+    const lottoWinningCondition = new LottoWinningCondition(winningNumbersString, bonusNumberString);
     createdLottoList.setWinningRank(lottoWinningCondition.winningNumbers, lottoWinningCondition.bonusNumber);
 
     const lottoResultSummary = createdLottoList.getLottoResultSummary({order: 'DESC'});

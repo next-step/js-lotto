@@ -3,9 +3,15 @@ import {LOTTO_INFO} from "../../../../consts/Lotto.js";
 
 class MoneyInputView {
     static async readInput() {
-        const value = await Console.readLine("> 구입금액을 입력해 주세요. ");
-        MoneyInputView.#validateValue(value);
-        return value;
+        while (true){
+            try {
+                const value = await Console.readLine("> 구입금액을 입력해 주세요. ");
+                MoneyInputView.#validateValue(value);
+                return value;
+            } catch (e) {
+                Console.print(e.message);
+            }
+        }
     }
 
     static #validateValue(value) {

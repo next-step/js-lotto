@@ -3,9 +3,15 @@ import {LOTTO_INFO} from "../../../../consts/Lotto.js";
 
 class WinningNumberInputView {
     static async readInput() {
-        const value = await Console.readLine("\n> 당첨 번호를 입력해 주세요. ");
-        WinningNumberInputView.#validateValue(value);
-        return value;
+        while (true){
+            try {
+                const value = await Console.readLine("\n> 당첨 번호를 입력해 주세요. ");
+                WinningNumberInputView.#validateValue(value);
+                return value;
+            } catch (e) {
+                Console.print(e.message);
+            }
+        }
     }
 
     static #validateValue(value) {
