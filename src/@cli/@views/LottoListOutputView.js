@@ -5,3 +5,5 @@ class LottoListOutputView {
         lottoList.lottoList.forEach((lotto) => Console.print(lotto.lottoNumbers));
     }
 }
+
+export default LottoListOutputView;

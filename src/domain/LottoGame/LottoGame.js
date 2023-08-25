@@ -7,7 +7,7 @@ import LottoWinningCondition from "../LottoWinningCondition/LottoWinningConditio
 import LottoResultOutputView from "../../@cli/@views/LottoResultOutputView.js";
 import LottoAmountOutputView from "../../@cli/@views/LottoAmountOutputView.js";
 import ProfitRateOutputView from "../../@cli/@views/ProfitRateOutputView.js";
-import LottoListOutputView from "../../@cli/@views/ProfitRateOutputView.js";
+import LottoListOutputView from "../../@cli/@views/LottoListOutputView.js";
 
 class LottoGame {
   async play () {
