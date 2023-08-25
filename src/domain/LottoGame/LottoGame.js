@@ -1,13 +1,13 @@
 import {LOTTO_INFO} from "../../consts/Lotto.js";
-import MoneyInputView from "../../@cli/@views/MoneyInputView.js";
-import WinningNumberInputView from "../../@cli/@views/WinningNumberInputView.js";
-import BonusNumberInputView from "../../@cli/@views/BonusNumberInputView.js";
+import MoneyInputView from "../../@cli/@views/InputViews/MoneyInputView/MoneyInputView.js";
+import WinningNumberInputView from "../../@cli/@views/InputViews/WinningNumberInputView/WinningNumberInputView.js";
+import BonusNumberInputView from "../../@cli/@views/InputViews/BonusNumberInputView/BonusNumberInputView.js";
 import LottoFactory from "../LottoFactory/LottoFactory.js";
 import LottoWinningCondition from "../LottoWinningCondition/LottoWinningCondition.js";
-import LottoResultOutputView from "../../@cli/@views/LottoResultOutputView.js";
-import LottoAmountOutputView from "../../@cli/@views/LottoAmountOutputView.js";
-import ProfitRateOutputView from "../../@cli/@views/ProfitRateOutputView.js";
-import LottoListOutputView from "../../@cli/@views/LottoListOutputView.js";
+import LottoResultOutputView from "../../@cli/@views/OutputViews/LottoResultOutputView.js";
+import LottoAmountOutputView from "../../@cli/@views/OutputViews/LottoAmountOutputView.js";
+import ProfitRateOutputView from "../../@cli/@views/OutputViews/ProfitRateOutputView.js";
+import LottoListOutputView from "../../@cli/@views/OutputViews/LottoListOutputView.js";
 
 class LottoGame {
   async play () {

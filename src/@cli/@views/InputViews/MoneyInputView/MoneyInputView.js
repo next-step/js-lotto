@@ -1,5 +1,5 @@
-import Console from "../util/Console.js";
-import {LOTTO_INFO} from "../../consts/Lotto.js";
+import Console from "../../../util/Console.js";
+import {LOTTO_INFO} from "../../../../consts/Lotto.js";
 
 class MoneyInputView {
     static async readInput() {

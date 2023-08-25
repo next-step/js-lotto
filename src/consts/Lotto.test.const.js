@@ -50,6 +50,7 @@ export const EXPECTED_LOTTO_RESULT_SUMMARY = LOTTO_INFO.WINNING_CONDITION.map((C
     match: CONDITION.MATCH,
     bonus: CONDITION.BONUS,
     count: LOTTO_LIST.filter(lotto => lotto.winningRank === CONDITION.RANK).length,
+    rank: CONDITION.RANK
 }));
 
 const EXPECTED_TOTAL_PRIZE = LOTTO_LIST.reduce((acc, lotto) => acc + lotto.prize, 0);

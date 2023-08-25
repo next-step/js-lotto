@@ -1,6 +1,6 @@
-import Console from "../util/Console.js";
-import {addCommasToNumber} from "../../util/number.js";
-import {LOTTO_INFO} from "../../consts/Lotto.js";
+import Console from "../../util/Console.js";
+import {addCommasToNumber} from "../../../util/number.js";
+import {LOTTO_INFO} from "../../../consts/Lotto.js";
 
 class LottoResultOutputView {
     static render(lottoResultSummary){
