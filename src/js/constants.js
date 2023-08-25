@@ -7,6 +7,7 @@ export const MIN_WINNING_NUMBER = MIN_LOTTO_NUMBER;
 export const MAX_WINNING_NUMBER = MAX_LOTTO_NUMBER;
 
 export const LOTTO_PRIZE_MAP = {
+  0: 0,
   1: 2000000000,
   2: 30000000,
   3: 1500000,
@@ -15,4 +16,4 @@ export const LOTTO_PRIZE_MAP = {
 };
 Object.freeze(LOTTO_PRIZE_MAP);
 
-export const LOTTO_TICKET_PRICE = 1000;
+export const LOTTO_PRICE = 1000;

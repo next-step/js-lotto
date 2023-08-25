@@ -1,56 +1,45 @@
-import {
-  NUMBER_OF_LOTTO_NUMBERS,
-  MIN_LOTTO_NUMBER,
-  MAX_LOTTO_NUMBER,
-} from "../src/js/constants";
-import {
-  checkLottoResult,
-  generateRandomLottoNumbers,
-  getPrizeByResult,
-} from "../src/js/lotto";
+import { LOTTO_PRIZE_MAP } from "../src/js/constants";
+import { Lotto } from "../src/js/Lotto";
+import { LottoWinningNumber } from "../src/js/LottoWinningNumber";
 
-test.each(Array.from({ length: 20 }))(
-  "generateRandomLottoNumbers function should generate correct lotto numbers",
-  () => {
-    const lottoNumbers = generateRandomLottoNumbers();
-    console.log(lottoNumbers);
-    expect(lottoNumbers.length).toEqual(NUMBER_OF_LOTTO_NUMBERS);
-    lottoNumbers.forEach((number) => {
-      expect(number).toBeGreaterThanOrEqual(MIN_LOTTO_NUMBER);
-      expect(number).toBeLessThanOrEqual(MAX_LOTTO_NUMBER);
-    });
-  }
-);
+describe("A lotto", () => {
+  it.each([
+    [[]], // it's empty
+    [[1, 2, 3, 4, 5]], // only 5 numbers
+    [[1, 2, 3, 4, 5, 6, 7]], // too many numbers
+    [[1, 2, 3, 4, 5, 5]], // duplicate
+    [[0, 1, 2, 3, 4, 5]], // first number is too small
+    [[1, 2, 3, 4, 5, 46]], // last number is too big
+  ])(
+    "should throw an error when invalid lotto numbers are given",
+    (invalidLottoNumbers) => {
+      expect(() => new Lotto(invalidLottoNumbers)).toThrow();
+    }
+  );
 
-test.each([
-  [[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6], 7, 1],
-  [[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6], 43, 1],
-  [[1, 2, 3, 4, 5, 7], [1, 2, 3, 4, 5, 6], 7, 2],
-  [[1, 2, 3, 4, 5, 43], [1, 2, 3, 4, 5, 6], 43, 2],
-  [[1, 2, 3, 4, 5, 43], [1, 2, 3, 4, 5, 6], 7, 3],
-  [[1, 2, 3, 4, 5, 7], [1, 2, 3, 4, 5, 6], 43, 3],
-  [[1, 2, 3, 4, 42, 43], [1, 2, 3, 4, 5, 6], 7, 4],
-  [[1, 2, 3, 4, 42, 7], [1, 2, 3, 4, 5, 6], 7, 4],
-  [[1, 2, 3, 41, 42, 43], [1, 2, 3, 4, 5, 6], 7, 5],
-  [[1, 2, 3, 41, 42, 7], [1, 2, 3, 4, 5, 6], 7, 5],
-])(
-  "checkLottoResult function should return a correct result",
-  (numbers, winningNumbers, bonusNumber, expectedResult) => {
-    const result = checkLottoResult(numbers, winningNumbers, bonusNumber);
-    expect(result).toEqual(expectedResult);
-  }
-);
-
-test.each([
-  [1, 2000000000],
-  [2, 30000000],
-  [3, 1500000],
-  [4, 50000],
-  [5, 5000],
-  [0, 0],
-])(
-  "getPrizeByResult function should return a correct prize for the given result",
-  (result, expectedPrize) => {
-    expect(getPrizeByResult(result)).toEqual(expectedPrize);
-  }
-);
+  it.each([
+    [[1, 2, 3, 4, 5, 6], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 1],
+    [[1, 2, 3, 4, 5, 6], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 43), 1],
+    [[1, 2, 3, 4, 5, 7], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 2],
+    [[1, 2, 3, 4, 5, 43], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 43), 2],
+    [[1, 2, 3, 4, 5, 43], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 3],
+    [[1, 2, 3, 4, 5, 7], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 43), 3],
+    [[1, 2, 3, 4, 42, 43], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 4],
+    [[1, 2, 3, 4, 42, 7], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 4],
+    [[1, 2, 3, 41, 42, 43], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 5],
+    [[1, 2, 3, 41, 42, 7], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 5],
+    [
+      [31, 32, 33, 34, 35, 36],
+      new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7),
+      0,
+    ],
+  ])(
+    "should return a correct place and prize",
+    (lottoNumbers, winningNumber, expectedPlace) => {
+      const lotto = new Lotto(lottoNumbers);
+      lotto.check(winningNumber);
+      expect(lotto.place).toEqual(expectedPlace);
+      expect(lotto.prize).toEqual(LOTTO_PRIZE_MAP[lotto.place]);
+    }
+  );
+});

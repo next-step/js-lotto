@@ -1,5 +1,5 @@
 import {
-  NUMBER_OF_LOTTO_NUMBERS,
+  NUMBER_OF_WINNING_NUMBERS,
   MIN_WINNING_NUMBER,
   MAX_WINNING_NUMBER,
 } from "./constants";
@@ -9,16 +9,16 @@ export class LottoWinningNumber {
   #winningNumbers;
   #bonusNumber;
 
-  static validateWinningNumbers(winningNumbers, bonusNumber) {
-    if (winningNumbers.length < NUMBER_OF_LOTTO_NUMBERS) {
+  static validateNumbers(winningNumbers, bonusNumber) {
+    if (winningNumbers.length < NUMBER_OF_WINNING_NUMBERS) {
       throw new WinningNumberError("Too few winning numbers");
     }
-    if (winningNumbers.length > NUMBER_OF_LOTTO_NUMBERS) {
+    if (winningNumbers.length > NUMBER_OF_WINNING_NUMBERS) {
       throw new WinningNumberError("Too many winning numbers");
     }
     if (
       winningNumbers.some(
-        (number) => number < MIN_WINNING_NUMBE || number > MAX_WINNING_NUMBER
+        (number) => number < MIN_WINNING_NUMBER || number > MAX_WINNING_NUMBER
       )
     ) {
       throw new WinningNumberError("Contains an invalid winning number");

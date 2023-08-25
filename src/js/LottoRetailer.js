@@ -1,14 +1,13 @@
-import { LOTTO_TICKET_PRICE } from "./constants";
-import { LottoTicket } from "./LottoTicket";
-import { generateRandomLottoNumbers } from "./lotto";
+import { LOTTO_PRICE } from "./constants";
+import { Lotto } from "./Lotto";
 
 export class LottoRetailer {
-  issueTicket(money) {
-    const numberOfTicketsToIssue = parseInt(money / LOTTO_TICKET_PRICE);
-    const change = money % LOTTO_TICKET_PRICE;
-    const tickets = Array.from({ length: numberOfTicketsToIssue }).map(
-      () => new LottoTicket(generateRandomLottoNumbers())
+  issues(money) {
+    const numberOfLottoToIssue = parseInt(money / LOTTO_PRICE);
+    const change = money % LOTTO_PRICE;
+    const lottoList = Array.from({ length: numberOfLottoToIssue }).map(() =>
+      Lotto.random()
     );
-    return { tickets, change };
+    return { lottoList, change };
   }
 }

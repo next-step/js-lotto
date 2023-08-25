@@ -4,6 +4,9 @@ import {
   MAX_LOTTO_NUMBER,
   LOTTO_PRIZE_MAP,
 } from "./constants";
+import { LottoNumberError } from "./errors";
+
+import { chooseSome } from "./utils";
 
 const ALL_LOTTO_NUMBERS = Array.from(
   {
@@ -13,50 +16,81 @@ const ALL_LOTTO_NUMBERS = Array.from(
 );
 Object.freeze(ALL_LOTTO_NUMBERS);
 
-export const generateRandomLottoNumbers = () => {
-  const selectableLottoNumbers = [...ALL_LOTTO_NUMBERS];
-  const randomLottoNumbers = [];
+export class Lotto {
+  #numbers = [];
+  #isChecked = false;
+  #place;
 
-  Array.from({ length: NUMBER_OF_LOTTO_NUMBERS }).forEach(() => {
-    const randomIndex = getRandomIntInclusive(
-      0,
-      selectableLottoNumbers.length - 1
-    );
-    randomLottoNumbers.push(selectableLottoNumbers[randomIndex]);
-    selectableLottoNumbers.splice(randomIndex, 1);
-  });
-  randomLottoNumbers.sort();
-  return randomLottoNumbers;
-};
-
-// Copied from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-const getRandomIntInclusive = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
-};
-
-export const checkLottoResult = (lottoNumbers, winningNumbers, bonusNumber) => {
-  const matchingNumbers = lottoNumbers.filter((number) =>
-    winningNumbers.includes(number)
-  );
-
-  const matchingNumbersCount = matchingNumbers.length;
-  if (matchingNumbersCount == 6) {
-    return 1;
-  } else if (matchingNumbersCount == 5) {
-    if (lottoNumbers.includes(bonusNumber)) {
-      return 2;
-    }
-    return 3;
-  } else if (matchingNumbersCount == 4) {
-    return 4;
-  } else if (matchingNumbersCount == 3) {
-    return 5;
+  constructor(numbers) {
+    Lotto.validateNumbers(numbers);
+    this.#numbers = [...numbers];
+    this.#numbers.sort();
   }
-  return 0;
-};
 
-export const getPrizeByResult = (rank) => {
-  return LOTTO_PRIZE_MAP[rank] || 0;
-};
+  get numbers() {
+    return [...this.#numbers];
+  }
+
+  get place() {
+    return this.#place;
+  }
+
+  get prize() {
+    return this.#isChecked ? LOTTO_PRIZE_MAP[this.#place] || 0 : undefined;
+  }
+
+  check(winningNumber) {
+    const matchingNumbers = this.#numbers.filter((number) =>
+      winningNumber.winningNumbers.includes(number)
+    );
+    const matchingNumbersCount = matchingNumbers.length;
+    switch (matchingNumbersCount) {
+      case 6:
+        this.#place = 1;
+        break;
+      case 5:
+        this.#place = this.#numbers.includes(winningNumber.bonusNumber) ? 2 : 3;
+        break;
+      case 4:
+        this.#place = 4;
+        break;
+      case 3:
+        this.#place = 5;
+        break;
+      default:
+        this.#place = 0;
+    }
+    this.#isChecked = true;
+  }
+
+  static get ALL_LOTTO_NUMBERS() {
+    return ALL_LOTTO_NUMBERS;
+  }
+
+  static validateNumbers(numbers) {
+    if (numbers.length < NUMBER_OF_LOTTO_NUMBERS) {
+      throw new LottoNumberError("Too few numbers");
+    }
+    if (numbers.length > NUMBER_OF_LOTTO_NUMBERS) {
+      throw new LottoNumberError("Too many numbers");
+    }
+    if (
+      numbers.some(
+        (number) => number < MIN_LOTTO_NUMBER || number > MAX_LOTTO_NUMBER
+      )
+    ) {
+      throw new LottoNumberError("Contains an invalid number");
+    }
+    if (new Set(numbers).size !== numbers.length) {
+      throw new LottoNumberError("Duplicate numbers");
+    }
+  }
+
+  static random() {
+    const randomNumbers = chooseSome(
+      ALL_LOTTO_NUMBERS,
+      NUMBER_OF_LOTTO_NUMBERS
+    );
+    return new Lotto(randomNumbers);
+  }
+}

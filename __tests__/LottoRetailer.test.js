@@ -1,7 +1,7 @@
-import { LottoTicket } from "../src/js/LottoTicket";
+import { Lotto } from "../src/js/Lotto";
 import { LottoRetailer } from "../src/js/LottoRetailer";
 
-describe("A lotto retailer sells lotto tickets for money", () => {
+describe("A lotto retailer sells lotto lottoList for money", () => {
   const retailer = new LottoRetailer();
   it.each([
     [0, 0, 0],
@@ -11,13 +11,13 @@ describe("A lotto retailer sells lotto tickets for money", () => {
     [10000, 10, 0],
     [100000, 100, 0],
   ])(
-    "should return correct number of lotto tickets and change",
-    (money, expectedNumberOfTickets, expectedChange) => {
-      const { tickets, change } = retailer.issueTicket(money);
-      expect(tickets.length).toEqual(expectedNumberOfTickets);
+    "should return correct number of lotto lottoList and change",
+    (money, expectedNumberOfLotto, expectedChange) => {
+      const { lottoList, change } = retailer.issues(money);
+      expect(lottoList.length).toEqual(expectedNumberOfLotto);
       expect(change).toEqual(expectedChange);
-      tickets.forEach((ticket) => {
-        expect(ticket).toBeInstanceOf(LottoTicket);
+      lottoList.forEach((lotto) => {
+        expect(lotto).toBeInstanceOf(Lotto);
       });
     }
   );
