@@ -1,4 +1,4 @@
-import { LottoMachine, LottoRewards, WinningLotto } from '../domain/index.js';
+import { Lotto, LottoMachine, LottoRewards, WinningLotto } from '../domain/index.js';
 import { splitToNumberArray } from '../utils/splitToNumberArray.js';
 import { LottoInputView, LottoOutputView } from '../view/Lotto/index.js';
 
@@ -38,7 +38,7 @@ class LottoGame {
   async setWinningLotto() {
     const winningNumbers = splitToNumberArray(await this.#inputView.winningNumbers());
     const bonus = Number(await this.#inputView.bonus());
-    this.#winningLotto = new WinningLotto(winningNumbers, bonus);
+    this.#winningLotto = new WinningLotto(new Lotto(winningNumbers), bonus);
 
     await this.withRetry(() => this.setRewards());
   }
@@ -51,8 +51,10 @@ class LottoGame {
 
   showResult() {
     this.#outputView.lottoResult();
-    Object.getOwnPropertySymbols(this.#rewards.prizeTable).forEach((rank) => {
-      this.#outputView.prize(this.#rewards.prizeTable[rank]);
+    const rankResult = this.#rewards.getRankList();
+
+    rankResult.forEach(({ reward, quantity }) => {
+      this.#outputView.prize(reward, quantity);
     });
 
     this.calculateRateOfReturn();

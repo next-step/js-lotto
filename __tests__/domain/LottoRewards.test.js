@@ -1,68 +1,52 @@
-import { Lotto, LottoRewards, WinningLotto } from '../../src/js/domain/index.js';
+import { Lotto, LottoRewards, RANK_KEY, WinningLotto } from '../../src/js/domain/index.js';
+
+const repeatLotto = (item, count) => Array(count).fill(item);
+
+const findRank = (list, key) => list.find(({ reward }) => reward.key === key);
 
 describe('로또 상금 목록 테스트', () => {
-  it('당첨로또와 6개가 동일하면 1등이다.', () => {
-    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
-    const winningLotto = new WinningLotto(new Lotto([1, 2, 3, 4, 5, 6]), 7);
-    const lottoReward = new LottoRewards([lotto], winningLotto);
+  it('로또 상금 목록은 로또들의 최종 결과를 반환한다.', () => {
+    const bonus = 7;
 
-    expect(lottoReward.prizeTable[Symbol.for('first')].quantity).toBe(1);
+    const first = new Lotto([1, 2, 3, 4, 5, 6]);
+    const firstQuantity = 2;
+
+    const second = new Lotto([1, 2, 3, 4, 5, bonus]);
+    const secondQuantity = 4;
+
+    const third = new Lotto([1, 2, 3, 4, 5, 8]);
+    const thirdQuantity = 6;
+
+    const fourth = new Lotto([1, 2, 3, 4, 7, 8]);
+    const fourthQuantity = 1;
+
+    const fifth = new Lotto([1, 2, 3, 7, 8, 9]);
+    const fifthQuantity = 3;
+
+    const lost = new Lotto([1, 2, 7, 8, 9, 10]);
+
+    const winningLotto = new WinningLotto(first, bonus);
+
+    const lottos = [
+      repeatLotto(first, firstQuantity),
+      repeatLotto(second, secondQuantity),
+      repeatLotto(third, thirdQuantity),
+      repeatLotto(fourth, fourthQuantity),
+      repeatLotto(fifth, fifthQuantity),
+      lost,
+    ].flat();
+
+    const lottoRewards = new LottoRewards(lottos, winningLotto);
+
+    const rankList = lottoRewards.getRankList();
+
+    expect(findRank(rankList, RANK_KEY.FIRST).quantity).toBe(firstQuantity);
+    expect(findRank(rankList, RANK_KEY.SECOND).quantity).toBe(secondQuantity);
+    expect(findRank(rankList, RANK_KEY.THIRD).quantity).toBe(thirdQuantity);
+    expect(findRank(rankList, RANK_KEY.FOURTH).quantity).toBe(fourthQuantity);
+    expect(findRank(rankList, RANK_KEY.FIFTH).quantity).toBe(fifthQuantity);
   });
 
-  it('당첨로또와 5개가 동일하며 보너스번호를 포함하면 2등이다.', () => {
-    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
-    const winningLotto = new WinningLotto(new Lotto([1, 2, 3, 4, 5, 7]), 6);
-    const lottoReward = new LottoRewards([lotto], winningLotto);
-
-    expect(lottoReward.prizeTable[Symbol.for('second')].quantity).toBe(1);
-  });
-
-  it('당첨로또와 5개가 동일하며 보너스번호를 미포함하면 3등이다.', () => {
-    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
-    const winningLotto = new WinningLotto(new Lotto([1, 2, 3, 4, 5, 7]), 8);
-    const lottoReward = new LottoRewards([lotto], winningLotto);
-
-    expect(lottoReward.prizeTable[Symbol.for('third')].quantity).toBe(1);
-  });
-
-  it('당첨로또와 4개가 동일하면 4등이다.', () => {
-    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
-    const winningLotto = new WinningLotto(new Lotto([1, 2, 3, 4, 7, 8]), 9);
-    const lottoReward = new LottoRewards([lotto], winningLotto);
-
-    expect(lottoReward.prizeTable[Symbol.for('fourth')].quantity).toBe(1);
-  });
-
-  it('당첨로또와 3개가 동일하면 5등이다.', () => {
-    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
-    const winningLotto = new WinningLotto(new Lotto([1, 2, 3, 7, 8, 9]), 10);
-    const lottoReward = new LottoRewards([lotto], winningLotto);
-
-    expect(lottoReward.prizeTable[Symbol.for('fifth')].quantity).toBe(1);
-  });
-
-  it.each([
-    {
-      numbers: [1, 2, 13, 14, 15, 16],
-    },
-    {
-      numbers: [1, 12, 13, 14, 15, 16],
-    },
-    {
-      numbers: [11, 12, 13, 14, 15, 16],
-    },
-  ])('당첨로또와 2개 이하로 동일하면 낙첨이다.', ({ numbers }) => {
-    const lotto = new Lotto(numbers);
-    const winningLotto = new WinningLotto(new Lotto([1, 2, 3, 4, 5, 6]), 7);
-    const lottoReward = new LottoRewards([lotto], winningLotto);
-
-    Object.getOwnPropertySymbols(lottoReward.prizeTable).forEach((rank) => {
-      expect(lottoReward.prizeTable[rank].quantity).toBe(0);
-    });
-  });
-});
-
-describe('로또 상금 목록 테스트', () => {
   it.each([
     {
       lotto: [1, 2, 3, 4, 5, 6],
