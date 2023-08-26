@@ -35,14 +35,6 @@ export class Lotto {
     return [...this.#numbers];
   }
 
-  // get place() {
-  //   return this.#place;
-  // }
-
-  // get prize() {
-  //   return this.#isChecked ? LOTTO_PRIZE_MAP[this.#place] || 0 : undefined;
-  // }
-
   get result() {
     if (this.#isChecked) {
       return {
