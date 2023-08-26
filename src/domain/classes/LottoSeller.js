@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE } from '../constants/index';
+import { ERROR_MESSAGE, LOTTO_MODE } from '../constants/index';
 import LottoTicket from './LottoTicket';
 
 class LottoSeller {
@@ -27,15 +27,28 @@ class LottoSeller {
     return Math.floor(amount / this.#lottoPrice);
   }
 
-  #createLottoTickets(count, lottoMode) {
-    const lottoTickets = Array.from({ length: count }, () => new LottoTicket(lottoMode));
+  #createAutoLottoTickets(count) {
+    const lottoTickets = Array.from({ length: count }, () => new LottoTicket(LOTTO_MODE.AUTO));
     return lottoTickets;
   }
 
-  sellToLottoTicket(amount, lottoMode) {
+  #createManualLottoTickets(count, lottoNumber) {
+    const lottoTickets = Array.from({ length: count }, () => new LottoTicket(LOTTO_MODE.MANUAL, lottoNumber));
+    return lottoTickets;
+  }
+
+  sellToManualLottoTicket(amount, lottoNumber) {
     LottoSeller.validateLottoPurchaseAvailability(amount, this.#lottoPrice);
     const sellCount = this.#calculateSellCount(amount);
-    const lottoTickets = this.#createLottoTickets(sellCount, lottoMode);
+    const lottoTickets = this.#createManualLottoTickets(sellCount, lottoNumber);
+    this.#increaseSellCount(sellCount);
+    return { changeAmount: amount % this.#lottoPrice, lottoTickets };
+  }
+
+  sellToAutoLottoTicket(amount) {
+    LottoSeller.validateLottoPurchaseAvailability(amount, this.#lottoPrice);
+    const sellCount = this.#calculateSellCount(amount);
+    const lottoTickets = this.#createAutoLottoTickets(sellCount);
     this.#increaseSellCount(sellCount);
     return { changeAmount: amount % this.#lottoPrice, lottoTickets };
   }
