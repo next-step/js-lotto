@@ -1,4 +1,4 @@
-export default class View<T extends HTMLElement = HTMLElement> {
+export default abstract class View<T extends HTMLElement = HTMLElement> {
   protected $element: T;
 
   constructor(element: T) {
@@ -54,4 +54,6 @@ export default class View<T extends HTMLElement = HTMLElement> {
     this.$element.dispatchEvent(event);
     return this;
   }
+
+  protected abstract initElement(): void;
 }

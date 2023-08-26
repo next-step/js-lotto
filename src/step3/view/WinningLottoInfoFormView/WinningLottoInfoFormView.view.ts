@@ -5,21 +5,28 @@ import { View } from '@step3/view';
 import { FocusNextWinningNumberInputAfterMoveParams } from '@step3/view/WinningLottoInfoFormView';
 
 export default class WinningLottoInfoFormView extends View<HTMLFormElement> {
-  private $bonusNumberInput = this.$element.querySelector<HTMLInputElement>(
-    SELECTOR_NAME.WINNING_LOTTO_INFO.BONUS_NUMBER_INPUT,
-  );
+  private $bonusNumberInput: HTMLInputElement;
 
-  private $winningLottoNumberInputs = this.$element.querySelectorAll<HTMLInputElement>(
-    SELECTOR_NAME.WINNING_LOTTO_INFO.WINNING_NUMBER_INPUT,
-  );
+  private $winningLottoNumberInputs: NodeListOf<HTMLInputElement>;
 
-  private $winningLottoInfoInputs = this.$element.querySelectorAll<HTMLInputElement>(
-    SELECTOR_NAME.WINNING_LOTTO_INFO.INPUTS,
-  );
+  private $winningLottoInfoInputs: NodeListOf<HTMLInputElement>;
 
   constructor($element: HTMLFormElement) {
     super($element);
+    this.initElement();
     this.setEvent();
+  }
+
+  protected initElement() {
+    this.$bonusNumberInput = this.$element.querySelector<HTMLInputElement>(
+      SELECTOR_NAME.WINNING_LOTTO_INFO.BONUS_NUMBER_INPUT,
+    );
+    this.$winningLottoNumberInputs = this.$element.querySelectorAll<HTMLInputElement>(
+      SELECTOR_NAME.WINNING_LOTTO_INFO.WINNING_NUMBER_INPUT,
+    );
+    this.$winningLottoInfoInputs = this.$element.querySelectorAll<HTMLInputElement>(
+      SELECTOR_NAME.WINNING_LOTTO_INFO.INPUTS,
+    );
   }
 
   protected setEvent() {

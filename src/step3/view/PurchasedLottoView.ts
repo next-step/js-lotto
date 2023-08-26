@@ -6,15 +6,26 @@ import { SYMBOLS } from '@step1/constants/commons';
 import { View } from '@step3/view';
 
 export default class PurchasedLottoView extends View<HTMLTableSectionElement> {
-  private $purchasedLottoLabel = this.$element.querySelector<HTMLLabelElement>(SELECTOR_NAME.PURCHASED.LOTTOS_LABEL);
+  private $purchasedLottoLabel: HTMLLabelElement;
 
-  private $purchasedLottoContainer = this.$element.querySelector<HTMLUListElement>(SELECTOR_NAME.PURCHASED.LOTTOS);
+  private $purchasedLottoContainer: HTMLUListElement;
 
   private $purchasedLottos: NodeListOf<HTMLLIElement> | null;
 
-  private $lottoNumbersToggleButton = this.$element.querySelector<HTMLInputElement>(
-    SELECTOR_NAME.PURCHASED.LOTTOS_TOGGLE_BUTTON,
-  );
+  private $lottoNumbersToggleButton: HTMLInputElement;
+
+  constructor($element: HTMLTableSectionElement) {
+    super($element);
+    this.initElement();
+  }
+
+  protected initElement() {
+    this.$purchasedLottoLabel = this.$element.querySelector<HTMLLabelElement>(SELECTOR_NAME.PURCHASED.LOTTOS_LABEL);
+    this.$purchasedLottoContainer = this.$element.querySelector<HTMLUListElement>(SELECTOR_NAME.PURCHASED.LOTTOS);
+    this.$lottoNumbersToggleButton = this.$element.querySelector<HTMLInputElement>(
+      SELECTOR_NAME.PURCHASED.LOTTOS_TOGGLE_BUTTON,
+    );
+  }
 
   private renderPurchasedLottoLabel(lottoNumberLength: number) {
     this.$purchasedLottoLabel.innerHTML = VIEW_MESSAGE_METHOD.PURCHASED_LOTTO(lottoNumberLength);
