@@ -1,5 +1,5 @@
-import { Lotto } from "../src/js/Lotto";
-import { LottoRetailer } from "../src/js/LottoRetailer";
+import { Lotto } from "../src/js/domain/Lotto";
+import { LottoRetailer } from "../src/js/domain/LottoRetailer";
 
 describe("A lotto retailer sells lotto lottoList for money", () => {
   const retailer = new LottoRetailer();

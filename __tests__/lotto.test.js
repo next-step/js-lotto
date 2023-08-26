@@ -1,6 +1,6 @@
 import { LOTTO_PRIZE_MAP } from "../src/js/constants";
-import { Lotto } from "../src/js/Lotto";
-import { LottoWinningNumber } from "../src/js/LottoWinningNumber";
+import { Lotto } from "../src/js/domain/Lotto";
+import { LottoWinningNumber } from "../src/js/domain/LottoWinningNumber";
 
 describe("A lotto", () => {
   it.each([

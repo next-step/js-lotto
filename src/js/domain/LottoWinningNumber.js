@@ -2,14 +2,14 @@ import {
   NUMBER_OF_WINNING_NUMBERS,
   MIN_WINNING_NUMBER,
   MAX_WINNING_NUMBER,
-} from "./constants";
-import { WinningNumberError } from "./errors";
+} from "../constants";
+import { WinningNumberError } from "../errors";
 
 export class LottoWinningNumber {
   #winningNumbers;
   #bonusNumber;
 
-  static validateNumbers(winningNumbers, bonusNumber) {
+  static validateNumbers(winningNumbers, bonusNumber = NaN) {
     if (winningNumbers.length < NUMBER_OF_WINNING_NUMBERS) {
       throw new WinningNumberError("Too few winning numbers");
     }
@@ -26,13 +26,19 @@ export class LottoWinningNumber {
     if (new Set(winningNumbers).size !== winningNumbers.length) {
       throw new WinningNumberError("Duplicate winning numbers");
     }
+    if (!isNaN(bonusNumber)) {
+      if (
+        bonusNumber < MIN_WINNING_NUMBER ||
+        bonusNumber > MAX_WINNING_NUMBER
+      ) {
+        throw new WinningNumberError("Invalid bonus number");
+      }
 
-    if (bonusNumber < MIN_WINNING_NUMBER || bonusNumber > MAX_WINNING_NUMBER) {
-      throw new WinningNumberError("Invalid bonus number");
-    }
-
-    if (winningNumbers.includes(bonusNumber)) {
-      throw new WinningNumberError("Duplicate bonus number in winning numbers");
+      if (winningNumbers.includes(bonusNumber)) {
+        throw new WinningNumberError(
+          "Duplicate bonus number in winning numbers"
+        );
+      }
     }
   }
 

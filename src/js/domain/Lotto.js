@@ -3,10 +3,10 @@ import {
   MIN_LOTTO_NUMBER,
   MAX_LOTTO_NUMBER,
   LOTTO_PRIZE_MAP,
-} from "./constants";
-import { LottoNumberError } from "./errors";
+} from "../constants";
+import { LottoNumberError } from "../errors";
 
-import { chooseSome } from "./utils";
+import { chooseSome } from "../utils";
 
 const ALL_LOTTO_NUMBERS = Array.from(
   {

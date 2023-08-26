@@ -1,6 +1,6 @@
 import { NUMBER_OF_LOTTO_NUMBERS } from "../src/js/constants";
-import { Lotto } from "../src/js/lotto";
 import { chooseSome } from "../src/js/utils";
+import { Lotto } from "../src/js/domain/Lotto";
 
 test.each(Array.from({ length: 20 }))(
   "chooseSome function should choose correct number of elements from the given array",

@@ -1,5 +1,5 @@
 import { MIN_WINNING_NUMBER, MAX_WINNING_NUMBER } from "../src/js/constants";
-import { LottoWinningNumber } from "../src/js/LottoWinningNumber";
+import { LottoWinningNumber } from "../src/js/domain/LottoWinningNumber";
 
 const VALID_WINNING_NUMBER = [1, 2, 3, 4, 5, 6];
 

@@ -1,4 +1,4 @@
-import { LOTTO_PRICE } from "./constants";
+import { LOTTO_PRICE } from "../constants";
 import { Lotto } from "./Lotto";
 
 export class LottoRetailer {
