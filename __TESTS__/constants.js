@@ -34,6 +34,14 @@ export const DUMMY_LOTTO_TICKETS = [
   { lottoNumber: '40, 41, 42, 43, 44, 45' }
 ];
 
+export const DUMMY_NOT_WINNING_TICKETS = [
+  { lottoNumber: '1, 2, 9, 10, 11, 12' },
+  { lottoNumber: '21, 2, 23, 24, 25, 26' },
+  { lottoNumber: '7, 15, 29, 36, 44, 45' },
+  { lottoNumber: '14, 27, 6, 24, 44, 45' },
+  { lottoNumber: '40, 41, 42, 43, 44, 45' }
+];
+
 export const DUMMY_DUPLICATE_NUMBER_LOTTO_TICKETS = [
   { lottoNumber: '1, 2, 3, 4, 5, 5' },
   { lottoNumber: '10, 10, 33, 44, 45, 10' },
@@ -94,3 +102,15 @@ export const DUMMY_INCORRECT_BONUS_NUMBER = [
   { winningLottoNumber: '8,18,26,28,30,38', bonusNumber: {} },
   { winningLottoNumber: '1,14,23,24,31,33', bonusNumber: -1 }
 ];
+
+/**LottoCalculator */
+export const DUMMY_LOTTO_RETURN_WINNING_RATE = [
+  { totalCost: 1000, totalPrize: 10000, expectedWinningRate: 1000 },
+  { totalCost: 2000, totalPrize: 10000, expectedWinningRate: 500 },
+  { totalCost: 3000, totalPrize: 0, expectedWinningRate: 0 },
+  { totalCost: 4000, totalPrize: 2000000000, expectedWinningRate: 50000000 },
+  { totalCost: 5000, totalPrize: 5000, expectedWinningRate: 100 }
+];
+
+export const DUMMY_WINNING_LOTTO_NUMBER = [1, 2, 3, 4, 5, 6];
+export const DUMMY_BONUS_NUMBER = 7;
