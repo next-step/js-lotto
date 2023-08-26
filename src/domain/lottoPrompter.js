@@ -51,9 +51,13 @@ export const endPrompter = () => {
   readlineInterface.close();
 };
 
-export const startPrompter = async () => {
+export const readPurchaseAmount = async () => {
+  const purchaseAmount = await executeReadInputPurchaseAmount();
+  return { purchaseAmount };
+};
+
+export const readLottoNumberAndBonusNumber = async () => {
   const lottoNumber = await executeReadLottoNumber();
   const bonusNumber = await executeReadBonusNumber();
-  const purchaseAmount = await executeReadInputPurchaseAmount();
-  return { lottoNumber, bonusNumber, purchaseAmount };
+  return { lottoNumber, bonusNumber };
 };
