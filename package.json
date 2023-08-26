@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start-step1": "node --es-module-specifier-resolution=node src/step1-index.js",
     "test": "jest --watch"
   },
   "devDependencies": {
