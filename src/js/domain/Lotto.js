@@ -115,3 +115,18 @@ export class Lotto {
     return new Lotto(randomNumbers);
   }
 }
+
+export const getStatistics = (lottoList) => {
+  let amountOfPrize = 0;
+  const placeMap = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+  lottoList.forEach((lotto) => {
+    const { place, prize } = lotto.result;
+    placeMap[place] += 1;
+    amountOfPrize += prize;
+  });
+
+  const rateOfReturn = (amountOfPrize / (lottoList.length * LOTTO_PRICE)) * 100;
+
+  return { amountOfPrize, placeMap, rateOfReturn };
+};
