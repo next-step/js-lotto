@@ -13,10 +13,8 @@
     "cypress:open": "cypress open",
     "build-step1": "webpack --config step1.config.js",
     "start-step1": "npm run build-step1 && node dist/step1-bundle.js",
-    "start-step2": "npm run build-step2 && node dist/step2-bundle.js",
-    "build-step3": "webpack --mode production --config step3.config.js",
-    "start-step3": "webpack serve --open --config step3.config.js",
-    "start-step4": "webpack serve --open --config step4.config.js"
+    "build-step2": "webpack --mode production --config step2.config.js",
+    "start-step2": "webpack serve --open --config step2.config.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
