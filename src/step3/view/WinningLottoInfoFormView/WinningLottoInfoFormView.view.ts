@@ -31,7 +31,7 @@ export default class WinningLottoInfoFormView extends View<HTMLFormElement> {
 
   protected setEvent() {
     this.$element.addEventListener(EVENT.SUBMIT, (event) => this.handleActionWinningLottoInfo(event));
-    this.$element.addEventListener(EVENT.INPUT, () => this.handleActionFocusWinningLottoInfoInputs());
+    this.$element.addEventListener(EVENT.INPUT, this.handleActionFocusWinningLottoInfoInputs.bind(this));
   }
 
   private handleActionWinningLottoInfo = (event: Event) => {

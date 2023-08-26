@@ -56,7 +56,7 @@ export default class LottoApplicationController {
   }
 
   private initWinningInfoModalResetEvent() {
-    this.winningInfoModalView.on(CUSTOM_EVENT.RESET, () => this.reset());
+    this.winningInfoModalView.on(CUSTOM_EVENT.RESET, this.reset.bind(this));
   }
 
   protected reset() {
