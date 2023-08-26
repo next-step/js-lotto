@@ -7,7 +7,7 @@ export const chooseSome = (array, quantity) => {
     chosen.push(selectable[randomIndex]);
     selectable.splice(randomIndex, 1);
   });
-  chosen.sort();
+  chosen.sort((a, b) => a - b);
   return chosen;
 };
 
