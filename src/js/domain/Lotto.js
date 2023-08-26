@@ -1,8 +1,9 @@
 import {
-  NUMBER_OF_LOTTO_NUMBERS,
+  LOTTO_PRICE,
+  LOTTO_PRIZE_MAP,
   MIN_LOTTO_NUMBER,
   MAX_LOTTO_NUMBER,
-  LOTTO_PRIZE_MAP,
+  NUMBER_OF_LOTTO_NUMBERS,
 } from "../constants";
 import { LottoNumberError } from "../errors";
 
@@ -27,7 +28,7 @@ export class Lotto {
   constructor(numbers) {
     Lotto.validateNumbers(numbers);
     this.#numbers = [...numbers];
-    this.#numbers.sort();
+    this.#numbers.sort((a, b) => a - b);
   }
 
   get numbers() {
