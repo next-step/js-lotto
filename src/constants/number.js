@@ -1,0 +1,22 @@
+const LOTTO_TICKET = Object.freeze({
+  MIN_RANGE: 1,
+  MAX_RANGE: 43,
+  NUMBERS_LENGTH: 6,
+});
+
+const LOTTO_PRIZE = Object.freeze({
+  DEFAULT: 0,
+  BONUS_MATCH_THRESHOLD: 5,
+});
+
+const LOTTO_PROFIT_FIXED = 2;
+const DEFAULT_TICKET_PRICE = 1000;
+const INITIAL_TOTAL_RPIZE = 0;
+
+export const NUMBER = Object.freeze({
+  LOTTO_TICKET,
+  LOTTO_PRIZE,
+  LOTTO_PROFIT_FIXED,
+  DEFAULT_TICKET_PRICE,
+  INITIAL_TOTAL_RPIZE,
+});
