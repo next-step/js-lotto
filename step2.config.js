@@ -1,9 +1,9 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const baseConfig = require("base.config");
 
 module.exports = {
-  mode: "development",
+  ...baseConfig,
   devServer: {
     port: 9000,
   },
@@ -12,23 +12,9 @@ module.exports = {
     filename: "step2-bundle.js",
     path: path.resolve(__dirname, "dist"),
   },
-  resolve: {
-    extensions: [".js", ".mjs", ".css"],
-  },
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: "babel-loader",
-            options: {
-              presets: ["@babel/preset-env"],
-            },
-          },
-        ],
-      },
+      ...baseConfig.module.rules,
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
@@ -36,10 +22,9 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    ...baseConfig.plugins,
     new HtmlWebpackPlugin({
       template: "./index.html",
     }),
   ],
-  devtool: "inline-source-map",
 };

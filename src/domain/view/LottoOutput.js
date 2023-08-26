@@ -25,6 +25,7 @@ export class LottoOutput {
   }
 
   render() {
+    this.winningForm.querySelectorAll(E.INPUT).forEach((input) => (input.disabled = STATE.FALSE));
     this.winningForm.querySelectorAll(E.INPUT).forEach((input) => (input.value = EMPTY_STRING));
     this.winningForm.classList.add(CLASS.HIDDEN);
     this.lottoToggleWrapper.classList.add(CLASS.HIDDEN);
