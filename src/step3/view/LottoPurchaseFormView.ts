@@ -27,6 +27,6 @@ export default class LottoPurchaseFormView extends View<HTMLFormElement> {
     event.preventDefault();
     const amount = this.$inputPriceInput.value;
     this.emit(CUSTOM_EVENT.SUBMIT_PURCHASE_AMOUNT, Number(amount));
-    this.$inputPriceInput.value = null;
+    this.$element.reset();
   };
 }

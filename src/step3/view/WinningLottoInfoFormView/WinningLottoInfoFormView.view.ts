@@ -61,9 +61,6 @@ export default class WinningLottoInfoFormView extends View<HTMLFormElement> {
   }
 
   public resetWinningLottoInfoForm() {
-    this.$winningLottoNumberInputs.forEach((winningNumberInput) => {
-      winningNumberInput.value = null;
-    });
-    this.$bonusNumberInput.value = null;
+    this.$element.reset();
   }
 }
