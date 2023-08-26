@@ -5,31 +5,31 @@ export default class LottoPrizeRules {
       rank: 1,
       requiresBonusNumber: false,
       matchingNumberCount: 6,
-      prizeAmount: 2000000000,
+      prizeAmount: 2_000_000_000,
     }),
     Object.freeze({
       rank: 2,
       requiresBonusNumber: true,
       matchingNumberCount: 5,
-      prizeAmount: 30000000,
+      prizeAmount: 30_000_000,
     }),
     Object.freeze({
       rank: 3,
       requiresBonusNumber: false,
       matchingNumberCount: 5,
-      prizeAmount: 1500000,
+      prizeAmount: 1_500_000,
     }),
     Object.freeze({
       rank: 4,
       requiresBonusNumber: false,
       matchingNumberCount: 4,
-      prizeAmount: 50000,
+      prizeAmount: 50_000,
     }),
     Object.freeze({
       rank: 5,
       requiresBonusNumber: false,
       matchingNumberCount: 3,
-      prizeAmount: 5000,
+      prizeAmount: 5_000,
     }),
   ];
 

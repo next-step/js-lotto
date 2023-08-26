@@ -1,4 +1,5 @@
 import LottoTicketRules from "./LottoTicketRules.js";
+import { getRandomIntegerBetweenMinMax } from "../utils/numberFunc.js";
 
 export default class LottoTicket {
   #rule;
@@ -20,20 +21,15 @@ export default class LottoTicket {
     return [...this.#numbers];
   }
 
-  generateRandomNumber() {
-    return (
-      Math.floor(Math.random() * (this.#rule.max - this.#rule.min + 1)) +
-      this.#rule.min
-    );
-  }
-
   addNumber(number) {
     this.#numbers.add(number);
   }
 
   initializeTicket() {
     while (this.#numbers.size < this.rule.length) {
-      this.addNumber(this.generateRandomNumber());
+      this.addNumber(
+        getRandomIntegerBetweenMinMax(this.#rule.min, this.#rule.max),
+      );
     }
   }
 }

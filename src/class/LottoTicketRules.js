@@ -14,11 +14,11 @@ export default class LottoTicketRules {
     const isMinValidFormat = isNaturalNumber(min);
     const isMaxValidFormat = isNaturalNumber(max);
 
-    const isMinSmallerThanMax =
+    const areMinMaxValuesValid =
       isMaxValidFormat && isMinValidFormat ? min < max : false;
 
     const isRangeValid =
-      isMinSmallerThanMax && isLengthValidFormat
+      areMinMaxValuesValid && isLengthValidFormat
         ? max - min + 1 >= length
         : false;
 
