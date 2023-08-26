@@ -14,7 +14,7 @@ export class LottoClerk {
 
 
   initState() {
-    this.clerk = new Clerk();
+    this.clerk = Clerk;
     this.customer = new Customer();
     this.machine = new Machine();
   }
@@ -40,16 +40,13 @@ export class LottoClerk {
   }
 
 
-  onCalculateResult = () => {
-    const result = this.machine.lottos.map((lotto) => this.clerk.countWinningNumber(lotto));
-    result.forEach((count) => this.customer.countResult(count));
-  };
-
-
-
   onSubmitWinningNumber = (event) => {
     event.preventDefault();
-    this.onCalculateResult();
+    this.customer.calculateResults(
+      this.machine.lottos,
+      this.clerk.winningNumber,
+      this.clerk.bonusNumber  
+    )
     this.output.showResultModal(this.customer.results, this.customer.getProfit())
     this.output.winningForm.removeEventListener(E.SUBMIT, this.onSubmitWinningNumber);
     this.output.winningForm.addEventListener(E.SUBMIT, (event) => {
