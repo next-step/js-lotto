@@ -11,7 +11,8 @@ export const ERROR_MARKER = '[⛔️ERROR]';
 export const ALERT_MESSAGE = Object.freeze({
   QUESTION_PURCHASE_AMOUNT: '구입 금액을 입력해주세요.',
   QUESTION_LOTTO_NUMBER: '당첨 번호를 입력해주세요.',
-  QUESTION_BONUS_NUMBER: '보너스 번호를 입력해주세요.'
+  QUESTION_BONUS_NUMBER: '보너스 번호를 입력해주세요.',
+  STATISTICS_TITLE_MESSAGE: '당첨 통계'
 });
 
 export const ERROR_MESSAGE = Object.freeze({
