@@ -1,3 +1,5 @@
+import { isNaturalNumber } from "../utils/numberFunc.js";
+
 export default class LottoTicketRules {
   static #DEFAULT_MIN = 1;
   static #DEFAULT_MAX = 43;
@@ -8,12 +10,9 @@ export default class LottoTicketRules {
   #length = LottoTicketRules.#DEFAULT_LENGTH;
 
   constructor(min, max, length) {
-    const isLengthValidFormat =
-      typeof length === "number" && Number.isInteger(length) && length > 0;
-    const isMinValidFormat =
-      typeof min === "number" && Number.isInteger(min) && min > 0;
-    const isMaxValidFormat =
-      typeof max === "number" && Number.isInteger(max) && max > 0;
+    const isLengthValidFormat = isNaturalNumber(length);
+    const isMinValidFormat = isNaturalNumber(min);
+    const isMaxValidFormat = isNaturalNumber(max);
 
     const isMinSmallerThanMax =
       isMaxValidFormat && isMinValidFormat ? min < max : false;

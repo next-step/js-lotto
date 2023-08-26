@@ -24,7 +24,7 @@ export default class LottoPrizeCalculator {
   }
 
   validateNumber(number, numberType) {
-    if (typeof number !== "number" || !Number.isInteger(number)) {
+    if (!Number.isInteger(number)) {
       throw new Error(`${numberType} 번호는 정수이어야 합니다.`);
     }
 
