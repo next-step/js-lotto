@@ -18,28 +18,71 @@ describe("A lotto", () => {
   );
 
   it.each([
-    [[1, 2, 3, 4, 5, 6], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 1],
-    [[1, 2, 3, 4, 5, 6], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 43), 1],
-    [[1, 2, 3, 4, 5, 7], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 2],
-    [[1, 2, 3, 4, 5, 43], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 43), 2],
-    [[1, 2, 3, 4, 5, 43], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 3],
-    [[1, 2, 3, 4, 5, 7], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 43), 3],
-    [[1, 2, 3, 4, 42, 43], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 4],
-    [[1, 2, 3, 4, 42, 7], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 4],
-    [[1, 2, 3, 41, 42, 43], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 5],
-    [[1, 2, 3, 41, 42, 7], new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7), 5],
+    [
+      [1, 2, 3, 4, 5, 6],
+      new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7),
+      { matchCount: 6, hasBonusNumber: false, place: 1 },
+    ],
+    [
+      [1, 2, 3, 4, 5, 6],
+      new LottoWinningNumber([1, 2, 3, 4, 5, 6], 43),
+      { matchCount: 6, hasBonusNumber: false, place: 1 },
+    ],
+    [
+      [1, 2, 3, 4, 5, 7],
+      new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7),
+      { matchCount: 5, hasBonusNumber: true, place: 2 },
+    ],
+    [
+      [1, 2, 3, 4, 5, 43],
+      new LottoWinningNumber([1, 2, 3, 4, 5, 6], 43),
+      { matchCount: 5, hasBonusNumber: true, place: 2 },
+    ],
+    [
+      [1, 2, 3, 4, 5, 43],
+      new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7),
+      { matchCount: 5, hasBonusNumber: false, place: 3 },
+    ],
+    [
+      [1, 2, 3, 4, 5, 7],
+      new LottoWinningNumber([1, 2, 3, 4, 5, 6], 43),
+      { matchCount: 5, hasBonusNumber: false, place: 3 },
+    ],
+    [
+      [1, 2, 3, 4, 42, 43],
+      new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7),
+      { matchCount: 4, hasBonusNumber: false, place: 4 },
+    ],
+    [
+      [1, 2, 3, 4, 42, 7],
+      new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7),
+      { matchCount: 4, hasBonusNumber: true, place: 4 },
+    ],
+    [
+      [1, 2, 3, 41, 42, 43],
+      new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7),
+      { matchCount: 3, hasBonusNumber: false, place: 5 },
+    ],
+    [
+      [1, 2, 3, 41, 42, 7],
+      new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7),
+      { matchCount: 3, hasBonusNumber: true, place: 5 },
+    ],
     [
       [31, 32, 33, 34, 35, 36],
       new LottoWinningNumber([1, 2, 3, 4, 5, 6], 7),
-      0,
+      { matchCount: 0, hasBonusNumber: false, place: 0 },
     ],
   ])(
     "should return a correct place and prize",
-    (lottoNumbers, winningNumber, expectedPlace) => {
+    (lottoNumbers, winningNumber, expectedResult) => {
       const lotto = new Lotto(lottoNumbers);
       lotto.check(winningNumber);
-      expect(lotto.place).toEqual(expectedPlace);
-      expect(lotto.prize).toEqual(LOTTO_PRIZE_MAP[lotto.place]);
+      const { matchCount, hasBonusNumber, place, prize } = lotto.result;
+      expect(matchCount).toEqual(expectedResult.matchCount);
+      expect(hasBonusNumber).toEqual(expectedResult.hasBonusNumber);
+      expect(place).toEqual(expectedResult.place);
+      expect(prize).toEqual(LOTTO_PRIZE_MAP[place]);
     }
   );
 });

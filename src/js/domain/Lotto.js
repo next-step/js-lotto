@@ -19,7 +19,10 @@ Object.freeze(ALL_LOTTO_NUMBERS);
 export class Lotto {
   #numbers = [];
   #isChecked = false;
+  #matchCount;
+  #hasBonusNumber;
   #place;
+  #prize;
 
   constructor(numbers) {
     Lotto.validateNumbers(numbers);
@@ -31,35 +34,33 @@ export class Lotto {
     return [...this.#numbers];
   }
 
-  get place() {
-    return this.#place;
-  }
+  // get place() {
+  //   return this.#place;
+  // }
 
-  get prize() {
-    return this.#isChecked ? LOTTO_PRIZE_MAP[this.#place] || 0 : undefined;
+  // get prize() {
+  //   return this.#isChecked ? LOTTO_PRIZE_MAP[this.#place] || 0 : undefined;
+  // }
+
+  get result() {
+    if (this.#isChecked) {
+      return {
+        matchCount: this.#matchCount,
+        hasBonusNumber: this.#hasBonusNumber,
+        place: this.#place,
+        prize: this.#prize,
+      };
+    }
   }
 
   check(winningNumber) {
     const matchingNumbers = this.#numbers.filter((number) =>
       winningNumber.winningNumbers.includes(number)
     );
-    const matchingNumbersCount = matchingNumbers.length;
-    switch (matchingNumbersCount) {
-      case 6:
-        this.#place = 1;
-        break;
-      case 5:
-        this.#place = this.#numbers.includes(winningNumber.bonusNumber) ? 2 : 3;
-        break;
-      case 4:
-        this.#place = 4;
-        break;
-      case 3:
-        this.#place = 5;
-        break;
-      default:
-        this.#place = 0;
-    }
+    this.#matchCount = matchingNumbers.length;
+    this.#hasBonusNumber = this.#numbers.includes(winningNumber.bonusNumber);
+    this.#place = Lotto.getPlace(this.#matchCount, this.#hasBonusNumber);
+    this.#prize = LOTTO_PRIZE_MAP[this.#place] || 0;
     this.#isChecked = true;
   }
 
@@ -84,6 +85,25 @@ export class Lotto {
     if (new Set(numbers).size !== numbers.length) {
       throw new LottoNumberError("Duplicate numbers");
     }
+  }
+
+  static getPlace(matchCount, hasBonusNumber) {
+    if (matchCount == 6) {
+      return 1;
+    }
+    if (matchCount == 5) {
+      if (hasBonusNumber) {
+        return 2;
+      }
+      return 3;
+    }
+    if (matchCount == 4) {
+      return 4;
+    }
+    if (matchCount == 3) {
+      return 5;
+    }
+    return 0;
   }
 
   static random() {
