@@ -12,15 +12,20 @@ export default class LottoPrizeCalculator {
     LOTTO: "로또",
   });
 
-  constructor(prizeRules, ticketRules) {
-    this.#prizeRules =
-      prizeRules instanceof LottoPrizeRules
-        ? prizeRules
-        : new LottoPrizeRules();
-    this.#ticketRules =
-      ticketRules instanceof LottoTicketRules
-        ? ticketRules
-        : new LottoTicketRules();
+  constructor(
+    prizeRules = new LottoPrizeRules(),
+    ticketRules = new LottoTicketRules(),
+  ) {
+    if (!(prizeRules instanceof LottoPrizeRules)) {
+      throw new Error("로또 상금 규칙이 올바르지 않습니다.");
+    }
+
+    if (!(ticketRules instanceof LottoTicketRules)) {
+      throw new Error("로또 규칙이 올바르지 않습니다.");
+    }
+
+    this.#prizeRules = prizeRules;
+    this.#ticketRules = ticketRules;
   }
 
   validateNumber(number, numberType) {

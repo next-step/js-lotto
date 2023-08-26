@@ -10,16 +10,21 @@ export default class LottoGame {
   #vendor;
   #calculator;
 
-  constructor(ticketRules, prizeRules, price) {
-    this.#ticketRules =
-      ticketRules instanceof LottoTicketRules
-        ? ticketRules
-        : new LottoTicketRules();
+  constructor(
+    ticketRules = new LottoTicketRules(),
+    prizeRules = new LottoPrizeRules(),
+    price,
+  ) {
+    if (!(prizeRules instanceof LottoPrizeRules)) {
+      throw new Error("로또 상금 규칙이 올바르지 않습니다.");
+    }
 
-    this.#prizeRules =
-      prizeRules instanceof LottoPrizeRules
-        ? prizeRules
-        : new LottoPrizeRules();
+    if (!(ticketRules instanceof LottoTicketRules)) {
+      throw new Error("로또 규칙이 올바르지 않습니다.");
+    }
+
+    this.#prizeRules = prizeRules;
+    this.#ticketRules = ticketRules;
 
     this.#vendor = new LottoVendor(price);
 

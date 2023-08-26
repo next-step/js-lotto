@@ -14,10 +14,10 @@ const makeLottoPrizeRule = (
 };
 
 describe("LottoPrizeRules 클래스 테스트", () => {
-  test("규칙 형식에 맞지 않는 초기값을 전달하면 기본값으로 설정된다.", () => {
-    const prizeRules = new LottoPrizeRules([makeLottoPrizeRule(1, 6, false)]);
-
-    expect(prizeRules.rules).toStrictEqual(prizeRules.defaultRules);
+  test("규칙 형식에 맞지 않는 초기값을 전달하면 에러가 발생한다.", () => {
+    expect(
+      () => new LottoPrizeRules([makeLottoPrizeRule(1, 6, false)]),
+    ).toThrowError("상금 규칙 중 없는 값이 있습니다.");
   });
 
   test.each([-1, 1.2])(

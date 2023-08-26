@@ -11,10 +11,10 @@ describe("LottoVendor 클래스 테스트", () => {
     },
   );
 
-  test.each([-1, 0])("로또 가격이 0이하이면 가격은 기본값이다.", (price) => {
-    const vendor = new LottoVendor(price);
-
-    expect(vendor.price).toBe(vendor.defaultPrice);
+  test.each([-1, 0])("로또 가격이 0이하이면 에러가 발생한다.", (price) => {
+    expect(() => new LottoVendor(price)).toThrowError(
+      "가격은 0보다 커야합니다.",
+    );
   });
 
   test.each(["test", {}, () => {}, undefined])(

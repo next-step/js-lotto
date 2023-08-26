@@ -1,58 +1,66 @@
+const DEFAULT_RULES = [
+  Object.freeze({
+    rank: 1,
+    requiresBonusNumber: false,
+    matchingNumberCount: 6,
+    prizeAmount: 2_000_000_000,
+  }),
+  Object.freeze({
+    rank: 2,
+    requiresBonusNumber: true,
+    matchingNumberCount: 5,
+    prizeAmount: 30_000_000,
+  }),
+  Object.freeze({
+    rank: 3,
+    requiresBonusNumber: false,
+    matchingNumberCount: 5,
+    prizeAmount: 1_500_000,
+  }),
+  Object.freeze({
+    rank: 4,
+    requiresBonusNumber: false,
+    matchingNumberCount: 4,
+    prizeAmount: 50_000,
+  }),
+  Object.freeze({
+    rank: 5,
+    requiresBonusNumber: false,
+    matchingNumberCount: 3,
+    prizeAmount: 5_000,
+  }),
+];
+
+const REQUIRED_KEYS = ["rank", "matchingNumberCount", "prizeAmount"];
+
 export default class LottoPrizeRules {
   #rules;
-  #defaultRules = [
-    Object.freeze({
-      rank: 1,
-      requiresBonusNumber: false,
-      matchingNumberCount: 6,
-      prizeAmount: 2_000_000_000,
-    }),
-    Object.freeze({
-      rank: 2,
-      requiresBonusNumber: true,
-      matchingNumberCount: 5,
-      prizeAmount: 30_000_000,
-    }),
-    Object.freeze({
-      rank: 3,
-      requiresBonusNumber: false,
-      matchingNumberCount: 5,
-      prizeAmount: 1_500_000,
-    }),
-    Object.freeze({
-      rank: 4,
-      requiresBonusNumber: false,
-      matchingNumberCount: 4,
-      prizeAmount: 50_000,
-    }),
-    Object.freeze({
-      rank: 5,
-      requiresBonusNumber: false,
-      matchingNumberCount: 3,
-      prizeAmount: 5_000,
-    }),
-  ];
-
-  static #REQUIRED_KEYS = ["rank", "matchingNumberCount", "prizeAmount"];
 
   #validateRulesProperty = (rules) => {
     if (!Array.isArray(rules)) {
-      return false;
+      throw new Error("상금 규칙은 배열이어야 합니다.");
     }
 
-    return rules.every((rule) =>
-      LottoPrizeRules.#REQUIRED_KEYS.every((key) => rule.hasOwnProperty(key)),
+    const isAllRequiredKeysExist = rules.every((rule) =>
+      REQUIRED_KEYS.every((key) => rule.hasOwnProperty(key)),
     );
+
+    if (!isAllRequiredKeysExist) {
+      throw new Error("상금 규칙 중 없는 값이 있습니다.");
+    }
   };
 
   #validateRuleFormat = (rules) => {
     rules.forEach((rule) => {
-      const { rank, matchingNumberCount, prizeAmount } = rule;
+      const { rank, matchingNumberCount, prizeAmount, requiresBonusNumber } =
+        rule;
 
       if (
         typeof rank !== "number" ||
         typeof matchingNumberCount !== "number" ||
-        typeof prizeAmount !== "number"
+        typeof prizeAmount !== "number" ||
+        (typeof requiresBonusNumber !== "undefined" &&
+          typeof requiresBonusNumber !== "boolean")
       ) {
         throw new Error("규칙의 자료형이 일치하지 않습니다.");
       }
@@ -77,13 +85,8 @@ export default class LottoPrizeRules {
     }
   };
 
-  constructor(rules) {
-    const isRulesFormatValid = this.#validateRulesProperty(rules);
-
-    if (!isRulesFormatValid) {
-      this.#rules = [...this.#defaultRules];
-      return;
-    }
+  constructor(rules = DEFAULT_RULES) {
+    this.#validateRulesProperty(rules);
 
     this.#validateRuleFormat(rules);
 
@@ -91,19 +94,11 @@ export default class LottoPrizeRules {
 
     this.#rules = rules.map((rule) => ({
       ...rule,
-      requiresBonusNumber:
-        typeof rule.requiresBonusNumber === "boolean"
-          ? rule.requiresBonusNumber
-          : false,
     }));
   }
 
   get rules() {
     return [...this.#rules];
-  }
-
-  get defaultRules() {
-    return [...this.#defaultRules];
   }
 
   getSingleRule(rank) {

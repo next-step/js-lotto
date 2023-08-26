@@ -1,24 +1,20 @@
 import LottoTicket from "./LottoTicket.js";
 
+const DEFAULT_PRICE = 1000;
+
 export default class LottoVendor {
   #price;
-  #defaultPrice = 1000;
 
-  constructor(price) {
-    if (price !== undefined && typeof price !== "number") {
+  constructor(price = DEFAULT_PRICE) {
+    if (typeof price !== "number") {
       throw new Error("가격은 number 이어야 합니다.");
     }
 
-    this.#price =
-      price <= 0 || price === undefined ? this.#defaultPrice : Number(price);
-  }
+    if (price <= 0) {
+      throw new Error("가격은 0보다 커야합니다.");
+    }
 
-  get price() {
-    return this.#price;
-  }
-
-  get defaultPrice() {
-    return this.#defaultPrice;
+    this.#price = price;
   }
 
   buy(payment, ticketRules) {

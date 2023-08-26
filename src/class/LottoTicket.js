@@ -5,11 +5,12 @@ export default class LottoTicket {
   #rule;
   #numbers = new Set([]);
 
-  constructor(ticketRules) {
-    this.#rule =
-      ticketRules instanceof LottoTicketRules
-        ? ticketRules
-        : new LottoTicketRules();
+  constructor(ticketRules = new LottoTicketRules()) {
+    if (!(ticketRules instanceof LottoTicketRules)) {
+      throw new Error("로또 규칙이 올바르지 않습니다.");
+    }
+
+    this.#rule = ticketRules;
     this.initializeTicket();
   }
 
