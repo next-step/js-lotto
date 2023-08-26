@@ -10,6 +10,8 @@ describe("A lotto retailer sells lotto lottoList for money", () => {
     [1500, 1, 500],
     [10000, 10, 0],
     [100000, 100, 0],
+    [101000, 100, 1000],
+    [200000, 100, 100000],
   ])(
     "should return correct number of lotto lottoList and change",
     (money, expectedNumberOfLotto, expectedChange) => {

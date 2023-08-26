@@ -17,3 +17,4 @@ export const LOTTO_PRIZE_MAP = {
 Object.freeze(LOTTO_PRIZE_MAP);
 
 export const LOTTO_PRICE = 1000;
+export const MAX_SELL_QUANTITY_AT_ONCE = 100;
