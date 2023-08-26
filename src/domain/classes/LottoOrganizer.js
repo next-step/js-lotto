@@ -7,7 +7,7 @@ class LottoOrganizer {
     this.#lottoCalculator = lottoCalculator;
   }
 
-  get lottoPrice() {
+  static lottoPrice() {
     return LOTTO_PRICE;
   }
 
@@ -26,7 +26,7 @@ class LottoOrganizer {
   }
 
   getWinningReturnRate(lottoTickets) {
-    const totalCost = this.lottoPrice * lottoTickets.length;
+    const totalCost = LottoOrganizer.lottoPrice() * lottoTickets.length;
     const totalPrize = lottoTickets.reduce((acc, lottoTicket) => {
       const { prize } = lottoTicket.result;
       return acc + prize;

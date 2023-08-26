@@ -1,12 +1,13 @@
 import { ERROR_MESSAGE, LOTTO_MODE } from '../constants/index';
 import LottoTicket from './LottoTicket';
+import LottoOrganizer from './LottoOrganizer';
 
 class LottoSeller {
   #sellCount = 0;
   #lottoPrice = 0;
 
-  constructor(lottoOrganizer) {
-    this.#lottoPrice = lottoOrganizer.lottoPrice;
+  constructor() {
+    this.#lottoPrice = LottoOrganizer.lottoPrice();
   }
 
   static validateLottoPurchaseAvailability(amount, lottoPrice) {
