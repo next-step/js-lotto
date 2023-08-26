@@ -7,9 +7,7 @@ import { LottoPurchaseFormView, PurchasedLottoView, WinningInfoModalView, Winnin
 
 import { LottoGame } from '@step1/model';
 
-import { Controller } from '@step3/controller';
-
-export default class LottoApplicationController extends Controller {
+export default class LottoApplicationController {
   private lottoPurchaseFormView = new LottoPurchaseFormView($<HTMLFormElement>(SELECTOR_NAME.INPUT_PRICE.FORM));
 
   private purchasedLottoView = new PurchasedLottoView(
@@ -22,8 +20,10 @@ export default class LottoApplicationController extends Controller {
 
   private winningInfoModalView = new WinningInfoModalView($<HTMLDivElement>(SELECTOR_NAME.WINNING_INFO.MODAL));
 
+  private lottoGame?: LottoGame;
+
   constructor(lottoGame?: LottoGame) {
-    super(lottoGame);
+    this.lottoGame = lottoGame;
     this.reset();
     this.initEvent();
   }
