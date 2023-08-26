@@ -2,6 +2,7 @@ import { ERROR_MESSAGE } from '../constants/error-message.js';
 import { LOTTO_AMOUNT_UNIT } from '../constants/lotto.js';
 import { Lotto } from '../domain/Lotto.js';
 import { LottoMachine } from '../domain/LottoMachine.js';
+import { LottoNumberGenerator } from '../domain/LottoNumberGenerator.js';
 import { WinningLotto } from '../domain/WinningLotto.js';
 import LottoView from './LottoVIew.js';
 
@@ -12,7 +13,7 @@ export class LottoController {
   #winningLotto;
 
   constructor() {
-    this.#lottoMachine = new LottoMachine();
+    this.#lottoMachine = new LottoMachine(LottoNumberGenerator);
     this.#lottoView = new LottoView();
   }
 

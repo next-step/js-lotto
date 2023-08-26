@@ -4,17 +4,17 @@ import {
   LOTTO_FIFTH_PRIZE,
   LOTTO_FIRST_PRIZE,
   LOTTO_FOURTH_PRIZE,
-  LOTTO_NUMBERS_LENGTH,
   LOTTO_SECOND_PRIZE,
   LOTTO_THIRD_PRIZE,
 } from '../constants/lotto.js';
-import { getRandomNumber } from '../utils/number.js';
 import { Lotto } from './Lotto.js';
 
 export class LottoMachine {
   #winningLottoResult;
+  #lottoNumberGenrator;
 
-  constructor() {
+  constructor(lottoNumberGenerator) {
+    this.#lottoNumberGenrator = lottoNumberGenerator;
     this.#winningLottoResult = {
       FIRST: [],
       SECOND: [],
@@ -31,7 +31,7 @@ export class LottoMachine {
 
     return Array.from(
       { length: this.#getNumberOfLotto(amount) },
-      () => new Lotto(this.#generateLottoNumbers())
+      () => new Lotto(this.#lottoNumberGenrator.generateNumber())
     );
   }
 
@@ -89,19 +89,6 @@ export class LottoMachine {
 
   #getNumberOfLotto(amount) {
     return amount / LOTTO_AMOUNT_UNIT;
-  }
-
-  #generateLottoNumbers() {
-    const numbers = [];
-
-    while (numbers.length < LOTTO_NUMBERS_LENGTH) {
-      const randomNumber = getRandomNumber(1, 45);
-      if (!numbers.includes(randomNumber)) {
-        numbers.push(randomNumber);
-      }
-    }
-
-    return numbers.sort((a, b) => a - b);
   }
 
   #validateMoneyUnit(amount, unit) {
