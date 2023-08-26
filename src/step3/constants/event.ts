@@ -8,4 +8,4 @@ export const EVENT = {
   SUBMIT: 'submit',
   CLICK: 'click',
   INPUT: 'input',
-};
+} as const;
