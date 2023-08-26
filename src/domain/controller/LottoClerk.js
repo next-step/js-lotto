@@ -66,8 +66,8 @@ export class LottoClerk {
     } catch (error) {
       this.output.showErrorMessage(testId, error.message);
     } finally {
-      this.clerk.budget = Math.round(value / LOTTO_PRICE) * LOTTO_PRICE;
-      this.customer.money = Math.round(value / LOTTO_PRICE) * LOTTO_PRICE;
+      this.clerk.budget = Math.floor(value / LOTTO_PRICE) * LOTTO_PRICE;
+      this.customer.money = Math.floor(value / LOTTO_PRICE) * LOTTO_PRICE;
       this.clerk.lottoCount = this.budget / this.lottoPrice;
     }
   };
