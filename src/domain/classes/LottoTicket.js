@@ -10,6 +10,7 @@ import {
 } from '../constants/index';
 
 class LottoTicket {
+  #result = null;
   #lottoNumber = [];
   #mode = LOTTO_MODE.MANUAL;
 
@@ -65,8 +66,16 @@ class LottoTicket {
     return this.#lottoNumber;
   }
 
+  get result() {
+    return this.#result;
+  }
+
   #generateLottoNumber() {
     return shuffleArray(LOTTO_BALLS).slice(0, LOTTO_NUMBER_LENGTH);
+  }
+
+  setResult(result) {
+    this.#result = result;
   }
 }
 
