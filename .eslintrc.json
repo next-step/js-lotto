@@ -4,7 +4,7 @@
     "node": true,
     "jest": true
   },
-  "extends": ["airbnb-base", "plugin:jsdoc/recommended", "prettier", "plugin:@typescript-eslint/recommended"],
+  "extends": ["airbnb-base", "plugin:jsdoc/recommended", "plugin:@typescript-eslint/recommended", "prettier"],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "parserOptions": {
