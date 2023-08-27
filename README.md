@@ -3,6 +3,9 @@
 </p>
 <h2 align="middle">행운의 로또</h2>
 <p align="middle">자바스크립트로 구현하는 로또 어플리케이션</p>
+<h5 align="middle">📍 학습 목표
+UI와 도메인 영역을 분리할 수 있는 설계를 고민해보고, <br> 목적에 맞게 객체와 함수를 활용
+단위 테스트 기반으로 점진적인 리팩터링</h5>
 <p align="middle">
   <img src="https://img.shields.io/badge/version-1.0.0-blue?style=flat-square" alt="template version"/>
   <img src="https://img.shields.io/badge/language-html-red.svg?style=flat-square"/>
