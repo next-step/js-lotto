@@ -27,9 +27,9 @@ export const actions = {
         commit(LOTTO_MUTATIONS_TYPE.ADD_LOTTO, { lotto })
       )
 
-      onSuccess()
+      onSuccess?.()
     } catch (error) {
-      onError(error)
+      onError?.(error)
     }
   },
   updateWinNumber: ({ commit }, { winNumberText, onSuccess, onError }) => {
@@ -39,9 +39,9 @@ export const actions = {
       const winNumberList = winNumberText.split(',').map(num => Number(num))
       commit(LOTTO_MUTATIONS_TYPE.SET_WIN_NUMBER_LIST, { winNumberList })
 
-      onSuccess()
+      onSuccess?.()
     } catch (error) {
-      onError(error)
+      onError?.(error)
     }
   },
   updateBonusNumber: (
@@ -68,18 +68,18 @@ export const actions = {
         lottoResult: { rate, stats }
       })
 
-      onSuccess()
+      onSuccess?.()
     } catch (error) {
-      onError(error)
+      onError?.(error)
     }
   },
   updateRetry: ({ commit }, { answer, onSuccess, onClose }) => {
     if (answer === 'y') {
       commit(LOTTO_MUTATIONS_TYPE.RESET)
-      onSuccess()
+      onSuccess?.()
       return
     }
 
-    onClose()
+    onClose?.()
   }
 }
