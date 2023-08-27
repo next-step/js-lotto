@@ -32,8 +32,8 @@ export default class PurchasedLottoView extends View<HTMLTableSectionElement> {
   }
 
   private renderPurchasedLotto(lottoNumbers: number[][]) {
-    this.$purchasedLottoContainer.innerHTML = lottoNumbers.reduce((purchasedLottoNode) => {
-      purchasedLottoNode += NODE_TEMPLATE.LOTTO;
+    this.$purchasedLottoContainer.innerHTML = lottoNumbers.reduce((purchasedLottoNode, lottoNumber) => {
+      purchasedLottoNode += NODE_TEMPLATE.LOTTO(lottoNumber.join(`${SYMBOLS.COMMA} `));
       return purchasedLottoNode;
     }, '');
     this.$purchasedLottos = this.$purchasedLottoContainer.querySelectorAll<HTMLLIElement>(
@@ -41,22 +41,19 @@ export default class PurchasedLottoView extends View<HTMLTableSectionElement> {
     );
   }
 
-  private renderLottoNumber(lottoNumberNode: Element, lottoNumbers?: number[]) {
-    lottoNumberNode.textContent = lottoNumbers ? lottoNumbers.join(`${SYMBOLS.COMMA} `) : null;
-    lottoNumberNode.className = lottoNumbers ? 'text-xl ml-2' : null;
-  }
-
-  public renderLottoNumbersInPurchasedLotto(lottoNumbers?: number[][]) {
-    this.$purchasedLottos.forEach((lottoNode, index) => {
-      const lottoNumberNode = lottoNode.querySelector(SELECTOR_NAME.PURCHASED.LOTTO_NUMBERS);
-      this.renderLottoNumber(lottoNumberNode, lottoNumbers ? lottoNumbers[index] : null);
-    });
+  public renderLottoNumbersInToggleCondition() {
+    if (this.$lottoNumbersToggleButton.checked) {
+      this.$purchasedLottoContainer.classList.add('view-lotto-numbers');
+      return;
+    }
+    this.$purchasedLottoContainer.classList.remove('view-lotto-numbers');
   }
 
   public renderPurchasedLottoView(lottoNumbers: number[][]) {
     this.resetCheckboxStatus();
     this.renderPurchasedLottoLabel(lottoNumbers.length);
     this.renderPurchasedLotto(lottoNumbers);
+    this.renderLottoNumbersInToggleCondition();
   }
 
   public resetCheckboxStatus() {
