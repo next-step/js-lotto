@@ -1,3 +1,7 @@
+import {
+  convertStringToNumber,
+  convertToNumberArray,
+} from '../src/js/utils/format.js'
 import { generateLottoNumbers } from '../src/js/utils/generateLottoNumbers.js'
 import { validate } from '../src/js/utils/validate.js'
 
@@ -103,3 +107,34 @@ describe('validate', () => {
     })
   })
 })
+
+describe('convertToNumberArray(input)', () => {
+  test.each([
+    ['1', '2', '3'],
+    ['34', '55', '68'],
+    '12,13,15,18,20',
+    '-1,-2,-3',
+  ])('%s to be true', (value) => {
+    expect(convertToNumberArray(value).every(Number.isFinite)).toBe(true)
+  })
+
+  test.each([['a', 'b', 'c'], 'a,b,c,d', [null, {}, undefined, []]])(
+    '%s to be false',
+    (value) => {
+      expect(convertToNumberArray(value).every(Number.isFinite)).toBe(false)
+    },
+  )
+})
+
+describe('convertStringToNumber', () => {
+  test.each([
+    ['1', 1],
+    ['2', 2],
+    ['555', 555],
+    ['-1', -1],
+  ])('%s => %s', (value) => {
+    expect(convertStringToNumber(value) == Number(value)).toBe(true)
+  })
+})
+
+describe('createLottoNumberObject', () => {})

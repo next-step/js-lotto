@@ -12,14 +12,49 @@ describe('LottoWinningNumbers', () => {
       extraNum: 45,
     }
 
-    test('to be truthy', () => {
-      expect(() => new LottoWinningNumbers(validNumbers)).toBeTruthy()
+    test('not to throw error', () => {
+      expect(() => new LottoWinningNumbers(validNumbers)).not.toThrow()
     })
 
-    test('to be throw', () => {
+    test.each([
+      {
+        selectedNums: [''],
+        extraNum: 45,
+      },
+      {
+        selectedNums: [3],
+        extraNum: 45,
+      },
+      {},
+      null,
+      [],
+      undefined,
+    ])('%s to throw error', (invalidNumbers) => {
       expect(() => new LottoWinningNumbers(invalidNumbers)).toThrow()
     })
   })
-  describe('- 당첨 번호가 서로 중복될 경우 에러를 출력한다.', () => {})
-  describe('-1 ~ 45의 범위 이내의 숫자가 입력되지 않은 경우 에러를 출력한다.', () => {})
+  describe('- 당첨 번호가 서로 중복될 경우 에러를 출력한다.', () => {
+    test.each([
+      {
+        selectedNums: [4, 6, 10, 19, 43, 44],
+        extraNum: 45,
+      },
+    ])('%s not to throw error', (validNumbers) => {
+      expect(() => new LottoWinningNumbers(validNumbers)).not.toThrow()
+    })
+
+    test.each([
+      {
+        selectedNums: [3, 3, 3, 3, 3, 3],
+        extraNum: 45,
+      },
+      {
+        selectedNums: [45, 45, 45],
+        extraNum: 45,
+      },
+    ])('%s to throw error', (invalidNumbers) => {
+      expect(() => new LottoWinningNumbers(invalidNumbers)).toThrow()
+    })
+  })
+  describe('- 1 ~ 45의 범위 이내의 숫자가 입력되지 않은 경우 에러를 출력한다.', () => {})
 })

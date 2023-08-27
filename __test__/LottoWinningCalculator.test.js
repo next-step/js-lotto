@@ -53,7 +53,7 @@ describe('LottoWinningCalculator', () => {
       5: 0,
       5.5: 0,
       6: 0,
-      profitRate: 62.5,
+      profitRate: `62.50`,
     }
 
     // Then

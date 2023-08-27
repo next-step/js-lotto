@@ -43,7 +43,7 @@ class LottoWinningCalculator {
 
     const totalCost = 1000 * statuses.length
 
-    return (totalPofit / totalCost) * 100
+    return ((totalPofit / totalCost) * 100).toFixed(2)
   }
 
   #setResult(ranks, profitRate) {
