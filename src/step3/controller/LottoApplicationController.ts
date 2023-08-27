@@ -1,3 +1,4 @@
+import { LottoBuyer, LottoResult } from '@step1/model';
 import { CUSTOM_EVENT, EVENT } from '@step3/constants/event';
 import { CLASS_NAME, SELECTOR_NAME } from '@step3/constants/selector';
 
@@ -5,25 +6,21 @@ import { $ } from '@step3/utils/dom';
 
 import { LottoPurchaseFormView, PurchasedLottoView, WinningInfoModalView, WinningLottoInfoFormView } from '@step3/view';
 
-import { LottoGame } from '@step1/model';
-
 export default class LottoApplicationController {
-  private lottoPurchaseFormView = new LottoPurchaseFormView($<HTMLFormElement>(SELECTOR_NAME.INPUT_PRICE.FORM));
+  private lottoPurchaseFormView: LottoPurchaseFormView;
 
-  private purchasedLottoView = new PurchasedLottoView(
-    $<HTMLTableSectionElement>(SELECTOR_NAME.PURCHASED.LOTTOS_SECTION),
-  );
+  private purchasedLottoView: PurchasedLottoView;
 
-  private winningLottoInfoFormView = new WinningLottoInfoFormView(
-    $<HTMLFormElement>(SELECTOR_NAME.WINNING_LOTTO_INFO.FORM),
-  );
+  private winningLottoInfoFormView: WinningLottoInfoFormView;
 
-  private winningInfoModalView = new WinningInfoModalView($<HTMLDivElement>(SELECTOR_NAME.WINNING_INFO.MODAL));
+  private winningInfoModalView: WinningInfoModalView;
 
-  private lottoGame?: LottoGame;
+  private lottoBuyer: LottoBuyer;
 
-  constructor(lottoGame?: LottoGame) {
-    this.lottoGame = lottoGame;
+  private lottoResult: LottoResult;
+
+  constructor() {
+    this.initElements();
     this.reset();
     this.initEvent();
   }
@@ -33,6 +30,19 @@ export default class LottoApplicationController {
     this.initPurchasedLottosToggleButtonClickEvent();
     this.initWinningLottoInfoFormSubmitEvent();
     this.initWinningInfoModalResetEvent();
+  }
+
+  private initElements() {
+    this.lottoPurchaseFormView = new LottoPurchaseFormView($<HTMLFormElement>(SELECTOR_NAME.INPUT_PRICE.FORM));
+    this.purchasedLottoView = new PurchasedLottoView(
+      $<HTMLTableSectionElement>(SELECTOR_NAME.PURCHASED.LOTTOS_SECTION),
+    );
+    this.winningLottoInfoFormView = new WinningLottoInfoFormView(
+      $<HTMLFormElement>(SELECTOR_NAME.WINNING_LOTTO_INFO.FORM),
+    );
+    this.winningInfoModalView = new WinningInfoModalView($<HTMLDivElement>(SELECTOR_NAME.WINNING_INFO.MODAL));
+    this.lottoBuyer = new LottoBuyer();
+    this.lottoResult = new LottoResult(this.lottoBuyer);
   }
 
   private initLottoPurchaseFormSubmitEvent() {
@@ -67,8 +77,7 @@ export default class LottoApplicationController {
   }
 
   private resetLottoGame() {
-    this.lottoGame.setBuyerInfo({ lottos: [], investmentAmount: 0 });
-    this.lottoGame.setWinningLottoInfo({ winningLottoNumbers: [], bonusNumber: 0 });
+    this.lottoBuyer.init();
   }
 
   private resetViews() {
@@ -92,7 +101,7 @@ export default class LottoApplicationController {
 
   private handlePurchaseLotto(purchaseAmount: number) {
     this.processWithAlertIfThrowError(() => {
-      const lottoNumbers = this.lottoGame.createLottoNumbers(purchaseAmount);
+      const lottoNumbers = this.lottoBuyer.buyLottos(purchaseAmount);
       this.purchasedLottoView.renderPurchasedLottoView(lottoNumbers);
       this.purchasedLottoView.show();
       this.winningLottoInfoFormView.show();
@@ -108,28 +117,8 @@ export default class LottoApplicationController {
   }
 
   private createWinningInfo(event: CustomEvent) {
-    const { winningLottoNumber, bonusNumber, lottoNumbers, investmentAmount } = this.createResultParams(event);
-    return this.lottoGame.createResults({
-      winningLottoNumber,
-      bonusNumber,
-      lottoNumbers,
-      investmentAmount,
-    });
-  }
-
-  private createResultParams(event: CustomEvent) {
-    const { winningLottoNumber = [], bonusNumber = 0 } = this.createWinningLottoInfo(event?.detail);
-    const { lottos = [], investmentAmount = 0 } = this.lottoGame.buyerInfo;
-    const lottoNumbers = lottos.map((lotto) => lotto.getLottoNumbers());
-    return { winningLottoNumber, bonusNumber, lottoNumbers, investmentAmount };
-  }
-
-  private createWinningLottoInfo(winningLottoInfo: { winningLottoNumbers: string; bonusNumber: string }) {
-    const { winningLottoNumbers, bonusNumber } = winningLottoInfo;
-    return {
-      winningLottoNumber: this.lottoGame.createWinningLottoNumbers(winningLottoNumbers),
-      bonusNumber: Number(bonusNumber),
-    };
+    const { winningLottoNumbers, bonusNumber } = event.detail;
+    return this.lottoResult.createResults({ winningLottoNumbers, bonusNumber });
   }
 
   private processWithAlertIfThrowError<T, U>(executeFunction: (arg?: U) => T, arg?: U): void {

@@ -4,4 +4,7 @@ export { default as LottoCalculator } from './LottoCalculator';
 export { default as LottoReward } from './LottoReward';
 export { default as Bank } from './Bank';
 export { default as LottoNumberMaker } from './LottoNumberMaker';
+
 export * from './LottoGame';
+export * from './LottoBuyer';
+export * from './LottoResult';
