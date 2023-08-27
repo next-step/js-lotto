@@ -14,7 +14,4 @@ export class View {
   hide() {
     this.$element.style.display = 'none';
   }
-
-  // eslint-disable-next-line class-methods-use-this
-  reset() {}
 }
