@@ -116,7 +116,7 @@ describe('store/actions', () => {
       expect(commit).toHaveBeenNthCalledWith(
         1,
         LOTTO_MUTATIONS_TYPE.SET_BONUS_NUMBER,
-        7
+        { bonusNumber: 7 }
       )
       expect(commit).toHaveBeenNthCalledWith(
         2,
