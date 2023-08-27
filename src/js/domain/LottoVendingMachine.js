@@ -7,7 +7,6 @@ class LottoVendingMachine {
   #purchaseAmount
   #issuedCount
   #lottos
-  static MIN_AMOUNT = 1000
 
   purchase(amount) {
     this.#validateAmount(amount)
@@ -24,12 +23,7 @@ class LottoVendingMachine {
     )
   }
   #validateAmount(amount) {
-    if (
-      !(
-        validate.isPositiveNumber(amount) &&
-        amount >= LottoVendingMachine.MIN_AMOUNT
-      )
-    )
+    if (!(validate.isPositiveNumber(amount) && amount >= LOTTO_MIN_PRICE))
       throw new Error(ERROR_MESSAGE.INVALID_AMOUNT)
   }
 

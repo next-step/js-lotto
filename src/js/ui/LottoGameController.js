@@ -16,11 +16,23 @@ class LottoGameController {
   }
 
   async run() {
-    /* 로또 구매 및 발행 */
-    // 입력기를 실행해 로또 구매금액을 입력받는다.
+    const purchasedLottoList = await this.purchaseAndIssueLottos()
+    const lottoWinningNumbers = await this.setWinningNumbers()
+    const result = this.calculateResults(
+      lottoWinningNumbers,
+      purchasedLottoList,
+    )
+    const formattedResult = this.#formatLottoResults(result)
+
+    this.#view.print(formattedResult)
+    process.exit()
+  }
+
+  async purchaseAndIssueLottos() {
+    // 입력기를 실행해 로또 구매 금액을 입력받는다.
     const purchaseAmount = await this.#view.getPurchaseAmount()
 
-    // 로또 판매기에 구매금액을 입력해 로또 목록을 받아온다.
+    // 로또 판매기에 구매 금액을 입력해 로또 목록을 받아온다.
     this.#vendingMachine.purchase(purchaseAmount)
     const purchasedLottoList = this.#vendingMachine.lottos
 
@@ -31,36 +43,36 @@ class LottoGameController {
       this.#view.print(numbers)
     })
 
-    /* 로또 당첨 번호 세팅 */
+    // 구매한 로또 목록을 리턴한다.
+    return purchasedLottoList
+  }
+
+  async setWinningNumbers() {
+    // 유저가 입력한 번호를 받아온다.
     const selectedNums = (await this.#view.getLottoWinningNumbers()).split(',')
     const extraNum = await this.#view.getExtraNumber()
-    const lottoWinningNumbers = new LottoWinningNumbers(selectedNums, extraNum)
+    // 입력된 번호를 바탕으로 로또 당첨 번호를 만들어 리턴한다.
+    return new LottoWinningNumbers(selectedNums, extraNum)
+  }
 
-    // 로또 목록에 당첨 번호를 전달해 당첨 갯수 상태를 변경한다.
+  calculateResults(lottoWinningNumbers, purchasedLottoList) {
+    // 로또 당첨 번호를 전달해 각 로또의 당첨 상태를 변경하고 이를 가져온다.
     const purchasedLottoStatuses = this.#getLottoStatus(
       lottoWinningNumbers.numbers,
       purchasedLottoList,
     )
-
-    // 변경된 로또의 상태목록을 로또 당첨 확인기에 전달한다.
+    // 로또 상태를 바탕으로 수익률을 계산한다.
     this.#winningCalculator.calculate(purchasedLottoStatuses)
-    const result = this.#winningCalculator.result
-    const formattedResult = this.#formatLottoResults(result)
 
-    // 출력기에 당첨 갯수와 수익률을 전달한다.
-    this.#view.print(formattedResult)
-
-    // 게임을 종료한다.
-    process.exit()
+    // 수익률을 리턴한다.
+    return this.#winningCalculator.result
   }
 
   #getLottoStatus(lottoWinningNumbers, purchasedLottoList) {
-    const purchasedLottoStatuses = purchasedLottoList.map((lotto) => {
+    return purchasedLottoList.map((lotto) => {
       lotto.setStatus(lottoWinningNumbers)
       return lotto.status
     })
-
-    return purchasedLottoStatuses
   }
 
   #formatLottoResults(result) {
@@ -72,15 +84,11 @@ class LottoGameController {
       6: PROMPT.LOTTO_MATCHING_RESULTS[6],
     }
 
-    let output = ''
+    const output = Object.keys(mapping).reduce((acc, key) => {
+      return acc + `${mapping[key]} - ${result[key]}개\n`
+    }, '')
 
-    for (const key in mapping) {
-      output += `${mapping[key]} - ${result[key]}개\n`
-    }
-
-    output += `총 수익률은 ${result.profitRate}%입니다.`
-
-    return output
+    return output + `총 수익률은 ${result.profitRate}%입니다.`
   }
 }
 

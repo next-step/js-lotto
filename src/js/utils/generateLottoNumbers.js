@@ -1,6 +1,8 @@
+import { SELECTED_NUMS_LENGTH } from '../../constants/conditions.js'
+
 const generateSingleLottoNumber = () => Math.floor(Math.random() * 45) + 1
 
-export const generateNotDuplicatedExtraNumber = (selectedNumbers) => {
+export const generateUniqExtraNumber = (selectedNumbers) => {
   const numSet = new Set(selectedNumbers)
   let extraNum = generateSingleLottoNumber()
 
@@ -11,8 +13,8 @@ export const generateNotDuplicatedExtraNumber = (selectedNumbers) => {
   return extraNum
 }
 
-export const generateLottoNumbers = (count = 6) => {
-  let randomNumbers = new Set()
+export const generateLottoNumbers = (count = SELECTED_NUMS_LENGTH) => {
+  const randomNumbers = new Set()
 
   while (randomNumbers.size < count) {
     const number = generateSingleLottoNumber()

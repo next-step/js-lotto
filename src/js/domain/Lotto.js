@@ -1,7 +1,7 @@
 import LottoBase from './LottoBase.js'
 import {
   generateLottoNumbers,
-  generateNotDuplicatedExtraNumber,
+  generateUniqExtraNumber,
 } from '../utils/generateLottoNumbers.js'
 
 class Lotto extends LottoBase {
@@ -9,7 +9,7 @@ class Lotto extends LottoBase {
 
   constructor() {
     const selectedNums = generateLottoNumbers()
-    const extraNum = generateNotDuplicatedExtraNumber(selectedNums)
+    const extraNum = generateUniqExtraNumber(selectedNums)
 
     super(selectedNums, extraNum)
 

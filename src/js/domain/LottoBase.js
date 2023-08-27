@@ -1,7 +1,8 @@
 import { ERROR_MESSAGE } from '../../constants/errorMessage.js'
+import { convertStringToNumber, convertToNumberArray } from '../utils/format.js'
 import {
   generateLottoNumbers,
-  generateNotDuplicatedExtraNumber,
+  generateUniqExtraNumber,
 } from '../utils/generateLottoNumbers.js'
 import { validate } from '../utils/validate.js'
 
@@ -11,37 +12,16 @@ class LottoBase {
 
   constructor(
     selectedNums = generateLottoNumbers(),
-    extraNum = generateNotDuplicatedExtraNumber(selectedNums),
+    extraNum = generateUniqExtraNumber(selectedNums),
   ) {
-    const formattedSelectedNums = this.#formatSelectedNums(selectedNums)
-    const formattedExtraNum = this.#formatExtraNum(extraNum)
+    const formattedSelectedNums = convertToNumberArray(selectedNums)
+    const formattedExtraNum = convertStringToNumber(extraNum)
     this.#validate(formattedSelectedNums, formattedExtraNum)
 
     this.numbers = {
       selectedNums: formattedSelectedNums,
       extraNum: formattedExtraNum,
     }
-  }
-
-  #formatSelectedNums(selectedNums) {
-    // 배열로 들어왔을 때
-    if (Array.isArray(selectedNums)) {
-      return selectedNums.map(Number)
-    }
-    // 문자열로 들어왔을 때
-    if (typeof selectedNums === 'string') {
-      return selectedNums.split(',')
-    }
-
-    return selectedNums
-  }
-
-  #formatExtraNum(extraNum) {
-    if (typeof extraNum === 'string') {
-      return Number(extraNum)
-    }
-
-    return extraNum
   }
 
   #validate(selectedNums, extraNum) {
@@ -51,7 +31,7 @@ class LottoBase {
       throw new Error(ERROR_MESSAGE.INVALID_NUMS_LENGTH)
     }
 
-    if (!validate.isNotDuplicated([...selectedNums, extraNum])) {
+    if (validate.isDuplicated([...selectedNums, extraNum])) {
       throw new Error(ERROR_MESSAGE.DUPLICATED_NUMS)
     }
 

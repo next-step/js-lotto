@@ -11,15 +11,15 @@ class LottoGameView {
   }
 
   async getPurchaseAmount() {
-    return await this.#getUserInput(PROMPT.PURCHASE_AMOUNT)
+    return this.#getUserInput(PROMPT.PURCHASE_AMOUNT)
   }
 
   async getLottoWinningNumbers() {
-    return await this.#getUserInput(PROMPT.LOTTO_WINNING_NUMBERS)
+    return this.#getUserInput(PROMPT.LOTTO_WINNING_NUMBERS)
   }
 
   async getExtraNumber() {
-    return await this.#getUserInput(PROMPT.EXTRA_NUMBER)
+    return this.#getUserInput(PROMPT.EXTRA_NUMBER)
   }
 
   async #getUserInput(prompt) {

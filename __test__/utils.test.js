@@ -66,22 +66,40 @@ describe('validate', () => {
       expect(validate.length(value, 6)).toBe(false)
     })
   })
-  describe('.isNotDuplicated(target)', () => {
-    test('to be true', () => {
-      const numbers = [1, 2, 3, 4, 5, 6]
-      expect(validate.isNotDuplicated(numbers)).toBe(true)
-    })
+  describe('.isDuplicated(target)', () => {
+    test.each([[['', '', '']], [[45, 45, 45]], [[1, 2, 3, 4, 5, 5]]])(
+      '%s to be true',
+      (value) => {
+        expect(validate.isDuplicated(value)).toBe(true)
+      },
+    )
 
-    test.each([
-      ['', '', ''],
-      [45, 45, 45],
-      [1, 2, 3, 4, 5, 5],
-      {},
-      null,
-      undefined,
-    ])('%s to be false', (value) => {
-      expect(validate.isNotDuplicated(value)).toBe(false)
+    test('to be false', () => {
+      const numbers = [1, 2, 3, 4, 5, 6]
+      expect(validate.isDuplicated(numbers)).toBe(false)
     })
   })
-  describe('.length(target, requiredLength)', () => {})
+  describe('.numberRange(target, condition)', () => {
+    // 배열일 경우
+    test.each([[[1, 2, 3, 4, 5]], [[3, 8, 20, 30, 43, 44]]])(
+      '%s to be true',
+      (value) => {
+        expect(validate.numberRange(value, { min: 1, max: 45 })).toBe(true)
+      },
+    )
+    test.each([[46, 47, 48, 49], ['1', '2', '3', '4'], [], null, undefined])(
+      '%s to be false',
+      (value) => {
+        expect(validate.numberRange(value, { min: 1, max: 45 })).toBe(false)
+      },
+    )
+
+    // 단일 숫자일 경우
+    test.each([1, 2, 3, 4, 5, 45])('%s to be true', (value) => {
+      expect(validate.numberRange(value, { min: 1, max: 45 })).toBe(true)
+    })
+    test.each([46, -1, '45'])('%s to be false', (value) => {
+      expect(validate.numberRange(value, { min: 1, max: 45 })).toBe(false)
+    })
+  })
 })

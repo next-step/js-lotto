@@ -17,32 +17,27 @@ export const validate = {
     }
     return false
   },
-  isNotDuplicated(target) {
+  isDuplicated(target) {
     if (!Array.isArray(target)) return false
 
     const targetSet = new Set(target)
-    if (target?.length === targetSet?.size) {
-      return true
-    }
-    return false
+
+    return target?.length !== targetSet?.size
   },
   numberRange(target, condition = { min: 1, max: 45 }) {
-    // target이 배열일 때
-    if (
-      target?.every(
+    // 배열일 경우
+    if (Array.isArray(target) && target.length) {
+      return target.every(
         (num) =>
           typeof num === 'number' &&
           condition.min <= num &&
           num <= condition.max,
       )
-    ) {
-      return true
     }
-    // target 이 단일 숫자일 때
-    else if (target >= condition.min && target <= condition.max) {
-      return true
+    // 단일 숫자일 경우
+    else if (typeof target === 'number') {
+      return target >= condition.min && target <= condition.max
     }
-
     return false
   },
 }
