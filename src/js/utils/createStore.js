@@ -2,7 +2,7 @@ import { ERROR_MESSAGE } from '../constants/message'
 
 export const createStore = ({ state: getState, actions, mutations }) => {
   let state = getState()
-  let listeners = new Set([])
+  const listeners = new Set([])
 
   const commit = (type, payload) => {
     const mutation = mutations[type]
@@ -30,7 +30,7 @@ export const createStore = ({ state: getState, actions, mutations }) => {
   }
 
   const destroy = () => {
-    listeners = new Set([])
+    listeners.clear()
   }
 
   return {
