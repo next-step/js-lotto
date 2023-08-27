@@ -2,7 +2,7 @@ import { ERROR_MESSAGE } from '../constants/message'
 
 export const createStore = ({ state: getState, actions, mutations }) => {
   let state = getState()
-  let listeners = []
+  let listeners = new Set([])
 
   const commit = (type, payload) => {
     const mutation = mutations[type]
@@ -26,15 +26,11 @@ export const createStore = ({ state: getState, actions, mutations }) => {
   }
 
   const subscribe = callback => {
-    if (listeners.includes(callback)) {
-      return
-    }
-
-    listeners.push(callback)
+    listeners.add(callback)
   }
 
   const destroy = () => {
-    listeners = []
+    listeners = new Set([])
   }
 
   return {
