@@ -1,6 +1,6 @@
 export const convertToNumberArray = (input) => {
   // 배열로 들어왔을 때
-  if (Array.isArray(input)) {
+  if (Array.isArray(input) && input.map(Number).every(Number.isFinite)) {
     return input.map(Number)
   }
   // 문자열로 들어왔을 때
@@ -16,4 +16,11 @@ export const convertStringToNumber = (input) => {
     return Number(input)
   }
   return input
+}
+
+export const createLottoNumberObject = ({ selectedNums, extraNum }) => {
+  return {
+    selectedNums,
+    extraNum,
+  }
 }

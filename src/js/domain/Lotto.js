@@ -1,23 +1,22 @@
-import LottoBase from './LottoBase.js'
+import { createLottoNumberObject } from '../utils/format.js'
 import {
   generateLottoNumbers,
   generateUniqExtraNumber,
 } from '../utils/generateLottoNumbers.js'
 
-class Lotto extends LottoBase {
+class Lotto {
   #status
+  #numbers
 
   constructor() {
     const selectedNums = generateLottoNumbers()
     const extraNum = generateUniqExtraNumber(selectedNums)
 
-    super(selectedNums, extraNum)
-
-    this.#status = {}
+    this.#numbers = createLottoNumberObject({ selectedNums, extraNum })
   }
 
   setStatus(winningNumbers) {
-    const { selectedNums, extraNum } = this.numbers
+    const { selectedNums, extraNum } = this.#numbers
 
     // winningNumbers.selectedNums 와 selectedNums 비교
     const winningSelectdNumsSet = new Set(winningNumbers.selectedNums)
@@ -40,6 +39,10 @@ class Lotto extends LottoBase {
 
   get status() {
     return this.#status
+  }
+
+  get numbers() {
+    return this.#numbers
   }
 }
 
