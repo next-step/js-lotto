@@ -1,9 +1,17 @@
 {
   "name": "lotto",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "step1-index.js",
+  "type": "module",
   "license": "MIT",
+  "scripts": {
+    "start-step1": "node src/step1-index.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --watch"
+  },
   "devDependencies": {
     "cypress": "^6.3.0"
+  },
+  "dependencies": {
+    "jest": "^29.6.2"
   }
 }
