@@ -73,10 +73,10 @@ import {
   displayWinningStats,
 } from "./view/view.js";
 
-async function playLottoGame() {
+async function getInputLottoPrice() {
   const inputPrice = await getUserInput(inputLottoPriceMessage);
-  const isAvaliablePrice = validateInputPrice(inputPrice);
 
+<<<<<<< HEAD
   if (!isAvaliablePrice) {
 <<<<<<< HEAD
 >>>>>>> a7c387c ([feat] 기능 실행 부분 로직 작성)
@@ -97,6 +97,38 @@ async function playLottoGame() {
 
   if (!inputWinningNumbers) {
 =======
+=======
+  if (!validateInputPrice(inputPrice)) {
+    return await getInputLottoPrice();
+  }
+
+  return inputPrice;
+}
+
+async function getInputWinningNumbers() {
+  const inputWinningNumbers = await getUserInput(inputLottoNumberMessage);
+
+  if (!validateInputWinningNumbers(inputWinningNumbers)) {
+    return getInputWinningNumbers();
+  }
+
+  return inputWinningNumbers;
+}
+
+async function getInputBonusNumber(winningNumbers) {
+  const inputBonusNumber = await getUserInput(inputBonusNumberMessage);
+
+  if (!validateInputBonusNumber(winningNumbers, inputBonusNumber)) {
+    return await getInputBonusNumber();
+  }
+
+  return inputBonusNumber;
+}
+
+async function playLottoGame() {
+  const inputPrice = await getInputLottoPrice();
+
+>>>>>>> 729d2cf ([feat] UX 개선에 따른 index.js 로직 변경)
   // 몇개 살 수 있는 지 출력
   const avaliableCount = calcLottoCount(inputPrice);
   displayAvailableLottoCount(avaliableCount);
@@ -105,10 +137,9 @@ async function playLottoGame() {
   const lottoNumbers = createLottosForAmount(calcLottoCount(inputPrice));
   displayLottoNumbers(lottoNumbers);
 
-  // 사용자의 당첨 번호 입력
-  const inputWinningNumbers = await getUserInput(inputLottoNumberMessage);
-  const isAvaliableNumbers = validateInputWinningNumbers(inputWinningNumbers);
+  const inputWinningNumbers = await getInputWinningNumbers();
 
+<<<<<<< HEAD
   if (!isAvaliableNumbers) {
 <<<<<<< HEAD
 >>>>>>> a7c387c ([feat] 기능 실행 부분 로직 작성)
@@ -152,6 +183,9 @@ async function playLottoGame() {
 <<<<<<< HEAD
 >>>>>>> a7c387c ([feat] 기능 실행 부분 로직 작성)
 =======
+=======
+  const inputBonusNumber = await getInputBonusNumber(inputWinningNumbers);
+>>>>>>> 729d2cf ([feat] UX 개선에 따른 index.js 로직 변경)
 
   const winningNumbers = inputWinningNumbers
     .split(",")
