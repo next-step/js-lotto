@@ -1,7 +1,7 @@
 import { ConsoleViewer } from "./Viewer.js";
-import LottoGame from "./LottoGame.js";
+import LottoGame from "../LottoGame.js";
 
-export default class Step1Controller {
+export default class Controller {
   #viewer;
   #lottoGame;
 
