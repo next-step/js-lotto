@@ -20,13 +20,38 @@ import {
   displayWinningStats,
 } from "./view/view.js";
 
-async function playLottoGame() {
+async function getInputLottoPrice() {
   const inputPrice = await getUserInput(inputLottoPriceMessage);
-  const isAvaliablePrice = validateInputPrice(inputPrice);
 
-  if (!isAvaliablePrice) {
-    return false;
+  if (!validateInputPrice(inputPrice)) {
+    return await getInputLottoPrice();
   }
+
+  return inputPrice;
+}
+
+async function getInputWinningNumbers() {
+  const inputWinningNumbers = await getUserInput(inputLottoNumberMessage);
+
+  if (!validateInputWinningNumbers(inputWinningNumbers)) {
+    return getInputWinningNumbers();
+  }
+
+  return inputWinningNumbers;
+}
+
+async function getInputBonusNumber(winningNumbers) {
+  const inputBonusNumber = await getUserInput(inputBonusNumberMessage);
+
+  if (!validateInputBonusNumber(winningNumbers, inputBonusNumber)) {
+    return await getInputBonusNumber();
+  }
+
+  return inputBonusNumber;
+}
+
+async function playLottoGame() {
+  const inputPrice = await getInputLottoPrice();
 
   // 몇개 살 수 있는 지 출력
   const avaliableCount = calcLottoCount(inputPrice);
@@ -36,24 +61,9 @@ async function playLottoGame() {
   const lottoNumbers = createLottosForAmount(calcLottoCount(inputPrice));
   displayLottoNumbers(lottoNumbers);
 
-  // 사용자의 당첨 번호 입력
-  const inputWinningNumbers = await getUserInput(inputLottoNumberMessage);
-  const isAvaliableNumbers = validateInputWinningNumbers(inputWinningNumbers);
+  const inputWinningNumbers = await getInputWinningNumbers();
 
-  if (!isAvaliableNumbers) {
-    return false;
-  }
-
-  // 보너스 번호 입력
-  const inputBonusNumber = await getUserInput(inputBonusNumberMessage);
-  const isAvaliableBonusNumber = validateInputBonusNumber(
-    inputWinningNumbers,
-    inputBonusNumber
-  );
-
-  if (!isAvaliableBonusNumber) {
-    return false;
-  }
+  const inputBonusNumber = await getInputBonusNumber(inputWinningNumbers);
 
   const winningNumbers = inputWinningNumbers
     .split(",")
