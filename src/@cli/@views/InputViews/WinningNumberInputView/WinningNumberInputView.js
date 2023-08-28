@@ -1,6 +1,6 @@
 import Console from "../../../util/Console.js";
 import {LOTTO_INFO} from "../../../../consts/Lotto.js";
-import {isNaturalNumber, isValidNumberString} from "../../../../utils/validate.js";
+import {isNaturalNumber, isValidNumberListString} from "../../../../utils/validate.js";
 
 class WinningNumberInputView {
     static async readInput() {
@@ -16,7 +16,7 @@ class WinningNumberInputView {
     }
 
     static #validateValue(value) {
-        if(!isValidNumberString(value))
+        if(!isValidNumberListString(value))
             throw new Error("입력은 숫자와 쉼표만으로 이루어져야 합니다.");
         if(!WinningNumberInputView.#isAllNaturalNumber(value))
             throw new Error("쉼표로 구분된 각각의 숫자는 자연수만 가능합니다.");

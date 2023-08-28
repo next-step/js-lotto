@@ -6,3 +6,8 @@ export const isValidNumberString = (numberString) => {
     const pattern = /^[0-9]+$/;
     return pattern.test(numberString);
 }
+
+export const isValidNumberListString = (numberListString) => {
+    const pattern  = /^[0-9,]+$/;
+    return pattern.test(numberListString);
+}
