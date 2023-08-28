@@ -3,12 +3,19 @@ import LottoPrizeRules from "./LottoPrizeRules.js";
 import LottoVendor from "./LottoVendor.js";
 import LottoPrizeCalculator from "./LottoPrizeCalculator.js";
 
+const GAME_STAGE = Object.freeze({
+  SET_PAYMENT: "SET_PAYMENT",
+  SET_WINNING_NUMBERS: "SET_WINNING_NUMBERS",
+  SET_BONUS_NUMBER: "SET_BONUS_NUMBER",
+});
+
 export default class LottoGame {
   #ticketRules;
   #prizeRules;
   #purchaseInfo;
   #vendor;
   #calculator;
+  #stage;
 
   constructor(
     ticketRules = new LottoTicketRules(),
@@ -32,6 +39,8 @@ export default class LottoGame {
       this.#prizeRules,
       this.#ticketRules,
     );
+
+    this.#stage = GAME_STAGE.SET_PAYMENT;
   }
 
   issueLottoTickets(payment) {
@@ -108,5 +117,17 @@ export default class LottoGame {
     );
 
     return totalPrize / this.#purchaseInfo.amount;
+  }
+
+  get stage() {
+    return this.#stage;
+  }
+
+  set stage(stage) {
+    if (!GAME_STAGE.hasOwnProperty(stage)) {
+      throw Error("존재하지 않는 단계입니다.");
+    }
+
+    this.#stage = GAME_STAGE[stage];
   }
 }

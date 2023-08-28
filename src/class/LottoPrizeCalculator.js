@@ -1,5 +1,6 @@
 import LottoPrizeRules from "./LottoPrizeRules.js";
 import LottoTicketRules from "./LottoTicketRules.js";
+import { UserInputError } from "./Error.js";
 
 export default class LottoPrizeCalculator {
   #prizeRules;
@@ -30,11 +31,13 @@ export default class LottoPrizeCalculator {
 
   validateNumber(number, numberType) {
     if (!Number.isInteger(number)) {
-      throw new Error(`${numberType} 번호는 정수이어야 합니다.`);
+      throw new UserInputError(`${numberType} 번호는 정수이어야 합니다.`);
     }
 
     if (number > this.#ticketRules.max || number < this.#ticketRules.min) {
-      throw new Error(`${numberType} 번호가 규칙의 범위를 벗어납니다.`);
+      throw new UserInputError(
+        `${numberType} 번호가 규칙의 범위를 벗어납니다.`,
+      );
     }
   }
 
@@ -44,7 +47,9 @@ export default class LottoPrizeCalculator {
     }
 
     if (numbers.length !== this.#ticketRules.length) {
-      throw new Error(`${numberType} 번호의 개수가 규칙과 일치하지 않습니다.`);
+      throw new UserInputError(
+        `${numberType} 번호의 개수가 규칙과 일치하지 않습니다.`,
+      );
     }
 
     numbers.forEach((number) => {
@@ -52,7 +57,7 @@ export default class LottoPrizeCalculator {
     });
 
     if (new Set(numbers).size !== numbers.length) {
-      throw new Error(`${numberType} 번호는 중복될 수 없습니다.`);
+      throw new UserInputError(`${numberType} 번호는 중복될 수 없습니다.`);
     }
   }
 
@@ -66,7 +71,7 @@ export default class LottoPrizeCalculator {
     this.validateNumber(number, LottoPrizeCalculator.#NUMBER_TYPE.BONUS);
 
     if (this.#winningNumbers.includes(number)) {
-      throw new Error("보너스 번호와 당첨번호가 중복됩니다");
+      throw new UserInputError("보너스 번호와 당첨번호가 중복됩니다");
     }
 
     this.#bonusNumber = number;

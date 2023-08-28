@@ -1,5 +1,7 @@
 import LottoTicket from "./LottoTicket.js";
 
+import { UserInputError } from "./Error.js";
+
 const DEFAULT_PRICE = 1000;
 
 export default class LottoVendor {
@@ -7,11 +9,11 @@ export default class LottoVendor {
 
   constructor(price = DEFAULT_PRICE) {
     if (typeof price !== "number") {
-      throw new Error("가격은 number 이어야 합니다.");
+      throw new UserInputError("가격은 number 이어야 합니다.");
     }
 
     if (price <= 0) {
-      throw new Error("가격은 0보다 커야합니다.");
+      throw new UserInputError("가격은 0보다 커야합니다.");
     }
 
     this.#price = price;
@@ -19,11 +21,11 @@ export default class LottoVendor {
 
   buy(payment, ticketRules) {
     if (typeof payment !== "number") {
-      throw new Error("지불 금액은 number 이어야 합니다.");
+      throw new UserInputError("지불 금액은 number 이어야 합니다.");
     }
 
     if (payment < 0) {
-      throw new Error("지불 금액은 0이상 이어야 합니다.");
+      throw new UserInputError("지불 금액은 0이상 이어야 합니다.");
     }
 
     const amount = Math.floor(payment / this.#price);

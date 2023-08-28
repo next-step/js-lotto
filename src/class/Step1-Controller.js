@@ -1,6 +1,8 @@
 import { ConsoleViewer } from "./Viewer.js";
 import LottoGame from "./LottoGame.js";
 
+import { UserInputError } from "./Error.js";
+
 export default class Step1Controller {
   #viewer;
   #lottoGame;
@@ -11,7 +13,15 @@ export default class Step1Controller {
     this.#viewer = new ConsoleViewer();
   }
 
-  handleError(error) {
+  async handleError(error) {
+    if (error instanceof UserInputError) {
+      this.#viewer.printContent(error.message);
+
+      await this.execute();
+
+      return;
+    }
+
     this.#viewer.printContent(error);
   }
 
@@ -49,25 +59,47 @@ export default class Step1Controller {
     this.#viewer.printProfitRatio(this.#lottoGame.getProfitRatio());
   }
 
+  async retryGame() {
+    const retryAnswer = await this.#viewer.getRetryAnswer();
+
+    if (retryAnswer.toUpperCase() === "Y") {
+      await this.execute();
+    } else {
+      this.#viewer.closeViewer();
+    }
+  }
+
   async execute() {
     try {
-      await this.setPayment();
+      if (this.#lottoGame.stage === "SET_PAYMENT") {
+        await this.setPayment();
 
-      this.printAmount();
+        this.printAmount();
 
-      this.printLottoNumbers();
+        this.printLottoNumbers();
 
-      await this.setWinningNumbers();
+        this.#lottoGame.stage = "SET_WINNING_NUMBERS";
+      }
 
-      await this.setBonusNumber();
+      if (this.#lottoGame.stage === "SET_WINNING_NUMBERS") {
+        await this.setWinningNumbers();
+
+        this.#lottoGame.stage = "SET_BONUS_NUMBER";
+      }
+
+      if (this.#lottoGame.stage === "SET_BONUS_NUMBER") {
+        await this.setBonusNumber();
+
+        this.#lottoGame.stage = "SET_PAYMENT";
+      }
 
       this.printPrizeSummary();
 
       this.printProfitRatio();
+
+      await this.retryGame();
     } catch (e) {
-      this.handleError(e);
-    } finally {
-      this.#viewer.closeViewer();
+      await this.handleError(e);
     }
   }
 }
