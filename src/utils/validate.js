@@ -6,7 +6,7 @@ import {
 } from "../data/constant.js";
 
 export const checkInputPriceType = (price) => {
-  if (!price || typeof price !== "number" || isNaN(price)) {
+  if (!price || isNaN(price) || price.includes(" ")) {
     throw new Error("금액은 숫자만 입력 가능하며 빈 값은 허용되지 않습니다.");
   }
 };
