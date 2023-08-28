@@ -17,8 +17,8 @@ export class ConsoleViewer {
     } (${prizeAmount.toLocaleString()}원) - ${count}개\n`;
   static #PROFIT_RATIO_MESSAGE = (ratio) =>
     `총 수익률은 ${(ratio * 100).toFixed(1)}%입니다.\n`;
-  static #WINNING_NUMBERS_SEPARATOR = ",";
   static #TICKET_FORMAT = (ticket) => `[${ticket.join(", ")}]\n`;
+  static #RETRY_ANSWER_INPUT_GUIDE = "> 다시 시작하시겠습니까? (y/n)";
 
   constructor() {
     this.readline = readline.createInterface({
@@ -76,6 +76,10 @@ export class ConsoleViewer {
 
   printProfitRatio(ratio) {
     this.printContent(ConsoleViewer.#PROFIT_RATIO_MESSAGE(ratio));
+  }
+
+  getRetryAnswer() {
+    return this.getUserInput(ConsoleViewer.#RETRY_ANSWER_INPUT_GUIDE);
   }
 
   closeViewer() {

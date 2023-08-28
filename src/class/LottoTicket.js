@@ -19,7 +19,7 @@ export default class LottoTicket {
   }
 
   get numbers() {
-    return [...this.#numbers];
+    return [...this.#numbers].sort((a, b) => a - b);
   }
 
   addNumber(number) {
