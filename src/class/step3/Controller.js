@@ -1,6 +1,7 @@
 import LottoGame from "../LottoGame.js";
 import Viewer from "./Viewer";
 import { UserInputError } from "../Error";
+import { withErrorHandler } from "../../utils/errorFunc";
 
 export default class Controller {
   #viewer;
@@ -21,17 +22,17 @@ export default class Controller {
     }
   }
 
+  #withCommonErrorHandler(callback) {
+    return withErrorHandler(callback.bind(this), this.#handleError.bind(this));
+  }
+
   #onClickPurchaseButton(payment) {
-    try {
-      this.#lottoGame.issueLottoTickets(Number(payment));
-    } catch (error) {
-      this.#handleError(error);
-    }
+    this.#lottoGame.issueLottoTickets(Number(payment));
   }
 
   init() {
     this.#viewer.addPurchaseButtonClickListener(
-      this.#onClickPurchaseButton.bind(this),
+      this.#withCommonErrorHandler(this.#onClickPurchaseButton),
     );
   }
 }
