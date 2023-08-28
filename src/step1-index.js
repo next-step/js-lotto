@@ -153,7 +153,12 @@ async function lottoGame() {
 
   displayWinningStats(winningResult);
   displayTotalProfitRate(avaliableCount);
+<<<<<<< HEAD
 >>>>>>> 3b7c1b7 ([feat] 1차 기능 구현 완료)
+=======
+
+  closeUserInput();
+>>>>>>> a7b8ec4 ([feat] index 로직 작성)
 }
 
 lottoGame();
