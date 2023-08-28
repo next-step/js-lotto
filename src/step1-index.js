@@ -11,6 +11,7 @@ import {
   inputBonusNumberMessage,
   inputLottoNumberMessage,
   inputLottoPriceMessage,
+  inputReplayMessage,
 } from "./utils/consoleMessage.js";
 import {
   displayAvailableLottoCount,
@@ -19,12 +20,11 @@ import {
   displayWinningStats,
 } from "./view/view.js";
 
-async function lottoGame() {
+async function playLottoGame() {
   const inputPrice = await getUserInput(inputLottoPriceMessage);
   const isAvaliablePrice = validateInputPrice(inputPrice);
 
   if (!isAvaliablePrice) {
-    closeUserInput();
     return false;
   }
 
@@ -41,7 +41,6 @@ async function lottoGame() {
   const isAvaliableNumbers = validateInputWinningNumbers(inputWinningNumbers);
 
   if (!isAvaliableNumbers) {
-    closeUserInput();
     return false;
   }
 
@@ -53,7 +52,6 @@ async function lottoGame() {
   );
 
   if (!isAvaliableBonusNumber) {
-    closeUserInput();
     return false;
   }
 
@@ -66,8 +64,18 @@ async function lottoGame() {
 
   displayWinningStats(winningResult);
   displayTotalProfitRate(avaliableCount);
-
-  closeUserInput();
 }
 
-lottoGame();
+async function startLottoGame() {
+  await playLottoGame();
+
+  const inputReplayAnswer = await getUserInput(inputReplayMessage);
+
+  if (inputReplayAnswer === "y") {
+    startLottoGame();
+  } else {
+    closeUserInput();
+  }
+}
+
+startLottoGame();
