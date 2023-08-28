@@ -59,8 +59,6 @@ class LottoStatistics {
       return 0;
     }
 
-    let profitRate = 0;
-
     const purchaseAmount = purchasedLottoCounts * LOTTO_AMOUNT_UNIT;
     const totalProfit =
       FIRST_PLACE_AMOUNT * this.#statistics['first place'] +
@@ -69,11 +67,10 @@ class LottoStatistics {
       FOURTH_PLACE_AMOUNT * this.#statistics['fourth place'] +
       FIFTH_PLACE_AMOUNT * this.#statistics['fifth place'];
 
-    profitRate =
+    return (
       ((totalProfit - purchaseAmount) / purchaseAmount) *
-      PROFIT_RATE_PERCENTAGE_UNIT;
-
-    return profitRate;
+      PROFIT_RATE_PERCENTAGE_UNIT
+    );
   }
 }
 
