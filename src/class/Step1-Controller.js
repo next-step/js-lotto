@@ -1,5 +1,6 @@
 import { ConsoleViewer } from "./Viewer.js";
 import LottoGame from "./LottoGame.js";
+
 import { UserInputError } from "./Error.js";
 
 export default class Step1Controller {

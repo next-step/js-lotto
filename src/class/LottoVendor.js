@@ -1,4 +1,5 @@
 import LottoTicket from "./LottoTicket.js";
+
 import { UserInputError } from "./Error.js";
 
 const DEFAULT_PRICE = 1000;
