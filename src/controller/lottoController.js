@@ -62,6 +62,7 @@ export const validateInputWinningNumbers = (winningNumbers) => {
 
 export const validateInputBonusNumber = (winningNumbers, bonusNumber) => {
   try {
+    isValidWinningNumberRange(winningNumbers);
     isWinningAndBonusNumberDuplicate(winningNumbers, bonusNumber);
     return true;
   } catch (error) {
@@ -71,33 +72,40 @@ export const validateInputBonusNumber = (winningNumbers, bonusNumber) => {
 };
 
 export const getWinningPrizeResult = (lottoNumbers, winningNumbers) => {
-  const bonusNumber = winningNumbers[winningNumbers.length - 1];
+  const bonusNumber = Number(winningNumbers[winningNumbers.length - 1]);
   const numberForMatch = winningNumbers.slice(0, -1);
 
-  const matchResult = lottoNumbers.map((number) => {
-    const matchCount = getLottoNumberMatchCount(number, numberForMatch);
-    const hasBonus = getBonusNumberMatchCount(number, bonusNumber);
+  const matchedCount = getLottoNumberMatchCount(lottoNumbers, numberForMatch);
+  const hasBonus = getBonusNumberMatchCount(lottoNumbers, bonusNumber);
 
-    return { matchCount, hasBonus };
-  });
-
-  const filteredMatchCountResult = matchResult.filter(
-    (result) => result.matchCount >= 3
-  );
-
-  return filteredMatchCountResult;
+  return { matchedCount, hasBonus };
 };
 
 export const getLottoNumberMatchCount = (lottoNumbers, numberForMatch) => {
-  return lottoNumbers.filter((number) => numberForMatch.includes(number))
-    .length;
+  const flattedlottoNumber = [].concat(...lottoNumbers);
+
+  const matchedNumbers = flattedlottoNumber.filter((number) =>
+    numberForMatch.includes(number)
+  );
+
+  const removeDuplicateMatchNumber = [...new Set(matchedNumbers)];
+  const matchedCount = removeDuplicateMatchNumber.length;
+
+  return matchedCount;
 };
 
 export const getBonusNumberMatchCount = (lottoNumbers, bonusNumber) => {
-  return lottoNumbers.includes(Number(bonusNumber));
+  const flattedlottoNumber = [].concat(...lottoNumbers);
+
+  const matchResult = flattedlottoNumber.some(
+    (number) => number === bonusNumber
+  );
+
+  return matchResult;
 };
 
 export const getPrizeKey = (matchCount, hasBonus) => {
+  console.log(matchCount, hasBonus);
   switch (matchCount) {
     case 3:
       return "5st";

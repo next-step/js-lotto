@@ -15,13 +15,12 @@ export const displayLottoNumbers = (lottoNumbers) => {
 };
 
 export const displayWinningStats = (winningResult) => {
-  winningResult.forEach((result) => {
-    const key = getPrizeKey(result.matchCount, result.hasBonus);
+  const { matchedCount, hasBonus } = winningResult;
+  const key = getPrizeKey(matchedCount, hasBonus);
 
-    if (key) {
-      LOTTO_PRIZE[key].count += 1;
-    }
-  });
+  if (key) {
+    LOTTO_PRIZE[key].count += 1;
+  }
 
   console.log("당첨 통계");
   console.log("======================");
