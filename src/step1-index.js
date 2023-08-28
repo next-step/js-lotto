@@ -66,6 +66,8 @@ async function lottoGame() {
 
   displayWinningStats(winningResult);
   displayTotalProfitRate(avaliableCount);
+
+  closeUserInput();
 }
 
 lottoGame();
