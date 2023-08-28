@@ -21,6 +21,7 @@ import {
   inputLottoNumberMessage,
   inputLottoPriceMessage,
 <<<<<<< HEAD
+<<<<<<< HEAD
 } from "./data/constant.js";
 import {
   displayAvailableLottoCount,
@@ -61,6 +62,9 @@ async function lottoGame() {
 
   if (!inputPrice) {
 =======
+=======
+  inputReplayMessage,
+>>>>>>> 0792fce ([feat] 재시작을 위한 로직 변경)
 } from "./utils/consoleMessage.js";
 import {
   displayAvailableLottoCount,
@@ -69,13 +73,16 @@ import {
   displayWinningStats,
 } from "./view/view.js";
 
-async function lottoGame() {
+async function playLottoGame() {
   const inputPrice = await getUserInput(inputLottoPriceMessage);
   const isAvaliablePrice = validateInputPrice(inputPrice);
 
   if (!isAvaliablePrice) {
+<<<<<<< HEAD
 >>>>>>> a7c387c ([feat] 기능 실행 부분 로직 작성)
     closeUserInput();
+=======
+>>>>>>> 0792fce ([feat] 재시작을 위한 로직 변경)
     return false;
   }
 
@@ -103,8 +110,11 @@ async function lottoGame() {
   const isAvaliableNumbers = validateInputWinningNumbers(inputWinningNumbers);
 
   if (!isAvaliableNumbers) {
+<<<<<<< HEAD
 >>>>>>> a7c387c ([feat] 기능 실행 부분 로직 작성)
     closeUserInput();
+=======
+>>>>>>> 0792fce ([feat] 재시작을 위한 로직 변경)
     return false;
   }
 
@@ -137,7 +147,6 @@ async function lottoGame() {
   closeUserInput();
 =======
   if (!isAvaliableBonusNumber) {
-    closeUserInput();
     return false;
   }
 <<<<<<< HEAD
@@ -154,11 +163,26 @@ async function lottoGame() {
   displayWinningStats(winningResult);
   displayTotalProfitRate(avaliableCount);
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 3b7c1b7 ([feat] 1차 기능 구현 완료)
 =======
 
   closeUserInput();
 >>>>>>> a7b8ec4 ([feat] index 로직 작성)
+=======
+>>>>>>> 0792fce ([feat] 재시작을 위한 로직 변경)
 }
 
-lottoGame();
+async function startLottoGame() {
+  await playLottoGame();
+
+  const inputReplayAnswer = await getUserInput(inputReplayMessage);
+
+  if (inputReplayAnswer === "y") {
+    startLottoGame();
+  } else {
+    closeUserInput();
+  }
+}
+
+startLottoGame();
