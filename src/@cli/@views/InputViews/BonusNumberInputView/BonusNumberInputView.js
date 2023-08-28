@@ -1,4 +1,5 @@
 import Console from "../../../util/Console.js";
+import {isNaturalNumber} from "../../../../utils/validate.js";
 
 class BonusNumberInputView {
     static async readInput() {
@@ -14,13 +15,9 @@ class BonusNumberInputView {
     }
 
     static #validateValue(value) {
-        if(!BonusNumberInputView.#isNaturalNumber(value))
+        if(!isNaturalNumber(value))
             throw new Error("보너스 번호 입력은 자연수만 가능합니다.");
     };
-
-    static #isNaturalNumber(value) {
-        return Number.isInteger(Number(value)) && Number(value) > 0;
-    }
 }
 
 export default BonusNumberInputView;
