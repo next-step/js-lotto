@@ -4,23 +4,28 @@
     "node": true,
     "jest": true
   },
-  "extends": ["airbnb-base", "prettier", "plugin:jsdoc/recommended"],
+  "extends": ["airbnb-base", "plugin:jsdoc/recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "rules": {
-    "import/no-cycle": [0],
+    "no-new": ["off"],
+    "@typescript-eslint/no-var-requires": ["off"],
+    "import/no-extraneous-dependencies": ["off"],
+    "import/no-cycle": ["off"],
     // 인스턴스 미 참조 하는 class method 제한
-    "class-methods-use-this": [0],
+    "class-methods-use-this": ["off"],
     // import시 from './~.js' 사용 제한
-    "import/extensions": [0],
+    "import/extensions": ["off"],
     // 함수 내 매개변수 재할당 제한
-    "no-param-reassign": [0],
+    "no-param-reassign": ["off"],
     // single export 제한
-    "import/prefer-default-export": [0],
+    "import/prefer-default-export": ["off"],
     // node:process 에러 방지
-    "import/no-unresolved": [0],
+    "import/no-unresolved": ["off"],
     // const만 사용 할 수 있도록 설정
     "prefer-const": ["error"],
     // 들여쓰기 깊이 제한

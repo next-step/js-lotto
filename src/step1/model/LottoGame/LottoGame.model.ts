@@ -8,9 +8,8 @@ export default class LottoGame {
   }
 
   createLottoNumbers(amount: number) {
-    return LottoMerchant.from(amount)
-      .sellLotto()
-      .map((lotto) => lotto.getLottoNumbers());
+    const lottos = LottoMerchant.from(amount).sellLotto();
+    return lottos.map((lotto) => lotto.getLottoNumbers());
   }
 
   createResults({ winningLottoNumber, bonusNumber, lottoNumbers, investmentAmount }: CreateResultsParams) {

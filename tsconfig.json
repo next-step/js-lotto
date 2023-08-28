@@ -9,6 +9,7 @@
     "baseUrl": ".",
     "paths": {
       "@step1/*": ["src/step1/*"],
+      "@step3/*": ["src/step3/*"],
       "@src/*": ["src/*"],
       "@test/*": ["__tests__/*"]
     }
