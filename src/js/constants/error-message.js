@@ -8,4 +8,5 @@ export const ERROR_MESSAGE = Object.freeze({
     `로또 구입 금액을 ${unit}원 단위로 입력해 주세요.`,
   NOT_VALID_RANDOM_RANGE: '범위의 시작 숫자기 끝 숫자보다 클 수 없습니다.',
   NOT_VALID_LOTTO_NUMBER: '로또 번호는 정수이어야 합니다.',
+  NOT_VALID_RESTART_ANSWER: 'y 또는 n 을 입력하세요',
 });

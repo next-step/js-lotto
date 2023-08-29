@@ -2,27 +2,22 @@ import { askQuestion, closeReadLine } from '../utils/console.js';
 import { calculateRateOfReturn } from '../utils/number.js';
 
 export default class LottoView {
-  async inputPurchaseAmount() {
-    const answer = await askQuestion('구입금액을 입력해 주세요.');
-    return answer;
+  print(message) {
+    console.log(message);
+  }
+
+  printError(error) {
+    console.error(error.message);
+  }
+
+  closeInput() {
+    closeReadLine();
   }
 
   printPurchaseAmount(lottos) {
     console.log(`${lottos.length}개를 구매했습니다.\n`);
     lottos.forEach((lotto) => console.log(`[${lotto.numbers}]`));
     console.log('\n');
-  }
-
-  async inputWinningNumber() {
-    const answer = await askQuestion('당첨 번호를 입력해 주세요.');
-    console.log('\n');
-    return answer;
-  }
-
-  async inputBonusNumber() {
-    const answer = await askQuestion('보너스 번호를 입력해 주세요.');
-    console.log('\n');
-    return answer;
   }
 
   printLottoResult(winningLottoResult, purchaseAmount) {
@@ -39,7 +34,29 @@ export default class LottoView {
     console.log(`5개 일치 (1,500,000원) - ${THIRD.length}개`);
     console.log(`5개 일치, 보너스 볼 일치 (30,000,000원) - ${SECOND.length}개`);
     console.log(`6개 일치 (2,000,000,000원) - ${FIRST.length}개`);
-    console.log(`총 수익률은 ${rateOfReturn}%입니다.`);
-    closeReadLine();
+    console.log(`총 수익률은 ${rateOfReturn}%입니다. \n`);
+  }
+
+  async inputPurchaseAmount() {
+    const answer = await askQuestion('구입금액을 입력해 주세요.');
+    return answer;
+  }
+
+  async inputWinningNumber() {
+    const answer = await askQuestion('당첨 번호를 입력해 주세요.');
+    console.log('\n');
+    return answer;
+  }
+
+  async inputBonusNumber() {
+    const answer = await askQuestion('보너스 번호를 입력해 주세요.');
+    console.log('\n');
+    return answer;
+  }
+
+  async inputRestart() {
+    const answer = await askQuestion('다시 시작하시겠습니까? (y/n) ');
+    console.log('\n');
+    return answer;
   }
 }

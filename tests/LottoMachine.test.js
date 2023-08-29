@@ -7,12 +7,13 @@ import {
 } from '../src/js/constants/lotto';
 import { Lotto } from '../src/js/domain/Lotto';
 import { LottoMachine } from '../src/js/domain/LottoMachine';
+import { LottoNumberGenerator } from '../src/js/domain/LottoNumberGenerator';
 import { WinningLotto } from '../src/js/domain/WinningLotto';
 
 describe('LottoMachine', () => {
   describe('로또 발급', () => {
     it('로또는 천원 단위로 구매 가능하다', () => {
-      const lottoMachine = new LottoMachine();
+      const lottoMachine = new LottoMachine(LottoNumberGenerator);
 
       const lottos = lottoMachine.issueLotto(1000);
 
@@ -23,7 +24,7 @@ describe('LottoMachine', () => {
 
     describe('천원 단위가 아닐 경우 에러가 발생한다.', () => {
       test.each([1111, -1, 0, 2134])('.issueLotto(%i)', (amount) => {
-        const lottoMachine = new LottoMachine();
+        const lottoMachine = new LottoMachine(LottoNumberGenerator);
 
         expect(() => lottoMachine.issueLotto(amount)).toThrowError();
       });
@@ -37,7 +38,7 @@ describe('LottoMachine', () => {
         [13000, 13],
         [100000, 100],
       ])('.issueLotto(%i)', (amount, numberOfLotto) => {
-        const lottoMachine = new LottoMachine();
+        const lottoMachine = new LottoMachine(LottoNumberGenerator);
         const lottos = lottoMachine.issueLotto(amount);
 
         expect(numberOfLotto).toBe(lottos.length);
@@ -57,7 +58,7 @@ describe('LottoMachine', () => {
       ])(
         '.getNumberOfMatchNumber(%p, %p)',
         (lottoNumbers, winningNumbers, matchNumber) => {
-          const lottoMachine = new LottoMachine();
+          const lottoMachine = new LottoMachine(LottoNumberGenerator);
           const lotto = new Lotto(lottoNumbers);
           const winningLotto = new WinningLotto(new Lotto(winningNumbers), 1);
 
@@ -143,7 +144,7 @@ describe('LottoMachine', () => {
       ])(
         '.checkWinningLotto(%p, %p)',
         (lottoNumbers, winningNumbers, bonusNumber, winningPrize) => {
-          const lottoMachine = new LottoMachine();
+          const lottoMachine = new LottoMachine(LottoNumberGenerator);
           const lottos = lottoNumbers.map((numbers) => new Lotto(numbers));
           const winningLotto = new WinningLotto(
             new Lotto(winningNumbers),
