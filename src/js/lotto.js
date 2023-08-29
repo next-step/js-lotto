@@ -7,7 +7,6 @@ const Lotto = {
     lottos: [],
     prize: PRIZES,
     numLottos: 0,
-    prize: [], 
     profitPercentage: 0,
 
     getLottoPurchaseAmount(amount) {
