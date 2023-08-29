@@ -1,5 +1,4 @@
 import Console from "../../util/Console.js";
-import {addCommasToNumber} from "../../../util/number.js";
 import {LOTTO_INFO} from "../../../consts/Lotto.js";
 
 class LottoResultOutputView {
@@ -8,9 +7,9 @@ class LottoResultOutputView {
         Console.print(`--------------------`);
         lottoResultSummary.forEach((lottoResult) => {
             if(lottoResult.bonus) {
-                Console.print(`${lottoResult.match}개 일치, 보너스 볼 일치 (${addCommasToNumber(LOTTO_INFO.PRIZE[lottoResult.rank])}원) - ${lottoResult.count}개`);
+                Console.print(`${lottoResult.match}개 일치, 보너스 볼 일치 (${LOTTO_INFO.PRIZE[lottoResult.rank].toLocaleString()}원) - ${lottoResult.count}개`);
             } else {
-                Console.print(`${lottoResult.match}개 일치 (${addCommasToNumber(LOTTO_INFO.PRIZE[lottoResult.rank])}원) - ${lottoResult.count}개`);
+                Console.print(`${lottoResult.match}개 일치 (${LOTTO_INFO.PRIZE[lottoResult.rank].toLocaleString()}원) - ${lottoResult.count}개`);
             }
         });
     }

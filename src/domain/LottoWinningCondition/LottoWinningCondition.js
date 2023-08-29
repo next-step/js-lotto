@@ -2,9 +2,9 @@ class LottoWinningCondition {
     #winningNumbers;
     #bonusNumber;
 
-    constructor(winningNumbersString, BonusNumberString) {
+    constructor(winningNumbersString, bonusNumberString) {
         const winningNumbers = winningNumbersString.split(",").map((number) => Number(number));
-        const bonusNumber = Number(BonusNumberString);
+        const bonusNumber = Number(bonusNumberString);
 
         this.#winningNumbers = winningNumbers;
         this.#bonusNumber = bonusNumber;

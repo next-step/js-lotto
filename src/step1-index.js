@@ -1,4 +1,4 @@
-import LottoGame from "./domain/LottoGame/LottoGame.js";
+import LottoGameInCli from './@cli/LottoGameInCli.js';
 
-const lottoGame = new LottoGame();
-lottoGame.play();
+const lottoGameInCli = new LottoGameInCli();
+lottoGameInCli.play();
