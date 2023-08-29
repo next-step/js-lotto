@@ -1,6 +1,7 @@
 import Lotto from "./js/lotto";
-import {RESULT_MESSAGE, INPUT_NUMBER_LENGTH} from './js/constants'
-import { inputElement,buttonElement,resultElement,showLottoNumbers,lottoListEl,winningNumbers,bonusNumber,openResult,restartBtn,rateResult } from "./js/selector";
+import ModalView from "./js/view/ModaView"
+import { RESULT_MESSAGE, INPUT_NUMBER_LENGTH } from './js/constants'
+import { inputElement, buttonElement, resultElement, showLottoNumbers, lottoListEl, winningNumbers, bonusNumber, openResult, restartBtn, rateResult, myModal } from "./js/selector";
 
 buttonElement.addEventListener('click', () => {
   const inputValue = inputElement.value;
@@ -12,56 +13,34 @@ showLottoNumbers.addEventListener('change', () => {
   lottoListEl.textContent = Lotto.lottos;
 });
 
-winningNumbers.forEach(function(input) {
-  input.addEventListener('input', function() {
-      if (this.value.length > INPUT_NUMBER_LENGTH) {
-          this.value = this.value.slice(0, INPUT_NUMBER_LENGTH);
-      }
-  });
-});
-
-bonusNumber.addEventListener('input', function() {
-  if (this.value.length > INPUT_NUMBER_LENGTH) {
+winningNumbers.forEach(function (input) {
+  input.addEventListener('input', function () {
+    if (this.value.length > INPUT_NUMBER_LENGTH) {
       this.value = this.value.slice(0, INPUT_NUMBER_LENGTH);
+    }
+  });
+});
+
+bonusNumber.addEventListener('input', function () {
+  if (this.value.length > INPUT_NUMBER_LENGTH) {
+    this.value = this.value.slice(0, INPUT_NUMBER_LENGTH);
   }
 });
 
-openResult.addEventListener('click', function() {
-  let hasEmptyField = false;
-  let winningNumberList = [];
-  
-  winningNumbers.forEach(function(input) {
-      if (input.value === '') {
-          hasEmptyField = true;
-          return;
-      } else {
-        winningNumberList.push(Number(input.value))
-      }
-  });
-  if (hasEmptyField || bonusNumber.value === '') {
-      alert(RESULT_MESSAGE.INPUT);
-  } else {
-    Lotto.matchedRank(winningNumberList, bonusNumber.value)
+openResult.addEventListener('click', function () {
+  const hasEmptyField = [...winningNumbers].some(input => input.value === '') || bonusNumber.value === '';
+  const winningNumberList = [...winningNumbers].map(input => Number(input.value));
 
-    const tableBody = document.getElementById('tableBody');
-    while (tableBody.firstChild) {
-      tableBody.removeChild(tableBody.firstChild);
-    }
-    Lotto.prize.forEach(function(item) {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td class="p-3">${item.rank}</td>
-            <td class="p-3">${item.text}</td>
-            <td class="p-3">${item.count}</td>
-        `;
-        tableBody.appendChild(row);
-    });
+  if (hasEmptyField) {
+    ModalView.showMessage(RESULT_MESSAGE.INPUT)
+  } else {
+    Lotto.matchedRank(winningNumberList, bonusNumber.value);
+    ModalView.updateTable();
     rateResult.textContent = RESULT_MESSAGE.RESULT_RATE(Lotto.profitPercentage);
+    ModalView.showModal();
   }
-  var modal = document.getElementById("myModal");
-  modal.style.display = "block";
 });
 
 restartBtn.addEventListener('click', () => {
-  location.reload(); 
+  location.reload();
 });
