@@ -26,8 +26,8 @@ class LottoStatistics {
     return this.#statistics;
   }
 
-  setStatistics(myLottos, lottoAnswer, lottoBonus) {
-    myLottos.forEach((myLotto) => {
+  setStatistics(lottoCandidates, lottoAnswer, lottoBonus) {
+    lottoCandidates.forEach((myLotto) => {
       let answerCount = 0;
       lottoAnswer.forEach((answer) => {
         if (myLotto.includes(answer)) {
@@ -55,7 +55,9 @@ class LottoStatistics {
   }
 
   calculateProfitRate(purchasedLottoCounts) {
-    let profitRate = 0;
+    if (purchasedLottoCounts === 0) {
+      return 0;
+    }
 
     const purchaseAmount = purchasedLottoCounts * LOTTO_AMOUNT_UNIT;
     const totalProfit =
@@ -65,13 +67,10 @@ class LottoStatistics {
       FOURTH_PLACE_AMOUNT * this.#statistics['fourth place'] +
       FIFTH_PLACE_AMOUNT * this.#statistics['fifth place'];
 
-    profitRate =
-      profitRate > 0
-        ? ((totalProfit - purchaseAmount) / purchaseAmount) *
-          PROFIT_RATE_PERCENTAGE_UNIT
-        : 0;
-
-    return profitRate;
+    return (
+      ((totalProfit - purchaseAmount) / purchaseAmount) *
+      PROFIT_RATE_PERCENTAGE_UNIT
+    );
   }
 }
 

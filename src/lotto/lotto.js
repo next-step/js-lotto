@@ -6,12 +6,12 @@ import {
   LOTTO_AMOUNT_SEPARATOR,
 } from '../constants/lotto.const.js';
 import { REGEX_NUMBERS } from '../constants/regex.const.js';
-import { getRandomNumber } from '../utils/random.util.js';
 import { getSortedArray } from '../utils/sort.util.js';
+import { getRandomNumber } from '../utils/number.util.js';
 
 class Lotto {
   #purchasedLottoCounts = 0;
-  #myLottos = [];
+  #lottoCandidates = [];
   #lottoAnswer = null;
   #lottoBonus = null;
 
@@ -21,8 +21,8 @@ class Lotto {
     return this.#purchasedLottoCounts;
   }
 
-  getMyLottos() {
-    return this.#myLottos;
+  getLottoCandidates() {
+    return this.#lottoCandidates;
   }
 
   getLottoAnswer() {
@@ -37,8 +37,8 @@ class Lotto {
     this.#purchasedLottoCounts = parseInt(amount) / LOTTO_AMOUNT_UNIT;
   }
 
-  setMyLottos(purchasedLottoCounts) {
-    this.#myLottos = this.publishLottoNumbers(purchasedLottoCounts);
+  setLottoCandidates(purchasedLottoCounts) {
+    this.#lottoCandidates = this.publishLottoNumbers(purchasedLottoCounts);
   }
 
   setLottoAnswer(lottoAnswer) {

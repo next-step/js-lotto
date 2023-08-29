@@ -56,3 +56,9 @@ live-server 폴더명
 ## 📝 License
 
 This project is [MIT](https://github.com/next-step/js-lotto/blob/main/LICENSE) licensed.
+
+<br/>
+
+## 개인 배포 링크
+
+[배포 링크](https://ding-co.github.io/js-lotto/)

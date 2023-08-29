@@ -32,17 +32,19 @@ describe('로또 구입', () => {
   });
 
   // (purchaseAmount / 1000) -> Purchased Lotto Counts
-  // PurchasedLottoCounts -> the number of myLottos length
+  // PurchasedLottoCounts -> the number of lottoCandidates length
   test('로또 구입 금액에 해당하는 만큼의 로또 발행', () => {
     const purchaseAmount = 5000;
 
     lotto.setPurchasedLottoCounts(purchaseAmount);
-    lotto.setMyLottos(lotto.getPurchasedLottoCounts());
+    lotto.setLottoCandidates(lotto.getPurchasedLottoCounts());
 
     expect(lotto.getPurchasedLottoCounts()).toBe(
       purchaseAmount / LOTTO_AMOUNT_UNIT
     );
-    expect(lotto.getMyLottos().length).toBe(purchaseAmount / LOTTO_AMOUNT_UNIT);
+    expect(lotto.getLottoCandidates().length).toBe(
+      purchaseAmount / LOTTO_AMOUNT_UNIT
+    );
   });
 
   // My Lotto Numbers -> 1~45
@@ -74,9 +76,9 @@ describe('로또 구입', () => {
     const purchaseAmount = 1000;
 
     lotto.setPurchasedLottoCounts(purchaseAmount);
-    lotto.setMyLottos(lotto.getPurchasedLottoCounts());
+    lotto.setLottoCandidates(lotto.getPurchasedLottoCounts());
 
-    expect(lotto.getMyLottos()[0].length).toBe(LOTTO_NUMBER_COUNT);
+    expect(lotto.getLottoCandidates()[0].length).toBe(LOTTO_NUMBER_COUNT);
   });
 
   // My Lotto Numbers -> Not Duplicated
@@ -84,10 +86,11 @@ describe('로또 구입', () => {
     const purchaseAmount = 1000;
 
     lotto.setPurchasedLottoCounts(purchaseAmount);
-    lotto.setMyLottos(lotto.getPurchasedLottoCounts());
+    lotto.setLottoCandidates(lotto.getPurchasedLottoCounts());
 
     expect(
-      lotto.getMyLottos().length === new Set(lotto.getMyLottos()).size
+      lotto.getLottoCandidates().length ===
+        new Set(lotto.getLottoCandidates()).size
     ).toBe(true);
   });
 });
@@ -223,8 +226,8 @@ describe('당첨 통계 및 수익률', () => {
 describe('Step 2 - 재시작 기능 및 UX 개선', () => {
   // my lotto numbers sorted ASC -> true
   test('로또 번호는 오름차순으로 정렬하여 보여준다.', () => {
-    lotto.setMyLottos(3);
-    lotto.getMyLottos().forEach((myLotto) => {
+    lotto.setLottoCandidates(3);
+    lotto.getLottoCandidates().forEach((myLotto) => {
       expect(
         JSON.stringify(getSortedArray(myLotto, { isAscending: true })) ===
           JSON.stringify(myLotto)
