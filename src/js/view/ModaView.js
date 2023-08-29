@@ -1,9 +1,8 @@
 const Lotto = require("../lotto");
-const { tableBody, myModal, } = require("../selector");
+const { tableBody, myModal, } = require("../utils/selector");
 
 const ModalView = {
     updateTable() {
-        console.log(tableBody, 'tableBody');
         while (tableBody.firstChild) {
             tableBody.removeChild(tableBody.firstChild);
         }

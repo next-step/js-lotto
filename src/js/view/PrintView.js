@@ -1,6 +1,6 @@
-const { RESULT_MESSAGE } = require('./constants.js')
+const { RESULT_MESSAGE } = require('../utils/constants.js')
 
-const View = {
+const PrintView = {
     printResult(resultCounts, profitPercentage) {
         console.log(RESULT_MESSAGE.RESULT);
         console.log(RESULT_MESSAGE.LINE);
@@ -10,4 +10,4 @@ const View = {
         console.log(RESULT_MESSAGE.RESULT_RATE(profitPercentage.toFixed(2)));
     }
 }
-module.exports = View;
+module.exports = PrintView;

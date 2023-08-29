@@ -1,7 +1,7 @@
 const LottoValidator = require('../utils/validate.js')
-const { LOTTO_PRICE, PRIZES } = require('./constants.js')
+const { LOTTO_PRICE, PRIZES } = require('./utils/constants.js')
 const LottoNumbers = require('./LottoNumbers.js')
-const View = require('./view.js')
+const View = require('./view/PrintView.js')
 
 const Lotto = {
     lottos: [],

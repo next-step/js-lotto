@@ -1,7 +1,7 @@
 import Lotto from "./js/lotto";
 import ModalView from "./js/view/ModaView"
-import { RESULT_MESSAGE, INPUT_NUMBER_LENGTH } from './js/constants'
-import { inputElement, buttonElement, resultElement, showLottoNumbers, lottoListEl, winningNumbers, bonusNumber, openResult, restartBtn, rateResult, myModal } from "./js/selector";
+import { RESULT_MESSAGE, INPUT_NUMBER_LENGTH } from './js/utils/constants'
+import { inputElement, buttonElement, resultElement, showLottoNumbers, lottoListEl, winningNumbers, bonusNumber, openResult, restartBtn, rateResult } from "./js/utils/selector";
 
 buttonElement.addEventListener('click', () => {
   const inputValue = inputElement.value;
