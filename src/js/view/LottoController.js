@@ -30,17 +30,17 @@ export class LottoController {
 
     this.#lottoView.printLottoResult(lottoResult, purchaseAmount);
 
-    await this.#restart();
-
-    this.#lottoView.closeInput();
+    this.#restart();
   }
 
   async #restart() {
     try {
       const inputValue = await this.#lottoView.inputRestart();
       if (this.#isRestart(inputValue)) {
-        await this.start();
+        this.start();
+        return;
       }
+      this.#lottoView.closeInput();
     } catch (error) {
       this.#lottoView.printError(error);
       await this.#restart();
