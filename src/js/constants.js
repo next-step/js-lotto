@@ -1,0 +1,20 @@
+export const NUMBER_OF_LOTTO_NUMBERS = 6;
+export const MIN_LOTTO_NUMBER = 1;
+export const MAX_LOTTO_NUMBER = 45;
+
+export const NUMBER_OF_WINNING_NUMBERS = NUMBER_OF_LOTTO_NUMBERS;
+export const MIN_WINNING_NUMBER = MIN_LOTTO_NUMBER;
+export const MAX_WINNING_NUMBER = MAX_LOTTO_NUMBER;
+
+export const LOTTO_PRIZE_MAP = {
+  0: 0,
+  1: 2000000000,
+  2: 30000000,
+  3: 1500000,
+  4: 50000,
+  5: 5000,
+};
+Object.freeze(LOTTO_PRIZE_MAP);
+
+export const LOTTO_PRICE = 1000;
+export const MAX_SELL_QUANTITY_AT_ONCE = 100;
