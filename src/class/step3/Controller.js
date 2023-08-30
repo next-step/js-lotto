@@ -27,7 +27,18 @@ export default class Controller {
   }
 
   #onClickPurchaseButton(payment) {
-    this.#lottoGame.issueLottoTickets(Number(payment));
+    if (this.#lottoGame.stage === "SET_PAYMENT") {
+      this.#lottoGame.issueLottoTickets(Number(payment));
+      this.#viewer.createPurchaseInfo(
+        this.#lottoGame.getLottoAmount(),
+        this.#lottoGame.getLottoTickets(),
+      );
+      this.#viewer.addSwitchClickListener();
+      this.#lottoGame.stage = "SET_WINNING_NUMBERS";
+      return;
+    }
+
+    alert("이미 로또를 구매하였습니다.");
   }
 
   init() {
