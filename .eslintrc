@@ -1,0 +1,21 @@
+{
+  "root": true,
+  "extends": ["eslint:recommended", "airbnb/base", "prettier"],
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "comma-dangle": ["error", "never"],
+    "no-console": "off",
+    "prettier/prettier": ["off"],
+    "lines-between-class-members": "off",
+    "class-methods-use-this": "off",
+    "consistent-return": "off"
+  },
+  "ignorePatterns": ["node_modules/", "/__tests__", "loader.js"]
+}
