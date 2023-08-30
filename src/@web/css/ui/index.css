@@ -1,4 +1,4 @@
-@import '@web/css/ui/modules/modal.css';
-@import '@web/css/ui/modules/switch.css';
-@import '@web/css/ui/modules/table.css';
-@import '@web/css/ui/modules/input.css';
+@import './modules/modal.css';
+@import './modules/switch.css';
+@import './modules/table.css';
+@import './modules/input.css';
