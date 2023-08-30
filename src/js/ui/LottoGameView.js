@@ -22,6 +22,10 @@ class LottoGameView {
     return this.#getUserInput(PROMPT.EXTRA_NUMBER)
   }
 
+  async getRestart() {
+    return this.#getUserInput(PROMPT.RESTART)
+  }
+
   async #getUserInput(prompt) {
     const userInput = await this.rl.question(prompt)
     return userInput

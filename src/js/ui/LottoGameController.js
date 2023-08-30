@@ -20,18 +20,37 @@ class LottoGameController {
   }
 
   async run() {
-    // 금액을 입력받아 로또를 구매한다.
+    try {
+      await this.executeGameCycle()
+      await this.restartOrEnd()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async restartOrEnd() {
+    const action = await this.#view.getRestart()
+
+    switch (action) {
+      case 'y':
+        this.run()
+        break
+      case 'n':
+        process.exit()
+      default:
+        process.exit()
+    }
+  }
+
+  async executeGameCycle() {
     const purchasedLottoList = await this.purchaseAndIssueLottos()
-    // 로또 번호를 입력받아 당첨 번호를 설정한다.
     const lottoWinningNumbers = await this.setWinningNumbers()
-    // 로또 당첨 결과를 계산한다.
     const result = this.calculateResults(
       lottoWinningNumbers,
       purchasedLottoList,
     )
-    // 당첨 결과를 출력한다.
+
     this.printResult(result)
-    process.exit()
   }
 
   async purchaseAndIssueLottos() {
@@ -73,11 +92,6 @@ class LottoGameController {
     })
   }
 
-  printResult(result) {
-    const formattedResult = this.formatLottoResults(result)
-    this.#view.print(formattedResult)
-  }
-
   getLottoStatus(lottoWinningNumbers, purchasedLottoList) {
     return purchasedLottoList.map((lotto) => {
       lotto.setStatus(lottoWinningNumbers)
@@ -101,6 +115,11 @@ class LottoGameController {
     }, '')
 
     return `${HEADER}${output}${FOOTER}`
+  }
+
+  printResult(result) {
+    const formattedResult = this.formatLottoResults(result)
+    this.#view.print(formattedResult)
   }
 }
 
