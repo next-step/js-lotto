@@ -59,6 +59,11 @@ export default class Controller {
     this.#viewer.openResultModal();
   }
 
+  #onClickRestartButton() {
+    this.#viewer.reset();
+    this.#lottoGame.reset();
+  }
+
   init() {
     this.#viewer.addPurchaseButtonClickListener(
       this.#withCommonErrorHandler(this.#onClickPurchaseButton),
@@ -66,6 +71,10 @@ export default class Controller {
 
     this.#viewer.addOpenResultModalButtonClickHandler(
       this.#withCommonErrorHandler(this.#onClickOpenResultModalButton),
+    );
+
+    this.#viewer.addResetButtonClickHandler(
+      this.#onClickRestartButton.bind(this),
     );
   }
 }

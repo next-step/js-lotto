@@ -130,4 +130,10 @@ export default class LottoGame {
 
     this.#stage = GAME_STAGE[stage];
   }
+
+  reset() {
+    this.#stage = GAME_STAGE.SET_PAYMENT;
+    this.#purchaseInfo = undefined;
+    this.#calculator.reset();
+  }
 }

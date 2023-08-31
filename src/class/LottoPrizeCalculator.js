@@ -108,4 +108,9 @@ export default class LottoPrizeCalculator {
       );
     });
   }
+
+  reset() {
+    this.#winningNumbers = undefined;
+    this.#bonusNumber = undefined;
+  }
 }

@@ -3,8 +3,8 @@ const cypressPurchaseLottoBeforeEach =
   () => {
     cy.visit("http://localhost:9000/");
 
-    cy.get("input").get(".payment").type(payment);
-    cy.get("button").get(".purchase").click();
+    cy.get("input.payment").type(payment);
+    cy.get("button.purchase").click();
 
     cy.window().then((win) => {
       cy.stub(win, "alert").as("alertStub");
@@ -19,7 +19,7 @@ const getBonusNumberInput = () => cy.get("input.bonus-number");
 const getOpenResultModalButton = () =>
   cy.get("button.open-result-modal-button");
 
-xdescribe("당첨 번호 및 보너스 번호 설정 테스트", () => {
+describe("당첨 번호 및 보너스 번호 설정 테스트", () => {
   beforeEach(cypressPurchaseLottoBeforeEach());
 
   it("당첨 번호 모두 입력하지 않으면 alert가 발생한다.", () => {
@@ -90,7 +90,17 @@ xdescribe("당첨 번호 및 보너스 번호 설정 테스트", () => {
 });
 
 describe("결과 확인 모달 팝업 테스트", () => {
-  beforeEach(cypressPurchaseLottoBeforeEach());
+  beforeEach(() => {
+    cypressPurchaseLottoBeforeEach()();
+
+    getWinningNumberInputByIndex(0).type("1");
+    getWinningNumberInputByIndex(1).type("2");
+    getWinningNumberInputByIndex(2).type("3");
+    getWinningNumberInputByIndex(3).type("4");
+    getWinningNumberInputByIndex(4).type("5");
+    getWinningNumberInputByIndex(5).type("6");
+    getBonusNumberInput().type("7");
+  });
 
   it("로또 구매 및 당첨 조건 입력 후 결과 확인 버튼을 클릭하면 모달이 팝업된다.", () => {
     getOpenResultModalButton().click();
@@ -98,7 +108,7 @@ describe("결과 확인 모달 팝업 테스트", () => {
     cy.get("div.modal").should("be.visible");
   });
 
-  xit("x아이콘을 클릭하면 모달이 닫힌다.", () => {
+  it("x아이콘을 클릭하면 모달이 닫힌다.", () => {
     getOpenResultModalButton().click();
 
     cy.get("div.modal-close svg").click();
@@ -106,15 +116,41 @@ describe("결과 확인 모달 팝업 테스트", () => {
     cy.get("div.modal").should("not.be.visible");
   });
 
-  xit("모달의 다시 시작하기 버튼을 클릭하면 모달이 닫히며 게임이 초기화 된다.", () => {
+  it("모달의 다시 시작하기 버튼을 클릭하면 모달이 닫히며 게임이 초기화 된다.", () => {
     getOpenResultModalButton().click();
 
     cy.get("button.restart").click();
 
     cy.get("div.modal").should("not.be.visible");
 
-    cy.get(".purchase-info").should("not.be.visible");
     cy.get("form.prize-info").should("not.be.visible");
-    cy.get("input.payment").should("not.have.value");
+    cy.get("input.winning-number").each((input) => {
+      cy.wrap(input).should("have.value", "");
+    });
+    cy.get("input.bonus-number").should("have.value", "");
+
+    cy.get(".purchase-info").should("not.exist");
+    cy.get("input.payment").should("have.value", "");
+  });
+
+  it("게임을 다시 시작해도 정상적으로 게임이 진행된다.", () => {
+    getOpenResultModalButton().click();
+
+    cy.get("button.restart").click();
+
+    cy.get("input.payment").type("2000");
+    cy.get("button.purchase").click();
+
+    getWinningNumberInputByIndex(0).type("10");
+    getWinningNumberInputByIndex(1).type("12");
+    getWinningNumberInputByIndex(2).type("13");
+    getWinningNumberInputByIndex(3).type("14");
+    getWinningNumberInputByIndex(4).type("25");
+    getWinningNumberInputByIndex(5).type("16");
+    getBonusNumberInput().type("37");
+
+    getOpenResultModalButton().click();
+
+    cy.get("div.modal").should("be.visible");
   });
 });

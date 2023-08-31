@@ -1,4 +1,4 @@
-xdescribe("로또 구매부분 테스트", () => {
+describe("로또 구매부분 테스트", () => {
   beforeEach(() => {
     cy.visit("http://localhost:9000/");
 

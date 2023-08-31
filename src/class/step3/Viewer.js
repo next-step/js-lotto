@@ -5,14 +5,14 @@ export default class Viewer {
   #paymentInput;
   #lottoContainer;
   #purchaseSection;
-  #showResultButton;
+  #openResultModalButton;
   #modal;
 
   constructor() {
     this.#purchaseButton = document.querySelector("button.purchase");
     this.#paymentInput = document.querySelector("input.payment");
     this.#lottoContainer = document.querySelector(".lotto-container");
-    this.#showResultButton = document.querySelector(
+    this.#openResultModalButton = document.querySelector(
       ".open-result-modal-button",
     );
 
@@ -30,7 +30,7 @@ export default class Viewer {
   }
 
   addOpenResultModalButtonClickHandler(callback) {
-    this.#showResultButton.addEventListener("click", () => {
+    this.#openResultModalButton.addEventListener("click", () => {
       const winningNumbers = Array.from(
         document.querySelectorAll("input.winning-number"),
       )
@@ -65,6 +65,14 @@ export default class Viewer {
     prizeInfoForm.classList.remove("d-none");
   }
 
+  #removePurchaseInfo() {
+    this.#purchaseSection.remove();
+
+    this.#purchaseSection = undefined;
+
+    this.#paymentInput.value = "";
+  }
+
   #toggleLottoBox() {
     const lottoBox = document.querySelector(".lotto-box");
 
@@ -85,11 +93,47 @@ export default class Viewer {
     profitRatioElement.textContent = HTML_FORMAT.PROFIT_RATIO(profitRatio);
   }
 
+  #resetPrizeInfo() {
+    const resultTableTbody = document.querySelector("table.result-table tbody");
+
+    const profitRatioElement = document.querySelector("div.modal-inner p");
+
+    const prizeInfoForm = document.querySelector("form.prize-info");
+
+    resultTableTbody.innerHTML = "";
+
+    profitRatioElement.textContent = "";
+
+    prizeInfoForm.classList.add("d-none");
+
+    Array.from(document.querySelectorAll("input.winning-number")).forEach(
+      (el) => {
+        el.value = "";
+      },
+    );
+
+    document.querySelector("input.bonus-number").value = "";
+  }
+
   openResultModal() {
     this.#modal.classList.add("open");
   }
 
   closeResultModal() {
     this.#modal.classList.remove("open");
+  }
+
+  reset() {
+    this.closeResultModal();
+
+    this.#resetPrizeInfo();
+
+    this.#removePurchaseInfo();
+  }
+
+  addResetButtonClickHandler(callback) {
+    document.querySelector("button.restart").addEventListener("click", () => {
+      callback();
+    });
   }
 }
