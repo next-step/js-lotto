@@ -41,9 +41,31 @@ export default class Controller {
     alert("이미 로또를 구매하였습니다.");
   }
 
+  #onClickOpenResultModalButton(winningNumbers, bonusNumber) {
+    if (this.#lottoGame.stage === "SET_PAYMENT") {
+      alert("로또를 먼저 구매해 주세요");
+      return;
+    }
+
+    this.#lottoGame.setWinningNumbers(winningNumbers);
+
+    this.#lottoGame.setBonusNumber(bonusNumber);
+
+    this.#viewer.setPrizeInfo(
+      this.#lottoGame.getTotalPrize(),
+      this.#lottoGame.getProfitRatio(),
+    );
+
+    this.#viewer.openResultModal();
+  }
+
   init() {
     this.#viewer.addPurchaseButtonClickListener(
       this.#withCommonErrorHandler(this.#onClickPurchaseButton),
+    );
+
+    this.#viewer.addOpenResultModalButtonClickHandler(
+      this.#withCommonErrorHandler(this.#onClickOpenResultModalButton),
     );
   }
 }
