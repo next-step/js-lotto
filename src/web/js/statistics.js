@@ -3,7 +3,27 @@ import {
   ERROR_WRONG_LOTTO_BONUS_MESSAGE,
 } from '../../constants/error.const.js';
 
+const init = () => {
+  const $lottoAnswersInputsContainer = document.querySelector(
+    '#winning-number-container'
+  );
+
+  Array(6)
+    .fill(null)
+    .forEach(() => {
+      const inputNumber = document.createElement('input');
+      inputNumber.dataset.winning = 'winning-number';
+      inputNumber.type = 'number';
+      inputNumber.classList.add('mx-1', 'text-center');
+      inputNumber.min = '1';
+      inputNumber.max = '45';
+      $lottoAnswersInputsContainer.appendChild(inputNumber);
+    });
+};
+
 const runStatistics = (lotto, lottoStatistics, lottoAnswers, lottoBonus) => {
+  init();
+
   const $lottoAnswersForm = document.querySelector('#lotto-answers-form');
   const $lottoAnswersInputs = document.querySelectorAll(
     '[data-winning="winning-number"]'
