@@ -58,7 +58,7 @@ export default class Viewer {
     this.#purchaseSection.innerHTML = HTML_FORMAT.PURCHASE_INFO(amount);
     this.#purchaseSection.innerHTML += HTML_FORMAT.LOTTO_BOX(tickets);
 
-    const prizeInfoForm = document.querySelector("form.prize_info");
+    const prizeInfoForm = document.querySelector("form.prize-info");
 
     this.#lottoContainer.insertBefore(this.#purchaseSection, prizeInfoForm);
 

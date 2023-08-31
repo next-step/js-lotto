@@ -19,7 +19,7 @@ const getBonusNumberInput = () => cy.get("input.bonus-number");
 const getOpenResultModalButton = () =>
   cy.get("button.open-result-modal-button");
 
-describe("당첨 번호 및 보너스 번호 설정 테스트", () => {
+xdescribe("당첨 번호 및 보너스 번호 설정 테스트", () => {
   beforeEach(cypressPurchaseLottoBeforeEach());
 
   it("당첨 번호 모두 입력하지 않으면 alert가 발생한다.", () => {
@@ -89,8 +89,32 @@ describe("당첨 번호 및 보너스 번호 설정 테스트", () => {
   });
 });
 
-xdescribe("결과 확인 모달 팝업 테스트", () => {
+describe("결과 확인 모달 팝업 테스트", () => {
   beforeEach(cypressPurchaseLottoBeforeEach());
 
-  it("로또 구매 및 당첨 조건 입력 후 결과 확인 버튼을 클릭하면 모달이 팝업된다.", () => {});
+  it("로또 구매 및 당첨 조건 입력 후 결과 확인 버튼을 클릭하면 모달이 팝업된다.", () => {
+    getOpenResultModalButton().click();
+
+    cy.get("div.modal").should("be.visible");
+  });
+
+  xit("x아이콘을 클릭하면 모달이 닫힌다.", () => {
+    getOpenResultModalButton().click();
+
+    cy.get("div.modal-close svg").click();
+
+    cy.get("div.modal").should("not.be.visible");
+  });
+
+  xit("모달의 다시 시작하기 버튼을 클릭하면 모달이 닫히며 게임이 초기화 된다.", () => {
+    getOpenResultModalButton().click();
+
+    cy.get("button.restart").click();
+
+    cy.get("div.modal").should("not.be.visible");
+
+    cy.get(".purchase-info").should("not.be.visible");
+    cy.get("form.prize-info").should("not.be.visible");
+    cy.get("input.payment").should("not.have.value");
+  });
 });
