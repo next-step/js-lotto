@@ -29,8 +29,8 @@ const runPurchase = (lotto) => {
   const $purchaseLottosLabel = document.querySelector(
     '#purchase-lottos__label'
   );
-  const $purchaseLottosTicket = document.querySelector(
-    '[data-ticket="purchase-lottos__ticket"]'
+  const $purchaseLottosTicketContainer = document.querySelector(
+    '#purchase-lottos-ticket-container'
   );
   const $purchaseLottosSwitch = document.querySelector(
     '#lotto-numbers-toggle-button'
@@ -51,19 +51,25 @@ const runPurchase = (lotto) => {
 `;
 
     if (purchasedLottoCounts === 0) {
-      $purchaseLottosTicket.parentElement.style.visibility = 'hidden';
+      $purchaseLottosTicketContainer.style.visibility = 'hidden';
       return;
     }
 
     if (purchasedLottoCounts > 1) {
-      $purchaseLottosTicket.parentElement.style.visibility = 'visible';
-      Array(purchasedLottoCounts - 1)
-        .fill($purchaseLottosTicket)
-        .forEach((element) => {
-          $purchaseLottosTicket.parentElement.appendChild(
-            element.cloneNode(true)
-          );
+      $purchaseLottosTicketContainer.replaceChildren();
+
+      const ticket = document.createElement('span');
+      ticket.dataset.ticket = 'purchase-lottos__ticket';
+      ticket.classList.add('mx-1', 'text-4xl');
+      ticket.innerHTML = '🎟️';
+
+      Array(purchasedLottoCounts)
+        .fill(null)
+        .forEach(() => {
+          $purchaseLottosTicketContainer.appendChild(ticket.cloneNode(true));
         });
+
+      $purchaseLottosTicketContainer.style.visibility = 'visible';
     }
   };
 
