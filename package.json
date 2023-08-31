@@ -3,13 +3,17 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "repository": {
+    "url": "git+https://github.com/Gn0lee/js-lotto.git"
+  },
   "scripts": {
     "start-step1": "npm run build-step1 && node dist/bundle.js",
     "test:unit": "jest --watch",
     "test:e2e": "cypress open",
     "start-step3": "webpack serve --open --config step3.config.js",
     "build-step1": "webpack --mode production --config step1.config.js",
-    "build-step3": "webpack --mode production --config step3.config.js"
+    "build-step3": "webpack --mode production --config step3.config.js",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
@@ -26,6 +30,7 @@
     "eslint-plugin-cypress": "^2.14.0",
     "eslint-plugin-jest": "^27.2.3",
     "eslint-plugin-prettier": "^5.0.0",
+    "gh-pages": "^6.0.0",
     "html-webpack-plugin": "^5.5.3",
     "jest": "^29.6.2",
     "prettier": "^3.0.0",
