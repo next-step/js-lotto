@@ -10,6 +10,8 @@
   "scripts": {
     "start-step1": "babel-node src/step1-index.js",
     "start-step2": "babel-node src/step2-index.js",
+    "start-step3": "webpack serve --open --config step3.config.js",
+    "start-step4": "webpack serve --open --config step4.config.js",
     "test": "jest",
     "dev": "live-server --port=8000"
   },
@@ -22,6 +24,15 @@
     "@babel/cli": "^7.22.10",
     "@babel/core": "^7.22.10",
     "@babel/node": "^7.22.10",
-    "@babel/preset-env": "^7.22.10"
+    "@babel/preset-env": "^7.22.10",
+    "babel-jest": "^29.6.4",
+    "babel-loader": "^9.1.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   }
 }
