@@ -1,25 +1,25 @@
 import { ERROR_WRONG_PURCHASE_AMOUNT_MESSAGE } from '../../constants/error.const.js';
 
 const runPurchase = (lotto) => {
-  const $purchaseAmountForm = document.querySelector('.purchase-amount-form');
+  const $purchaseAmountForm = document.querySelector('#purchase-amount-form');
   const $purchaseAmountInput = document.querySelector(
-    '.purchase-amount__input'
+    '#purchase-amount__input'
   );
 
   const $purchaseLottosSection = document.querySelector(
-    '.purchase-lottos-section'
+    '#purchase-lottos-section'
   );
   const $purchaseLottosLabel = document.querySelector(
-    '.purchase-lottos__label'
+    '#purchase-lottos__label'
   );
   const $purchaseLottosTicket = document.querySelector(
-    '.purchase-lottos__ticket'
+    '[data-ticket="purchase-lottos__ticket"]'
   );
   const $purchaseLottosSwitch = document.querySelector(
-    '.lotto-numbers-toggle-button'
+    '#lotto-numbers-toggle-button'
   );
 
-  const $lottoAnswersForm = document.querySelector('.lotto-answers-form');
+  const $lottoAnswersForm = document.querySelector('#lotto-answers-form');
 
   const showBelowElements = (isShow) => {
     const visibilityStyle = isShow ? 'visible' : 'hidden';
@@ -76,14 +76,18 @@ const runPurchase = (lotto) => {
   $purchaseLottosSwitch.addEventListener('change', (event) => {
     const { checked } = event.target;
 
-    const tickets = document.querySelectorAll('.purchase-lottos__ticket');
-    const lottoCandidates = document.querySelectorAll('.lotto-candidate');
+    const tickets = document.querySelectorAll(
+      '[data-ticket="purchase-lottos__ticket"]'
+    );
+    const lottoCandidates = document.querySelectorAll(
+      '[data-candidate="lotto-candidate"]'
+    );
 
     if (checked) {
       if (lottoCandidates.length < 1) {
         tickets.forEach((ticket, idx) => {
           const lottoCandidate = document.createElement('span');
-          lottoCandidate.className = 'lotto-candidate';
+          lottoCandidate.dataset.candidate = 'lotto-candidate';
           lottoCandidate.innerHTML = lotto.getLottoCandidates()[idx];
 
           ticket.appendChild(lottoCandidate);
