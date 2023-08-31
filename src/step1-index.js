@@ -8,7 +8,7 @@ import { Console } from "./js/view/Console";
 
   const amount = await view.getUserInput("구입금액을 입력해 주세요: ", {
     parser: (inputStr) => {
-      const amount = parseInt(inputStr);
+      const amount = parseInt(inputStr, 10);
       if (isNaN(amount)) {
         throw Error("숫자가 아닙니다.");
       }
@@ -36,7 +36,7 @@ import { Console } from "./js/view/Console";
       parser: (inputStr) => {
         const winningNumbers = inputStr
           .split(",")
-          .map((numStr) => parseInt(numStr.trim()))
+          .map((numStr) => parseInt(numStr.trim()), 10)
           .filter((num) => !isNaN(num));
         LottoWinningNumber.validateNumbers(winningNumbers);
         return winningNumbers;
@@ -46,7 +46,7 @@ import { Console } from "./js/view/Console";
 
   const bonusNumber = await view.getUserInput("보너스 번호를 입력해 주세요: ", {
     parser: (inputStr) => {
-      const bonusNumber = parseInt(inputStr);
+      const bonusNumber = parseInt(inputStr, 10);
       if (isNaN(bonusNumber)) {
         throw Error("숫자가 아닙니다.");
       }
