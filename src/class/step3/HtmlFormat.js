@@ -26,6 +26,28 @@ const HTML_FORMAT = Object.freeze({
       .join("")}
   </div>
   `,
+  PRIZE_FORMAT: (totalPrize) => `
+  ${totalPrize
+    .map(
+      (prize) => `<tr class="text-center">
+                  <td class="p-3">${
+                    prize.requiresBonusNumber
+                      ? `${prize.matchingNumberCount}개+보너스볼`
+                      : `${prize.matchingNumberCount}개`
+                  }</td>
+                  <td class="p-3">${prize.prizeAmount.toLocaleString("en")}</td>
+                  <td class="p-3">${prize.count}개</td>
+                </tr>`,
+    )
+    .join("")}
+  `,
+  PROFIT_RATIO: (profitRatio) => {
+    const profitPercent = profitRatio * 100;
+
+    return `당신의 총 수익률은 ${
+      Number.isInteger(profitPercent) ? profitPercent : profitPercent.toFixed(1)
+    }%입니다.`;
+  },
 });
 
 export default HTML_FORMAT;

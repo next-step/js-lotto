@@ -116,7 +116,7 @@ export default class LottoGame {
       0,
     );
 
-    return totalPrize / this.#purchaseInfo.amount;
+    return totalPrize / (this.#purchaseInfo.amount * this.#purchaseInfo.price);
   }
 
   get stage() {

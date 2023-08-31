@@ -5,16 +5,44 @@ export default class Viewer {
   #paymentInput;
   #lottoContainer;
   #purchaseSection;
+  #showResultButton;
+  #modal;
 
   constructor() {
     this.#purchaseButton = document.querySelector("button.purchase");
     this.#paymentInput = document.querySelector("input.payment");
     this.#lottoContainer = document.querySelector(".lotto-container");
+    this.#showResultButton = document.querySelector(
+      ".open-result-modal-button",
+    );
+
+    document
+      .querySelector(".modal-close")
+      .addEventListener("click", this.closeResultModal.bind(this));
+
+    this.#modal = document.querySelector(".modal");
   }
 
   addPurchaseButtonClickListener(callback) {
     this.#purchaseButton.addEventListener("click", () => {
       callback(this.#paymentInput.value);
+    });
+  }
+
+  addOpenResultModalButtonClickHandler(callback) {
+    this.#showResultButton.addEventListener("click", () => {
+      const winningNumbers = Array.from(
+        document.querySelectorAll("input.winning-number"),
+      )
+        .map((input) => input.value)
+        .filter((value) => value.trim().length > 0)
+        .map(Number);
+
+      const bonusNumber = Number(
+        document.querySelector("input.bonus-number").value,
+      );
+
+      callback(winningNumbers, bonusNumber);
     });
   }
 
@@ -45,5 +73,23 @@ export default class Viewer {
     } else {
       lottoBox.classList.replace("d-none", "d-flex");
     }
+  }
+
+  setPrizeInfo(totalPrize, profitRatio) {
+    const resultTableTbody = document.querySelector("table.result-table tbody");
+
+    const profitRatioElement = document.querySelector("div.modal-inner p");
+
+    resultTableTbody.innerHTML = HTML_FORMAT.PRIZE_FORMAT(totalPrize);
+
+    profitRatioElement.textContent = HTML_FORMAT.PROFIT_RATIO(profitRatio);
+  }
+
+  openResultModal() {
+    this.#modal.classList.add("open");
+  }
+
+  closeResultModal() {
+    this.#modal.classList.remove("open");
   }
 }
