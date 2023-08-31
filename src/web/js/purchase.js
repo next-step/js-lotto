@@ -1,6 +1,23 @@
 import { ERROR_WRONG_PURCHASE_AMOUNT_MESSAGE } from '../../constants/error.const.js';
 
+const init = () => {
+  const $purchaseLottosContainer = document.querySelector(
+    '#purchase-lottos__container'
+  );
+
+  const purchaseLottosLabel = document.createElement('label');
+  purchaseLottosLabel.id = 'purchase-lottos__label';
+  purchaseLottosLabel.classList.add('flex-auto', 'my-0');
+
+  $purchaseLottosContainer.insertBefore(
+    purchaseLottosLabel,
+    $purchaseLottosContainer.firstChild
+  );
+};
+
 const runPurchase = (lotto) => {
+  init();
+
   const $purchaseAmountForm = document.querySelector('#purchase-amount-form');
   const $purchaseAmountInput = document.querySelector(
     '#purchase-amount__input'
