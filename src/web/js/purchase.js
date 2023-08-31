@@ -106,25 +106,19 @@ const runPurchase = (lotto) => {
       '[data-candidate="lotto-candidate"]'
     );
 
-    if (checked) {
-      if (lottoCandidates.length < 1) {
-        tickets.forEach((ticket, idx) => {
-          const lottoCandidate = document.createElement('span');
-          lottoCandidate.dataset.candidate = 'lotto-candidate';
-          lottoCandidate.innerHTML = lotto.getLottoCandidates()[idx];
+    if (lottoCandidates.length < 1) {
+      tickets.forEach((ticket, idx) => {
+        const lottoCandidate = document.createElement('span');
+        lottoCandidate.dataset.candidate = 'lotto-candidate';
+        lottoCandidate.innerHTML = lotto.getLottoCandidates()[idx];
 
-          ticket.appendChild(lottoCandidate);
-        });
-      } else {
-        lottoCandidates.forEach((lottoCandidate) => {
-          lottoCandidate.style.display = 'inline-block';
-        });
-      }
-    } else {
-      lottoCandidates.forEach((lottoCandidate) => {
-        lottoCandidate.style.display = 'none';
+        ticket.appendChild(lottoCandidate);
       });
     }
+
+    lottoCandidates.forEach((lottoCandidate) => {
+      lottoCandidate.style.display = checked ? 'inline-block' : 'none';
+    });
   });
 };
 
