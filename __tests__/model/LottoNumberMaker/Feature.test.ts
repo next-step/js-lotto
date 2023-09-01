@@ -1,5 +1,7 @@
 import { LOTTO_TERMS } from '@step1/constants/lotto';
 import LottoNumberMaker from '@step1/model/LottoNumberMaker';
+import { describe, expect, test } from '@jest/globals';
+
 import {
   isAscendingOrder,
   isDuplicateLottoNumbers,

@@ -1,4 +1,5 @@
 import { LottoReward } from '@step1/model';
+import { describe, expect, test } from '@jest/globals';
 
 describe('LottoReward 관련 기능 테스트', () => {
   test.each([

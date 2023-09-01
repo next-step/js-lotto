@@ -2,6 +2,7 @@ import { SYMBOLS } from '@step1/constants/commons';
 import { LOTTO_TERMS } from '@step1/constants/lotto';
 import { Lotto } from '@step1/model';
 import { isDefaultLottoCount, isValidLottoNumbersRange } from '@step1/utils/validate/lotto/lottoValidate';
+import { describe, expect, test } from '@jest/globals';
 
 describe('Lotto 관련 기능 테스트', () => {
   describe('랜덤 번호를 통한 로또 생성 테스트', () => {

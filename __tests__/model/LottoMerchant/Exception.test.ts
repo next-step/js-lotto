@@ -2,6 +2,7 @@ import { LOTTO_TERMS } from '@step1/constants/lotto';
 import { ERROR_MESSAGE } from '@step1/constants/message';
 import { PurchaseLottoError } from '@step1/errors';
 import { LottoMerchant } from '@step1/model';
+import { describe, expect, test } from '@jest/globals';
 
 describe('LottoMerchant 관련 예외 테스트', () => {
   describe('잔돈이 발생하는 case 테스트', () => {

@@ -2,6 +2,7 @@ import { LOTTO_TERMS } from '@step1/constants/lotto';
 import { ERROR_MESSAGE } from '@step1/constants/message';
 import { LottoError } from '@step1/errors';
 import { LottoReward } from '@step1/model';
+import { describe, expect, test } from '@jest/globals';
 
 describe('LottoReward 예외 관련 테스트', () => {
   test.each([
