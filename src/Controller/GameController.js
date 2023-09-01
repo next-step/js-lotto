@@ -57,9 +57,9 @@ export class GameController {
   }
 
   async #readRestart() {
-    const restart = await this.#view.readRestart();
+    const isRestart = await this.#view.readRestart();
 
-    if (restart) return this.LottoGameProcess();
+    if (isRestart) return this.LottoGameProcess();
 
     this.#endGame();
   }
