@@ -12,6 +12,7 @@ export class GameController {
     const tickets = await this.#getTickets();
     const winningNumbers = await this.#readWinningNumbers();
     const ticketResults = this.#checkTicketsResult(tickets, winningNumbers);
+
     this.#printTicketsResult(ticketResults);
     this.#readRestart();
   }
