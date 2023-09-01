@@ -43,14 +43,7 @@ export class GameController {
   }
 
   #checkTicketsResult(tickets, winningNumbers) {
-    return tickets.map((ticket) => {
-      const ticketNumbers = ticket.getTicketNumbers();
-
-      return this.#lottoCorporation.checkTicketResult(
-        ticketNumbers,
-        winningNumbers
-      );
-    });
+    return this.#lottoCorporation.checkTicketsResult(tickets, winningNumbers);
   }
 
   #printTicketsResult(ticketResults) {

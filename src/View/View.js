@@ -1,11 +1,6 @@
 import { InputView, OutputView } from '.';
 import { Validator } from '../utils/Validator';
 import { MESSAGE, RESTART_INPUT } from '../constants';
-import {
-  calculatePrizeCount,
-  calculateProfitRate,
-  calculateTotalPrize,
-} from '../utils';
 
 export class View {
   #inputView = InputView;
@@ -90,16 +85,14 @@ export class View {
   }
 
   printTicketsResult(ticketResults) {
-    const prizeCount = calculatePrizeCount(ticketResults);
-    const totalPrize = calculateTotalPrize(ticketResults);
-    const profitRate = calculateProfitRate(totalPrize, ticketResults.length);
+    const { prizes, profitRate } = ticketResults;
 
-    this.#displayPrize(prizeCount);
+    this.#displayPrize(prizes);
     this.#outputView.print(MESSAGE.PRINT.PROFIT(profitRate));
   }
 
-  #displayPrize(prizeCount) {
-    this.#outputView.print(MESSAGE.PRINT.PRIZE(prizeCount));
+  #displayPrize(prizes) {
+    this.#outputView.print(MESSAGE.PRINT.PRIZE(prizes));
   }
 
   /* Close Readline */
