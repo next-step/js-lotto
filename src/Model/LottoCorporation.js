@@ -12,9 +12,7 @@ export class LottoCorporation {
   }
 
   buyTickets(purchaseAmount) {
-    const tickets = this.#lottoStore.buyTickets(purchaseAmount);
-
-    return tickets;
+    return this.#lottoStore.buyTickets(purchaseAmount);
   }
 
   checkTicketResult(ticketNumbers, winningNumbers) {
