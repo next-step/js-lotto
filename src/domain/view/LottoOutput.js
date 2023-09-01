@@ -40,10 +40,10 @@ export class LottoOutput {
   }
 
   showErrorMessage(elementId, message) {
-    const errorElement = elementId === 'budget-input' ? this.budgetError : this.winningError;
+    const errorElement = elementId === 'budget_input' ? this.budgetError : this.winningError;
     errorElement.innerHTML = message;
     errorElement.classList.toggle(CLASS.HIDDEN, message === EMPTY_STRING);
-    if (elementId === 'budget-input') {
+    if (elementId === 'budget_input') {
       this.budgetButton.disabled = message === EMPTY_STRING ? STATE.FALSE : STATE.TRUE;
     } else {
       this.winningButton.disabled = message === EMPTY_STRING ? STATE.FALSE : STATE.TRUE;
