@@ -12,6 +12,7 @@ export class GameController {
     const tickets = await this.#getTickets();
     const winningNumbers = await this.#readWinningNumbers();
     const ticketResults = this.#checkTicketsResult(tickets, winningNumbers);
+
     this.#printTicketsResult(ticketResults);
     this.#readRestart();
   }
@@ -42,14 +43,7 @@ export class GameController {
   }
 
   #checkTicketsResult(tickets, winningNumbers) {
-    return tickets.map((ticket) => {
-      const ticketNumbers = ticket.getTicketNumbers();
-
-      return this.#lottoCorporation.checkTicketResult(
-        ticketNumbers,
-        winningNumbers
-      );
-    });
+    return this.#lottoCorporation.checkTicketsResult(tickets, winningNumbers);
   }
 
   #printTicketsResult(ticketResults) {
@@ -57,9 +51,9 @@ export class GameController {
   }
 
   async #readRestart() {
-    const restart = await this.#view.readRestart();
+    const isRestart = await this.#view.readRestart();
 
-    if (restart) return this.LottoGameProcess();
+    if (isRestart) return this.LottoGameProcess();
 
     this.#endGame();
   }

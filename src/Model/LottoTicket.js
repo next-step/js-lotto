@@ -21,6 +21,7 @@ export class LottoTicket {
 
   #createNumbers() {
     const uniqueNumbers = new Set();
+
     while (uniqueNumbers.size !== NUMBER.LOTTO_TICKET.NUMBERS_LENGTH) {
       const randomNumber = this.#getRandomLottoNumber();
 

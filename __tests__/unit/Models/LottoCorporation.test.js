@@ -1,5 +1,5 @@
 import { LottoCorporation } from '../../../src/Model';
-import { NUMBER } from '../../../src/constants';
+import { NUMBER, RADIX } from '../../../src/constants';
 import { isLottoNumber } from '../../../src/utils/Validator';
 
 describe('LottoCorporation', () => {
@@ -10,7 +10,10 @@ describe('LottoCorporation', () => {
 
   test('구매금액에 맞는 로또의 개수를 반환하는지 확인한다.', () => {
     const TICKET_PRICE = NUMBER.DEFAULT_TICKET_PRICE;
-    const expectedTicketCount = parseInt(purchaseAmount / TICKET_PRICE);
+    const expectedTicketCount = parseInt(
+      purchaseAmount / TICKET_PRICE,
+      RADIX.BASE_10
+    );
 
     expect(tickets.length).toBe(expectedTicketCount);
   });
