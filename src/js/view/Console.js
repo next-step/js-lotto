@@ -10,7 +10,7 @@ export class Console {
 
   async #prompt(text) {
     console.log("\n");
-    return await this.#rl.question(text);
+    return this.#rl.question(text);
   }
 
   print(message) {
@@ -19,7 +19,7 @@ export class Console {
 
   async getUserInput(message, { parser }) {
     if (!parser) {
-      return await this.#prompt(message);
+      return this.#prompt(message);
     }
 
     while (true) {
