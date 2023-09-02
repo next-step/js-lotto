@@ -3,7 +3,7 @@ import {
   getTotalInvestgatePrice,
   getTotalWinningPrice,
 } from "../controller/lottoController.js";
-import { LOTTO_PRIZE } from "../data/constant.js";
+import { LOTTO_PRIZE } from "../data/lotto.js";
 import { priceWithCommas } from "../utils/calculate.js";
 
 export const displayAvailableLottoCount = (lottoCount) => {
@@ -14,14 +14,7 @@ export const displayLottoNumbers = (lottoNumbers) => {
   lottoNumbers.forEach((lotto) => console.log(lotto));
 };
 
-export const displayWinningStats = (winningResult) => {
-  const { matchedCount, hasBonus } = winningResult;
-  const key = getPrizeKey(matchedCount, hasBonus);
-
-  if (key) {
-    LOTTO_PRIZE[key].count += 1;
-  }
-
+export const displayWinningStats = () => {
   console.log("당첨 통계");
   console.log("======================");
 

@@ -1,8 +1,10 @@
 import {
+  checkInputPrice,
   createLottosForAmount,
+  formatWinningNumbers,
   getWinningPrizeResult,
+  updateLottoPrizeCount,
   validateInputBonusNumber,
-  validateInputPrice,
   validateInputWinningNumbers,
 } from "./controller/lottoController.js";
 import { calcLottoCount } from "./utils/calculate.js";
@@ -11,7 +13,7 @@ import {
   inputBonusNumberMessage,
   inputLottoNumberMessage,
   inputLottoPriceMessage,
-} from "./utils/constant.js";
+} from "./data/constant.js";
 import {
   displayAvailableLottoCount,
   displayLottoNumbers,
@@ -19,52 +21,71 @@ import {
   displayWinningStats,
 } from "./view/view.js";
 
-async function lottoGame() {
+async function getInputPrice() {
   const inputPrice = await getUserInput(inputLottoPriceMessage);
-  const isAvaliablePrice = validateInputPrice(inputPrice);
 
-  if (!isAvaliablePrice) {
+  try {
+    checkInputPrice(inputPrice);
+  } catch (error) {
+    console.log(error.message);
+    return false;
+  }
+
+  return inputPrice;
+}
+
+async function getInputWinningNumbers() {
+  const inputWinningNumbers = await getUserInput(inputLottoNumberMessage);
+  return validateInputWinningNumbers(inputWinningNumbers)
+    ? inputWinningNumbers
+    : null;
+}
+
+async function getInputBonusNumber(winningNumbers) {
+  const inputBonusNumber = await getUserInput(inputBonusNumberMessage);
+  return validateInputBonusNumber(winningNumbers, inputBonusNumber)
+    ? inputBonusNumber
+    : null;
+}
+
+async function lottoGame() {
+  const inputPrice = await getInputPrice();
+
+  if (!inputPrice) {
     closeUserInput();
     return false;
   }
 
-  // 몇개 살 수 있는 지 출력
   const avaliableCount = calcLottoCount(inputPrice);
   displayAvailableLottoCount(avaliableCount);
 
-  // 로또 번호 출력
-  const lottoNumbers = createLottosForAmount(calcLottoCount(inputPrice));
+  const lottoNumbers = createLottosForAmount(avaliableCount);
   displayLottoNumbers(lottoNumbers);
 
-  // 사용자의 당첨 번호 입력
-  const inputWinningNumbers = await getUserInput(inputLottoNumberMessage);
-  const isAvaliableNumbers = validateInputWinningNumbers(inputWinningNumbers);
+  const inputWinningNumbers = await getInputWinningNumbers();
 
-  if (!isAvaliableNumbers) {
+  if (!inputWinningNumbers) {
     closeUserInput();
     return false;
   }
 
-  // 보너스 번호 입력
-  const inputBonusNumber = await getUserInput(inputBonusNumberMessage);
-  const isAvaliableBonusNumber = validateInputBonusNumber(
+  const inputBonusNumber = await getInputBonusNumber(inputWinningNumbers);
+
+  if (!inputBonusNumber) {
+    closeUserInput();
+    return false;
+  }
+
+  const winningNumbers = formatWinningNumbers(
     inputWinningNumbers,
     inputBonusNumber
   );
 
-  if (!isAvaliableBonusNumber) {
-    closeUserInput();
-    return false;
-  }
-
-  const winningNumbers = inputWinningNumbers
-    .split(",")
-    .map((number) => Number(number.trim()))
-    .concat(inputBonusNumber);
-
   const winningResult = getWinningPrizeResult(lottoNumbers, winningNumbers);
 
-  displayWinningStats(winningResult);
+  updateLottoPrizeCount(winningResult);
+
+  displayWinningStats();
   displayTotalProfitRate(avaliableCount);
 
   closeUserInput();

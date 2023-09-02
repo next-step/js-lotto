@@ -1,26 +1,22 @@
-import { SINGLE_LOTTO_PRICE, LOTTO_PRIZE } from "../data/constant.js";
+import { SINGLE_LOTTO_PRICE } from "../data/constant.js";
+import { LOTTO_PRIZE } from "../data/lotto.js";
 import { createRandomLottoNumber } from "../utils/calculate.js";
 import {
-  checkInputPriceType,
-  checkInputPriceUnit,
-  isValidAmount,
   isValidWinningNumberLength,
   isValidWinningNumberRange,
   isWinningNumbersDuplicate,
   isWinningAndBonusNumberDuplicate,
+  validateInputPriceType,
+  validateAmount,
+  validateInputPriceUnit,
 } from "../utils/validate.js";
 
-export const validateInputPrice = (price) => {
-  try {
-    checkInputPriceType(price);
-    isValidAmount(price);
-    checkInputPriceUnit(price);
+export const checkInputPrice = (price) => {
+  validateInputPriceType(price);
+  validateAmount(price);
+  validateInputPriceUnit(price);
 
-    return true;
-  } catch (error) {
-    console.log(error.message);
-    return false;
-  }
+  return true;
 };
 
 export const createLottosForAmount = (lottoCount) => {
@@ -104,8 +100,16 @@ export const getBonusNumberMatchCount = (lottoNumbers, bonusNumber) => {
   return matchResult;
 };
 
+export const updateLottoPrizeCount = (winningResult) => {
+  const { matchedCount, hasBonus } = winningResult;
+  const key = getPrizeKey(matchedCount, hasBonus);
+
+  if (key) {
+    LOTTO_PRIZE[key].count += 1;
+  }
+};
+
 export const getPrizeKey = (matchCount, hasBonus) => {
-  console.log(matchCount, hasBonus);
   switch (matchCount) {
     case 3:
       return "5st";
@@ -132,4 +136,11 @@ export const getTotalWinningPrice = () => {
 
 export const getTotalInvestgatePrice = (avaliableCount) => {
   return SINGLE_LOTTO_PRICE * Number(avaliableCount);
+};
+
+export const formatWinningNumbers = (winningNumbers, bonusNumber) => {
+  return winningNumbers
+    .split(",")
+    .map((number) => Number(number.trim()))
+    .concat(bonusNumber);
 };

@@ -2,23 +2,24 @@ import {
   LOTTO_LENGTH,
   MAX_LOTTO_NUMBER,
   MIN_LOTTO_NUMBER,
+  MIN_LOTTO_PRICE_LENGTH,
   SINGLE_LOTTO_PRICE,
 } from "../data/constant.js";
 
-export const checkInputPriceType = (price) => {
+export const validateInputPriceType = (price) => {
   if (!price || isNaN(price) || price.includes(" ")) {
     throw new Error("금액은 숫자만 입력 가능하며 빈 값은 허용되지 않습니다.");
   }
 };
 
-export const isValidAmount = (price) => {
+export const validateAmount = (price) => {
   if (price <= 0) {
     throw new Error("입력한 금액은 0보다 커야합니다.");
   }
 };
 
-export const checkInputPriceUnit = (price) => {
-  if (price.length < 4) {
+export const validateInputPriceUnit = (price) => {
+  if (price.length < MIN_LOTTO_PRICE_LENGTH) {
     throw new Error(`금액은 ${SINGLE_LOTTO_PRICE}원 단위로 입력 가능합니다.`);
   }
 
