@@ -20,7 +20,7 @@ import {
 import { displayWinningStats } from "../src/view/view.js";
 
 describe("로또를 구입합니다.", () => {
-  test("구입 금액 입력 시 숫자만 입력 가능 합니다.", () => {
+  test("로또 구입 금액은 숫자만 입력 가능 합니다.", () => {
     expect(() => checkInputPriceType(3000)).not.toThrow();
 
     const invalidValue = ["3000", "안녕하세요", "안녕hello", "33 333", " "];

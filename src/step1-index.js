@@ -11,7 +11,7 @@ import {
   inputBonusNumberMessage,
   inputLottoNumberMessage,
   inputLottoPriceMessage,
-} from "./utils/consoleMessage.js";
+} from "./utils/constant.js";
 import {
   displayAvailableLottoCount,
   displayLottoNumbers,
