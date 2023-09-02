@@ -1,7 +1,6 @@
-import { Console } from '../utils';
-import { Validator } from '../utils/Validator';
+import { Validator } from '../../utils/Validator';
 
-export const InputView = {
+export const InputViewWeb = {
   async readUserInput(message) {
     const userInput = await Console.readLine(message);
     Validator.View.readUserInput(userInput);

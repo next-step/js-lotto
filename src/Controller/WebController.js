@@ -10,7 +10,9 @@ export class WebController {
   }
 
   #bindEvent() {
-    document.querySelector('#purchaseButton').addEventListener('click', () => {
+    //이건 View로 넘겨야 할 듯
+    const purchaseButton = document.querySelector('#purchase-button');
+    purchaseButton.addEventListener('click', () => {
       this.#getTickets();
     });
   }

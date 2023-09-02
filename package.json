@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start-step1": "babel-node src/step1-index.js",
-    "start-step2": "babel-node src/step2-index.js",
+    "build-step3": "webpack --mode production --config step3.config.js",
     "start-step3": "webpack serve --open --config step3.config.js",
     "start-step4": "webpack serve --open --config step4.config.js",
     "test": "jest",
@@ -19,6 +19,11 @@
     "transform": {
       "^.+\\.js$": "babel-jest"
     }
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
   },
   "dependencies": {
     "@babel/cli": "^7.22.10",

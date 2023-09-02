@@ -1,6 +1,6 @@
-import { InputView, OutputView } from '.';
-import { Validator } from '../utils/Validator';
-import { MESSAGE, RESTART_INPUT } from '../constants';
+import { InputView, OutputView } from './';
+import { Validator } from '../../utils/Validator';
+import { MESSAGE, RESTART_INPUT } from '../../constants';
 
 export class View {
   #inputView = InputView;

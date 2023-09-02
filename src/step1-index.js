@@ -1,4 +1,4 @@
-import { View } from './View';
+import { View } from './View/CLI';
 import { GameController } from './Controller/GameController';
 
 class App {

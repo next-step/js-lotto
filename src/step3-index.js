@@ -1,5 +1,8 @@
-import { ViewWeb } from './View';
+import { ViewWeb } from './View/Web';
 import { WebController } from './Controller/WebController';
+import './css/index.css';
+
+console.log('step3!');
 
 class App {
   #view;
