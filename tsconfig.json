@@ -10,9 +10,11 @@
     "paths": {
       "@step1/*": ["src/step1/*"],
       "@step3/*": ["src/step3/*"],
+      "@step4/*": ["src/step4/*"],
       "@src/*": ["src/*"],
       "@test/*": ["__tests__/*"]
-    }
+    },
+    "types": ["cypress", "node"]
   },
   "ts-node": { "esm": true },
   "include": ["./src/**/*", "__tests__", "cypress"],

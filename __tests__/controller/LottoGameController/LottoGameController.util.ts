@@ -3,6 +3,7 @@ import LottoGameController from '@step1/controller/LottoGameController';
 import { LottoGame } from '@step1/model';
 import { InputView } from '@step1/view';
 import { MockInputViewParams } from '@test/controller/LottoGameController';
+import { jest } from '@jest/globals';
 
 export const runLottoGameController = async () => {
   await new LottoGameController().run();
@@ -23,10 +24,10 @@ export const mockInputView: (params?: MockInputViewParams) => void = (
 ) => {
   InputView.inputByUser = jest
     .fn()
-    .mockResolvedValueOnce(investmentAmount)
-    .mockResolvedValueOnce(winningLottoNumbers)
-    .mockResolvedValueOnce(bonusNumber)
-    .mockResolvedValueOnce(gameCommand);
+    .mockResolvedValueOnce(investmentAmount as never)
+    .mockResolvedValueOnce(winningLottoNumbers as never)
+    .mockResolvedValueOnce(bonusNumber as never)
+    .mockResolvedValueOnce(gameCommand as never) as jest.MockedFunction<(message: string) => Promise<string>>;
 };
 
 export const mockCreateLottoNumbers = (lottos = [[1, 2, 3, 4, 5, 6]]) => {

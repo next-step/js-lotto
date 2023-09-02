@@ -1,37 +1,34 @@
 /// <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+import { CYPRESS_SELECTOR } from '@step4/constants/cypressSelector';
+
+Cypress.Commands.add('buyLotto', (price: string) => {
+  // given
+  cy.get(CYPRESS_SELECTOR.INPUT_PRICE.INPUT).type(price);
+  // when
+  cy.get(CYPRESS_SELECTOR.INPUT_PRICE.FORM).submit();
+});
+
+Cypress.Commands.add('checkLottoNumbers', () => {
+  // given
+  const numbers = [1, 2, 3, 4, 5, 6];
+
+  // when
+  cy.buyLotto('1000');
+  cy.get(CYPRESS_SELECTOR.WINNING_LOTTO_INFO.WINNING_NUMBER_INPUT).each(($input, index) => {
+    cy.wrap($input).type(`${numbers[index]}`);
+  });
+  cy.get(CYPRESS_SELECTOR.WINNING_LOTTO_INFO.BONUS_NUMBER_INPUT).type('7');
+  cy.get(CYPRESS_SELECTOR.WINNING_LOTTO_INFO.FORM).submit();
+});
+
+Cypress.Commands.add('isInitApp', () => {
+  // then
+  cy.get(CYPRESS_SELECTOR.INPUT_PRICE.FORM).should('be.visible');
+  cy.get(CYPRESS_SELECTOR.PURCHASED.LOTTOS_SECTION).should('not.be.visible');
+  cy.get(CYPRESS_SELECTOR.WINNING_LOTTO_INFO.FORM).should('not.be.visible');
+  cy.get(CYPRESS_SELECTOR.WINNING_INFO.MODAL).should('not.be.visible');
+});
+
+Cypress.Commands.add('forceClickLottoToggleButton', () => {
+  cy.get(CYPRESS_SELECTOR.PURCHASED.LOTTOS_TOGGLE_BUTTON).check({ force: true });
+});
