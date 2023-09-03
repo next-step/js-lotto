@@ -1,4 +1,3 @@
-import { SYMBOLS } from '@step1/constants/commons';
 import { LOTTO_TERMS } from '@step1/constants/lotto';
 import { CLASS_NAME } from '@step3/constants/selector';
 import { CYPRESS_SELECTOR } from '@step4/constants/cypressSelector';
@@ -60,22 +59,18 @@ describe('로또 게임 e2e test', () => {
       // when
       cy.forceClickLottoToggleButton();
       cy.get(CYPRESS_SELECTOR.PURCHASED.LOTTO_NUMBERS).each(($lottoNumber) => {
-        $lottoNumber
-          .text()
-          .split(SYMBOLS.COMMA)
-          .map(Number)
-          .forEach((lottoNumber) => {
-            // then
-            expect(lottoNumber).to.be.least(LOTTO_TERMS.MIN_LOTTO_NUMBER);
-            expect(lottoNumber).to.be.most(LOTTO_TERMS.MAX_LOTTO_NUMBER);
-          });
+        cypressUtilFunctions.getLottoNumbers($lottoNumber).forEach((lottoNumber) => {
+          // then
+          expect(lottoNumber).to.be.least(LOTTO_TERMS.MIN_LOTTO_NUMBER);
+          expect(lottoNumber).to.be.most(LOTTO_TERMS.MAX_LOTTO_NUMBER);
+        });
       });
     });
     it('사용자가 바라보는 로또는 중복되는 숫자가 존재하지 않아야 한다.', () => {
       // when
       cy.forceClickLottoToggleButton();
       cy.get(CYPRESS_SELECTOR.PURCHASED.LOTTO_NUMBERS).each(($lottoNumber) => {
-        const lottoNumbers = $lottoNumber.text().split(SYMBOLS.COMMA).map(Number);
+        const lottoNumbers = cypressUtilFunctions.getLottoNumbers($lottoNumber);
         lottoNumbers.forEach((lottoNumber) => {
           // then
           expect(lottoNumbers.filter((_lottoNumber) => _lottoNumber === lottoNumber)).to.have.length(1);
