@@ -10,9 +10,3 @@ export const validatePositiveNumber = num => {
     throw new Error(ERROR_MESSAGE[VALID_NUMBER_REQUIRED]);
   }
 };
-
-export const validateYesOrNoInput = input => {
-  if (!(input.toLowerCase() === "y" || input.toLowerCase() === "n")) {
-    throw new Error(ERROR_MESSAGE.ALLOWED_YES_NO);
-  }
-};
