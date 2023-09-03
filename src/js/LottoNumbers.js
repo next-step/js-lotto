@@ -1,4 +1,4 @@
-const { RESULT_MESSAGE ,LOTTO_RANDOM_MAX, LOTTO_RANDOM_LENGTH } = require('./constants.js')
+const { RESULT_MESSAGE ,LOTTO_RANDOM_MAX, LOTTO_RANDOM_LENGTH } = require('./utils/constants.js')
 
 const LottoNumbers = {
     generateRandomNumbers() {

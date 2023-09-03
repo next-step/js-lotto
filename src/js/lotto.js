@@ -1,11 +1,13 @@
 const LottoValidator = require('../utils/validate.js')
-const { LOTTO_PRICE, PRIZES, RESULT_MESSAGE } = require('./constants.js')
+const { LOTTO_PRICE, PRIZES } = require('./utils/constants.js')
 const LottoNumbers = require('./LottoNumbers.js')
-const View = require('./view.js')
+const View = require('./view/PrintView.js')
 
 const Lotto = {
     lottos: [],
     prize: PRIZES,
+    numLottos: 0,
+    profitPercentage: 0,
 
     getLottoPurchaseAmount(amount) {
         this.amount = LottoValidator.amountValidate(amount)
@@ -13,8 +15,8 @@ const Lotto = {
     },
 
     buyLotto(purchaseAmount) {
-        const numLottos = Math.floor(purchaseAmount / LOTTO_PRICE);
-        this.lottos = LottoNumbers.getNumbers(numLottos);
+        this.numLottos = Math.floor(purchaseAmount / LOTTO_PRICE);
+        this.lottos = LottoNumbers.getNumbers(this.numLottos);
     },
 
     checkMatch(numMatches, result, lottoNumbers, bonusNumber) {
@@ -39,8 +41,8 @@ const Lotto = {
         })
 
         const totalInvestment = this.lottos.length * LOTTO_PRICE;
-        const profitPercentage = ((totalPrize - totalInvestment) / totalInvestment) * 100;
-        View.printResult(this.prize, profitPercentage)
+        this.profitPercentage = ((totalPrize - totalInvestment) / totalInvestment) * 100;
+        View.printResult(this.prize, this.profitPercentage)
     },
 
     matchedRank(winningNumbers, bonusNumber) {
