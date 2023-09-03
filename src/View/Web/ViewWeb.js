@@ -1,98 +1,106 @@
-import { InputViewWeb, OutputViewWeb } from './';
+import { OutputViewWeb, InputViewWeb } from './';
 import { Validator } from '../../utils/Validator';
 import { MESSAGE, RESTART_INPUT } from '../../constants';
 
 export class ViewWeb {
-  #inputView = InputViewWeb;
-  #outputView = OutputViewWeb;
-  #validator = Validator.View;
+  #inputView;
+  #outputView;
+  #validator;
 
-  async validateUserInput(message, validator) {
-    try {
-      const userInput = await this.#inputView.readUserInput(
-        MESSAGE.PREFIX(message)
-      );
-
-      validator(userInput);
-      return userInput;
-    } catch (error) {
-      this.#outputView.print(error.message);
-      return this.validateUserInput(message, validator);
-    }
+  constructor() {
+    this.#inputView = new InputViewWeb();
+    this.#outputView = OutputViewWeb;
+    this.#validator = Validator.View;
   }
 
   /* Input */
-  async readPurchaseAmount() {
-    const userInput = await this.validateUserInput(
-      MESSAGE.READ.PURCHASE_AMOUNT,
-      this.#validator.readPurchaseAmount
-    );
-
-    return userInput;
+  readPurchaseAmount() {
+    return this.#inputView.readPurchaseAmount();
   }
 
-  async readWinningNumbers() {
-    const lottoNumbers = await this.#readLottoNumbers();
-    const bonusNumber = await this.#readBonusNumber(lottoNumbers);
+  // 아래부터 수정해야함
+  // async readWinningNumbers() {
+  //   const lottoNumbers = await this.#readLottoNumbers();
+  //   const bonusNumber = await this.#readBonusNumber(lottoNumbers);
 
-    return { lottoNumbers, bonusNumber };
-  }
+  //   return { lottoNumbers, bonusNumber };
+  // }
 
-  async #readLottoNumbers() {
-    const lottoNumbersInput = await this.validateUserInput(
-      MESSAGE.READ.LOTTO_NUMBERS,
-      (input) => {
-        const lottoNumbers = input.split(',').map(Number);
-        this.#validator.readLottoNumbers(lottoNumbers);
-      }
-    );
+  // async #readLottoNumbers() {
+  //   const lottoNumbersInput = await this.validateUserInput(
+  //     MESSAGE.READ.LOTTO_NUMBERS,
+  //     (input) => {
+  //       const lottoNumbers = input.split(',').map(Number);
+  //       this.#validator.readLottoNumbers(lottoNumbers);
+  //     }
+  //   );
 
-    return lottoNumbersInput.split(',').map(Number);
-  }
+  //   return lottoNumbersInput.split(',').map(Number);
+  // }
 
-  async #readBonusNumber(lottoNumbers) {
-    const bonusNumberInput = await this.validateUserInput(
-      MESSAGE.READ.BONUS_NUMBER,
-      (input) => this.#validator.readBonusNumber(input, lottoNumbers)
-    );
+  // async #readBonusNumber(lottoNumbers) {
+  //   const bonusNumberInput = await this.validateUserInput(
+  //     MESSAGE.READ.BONUS_NUMBER,
+  //     (input) => this.#validator.readBonusNumber(input, lottoNumbers)
+  //   );
 
-    return Number(bonusNumberInput);
-  }
+  //   return Number(bonusNumberInput);
+  // }
 
-  async readRestart() {
-    const restartInput = await this.validateUserInput(
-      MESSAGE.READ.RESTART,
-      Validator.View.readRestart
-    );
+  // async readRestart() {
+  //   const restartInput = await this.validateUserInput(
+  //     MESSAGE.READ.RESTART,
+  //     Validator.View.readRestart
+  //   );
 
-    return restartInput === RESTART_INPUT.YES;
-  }
+  //   return restartInput === RESTART_INPUT.YES;
+  // }
 
   /* Output */
-  printPurchasedTickets(tickets) {
+  renderPurchasedTickets(tickets) {
     const amount = tickets.length;
-    this.#outputView.print(MESSAGE.PRINT.PURCHASED_AMOUNT(amount));
+    const $ticketAmount = document.querySelector('#ticket-amount');
+    const ticketAmountComponent = `
+        <div class="d-flex">
+          <label class="flex-auto my-0">총 ${amount}개를 구매하였습니다.</label>
+          <div class="flex-auto d-flex justify-end pr-1">
+            <label class="switch">
+              <input type="checkbox" class="lotto-numbers-toggle-button" />
+              <span class="text-base font-normal">번호보기</span>
+            </label>
+          </div>
+        </div>
+      `;
+    this.#outputView.render($ticketAmount, ticketAmountComponent);
 
-    for (const ticket of tickets) {
-      const ticketNumbers = ticket.getTicketNumbers();
+    const ticketComponent = tickets
+      .map(
+        (ticket) => `
+        <div class="d-flex align-items-center lotto-number-container">
+            <span class="mx-1 text-4xl">🎟️ </span>
+            <div class="lotto-numbers">
+                ${ticket
+                  .getTicketNumbers()
+                  .map((number) => `<span class="mx-1">${number}</span>`)
+                  .join('')}
+            </div>
+        </div>
+    `
+      )
+      .join('');
 
-      this.#outputView.print(ticketNumbers);
-    }
+    const $ticketIcons = document.querySelector('#ticket-icons');
+    this.#outputView.render($ticketIcons, ticketComponent);
   }
 
-  printTicketsResult(ticketResults) {
-    const { prizes, profitRate } = ticketResults;
+  // printTicketsResult(ticketResults) {
+  //   const { prizes, profitRate } = ticketResults;
 
-    this.#displayPrize(prizes);
-    this.#outputView.print(MESSAGE.PRINT.PROFIT(profitRate));
-  }
+  //   this.#displayPrize(prizes);
+  //   this.#outputView.print(MESSAGE.PRINT.PROFIT(profitRate));
+  // }
 
-  #displayPrize(prizes) {
-    this.#outputView.print(MESSAGE.PRINT.PRIZE(prizes));
-  }
-
-  /* Close Readline */
-  close() {
-    this.#inputView.close();
-  }
+  // #displayPrize(prizes) {
+  //   this.#outputView.print(MESSAGE.PRINT.PRIZE(prizes));
+  // }
 }

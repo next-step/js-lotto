@@ -1,3 +1,14 @@
+## 구현목록
+
+- [x] submit 이벤트가 발생하면 구매금액을 입력받는다.
+  - [x] 금액에 문제가 있을 경우, 예외처리 한다.
+- [x] 구매한 Ticket을 화면에 렌더링한다.
+- [x] toggle 버튼을 누를 경우, 숫자를 렌더링한다.
+
+
+- [ ] 각 객체와 Layer에서 발생하는 Error를 처리하는 Layer에 대해 고민한다.
+- [ ] EventHandler binding을 담당하는 객체를 생성한다. 해당 객체는 Controller에서 관리한다.
+
 ## 배포
 
 - [ ] 실행 가능한 페이지에 접근할 수 있도록 github page 기능을 이용하고, 해당 링크를 PR과 README에 작성한다.
@@ -26,5 +37,5 @@
 
 ## 리팩터링
 
-- [ ] View에서 로또 상금을 확인하는 로직을 제거하고, `prizeCount`, `totalPrize`, `profitRate` 매개변수로 받아 정해진 형식에 할당하여 출력한다.
-- [ ] LottoPrize 객체를 만들어 사이드 이펙트를 최소화한다.
+- [x] View에서 로또 상금을 확인하는 로직을 제거하고, `prizeCount`, `totalPrize`, `profitRate` 매개변수로 받아 정해진 형식에 할당하여 출력한다.
+- [x] LottoPrize 객체를 만들어 사이드 이펙트를 최소화한다.

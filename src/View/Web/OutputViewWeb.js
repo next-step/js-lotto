@@ -1,5 +1,5 @@
 export const OutputViewWeb = {
-  print(...message) {
-    Console.print(...message);
+  render(targetElement, $children) {
+    targetElement.innerHTML = $children;
   },
 };
