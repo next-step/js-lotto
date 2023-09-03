@@ -35,6 +35,8 @@
 - 도메인 분리
 - 변수명 관리
 - 코드의 가독성과 유지보수성을 높일 수 있습니다.
-- 순수 함수 처리
+- 순수 함수 처리 & test code
 - scope
 - 테스트 코드
+- modules - export & import (jsdoc and js files)
+- BDD vs TDD vs ATDD
