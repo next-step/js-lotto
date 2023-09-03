@@ -48,13 +48,13 @@ describe('Lotto E2E Test', () => {
     it(`should issue 3 lotto tickets with ${LOTTO_PRICE * 3}`, () => {
       INPUT.type(LOTTO_PRICE * 3);
       BUTTON.click();
-      cy.get(SELECTOR.LOTTO_TICKET).should('have.length', 3);
+      cy.get('.lotto-tickets').should('have.length', 3);
     });
 
     it(`should display issued numbers once toggle checked`, () => {
       INPUT.type(LOTTO_PRICE * 3);
       BUTTON.click();
-      cy.get(SELECTOR.LOTTO_TICKET).should('have.length', 3);
+      cy.get('.lotto-tickets').should('have.length', 3);
       cy.get(SELECTOR.LOTTO_TOGGLE).check({ force: true });
       cy.get(SELECTOR.LOTTO_LIST).should('have.class', 'flex-col');
     });

@@ -4,7 +4,7 @@ export const SELECTOR = {
   BUDGET_BUTTON: '[data-test-id="budget_button"]',
   BUDGET_ERROR: '[data-test-id="budget_error"]',
   
-  LOTTO_TICKET: '[data-test-id="lotto_ticket"]',
+  LOTTO_TICKET: '[data-test-id="lotto_tickets"]',
   LOTTO_COUNT: '[data-test-id="lotto_count"]',
   LOTTO_SECTION: '[data-test-id="lotto_section"]',
   LOTTO_LIST: '[data-test-id="lotto_wrapper"]',
