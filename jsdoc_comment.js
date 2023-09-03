@@ -1,3 +1,5 @@
+// https://github.com/microsoft/TypeScript/issues/50436
+
 /**
  * @typedef {Object} RankPriceStatsFunctions
  * @property {(count: number) => string} firstWinner
@@ -15,3 +17,5 @@
  * @property {number} fourthWinner - 4
  * @property {number} fifthWinner - 3
  */
+
+module.exports = {};

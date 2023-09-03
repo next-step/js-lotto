@@ -1,8 +1,6 @@
 import { LOTTO_PRICE } from "../../domain/constant.js";
 
-require("../../../jsdoc_comment.js");
-
-/** @typedef {RankPriceStatsFunctions} */
+/** @type {import('../../../jsdoc_comment.js').RankPriceStatsFunctions}  */
 const RANK_PRICE_STATS = {
   firstWinner: count =>
     `6개 일치 (${LOTTO_PRICE.FIRST_WINNER.toLocaleString()}원) - ${count}개`,
@@ -25,7 +23,7 @@ const ViewBuyerLottoList = buyerLottoList => {
   buyerLottoList.forEach(list => console.log(list));
 };
 
-/** @typedef {LottoStats} */
+/** @type {import('../../../jsdoc_comment.js').LottoStats}  */
 const ViewWinnerPriceStats = stats => {
   console.log("당첨 통계");
   console.log("--------------------");
