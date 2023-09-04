@@ -12,7 +12,6 @@ export class WebController {
   #setEventHandler() {
     const purchaseButton = document.querySelector('#ticket-form');
     purchaseButton.addEventListener('submit', (event) => {
-      console.log('submit');
       event.preventDefault();
       this.#getTickets();
     });
