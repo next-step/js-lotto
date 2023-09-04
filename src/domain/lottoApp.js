@@ -1,21 +1,37 @@
-import { ERROR_MARKER } from './constants/index';
+import errorFallback from './errorFallback';
 import { createPurchaseMessage } from './lottoMessageCreator';
 import { LottoCustomer, LottoSeller, LottoOrganizer, LottoMachine, LottoCalculator } from './classes/index';
 import { readPurchaseAmount, readLottoNumberAndBonusNumber } from './lottoPrompter';
 
-const buyAndPrintLottoTickets = async (lottoCustomer, lottoSeller) => {
-  lottoCustomer.buyAutoLottoTicket(lottoSeller);
-  const lottoNumbers = lottoCustomer.lottoTickets.map(({ lottoNumber }) => lottoNumber);
+const buyLottoTicket = async () => {
+  try {
+    const purchaseAmount = await readPurchaseAmount();
+    const lottoCustomer = new LottoCustomer(purchaseAmount);
+    const lottoSeller = new LottoSeller();
+    lottoCustomer.buyAutoLottoTicket(lottoSeller);
+    return lottoCustomer;
+  } catch (error) {
+    errorFallback(error);
+    return buyLottoTicket();
+  }
+};
 
-  console.log(createPurchaseMessage(lottoCustomer.lottoTickets.length));
+const printPurchaseLottoTickets = (lottoTickets) => {
+  const lottoNumbers = lottoTickets.map(({ lottoNumber }) => lottoNumber);
+  console.log(createPurchaseMessage(lottoTickets.length));
   lottoNumbers.forEach((lottoNumber) => {
     console.log(lottoNumber.sort((a, b) => a - b));
   });
 };
 
 const asyncSetupLottoMachine = async () => {
-  const { lottoNumber: winningLottoNumber, bonusNumber } = await readLottoNumberAndBonusNumber();
-  return new LottoMachine(winningLottoNumber, bonusNumber);
+  try {
+    const { lottoNumber, bonusNumber } = await readLottoNumberAndBonusNumber();
+    return new LottoMachine(lottoNumber, bonusNumber);
+  } catch (error) {
+    errorFallback(error);
+    return asyncSetupLottoMachine();
+  }
 };
 
 const calculateLottoWiningRate = (lottoMachine, lottoCustomer) => {
@@ -27,21 +43,21 @@ const calculateLottoWiningRate = (lottoMachine, lottoCustomer) => {
 
 const lottoApp = async () => {
   try {
-    const { purchaseAmount } = await readPurchaseAmount();
-    const lottoCustomer = new LottoCustomer(purchaseAmount);
-    const lottoSeller = new LottoSeller();
-
-    buyAndPrintLottoTickets(lottoCustomer, lottoSeller);
+    const purchasedLottoCustomer = await buyLottoTicket();
+    printPurchaseLottoTickets(purchasedLottoCustomer.lottoTickets);
     const lottoMachine = await asyncSetupLottoMachine();
-    const winningRate = calculateLottoWiningRate(lottoMachine, lottoCustomer);
-    const lottoTickets = lottoCustomer.lottoTickets.map(({ lottoNumber, result }) => ({ lottoNumber, result }));
+    const winningRate = calculateLottoWiningRate(lottoMachine, purchasedLottoCustomer);
+    const lottoTickets = purchasedLottoCustomer.lottoTickets.map(({ lottoNumber, result }) => ({
+      lottoNumber,
+      result
+    }));
 
     return {
       winningRate,
       lottoTickets
     };
   } catch (error) {
-    console.log(`${ERROR_MARKER} ${error}`);
+    errorFallback(error);
   }
 };
 
