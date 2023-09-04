@@ -12,12 +12,11 @@ export default class App {
     #winningConditionInputForm;
     #resultModal;
 
-
     constructor() {
         this.#moneyInputForm = new MoneyInputForm({ $target: document.querySelector('#money-input-form'), onSubmit: this.#onSubmitMoneyInputForm.bind(this) });
         this.#lottoListContainer = new LottoListContainer({ $target: document.querySelector('#lotto-list-container') });
         this.#winningConditionInputForm = new WinningConditionInputForm({ $target: document.querySelector('#winning-condition-input-form'), onSubmit: this.#onSubmitWinningNumberInputForm.bind(this) });
-        this.#resultModal = new ResultModal({ $target: document.querySelector('.modal') });
+        this.#resultModal = new ResultModal({ $target: document.querySelector('.modal'), onClickRestart: this.#onClickRestart.bind(this) });
     }
 
     #onSubmitMoneyInputForm({money}) {
@@ -37,5 +36,12 @@ export default class App {
         const lottoResultReport = new LottoResultReport(this.#lottoListContainer.state.lottoList);
         this.#resultModal.setState({resultSummary: lottoResultReport.getLottoResultSummary({order: 'DESC'}), profitRate: lottoResultReport.getProfitRate()});
         this.#resultModal.openModal();
+    }
+
+    #onClickRestart() {
+        this.#moneyInputForm.init();
+        this.#lottoListContainer.init();
+        this.#winningConditionInputForm.init();
+        this.#resultModal.init();
     }
 }

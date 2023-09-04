@@ -30,6 +30,13 @@ export default class MoneyInputForm {
                 }
             }
         });
+        this.init();
+    }
+    init() {
+        this.#state = {
+            money: 0
+        }
+        this.#$moneyInput.setValue("");
     }
 
     #validateForm(value) {

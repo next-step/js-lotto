@@ -4,7 +4,7 @@ import {LOTTO_INFO} from "../../../consts/Lotto";
 
 export default class WinningConditionInputForm {
     #$winningInputForm;
-    #$winningNumberInputs;
+    #$winningNumberInputs = [];
     #$bonusNumberInput;
     #$winningConditionFormSubmitButton;
     #state = {
@@ -14,12 +14,13 @@ export default class WinningConditionInputForm {
 
     constructor({$target, onSubmit}) {
         this.#$winningInputForm = $target;
-        this.#$winningNumberInputs = $target.querySelectorAll(".winning-number").forEach(($input, index) =>
-            new Input({$target: $input, onChange: () => {
+        $target.querySelectorAll(".winning-number").forEach(($input, index) =>
+            this.#$winningNumberInputs.push(new Input({$target: $input, onChange: () => {
                     this.#state.winningNumbers[index] = Number($input.value) ?? null;
                 }
-            })
+            }))
         );
+
         this.#$bonusNumberInput = new Input({
             $target : $target.querySelector(".bonus-number"),
             onChange:() => {
@@ -37,6 +38,16 @@ export default class WinningConditionInputForm {
                 }
             }
         })
+        this.init();
+    }
+
+    init() {
+        this.#state = {
+            winningNumbers: [null,null,null,null,null,null],
+            bonusNumber: null
+        }
+        this.#$winningNumberInputs.forEach(($input) => $input.setValue(""));
+        this.#$bonusNumberInput.setValue("");
         this.#$winningInputForm.style.display = "none";
     }
 

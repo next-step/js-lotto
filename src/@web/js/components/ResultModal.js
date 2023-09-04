@@ -5,16 +5,27 @@ export default class ResultModal {
     #$modalCloseButton;
     #$resultTable;
     #$profitRate;
+    #$restartButton;
     #state = {
         resultSummary: [],
         profitRate: 0
     }
-    constructor({$target}) {
+    constructor({$target, onClickRestart}) {
         this.#$modal = $target;
         this.#$modalCloseButton = this.#$modal.querySelector(".modal-close");
         this.#$resultTable = this.#$modal.querySelector(".result-table");
         this.#$profitRate = this.#$modal.querySelector(".profit-rate");
-        this.#$modalCloseButton.addEventListener("click", this.#closeModal.bind(this));
+        this.#$restartButton = this.#$modal.querySelector(".restart-button");
+        this.#$modalCloseButton.addEventListener("click", this.closeModal.bind(this));
+        this.#$restartButton.addEventListener("click", onClickRestart);
+    }
+
+    init() {
+        this.#state = {
+            resultSummary: [],
+            profitRate: 0
+        }
+        this.closeModal();
     }
 
     setState(nextState) {
@@ -22,7 +33,6 @@ export default class ResultModal {
             ...this.#state,
             ...nextState
         };
-        console.log(this.#state)
     }
 
     openModal() {
@@ -31,12 +41,11 @@ export default class ResultModal {
         this.#$modal.classList.add("open");
     }
 
-    #closeModal() {
+    closeModal() {
         this.#$modal.classList.remove("open");
     }
 
     #renderResultTable() {
-        console.log(this.#state.resultSummary)
         this.#$resultTable.innerHTML = `
              <thead>
                 <tr class="text-center">

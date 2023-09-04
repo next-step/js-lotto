@@ -14,6 +14,15 @@ export default class LottoListContainer {
         this.#$lottoList = document.querySelector("#lotto-list");
         this.#$lottoNumbersToggleButton = document.querySelector(".lotto-numbers-toggle-button");
         this.#$lottoNumbersToggleButton.addEventListener("change", this.#onChangeToggleButton.bind(this));
+        this.init();
+    }
+
+    init() {
+        this.#state = {
+            lottoList: [],
+            isVisibleLottoNumbers: false
+        }
+        this.#$lottoNumbersToggleButton.checked = false;
         this.#$lottoListContainer.style.display = "none";
     }
 
