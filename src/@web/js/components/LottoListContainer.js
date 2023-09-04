@@ -17,6 +17,10 @@ export default class LottoListContainer {
         this.#$lottoListContainer.style.display = "none";
     }
 
+    get state() {
+        return this.#state;
+    }
+
     setState(nextState) {
         this.#state = {
             ...this.#state,
@@ -48,6 +52,6 @@ export default class LottoListContainer {
     #renderLotto(lotto, isVisibleLottoNumbers) {
         if(!isVisibleLottoNumbers)
             return  `<span class="mx-1 text-4xl">🎟️</span>`
-        return `<span class="mx-1 text-4xl flex-auto">🎟️<span class="text-xl">${this.#state.isVisibleLottoNumbers && lotto.getSortedLottoNumbers().join(", ")}</span></span>`;
+        return `<span class="mx-1 text-4xl lotto-wrapper">🎟️<span class="text-xl">${this.#state.isVisibleLottoNumbers && lotto.getSortedLottoNumbers().join(", ")}</span></span>`;
     }
 }
