@@ -16,6 +16,7 @@
             </label>
             <div class="d-flex">
               <input
+                id="purchase-amount-input"
                 type="number"
                 class="w-100 mr-2 pl-2"
                 placeholder="구입 금액"
@@ -25,7 +26,7 @@
           </form>
           <section id="purchased-tickets" class="mt-9">
             <div id="ticket-amount"></div>
-            <div id="ticket-icons" class="d-flex flex-wrap"></div>
+            <div id="tickets" class="d-flex flex-wrap"></div>
           </section>
           <form class="mt-9">
             <label class="flex-auto d-inline-block mb-3"
@@ -64,7 +65,11 @@
               <div class="bonus-number-container flex-grow">
                 <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
                 <div class="d-flex justify-center">
-                  <input type="number" class="bonus-number text-center" />
+                  <input
+                    id="bonus-number-input"
+                    type="number"
+                    class="bonus-number text-center"
+                  />
                 </div>
               </div>
             </div>
@@ -127,7 +132,9 @@
           </div>
           <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
           <div class="d-flex justify-center mt-5">
-            <button type="button" class="btn btn-cyan">다시 시작하기</button>
+            <button id="restart-button" type="button" class="btn btn-cyan">
+              다시 시작하기
+            </button>
           </div>
         </div>
       </div>

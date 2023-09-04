@@ -1,6 +1,6 @@
 import { OutputViewWeb, InputViewWeb } from './';
 import { Validator } from '../../utils/Validator';
-import { MESSAGE, RESTART_INPUT } from '../../constants';
+import { MESSAGE, RESTART_INPUT, SELECTOR } from '../../constants';
 import { TicketAmount, TicketsNumbers } from '../../components';
 
 export class ViewWeb {
@@ -19,25 +19,13 @@ export class ViewWeb {
     return this.#inputView.readPurchaseAmount();
   }
 
-  // 아래부터 수정해야함
-  // async readWinningNumbers() {
-  //   const lottoNumbers = await this.#readLottoNumbers();
-  //   const bonusNumber = await this.#readBonusNumber(lottoNumbers);
+  readWinningNumbers() {
+    return this.#inputView.readWinningNumbers();
+  }
 
-  //   return { lottoNumbers, bonusNumber };
-  // }
-
-  // async #readLottoNumbers() {
-  //   const lottoNumbersInput = await this.validateUserInput(
-  //     MESSAGE.READ.LOTTO_NUMBERS,
-  //     (input) => {
-  //       const lottoNumbers = input.split(',').map(Number);
-  //       this.#validator.readLottoNumbers(lottoNumbers);
-  //     }
-  //   );
-
-  //   return lottoNumbersInput.split(',').map(Number);
-  // }
+  #readLottoNumbers() {
+    return this.#inputView.readLottoNumbers();
+  }
 
   // async #readBonusNumber(lottoNumbers) {
   //   const bonusNumberInput = await this.validateUserInput(
@@ -60,13 +48,9 @@ export class ViewWeb {
   /* Output */
   renderPurchasedTickets(tickets) {
     const amount = tickets.length;
-    const $ticketAmount = document.querySelector('#ticket-amount');
-    this.#outputView.render($ticketAmount, TicketAmount(amount));
 
-    const ticketComponents = TicketsNumbers(tickets);
-
-    const $ticketIcons = document.querySelector('#ticket-icons');
-    this.#outputView.render($ticketIcons, ticketComponents);
+    this.#outputView.render(SELECTOR.TICKET_AMOUNT, TicketAmount(amount));
+    this.#outputView.render(SELECTOR.TICKETS, TicketsNumbers(tickets));
   }
 
   // printTicketsResult(ticketResults) {

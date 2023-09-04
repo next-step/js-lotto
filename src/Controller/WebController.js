@@ -1,4 +1,5 @@
 import { LottoCorporation } from '../Model/LottoCorporation';
+import { SELECTOR } from '../constants';
 
 export class WebController {
   #view;

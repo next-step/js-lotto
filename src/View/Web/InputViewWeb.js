@@ -1,21 +1,17 @@
 import { Validator } from '../../utils/Validator';
-import { MESSAGE } from '../../constants';
+import { MESSAGE, SELECTOR } from '../../constants';
 
 export class InputViewWeb {
-  lottoNumberInputs = document.querySelectorAll('.winning-number');
-  bonusNumberInput = document.querySelector('.bonus-number');
-  restartButton = document.querySelector('.btn.btn-cyan');
+  lottoNumberInputs = SELECTOR.LOTTO_NUMBER_INPUT;
+  bonusNumberInput = SELECTOR.BONUS_NUMBER_INPUT;
+  restartButton = SELECTOR.RESTART_INPUT;
   #validator = Validator.View;
 
   readPurchaseAmount() {
-    const inputElement = document.querySelector(
-      'input[type="number"][placeholder="구입 금액"]'
-    );
+    const inputElement = SELECTOR.PURCHASE_AMOUNT_INPUT;
     const purchaseAmount = parseInt(inputElement.value, 10);
 
-    if (isNaN(purchaseAmount)) {
-      throw new Error(MESSAGE.READ.PURCHASE_AMOUNT);
-    }
+    if (isNaN(purchaseAmount)) throw new Error(MESSAGE.READ.PURCHASE_AMOUNT);
 
     return purchaseAmount;
   }
@@ -29,9 +25,7 @@ export class InputViewWeb {
   }
 
   #readLottoNumbers() {
-    const lottoNumbers = Array.from(this.lottoNumberInputs).map((input) =>
-      Number(input.value)
-    );
+    const lottoNumbers = Array.from(this.lottoNumberInputs).map(Number);
 
     if (!this.#validator.readLottoNumbers(lottoNumbers)) {
       throw new Error(MESSAGE.READ.LOTTO_NUMBERS);
