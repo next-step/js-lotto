@@ -1,5 +1,6 @@
 import { stdin as input, stdout as output } from 'process';
 import * as readline from 'readline';
+import errorFallback from './errorFallback';
 import { ALERT_MESSAGE, ERROR_MESSAGE, APP_EXIT_KEY, APP_RETRY_KEY } from './constants/index';
 
 const { QUESTION_PURCHASE_AMOUNT, QUESTION_LOTTO_NUMBER, QUESTION_BONUS_NUMBER } = ALERT_MESSAGE;
@@ -13,7 +14,8 @@ const readInputMessage = ({ questionMessage, errorMessage }, validator = (messag
       if (validator(inputMessage)) {
         resolve(inputMessage);
       }
-      reject(new Error(errorMessage));
+
+      reject(errorMessage);
     });
   });
 
@@ -25,8 +27,8 @@ export const executeReadInputPurchaseAmount = async () => {
     });
     return amount;
   } catch (error) {
-    console.error(error);
-    executeReadInputPurchaseAmount();
+    errorFallback(error);
+    return executeReadInputPurchaseAmount();
   }
 };
 
@@ -38,7 +40,7 @@ export const executeReadLottoNumber = async () => {
     });
     return winningLottoNumber;
   } catch (error) {
-    console.error(error);
+    errorFallback(error);
     return executeReadLottoNumber();
   }
 };
@@ -51,7 +53,7 @@ export const executeReadBonusNumber = async () => {
     });
     return winningBonusNumber;
   } catch (error) {
-    console.error(error);
+    errorFallback(error);
     return executeReadBonusNumber();
   }
 };
@@ -67,14 +69,14 @@ export const executeReadRetryAppKey = async () => {
     );
     return inputKey;
   } catch (error) {
-    console.error(error);
+    errorFallback(error);
     return executeReadRetryAppKey();
   }
 };
 
 export const readPurchaseAmount = async () => {
   const purchaseAmount = await executeReadInputPurchaseAmount();
-  return { purchaseAmount };
+  return purchaseAmount;
 };
 
 export const readLottoNumberAndBonusNumber = async () => {
