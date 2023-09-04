@@ -1,7 +1,7 @@
 import { ERROR_MARKER } from './constants/index';
 import { createPurchaseMessage } from './lottoMessageCreator';
 import { LottoCustomer, LottoSeller, LottoOrganizer, LottoMachine, LottoCalculator } from './classes/index';
-import { readPurchaseAmount, readLottoNumberAndBonusNumber, endPrompter } from './lottoPrompter';
+import { readPurchaseAmount, readLottoNumberAndBonusNumber } from './lottoPrompter';
 
 const buyAndPrintLottoTickets = async (lottoCustomer, lottoSeller) => {
   lottoCustomer.buyAutoLottoTicket(lottoSeller);
@@ -42,8 +42,6 @@ const lottoApp = async () => {
     };
   } catch (error) {
     console.log(`${ERROR_MARKER} ${error}`);
-  } finally {
-    endPrompter();
   }
 };
 

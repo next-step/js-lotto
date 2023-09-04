@@ -1,11 +1,11 @@
 {
   "name": "lotto",
   "version": "1.0.0",
-  "main": "src/step1-index.js",
+  "main": "src/step2-index.js",
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "node --loader ./loader.js src/step1-index.js",
+    "start": "node --loader ./loader.js src/step2-index.js",
     "lint": "eslint src/**/*.js",
     "test": "jest --watch"
   },

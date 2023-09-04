@@ -1,16 +1,16 @@
 import { stdin as input, stdout as output } from 'process';
 import * as readline from 'readline';
-import { ALERT_MESSAGE, ERROR_MESSAGE } from './constants/index';
+import { ALERT_MESSAGE, ERROR_MESSAGE, APP_EXIT_KEY, APP_RETRY_KEY } from './constants/index';
 
 const { QUESTION_PURCHASE_AMOUNT, QUESTION_LOTTO_NUMBER, QUESTION_BONUS_NUMBER } = ALERT_MESSAGE;
 const { NOT_RECEIVED_AMOUNT, NOT_RECEIVED_LOTTO_NUMBER, NOT_RECEIVED_BONUS_NUMBER } = ERROR_MESSAGE;
 
 const readlineInterface = readline.createInterface({ input, output });
 
-const readInputMessage = (questionMessage, errorMessage) =>
+const readInputMessage = ({ questionMessage, errorMessage }, validator = (message) => message.trim()) =>
   new Promise((resolve, reject) => {
     readlineInterface.question(`${questionMessage}\n`, (inputMessage) => {
-      if (inputMessage.trim()) {
+      if (validator(inputMessage)) {
         resolve(inputMessage);
       }
       reject(new Error(errorMessage));
@@ -19,7 +19,10 @@ const readInputMessage = (questionMessage, errorMessage) =>
 
 export const executeReadInputPurchaseAmount = async () => {
   try {
-    const amount = await readInputMessage(QUESTION_PURCHASE_AMOUNT, NOT_RECEIVED_AMOUNT);
+    const amount = await readInputMessage({
+      questionMessage: QUESTION_PURCHASE_AMOUNT,
+      errorMessage: NOT_RECEIVED_AMOUNT
+    });
     return amount;
   } catch (error) {
     console.error(error);
@@ -29,8 +32,11 @@ export const executeReadInputPurchaseAmount = async () => {
 
 export const executeReadLottoNumber = async () => {
   try {
-    const amount = await readInputMessage(QUESTION_LOTTO_NUMBER, NOT_RECEIVED_LOTTO_NUMBER);
-    return amount;
+    const winningLottoNumber = await readInputMessage({
+      questionMessage: QUESTION_LOTTO_NUMBER,
+      errorMessage: NOT_RECEIVED_LOTTO_NUMBER
+    });
+    return winningLottoNumber;
   } catch (error) {
     console.error(error);
     return executeReadLottoNumber();
@@ -39,16 +45,31 @@ export const executeReadLottoNumber = async () => {
 
 export const executeReadBonusNumber = async () => {
   try {
-    const amount = await readInputMessage(QUESTION_BONUS_NUMBER, NOT_RECEIVED_BONUS_NUMBER);
-    return amount;
+    const winningBonusNumber = await readInputMessage({
+      questionMessage: QUESTION_BONUS_NUMBER,
+      errorMessage: NOT_RECEIVED_BONUS_NUMBER
+    });
+    return winningBonusNumber;
   } catch (error) {
     console.error(error);
     return executeReadBonusNumber();
   }
 };
 
-export const endPrompter = () => {
-  readlineInterface.close();
+export const executeReadRetryAppKey = async () => {
+  try {
+    const inputKey = await readInputMessage(
+      {
+        questionMessage: ALERT_MESSAGE.RETRY_MESSAGE,
+        errorMessage: ERROR_MESSAGE.INVALID_APP_RETRY_KEY
+      },
+      (message) => message === APP_RETRY_KEY || message === APP_EXIT_KEY
+    );
+    return inputKey;
+  } catch (error) {
+    console.error(error);
+    return executeReadRetryAppKey();
+  }
 };
 
 export const readPurchaseAmount = async () => {
@@ -60,4 +81,8 @@ export const readLottoNumberAndBonusNumber = async () => {
   const lottoNumber = await executeReadLottoNumber();
   const bonusNumber = await executeReadBonusNumber();
   return { lottoNumber, bonusNumber };
+};
+
+export const endPrompter = () => {
+  readlineInterface.close();
 };
