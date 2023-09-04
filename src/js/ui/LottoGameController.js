@@ -3,6 +3,7 @@ import LottoVendingMachine from '../domain/LottoVendingMachine.js'
 import LottoWinningCalculator from '../domain/LottoWinningCalculator.js'
 import LottoWinningNumbers from '../domain/LottoWinningNumbers.js'
 import { PROMPT } from '../../constants/prompt.js'
+import { withRetry } from '../utils/withRetry.js'
 
 class LottoGameController {
   #view
@@ -21,7 +22,19 @@ class LottoGameController {
 
   async run() {
     try {
-      await this.executeGameCycle()
+      const purchasedLottoList = await withRetry(
+        this.purchaseAndIssueLottos.bind(this),
+      )
+      const lottoWinningNumbers = await withRetry(
+        this.setWinningNumbers.bind(this),
+      )
+      const result = this.calculateResults(
+        lottoWinningNumbers,
+        purchasedLottoList,
+      )
+
+      this.printResult(result)
+
       await this.restartOrEnd()
     } catch (error) {
       console.log(error)
@@ -40,17 +53,6 @@ class LottoGameController {
       default:
         process.exit()
     }
-  }
-
-  async executeGameCycle() {
-    const purchasedLottoList = await this.purchaseAndIssueLottos()
-    const lottoWinningNumbers = await this.setWinningNumbers()
-    const result = this.calculateResults(
-      lottoWinningNumbers,
-      purchasedLottoList,
-    )
-
-    this.printResult(result)
   }
 
   async purchaseAndIssueLottos() {
