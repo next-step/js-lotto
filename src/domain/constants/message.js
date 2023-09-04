@@ -20,8 +20,9 @@ export const ALERT_MESSAGE = Object.freeze({
 
 export const ERROR_MESSAGE = Object.freeze({
   ERROR_CODE: '로또 구입 금액을 입력해주세요.',
-  NOT_RECEIVED_LOTTO_NUMBER: '로또 번호를 입력해주세요.',
-  NOT_RECEIVED_BONUS_NUMBER: '보너스 번호를 입력해주세요.',
+  NOT_RECEIVED_AMOUNT: '구입 금액을 입력하지 않았습니다.',
+  NOT_RECEIVED_LOTTO_NUMBER: '로또 번호를 입력하지 않았습니다.',
+  NOT_RECEIVED_BONUS_NUMBER: '보너스 번호를 입력하지 않았습니다.',
   NOT_ENOUGH_AMOUNT: `최소 로또 구입 금액이 부족합니다. 최소 금액은 ${LOTTO_PRICE}원입니다.`,
   INVALID_APP_RETRY_KEY: `다시 시작하려면 ${APP_RETRY_KEY}를 입력해주시고, 종료하려면 ${APP_EXIT_KEY}를 입력해주세요.`,
   INVALID_LOTTO_MODE: '올바른 로또 방식이 아닙니다.',
