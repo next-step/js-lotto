@@ -14,16 +14,16 @@ showLottoNumbers.addEventListener('change', () => {
 });
 
 winningNumbers.forEach(function (input) {
-  input.addEventListener('input', function () {
-    if (this.value.length > INPUT_NUMBER_LENGTH) {
-      this.value = this.value.slice(0, INPUT_NUMBER_LENGTH);
+  input.addEventListener('input', function (event) {
+    if (event.target.value.length > INPUT_NUMBER_LENGTH) {
+      event.target.value = event.target.value.slice(0, INPUT_NUMBER_LENGTH);
     }
   });
 });
 
-bonusNumber.addEventListener('input', function () {
-  if (this.value.length > INPUT_NUMBER_LENGTH) {
-    this.value = this.value.slice(0, INPUT_NUMBER_LENGTH);
+bonusNumber.addEventListener('input', function (event) {
+  if (event.target.value.length > INPUT_NUMBER_LENGTH) {
+    event.target.value = event.target.value.slice(0, INPUT_NUMBER_LENGTH);
   }
 });
 
