@@ -21,7 +21,14 @@ const ModalView = {
         alert(message);
     },
     showModal() {
-        myModal.style.display = 'block';
+        myModal.classList.add('displayShow');
     },
+    closeModal(){
+        myModal.classList.add('displayNone');
+    },
+    clearModal(){
+        this.closeModal();
+        tableBody.removeChild(tableBody.firstChild);
+    }
 }
 module.exports = ModalView;
