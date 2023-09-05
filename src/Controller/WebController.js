@@ -5,7 +5,7 @@ import { SELECTOR } from '../constants';
 export class WebController {
   #view;
   #lottoCorporation = new LottoCorporation();
-  #lottoEvent = new LottoEvents();
+  #lottoEvents = new LottoEvents();
 
   constructor(view) {
     this.#view = view;
@@ -14,21 +14,12 @@ export class WebController {
 
   #setEventHandler() {
     const purchaseButton = this.#view.getElement(SELECTOR.TICKET.FORM);
-    this.#lottoEvent.purchaseLotto(purchaseButton, () => {
+    this.#lottoEvents.purchaseLotto(purchaseButton, () => {
       this.#getTickets();
     });
 
     const ticketSection = this.#view.getElement(SELECTOR.TICKET.PURCHASED);
-    ticketSection.addEventListener('change', (event) => {
-      if (event.target.matches('.lotto-numbers-toggle-button')) {
-        const lottoNumbersElements =
-          document.querySelectorAll('.lotto-numbers');
-
-        lottoNumbersElements.forEach(($element) => {
-          $element.style.display = event.target.checked ? 'block' : 'none';
-        });
-      }
-    });
+    this.#lottoEvents.toggleTicketNumber(ticketSection);
   }
 
   #getTickets() {
