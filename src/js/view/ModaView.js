@@ -28,7 +28,7 @@ const ModalView = {
     },
     clearModal(){
         this.closeModal();
-        tableBody.removeChild(tableBody.firstChild);
+        tableBody.innerHTML = '';
     }
 }
 module.exports = ModalView;

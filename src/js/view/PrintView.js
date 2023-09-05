@@ -1,4 +1,4 @@
-const { RESULT_MESSAGE } = require('../utils/constants.js')
+const { RESULT_MESSAGE, LOTTO_PRICE } = require('../utils/constants.js')
 
 const PrintView = {
     printResult(resultCounts, profitPercentage) {
@@ -10,15 +10,15 @@ const PrintView = {
         console.log(RESULT_MESSAGE.RESULT_RATE(profitPercentage.toFixed(2)));
     },
 
-    calculatePrizes(prize) {
+    calculatePrizes(lottos,prize) {
         let totalPrize = 0;
         prize.forEach(rank => {
             totalPrize += rank.count * rank.prize;
         })
 
-        const totalInvestment = this.lottos.length * LOTTO_PRICE;
+        const totalInvestment = lottos.length * LOTTO_PRICE;
         const profitPercentage = ((totalPrize - totalInvestment) / totalInvestment) * 100;
-        printResult(this.prize, profitPercentage)
+        this.printResult(prize, profitPercentage)
     },
 }
 module.exports = PrintView;

@@ -10,7 +10,18 @@ buttonElement.addEventListener('click', () => {
 });
 
 showLottoNumbers.addEventListener('change', () => {
-  lottoListEl.textContent = Lotto.lottos;
+  if (showLottoNumbers.checked) {
+    lottoListEl.textContent = Lotto.lottos;
+  } else {
+    const lottoCount = Lotto.lottos.length;
+    const lottoSymbol = '🎟️';
+
+    let lottoSymbols = '';
+    for (let i = 0; i < lottoCount; i++) {
+      lottoSymbols += `<span class="mx-1 text-4xl">${lottoSymbol}</span>`;
+    }
+    lottoListEl.innerHTML = lottoSymbols;
+  }
 });
 
 winningNumbers.forEach(function (input) {
@@ -42,5 +53,13 @@ openResult.addEventListener('click', function () {
 });
 
 restartBtn.addEventListener('click', () => {
-  location.reload();
+  ModalView.clearModal();
+  Lotto.clearLotto();
+  lottoListEl.innerHTML = '';
+  resultElement.innerHTML = '';
+  inputElement.value = '';
+  bonusNumber.value = '';
+  winningNumbers.forEach((input) => {
+    input.value = '';
+  });
 });

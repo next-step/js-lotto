@@ -39,10 +39,16 @@ const Lotto = {
             const matchedNumbers = lottoNumbers.filter(num => winningNumbers.includes(num));
             const matchedRank = this.prize.find(result => this.checkMatch(matchedNumbers.length, result, lottoNumbers, bonusNumber));
             if (matchedRank) {
-                matchedRank.count++;s
+                matchedRank.count++;
             }
         });
-        View.calculatePrizes(this.prize);
+        View.calculatePrizes(this.lottos, this.prize);
+    },
+    clearLotto() {
+        this.lottos = [];
+        this.prize = PRIZES;
+        this.numLottos = 0;
+        this.profitPercentage = 0;
     }
 }
 module.exports = Lotto;
