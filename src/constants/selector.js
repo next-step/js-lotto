@@ -11,6 +11,7 @@ const LOTTO = Object.freeze({
   BONUS_NUMBER_INPUT: '#bonus-number-input',
   NUMBER_DISPLAY_TOGGLE: '.lotto-numbers-toggle-button',
   NUMBERS: '.lotto-numbers',
+  WINNING_NUMBER_INPUT: '#winning-number-input',
 });
 
 const PLAY_OPTION = Object.freeze({

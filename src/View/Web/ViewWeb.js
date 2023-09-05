@@ -1,7 +1,11 @@
 import { OutputViewWeb, InputViewWeb } from './';
 import { Validator } from '../../utils/Validator';
 import { MESSAGE, RESTART_INPUT, SELECTOR } from '../../constants';
-import { TicketAmount, TicketsNumbers } from '../../components';
+import {
+  TicketAmount,
+  TicketsNumbers,
+  WinningNumberInput,
+} from '../../components';
 
 export class ViewWeb {
   #inputView;
@@ -77,7 +81,12 @@ export class ViewWeb {
     this.#outputView.render(SELECTOR.TICKET.TICKETS, TicketsNumbers(tickets));
   }
 
-  renderWinningNumbers() {}
+  renderWinningNumbers() {
+    this.#outputView.render(
+      SELECTOR.LOTTO.WINNING_NUMBER_INPUT,
+      WinningNumberInput
+    );
+  }
 
   // printTicketsResult(ticketResults) {
   //   const { prizes, profitRate } = ticketResults;
