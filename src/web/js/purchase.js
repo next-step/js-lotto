@@ -51,11 +51,16 @@ const runPurchase = (lotto) => {
 `;
 
     if (purchasedLottoCounts === 0) {
+<<<<<<< HEAD
       $purchaseLottosTicketContainer.style.visibility = 'hidden';
+=======
+      $purchaseLottosTicket.parentElement.style.visibility = 'hidden';
+>>>>>>> upstream/ding-co
       return;
     }
 
     if (purchasedLottoCounts > 1) {
+<<<<<<< HEAD
       $purchaseLottosTicketContainer.replaceChildren();
 
       const ticket = document.createElement('span');
@@ -70,6 +75,16 @@ const runPurchase = (lotto) => {
         });
 
       $purchaseLottosTicketContainer.style.visibility = 'visible';
+=======
+      $purchaseLottosTicket.parentElement.style.visibility = 'visible';
+      Array(purchasedLottoCounts - 1)
+        .fill($purchaseLottosTicket)
+        .forEach((element) => {
+          $purchaseLottosTicket.parentElement.appendChild(
+            element.cloneNode(true)
+          );
+        });
+>>>>>>> upstream/ding-co
     }
   };
 
@@ -99,6 +114,7 @@ const runPurchase = (lotto) => {
   $purchaseLottosSwitch.addEventListener('change', (event) => {
     const { checked } = event.target;
 
+<<<<<<< HEAD
     const tickets = document.querySelectorAll(
       '[data-ticket="purchase-lottos__ticket"]'
     );
@@ -119,6 +135,30 @@ const runPurchase = (lotto) => {
     lottoCandidates.forEach((lottoCandidate) => {
       lottoCandidate.style.display = checked ? 'inline-block' : 'none';
     });
+=======
+    const tickets = document.querySelectorAll('.purchase-lottos__ticket');
+    const lottoCandidates = document.querySelectorAll('.lotto-candidate');
+
+    if (checked) {
+      if (lottoCandidates.length < 1) {
+        tickets.forEach((ticket, idx) => {
+          const lottoCandidate = document.createElement('span');
+          lottoCandidate.className = 'lotto-candidate';
+          lottoCandidate.innerHTML = lotto.getLottoCandidates()[idx];
+
+          ticket.appendChild(lottoCandidate);
+        });
+      } else {
+        lottoCandidates.forEach((lottoCandidate) => {
+          lottoCandidate.style.display = 'inline-block';
+        });
+      }
+    } else {
+      lottoCandidates.forEach((lottoCandidate) => {
+        lottoCandidate.style.display = 'none';
+      });
+    }
+>>>>>>> upstream/ding-co
   });
 };
 
