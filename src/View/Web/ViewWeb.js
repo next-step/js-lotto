@@ -1,6 +1,6 @@
 import { OutputViewWeb, InputViewWeb } from './';
 import { Validator } from '../../utils/Validator';
-import { MESSAGE, RESTART_INPUT, SELECTOR } from '../../constants';
+import { MESSAGE, RESTART_INPUT, ELEMENT } from '../../constants';
 import { TicketAmount, TicketsNumbers } from '../../components';
 
 export class ViewWeb {
@@ -49,8 +49,8 @@ export class ViewWeb {
   renderPurchasedTickets(tickets) {
     const amount = tickets.length;
 
-    this.#outputView.render(SELECTOR.TICKET_AMOUNT, TicketAmount(amount));
-    this.#outputView.render(SELECTOR.TICKETS, TicketsNumbers(tickets));
+    this.#outputView.render(ELEMENT.TICKET_AMOUNT, TicketAmount(amount));
+    this.#outputView.render(ELEMENT.TICKETS, TicketsNumbers(tickets));
   }
 
   // printTicketsResult(ticketResults) {

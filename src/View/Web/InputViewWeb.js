@@ -1,14 +1,12 @@
 import { Validator } from '../../utils/Validator';
-import { MESSAGE, SELECTOR } from '../../constants';
+import { ELEMENT, MESSAGE } from '../../constants';
 
 export class InputViewWeb {
-  lottoNumberInputs = SELECTOR.LOTTO_NUMBER_INPUT;
-  bonusNumberInput = SELECTOR.BONUS_NUMBER_INPUT;
-  restartButton = SELECTOR.RESTART_INPUT;
+  #element = ELEMENT;
   #validator = Validator.View;
 
   readPurchaseAmount() {
-    const inputElement = SELECTOR.PURCHASE_AMOUNT_INPUT;
+    const inputElement = this.#element.PURCHASE_AMOUNT_INPUT;
     const purchaseAmount = parseInt(inputElement.value, 10);
 
     if (isNaN(purchaseAmount)) throw new Error(MESSAGE.READ.PURCHASE_AMOUNT);
@@ -25,7 +23,9 @@ export class InputViewWeb {
   }
 
   #readLottoNumbers() {
-    const lottoNumbers = Array.from(this.lottoNumberInputs).map(Number);
+    const lottoNumbers = Array.from(this.#element.LOTTO_NUMBER_INPUT).map(
+      Number
+    );
 
     if (!this.#validator.readLottoNumbers(lottoNumbers)) {
       throw new Error(MESSAGE.READ.LOTTO_NUMBERS);
@@ -35,7 +35,7 @@ export class InputViewWeb {
   }
 
   #readBonusNumber(lottoNumbers) {
-    const bonusNumber = Number(this.bonusNumberInput.value);
+    const bonusNumber = Number(this.#element.BONUS_NUMBER_INPUT.value);
 
     if (!this.#validator.readBonusNumber(bonusNumber, lottoNumbers)) {
       throw new Error(MESSAGE.READ.BONUS_NUMBER);
