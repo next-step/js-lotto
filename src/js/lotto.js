@@ -34,26 +34,15 @@ const Lotto = {
         }
     },
 
-    calculatePrizes() {
-        let totalPrize = 0;
-        this.prize.forEach(rank => {
-            totalPrize += rank.count * rank.prize;
-        })
-
-        const totalInvestment = this.lottos.length * LOTTO_PRICE;
-        this.profitPercentage = ((totalPrize - totalInvestment) / totalInvestment) * 100;
-        View.printResult(this.prize, this.profitPercentage)
-    },
-
     matchedRank(winningNumbers, bonusNumber) {
         this.lottos.forEach(lottoNumbers => {
             const matchedNumbers = lottoNumbers.filter(num => winningNumbers.includes(num));
             const matchedRank = this.prize.find(result => this.checkMatch(matchedNumbers.length, result, lottoNumbers, bonusNumber));
             if (matchedRank) {
-                matchedRank.count++;
+                matchedRank.count++;s
             }
         });
-        this.calculatePrizes();
+        View.calculatePrizes(this.prize);
     }
 }
 module.exports = Lotto;
