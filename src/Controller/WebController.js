@@ -11,13 +11,13 @@ export class WebController {
   }
 
   #setEventHandler() {
-    const purchaseButton = document.querySelector('#ticket-form');
+    const purchaseButton = this.#view.getElement(SELECTOR.TICKET_FORM);
     purchaseButton.addEventListener('submit', (event) => {
       event.preventDefault();
       this.#getTickets();
     });
 
-    const ticketSection = document.querySelector('#purchased-tickets');
+    const ticketSection = this.#view.getElement(SELECTOR.PURCHASED_TICKET);
     ticketSection.addEventListener('change', (event) => {
       if (event.target.matches('.lotto-numbers-toggle-button')) {
         const lottoNumbersElements =
@@ -37,25 +37,6 @@ export class WebController {
   }
 
   /*
-  async #getTickets() {
-    const purchaseAmount = await this.#view.readPurchaseAmount();
-    const tickets = this.#buyTickets(purchaseAmount);
-
-    this.#printTickets(tickets);
-
-    return tickets;
-  }
-
-  #buyTickets(purchaseAmount) {
-    const tickets = this.#lottoCorporation.buyTickets(purchaseAmount);
-
-    return tickets;
-  }
-
-  #printTickets(tickets) {
-    this.#view.printPurchasedTickets(tickets);
-  }
-
   async #readWinningNumbers() {
     const winningNumbers = await this.#view.readWinningNumbers();
 

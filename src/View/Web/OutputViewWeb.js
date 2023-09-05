@@ -1,5 +1,7 @@
 export const OutputViewWeb = {
-  render(targetElement, $children) {
-    targetElement.innerHTML = $children;
+  render(targetSelector, children) {
+    const targetElement = document.querySelector(targetSelector);
+
+    targetElement.innerHTML = children;
   },
 };
