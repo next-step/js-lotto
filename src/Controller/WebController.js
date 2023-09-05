@@ -13,12 +13,12 @@ export class WebController {
   }
 
   #setEventHandler() {
-    const purchaseButton = this.#view.getElement(SELECTOR.TICKET_FORM);
+    const purchaseButton = this.#view.getElement(SELECTOR.TICKET.FORM);
     this.#lottoEvent.purchaseLotto(purchaseButton, () => {
       this.#getTickets();
     });
 
-    const ticketSection = this.#view.getElement(SELECTOR.PURCHASED_TICKET);
+    const ticketSection = this.#view.getElement(SELECTOR.TICKET.PURCHASED);
     ticketSection.addEventListener('change', (event) => {
       if (event.target.matches('.lotto-numbers-toggle-button')) {
         const lottoNumbersElements =

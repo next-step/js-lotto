@@ -1,10 +1,22 @@
-export const SELECTOR = Object.freeze({
-  TICKET_AMOUNT: '#ticket-amount',
+const TICKET = Object.freeze({
   TICKETS: '#tickets',
-  TICKET_FORM: '#ticket-form',
-  PURCHASED_TICKET: '#purchased-tickets',
+  AMOUNT: '#ticket-amount',
+  FORM: '#ticket-form',
+  PURCHASED: '#purchased-tickets',
   PURCHASE_AMOUNT_INPUT: '#purchase-amount-input',
-  LOTTO_NUMBER_INPUT: '.winning-number-input',
+});
+
+const LOTTO = Object.freeze({
+  NUMBER_INPUT: '.winning-number-input',
   BONUS_NUMBER_INPUT: '#bonus-number-input',
-  RESTART_INPUT: '#restart-button',
+});
+
+const PLAY_OPTION = Object.freeze({
+  RESTART_BUTTON: '#restart-button',
+});
+
+export const SELECTOR = Object.freeze({
+  TICKET,
+  LOTTO,
+  PLAY_OPTION,
 });
