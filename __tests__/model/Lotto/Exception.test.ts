@@ -2,6 +2,7 @@ import { LOTTO_TERMS } from '@step1/constants/lotto';
 import { ERROR_MESSAGE } from '@step1/constants/message';
 import { LottoError } from '@step1/errors';
 import { Lotto } from '@step1/model';
+import { describe, expect, test } from '@jest/globals';
 
 describe('Lotto 관련 예외 테스트', () => {
   describe('생성된 로또 번호 중 유효하지 않은 로또 번호 범위의 값이 존재하는 case 테스트', () => {

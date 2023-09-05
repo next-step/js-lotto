@@ -23,10 +23,10 @@ body {
   height: 36px;
 }
 
-#purchased-lotto-numbers {
+.purchased-lotto-numbers {
   display: none;
 }
 
-.view-lotto-numbers #purchased-lotto-numbers {
+.view-lotto-numbers .purchased-lotto-numbers {
   display: block;
 }

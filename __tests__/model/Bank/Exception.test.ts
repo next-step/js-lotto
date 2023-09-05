@@ -1,6 +1,7 @@
 import { ERROR_MESSAGE } from '@step1/constants/message';
 import { BonusNumberError } from '@step1/errors';
 import { Bank } from '@step1/model';
+import { describe, expect, test } from '@jest/globals';
 
 describe('Bank 관련 예외 테스트', () => {
   describe('보너스 번호가 유효한 범위에 없는 값인 case 테스트', () => {

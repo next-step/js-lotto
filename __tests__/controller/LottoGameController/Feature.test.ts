@@ -5,12 +5,13 @@ import {
   mockInputView,
   runLottoGameController,
 } from '@test/controller/LottoGameController/LottoGameController.util';
+import { beforeAll, describe, expect, jest, test } from '@jest/globals';
 
 jest.mock('@step1/view/outputView');
 
 describe('LottoGameController 관련 기능 테스트', () => {
   beforeAll(() => {
-    jest.spyOn(global.process, 'exit').mockImplementation();
+    jest.spyOn(global.process, 'exit').mockImplementation((fn: never) => fn);
   });
 
   afterEach(() => {

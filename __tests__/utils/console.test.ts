@@ -1,12 +1,13 @@
 import Console from '@step1/utils/console';
+import { describe, expect, test, jest } from '@jest/globals';
 
 const INPUT_TEST = '입력 테스트';
 const INPUT_MESSAGE = '입력 메시지 : ';
 
 jest.mock('node:readline/promises', () => ({
-  createInterface: jest.fn().mockReturnValue({
-    question: jest.fn().mockImplementation(() => Promise.resolve(INPUT_TEST)),
-    close: jest.fn(),
+  createInterface: () => ({
+    question: () => Promise.resolve(INPUT_TEST),
+    close: () => {},
   }),
 }));
 

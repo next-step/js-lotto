@@ -1,4 +1,5 @@
 import { LottoMerchant } from '@step1/model';
+import { describe, expect, test } from '@jest/globals';
 
 describe('LottoMerchant 관련 기능 테스트', () => {
   test.each([
