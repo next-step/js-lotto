@@ -19,7 +19,7 @@ const INFO_MESSAGE = Object.freeze({
   REQUEST_PAYMENT: "구입금액을 입력해 주세요.\n",
   REQUEST_WIN_NUMBER: "\n당첨 번호를 입력해 주세요.\n",
   REQUEST_BONUS_NUMBER: "보너스 번호를 입력해 주세요.\n",
-  REQUEST_RESTART: "다시 시작하시겠습니까? (y/n)",
+  REQUEST_RESTART: "다시 시작하시겠습니까? (Y / random key) + Enter",
 });
 
 export { LOTTO_RULES, LOTTO_PRICE, INFO_MESSAGE };

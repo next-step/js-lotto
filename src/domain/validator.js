@@ -6,7 +6,7 @@ import {
   VALID_NUMBER_REQUIRED,
 } from "../utils/errorMessage.js";
 
-import { isValidNumber } from "../utils/validator.js";
+import { isValidNumber, validatePositiveNumber } from "../utils/validator.js";
 
 import { LOTTO_PRICE, LOTTO_RULES } from "./constant.js";
 
@@ -23,6 +23,8 @@ const validateLottoDuplicateNumbers = numberList => {
  * @param {number} amount
  */
 const validateLottoPrice = amount => {
+  validatePositiveNumber(amount);
+
   if (amount / LOTTO_PRICE.PRICE < LOTTO_RULES.LOTTO_MIN_NUMBER_ALLOWED) {
     throw new Error(ERROR_MESSAGE[LOTTO_MIN_PRICE_REQUIRED]);
   }

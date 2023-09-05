@@ -33,26 +33,22 @@ const _handleLottoMatchNumberLength = (buyerLottoNumbers, winNumbers) =>
 const _hasBonusNumber = buyerList =>
   buyerList.includes(dataStorage.bonusNumber);
 
+const _RANK_STATS = {
+  6: () => dataStorage.lottoStats.firstWinner++,
+  5: buyerList =>
+    !_hasBonusNumber(buyerList)
+      ? dataStorage.lottoStats.thirdWinner++
+      : dataStorage.lottoStats.secondWinner++,
+  4: () => dataStorage.lottoStats.fourthWinner++,
+  3: () => dataStorage.lottoStats.fifthWinner++,
+};
+
 /**
  * @param {number} match - 일치하는 숫자 개수
  * @param {number[]} buyerList
  */
 const _handleRankStats = (match, buyerList) => {
-  switch (match) {
-    case 3:
-      dataStorage.lottoStats.fifthWinner++;
-      break;
-    case 4:
-      dataStorage.lottoStats.fourthWinner++;
-      break;
-    case 5:
-      !_hasBonusNumber(buyerList)
-        ? dataStorage.lottoStats.thirdWinner++
-        : dataStorage.lottoStats.secondWinner++;
-      break;
-    case 6:
-      dataStorage.lottoStats.firstWinner++;
-      break;
-    default:
+  if (_RANK_STATS.hasOwnProperty(match)) {
+    _RANK_STATS[match](buyerList);
   }
 };

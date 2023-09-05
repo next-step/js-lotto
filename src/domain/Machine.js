@@ -24,8 +24,6 @@ export const Machine = {
     validateLottoDuplicateNumbers(numberList);
 
     dataStorage.winNumbers = numberList;
-
-    return dataStorage.winNumbers;
   },
 
   getBonusNumber(winNumbers, bonusNumberStr) {
@@ -35,7 +33,5 @@ export const Machine = {
     validateBonusNumber(winNumbers, bonusNumber);
 
     dataStorage.bonusNumber = bonusNumber;
-
-    return dataStorage.bonusNumber;
   },
 };
