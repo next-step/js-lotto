@@ -1,9 +1,11 @@
 import { LottoCorporation } from '../Model/LottoCorporation';
+import { LottoEvents } from '../Model/LottoEvents';
 import { SELECTOR } from '../constants';
 
 export class WebController {
   #view;
   #lottoCorporation = new LottoCorporation();
+  #lottoEvent = new LottoEvents();
 
   constructor(view) {
     this.#view = view;
@@ -12,8 +14,7 @@ export class WebController {
 
   #setEventHandler() {
     const purchaseButton = this.#view.getElement(SELECTOR.TICKET_FORM);
-    purchaseButton.addEventListener('submit', (event) => {
-      event.preventDefault();
+    this.#lottoEvent.purchaseLotto(purchaseButton, () => {
       this.#getTickets();
     });
 
@@ -34,6 +35,7 @@ export class WebController {
     const purchaseAmount = this.#view.readPurchaseAmount();
     const tickets = this.#lottoCorporation.buyTickets(purchaseAmount);
     this.#view.renderPurchasedTickets(tickets);
+    this.#view.renderWinningNumbers();
   }
 
   /*

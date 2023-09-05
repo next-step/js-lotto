@@ -77,6 +77,8 @@ export class ViewWeb {
     this.#outputView.render(SELECTOR.TICKETS, TicketsNumbers(tickets));
   }
 
+  renderWinningNumbers() {}
+
   // printTicketsResult(ticketResults) {
   //   const { prizes, profitRate } = ticketResults;
 
