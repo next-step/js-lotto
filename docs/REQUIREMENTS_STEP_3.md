@@ -6,7 +6,10 @@
 - [x] toggle 버튼을 누를 경우, 숫자를 렌더링한다.
 
 - [ ] 각 객체와 Layer에서 발생하는 Error를 처리하는 Layer에 대해 고민한다.
-- [ ] EventHandler binding을 담당하는 객체를 생성한다. 해당 객체는 Controller에서 관리한다.
+- [x] EventHandler binding을 담당하는 객체를 생성한다. 해당 객체는 Controller에서 관리한다.
+
+- [ ] 티켓을 구매하면 티켓 컴포넌트와 winningNumber를 입력할 수 있는 컴포넌트가 렌더링 된다.
+  - [ ] modal 컴포넌트는 app 외부에 존재하는 별도의 portal 컴포넌트에서 관리한다.
 
 ## 배포
 
