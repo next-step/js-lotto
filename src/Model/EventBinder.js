@@ -13,7 +13,7 @@ export class EventBinder {
     });
   }
 
-  onChange(element, callbackEvent) {
+  onClick(element, callbackEvent) {
     element.addEventListener('click', (event) => {
       event.preventDefault();
       callbackEvent(event);

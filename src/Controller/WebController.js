@@ -12,6 +12,7 @@ export class WebController {
     this.#setEventHandler();
   }
 
+  // event binding layer View쪽으로 몰아주는 것 고려해보기.
   #setEventHandler() {
     const purchaseButton = this.#view.getElement(SELECTOR.TICKET.FORM);
     this.#lottoEvents.purchaseLotto(purchaseButton, () => {
@@ -22,36 +23,48 @@ export class WebController {
     this.#lottoEvents.toggleTicketNumber(ticketSection);
   }
 
-  #getTickets() {
-    const purchaseAmount = this.#view.readPurchaseAmount();
+  async #getTickets() {
+    const purchaseAmount = await this.#view.readPurchaseAmount();
+    const tickets = this.#buyTickets(purchaseAmount);
+
+    this.#renderTickets(tickets);
+
+    return tickets;
+  }
+
+  #buyTickets(purchaseAmount) {
     const tickets = this.#lottoCorporation.buyTickets(purchaseAmount);
+
+    return tickets;
+  }
+
+  #renderTickets(tickets) {
     this.#view.renderPurchasedTickets(tickets);
-    this.#view.renderWinningNumbers();
   }
 
-  // async #readWinningNumbers() {
-  //   const winningNumbers = await this.#view.readWinningNumbers();
+  async #readWinningNumbers() {
+    const winningNumbers = await this.#view.readWinningNumbers();
 
-  //   return winningNumbers;
-  // }
-
-  // #checkTicketsResult(tickets, winningNumbers) {
-  //   return this.#lottoCorporation.checkTicketsResult(tickets, winningNumbers);
-  // }
-
-  #renderTicketsResult(ticketResults) {
-    this.#view.renderTicketsResult(ticketResults);
+    return winningNumbers;
   }
 
-  // async #readRestart() {
-  //   const isRestart = await this.#view.readRestart();
+  #checkTicketsResult(tickets, winningNumbers) {
+    return this.#lottoCorporation.checkTicketsResult(tickets, winningNumbers);
+  }
 
-  //   if (isRestart) return this.LottoGameProcess();
+  #printTicketsResult(ticketResults) {
+    this.#view.printTicketsResult(ticketResults);
+  }
 
-  //   this.#endGame();
-  // }
+  async #readRestart() {
+    const isRestart = await this.#view.readRestart();
 
-  // #endGame() {
-  //   this.#view.close();
-  // }
+    if (isRestart) return this.LottoGameProcess();
+
+    this.#endGame();
+  }
+
+  #endGame() {
+    this.#view.close();
+  }
 }

@@ -32,6 +32,8 @@ export class LottoEvents {
     const openTicketResultButton = document.querySelector(
       SELECTOR.MODAL.OPEN_TICKETS_RESULT
     );
-    this.#eventBinder.onClick(openTicketResultButton);
+    this.#eventBinder.onClick(openTicketResultButton, () => {
+      console.log('결과확인');
+    });
   }
 }

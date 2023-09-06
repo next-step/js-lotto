@@ -24,7 +24,7 @@ export class ViewWeb {
   }
 
   /* Input */
-  readPurchaseAmount() {
+  async readPurchaseAmount() {
     const purchaseAmount = this.#inputView.getElementValueByInt(
       SELECTOR.TICKET.PURCHASE_AMOUNT_INPUT
     );
@@ -34,45 +34,42 @@ export class ViewWeb {
     return purchaseAmount;
   }
 
-  // readWinningNumbers() {
-  //   const lottoNumbers = this.#readLottoNumbers();
-  //   const bonusNumber = this.#readBonusNumber(lottoNumbers);
+  async readWinningNumbers() {
+    const lottoNumbers = await this.#readLottoNumbers();
+    const bonusNumber = await this.#readBonusNumber(lottoNumbers);
 
-  //   return { lottoNumbers, bonusNumber };
-  // }
+    return { lottoNumbers, bonusNumber };
+  }
 
-  // #readLottoNumbers() {
-  //   const lottoNumbers = Array.from(
-  //     this.#inputView.getElement(SELECTOR.LOTTO.NUMBER_INPUT)
-  //   ).map(Number);
+  async #readLottoNumbers() {
+    const lottoNumbersInput = await this.validateUserInput(
+      MESSAGE.READ.LOTTO_NUMBERS,
+      (input) => {
+        const lottoNumbers = input.split(',').map(Number);
+        this.#validator.readLottoNumbers(lottoNumbers);
+      }
+    );
 
-  //   if (!this.#validator.readLottoNumbers(lottoNumbers)) {
-  //     throw new Error(MESSAGE.READ.LOTTO_NUMBERS);
-  //   }
+    return lottoNumbersInput.split(',').map(Number);
+  }
 
-  //   return lottoNumbers;
-  // }
+  async #readBonusNumber(lottoNumbers) {
+    const bonusNumberInput = await this.validateUserInput(
+      MESSAGE.READ.BONUS_NUMBER,
+      (input) => this.#validator.readBonusNumber(input, lottoNumbers)
+    );
 
-  // #readBonusNumber(lottoNumbers) {
-  //   const bonusNumber = Number(
-  //     this.#inputView.getElementValueByInt(SELECTOR.LOTTO.BONUS_NUMBER_INPUT)
-  //   );
+    return Number(bonusNumberInput);
+  }
 
-  //   if (!this.#validator.readBonusNumber(bonusNumber, lottoNumbers)) {
-  //     throw new Error(MESSAGE.READ.BONUS_NUMBER);
-  //   }
+  async readRestart() {
+    const restartInput = await this.validateUserInput(
+      MESSAGE.READ.RESTART,
+      Validator.View.readRestart
+    );
 
-  //   return bonusNumber;
-  // }
-
-  // readRestart() {
-  //   return new Promise((resolve) => {
-  //     this.restartButton.addEventListener('click', () => {
-  //       const restartConfirmed = confirm(MESSAGE.READ.RESTART);
-  //       resolve(restartConfirmed === RESTART_INPUT.YES);
-  //     });
-  //   });
-  // }
+    return restartInput === RESTART_INPUT.YES;
+  }
 
   /* Output */
   renderPurchasedTickets(tickets) {
@@ -82,14 +79,14 @@ export class ViewWeb {
     this.#outputView.render(SELECTOR.TICKET.TICKETS, TicketsNumbers(tickets));
   }
 
-  renderWinningNumbers() {
-    this.#outputView.render(
-      SELECTOR.LOTTO.WINNING_NUMBER_INPUT,
-      WinningNumberInput
-    );
+  renderTicketsResult(ticketResults) {
+    const { prizes, profitRate } = ticketResults;
+
+    this.#displayPrize(prizes);
+    this.#outputView.print(MESSAGE.PRINT.PROFIT(profitRate));
   }
 
-  renderTicketsResult(ticketResults) {
-    this.#outputView.openModal(WinningPrize(ticketResults));
+  #displayPrize(prizes) {
+    this.#outputView.print(MESSAGE.PRINT.PRIZE(prizes));
   }
 }
