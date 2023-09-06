@@ -5,7 +5,6 @@
 - [x] 구매한 Ticket을 화면에 렌더링한다.
 - [x] toggle 버튼을 누를 경우, 숫자를 렌더링한다.
 
-
 - [ ] 각 객체와 Layer에서 발생하는 Error를 처리하는 Layer에 대해 고민한다.
 - [ ] EventHandler binding을 담당하는 객체를 생성한다. 해당 객체는 Controller에서 관리한다.
 
@@ -39,3 +38,5 @@
 
 - [x] View에서 로또 상금을 확인하는 로직을 제거하고, `prizeCount`, `totalPrize`, `profitRate` 매개변수로 받아 정해진 형식에 할당하여 출력한다.
 - [x] LottoPrize 객체를 만들어 사이드 이펙트를 최소화한다.
+- [ ] display toggle을 위해 동적으로 컴포넌트를 생성하기 보단, class의 display로 관리하는 방식 고려해보기. (동적으로 생성할 경우, 테스트 난이도와 사이드이펙트로 커짐.)
+- [ ] view에 존재하는 selector로직을 eventBinder 객체로 넘기는 것 고려해보기.
