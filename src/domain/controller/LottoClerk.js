@@ -23,10 +23,10 @@ export class LottoClerk {
   }
 
   bindEvent() {
-    this.app.addEventListener(E.CLICK, this.onClick.bind(this));
-    this.app.addEventListener(E.SUBMIT, this.onSubmit.bind(this));
-    this.app.addEventListener(E.INPUT, this.onInput.bind(this));
-    this.app.addEventListener(E.CHANGE, this.onChange.bind(this));
+    this.app.addEventListener(E.CLICK, (event) => this.onClick(event));
+    this.app.addEventListener(E.SUBMIT, (event) => this.onSubmit(event));
+    this.app.addEventListener(E.INPUT, (event) => this.onInput(event));
+    this.app.addEventListener(E.CHANGE, (event) => this.onChange(event));
   }
 
   onClick(event) {
