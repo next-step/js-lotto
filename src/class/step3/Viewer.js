@@ -12,9 +12,6 @@ export default class Viewer {
     this.#purchaseButton = document.querySelector("button.purchase");
     this.#paymentInput = document.querySelector("input.payment");
     this.#lottoContainer = document.querySelector(".lotto-container");
-    this.#openResultModalButton = document.querySelector(
-      ".open-result-modal-button",
-    );
 
     document
       .querySelector(".modal-close")
@@ -24,23 +21,34 @@ export default class Viewer {
   }
 
   addPurchaseButtonClickListener(callback) {
-    this.#purchaseButton.addEventListener("click", () => {
-      callback(this.#paymentInput.value);
+    const purchaseForm = document.querySelector("form.purchase");
+
+    purchaseForm.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+      callback(evt.target[0].value);
     });
   }
 
   addOpenResultModalButtonClickHandler(callback) {
-    this.#openResultModalButton.addEventListener("click", () => {
-      const winningNumbers = Array.from(
-        document.querySelectorAll("input.winning-number"),
-      )
-        .map((input) => input.value)
+    const prizeInfoForm = document.querySelector("form.prize-info");
+
+    prizeInfoForm.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+
+      const target = evt.target;
+
+      const winningNumbers = [
+        target[0].value,
+        target[1].value,
+        target[2].value,
+        target[3].value,
+        target[4].value,
+        target[5].value,
+      ]
         .filter((value) => value.trim().length > 0)
         .map(Number);
 
-      const bonusNumber = Number(
-        document.querySelector("input.bonus-number").value,
-      );
+      const bonusNumber = Number(target[6].value);
 
       callback(winningNumbers, bonusNumber);
     });
@@ -106,13 +114,7 @@ export default class Viewer {
 
     prizeInfoForm.classList.add("d-none");
 
-    Array.from(document.querySelectorAll("input.winning-number")).forEach(
-      (el) => {
-        el.value = "";
-      },
-    );
-
-    document.querySelector("input.bonus-number").value = "";
+    prizeInfoForm.reset();
   }
 
   openResultModal() {

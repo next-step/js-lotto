@@ -14,6 +14,8 @@ export default class Controller {
 
     this.#lottoGame = lottoGame;
     this.#viewer = new Viewer();
+
+    this.init();
   }
 
   #handleError(error) {
