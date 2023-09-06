@@ -79,7 +79,7 @@ describe('Lotto E2E Test', () => {
     });
 
     it(`should validate input`, () => {
-      const tests = [
+      const TESTS = [
         {
           numbers: [1, 1, 2, 3, 4, 5],
           error: ERRORS.NOT_NUMBER_UNIQUE,
@@ -98,7 +98,7 @@ describe('Lotto E2E Test', () => {
         },
       ];
 
-      tests.forEach(({ numbers, error }) => {
+      TESTS.forEach(({ numbers, error }) => {
         cy.get('.winning-number').each(($input, index) => {
           cy.wrap($input).clear()
         })
