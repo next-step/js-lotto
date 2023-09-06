@@ -12,4 +12,11 @@ export class EventBinder {
       callbackEvent(event);
     });
   }
+
+  onChange(element, callbackEvent) {
+    element.addEventListener('click', (event) => {
+      event.preventDefault();
+      callbackEvent(event);
+    });
+  }
 }

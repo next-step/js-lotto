@@ -5,6 +5,7 @@ import {
   TicketAmount,
   TicketsNumbers,
   WinningNumberInput,
+  WinningPrize,
 } from '../../components';
 
 export class ViewWeb {
@@ -88,14 +89,7 @@ export class ViewWeb {
     );
   }
 
-  // printTicketsResult(ticketResults) {
-  //   const { prizes, profitRate } = ticketResults;
-
-  //   this.#displayPrize(prizes);
-  //   this.#outputView.print(MESSAGE.PRINT.PROFIT(profitRate));
-  // }
-
-  // #displayPrize(prizes) {
-  //   this.#outputView.print(MESSAGE.PRINT.PRIZE(prizes));
-  // }
+  renderTicketsResult(ticketResults) {
+    this.#outputView.openModal(WinningPrize(ticketResults));
+  }
 }

@@ -29,33 +29,29 @@ export class WebController {
     this.#view.renderWinningNumbers();
   }
 
-  /*
-  async #readWinningNumbers() {
-    const winningNumbers = await this.#view.readWinningNumbers();
+  // async #readWinningNumbers() {
+  //   const winningNumbers = await this.#view.readWinningNumbers();
 
-    return winningNumbers;
+  //   return winningNumbers;
+  // }
+
+  // #checkTicketsResult(tickets, winningNumbers) {
+  //   return this.#lottoCorporation.checkTicketsResult(tickets, winningNumbers);
+  // }
+
+  #renderTicketsResult(ticketResults) {
+    this.#view.renderTicketsResult(ticketResults);
   }
 
-  #checkTicketsResult(tickets, winningNumbers) {
-    return this.#lottoCorporation.checkTicketsResult(tickets, winningNumbers);
-  }
+  // async #readRestart() {
+  //   const isRestart = await this.#view.readRestart();
 
-  #printTicketsResult(ticketResults) {
-    this.#view.printTicketsResult(ticketResults);
-  }
+  //   if (isRestart) return this.LottoGameProcess();
 
-  async #readRestart() {
-    const isRestart = await this.#view.readRestart();
+  //   this.#endGame();
+  // }
 
-    if (isRestart) return this.LottoGameProcess();
-
-    this.#endGame();
-  }
-
-  #endGame() {
-    this.#view.close();
-  }
-
-  
-  */
+  // #endGame() {
+  //   this.#view.close();
+  // }
 }
