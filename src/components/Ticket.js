@@ -75,7 +75,7 @@ export const WinningNumberInput = `
     </div>
   </div>
   <button
-    id="check"
+    id="check-tickets-result"
     type="submit"
     class="open-result-modal-button mt-5 btn btn-cyan w-100"
   >

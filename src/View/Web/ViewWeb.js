@@ -21,7 +21,7 @@ export class ViewWeb {
   }
 
   bindEvent(events) {
-    const { getTickets, readWinningNumbers } = events;
+    const { getTickets, readWinningNumbers, checkTicketsResult } = events;
 
     this.#lottoEvents.purchaseLotto(
       this.#element.get(SELECTOR.TICKET.FORM),
@@ -35,6 +35,11 @@ export class ViewWeb {
     this.#lottoEvents.submitWinningNumber(
       this.#element.get(SELECTOR.LOTTO.WINNING_NUMBER_FORM),
       readWinningNumbers
+    );
+
+    this.#lottoEvents.openResultModal(
+      this.#element.get(SELECTOR.LOTTO.WINNING_NUMBER_FORM),
+      checkTicketsResult
     );
   }
 
