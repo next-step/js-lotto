@@ -43,7 +43,7 @@ class LottoOrganizer {
         rank,
         prize
       });
-    }, this);
+    });
   }
 }
 
