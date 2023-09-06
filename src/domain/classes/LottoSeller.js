@@ -10,14 +10,14 @@ class LottoSeller {
     this.#lottoPrice = LottoOrganizer.lottoPrice();
   }
 
-  static validateLottoPurchaseAvailability(amount, lottoPrice) {
+  get sellCount() {
+    return this.#sellCount;
+  }
+
+  #validateLottoPurchaseAvailability(amount, lottoPrice) {
     if (amount < lottoPrice) {
       throw ERROR_MESSAGE.NOT_ENOUGH_AMOUNT;
     }
-  }
-
-  get sellCount() {
-    return this.#sellCount;
   }
 
   #increaseSellCount(sellCount) {
@@ -39,7 +39,7 @@ class LottoSeller {
   }
 
   sellToManualLottoTicket(amount, lottoNumber) {
-    LottoSeller.validateLottoPurchaseAvailability(amount, this.#lottoPrice);
+    this.#validateLottoPurchaseAvailability.validateLottoPurchaseAvailability(amount, this.#lottoPrice);
     const sellCount = this.#calculateSellCount(amount);
     const lottoTickets = this.#createManualLottoTickets(sellCount, lottoNumber);
     this.#increaseSellCount(sellCount);
@@ -47,7 +47,7 @@ class LottoSeller {
   }
 
   sellToAutoLottoTicket(amount) {
-    LottoSeller.validateLottoPurchaseAvailability(amount, this.#lottoPrice);
+    this.#validateLottoPurchaseAvailability(amount, this.#lottoPrice);
     const sellCount = this.#calculateSellCount(amount);
     const lottoTickets = this.#createAutoLottoTickets(sellCount);
     this.#increaseSellCount(sellCount);

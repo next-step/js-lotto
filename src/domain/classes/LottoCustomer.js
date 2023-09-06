@@ -6,14 +6,8 @@ class LottoCustomer {
   #amount = 0;
 
   constructor(amount) {
-    LottoCustomer.validateAmount(amount);
+    this.#validateAmount(amount);
     this.#amount = Number(amount);
-  }
-
-  static validateAmount(amount) {
-    if (!isPositiveNumber(amount)) {
-      throw ERROR_MESSAGE.INVALID_AMOUNT_BY_NOT_POSITIVE_AMOUNT;
-    }
   }
 
   get amount() {
@@ -22,6 +16,12 @@ class LottoCustomer {
 
   get lottoTickets() {
     return this.#lottoTickets;
+  }
+
+  #validateAmount(amount) {
+    if (!isPositiveNumber(amount)) {
+      throw ERROR_MESSAGE.INVALID_AMOUNT_BY_NOT_POSITIVE_AMOUNT;
+    }
   }
 
   #setLottoTickets(lottoTickets) {
