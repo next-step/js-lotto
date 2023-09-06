@@ -14,6 +14,10 @@ const LOTTO = Object.freeze({
   WINNING_NUMBER_INPUT: '#winning-number-input',
 });
 
+const MODAL = Object.freeze({
+  OPEN_TICKETS_RESULT: '#open-tickets-result-modal',
+});
+
 const PLAY_OPTION = Object.freeze({
   RESTART_BUTTON: '#restart-button',
 });
@@ -21,5 +25,6 @@ const PLAY_OPTION = Object.freeze({
 export const SELECTOR = Object.freeze({
   TICKET,
   LOTTO,
+  MODAL,
   PLAY_OPTION,
 });

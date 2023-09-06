@@ -1,3 +1,3 @@
 export * from './Ticket';
-export * from './WinningPrize';
+export * from './TicketsResult';
 export * from './Modal';
