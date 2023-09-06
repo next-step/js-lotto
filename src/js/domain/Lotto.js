@@ -60,7 +60,7 @@ export class Lotto {
     this.#matchCount = matchingNumbers.length;
     this.#hasBonusNumber = this.#numbers.includes(winningNumber.bonusNumber);
     this.#place = Lotto.getPlace(this.#matchCount, this.#hasBonusNumber);
-    this.#prize = LOTTO_PRIZE_MAP[this.#place] || 0;
+    this.#prize = LOTTO_PRIZE_MAP[this.#place] ?? 0;
     this.#isChecked = true;
   }
 
