@@ -8,7 +8,7 @@ test.each(Array.from({ length: 20 }))(
     const chosen = chooseSome(ALL_LOTTO_NUMBERS, NUMBER_OF_LOTTO_NUMBERS);
     expect(chosen.length).toEqual(NUMBER_OF_LOTTO_NUMBERS);
     chosen.forEach((number) => {
-      expect(ALL_LOTTO_NUMBERS.includes(number)).toBe(true);
+      expect(ALL_LOTTO_NUMBERS.includes(number)).toBeTruthy();
     });
   }
 );
