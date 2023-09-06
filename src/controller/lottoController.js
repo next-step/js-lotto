@@ -23,7 +23,8 @@ export const createLottosForAmount = (lottoCount) => {
   let lottoNumbers = [];
 
   for (let i = 0; i < lottoCount; i++) {
-    lottoNumbers.push(createLottoNumbers());
+    const sortedLottoNumbers = createLottoNumbers().sort((a, b) => a - b);
+    lottoNumbers.push(sortedLottoNumbers);
   }
 
   return lottoNumbers;

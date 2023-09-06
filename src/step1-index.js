@@ -13,6 +13,7 @@ import {
   inputBonusNumberMessage,
   inputLottoNumberMessage,
   inputLottoPriceMessage,
+  inputReplayMessage,
 } from "./data/constant.js";
 import {
   displayAvailableLottoCount,
@@ -26,35 +27,35 @@ async function getInputPrice() {
 
   try {
     checkInputPrice(inputPrice);
+    return inputPrice;
   } catch (error) {
     console.log(error.message);
-    return false;
+    return getInputPrice();
   }
-
-  return inputPrice;
 }
 
 async function getInputWinningNumbers() {
   const inputWinningNumbers = await getUserInput(inputLottoNumberMessage);
-  return validateInputWinningNumbers(inputWinningNumbers)
-    ? inputWinningNumbers
-    : null;
+
+  if (validateInputWinningNumbers(inputWinningNumbers)) {
+    return inputWinningNumbers;
+  } else {
+    return getInputWinningNumbers();
+  }
 }
 
 async function getInputBonusNumber(winningNumbers) {
   const inputBonusNumber = await getUserInput(inputBonusNumberMessage);
-  return validateInputBonusNumber(winningNumbers, inputBonusNumber)
-    ? inputBonusNumber
-    : null;
+
+  if (validateInputBonusNumber(winningNumbers, inputBonusNumber)) {
+    return inputBonusNumber;
+  } else {
+    return getInputBonusNumber(winningNumbers);
+  }
 }
 
-async function lottoGame() {
+async function playLottoGame() {
   const inputPrice = await getInputPrice();
-
-  if (!inputPrice) {
-    closeUserInput();
-    return false;
-  }
 
   const avaliableCount = calcLottoCount(inputPrice);
   displayAvailableLottoCount(avaliableCount);
@@ -64,17 +65,7 @@ async function lottoGame() {
 
   const inputWinningNumbers = await getInputWinningNumbers();
 
-  if (!inputWinningNumbers) {
-    closeUserInput();
-    return false;
-  }
-
   const inputBonusNumber = await getInputBonusNumber(inputWinningNumbers);
-
-  if (!inputBonusNumber) {
-    closeUserInput();
-    return false;
-  }
 
   const winningNumbers = formatWinningNumbers(
     inputWinningNumbers,
@@ -87,8 +78,18 @@ async function lottoGame() {
 
   displayWinningStats();
   displayTotalProfitRate(avaliableCount);
-
-  closeUserInput();
 }
 
-lottoGame();
+async function startLottoGame() {
+  await playLottoGame();
+
+  const inputReplayAnswer = await getUserInput(inputReplayMessage);
+
+  if (inputReplayAnswer === "y") {
+    startLottoGame();
+  } else {
+    closeUserInput();
+  }
+}
+
+startLottoGame();
