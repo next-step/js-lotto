@@ -38,20 +38,20 @@ class LottoSeller {
     return lottoTickets;
   }
 
-  sellToManualLottoTicket(amount, lottoNumber) {
-    this.#validateLottoPurchaseAvailability.validateLottoPurchaseAvailability(amount, this.#lottoPrice);
+  #sellTickets(amount, createTicket) {
+    this.#validateLottoPurchaseAvailability(amount, this.#lottoPrice);
     const sellCount = this.#calculateSellCount(amount);
-    const lottoTickets = this.#createManualLottoTickets(sellCount, lottoNumber);
+    const lottoTickets = createTicket(sellCount);
     this.#increaseSellCount(sellCount);
     return { changeAmount: amount % this.#lottoPrice, lottoTickets };
   }
 
+  sellToManualLottoTicket(amount, lottoNumber) {
+    return this.#sellTickets(amount, (sellCount) => this.#createManualLottoTickets(sellCount, lottoNumber));
+  }
+
   sellToAutoLottoTicket(amount) {
-    this.#validateLottoPurchaseAvailability(amount, this.#lottoPrice);
-    const sellCount = this.#calculateSellCount(amount);
-    const lottoTickets = this.#createAutoLottoTickets(sellCount);
-    this.#increaseSellCount(sellCount);
-    return { changeAmount: amount % this.#lottoPrice, lottoTickets };
+    return this.#sellTickets(amount, this.#createAutoLottoTickets.bind(this));
   }
 }
 
