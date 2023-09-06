@@ -10,31 +10,31 @@ class LottoController {
       winningCount: 3,
       hasToWinBonus: false,
       winningAmount: 5_000,
-      numOfwinTicket: 0,
+      numOfWinTicket: 0,
     },
     {
       winningCount: 4,
       hasToWinBonus: false,
       winningAmount: 50_000,
-      numOfwinTicket: 0,
+      numOfWinTicket: 0,
     },
     {
       winningCount: 5,
       hasToWinBonus: false,
       winningAmount: 1_500_000,
-      numOfwinTicket: 0,
+      numOfWinTicket: 0,
     },
     {
       winningCount: 5,
       hasToWinBonus: true,
       winningAmount: 30_000_000,
-      numOfwinTicket: 0,
+      numOfWinTicket: 0,
     },
     {
       winningCount: 6,
       hasToWinBonus: false,
       winningAmount: 2_000_000_000,
-      numOfwinTicket: 0,
+      numOfWinTicket: 0,
     },
   ];
 
@@ -150,7 +150,7 @@ class LottoController {
         criteria.winningCount === count.winningCount &&
         (count.winBonus || !criteria.hasToWinBonus)
       )
-        criteria.numOfwinTicket++;
+        criteria.numOfWinTicket++;
     });
   }
 
@@ -194,7 +194,7 @@ class LottoController {
       console.log(
         `${criteria.winningCount}개 일치${criteria.hasToWinBonus ? ", 보너스 볼 일치" : ""} (${
           criteria.winningAmount
-        }원) - ${criteria.numOfwinTicket}개`
+        }원) - ${criteria.numOfWinTicket}개`
       );
     });
   }
@@ -209,7 +209,7 @@ class LottoController {
 
   calculateEarns() {
     const amounts = this.#winningCriteria.reduce((sum, criteria) => {
-      return sum + criteria.numOfwinTicket * criteria.winningAmount;
+      return sum + criteria.numOfWinTicket * criteria.winningAmount;
     }, 0);
 
     return (amounts / this.#money) * 100;
