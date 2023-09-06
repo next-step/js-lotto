@@ -68,7 +68,6 @@ export const WinningNumberInput = `
       <h4 class="mt-0 mb-3 text-center">보너스 번호</h4>
       <div class="d-flex justify-center">
         <input
-          id="bonus-number-input"
           type="number"
           class="bonus-number text-center"
         />

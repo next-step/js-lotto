@@ -53,35 +53,28 @@ export class ViewWeb {
     const lottoNumbers = await this.#readLottoNumbers();
     const bonusNumber = await this.#readBonusNumber(lottoNumbers);
 
+    console.log(lottoNumbers, bonusNumber);
     return { lottoNumbers, bonusNumber };
   }
 
-  validateUserInput(errorMessage, callback) {
-    try {
-      callback();
-    } catch {
-      throw new Error(errorMessage);
-    }
-  }
-
   async #readLottoNumbers() {
-    return await this.validateUserInput(MESSAGE.READ.LOTTO_NUMBERS, () => {
-      const $lottoNumbers = document.querySelectorAll(
-        SELECTOR.LOTTO.WINNING_NUMBER
-      );
-      const lottoNumbers = [...$lottoNumbers].map(({ value }) => value);
+    const $lottoNumbers = document.querySelectorAll(
+      SELECTOR.LOTTO.WINNING_NUMBER
+    );
+    const lottoNumbers = [...$lottoNumbers].map(({ value }) => value);
 
-      this.#validator.readLottoNumbers(lottoNumbers);
-    });
+    this.#validator.readLottoNumbers(lottoNumbers);
+
+    return lottoNumbers.map(Number);
   }
 
   async #readBonusNumber(lottoNumbers) {
-    const bonusNumberInput = await this.validateUserInput(
-      MESSAGE.READ.BONUS_NUMBER,
-      (input) => this.#validator.readBonusNumber(input, lottoNumbers)
-    );
+    const $bonusNumber = document.querySelector(SELECTOR.LOTTO.BONUS_NUMBER);
+    const bonusNumber = Number($bonusNumber.value);
 
-    return Number(bonusNumberInput);
+    this.#validator.readBonusNumber(bonusNumber, lottoNumbers);
+
+    return bonusNumber;
   }
 
   async readRestart() {

@@ -24,6 +24,7 @@ export class WebController {
 
     this.#renderTickets(tickets);
     this.#renderReadWinningNumbers();
+
     this.#storage.set('tickets', tickets);
   }
 
@@ -41,6 +42,8 @@ export class WebController {
 
   async #readWinningNumbers() {
     const winningNumbers = await this.#view.readWinningNumbers();
+
+    this.#storage.set('winningNumbers', winningNumbers);
   }
 
   #checkTicketsResult(tickets, winningNumbers) {

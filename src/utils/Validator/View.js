@@ -16,6 +16,9 @@ export const View = {
   },
 
   readLottoNumbers(lottoNumbers) {
+    if (lottoNumbers.some((value) => value === EMPTY_INPUT))
+      throw new Error(MESSAGE.READ.LOTTO_NUMBERS);
+
     // 로또는 6자리 수이다.
     const lottoLength = NUMBER.LOTTO_TICKET.NUMBERS_LENGTH;
     if (lottoNumbers.length !== lottoLength)
@@ -33,6 +36,8 @@ export const View = {
   },
 
   readBonusNumber(bonusNumber, lottoNumbers) {
+    if (bonusNumber === EMPTY_INPUT) throw new Error(MESSAGE.READ.BONUS_NUMBER);
+
     const { MIN_RANGE, MAX_RANGE } = NUMBER.LOTTO_TICKET;
 
     if (!isLottoNumber(bonusNumber))
