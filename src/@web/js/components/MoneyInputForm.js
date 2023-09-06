@@ -1,5 +1,3 @@
-import Input from "./Input";
-import Button from "./Button";
 import {isNaturalNumber, isValidNumberString} from "../../../utils/validate";
 import {LOTTO_INFO} from "../../../consts/Lotto";
 
@@ -7,41 +5,29 @@ export default class MoneyInputForm {
     #$moneyInputForm;
     #$moneyInput;
     #$moneyInputSubmitButton;
-    #state = {
-        money: 0
-    }
-    constructor({$target, onSubmit}) {
-        this.#$moneyInputForm = $target;
-        this.#$moneyInput = new Input({
-            $target: this.#$moneyInputForm.querySelector("#money-input"),
-            onChange: () => {
-                this.#state.money = this.#$moneyInput.value;
+
+    constructor({initialState, onSubmit}) {
+        this.#$moneyInputForm = document.querySelector("#money-input-form");
+        this.#$moneyInput = this.#$moneyInputForm.querySelector("#money-input");
+        this.#$moneyInputSubmitButton = this.#$moneyInputForm.querySelector("#money-input-submit-button");
+
+        this.#$moneyInputForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            try {
+                this.#validateMoneyInput(this.#$moneyInput.value);
+                onSubmit(this.#$moneyInput.value);
+            } catch (e) {
+                this.#$moneyInput.value = "";
+                alert(e.message);
             }
         });
-        this.#$moneyInputSubmitButton = new Button({
-            $target: this.#$moneyInputForm.querySelector("#money-input-submit-button"),
-            onClick: () => {
-                try {
-                    this.#validateForm(this.#state);
-                    onSubmit(this.#state);
-                } catch (e) {
-                    this.#$moneyInput.setValue("");
-                    alert(e.message);
-                }
-            }
-        });
-        this.init();
-    }
-    init() {
-        this.#state = {
-            money: 0
-        }
-        this.#$moneyInput.setValue("");
+
+        this.init(initialState);
     }
 
-    #validateForm(value) {
-        this.#validateMoneyInput(value.money);
-    };
+    init(initialState) {
+        this.#$moneyInput.value = initialState?.money;
+    }
 
     #validateMoneyInput(value) {
         if(!isValidNumberString(value))
