@@ -28,9 +28,7 @@ export class WebController {
   }
 
   #buyTickets(purchaseAmount) {
-    const tickets = this.#lottoCorporation.buyTickets(purchaseAmount);
-
-    return tickets;
+    return this.#lottoCorporation.buyTickets(purchaseAmount);
   }
 
   #renderTickets(tickets) {
@@ -43,8 +41,6 @@ export class WebController {
 
   async #readWinningNumbers() {
     const winningNumbers = await this.#view.readWinningNumbers();
-
-    console.log(winningNumbers, '!!');
   }
 
   #checkTicketsResult(tickets, winningNumbers) {
