@@ -21,8 +21,12 @@ class LottoTicket {
     this.#mode = mode;
     this.#lottoNumber =
       mode === LOTTO_MODE.AUTO
-        ? this.#generateLottoNumber()
+        ? LottoTicket.createLottoNumber()
         : convertStringToNumber(lottoNumber, LOTTO_NUMBER_SEPARATOR);
+  }
+
+  static createLottoNumber() {
+    return shuffleArray(LOTTO_BALLS).slice(0, LOTTO_NUMBER_LENGTH);
   }
 
   get mode() {
@@ -68,10 +72,6 @@ class LottoTicket {
         throw ERROR_MESSAGE.INVALID_LOTTO_NUMBER_BY_DUPLICATE;
       }
     }
-  }
-
-  #generateLottoNumber() {
-    return shuffleArray(LOTTO_BALLS).slice(0, LOTTO_NUMBER_LENGTH);
   }
 
   setResult(result) {
