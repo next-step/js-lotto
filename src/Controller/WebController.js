@@ -44,8 +44,8 @@ export class WebController {
     return this.#lottoCorporation.checkTicketsResult(tickets, winningNumbers);
   }
 
-  #printTicketsResult(ticketResults) {
-    this.#view.printTicketsResult(ticketResults);
+  #renderTicketsResult(ticketResults) {
+    this.#view.renderTicketsResult(ticketResults);
   }
 
   async #readRestart() {
