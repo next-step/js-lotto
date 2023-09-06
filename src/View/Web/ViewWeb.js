@@ -5,6 +5,7 @@ import {
   TicketAmount,
   TicketsNumbers,
   WinningNumberInput,
+  WinningPrize,
 } from '../../components';
 import { LottoEvents } from '../../Model';
 
@@ -107,13 +108,6 @@ export class ViewWeb {
   }
 
   renderTicketsResult(ticketResults) {
-    const { prizes, profitRate } = ticketResults;
-
-    this.#displayPrize(prizes);
-    this.#outputView.print(MESSAGE.PRINT.PROFIT(profitRate));
-  }
-
-  #displayPrize(prizes) {
-    this.#outputView.print(MESSAGE.PRINT.PRIZE(prizes));
+    this.#outputView.render(SELECTOR.MODAL.PORTAL, WinningPrize(ticketResults));
   }
 }

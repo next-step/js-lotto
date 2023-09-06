@@ -22,42 +22,48 @@ export const WinningPrize = (ticketResults) => {
             <tr class="text-center">
               <td class="p-3">3개</td>
               <td class="p-3">5,000</td>
-              <td class="p-3">${prizes.filter(
-                ({ matchingCount }) => matchingCount === 3
-              )}개</td>
+              <td class="p-3">${
+                prizes.filter(({ matchingCount }) => matchingCount === 3).length
+              }개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">4개</td>
               <td class="p-3">50,000</td>
-              <td class="p-3">${prizes.filter(
-                ({ matchingCount }) => matchingCount === 4
-              )}개</td>
+              <td class="p-3">${
+                prizes.filter(({ matchingCount }) => matchingCount === 4).length
+              }개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">5개</td>
               <td class="p-3">1,500,000</td>
-              <td class="p-3">${prizes.filter(
-                ({ matchingCount }) => matchingCount === 5 && !isBonusMatched
-              )}개</td>
+              <td class="p-3">${
+                prizes.filter(
+                  ({ matchingCount }) => matchingCount === 5 && !isBonusMatched
+                ).length
+              }개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">5개 + 보너스볼</td>
               <td class="p-3">30,000,000</td>
-              <td class="p-3">${prizes.filter(
-                ({ matchingCount }) => matchingCount === 5 && isBonusMatched
-              )}개</td>
+              <td class="p-3">${
+                prizes.filter(
+                  ({ matchingCount }) => matchingCount === 5 && isBonusMatched
+                ).length
+              }개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">6개</td>
               <td class="p-3">2,000,000,000</td>
-              <td class="p-3">${prizes.filter(
-                ({ matchingCount }) => matchingCount === 6
-              )}개</td>
+              <td class="p-3">${
+                prizes.filter(({ matchingCount }) => matchingCount === 6).length
+              }개</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p class="text-center font-bold">당신의 총 수익률은 ${profitRate}%입니다.</p>
+      <p class="text-center font-bold">당신의 총 수익률은 ${profitRate.toFixed(
+        2
+      )}%입니다.</p>
       <div class="d-flex justify-center mt-5">
         <button id="restart-button" type="button" class="btn btn-cyan">
           다시 시작하기

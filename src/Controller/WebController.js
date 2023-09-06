@@ -55,6 +55,8 @@ export class WebController {
       tickets,
       winningNumbers
     );
+
+    this.#renderTicketsResult(ticketResults);
   }
 
   #renderTicketsResult(ticketResults) {
