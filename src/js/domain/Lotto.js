@@ -9,13 +9,20 @@ import { LottoNumberError } from "../errors";
 
 import { chooseSome } from "../utils";
 
-const ALL_LOTTO_NUMBERS = Array.from(
+export const ALL_LOTTO_NUMBERS = Array.from(
   {
     length: MAX_LOTTO_NUMBER - MIN_LOTTO_NUMBER + 1,
   },
   (v, i) => i + MIN_LOTTO_NUMBER
 );
 Object.freeze(ALL_LOTTO_NUMBERS);
+
+const LOTTO_PLACE_MAP = {
+  6: () => 1,
+  5: (hasBonusNumber) => (hasBonusNumber ? 2 : 3),
+  4: () => 4,
+  3: () => 5,
+};
 
 export class Lotto {
   #numbers = [];
@@ -57,10 +64,6 @@ export class Lotto {
     this.#isChecked = true;
   }
 
-  static get ALL_LOTTO_NUMBERS() {
-    return ALL_LOTTO_NUMBERS;
-  }
-
   static validateNumbers(numbers) {
     if (numbers.length < NUMBER_OF_LOTTO_NUMBERS) {
       throw new LottoNumberError("Too few numbers");
@@ -81,22 +84,9 @@ export class Lotto {
   }
 
   static getPlace(matchCount, hasBonusNumber) {
-    if (matchCount == 6) {
-      return 1;
-    }
-    if (matchCount == 5) {
-      if (hasBonusNumber) {
-        return 2;
-      }
-      return 3;
-    }
-    if (matchCount == 4) {
-      return 4;
-    }
-    if (matchCount == 3) {
-      return 5;
-    }
-    return 0;
+    return matchCount in LOTTO_PLACE_MAP
+      ? LOTTO_PLACE_MAP[matchCount](hasBonusNumber)
+      : 0;
   }
 
   static random() {
