@@ -1,26 +1,18 @@
 import { LottoCorporation } from '../Model/LottoCorporation';
-import { LottoEvents } from '../Model/LottoEvents';
-import { SELECTOR } from '../constants';
 
 export class WebController {
   #view;
   #lottoCorporation = new LottoCorporation();
-  #lottoEvents = new LottoEvents();
 
   constructor(view) {
     this.#view = view;
-    this.#setEventHandler();
+    this.#bindEvent();
   }
 
-  // event binding layer View쪽으로 몰아주는 것 고려해보기.
-  #setEventHandler() {
-    const purchaseButton = this.#view.getElement(SELECTOR.TICKET.FORM);
-    this.#lottoEvents.purchaseLotto(purchaseButton, () => {
-      this.#getTickets();
+  #bindEvent() {
+    this.#view.bindEvent({
+      getTickets: () => this.#getTickets(),
     });
-
-    const ticketSection = this.#view.getElement(SELECTOR.TICKET.PURCHASED);
-    this.#lottoEvents.toggleTicketNumber(ticketSection);
   }
 
   async #getTickets() {

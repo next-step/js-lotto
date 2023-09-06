@@ -1,17 +1,15 @@
 import { OutputViewWeb, InputViewWeb } from './';
 import { Validator } from '../../utils/Validator';
 import { MESSAGE, RESTART_INPUT, SELECTOR } from '../../constants';
-import {
-  TicketAmount,
-  TicketsNumbers,
-  WinningNumberInput,
-  WinningPrize,
-} from '../../components';
+import { TicketAmount, TicketsNumbers } from '../../components';
+
+import { LottoEvents } from '../../Model';
 
 export class ViewWeb {
   #inputView;
   #outputView;
   #validator;
+  #lottoEvents = new LottoEvents();
 
   constructor() {
     this.#inputView = new InputViewWeb();
@@ -19,7 +17,19 @@ export class ViewWeb {
     this.#validator = Validator.View;
   }
 
-  getElement(selector) {
+  bindEvent(events) {
+    const { getTickets } = events;
+
+    const purchaseButton = this.#getElement(SELECTOR.TICKET.FORM);
+    this.#lottoEvents.purchaseLotto(purchaseButton, () => {
+      getTickets();
+    });
+
+    const ticketSection = this.#getElement(SELECTOR.TICKET.PURCHASED);
+    this.#lottoEvents.toggleTicketNumber(ticketSection);
+  }
+
+  #getElement(selector) {
     return this.#inputView.getElement(selector);
   }
 
