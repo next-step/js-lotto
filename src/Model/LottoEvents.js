@@ -24,16 +24,5 @@ export class LottoEvents {
         return ($element.style.display = 'none');
       });
     });
-
-    this.#openTicketsResult();
-  }
-
-  #openTicketsResult() {
-    const openTicketResultButton = document.querySelector(
-      SELECTOR.MODAL.OPEN_TICKETS_RESULT
-    );
-    this.#eventBinder.onClick(openTicketResultButton, () => {
-      console.log('결과확인');
-    });
   }
 }

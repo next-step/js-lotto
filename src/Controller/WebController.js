@@ -3,6 +3,7 @@ import { LottoCorporation } from '../Model/LottoCorporation';
 export class WebController {
   #view;
   #lottoCorporation = new LottoCorporation();
+  #storage = new Map();
 
   constructor(view) {
     this.#view = view;
@@ -20,8 +21,7 @@ export class WebController {
     const tickets = this.#buyTickets(purchaseAmount);
 
     this.#renderTickets(tickets);
-
-    return tickets;
+    this.#storage.set('tickets', tickets);
   }
 
   #buyTickets(purchaseAmount) {
@@ -33,6 +33,8 @@ export class WebController {
   #renderTickets(tickets) {
     this.#view.renderPurchasedTickets(tickets);
   }
+
+  #renderReadWinningNumbers() {}
 
   async #readWinningNumbers() {
     const winningNumbers = await this.#view.readWinningNumbers();
