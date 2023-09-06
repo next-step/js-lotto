@@ -1,18 +1,17 @@
-import { OutputViewWeb, InputViewWeb } from './';
+import { OutputViewWeb, Element } from './';
 import { Validator } from '../../utils/Validator';
 import { MESSAGE, RESTART_INPUT, SELECTOR } from '../../constants';
 import { TicketAmount, TicketsNumbers } from '../../components';
-
 import { LottoEvents } from '../../Model';
 
 export class ViewWeb {
-  #inputView;
+  #element;
   #outputView;
   #validator;
   #lottoEvents = new LottoEvents();
 
   constructor() {
-    this.#inputView = new InputViewWeb();
+    this.#element = new Element();
     this.#outputView = OutputViewWeb;
     this.#validator = Validator.View;
   }
@@ -20,22 +19,18 @@ export class ViewWeb {
   bindEvent(events) {
     const { getTickets } = events;
 
-    const purchaseButton = this.#getElement(SELECTOR.TICKET.FORM);
+    const purchaseButton = this.#element.get(SELECTOR.TICKET.FORM);
     this.#lottoEvents.purchaseLotto(purchaseButton, () => {
       getTickets();
     });
 
-    const ticketSection = this.#getElement(SELECTOR.TICKET.PURCHASED);
+    const ticketSection = this.#element.get(SELECTOR.TICKET.PURCHASED);
     this.#lottoEvents.toggleTicketNumber(ticketSection);
-  }
-
-  #getElement(selector) {
-    return this.#inputView.getElement(selector);
   }
 
   /* Input */
   async readPurchaseAmount() {
-    const purchaseAmount = this.#inputView.getElementValueByInt(
+    const purchaseAmount = this.#element.getValueByInt(
       SELECTOR.TICKET.PURCHASE_AMOUNT_INPUT
     );
 

@@ -1,13 +1,13 @@
-export class InputViewWeb {
-  getElement(selector) {
+export class Element {
+  get(selector) {
     return document.querySelector(selector);
   }
 
-  getElementValueByString(selector) {
+  getValueByString(selector) {
     return document.querySelector(selector).value;
   }
 
-  getElementValueByInt(selector) {
+  getValueByInt(selector) {
     return parseInt(document.querySelector(selector).value, 10);
   }
 }
