@@ -1,4 +1,5 @@
 import { LottoCorporation } from '../Model/LottoCorporation';
+import { SELECTOR } from '../constants';
 
 export class WebController {
   #view;
@@ -13,6 +14,7 @@ export class WebController {
   #bindEvent() {
     this.#view.bindEvent({
       getTickets: () => this.#getTickets(),
+      readWinningNumbers: () => this.#readWinningNumbers(),
     });
   }
 
@@ -21,6 +23,7 @@ export class WebController {
     const tickets = this.#buyTickets(purchaseAmount);
 
     this.#renderTickets(tickets);
+    this.#renderReadWinningNumbers();
     this.#storage.set('tickets', tickets);
   }
 
@@ -34,12 +37,14 @@ export class WebController {
     this.#view.renderPurchasedTickets(tickets);
   }
 
-  #renderReadWinningNumbers() {}
+  #renderReadWinningNumbers() {
+    this.#view.renderReadWinningNumbers();
+  }
 
   async #readWinningNumbers() {
     const winningNumbers = await this.#view.readWinningNumbers();
 
-    return winningNumbers;
+    console.log(winningNumbers, '!!');
   }
 
   #checkTicketsResult(tickets, winningNumbers) {

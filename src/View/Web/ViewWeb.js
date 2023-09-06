@@ -1,7 +1,11 @@
 import { OutputViewWeb, Element } from './';
 import { Validator } from '../../utils/Validator';
 import { MESSAGE, RESTART_INPUT, SELECTOR } from '../../constants';
-import { TicketAmount, TicketsNumbers } from '../../components';
+import {
+  TicketAmount,
+  TicketsNumbers,
+  WinningNumberInput,
+} from '../../components';
 import { LottoEvents } from '../../Model';
 
 export class ViewWeb {
@@ -17,15 +21,21 @@ export class ViewWeb {
   }
 
   bindEvent(events) {
-    const { getTickets } = events;
+    const { getTickets, readWinningNumbers } = events;
 
-    const purchaseButton = this.#element.get(SELECTOR.TICKET.FORM);
-    this.#lottoEvents.purchaseLotto(purchaseButton, () => {
-      getTickets();
-    });
+    this.#lottoEvents.purchaseLotto(
+      this.#element.get(SELECTOR.TICKET.FORM),
+      getTickets
+    );
 
-    const ticketSection = this.#element.get(SELECTOR.TICKET.PURCHASED);
-    this.#lottoEvents.toggleTicketNumber(ticketSection);
+    this.#lottoEvents.toggleTicketNumber(
+      this.#element.get(SELECTOR.TICKET.PURCHASED)
+    );
+
+    this.#lottoEvents.submitWinningNumber(
+      this.#element.get(SELECTOR.LOTTO.WINNING_NUMBER_FORM),
+      readWinningNumbers
+    );
   }
 
   /* Input */
@@ -46,16 +56,23 @@ export class ViewWeb {
     return { lottoNumbers, bonusNumber };
   }
 
-  async #readLottoNumbers() {
-    const lottoNumbersInput = await this.validateUserInput(
-      MESSAGE.READ.LOTTO_NUMBERS,
-      (input) => {
-        const lottoNumbers = input.split(',').map(Number);
-        this.#validator.readLottoNumbers(lottoNumbers);
-      }
-    );
+  validateUserInput(errorMessage, callback) {
+    try {
+      callback();
+    } catch {
+      throw new Error(errorMessage);
+    }
+  }
 
-    return lottoNumbersInput.split(',').map(Number);
+  async #readLottoNumbers() {
+    return await this.validateUserInput(MESSAGE.READ.LOTTO_NUMBERS, () => {
+      const $lottoNumbers = document.querySelectorAll(
+        SELECTOR.LOTTO.WINNING_NUMBER
+      );
+      const lottoNumbers = [...$lottoNumbers].map(({ value }) => value);
+
+      this.#validator.readLottoNumbers(lottoNumbers);
+    });
   }
 
   async #readBonusNumber(lottoNumbers) {
@@ -82,6 +99,13 @@ export class ViewWeb {
 
     this.#outputView.render(SELECTOR.TICKET.AMOUNT, TicketAmount(amount));
     this.#outputView.render(SELECTOR.TICKET.TICKETS, TicketsNumbers(tickets));
+  }
+
+  renderReadWinningNumbers() {
+    this.#outputView.render(
+      SELECTOR.LOTTO.WINNING_NUMBER_FORM,
+      WinningNumberInput
+    );
   }
 
   renderTicketsResult(ticketResults) {

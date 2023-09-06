@@ -8,12 +8,12 @@ export class LottoEvents {
     this.#eventBinder = new EventBinder();
   }
 
-  purchaseLotto(purchaseButton, getTickets) {
-    this.#eventBinder.onSubmit(purchaseButton, getTickets);
+  purchaseLotto($purchaseButton, getTickets) {
+    this.#eventBinder.onSubmit($purchaseButton, getTickets);
   }
 
-  toggleTicketNumber(toggleButton) {
-    this.#eventBinder.onChange(toggleButton, (event) => {
+  toggleTicketNumber($toggleButton) {
+    this.#eventBinder.onChange($toggleButton, (event) => {
       const lottoNumbers = document.querySelectorAll(SELECTOR.LOTTO.NUMBERS);
 
       lottoNumbers.forEach(($element) => {
@@ -24,5 +24,9 @@ export class LottoEvents {
         return ($element.style.display = 'none');
       });
     });
+  }
+
+  submitWinningNumber($winningNumberForm, readWinningNumbers) {
+    this.#eventBinder.onSubmit($winningNumberForm, readWinningNumbers);
   }
 }
