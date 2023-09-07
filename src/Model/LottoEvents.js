@@ -39,4 +39,11 @@ export class LottoEvents {
       if (event.target.matches(SELECTOR.MODAL.CLOSE)) closeModal();
     });
   }
+
+  restartGame($portal, restartGame) {
+    this.#eventBinder.onClick($portal, (event) => {
+      if (event.target.matches(SELECTOR.PLAY_OPTION.RESTART_BUTTON))
+        restartGame();
+    });
+  }
 }

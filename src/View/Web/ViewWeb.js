@@ -23,7 +23,7 @@ export class ViewWeb {
   }
 
   bindEvent(events) {
-    const { getTickets, checkTicketsResult } = events;
+    const { getTickets, checkTicketsResult, restartGame } = events;
 
     this.#lottoEvents.purchaseLotto(
       this.#element.get(SELECTOR.TICKET.FORM),
@@ -42,8 +42,13 @@ export class ViewWeb {
     this.#lottoEvents.closeResultModal(
       this.#element.get(SELECTOR.MODAL.PORTAL),
       () => {
-        this.#closeModal();
+        this.closeModal();
       }
+    );
+
+    this.#lottoEvents.restartGame(
+      this.#element.get(SELECTOR.MODAL.PORTAL),
+      restartGame
     );
   }
 
@@ -66,9 +71,7 @@ export class ViewWeb {
   }
 
   async #readLottoNumbers() {
-    const $lottoNumbers = document.querySelectorAll(
-      SELECTOR.LOTTO.WINNING_NUMBER
-    );
+    const $lottoNumbers = this.#element.getAll(SELECTOR.LOTTO.WINNING_NUMBER);
     const lottoNumbers = [...$lottoNumbers].map(({ value }) => value);
 
     this.#validator.readLottoNumbers(lottoNumbers);
@@ -77,21 +80,12 @@ export class ViewWeb {
   }
 
   async #readBonusNumber(lottoNumbers) {
-    const $bonusNumber = document.querySelector(SELECTOR.LOTTO.BONUS_NUMBER);
+    const $bonusNumber = this.#element.get(SELECTOR.LOTTO.BONUS_NUMBER);
     const bonusNumber = Number($bonusNumber.value);
 
     this.#validator.readBonusNumber(bonusNumber, lottoNumbers);
 
     return bonusNumber;
-  }
-
-  async readRestart() {
-    const restartInput = await this.validateUserInput(
-      MESSAGE.READ.RESTART,
-      Validator.View.readRestart
-    );
-
-    return restartInput === RESTART_INPUT.YES;
   }
 
   /* Output */
@@ -116,7 +110,34 @@ export class ViewWeb {
     );
   }
 
-  #closeModal() {
+  closeModal() {
     this.#outputView.clear(SELECTOR.MODAL.PORTAL);
+  }
+
+  resetView() {
+    this.#resetInputValues();
+    this.#removePurchasedTickets();
+    this.#removeReadWinningNumbers();
+  }
+
+  #resetInputValues() {
+    const $lottoNumbers = this.#element.getAll(SELECTOR.LOTTO.WINNING_NUMBER);
+    const $bonusNumber = this.#element.get(SELECTOR.LOTTO.BONUS_NUMBER);
+    const $purchaseAmount = this.#element.get(
+      SELECTOR.TICKET.PURCHASE_AMOUNT_INPUT
+    );
+
+    $lottoNumbers.forEach(($number) => ($number.value = ''));
+    $bonusNumber.value = '';
+    $purchaseAmount.value = '';
+  }
+
+  #removePurchasedTickets() {
+    this.#outputView.clear(SELECTOR.TICKET.AMOUNT);
+    this.#outputView.clear(SELECTOR.TICKET.TICKETS);
+  }
+
+  #removeReadWinningNumbers() {
+    this.#outputView.clear(SELECTOR.LOTTO.WINNING_NUMBER_FORM);
   }
 }

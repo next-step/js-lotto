@@ -15,6 +15,7 @@ export class WebController {
     this.#view.bindEvent({
       getTickets: () => this.#getTickets(),
       checkTicketsResult: () => this.#checkTicketsResult(),
+      restartGame: () => this.#restartGame(),
     });
   }
 
@@ -58,15 +59,9 @@ export class WebController {
     this.#view.renderTicketsResult(ticketResults);
   }
 
-  async #readRestart() {
-    const isRestart = await this.#view.readRestart();
-
-    if (isRestart) return this.LottoGameProcess();
-
-    this.#endGame();
-  }
-
-  #endGame() {
-    this.#view.close();
+  async #restartGame() {
+    this.#view.closeModal();
+    this.#storage = new Map();
+    this.#view.resetView();
   }
 }

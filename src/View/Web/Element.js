@@ -3,6 +3,10 @@ export class Element {
     return document.querySelector(selector);
   }
 
+  getAll(selector) {
+    return document.querySelectorAll(selector);
+  }
+
   getValueByString(selector) {
     return document.querySelector(selector).value;
   }
