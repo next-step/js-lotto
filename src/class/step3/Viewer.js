@@ -139,3 +139,34 @@ export default class Viewer {
     });
   }
 }
+
+export const printWinningNumberInputs = (length) => {
+  const winningNumberBox = document.querySelector("div.winning-number-box");
+
+  winningNumberBox.innerHTML = HTML_FORMAT.WINNING_NUMBER_INPUTS(length);
+};
+
+export const printPurchaseInfoAndPrizeInfo = (amount, tickets) => {
+  const purchaseSection = document.createElement("section");
+  const prizeInfoForm = document.querySelector("form.prize-info");
+  const lottoContainer = document.querySelector(".lotto-container");
+  const switchElement = document.querySelector(".switch-box");
+
+  purchaseSection.classList.add("mt-9", "purchase");
+  purchaseSection.innerHTML = HTML_FORMAT.PURCHASE_INFO(amount);
+  purchaseSection.innerHTML += HTML_FORMAT.LOTTO_BOX(tickets);
+
+  lottoContainer.insertBefore(purchaseSection, prizeInfoForm);
+
+  switchElement.addEventListener("change", () => {
+    const lottoBox = document.querySelector(".lotto-box");
+
+    if (lottoBox.classList.contains("d-flex")) {
+      lottoBox.classList.replace("d-flex", "d-none");
+    } else {
+      lottoBox.classList.replace("d-none", "d-flex");
+    }
+  });
+
+  prizeInfoForm.classList.remove("d-none");
+};

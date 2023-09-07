@@ -102,6 +102,10 @@ export default class LottoGame {
     return this.#purchaseInfo.amount;
   }
 
+  getTicketNumbersLength() {
+    return this.#ticketRules.length;
+  }
+
   getProfitRatio() {
     if (this.#purchaseInfo === undefined) {
       throw new Error("먼저 로또를 구매해야 합니다.");

@@ -48,6 +48,16 @@ const HTML_FORMAT = Object.freeze({
       Number.isInteger(profitPercent) ? profitPercent : profitPercent.toFixed(1)
     }%입니다.`;
   },
+  WINNING_NUMBER_INPUTS: (length) =>
+    `${Array.from(
+      { length },
+      (_, index) => `
+          <input
+            type="number"
+            class="winning-number mx-1 text-center"
+            data-index="${index}"
+          />`,
+    ).join("")}`,
 });
 
 export default HTML_FORMAT;
