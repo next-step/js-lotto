@@ -38,6 +38,13 @@ export class ViewWeb {
       this.#element.get(SELECTOR.LOTTO.WINNING_NUMBER_FORM),
       checkTicketsResult
     );
+
+    this.#lottoEvents.closeResultModal(
+      this.#element.get(SELECTOR.MODAL.PORTAL),
+      () => {
+        this.#closeModal();
+      }
+    );
   }
 
   /* Input */
@@ -107,5 +114,9 @@ export class ViewWeb {
       SELECTOR.MODAL.PORTAL,
       Modal(WinningPrize(ticketResults))
     );
+  }
+
+  #closeModal() {
+    this.#outputView.clear(SELECTOR.MODAL.PORTAL);
   }
 }

@@ -33,4 +33,10 @@ export class LottoEvents {
   openResultModal($winningLottoForm, checkTicketsResult) {
     this.#eventBinder.onSubmit($winningLottoForm, checkTicketsResult);
   }
+
+  closeResultModal($portal, closeModal) {
+    this.#eventBinder.onClick($portal, (event) => {
+      if (event.target.matches(SELECTOR.MODAL.CLOSE)) closeModal();
+    });
+  }
 }

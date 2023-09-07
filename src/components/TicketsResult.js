@@ -3,9 +3,9 @@ export const WinningPrize = (ticketResults) => {
 
   return `
     <div class="modal-inner p-10">
-      <div class="modal-close">
-        <svg viewbox="0 0 40 40">
-          <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
+      <div id="modal-close" class="modal-close">
+        <svg id="modal-close" viewbox="0 0 40 40">
+          <path id="modal-close" class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
         </svg>
       </div>
       <h2 class="text-center">🏆 당첨 통계 🏆</h2>

@@ -4,4 +4,10 @@ export const OutputViewWeb = {
 
     targetElement.innerHTML = children;
   },
+
+  clear(targetSelector) {
+    const targetElement = document.querySelector(targetSelector);
+
+    targetElement.innerHTML = null;
+  },
 };

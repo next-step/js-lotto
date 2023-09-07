@@ -17,6 +17,7 @@ const LOTTO = Object.freeze({
 const MODAL = Object.freeze({
   PORTAL: '#portal',
   CHECK_TICKETS_RESULT: '#check-tickets-result',
+  CLOSE: '#modal-close',
 });
 
 const PLAY_OPTION = Object.freeze({
