@@ -1,6 +1,4 @@
 .modal {
-  opacity: 0;
-  visibility: hidden;
   display: flex;
   position: fixed;
   top: 0;
@@ -10,11 +8,6 @@
   background: rgba(0, 0, 0, 0.5);
   transition: opacity 0.25s ease;
   z-index: 2;
-}
-
-.modal.open {
-  opacity: 1;
-  visibility: visible;
 }
 
 .modal-inner {

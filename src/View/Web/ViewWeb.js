@@ -6,6 +6,7 @@ import {
   TicketsNumbers,
   WinningNumberInput,
   WinningPrize,
+  Modal,
 } from '../../components';
 import { LottoEvents } from '../../Model';
 
@@ -102,6 +103,9 @@ export class ViewWeb {
   }
 
   renderTicketsResult(ticketResults) {
-    this.#outputView.render(SELECTOR.MODAL.PORTAL, WinningPrize(ticketResults));
+    this.#outputView.render(
+      SELECTOR.MODAL.PORTAL,
+      Modal(WinningPrize(ticketResults))
+    );
   }
 }
