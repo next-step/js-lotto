@@ -1,6 +1,6 @@
 const { RESULT_MESSAGE, LOTTO_PRICE } = require('../utils/constants.js')
 
-const PrintView = {
+const LottoView = {
     printResult(resultCounts, profitPercentage) {
         console.log(RESULT_MESSAGE.RESULT);
         console.log(RESULT_MESSAGE.LINE);
@@ -21,4 +21,4 @@ const PrintView = {
         this.printResult(prize, profitPercentage)
     },
 }
-module.exports = PrintView;
+module.exports = LottoView;
