@@ -31,14 +31,6 @@ export class LottoEvents {
   }
 
   openResultModal($winningLottoForm, checkTicketsResult) {
-    $winningLottoForm.addEventListener('click', (event) => {
-      if (event.target.matches(SELECTOR.MODAL.CHECK_TICKETS_RESULT)) {
-        const $openModalButton = document.querySelector(
-          SELECTOR.MODAL.CHECK_TICKETS_RESULT
-        );
-
-        this.#eventBinder.onClick($openModalButton, checkTicketsResult);
-      }
-    });
+    this.#eventBinder.onSubmit($winningLottoForm, checkTicketsResult);
   }
 }

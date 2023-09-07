@@ -22,7 +22,7 @@ export class ViewWeb {
   }
 
   bindEvent(events) {
-    const { getTickets, readWinningNumbers, checkTicketsResult } = events;
+    const { getTickets, checkTicketsResult } = events;
 
     this.#lottoEvents.purchaseLotto(
       this.#element.get(SELECTOR.TICKET.FORM),
@@ -31,11 +31,6 @@ export class ViewWeb {
 
     this.#lottoEvents.toggleTicketNumber(
       this.#element.get(SELECTOR.TICKET.PURCHASED)
-    );
-
-    this.#lottoEvents.submitWinningNumber(
-      this.#element.get(SELECTOR.LOTTO.WINNING_NUMBER_FORM),
-      readWinningNumbers
     );
 
     this.#lottoEvents.openResultModal(
@@ -59,7 +54,6 @@ export class ViewWeb {
     const lottoNumbers = await this.#readLottoNumbers();
     const bonusNumber = await this.#readBonusNumber(lottoNumbers);
 
-    console.log(lottoNumbers, bonusNumber);
     return { lottoNumbers, bonusNumber };
   }
 
