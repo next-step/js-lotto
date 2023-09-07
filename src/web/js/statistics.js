@@ -3,15 +3,38 @@ import {
   ERROR_WRONG_LOTTO_BONUS_MESSAGE,
 } from '../../constants/error.const.js';
 
-const runStatistics = (lotto, lottoStatistics, lottoAnswers, lottoBonus) => {
-  const $lottoAnswersForm = document.querySelector('.lotto-answers-form');
-  const $lottoAnswersInputs = document.querySelectorAll('.winning-number');
-  const $lottoAnswersBonusInput = document.querySelector('.bonus-number');
+const init = () => {
+  const $lottoAnswersInputsContainer = document.querySelector(
+    '#winning-number-container'
+  );
 
-  const $lottoStatisticsTableRows =
-    document.querySelectorAll('.lotto-statistics');
-  const $lottoProfitRate = document.querySelector('.lotto-profit-rate');
-  const $restartButton = document.querySelector('.restart-button');
+  Array(6)
+    .fill(null)
+    .forEach(() => {
+      const inputNumber = document.createElement('input');
+      inputNumber.dataset.winning = 'winning-number';
+      inputNumber.type = 'number';
+      inputNumber.classList.add('mx-1', 'text-center');
+      inputNumber.min = '1';
+      inputNumber.max = '45';
+      $lottoAnswersInputsContainer.appendChild(inputNumber);
+    });
+};
+
+const runStatistics = (lotto, lottoStatistics, lottoAnswers, lottoBonus) => {
+  init();
+
+  const $lottoAnswersForm = document.querySelector('#lotto-answers-form');
+  const $lottoAnswersInputs = document.querySelectorAll(
+    '[data-winning="winning-number"]'
+  );
+  const $lottoAnswersBonusInput = document.querySelector('#bonus-number');
+
+  const $lottoStatisticsTableRows = document.querySelectorAll(
+    '[data-statistics="lotto-statistics"]'
+  );
+  const $lottoProfitRate = document.querySelector('#lotto-profit-rate');
+  const $restartButton = document.querySelector('#restart-button');
 
   const $modal = document.querySelector('.modal');
 
