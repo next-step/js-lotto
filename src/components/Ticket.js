@@ -43,42 +43,42 @@ export const WinningNumberInput = `
           class="winning-number mx-1 text-center"        
           required
           min="1"
-          max="45"
+          max="43"
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"        
           required
           min="1"
-          max="45"
+          max="43"
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"        
           required
           min="1"
-          max="45"
+          max="43"
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"        
           required
           min="1"
-          max="45"
+          max="43"
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"        
           required
           min="1"
-          max="45"
+          max="43"
         />
         <input
           type="number"
           class="winning-number mx-1 text-center"        
           required
           min="1"
-          max="45"
+          max="43"
         />
       </div>
     </div>
