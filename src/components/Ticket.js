@@ -40,27 +40,45 @@ export const WinningNumberInput = `
       <div>
         <input
           type="number"
-          class="winning-number mx-1 text-center"
+          class="winning-number mx-1 text-center"        
+          required
+          min="1"
+          max="45"
         />
         <input
           type="number"
-          class="winning-number mx-1 text-center"
+          class="winning-number mx-1 text-center"        
+          required
+          min="1"
+          max="45"
         />
         <input
           type="number"
-          class="winning-number mx-1 text-center"
+          class="winning-number mx-1 text-center"        
+          required
+          min="1"
+          max="45"
         />
         <input
           type="number"
-          class="winning-number mx-1 text-center"
+          class="winning-number mx-1 text-center"        
+          required
+          min="1"
+          max="45"
         />
         <input
           type="number"
-          class="winning-number mx-1 text-center"
+          class="winning-number mx-1 text-center"        
+          required
+          min="1"
+          max="45"
         />
         <input
           type="number"
-          class="winning-number mx-1 text-center"
+          class="winning-number mx-1 text-center"        
+          required
+          min="1"
+          max="45"
         />
       </div>
     </div>
