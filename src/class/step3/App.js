@@ -2,8 +2,13 @@ import LottoGame from "../LottoGame";
 import { UserInputError } from "../Error";
 
 import {
+  closeResultModal,
+  openResultModal,
+  printPrizeInfo,
   printPurchaseInfoAndPrizeInfo,
   printWinningNumberInputs,
+  removePurchaseInfo,
+  resetPrizeInfo,
 } from "./Viewer";
 
 export default class App {
@@ -31,6 +36,7 @@ export default class App {
     try {
       const purchaseForm = document.querySelector("form.purchase");
       const prizeInfoForm = document.querySelector("form.prize-info");
+      const restartButton = document.querySelector("button.restart");
 
       purchaseForm.addEventListener("submit", (evt) => {
         evt.preventDefault();
@@ -74,6 +80,19 @@ export default class App {
         this.#lottoGame.setWinningNumbers(winningNumbers);
 
         this.#lottoGame.setBonusNumber(bonusNumber);
+
+        printPrizeInfo(
+          this.#lottoGame.getTotalPrize(),
+          this.#lottoGame.getProfitRatio(),
+        );
+
+        openResultModal();
+      });
+
+      restartButton.addEventListener("click", () => {
+        resetPrizeInfo();
+        removePurchaseInfo();
+        closeResultModal();
       });
     } catch (e) {
       this.#alertUserInputError(e);

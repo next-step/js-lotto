@@ -1,5 +1,5 @@
 import "./css/index.css";
 
-import Controller from "./class/step3/Controller";
+import App from "./class/step3/App";
 
-const controller = new Controller();
+new App();
