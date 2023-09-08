@@ -21,6 +21,9 @@ export class WebController {
 
   async #getTickets() {
     const purchaseAmount = await this.#view.readPurchaseAmount();
+
+    if (purchaseAmount === null) return;
+
     const tickets = this.#buyTickets(purchaseAmount);
 
     this.#renderTickets(tickets);
@@ -43,14 +46,14 @@ export class WebController {
 
   async #checkTicketsResult() {
     const tickets = this.#storage.get(KEY.TICKETS);
-    const winningNumbers = await this.#view.readWinningNumbers();
+    const { lottoNumbers, bonusNumber } = await this.#view.readWinningNumbers();
 
-    if (!winningNumbers) throw new Error('로또 번호를 먼저 입력해야합니다.');
+    if (lottoNumbers === null || bonusNumber === null) return;
 
-    const ticketResults = this.#lottoCorporation.checkTicketsResult(
-      tickets,
-      winningNumbers
-    );
+    const ticketResults = this.#lottoCorporation.checkTicketsResult(tickets, {
+      lottoNumbers,
+      bonusNumber,
+    });
 
     this.#renderTicketsResult(ticketResults);
   }

@@ -1,6 +1,6 @@
 import { OutputViewWeb, Element } from './';
 import { Validator } from '../../utils/Validator';
-import { MESSAGE, RESTART_INPUT, SELECTOR } from '../../constants';
+import { MESSAGE, NUMBER, SELECTOR } from '../../constants';
 import {
   TicketAmount,
   TicketsNumbers,
@@ -8,7 +8,7 @@ import {
   WinningPrize,
   Modal,
 } from '../../components';
-import { LottoEvents } from '../../Model';
+import { LottoEvents, WebErrorHandler } from '../../Model';
 
 export class ViewWeb {
   #element;
@@ -54,60 +54,80 @@ export class ViewWeb {
 
   /* Input */
   async readPurchaseAmount() {
-    const purchaseAmount = this.#element.getValueByInt(
-      SELECTOR.TICKET.PURCHASE_AMOUNT_INPUT
-    );
+    return WebErrorHandler.catcher(() => {
+      const purchaseAmount = this.#element.getValueByInt(
+        SELECTOR.TICKET.PURCHASE_AMOUNT_INPUT
+      );
 
-    if (isNaN(purchaseAmount)) throw new Error(MESSAGE.READ.PURCHASE_AMOUNT);
+      if (isNaN(purchaseAmount)) throw new Error(MESSAGE.READ.PURCHASE_AMOUNT);
+      if (Number(purchaseAmount) < NUMBER.DEFAULT_TICKET_PRICE)
+        throw new Error(MESSAGE.ERROR.INSUFFICIENT_PURCHASE_AMOUNT);
 
-    return purchaseAmount;
+      return purchaseAmount;
+    });
   }
 
   async readWinningNumbers() {
-    const lottoNumbers = await this.#readLottoNumbers();
-    const bonusNumber = await this.#readBonusNumber(lottoNumbers);
+    return WebErrorHandler.catcher(async () => {
+      const lottoNumbers = await this.#readLottoNumbers();
 
-    return { lottoNumbers, bonusNumber };
+      if (lottoNumbers === null)
+        return { lottoNumbers: null, bonusNumber: null };
+
+      const bonusNumber = await this.#readBonusNumber(lottoNumbers);
+
+      return { lottoNumbers, bonusNumber };
+    });
   }
 
   async #readLottoNumbers() {
-    const $lottoNumbers = this.#element.getAll(SELECTOR.LOTTO.WINNING_NUMBER);
-    const lottoNumbers = [...$lottoNumbers].map(({ value }) => value);
+    return WebErrorHandler.catcher(() => {
+      const $lottoNumbers = this.#element.getAll(SELECTOR.LOTTO.WINNING_NUMBER);
+      const lottoNumbers = [...$lottoNumbers].map(({ value }) => value);
 
-    this.#validator.readLottoNumbers(lottoNumbers);
+      this.#validator.readLottoNumbers(lottoNumbers);
 
-    return lottoNumbers.map(Number);
+      return lottoNumbers.map(Number);
+    });
   }
 
   async #readBonusNumber(lottoNumbers) {
-    const $bonusNumber = this.#element.get(SELECTOR.LOTTO.BONUS_NUMBER);
-    const bonusNumber = Number($bonusNumber.value);
+    return WebErrorHandler.catcher(() => {
+      const $bonusNumber = this.#element.get(SELECTOR.LOTTO.BONUS_NUMBER);
+      const bonusNumber = Number($bonusNumber.value);
 
-    this.#validator.readBonusNumber(bonusNumber, lottoNumbers);
+      this.#validator.readBonusNumber(bonusNumber, lottoNumbers);
 
-    return bonusNumber;
+      return bonusNumber;
+    });
   }
 
   /* Output */
   renderPurchasedTickets(tickets) {
-    const amount = tickets.length;
+    WebErrorHandler.catcher(() => {
+      const amount = tickets.length;
 
-    this.#outputView.render(SELECTOR.TICKET.AMOUNT, TicketAmount(amount));
-    this.#outputView.render(SELECTOR.TICKET.TICKETS, TicketsNumbers(tickets));
+      this.#outputView.render(SELECTOR.TICKET.AMOUNT, TicketAmount(amount));
+      this.#outputView.render(SELECTOR.TICKET.TICKETS, TicketsNumbers(tickets));
+    });
   }
 
   renderReadWinningNumbers() {
-    this.#outputView.render(
-      SELECTOR.LOTTO.WINNING_NUMBER_FORM,
-      WinningNumberInput
-    );
+    WebErrorHandler.catcher(() => {
+      this.#outputView.render(
+        SELECTOR.LOTTO.WINNING_NUMBER_FORM,
+        WinningNumberInput
+      );
+    });
   }
 
   renderTicketsResult(ticketResults) {
-    this.#outputView.render(
-      SELECTOR.MODAL.PORTAL,
-      Modal(WinningPrize(ticketResults))
-    );
+    WebErrorHandler.catcher(() => {
+      this.#outputView.render(
+        SELECTOR.MODAL.PORTAL,
+        Modal(WinningPrize(ticketResults))
+      );
+    });
   }
 
   closeModal() {
