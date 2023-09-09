@@ -1,16 +1,15 @@
-import { EMPTY_STRING, SELECTOR, STATE, CLASS } from '../../constants/index.js';
+import { CLASS, EMPTY_STRING, STATE } from '../../constants/index.js';
 
 export class BudgetForm {
-
-  constructor({app}) {
-    this.budgetForm = app.querySelector(SELECTOR.BUDGET_FORM);
+  constructor({ budget }) {
+    this.budgetForm = budget;
     this.render();
   }
 
   render() {
     const $input = this.budgetForm.querySelector('input');
     const $button = this.budgetForm.querySelector('button');
-    
+
     $input.disabled = STATE.FALSE;
     $button.disabled = STATE.TRUE;
     $input.value = EMPTY_STRING;
@@ -32,5 +31,4 @@ export class BudgetForm {
     $input.disabled = STATE.TRUE;
     $button.disabled = STATE.TRUE;
   }
-
 }

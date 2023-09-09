@@ -1,9 +1,8 @@
-import { EMPTY_STRING, SELECTOR, STATE, CLASS } from '../../constants/index.js';
+import { CLASS, EMPTY_STRING, STATE } from '../../constants/index.js';
 
 export class WinningForm {
-
-  constructor({app}) {
-    this.winningForm = app.querySelector(SELECTOR.WINNING_FORM);
+  constructor({ winning }) {
+    this.winningForm = winning;
     this.render();
   }
 
@@ -12,15 +11,15 @@ export class WinningForm {
     const $button = this.winningForm.querySelector('button');
 
     this.winningForm.classList.add(CLASS.HIDDEN);
-    $inputs.forEach(input => input.disabled = STATE.FALSE);
-    $inputs.forEach(input => input.value = EMPTY_STRING);
+    $inputs.forEach((input) => (input.disabled = STATE.FALSE));
+    $inputs.forEach((input) => (input.value = EMPTY_STRING));
     $button.disabled = STATE.TRUE;
   }
 
   disableInputs() {
     const $inputs = this.winningForm.querySelectorAll('input');
-    
-    $inputs.forEach(input => input.disabled = STATE.TRUE);
+
+    $inputs.forEach((input) => (input.disabled = STATE.TRUE));
   }
 
   showErrorMessage(message) {
@@ -40,5 +39,4 @@ export class WinningForm {
     this.winningForm.removeEventListener(type, removeFn);
     this.winningForm.addEventListener(type, addFn);
   }
-
 }

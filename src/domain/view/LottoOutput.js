@@ -1,17 +1,16 @@
-import { CLASS, EVENT as E, EMPTY_STRING, SELECTOR, STATE } from '../constants/index.js';
-
+import { SELECTOR } from '../constants/index.js';
 
 import { BudgetForm } from './components/BudgetForm.js';
-import { WinningForm } from './components/WinningForm.js';
 import { LottoSection } from './components/LottoSection.js';
 import { Modal } from './components/Modal.js';
+import { WinningForm } from './components/WinningForm.js';
 
 export class LottoOutput {
   constructor({ app }) {
-    this.budgetForm = new BudgetForm({app});
-    this.winningForm = new WinningForm({app});
-    this.lottoSection = new LottoSection({app});
-    this.modal = new Modal({app});
+    this.budgetForm = new BudgetForm({ budget: app.querySelector(SELECTOR.BUDGET_FORM) });
+    this.winningForm = new WinningForm({ winning: app.querySelector(SELECTOR.WINNING_FORM) });
+    this.lottoSection = new LottoSection({ lotto: app.querySelector(SELECTOR.LOTTO_SECTION) });
+    this.modal = new Modal({ modal: app.querySelector(SELECTOR.MODAL) });
     this.render();
   }
 
@@ -22,9 +21,9 @@ export class LottoOutput {
   }
 
   showErrorMessage(elementId, message) {
-    elementId === 'budget_input' 
-    ? this.budgetForm.showErrorMessage(message) 
-    : this.winningForm.showErrorMessage(message);
+    SELECTOR[elementId] === SELECTOR.BUDGET_INPUT
+      ? this.budgetForm.showErrorMessage(message)
+      : this.winningForm.showErrorMessage(message);
   }
 
   showLottos(lottos) {
@@ -39,12 +38,10 @@ export class LottoOutput {
 
   showResultModal(result, profitRate) {
     this.winningForm.disableInputs();
-    
     this.modal.showResult(result, profitRate);
   }
 
   toggleModal() {
     this.modal.toggleModal();
   }
-
 }

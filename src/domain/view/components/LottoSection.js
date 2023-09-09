@@ -2,8 +2,8 @@ import { EMPTY_STRING, SELECTOR, STATE, CLASS } from '../../constants/index.js';
 import { sortNumberArray } from '../../../util/index.js';
 
 export class LottoSection {
-  constructor({ app }) {
-    this.lottoSection = app.querySelector(SELECTOR.LOTTO_SECTION);
+  constructor({ lotto }) {
+    this.lottoSection = lotto;
     this.render();
   }
 

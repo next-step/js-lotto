@@ -1,16 +1,8 @@
-import { LOTTO_WINNIG_PRIZE, EMPTY_STRING, SELECTOR, STATE, CLASS } from '../../constants/index.js';
+import { CLASS, LOTTO_WINNIG_PRIZE, SELECTOR } from '../../constants/index.js';
 
 export class Modal {
-
-  constructor({app}) {
-    this.modal = app.querySelector(SELECTOR.MODAL);
-    this.render();
-  }
-
-  render() {
-    const $body = this.modal.querySelector(SELECTOR.MODAL_BODY);
-
-    $body.innerHTML = ``;
+  constructor({ modal }) {
+    this.modal = modal;
   }
 
   showResult(result, profitRate) {
@@ -24,8 +16,7 @@ export class Modal {
     this.modal.classList.toggle(CLASS.OPEN);
   }
 
-
-  resultModal = (result, profit) => 
+  resultModal = (result, profit) =>
     `
     <table class="result-table border-collapse border border-black">
       <thead>
