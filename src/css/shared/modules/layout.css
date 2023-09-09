@@ -50,6 +50,10 @@
   margin-right: 8px;
 }
 
+.ml-2 {
+  margin-left: 8px;
+}
+
 /* Box Alignment - Justify Content*/
 .justify-start {
   justify-content: flex-start;
