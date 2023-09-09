@@ -45,6 +45,7 @@ export const LottoApp = target => {
 
   const destroy = () => {
     lottoStore.dispatch(LOTTO_ACTIONS_TYPE.UPDATE_RETRY, { answer: 'y' })
+    lottoStore.destroy()
 
     Object.keys(children).forEach(key => children[key].destroy())
   }
