@@ -10,7 +10,7 @@ module.exports = {
   entry: ['./src/js/step3-index.js', './src/css/index.css'],
   output: {
     filename: 'step3-bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'docs')
   },
   resolve: {
     extensions: ['.js', '.mjs', '.css']
