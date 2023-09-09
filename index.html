@@ -11,7 +11,7 @@
       <div class="d-flex justify-center mt-5">
         <div class="w-100">
           <h1 class="text-center">🎱 행운의 로또</h1>
-          <form id="ticket-form" class="mt-5">
+          <form id="ticket-form" class="mt-5 test-ticket-form">
             <label class="mb-2 d-inline-block"
               >구입할 금액을 입력해주세요.
             </label>
@@ -19,18 +19,23 @@
               <input
                 id="purchase-amount-input"
                 type="number"
-                class="w-100 mr-2 pl-2"
+                class="w-100 mr-2 pl-2 test-purchase-input"
                 placeholder="구입 금액"
               />
-              <button type="submit" class="btn btn-cyan">확인</button>
+              <button type="submit" class="btn btn-cyan test-confirm-btn">
+                확인
+              </button>
             </div>
           </form>
-          <section id="purchased-tickets" class="mt-9">
-            <div id="ticket-amount"></div>
-            <div id="tickets" class="d-flex flex-wrap"></div>
+          <section id="purchased-tickets" class="mt-9 test-purchased-tickets">
+            <div id="ticket-amount" class="test-ticket-amount"></div>
+            <div id="tickets" class="d-flex flex-wrap test-tickets"></div>
           </section>
           <section>
-            <form id="winning-number-form" class="mt-9"></form>
+            <form
+              id="winning-number-form"
+              class="mt-9 test-winning-number-form"
+            ></form>
           </section>
         </div>
       </div>

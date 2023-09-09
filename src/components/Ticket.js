@@ -3,7 +3,7 @@ const concatContainer = (array, component) =>
   array.map((item) => component(item)).join('');
 
 const TicketNumber = (ticketNumber) => `
-  <span class="mx-1">${ticketNumber}</span>
+  <span class="mx-1 test-ticket-number">${ticketNumber}</span>
 `;
 
 const TicketNumbers = (ticket) => `
