@@ -21,6 +21,7 @@ export const LottoTicketList = target => {
       <div id="lotto-list" class="d-flex flex-wrap"></div>
     </div>
   `)
+  const ToggleButton = getEl('#lotto-numbers-toggle-button', Element)
   const LottoCountLabel = new LottoCountLabelComponent(Element)
   const LottoList = new LottoListComponent(Element, {
     isShowList
@@ -39,14 +40,12 @@ export const LottoTicketList = target => {
   return {
     update,
     render: () => {
-      const ToggleButton = getEl('#lotto-numbers-toggle-button', Element)
       ToggleButton.addEventListener('click', handleClickToggle)
 
       target.append(Element)
       update()
     },
     destroy: () => {
-      const ToggleButton = getEl('#lotto-numbers-toggle-button', Element)
       ToggleButton.removeEventListener('click', handleClickToggle)
     }
   }

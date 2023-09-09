@@ -20,6 +20,8 @@ export const OrderAmountField = target => {
       </div>
     </form>
   `)
+  const Input = getEl('input', Element)
+  const Button = getEl('button', Element)
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -31,9 +33,6 @@ export const OrderAmountField = target => {
   }
 
   const handleUpdatePayment = () => {
-    const Input = getEl('input', Element)
-    const Button = getEl('button', Element)
-
     lottoStore.dispatch(LOTTO_ACTIONS_TYPE.UPDATE_PAYMENT, {
       paymentText: payment(),
       onSuccess: () => {
@@ -48,9 +47,6 @@ export const OrderAmountField = target => {
 
   return {
     render: () => {
-      const Input = getEl('input', Element)
-      const Button = getEl('button', Element)
-
       Element.addEventListener('submit', handleSubmit)
       Input.addEventListener('keyup', handleChangePayment)
       Button.addEventListener('click', handleUpdatePayment)
@@ -58,9 +54,6 @@ export const OrderAmountField = target => {
       target.append(Element)
     },
     destroy: () => {
-      const Input = getEl('input', Element)
-      const Button = getEl('button', Element)
-
       Element.removeEventListener('submit', handleSubmit)
       Input.removeEventListener('keyup', handleChangePayment)
       Button.removeEventListener('click', handleUpdatePayment)

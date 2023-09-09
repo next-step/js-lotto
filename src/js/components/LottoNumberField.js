@@ -56,6 +56,7 @@ export const LottoNumberField = (target, { onOpenModal }) => {
       </button>
     </form>
   `)
+  const OpenResultButton = getEl('.open-result-modal-button', Element)
 
   const updateWinNumber = () => {
     const WinningNumberList = getAllEl('.winning-number', Element)
@@ -109,13 +110,11 @@ export const LottoNumberField = (target, { onOpenModal }) => {
 
   return {
     render: () => {
-      const OpenResultButton = getEl('.open-result-modal-button', Element)
       OpenResultButton.addEventListener('click', handleClickResultButton)
 
       target.append(Element)
     },
     destroy: () => {
-      const OpenResultButton = getEl('.open-result-modal-button', Element)
       OpenResultButton.removeEventListener('click', handleClickResultButton)
     }
   }
