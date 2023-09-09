@@ -4,8 +4,7 @@ import { getState } from '../utils/getState'
 
 export const LottoCountLabel = target => {
   const Element = () => {
-    const lottoState = getState(lottoStore)
-    const { lottoList } = lottoState
+    const { lottoList } = getState(lottoStore)
 
     return createEl(`
       <label id="lotto-count-label" class="flex-auto my-0">

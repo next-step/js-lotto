@@ -4,8 +4,7 @@ import { getState } from '../utils/getState'
 
 export const LottoList = (target, props) => {
   const Element = () => {
-    const lottoState = getState(lottoStore)
-    const { lottoList } = lottoState
+    const { lottoList } = getState(lottoStore)
     const { isShowList } = props
 
     return createEl(`
