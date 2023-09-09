@@ -3,7 +3,7 @@ import { Lotto } from "./Lotto";
 
 export class LottoRetailer {
   issues(money) {
-    const numberOfLottoCanBuy = parseInt(money / LOTTO_PRICE);
+    const numberOfLottoCanBuy = parseInt(money / LOTTO_PRICE, 10);
     const numberOfLottoToIssue =
       numberOfLottoCanBuy < MAX_SELL_QUANTITY_AT_ONCE
         ? numberOfLottoCanBuy

@@ -1,4 +1,5 @@
 import { MIN_WINNING_NUMBER, MAX_WINNING_NUMBER } from "../src/js/constants";
+import { WinningNumberError } from "../src/js/errors";
 import { LottoWinningNumber } from "../src/js/domain/LottoWinningNumber";
 
 const VALID_WINNING_NUMBER = [1, 2, 3, 4, 5, 6];
@@ -14,7 +15,9 @@ describe("Lotto winning numbers", () => {
   ])(
     "should throw an error when invalid winning numbers are given",
     (winningNumbers) => {
-      expect(() => new LottoWinningNumber(winningNumbers, 45)).toThrow();
+      expect(() => new LottoWinningNumber(winningNumbers, 45)).toThrow(
+        WinningNumberError
+      );
     }
   );
 

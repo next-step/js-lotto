@@ -10,19 +10,19 @@ export class Console {
 
   async #prompt(text) {
     console.log("\n");
-    return await this.#rl.question(text);
+    return this.#rl.question(text);
   }
 
   print(message) {
     console.log(message);
   }
 
-  async getUserInput(message, { parser }) {
+  async getUserInput(message, { parser, maxRetryCount = 10 }) {
     if (!parser) {
-      return await this.#prompt(message);
+      return this.#prompt(message);
     }
 
-    while (true) {
+    for (let retryCount = 0; retryCount < maxRetryCount; ++retryCount) {
       const userInputStr = await this.#prompt(message);
       try {
         const userInput = parser(userInputStr);
@@ -31,6 +31,8 @@ export class Console {
         this.print(`잘못된 입력입니다: ${error.message}`);
       }
     }
+
+    throw new Error("재입력 허용 횟수 초과");
   }
 
   close() {

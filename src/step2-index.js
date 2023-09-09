@@ -3,9 +3,7 @@ import { LottoRetailer } from "./js/domain/LottoRetailer";
 import { LottoWinningNumber } from "./js/domain/LottoWinningNumber";
 import { Console } from "./js/view/Console";
 
-(async function () {
-  const view = new Console();
-
+const play = async (view) => {
   const amount = await view.getUserInput("구입금액을 입력해 주세요: ", {
     parser: (inputStr) => {
       const amount = parseInt(inputStr, 10);
@@ -24,8 +22,7 @@ import { Console } from "./js/view/Console";
   view.print(`${lottoList.length}개를 구매하셨습니다. (거스름 돈: ${change})`);
 
   if (lottoList.length === 0) {
-    view.close();
-    return;
+    return 0;
   }
 
   lottoList.forEach((lotto) => view.print(`[${lotto.numbers.join(", ")}]`));
@@ -71,5 +68,26 @@ import { Console } from "./js/view/Console";
   );
   view.print(`6개 일치 (2,000,000,000원) - ${statistics.placeMap[1] ?? 0}개`);
   view.print(`총 수익률은 ${statistics.rateOfReturn.toFixed(2)}%입니다.`);
+
+  return 0;
+};
+
+(async function () {
+  const view = new Console();
+  let playAgain = false;
+  do {
+    if ((await play(view)) !== 0) {
+      break;
+    }
+
+    playAgain = await view.getUserInput("재시작 하시겠습니까? [Y/n]", {
+      parser: (inputStr) => {
+        if (inputStr === "" || ["y", "yes"].includes(inputStr.toLowerCase())) {
+          return true;
+        }
+        return false;
+      },
+    });
+  } while (playAgain);
   view.close();
 })();

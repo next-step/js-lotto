@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start-step1": "node --es-module-specifier-resolution=node src/step1-index.js",
+    "start-step2": "node --es-module-specifier-resolution=node src/step2-index.js",
     "test": "jest --watch"
   },
   "devDependencies": {

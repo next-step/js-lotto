@@ -89,7 +89,7 @@ describe("A lotto", () => {
   );
 });
 
-test("getStatistics", () => {
+test("getStatistics should get lists of Lotto and calculate statistics correctly", () => {
   const lottoList = TEST_LOTTO_NUMBERS_AND_EXPECTED_RESULT.map(
     ([lottoNumbers]) => new Lotto(lottoNumbers)
   );
@@ -106,8 +106,6 @@ test("getStatistics", () => {
   );
   expectedResult.rateOfReturn =
     (expectedResult.amountOfPrize / (lottoList.length * LOTTO_PRICE)) * 100;
-
-  console.log(expectedResult);
 
   const statistics = getStatistics(lottoList);
   expect(statistics.amountOfPrize).toEqual(expectedResult.amountOfPrize);
