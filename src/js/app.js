@@ -9,12 +9,12 @@ import { createSignal } from './utils/createSignal'
 
 export const LottoApp = target => {
   const [isOpenResultModal, setIsOpenResultModal] = createSignal(false)
-  const [components, setComponents] = createSignal({
+  let children = {
     OrderAmountField: null,
     LottoTicketList: null,
     LottoNumberField: null,
     ResultModal: null
-  })
+  }
 
   const template = `
     <div id="container" class="d-flex justify-center mt-5">
@@ -28,7 +28,7 @@ export const LottoApp = target => {
   `
 
   const handleIsOpenModal = isOpen => () => {
-    const { ResultModal } = components()
+    const { ResultModal } = children
 
     setIsOpenResultModal(isOpen)
     ResultModal.render()
@@ -46,7 +46,6 @@ export const LottoApp = target => {
   const destroy = () => {
     lottoStore.dispatch(LOTTO_ACTIONS_TYPE.UPDATE_RETRY, { answer: 'y' })
 
-    const children = components()
     Object.keys(children).forEach(key => children[key].destroy())
   }
 
@@ -69,12 +68,12 @@ export const LottoApp = target => {
       onClose: handleIsOpenModal(false)
     })
 
-    setComponents({
+    children = {
       OrderAmountField,
       LottoTicketList,
       LottoNumberField,
       ResultModal
-    })
+    }
 
     OrderAmountField.render()
     LottoTicketList.render()
