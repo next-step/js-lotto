@@ -1,5 +1,7 @@
 import { createEl, getEl } from './utils/dom'
 import { OrderAmountField as OrderAmountFieldComponent } from './components/OrderAmountField'
+import { LottoTicketList as LottoTicketListComponent } from './components/LottoTicketList'
+import { lottoStore } from './store/index'
 
 export const LottoApp = target => {
   const template = `
@@ -19,8 +21,14 @@ export const LottoApp = target => {
     const OrderAmountField = new OrderAmountFieldComponent(
       getEl('#order-amount-field-wrapper', Element)
     )
+    const LottoTicketList = new LottoTicketListComponent(
+      getEl('#lotto-ticket-list-wrapper', Element)
+    )
 
     OrderAmountField.render()
+    LottoTicketList.render()
+
+    lottoStore.subscribe(LottoTicketList.update)
     target.append(Element)
   }
 
