@@ -6,6 +6,7 @@ import { ResultModal as ResultModalComponent } from './components/ResultModal'
 import { lottoStore } from './store/index'
 import { LOTTO_ACTIONS_TYPE } from './constants/store'
 import { createSignal } from './utils/createSignal'
+import { debounce } from './utils/debounce'
 
 export const LottoApp = target => {
   const [isOpenResultModal, setIsOpenResultModal] = createSignal(false)
@@ -43,46 +44,51 @@ export const LottoApp = target => {
     render()
   }
 
+  const render = () => {
+    const Element = createEl(template)
+
+    children = {
+      OrderAmountField: new OrderAmountFieldComponent(
+        getEl('#order-amount-field-wrapper', Element)
+      ),
+      LottoTicketList: new LottoTicketListComponent(
+        getEl('#lotto-ticket-list-wrapper', Element)
+      ),
+      LottoNumberField: new LottoNumberFieldComponent(
+        getEl('#lotto-number-field-wrapper', Element),
+        { onOpenModal: handleIsOpenModal(true) }
+      ),
+      ResultModal: new ResultModalComponent(Element, {
+        isOpen: isOpenResultModal,
+        onReset: handleReset,
+        onClose: handleIsOpenModal(false)
+      })
+    }
+
+    lottoStore.subscribe(children.LottoTicketList.update)
+    lottoStore.subscribe(update)
+
+    children.OrderAmountField.render()
+    target.append(Element)
+  }
+
+  const update = debounce(({ lotto } = {}) => {
+    if (!lotto) {
+      return
+    }
+
+    const { LottoTicketList, LottoNumberField, ResultModal } = children
+
+    LottoTicketList.render()
+    LottoNumberField.render()
+    ResultModal.render()
+  })
+
   const destroy = () => {
     lottoStore.dispatch(LOTTO_ACTIONS_TYPE.UPDATE_RETRY, { answer: 'y' })
     lottoStore.destroy()
 
     Object.keys(children).forEach(key => children[key].destroy())
-  }
-
-  const render = () => {
-    const Element = createEl(template)
-
-    const OrderAmountField = new OrderAmountFieldComponent(
-      getEl('#order-amount-field-wrapper', Element)
-    )
-    const LottoTicketList = new LottoTicketListComponent(
-      getEl('#lotto-ticket-list-wrapper', Element)
-    )
-    const LottoNumberField = new LottoNumberFieldComponent(
-      getEl('#lotto-number-field-wrapper', Element),
-      { onOpenModal: handleIsOpenModal(true) }
-    )
-    const ResultModal = new ResultModalComponent(Element, {
-      isOpen: isOpenResultModal,
-      onReset: handleReset,
-      onClose: handleIsOpenModal(false)
-    })
-
-    children = {
-      OrderAmountField,
-      LottoTicketList,
-      LottoNumberField,
-      ResultModal
-    }
-
-    OrderAmountField.render()
-    LottoTicketList.render()
-    LottoNumberField.render()
-    ResultModal.render()
-
-    lottoStore.subscribe(LottoTicketList.update)
-    target.append(Element)
   }
 
   return {
