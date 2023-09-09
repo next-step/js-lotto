@@ -12,7 +12,7 @@ export class LottoClerk {
     this.output = new LottoOutput({ app });
   }
 
-  initState() {
+  initState = () => {
     this.budget = 0;
     this.lottos = [];
     this.winningNumber = Array.from({ length: 6 });
@@ -22,24 +22,41 @@ export class LottoClerk {
     this.machine = new Machine();
   }
 
-  bindEvent() {
+  bindEvent = () => {
     this.app.addEventListener(E.CLICK, (event) => this.onClick(event));
     this.app.addEventListener(E.SUBMIT, (event) => this.onSubmit(event));
     this.app.addEventListener(E.INPUT, (event) => this.onInput(event));
     this.app.addEventListener(E.CHANGE, (event) => this.onChange(event));
   }
 
-  onClick(event) {
-    let select;
-    select = event.target.dataset.testId;
+  extractDataFromEvent = (event) => {
+    const {
+      value: VALUE,
+      dataset: { testId, index },
+    } = event.target;
 
-    if (event.target.tagName === 'svg' || event.target.tagName === 'path') {
-      select = event.target.parentNode.dataset.testId;
-    }
+    if (testId === undefined) return {
+      ID: undefined,
+      INDEX : undefined,
+      VALUE : undefined
+    };
 
-    if (select === undefined) return;
+    const ID = testId.toUpperCase();
+    const INDEX = index === undefined ? undefined : Number(index);
 
-    switch (SELECTOR[select.toUpperCase()]) {
+    return {
+      ID,
+      INDEX,
+      VALUE,
+    };
+  };
+
+  onClick = (event) => {
+    const { ID } = this.extractDataFromEvent(event);
+
+    if (ID === undefined) return;
+
+    switch (SELECTOR[ID]) {
       case SELECTOR.BUDGET_BUTTON:
         this.onPurchaseLotto(event);
         break;
@@ -55,13 +72,13 @@ export class LottoClerk {
       default:
         break;
     }
-  }
+  };
 
-  onSubmit(event) {
-    const select = event.target.dataset.testId;
-    if (select === undefined) return;
+  onSubmit = (event) => {
+    const { ID } = this.extractDataFromEvent(event);
+    if (ID === undefined) return;
 
-    switch (SELECTOR[select.toUpperCase()]) {
+    switch (SELECTOR[ID]) {
       case SELECTOR.BUDGET_FORM:
         this.onPurchaseLotto(event);
         break;
@@ -73,26 +90,27 @@ export class LottoClerk {
     }
   }
 
-  onInput(event) {
-    const { testId, index } = event.target.dataset;
-    if (testId === undefined) return;
+  onInput = (event) => {
+    const { ID } = this.extractDataFromEvent(event);
+    if (ID === undefined) return;
 
-    switch (SELECTOR[testId.toUpperCase()]) {
+    switch (SELECTOR[ID]) {
       case SELECTOR.BUDGET_INPUT:
-        this.onChangeBudget(event.target);
+        this.onChangeBudget(event);
         break;
       case SELECTOR.WINNING_INPUT:
-        this.onChangeWinningNumber(event.target, Number(index));
+        this.onChangeWinningNumber(event);
         break;
       default:
         break;
     }
   }
 
-  onChange(event) {
-    const select = event.target.dataset.testId;
-    if (select === undefined) return;
-    switch (SELECTOR[select.toUpperCase()]) {
+  onChange = (event) => {
+    const { ID } = this.extractDataFromEvent(event);
+
+    if (ID === undefined) return;
+    switch (SELECTOR[ID]) {
       case SELECTOR.LOTTO_TOGGLE:
         this.output.toggleLotto(event.target.checked);
         break;
@@ -118,39 +136,36 @@ export class LottoClerk {
     });
   };
 
-  onChangeBudget = (target) => {
-    const {
-      value,
-      dataset: { testId },
-    } = target;
+  onChangeBudget = (event) => {
+    const { VALUE, ID } = this.extractDataFromEvent(event);
+
     try {
-      validateInputPrice(value);
-      this.output.showErrorMessage(testId, '');
+      validateInputPrice(VALUE);
+      this.output.showErrorMessage(ID, '');
     } catch (error) {
-      this.output.showErrorMessage(testId, error.message);
+      this.output.showErrorMessage(ID, error.message);
     } finally {
-      this.budget = Math.floor(value / LOTTO_PRICE) * LOTTO_PRICE;
-      this.customer.money = Math.floor(value / LOTTO_PRICE) * LOTTO_PRICE;
+      this.budget = Math.floor(VALUE / LOTTO_PRICE) * LOTTO_PRICE;
+      this.customer.money = Math.floor(VALUE / LOTTO_PRICE) * LOTTO_PRICE;
       this.lottoCount = this.budget / this.lottoPrice;
     }
   };
 
-  onChangeWinningNumber = (target, index) => {
-    const {
-      value,
-      dataset: { testId },
-    } = target;
-    index === 6 ? (this.bonusNumber = Number(value)) : (this.winningNumber[index] = Number(value));
+  onChangeWinningNumber = (event) => {
+    const { VALUE, INDEX, ID } = this.extractDataFromEvent(event);
+
+    INDEX === 6 ? (this.bonusNumber = Number(VALUE)) : (this.winningNumber[INDEX] = Number(VALUE));
 
     const isValid = this.winningNumber.every((num) => !isNaN(num)) && this.bonusNumber;
+
     if (!isValid) return;
 
     try {
       validateWinningNumber(this.winningNumber);
       validateBonusNumer(this.winningNumber, this.bonusNumber);
-      this.output.showErrorMessage(testId, '');
+      this.output.showErrorMessage(ID, '');
     } catch (error) {
-      this.output.showErrorMessage(testId, error.message);
+      this.output.showErrorMessage(ID, error.message);
     }
   };
 
