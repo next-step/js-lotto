@@ -21,8 +21,7 @@ class LottoCalculator {
   }
 
   calculateWinningReturnRate(totalCost, totalPrize) {
-    const returnRate = (totalPrize / totalCost) * 100;
-    return returnRate;
+    return (totalPrize / totalCost) * 100;
   }
 }
 

@@ -12,17 +12,14 @@ class LottoOrganizer {
   }
 
   #getWinningDetails(matchLottoNumberCount, matchBonusNumberCount) {
-    const matcherMap = new Map(Object.entries(LOTTO_MATCH_COUNT));
-    let rank = 'OTHERS';
+    const matcherArray = Array.from(Object.entries(LOTTO_MATCH_COUNT));
 
-    matcherMap.forEach((value, key) => {
+    const rank = matcherArray.find(([, value]) => {
       const { BASE_NUMBER, BONUS_NUMBER } = value;
-      if (matchLottoNumberCount === BASE_NUMBER && matchBonusNumberCount === BONUS_NUMBER) {
-        rank = key;
-      }
+      return matchLottoNumberCount === BASE_NUMBER && matchBonusNumberCount === BONUS_NUMBER;
     });
 
-    return rank;
+    return rank ? rank[0] : 'OTHERS';
   }
 
   getWinningReturnRate(lottoTickets) {
@@ -46,7 +43,7 @@ class LottoOrganizer {
         rank,
         prize
       });
-    }, this);
+    });
   }
 }
 

@@ -15,23 +15,39 @@ class LottoTicket {
   #mode = LOTTO_MODE.MANUAL;
 
   constructor(mode, lottoNumber = '') {
-    LottoTicket.validateLottoMode(mode);
-    LottoTicket.validateLottoNumber(mode, lottoNumber);
+    this.#validateLottoMode(mode);
+    this.#validateLottoNumber(mode, lottoNumber);
 
     this.#mode = mode;
     this.#lottoNumber =
       mode === LOTTO_MODE.AUTO
-        ? this.#generateLottoNumber()
+        ? LottoTicket.createLottoNumber()
         : convertStringToNumber(lottoNumber, LOTTO_NUMBER_SEPARATOR);
   }
 
-  static validateLottoMode(mode) {
+  static createLottoNumber() {
+    return shuffleArray(LOTTO_BALLS).slice(0, LOTTO_NUMBER_LENGTH);
+  }
+
+  get mode() {
+    return this.#mode;
+  }
+
+  get lottoNumber() {
+    return this.#lottoNumber;
+  }
+
+  get result() {
+    return this.#result;
+  }
+
+  #validateLottoMode(mode) {
     if (mode !== LOTTO_MODE.AUTO && mode !== LOTTO_MODE.MANUAL) {
       throw ERROR_MESSAGE.INVALID_LOTTO_MODE;
     }
   }
 
-  static validateLottoNumber(mode, lottoNumber) {
+  #validateLottoNumber(mode, lottoNumber) {
     if (mode === LOTTO_MODE.MANUAL) {
       if (!lottoNumber || !lottoNumber.length) {
         throw ERROR_MESSAGE.INVALID_LOTTO_NUMBER_BY_NOT_EXIST;
@@ -56,22 +72,6 @@ class LottoTicket {
         throw ERROR_MESSAGE.INVALID_LOTTO_NUMBER_BY_DUPLICATE;
       }
     }
-  }
-
-  get mode() {
-    return this.#mode;
-  }
-
-  get lottoNumber() {
-    return this.#lottoNumber;
-  }
-
-  get result() {
-    return this.#result;
-  }
-
-  #generateLottoNumber() {
-    return shuffleArray(LOTTO_BALLS).slice(0, LOTTO_NUMBER_LENGTH);
   }
 
   setResult(result) {

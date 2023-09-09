@@ -3,7 +3,9 @@ import {
   LOTTO_MIN_NUMBER,
   LOTTO_MAX_NUMBER,
   LOTTO_PRICE,
-  LOTTO_NUMBER_LENGTH
+  LOTTO_NUMBER_LENGTH,
+  APP_EXIT_KEY,
+  APP_RETRY_KEY
 } from './configure';
 
 export const ERROR_MARKER = '[⛔️ERROR]';
@@ -12,14 +14,17 @@ export const ALERT_MESSAGE = Object.freeze({
   QUESTION_PURCHASE_AMOUNT: '구입 금액을 입력해주세요.',
   QUESTION_LOTTO_NUMBER: '당첨 번호를 입력해주세요.',
   QUESTION_BONUS_NUMBER: '보너스 번호를 입력해주세요.',
-  STATISTICS_TITLE_MESSAGE: '당첨 통계'
+  STATISTICS_TITLE_MESSAGE: '당첨 통계',
+  RETRY_MESSAGE: `다시 시작하시겠습니까? (${APP_RETRY_KEY}/${APP_EXIT_KEY})`
 });
 
 export const ERROR_MESSAGE = Object.freeze({
-  NOT_RECEIVED_AMOUNT: '로또 구입 금액을 입력해주세요.',
-  NOT_RECEIVED_LOTTO_NUMBER: '로또 번호를 입력해주세요.',
-  NOT_RECEIVED_BONUS_NUMBER: '보너스 번호를 입력해주세요.',
+  ERROR_CODE: '로또 구입 금액을 입력해주세요.',
+  NOT_RECEIVED_AMOUNT: '구입 금액을 입력하지 않았습니다.',
+  NOT_RECEIVED_LOTTO_NUMBER: '로또 번호를 입력하지 않았습니다.',
+  NOT_RECEIVED_BONUS_NUMBER: '보너스 번호를 입력하지 않았습니다.',
   NOT_ENOUGH_AMOUNT: `최소 로또 구입 금액이 부족합니다. 최소 금액은 ${LOTTO_PRICE}원입니다.`,
+  INVALID_APP_RETRY_KEY: `다시 시작하려면 ${APP_RETRY_KEY}를 입력해주시고, 종료하려면 ${APP_EXIT_KEY}를 입력해주세요.`,
   INVALID_LOTTO_MODE: '올바른 로또 방식이 아닙니다.',
   INVALID_LOTTO_NUMBER_BY_NOT_EXIST: '로또 번호가 존재하지 않습니다.',
   INVALID_AMOUNT_BY_NOT_POSITIVE_AMOUNT: '로또 구입 금액은 양의 정수만 입력 가능합니다.',
