@@ -1,3 +1,5 @@
+export const LOTTO_WIN_NUMBER_LENGTH = 6
+
 export const DEFAULT_PRICE = 1000
 
 export const LOTTO_RANK = {

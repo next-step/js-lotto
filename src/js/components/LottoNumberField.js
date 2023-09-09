@@ -1,6 +1,7 @@
+import { LOTTO_WIN_NUMBER_LENGTH } from '../constants/lotto'
 import { LOTTO_ACTIONS_TYPE } from '../constants/store'
-import { createSignal } from '../utils/createSignal'
 import { lottoStore } from '../store'
+import { createSignal } from '../utils/createSignal'
 import { createEl, getAllEl, getEl } from '../utils/dom'
 
 export const LottoNumberField = (target, { onOpenModal }) => {
@@ -15,30 +16,16 @@ export const LottoNumberField = (target, { onOpenModal }) => {
         <div>
           <h4 class="mt-0 mb-3 text-center">당첨 번호</h4>
           <div>
-            <input
-              type="number"
-              class="winning-number mx-1 text-center"
-            />
-            <input
-              type="number"
-              class="winning-number mx-1 text-center"
-            />
-            <input
-              type="number"
-              class="winning-number mx-1 text-center"
-            />
-            <input
-              type="number"
-              class="winning-number mx-1 text-center"
-            />
-            <input
-              type="number"
-              class="winning-number mx-1 text-center"
-            />
-            <input
-              type="number"
-              class="winning-number mx-1 text-center"
-            />
+            ${Array.from({ length: LOTTO_WIN_NUMBER_LENGTH })
+              .map(
+                () => `
+                <input
+                  type="number"
+                  class="winning-number mx-1 text-center"
+                />
+              `
+              )
+              .join('')}
           </div>
         </div>
         <div class="bonus-number-container flex-grow">
