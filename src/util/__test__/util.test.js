@@ -8,7 +8,6 @@ describe('util functions test', () => {
 
     //then
     expect(getProfitRate(MONEY, TOTAL)).toEqual('100.0');
-    // console.log(profitRateCalculator(MONEY, TOTAL))
   });
 
   test('SortArray util', () => {

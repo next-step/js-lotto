@@ -1,6 +1,22 @@
-import { LOTTO_WINNIG_PRIZE } from '../../constants/index.js';
+import { CLASS, LOTTO_WINNIG_PRIZE, SELECTOR } from '../../constants/index.js';
 
-export const ResultModal = (result, profit) => 
+export class Modal {
+  constructor({ modal }) {
+    this.modal = modal;
+  }
+
+  showResult(result, profitRate) {
+    const $body = this.modal.querySelector(SELECTOR.MODAL_BODY);
+
+    $body.innerHTML = this.resultModal(result, profitRate);
+    this.toggleModal();
+  }
+
+  toggleModal() {
+    this.modal.classList.toggle(CLASS.OPEN);
+  }
+
+  resultModal = (result, profit) =>
     `
     <table class="result-table border-collapse border border-black">
       <thead>
@@ -40,3 +56,4 @@ export const ResultModal = (result, profit) =>
     </table>
     </div>
     <p class="text-center font-bold">당신의 총 수익률은 ${profit}%입니다.</p>`;
+}
