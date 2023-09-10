@@ -14,24 +14,13 @@
 // 콘솔 기반에서 쓰이도록 override
 // 웹 기반에서 쓰이도록 override
 // 컨트롤러는 외부에서 view 를 주입받도록 만들어서 유연성을 업!
-class AbstractLottoGameView {
-  async getPurchaseAmount() {
-    throw new Error('This method must be overridden')
-  }
 
-  async getLottoWinningNumbers() {
-    throw new Error('This method must be overridden')
-  }
+import LottoGameController from './js/ui/LottoGameController.js'
+import LottoGameViewWeb from './js/ui/LottoGameViewWeb.js'
 
-  async getExtraNumber() {
-    throw new Error('This method must be overridden')
-  }
-
-  async getRestart() {
-    throw new Error('This method must be overridden')
-  }
-
-  print(message) {
-    throw new Error('This method must be overridden')
-  }
+const main = () => {
+  const view = new LottoGameViewWeb()
+  new LottoGameController(view).run()
 }
+
+main()

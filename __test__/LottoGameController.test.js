@@ -5,7 +5,7 @@ const PURCHASE_AMOUNT = 3000
 const SELECTED_NUMS = '1,2,3,4,5,6'
 const EXTRA_NUM = '7'
 
-jest.mock('../src/js/ui/LottoGameView', () => {
+jest.mock('../src/js/ui/LottoGameViewConsole', () => {
   return jest.fn().mockImplementation(() => {
     return {
       getPurchaseAmount: async () => PURCHASE_AMOUNT,

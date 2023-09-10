@@ -13,7 +13,7 @@ body {
   margin: 0 auto;
 }
 
-.winning-number {
+.selected-number {
   width: 30px;
   height: 36px;
 }
