@@ -73,3 +73,11 @@ export const handleRestartButtonClick = (lottoGame) => {
   closeResultModal();
   lottoGame.reset();
 };
+
+export const handleClickModalDimmedArea = (evt) => {
+  const modalInner = document.querySelector(".modal-inner");
+
+  if (!modalInner.contains(evt.target)) {
+    closeResultModal();
+  }
+};

@@ -1,17 +1,11 @@
 import HTML_FORMAT from "./HtmlFormat";
 
+import { handleClickModalDimmedArea } from "./EventListener";
+
 export const printWinningNumberInputs = (length) => {
   const winningNumberBox = document.querySelector("div.winning-number-box");
 
   winningNumberBox.innerHTML = HTML_FORMAT.WINNING_NUMBER_INPUTS(length);
-};
-
-const handleClickModalDimmedArea = (event) => {
-  const modalInner = document.querySelector(".modal-inner");
-
-  if (!modalInner.contains(event.target)) {
-    closeResultModal();
-  }
 };
 
 export const openResultModal = () => {
