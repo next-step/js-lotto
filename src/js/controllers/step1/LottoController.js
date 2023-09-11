@@ -45,7 +45,6 @@ class LottoController {
     this.#readline = readline;
     this.#consoleInput = new ConsoleInput(readline);
     this.#consoleOutput = new ConsoleOutput();
-    // this.#startLotto();
   }
 
   validateMoney(money) {
