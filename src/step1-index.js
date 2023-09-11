@@ -6,4 +6,5 @@ const readline = createInterface({
   output: process.stdout,
 });
 
-new LottoController(readline);
+const lottoController = new LottoController(readline);
+lottoController.startLotto();

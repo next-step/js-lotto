@@ -45,7 +45,7 @@ class LottoController {
     this.#readline = readline;
     this.#consoleInput = new ConsoleInput(readline);
     this.#consoleOutput = new ConsoleOutput();
-    this.#startLotto();
+    // this.#startLotto();
   }
 
   validateMoney(money) {
@@ -103,7 +103,7 @@ class LottoController {
   }
 
   async #makeLotto(money) {
-    const lottoTickets = this.#issueLottoTickets(money);
+    const lottoTickets = this.issueLottoTickets(money);
     this.#consoleOutput.printLottoTickets(lottoTickets);
 
     const { winningNumbers, bonusNumber } = await this.#readNumbers();
@@ -138,13 +138,13 @@ class LottoController {
     return { winningNumbers, bonusNumber };
   }
 
-  #issueLottoTickets(money) {
+  issueLottoTickets(money) {
     const NumberOfLotto = Math.floor(money / LottoTicket.price);
 
-    return Array.from({ length: NumberOfLotto }, () => new LottoTicket(this.#drawLottoNumbers()));
+    return Array.from({ length: NumberOfLotto }, () => new LottoTicket(this.drawLottoNumbers()));
   }
 
-  #drawLottoNumbers() {
+  drawLottoNumbers() {
     const numbers = [];
 
     while (numbers.length < 6) {
