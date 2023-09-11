@@ -162,7 +162,7 @@ class LottoController {
 
     count.winningCount = this.countWinningNumbers(lottoNumbers, winningNumbers);
 
-    if (lottoNumbers.indexOf(bonusNumber) !== -1) count.winBonus = true;
+    if (lottoNumbers.includes(bonusNumber)) count.winBonus = true;
 
     return count;
   }
