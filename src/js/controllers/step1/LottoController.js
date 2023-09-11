@@ -1,9 +1,12 @@
+import { LOTTO_MAX_NUM, LOTTO_MIN_NUM, LOTTO_TICKET_PRICE } from "../../constants.js";
 import LottoTicket from "../../models/LottoTicket.js";
 import ConsoleInput from "../../views/step1/ConsoleInput.js";
+import ConsoleOutput from "../../views/step1/ConsoleOutput.js";
 
 class LottoController {
   #readline;
   #consoleInput;
+  #consoleOutput;
   #money;
   #winningCriteria = [
     {
@@ -41,6 +44,8 @@ class LottoController {
   constructor(readline) {
     this.#readline = readline;
     this.#consoleInput = new ConsoleInput(readline);
+    this.#consoleOutput = new ConsoleOutput();
+    this.#startLotto();
   }
 
   validateMoney(money) {
@@ -49,18 +54,19 @@ class LottoController {
     }
 
     if (money < 1000) {
-      throw new Error("금액은 1000원 이상이어야 합니다.");
+      throw new Error(`금액은 ${LOTTO_TICKET_PRICE}원 이상이어야 합니다.`);
     }
 
     if (money % 1000 > 0) {
-      throw new Error("금액은 1000원 단위여야 합니다.");
+      throw new Error(`금액은 ${LOTTO_TICKET_PRICE}원 단위여야 합니다.`);
     }
   }
 
   validateNumber(number) {
     if (isNaN(number)) throw new Error("번호는 숫자 타입이어야 합니다.");
 
-    if (number < 1 || number > 45) throw new Error("번호는 1 이상 45 이하 숫자여야 합니다.");
+    if (number < LOTTO_MIN_NUM || number > LOTTO_MAX_NUM)
+      throw new Error(`번호는 ${LOTTO_MIN_NUM} 이상 ${LOTTO_MAX_NUM} 이하 숫자여야 합니다.`);
   }
 
   validateWinningNumbers(winningNumbers) {
@@ -82,27 +88,45 @@ class LottoController {
       throw new Error("보너스 번호는 당첨 번호와 중복되면 안됩니다.");
   }
 
-  async startLotto() {
-    const money = await this.readMoney();
+  async #startLotto() {
+    const money = await this.#readMoney();
     this.#money = money;
-    const lottoTickets = this.issueLottoTickets(money);
+    await this.#makeLotto(money);
+    const earns = this.#calculateEarns();
 
-    this.printLottoTickets(lottoTickets);
-
-    const { winningNumbers, bonusNumber } = await this.readNumbers();
-    this.printWinningStatistics({ lottoTickets, winningNumbers, bonusNumber });
+    this.#consoleOutput.printWinningStatistics({
+      earns,
+      winningCriteria: this.#winningCriteria,
+    });
 
     this.#readline.close();
   }
 
-  async readMoney() {
+  async #makeLotto(money) {
+    const lottoTickets = this.#issueLottoTickets(money);
+    this.#consoleOutput.printLottoTickets(lottoTickets);
+
+    const { winningNumbers, bonusNumber } = await this.#readNumbers();
+
+    this.#produceStatistics({ lottoTickets, winningNumbers, bonusNumber });
+  }
+
+  #produceStatistics({ lottoTickets, winningNumbers, bonusNumber }) {
+    lottoTickets.forEach((lottoTicket) => {
+      const lottoNumbers = lottoTicket.getLottoNumbers();
+
+      this.#exportStatistics({ lottoNumbers, winningNumbers, bonusNumber });
+    });
+  }
+
+  async #readMoney() {
     const money = await this.#consoleInput.readline("구입금액을 입력해 주세요.");
     this.validateMoney(money);
 
     return Number(money);
   }
 
-  async readNumbers() {
+  async #readNumbers() {
     const winningNumbersStr = await this.#consoleInput.readline("당첨 번호를 입력해주세요.");
 
     const winningNumbers = winningNumbersStr.split(",").map(Number);
@@ -114,93 +138,67 @@ class LottoController {
     return { winningNumbers, bonusNumber };
   }
 
-  issueLottoTickets(money) {
+  #issueLottoTickets(money) {
     const NumberOfLotto = Math.floor(money / LottoTicket.price);
-    
-    return Array.from({ length: NumberOfLotto }, () => new LottoTicket(this.drawLottoNumbers()));
+
+    return Array.from({ length: NumberOfLotto }, () => new LottoTicket(this.#drawLottoNumbers()));
   }
 
-  drawLottoNumbers() {
+  #drawLottoNumbers() {
     const numbers = [];
 
     while (numbers.length < 6) {
-      const randomNumber = Math.floor(Math.random() * 45) + 1;
+      const randomNumber = Math.floor(Math.random() * LOTTO_MAX_NUM) + 1;
       if (numbers.indexOf(randomNumber) === -1) numbers.push(randomNumber);
     }
 
     return numbers.sort((a, b) => a - b);
   }
 
-  exportStatistics({ lottoNumbers, winningNumbers, bonusNumber }) {
-    const count = this.countMatchNumbers({
-      lottoNumbers,
-      winningNumbers,
-      bonusNumber,
-    });
+  #exportStatistics({ lottoNumbers, winningNumbers, bonusNumber }) {
+    const count = this.#countMatchNumbers({ lottoNumbers, winningNumbers, bonusNumber });
 
     this.#winningCriteria.forEach((criteria) => {
-      if (
-        criteria.winningCount === count.winningCount &&
-        (count.winBonus || !criteria.hasToWinBonus)
-      )
-        criteria.numOfWinTicket++;
+      this.#checkWin(criteria, count);
     });
   }
 
-  countMatchNumbers({ lottoNumbers, winningNumbers, bonusNumber }) {
+  #checkWin(criteria, count) {
+    if (
+      criteria.winningCount === count.winningCount &&
+      (count.winBonus || !criteria.hasToWinBonus)
+    ) {
+      criteria.numOfWinTicket++;
+      this.#processDuplicateWin(criteria, count);
+    }
+  }
+
+  #processDuplicateWin(criteria, count) {
+    if (!criteria.hasToWinBonus && criteria.winningCount === 5 && count.winBonus) {
+      criteria.numOfWinTicket--;
+    }
+  }
+
+  #countMatchNumbers({ lottoNumbers, winningNumbers, bonusNumber }) {
     const count = {
       winningCount: 0,
       winBonus: false,
     };
 
-    count.winningCount = this.countWinningNumbers(lottoNumbers, winningNumbers);
+    count.winningCount = this.#countWinningNumbers(lottoNumbers, winningNumbers);
 
     if (lottoNumbers.includes(bonusNumber)) count.winBonus = true;
 
     return count;
   }
 
-  countWinningNumbers(lottoNumbers, winningNumbers) {
-    const winningCount = lottoNumbers.reduce((sum, number) => {
-      if (winningNumbers.indexOf(number) !== -1) return sum + 1;
-      return sum;
-    }, 0);
+  #countWinningNumbers(lottoNumbers, winningNumbers) {
+    const winningCount = lottoNumbers.filter((number) => winningNumbers.includes(number)).length;
 
     return winningCount;
   }
 
-  printWinningStatistics({ lottoTickets, winningNumbers, bonusNumber }) {
-    console.log("\n당첨 통계\n--------------------");
-    lottoTickets.forEach((lottoTicket) => {
-      const lottoNumbers = lottoTicket.getLottoNumbers();
-
-      this.exportStatistics({ lottoNumbers, winningNumbers, bonusNumber });
-    });
-
-    this.printMatches();
-
-    console.log(`총 수익률은 ${this.calculateEarns()}% 입니다.`);
-  }
-
-  printMatches() {
-    this.#winningCriteria.forEach((criteria) => {
-      console.log(
-        `${criteria.winningCount}개 일치${criteria.hasToWinBonus ? ", 보너스 볼 일치" : ""} (${
-          criteria.winningAmount
-        }원) - ${criteria.numOfWinTicket}개`
-      );
-    });
-  }
-
-  printLottoTickets(lottoTickets) {
-    console.log(`${lottoTickets.length}개를 구매했습니다.`);
-
-    lottoTickets.forEach((lottoTicket) => {
-      console.log(lottoTicket.getLottoNumbers());
-    });
-  }
-
-  calculateEarns() {
+  #calculateEarns() {
     const amounts = this.#winningCriteria.reduce((sum, criteria) => {
       return sum + criteria.numOfWinTicket * criteria.winningAmount;
     }, 0);
