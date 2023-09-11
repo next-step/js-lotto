@@ -117,14 +117,9 @@ class LottoController {
   }
 
   issueLottoTickets(money) {
-    const lottoTickets = [];
     const NumberOfLotto = Math.floor(money / LottoTicket.price);
-
-    for (let i = 0; i < NumberOfLotto; i++) {
-      lottoTickets.push(new LottoTicket(this.drawLottoNumbers()));
-    }
-
-    return lottoTickets;
+    
+    return Array.from({ length: NumberOfLotto }, () => new LottoTicket(this.drawLottoNumbers()));
   }
 
   drawLottoNumbers() {
