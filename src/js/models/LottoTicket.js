@@ -1,5 +1,5 @@
 class LottoTicket {
-  static price = 1000;
+  static price = LOTTO_TICKET_PRICE;
   #lottoNumbers;
 
   constructor(lottoNumbers) {
