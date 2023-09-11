@@ -64,9 +64,7 @@ class LottoController {
   }
 
   validateWinningNumbers(winningNumbers) {
-    winningNumbers.forEach((number) => {
-      this.validateNumber(number);
-    });
+    winningNumbers.forEach(this.validateNumber);
 
     if (winningNumbers.length !== 6) {
       throw new Error("당첨 번호는 6개의 숫자여야 합니다.");
