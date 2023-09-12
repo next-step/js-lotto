@@ -1,17 +1,21 @@
+import { MATCH_MESSAGE } from "../../constants.js";
+
 class ConsoleOutput {
-  printWinningStatistics({ earns, winningCriteria }) {
+  printWinningStatistics({ earns, winningCriteria, lottoTickets }) {
     console.log("\n당첨 통계\n--------------------");
-    this.printMatches(winningCriteria);
+    this.printMatches(winningCriteria, lottoTickets);
     console.log(`총 수익률은 ${earns}% 입니다.`);
   }
 
-  printMatches(winningCriteria) {
-    winningCriteria.forEach((criteria) => {
-      console.log(
-        `${criteria.winningCount}개 일치${criteria.hasToWinBonus ? ", 보너스 볼 일치" : ""} (${
-          criteria.winningAmount
-        }원) - ${criteria.numOfWinTicket}개`
-      );
+  printMatches(winningCriteria, lottoTickets) {
+    const countOfWins = new Array(5).fill(0);
+    lottoTickets.forEach((lottoTicket) => {
+      let placeIdx = lottoTicket.getPlaceIdx();
+      if (placeIdx !== null) countOfWins[placeIdx]++;
+    });
+
+    winningCriteria.forEach((criteria, idx) => {
+      console.log(MATCH_MESSAGE(criteria, countOfWins[idx]));
     });
   }
 

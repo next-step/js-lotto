@@ -13,31 +13,26 @@ class LottoController {
       winningCount: 3,
       hasToWinBonus: false,
       winningAmount: 5_000,
-      numOfWinTicket: 0,
     },
     {
       winningCount: 4,
       hasToWinBonus: false,
       winningAmount: 50_000,
-      numOfWinTicket: 0,
     },
     {
       winningCount: 5,
       hasToWinBonus: false,
       winningAmount: 1_500_000,
-      numOfWinTicket: 0,
     },
     {
       winningCount: 5,
       hasToWinBonus: true,
       winningAmount: 30_000_000,
-      numOfWinTicket: 0,
     },
     {
       winningCount: 6,
       hasToWinBonus: false,
       winningAmount: 2_000_000_000,
-      numOfWinTicket: 0,
     },
   ];
 
@@ -90,12 +85,13 @@ class LottoController {
   async startLotto() {
     const money = await this.#readMoney();
     this.#money = money;
-    await this.#makeLotto(money);
-    const earns = this.#calculateEarns();
+    const lottoTickets = await this.#makeLotto(money);
+    const earns = this.#calculateEarns(lottoTickets);
 
     this.#consoleOutput.printWinningStatistics({
       earns,
       winningCriteria: this.#winningCriteria,
+      lottoTickets,
     });
 
     this.#readline.close();
@@ -108,13 +104,15 @@ class LottoController {
     const { winningNumbers, bonusNumber } = await this.#readNumbers();
 
     this.#produceStatistics({ lottoTickets, winningNumbers, bonusNumber });
+
+    return lottoTickets;
   }
 
   #produceStatistics({ lottoTickets, winningNumbers, bonusNumber }) {
     lottoTickets.forEach((lottoTicket) => {
       const lottoNumbers = lottoTicket.getLottoNumbers();
 
-      this.#exportStatistics({ lottoNumbers, winningNumbers, bonusNumber });
+      this.#exportStatistics({ lottoTicket, winningNumbers, bonusNumber });
     });
   }
 
@@ -154,27 +152,33 @@ class LottoController {
     return numbers.sort((a, b) => a - b);
   }
 
-  #exportStatistics({ lottoNumbers, winningNumbers, bonusNumber }) {
-    const count = this.#countMatchNumbers({ lottoNumbers, winningNumbers, bonusNumber });
+  #exportStatistics({ lottoTicket, winningNumbers, bonusNumber }) {
+    const count = this.#countMatchNumbers({
+      lottoNumbers: lottoTicket.getLottoNumbers(),
+      winningNumbers,
+      bonusNumber,
+    });
 
-    this.#winningCriteria.forEach((criteria) => {
-      this.#checkWin(criteria, count);
+    this.#winningCriteria.forEach((criteria, placeIdx) => {
+      this.#checkWin({ criteria, count, lottoTicket, placeIdx });
     });
   }
 
-  #checkWin(criteria, count) {
+  #checkWin({ criteria, count, lottoTicket, placeIdx }) {
     if (
       criteria.winningCount === count.winningCount &&
       (count.winBonus || !criteria.hasToWinBonus)
     ) {
-      criteria.numOfWinTicket++;
-      this.#processDuplicateWin(criteria, count);
+      lottoTicket.setPlaceIdx(placeIdx);
+      lottoTicket.setWinningAmount(criteria.winningAmount);
+      this.#processDuplicateWin({ criteria, count, lottoTicket });
     }
   }
 
-  #processDuplicateWin(criteria, count) {
+  #processDuplicateWin({ criteria, count, lottoTicket }) {
     if (!criteria.hasToWinBonus && criteria.winningCount === 5 && count.winBonus) {
-      criteria.numOfWinTicket--;
+      lottoTicket.setPlaceIdx(null);
+      lottoTicket.setWinningAmount(0);
     }
   }
 
@@ -197,9 +201,9 @@ class LottoController {
     return winningCount;
   }
 
-  #calculateEarns() {
-    const amounts = this.#winningCriteria.reduce((sum, criteria) => {
-      return sum + criteria.numOfWinTicket * criteria.winningAmount;
+  #calculateEarns(lottoTickets) {
+    const amounts = lottoTickets.reduce((sum, lottoTicket) => {
+      return sum + lottoTicket.getWinningAmount();
     }, 0);
 
     return (amounts / this.#money) * 100;
