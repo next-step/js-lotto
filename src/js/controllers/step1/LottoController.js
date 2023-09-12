@@ -1,4 +1,20 @@
-import { LOTTO_MAX_NUM, LOTTO_MIN_NUM, LOTTO_TICKET_PRICE } from "../../constants.js";
+import {
+  DUPLICATE_BONUS_NUMBER_ERROR_MESSAGE,
+  DUPLICATE_WINNING_NUMBERS_ERROR_MESSAGE,
+  FIFTH_PLACE_WINNING_AMOUNT,
+  FIRST_PLACE_WINNING_AMOUNT,
+  FOURTH_PLACE_WINNING_AMOUNT,
+  LOTTO_MAX_NUM,
+  LOTTO_MIN_NUM,
+  MONEY_RANGE_ERROR_MESSAGE,
+  MONEY_TYPE_ERROR_MESSAGE,
+  MONEY_UNIT_ERROR_MESSAGE,
+  NUMBER_RANGE_ERROR_MESSAGE,
+  NUMBER_TYPE_ERROR_MESSAGE,
+  SECOND_PLACE_WINNING_AMOUNT,
+  THIRD_PLACE_WINNING_AMOUNT,
+  WINNING_NUMBERS_LENGTH_ERROR_MESSAGE,
+} from "../../constants.js";
 import LottoTicket from "../../models/LottoTicket.js";
 import ConsoleInput from "../../views/step1/ConsoleInput.js";
 import ConsoleOutput from "../../views/step1/ConsoleOutput.js";
@@ -12,27 +28,27 @@ class LottoController {
     {
       winningCount: 3,
       hasToWinBonus: false,
-      winningAmount: 5_000,
+      winningAmount: FIFTH_PLACE_WINNING_AMOUNT,
     },
     {
       winningCount: 4,
       hasToWinBonus: false,
-      winningAmount: 50_000,
+      winningAmount: FOURTH_PLACE_WINNING_AMOUNT,
     },
     {
       winningCount: 5,
       hasToWinBonus: false,
-      winningAmount: 1_500_000,
+      winningAmount: THIRD_PLACE_WINNING_AMOUNT,
     },
     {
       winningCount: 5,
       hasToWinBonus: true,
-      winningAmount: 30_000_000,
+      winningAmount: SECOND_PLACE_WINNING_AMOUNT,
     },
     {
       winningCount: 6,
       hasToWinBonus: false,
-      winningAmount: 2_000_000_000,
+      winningAmount: FIRST_PLACE_WINNING_AMOUNT,
     },
   ];
 
@@ -44,34 +60,34 @@ class LottoController {
 
   validateMoney(money) {
     if (isNaN(money)) {
-      throw new Error("금액은 숫자 타입이어야 합니다.");
+      throw new Error(MONEY_TYPE_ERROR_MESSAGE);
     }
 
     if (money < 1000) {
-      throw new Error(`금액은 ${LOTTO_TICKET_PRICE}원 이상이어야 합니다.`);
+      throw new Error(MONEY_RANGE_ERROR_MESSAGE);
     }
 
     if (money % 1000 > 0) {
-      throw new Error(`금액은 ${LOTTO_TICKET_PRICE}원 단위여야 합니다.`);
+      throw new Error(MONEY_UNIT_ERROR_MESSAGE);
     }
   }
 
   validateNumber(number) {
-    if (isNaN(number)) throw new Error("번호는 숫자 타입이어야 합니다.");
+    if (isNaN(number)) throw new Error(NUMBER_TYPE_ERROR_MESSAGE);
 
     if (number < LOTTO_MIN_NUM || number > LOTTO_MAX_NUM)
-      throw new Error(`번호는 ${LOTTO_MIN_NUM} 이상 ${LOTTO_MAX_NUM} 이하 숫자여야 합니다.`);
+      throw new Error(NUMBER_RANGE_ERROR_MESSAGE);
   }
 
   validateWinningNumbers(winningNumbers) {
     winningNumbers.forEach(this.validateNumber);
 
     if (winningNumbers.length !== 6) {
-      throw new Error("당첨 번호는 6개의 숫자여야 합니다.");
+      throw new Error(WINNING_NUMBERS_LENGTH_ERROR_MESSAGE);
     }
 
     if (new Set(winningNumbers).size !== winningNumbers.length) {
-      throw new Error("당첨 번호는 중복되면 안됩니다.");
+      throw new Error(DUPLICATE_WINNING_NUMBERS_ERROR_MESSAGE);
     }
   }
 
@@ -79,14 +95,14 @@ class LottoController {
     this.validateNumber(bonusNumber);
 
     if (winningNumbers.indexOf(bonusNumber) !== -1)
-      throw new Error("보너스 번호는 당첨 번호와 중복되면 안됩니다.");
+      throw new Error(DUPLICATE_BONUS_NUMBER_ERROR_MESSAGE);
   }
 
   async startLotto() {
     const money = await this.#readMoney();
     this.#money = money;
     const lottoTickets = await this.#makeLotto(money);
-    const earns = this.#calculateEarns(lottoTickets);
+    const earns = this.calculateEarns(lottoTickets);
 
     this.#consoleOutput.printWinningStatistics({
       earns,
@@ -112,7 +128,7 @@ class LottoController {
     lottoTickets.forEach((lottoTicket) => {
       const lottoNumbers = lottoTicket.getLottoNumbers();
 
-      this.#exportStatistics({ lottoTicket, winningNumbers, bonusNumber });
+      this.exportStatistics({ lottoTicket, winningNumbers, bonusNumber });
     });
   }
 
@@ -152,7 +168,7 @@ class LottoController {
     return numbers.sort((a, b) => a - b);
   }
 
-  #exportStatistics({ lottoTicket, winningNumbers, bonusNumber }) {
+  exportStatistics({ lottoTicket, winningNumbers, bonusNumber }) {
     const count = this.#countMatchNumbers({
       lottoNumbers: lottoTicket.getLottoNumbers(),
       winningNumbers,
@@ -201,7 +217,7 @@ class LottoController {
     return winningCount;
   }
 
-  #calculateEarns(lottoTickets) {
+  calculateEarns(lottoTickets) {
     const amounts = lottoTickets.reduce((sum, lottoTicket) => {
       return sum + lottoTicket.getWinningAmount();
     }, 0);
