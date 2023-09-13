@@ -1,11 +1,13 @@
 const LottoValidator = require('../utils/validate.js')
-const { LOTTO_PRICE, PRIZES, RESULT_MESSAGE } = require('./constants.js')
+const { LOTTO_PRICE, PRIZES } = require('./utils/constants.js')
 const LottoNumbers = require('./LottoNumbers.js')
-const View = require('./view.js')
+const View = require('./view/LottoView.js')
 
 const Lotto = {
     lottos: [],
     prize: PRIZES,
+    numLottos: 0,
+    profitPercentage: 0,
 
     getLottoPurchaseAmount(amount) {
         this.amount = LottoValidator.amountValidate(amount)
@@ -13,8 +15,8 @@ const Lotto = {
     },
 
     buyLotto(purchaseAmount) {
-        const numLottos = Math.floor(purchaseAmount / LOTTO_PRICE);
-        this.lottos = LottoNumbers.getNumbers(numLottos);
+        this.numLottos = Math.floor(purchaseAmount / LOTTO_PRICE);
+        this.lottos = LottoNumbers.getNumbers(this.numLottos);
     },
 
     checkMatch(numMatches, result, lottoNumbers, bonusNumber) {
@@ -32,17 +34,6 @@ const Lotto = {
         }
     },
 
-    calculatePrizes() {
-        let totalPrize = 0;
-        this.prize.forEach(rank => {
-            totalPrize += rank.count * rank.prize;
-        })
-
-        const totalInvestment = this.lottos.length * LOTTO_PRICE;
-        const profitPercentage = ((totalPrize - totalInvestment) / totalInvestment) * 100;
-        View.printResult(this.prize, profitPercentage)
-    },
-
     matchedRank(winningNumbers, bonusNumber) {
         this.lottos.forEach(lottoNumbers => {
             const matchedNumbers = lottoNumbers.filter(num => winningNumbers.includes(num));
@@ -51,7 +42,13 @@ const Lotto = {
                 matchedRank.count++;
             }
         });
-        this.calculatePrizes();
+        View.calculatePrizes(this.lottos, this.prize);
+    },
+    clearLotto() {
+        this.lottos = [];
+        this.prize = PRIZES;
+        this.numLottos = 0;
+        this.profitPercentage = 0;
     }
 }
 module.exports = Lotto;

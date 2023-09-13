@@ -1,4 +1,4 @@
-const { LOTTO_PRICE, ERROR_MESSAGE, WIN_NUMBER_COUNT, BONUS_NUMBER_COUNT } = require('../js/constants.js')
+const { LOTTO_PRICE, ERROR_MESSAGE, WIN_NUMBER_COUNT, BONUS_NUMBER_COUNT } = require('../js/utils/constants.js')
 const LottoValidator = {
     amountValidate(amount) {
         if (isNaN(amount) || amount <= 0) {
