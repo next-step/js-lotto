@@ -71,7 +71,7 @@ export default class LottoPrizeCalculator {
     this.validateNumber(number, LottoPrizeCalculator.#NUMBER_TYPE.BONUS);
 
     if (this.#winningNumbers.includes(number)) {
-      throw new UserInputError("보너스 번호와 당첨번호가 중복됩니다");
+      throw new UserInputError("보너스 번호와 당첨번호가 중복됩니다.");
     }
 
     this.#bonusNumber = number;
@@ -107,5 +107,10 @@ export default class LottoPrizeCalculator {
         correctNumberCount === rule.matchingNumberCount
       );
     });
+  }
+
+  reset() {
+    this.#winningNumbers = undefined;
+    this.#bonusNumber = undefined;
   }
 }

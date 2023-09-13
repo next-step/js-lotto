@@ -102,6 +102,10 @@ export default class LottoGame {
     return this.#purchaseInfo.amount;
   }
 
+  getTicketNumbersLength() {
+    return this.#ticketRules.length;
+  }
+
   getProfitRatio() {
     if (this.#purchaseInfo === undefined) {
       throw new Error("먼저 로또를 구매해야 합니다.");
@@ -116,7 +120,7 @@ export default class LottoGame {
       0,
     );
 
-    return totalPrize / this.#purchaseInfo.amount;
+    return totalPrize / (this.#purchaseInfo.amount * this.#purchaseInfo.price);
   }
 
   get stage() {
@@ -129,5 +133,11 @@ export default class LottoGame {
     }
 
     this.#stage = GAME_STAGE[stage];
+  }
+
+  reset() {
+    this.#stage = GAME_STAGE.SET_PAYMENT;
+    this.#purchaseInfo = undefined;
+    this.#calculator.reset();
   }
 }

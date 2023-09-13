@@ -1,5 +1,5 @@
-import Step1Controller from "./class/Step1-Controller.js";
+import Controller from "./class/step1/Controller.js";
 
-const controller = new Step1Controller();
+const controller = new Controller();
 
 controller.execute();

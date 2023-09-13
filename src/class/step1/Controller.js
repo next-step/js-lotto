@@ -1,15 +1,17 @@
 import { ConsoleViewer } from "./Viewer.js";
-import LottoGame from "./LottoGame.js";
+import LottoGame from "../LottoGame.js";
+import { UserInputError } from "../Error.js";
 
-import { UserInputError } from "./Error.js";
-
-export default class Step1Controller {
+export default class Controller {
   #viewer;
   #lottoGame;
 
-  constructor(lottoGame) {
-    this.#lottoGame =
-      lottoGame instanceof LottoGame ? lottoGame : new LottoGame();
+  constructor(lottoGame = new LottoGame()) {
+    if (!(lottoGame instanceof LottoGame)) {
+      throw new Error("올바른 로또 게임이 아닙니다.");
+    }
+
+    this.#lottoGame = lottoGame;
     this.#viewer = new ConsoleViewer();
   }
 
