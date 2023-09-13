@@ -8,7 +8,10 @@ const { NOT_RECEIVED_AMOUNT, NOT_RECEIVED_LOTTO_NUMBER, NOT_RECEIVED_BONUS_NUMBE
 
 const readlineInterface = readline.createInterface({ input, output });
 
-const readInputMessage = ({ questionMessage, errorMessage }, validator = (message) => message.trim()) =>
+const validateMessage = (message) => message.trim();
+const validatedAppControlKey = (message) => [APP_RETRY_KEY, APP_EXIT_KEY].includes(message);
+
+const readInputMessage = (questionMessage, errorMessage, validator = validateMessage) =>
   new Promise((resolve, reject) => {
     readlineInterface.question(`${questionMessage}\n`, (inputMessage) => {
       if (validator(inputMessage)) {
@@ -21,10 +24,7 @@ const readInputMessage = ({ questionMessage, errorMessage }, validator = (messag
 
 export const executeReadInputPurchaseAmount = async () => {
   try {
-    const amount = await readInputMessage({
-      questionMessage: QUESTION_PURCHASE_AMOUNT,
-      errorMessage: NOT_RECEIVED_AMOUNT
-    });
+    const amount = await readInputMessage(QUESTION_PURCHASE_AMOUNT, NOT_RECEIVED_AMOUNT);
     return amount;
   } catch (error) {
     errorFallback(error);
@@ -34,10 +34,7 @@ export const executeReadInputPurchaseAmount = async () => {
 
 export const executeReadLottoNumber = async () => {
   try {
-    const winningLottoNumber = await readInputMessage({
-      questionMessage: QUESTION_LOTTO_NUMBER,
-      errorMessage: NOT_RECEIVED_LOTTO_NUMBER
-    });
+    const winningLottoNumber = await readInputMessage(QUESTION_LOTTO_NUMBER, NOT_RECEIVED_LOTTO_NUMBER);
     return winningLottoNumber;
   } catch (error) {
     errorFallback(error);
@@ -47,10 +44,7 @@ export const executeReadLottoNumber = async () => {
 
 export const executeReadBonusNumber = async () => {
   try {
-    const winningBonusNumber = await readInputMessage({
-      questionMessage: QUESTION_BONUS_NUMBER,
-      errorMessage: NOT_RECEIVED_BONUS_NUMBER
-    });
+    const winningBonusNumber = await readInputMessage(QUESTION_BONUS_NUMBER, NOT_RECEIVED_BONUS_NUMBER);
     return winningBonusNumber;
   } catch (error) {
     errorFallback(error);
@@ -61,11 +55,9 @@ export const executeReadBonusNumber = async () => {
 export const executeReadRetryAppKey = async () => {
   try {
     const inputKey = await readInputMessage(
-      {
-        questionMessage: ALERT_MESSAGE.RETRY_MESSAGE,
-        errorMessage: ERROR_MESSAGE.INVALID_APP_RETRY_KEY
-      },
-      (message) => message === APP_RETRY_KEY || message === APP_EXIT_KEY
+      ALERT_MESSAGE.RETRY_MESSAGE,
+      ERROR_MESSAGE.INVALID_APP_RETRY_KEY,
+      validatedAppControlKey
     );
     return inputKey;
   } catch (error) {
