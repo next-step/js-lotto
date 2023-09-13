@@ -10,7 +10,7 @@ import {
   LOTTO_MAX_NUMBER,
   ERROR_MESSAGE
 } from '../src/domain/constants/index';
-import { LottoTicket } from '../src/domain/classes/index';
+import { LottoTicket } from '../src/domain/models/index';
 
 describe('로또 티켓 테스트', () => {
   it("로또 티켓이 '자동' 또는 '수동' 방식이 아니라면 오류가 발생한다.", () => {

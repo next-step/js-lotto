@@ -6,7 +6,7 @@ import {
   DUMMY_INCORRECT_WINNING_LOTTO_BY_DUPLICATE_BONUS_NUMBER,
   DUMMY_INCORRECT_BONUS_NUMBER
 } from './constants';
-import { LottoMachine } from '../src/domain/classes/index';
+import { LottoMachine } from '../src/domain/models/index';
 import {
   ERROR_MESSAGE,
   LOTTO_NUMBER_SEPARATOR,

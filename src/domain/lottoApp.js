@@ -1,7 +1,6 @@
-import errorFallback from './errorFallback';
-import { createPurchaseMessage } from './lottoMessageCreator';
-import { LottoCustomer, LottoSeller, LottoOrganizer, LottoMachine, LottoCalculator } from './classes/index';
-import { readPurchaseAmount, readLottoNumberAndBonusNumber } from './lottoPrompter';
+import errorFallback from './error/errorFallback';
+import { LottoCustomer, LottoSeller, LottoOrganizer, LottoMachine, LottoCalculator } from './models/index';
+import { createPurchaseMessage, readPurchaseAmount, readLottoNumberAndBonusNumber } from './services/index';
 
 const buyLottoTicket = async () => {
   try {

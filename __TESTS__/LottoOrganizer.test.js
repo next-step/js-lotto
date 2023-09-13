@@ -1,6 +1,6 @@
 import { DUMMY_WINNING_LOTTO_NUMBER, DUMMY_BONUS_NUMBER, DUMMY_NOT_WINNING_TICKETS } from './constants';
 import { LOTTO_MODE, LOTTO_PRIZE, LOTTO_NUMBER_LENGTH, LOTTO_MATCH_COUNT } from '../src/domain/constants/index';
-import { LottoOrganizer, LottoTicket, LottoCalculator } from '../src/domain/classes/index';
+import { LottoOrganizer, LottoTicket, LottoCalculator } from '../src/domain/models/index';
 
 const getLottoOrganizer = () => {
   const lottoCalculator = new LottoCalculator(DUMMY_WINNING_LOTTO_NUMBER, DUMMY_BONUS_NUMBER);

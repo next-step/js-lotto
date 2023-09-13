@@ -1,5 +1,5 @@
-import { LOTTO_PRIZE, LOTTO_MATCH_COUNT } from './constants/index';
-import { formatNumberToCKoreanCurrency } from '../utils/index';
+import { LOTTO_PRIZE, LOTTO_MATCH_COUNT } from '../constants/index';
+import { formatNumberToCKoreanCurrency } from '../../utils/index';
 
 export const createPurchaseMessage = (lottoLength) => `${lottoLength}개를 구매했습니다.`;
 

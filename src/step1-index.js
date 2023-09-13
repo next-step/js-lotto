@@ -1,7 +1,7 @@
 import lottoApp from './domain/lottoApp';
-import { createWinningRateMessage, createLottoStatisticsMessage } from './domain/lottoMessageCreator';
+import { createWinningRateMessage, createLottoStatisticsMessage } from './domain/services/index';
 import { ALERT_MESSAGE } from './domain/constants/index';
-import { printMessage, printMessageList } from './view/viewer';
+import { printMessage, printMessageList } from './view/cliViewer';
 
 const { winningRate, lottoTickets } = await lottoApp();
 

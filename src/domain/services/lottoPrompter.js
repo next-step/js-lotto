@@ -1,7 +1,7 @@
 import { stdin as input, stdout as output } from 'process';
 import * as readline from 'readline';
-import errorFallback from './errorFallback';
-import { ALERT_MESSAGE, ERROR_MESSAGE, APP_EXIT_KEY, APP_RETRY_KEY } from './constants/index';
+import errorFallback from '../error/errorFallback';
+import { ALERT_MESSAGE, ERROR_MESSAGE, APP_EXIT_KEY, APP_RETRY_KEY } from '../constants/index';
 
 const { QUESTION_PURCHASE_AMOUNT, QUESTION_LOTTO_NUMBER, QUESTION_BONUS_NUMBER } = ALERT_MESSAGE;
 const { NOT_RECEIVED_AMOUNT, NOT_RECEIVED_LOTTO_NUMBER, NOT_RECEIVED_BONUS_NUMBER } = ERROR_MESSAGE;

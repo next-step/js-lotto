@@ -1,9 +1,13 @@
 import { exit } from 'node:process';
 import lottoApp from './domain/lottoApp';
-import { executeReadRetryAppKey, endPrompter } from './domain/lottoPrompter';
-import { createWinningRateMessage, createLottoStatisticsMessage } from './domain/lottoMessageCreator';
+import {
+  executeReadRetryAppKey,
+  endPrompter,
+  createWinningRateMessage,
+  createLottoStatisticsMessage
+} from './domain/services/index';
 import { ALERT_MESSAGE, APP_EXIT_KEY } from './domain/constants/index';
-import { printMessage, printMessageList } from './view/viewer';
+import { printMessage, printMessageList } from './view/cliViewer';
 
 const executeLottoApp = async () => {
   try {

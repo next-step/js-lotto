@@ -1,5 +1,5 @@
 import { DUMMY_WINNING_LOTTO, DUMMY_LOTTO_RETURN_WINNING_RATE } from './constants';
-import { LottoCalculator, LottoMachine } from '../src/domain/classes/index';
+import { LottoCalculator, LottoMachine } from '../src/domain/models/index';
 
 describe('로또 당첨 계산 테스트', () => {
   test.each(DUMMY_WINNING_LOTTO)(
