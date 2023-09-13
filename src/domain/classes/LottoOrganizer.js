@@ -19,7 +19,7 @@ class LottoOrganizer {
       return matchLottoNumberCount === BASE_NUMBER && matchBonusNumberCount === BONUS_NUMBER;
     });
 
-    return rank ? rank[0] : 'OTHERS';
+    return (rank && rank.at(0)) ?? 'OTHERS';
   }
 
   getWinningReturnRate(lottoTickets) {
