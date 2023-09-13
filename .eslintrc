@@ -17,5 +17,5 @@
     "class-methods-use-this": "off",
     "consistent-return": "off"
   },
-  "ignorePatterns": ["node_modules/", "/__tests__", "loader.js"]
+  "ignorePatterns": ["node_modules/", "/__tests__", "loader.js", "*.config.js"]
 }
