@@ -7,7 +7,7 @@ const buyLottoTicket = async () => {
   try {
     const purchaseAmount = await readPurchaseAmount();
     const lottoCustomer = new LottoCustomer(purchaseAmount);
-    const lottoSeller = new LottoSeller();
+    const lottoSeller = new LottoSeller(LottoOrganizer.lottoPrice());
     lottoCustomer.buyAutoLottoTicket(lottoSeller);
     return lottoCustomer;
   } catch (error) {
@@ -34,11 +34,11 @@ const asyncSetupLottoMachine = async () => {
   }
 };
 
-const calculateLottoWiningRate = (lottoMachine, lottoCustomer) => {
+const calculateLottoWiningRate = (lottoMachine, lottoTickets) => {
   const lottoCalculator = new LottoCalculator(lottoMachine.winningLottoNumber, lottoMachine.bonusNumber);
   const lottoOrganizer = new LottoOrganizer(lottoCalculator);
-  lottoOrganizer.matchToLottoTickets(lottoCustomer.lottoTickets);
-  return lottoOrganizer.getWinningReturnRate(lottoCustomer.lottoTickets);
+  lottoOrganizer.matchToLottoTickets(lottoTickets);
+  return lottoOrganizer.getWinningReturnRate(lottoTickets);
 };
 
 const lottoApp = async () => {
@@ -46,7 +46,7 @@ const lottoApp = async () => {
     const purchasedLottoCustomer = await buyLottoTicket();
     printPurchaseLottoTickets(purchasedLottoCustomer.lottoTickets);
     const lottoMachine = await asyncSetupLottoMachine();
-    const winningRate = calculateLottoWiningRate(lottoMachine, purchasedLottoCustomer);
+    const winningRate = calculateLottoWiningRate(lottoMachine, purchasedLottoCustomer.lottoTickets);
     const lottoTickets = purchasedLottoCustomer.lottoTickets.map(({ lottoNumber, result }) => ({
       lottoNumber,
       result

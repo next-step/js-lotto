@@ -5,12 +5,12 @@ import {
   DUMMY_NOT_PURCHASABLE_AMOUNT
 } from './constants';
 import { ERROR_MESSAGE, LOTTO_PRICE } from '../src/domain/constants/index';
-import { LottoCustomer, LottoSeller } from '../src/domain/classes/index';
+import { LottoCustomer, LottoSeller, LottoOrganizer } from '../src/domain/classes/index';
 
 let lottoSeller = null;
 
 beforeEach(() => {
-  lottoSeller = new LottoSeller();
+  lottoSeller = new LottoSeller(LottoOrganizer.lottoPrice());
 });
 
 describe('로또 구매 테스트', () => {
