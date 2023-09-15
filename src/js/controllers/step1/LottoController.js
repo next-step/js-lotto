@@ -145,8 +145,6 @@ class LottoController {
 
   #produceStatistics({ lottoTickets, winningNumbers, bonusNumber }) {
     lottoTickets.forEach((lottoTicket) => {
-      const lottoNumbers = lottoTicket.getLottoNumbers();
-
       this.exportStatistics({ lottoTicket, winningNumbers, bonusNumber });
     });
   }
