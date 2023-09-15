@@ -13,7 +13,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   resolve: {
-    extensions: ['.js', '.mjs', '.css'],
+    extensions: ['.js', '.mjs','jsx','.css'],
   },
   module: {
     rules: [

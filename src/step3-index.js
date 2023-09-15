@@ -1,3 +1,4 @@
+import "./css/index.css"
 import Lotto from "./js/lotto";
 import ModalView from "./js/view/ModaView"
 import { RESULT_MESSAGE, INPUT_NUMBER_LENGTH } from './js/utils/constants'
