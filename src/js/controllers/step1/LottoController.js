@@ -110,6 +110,25 @@ class LottoController {
       lottoTickets,
     });
 
+    await this.endLotto();
+  }
+
+  async #readStartAgain() {
+    const isQuit = await this.#consoleInput.readline("다시 시작하시겠습니까? (y/n)");
+
+    if (isQuit === "y") return true;
+    if (isQuit === "n") return false;
+
+    console.log("y 또는 n만 입력해주세요.");
+    return await this.#readStartAgain();
+  }
+
+  async endLotto() {
+    const startAgain = await this.#readStartAgain();
+    if (startAgain) {
+      this.startLotto();
+      return;
+    }
     this.#readline.close();
   }
 
@@ -134,21 +153,46 @@ class LottoController {
 
   async #readMoney() {
     const money = await this.#consoleInput.readline("구입금액을 입력해 주세요.");
-    this.validateMoney(money);
 
-    return Number(money);
+    try {
+      this.validateMoney(money);
+      return Number(money);
+    } catch (e) {
+      console.log(e.message);
+      return await this.#readMoney();
+    }
   }
 
   async #readNumbers() {
-    const winningNumbersStr = await this.#consoleInput.readline("당첨 번호를 입력해주세요.");
-
-    const winningNumbers = winningNumbersStr.split(",").map(Number);
-    this.validateWinningNumbers(winningNumbers);
-
-    const bonusNumber = Number(await this.#consoleInput.readline("보너스 번호를 입력해 주세요."));
-    this.validateBonusNumber(winningNumbers, bonusNumber);
+    const winningNumbers = await this.#readWinningNumbers();
+    const bonusNumber = await this.#readBonusNumber(winningNumbers);
 
     return { winningNumbers, bonusNumber };
+  }
+
+  async #readWinningNumbers() {
+    const winningNumbersStr = await this.#consoleInput.readline("당첨 번호를 입력해주세요.");
+    const winningNumbers = winningNumbersStr.split(",").map(Number);
+
+    try {
+      this.validateWinningNumbers(winningNumbers);
+      return winningNumbers;
+    } catch (e) {
+      console.log(e.message);
+      return await this.#readWinningNumbers();
+    }
+  }
+
+  async #readBonusNumber(winningNumbers) {
+    const bonusNumber = Number(await this.#consoleInput.readline("보너스 번호를 입력해 주세요."));
+
+    try {
+      this.validateBonusNumber(winningNumbers, bonusNumber);
+      return bonusNumber;
+    } catch (e) {
+      console.log(e.message);
+      return await this.#readBonusNumber(winningNumbers);
+    }
   }
 
   issueLottoTickets(money) {
