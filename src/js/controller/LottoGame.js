@@ -7,21 +7,25 @@ class LottoGame {
     lottoList: new LottoListView(),
     winningLotto: new WinningLottoView(),
     lottoResult: new LottoResultView(),
+
+    error: alert.bind(window),
+
+    settings: {
+      isShowNumbers: false,
+    },
   };
 
-  #errorView = alert.bind(window);
+  #lottoConfig = {
+    lottoMachine: new LottoMachine(),
 
-  #lottoMachine;
+    money: 0,
 
-  #money;
+    lottos: [],
 
-  #lottos;
+    winningLotto: null,
 
-  #winningLotto;
-
-  #rewards;
-
-  #isShowNumbers;
+    rewards: null,
+  };
 
   constructor() {
     this.init();
@@ -29,12 +33,12 @@ class LottoGame {
   }
 
   init() {
-    this.#lottoMachine = new LottoMachine();
-    this.#money = 0;
-    this.#lottos = [];
-    this.#winningLotto = null;
-    this.#rewards = null;
-    this.#isShowNumbers = false;
+    this.#lottoConfig.lottoMachine = new LottoMachine();
+    this.#lottoConfig.money = 0;
+    this.#lottoConfig.lottos = [];
+    this.#lottoConfig.winningLotto = null;
+    this.#lottoConfig.rewards = null;
+    this.#view.settings.isShowNumbers = false;
   }
 
   bindEvents() {
@@ -50,24 +54,21 @@ class LottoGame {
   }
 
   buyLotto(money) {
-    this.#money = Number(money.trim());
-    this.#lottos = this.#lottoMachine.buy(this.#money);
-    this.showLottos(this.#isShowNumbers);
+    this.#lottoConfig.money = Number(money.trim());
+    this.#lottoConfig.lottos = this.#lottoConfig.lottoMachine.buy(this.#lottoConfig.money);
+    this.showLottos(this.#view.settings.isShowNumbers);
     this.#view.winningLotto.show();
   }
 
   showLottos(visibleNumbers = false) {
-    this.#view.lottoList.setLottoQuantity(this.#lottos.length);
-    this.#view.lottoList.showLottos(
-      this.#lottos.map(({ numbers }) => numbers),
-      visibleNumbers
-    );
+    this.#view.lottoList.setLottoQuantity(this.#lottoConfig.lottos.length);
+    this.#view.lottoList.showLottos(this.#lottoConfig.lottos, visibleNumbers);
     this.#view.lottoList.show();
   }
 
   toggleShowNumbers() {
-    this.#isShowNumbers = !this.#isShowNumbers;
-    this.showLottos(this.#isShowNumbers);
+    this.#view.settings.isShowNumbers = !this.#view.settings.isShowNumbers;
+    this.showLottos(this.#view.settings.isShowNumbers);
   }
 
   setWinningLotto() {
@@ -76,20 +77,20 @@ class LottoGame {
       .map(Number)
       .filter((number) => number);
     const bonus = Number(this.#view.winningLotto.getBonusNumber());
-    this.#winningLotto = new WinningLotto(Lotto.of(winningNumbers.map(Number)), Number(bonus));
+    this.#lottoConfig.winningLotto = new WinningLotto(Lotto.of(winningNumbers.map(Number)), Number(bonus));
     this.computeRewards();
     this.computeRateOfReturn();
     this.showResult();
   }
 
   computeRewards() {
-    this.#rewards = new LottoRewards(this.#lottos, this.#winningLotto);
-    const rankResult = this.#rewards.getRankList();
+    this.#lottoConfig.rewards = new LottoRewards(this.#lottoConfig.lottos, this.#lottoConfig.winningLotto);
+    const rankResult = this.#lottoConfig.rewards.getRankList();
     this.#view.lottoResult.setResult(rankResult);
   }
 
   computeRateOfReturn() {
-    const rateOfReturn = this.#rewards.computeRateOfReturn(this.#money);
+    const rateOfReturn = this.#lottoConfig.rewards.computeRateOfReturn(this.#lottoConfig.money);
     this.#view.lottoResult.setRateOfReturn(rateOfReturn);
   }
 
@@ -108,7 +109,7 @@ class LottoGame {
     try {
       action();
     } catch ({ message }) {
-      this.#errorView(message);
+      this.#view.error(message);
     }
   }
 }

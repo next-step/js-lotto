@@ -33,7 +33,7 @@ export class LottoListView extends View {
     if (!visibleNumbers) this.$boughtLottos.classList.remove('flex-col');
     this.$boughtLottos.innerHTML = lottos
       .map(
-        (numbers) => `<li class="mx-1 text-4xl lotto-wrapper">
+        ({ numbers }) => `<li class="mx-1 text-4xl lotto-wrapper">
         <span class="lotto-icon">🎟️ </span>
         <span class="lotto-detail" style="display: ${visibleNumbers ? 'inline' : 'none'};">${numbers}</span>
       </li>
