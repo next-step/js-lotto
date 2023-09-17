@@ -17,6 +17,10 @@ export default class LottoGame {
   #calculator;
   #stage;
 
+  static STAGE_SET_PAYMENT = GAME_STAGE.SET_PAYMENT;
+  static STAGE_SET_WINNING_NUMBERS = GAME_STAGE.SET_WINNING_NUMBERS;
+  static STAGE_SET_BONUS_NUMBER = GAME_STAGE.SET_BONUS_NUMBER;
+
   constructor(
     ticketRules = new LottoTicketRules(),
     prizeRules = new LottoPrizeRules(),

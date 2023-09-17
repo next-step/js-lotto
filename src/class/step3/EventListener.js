@@ -6,6 +6,7 @@ import {
   removePurchaseInfo,
   resetPrizeInfo,
 } from "./Viewer";
+import LottoGame from "../LottoGame";
 
 export const handlePurchaseFormSubmit = (
   lottoGame,
@@ -15,7 +16,7 @@ export const handlePurchaseFormSubmit = (
   evt.preventDefault();
 
   try {
-    if (lottoGame.stage === "SET_PAYMENT") {
+    if (lottoGame.stage === LottoGame.STAGE_SET_PAYMENT) {
       lottoGame.issueLottoTickets(Number(evt.target[0].value));
 
       printPurchaseInfoAndPrizeInfo(
@@ -23,7 +24,7 @@ export const handlePurchaseFormSubmit = (
         lottoGame.getLottoTickets(),
       );
 
-      lottoGame.stage = "SET_WINNING_NUMBERS";
+      lottoGame.stage = LottoGame.STAGE_SET_WINNING_NUMBERS;
       return;
     }
 
@@ -37,7 +38,7 @@ export const handlePrizeFormSubmit = (lottoGame, alertUserInputError, evt) => {
   evt.preventDefault();
 
   try {
-    if (lottoGame.stage === "SET_PAYMENT") {
+    if (lottoGame.stage === LottoGame.STAGE_SET_PAYMENT) {
       alert("로또를 먼저 구매해 주세요");
       return;
     }
