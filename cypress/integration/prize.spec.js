@@ -137,6 +137,18 @@ describe("결과 확인 모달 팝업 테스트", () => {
     ELEMENT.MODAL().should("not.be.visible");
   });
 
+  it("모달 외부를 클릭하면 모달이 닫힌다.", () => {
+    ELEMENT.OPEN_RESULT_MODAL_BUTTON().click();
+
+    ELEMENT.MODAL().then(($modal) => {
+      const rect = $modal[0].getBoundingClientRect();
+
+      cy.get("body").click(rect.left - 5, rect.top - 5, { force: true });
+    });
+
+    ELEMENT.MODAL().should("not.be.visible");
+  });
+
   it("모달의 다시 시작하기 버튼을 클릭하면 모달이 닫히며 게임이 초기화 된다.", () => {
     ELEMENT.OPEN_RESULT_MODAL_BUTTON().click();
 
