@@ -1,8 +1,6 @@
 import ERROR from '../../src/js/constants/error.js';
 import { Lotto } from '../../src/js/domain/index.js';
 
-const isAscending = (arr) => arr.every((item, idx) => (idx === 0 ? true : item >= arr[idx - 1]));
-
 describe('로또 테스트', () => {
   it.each([
     { numbers: [1, 2, 3, 4, 5, 6] },
@@ -17,14 +15,14 @@ describe('로또 테스트', () => {
   });
 
   it.each([
-    { numbers: [41, 40, 16, 23, 45, 1] },
-    { numbers: [42, 7, 16, 23, 6, 41] },
-    { numbers: [7, 13, 42, 4, 45, 32] },
-    { numbers: [12, 42, 16, 8, 45, 1] },
-    { numbers: [32, 42, 16, 23, 9, 3] },
-  ])('로또는 오름차순으로 정렬된다', ({ numbers }) => {
+    { numbers: [41, 40, 16, 23, 45, 1], expected: [1, 16, 23, 40, 41, 45] },
+    { numbers: [42, 7, 16, 23, 6, 41], expected: [6, 7, 16, 23, 41, 42] },
+    { numbers: [7, 13, 42, 4, 45, 32], expected: [4, 7, 13, 32, 42, 45] },
+    { numbers: [12, 42, 16, 8, 45, 1], expected: [1, 8, 12, 16, 42, 45] },
+    { numbers: [32, 42, 16, 23, 9, 3], expected: [3, 9, 16, 23, 32, 42] },
+  ])('로또는 오름차순으로 정렬된다', ({ numbers, expected }) => {
     const lotto = Lotto.of(numbers);
-    expect(isAscending(lotto.numbers)).toBeTruthy();
+    expect(lotto.numbers).toEqual(expected);
   });
 
   it.each([{ numbers: [1, 2, 3, 4, 5] }, { numbers: [1, 2, 3, 11, 23, 34, 44, 12] }, { numbers: [3, 2, 4, 44] }])(
