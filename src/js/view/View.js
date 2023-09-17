@@ -14,4 +14,8 @@ export class View {
   hide() {
     this.$element.style.display = 'none';
   }
+
+  reset() {
+    throw new Error('리셋 로직을 구성해주세요!');
+  }
 }

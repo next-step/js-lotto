@@ -1,5 +1,5 @@
 import { Lotto, LottoMachine, LottoRewards, WinningLotto } from '../domain/index.js';
-import { LottoListView, LottoResultView, PurchaseView, WinningLottoView } from '../view/index.js';
+import { ErrorView, LottoListView, LottoResultView, PurchaseView, WinningLottoView } from '../view/index.js';
 
 class LottoGame {
   #view = {
@@ -8,11 +8,11 @@ class LottoGame {
     winningLotto: new WinningLottoView(),
     lottoResult: new LottoResultView(),
 
-    error: alert.bind(window),
+    error: new ErrorView(),
+  };
 
-    settings: {
-      isShowNumbers: false,
-    },
+  #viewSettings = {
+    isShowNumbers: false,
   };
 
   #lottoConfig = {
@@ -38,7 +38,7 @@ class LottoGame {
     this.#lottoConfig.lottos = [];
     this.#lottoConfig.winningLotto = null;
     this.#lottoConfig.rewards = null;
-    this.#view.settings.isShowNumbers = false;
+    this.#viewSettings.isShowNumbers = false;
   }
 
   bindEvents() {
@@ -56,7 +56,7 @@ class LottoGame {
   buyLotto(money) {
     this.#lottoConfig.money = Number(money.trim());
     this.#lottoConfig.lottos = this.#lottoConfig.lottoMachine.buy(this.#lottoConfig.money);
-    this.showLottos(this.#view.settings.isShowNumbers);
+    this.showLottos(this.#viewSettings.isShowNumbers);
     this.#view.winningLotto.show();
   }
 
@@ -67,16 +67,13 @@ class LottoGame {
   }
 
   toggleShowNumbers() {
-    this.#view.settings.isShowNumbers = !this.#view.settings.isShowNumbers;
-    this.showLottos(this.#view.settings.isShowNumbers);
+    this.#viewSettings.isShowNumbers = !this.#viewSettings.isShowNumbers;
+    this.showLottos(this.#viewSettings.isShowNumbers);
   }
 
   setWinningLotto() {
-    const winningNumbers = this.#view.winningLotto
-      .getWinningNumbers()
-      .map(Number)
-      .filter((number) => number);
-    const bonus = Number(this.#view.winningLotto.getBonusNumber());
+    const winningNumbers = this.#view.winningLotto.winningNumbers.map(Number).filter((number) => number);
+    const bonus = Number(this.#view.winningLotto.bonusNumber);
     this.#lottoConfig.winningLotto = new WinningLotto(Lotto.of(winningNumbers.map(Number)), Number(bonus));
     this.computeRewards();
     this.computeRateOfReturn();
@@ -109,7 +106,8 @@ class LottoGame {
     try {
       action();
     } catch ({ message }) {
-      this.#view.error(message);
+      this.#view.error.setError(message);
+      this.#view.error.showError();
     }
   }
 }

@@ -24,11 +24,11 @@ export class WinningLottoView extends View {
     });
   }
 
-  getWinningNumbers() {
+  get winningNumbers() {
     return this.$winningNumbers.map(({ value }) => value);
   }
 
-  getBonusNumber() {
+  get bonusNumber() {
     return this.$bonus.value;
   }
 
