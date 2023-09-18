@@ -12,6 +12,7 @@ export default class Rank {
   };
   RANK_LOWER_BOUND = RANKS.FIRST;
   RANK_UPPER_BOUND = RANKS.NONE;
+  #rank;
   #prize;
 
   static of(rank) {
@@ -21,6 +22,7 @@ export default class Rank {
   constructor(rank) {
     this.#validateRank(rank);
 
+    this.#rank = rank;
     this.#prize = this.PRIZES[rank];
   }
 
@@ -28,6 +30,10 @@ export default class Rank {
     if (typeof rank !== "number") throw new RankNotNumberError();
     if (rank < this.RANK_LOWER_BOUND || rank > this.RANK_UPPER_BOUND)
       throw new RankOutOfRangeError();
+  }
+
+  getRank() {
+    return this.#rank;
   }
 
   getPrize() {
