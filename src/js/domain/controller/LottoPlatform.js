@@ -1,6 +1,7 @@
-import LottoMachine from "../models/LottoMachine.js";
+import LottoMachine from "../models/LottoMachine/index.js";
 import WinningLotto from "../models/WinningLotto/index.js";
 import Statistics from "../models/Statistics.js";
+import RuntimeError from "../RuntimeError.js";
 import View from "../../UI/View.js";
 
 export default class LottoPlatform {
@@ -13,9 +14,9 @@ export default class LottoPlatform {
   }
 
   #issueLottos(purchasingPrice) {
-    // TODO v2에 purchasingPrice 받아오기
     const lottoMachine = new LottoMachine();
-    this.#lottos.push(lottoMachine.issueLotto());
+    this.#lottos = lottoMachine.issueLottoOf(purchasingPrice);
+    this.#view.printLine(`${this.#lottos.length}개를 구매했습니다.`);
   }
 
   #displayLottos() {
@@ -50,8 +51,12 @@ export default class LottoPlatform {
       );
       this.#displayLottoStatistics();
     } catch (error) {
-      // TODO error message 처리
-      console.log(error.message);
+      let message = error.message;
+      if (error instanceof RuntimeError) {
+        message = error.getMessage();
+      }
+
+      this.#view.printLine(message);
     } finally {
       this.#view.close();
     }

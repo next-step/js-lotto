@@ -1,5 +1,5 @@
 import { RankNotNumberError, RankOutOfRangeError } from "./errors.js";
-import { RANKS } from "../constants.js";
+import { RANKS } from "../../constants.js";
 
 export default class Rank {
   PRIZES = {

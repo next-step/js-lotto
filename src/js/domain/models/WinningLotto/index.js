@@ -4,7 +4,11 @@ import {
   BonusNumberOutOfRangeError,
   BonusNumberDuplicatedError,
 } from "./errors.js";
-import { LOTTO_LOWER_BOUND, LOTTO_UPPER_BOUND, RANKS } from "../constants.js";
+import {
+  LOTTO_LOWER_BOUND,
+  LOTTO_UPPER_BOUND,
+  RANKS,
+} from "../../constants.js";
 import Rank from "../Rank/index.js";
 
 export default class WinningLotto {

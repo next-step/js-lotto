@@ -9,7 +9,7 @@ import {
   LOTTO_DIGITS,
   LOTTO_LOWER_BOUND,
   LOTTO_UPPER_BOUND,
-} from "../constants.js";
+} from "../../constants.js";
 
 export default class Lotto {
   #lottoNumbers;

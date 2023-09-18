@@ -1,4 +1,4 @@
-import RuntimeError from "../RuntimeError.js";
+import RuntimeError from "../../RuntimeError.js";
 
 export class RankNotNumberError extends RuntimeError {
   static MESSAGE = "순위는 숫자여야합니다.";

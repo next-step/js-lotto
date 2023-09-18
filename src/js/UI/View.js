@@ -38,7 +38,6 @@ export default class View {
     const purchasingPriceInput = await new Promise((resolve) =>
       readlineInterface.question("> 구입금액을 입력해 주세요. ", resolve)
     );
-    this.printLine("1개를 구매했습니다.");
 
     const purchasingPrice =
       this.#convertToMatchingDataType(purchasingPriceInput);
@@ -72,14 +71,15 @@ export default class View {
       "5,000",
     ];
 
-    let statistics = [];
+    const ranks = [];
     const winningRankCount = rankCount.slice(0, rankCount.length - 1);
     winningRankCount.forEach((count, idx) => {
       const extraInfo = idx === 2 ? ", 보너스 볼 일치" : "";
       const summary = `${matchCounts[idx]}개 일치${extraInfo} (${prizes[idx]}원) - ${count}개`;
-      statistics.push(summary);
+      ranks.push(summary);
     });
-    statistics = statistics.reverse();
+
+    const statistics = ranks.reverse();
     statistics.push(`총 수익률은 ${revenueRate}%입니다.`);
 
     this.printLine("당첨 통계");

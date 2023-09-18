@@ -1,8 +1,6 @@
-import { RANKS } from "./constants.js";
+import { RANKS, LOTTO_UNIT_PRICE } from "../constants.js";
 
 export default class Statistics {
-  LOTTO_UNIT_PRICE = 1_000;
-
   count(ranks) {
     const rankCounts = new Map([
       [RANKS.FIRST, 0],
@@ -24,7 +22,7 @@ export default class Statistics {
   calculate(ranks) {
     let totalRevenue = 0;
 
-    const totalPurchased = this.LOTTO_UNIT_PRICE * ranks.length;
+    const totalPurchased = LOTTO_UNIT_PRICE * ranks.length;
 
     ranks.forEach((rank) => {
       totalRevenue += rank.getPrize();
