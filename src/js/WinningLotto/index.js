@@ -26,6 +26,22 @@ export default class WinningLotto {
       throw new BonusNumberDuplicatedError();
   }
 
+  #getRankFromMatchInfo(matchCount, isBonusMatch) {
+    switch (matchCount) {
+      case 6:
+        return RANKS.FIRST;
+      case 5:
+        if (isBonusMatch) return RANKS.SECOND;
+        return RANKS.SECOND;
+      case 4:
+        return RANKS.FOURTH;
+      case 3:
+        return RANKS.FIFTH;
+      default:
+        return RANKS.NONE;
+    }
+  }
+
   getRank(targetLotto) {
     const winningLottoNumbers = this.#lotto.display();
     const targetLottoNumbers = targetLotto.display();
@@ -33,28 +49,9 @@ export default class WinningLotto {
     const matchCount = winningLottoNumbers.filter((number) =>
       targetLottoNumbers.includes(number)
     ).length;
-    const isBonusMatched = targetLottoNumbers.includes(this.#bonusNumber);
+    const isBonusMatch = targetLottoNumbers.includes(this.#bonusNumber);
 
-    let rank;
-    switch (matchCount) {
-      case 6:
-        rank = RANKS.FIRST;
-        break;
-      case 5:
-        if (isBonusMatched) rank = RANKS.SECOND;
-        else rank = RANKS.SECOND;
-        break;
-      case 4:
-        rank = RANKS.FOURTH;
-        break;
-      case 3:
-        rank = RANKS.FIFTH;
-        break;
-      default:
-        rank = RANKS.NONE;
-        break;
-    }
-
+    const rank = this.#getRankFromMatchInfo(matchCount, isBonusMatch);
     return Rank.of(rank);
   }
 }
