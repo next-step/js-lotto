@@ -84,3 +84,10 @@ describe("Lotto 생성자 테스트", () => {
     });
   });
 });
+
+describe("of() 테스트", () => {
+  it("Lotto 인스턴스를 반환한다.", () => {
+    const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
+    expect(lotto).toBeInstanceOf(Lotto);
+  });
+});

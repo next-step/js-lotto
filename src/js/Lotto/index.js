@@ -14,6 +14,10 @@ import {
 export default class Lotto {
   #lottoNumbers;
 
+  static of(lottoNumbers) {
+    return new Lotto(lottoNumbers);
+  }
+
   constructor(lottoNumbers) {
     this.#validateLottoNumbers(lottoNumbers);
 

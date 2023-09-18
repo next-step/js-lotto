@@ -8,7 +8,7 @@ import Lotto from "./Lotto";
 export default class LottoMachine {
   issueLotto() {
     const lottoNumbers = this.#generateLottoNumbers();
-    return new Lotto(lottoNumbers);
+    return Lotto.of(lottoNumbers);
   }
 
   #generateLottoNumbers() {
