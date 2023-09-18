@@ -52,6 +52,9 @@ export default class Lotto {
   }
 
   display() {
-    return this.#lottoNumbers;
+    const sortedLottoNumbers = this.#lottoNumbers.sort(
+      (a, b) => Number(a) - Number(b)
+    );
+    return sortedLottoNumbers;
   }
 }

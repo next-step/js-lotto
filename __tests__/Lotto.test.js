@@ -97,4 +97,9 @@ describe("display() 테스트", () => {
     const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
     expect(lotto.display()).toEqual([1, 2, 3, 4, 5, 6]);
   });
+
+  it("lottoNumbers는 오름차순으로 정렬된다.", () => {
+    const lotto = new Lotto([30, 29, 28, 27, 26, 1]);
+    expect(lotto.display()).toEqual([1, 26, 27, 28, 29, 30]);
+  });
 });
