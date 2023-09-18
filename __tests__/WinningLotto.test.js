@@ -1,18 +1,18 @@
-import WinningLotto from "../src/js/WinningLotto";
+import WinningLotto from "../src/js/domain/models/WinningLotto";
 import {
   BonusNumberNotNumberError,
   BonusNumberOutOfRangeError,
   BonusNumberDuplicatedError,
-} from "../src/js/WinningLotto/errors";
+} from "../src/js/domain/models/WinningLotto/errors";
 import {
   LottoNumbersNotArrayError,
   LottoNumbersLengthNotSixError,
   LottoNumberNotNumberError,
   LottoNumberOutOfRangeError,
   LottoNumberDuplicatedError,
-} from "../src/js/Lotto/errors";
-import Lotto from "../src/js/Lotto";
-import Rank from "../src/js/Rank";
+} from "../src/js/domain/models/Lotto/errors";
+import Lotto from "../src/js/domain/models/Lotto";
+import Rank from "../src/js/domain/models/Rank";
 
 describe("WinningLotto 생성자 테스트", () => {
   describe("LottoNumbers 유효성 검사 테스트", () => {

@@ -1,5 +1,8 @@
-import Rank from "../src/js/Rank";
-import { RankNotNumberError, RankOutOfRangeError } from "../src/js/Rank/errors";
+import Rank from "../src/js/domain/models/Rank";
+import {
+  RankNotNumberError,
+  RankOutOfRangeError,
+} from "../src/js/domain/models/Rank/errors";
 
 describe("Rank 생성자 테스트", () => {
   describe("Rank 유효성 테스트", () => {

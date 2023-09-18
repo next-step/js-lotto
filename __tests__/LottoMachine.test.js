@@ -1,5 +1,5 @@
-import LottoMachine from "../src/js/LottoMachine";
-import Lotto from "../src/js/Lotto";
+import LottoMachine from "../src/js/domain/models/LottoMachine";
+import Lotto from "../src/js/domain/models/Lotto";
 
 describe("로또 한 장을 발행한다.", () => {
   const lottoMachine = new LottoMachine();

@@ -1,5 +1,5 @@
-import Statistics from "../src/js/Statistics";
-import Rank from "../src/js/Rank";
+import Statistics from "../src/js/domain/models/Statistics";
+import Rank from "../src/js/domain/models/Rank";
 
 const statistics = new Statistics();
 
