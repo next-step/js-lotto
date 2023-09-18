@@ -22,6 +22,7 @@ export default class LottoPlatform {
     this.#lottos.forEach((targetLotto) =>
       this.#view.printLine(targetLotto.display())
     );
+    this.#view.printLine("");
   }
 
   #checkLottoResult(winningLottoNumbers, bonusNumber) {
@@ -35,8 +36,7 @@ export default class LottoPlatform {
     const statistics = new Statistics();
     const rankCount = statistics.count(this.#ranks);
     const revenueRate = statistics.calculate(this.#ranks);
-    this.#view.printLine(rankCount);
-    this.#view.printLine(revenueRate);
+    this.#view.printStatistics(rankCount, revenueRate);
   }
 
   async run() {
