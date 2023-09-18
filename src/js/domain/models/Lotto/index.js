@@ -4,12 +4,12 @@ import {
   LottoNumberNotNumberError,
   LottoNumberOutOfRangeError,
   LottoNumberDuplicatedError,
-} from "./errors";
+} from "./errors.js";
 import {
   LOTTO_DIGITS,
   LOTTO_LOWER_BOUND,
   LOTTO_UPPER_BOUND,
-} from "../constants";
+} from "../constants.js";
 
 export default class Lotto {
   #lottoNumbers;

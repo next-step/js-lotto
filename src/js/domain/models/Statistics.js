@@ -1,4 +1,4 @@
-import { RANKS } from "./constants";
+import { RANKS } from "./constants.js";
 
 export default class Statistics {
   LOTTO_UNIT_PRICE = 1_000;

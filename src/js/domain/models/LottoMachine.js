@@ -2,8 +2,8 @@ import {
   LOTTO_DIGITS,
   LOTTO_LOWER_BOUND,
   LOTTO_UPPER_BOUND,
-} from "./constants";
-import Lotto from "./Lotto";
+} from "./constants.js";
+import Lotto from "./Lotto/index.js";
 
 export default class LottoMachine {
   issueLotto() {

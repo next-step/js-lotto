@@ -1,11 +1,11 @@
-import Lotto from "../Lotto";
+import Lotto from "../Lotto/index.js";
 import {
   BonusNumberNotNumberError,
   BonusNumberOutOfRangeError,
   BonusNumberDuplicatedError,
-} from "./errors";
-import { LOTTO_LOWER_BOUND, LOTTO_UPPER_BOUND, RANKS } from "../constants";
-import Rank from "../Rank";
+} from "./errors.js";
+import { LOTTO_LOWER_BOUND, LOTTO_UPPER_BOUND, RANKS } from "../constants.js";
+import Rank from "../Rank/index.js";
 
 export default class WinningLotto {
   #lotto;
