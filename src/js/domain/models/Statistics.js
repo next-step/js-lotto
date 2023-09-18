@@ -1,6 +1,8 @@
 import { RANKS, LOTTO_UNIT_PRICE } from "../constants.js";
 
 export default class Statistics {
+  DECIMAL_POINT = 2;
+
   count(ranks) {
     const rankCounts = new Map([
       [RANKS.FIRST, 0],
@@ -28,6 +30,15 @@ export default class Statistics {
       totalRevenue += rank.getPrize();
     });
 
-    return (totalRevenue / totalPurchased) * 100;
+    const revenueRate = (totalRevenue / totalPurchased) * 100;
+    return this.#roundToSecondDecimalPoint(revenueRate);
+  }
+
+  #roundToSecondDecimalPoint(number) {
+    if (Number.isInteger(number)) return number.toString();
+
+    const formatted = number.toFixed(this.DECIMAL_POINT);
+    const endRegExp = /.\d+0/;
+    return endRegExp.test(formatted) ? formatted.slice(0, -1) : formatted;
   }
 }

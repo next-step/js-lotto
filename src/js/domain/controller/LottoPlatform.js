@@ -46,6 +46,7 @@ export default class LottoPlatform {
         this.#issueLottos(purchasingPrice)
       );
       this.#displayLottos();
+
       await this.#view.addWinningInfoHandler((winningNumbers, bonusNumber) =>
         this.#checkLottoResult(winningNumbers, bonusNumber)
       );
