@@ -91,3 +91,10 @@ describe("of() 테스트", () => {
     expect(lotto).toBeInstanceOf(Lotto);
   });
 });
+
+describe("display() 테스트", () => {
+  it("lottoNumbers를 반환한다.", () => {
+    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
+    expect(lotto.display()).toEqual([1, 2, 3, 4, 5, 6]);
+  });
+});

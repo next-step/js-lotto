@@ -50,4 +50,8 @@ export default class Lotto {
   #hasDuplicatedLottoNumbers(lottoNumbers) {
     return new Set(lottoNumbers).size !== lottoNumbers.length;
   }
+
+  display() {
+    return this.#lottoNumbers;
+  }
 }
