@@ -50,6 +50,7 @@ export default class LottoPlatform {
       );
       this.#displayLottoStatistics();
     } catch (error) {
+      // TODO error message 처리
       console.log(error.message);
     } finally {
       this.#view.close();
