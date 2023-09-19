@@ -1,5 +1,7 @@
+import "./css/index.css"
 import Lotto from "./js/lotto";
 import ModalView from "./js/view/ModaView"
+import LottoValidator from './utils/validate.js'
 import { RESULT_MESSAGE, INPUT_NUMBER_LENGTH } from './js/utils/constants'
 import { inputElement, buttonElement, resultElement, showLottoNumbers, lottoListEl, winningNumbers, bonusNumber, openResult, restartBtn, rateResult } from "./js/utils/selector";
 
@@ -41,7 +43,8 @@ bonusNumber.addEventListener('input', function (event) {
 openResult.addEventListener('click', function () {
   const hasEmptyField = [...winningNumbers].some(input => input.value === '') || bonusNumber.value === '';
   const winningNumberList = [...winningNumbers].map(input => Number(input.value));
-
+  LottoValidator.checkWinningNumbers(winningNumberList);
+  LottoValidator.checkBonusNumber(bonusNumber.value);
   if (hasEmptyField) {
     ModalView.showMessage(RESULT_MESSAGE.INPUT)
   } else {

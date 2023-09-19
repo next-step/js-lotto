@@ -25,6 +25,8 @@ body {
 
 .displayShow {
   display: block;
+  opacity: 100%;
+  visibility: visible;
 }
 .displayNone {
   display: none;

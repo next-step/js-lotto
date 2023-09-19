@@ -21,9 +21,11 @@ const ModalView = {
         alert(message);
     },
     showModal() {
+        myModal.classList.remove('displayNone');
         myModal.classList.add('displayShow');
     },
     closeModal(){
+        myModal.classList.remove('displayShow');
         myModal.classList.add('displayNone');
     },
     clearModal(){

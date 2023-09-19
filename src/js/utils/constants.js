@@ -17,7 +17,9 @@ const ERROR_MESSAGE = {
     NONUMBER: '유효하지 않은 입력입니다. 1000 이상의 숫자를 입력해주세요.',
     AMOUNT_MIN: `최소 금액은 ${LOTTO_PRICE}원 이상의 숫자를 입력해주세요`,
     PUT_WIN_NUMBER_COUNT: `숫자는  ${WIN_NUMBER_COUNT}개를 입력해주세요.`,
-    PUT_BONUS_NUMBER_COUNT: `숫자는  ${BONUS_NUMBER_COUNT}개를 입력해주세요.`
+    PUT_BONUS_NUMBER_COUNT: `숫자는  ${BONUS_NUMBER_COUNT}개를 입력해주세요.`,
+    DUPLICATE_NUMBERS: '중복된 번호가 있습니다.',
+    NUMBER_OVER_LIMIT: '최대 45까지 입력할 수 있습니다.'
 }
 const RESULT_MESSAGE = {
     INPUT: '구입금액을 입력해 주세요: ',
