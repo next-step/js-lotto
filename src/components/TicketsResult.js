@@ -1,3 +1,5 @@
+import { countWinningTicket } from '../utils';
+
 export const WinningPrize = (ticketResults) => {
   const { prizes, profitRate } = ticketResults;
 
@@ -22,41 +24,27 @@ export const WinningPrize = (ticketResults) => {
             <tr class="text-center">
               <td class="p-3">3개</td>
               <td class="p-3">5,000</td>
-              <td class="p-3">${
-                prizes.filter(({ matchingCount }) => matchingCount === 3).length
-              }개</td>
+              <td class="p-3">${countWinningTicket(3, prizes)}개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">4개</td>
               <td class="p-3">50,000</td>
-              <td class="p-3">${
-                prizes.filter(({ matchingCount }) => matchingCount === 4).length
-              }개</td>
+              <td class="p-3">${countWinningTicket(4, prizes)}개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">5개</td>
               <td class="p-3">1,500,000</td>
-              <td class="p-3">${
-                prizes.filter(
-                  ({ matchingCount }) => matchingCount === 5 && !isBonusMatched
-                ).length
-              }개</td>
+              <td class="p-3">${countWinningTicket(5, prizes)}개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">5개 + 보너스볼</td>
               <td class="p-3">30,000,000</td>
-              <td class="p-3">${
-                prizes.filter(
-                  ({ matchingCount }) => matchingCount === 5 && isBonusMatched
-                ).length
-              }개</td>
+              <td class="p-3">${countWinningTicket(5, prizes, true)}개</td>
             </tr>
             <tr class="text-center">
               <td class="p-3">6개</td>
               <td class="p-3">2,000,000,000</td>
-              <td class="p-3">${
-                prizes.filter(({ matchingCount }) => matchingCount === 6).length
-              }개</td>
+              <td class="p-3">${countWinningTicket(6, prizes)}개</td>
             </tr>
           </tbody>
         </table>

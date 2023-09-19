@@ -50,3 +50,18 @@ export const checkLottoPrize = (matchingCount, isBonusMatched) => {
 
   throw new Error(MESSAGE.ERROR.OVERFLOW_LOTTO_LENGTH);
 };
+
+export const countWinningTicket = (
+  matchingCount,
+  prizes,
+  isBonusMatched = false
+) => {
+  return prizes.filter((prize) => {
+    if (matchingCount === 5)
+      return (
+        prize.matchingCount === 5 && prize.isBonusMatched === isBonusMatched
+      );
+
+    return prize.matchingCount === matchingCount;
+  }).length;
+};
