@@ -2,6 +2,7 @@ import {
   LOTTO_INITIAL_PRIZE_COUNT,
   NUMBER,
   LOTTO_PRIZE_BOARD,
+  MESSAGE,
 } from '../constants';
 
 export const calculatePrizeCount = (ticketResults) => {
@@ -47,5 +48,5 @@ export const checkLottoPrize = (matchingCount, isBonusMatched) => {
   if (matchingCount === 5 && isBonusMatched) return 30_000_000;
   if (matchingCount === 6) return 2_000_000_000;
 
-  throw new Error('로또는 최대 6자리 수입니다.');
+  throw new Error(MESSAGE.ERROR.OVERFLOW_LOTTO_LENGTH);
 };

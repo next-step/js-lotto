@@ -15,6 +15,7 @@ const ERROR = Object.freeze({
   INVALID_BONUS_NUMBER_RANGE: (min, max) =>
     `보너스 번호는 ${min}~${max} 사이의 숫자만 가능합니다.`,
   DUPLICATE_BONUS_NUMBER: '보너스 번호는 로또 번호와 중복될 수 없습니다.',
+  OVERFLOW_LOTTO_LENGTH: '로또는 최대 6자리 수입니다.',
 });
 
 const READ = Object.freeze({
