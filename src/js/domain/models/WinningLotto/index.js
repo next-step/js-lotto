@@ -16,6 +16,10 @@ export default class WinningLotto {
   #lotto;
   #bonusNumber;
 
+  static from(lotto, bonusNumber) {
+    return new WinningLotto(lotto, bonusNumber);
+  }
+
   constructor(lotto, bonusNumber) {
     this.#validateLottoInstance(lotto);
     this.#lotto = lotto;

@@ -63,6 +63,14 @@ describe("WinningLotto 생성자 테스트", () => {
   });
 });
 
+describe("static from(lotto, bonusNumber) 테스트", () => {
+  it("WinningLotto 인스턴스를 반환한다.", () => {
+    const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
+    const winningLotto = WinningLotto.from(lotto, 7);
+    expect(winningLotto).toBeInstanceOf(WinningLotto);
+  });
+});
+
 describe("checkRank(targetLotto) 테스트", () => {
   describe("올바른 Rank 객체를 반환한다.", () => {
     const lotto = Lotto.of([1, 2, 3, 4, 5, 6]);
