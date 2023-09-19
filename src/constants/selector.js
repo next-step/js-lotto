@@ -8,6 +8,7 @@ const TICKET = Object.freeze({
 
 const LOTTO = Object.freeze({
   NUMBER_DISPLAY_TOGGLE: '.lotto-numbers-toggle-button',
+  NUMBER_DISPLAY_TOGGLE_LABEL: '.lotto-numbers-toggle-label',
   NUMBERS: '.lotto-numbers',
   WINNING_NUMBER: '.winning-number',
   BONUS_NUMBER: '.bonus-number',
