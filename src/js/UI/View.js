@@ -9,18 +9,20 @@ export default class View {
   #convertToMatchingDataType(input) {
     if (input === "null") {
       return null;
-    } else if (input === "undefined") {
+    }
+    if (input === "undefined") {
       return undefined;
-    } else if (/^-?\d+(\.\d+)?$/.test(input)) {
+    }
+    if (/^-?\d+(\.\d+)?$/.test(input)) {
       // 숫자 변환
       return parseFloat(input);
-    } else {
-      try {
-        return JSON.parse(input);
-      } catch (error) {
-        // 그대로 반환 (문자열 유지)
-        return input;
-      }
+    }
+
+    try {
+      return JSON.parse(input);
+    } catch (error) {
+      // 그대로 반환 (문자열 유지)
+      return input;
     }
   }
 
