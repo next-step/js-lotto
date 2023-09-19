@@ -13,6 +13,7 @@
     "start-step3": "webpack serve --open --config step3.config.js",
     "start-step4": "webpack serve --open --config step4.config.js",
     "test": "jest",
+    "test-cy": "cypress run",
     "dev": "live-server --port=8000"
   },
   "jest": {
