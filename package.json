@@ -1,25 +1,34 @@
 {
-  "name": "lotto",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "start-step1": "node src/step1-index.js",
-    "start-step2": "node src/step2-index.js",
-    "test": "jest --watch"
+    "test": "jest --watch --no-cache",
+    "build-step1": "webpack --config step1.config.js",
+    "start-step1": "npm run build-step1 && node dist/step1-bundle.js",
+    "start-step2": "npm run build-step2 && node dist/step2-bundle.js",
+    "start-step3": "webpack serve --open --config step3.config.js",
+    "start-step4": "webpack serve --open --config step4.config.js"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.22.10",
-    "@types/jest": "^29.5.3",
-    "babel-jest": "^29.6.2",
-    "cypress": "^6.3.0",
-    "jest": "^29.6.2"
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "@types/jest": "^29.2.5",
+    "jest": "^29.3.1",
+    "babel-jest": "^29.3.1",
+    "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "css-loader": "^6.6.0",
+    "style-loader": "^3.3.1",
+    "eslint": "^8.31.0",
+    "prettier": "^2.8.2",
+    "esm": "^3.2.25",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.7.4"
   },
   "jest": {
     "transform": {
-      "\\.[jt]sx?$": "babel-jest"
+      "^.+\\.js$": "babel-jest"
     }
   },
   "babel": {
