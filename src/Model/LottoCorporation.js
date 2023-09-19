@@ -1,16 +1,12 @@
 import { NUMBER } from '../constants';
-import { LottoPrize, LottoStore } from '../Model';
+import { LottoStore } from '../Model';
+import { checkPrize } from '../utils';
 
 /**
  * 로또의 판매 및 Ticket 결과를 확인하는 객체입니다.
  */
 export class LottoCorporation {
-  #lottoStore;
-  #lottoPrize = new LottoPrize();
-
-  constructor() {
-    this.#lottoStore = new LottoStore();
-  }
+  #lottoStore = new LottoStore();
 
   buyTickets(purchaseAmount) {
     return this.#lottoStore.buyTickets(purchaseAmount);
@@ -39,7 +35,7 @@ export class LottoCorporation {
       winningNumbers
     );
 
-    const prize = this.#lottoPrize.checkPrize(matchingCount, isBonusMatched);
+    const prize = checkPrize(matchingCount, isBonusMatched);
 
     return { matchingCount, isBonusMatched, prize };
   }
