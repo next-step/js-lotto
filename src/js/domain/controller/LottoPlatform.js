@@ -1,8 +1,7 @@
-import LottoMachine from "../models/LottoMachine/index.js";
+import createLottoMachine from "../models/LottoMachine/createLottoMachine.js";
 import Lotto from "../models/Lotto/index.js";
 import WinningLotto from "../models/WinningLotto/index.js";
-import Statistics from "../models/Statistics.js";
-import ValidationError from "../ValidationError.js";
+import createStatistics from "../models/createStatistics.js";
 import View from "../../UI/View.js";
 import { RetryError } from "./errors.js";
 
@@ -17,8 +16,8 @@ export default class LottoPlatform {
   }
 
   #issueLottos(purchasingPrice) {
-    const lottoMachine = new LottoMachine();
-    this.#lottos = lottoMachine.issueLottoOf(purchasingPrice);
+    const { issueLottoOf } = createLottoMachine();
+    this.#lottos = issueLottoOf(purchasingPrice);
     this.#view.printLine(`${this.#lottos.length}개를 구매했습니다.`);
   }
 
@@ -44,9 +43,9 @@ export default class LottoPlatform {
   }
 
   #displayLottoStatistics() {
-    const statistics = new Statistics();
-    const rankCount = statistics.count(this.#ranks);
-    const revenueRate = statistics.calculate(this.#ranks);
+    const { countRanks, calculateRevenue } = createStatistics();
+    const rankCount = countRanks(this.#ranks);
+    const revenueRate = calculateRevenue(this.#ranks);
     this.#view.printStatistics(rankCount, revenueRate);
   }
 

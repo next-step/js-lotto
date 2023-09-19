@@ -1,9 +1,9 @@
-import Statistics from "../src/js/domain/models/Statistics";
+import createStatistics from "../src/js/domain/models/createStatistics";
 import Rank from "../src/js/domain/models/Rank";
 
-const statistics = new Statistics();
+const { countRanks, calculateRevenue } = createStatistics();
 
-describe("count() 테스트", () => {
+describe("countRanks) 테스트", () => {
   describe("올바른 rankCounts 배열을 반환한다.", () => {
     describe("로또가 1개인 경우", () => {
       const testCases = [
@@ -35,7 +35,7 @@ describe("count() 테스트", () => {
 
       it.each(testCases)("rank: $rank", ({ rank, rankCounts }) => {
         const ranks = [Rank.of(rank)];
-        expect(statistics.count(ranks)).toEqual(rankCounts);
+        expect(countRanks(ranks)).toEqual(rankCounts);
       });
     });
 
@@ -52,7 +52,7 @@ describe("count() 테스트", () => {
 
       it.each(testCases)("rank: $ranks", ({ rankArr, rankCounts }) => {
         const ranks = rankArr.map((rank) => Rank.of(rank));
-        expect(statistics.count(ranks)).toEqual(rankCounts);
+        expect(countRanks(ranks)).toEqual(rankCounts);
       });
     });
   });
@@ -90,7 +90,7 @@ describe("calculateRevenue() 테스트", () => {
 
       it.each(testCases)("rank: $rank", ({ rank, revenueRate }) => {
         const ranks = [Rank.of(rank)];
-        expect(statistics.calculate(ranks)).toBe(revenueRate.toString());
+        expect(calculateRevenue(ranks)).toBe(revenueRate.toString());
       });
     });
 
@@ -107,7 +107,7 @@ describe("calculateRevenue() 테스트", () => {
 
       it.each(testCases)("rankArr: $rankArr", ({ rankArr, revenueRate }) => {
         const ranks = rankArr.map((rank) => Rank.of(rank));
-        expect(statistics.calculate(ranks)).toBe(revenueRate.toString());
+        expect(calculateRevenue(ranks)).toBe(revenueRate.toString());
       });
     });
   });

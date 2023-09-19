@@ -12,32 +12,32 @@ import {
 } from "../../constants.js";
 import Lotto from "../Lotto/index.js";
 
-export default class LottoMachine {
-  ZERO = 0;
-  MIN_ISSUE_AMOUNT = 1;
-  MAX_ISSUE_AMOUNT = 100;
+const createLottoMachine = () => {
+  const ZERO = 0;
+  const MIN_ISSUE_AMOUNT = 1;
+  const MAX_ISSUE_AMOUNT = 100;
 
-  issueLottoOf(purchasingPrice) {
-    this.#validatePurchasingPrice(purchasingPrice);
+  const issueLottoOf = (purchasingPrice) => {
+    validatePurchasingPrice(purchasingPrice);
     const issueAmount = Math.floor(purchasingPrice / LOTTO_UNIT_PRICE);
     const lottos = [];
     for (let i = 0; i < issueAmount; i++) {
-      lottos.push(this.#issueLotto());
+      lottos.push(issueLotto());
     }
     return lottos;
-  }
+  };
 
-  #validatePurchasingPrice(purchasingPrice) {
+  const validatePurchasingPrice = (purchasingPrice) => {
     if (typeof purchasingPrice !== "number")
       throw new PurchasingPriceNotNumberError();
-    if (purchasingPrice < this.ZERO) throw new PurchasingPriceIsNegativeError();
-    if (purchasingPrice < LOTTO_UNIT_PRICE * this.MIN_ISSUE_AMOUNT)
+    if (purchasingPrice < ZERO) throw new PurchasingPriceIsNegativeError();
+    if (purchasingPrice < LOTTO_UNIT_PRICE * MIN_ISSUE_AMOUNT)
       throw new PurchasingPriceLessLowerBoundError();
-    if (purchasingPrice > LOTTO_UNIT_PRICE * this.MAX_ISSUE_AMOUNT)
+    if (purchasingPrice > LOTTO_UNIT_PRICE * MAX_ISSUE_AMOUNT)
       throw new PurchasingPriceAboveUpperBoundError();
-  }
+  };
 
-  #generateLottoNumbers() {
+  const generateLottoNumbers = () => {
     const lottoNumbers = new Set();
     while (lottoNumbers.size < LOTTO_DIGITS) {
       const randomNumber =
@@ -45,10 +45,16 @@ export default class LottoMachine {
       lottoNumbers.add(randomNumber);
     }
     return Array.from(lottoNumbers);
-  }
+  };
 
-  #issueLotto() {
-    const lottoNumbers = this.#generateLottoNumbers();
+  const issueLotto = () => {
+    const lottoNumbers = generateLottoNumbers();
     return Lotto.of(lottoNumbers);
-  }
-}
+  };
+
+  return {
+    issueLottoOf,
+  };
+};
+
+export default createLottoMachine;

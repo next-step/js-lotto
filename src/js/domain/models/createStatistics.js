@@ -1,9 +1,7 @@
 import { RANKS, LOTTO_UNIT_PRICE } from "../constants.js";
 
-export default class Statistics {
-  DECIMAL_POINT = 2;
-
-  count(ranks) {
+const createStatistics = () => {
+  const countRanks = (ranks) => {
     const rankCounts = new Map([
       [RANKS.FIRST, 0],
       [RANKS.SECOND, 0],
@@ -19,9 +17,19 @@ export default class Statistics {
     });
 
     return Array.from(rankCounts.values());
-  }
+  };
 
-  calculate(ranks) {
+  const roundToSecondDecimalPoint = (number) => {
+    if (Number.isInteger(number)) return number.toString();
+
+    const DECIMAL_POINT = 2;
+    const formatted = number.toFixed(DECIMAL_POINT);
+
+    const endRegExp = /.\d+0/;
+    return endRegExp.test(formatted) ? formatted.slice(0, -1) : formatted;
+  };
+
+  const calculateRevenue = (ranks) => {
     let totalRevenue = 0;
 
     const totalPurchased = LOTTO_UNIT_PRICE * ranks.length;
@@ -31,14 +39,13 @@ export default class Statistics {
     });
 
     const revenueRate = (totalRevenue / totalPurchased) * 100;
-    return this.#roundToSecondDecimalPoint(revenueRate);
-  }
+    return roundToSecondDecimalPoint(revenueRate);
+  };
 
-  #roundToSecondDecimalPoint(number) {
-    if (Number.isInteger(number)) return number.toString();
+  return {
+    countRanks,
+    calculateRevenue,
+  };
+};
 
-    const formatted = number.toFixed(this.DECIMAL_POINT);
-    const endRegExp = /.\d+0/;
-    return endRegExp.test(formatted) ? formatted.slice(0, -1) : formatted;
-  }
-}
+export default createStatistics;

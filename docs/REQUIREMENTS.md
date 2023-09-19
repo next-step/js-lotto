@@ -91,3 +91,9 @@ f1 -> f2 -> f3
   V winningLottoNumbers를 잘못 입력한 경우
   V BonusNumber를 잘못 입력한 경우
   V 그 외 Error 발생한 경우, 앱 종료
+
+## Step2 리팩토링
+
+[V] class가 불필요한 경우 모듈로 변경
+[V] 불필요한 코드 삭제
+[V] 의도 드러내는 메소드명 확인(클라이언트 입장)
