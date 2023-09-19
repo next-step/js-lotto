@@ -1,14 +1,14 @@
 import { OutputViewWeb, Element } from './';
-import { Validator } from '../../utils/Validator';
-import { MESSAGE, NUMBER, SELECTOR } from '../../constants';
+import { Validator } from '../utils/Validator';
+import { MESSAGE, NUMBER, SELECTOR } from '../constants';
 import {
   TicketAmount,
   TicketsNumbers,
   WinningNumberInput,
   WinningPrize,
   Modal,
-} from '../../components';
-import { LottoEvents, WebErrorHandler } from '../../Model';
+} from '../components';
+import { LottoEvents, WebErrorHandler } from '../Model';
 
 export class ViewWeb {
   #element;

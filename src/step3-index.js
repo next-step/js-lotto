@@ -1,4 +1,4 @@
-import { ViewWeb } from './View/Web';
+import { ViewWeb } from './View';
 import { WebController } from './Controller/WebController';
 import './css/index.css';
 
