@@ -65,6 +65,16 @@ export default class View {
     this.printLine("");
   }
 
+  async addRetryHandler(cbFunc) {
+    const retryInput = await new Promise((resolve) =>
+      readlineInterface.question("> 다시 시작하시겠습니까? (y/n) ", resolve)
+    );
+    const retry = this.#convertToMatchingDataType(retryInput);
+    cbFunc(retry);
+
+    this.printLine("");
+  }
+
   printStatistics(rankCount, revenueRate) {
     // ranks: [1, 2, 3, 4, 5]
     const matchCounts = [6, 5, 5, 4, 3];
@@ -90,6 +100,7 @@ export default class View {
     this.printLine("당첨 통계");
     this.printLine("--------------------");
     statistics.forEach((line) => this.printLine(line));
+    this.printLine("");
   }
 
   close() {

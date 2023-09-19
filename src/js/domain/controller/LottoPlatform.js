@@ -4,6 +4,7 @@ import WinningLotto from "../models/WinningLotto/index.js";
 import Statistics from "../models/Statistics.js";
 import ValidationError from "../ValidationError.js";
 import View from "../../UI/View.js";
+import { RetryError } from "./errors.js";
 
 export default class LottoPlatform {
   #view;
@@ -74,7 +75,7 @@ export default class LottoPlatform {
   async runUntilFinish() {
     let goToFlag = 1;
 
-    while (goToFlag !== 4) {
+    while (goToFlag !== 5) {
       try {
         while (goToFlag === 1) {
           await this.#view.addPurchasingPriceHandler((purchasingPrice) =>
@@ -95,10 +96,24 @@ export default class LottoPlatform {
           await this.#view.addBonusNumberHandler((bonusNumber) =>
             this.#checkLottoResult(bonusNumber)
           );
+          this.#displayLottoStatistics();
           goToFlag = 4;
         }
 
-        this.#displayLottoStatistics();
+        while (goToFlag === 4) {
+          await this.#view.addRetryHandler((retry) => {
+            switch (retry) {
+              case "y":
+                goToFlag = 1;
+                break;
+              case "n":
+                goToFlag = 5;
+                break;
+              default:
+                throw new RetryError();
+            }
+          });
+        }
       } catch (error) {
         this.#view.printLine(error.message);
       }
