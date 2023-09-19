@@ -73,26 +73,26 @@ export default class Controller {
 
   async execute() {
     try {
-      if (this.#lottoGame.stage === "SET_PAYMENT") {
+      if (this.#lottoGame.stage === LottoGame.STAGE_SET_PAYMENT) {
         await this.setPayment();
 
         this.printAmount();
 
         this.printLottoNumbers();
 
-        this.#lottoGame.stage = "SET_WINNING_NUMBERS";
+        this.#lottoGame.stage = LottoGame.STAGE_SET_WINNING_NUMBERS;
       }
 
-      if (this.#lottoGame.stage === "SET_WINNING_NUMBERS") {
+      if (this.#lottoGame.stage === LottoGame.STAGE_SET_WINNING_NUMBERS) {
         await this.setWinningNumbers();
 
-        this.#lottoGame.stage = "SET_BONUS_NUMBER";
+        this.#lottoGame.stage = LottoGame.STAGE_SET_BONUS_NUMBER;
       }
 
-      if (this.#lottoGame.stage === "SET_BONUS_NUMBER") {
+      if (this.#lottoGame.stage === LottoGame.STAGE_SET_BONUS_NUMBER) {
         await this.setBonusNumber();
 
-        this.#lottoGame.stage = "SET_PAYMENT";
+        this.#lottoGame.stage = LottoGame.STAGE_SET_PAYMENT;
       }
 
       this.printPrizeSummary();
