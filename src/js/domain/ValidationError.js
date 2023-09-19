@@ -1,4 +1,4 @@
-export default class RuntimeError extends Error {
+export default class ValidationError extends Error {
   #message;
 
   constructor(message) {

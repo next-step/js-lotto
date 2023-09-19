@@ -1,6 +1,6 @@
-import RuntimeError from "../../RuntimeError.js";
+import ValidationError from "../../ValidationError.js";
 
-export class RankNotNumberError extends RuntimeError {
+export class RankNotNumberError extends ValidationError {
   static MESSAGE = "순위는 숫자여야합니다.";
 
   constructor() {
@@ -8,7 +8,7 @@ export class RankNotNumberError extends RuntimeError {
   }
 }
 
-export class RankOutOfRangeError extends RuntimeError {
+export class RankOutOfRangeError extends ValidationError {
   static MESSAGE = "순위는 [1, 6] 사이 범위여야합니다.";
 
   constructor() {

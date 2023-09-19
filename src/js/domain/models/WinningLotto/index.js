@@ -1,5 +1,6 @@
 import Lotto from "../Lotto/index.js";
 import {
+  LottoIsNotLottoInstanceError,
   BonusNumberNotNumberError,
   BonusNumberOutOfRangeError,
   BonusNumberDuplicatedError,
@@ -15,11 +16,17 @@ export default class WinningLotto {
   #lotto;
   #bonusNumber;
 
-  constructor(lottoNumbers, bonusNumber) {
-    this.#lotto = Lotto.of(lottoNumbers);
+  constructor(lotto, bonusNumber) {
+    this.#validateLottoInstance(lotto);
+    this.#lotto = lotto;
 
-    this.#validateBonusNumber(lottoNumbers, bonusNumber);
+    const winningLottoNumbers = lotto.display();
+    this.#validateBonusNumber(winningLottoNumbers, bonusNumber);
     this.#bonusNumber = bonusNumber;
+  }
+
+  #validateLottoInstance(lotto) {
+    if (!(lotto instanceof Lotto)) throw new LottoIsNotLottoInstanceError();
   }
 
   #validateBonusNumber(lottoNumbers, bonusNumber) {

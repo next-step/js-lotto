@@ -1,6 +1,26 @@
-import RuntimeError from "../../RuntimeError.js";
+import ValidationError from "../../ValidationError.js";
 
-export class BonusNumberNotNumberError extends RuntimeError {
+export class LottoIsNotLottoInstanceError extends ValidationError {
+  static ERROR_TYPE = " [WinningLotto Error] ";
+  static MESSAGE = "Lotto 인스턴스 형태가 아닙니다.";
+
+  constructor() {
+    super(
+      LottoIsNotLottoInstanceError.ERROR_TYPE +
+        LottoIsNotLottoInstanceError.MESSAGE
+    );
+  }
+}
+
+export class BonusNumberError extends ValidationError {
+  static ERROR_TYPE = " [BonusNumber Error] ";
+
+  constructor(message) {
+    super(BonusNumberError.ERROR_TYPE + message);
+  }
+}
+
+export class BonusNumberNotNumberError extends BonusNumberError {
   static MESSAGE = "보너스 번호는 숫자여야합니다.";
 
   constructor() {
@@ -8,7 +28,7 @@ export class BonusNumberNotNumberError extends RuntimeError {
   }
 }
 
-export class BonusNumberOutOfRangeError extends RuntimeError {
+export class BonusNumberOutOfRangeError extends BonusNumberError {
   static MESSAGE = "보너스 번호는 [1, 45] 사이의 숫자여야합니다.";
 
   constructor() {
@@ -16,7 +36,7 @@ export class BonusNumberOutOfRangeError extends RuntimeError {
   }
 }
 
-export class BonusNumberDuplicatedError extends RuntimeError {
+export class BonusNumberDuplicatedError extends BonusNumberError {
   static MESSAGE = "보너스 번호는 당첨 번호와 중복되지 않아야합니다.";
 
   constructor() {

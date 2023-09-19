@@ -44,20 +44,25 @@ export default class View {
     cbFunc(purchasingPrice);
   }
 
-  async addWinningInfoHandler(cbFunc) {
+  async addWinningNumberHandler(cbFunc) {
     const winningNumbersInput = await new Promise((resolve) =>
       readlineInterface.question("> 당첨 번호를 입력해 주세요. ", resolve)
     );
-    const winningNumbers = this.#convertToArray(winningNumbersInput);
-    this.printLine("");
 
+    const winningNumbers = this.#convertToArray(winningNumbersInput);
+    cbFunc(winningNumbers);
+
+    this.printLine("");
+  }
+
+  async addBonusNumberHandler(cbFunc) {
     const bonusNumberInput = await new Promise((resolve) =>
       readlineInterface.question("> 보너스 번호를 입력해 주세요. ", resolve)
     );
     const bonusNumber = this.#convertToMatchingDataType(bonusNumberInput);
-    this.printLine("");
+    cbFunc(bonusNumber);
 
-    cbFunc(winningNumbers, bonusNumber);
+    this.printLine("");
   }
 
   printStatistics(rankCount, revenueRate) {

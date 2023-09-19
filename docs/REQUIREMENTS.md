@@ -86,3 +86,7 @@ f1 -> f2 -> f3
 [all] 에러 처리
 
 - 사용자가 잘못된 값을 입력한 경우 throw 문으로 에러 발생시키고, 에러 메시지 출력 후 해당 부분부터 입력 다시 받기
+  V purchasingPrice를 잘못 입력한 경우
+  V winningLottoNumbers를 잘못 입력한 경우
+  V BonusNumber를 잘못 입력한 경우
+  V 그 외 Error 발생한 경우, 앱 종료

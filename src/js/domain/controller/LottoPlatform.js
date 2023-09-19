@@ -1,11 +1,13 @@
 import LottoMachine from "../models/LottoMachine/index.js";
+import Lotto from "../models/Lotto/index.js";
 import WinningLotto from "../models/WinningLotto/index.js";
 import Statistics from "../models/Statistics.js";
-import RuntimeError from "../RuntimeError.js";
+import ValidationError from "../ValidationError.js";
 import View from "../../UI/View.js";
 
 export default class LottoPlatform {
   #view;
+  #lottoWithWinningNumbers;
   #lottos = [];
   #ranks = [];
 
@@ -26,8 +28,15 @@ export default class LottoPlatform {
     this.#view.printLine("");
   }
 
-  #checkLottoResult(winningLottoNumbers, bonusNumber) {
-    const winningLotto = new WinningLotto(winningLottoNumbers, bonusNumber);
+  #validateWinningNumbers(winningNumbers) {
+    this.#lottoWithWinningNumbers = Lotto.of(winningNumbers);
+  }
+
+  #checkLottoResult(bonusNumber) {
+    const winningLotto = new WinningLotto(
+      this.#lottoWithWinningNumbers,
+      bonusNumber
+    );
     this.#lottos.forEach((targetLotto) => {
       this.#ranks.push(winningLotto.getRank(targetLotto));
     });
@@ -40,26 +49,61 @@ export default class LottoPlatform {
     this.#view.printStatistics(rankCount, revenueRate);
   }
 
-  async run() {
+  async runOnce() {
     try {
       await this.#view.addPurchasingPriceHandler((purchasingPrice) =>
         this.#issueLottos(purchasingPrice)
       );
       this.#displayLottos();
 
-      await this.#view.addWinningInfoHandler((winningNumbers, bonusNumber) =>
-        this.#checkLottoResult(winningNumbers, bonusNumber)
+      await this.#view.addWinningNumberHandler((winningNumbers) =>
+        this.#validateWinningNumbers(winningNumbers)
+      );
+
+      await this.#view.addBonusNumberHandler((bonusNumber) =>
+        this.#checkLottoResult(bonusNumber)
       );
       this.#displayLottoStatistics();
     } catch (error) {
-      let message = error.message;
-      if (error instanceof RuntimeError) {
-        message = error.getMessage();
-      }
-
-      this.#view.printLine(message);
+      this.#view.printLine(error.message);
     } finally {
       this.#view.close();
     }
+  }
+
+  async runUntilFinish() {
+    let goToFlag = 1;
+
+    while (goToFlag !== 4) {
+      try {
+        while (goToFlag === 1) {
+          await this.#view.addPurchasingPriceHandler((purchasingPrice) =>
+            this.#issueLottos(purchasingPrice)
+          );
+          this.#displayLottos();
+          goToFlag = 2;
+        }
+
+        while (goToFlag === 2) {
+          await this.#view.addWinningNumberHandler((winningNumbers) =>
+            this.#validateWinningNumbers(winningNumbers)
+          );
+          goToFlag = 3;
+        }
+
+        while (goToFlag === 3) {
+          await this.#view.addBonusNumberHandler((bonusNumber) =>
+            this.#checkLottoResult(bonusNumber)
+          );
+          goToFlag = 4;
+        }
+
+        this.#displayLottoStatistics();
+      } catch (error) {
+        this.#view.printLine(error.message);
+      }
+    }
+
+    this.#view.close();
   }
 }
