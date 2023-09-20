@@ -1,4 +1,4 @@
-import { LOTTO_PRICE, LOTTO_PRIZE, LOTTO_MATCH_COUNT } from '../constants/index';
+import { LOTTO_PRICE, LOTTO_PRIZE, LOTTO_MATCH_COUNT } from '../constants/index.js';
 
 class LottoOrganizer {
   #lottoCalculator = null;

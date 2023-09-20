@@ -4,8 +4,8 @@ import {
   LOTTO_NUMBER_LENGTH,
   LOTTO_MIN_NUMBER,
   LOTTO_MAX_NUMBER
-} from '../constants/index';
-import { isDuplicateArray, isTruthyArray, convertStringToNumber } from '../../utils/index';
+} from '../constants/index.js';
+import { isDuplicateArray, isTruthyArray, convertStringToNumber } from '../../utils/index.js';
 
 class LottoMachine {
   #winningLottoNumber = [];

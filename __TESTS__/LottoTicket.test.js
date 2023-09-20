@@ -9,7 +9,7 @@ import {
   LOTTO_MIN_NUMBER,
   LOTTO_MAX_NUMBER,
   ERROR_MESSAGE
-} from '../src/domain/constants/index';
+} from '../src/domain/constants/index.js';
 import { LottoTicket } from '../src/domain/models/index';
 
 describe('로또 티켓 테스트', () => {

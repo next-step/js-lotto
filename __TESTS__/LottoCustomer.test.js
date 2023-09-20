@@ -4,7 +4,7 @@ import {
   DUMMY_PURCHASABLE_AMOUNT,
   DUMMY_NOT_PURCHASABLE_AMOUNT
 } from './constants';
-import { ERROR_MESSAGE, LOTTO_PRICE } from '../src/domain/constants/index';
+import { ERROR_MESSAGE, LOTTO_PRICE } from '../src/domain/constants/index.js';
 import { LottoCustomer, LottoSeller, LottoOrganizer } from '../src/domain/models/index';
 
 let lottoSeller = null;

@@ -6,7 +6,7 @@ import {
   createWinningRateMessage,
   createLottoStatisticsMessage
 } from './domain/services/index';
-import { ALERT_MESSAGE, APP_EXIT_KEY } from './domain/constants/index';
+import { ALERT_MESSAGE, APP_EXIT_KEY } from './domain/constants/index.js';
 import { printMessage, printMessageList } from './view/cliViewer';
 
 const executeLottoApp = async () => {

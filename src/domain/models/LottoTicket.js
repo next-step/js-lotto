@@ -1,4 +1,4 @@
-import { isPositiveNumber, isDuplicateArray, shuffleArray, convertStringToNumber } from '../../utils/index';
+import { isPositiveNumber, isDuplicateArray, shuffleArray, convertStringToNumber } from '../../utils/index.js';
 import {
   LOTTO_BALLS,
   ERROR_MESSAGE,
@@ -7,7 +7,7 @@ import {
   LOTTO_MODE,
   LOTTO_NUMBER_SEPARATOR,
   LOTTO_NUMBER_LENGTH
-} from '../constants/index';
+} from '../constants/index.js';
 
 class LottoTicket {
   #result = null;

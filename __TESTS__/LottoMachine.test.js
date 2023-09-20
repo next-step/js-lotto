@@ -14,7 +14,7 @@ import {
   LOTTO_BONUS_NUMBER_LENGTH,
   LOTTO_MIN_NUMBER,
   LOTTO_MAX_NUMBER
-} from '../src/domain/constants/index';
+} from '../src/domain/constants/index.js';
 
 describe('로또 당첨 번호 테스트', () => {
   test.each(DUMMY_WINNING_LOTTO)(

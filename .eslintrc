@@ -15,7 +15,13 @@
     "prettier/prettier": ["off"],
     "lines-between-class-members": "off",
     "class-methods-use-this": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "no-undef": "off",
+    "no-restricted-syntax": "off",
+    "no-return-assign": "off",
+    "no-param-reassign": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": "off"
   },
   "ignorePatterns": ["node_modules/", "/__tests__", "loader.js", "*.config.js"]
 }

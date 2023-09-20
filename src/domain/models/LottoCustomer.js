@@ -1,5 +1,5 @@
-import { ERROR_MESSAGE } from '../constants/index';
-import { isPositiveNumber } from '../../utils/index';
+import { ERROR_MESSAGE } from '../constants/index.js';
+import { isPositiveNumber } from '../../utils/index.js';
 
 class LottoCustomer {
   #lottoTickets = [];

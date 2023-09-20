@@ -1,5 +1,5 @@
-import { ERROR_MESSAGE, LOTTO_MODE } from '../constants/index';
-import LottoTicket from './LottoTicket';
+import { ERROR_MESSAGE, LOTTO_MODE } from '../constants/index.js';
+import LottoTicket from './LottoTicket.js';
 
 class LottoSeller {
   #sellCount = 0;
