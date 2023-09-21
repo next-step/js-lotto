@@ -94,7 +94,7 @@ export class ViewWeb {
   async #readBonusNumber(lottoNumbers) {
     return WebErrorHandler.catcher(() => {
       const $bonusNumber = this.#element.get(SELECTOR.LOTTO.BONUS_NUMBER);
-      const bonusNumber = Number($bonusNumber.value);
+      const bonusNumber = $bonusNumber.valueAsNumber;
 
       this.#validator.readBonusNumber(bonusNumber, lottoNumbers);
 
