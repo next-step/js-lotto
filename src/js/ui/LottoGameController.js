@@ -1,8 +1,6 @@
-import LottoGameView from './LottoGameView.js'
 import LottoVendingMachine from '../domain/LottoVendingMachine.js'
 import LottoWinningCalculator from '../domain/LottoWinningCalculator.js'
 import LottoWinningNumbers from '../domain/LottoWinningNumbers.js'
-import { PROMPT } from '../../constants/prompt.js'
 import { withRetry } from '../utils/withRetry.js'
 
 class LottoGameController {
@@ -11,7 +9,7 @@ class LottoGameController {
   #winningCalculator
 
   constructor(
-    view = new LottoGameView(),
+    view,
     vendingMachine = new LottoVendingMachine(),
     winningCalculator = new LottoWinningCalculator(),
   ) {
@@ -20,6 +18,7 @@ class LottoGameController {
     this.#winningCalculator = winningCalculator
   }
 
+  // FIXME: withRetry 를 view 에 맞게 주입받도록 변경하자
   async run() {
     try {
       const purchasedLottoList = await withRetry(
@@ -33,7 +32,7 @@ class LottoGameController {
         purchasedLottoList,
       )
 
-      this.printResult(result)
+      this.#view.printResult(result)
 
       await this.restartOrEnd()
     } catch (error) {
@@ -41,6 +40,7 @@ class LottoGameController {
     }
   }
 
+  // TODO: 이 재시작 로직이 웹, 콘솔 구애받지 않고 실행될 수 있도록 하자.
   async restartOrEnd() {
     const action = await this.#view.getRestart()
 
@@ -49,9 +49,9 @@ class LottoGameController {
         this.run()
         break
       case 'n':
-        process.exit()
+      // process.exit()
       default:
-        process.exit()
+      // process.exit()
     }
   }
 
@@ -61,16 +61,18 @@ class LottoGameController {
     this.#vendingMachine.purchase(purchaseAmount)
     const purchasedLottoList = this.#vendingMachine.lottos
 
-    this.printPurchasedLottos(purchasedLottoList)
+    this.#view.printPurchasedLottos(purchasedLottoList)
 
     return purchasedLottoList
   }
 
   async setWinningNumbers() {
-    const selectedNums = (await this.#view.getLottoWinningNumbers()).split(',')
-    const extraNum = await this.#view.getExtraNumber()
+    const { selectedNums, extraNum } = await this.#view.getLottoWinningNumbers()
 
-    return new LottoWinningNumbers({ selectedNums, extraNum })
+    return new LottoWinningNumbers({
+      selectedNums: selectedNums,
+      extraNum,
+    })
   }
 
   calculateResults(lottoWinningNumbers, purchasedLottoList) {
@@ -84,44 +86,11 @@ class LottoGameController {
     return this.#winningCalculator.result
   }
 
-  printPurchasedLottos(purchasedLottoList) {
-    this.#view.print(`\n${purchasedLottoList.length}개를 구매했습니다.`)
-
-    purchasedLottoList.forEach((lotto) => {
-      const { selectedNums, extraNum } = lotto.numbers
-      const numbers = [...selectedNums, extraNum].sort((a, b) => a - b)
-      this.#view.print(numbers)
-    })
-  }
-
   getLottoStatus(lottoWinningNumbers, purchasedLottoList) {
     return purchasedLottoList.map((lotto) => {
       lotto.setStatus(lottoWinningNumbers)
       return lotto.status
     })
-  }
-
-  formatLottoResults(result) {
-    const HEADER = '\n당첨 통계\n----------------------\n'
-    const FOOTER = `총 수익률은 ${result.profitRate}%입니다.`
-    const mapping = new Map([
-      [3, PROMPT.LOTTO_MATCHING_RESULTS[3]],
-      [4, PROMPT.LOTTO_MATCHING_RESULTS[4]],
-      [5, PROMPT.LOTTO_MATCHING_RESULTS[5]],
-      [5.5, PROMPT.LOTTO_MATCHING_RESULTS[5.5]],
-      [6, PROMPT.LOTTO_MATCHING_RESULTS[6]],
-    ])
-
-    const output = Array.from(mapping.keys()).reduce((acc, key) => {
-      return `${acc}${mapping.get(key)} - ${result[key]}개\n`
-    }, '')
-
-    return `${HEADER}${output}${FOOTER}`
-  }
-
-  printResult(result) {
-    const formattedResult = this.formatLottoResults(result)
-    this.#view.print(formattedResult)
   }
 }
 

@@ -1,9 +1,11 @@
-import { PROMPT } from '../../constants/prompt.js'
 import LottoGameView from './LottoGameView.js'
 
 class LottoGameViewWeb extends LottoGameView {
+  #restart
+
   constructor() {
     super()
+    this.#restart = 'n'
   }
 
   async getPurchaseAmount() {
@@ -22,8 +24,6 @@ class LottoGameViewWeb extends LottoGameView {
     const { selectedNums, extraNum } = await this.#createButtonClickPromise()
     return { selectedNums: selectedNums, extraNum }
   }
-
-  async getRestart() {}
 
   printPurchasedLottos(purchasedLottoList) {
     const lottoAmount = purchasedLottoList.length
@@ -83,6 +83,7 @@ class LottoGameViewWeb extends LottoGameView {
   }
 
   printResult(result) {
+    // 결과 출력
     const threeEl = document.querySelector('#match-three')
     const fourEl = document.querySelector('#match-four')
     const fiveEl = document.querySelector('#match-five')
@@ -97,16 +98,33 @@ class LottoGameViewWeb extends LottoGameView {
 
     const profitRateEl = document.querySelector('#profit-rate')
     profitRateEl.textContent = `당신의 총 수익률은 ${result.profitRate}%입니다.`
+
+    const $showResultButton = document.querySelector(
+      '.open-result-modal-button',
+    )
+    const $closeButton = document.querySelector('.modal-close')
+    const $retryButton = document.querySelector('.retry-button')
+    const $modal = document.querySelector('.modal')
+
+    const onModalShow = () => {
+      $modal.classList.add('open')
+    }
+
+    const onModalClose = () => {
+      $modal.classList.remove('open')
+      this.#restart = 'y'
+    }
+
+    $showResultButton.addEventListener('click', onModalShow)
+    $closeButton.addEventListener('click', onModalClose)
+    $retryButton.addEventListener('click', onModalClose)
   }
 
-  print(prompt) {}
+  async getRestart() {
+    return new Promise((resolve) => {
+      resolve(this.#restart)
+    })
+  }
 }
 
 export default LottoGameViewWeb
-
-/*
-            <div class="d-flex items-center">
-                <span class="mx-1 text-4xl">🎟️</span>
-                <span class="mx-1 text-base">2, 3, 4, 5, 6, 7, 8</span>
-              </div>
-*/
