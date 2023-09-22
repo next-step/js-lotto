@@ -64,7 +64,7 @@ export class WebController {
 
   async #restartGame() {
     this.#view.closeModal();
-    this.#storage = new Map();
+    this.#storage.clear();
     this.#view.resetView();
   }
 }
