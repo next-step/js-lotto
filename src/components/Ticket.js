@@ -1,6 +1,4 @@
-// 배열의 값을 갖는 컨테이너 컴포넌트를 하나의 컴포넌트로 합치는 역할을합니다.
-const concatContainer = (array, component) =>
-  array.map((item) => component(item)).join('');
+import { concatContainer } from '../utils/components';
 
 const TicketNumber = (ticketNumber) => `
   <span class="mx-1 test-ticket-number">${ticketNumber}</span>
