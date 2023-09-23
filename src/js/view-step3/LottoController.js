@@ -32,97 +32,98 @@ export class LottoController {
     };
   }
 
+  hadleSubmitInputPriceForm = (e) => {
+    e.preventDefault();
+
+    const purchaseAmount = this.#inputPriceFormView.getPurchaseAmount();
+
+    try {
+      const lottos = this.#lottoMachine.issueLotto(purchaseAmount);
+
+      this.#store.lottos = lottos;
+
+      this.#purchasedLottoView.setTotalPurchased(this.#store.lottos.length);
+
+      this.#purchasedLottoView.setLottoIcons(this.#store.lottos);
+
+      this.#purchasedLottoView.showPurchasedLottos();
+
+      this.#inputLottoNumsVIew.showInputLottoNums();
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  handleClickLottoNumbersToggleBtn = (e) => {
+    this.#purchasedLottoView.setLottoIcons(
+      this.#store.lottos,
+      e.target.checked
+    );
+  };
+
+  handleClickLottoResult = () => {
+    try {
+      const result = this.getLottoResult(this.#store.lottos);
+
+      const rateOfReturn = this.getRateOfReturn(result, this.#store.lottos);
+
+      this.showResult(result, rateOfReturn);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  handleClickRestart = () => {
+    this.#initialize();
+    this.#inputLottoNumsVIew.initialize();
+    this.#purchasedLottoView.initialize();
+    this.#modalView.closeModal();
+  };
+
+  getLottoResult(lottos) {
+    const { winningNumbers, bonusNumber } =
+      this.#inputLottoNumsVIew.getWinningAndBonusNumbers();
+
+    const winningLotto = new WinningLotto(
+      new Lotto(winningNumbers),
+      bonusNumber
+    );
+
+    return this.#lottoMachine.checkWinningLotto(lottos, winningLotto);
+  }
+
+  getRateOfReturn(result, lottos) {
+    return calculateRateOfReturn(
+      result.TOTAL_WINNING_PRIZE,
+      lottos.length * LOTTO_AMOUNT_UNIT
+    );
+  }
+
+  showResult(result, rateOfReturn) {
+    this.#inputLottoNumsVIew.setResultHtml(result, rateOfReturn);
+    this.#modalView.openModal();
+  }
+
   start() {
-    const hadleInputPriceForm = (e) => {
-      e.preventDefault();
-      const purchaseAmount = this.#inputPriceFormView.getPurchaseAmount();
-
-      try {
-        const lottos = this.#lottoMachine.issueLotto(purchaseAmount);
-
-        this.#store.lottos = lottos;
-
-        this.#purchasedLottoView.setTotalPurchased(this.#store.lottos.length);
-
-        this.#purchasedLottoView.setLottoIcons(this.#store.lottos);
-
-        this.#purchasedLottoView.showPurchasedLottos();
-
-        this.#inputLottoNumsVIew.showInputLottoNums();
-      } catch (error) {
-        alert(error.message);
-      }
-    };
-
     this.#inputPriceFormView.inputPriceForm.addEventListener(
       'submit',
-      hadleInputPriceForm
+      this.hadleSubmitInputPriceForm
     );
 
-    const handleLottoSwitch = (e) => {
-      if (e.target.checked) {
-        this.#purchasedLottoView.setLottoIcons(this.#store.lottos, true);
-        return;
-      }
-      this.#purchasedLottoView.setLottoIcons(this.#store.lottos);
-    };
-
-    this.#purchasedLottoView.lottoSwitch.addEventListener(
+    this.#purchasedLottoView.lottoNumbersToggleBtn.addEventListener(
       'click',
-      handleLottoSwitch
+      this.handleClickLottoNumbersToggleBtn
     );
-
-    const handleInputLottoNums = () => {
-      const { winningNumbers, bonusNumber } =
-        this.#inputLottoNumsVIew.getWinningAndBonusNumbers();
-
-      this.#store.winningNumbers = winningNumbers;
-      this.#store.bonusNumber = bonusNumber;
-
-      try {
-        const winningLotto = new WinningLotto(
-          new Lotto(this.#store.winningNumbers),
-          this.#store.bonusNumber
-        );
-
-        const result = this.#lottoMachine.checkWinningLotto(
-          this.#store.lottos,
-          winningLotto
-        );
-
-        this.#store.result = result;
-
-        const purchaseAmount = this.#store.lottos.length * LOTTO_AMOUNT_UNIT;
-        const rateOfReturn = calculateRateOfReturn(
-          result.TOTAL_WINNING_PRIZE,
-          purchaseAmount
-        );
-
-        this.#inputLottoNumsVIew.setResultHtml(
-          this.#store.result,
-          rateOfReturn
-        );
-
-        this.#modalView.openModal();
-      } catch (error) {
-        alert(error.message);
-      }
-    };
 
     this.#inputLottoNumsVIew.showResultBtn.addEventListener(
       'click',
-      handleInputLottoNums
+      this.handleClickLottoResult
     );
 
-    this.#modalView.modalClose.addEventListener('click', () => {
-      this.#modalView.closeModal();
-    });
+    this.#modalView.modalClose.addEventListener('click', () =>
+      this.#modalView.closeModal()
+    );
 
-    this.#modalView.restart.addEventListener('click', () => {
-      this.#initialize();
-      this.#inputLottoNumsVIew.initialize();
-      this.#purchasedLottoView.initialize();
-      this.#modalView.closeModal();
-    });
+    this.#modalView.restart.addEventListener('click', this.handleClickRestart);
   }
 }
