@@ -1,5 +1,6 @@
 import { ViewWeb } from './View';
 import { WebController } from './Controller/WebController';
+import { WebErrorHandler } from './Model';
 import './css/index.css';
 
 class App {
@@ -7,7 +8,7 @@ class App {
   #controller;
 
   constructor() {
-    this.#view = new ViewWeb();
+    this.#view = WebErrorHandler.errorProxy(new ViewWeb());
     this.#controller = new WebController(this.#view);
   }
 }
