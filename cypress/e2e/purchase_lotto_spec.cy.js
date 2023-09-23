@@ -70,13 +70,32 @@ describe('로또를 구매하면', () => {
       });
     });
 
-    it('중복된 번호를 입력하면 경고창이 뜬다.', () => {
-      cy.get('.winning-number').each((winningNumberInput, index) => {
-        cy.wrap(winningNumberInput).type(index + 1);
-      });
-      cy.get('.bonus-number').type(1);
+    it('로또 번호가 중복될 경우 경고창이 뜬다.', () => {
+      const winningNumbers = [1, 1, 2, 3, 4, 5];
+      const bonusNumber = 6;
 
-      cy.get('#check-tickets-result').click();
+      cy.inputWinningNumbers({
+        winningNumbers,
+        bonusNumber,
+      });
+
+      cy.get('#check-tickets-result')
+        .click()
+        .then(() => {
+          expect(alertStub).to.have.been.calledWith(
+            MESSAGE.ERROR.DUPLICATE_LOTTO_NUMBERS
+          );
+        });
+    });
+
+    it('보너스 번호가 로또 번호와 중복될 경우 경고창이 뜬다.', () => {
+      const winningNumbers = [1, 2, 3, 4, 5, 6];
+      const bonusNumber = 1;
+
+      cy.inputWinningNumbers({
+        winningNumbers,
+        bonusNumber,
+      });
 
       cy.get('#check-tickets-result')
         .click()
