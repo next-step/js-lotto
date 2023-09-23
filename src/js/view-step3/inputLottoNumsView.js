@@ -1,4 +1,4 @@
-import { $ } from '../utils/dom';
+import { $, hideElement, showElement } from '../utils/dom';
 
 export class InputLottoNumsView {
   #inputLottoNums;
@@ -23,11 +23,12 @@ export class InputLottoNumsView {
     this.#fifth = $('.fifth');
     this.#rateOfReturn = $('.rate-of-return');
 
-    this.#inputLottoNums.style.display = 'none';
+    hideElement(this.#inputLottoNums);
   }
 
   getWinningAndBonusNumbers() {
-    this.#inputs.forEach((input) => this.#inputValues.push(input.value));
+    this.#inputValues = [...this.#inputs].map((input) => input.value);
+
     return {
       winningNumbers: this.#inputValues.slice(0, 6),
       bonusNumber: this.#inputValues[this.#inputValues.length - 1],
@@ -49,7 +50,7 @@ export class InputLottoNumsView {
   }
 
   showInputLottoNums() {
-    this.#inputLottoNums.style.display = 'block';
+    showElement(this.#inputLottoNums);
   }
 
   initialize() {
