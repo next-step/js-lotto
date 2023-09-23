@@ -1,16 +1,21 @@
-import { SELECTOR } from '../../src/constants';
+import { SELECTOR, MESSAGE } from '../../src/constants';
 
 describe('로또를 구매하면', () => {
+  let alertStub;
+
   beforeEach(() => {
     cy.visit('http://localhost:9000');
+    alertStub = cy.stub().as('alertStub');
+    cy.on('window:alert', alertStub);
   });
 
   describe('금액이 부족할 경우', () => {
-    it('경고창이 뜬다.', () => {
-      const alertStub = cy.stub().as('alertStub');
-      cy.on('window:alert', alertStub);
+    beforeEach(() => {
+      cy.purchaseLotto(500);
+    });
 
-      cy.purchaseLotto(500).then(() => {
+    it('경고창이 뜬다.', () => {
+      cy.then(() => {
         expect(alertStub).to.have.been.calledWith(
           '구입 금액보다 상품의 가격이 높습니다.'
         );
@@ -18,8 +23,6 @@ describe('로또를 구매하면', () => {
     });
 
     it('로또 번호 입력창이 떠서는 안된다.', () => {
-      cy.purchaseLotto(500);
-
       cy.get('.winning-number').should('not.exist');
     });
   });
@@ -52,15 +55,36 @@ describe('로또를 구매하면', () => {
     });
   });
 
-  it('당첨 번호와 보너스 번호를 입력할 수 있다', () => {
-    cy.purchaseLotto(1000);
+  describe('당첨 번호와 보너스 번호는', () => {
+    beforeEach(() => {
+      cy.purchaseLotto(1000);
+    });
 
-    const winningNumbers = [1, 2, 3, 4, 5, 6];
-    const bonusNumber = 7;
+    it('로또를 구매하면 입력할 수 있다.', () => {
+      const winningNumbers = [1, 2, 3, 4, 5, 6];
+      const bonusNumber = 7;
 
-    cy.inputWinningNumbers({
-      winningNumbers,
-      bonusNumber,
+      cy.inputWinningNumbers({
+        winningNumbers,
+        bonusNumber,
+      });
+    });
+
+    it('중복된 번호를 입력하면 경고창이 뜬다.', () => {
+      cy.get('.winning-number').each((winningNumberInput, index) => {
+        cy.wrap(winningNumberInput).type(index + 1);
+      });
+      cy.get('.bonus-number').type(1);
+
+      cy.get('#check-tickets-result').click();
+
+      cy.get('#check-tickets-result')
+        .click()
+        .then(() => {
+          expect(alertStub).to.have.been.calledWith(
+            MESSAGE.ERROR.DUPLICATE_BONUS_NUMBER
+          );
+        });
     });
   });
 });
