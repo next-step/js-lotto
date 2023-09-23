@@ -1,4 +1,4 @@
-import { SELECTOR, MESSAGE } from '../../src/constants';
+import { SELECTOR, MESSAGE, NUMBER } from '../../src/constants';
 
 describe('로또를 구매하면', () => {
   let alertStub;
@@ -55,12 +55,12 @@ describe('로또를 구매하면', () => {
     });
   });
 
-  describe('당첨 번호와 보너스 번호는', () => {
+  describe('당첨 번호와 보너스 번호', () => {
     beforeEach(() => {
       cy.purchaseLotto(1000);
     });
 
-    it('로또를 구매하면 입력할 수 있다.', () => {
+    it('입력할 수 있다.', () => {
       const winningNumbers = [1, 2, 3, 4, 5, 6];
       const bonusNumber = 7;
 
@@ -70,40 +70,72 @@ describe('로또를 구매하면', () => {
       });
     });
 
-    it('로또 번호가 중복될 경우 경고창이 뜬다.', () => {
-      const winningNumbers = [1, 1, 2, 3, 4, 5];
-      const bonusNumber = 6;
+    describe('번호가 중복될 경우 경고창이 뜬다.', () => {
+      it('로또 번호 중복', () => {
+        const winningNumbers = [1, 1, 2, 3, 4, 5];
+        const bonusNumber = 6;
 
-      cy.inputWinningNumbers({
-        winningNumbers,
-        bonusNumber,
+        cy.inputWinningNumbers({
+          winningNumbers,
+          bonusNumber,
+        });
+
+        cy.get(SELECTOR.MODAL.CHECK_TICKETS_RESULT)
+          .click()
+          .then(() => {
+            expect(alertStub).to.have.been.calledWith(
+              MESSAGE.ERROR.DUPLICATE_LOTTO_NUMBERS
+            );
+          });
       });
 
-      cy.get('#check-tickets-result')
-        .click()
-        .then(() => {
-          expect(alertStub).to.have.been.calledWith(
-            MESSAGE.ERROR.DUPLICATE_LOTTO_NUMBERS
-          );
+      it('보너스 번호 중복', () => {
+        const winningNumbers = [1, 2, 3, 4, 5, 6];
+        const bonusNumber = 1;
+
+        cy.inputWinningNumbers({
+          winningNumbers,
+          bonusNumber,
         });
+
+        cy.get(SELECTOR.MODAL.CHECK_TICKETS_RESULT)
+          .click()
+          .then(() => {
+            expect(alertStub).to.have.been.calledWith(
+              MESSAGE.ERROR.DUPLICATE_BONUS_NUMBER
+            );
+          });
+      });
     });
 
-    it('보너스 번호가 로또 번호와 중복될 경우 경고창이 뜬다.', () => {
-      const winningNumbers = [1, 2, 3, 4, 5, 6];
-      const bonusNumber = 1;
+    describe('번호가 범위를 벗어나면 결과창이 뜨지 않는다.', () => {
+      const invalidNumbers = [0, 50, 100];
 
-      cy.inputWinningNumbers({
-        winningNumbers,
-        bonusNumber,
+      invalidNumbers.forEach((invalidNumber) => {
+        it('범위를 벗어난 로또번호로 제출이 불가하다.', () => {
+          const winningNumbers = [1, 2, 3, 4, 5, invalidNumber];
+          const bonusNumber = 7;
+
+          cy.inputWinningNumbers({ winningNumbers, bonusNumber });
+          cy.get(SELECTOR.MODAL.CHECK_TICKETS_RESULT).click();
+
+          cy.get('.modal-inner').should('not.exist');
+        });
       });
 
-      cy.get('#check-tickets-result')
-        .click()
-        .then(() => {
-          expect(alertStub).to.have.been.calledWith(
-            MESSAGE.ERROR.DUPLICATE_BONUS_NUMBER
-          );
+      invalidNumbers.forEach((invalidNumber) => {
+        it('범위를 벗어난 보너스 번호로 제출이 불가하다.', () => {
+          const winningNumbers = [1, 2, 3, 4, 5, 6];
+
+          cy.inputWinningNumbers({
+            winningNumbers,
+            bonusNumber: invalidNumber,
+          });
+          cy.get(SELECTOR.MODAL.CHECK_TICKETS_RESULT).click();
+
+          cy.get('.modal-inner').should('not.exist');
         });
+      });
     });
   });
 });
