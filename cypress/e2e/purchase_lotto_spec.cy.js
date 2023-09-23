@@ -138,4 +138,22 @@ describe('로또를 구매하면', () => {
       });
     });
   });
+
+  describe('다시 시작하기 버튼을 누르면', () => {
+    it('로또번호 입력창이 사라진다.', () => {
+      cy.purchaseLotto(1000);
+
+      const winningNumbers = [1, 2, 3, 4, 5, 6];
+      const bonusNumber = 7;
+
+      cy.inputWinningNumbers({
+        winningNumbers,
+        bonusNumber,
+      });
+      cy.get(SELECTOR.MODAL.CHECK_TICKETS_RESULT).click();
+      cy.get(SELECTOR.PLAY_OPTION.RESTART_BUTTON).click();
+
+      cy.get('.winning-number').should('not.exist');
+    });
+  });
 });
