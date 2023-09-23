@@ -5,14 +5,22 @@ describe('로또를 구매하면', () => {
     cy.visit('http://localhost:9000');
   });
 
-  it('금액이 부족할 경우 경고창이 뜬다.', () => {
-    const alertStub = cy.stub().as('alertStub');
-    cy.on('window:alert', alertStub);
+  describe('금액이 부족할 경우', () => {
+    it('경고창이 뜬다.', () => {
+      const alertStub = cy.stub().as('alertStub');
+      cy.on('window:alert', alertStub);
 
-    cy.purchaseLotto(500).then(() => {
-      expect(alertStub).to.have.been.calledWith(
-        '구입 금액보다 상품의 가격이 높습니다.'
-      );
+      cy.purchaseLotto(500).then(() => {
+        expect(alertStub).to.have.been.calledWith(
+          '구입 금액보다 상품의 가격이 높습니다.'
+        );
+      });
+    });
+
+    it('로또 번호 입력창이 떠서는 안된다.', () => {
+      cy.purchaseLotto(500);
+
+      cy.get('.winning-number').should('not.exist');
     });
   });
 
