@@ -1,60 +1,56 @@
-import { $ } from '../utils/dom';
+import { $, hideElement, removeAllChild, showElement } from '../utils/dom';
 
 export class PurchasedLottoView {
   #lottoIcons;
   #totalPurchased;
   #purchasedLottos;
-  #lottoSwitch;
+  #lottoNumbersToggleBtn;
 
   constructor() {
     this.#lottoIcons = $('.lotto-icons');
     this.#totalPurchased = $('.total-purchased');
     this.#purchasedLottos = $('.purchased-lottos');
-    this.#lottoSwitch = $('.lotto-switch');
+    this.#lottoNumbersToggleBtn = $('.lotto-switch');
 
     this.initialize();
   }
 
   initialize() {
-    this.#purchasedLottos.style.display = 'none';
     this.#totalPurchased.innerHTML = '';
-    while (this.#lottoIcons.firstChild) {
-      this.#lottoIcons.removeChild(this.#lottoIcons.firstChild);
-    }
+    hideElement(this.#purchasedLottos);
+    removeAllChild(this.#lottoIcons);
   }
 
   setTotalPurchased(totalNumber) {
     this.#totalPurchased.innerHTML = `총 ${totalNumber}개를 구매하였습니다.`;
   }
 
-  setLottoIcons(lottos, isWithNums = false) {
-    while (this.#lottoIcons.firstChild) {
-      this.#lottoIcons.removeChild(this.#lottoIcons.firstChild);
-    }
+  setLottoIcons(lottos, isWithNums) {
+    removeAllChild(this.#lottoIcons);
 
     lottos.forEach((lotto) => {
-      const lottoIcon = this.getLottoIconHtml();
-      if (isWithNums) {
-        lottoIcon.textContent += lotto.numbers;
-      }
-      this.#lottoIcons.appendChild(lottoIcon);
+      this.#lottoIcons.appendChild(this.getLottoIconHtml(lotto, isWithNums));
     });
   }
 
-  getLottoIconHtml() {
+  getLottoIconHtml(lotto, isWithNums) {
     const lottoIcon = '🎟️ ';
     const lottoIconHtml = document.createElement('span');
     lottoIconHtml.innerHTML = lottoIcon;
     lottoIconHtml.classList.add('mx-1', 'text-4xl');
 
+    if (isWithNums) {
+      lottoIconHtml.textContent += lotto.numbers;
+    }
+
     return lottoIconHtml;
   }
 
   showPurchasedLottos() {
-    this.#purchasedLottos.style.display = 'block';
+    showElement(this.#purchasedLottos);
   }
 
   get lottoSwitch() {
-    return this.#lottoSwitch;
+    return this.#lottoNumbersToggleBtn;
   }
 }
