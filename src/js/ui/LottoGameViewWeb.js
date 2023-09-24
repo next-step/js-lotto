@@ -1,130 +1,130 @@
-import LottoGameView from './LottoGameView.js'
+import LottoGameView from './LottoGameView.js';
 
 class LottoGameViewWeb extends LottoGameView {
-  #restart
+  #restart;
 
   constructor() {
-    super()
-    this.#restart = 'n'
+    super();
+    this.#restart = 'n';
   }
 
   async getPurchaseAmount() {
     return new Promise(async (resolve, reject) => {
-      const button = document.getElementById('purchase-button')
+      const button = document.getElementById('purchase-button');
 
       button.addEventListener('click', async () => {
-        const input = document.getElementById('purchase-amount-input')
-        const purchaseAmount = input.value
-        resolve(purchaseAmount)
-      })
-    })
+        const input = document.getElementById('purchase-amount-input');
+        const purchaseAmount = input.value;
+        resolve(purchaseAmount);
+      });
+    });
   }
 
   async getLottoWinningNumbers() {
-    const { selectedNums, extraNum } = await this.#createButtonClickPromise()
-    return { selectedNums: selectedNums, extraNum }
+    const { selectedNums, extraNum } = await this.#createButtonClickPromise();
+    return { selectedNums: selectedNums, extraNum };
   }
 
   printPurchasedLottos(purchasedLottoList) {
-    const lottoAmount = purchasedLottoList.length
+    const lottoAmount = purchasedLottoList.length;
 
     // 구매한 갯수 출력
-    const view = document.getElementById('purchased-amount-view')
-    const message = `총 ${lottoAmount}개를 구매하였습니다.`
-    view.textContent = message
+    const view = document.getElementById('purchased-amount-view');
+    const message = `총 ${lottoAmount}개를 구매하였습니다.`;
+    view.textContent = message;
 
     // 로또 이미지, 로또 번호 출력
-    const lottoWrapper = document.getElementById('ticket-image-wrapper')
+    const lottoWrapper = document.getElementById('ticket-image-wrapper');
     purchasedLottoList.forEach((lotto) => {
-      const { selectedNums, extraNum } = lotto.numbers
-      const numbers = [...selectedNums, extraNum].sort((a, b) => a - b)
+      const { selectedNums, extraNum } = lotto.numbers;
+      const numbers = [...selectedNums, extraNum].sort((a, b) => a - b);
 
-      const ticketWrapper = document.createElement('div')
-      ticketWrapper.className = 'd-flex items-center'
+      const ticketWrapper = document.createElement('div');
+      ticketWrapper.className = 'd-flex items-center';
 
-      const ticketElement = document.createElement('span')
-      ticketElement.className = 'mx-1 text-4xl'
-      ticketElement.textContent = '🎟️'
+      const ticketElement = document.createElement('span');
+      ticketElement.className = 'mx-1 text-4xl';
+      ticketElement.textContent = '🎟️';
 
-      const numberElement = document.createElement('span')
-      numberElement.className = 'mx-1 text-base'
-      numberElement.textContent = numbers.join(', ')
+      const numberElement = document.createElement('span');
+      numberElement.className = 'mx-1 text-base';
+      numberElement.textContent = numbers.join(', ');
 
-      ticketWrapper.appendChild(ticketElement)
-      ticketWrapper.appendChild(numberElement)
-
-      lottoWrapper.appendChild(ticketWrapper)
-    })
+      ticketWrapper.append(ticketElement, numberElement);
+      // FIXME: 로또는 한 번에 여러개 발행 가능하고, 여러번 여러개 발행은 불가능하다.
+      lottoWrapper.replaceChildren();
+      lottoWrapper.append(ticketWrapper);
+    });
   }
 
   #createButtonClickPromise() {
     return new Promise((resolve) => {
-      const button = document.querySelector('.open-result-modal-button')
+      const button = document.querySelector('.open-result-modal-button');
       button.addEventListener('click', () => {
         // 일반 번호들 가져오기
         const selectedNumsElements =
-          document.querySelectorAll('.selected-number')
+          document.querySelectorAll('.selected-number');
         const selectedNums = Array.from(selectedNumsElements).map((input) =>
-          Number(input.value),
-        )
+          Number(input.value)
+        );
 
         // 보너스 번호 가져오기
-        const extraNumInput = document.querySelector('.bonus-number')
-        const extraNum = Number(extraNumInput.value)
+        const extraNumInput = document.querySelector('.bonus-number');
+        const extraNum = Number(extraNumInput.value);
 
         // 입력된 번호 컨트롤러로 전달
-        resolve({ selectedNums, extraNum })
+        resolve({ selectedNums, extraNum });
 
         // 모달창 열기
-        const modal = document.querySelector('.modal')
-        modal.classList.add('open')
-      })
-    })
+        const modal = document.querySelector('.modal');
+        modal.classList.add('open');
+      });
+    });
   }
 
   printResult(result) {
     // 결과 출력
-    const threeEl = document.querySelector('#match-three')
-    const fourEl = document.querySelector('#match-four')
-    const fiveEl = document.querySelector('#match-five')
-    const extraEl = document.querySelector('#match-extra')
-    const sixEl = document.querySelector('#match-six')
+    const threeEl = document.querySelector('#match-three');
+    const fourEl = document.querySelector('#match-four');
+    const fiveEl = document.querySelector('#match-five');
+    const extraEl = document.querySelector('#match-extra');
+    const sixEl = document.querySelector('#match-six');
 
-    threeEl.textContent = result[3] + '개'
-    fourEl.textContent = result[4] + '개'
-    fiveEl.textContent = result[5] + '개'
-    extraEl.textContent = result[5.5] + '개'
-    sixEl.textContent = result[6] + '개'
+    threeEl.textContent = result[3] + '개';
+    fourEl.textContent = result[4] + '개';
+    fiveEl.textContent = result[5] + '개';
+    extraEl.textContent = result[5.5] + '개';
+    sixEl.textContent = result[6] + '개';
 
-    const profitRateEl = document.querySelector('#profit-rate')
-    profitRateEl.textContent = `당신의 총 수익률은 ${result.profitRate}%입니다.`
+    const profitRateEl = document.querySelector('#profit-rate');
+    profitRateEl.textContent = `당신의 총 수익률은 ${result.profitRate}%입니다.`;
 
     const $showResultButton = document.querySelector(
-      '.open-result-modal-button',
-    )
-    const $closeButton = document.querySelector('.modal-close')
-    const $retryButton = document.querySelector('.retry-button')
-    const $modal = document.querySelector('.modal')
+      '.open-result-modal-button'
+    );
+    const $closeButton = document.querySelector('.modal-close');
+    const $retryButton = document.querySelector('.retry-button');
+    const $modal = document.querySelector('.modal');
 
     const onModalShow = () => {
-      $modal.classList.add('open')
-    }
+      $modal.classList.add('open');
+    };
 
     const onModalClose = () => {
-      $modal.classList.remove('open')
-      this.#restart = 'y'
-    }
+      $modal.classList.remove('open');
+      this.#restart = 'y';
+    };
 
-    $showResultButton.addEventListener('click', onModalShow)
-    $closeButton.addEventListener('click', onModalClose)
-    $retryButton.addEventListener('click', onModalClose)
+    $showResultButton.addEventListener('click', onModalShow);
+    $closeButton.addEventListener('click', onModalClose);
+    $retryButton.addEventListener('click', onModalClose);
   }
 
   async getRestart() {
     return new Promise((resolve) => {
-      resolve(this.#restart)
-    })
+      resolve(this.#restart);
+    });
   }
 }
 
-export default LottoGameViewWeb
+export default LottoGameViewWeb;

@@ -1,26 +1,75 @@
-/*
-  - [ ] 로또 구매 -> LottoVendingMachine.purchase
-    - [ ] 구입 금액을 입력받는다. 
-    - [ ] 구입 금액만큼 로또를 발행한다.
-  - [ ] 구매한 로또 목록 확인 -> LottoVendingMachine.lottos (length)
-  - [ ] 당첨 번호 및 보너스 번호 지정 -> LottoWinningNumbers({selectedNums, ExtraNum})
-  - [ ] 당첨 통계 확인 -> LottoWinningCalculator.calculate()
-  - [ ] 게임 재시작 -> retry
+import LottoGameViewWeb from './js/ui/LottoGameViewWeb.js';
+import LottoGameController from './js/ui/LottoGameController.js';
 
-  * Controller 에 있는 로직을 별도의 도메인 함수로 분리하면 재사용 가능할 것 같다.
-*/
+class App {
+  #view;
+  #controller;
 
-// 뷰를 추상 클래스로 만든다.
-// 콘솔 기반에서 쓰이도록 override
-// 웹 기반에서 쓰이도록 override
-// 컨트롤러는 외부에서 view 를 주입받도록 만들어서 유연성을 업!
+  constructor() {
+    this.#view = new LottoGameViewWeb();
+    this.#controller = new LottoGameController();
+  }
 
-import LottoGameController from './js/ui/LottoGameController.js'
-import LottoGameViewWeb from './js/ui/LottoGameViewWeb.js'
+  run() {
+    try {
+      this.step1();
+      this.step2();
+      /**
+       * TODO:
+       * 당첨 통계에 올바른 결과 표시하기
+       * 다시 시작하기, 모달 닫기 바인딩
+       * 메소드 내의 이벤트 바인딩, 이벤트 콜백함수 분리하기
+       */
+    } catch (error) {
+      alert(error.message);
+    }
+  }
 
-const main = () => {
-  const view = new LottoGameViewWeb()
-  new LottoGameController(view).run()
+  /**
+   * 구매 버튼을 클릭해 유저가 입력한 금액만큼 로또를 발행한다.
+   */
+  step1() {
+    const $purchaseButton = document.getElementById('purchase-button');
+    const $purchaseInput = document.getElementById('purchase-amount-input');
+
+    $purchaseButton.addEventListener('click', () => {
+      const purchaseAmount = $purchaseInput.value;
+
+      this.#controller
+        .purchaseAndIssueLottos(purchaseAmount)
+        .then(() =>
+          this.#view.printPurchasedLottos(this.#controller.purchasedLottoList)
+        )
+        .catch((error) => alert(error.message));
+    });
+  }
+
+  /**
+   * 유저가 입력한 당첨 번호, 보너스 번호를 바탕으로 당첨 결과를 확인한다.
+   */
+  step2() {
+    const $openResultButton = document.querySelector(
+      '.open-result-modal-button'
+    );
+    const $resultModal = document.querySelector('.modal');
+    const $selectedNumsInput = document.querySelectorAll('.selected-number');
+    const $extraNumInput = document.querySelector('.bonus-number');
+
+    $openResultButton.addEventListener('click', () => {
+      const selectedNums = Array.from($selectedNumsInput).map(
+        (input) => input.valueAsNumber
+      );
+      const extraNum = Number($extraNumInput.valueAsNumber);
+
+      this.#controller
+        .setWinningNumbers({ selectedNums, extraNum })
+        .then(() => {
+          this.#controller.calculateResults();
+          $resultModal.classList.add('open');
+        })
+        .catch((error) => alert(error.message));
+    });
+  }
 }
 
-main()
+new App().run();

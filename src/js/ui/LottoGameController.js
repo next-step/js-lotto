@@ -1,63 +1,61 @@
-import LottoVendingMachine from '../domain/LottoVendingMachine.js'
-import LottoWinningCalculator from '../domain/LottoWinningCalculator.js'
-import LottoWinningNumbers from '../domain/LottoWinningNumbers.js'
+import LottoVendingMachine from '../domain/LottoVendingMachine.js';
+import LottoWinningCalculator from '../domain/LottoWinningCalculator.js';
+import LottoWinningNumbers from '../domain/LottoWinningNumbers.js';
 
 class LottoGameController {
-  #view
-  #vendingMachine
-  #winningCalculator
+  #vendingMachine;
+  #winningCalculator;
+  purchasedLottoList;
+  lottoWinningNumbers;
+  calculatedResult;
 
-  constructor(
-    view,
+  constructor({
     vendingMachine = new LottoVendingMachine(),
     winningCalculator = new LottoWinningCalculator(),
-  ) {
-    this.#view = view
-    this.#vendingMachine = vendingMachine
-    this.#winningCalculator = winningCalculator
+  } = {}) {
+    this.#vendingMachine = vendingMachine;
+    this.#winningCalculator = winningCalculator;
   }
 
-  async purchaseAndIssueLottos() {
-    const purchaseAmount = await this.#view.getPurchaseAmount()
-
-    this.#vendingMachine.purchase(purchaseAmount)
-    const purchasedLottoList = this.#vendingMachine.lottos
-
-    this.#view.printPurchasedLottos(purchasedLottoList)
-
-    return purchasedLottoList
+  /**
+   * 구매 금액만큼 로또를 발행한다.
+   * @param {String} purchaseAmount
+   */
+  async purchaseAndIssueLottos(purchaseAmount) {
+    this.#vendingMachine.purchase(purchaseAmount);
+    this.purchasedLottoList = this.#vendingMachine.lottos;
   }
 
-  async setWinningNumbers() {
-    const { selectedNums, extraNum } = await this.#view.getLottoWinningNumbers()
+  /**
+   * 인자로 받은 로또 번호로 로또 당첨 번호를 결정한다.
+   * @param {Object} givenLottoNumbers { selectedNums, extraNum }
+   */
+  async setWinningNumbers(givenLottoNumbers) {
+    const { selectedNums, extraNum } = givenLottoNumbers;
 
-    return new LottoWinningNumbers({
-      selectedNums: selectedNums,
+    this.lottoWinningNumbers = new LottoWinningNumbers({
+      selectedNums,
       extraNum,
-    })
+    });
   }
 
-  calculateResults(lottoWinningNumbers, purchasedLottoList) {
+  calculateResults() {
     const purchasedLottoStatuses = this.getLottoStatus(
-      lottoWinningNumbers.numbers,
-      purchasedLottoList,
-    )
+      this.lottoWinningNumbers.numbers,
+      this.purchasedLottoList
+    );
 
-    this.#winningCalculator.calculate(purchasedLottoStatuses)
+    this.#winningCalculator.calculate(purchasedLottoStatuses);
 
-    return this.#winningCalculator.result
+    this.calculateResults = this.#winningCalculator.result;
   }
 
   getLottoStatus(lottoWinningNumbers, purchasedLottoList) {
     return purchasedLottoList.map((lotto) => {
-      lotto.setStatus(lottoWinningNumbers)
-      return lotto.status
-    })
-  }
-
-  printResult(result) {
-    this.#view.printResult(result)
+      lotto.setStatus(lottoWinningNumbers);
+      return lotto.status;
+    });
   }
 }
 
-export default LottoGameController
+export default LottoGameController;
