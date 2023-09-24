@@ -17,7 +17,10 @@ export default {
     extensions: ['.js', '.css']
   },
   devServer: {
-    port: 9000
+    port: 9000,
+    open: true,
+    hot: true,
+    watchFiles: './src/**/*'
   },
   module: {
     rules: [
