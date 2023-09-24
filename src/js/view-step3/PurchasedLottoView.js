@@ -40,6 +40,7 @@ export class PurchasedLottoView {
     lottoIconHtml.classList.add('mx-1', 'text-4xl');
 
     if (isWithNums) {
+      lottoIconHtml.classList.add('lotto-numbers');
       lottoIconHtml.textContent += lotto.numbers;
     }
 
@@ -50,7 +51,7 @@ export class PurchasedLottoView {
     showElement(this.#purchasedLottos);
   }
 
-  get lottoSwitch() {
+  get lottoNumbersToggleBtn() {
     return this.#lottoNumbersToggleBtn;
   }
 }
