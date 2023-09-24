@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --watch",
     "start-step1": "node src/step1-index.js",
-    "build-step3": "webpack --mode production --config step3.config.js"
+    "preview-step3": "parcel src/index.html --open chrome --port 3000",
+    "build-step3": "parcel build src/index.html"
   },
   "devDependencies": {
     "@babel/cli": "^7.22.10",
@@ -17,8 +18,7 @@
     "babel-loader": "^9.1.3",
     "cypress": "^6.3.0",
     "jest": "^29.6.2",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4"
+    "parcel": "^2.9.3"
   },
   "jest": {
     "transform": {
