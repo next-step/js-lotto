@@ -1,8 +1,6 @@
 import LottoVendingMachine from '../domain/LottoVendingMachine.js'
 import LottoWinningCalculator from '../domain/LottoWinningCalculator.js'
 import LottoWinningNumbers from '../domain/LottoWinningNumbers.js'
-import { withRetry } from '../utils/withRetry.js'
-import LottoGameViewConsole from './LottoGameViewConsole.js'
 
 class LottoGameController {
   #view
@@ -10,50 +8,13 @@ class LottoGameController {
   #winningCalculator
 
   constructor(
-    view = new LottoGameViewConsole(),
+    view,
     vendingMachine = new LottoVendingMachine(),
     winningCalculator = new LottoWinningCalculator(),
   ) {
     this.#view = view
     this.#vendingMachine = vendingMachine
     this.#winningCalculator = winningCalculator
-  }
-
-  // FIXME: withRetry 를 view 에 맞게 주입받도록 변경하자
-  async run() {
-    try {
-      const purchasedLottoList = await withRetry(
-        this.purchaseAndIssueLottos.bind(this),
-      )
-      const lottoWinningNumbers = await withRetry(
-        this.setWinningNumbers.bind(this),
-      )
-      const result = this.calculateResults(
-        lottoWinningNumbers,
-        purchasedLottoList,
-      )
-
-      this.#view.printResult(result)
-
-      await this.restartOrEnd()
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  // TODO: 이 재시작 로직이 웹, 콘솔 구애받지 않고 실행될 수 있도록 하자.
-  async restartOrEnd() {
-    const action = await this.#view.getRestart()
-
-    switch (action) {
-      case 'y':
-        this.run()
-        break
-      case 'n':
-      // process.exit()
-      default:
-      // process.exit()
-    }
   }
 
   async purchaseAndIssueLottos() {
@@ -92,6 +53,10 @@ class LottoGameController {
       lotto.setStatus(lottoWinningNumbers)
       return lotto.status
     })
+  }
+
+  printResult(result) {
+    this.#view.printResult(result)
   }
 }
 
