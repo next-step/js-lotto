@@ -2,6 +2,7 @@ import LottoVendingMachine from '../domain/LottoVendingMachine.js'
 import LottoWinningCalculator from '../domain/LottoWinningCalculator.js'
 import LottoWinningNumbers from '../domain/LottoWinningNumbers.js'
 import { withRetry } from '../utils/withRetry.js'
+import LottoGameViewConsole from './LottoGameViewConsole.js'
 
 class LottoGameController {
   #view
@@ -9,7 +10,7 @@ class LottoGameController {
   #winningCalculator
 
   constructor(
-    view,
+    view = new LottoGameViewConsole(),
     vendingMachine = new LottoVendingMachine(),
     winningCalculator = new LottoWinningCalculator(),
   ) {
