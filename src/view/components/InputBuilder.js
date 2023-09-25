@@ -39,7 +39,7 @@ class InputBuilder {
     $input.setAttribute('type', this.#type);
   }
 
-  #createLabel(labelText = 'label') {
+  #createLabel(labelText = '') {
     const $label = createElement('label');
     $label.setAttribute('for', this.#id);
     if (labelText) {
@@ -63,25 +63,16 @@ class InputBuilder {
     return $fragment;
   }
 
-  createInput(withLabel = true, $container = null) {
+  createInput(withLabel, labelText) {
     const $input = createElement('input');
     this.#setInput($input);
     this.#setInputAttributes($input);
 
-    if ($container) {
-      $container.appendChild($input);
-    }
-
     if (withLabel) {
-      const $label = this.#createLabel($container);
+      const $label = this.#createLabel(labelText);
       $label.setAttribute('for', this.#id);
-
-      if ($container) {
-        $container.prepend($label);
-        return $container;
-      }
-      $input.before($label);
-      return $input;
+      $label.appendChild($input);
+      return $label;
     }
 
     return $input;
