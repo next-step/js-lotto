@@ -14,12 +14,7 @@ class App {
     try {
       this.step1();
       this.step2();
-      /**
-       * TODO:
-       * 당첨 통계에 올바른 결과 표시하기
-       * 다시 시작하기, 모달 닫기 바인딩
-       * 메소드 내의 이벤트 바인딩, 이벤트 콜백함수 분리하기
-       */
+      this.step3();
     } catch (error) {
       alert(error.message);
     }
@@ -65,10 +60,31 @@ class App {
         .setWinningNumbers({ selectedNums, extraNum })
         .then(() => {
           this.#controller.calculateResults();
+          this.#view.printResult(this.#controller.calculatedResult);
           $resultModal.classList.add('open');
         })
         .catch((error) => alert(error.message));
     });
+  }
+
+  /**
+   * 모달창 닫기, 다시 시작하기 기능을 바인딩한다.
+   */
+  step3() {
+    const $closeButton = document.querySelector('.modal-close');
+    const $retryButton = document.querySelector('.retry-button');
+    const $resultModal = document.querySelector('.modal');
+
+    const closeModal = () => {
+      $resultModal.classList.remove('open');
+    };
+
+    const retryGame = () => {
+      closeModal();
+    };
+
+    $closeButton.addEventListener('click', closeModal);
+    $retryButton.addEventListener('click', retryGame);
   }
 }
 

@@ -39,6 +39,9 @@ class LottoGameController {
     });
   }
 
+  /**
+   * 로또 당첨 번호와 구매한 로또 번호를 비교해 수익률을 계산한다.
+   */
   calculateResults() {
     const purchasedLottoStatuses = this.getLottoStatus(
       this.lottoWinningNumbers.numbers,
@@ -47,9 +50,15 @@ class LottoGameController {
 
     this.#winningCalculator.calculate(purchasedLottoStatuses);
 
-    this.calculateResults = this.#winningCalculator.result;
+    this.calculatedResult = this.#winningCalculator.result;
   }
 
+  /**
+   * 로또 당첨 번호와 구매 목록을 받아, 구매한 개별 로또의 당첨 상태를 변경하고 이를 리턴한다.
+   * @param { Object } lottoWinningNumbers
+   * @param { Array } purchasedLottoList
+   * @returns { Array } 당첨 여부 상태를 가진 구매 로또 목록
+   */
   getLottoStatus(lottoWinningNumbers, purchasedLottoList) {
     return purchasedLottoList.map((lotto) => {
       lotto.setStatus(lottoWinningNumbers);

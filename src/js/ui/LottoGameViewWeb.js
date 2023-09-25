@@ -1,28 +1,8 @@
 import LottoGameView from './LottoGameView.js';
 
 class LottoGameViewWeb extends LottoGameView {
-  #restart;
-
   constructor() {
     super();
-    this.#restart = 'n';
-  }
-
-  async getPurchaseAmount() {
-    return new Promise(async (resolve, reject) => {
-      const button = document.getElementById('purchase-button');
-
-      button.addEventListener('click', async () => {
-        const input = document.getElementById('purchase-amount-input');
-        const purchaseAmount = input.value;
-        resolve(purchaseAmount);
-      });
-    });
-  }
-
-  async getLottoWinningNumbers() {
-    const { selectedNums, extraNum } = await this.#createButtonClickPromise();
-    return { selectedNums: selectedNums, extraNum };
   }
 
   printPurchasedLottos(purchasedLottoList) {
@@ -57,32 +37,8 @@ class LottoGameViewWeb extends LottoGameView {
     });
   }
 
-  #createButtonClickPromise() {
-    return new Promise((resolve) => {
-      const button = document.querySelector('.open-result-modal-button');
-      button.addEventListener('click', () => {
-        // 일반 번호들 가져오기
-        const selectedNumsElements =
-          document.querySelectorAll('.selected-number');
-        const selectedNums = Array.from(selectedNumsElements).map((input) =>
-          Number(input.value)
-        );
-
-        // 보너스 번호 가져오기
-        const extraNumInput = document.querySelector('.bonus-number');
-        const extraNum = Number(extraNumInput.value);
-
-        // 입력된 번호 컨트롤러로 전달
-        resolve({ selectedNums, extraNum });
-
-        // 모달창 열기
-        const modal = document.querySelector('.modal');
-        modal.classList.add('open');
-      });
-    });
-  }
-
   printResult(result) {
+    console.log(result);
     // 결과 출력
     const threeEl = document.querySelector('#match-three');
     const fourEl = document.querySelector('#match-four');
@@ -98,32 +54,6 @@ class LottoGameViewWeb extends LottoGameView {
 
     const profitRateEl = document.querySelector('#profit-rate');
     profitRateEl.textContent = `당신의 총 수익률은 ${result.profitRate}%입니다.`;
-
-    const $showResultButton = document.querySelector(
-      '.open-result-modal-button'
-    );
-    const $closeButton = document.querySelector('.modal-close');
-    const $retryButton = document.querySelector('.retry-button');
-    const $modal = document.querySelector('.modal');
-
-    const onModalShow = () => {
-      $modal.classList.add('open');
-    };
-
-    const onModalClose = () => {
-      $modal.classList.remove('open');
-      this.#restart = 'y';
-    };
-
-    $showResultButton.addEventListener('click', onModalShow);
-    $closeButton.addEventListener('click', onModalClose);
-    $retryButton.addEventListener('click', onModalClose);
-  }
-
-  async getRestart() {
-    return new Promise((resolve) => {
-      resolve(this.#restart);
-    });
   }
 }
 

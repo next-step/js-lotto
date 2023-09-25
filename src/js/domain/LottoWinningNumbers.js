@@ -1,44 +1,45 @@
-import { SELECTED_NUMS_LENGTH } from '../../constants/conditions.js'
-import { ERROR_MESSAGE } from '../../constants/errorMessage.js'
+import { SELECTED_NUMS_LENGTH } from '../../constants/conditions.js';
+import { ERROR_MESSAGE } from '../../constants/errorMessage.js';
 import {
   convertStringToNumber,
   convertToNumberArray,
   createLottoNumberObject,
-} from '../utils/format.js'
-import { validate } from '../utils/validate.js'
+} from '../utils/format.js';
+import { validate } from '../utils/validate.js';
 
 class LottoWinningNumbers {
-  #numbers
+  #numbers;
 
   constructor({ selectedNums, extraNum }) {
-    const formattedSelectedNums = convertToNumberArray(selectedNums)
-    const formattedExtraNum = convertStringToNumber(extraNum)
+    const formattedSelectedNums = convertToNumberArray(selectedNums);
+    const formattedExtraNum = convertStringToNumber(extraNum);
 
-    this.#validate(formattedSelectedNums, formattedExtraNum)
+    this.#validate(formattedSelectedNums, formattedExtraNum);
 
     this.#numbers = createLottoNumberObject({
       selectedNums: formattedSelectedNums,
       extraNum: formattedExtraNum,
-    })
+    });
   }
 
   #validate(selectedNums, extraNum) {
     if (!validate.length(selectedNums, SELECTED_NUMS_LENGTH)) {
-      throw new Error(ERROR_MESSAGE.INVALID_NUMS_LENGTH)
+      throw new Error(ERROR_MESSAGE.INVALID_NUMS_LENGTH);
     }
 
+    // FIXME: 에러 발생하는 케이스 다양하게 핸들링 하도록 수정
     if (validate.isDuplicated([...selectedNums, extraNum])) {
-      throw new Error(ERROR_MESSAGE.DUPLICATED_NUMS)
+      throw new Error(ERROR_MESSAGE.DUPLICATED_NUMS);
     }
 
     if (!validate.numberRange([...selectedNums, extraNum])) {
-      throw new Error(ERROR_MESSAGE.INVALID_NUMS_RANGE)
+      throw new Error(ERROR_MESSAGE.INVALID_NUMS_RANGE);
     }
   }
 
   get numbers() {
-    return this.#numbers
+    return this.#numbers;
   }
 }
 
-export default LottoWinningNumbers
+export default LottoWinningNumbers;
