@@ -8,11 +8,11 @@ class InputBuilder {
   #placeholder = '';
   #type = 'text';
 
-  constructor(id, name, placeholder, type) {
+  constructor(type, id, name, placeholder) {
+    this.#type = type;
     this.#id = id;
     this.#name = name;
     this.#placeholder = placeholder;
-    this.#type = type;
   }
 
   get $input() {
