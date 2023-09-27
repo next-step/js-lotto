@@ -5,12 +5,21 @@ import { addEvent } from '../../../view/eventHandler.js';
 class LottoAmountForm {
   #inputBuilder = null;
   #lottoPrice = 0;
-  #submitEvent = null;
+  #submitEventList = [];
+  #amount = 0;
 
-  constructor(inputBuilder, lottoPrice, submitEvent) {
+  constructor(inputBuilder, lottoPrice, submitEventList) {
     this.#inputBuilder = inputBuilder;
     this.#lottoPrice = lottoPrice;
-    this.#submitEvent = submitEvent;
+    this.#submitEventList = submitEventList;
+  }
+
+  get amount() {
+    return this.#amount;
+  }
+
+  #setAmount(amount) {
+    this.#amount = amount;
   }
 
   #addSubmitEvent($form) {
@@ -18,10 +27,13 @@ class LottoAmountForm {
       event.preventDefault();
       const formData = new FormData(event.target);
       const amount = Number(formData.get('lotto-amount')); // 'inputName'은 input의 name 속성
+      this.#setAmount(amount);
       callback(amount);
     };
 
-    addEvent($form, 'submit', (event) => submitAmountForm(event, this.#submitEvent));
+    this.#submitEventList.forEach((submitEvent) => {
+      addEvent($form, 'submit', (event) => submitAmountForm(event, submitEvent));
+    });
   }
 
   #setMinAmount($input, min) {
@@ -68,7 +80,7 @@ class LottoAmountForm {
     $inputContainer.appendChild($submitButton);
     $form.appendChild($amountInputWrapper);
 
-    if (this.#submitEvent) {
+    if (this.#submitEventList.length) {
       this.#addSubmitEvent($form);
     }
 
