@@ -6,6 +6,9 @@ export const LOTTO_BALLS = [
   33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45
 ];
 
+export const MAX_PURCHASE_COUNT = 20;
+export const MIN_PURCHASE_COUNT = 1;
+
 export const LOTTO_BONUS_NUMBER_LENGTH = 1;
 export const LOTTO_NUMBER_LENGTH = 6;
 export const LOTTO_PRICE = 1000;
