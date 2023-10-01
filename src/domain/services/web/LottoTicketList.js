@@ -3,13 +3,13 @@ import { LOTTO_TICKET_MARKER, LOTTO_TOGGLE_MESSAGE } from '../../constants/index
 import {
   createElement,
   createFragment,
-  clearElement,
   addClassNames,
   clearClassNames,
   showElement,
   hideElement,
   getQuerySelector,
-  getQuerySelectorAll
+  getQuerySelectorAll,
+  clearElement
 } from '../../../view/DOMHandler.js';
 
 import { addEvent } from '../../../view/eventHandler.js';
@@ -28,6 +28,10 @@ class LottoTicketList {
     this.#inputBuilder = inputBuilder;
     this.#LottoCustomer = LottoCustomer;
     this.#LottoSeller = LottoSeller;
+  }
+
+  get lottoTickets() {
+    return this.#lottoTickets;
   }
 
   #createLottoTicketListLabel() {
@@ -125,6 +129,7 @@ class LottoTicketList {
     this.#setLottoTickets(amount);
     const $purchaseInfo = this.#createLottoPurchaseInfo();
     const $lottoTicketList = this.#createLottoTicketList();
+    clearElement(this.#ticketListContainer);
     this.#ticketListContainer.append($purchaseInfo, $lottoTicketList);
     this.#configureTicketListStyle();
   }
