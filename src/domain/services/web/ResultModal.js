@@ -17,13 +17,21 @@ class ResultModal {
   #LottoMachine = null;
   #LottoCalculator = null;
   #LottoOrganizer = null;
+  #retryCallback = null;
   #tableDataEntries = [];
 
-  constructor(tableBuilder, LottoMachine, LottoCalculator, LottoOrganizer) {
+  constructor(tableBuilder, LottoMachine, LottoCalculator, LottoOrganizer, retryCallback) {
     this.#tableBuilder = tableBuilder;
     this.#LottoMachine = LottoMachine;
     this.#LottoCalculator = LottoCalculator;
     this.#LottoOrganizer = LottoOrganizer;
+    this.#retryCallback = retryCallback;
+  }
+
+  #attachRetryEvent($retryButton) {
+    addEvent($retryButton, 'click', () => {
+      this.#retryCallback();
+    });
   }
 
   #getLottoResult({ winningLottoNumber, bonusNumber }, lottoTickets) {
@@ -147,9 +155,9 @@ class ResultModal {
 
     addClassNames($buttonWrapper, buttonWrapperClassNames);
     addClassNames($retryButton, buttonClassNames);
-
     $retryButton.setAttribute('type', 'button');
     $retryButton.textContent = '다시 시작하기';
+    this.#attachRetryEvent($retryButton);
     $buttonWrapper.appendChild($retryButton);
     return $buttonWrapper;
   }
