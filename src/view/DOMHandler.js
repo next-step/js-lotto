@@ -9,6 +9,7 @@ export const createHeading = (headingType, textContent) => {
   $heading.textContent = textContent;
   return $heading;
 };
+export const createSvgElement = (element) => document.createElementNS('http://www.w3.org/2000/svg', element);
 export const clearElement = (element) => element.replaceChildren();
 export const findElementByTag = (parent, tagName) => parent.getElementsByTagName(tagName);
 export const clearClassNames = (element) => (element.className = '');
