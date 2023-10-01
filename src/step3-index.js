@@ -1,3 +1,4 @@
 import './assets/css/index.css';
+import renderApp from './domain/renderLottoApp.js';
 
-console.log('webpack loaded!!');
+renderApp();
