@@ -112,9 +112,12 @@ class LottoWinningNumberForm {
     const submitForm = (event, callback) => {
       event.preventDefault();
       const formData = new FormData(event.target);
-      const winningNumbers = formData.getAll('winning-number').map((winningNumber) => Number(winningNumber));
+      const winningLottoNumber = formData
+        .getAll('winning-number')
+        .map((winningNumber) => Number(winningNumber))
+        .join(',');
       const bonusNumber = Number(formData.get('bonus-number'));
-      callback([...winningNumbers, bonusNumber]);
+      callback({ winningLottoNumber, bonusNumber });
     };
 
     addEvent($form, 'submit', (event) => submitForm(event, this.#submitEvent));
