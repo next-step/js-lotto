@@ -10,7 +10,6 @@ import {
   createHeading,
   createElement,
   createFragment,
-  clearElement,
   addClassNames,
   showElement,
   hideElement
