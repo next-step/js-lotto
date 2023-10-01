@@ -8,10 +8,7 @@ class LottoCalculator {
   }
 
   #getMatchLottoNumberCount(lottoNumber) {
-    return this.#winningLottoNumber.reduce(
-      (count, number, index) => (number === lottoNumber[index] ? count + 1 : count),
-      0
-    );
+    return this.#winningLottoNumber.reduce((count, number) => (lottoNumber.includes(number) ? count + 1 : count), 0);
   }
 
   calculateLottoMatchCounts(lottoNumber) {
@@ -21,7 +18,7 @@ class LottoCalculator {
   }
 
   calculateWinningReturnRate(totalCost, totalPrize) {
-    return (totalPrize / totalCost) * 100;
+    return ((totalPrize - totalCost) / totalCost) * 100;
   }
 }
 
