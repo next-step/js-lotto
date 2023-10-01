@@ -1,6 +1,6 @@
 import { stdin as input, stdout as output } from 'process';
 import * as readline from 'readline';
-import errorFallback from '../error/errorFallback';
+import errorFallback from '../models/error/errorFallback.js';
 import { ALERT_MESSAGE, ERROR_MESSAGE, APP_EXIT_KEY, APP_RETRY_KEY } from '../constants/index.js';
 
 const { QUESTION_PURCHASE_AMOUNT, QUESTION_LOTTO_NUMBER, QUESTION_BONUS_NUMBER } = ALERT_MESSAGE;

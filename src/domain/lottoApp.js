@@ -1,4 +1,4 @@
-import errorFallback from './error/errorFallback';
+import errorFallback from './models/error/errorFallback.js';
 import { LottoCustomer, LottoSeller, LottoOrganizer, LottoMachine, LottoCalculator } from './models/index';
 import { createPurchaseMessage, readPurchaseAmount, readLottoNumberAndBonusNumber } from './services/index';
 
