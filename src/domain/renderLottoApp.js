@@ -1,4 +1,4 @@
-import { LottoOrganizer, LottoCustomer, LottoSeller } from './models/index.js';
+import { LottoOrganizer, LottoCustomer, LottoSeller, LottoMachine, LottoCalculator } from './models/index.js';
 import {
   LottoAmountForm,
   LottoTicketList,
@@ -7,46 +7,39 @@ import {
   ResultModal
 } from './services/web/index.js';
 import { AMOUNT_PLACEHOLDER, HEADING_TITLE } from './constants/index.js';
-import { InputBuilder } from '../view/components/index.js';
+import { InputBuilder, TableBuilder } from '../view/components/index.js';
 import { getQuerySelector } from '../view/DOMHandler.js';
+
+const createInputBuilder = (type, id, name, placeholder) => new InputBuilder(type, id, name, placeholder);
+
+const initRender = ($content, title, forms, ticketList, resultModal, winningForm) => {
+  const renderer = new LottoContentRenderer(title, forms, ticketList, winningForm, resultModal, $content);
+  renderer.render();
+};
 
 const renderApp = () => {
   try {
     const $lottoContent = getQuerySelector('#lotto-content');
-    const amountInputBuilder = new InputBuilder('number', 'lotto-amount', 'lotto-amount', AMOUNT_PLACEHOLDER);
-    const numberInputBuilder = new InputBuilder('number');
-    const inputToggleCheckboxBuilder = new InputBuilder(
+
+    const resultTableBuilder = new TableBuilder();
+    const amountInput = createInputBuilder('number', 'lotto-amount', 'lotto-amount', AMOUNT_PLACEHOLDER);
+    const toggleInput = createInputBuilder(
       'checkbox',
       'toggle-lotto-tickets',
       'toggle-lotto-tickets',
       AMOUNT_PLACEHOLDER
     );
-    const lottoTicketList = new LottoTicketList(
-      inputToggleCheckboxBuilder,
-      LottoOrganizer.lottoPrice(),
-      LottoCustomer,
-      LottoSeller
-    );
-    const resultModal = new ResultModal();
-    const lottoWinningNumberForm = new LottoWinningNumberForm(InputBuilder, (winningNumber) =>
-      resultModal.getLottoWinningBonusNumber(winningNumber)
-    );
+    const ticketList = new LottoTicketList(toggleInput, LottoOrganizer.lottoPrice(), LottoCustomer, LottoSeller);
+    const resultModal = new ResultModal(resultTableBuilder, LottoMachine, LottoCalculator, LottoOrganizer, renderApp);
 
-    const lottoAmountForm = new LottoAmountForm(amountInputBuilder, LottoOrganizer.lottoPrice(), [
-      (amount) => lottoTicketList.handleAmount(amount),
-      () => lottoWinningNumberForm.show()
-    ]);
+    const winningNumberCallback = (winningNumber) =>
+      resultModal.getLottoWinningBonusNumber(winningNumber, ticketList.lottoTickets);
+    const lottoWinningForm = new LottoWinningNumberForm(InputBuilder, winningNumberCallback);
 
-    const lottoContentRenderer = new LottoContentRenderer(
-      HEADING_TITLE,
-      lottoAmountForm,
-      lottoTicketList,
-      lottoWinningNumberForm,
-      $lottoContent
-    );
+    const amountCallbacks = [(amount) => ticketList.handleAmount(amount), () => lottoWinningForm.show()];
+    const lottoAmountForm = new LottoAmountForm(amountInput, LottoOrganizer.lottoPrice(), amountCallbacks);
 
-    // lottoAmountForm.render();
-    lottoContentRenderer.render();
+    initRender($lottoContent, HEADING_TITLE, lottoAmountForm, ticketList, resultModal, lottoWinningForm);
   } catch (error) {
     console.error(error);
   }
