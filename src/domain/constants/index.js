@@ -1,2 +1,3 @@
-export * from './configure';
-export * from './message';
+export * from './configure.js';
+export * from './message.js';
+export * from './webUiMessages.js';

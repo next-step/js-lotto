@@ -1,4 +1,4 @@
-import { LOTTO_PRICE, LOTTO_PRIZE, LOTTO_MATCH_COUNT } from '../constants/index';
+import { LOTTO_PRICE, LOTTO_PRIZE, LOTTO_MATCH_COUNT } from '../constants/index.js';
 
 class LottoOrganizer {
   #lottoCalculator = null;
@@ -19,7 +19,7 @@ class LottoOrganizer {
       return matchLottoNumberCount === BASE_NUMBER && matchBonusNumberCount === BONUS_NUMBER;
     });
 
-    return rank ? rank[0] : 'OTHERS';
+    return (rank && rank.at(0)) ?? 'OTHERS';
   }
 
   getWinningReturnRate(lottoTickets) {

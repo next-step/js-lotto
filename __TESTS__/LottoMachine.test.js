@@ -6,7 +6,7 @@ import {
   DUMMY_INCORRECT_WINNING_LOTTO_BY_DUPLICATE_BONUS_NUMBER,
   DUMMY_INCORRECT_BONUS_NUMBER
 } from './constants';
-import { LottoMachine } from '../src/domain/classes/index';
+import { LottoMachine } from '../src/domain/models/index';
 import {
   ERROR_MESSAGE,
   LOTTO_NUMBER_SEPARATOR,
@@ -14,7 +14,7 @@ import {
   LOTTO_BONUS_NUMBER_LENGTH,
   LOTTO_MIN_NUMBER,
   LOTTO_MAX_NUMBER
-} from '../src/domain/constants/index';
+} from '../src/domain/constants/index.js';
 
 describe('로또 당첨 번호 테스트', () => {
   test.each(DUMMY_WINNING_LOTTO)(

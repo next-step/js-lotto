@@ -105,11 +105,11 @@ export const DUMMY_INCORRECT_BONUS_NUMBER = [
 
 /**LottoCalculator */
 export const DUMMY_LOTTO_RETURN_WINNING_RATE = [
-  { totalCost: 1000, totalPrize: 10000, expectedWinningRate: 1000 },
-  { totalCost: 2000, totalPrize: 10000, expectedWinningRate: 500 },
-  { totalCost: 3000, totalPrize: 0, expectedWinningRate: 0 },
-  { totalCost: 4000, totalPrize: 2000000000, expectedWinningRate: 50000000 },
-  { totalCost: 5000, totalPrize: 5000, expectedWinningRate: 100 }
+  { totalCost: 1000, totalPrize: 10000, expectedWinningRate: 900 },
+  { totalCost: 2000, totalPrize: 10000, expectedWinningRate: 400 },
+  { totalCost: 3000, totalPrize: 0, expectedWinningRate: -100 },
+  { totalCost: 4000, totalPrize: 2000000000, expectedWinningRate: 49999900 },
+  { totalCost: 5000, totalPrize: 5000, expectedWinningRate: 0 }
 ];
 
 export const DUMMY_WINNING_LOTTO_NUMBER = [1, 2, 3, 4, 5, 6];

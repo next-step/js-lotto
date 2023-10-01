@@ -6,7 +6,7 @@ import {
   LOTTO_NUMBER_LENGTH,
   APP_EXIT_KEY,
   APP_RETRY_KEY
-} from './configure';
+} from './configure.js';
 
 export const ERROR_MARKER = '[⛔️ERROR]';
 
