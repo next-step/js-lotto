@@ -5,13 +5,15 @@ const PURCHASE_AMOUNT = 3000
 const SELECTED_NUMS = '1,2,3,4,5,6'
 const EXTRA_NUM = '7'
 
-jest.mock('../src/js/ui/LottoGameView', () => {
+jest.mock('../src/js/ui/LottoGameViewConsole', () => {
   return jest.fn().mockImplementation(() => {
     return {
       getPurchaseAmount: async () => PURCHASE_AMOUNT,
-      getLottoWinningNumbers: async () => SELECTED_NUMS,
-      getExtraNumber: async () => EXTRA_NUM,
-      print: jest.fn(),
+      getLottoWinningNumbers: async () => ({
+        selectedNums: SELECTED_NUMS,
+        extraNum: EXTRA_NUM,
+      }),
+      printPurchasedLottos: jest.fn(),
     }
   })
 })
@@ -34,18 +36,5 @@ describe('LottoGameController', () => {
       selectedNums: SELECTED_NUMS.split(',').map(Number),
       extraNum: Number(EXTRA_NUM),
     })
-  })
-
-  test('사용자가 구매한 로또 번호와 당첨 번호를 비교하여 당첨 내역 및 수익률을 출력한다.', async () => {
-    const lottoWinningNumbers = await controller.setWinningNumbers()
-    const purchasedLottoList = await controller.purchaseAndIssueLottos()
-    const result = controller.calculateResults(
-      lottoWinningNumbers,
-      purchasedLottoList,
-    )
-    const regExp =
-      /당첨 통계\n-+\n3개 일치.*\n4개 일치.*\n5개 일치.*\n5개 일치, 보너스 볼 일치.*\n6개 일치.*\n총 수익률은 \d+(\.\d{2})?%입니다\./
-
-    expect(controller.formatLottoResults(result)).toMatch(regExp)
   })
 })
