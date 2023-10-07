@@ -1,0 +1,14 @@
+.lotto-number-container {
+  display: flex;
+  align-items: center;
+}
+
+.lotto-numbers {
+  display: none;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+input.lotto-numbers-toggle-button:checked ~ .lotto-numbers {
+  display: block;
+}

@@ -1,6 +1,4 @@
 .modal {
-  opacity: 0;
-  visibility: hidden;
   display: flex;
   position: fixed;
   top: 0;
@@ -12,14 +10,9 @@
   z-index: 2;
 }
 
-.modal.open {
-  opacity: 1;
-  visibility: visible;
-}
-
 .modal-inner {
   transition: top 0.25s ease;
-  max-width: 350px;
+  max-width: 360px;
   margin: auto;
   overflow: auto;
   background: #fff;

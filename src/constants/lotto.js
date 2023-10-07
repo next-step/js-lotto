@@ -16,3 +16,7 @@ export const RESTART_INPUT = Object.freeze({
   YES: 'y',
   NO: 'n',
 });
+
+export const RADIX = Object.freeze({
+  BASE_10: 10,
+});

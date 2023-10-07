@@ -1,0 +1,36 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - step3
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.12.0'
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Build
+        run: yarn build-step3
+
+      - name: Move build files(dist => root)
+        run: |
+          cp -r dist/* ./
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: web-deploy
+          folder: .
+          token: ${{ secrets.DEPLOY_TOKEN }}

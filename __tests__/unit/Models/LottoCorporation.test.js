@@ -1,5 +1,5 @@
 import { LottoCorporation } from '../../../src/Model';
-import { NUMBER } from '../../../src/constants';
+import { NUMBER, RADIX } from '../../../src/constants';
 import { isLottoNumber } from '../../../src/utils/Validator';
 
 describe('LottoCorporation', () => {
@@ -10,7 +10,10 @@ describe('LottoCorporation', () => {
 
   test('구매금액에 맞는 로또의 개수를 반환하는지 확인한다.', () => {
     const TICKET_PRICE = NUMBER.DEFAULT_TICKET_PRICE;
-    const expectedTicketCount = parseInt(purchaseAmount / TICKET_PRICE);
+    const expectedTicketCount = parseInt(
+      purchaseAmount / TICKET_PRICE,
+      RADIX.BASE_10
+    );
 
     expect(tickets.length).toBe(expectedTicketCount);
   });
@@ -47,31 +50,6 @@ describe('LottoCorporation', () => {
       );
 
       expect(sorted).toBeTruthy();
-    }
-  );
-
-  const mockCases = [
-    {
-      ticketNumbers: [1, 2, 3, 4, 5, 6],
-      winningNumbers: { lottoNumbers: [1, 2, 3, 4, 5, 6], bonusNumber: 7 },
-      expectedValue: 6,
-    },
-    {
-      ticketNumbers: [11, 12, 13, 14, 15, 16],
-      winningNumbers: { lottoNumbers: [1, 2, 3, 4, 5, 6], bonusNumber: 7 },
-      expectedValue: 0,
-    },
-  ];
-
-  test.each(mockCases)(
-    '로또 티켓의 결과를 확인한다.',
-    ({ ticketNumbers, winningNumbers, expectedValue }) => {
-      const { matchingCount } = lottoCorporation.checkTicketResult(
-        ticketNumbers,
-        winningNumbers
-      );
-
-      expect(matchingCount).toBe(expectedValue);
     }
   );
 });

@@ -134,19 +134,19 @@ class Store {
 
 - 너무 확장성에 연연하지 말고, 명확히 필요한 것들만 깔끔하게 정리하기.
 
-  - [ ] 불필요한 상수 제거.
+  - [x] 불필요한 상수 제거.
   - [x] 불필요한 주석 제거.
-  - [ ] 불필요한 추상화 제거.
-    - [ ] sort 메서드 LottoTicket 로직 내부로 이동.
+  - [x] 불필요한 추상화 제거.
+    - [x] sort 메서드 LottoTicket 로직 내부로 이동.
 
 - 네이밍 및 가독성 개선하기.
   - [ ] Validator.View 이런 방식은 오해를 일으킬 수 있으니, 네이밍 방식 개선해보기.
 
 ### Validator
 
-- [ ] 인자가 3개를 넘는다면, 객체로 주고받는다.
-- [ ] `isNumbersUnique` 내부 로직에 더 좋은 방법이 없나, 고민해보기. 그리고 그 이유 작성하기. (왜 더 나은지.)
-- [ ] 공통 유틸인지 확인하고, 도메인에 따라 다시 분리하기.
+- [x] 인자가 3개를 넘는다면, 객체로 주고받는다.
+- [x] `isNumbersUnique` 내부 로직에 더 좋은 방법이 없나, 고민해보기. 그리고 그 이유 작성하기. (왜 더 나은지.)
+- [x] 공통 유틸인지 확인하고, 도메인에 따라 다시 분리하기.
 
 ### src/utils/lottoPrize.js
 
@@ -156,20 +156,20 @@ class Store {
 
 - jest API 최대한 이용하기.
 
-  - [ ] forEach 대신 `each` 메서드 사용하기.
-  - [ ] toBe(true) 대신 `toBoTruthy` 메서드 사용하기.
+  - [x] forEach 대신 `each` 메서드 사용하기.
+  - [x] toBe(true) 대신 `toBoTruthy` 메서드 사용하기.
 
-- [ ] getRandomIntInRange 테스트코드 추가.
+- [x] getRandomIntInRange 테스트코드 추가.
 - [ ] utils함수들 테스트코드 진행.
 
 - 변수 네이밍 개선하기
-  - [ ] boolean값은 `is-`, `toBe-` 등으로 `Boolean Flag` 사용하기.
+  - [x] boolean값은 `is-`, `toBe-` 등으로 `Boolean Flag` 사용하기.
 
 ### 의존성 모듈
 
-- [ ] babel 공부하기.
-  - [ ] 현재 프로젝트에 적용된 의존성 모듈 공부하기.
-  - [ ] 불필요한 의존성 모듈 제거하기.
+- [x] babel 공부하기.
+  - [x] 현재 프로젝트에 적용된 의존성 모듈 공부하기.
+  - [x] 불필요한 의존성 모듈 제거하기.
 
 ---
 
