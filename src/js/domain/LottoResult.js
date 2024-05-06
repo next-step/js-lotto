@@ -1,8 +1,10 @@
 class LottoResult {
   #winningNumbers;
+  #bonusNumber;
 
-  constructor(winningNumbers) {
+  constructor(winningNumbers, bonusNumber) {
     this.#winningNumbers = [...winningNumbers];
+    this.#bonusNumber = bonusNumber;
   }
 
   countMatchingWinningNumbers(numbers) {
@@ -10,6 +12,10 @@ class LottoResult {
       numbers.includes(winningNumber)
     );
     return matchedWinningNumbers.length;
+  }
+
+  getIsBonusNumberMatching(numbers) {
+    return numbers.includes(this.#bonusNumber);
   }
 }
 

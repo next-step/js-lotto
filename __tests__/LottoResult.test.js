@@ -17,4 +17,20 @@ describe("로또 당첨 기능 테스트", () => {
     expect(matchingCount).toBeGreaterThanOrEqual(0);
     expect(matchingCount).toBeLessThanOrEqual(6);
   });
+
+  test("로또 당첨 결과를 파악하기 위해서는 보너스 번호와 당첨 번호가 일치하는지 여부를 구해야 한다.", () => {
+    // given
+    const purchasedLotto = new Lotto();
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const bonusNumber = 7;
+    const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+
+    // when
+    const isBonusNumberMatching = lottoResult.getIsBonusNumberMatching(
+      purchasedLotto.numbers
+    );
+
+    // then
+    expect(typeof isBonusNumberMatching).toBe("boolean");
+  });
 });
