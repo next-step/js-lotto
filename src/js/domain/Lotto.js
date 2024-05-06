@@ -1,9 +1,11 @@
+import { COUNT_LOTTO_NUMBERS, LOTTO_PRICE } from "../../constants/lotto";
+
 class Lotto {
-  #price = 1000;
+  #price = LOTTO_PRICE;
   #numbers = [];
 
   constructor() {
-    this.generateRandomNumbers();
+    this.generateLottoNumbers();
   }
 
   get price() {
@@ -14,10 +16,20 @@ class Lotto {
     return this.#numbers;
   }
 
-  generateRandomNumbers() {
-    for (let i = 0; i < 6; i++) {
+  generateLottoNumbers() {
+    const numbersSet = new Set();
+
+    while (true) {
       const randomNumber = Math.floor(Math.random() * 45) + 1;
-      this.#numbers.push(randomNumber);
+
+      if (!numbersSet.has(randomNumber)) {
+        numbersSet.add(randomNumber);
+        this.#numbers.push(randomNumber);
+      }
+
+      if (this.#numbers.length === COUNT_LOTTO_NUMBERS) {
+        break;
+      }
     }
   }
 }
