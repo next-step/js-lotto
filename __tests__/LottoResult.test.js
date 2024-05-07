@@ -121,7 +121,7 @@ describe("로또 당첨 기능 테스트", () => {
 
   test.each([
     [
-      "일치하",
+      "일치하는 것이 있으",
       2,
       {
         lottoNumbers: [1, 2, 3, 4, 5, 12],
@@ -130,7 +130,7 @@ describe("로또 당첨 기능 테스트", () => {
       },
     ],
     [
-      "일치하지 않으",
+      "일치하는 것이 없으",
       3,
       {
         lottoNumbers: [1, 2, 3, 4, 5, 12],
@@ -139,19 +139,19 @@ describe("로또 당첨 기능 테스트", () => {
       },
     ],
   ])(
-    "로또 번호와 당첨번호가 일치하는 갯수가 5개일 때 로또 번호와 보너스 번호가 %s면 %s등이다.",
-    () => {
+    "로또 번호와 당첨번호가 일치하는 갯수가 5개일 때 로또 번호 중 보너스 번호와 %s면 %s등이다.",
+    (_, expectedResult, testSet) => {
       // given
-      const lottoNumbers = [1, 2, 3, 4, 5, 12];
-      const winningNumbers = [1, 2, 3, 4, 5, 9];
-      const bonusNumber = 12;
+      const lottoNumbers = testSet.lottoNumbers;
+      const winningNumbers = testSet.winningNumbers;
+      const bonusNumber = testSet.bonusNumber;
       const lottoResult = new LottoResult(winningNumbers, bonusNumber);
 
       // when
       const lottoRanking = lottoResult.getLottoRanking(lottoNumbers);
 
       // then
-      expect(lottoRanking).toBe(2);
+      expect(lottoRanking).toBe(expectedResult);
     }
   );
 });
