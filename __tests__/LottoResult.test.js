@@ -102,6 +102,15 @@ describe("로또 당첨 기능 테스트", () => {
         bonusNumber: 7,
       },
     ],
+    [
+      0,
+      -1,
+      {
+        lottoNumbers: [1, 2, 3, 12, 18, 23],
+        winningNumbers: [19, 25, 27, 28, 29, 31],
+        bonusNumber: 7,
+      },
+    ],
   ])(
     "로또 당첨 등수를 구하려고 할 때 로또 번호와 당첨 번호가 일치하는 갯수가 %s개 이면 %s등이다.",
     (_, expectedResult, testSet) => {
@@ -152,6 +161,26 @@ describe("로또 당첨 기능 테스트", () => {
 
       // then
       expect(lottoRanking).toBe(expectedResult);
+    }
+  );
+
+  test.each([
+    [1, 2000000000],
+    [2, 30000000],
+    [3, 1500000],
+    [4, 50000],
+    [5, 5000],
+    [6, 0],
+  ])(
+    "로또 당첨 %s등일 때 상금은 %s원이다.",
+    (ranking, expectedWinningPrice) => {
+      // given
+
+      // when
+      const lottoWinningPrice = LottoResult.getLottoWinningPrice(ranking);
+
+      // then
+      expect(lottoWinningPrice).toBe(expectedWinningPrice);
     }
   );
 });

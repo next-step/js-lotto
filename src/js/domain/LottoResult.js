@@ -7,6 +7,23 @@ class LottoResult {
     this.#bonusNumber = bonusNumber;
   }
 
+  static getLottoWinningPrice(lottoRanking) {
+    switch (lottoRanking) {
+      case 1:
+        return 2000000000;
+      case 2:
+        return 30000000;
+      case 3:
+        return 1500000;
+      case 4:
+        return 50000;
+      case 5:
+        return 5000;
+      default:
+        return 0;
+    }
+  }
+
   countMatchingWinningNumbers(lottoNumbers) {
     const matchedWinningNumbers = this.#winningNumbers.filter((winningNumber) =>
       lottoNumbers.includes(winningNumber)
