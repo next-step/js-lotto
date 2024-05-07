@@ -7,15 +7,33 @@ class LottoResult {
     this.#bonusNumber = bonusNumber;
   }
 
-  countMatchingWinningNumbers(numbers) {
+  countMatchingWinningNumbers(lottoNumbers) {
     const matchedWinningNumbers = this.#winningNumbers.filter((winningNumber) =>
-      numbers.includes(winningNumber)
+      lottoNumbers.includes(winningNumber)
     );
     return matchedWinningNumbers.length;
   }
 
-  getIsBonusNumberMatching(numbers) {
-    return numbers.includes(this.#bonusNumber);
+  isBonusNumberMatching(lottoNumbers) {
+    return lottoNumbers.includes(this.#bonusNumber);
+  }
+
+  getLottoRanking(lottoNumbers) {
+    const matchingCount = this.countMatchingWinningNumbers(lottoNumbers);
+    const isBonusNumberMatching = this.isBonusNumberMatching(lottoNumbers);
+
+    switch (matchingCount) {
+      case 6:
+        return 1;
+      case 5:
+        return isBonusNumberMatching ? 2 : 3;
+      case 4:
+        return 4;
+      case 3:
+        return 5;
+      default:
+        return -1;
+    }
   }
 }
 

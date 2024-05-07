@@ -1,4 +1,9 @@
-import { COUNT_LOTTO_NUMBERS, LOTTO_PRICE } from "../../constants/lotto";
+import {
+  LENGTH_LOTTO_NUMBERS,
+  LOTTO_PRICE,
+  MAX_LOTTO_NUMBER,
+  MIN_LOTTO_NUMBER,
+} from "../../constants/lotto";
 
 class Lotto {
   #price = LOTTO_PRICE;
@@ -20,14 +25,15 @@ class Lotto {
     const numbersSet = new Set();
 
     while (true) {
-      const randomNumber = Math.floor(Math.random() * 45) + 1;
+      const randomNumber =
+        Math.floor(Math.random() * MAX_LOTTO_NUMBER) + MIN_LOTTO_NUMBER;
 
       if (!numbersSet.has(randomNumber)) {
         numbersSet.add(randomNumber);
         this.#numbers.push(randomNumber);
       }
 
-      if (this.#numbers.length === COUNT_LOTTO_NUMBERS) {
+      if (this.#numbers.length === LENGTH_LOTTO_NUMBERS) {
         break;
       }
     }

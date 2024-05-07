@@ -73,19 +73,48 @@ describe("로또 당첨 기능 테스트", () => {
     }
   );
 
-  test("로또 당첨 결과를 파악하기 위해서는 보너스 번호와 당첨 번호가 일치하는지 여부를 구해야 한다.", () => {
-    // given
-    const purchasedLotto = new Lotto();
-    const winningNumbers = [1, 2, 3, 4, 5, 6];
-    const bonusNumber = 7;
-    const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+  test.each([
+    [
+      6,
+      1,
+      {
+        lottoNumbers: [1, 2, 3, 4, 5, 6],
+        winningNumbers: [1, 2, 3, 4, 5, 6],
+        bonusNumber: 7,
+      },
+    ],
+    [
+      4,
+      4,
+      {
+        lottoNumbers: [1, 2, 3, 4, 8, 10],
+        winningNumbers: [1, 2, 3, 4, 5, 6],
+        bonusNumber: 7,
+      },
+    ],
+    [
+      3,
+      5,
+      {
+        lottoNumbers: [1, 2, 3, 12, 18, 23],
+        winningNumbers: [1, 2, 3, 34, 9, 7],
+        bonusNumber: 7,
+      },
+    ],
+  ])(
+    "로또 당첨 결과를 구할 때 로또 번호와 당첨번호가 일치하는 갯수가 %s개 이면 %s등이다.",
+    (expectedResult, expectedRanking, testSet) => {
+      // given
+      const lottoNumbers = testSet.lottoNumbers;
+      const winningNumbers = testSet.winningNumbers;
+      const bonusNumber = testSet.bonusNumber;
+      const lottoResult = new LottoResult(winningNumbers, bonusNumber);
 
-    // when
-    const isBonusNumberMatching = lottoResult.getIsBonusNumberMatching(
-      purchasedLotto.numbers
-    );
+      // when
+      const lottoRanking = lottoResult.getLottoRanking(lottoNumbers);
 
-    // then
-    expect(typeof isBonusNumberMatching).toBe("boolean");
-  });
+      // then
+      expect(lottoRanking).toBe(expectedRanking);
+    }
+  );
 });
