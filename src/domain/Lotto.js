@@ -1,27 +1,37 @@
 import { LOTTO } from "../constant";
-import { isInRange, isNaturalNumber } from "../utils/validation";
+import {
+  isInRange,
+  isNaturalNumber,
+  isEqualLength,
+  hasDuplicateNumbers,
+} from "../utils/validation";
 
 export default class Lotto {
   numbers = [];
 
   constructor(numbers) {
-    this.validateNumbers();
-
+    this.validateNumbers(numbers);
     this.numbers = numbers;
   }
 
-  validateNumbers() {
-    this.#validateNumberCount(this.numbers);
-    this.numbers.forEach((num) => {
+  get numbers() {
+    return this.numbers;
+  }
+
+  validateNumbers(numbers) {
+    this.#validateNumberCount(numbers);
+
+    numbers.forEach((num) => {
       this.#validateNumberInRange(num);
       this.#validateNaturalNumber(num);
     });
-    this.#validateUniqueNumber(this.numbers);
+
+    this.#validateUniqueNumber(numbers);
   }
 
   #validateNumberCount(numbers) {
     if (!isEqualLength(numbers, LOTTO.NUMBER_COUNT)) {
-      throw new Error("당첨번호는 6개여야 합니다.");
+      throw new Error("로또 번호는 6개여야 합니다.");
     }
   }
 
@@ -40,7 +50,7 @@ export default class Lotto {
   }
 
   #validateUniqueNumber(numbers) {
-    if (!hasDuplicateNumbers(numbers)) {
+    if (hasDuplicateNumbers(numbers)) {
       throw new Error("중복된 번호가 있습니다.");
     }
   }
