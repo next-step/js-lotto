@@ -1,4 +1,4 @@
-import { generateRamdomNumbers } from '../utils';
+import { generateRandomNumbers } from '../utils';
 import Lotto from './Lotto';
 
 export const ERROR_MESSAGE_LACK_MONEY = '로또 구매 하기에 금액이 부족합니다.';
@@ -8,7 +8,9 @@ export const ERROR_MESSAGE_NOT_ENTER_BONUS_NUMBER = '보너스 넘버가 입력�
 const LOTTO_PRICE = 1000;
 const LOTTO_TOTAL_COUNT = 6;
 const LOTTO_MAX_NUMBER = 45;
+const LOTTO_BONUS_COUNT = 5;
 const RADIX_INTEGER = 10;
+const BONUS_WINNING = 7;
 
 class LottoMachine {
   #winnigNumbers;
@@ -48,11 +50,20 @@ class LottoMachine {
     if (this.#bonusNumber === 0) throw new Error(ERROR_MESSAGE_NOT_ENTER_BONUS_NUMBER);
   }
 
+  createLottos(inputPrices) {
+    this.validCheckAmount(inputPrices);
+    const numberLottoPurchases = Math.floor(inputPrices / LOTTO_PRICE);
+
+    return [...Array(numberLottoPurchases)].map(
+      () => new Lotto(this.generateLottoNumbers())
+    );
+  }
+
   generateLottoNumbers() {
     const lottoNumbers = [];
 
-    while (lottoNumbers.length !== 6) {
-      const number = generateRamdomNumbers(45, 10);
+    while (lottoNumbers.length !== LOTTO_TOTAL_COUNT) {
+      const number = generateRandomNumbers(LOTTO_MAX_NUMBER, RADIX_INTEGER);
       if (!lottoNumbers.includes(number)) {
         lottoNumbers.push(number);
       }
@@ -62,31 +73,53 @@ class LottoMachine {
   }
 
   resultsLottoWinning(lotto) {
-    return lotto.filter(
-      (number) => this.#winnigNumbers.includes(number) || number === this.#bonusNumber
-    ).length;
+    const result = lotto.filter((number) => this.#winnigNumbers.includes(number)).length;
+
+    if (result === LOTTO_BONUS_COUNT) {
+      const bonus = lotto.filter((number) => number === this.#bonusNumber);
+      if (bonus.length === 1) {
+        return BONUS_WINNING;
+      }
+    }
+
+    return result;
   }
 
-  statisticsLottoWinning(lottos) {
+  checkLottoWinning(lottos) {
     this.validEnterWinningNumbers();
     this.validEnterBonusNumber();
 
-    const result = [];
-    lottos.forEach((lotto) => {
-      result.push(this.resultsLottoWinning(lotto));
+    const result = lottos.map((lotto) => {
+      lotto.result = this.resultsLottoWinning(lotto.numbers);
+      return lotto;
     });
 
     return result;
   }
 
-  createLottos(inputPrices) {
-    this.validCheckAmount(inputPrices);
-    const numberLottoPurchases = Math.floor(inputPrices / LOTTO_PRICE);
+  switchResultToMoney(result) {
+    switch (result) {
+      case 3:
+        return 5000;
+      case 4:
+        return 50000;
+      case 5:
+        return 1500000;
+      case 6:
+        return 2000000000;
+      case 7:
+        return 30000000;
+      default:
+        return 0;
+    }
+  }
 
-    console.log('this.generateLottoNumbers()', this.generateLottoNumbers());
-    return [...Array(numberLottoPurchases)].map(
-      () => new Lotto(this.generateLottoNumbers())
-    );
+  returnsLottos(prices, lottos) {
+    const totalProfit = lottos.reduce((acc, lotto) => {
+      return acc + this.switchResultToMoney(lotto.result);
+    }, 0);
+
+    return (totalProfit / prices).toFixed(2) * 100;
   }
 }
 
