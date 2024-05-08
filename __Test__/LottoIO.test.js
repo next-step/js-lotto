@@ -1,3 +1,5 @@
+import LottoIO from '../src/view/\bLottoIO';
+
 describe('로또 입출력에 관한 테스트 케이스', () => {
   test('구매 금액을 입력받는다.', async () => {
     //given
