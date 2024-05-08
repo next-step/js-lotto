@@ -1,4 +1,8 @@
-import LottoMachine, { ERROR_MESSAGE_LACK_MONEY } from '../src/domain/LottoMachine';
+import LottoMachine, {
+  ERROR_MESSAGE_LACK_MONEY,
+  ERROR_MESSAGE_NOT_ENTER_BONUS_NUMBER,
+  ERROR_MESSAGE_NOT_ENTER_WINNING_NUMBERS,
+} from '../src/domain/LottoMachine';
 
 describe('로또 머신에 대한 테스트 케이스', () => {
   test('금액에 해당하는 만큼 로또를 발행한다.', () => {
@@ -33,5 +37,33 @@ describe('로또 머신에 대한 테스트 케이스', () => {
     //then
     expect(machine.bonusNumber).toBe(7);
     expect([1, 2, 3, 4, 5, 6]).toEqual(machine.winnigNumbers);
+  });
+
+  test('우승번호를 입력하지 않으면 통계를 낼 수 없다.', () => {
+    //given
+    const machine = new LottoMachine();
+
+    //when
+    const lottos = machine.createLottos(7000);
+    machine.bonusNumber = 7;
+
+    //then
+    expect(() => {
+      machine.statisticsLottoWinning();
+    }).toThrow(ERROR_MESSAGE_NOT_ENTER_WINNING_NUMBERS);
+  });
+
+  test('보너스 번호를 입력하지 않으면 통계를 낼 수 없다.', () => {
+    //given
+    const machine = new LottoMachine();
+
+    //when
+    const lottos = machine.createLottos(7000);
+    machine.winnigNumbers = [1, 2, 3, 4, 5, 6];
+
+    //then
+    expect(() => {
+      machine.statisticsLottoWinning();
+    }).toThrow(ERROR_MESSAGE_NOT_ENTER_BONUS_NUMBER);
   });
 });
