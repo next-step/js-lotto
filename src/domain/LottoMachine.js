@@ -13,12 +13,10 @@ const RADIX_INTEGER = 10;
 class LottoMachine {
   #winnigNumbers;
   #bonusNumber;
-  #purchasedLottos;
 
   constructor() {
     this.#winnigNumbers = [];
     this.#bonusNumber = 0;
-    this.#purchasedLottos = [];
   }
 
   get winnigNumbers() {
@@ -41,12 +39,6 @@ class LottoMachine {
     if (prices < LOTTO_PRICE) throw new Error(ERROR_MESSAGE_LACK_MONEY);
   }
 
-  generateLottoNumbers() {
-    return [...Array(6)].map(() =>
-      generateRamdomNumbers(LOTTO_MAX_NUMBER, RADIX_INTEGER)
-    );
-  }
-
   validEnterWinningNumbers() {
     if (this.#winnigNumbers.length !== LOTTO_TOTAL_COUNT)
       throw new Error(ERROR_MESSAGE_NOT_ENTER_WINNING_NUMBERS);
@@ -56,14 +48,17 @@ class LottoMachine {
     if (this.#bonusNumber === 0) throw new Error(ERROR_MESSAGE_NOT_ENTER_BONUS_NUMBER);
   }
 
-  statisticsLottoWinning(lottos) {
-    this.validEnterWinningNumbers();
-    this.validEnterBonusNumber();
+  generateLottoNumbers() {
+    const lottoNumbers = [];
 
-    let result = [];
-    lottos.forEach((lotto) => {
-      result.push(this.resultsLottoWinning(lotto));
-    });
+    while (lottoNumbers.length !== 6) {
+      const number = generateRamdomNumbers(45, 10);
+      if (!lottoNumbers.includes(number)) {
+        lottoNumbers.push(number);
+      }
+    }
+
+    return lottoNumbers;
   }
 
   resultsLottoWinning(lotto) {
@@ -72,10 +67,23 @@ class LottoMachine {
     ).length;
   }
 
+  statisticsLottoWinning(lottos) {
+    this.validEnterWinningNumbers();
+    this.validEnterBonusNumber();
+
+    const result = [];
+    lottos.forEach((lotto) => {
+      result.push(this.resultsLottoWinning(lotto));
+    });
+
+    return result;
+  }
+
   createLottos(inputPrices) {
     this.validCheckAmount(inputPrices);
-    const numberLottoPurchases = inputPrices / LOTTO_PRICE;
+    const numberLottoPurchases = Math.floor(inputPrices / LOTTO_PRICE);
 
+    console.log('this.generateLottoNumbers()', this.generateLottoNumbers());
     return [...Array(numberLottoPurchases)].map(
       () => new Lotto(this.generateLottoNumbers())
     );
