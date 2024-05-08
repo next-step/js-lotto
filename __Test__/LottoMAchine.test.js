@@ -49,7 +49,7 @@ describe('로또 머신에 대한 테스트 케이스', () => {
 
     //then
     expect(() => {
-      machine.statisticsLottoWinning();
+      machine.checkLottoWinning(lottos);
     }).toThrow(ERROR_MESSAGE_NOT_ENTER_WINNING_NUMBERS);
   });
 
@@ -63,7 +63,7 @@ describe('로또 머신에 대한 테스트 케이스', () => {
 
     //then
     expect(() => {
-      machine.statisticsLottoWinning();
+      machine.checkLottoWinning(lottos);
     }).toThrow(ERROR_MESSAGE_NOT_ENTER_BONUS_NUMBER);
   });
 });
