@@ -1,3 +1,5 @@
+export const ERROR_MESSAGE_INPUT_PURCHASE_PRICE = '구매 금액은 숫자만 입력 가능합니다.';
+
 const MESSAGE_PURCHASE_PRICE = '구입금액을 입력해 주세요.';
 
 class LottoIO {
@@ -23,8 +25,14 @@ class LottoIO {
     });
   }
 
+  validPurChasePrice(price) {
+    if (Number.isNaN(Number(price))) throw new Error(ERROR_MESSAGE_INPUT_PURCHASE_PRICE);
+  }
+
   async inputPurchasePrice() {
-    return await this.readLineAsync(MESSAGE_PURCHASE_PRICE);
+    const price = await this.readLineAsync(MESSAGE_PURCHASE_PRICE);
+    this.validPurChasePrice(price);
+    return parseInt(price);
   }
 }
 
