@@ -1,4 +1,8 @@
 import {
+  ERROR_LOTTO_PURCHASED_AMOUNT_NOT_NUMBER,
+  ERROR_LOTTO_PURCHASED_AMOUNT_TOO_SMALL,
+} from "../../constants/error";
+import {
   LENGTH_LOTTO_NUMBERS,
   LOTTO_PRICE,
   MAX_LOTTO_NUMBER,
@@ -19,6 +23,16 @@ class Lotto {
 
   get numbers() {
     return this.#numbers;
+  }
+
+  static validateLottoPurchasedAmount(purchasedAmount) {
+    if (isNaN(purchasedAmount)) {
+      throw new Error(ERROR_LOTTO_PURCHASED_AMOUNT_NOT_NUMBER);
+    }
+
+    if (Number(purchasedAmount) < 0) {
+      throw new Error(ERROR_LOTTO_PURCHASED_AMOUNT_TOO_SMALL);
+    }
   }
 
   generateLottoNumbers() {
