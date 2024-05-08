@@ -21,4 +21,17 @@ describe('로또 머신에 대한 테스트 케이스', () => {
       machine.createLottos(700);
     }).toThrow(ERROR_MESSAGE_LACK_MONEY);
   });
+
+  test('로또기계는 당첨번호와 보너스 번호를 입력받아야된다.', () => {
+    //given
+    const machine = new LottoMachine();
+
+    //when
+    machine.bonusNumber = 7;
+    machine.winnigNumbers = [1, 2, 3, 4, 5, 6];
+
+    //then
+    expect(machine.bonusNumber).toBe(7);
+    expect([1, 2, 3, 4, 5, 6]).toEqual(machine.winnigNumbers);
+  });
 });
