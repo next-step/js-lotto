@@ -1,3 +1,5 @@
+import { LottoWinningPrice } from "../../constants/lottoResult";
+
 class LottoResult {
   #winningNumbers;
   #bonusNumber;
@@ -10,15 +12,15 @@ class LottoResult {
   static getLottoWinningPrice(lottoRanking) {
     switch (lottoRanking) {
       case 1:
-        return 2000000000;
+        return LottoWinningPrice.FIRST;
       case 2:
-        return 30000000;
+        return LottoWinningPrice.SECOND;
       case 3:
-        return 1500000;
+        return LottoWinningPrice.THIRD;
       case 4:
-        return 50000;
+        return LottoWinningPrice.FOURTH;
       case 5:
-        return 5000;
+        return LottoWinningPrice.FIFTH;
       default:
         return 0;
     }
