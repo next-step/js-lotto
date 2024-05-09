@@ -23,4 +23,14 @@ describe('로또 티켓 기능 테스트', () => {
       lottoTicket.lottoNumbers = [1, 1, 2, 10, 30, 40];
     }).toThrow();
   });
+  it('로또 금액은 1,000원이다.', () => {
+    // given
+    const lottoTicket = new LottoTicket();
+
+    // when
+    const change = lottoTicket.buy(2_000);
+
+    // then
+    expect(change).toBe(1_000);
+  });
 });
