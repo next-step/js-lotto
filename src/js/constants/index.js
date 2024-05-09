@@ -1,0 +1,8 @@
+export const LOTTO = {
+  WINNING_NUMBER_LENGTH: 6,
+  MIN_WINNING_NUMBER_RANGE: 1,
+  MAX_WINNING_NUMBER_RANGE: 45,
+  NAME_EN: 'lotto',
+  NAME_KR: '로또',
+  PRICE: 1_000,
+};
