@@ -1,3 +1,4 @@
+import { errorLottoWinningNumbers } from "../../constants/error";
 import { LottoWinningPrice } from "../../constants/lottoResult";
 
 class LottoResult {
@@ -23,6 +24,17 @@ class LottoResult {
         return LottoWinningPrice.FIFTH;
       default:
         return 0;
+    }
+  }
+
+  static validateWinningNumbers(input) {
+    const winningNumbers = input.split(",");
+    const winningNumbersSet = new Set(winningNumbers);
+
+    if (winningNumbers.length !== winningNumbersSet.size) {
+      throw new Error(
+        errorLottoWinningNumbers.ERROR_LOTTO_WINNING_NUMBERS_DUPLICATED
+      );
     }
   }
 
