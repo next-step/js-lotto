@@ -31,6 +31,20 @@ const Input = {
       }
     }
   },
+
+  async getBonusNumber(winningNumbers) {
+    while (true) {
+      const input = await readLineAsync("보너스 번호를 입력해 주세요.");
+      try {
+        LottoResult.validateBonusNumber(input, winningNumbers);
+        const bonusNumber = Number(input);
+        return bonusNumber;
+      } catch (e) {
+        console.log(e.message);
+        console.log();
+      }
+    }
+  },
 };
 
 export default Input;

@@ -1,4 +1,7 @@
-import { errorLottoWinningNumbers } from "../../constants/error";
+import {
+  ErrorLottoBonusNumber,
+  ErrorLottoWinningNumbers,
+} from "../../constants/error";
 import { LottoWinningPrice } from "../../constants/lottoResult";
 
 class LottoResult {
@@ -33,7 +36,21 @@ class LottoResult {
 
     if (winningNumbers.length !== winningNumbersSet.size) {
       throw new Error(
-        errorLottoWinningNumbers.ERROR_LOTTO_WINNING_NUMBERS_DUPLICATED
+        ErrorLottoWinningNumbers.ERROR_LOTTO_WINNING_NUMBERS_DUPLICATED
+      );
+    }
+  }
+
+  static validateBonusNumber(input, winningNumbers) {
+    if (isNaN(input)) {
+      throw new Error(
+        ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_NOT_NUMBER
+      );
+    }
+
+    if (winningNumbers.includes(Number(input))) {
+      throw new Error(
+        ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_DUPLICATED
       );
     }
   }

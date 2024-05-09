@@ -1,4 +1,4 @@
-import { errorLottoPurchasedAmount } from "../../constants/error";
+import { ErrorLottoPurchasedAmount } from "../../constants/error";
 import {
   LENGTH_LOTTO_NUMBERS,
   LOTTO_PRICE,
@@ -25,13 +25,13 @@ class Lotto {
   static validateLottoPurchasedAmount(purchasedAmount) {
     if (isNaN(purchasedAmount)) {
       throw new Error(
-        errorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_NUMBER
+        ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_NUMBER
       );
     }
 
     if (Number(purchasedAmount) < 0) {
       throw new Error(
-        errorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_POSITIVE
+        ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_POSITIVE
       );
     }
   }

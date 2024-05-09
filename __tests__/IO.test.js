@@ -1,6 +1,7 @@
 import {
-  errorLottoPurchasedAmount,
-  errorLottoWinningNumbers,
+  ErrorLottoBonusNumber,
+  ErrorLottoPurchasedAmount,
+  ErrorLottoWinningNumbers,
 } from "../src/constants/error";
 import Input from "../src/js/view/Input";
 import * as io from "../src/utils/readlineAsync";
@@ -38,10 +39,10 @@ describe("입출력 기능 테스트", () => {
     // then
     expect(readLineAsyncSpy).toHaveBeenCalledTimes(3);
     expect(logSpy).toHaveBeenCalledWith(
-      errorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_POSITIVE
+      ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_POSITIVE
     );
     expect(logSpy).toHaveBeenCalledWith(
-      errorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_NUMBER
+      ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_NUMBER
     );
     expect(lottoPurchasedAmount).toBe(1000);
   });
@@ -71,8 +72,38 @@ describe("입출력 기능 테스트", () => {
     // then
     expect(readLineAsyncSpy).toHaveBeenCalledTimes(2);
     expect(logSpy).toHaveBeenCalledWith(
-      errorLottoWinningNumbers.ERROR_LOTTO_WINNING_NUMBERS_DUPLICATED
+      ErrorLottoWinningNumbers.ERROR_LOTTO_WINNING_NUMBERS_DUPLICATED
     );
     expect(winningNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+  });
+
+  test("로또 보너스 번호를 입력 받을 때 1이상 45이하의 정수이면서 당첨번호로 선택한 수들과 다른 수를 입력 하면 정상적으로 종료된다.", async () => {
+    // given
+    readLineAsyncSpy.mockImplementationOnce(() => Promise.resolve("7"));
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+
+    // when
+    const bonusNumber = await Input.getBonusNumber(winningNumbers);
+
+    // then
+    expect(bonusNumber).toBe(7);
+  });
+
+  test("로또 보너스 번호를 입력 받을 때 1이상 45이하의 정수이면서 당첨번호로 선택한 수들과 겹치면 에러 메시지 출력 후 정상적으로 종료된다.", async () => {
+    // given
+    readLineAsyncSpy
+      .mockImplementationOnce(() => Promise.resolve("6"))
+      .mockImplementationOnce(() => Promise.resolve("7"));
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+
+    // when
+    const bonusNumber = await Input.getBonusNumber(winningNumbers);
+
+    // then
+    expect(readLineAsyncSpy).toHaveBeenCalledTimes(2);
+    expect(logSpy).toHaveBeenCalledWith(
+      ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_DUPLICATED
+    );
+    expect(bonusNumber).toBe(7);
   });
 });
