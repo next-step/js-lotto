@@ -3,7 +3,9 @@ import {
   ErrorLottoPurchasedAmount,
   ErrorLottoWinningNumbers,
 } from "../src/constants/error";
+import LottoResult from "../src/js/domain/LottoResult";
 import Input from "../src/js/view/Input";
+import Output from "../src/js/view/Output";
 import * as io from "../src/utils/readlineAsync";
 
 const logSpy = jest.spyOn(console, "log");
@@ -105,5 +107,35 @@ describe("입출력 기능 테스트", () => {
       ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_DUPLICATED
     );
     expect(bonusNumber).toBe(7);
+  });
+
+  test("로또 당첨 결과를 출력한다.", () => {
+    // given
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const bonusNumber = 7;
+    const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+    const purchasedLottoNumbers = [
+      [1, 2, 3, 4, 5, 6],
+      [1, 2, 3, 13, 15, 18],
+      [1, 2, 3, 4, 5, 13],
+      [1, 2, 3, 4, 5, 7],
+      [20, 21, 22, 23, 24, 25],
+    ];
+    const lottoRankings = purchasedLottoNumbers.map((lottoNumbers) =>
+      lottoResult.getLottoRanking(lottoNumbers)
+    );
+
+    // when
+    Output.printLottoRankingsStatus(lottoRankings);
+
+    // then
+    expect(logSpy).toHaveBeenCalledWith("당첨 통계\n--------------------");
+    expect(logSpy).toHaveBeenCalledWith("3개 일치 (5,000원) - 1개");
+    expect(logSpy).toHaveBeenCalledWith("4개 일치 (50,000원) - 0개");
+    expect(logSpy).toHaveBeenCalledWith("5개 일치 (1,500,000원) - 1개");
+    expect(logSpy).toHaveBeenCalledWith(
+      "5개 일치, 보너스 볼 일치 (30,000,000원) - 1개"
+    );
+    expect(logSpy).toHaveBeenCalledWith("6개 일치 (2,000,000,000원) - 1개");
   });
 });

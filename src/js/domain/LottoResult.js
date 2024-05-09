@@ -2,7 +2,10 @@ import {
   ErrorLottoBonusNumber,
   ErrorLottoWinningNumbers,
 } from "../../constants/error";
-import { LottoWinningPrice } from "../../constants/lottoResult";
+import {
+  LottoMatchingCountCondition,
+  LottoWinningPrice,
+} from "../../constants/lottoResult";
 
 class LottoResult {
   #winningNumbers;
@@ -14,20 +17,7 @@ class LottoResult {
   }
 
   static getLottoWinningPrice(lottoRanking) {
-    switch (lottoRanking) {
-      case 1:
-        return LottoWinningPrice.FIRST;
-      case 2:
-        return LottoWinningPrice.SECOND;
-      case 3:
-        return LottoWinningPrice.THIRD;
-      case 4:
-        return LottoWinningPrice.FOURTH;
-      case 5:
-        return LottoWinningPrice.FIFTH;
-      default:
-        return 0;
-    }
+    return LottoWinningPrice[lottoRanking];
   }
 
   static validateWinningNumbers(input) {
@@ -71,13 +61,13 @@ class LottoResult {
     const isBonusNumberMatching = this.isBonusNumberMatching(lottoNumbers);
 
     switch (matchingCount) {
-      case 6:
+      case LottoMatchingCountCondition[1]:
         return 1;
-      case 5:
+      case LottoMatchingCountCondition[2]:
         return isBonusNumberMatching ? 2 : 3;
-      case 4:
+      case LottoMatchingCountCondition[4]:
         return 4;
-      case 3:
+      case LottoMatchingCountCondition[5]:
         return 5;
       default:
         return -1;
