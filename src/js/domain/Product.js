@@ -26,18 +26,6 @@ class Product {
   get price() {
     return this.#price;
   }
-
-  buy(cost) {
-    if (cost > Number.MAX_SAFE_INTEGER || !Number.isInteger(cost)) {
-      throw new TypeError(
-        'buy로 전달된 매개변수는 표현가능한 숫자형이어야 합니다.'
-      );
-    }
-    if (cost < this.#price) {
-      throw new Error('금액이 부족합니다.');
-    }
-    return cost - this.#price;
-  }
 }
 
 export default Product;

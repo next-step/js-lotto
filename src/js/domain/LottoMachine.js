@@ -1,8 +1,10 @@
 import { LOTTO } from '../constants';
 import {
+  generateLottoNumberArray,
   isValidLottoNumber,
   isValidLottoNumberArray,
 } from '../utils/LottoUtil';
+import LottoTicket from './LottoTicket';
 
 class LottoMachine {
   #winningNumbers;
@@ -99,6 +101,25 @@ class LottoMachine {
       default:
         return 0;
     }
+  }
+
+  sellAutoLottoTicket(cost) {
+    if (cost > Number.MAX_SAFE_INTEGER || !Number.isInteger(cost)) {
+      throw new TypeError(
+        'buy로 전달된 매개변수는 표현가능한 숫자형이어야 합니다.'
+      );
+    }
+    if (cost < LOTTO.PRICE) {
+      throw new Error('금액이 부족합니다.');
+    }
+
+    const sellCount = Math.floor(cost / LOTTO.PRICE);
+
+    return Array.from({ length: sellCount }, () => {
+      const lottoTicket = new LottoTicket();
+      lottoTicket.lottoNumbers = generateLottoNumberArray();
+      return lottoTicket;
+    });
   }
 }
 

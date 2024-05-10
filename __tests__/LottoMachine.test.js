@@ -116,4 +116,35 @@ describe('로또 머신 기능 테스트', () => {
       expect(result).toBe(expected);
     });
   });
+
+  describe('로또 발권', () => {
+    it('지불할 금액이 로또 금액보다 적다면 에러를 발생한다.', () => {
+      const lottoMachine = new LottoMachine();
+
+      expect(() => lottoMachine.sellAutoLottoTicket(800)).toThrow();
+    });
+
+    it('지불한 금액에 따라 n개의 로또를 발권한다. (자동)', () => {
+      // given
+      const lottoMachine = new LottoMachine();
+
+      // when
+      const lottoTickets = lottoMachine.sellAutoLottoTicket(2_000);
+
+      // then
+      expect(lottoTickets).toHaveLength(2);
+      expect(
+        lottoTickets.every((lotto) => lotto instanceof LottoTicket)
+      ).toBeTruthy();
+    });
+
+    it.each([['1000'], [Infinity], [Number.MAX_SAFE_INTEGER + 1]])(
+      '"%s" 는 sellAutoLottoTicket() 매개변수로 전달될 수 없습니다.',
+      (invalidValue) => {
+        const lottoMachine = new LottoMachine();
+
+        expect(() => lottoMachine.sellAutoLottoTicket(invalidValue)).toThrow();
+      }
+    );
+  });
 });
