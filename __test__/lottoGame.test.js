@@ -10,4 +10,13 @@ describe("로또 게임 테스트", () => {
 
     expect(lottoGame.result.length).toEqual(1);
   });
+
+  test("구입 금액에 해당하는 만큼 로또를 발행해야 한다.", () => {
+    const purchasePrice = LOTTO_GAME.UNIT_PRICE * 8;
+
+    const lottoGame = new LottoGame(purchasePrice);
+    lottoGame.purchaseLottos();
+
+    expect(lottoGame.result.length).toEqual(8);
+  });
 });

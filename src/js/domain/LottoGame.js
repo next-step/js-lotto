@@ -18,6 +18,12 @@ export class LottoGame {
     }
   }
 
+  purchaseLottos() {
+    while (this.#purchasePrice >= LOTTO_GAME.UNIT_PRICE) {
+      this.purchaseUnitLotto();
+    }
+  }
+
   get result() {
     return this.#lottos;
   }
