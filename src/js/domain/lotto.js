@@ -4,7 +4,7 @@ import { generateRandomNumber } from "../../utils/generateRandomNumber";
 export class Lotto {
   constructor() {}
 
-  getLottoNumbers() {
+  generate() {
     const lottoNumbers = new Set();
 
     while (lottoNumbers.size < LOTTO.NUMBERS_COUNT) {
