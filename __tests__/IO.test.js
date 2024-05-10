@@ -3,6 +3,7 @@ import {
   ErrorLottoPurchasedAmount,
   ErrorLottoWinningNumbers,
 } from "../src/constants/error";
+import Lotto from "../src/js/domain/Lotto";
 import LottoResult from "../src/js/domain/LottoResult";
 import Input from "../src/js/view/Input";
 import Output from "../src/js/view/Output";
@@ -47,6 +48,18 @@ describe("입출력 기능 테스트", () => {
       ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_NUMBER
     );
     expect(lottoPurchasedAmount).toBe(1000);
+  });
+
+  test("로또 구매 금액으로 발급한 최대 개수의 로또의 수를 출력한다.", () => {
+    // given
+    const purchasedAmount = 10001;
+    const lottos = Lotto.generateLottos(purchasedAmount);
+
+    // when
+    Output.printGeneratedLottosCount(lottos.length);
+
+    // then
+    expect(logSpy).toHaveBeenCalledWith("10개를 구매했습니다.");
   });
 
   test("로또 당첨 번호를 입력 받을 때 서로 다른 1이상 45이하의 정수 6개를 입력하면 정상적으로 종료된다.", async () => {

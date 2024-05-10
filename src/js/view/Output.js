@@ -28,6 +28,10 @@ const Output = {
   printLottoProfitRate(lottoProfitRate) {
     console.log(`총 수익률은 ${lottoProfitRate}%입니다.`);
   },
+
+  printGeneratedLottosCount(lottosCount) {
+    console.log(`${lottosCount}개를 구매했습니다.`);
+  },
 };
 
 export default Output;
