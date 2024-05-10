@@ -17,10 +17,10 @@ describe('로또 기능 테스트', () => {
 		const lotto = new Lotto();
 
 		// when
-		const qty = lotto.purchase(5000);
+		const quantity = lotto.purchase(5000);
 
 		// then
-		expect(qty).toBe(5);
+		expect(quantity).toBe(5);
 	});
 
 	test('로또 당첨 번호는 1 ~ 45 사이의 무작위 수 중 중복되지 않는 6개이다.', () => {

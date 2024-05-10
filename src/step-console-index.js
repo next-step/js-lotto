@@ -18,12 +18,10 @@ function readLineAsync(query) {
 
 async function play() {
 	const lotto = new Lotto();
-
 	const purchaseAmount = await readLineAsync('구입금액을 입력해 주세요. > ');
+	const quantity = lotto.purchase(purchaseAmount);
 
-	const qty = lotto.purchase(purchaseAmount);
-
-	console.log(`${qty}개를 구매했습니다.`);
+	console.log(`${quantity}개를 구매했습니다.`);
 }
 
 play();

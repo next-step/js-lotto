@@ -2,7 +2,7 @@ import { ConstantNumbers } from './constant';
 
 class Lotto {
 	price = ConstantNumbers.LOTTO_PRICE;
-	qty;
+	quantity;
 	purchaseAmount;
 
 	winningNumbers = Array.from(
@@ -12,14 +12,14 @@ class Lotto {
 
 	winningResult = [];
 
-	constructor(qty) {
-		this.qty = qty;
+	constructor(quantity) {
+		this.quantity = quantity;
 	}
 
 	purchase(purchaseAmount) {
-		// 구매 금액을 로또 가격으로 나눈 몫이 qty
-		this.qty = purchaseAmount / this.price;
-		return this.qty;
+		// 구매 금액을 로또 가격으로 나눈 몫이 quantity
+		this.quantity = purchaseAmount / this.price;
+		return this.quantity;
 	}
 
 	getWinningNumbers() {
