@@ -45,26 +45,32 @@ class LottoMachine {
     this.#bonusWinningNumber = bonusWinningNumber;
   }
 
+  #hasBonusNumber(lottoNumbers) {
+    return lottoNumbers.includes(this.#bonusWinningNumber);
+  }
+
+  #getMatchLottoNumberCount(lottoNumbers) {
+    return this.#winningNumbers.reduce(
+      (count, winningNumber) =>
+        lottoNumbers.includes(winningNumber) ? count + 1 : count,
+      0
+    );
+  }
+
   getWinningResult(lottoNumbers) {
-    const matchNumber = this.#winningNumbers.filter((winningNumber) =>
-      lottoNumbers.includes(winningNumber)
-    ).length;
-    if (matchNumber === 6) {
-      return 1;
+    const matchLottoNumber = this.#getMatchLottoNumberCount(lottoNumbers);
+    switch (matchLottoNumber) {
+      case 6:
+        return 1;
+      case 5:
+        return this.#hasBonusNumber(lottoNumbers) ? 2 : 3;
+      case 4:
+        return 4;
+      case 3:
+        return 5;
+      default:
+        return -1;
     }
-    if (matchNumber === 5 && lottoNumbers.includes(this.#bonusWinningNumber)) {
-      return 2;
-    }
-    if (matchNumber === 5) {
-      return 3;
-    }
-    if (matchNumber === 4) {
-      return 4;
-    }
-    if (matchNumber === 3) {
-      return 5;
-    }
-    return -1;
   }
 }
 
