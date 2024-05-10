@@ -17,7 +17,22 @@ class LottoResult {
   }
 
   static getLottoWinningPrice(lottoRanking) {
+    if (lottoRanking == -1) {
+      return 0;
+    }
     return LottoWinningPrice[lottoRanking];
+  }
+
+  static getTotalLottoWinningPrice(lottoRankings) {
+    const totalLottoWinningPrice = lottoRankings.reduce((acc, lottoRanking) => {
+      return LottoResult.getLottoWinningPrice(lottoRanking) + acc;
+    }, 0);
+
+    return totalLottoWinningPrice;
+  }
+
+  static getTotalLottoProfitRate(totalLottoWinningPrice, lottoPurcasedAmount) {
+    return (totalLottoWinningPrice / lottoPurcasedAmount) * 100;
   }
 
   static validateWinningNumbers(input) {

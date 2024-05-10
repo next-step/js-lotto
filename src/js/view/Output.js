@@ -35,6 +35,10 @@ const Output = {
       lottoRankingsStatus[ranking]
     }개`;
   },
+
+  printLottoProfitRate(lottoProfitRate) {
+    console.log(`총 수익률은 ${lottoProfitRate}%입니다.`);
+  },
 };
 
 export default Output;
