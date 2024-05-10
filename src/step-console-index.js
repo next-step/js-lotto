@@ -18,19 +18,19 @@ function readLineAsync(query) {
 
 async function play() {
 	const lotto = new Lotto();
-	const winningNumbers = [];
+	const lottoNumbers = [];
 
 	const purchaseAmount = await readLineAsync('구입금액을 입력해 주세요. > ');
 	const quantity = lotto.purchase(purchaseAmount);
 
 	for (let i = 0; i < quantity; i++) {
-		winningNumbers.push(lotto.getWinningNumbers());
+		lottoNumbers.push(lotto.createLottoNumbers());
 	}
 
 	console.log(`${quantity}개를 구매했습니다.`);
 
-	for (let i = 0; i < winningNumbers.length; i++) {
-		console.log(`[${winningNumbers[i].join(', ')}]`);
+	for (let i = 0; i < lottoNumbers.length; i++) {
+		console.log(`[${lottoNumbers[i].join(', ')}]`);
 	}
 }
 

@@ -5,7 +5,7 @@ class Lotto {
 	quantity;
 	purchaseAmount;
 
-	winningNumbers = Array.from(
+	lottoNumbers = Array.from(
 		{ length: ConstantNumbers.MAX_NUMBER - ConstantNumbers.MIN_NUMBER + 1 },
 		(_, i) => i + ConstantNumbers.MIN_NUMBER
 	);
@@ -22,22 +22,20 @@ class Lotto {
 		return this.quantity;
 	}
 
-	getWinningNumbers() {
+	createLottoNumbers() {
 		this.winningResult = [];
 
 		for (let i = 0; i < ConstantNumbers.COUNT; i++) {
-			const randomIndex = Math.floor(
-				Math.random() * this.winningNumbers.length
-			);
-			this.winningResult.push(this.winningNumbers[randomIndex]);
-			this.winningNumbers.splice(randomIndex, 1);
+			const randomIndex = Math.floor(Math.random() * this.lottoNumbers.length);
+			this.winningResult.push(this.lottoNumbers[randomIndex]);
+			this.lottoNumbers.splice(randomIndex, 1);
 		}
 
 		return this.winningResult;
 	}
 
-	getBonusNumber() {
-		const availableNumber = this.winningNumbers.filter(
+	createBonusNumber() {
+		const availableNumber = this.lottoNumbers.filter(
 			num => !this.winningResult.includes(num)
 		);
 

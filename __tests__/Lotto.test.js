@@ -28,12 +28,12 @@ describe('로또 기능 테스트', () => {
 		const lotto = new Lotto();
 
 		// when
-		const winningNumbers = lotto.getWinningNumbers();
+		const lottoNumbers = lotto.createLottoNumbers();
 
 		// then
-		expect(winningNumbers.length).toBe(6); // 번호의 개수가 6개인지
-		expect(new Set(winningNumbers).size).toBe(6); // 6개의 번호가 중복되지 않는지
-		winningNumbers.forEach(num => {
+		expect(lottoNumbers.length).toBe(6); // 번호의 개수가 6개인지
+		expect(new Set(lottoNumbers).size).toBe(6); // 6개의 번호가 중복되지 않는지
+		lottoNumbers.forEach(num => {
 			expect(num).toBeGreaterThanOrEqual(1); // 최소 1인지
 			expect(num).toBeLessThanOrEqual(45); // 최대 45인지
 		});
@@ -44,10 +44,10 @@ describe('로또 기능 테스트', () => {
 		const lotto = new Lotto();
 
 		// when
-		const winningNumbers = lotto.getWinningNumbers();
-		const bonusNumber = lotto.getBonusNumber();
+		const lottoNumbers = lotto.createLottoNumbers();
+		const bonusNumber = lotto.createBonusNumber();
 
 		// then
-		expect(winningNumbers.includes(bonusNumber)).toBeFalsy();
+		expect(lottoNumbers.includes(bonusNumber)).toBeFalsy();
 	});
 });
