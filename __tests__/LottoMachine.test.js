@@ -58,7 +58,7 @@ describe('로또 머신 기능 테스트', () => {
     [[1, 2, 3, 10, 11, 12], 5],
     [[1, 2, 10, 11, 12, 13], -1],
     [[10, 11, 12, 13, 14, 15], -1],
-  ])('번호 일치 여부 조회', (lottoNumbers, expected) => {
+  ])('당첨 등수 조회', (lottoNumbers, expected) => {
     // given
     const lottoMachine = new LottoMachine();
     lottoMachine.winningNumbers = [1, 2, 3, 4, 5, 6];
@@ -68,14 +68,37 @@ describe('로또 머신 기능 테스트', () => {
     lottoTicket.lottoNumbers = lottoNumbers;
 
     // when
-    const result = lottoMachine.getWinningResult(lottoTicket.lottoNumbers);
+    const result = lottoMachine.getWinningRank(lottoTicket.lottoNumbers);
 
     // then
     expect(result).toBe(expected);
   });
-  it('당첨 금액 설정', () => {
+  it.each([[[]], [[1, 2, 3, 4, 5]]])('당첨 금액 설정', (winningAmount) => {
+    expect(() => new LottoMachine(winningAmount)).toThrow();
+  });
+  it.each([
+    [[1, 2, 3, 4, 5, 6], 2_000_000_000],
+    [[1, 2, 3, 4, 5, 7], 30_000_000],
+    [[1, 2, 3, 4, 5, 10], 1_500_000],
+    [[1, 2, 3, 4, 10, 11], 50_000],
+    [[1, 2, 3, 10, 11, 12], 5_000],
+    [[1, 2, 10, 11, 12, 13], 0],
+    [[10, 11, 12, 13, 14, 15], 0],
+  ])('당첨 금액 조회', (lottoNumbers, expected) => {
     // given
+    const lottoMachine = new LottoMachine([
+      2_000_000_000, 30_000_000, 1_500_000, 50_000, 5_000, 0,
+    ]);
+    lottoMachine.winningNumbers = [1, 2, 3, 4, 5, 6];
+    lottoMachine.bonusWinningNumber = 7;
+
+    const lottoTicket = new LottoTicket();
+    lottoTicket.lottoNumbers = lottoNumbers;
+
     // when
+    const result = lottoMachine.getAmount(lottoTicket.lottoNumbers);
+
     // then
+    expect(result).toBe(expected);
   });
 });

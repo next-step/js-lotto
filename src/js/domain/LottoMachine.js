@@ -7,12 +7,24 @@ import {
 class LottoMachine {
   #winningNumbers;
   #bonusWinningNumber;
+  #winningAmount;
 
-  constructor() {
+  static DEFAULT_WINNING_AMOUNT = [
+    2_000_000_000, 30_000_000, 1_500_000, 50_000, 5_000, 0,
+  ];
+
+  constructor(winningAmount = LottoMachine.DEFAULT_WINNING_AMOUNT) {
+    if (!Array.isArray(winningAmount)) {
+      throw new TypeError('유효하지 않은 값 입니다.');
+    }
+    if (winningAmount.length !== LOTTO.WINNING_NUMBER_LENGTH) {
+      throw new TypeError('당첨 금액 형식에 맞지않습니다.');
+    }
     this.#winningNumbers = Array.from({
       length: LOTTO.WINNING_NUMBER_LENGTH,
     }).fill(null);
     this.#bonusWinningNumber = null;
+    this.#winningAmount = winningAmount;
   }
 
   get winningNumbers() {
@@ -57,7 +69,7 @@ class LottoMachine {
     );
   }
 
-  getWinningResult(lottoNumbers) {
+  getWinningRank(lottoNumbers) {
     const matchLottoNumber = this.#getMatchLottoNumberCount(lottoNumbers);
     switch (matchLottoNumber) {
       case 6:
@@ -70,6 +82,22 @@ class LottoMachine {
         return 5;
       default:
         return -1;
+    }
+  }
+
+  getAmount(lottoNumbers) {
+    const matchLottoNumber = this.#getMatchLottoNumberCount(lottoNumbers);
+    switch (matchLottoNumber) {
+      case 6:
+        return 2_000_000_000;
+      case 5:
+        return this.#hasBonusNumber(lottoNumbers) ? 30_000_000 : 1_500_000;
+      case 4:
+        return 50_000;
+      case 3:
+        return 5_000;
+      default:
+        return 0;
     }
   }
 }
