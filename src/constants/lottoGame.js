@@ -1,3 +1,1 @@
-export const LOTTO_GAME = {
-  UNIT_PRICE: 1000,
-};
+export const LOTTO_GAME = {};
