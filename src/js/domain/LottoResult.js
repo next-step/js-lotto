@@ -5,6 +5,7 @@ import {
 import {
   LottoMatchingCountCondition,
   LottoWinningPrice,
+  MAX_LOTTO_RANKING,
 } from "../../constants/lottoResult";
 
 class LottoResult {
@@ -58,6 +59,21 @@ class LottoResult {
         ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_DUPLICATED
       );
     }
+  }
+
+  static getLottoRankingCounts(lottoRankings) {
+    const lottoRankingCounts = Array(MAX_LOTTO_RANKING + 1).fill(0);
+
+    // 1 ~ 5등에 해당하지 않는 유효하지 않은 등수 제거
+    const filteredRankings = lottoRankings.filter(
+      (lottoRanking) => lottoRanking > 0
+    );
+
+    filteredRankings.forEach((ranking) => {
+      lottoRankingCounts[ranking] += 1;
+    });
+
+    return lottoRankingCounts;
   }
 
   countMatchingWinningNumbers(lottoNumbers) {

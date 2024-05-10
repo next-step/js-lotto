@@ -124,9 +124,10 @@ describe("입출력 기능 테스트", () => {
     const lottoRankings = purchasedLottoNumbers.map((lottoNumbers) =>
       lottoResult.getLottoRanking(lottoNumbers)
     );
+    const lottoRankingCounts = LottoResult.getLottoRankingCounts(lottoRankings);
 
     // when
-    Output.printLottoRankingsStatus(lottoRankings);
+    Output.printLottoRankingCounts(lottoRankingCounts);
 
     // then
     expect(logSpy).toHaveBeenCalledWith("당첨 통계\n--------------------");
