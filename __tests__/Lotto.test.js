@@ -22,4 +22,20 @@ describe('로또 기능 테스트', () => {
 		// then
 		expect(qty).toBe(5);
 	});
+
+	test('로또 당첨 번호는 1 ~ 45 사이의 무작위 수 중 중복되지 않는 6개이다.', () => {
+		// given
+		const lotto = new Lotto();
+
+		// when
+		const winningNumbers = lotto.getWinningNumbers();
+
+		// then
+		expect(winningNumbers.length).toBe(6); // 번호의 개수가 6개인지
+		expect(new Set(winningNumbers).size).toBe(6); // 6개의 번호가 중복되지 않는지
+		winningNumbers.forEach(num => {
+			expect(num).toBeGreaterThanOrEqual(1); // 최소 1인지
+			expect(num).toBeLessThanOrEqual(45); // 최대 45인지
+		});
+	});
 });
