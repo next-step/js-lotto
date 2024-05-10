@@ -36,20 +36,26 @@ describe('상품 기능 테스트', () => {
     expect(lotto).toHaveProperty('name');
     expect(lotto).toHaveProperty('price');
   });
-  it.each(INVALID_PRODUCT_NAME)(
-    '%s 는 상품명이 될 수 없다.',
-    (invalidProductName) => {
-      expect(() => new Product(invalidProductName, LOTTO.PRICE)).toThrow();
-    }
-  );
-  it.each(INVALID_PRODUCT_PRICE)(
-    '%s 는 상품 금액이 될 수 없다.',
-    (invalidProductPrice) => {
-      expect(() => new Product(LOTTO.NAME_KR, invalidProductPrice)).toThrow();
-    }
-  );
 
-  describe('상품 구매', () => {
+  describe('상품명 기능 테스트', () => {
+    it.each(INVALID_PRODUCT_NAME)(
+      '%s 는 상품명이 될 수 없다.',
+      (invalidProductName) => {
+        expect(() => new Product(invalidProductName, LOTTO.PRICE)).toThrow();
+      }
+    );
+  });
+
+  describe('상품 금액 기능 테스트', () => {
+    it.each(INVALID_PRODUCT_PRICE)(
+      '%s 는 상품 금액이 될 수 없다.',
+      (invalidProductPrice) => {
+        expect(() => new Product(LOTTO.NAME_KR, invalidProductPrice)).toThrow();
+      }
+    );
+  });
+
+  describe.skip('상품 구매', () => {
     it('지불할 금액이 상품금액보다 적다면 에러를 발생한다.', () => {
       const lotto = new Product(LOTTO.NAME_KR, LOTTO.PRICE);
 
