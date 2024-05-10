@@ -7,15 +7,11 @@ import {
 } from "../../constants/lotto";
 
 class Lotto {
-  #price = LOTTO_PRICE;
+  static price = LOTTO_PRICE;
   #numbers = [];
 
   constructor() {
     this.generateLottoNumbers();
-  }
-
-  get price() {
-    return this.#price;
   }
 
   get numbers() {
@@ -34,6 +30,17 @@ class Lotto {
         ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_POSITIVE
       );
     }
+  }
+
+  static generateLottos(purchasedAmount) {
+    const availableLottoCount = Math.floor(purchasedAmount / Lotto.price);
+    const generatedLottos = [];
+
+    for (let i = 0; i < availableLottoCount; i++) {
+      generatedLottos.push(new Lotto());
+    }
+
+    return generatedLottos;
   }
 
   generateLottoNumbers() {
