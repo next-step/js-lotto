@@ -1,6 +1,29 @@
-/**
- * step 1의 시작점이 되는 파일입니다.
- * 브라우저 환경에서 사용하는 css 파일 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
- */
+import Lotto from './tests/Lotto';
 
-console.log('Hello, World!');
+const readline = require('readline');
+
+function readLineAsync(query) {
+	return new Promise(resolve => {
+		const rl = readline.createInterface({
+			input: process.stdin,
+			output: process.stdout
+		});
+
+		rl.question(query, input => {
+			rl.close();
+			resolve(input);
+		});
+	});
+}
+
+async function play() {
+	const lotto = new Lotto();
+
+	const purchaseAmount = await readLineAsync('구입금액을 입력해 주세요. > ');
+
+	const qty = lotto.purchase(purchaseAmount);
+
+	console.log(`${qty}개를 구매했습니다.`);
+}
+
+play();
