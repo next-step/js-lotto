@@ -38,4 +38,16 @@ describe('로또 기능 테스트', () => {
 			expect(num).toBeLessThanOrEqual(45); // 최대 45인지
 		});
 	});
+
+	test('당첨 번호 이외 1개의 보너스 번호가 있다.', () => {
+		// given
+		const lotto = new Lotto();
+
+		// when
+		const winningNumbers = lotto.getWinningNumbers();
+		const bonusNumber = lotto.getBonusNumber();
+
+		// then
+		expect(winningNumbers.includes(bonusNumber)).toBeFalsy();
+	});
 });

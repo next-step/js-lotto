@@ -5,6 +5,13 @@ class Lotto {
 	qty;
 	purchaseAmount;
 
+	winningNumbers = Array.from(
+		{ length: ConstantNumbers.MAX_NUMBER - ConstantNumbers.MIN_NUMBER + 1 },
+		(_, i) => i + ConstantNumbers.MIN_NUMBER
+	);
+
+	winningResult = [];
+
 	constructor(qty) {
 		this.qty = qty;
 	}
@@ -16,19 +23,25 @@ class Lotto {
 	}
 
 	getWinningNumbers() {
-		const numbers = Array.from(
-			{ length: ConstantNumbers.MAX_NUMBER - ConstantNumbers.MIN_NUMBER + 1 },
-			(_, i) => i + ConstantNumbers.MIN_NUMBER
-		);
-		const result = [];
-
 		for (let i = 0; i < ConstantNumbers.COUNT; i++) {
-			const randomIndex = Math.floor(Math.random() * numbers.length);
-			result.push(numbers[randomIndex]);
-			numbers.splice(randomIndex, 1);
+			const randomIndex = Math.floor(
+				Math.random() * this.winningNumbers.length
+			);
+			this.winningResult.push(this.winningNumbers[randomIndex]);
+			this.winningNumbers.splice(randomIndex, 1);
 		}
 
-		return result;
+		return this.winningResult;
+	}
+
+	getBonusNumber() {
+		const availableNumber = this.winningNumbers.filter(
+			num => !this.winningResult.includes(num)
+		);
+
+		const randomIndex = Math.floor(Math.random() * availableNumber.length);
+
+		return availableNumber[randomIndex];
 	}
 }
 
