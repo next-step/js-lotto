@@ -23,6 +23,8 @@ class Lotto {
 	}
 
 	getWinningNumbers() {
+		this.winningResult = [];
+
 		for (let i = 0; i < ConstantNumbers.COUNT; i++) {
 			const randomIndex = Math.floor(
 				Math.random() * this.winningNumbers.length
