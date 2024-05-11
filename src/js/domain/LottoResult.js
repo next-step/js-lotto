@@ -3,12 +3,12 @@ import {
   ErrorLottoWinningNumbers,
   ErrorNumber,
 } from "../../constants/error";
-import { LENGTH_LOTTO_NUMBERS } from "../../constants/lotto";
 import {
   LottoMatchingCountCondition,
   LottoWinningPrice,
   MAX_LOTTO_RANKING,
 } from "../../constants/lottoResult";
+import Lotto from "./Lotto";
 
 class LottoResult {
   #winningNumbers;
@@ -34,7 +34,7 @@ class LottoResult {
     const winningNumbers = input.split(",").map((number) => number.trim());
     const winningNumbersSet = new Set(winningNumbers);
 
-    if (winningNumbers.length !== LENGTH_LOTTO_NUMBERS) {
+    if (winningNumbers.length !== Lotto.LENGTH_LOTTO_NUMBERS) {
       throw new Error(
         ErrorLottoWinningNumbers.ERROR_LOTTO_WINNING_NUMBERS_LENGTH
       );

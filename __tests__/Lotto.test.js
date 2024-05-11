@@ -1,22 +1,6 @@
-import {
-  LENGTH_LOTTO_NUMBERS,
-  LOTTO_PRICE,
-  MAX_LOTTO_NUMBER,
-  MIN_LOTTO_NUMBER,
-} from "../src/constants/lotto";
 import Lotto from "../src/js/domain/Lotto";
 
 describe("로또 기능 테스트", () => {
-  test("로또 한장의 가격은 1,000원이다.", () => {
-    // given
-
-    // when
-    const lottoPrice = Lotto.price;
-
-    // then
-    expect(lottoPrice).toBe(LOTTO_PRICE);
-  });
-
   test("각 로또는 랜덤의 서로 다른 1이상 45이하의 정수 6개로 이루어져있다.", () => {
     // given
     const lotto = new Lotto();
@@ -29,11 +13,11 @@ describe("로또 기능 테스트", () => {
     // 중복되지 않는 로또 번호 개수 확인을 위한 집합
     const lottoNumbersSet = new Set();
 
-    expect(lottoNumbers).toHaveLength(LENGTH_LOTTO_NUMBERS);
+    expect(lottoNumbers).toHaveLength(Lotto.LENGTH_LOTTO_NUMBERS);
     lottoNumbers.forEach((lottoNumber) => {
       lottoNumbersSet.add(lottoNumber);
-      expect(lottoNumber).toBeGreaterThanOrEqual(MIN_LOTTO_NUMBER);
-      expect(lottoNumber).toBeLessThanOrEqual(MAX_LOTTO_NUMBER);
+      expect(lottoNumber).toBeGreaterThanOrEqual(Lotto.MIN_LOTTO_NUMBER);
+      expect(lottoNumber).toBeLessThanOrEqual(Lotto.MAX_LOTTO_NUMBER);
     });
     expect(Array.from(lottoNumbersSet)).toHaveLength(6);
   });

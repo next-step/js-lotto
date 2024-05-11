@@ -1,13 +1,11 @@
 import { ErrorLottoPurchasedAmount } from "../../constants/error";
-import {
-  LENGTH_LOTTO_NUMBERS,
-  LOTTO_PRICE,
-  MAX_LOTTO_NUMBER,
-  MIN_LOTTO_NUMBER,
-} from "../../constants/lotto";
 
 class Lotto {
-  static price = LOTTO_PRICE;
+  static LENGTH_LOTTO_NUMBERS = 6;
+  static LOTTO_PRICE = 1000;
+  static MAX_LOTTO_NUMBER = 45;
+  static MIN_LOTTO_NUMBER = 1;
+
   #numbers = [];
 
   constructor() {
@@ -33,7 +31,7 @@ class Lotto {
   }
 
   static generateLottos(purchasedAmount) {
-    const availableLottoCount = Math.floor(purchasedAmount / Lotto.price);
+    const availableLottoCount = Math.floor(purchasedAmount / Lotto.LOTTO_PRICE);
     const generatedLottos = [];
 
     for (let i = 0; i < availableLottoCount; i++) {
@@ -48,14 +46,15 @@ class Lotto {
 
     while (true) {
       const randomNumber =
-        Math.floor(Math.random() * MAX_LOTTO_NUMBER) + MIN_LOTTO_NUMBER;
+        Math.floor(Math.random() * Lotto.MAX_LOTTO_NUMBER) +
+        Lotto.MIN_LOTTO_NUMBER;
 
       if (!numbersSet.has(randomNumber)) {
         numbersSet.add(randomNumber);
         this.#numbers.push(randomNumber);
       }
 
-      if (this.#numbers.length === LENGTH_LOTTO_NUMBERS) {
+      if (this.#numbers.length === Lotto.LENGTH_LOTTO_NUMBERS) {
         break;
       }
     }
