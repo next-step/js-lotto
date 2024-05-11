@@ -3,9 +3,22 @@ import {
   readLottoNumbers,
   readMatchLottoNumber,
   readROI,
+  writeLottoNumbers,
 } from '../src/js/view/LottoIO';
 
 describe('입출력 (로또) 기능 테스트', () => {
+  it('로또 번호를 입력받을 수 있다.', () => {
+    // given
+    const input = ' 1,2, 3, 4,5,6';
+
+    // when
+    const lottoNumbers = writeLottoNumbers(input);
+
+    // then
+    expect(lottoNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(() => writeLottoNumbers('a, b, d, 3, 24, 43')).toThrow();
+    expect(() => writeLottoNumbers('0, 2, 45, 100, 22, 11')).toThrow();
+  });
   it('로또 번호를 출력한다.', () => {
     // given
     const lottoTicket = new LottoTicket();

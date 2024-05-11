@@ -1,5 +1,6 @@
 import LottoTicket from '../domain/LottoTicket';
 import { calcROI, comma } from '../utils';
+import { isValidLottoNumberArray } from '../utils/LottoUtil';
 
 export function readLottoNumbers(lottoTicketInstance) {
   if (!(lottoTicketInstance instanceof LottoTicket)) {
@@ -21,4 +22,18 @@ export function readROI(netReturn, investmentCost) {
 
 export function readMatchLottoNumber({ matchNumber, price, matchCount }) {
   return `${matchNumber}개 일치 (${comma(price)}원) - ${matchCount}개`;
+}
+
+export function writeLottoNumbers(input) {
+  const lottoNumbers = input
+    .trim()
+    .replace(/\s/g, '')
+    .split(',')
+    .map((number) => Number(number));
+
+  if (!isValidLottoNumberArray(lottoNumbers)) {
+    throw TypeError('올바른 로또 형식이 아닙니다.');
+  }
+
+  return lottoNumbers;
 }
