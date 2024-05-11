@@ -7,7 +7,13 @@ import Output from "./js/view/Output";
 const purchasedAmount = await Input.getLottoPurchasedAmount();
 
 // 로또를 구입한 금액만큼 최대 개수의 로또 발급
-const lottos = Lotto.generateLottos(purchasedAmount);
+const availableLottoCount = Lotto.getAvailableLottoCount(purchasedAmount);
+const lottos = [];
+
+for (let i = 0; i < availableLottoCount; i++) {
+  const lottoNumbers = Lotto.generateLottoNumbers();
+  lottos.push(new Lotto(lottoNumbers));
+}
 
 // 로또를 발급한 개수 출력
 Output.printGeneratedLottosCount(lottos.length);

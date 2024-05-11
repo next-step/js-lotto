@@ -8,8 +8,8 @@ class Lotto {
 
   #numbers = [];
 
-  constructor() {
-    this.generateLottoNumbers();
+  constructor(lottoNumbers) {
+    this.#numbers = [...lottoNumbers];
   }
 
   get numbers() {
@@ -30,34 +30,27 @@ class Lotto {
     }
   }
 
-  static generateLottos(purchasedAmount) {
-    const availableLottoCount = Math.floor(purchasedAmount / Lotto.LOTTO_PRICE);
-    const generatedLottos = [];
-
-    for (let i = 0; i < availableLottoCount; i++) {
-      generatedLottos.push(new Lotto());
-    }
-
-    return generatedLottos;
+  static getAvailableLottoCount(purchasedAmount) {
+    return Math.floor(purchasedAmount / Lotto.LOTTO_PRICE);
   }
 
-  generateLottoNumbers() {
-    const numbersSet = new Set();
+  static generateLottoNumbers() {
+    const lottoNumbers = [];
+    const candidateLottoNumbers = Array.from(
+      { length: Lotto.MAX_LOTTO_NUMBER },
+      (_, i) => i + 1
+    );
 
-    while (true) {
-      const randomNumber =
-        Math.floor(Math.random() * Lotto.MAX_LOTTO_NUMBER) +
-        Lotto.MIN_LOTTO_NUMBER;
+    for (let i = 0; i < Lotto.LENGTH_LOTTO_NUMBERS; i++) {
+      const randomIndex = Math.floor(
+        Math.random() * candidateLottoNumbers.length
+      );
 
-      if (!numbersSet.has(randomNumber)) {
-        numbersSet.add(randomNumber);
-        this.#numbers.push(randomNumber);
-      }
-
-      if (this.#numbers.length === Lotto.LENGTH_LOTTO_NUMBERS) {
-        break;
-      }
+      const deletedNumbers = candidateLottoNumbers.splice(randomIndex, 1);
+      lottoNumbers.push(...deletedNumbers);
     }
+
+    return lottoNumbers;
   }
 }
 

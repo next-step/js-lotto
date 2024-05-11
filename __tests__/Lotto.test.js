@@ -3,7 +3,8 @@ import Lotto from "../src/js/domain/Lotto";
 describe("로또 기능 테스트", () => {
   test("각 로또는 랜덤의 서로 다른 1이상 45이하의 정수 6개로 이루어져있다.", () => {
     // given
-    const lotto = new Lotto();
+    const randomNumbers = Lotto.generateLottoNumbers();
+    const lotto = new Lotto(randomNumbers);
 
     // when
     const lottoNumbers = lotto.numbers;
@@ -27,9 +28,9 @@ describe("로또 기능 테스트", () => {
     const purchasedAmount = 10001;
 
     // when
-    const lottos = Lotto.generateLottos(purchasedAmount);
+    const availableLottoCount = Lotto.getAvailableLottoCount(purchasedAmount);
 
     // then
-    expect(lottos).toHaveLength(10);
+    expect(availableLottoCount).toBe(10);
   });
 });

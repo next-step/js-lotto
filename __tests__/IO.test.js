@@ -54,10 +54,10 @@ describe("입출력 기능 테스트", () => {
   test("로또 구매 금액으로 발급한 최대 개수의 로또의 수를 출력한다.", () => {
     // given
     const purchasedAmount = 10001;
-    const lottos = Lotto.generateLottos(purchasedAmount);
+    const availableLottoCount = Lotto.getAvailableLottoCount(purchasedAmount);
 
     // when
-    Output.printGeneratedLottosCount(lottos.length);
+    Output.printGeneratedLottosCount(availableLottoCount);
 
     // then
     expect(logSpy).toHaveBeenCalledWith("10개를 구매했습니다.");
@@ -65,15 +65,20 @@ describe("입출력 기능 테스트", () => {
 
   test("발급된 로또들의 각 로또의 로또 번호들을 출력한다.", () => {
     // given
-    const purchasedAmount = 10001;
-    const lottos = Lotto.generateLottos(purchasedAmount);
+    const lottosCount = 10;
+    const lottos = [];
+
+    for (let i = 0; i < lottosCount; i++) {
+      const lottoNumbers = Lotto.generateLottoNumbers();
+      lottos.push(new Lotto(lottoNumbers));
+    }
 
     // when
     Output.printGeneratedLottosNumbers(lottos);
 
     // then
     const regex = /^\[(\d+,\s?)+\d+\]$/;
-    expect(logSpy).toHaveBeenCalledTimes(10);
+    expect(logSpy).toHaveBeenCalledTimes(lottosCount);
     expect(logSpy).toHaveBeenCalledWith(expect.stringMatching(regex));
   });
 
@@ -161,8 +166,13 @@ describe("입출력 기능 테스트", () => {
 
   test("로또 당첨 결과를 출력한다.", () => {
     // given
-    const lottoPurchasedAmount = 3000;
-    const lottos = Lotto.generateLottos(lottoPurchasedAmount);
+    const lottosCount = 10;
+    const lottos = [];
+
+    for (let i = 0; i < lottosCount; i++) {
+      const lottoNumbers = Lotto.generateLottoNumbers();
+      lottos.push(new Lotto(lottoNumbers));
+    }
     const winningNumbers = [1, 2, 3, 4, 5, 6];
     const bonusNumber = 7;
     const lottoResult = new LottoResult(winningNumbers, bonusNumber);
@@ -179,8 +189,24 @@ describe("입출력 기능 테스트", () => {
 
   test("로또 당첨 수익률을 출력한다.", () => {
     // given
-    const lottoPurchasedAmount = 8000;
-    const lottos = Lotto.generateLottos(lottoPurchasedAmount);
+    const purchasedAmount = 8000;
+    const availableLottoCount = Lotto.getAvailableLottoCount(purchasedAmount);
+    const lottoNumbers = [
+      [8, 21, 23, 41, 42, 43],
+      [3, 5, 11, 16, 32, 38],
+      [7, 11, 16, 35, 36, 44],
+      [1, 8, 11, 31, 41, 42],
+      [13, 14, 16, 38, 42, 45],
+      [7, 11, 30, 40, 42, 43],
+      [2, 13, 22, 32, 38, 45],
+      [1, 3, 5, 14, 22, 45],
+    ];
+    const lottos = [];
+
+    for (let i = 0; i < availableLottoCount; i++) {
+      lottos.push(new Lotto(lottoNumbers[i]));
+    }
+
     const winningNumbers = [1, 2, 3, 4, 5, 6];
     const bonusNumber = 7;
     const lottoResult = new LottoResult(winningNumbers, bonusNumber);
@@ -188,15 +214,13 @@ describe("입출력 기능 테스트", () => {
       lottoResult.getTotalLottoWinningPrice(lottos);
     const totalLottoProfitRate = LottoResult.getTotalLottoProfitRate(
       totalLottoWinningPrice,
-      lottoPurchasedAmount
+      purchasedAmount
     );
 
     // when
     Output.printLottoProfitRate(totalLottoProfitRate);
 
     // then
-    expect(logSpy).toHaveBeenCalledWith(
-      `총 수익률은 ${totalLottoProfitRate}%입니다.`
-    );
+    expect(logSpy).toHaveBeenCalledWith(`총 수익률은 62.5%입니다.`);
   });
 });
