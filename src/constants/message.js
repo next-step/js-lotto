@@ -6,4 +6,5 @@ export const INPUT_MESSAGE = {
 
 export const OUTPUT_MESSAGE = {
   PURCHASE_RESULT: (count) => `${count}개를 구매했습니다.`,
+  PURCHASE_PRICE_NAN_ERROR: "숫자를 입력해주세요.",
 };

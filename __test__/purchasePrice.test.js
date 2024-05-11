@@ -1,4 +1,6 @@
+import { OUTPUT_MESSAGE } from "../src/constants/message";
 import { readline } from "../src/utils/readline";
+import { isNumberValidator } from "../src/validator/isNumberValidator";
 import { input } from "../src/view/console/input";
 
 describe("구입 금액 테스트", () => {
@@ -18,5 +20,17 @@ describe("구입 금액 테스트", () => {
     const result = await input.purchasePrice();
 
     expect(result).toEqual(2000);
+  });
+
+  test("구입금액은 숫자만을 입력해야 한다.", async () => {
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve("안녕"); // Simulate user input
+    });
+
+    const result = await input.purchasePrice();
+
+    expect(() => isNumberValidator(result)).toThrow(
+      OUTPUT_MESSAGE.PURCHASE_PRICE_NAN_ERROR
+    );
   });
 });

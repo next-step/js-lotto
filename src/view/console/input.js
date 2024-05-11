@@ -4,9 +4,12 @@ import { readline } from "../../utils/readline";
 
 export const input = {
   async purchasePrice() {
-    return await readline.question(INPUT_MESSAGE.INPUT_PURCHASE_PRICE, () =>
-      readline.close()
+    const purchasePrice = await readline.question(
+      INPUT_MESSAGE.INPUT_PURCHASE_PRICE,
+      () => readline.close()
     );
+
+    return Number(purchasePrice);
   },
 
   async winningLotto() {
@@ -14,6 +17,7 @@ export const input = {
       INPUT_MESSAGE.INPUT_WINNING_NUMBER,
       () => readline.close()
     );
+
     return convertNumbersToArray(winningNumbers);
   },
 
