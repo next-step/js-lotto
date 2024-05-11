@@ -1,7 +1,9 @@
 import {
   ErrorLottoBonusNumber,
   ErrorLottoWinningNumbers,
+  ErrorNumber,
 } from "../../constants/error";
+import { LENGTH_LOTTO_NUMBERS } from "../../constants/lotto";
 import {
   LottoMatchingCountCondition,
   LottoWinningPrice,
@@ -29,27 +31,47 @@ class LottoResult {
   }
 
   static validateWinningNumbers(input) {
-    const winningNumbers = input.split(",");
+    const winningNumbers = input.split(",").map((number) => number.trim());
     const winningNumbersSet = new Set(winningNumbers);
+
+    if (winningNumbers.length !== LENGTH_LOTTO_NUMBERS) {
+      throw new Error(
+        ErrorLottoWinningNumbers.ERROR_LOTTO_WINNING_NUMBERS_LENGTH
+      );
+    }
 
     if (winningNumbers.length !== winningNumbersSet.size) {
       throw new Error(
         ErrorLottoWinningNumbers.ERROR_LOTTO_WINNING_NUMBERS_DUPLICATED
       );
     }
+
+    winningNumbersSet.forEach((winningNumber) => {
+      LottoResult.validateNumber(winningNumber);
+    });
   }
 
   static validateBonusNumber(input, winningNumbers) {
-    if (isNaN(input)) {
-      throw new Error(
-        ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_NOT_NUMBER
-      );
-    }
+    LottoResult.validateNumber(input);
 
     if (winningNumbers.includes(Number(input))) {
       throw new Error(
         ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_DUPLICATED
       );
+    }
+  }
+
+  static validateNumber(input) {
+    if (isNaN(input)) {
+      throw new Error(ErrorNumber.ERROR_LOTTO_BONUS_NUMBER_NOT_NUMBER);
+    }
+
+    if (!Number.isInteger(Number(input))) {
+      throw new Error(ErrorNumber.ERROR_LOTTO_BONUS_NUMBER_NOT_VALID_INTEGER);
+    }
+
+    if (Number(input) < 1 || Number(input) > 45) {
+      throw new Error(ErrorNumber.ERROR_LOTTO_BONUS_NUMBER_NOT_VALID_INTEGER);
     }
   }
 

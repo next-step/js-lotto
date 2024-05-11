@@ -2,6 +2,7 @@ import {
   ErrorLottoBonusNumber,
   ErrorLottoPurchasedAmount,
   ErrorLottoWinningNumbers,
+  ErrorNumber,
 } from "../src/constants/error";
 import Lotto from "../src/js/domain/Lotto";
 import LottoResult from "../src/js/domain/LottoResult";
@@ -86,6 +87,28 @@ describe("입출력 기능 테스트", () => {
     const winningNumbers = await Input.getWinningNumbers();
 
     // then
+    expect(winningNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+  });
+
+  test("로또 당첨 번호를 입력 받을 때 정수가 아니거나 1미만 또는 45 초과의 정수를 입력하면 에러메시지 출력 후 다시 입력을 받는다.", async () => {
+    // given
+    readLineAsyncSpy
+      .mockImplementationOnce(() => Promise.resolve("가나다,2,3,4,5,6"))
+      .mockImplementationOnce(() => Promise.resolve("-1,2,3,4,5,6"))
+      .mockImplementationOnce(() => Promise.resolve("1,2,3,4,5,47"))
+      .mockImplementationOnce(() => Promise.resolve("1,2,3,4,5,6"));
+
+    // when
+    const winningNumbers = await Input.getWinningNumbers();
+
+    // then
+    expect(readLineAsyncSpy).toHaveBeenCalledTimes(4);
+    expect(logSpy).toHaveBeenCalledWith(
+      ErrorNumber.ERROR_LOTTO_BONUS_NUMBER_NOT_NUMBER
+    );
+    expect(logSpy).toHaveBeenCalledWith(
+      ErrorNumber.ERROR_LOTTO_BONUS_NUMBER_NOT_VALID_INTEGER
+    );
     expect(winningNumbers).toEqual([1, 2, 3, 4, 5, 6]);
   });
 
