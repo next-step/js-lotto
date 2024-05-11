@@ -33,4 +33,14 @@ describe("IO 테스트", () => {
 
     expect(console.log).toHaveBeenCalledWith(lottos.pop());
   });
+
+  test("당첨번호를 입력받는다.", async () => {
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve("1, 2, 3, 4, 5, 6");
+    });
+
+    const result = await input.winningLotto();
+
+    expect(result).toEqual("1, 2, 3, 4, 5, 6");
+  });
 });

@@ -7,4 +7,10 @@ export const input = {
       readline.close()
     );
   },
+
+  async winningLotto() {
+    return await readline.question(INPUT_MESSAGE.INPUT_WINNING_NUMBER, () =>
+      readline.close()
+    );
+  },
 };
