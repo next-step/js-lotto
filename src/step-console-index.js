@@ -6,6 +6,7 @@ import { isNumberValidator } from "./validator/isNumberValidator";
 import { isArrLengthValidator } from "./validator/isArrLengthValidator";
 import { hasNumberValidator } from "./validator/hasNumberValidator";
 import { isDuplicateValidator } from "./validator/isDuplicateValidator";
+import { isContainValidator } from "./validator/isContainValidator";
 
 class App {
   #lottoGame;
@@ -25,13 +26,15 @@ class App {
   }
 
   async getWinningNumbers() {
-    const winningNumbers = await input.winningLotto();
-    this.validateWinningNumbers(winningNumbers);
-    return winningNumbers;
+    const winningNumberArray = await input.winningLotto();
+    this.validateWinningNumbers(winningNumberArray);
+
+    return winningNumberArray;
   }
 
-  async getBonusNumber() {
+  async getBonusNumber(winningNumberArray) {
     const bonusNumber = await input.bonusNumber();
+    this.validateBonusNumber(winningNumberArray, bonusNumber);
 
     return bonusNumber;
   }
@@ -41,31 +44,37 @@ class App {
       isNumberValidator(purchasePrice);
     } catch (error) {
       console.log(error.message);
-      app.settingLottos();
     }
   }
 
-  async validateWinningNumbers(winningNumbers) {
+  async validateWinningNumbers(winningNumberArray) {
     try {
-      isArrLengthValidator(winningNumbers);
-      hasNumberValidator(winningNumbers);
-      isDuplicateValidator(winningNumbers);
+      isArrLengthValidator(winningNumberArray);
+      hasNumberValidator(winningNumberArray);
+      isDuplicateValidator(winningNumberArray);
     } catch (error) {
       console.log(error.message);
-      await this.getWinningNumbers();
     }
   }
-  async validateBonusNumber(bonusNumber) {
+
+  async validateBonusNumber(winningNumberArray, bonusNumber) {
     try {
       isNumberValidator(bonusNumber);
+      isContainValidator(winningNumberArray, bonusNumber);
     } catch (error) {
       console.log(error.message);
-      await this.getBonusNumber();
     }
   }
   async play() {
     await this.settingLottos();
-    const winningNumbers = await this.getWinningNumbers();
+    const winningNumberArray = await this.getWinningNumbers();
+    console.log("qqwe");
+    const bonusNumber = await this.getBonusNumber(winningNumberArray);
+    this.#lottoGame = new LottoGame(
+      this.#lottos,
+      winningNumberArray,
+      bonusNumber
+    );
   }
 }
 

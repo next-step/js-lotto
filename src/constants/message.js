@@ -11,4 +11,5 @@ export const OUTPUT_MESSAGE = {
   NAN_ERROR: "숫자를 입력해주세요.",
   WINNING_LOTTO_LENGTH_ERROR: `당첨 번호는 ${LOTTO.NUMBERS_COUNT}개를 입력해야 합니다.`,
   DUPLICATE_NUMBER_ERROR: "중복되게 입력할 수 없습니다.",
+  CONTAIN_ERROR: "보너스 번호는 당첨 번호와 중복될 수 없습니다.",
 };

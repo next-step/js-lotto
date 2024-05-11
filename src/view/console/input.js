@@ -22,8 +22,11 @@ export const input = {
   },
 
   async bonusNumber() {
-    return await readline.question(INPUT_MESSAGE.INPUT_BONUS_NUMBER, () =>
-      readline.close()
+    const bonusNumber = await readline.question(
+      INPUT_MESSAGE.INPUT_BONUS_NUMBER,
+      () => readline.close()
     );
+
+    return Number(bonusNumber);
   },
 };

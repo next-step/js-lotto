@@ -17,18 +17,23 @@ describe("당첨 번호 테스트", () => {
       return Promise.resolve("1, 2, 3, 4, 5, 6");
     });
 
-    const result = await input.winningLotto();
+    const winningNumbers = await input.winningLotto();
 
-    expect(result).toEqual(convertNumbersToArray("1, 2, 3, 4, 5, 6"));
+    expect(winningNumbers).toEqual(convertNumbersToArray("1, 2, 3, 4, 5, 6"));
   });
 
   test(`당첨번호는 ${LOTTO.NUMBERS_COUNT}개를 입력해야한다. 그렇지 않으면 에러를 발생한다.`, async () => {
-    const result = Array.from(
+    const inputValue = Array.from(
       { length: LOTTO.NUMBERS_COUNT - 1 },
       (_, i) => i + 1
-    );
+    ).join(", ");
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve(inputValue);
+    });
 
-    expect(() => isArrLengthValidator(result)).toThrow(
+    const winningNumbers = await input.winningLotto();
+
+    expect(() => isArrLengthValidator(winningNumbers)).toThrow(
       OUTPUT_MESSAGE.WINNING_LOTTO_LENGTH_ERROR
     );
   });
