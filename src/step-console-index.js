@@ -32,6 +32,9 @@ async function play() {
 	for (let i = 0; i < lottoNumbers.length; i++) {
 		console.log(`[${lottoNumbers[i].join(', ')}]`);
 	}
+
+	await readLineAsync('당첨 번호를 입력해 주세요.');
+	await readLineAsync('보너스 번호를 입력해 주세요.');
 }
 
 play();
