@@ -37,8 +37,9 @@ const generateLottoNumbers = (count) => {
       .fill()
       .map((_, i) => i + LOTTO_MIN_NUMBER);
 
-    const numbers = drawNotDuplicatedItems(lottoNumbers, LOTTO_DIGITS).sort();
-    numbersList.push(numbers);
+    const numbers = drawNotDuplicatedItems(lottoNumbers, LOTTO_DIGITS);
+    const sortedNumbers = numbers.toSorted((a, b) => a - b);
+    numbersList.push(sortedNumbers);
   }
 
   return numbersList;
