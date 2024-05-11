@@ -29,3 +29,7 @@ export function readLineAsync(query) {
 export function calcROI(netReturn, investmentCost) {
   return (netReturn / investmentCost) * 100;
 }
+
+export function comma(money) {
+  return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}

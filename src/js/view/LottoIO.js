@@ -1,5 +1,5 @@
 import LottoTicket from '../domain/LottoTicket';
-import { calcROI } from '../utils';
+import { calcROI, comma } from '../utils';
 
 export function readLottoNumbers(lottoTicketInstance) {
   if (!(lottoTicketInstance instanceof LottoTicket)) {
@@ -17,4 +17,8 @@ export function readLottoNumbers(lottoTicketInstance) {
  */
 export function readROI(netReturn, investmentCost) {
   return `${calcROI(netReturn, investmentCost).toFixed(1)}%`;
+}
+
+export function readMatchLottoNumber({ matchNumber, price, matchCount }) {
+  return `${matchNumber}개 일치 (${comma(price)}원) - ${matchCount}개`;
 }
