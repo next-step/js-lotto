@@ -24,19 +24,12 @@ const bonusNumber = await Input.getBonusNumber(winningNumbers);
 // 로또 당첨 결과 생성
 const lottoResult = new LottoResult(winningNumbers, bonusNumber);
 
-// 로또 당첨 순위 계산
-const lottosNumbers = lottos.map((lotto) => lotto.numbers);
-const lottoRankings = lottosNumbers.map((lottoNumbers) =>
-  lottoResult.getLottoRanking(lottoNumbers)
-);
-const lottoRankingCounts = LottoResult.getLottoRankingCounts(lottoRankings);
-
-// 로또 당첨 통계 출력
-Output.printLottoRankingCounts(lottoRankingCounts);
+// 로또 당첨 결과 통계 출력
+const lottoRankingStatistics = lottoResult.getLottoRankingStatistics(lottos);
+Output.printLottoRankingStatistics(lottoRankingStatistics);
 
 // 로또 수익률 출력
-const totalLottoWinningPrice =
-  LottoResult.getTotalLottoWinningPrice(lottoRankings);
+const totalLottoWinningPrice = lottoResult.getTotalLottoWinningPrice(lottos);
 const totalLottoProfitRate = LottoResult.getTotalLottoProfitRate(
   totalLottoWinningPrice,
   purchasedAmount

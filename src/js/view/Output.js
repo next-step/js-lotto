@@ -5,12 +5,12 @@ import {
 } from "../../constants/lottoResult";
 
 const Output = {
-  printLottoRankingCounts(lottoRankingCounts) {
+  printLottoRankingStatistics(lottoRankingStatistics) {
     console.log("\n당첨 통계\n--------------------");
     for (let i = MAX_LOTTO_RANKING; i > 0; i--) {
       const template = this.generateLottoRankingCountsTemplate(
         i,
-        lottoRankingCounts
+        lottoRankingStatistics
       );
 
       console.log(template);

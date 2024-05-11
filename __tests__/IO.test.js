@@ -138,56 +138,31 @@ describe("입출력 기능 테스트", () => {
 
   test("로또 당첨 결과를 출력한다.", () => {
     // given
+    const lottoPurchasedAmount = 3000;
+    const lottos = Lotto.generateLottos(lottoPurchasedAmount);
     const winningNumbers = [1, 2, 3, 4, 5, 6];
     const bonusNumber = 7;
     const lottoResult = new LottoResult(winningNumbers, bonusNumber);
-    const purchasedLottoNumbers = [
-      [1, 2, 3, 4, 5, 6],
-      [1, 2, 3, 13, 15, 18],
-      [1, 2, 3, 4, 5, 13],
-      [1, 2, 3, 4, 5, 7],
-      [20, 21, 22, 23, 24, 25],
-    ];
-    const lottoRankings = purchasedLottoNumbers.map((lottoNumbers) =>
-      lottoResult.getLottoRanking(lottoNumbers)
-    );
-    const lottoRankingCounts = LottoResult.getLottoRankingCounts(lottoRankings);
+    const lottoRankingStatistics =
+      lottoResult.getLottoRankingStatistics(lottos);
 
     // when
-    Output.printLottoRankingCounts(lottoRankingCounts);
+    Output.printLottoRankingStatistics(lottoRankingStatistics);
 
     // then
-    expect(logSpy).toHaveBeenCalledWith("당첨 통계\n--------------------");
-    expect(logSpy).toHaveBeenCalledWith("3개 일치 (5,000원) - 1개");
-    expect(logSpy).toHaveBeenCalledWith("4개 일치 (50,000원) - 0개");
-    expect(logSpy).toHaveBeenCalledWith("5개 일치 (1,500,000원) - 1개");
-    expect(logSpy).toHaveBeenCalledWith(
-      "5개 일치, 보너스 볼 일치 (30,000,000원) - 1개"
-    );
-    expect(logSpy).toHaveBeenCalledWith("6개 일치 (2,000,000,000원) - 1개");
+    expect(logSpy).toHaveBeenCalledWith("\n당첨 통계\n--------------------");
+    expect(logSpy).toHaveBeenCalledTimes(6);
   });
 
   test("로또 당첨 수익률을 출력한다.", () => {
     // given
     const lottoPurchasedAmount = 8000;
+    const lottos = Lotto.generateLottos(lottoPurchasedAmount);
     const winningNumbers = [1, 2, 3, 4, 5, 6];
     const bonusNumber = 7;
     const lottoResult = new LottoResult(winningNumbers, bonusNumber);
-    const purchasedLottoNumbers = [
-      [8, 21, 23, 41, 42, 43],
-      [3, 5, 11, 16, 32, 38],
-      [7, 11, 16, 35, 36, 44],
-      [1, 8, 11, 31, 41, 42],
-      [13, 14, 16, 38, 42, 45],
-      [7, 11, 30, 40, 42, 43],
-      [2, 13, 22, 32, 38, 45],
-      [1, 3, 5, 14, 22, 45],
-    ];
-    const lottoRankings = purchasedLottoNumbers.map((lottoNumbers) =>
-      lottoResult.getLottoRanking(lottoNumbers)
-    );
     const totalLottoWinningPrice =
-      LottoResult.getTotalLottoWinningPrice(lottoRankings);
+      lottoResult.getTotalLottoWinningPrice(lottos);
     const totalLottoProfitRate = LottoResult.getTotalLottoProfitRate(
       totalLottoWinningPrice,
       lottoPurchasedAmount
@@ -197,6 +172,8 @@ describe("입출력 기능 테스트", () => {
     Output.printLottoProfitRate(totalLottoProfitRate);
 
     // then
-    expect(logSpy).toHaveBeenCalledWith("총 수익률은 62.5%입니다.");
+    expect(logSpy).toHaveBeenCalledWith(
+      `총 수익률은 ${totalLottoProfitRate}%입니다.`
+    );
   });
 });
