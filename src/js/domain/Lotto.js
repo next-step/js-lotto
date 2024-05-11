@@ -1,4 +1,8 @@
-import { ErrorLottoPurchasedAmount } from "../../constants/error";
+import {
+  ErrorLottoNumber,
+  ErrorLottoNumbers,
+  ErrorLottoPurchasedAmount,
+} from "../../constants/error";
 
 class Lotto {
   static LENGTH_LOTTO_NUMBERS = 6;
@@ -9,7 +13,12 @@ class Lotto {
   #numbers = [];
 
   constructor(lottoNumbers) {
-    this.#numbers = Lotto.convertLottoNumbersToArray(lottoNumbers);
+    try {
+      Lotto.validateLottoNumbers(lottoNumbers);
+      this.#numbers = Lotto.convertLottoNumbersToArray(lottoNumbers);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   get numbers() {
@@ -59,6 +68,30 @@ class Lotto {
     }
 
     return lottoNumbers;
+  }
+
+  static validateLottoNumbers(input) {
+    const lottoNumbers = Lotto.convertLottoNumbersToArray(input);
+    if (lottoNumbers.length !== Lotto.LENGTH_LOTTO_NUMBERS) {
+      throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH);
+    }
+    lottoNumbers.forEach((lottoNumber) => {
+      this.validateLottoNumber(lottoNumber);
+    });
+  }
+
+  static validateLottoNumber(input) {
+    if (isNaN(input)) {
+      throw new Error(ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_NUMBER);
+    }
+
+    if (!Number.isInteger(Number(input))) {
+      throw new Error(ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_VALID_INTEGER);
+    }
+
+    if (Number(input) < 1 || Number(input) > 45) {
+      throw new Error(ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_VALID_INTEGER);
+    }
   }
 }
 
