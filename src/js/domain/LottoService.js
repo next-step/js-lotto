@@ -18,6 +18,11 @@ export const buyLottos = (money) => {
   return lottos;
 };
 
+export const getNumbersList = (lottos) => lottos.map((e) => e.numbers);
+
+export const getLottoRanks = (lottos, winningNumbers, bonusNumber) =>
+  lottos.map((e) => e.compare(winningNumbers, bonusNumber));
+
 const checkMoney = (money) => {
   if (!Number.isInteger(money)) {
     throw new Error();
