@@ -6,7 +6,7 @@ import {
 
 const Output = {
   printLottoRankingCounts(lottoRankingCounts) {
-    console.log("당첨 통계\n--------------------");
+    console.log("\n당첨 통계\n--------------------");
     for (let i = MAX_LOTTO_RANKING; i > 0; i--) {
       const template = this.generateLottoRankingCountsTemplate(
         i,

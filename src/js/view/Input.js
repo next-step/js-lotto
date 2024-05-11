@@ -18,7 +18,7 @@ const Input = {
 
   async getWinningNumbers() {
     while (true) {
-      const input = await readLineAsync("당첨 번호를 입력해 주세요.");
+      const input = await readLineAsync("\n당첨 번호를 입력해 주세요.");
       try {
         LottoResult.validateWinningNumbers(input);
         const winningNumbers = input
@@ -34,7 +34,7 @@ const Input = {
 
   async getBonusNumber(winningNumbers) {
     while (true) {
-      const input = await readLineAsync("보너스 번호를 입력해 주세요.");
+      const input = await readLineAsync("\n보너스 번호를 입력해 주세요.");
       try {
         LottoResult.validateBonusNumber(input, winningNumbers);
         const bonusNumber = Number(input);
