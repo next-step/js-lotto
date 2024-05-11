@@ -49,27 +49,7 @@ export class Lotto {
   }
 
   #getLottoRank(hitCount, isHitBonusNumber) {
-    if (hitCount === 6) {
-      return LottoRank.FIRST;
-    }
-
-    if (hitCount === 5 && isHitBonusNumber) {
-      return LottoRank.SECOND;
-    }
-
-    if (hitCount === 5) {
-      return LottoRank.THIRD;
-    }
-
-    if (hitCount === 4) {
-      return LottoRank.FOURTH;
-    }
-
-    if (hitCount === 3) {
-      return LottoRank.FIFTH;
-    }
-
-    return LottoRank.NOTHING;
+    return LottoRank.getRank(hitCount, isHitBonusNumber);
   }
 
   get numbers() {
