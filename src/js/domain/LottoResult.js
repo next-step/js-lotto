@@ -15,8 +15,17 @@ class LottoResult {
   #bonusNumber;
 
   constructor(winningNumbers, bonusNumber) {
-    this.#winningNumbers = [...winningNumbers];
-    this.#bonusNumber = bonusNumber;
+    try {
+      LottoResult.validateWinningNumbers(winningNumbers);
+      const winningNumbersArray =
+        Lotto.convertLottoNumbersToArray(winningNumbers);
+      this.#winningNumbers = winningNumbersArray;
+
+      LottoResult.validateBonusNumber(bonusNumber, this.#winningNumbers);
+      this.#bonusNumber = Number(bonusNumber);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   static getLottoWinningPrice(lottoRanking) {
@@ -31,7 +40,7 @@ class LottoResult {
   }
 
   static validateWinningNumbers(input) {
-    const winningNumbers = input.split(",").map((number) => number.trim());
+    const winningNumbers = Lotto.convertLottoNumbersToArray(input);
     const winningNumbersSet = new Set(winningNumbers);
 
     if (winningNumbers.length !== Lotto.LENGTH_LOTTO_NUMBERS) {
@@ -47,31 +56,17 @@ class LottoResult {
     }
 
     winningNumbersSet.forEach((winningNumber) => {
-      LottoResult.validateNumber(winningNumber);
+      Lotto.validateLottoNumber(winningNumber);
     });
   }
 
   static validateBonusNumber(input, winningNumbers) {
-    LottoResult.validateNumber(input);
+    Lotto.validateLottoNumber(input);
 
     if (winningNumbers.includes(Number(input))) {
       throw new Error(
         ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_DUPLICATED
       );
-    }
-  }
-
-  static validateNumber(input) {
-    if (isNaN(input)) {
-      throw new Error(ErrorNumber.ERROR_LOTTO_BONUS_NUMBER_NOT_NUMBER);
-    }
-
-    if (!Number.isInteger(Number(input))) {
-      throw new Error(ErrorNumber.ERROR_LOTTO_BONUS_NUMBER_NOT_VALID_INTEGER);
-    }
-
-    if (Number(input) < 1 || Number(input) > 45) {
-      throw new Error(ErrorNumber.ERROR_LOTTO_BONUS_NUMBER_NOT_VALID_INTEGER);
     }
   }
 

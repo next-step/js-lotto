@@ -9,11 +9,19 @@ class Lotto {
   #numbers = [];
 
   constructor(lottoNumbers) {
-    this.#numbers = [...lottoNumbers];
+    this.#numbers = Lotto.convertLottoNumbersToArray(lottoNumbers);
   }
 
   get numbers() {
     return [...this.#numbers];
+  }
+
+  static convertLottoNumbersToArray(lottoNumbers) {
+    if (typeof lottoNumbers !== "string") {
+      return lottoNumbers;
+    }
+
+    return lottoNumbers.split(",").map(Number);
   }
 
   static validateLottoPurchasedAmount(purchasedAmount) {

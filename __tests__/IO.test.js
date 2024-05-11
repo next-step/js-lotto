@@ -1,5 +1,6 @@
 import {
   ErrorLottoBonusNumber,
+  ErrorLottoNumber,
   ErrorLottoPurchasedAmount,
   ErrorLottoWinningNumbers,
   ErrorNumber,
@@ -92,7 +93,7 @@ describe("입출력 기능 테스트", () => {
     const winningNumbers = await Input.getWinningNumbers();
 
     // then
-    expect(winningNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(winningNumbers).toEqual("1,2,3,4,5,6");
   });
 
   test("로또 당첨 번호를 입력 받을 때 정수가 아니거나 1미만 또는 45 초과의 정수를 입력하면 에러메시지 출력 후 다시 입력을 받는다.", async () => {
@@ -109,12 +110,12 @@ describe("입출력 기능 테스트", () => {
     // then
     expect(readLineAsyncSpy).toHaveBeenCalledTimes(4);
     expect(logSpy).toHaveBeenCalledWith(
-      ErrorNumber.ERROR_LOTTO_BONUS_NUMBER_NOT_NUMBER
+      ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_NUMBER
     );
     expect(logSpy).toHaveBeenCalledWith(
-      ErrorNumber.ERROR_LOTTO_BONUS_NUMBER_NOT_VALID_INTEGER
+      ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_VALID_INTEGER
     );
-    expect(winningNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(winningNumbers).toBe("1,2,3,4,5,6");
   });
 
   test("로또 당첨 번호를 입력 받을 때 1이상 45이하의 정수 6개 중 겹치는 숫자가 있다면 에러메시지 출력 후 다시 입력을 받는다.", async () => {
@@ -131,7 +132,7 @@ describe("입출력 기능 테스트", () => {
     expect(logSpy).toHaveBeenCalledWith(
       ErrorLottoWinningNumbers.ERROR_LOTTO_WINNING_NUMBERS_DUPLICATED
     );
-    expect(winningNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(winningNumbers).toBe("1,2,3,4,5,6");
   });
 
   test("로또 보너스 번호를 입력 받을 때 1이상 45이하의 정수이면서 당첨번호로 선택한 수들과 다른 수를 입력 하면 정상적으로 종료된다.", async () => {
