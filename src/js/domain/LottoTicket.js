@@ -6,6 +6,7 @@ class LottoTicket extends Product {
   #lottoNumbers;
   constructor(name = LOTTO.NAME_KR, price = LOTTO.PRICE) {
     super(name, price);
+    this.#lottoNumbers = [];
   }
 
   get lottoNumbers() {
