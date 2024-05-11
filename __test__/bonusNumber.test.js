@@ -31,4 +31,16 @@ describe("보너스 번호 테스트", () => {
       OUTPUT_MESSAGE.CONTAIN_ERROR
     );
   });
+
+  test("보너스 번호는 숫자만을 입력해야한다.", async () => {
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve("안녕");
+    });
+
+    const bonusNumber = await input.bonusNumber();
+
+    expect(() => isNumberValidator(bonusNumber)).toThrow(
+      OUTPUT_MESSAGE.NAN_ERROR
+    );
+  });
 });
