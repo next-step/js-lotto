@@ -15,10 +15,9 @@ describe("로또 테스트", () => {
 
     const lottoNumbers = lotto.generate();
 
-    lottoNumbers.forEach((number) => {
-      expect(number).toBeGreaterThanOrEqual(1);
-      expect(number).toBeLessThanOrEqual(LOTTO.MAX_NUMBER);
-    });
+    expect(
+      lottoNumbers.every((number) => 1 <= number && number <= LOTTO.MAX_NUMBER)
+    ).toEqual(true);
   });
 
   test("로또 숫자는 오름차순 정렬되어 있다.", () => {
