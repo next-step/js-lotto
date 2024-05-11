@@ -30,7 +30,7 @@ describe("구입 금액 테스트", () => {
     const result = await input.purchasePrice();
 
     expect(() => isNumberValidator(result)).toThrow(
-      OUTPUT_MESSAGE.PURCHASE_PRICE_NAN_ERROR
+      OUTPUT_MESSAGE.NAN_ERROR
     );
   });
 });
