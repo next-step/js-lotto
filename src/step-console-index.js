@@ -3,6 +3,8 @@ import { output } from "./view/console/output";
 import { LottoGame } from "./js/domain/LottoGame";
 import { Lotto } from "./js/domain/Lotto";
 import { isNumberValidator } from "./validator/isNumberValidator";
+import { isArrLengthValidator } from "./validator/isArrLengthValidator";
+
 class App {
   #lottoGame;
   #lottos;
@@ -22,6 +24,7 @@ class App {
 
   async settingLottoGame() {
     const winningNumbers = await input.winningLotto();
+    this.validateWinningNumbers(winningNumbers);
     const bonusNumber = await input.bonusNumber();
     this.#lottoGame = new LottoGame(this.#lottos, winningNumbers, bonusNumber);
   }
@@ -34,7 +37,22 @@ class App {
       app.settingLottos();
     }
   }
+
+  async validateWinningNumbers(winningNumbers) {
+    try {
+      isArrLengthValidator(winningNumbers);
+    } catch (error) {
+      console.log(error.message);
+      app.settingLottoGame();
+    }
+  }
+
+  async play() {
+    await this.settingLottos();
+    await this.settingLottoGame();
+  }
 }
 
 const app = new App();
-app.settingLottos();
+
+app.play();
