@@ -13,4 +13,10 @@ export const input = {
       readline.close()
     );
   },
+
+  async bonusNumber() {
+    return await readline.question(INPUT_MESSAGE.INPUT_BONUS_NUMBER, () =>
+      readline.close()
+    );
+  },
 };

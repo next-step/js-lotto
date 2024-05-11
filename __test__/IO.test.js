@@ -43,4 +43,14 @@ describe("IO 테스트", () => {
 
     expect(result).toEqual("1, 2, 3, 4, 5, 6");
   });
+
+  test("보너스 번호를 입력받는다.", async () => {
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve(7);
+    });
+
+    const result = await input.bonusNumber();
+
+    expect(result).toEqual(7);
+  });
 });

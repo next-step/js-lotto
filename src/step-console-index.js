@@ -1,7 +1,29 @@
-/**
- * step 1의 시작점이 되는 파일입니다.
- * 브라우저 환경에서 사용하는 css 파일 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
- */
+import { input } from "./view/console/input";
+import { output } from "./view/console/output";
+import { LottoGame } from "./js/domain/LottoGame";
+import { Lotto } from "./js/domain/Lotto";
+class App {
+  #lottoGame;
+  #lottos;
+  constructor() {
+    this.#lottoGame;
+    this.#lottos;
+  }
 
+  async settingLottos() {
+    const purchasePrice = await input.purchasePrice();
+    const lotto = new Lotto(purchasePrice);
+    lotto.purchaseLottos();
+    this.#lottos = lotto.lottos;
+    output.lottos(this.#lottos);
+  }
 
-console.log("Hello, World!");
+  async settingLottoGame() {
+    const winningLotto = await input.winningLotto();
+    const bonusNumber = await input.bonusNumber();
+    this.#lottoGame = new LottoGame(this.#lottos, winningLotto, bonusNumber);
+  }
+}
+
+const app = new App();
+app.settingLottos();
