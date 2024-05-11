@@ -1,4 +1,5 @@
 import { INPUT_MESSAGE } from "../../constants/message";
+import { convertNumbersToArray } from "../../utils/convertNumbersToArray";
 import { readline } from "../../utils/readline";
 
 export const input = {
@@ -9,9 +10,11 @@ export const input = {
   },
 
   async winningLotto() {
-    return await readline.question(INPUT_MESSAGE.INPUT_WINNING_NUMBER, () =>
-      readline.close()
+    const winningNumbers = await readline.question(
+      INPUT_MESSAGE.INPUT_WINNING_NUMBER,
+      () => readline.close()
     );
+    return convertNumbersToArray(winningNumbers);
   },
 
   async bonusNumber() {
