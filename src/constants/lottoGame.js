@@ -1,1 +1,4 @@
-export const LOTTO_GAME = {};
+export const LOTTO_GAME = {
+  MAX_RANK: 5,
+  
+};

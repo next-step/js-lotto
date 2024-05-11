@@ -1,5 +1,4 @@
 import { LOTTO } from "../src/constants/lotto";
-import { LOTTO_GAME } from "../src/constants/lottoGame";
 import { Lotto } from "../src/js/domain/lotto";
 
 describe("로또 테스트", () => {

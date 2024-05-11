@@ -1,3 +1,4 @@
+import { LOTTO_GAME } from "../../constants/LottoGame";
 import { LOTTO } from "../../constants/lotto";
 export class LottoGame {
   #lottos;
@@ -9,7 +10,7 @@ export class LottoGame {
     this.#winningNumbers = winnerNumbers;
     this.#bonusNumber = bonusNumber;
     this.#result = new Map(
-      Array.from({ length: LOTTO.NUMBERS_COUNT }, (_, index) => [index + 1, 0])
+      Array.from({ length: LOTTO_GAME.MAX_RANK }, (_, index) => [index + 1, 0])
     );
   }
 
@@ -23,13 +24,13 @@ export class LottoGame {
 
   #convertCheckResultToRank = (lotto, checkResult) => {
     switch (checkResult) {
-      case 3:
+      case LOTTO.NUMBERS_COUNT - 3:
         return 5;
-      case 4:
+      case LOTTO.NUMBERS_COUNT - 2:
         return 4;
-      case 5:
+      case LOTTO.NUMBERS_COUNT - 1:
         return lotto.includes(this.#bonusNumber) ? 2 : 3;
-      case 6:
+      case LOTTO.NUMBERS_COUNT:
         return 1;
       default:
         return 0;
