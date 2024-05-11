@@ -4,7 +4,7 @@ import { convertNumbersToArray } from "../src/utils/convertNumbersToArray";
 import { readline } from "../src/utils/readline";
 import { hasNumberValidator } from "../src/validator/hasNumberValidator";
 import { isArrLengthValidator } from "../src/validator/isArrLengthValidator";
-import { isNumberValidator } from "../src/validator/isNumberValidator";
+import { isDuplicateValidator } from "../src/validator/isDuplicateValidator";
 import { input } from "../src/view/console/input";
 
 describe("당첨 번호 테스트", () => {
@@ -42,6 +42,18 @@ describe("당첨 번호 테스트", () => {
 
     expect(() => hasNumberValidator(winningNumbers)).toThrow(
       OUTPUT_MESSAGE.NAN_ERROR
+    );
+  });
+
+  test("당첨번호는 중복되게 입력할 수 없다. 그렇지 않으면 에러를 발생한다.", async () => {
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve("1, 2, 3, 4, 4, 5");
+    });
+
+    const winningNumbers = await input.winningLotto();
+
+    expect(() => isDuplicateValidator(winningNumbers)).toThrow(
+      OUTPUT_MESSAGE.DUPLICATE_NUMBER_ERROR
     );
   });
 });

@@ -1,5 +1,7 @@
 export const hasNumberValidator = (array) => {
-  if (array.some((number) => Number.isNaN(number))) {
+  const validator = array.some((number) => Number.isNaN(number));
+
+  if (validator) {
     throw new Error("숫자를 입력해주세요.");
   }
 };

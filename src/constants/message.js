@@ -9,6 +9,6 @@ export const INPUT_MESSAGE = {
 export const OUTPUT_MESSAGE = {
   PURCHASE_RESULT: (count) => `${count}개를 구매했습니다.`,
   NAN_ERROR: "숫자를 입력해주세요.",
-
-  WINN_NUMBERS_LENGTH_ERROR: `당첨 번호는 ${LOTTO.NUMBERS_COUNT}개를 입력해야 합니다.`,
+  WINNING_LOTTO_LENGTH_ERROR: `당첨 번호는 ${LOTTO.NUMBERS_COUNT}개를 입력해야 합니다.`,
+  DUPLICATE_NUMBER_ERROR: "중복되게 입력할 수 없습니다.",
 };

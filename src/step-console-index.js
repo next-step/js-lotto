@@ -5,6 +5,7 @@ import { Lotto } from "./js/domain/Lotto";
 import { isNumberValidator } from "./validator/isNumberValidator";
 import { isArrLengthValidator } from "./validator/isArrLengthValidator";
 import { hasNumberValidator } from "./validator/hasNumberValidator";
+import { isDuplicateValidator } from "./validator/isDuplicateValidator";
 
 class App {
   #lottoGame;
@@ -32,7 +33,7 @@ class App {
   async getBonusNumber() {
     const bonusNumber = await input.bonusNumber();
 
-    this.#lottoGame = new LottoGame(this.#lottos, winningNumbers, bonusNumber);
+    return bonusNumber;
   }
 
   async validatePurchasePrice(purchasePrice) {
@@ -48,15 +49,23 @@ class App {
     try {
       isArrLengthValidator(winningNumbers);
       hasNumberValidator(winningNumbers);
+      isDuplicateValidator(winningNumbers);
     } catch (error) {
       console.log(error.message);
-      app.settingLottoGame();
+      await this.getWinningNumbers();
     }
   }
-
+  async validateBonusNumber(bonusNumber) {
+    try {
+      isNumberValidator(bonusNumber);
+    } catch (error) {
+      console.log(error.message);
+      await this.getBonusNumber();
+    }
+  }
   async play() {
     await this.settingLottos();
-    await this.settingWinningNumbers();
+    const winningNumbers = await this.getWinningNumbers();
   }
 }
 
