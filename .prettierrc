@@ -7,5 +7,6 @@
 	"endOfLine": "lf",
 	"trailingComma": "none",
 	"arrowParens": "avoid",
-	"useTabs": true
+	"useTabs": true,
+	"printWidth": 120
 }
