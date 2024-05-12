@@ -1,3 +1,4 @@
+import { LOTTO, MESSAGE } from "../constant";
 import {
   validateNumberCount,
   validateNaturalNumber,
@@ -22,7 +23,6 @@ export default class LottoChecker {
       validateNaturalNumber(number);
       validateNumberInRange(number);
     });
-
     validateUniqueNumber(totalLottoNumbers);
 
     this.#winningNumbers = winningNumbers;
@@ -31,13 +31,15 @@ export default class LottoChecker {
 
   #prizeNumbersMap() {
     const prizeNumbers = [...this.#winningNumbers, this.#bonusNumber];
-    const prizeNumbersMap = new Array(Math.max(...prizeNumbers)).fill(0);
+    const prizeNumbersMap = new Array(Math.max(...prizeNumbers)).fill(
+      LOTTO.NUMBER_FLAG.NOT_MATCHED
+    );
 
     this.#winningNumbers.forEach((number) => {
-      prizeNumbersMap[number] = 1;
+      prizeNumbersMap[number] = LOTTO.NUMBER_FLAG.IS_WINNING;
     });
 
-    prizeNumbersMap[this.#bonusNumber] = 2;
+    prizeNumbersMap[this.#bonusNumber] = LOTTO.NUMBER_FLAG.IS_BONUS;
 
     return prizeNumbersMap;
   }
@@ -51,11 +53,11 @@ export default class LottoChecker {
     };
 
     lotto.numbers.forEach((number) => {
-      if (prizeNumbersMap[number] === 1) {
+      if (prizeNumbersMap[number] === LOTTO.NUMBER_FLAG.IS_WINNING) {
         matchedNumbers.matchedWinningNumberCount += 1;
       }
 
-      if (prizeNumbersMap[number] === 2) {
+      if (prizeNumbersMap[number] === LOTTO.NUMBER_FLAG.IS_BONUS) {
         matchedNumbers.isBonusNumberMatched = true;
       }
     });
@@ -77,11 +79,11 @@ export default class LottoChecker {
 
   #validateCheckSetNumbers() {
     if (!this.#winningNumbers.length) {
-      throw new Error("당첨 번호를 설정해주세요.");
+      throw new Error(MESSAGE.ERROR.SET_WINNING_NUMBER);
     }
 
     if (!this.#bonusNumber) {
-      throw new Error("보너스 번호를 설정해주세요.");
+      throw new Error(MESSAGE.ERROR.SET_BONUS_NUMBER);
     }
   }
 

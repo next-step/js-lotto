@@ -1,4 +1,4 @@
-import { LOTTO } from "../constant";
+import { LOTTO, MESSAGE } from "../constant";
 import {
   isEqualLength,
   isInRange,
@@ -8,26 +8,30 @@ import {
 
 export const validateNumberCount = (numbers) => {
   if (!isEqualLength(numbers, LOTTO.NUMBER_COUNT)) {
-    throw new Error("로또 번호는 6개여야 합니다.");
+    throw new Error(MESSAGE.ERROR.NUMBER_COUNT);
   }
 };
 
 export const validateNumberInRange = (num) => {
   if (!isInRange(num, LOTTO.MIN_NUMBER, LOTTO.MAX_NUMBER)) {
-    throw new Error(
-      `모든 로또의 번호는 ${LOTTO.MIN_NUMBER}부터 ${LOTTO.MAX_NUMBER}사이의 수 입니다.`
-    );
+    throw new Error(MESSAGE.ERROR.NUMBER_RANGE);
   }
 };
 
 export const validateNaturalNumber = (num) => {
   if (!isNaturalNumber(num)) {
-    throw new Error("모든 로또의 번호는 자연수여야 합니다.");
+    throw new Error(MESSAGE.ERROR.LOTTO_NUMBER_SHOULD_BE_NATURAL);
   }
 };
 
 export const validateUniqueNumber = (numbers) => {
   if (hasDuplicateNumbers(numbers)) {
-    throw new Error("중복된 번호가 있습니다.");
+    throw new Error(MESSAGE.ERROR.UNIQUE_NUMBER);
+  }
+};
+
+export const validatePrice = (price) => {
+  if (!isNaturalNumber(price)) {
+    throw new Error(MESSAGE.ERROR.MONEY_SHOULD_BE_NATURAL);
   }
 };

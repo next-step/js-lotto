@@ -1,14 +1,14 @@
-import { LOTTO } from "../constant";
+import { LOTTO, MESSAGE } from "../constant";
 import { generateUniqueRandomNumbers } from "../utils/number";
-import { isNaturalNumber } from "../utils/validation";
 import Lotto from "./Lotto";
+import { validatePrice } from "./LottoValidate";
 
 export default class AutoLottoPrinter {
   #lottoPrice;
 
   constructor(lottoPrice) {
-    this.#validatePrice(lottoPrice);
-    this.lottoPrice = lottoPrice;
+    validatePrice(lottoPrice);
+    this.#lottoPrice = lottoPrice;
   }
 
   #generateLottoNumbers() {
@@ -32,19 +32,11 @@ export default class AutoLottoPrinter {
     );
   }
 
-  #validatePrice(price) {
-    if (!isNaturalNumber(price)) {
-      throw new Error("금액은 자연수이어야 합니다.");
-    }
-  }
-
   #validateBuyLotto(money) {
-    this.#validatePrice(money);
+    validatePrice(money);
 
     if (money < this.#lottoPrice) {
-      throw new Error(
-        "로또 구매 금액은 로또 한 장의 가격보다 적을 수 없습니다."
-      );
+      throw new Error(MESSAGE.ERROR.LOTTO_PRICE);
     }
   }
 

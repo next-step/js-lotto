@@ -36,4 +36,39 @@ export const LOTTO = {
       reward: 5000,
     },
   ],
+  WINNING_NUMBER_SEPARATOR: ",",
+  NUMBER_FLAG: {
+    IS_WINNING: 1,
+    IS_BONUS: 2,
+    NOT_MATCHED: 0,
+  },
+};
+
+export const MESSAGE = {
+  PROMPT: {
+    BUY_AMOUNT: "> 구입금액을 입력해 주세요. ",
+    WINNING_NUMBERS: "> 당첨 번호를 입력해 주세요. ",
+    BONUS_NUMBER: "> 보너스 번호를 입력해 주세요. ",
+  },
+
+  OUTPUT: {
+    HOW_MANY_BOUGHT: (howManyBought) => `${howManyBought}개를 구입하셨습니다.`,
+    WINNING_STATICS: "당첨 통계",
+    RESULT_PER_RANK: (prize, winningCount) =>
+      `${prize.matchingNumberCount}개 일치${
+        prize.bonusAffectsWinning ? ", 보너스 볼 일치" : ""
+      } (${Number(prize.reward).toLocaleString()}원) - ${winningCount}개`,
+    TOTAL_RATE: (totalRate) => `총 수익률은 ${totalRate}%입니다.`,
+  },
+
+  ERROR: {
+    LOTTO_PRICE: "로또 구매 금액은 로또 한 장의 가격보다 적을 수 없습니다.",
+    NUMBER_COUNT: `로또 번호는 ${LOTTO.NUMBER_COUNT}개여야 합니다.`,
+    NUMBER_RANGE: `모든 로또의 번호는 ${LOTTO.MIN_NUMBER}부터 ${LOTTO.MAX_NUMBER}사이의 수 입니다.`,
+    UNIQUE_NUMBER: "중복된 번호가 있습니다.",
+    LOTTO_NUMBER_SHOULD_BE_NATURAL: "모든 로또의 번호는 자연수여야 합니다.",
+    MONEY_SHOULD_BE_NATURAL: "금액은 자연수이어야 합니다.",
+    SET_WINNING_NUMBER: "당첨 번호를 설정해주세요.",
+    SET_BONUS_NUMBER: "보너스 번호를 설정해주세요.",
+  },
 };

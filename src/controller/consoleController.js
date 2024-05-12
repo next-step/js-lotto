@@ -1,3 +1,5 @@
+import { LOTTO } from "../constant";
+
 export default class ConsoleController {
   #autoLottoPrinter;
   #lottoChecker;
@@ -20,7 +22,7 @@ export default class ConsoleController {
     });
 
     const winningNumbers = (await this.#consoleView.askWinningNumbers())
-      .split(",")
+      .split(LOTTO.WINNING_NUMBER_SEPARATOR)
       .map((num) => Number(num));
     const bonusNumber = Number(await this.#consoleView.askBonusNumber());
     this.#lottoChecker.lottoNumberInfo = {
