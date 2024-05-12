@@ -8,91 +8,84 @@ import { hasNumberValidator } from "./validator/hasNumberValidator";
 import { isDuplicateValidator } from "./validator/isDuplicateValidator";
 import { isContainValidator } from "./validator/isContainValidator";
 
-class App {
-  #lottos;
-  constructor() {
-    this.#lottos;
-  }
-
-  async settingLottos() {
+const app = async () => {
+  const getPurchasePrice = async () => {
     try {
       const purchasePrice = await input.purchasePrice();
-      this.validatePurchasePrice(purchasePrice);
-      const lotto = new Lotto(purchasePrice);
-      lotto.purchaseLottos();
-      this.#lottos = lotto.lottos;
-      output.lottosCount(this.#lottos.length);
-      output.lottos(this.#lottos);
-      return purchasePrice;
-    } catch (error) {
-      console.log(error.message);
-      await this.settingLottos();
-    }
-  }
-
-  async getPurchasePrice() {
-    try {
-      const purchasePrice = await input.purchasePrice();
-      this.validatePurchasePrice(purchasePrice);
+      validatePurchasePrice(purchasePrice);
 
       return purchasePrice;
     } catch (error) {
       console.log(error.message);
-      await this.getPurchasePrice();
+      return await getPurchasePrice();
     }
-  }
+  };
 
-  async getWinningNumbers() {
+  const settingLottos = (purchasePrice) => {
+    const lotto = new Lotto(purchasePrice);
+
+    return { lottos: lotto.lottos, lottosCount: lotto.lottos.length };
+  };
+
+  const getWinningNumbers = async () => {
     try {
       const winningNumberArray = await input.winningLotto();
-      this.validateWinningNumbers(winningNumberArray);
+      validateWinningNumbers(winningNumberArray);
 
       return winningNumberArray;
     } catch (error) {
       console.log(error.message);
-      await this.getWinningNumbers();
+      return await getWinningNumbers();
     }
-  }
+  };
 
-  async getBonusNumber(winningNumberArray) {
+  const getBonusNumber = async (winningNumberArray) => {
     try {
       const bonusNumber = await input.bonusNumber();
-      this.validateBonusNumber(winningNumberArray, bonusNumber);
+      validateBonusNumber(winningNumberArray, bonusNumber);
 
       return bonusNumber;
     } catch (error) {
       console.log(error.message);
-      await this.getBonusNumber(winningNumberArray);
+      return await getBonusNumber(winningNumberArray);
     }
-  }
+  };
 
-  validatePurchasePrice(purchasePrice) {
+  const validatePurchasePrice = (purchasePrice) => {
     isIntegerValidator(purchasePrice);
-  }
+  };
 
-  validateWinningNumbers(winningNumberArray) {
+  const validateWinningNumbers = (winningNumberArray) => {
     isArrLengthValidator(winningNumberArray);
     hasNumberValidator(winningNumberArray);
     isDuplicateValidator(winningNumberArray);
-  }
+  };
 
-  validateBonusNumber(winningNumberArray, bonusNumber) {
+  const validateBonusNumber = (winningNumberArray, bonusNumber) => {
     isIntegerValidator(bonusNumber);
     isContainValidator(winningNumberArray, bonusNumber);
-  }
+  };
 
-  async play() {
-    const purchasePrice = await this.settingLottos();
-    const winningNumberArray = await this.getWinningNumbers();
-    const bonusNumber = await this.getBonusNumber(winningNumberArray);
-    const lottoGame = new LottoGame(this.#lottos, winningNumberArray, bonusNumber);
-    lottoGame.checkLottos();
+  const calculateRateOfReturn = (totalIncome, purchasePrice) => {
+    return (totalIncome / purchasePrice) * 100;
+  };
+
+  const play = async () => {
+    const purchasePrice = await getPurchasePrice();
+    const { lottos, lottosCount } = settingLottos(purchasePrice);
+    output.lottosCount(lottosCount);
+    output.lottos(lottos);
+    const winningNumberArray = await getWinningNumbers();
+    const bonusNumber = await getBonusNumber(winningNumberArray);
+    const lottoGame = new LottoGame(lottos, winningNumberArray, bonusNumber);
     const result = lottoGame.result;
+    const totalIncome = lottoGame.totalIncome;
+    const rateOfReturn = calculateRateOfReturn(totalIncome, purchasePrice);
     output.result(result);
-    output.rateOfReturn(purchasePrice);
-  }
-}
+    output.rateOfReturn(rateOfReturn);
+  };
 
-const app = new App();
+  play();
+};
 
-app.play();
+app();

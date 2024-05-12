@@ -7,6 +7,7 @@ export class Lotto {
   constructor(purchasePrice) {
     this.#lottos = [];
     this.#purchasePrice = purchasePrice;
+    this.#purchaseLottos();
   }
 
   generate() {
@@ -26,7 +27,7 @@ export class Lotto {
     }
   }
 
-  purchaseLottos() {
+  #purchaseLottos() {
     while (this.#purchasePrice >= LOTTO.UNIT_PRICE) {
       this.#purchaseUnitLotto();
     }

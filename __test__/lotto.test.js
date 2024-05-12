@@ -15,9 +15,7 @@ describe("로또 테스트", () => {
 
     const lottoNumbers = lotto.generate();
 
-    expect(
-      lottoNumbers.every((number) => 1 <= number && number <= LOTTO.MAX_NUMBER)
-    ).toEqual(true);
+    expect(lottoNumbers.every((number) => 1 <= number && number <= LOTTO.MAX_NUMBER)).toEqual(true);
   });
 
   test("로또 숫자는 오름차순 정렬되어 있다.", () => {
@@ -30,7 +28,6 @@ describe("로또 테스트", () => {
 
   test(`로또 1장의 가격은 ${LOTTO.UNIT_PRICE}이다.`, () => {
     const lottoGame = new Lotto(LOTTO.UNIT_PRICE);
-    lottoGame.purchaseLottos();
 
     expect(lottoGame.lottos.length).toEqual(1);
   });
@@ -38,9 +35,8 @@ describe("로또 테스트", () => {
   test("구입 금액에 해당하는 만큼 로또를 발행해야 한다.", () => {
     const purchasePrice = LOTTO.UNIT_PRICE * 8;
 
-    const lottoGame = new Lotto(purchasePrice);
-    lottoGame.purchaseLottos();
+    const lotto = new Lotto(purchasePrice);
 
-    expect(lottoGame.lottos.length).toEqual(8);
+    expect(lotto.lottos.length).toEqual(8);
   });
 });
