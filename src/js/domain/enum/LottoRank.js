@@ -8,25 +8,25 @@ export const LottoRank = Object.freeze({
 
   getRank(hitCount, isHitBonusNumber) {
     if (hitCount === 6) {
-      return LottoRank.FIRST;
+      return this.FIRST;
     }
 
     if (hitCount === 5 && isHitBonusNumber) {
-      return LottoRank.SECOND;
+      return this.SECOND;
     }
 
     if (hitCount === 5) {
-      return LottoRank.THIRD;
+      return this.THIRD;
     }
 
     if (hitCount === 4) {
-      return LottoRank.FOURTH;
+      return this.FOURTH;
     }
 
     if (hitCount === 3) {
-      return LottoRank.FIFTH;
+      return this.FIFTH;
     }
 
-    return LottoRank.NOTHING;
+    return this.NOTHING;
   },
 });
