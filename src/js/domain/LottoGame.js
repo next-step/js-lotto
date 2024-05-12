@@ -1,20 +1,23 @@
 import { LOTTO_GAME } from "../../constants/LottoGame";
 import { LOTTO } from "../../constants/lotto";
+import { WINNINGS } from "../../constants/message";
 import { initMap } from "../../utils/initMap";
+
 export class LottoGame {
   #lottos;
-  #winningNumbers;
+  #winningNumberArray;
   #bonusNumber;
   #result;
-  constructor(lottos, winnerNumbers, bonusNumber) {
+  constructor(lottos, winningNumberArray, bonusNumber) {
     this.#lottos = lottos;
-    this.#winningNumbers = winnerNumbers;
+    this.#winningNumberArray = winningNumberArray;
     this.#bonusNumber = bonusNumber;
     this.#result = initMap(LOTTO_GAME.MAX_RANK);
+    this.checkLottos();
   }
 
   #checkUnitLotto(lotto) {
-    const checkResult = lotto.filter((number) => this.#winningNumbers.includes(number)).length;
+    const checkResult = lotto.filter((number) => this.#winningNumberArray.includes(number)).length;
 
     return this.#convertCheckResultToRank(lotto, checkResult);
   }
@@ -39,7 +42,7 @@ export class LottoGame {
   }
 
   checkLottos() {
-    this.#lottos.map((lotto) =>
+    this.#lottos.forEach((lotto) =>
       this.setResult(this.#checkUnitLotto(lotto), this.#result.get(this.#checkUnitLotto(lotto)) + 1)
     );
   }
@@ -48,14 +51,9 @@ export class LottoGame {
     return this.#result;
   }
 
-  get totalRateOfReturn() {
-    const prizes = [
-      WINNINGS.FIRST_PRIZE,
-      LOTTO_GAME.SECOND_PRIZE,
-      LOTTO_GAME.THIRD_PRIZE,
-      LOTTO_GAME.FOURTH_PRIZE,
-      LOTTO_GAME.FIFTH_PRIZE,
-    ];
+  get totalIncome() {
+    const prizes = [WINNINGS.FIRST, WINNINGS.SECOND, WINNINGS.THIRD, WINNINGS.FOURTH, WINNINGS.FIFTH];
+
     return prizes.reduce((total, prize, index) => total + this.#result.get(index + 1) * prize, 0);
   }
 }

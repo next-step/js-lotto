@@ -1,3 +1,4 @@
+import { numberFormater } from "../utils/numberFormater";
 import { LOTTO } from "./lotto";
 
 export const INPUT_MESSAGE = {
@@ -9,11 +10,12 @@ export const INPUT_MESSAGE = {
 export const OUTPUT_MESSAGE = {
   PURCHASE_RESULT_COUNT: (count) => `${count}개를 구매했습니다.`,
   WINNING_STATISTICS: "\n당첨 통계\n--------------------",
-  FIRST_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT}개 일치 (${WINNINGS.FIRST}원) - ${count}개`,
-  SECOND_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT - 1}개 일치, 보너스 볼 일치 (${WINNINGS.SECOND}원) - ${count}개`,
-  THIRD_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT - 1}개 일치 (${WINNINGS.THIRD}원) - ${count}개`,
-  FOURTH_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT - 2}개 일치 (${WINNINGS.FOURTH}원) - ${count}개`,
-  FIFTH_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT - 3}개 일치 (${WINNINGS.FIFTH}원) - ${count}개`,
+  FIRST_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT}개 일치 (${numberFormater(WINNINGS.FIRST)}원) - ${count}개`,
+  SECOND_PRIZE: (count) =>
+    `${LOTTO.NUMBERS_COUNT - 1}개 일치, 보너스 볼 일치 (${numberFormater(WINNINGS.SECOND)}원) - ${count}개`,
+  THIRD_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT - 1}개 일치 (${numberFormater(WINNINGS.THIRD)}원) - ${count}개`,
+  FOURTH_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT - 2}개 일치 (${numberFormater(WINNINGS.FOURTH)}원) - ${count}개`,
+  FIFTH_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT - 3}개 일치 (${numberFormater(WINNINGS.FIFTH)}원) - ${count}개`,
   TOTAL_RATE_OF_RETURN: (count) => `총 수익률은 ${count}%입니다.`,
 
   NAN_ERROR: "숫자를 입력해주세요.",
@@ -24,9 +26,9 @@ export const OUTPUT_MESSAGE = {
 };
 
 export const WINNINGS = {
-  FIRST: "2,000,000,000",
-  SECOND: "30,000,000",
-  THIRD: "1,500,000",
-  FOURTH: "50,000",
-  FIFTH: "5,000",
+  FIRST: 2_000_000_000,
+  SECOND: 30_000_000,
+  THIRD: 1_500_000,
+  FOURTH: 50_000,
+  FIFTH: 5_000,
 };
