@@ -9,7 +9,7 @@ export default class Lotto {
   numbers = [];
 
   constructor(numbers) {
-    this.validateNumbers(numbers);
+    this.#validateNumbers(numbers);
     this.numbers = numbers;
   }
 
@@ -17,7 +17,7 @@ export default class Lotto {
     return this.numbers;
   }
 
-  validateNumbers(numbers) {
+  #validateNumbers(numbers) {
     validateNumberCount(numbers);
 
     numbers.forEach((num) => {

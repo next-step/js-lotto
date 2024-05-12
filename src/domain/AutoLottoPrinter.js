@@ -19,7 +19,7 @@ export default class AutoLottoPrinter {
     );
   }
 
-  getBuyingLottoAmount(money) {
+  #getBuyingLottoAmount(money) {
     return Math.floor(money / this.#lottoPrice);
   }
 
@@ -27,7 +27,7 @@ export default class AutoLottoPrinter {
     this.#validateBuyLotto(money);
 
     return Array.from(
-      { length: this.getBuyingLottoAmount(money) },
+      { length: this.#getBuyingLottoAmount(money) },
       () => new Lotto(this.#generateLottoNumbers())
     );
   }
