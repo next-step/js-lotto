@@ -2,11 +2,37 @@ import { ErrorLottoBonusNumber } from "../constants/error";
 import Lotto from "./Lotto";
 
 class LottoResult {
-  static LottoRanking = [-1, 1, 2, 3, 4, 5];
-  static LottoMatchingCountCondition = [0, 6, 5, 5, 4, 3];
-  static LottoWinningPrice = [
-    0, 2_000_000_000, 30_000_000, 1_500_000, 50_000, 5_000,
-  ];
+  static LottoRanking = {
+    default: {
+      ranking: -1,
+      winningPrice: 0,
+    },
+    1: {
+      ranking: 1,
+      winningPrice: 2_000_000_000,
+      condition: 6,
+    },
+    2: {
+      ranking: 2,
+      winningPrice: 30_000_000,
+      condition: 5,
+    },
+    3: {
+      ranking: 3,
+      winningPrice: 1_500_000,
+      condition: 5,
+    },
+    4: {
+      ranking: 4,
+      winningPrice: 50_000,
+      condition: 4,
+    },
+    5: {
+      ranking: 5,
+      winningPrice: 5_000,
+      condition: 3,
+    },
+  };
 
   #winningNumbers;
   #bonusNumber;
@@ -23,10 +49,10 @@ class LottoResult {
   }
 
   static getLottoWinningPrice(lottoRanking) {
-    if (lottoRanking == LottoResult.LottoRanking[0]) {
-      return LottoResult.LottoWinningPrice[0];
+    if (lottoRanking == LottoResult.LottoRanking.default.ranking) {
+      return LottoResult.LottoRanking.default.winningPrice;
     }
-    return LottoResult.LottoWinningPrice[lottoRanking];
+    return LottoResult.LottoRanking[lottoRanking].winningPrice;
   }
 
   static getTotalLottoProfitRate(totalLottoWinningPrice, lottoPurcasedAmount) {
@@ -48,18 +74,18 @@ class LottoResult {
     const isBonusNumberMatching = lotto.hasLottoNumber(this.#bonusNumber);
 
     switch (matchingCount) {
-      case LottoResult.LottoMatchingCountCondition[1]:
-        return LottoResult.LottoRanking[1];
-      case LottoResult.LottoMatchingCountCondition[2]:
+      case LottoResult.LottoRanking[1].condition:
+        return LottoResult.LottoRanking[1].ranking;
+      case LottoResult.LottoRanking[2].condition:
         return isBonusNumberMatching
-          ? LottoResult.LottoRanking[2]
-          : LottoResult.LottoRanking[3];
-      case LottoResult.LottoMatchingCountCondition[4]:
-        return LottoResult.LottoRanking[4];
-      case LottoResult.LottoMatchingCountCondition[5]:
-        return LottoResult.LottoRanking[5];
+          ? LottoResult.LottoRanking[2].ranking
+          : LottoResult.LottoRanking[3].ranking;
+      case LottoResult.LottoRanking[4].condition:
+        return LottoResult.LottoRanking[4].ranking;
+      case LottoResult.LottoRanking[5].condition:
+        return LottoResult.LottoRanking[5].ranking;
       default:
-        return LottoResult.LottoRanking[0];
+        return LottoResult.LottoRanking.default.ranking;
     }
   }
 
@@ -71,7 +97,13 @@ class LottoResult {
 
   getLottoRankingStatistics(lottos) {
     const lottoRankings = this.getLottoRankings(lottos);
-    const lottoRankingCounts = Array(LottoResult.LottoRanking.length).fill(0);
+    const lottoRankingCounts = Object.keys(LottoResult.LottoRanking).reduce(
+      (acc, key) => {
+        acc[key] = 0;
+        return acc;
+      },
+      {}
+    );
 
     // 1 ~ 5등에 해당하지 않는 유효하지 않은 등수 제거
     const filteredRankings = lottoRankings.filter(

@@ -93,7 +93,10 @@ class Lotto {
       throw new Error(ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_VALID_INTEGER);
     }
 
-    if (Number(input) < 1 || Number(input) > 45) {
+    if (
+      Number(input) < Lotto.MIN_LOTTO_NUMBER ||
+      Number(input) > Lotto.MAX_LOTTO_NUMBER
+    ) {
       throw new Error(ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_VALID_INTEGER);
     }
   }
