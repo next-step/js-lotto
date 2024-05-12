@@ -19,8 +19,8 @@ export default class LottoChecker {
     validateNumberCount(winningNumbers);
 
     totalLottoNumbers.forEach((number) => {
-      validateNumberInRange(number);
       validateNaturalNumber(number);
+      validateNumberInRange(number);
     });
 
     validateUniqueNumber(totalLottoNumbers);
@@ -123,5 +123,9 @@ export default class LottoChecker {
     });
 
     return { lottoAmount: lottoList.length, winningDataPerRank, totalRewards };
+  }
+
+  get prizeInfo() {
+    return this.#prizeInfo;
   }
 }

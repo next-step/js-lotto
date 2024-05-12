@@ -8,7 +8,7 @@ export default class AutoLottoPrinter {
 
   constructor(lottoPrice) {
     this.#validatePrice(lottoPrice);
-    this.#lottoPrice = lottoPrice;
+    this.lottoPrice = lottoPrice;
   }
 
   #generateLottoNumbers() {
@@ -46,5 +46,9 @@ export default class AutoLottoPrinter {
         "로또 구매 금액은 로또 한 장의 가격보다 적을 수 없습니다."
       );
     }
+  }
+
+  get lottoPrice() {
+    return this.#lottoPrice;
   }
 }
