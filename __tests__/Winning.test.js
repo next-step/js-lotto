@@ -1,5 +1,14 @@
 import Winning from '../src/tests/Winning';
-import { WinningPrize } from '../src/tests/constant';
+import { WinningRank, WinningPrize } from '../src/tests/constant';
+
+jest.mock('../src/tests/Lotto.js', () => {
+	return jest.fn().mockImplementation(() => {
+		return {
+			createLottoNumbers: () => [1, 2, 3, 4, 5, 6],
+			createBonusNumber: () => 7
+		};
+	});
+});
 
 describe('로또 당첨 테스트', () => {
 	test('사용자가 구매한 로또 번호와 당첨 번호를 비교한다', () => {
@@ -22,27 +31,35 @@ describe('로또 당첨 테스트', () => {
 
 	test('당첨은 1등부터 5등까지 있다', () => {
 		// given
-		const lotto = new Winning();
+		const firstPlace = new Winning([1, 2, 3, 4, 5, 6]);
+		const secondPlace = new Winning([1, 2, 3, 4, 5, 7]);
+		const thirdPlace = new Winning([1, 2, 3, 4, 5, 8]);
+		const fourthPlace = new Winning([1, 2, 3, 4, 8, 9]);
+		const fifthPlace = new Winning([1, 2, 3, 8, 9, 10]);
 
 		// when
 		// then
-		expect(lotto.checkWinning([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6], 7)).toBe(1);
-		expect(lotto.checkWinning([1, 2, 3, 4, 5, 7], [1, 2, 3, 4, 5, 6], 7)).toBe(2);
-		expect(lotto.checkWinning([1, 2, 3, 4, 5, 8], [1, 2, 3, 4, 5, 6], 7)).toBe(3);
-		expect(lotto.checkWinning([1, 2, 3, 4, 8, 9], [1, 2, 3, 4, 5, 6], 7)).toBe(4);
-		expect(lotto.checkWinning([1, 2, 3, 8, 9, 10], [1, 2, 3, 4, 5, 6], 7)).toBe(5);
+		expect(firstPlace.checkWinning()).toBe(WinningRank.FIRST_PLACE);
+		expect(secondPlace.checkWinning()).toBe(WinningRank.SECOND_PLACE);
+		expect(thirdPlace.checkWinning()).toBe(WinningRank.THIRD_PLACE);
+		expect(fourthPlace.checkWinning()).toBe(WinningRank.FOURTH_PLACE);
+		expect(fifthPlace.checkWinning()).toBe(WinningRank.FIFTH_PLACE);
 	});
 
 	test('당첨 기준에 대한 금액 일치', () => {
 		// given
-		const lotto = new Winning();
+		const firstPlace = new Winning([1, 2, 3, 4, 5, 6]);
+		const secondPlace = new Winning([1, 2, 3, 4, 5, 7]);
+		const thirdPlace = new Winning([1, 2, 3, 4, 5, 8]);
+		const fourthPlace = new Winning([1, 2, 3, 4, 8, 9]);
+		const fifthPlace = new Winning([1, 2, 3, 8, 9, 10]);
 
 		// when
 		// then
-		expect(lotto.calculatePrize([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6], 7)).toBe(WinningPrize.FIRST_PRIZE);
-		expect(lotto.calculatePrize([1, 2, 3, 4, 5, 7], [1, 2, 3, 4, 5, 6], 7)).toBe(WinningPrize.SECOND_PRIZE);
-		expect(lotto.calculatePrize([1, 2, 3, 4, 5, 8], [1, 2, 3, 4, 5, 6], 7)).toBe(WinningPrize.THIRD_PRIZE);
-		expect(lotto.calculatePrize([1, 2, 3, 4, 8, 9], [1, 2, 3, 4, 5, 6], 7)).toBe(WinningPrize.FOURTH_PRIZE);
-		expect(lotto.calculatePrize([1, 2, 3, 8, 9, 10], [1, 2, 3, 4, 5, 6], 7)).toBe(WinningPrize.FIFTH_PRIZE);
+		expect(firstPlace.calculatePrize()).toBe(WinningPrize.FIRST_PRIZE);
+		expect(secondPlace.calculatePrize()).toBe(WinningPrize.SECOND_PRIZE);
+		expect(thirdPlace.calculatePrize()).toBe(WinningPrize.THIRD_PRIZE);
+		expect(fourthPlace.calculatePrize()).toBe(WinningPrize.FOURTH_PRIZE);
+		expect(fifthPlace.calculatePrize()).toBe(WinningPrize.FIFTH_PRIZE);
 	});
 });
