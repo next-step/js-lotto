@@ -2,17 +2,16 @@ import Lotto from './Lotto';
 import { WinningRank, WinningPrize } from './constant';
 
 class Winning {
-	lotto = new Lotto();
-
 	constructor(userInputWinningNumber) {
-		this.winningNumbers = userInputWinningNumber;
+		this.lotto = new Lotto();
+		this.userInputWinningNumber = userInputWinningNumber;
 		this.createLottoNumbers = this.lotto.createLottoNumbers();
 		this.createBonusNumber = this.lotto.createBonusNumber();
 	}
 
-	checkWinning(winningNumbers, createLottoNumbers, createBonusNumber) {
-		const matches = winningNumbers.filter(number => createLottoNumbers.includes(number)).length;
-		const bonusMatches = winningNumbers.includes(createBonusNumber);
+	checkWinning() {
+		const matches = this.userInputWinningNumber.filter(number => this.createLottoNumbers.includes(number)).length;
+		const bonusMatches = this.userInputWinningNumber.includes(this.createBonusNumber);
 
 		if (matches === 6) return WinningRank.FIRST_PLACE;
 		if (matches === 5 && bonusMatches) return WinningRank.SECOND_PLACE;
@@ -22,9 +21,9 @@ class Winning {
 		return 0;
 	}
 
-	calculatePrize(winningNumbers, createLottoNumbers, createBonusNumber) {
-		const matches = winningNumbers.filter(number => createLottoNumbers.includes(number)).length;
-		const bonusMatches = winningNumbers.includes(createBonusNumber);
+	calculatePrize() {
+		const matches = this.userInputWinningNumber.filter(number => this.createLottoNumbers.includes(number)).length;
+		const bonusMatches = this.userInputWinningNumber.includes(this.createBonusNumber);
 
 		switch (matches) {
 			case 3:
