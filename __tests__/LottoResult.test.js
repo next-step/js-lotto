@@ -22,15 +22,6 @@ describe("로또 당첨 기능 테스트", () => {
       },
     ],
     [
-      3,
-      5,
-      {
-        lottoNumbers: [1, 2, 3, 12, 18, 23],
-        winningNumbers: [1, 2, 3, 34, 9, 7],
-        bonusNumber: 7,
-      },
-    ],
-    [
       0,
       -1,
       {

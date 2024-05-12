@@ -12,18 +12,14 @@ class LottoResult {
   #bonusNumber;
 
   constructor(winningNumbers, bonusNumber) {
-    try {
-      Lotto.validateLottoNumbers(winningNumbers);
+    Lotto.validateLottoNumbers(winningNumbers);
 
-      const winningNumbersArray =
-        Lotto.convertLottoNumbersToArray(winningNumbers);
-      this.#winningNumbers = winningNumbersArray;
+    const winningNumbersArray =
+      Lotto.convertLottoNumbersToArray(winningNumbers);
+    this.#winningNumbers = winningNumbersArray;
 
-      LottoResult.validateBonusNumber(bonusNumber, this.#winningNumbers);
-      this.#bonusNumber = Number(bonusNumber);
-    } catch (e) {
-      console.error(e);
-    }
+    LottoResult.validateBonusNumber(bonusNumber, this.#winningNumbers);
+    this.#bonusNumber = Number(bonusNumber);
   }
 
   static getLottoWinningPrice(lottoRanking) {

@@ -13,12 +13,8 @@ class Lotto {
   #numbers = [];
 
   constructor(lottoNumbers) {
-    try {
-      Lotto.validateLottoNumbers(lottoNumbers);
-      this.#numbers = Lotto.convertLottoNumbersToArray(lottoNumbers);
-    } catch (e) {
-      console.error(e);
-    }
+    Lotto.validateLottoNumbers(lottoNumbers);
+    this.#numbers = Lotto.convertLottoNumbersToArray(lottoNumbers);
   }
 
   get numbers() {
@@ -48,10 +44,11 @@ class Lotto {
   }
 
   static getAvailableLottoCount(purchasedAmount) {
-    return Math.floor(purchasedAmount / Lotto.LOTTO_PRICE);
+    Lotto.validateLottoPurchasedAmount(purchasedAmount);
+    return Math.floor(Number(purchasedAmount) / Lotto.LOTTO_PRICE);
   }
 
-  static generateLottoNumbers() {
+  static generateRandomLottoNumbers() {
     const lottoNumbers = [];
     const candidateLottoNumbers = Array.from(
       { length: Lotto.MAX_LOTTO_NUMBER },
