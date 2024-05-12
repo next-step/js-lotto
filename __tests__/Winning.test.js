@@ -1,15 +1,6 @@
 import Winning from '../src/tests/Winning';
 import { WinningRank, WinningPrize } from '../src/tests/constant';
 
-jest.mock('../src/tests/Lotto.js', () => {
-	return jest.fn().mockImplementation(() => {
-		return {
-			createLottoNumbers: () => [1, 2, 3, 4, 5, 6],
-			createBonusNumber: () => 7
-		};
-	});
-});
-
 describe('로또 당첨 테스트', () => {
 	test('사용자가 구매한 로또 번호와 당첨 번호를 비교한다', () => {
 		// given
@@ -31,11 +22,11 @@ describe('로또 당첨 테스트', () => {
 
 	test('당첨은 1등부터 5등까지 있다', () => {
 		// given
-		const firstPlace = new Winning([1, 2, 3, 4, 5, 6]);
-		const secondPlace = new Winning([1, 2, 3, 4, 5, 7]);
-		const thirdPlace = new Winning([1, 2, 3, 4, 5, 8]);
-		const fourthPlace = new Winning([1, 2, 3, 4, 8, 9]);
-		const fifthPlace = new Winning([1, 2, 3, 8, 9, 10]);
+		const firstPlace = new Winning([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6], 7);
+		const secondPlace = new Winning([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 7], 7);
+		const thirdPlace = new Winning([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 8], 7);
+		const fourthPlace = new Winning([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 8, 9], 7);
+		const fifthPlace = new Winning([1, 2, 3, 4, 5, 6], [1, 2, 3, 8, 9, 10], 7);
 
 		// when
 		// then
@@ -48,11 +39,11 @@ describe('로또 당첨 테스트', () => {
 
 	test('당첨 기준에 대한 금액 일치', () => {
 		// given
-		const firstPlace = new Winning([1, 2, 3, 4, 5, 6]);
-		const secondPlace = new Winning([1, 2, 3, 4, 5, 7]);
-		const thirdPlace = new Winning([1, 2, 3, 4, 5, 8]);
-		const fourthPlace = new Winning([1, 2, 3, 4, 8, 9]);
-		const fifthPlace = new Winning([1, 2, 3, 8, 9, 10]);
+		const firstPlace = new Winning([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6], 7);
+		const secondPlace = new Winning([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 7], 7);
+		const thirdPlace = new Winning([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 8], 7);
+		const fourthPlace = new Winning([1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 8, 9], 7);
+		const fifthPlace = new Winning([1, 2, 3, 4, 5, 6], [1, 2, 3, 8, 9, 10], 7);
 
 		// when
 		// then
