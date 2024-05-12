@@ -1,5 +1,5 @@
 import { LOTTO } from "../src/constants/lotto";
-import { OUTPUT_MESSAGE } from "../src/constants/message";
+import { PRIZE_MESSAGE } from "../src/constants/message";
 import { Lotto } from "../src/domain/Lotto";
 import { LottoGame } from "../src/domain/LottoGame";
 import { output } from "../src/view/console/output";
@@ -33,6 +33,7 @@ describe("출력 테스트", () => {
     const lottoGame = new LottoGame(lottos, winningNumbers, bonusNumber);
     output.result(lottoGame.result);
 
-    expect(console.log).toHaveBeenCalledWith(OUTPUT_MESSAGE.FIFTH_PRIZE(1));
+    expect(console.log).toHaveBeenCalledWith(PRIZE_MESSAGE[5](1));
+    expect(console.log).toHaveBeenCalledWith(PRIZE_MESSAGE[1](1));
   });
 });

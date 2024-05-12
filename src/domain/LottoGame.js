@@ -23,18 +23,14 @@ export class LottoGame {
   }
 
   #convertCheckResultToRank = (lotto, checkResult) => {
-    switch (checkResult) {
-      case LOTTO.NUMBERS_COUNT - 3:
-        return 5;
-      case LOTTO.NUMBERS_COUNT - 2:
-        return 4;
-      case LOTTO.NUMBERS_COUNT - 1:
-        return lotto.includes(this.#bonusNumber) ? 2 : 3;
-      case LOTTO.NUMBERS_COUNT:
-        return 1;
-      default:
-        return LOTTO.NUMBERS_COUNT;
-    }
+    const resultMapping = {
+      [LOTTO.NUMBERS_COUNT - 3]: 5,
+      [LOTTO.NUMBERS_COUNT - 2]: 4,
+      [LOTTO.NUMBERS_COUNT - 1]: lotto.includes(this.#bonusNumber) ? 2 : 3,
+      [LOTTO.NUMBERS_COUNT]: 1,
+    };
+
+    return resultMapping[checkResult] || LOTTO.NUMBERS_COUNT;
   };
 
   #setResult(key, value) {
@@ -42,9 +38,10 @@ export class LottoGame {
   }
 
   #checkLottos() {
-    this.#lottos.forEach((lotto) =>
-      this.#setResult(this.#checkUnitLotto(lotto), this.#result.get(this.#checkUnitLotto(lotto)) + 1)
-    );
+    this.#lottos.forEach((lotto) => {
+      if (this.#checkUnitLotto(lotto) === LOTTO.NUMBERS_COUNT) return;
+      this.#setResult(this.#checkUnitLotto(lotto), this.#result.get(this.#checkUnitLotto(lotto)) + 1);
+    });
   }
 
   get result() {

@@ -1,4 +1,4 @@
-import { OUTPUT_MESSAGE } from "../../constants/message";
+import { OUTPUT_MESSAGE, PRIZE_MESSAGE } from "../../constants/message";
 
 export const output = {
   lottosCount(count) {
@@ -11,26 +11,12 @@ export const output = {
 
   result(result) {
     const resultArray = [...result.entries()].reverse();
+
     console.log(OUTPUT_MESSAGE.WINNING_STATISTICS);
     resultArray.forEach(([key, value]) => {
-      switch (key) {
-        case 1:
-          console.log(OUTPUT_MESSAGE.FIRST_PRIZE(value));
-          break;
-        case 2:
-          console.log(OUTPUT_MESSAGE.SECOND_PRIZE(value));
-          break;
-        case 3:
-          console.log(OUTPUT_MESSAGE.THIRD_PRIZE(value));
-          break;
-        case 4:
-          console.log(OUTPUT_MESSAGE.FOURTH_PRIZE(value));
-          break;
-        case 5:
-          console.log(OUTPUT_MESSAGE.FIFTH_PRIZE(value));
-          break;
-        default:
-          break;
+      const message = PRIZE_MESSAGE[key];
+      if (message) {
+        console.log(message(value));
       }
     });
   },
