@@ -1,6 +1,6 @@
 import { OUTPUT_MESSAGE } from "../src/constants/message";
 import { readline } from "../src/utils/readline";
-import { isNumberValidator } from "../src/validator/isNumberValidator";
+import { isIntegerValidator } from "../src/validator/isIntegerValidator";
 import { input } from "../src/view/console/input";
 
 describe("구입 금액 테스트", () => {
@@ -29,8 +29,6 @@ describe("구입 금액 테스트", () => {
 
     const result = await input.purchasePrice();
 
-    expect(() => isNumberValidator(result)).toThrow(
-      OUTPUT_MESSAGE.NAN_ERROR
-    );
+    expect(() => isIntegerValidator(result)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
   });
 });

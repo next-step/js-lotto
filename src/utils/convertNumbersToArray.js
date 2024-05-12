@@ -1,2 +1,1 @@
-export const convertNumbersToArray = (numbers) =>
-  numbers.split(",").map((number) => parseInt(number.trim()));
+export const convertNumbersToArray = (numbers) => numbers.split(",").map((number) => parseInt(number.trim()));

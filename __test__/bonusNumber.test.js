@@ -1,7 +1,7 @@
 import { OUTPUT_MESSAGE } from "../src/constants/message";
 import { readline } from "../src/utils/readline";
 import { isContainValidator } from "../src/validator/isContainValidator";
-import { isNumberValidator } from "../src/validator/isNumberValidator";
+import { isIntegerValidator } from "../src/validator/isIntegerValidator";
 import { input } from "../src/view/console/input";
 
 describe("보너스 번호 테스트", () => {
@@ -27,9 +27,7 @@ describe("보너스 번호 테스트", () => {
     const bonusNumber = await input.bonusNumber();
     const winningNumbers = [1, 2, 3, 4, 5, 6];
 
-    expect(() => isContainValidator(winningNumbers, bonusNumber)).toThrow(
-      OUTPUT_MESSAGE.CONTAIN_ERROR
-    );
+    expect(() => isContainValidator(winningNumbers, bonusNumber)).toThrow(OUTPUT_MESSAGE.CONTAIN_ERROR);
   });
 
   test("보너스 번호는 숫자만을 입력해야한다.", async () => {
@@ -39,8 +37,6 @@ describe("보너스 번호 테스트", () => {
 
     const bonusNumber = await input.bonusNumber();
 
-    expect(() => isNumberValidator(bonusNumber)).toThrow(
-      OUTPUT_MESSAGE.NAN_ERROR
-    );
+    expect(() => isIntegerValidator(bonusNumber)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
   });
 });
