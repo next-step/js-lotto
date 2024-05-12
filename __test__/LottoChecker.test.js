@@ -1,3 +1,4 @@
+import { LOTTO } from "../src/constant";
 import Lotto from "../src/domain/Lotto";
 import LottoChecker from "../src/domain/LottoChecker";
 
@@ -5,39 +6,7 @@ describe("Lotto Checker", () => {
   let lottoChecker;
 
   beforeEach(() => {
-    const prizeInfo = [
-      {
-        rank: 1,
-        matchingNumberCount: 6,
-        bonusAffectsWinning: false,
-        reward: 2000000000,
-      },
-      {
-        rank: 2,
-        matchingNumberCount: 5,
-        bonusAffectsWinning: true,
-        reward: 30000000,
-      },
-      {
-        rank: 3,
-        matchingNumberCount: 5,
-        bonusAffectsWinning: false,
-        reward: 1500000,
-      },
-      {
-        rank: 4,
-        matchingNumberCount: 4,
-        bonusAffectsWinning: false,
-        reward: 50000,
-      },
-      {
-        rank: 5,
-        matchingNumberCount: 3,
-        bonusAffectsWinning: false,
-        reward: 5000,
-      },
-    ];
-
+    const prizeInfo = LOTTO.PRIZE_INFO;
     lottoChecker = new LottoChecker(prizeInfo);
   });
 
@@ -136,7 +105,7 @@ describe("Lotto Checker", () => {
         // then
         expect(matchedWinningNumberCount).toBe(6);
         expect(isBonusNumberMatched).toBeFalsy();
-        expect(prize.rank).toBe(1);
+        expect(prize.rank).toBe("1st");
         expect(prize.matchingNumberCount).toBe(6);
         expect(prize.bonusAffectsWinning).toBeFalsy();
         expect(prize.reward).toBe(2000000000);
@@ -151,7 +120,7 @@ describe("Lotto Checker", () => {
         // then
         expect(matchedWinningNumberCount).toBe(5);
         expect(isBonusNumberMatched).toBeTruthy();
-        expect(prize.rank).toBe(2);
+        expect(prize.rank).toBe("2nd");
         expect(prize.matchingNumberCount).toBe(5);
         expect(prize.bonusAffectsWinning).toBeTruthy();
         expect(prize.reward).toBe(30000000);
@@ -166,7 +135,7 @@ describe("Lotto Checker", () => {
         // then
         expect(matchedWinningNumberCount).toBe(3);
         expect(isBonusNumberMatched).toBeTruthy();
-        expect(prize.rank).toBe(5);
+        expect(prize.rank).toBe("5th");
         expect(prize.matchingNumberCount).toBe(3);
         expect(prize.bonusAffectsWinning).toBeFalsy();
         expect(prize.reward).toBe(5000);
@@ -232,11 +201,11 @@ describe("Lotto Checker", () => {
 
       // then
       expect(lottoAmount).toEqual(8);
-      expect(winningDataPerRank[1].winningCount).toEqual(1);
-      expect(winningDataPerRank[2].winningCount).toEqual(1);
-      expect(winningDataPerRank[3].winningCount).toEqual(1);
-      expect(winningDataPerRank[4].winningCount).toEqual(1);
-      expect(winningDataPerRank[5].winningCount).toEqual(1);
+      expect(winningDataPerRank["1st"].winningCount).toEqual(1);
+      expect(winningDataPerRank["2nd"].winningCount).toEqual(1);
+      expect(winningDataPerRank["3rd"].winningCount).toEqual(1);
+      expect(winningDataPerRank["4th"].winningCount).toEqual(1);
+      expect(winningDataPerRank["5th"].winningCount).toEqual(1);
       expect(totalRewards).toEqual(2031555000);
     });
   });
