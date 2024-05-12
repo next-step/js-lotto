@@ -1,5 +1,5 @@
 import Lotto from './Lotto';
-import { WinningRank } from './constant';
+import { WinningRank, WinningPrize } from './constant';
 
 class Winning {
 	lotto = new Lotto();
@@ -20,6 +20,22 @@ class Winning {
 		if (matches === 4) return WinningRank.FOURTH_PLACE;
 		if (matches === 3) return WinningRank.FIFTH_PLACE;
 		return 0;
+	}
+
+	calculatePrize(winningNumbers, createLottoNumbers, createBonusNumber) {
+		const matches = winningNumbers.filter(number => createLottoNumbers.includes(number)).length;
+		const bonusMatches = winningNumbers.includes(createBonusNumber);
+
+		switch (matches) {
+			case 3:
+				return WinningPrize.FIFTH_PRIZE;
+			case 4:
+				return WinningPrize.FOURTH_PRIZE;
+			case 5:
+				return bonusMatches ? WinningPrize.SECOND_PRIZE : WinningPrize.THIRD_PRIZE;
+			case 6:
+				return WinningPrize.FIRST_PRIZE;
+		}
 	}
 }
 
