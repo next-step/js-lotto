@@ -10,8 +10,7 @@ class Winning {
 	}
 
 	checkWinning() {
-		const matches = this.userInputWinningNumber.filter(number => this.createLottoNumbers.includes(number)).length;
-		const bonusMatches = this.userInputWinningNumber.includes(this.createBonusNumber);
+		const { matches, bonusMatches } = this.calculateMatches();
 
 		if (matches === 6) return WinningRank.FIRST_PLACE;
 		if (matches === 5 && bonusMatches) return WinningRank.SECOND_PLACE;
@@ -22,8 +21,7 @@ class Winning {
 	}
 
 	calculatePrize() {
-		const matches = this.userInputWinningNumber.filter(number => this.createLottoNumbers.includes(number)).length;
-		const bonusMatches = this.userInputWinningNumber.includes(this.createBonusNumber);
+		const { matches, bonusMatches } = this.calculateMatches();
 
 		switch (matches) {
 			case 3:
@@ -35,6 +33,12 @@ class Winning {
 			case 6:
 				return WinningPrize.FIRST_PRIZE;
 		}
+	}
+
+	calculateMatches() {
+		const matches = this.userInputWinningNumber.filter(number => this.createLottoNumbers.includes(number)).length;
+		const bonusMatches = this.userInputWinningNumber.includes(this.createBonusNumber);
+		return { matches, bonusMatches };
 	}
 }
 
