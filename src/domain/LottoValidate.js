@@ -7,7 +7,6 @@ import {
 } from "../utils/validation";
 
 export const validateNumberCount = (numbers) => {
-  console.log(numbers);
   if (!isEqualLength(numbers, LOTTO.NUMBER_COUNT)) {
     throw new Error("로또 번호는 6개여야 합니다.");
   }

@@ -46,13 +46,13 @@ export default class LottoChecker {
     const prizeNumbersMap = this.#prizeNumbersMap();
 
     const matchedNumbers = {
-      matchedWinningNumbers: [],
+      matchedWinningNumberCount: 0,
       isBonusNumberMatched: false,
     };
 
     lotto.numbers.forEach((number) => {
       if (prizeNumbersMap[number] === 1) {
-        matchedNumbers.matchedWinningNumbers.push(number);
+        matchedNumbers.matchedWinningNumberCount += 1;
       }
 
       if (prizeNumbersMap[number] === 2) {
@@ -63,9 +63,9 @@ export default class LottoChecker {
     return matchedNumbers;
   }
 
-  #findMatchedPrize(matchedWinningNumbers, isBonusNumberMatched) {
+  #findMatchedPrize(matchedWinningNumberCount, isBonusNumberMatched) {
     return this.#prizeInfo.find((prize) => {
-      if (matchedWinningNumbers.length === prize.matchingNumberCount) {
+      if (matchedWinningNumberCount === prize.matchingNumberCount) {
         if (prize.bonusAffectsWinning) {
           return isBonusNumberMatched;
         }
@@ -88,18 +88,40 @@ export default class LottoChecker {
   checkLotto(lotto) {
     this.#validateCheckSetNumbers();
 
-    const { matchedWinningNumbers, isBonusNumberMatched } =
+    const { matchedWinningNumberCount, isBonusNumberMatched } =
       this.#checkLottoNumbers(lotto);
 
     const prize = this.#findMatchedPrize(
-      matchedWinningNumbers,
+      matchedWinningNumberCount,
       isBonusNumberMatched
     );
 
     return {
-      matchedWinningNumbers,
+      matchedWinningNumberCount,
       isBonusNumberMatched,
       prize,
     };
+  }
+
+  checkWinningData(lottoList) {
+    const winningDataPerRank = this.#prizeInfo.reduce(
+      (acc, prize) => ({
+        ...acc,
+        [prize.rank]: { winningCount: 0, reward: prize.reward },
+      }),
+      {}
+    );
+    let totalRewards = 0;
+
+    lottoList.forEach((lotto) => {
+      const { prize } = this.checkLotto(lotto);
+
+      if (prize) {
+        winningDataPerRank[prize.rank].winningCount += 1;
+        totalRewards += prize.reward;
+      }
+    });
+
+    return { lottoAmount: lottoList.length, winningDataPerRank, totalRewards };
   }
 }

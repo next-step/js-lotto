@@ -130,11 +130,11 @@ describe("Lotto Checker", () => {
       test("로또 번호가 6개가 일치하면 2000000000을 상금으로 받는다.", () => {
         // when
         const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
-        const { matchedWinningNumbers, isBonusNumberMatched, prize } =
+        const { matchedWinningNumberCount, isBonusNumberMatched, prize } =
           lottoChecker.checkLotto(lotto);
 
         // then
-        expect(matchedWinningNumbers).toHaveLength(6);
+        expect(matchedWinningNumberCount).toBe(6);
         expect(isBonusNumberMatched).toBeFalsy();
         expect(prize.rank).toBe(1);
         expect(prize.matchingNumberCount).toBe(6);
@@ -145,11 +145,11 @@ describe("Lotto Checker", () => {
       test("로또 번호가 5개 + 보너스 번호 1개가 일치하면 30,000,000원 상금을 받는다.", () => {
         // when
         const lotto = new Lotto([1, 2, 3, 4, 5, 7]);
-        const { matchedWinningNumbers, isBonusNumberMatched, prize } =
+        const { matchedWinningNumberCount, isBonusNumberMatched, prize } =
           lottoChecker.checkLotto(lotto);
 
         // then
-        expect(matchedWinningNumbers).toHaveLength(5);
+        expect(matchedWinningNumberCount).toBe(5);
         expect(isBonusNumberMatched).toBeTruthy();
         expect(prize.rank).toBe(2);
         expect(prize.matchingNumberCount).toBe(5);
@@ -160,11 +160,11 @@ describe("Lotto Checker", () => {
       test("로또 번호 3개 + 보너스 번호 1개가 일치하면 5,000원 상금을 받는다.", () => {
         // when
         const lotto = new Lotto([1, 2, 3, 7, 8, 9]);
-        const { matchedWinningNumbers, isBonusNumberMatched, prize } =
+        const { matchedWinningNumberCount, isBonusNumberMatched, prize } =
           lottoChecker.checkLotto(lotto);
 
         // then
-        expect(matchedWinningNumbers).toHaveLength(3);
+        expect(matchedWinningNumberCount).toBe(3);
         expect(isBonusNumberMatched).toBeTruthy();
         expect(prize.rank).toBe(5);
         expect(prize.matchingNumberCount).toBe(3);
@@ -175,11 +175,11 @@ describe("Lotto Checker", () => {
       test("로또 번호가 2개 일치, 보너스 번호 1개 일치하는 경우에는 상금이 없다.", () => {
         // when
         const lotto = new Lotto([45, 7, 43, 42, 2, 1]);
-        const { matchedWinningNumbers, isBonusNumberMatched, prize } =
+        const { matchedWinningNumberCount, isBonusNumberMatched, prize } =
           lottoChecker.checkLotto(lotto);
 
         // then
-        expect(matchedWinningNumbers).toHaveLength(2);
+        expect(matchedWinningNumberCount).toBe(2);
         expect(isBonusNumberMatched).toBeTruthy();
         expect(prize).toBeUndefined();
       });
@@ -187,14 +187,57 @@ describe("Lotto Checker", () => {
       test("로또 번호가 모두 일치 하지 않는 경우에는 상금이 없다.", () => {
         // when
         const lotto = new Lotto([45, 44, 43, 42, 41, 30]);
-        const { matchedWinningNumbers, isBonusNumberMatched, prize } =
+        const { matchedWinningNumberCount, isBonusNumberMatched, prize } =
           lottoChecker.checkLotto(lotto);
 
         // then
-        expect(matchedWinningNumbers).toHaveLength(0);
+        expect(matchedWinningNumberCount).toBe(0);
         expect(isBonusNumberMatched).toBeFalsy();
         expect(prize).toBeUndefined();
       });
+    });
+  });
+
+  describe("여러장의 로또 당첨 결과를 확인할 수 있다.", () => {
+    test("로또 등수 별 몇 장의 로또가 당첨되었는지 확인할 수 있다.", () => {
+      // given
+      lottoChecker.lottoNumberInfo = {
+        winningNumbers: [1, 2, 3, 4, 5, 6],
+        bonusNumber: 7,
+      };
+
+      const lotto1 = new Lotto([1, 2, 3, 4, 5, 6]); //1등
+      const lotto2 = new Lotto([1, 2, 3, 4, 5, 7]); //2등
+      const lotto3 = new Lotto([1, 2, 3, 4, 5, 9]); //3등
+      const lotto4 = new Lotto([1, 2, 3, 4, 7, 8]); //4등
+      const lotto5 = new Lotto([1, 2, 3, 7, 8, 9]); //5등
+      const lotto6 = new Lotto([1, 2, 7, 8, 9, 10]); //꽝
+      const lotto7 = new Lotto([1, 7, 8, 9, 10, 11]); //꽝
+      const lotto8 = new Lotto([7, 8, 9, 10, 11, 12]); //꽝
+
+      const lottoList = [
+        lotto1,
+        lotto2,
+        lotto3,
+        lotto4,
+        lotto5,
+        lotto6,
+        lotto7,
+        lotto8,
+      ];
+
+      // when
+      const { lottoAmount, winningDataPerRank, totalRewards } =
+        lottoChecker.checkWinningData(lottoList);
+
+      // then
+      expect(lottoAmount).toEqual(8);
+      expect(winningDataPerRank[1].winningCount).toEqual(1);
+      expect(winningDataPerRank[2].winningCount).toEqual(1);
+      expect(winningDataPerRank[3].winningCount).toEqual(1);
+      expect(winningDataPerRank[4].winningCount).toEqual(1);
+      expect(winningDataPerRank[5].winningCount).toEqual(1);
+      expect(totalRewards).toEqual(2031555000);
     });
   });
 });
