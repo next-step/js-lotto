@@ -5,4 +5,12 @@ const ConstantNumbers = {
 	COUNT: 6
 };
 
-export { ConstantNumbers };
+const WinningRank = {
+	FIRST_PLACE: 1,
+	SECOND_PLACE: 2,
+	THIRD_PLACE: 3,
+	FOURTH_PLACE: 4,
+	FIFTH_PLACE: 5
+};
+
+export { ConstantNumbers, WinningRank };
