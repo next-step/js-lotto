@@ -13,12 +13,6 @@ export const validateNumberCount = (numbers) => {
   }
 };
 
-export const validateBonusNumberCount = (numbers) => {
-  if (!isEqualLength(numbers, LOTTO.BONUS_NUMBER_COUNT)) {
-    throw new Error("보너스 번호는 1개여야 합니다.");
-  }
-};
-
 export const validateNumberInRange = (num) => {
   if (!isInRange(num, LOTTO.MIN_NUMBER, LOTTO.MAX_NUMBER)) {
     throw new Error(
