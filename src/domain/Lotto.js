@@ -1,5 +1,5 @@
-import { LOTTO } from "../../constants/lotto";
-import { generateRandomNumber } from "../../utils/generateRandomNumber";
+import { LOTTO } from "../constants/lotto";
+import { generateRandomNumber } from "../utils/generateRandomNumber";
 
 export class Lotto {
   #lottos;

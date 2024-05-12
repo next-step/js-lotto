@@ -1,11 +1,11 @@
-import { LOTTO } from "../src/constants/lotto";
-import { OUTPUT_MESSAGE } from "../src/constants/message";
-import { convertNumbersToArray } from "../src/utils/convertNumbersToArray";
-import { readline } from "../src/utils/readline";
-import { hasNumberValidator } from "../src/validator/hasNumberValidator";
-import { isArrLengthValidator } from "../src/validator/isArrLengthValidator";
-import { isDuplicateValidator } from "../src/validator/isDuplicateValidator";
-import { input } from "../src/view/console/input";
+import { LOTTO } from "../../src/constants/lotto";
+import { OUTPUT_MESSAGE } from "../../src/constants/message";
+import { convertNumbersToArray } from "../../src/utils/convertNumbersToArray";
+import { readline } from "../../src/utils/readline";
+import { hasNumberValidator } from "../../src/validator/hasNumberValidator";
+import { isArrLengthValidator } from "../../src/validator/isArrLengthValidator";
+import { isDuplicateValidator } from "../../src/validator/isDuplicateValidator";
+import { input } from "../../src/view/console/input";
 
 describe("당첨 번호 테스트", () => {
   afterEach(() => {

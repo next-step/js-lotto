@@ -1,4 +1,4 @@
-import { LottoGame } from "../src/js/domain/LottoGame";
+import { LottoGame } from "../src/domain/LottoGame";
 
 describe("로또 게임 테스트", () => {
   test("사용자가 구매한 로또 번호와 당첨 번호를 비교한다.", () => {

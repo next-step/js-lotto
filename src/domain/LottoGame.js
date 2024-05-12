@@ -1,7 +1,7 @@
-import { LOTTO_GAME } from "../../constants/LottoGame";
-import { LOTTO } from "../../constants/lotto";
-import { WINNINGS } from "../../constants/message";
-import { initMap } from "../../utils/initMap";
+import { LOTTO_GAME } from "../constants/LottoGame";
+import { LOTTO } from "../constants/lotto";
+import { WINNINGS } from "../constants/message";
+import { initMap } from "../utils/initMap";
 
 export class LottoGame {
   #lottos;

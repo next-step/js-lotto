@@ -1,7 +1,7 @@
 import { input } from "./view/console/input";
 import { output } from "./view/console/output";
-import { LottoGame } from "./js/domain/LottoGame";
-import { Lotto } from "./js/domain/Lotto";
+import { LottoGame } from "./domain/LottoGame";
+import { Lotto } from "./domain/Lotto";
 import { isIntegerValidator } from "./validator/isIntegerValidator";
 import { isArrLengthValidator } from "./validator/isArrLengthValidator";
 import { hasNumberValidator } from "./validator/hasNumberValidator";

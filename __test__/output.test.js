@@ -1,7 +1,7 @@
 import { LOTTO } from "../src/constants/lotto";
 import { OUTPUT_MESSAGE } from "../src/constants/message";
-import { Lotto } from "../src/js/domain/Lotto";
-import { LottoGame } from "../src/js/domain/LottoGame";
+import { Lotto } from "../src/domain/Lotto";
+import { LottoGame } from "../src/domain/LottoGame";
 import { output } from "../src/view/console/output";
 
 describe("출력 테스트", () => {
@@ -31,7 +31,6 @@ describe("출력 테스트", () => {
     const bonusNumber = 7;
 
     const lottoGame = new LottoGame(lottos, winningNumbers, bonusNumber);
-
     output.result(lottoGame.result);
 
     expect(console.log).toHaveBeenCalledWith(OUTPUT_MESSAGE.FIFTH_PRIZE(1));

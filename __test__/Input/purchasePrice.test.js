@@ -1,7 +1,7 @@
-import { OUTPUT_MESSAGE } from "../src/constants/message";
-import { readline } from "../src/utils/readline";
-import { isIntegerValidator } from "../src/validator/isIntegerValidator";
-import { input } from "../src/view/console/input";
+import { OUTPUT_MESSAGE } from "../../src/constants/message";
+import { readline } from "../../src/utils/readline";
+import { isIntegerValidator } from "../../src/validator/isIntegerValidator";
+import { input } from "../../src/view/console/input";
 
 describe("구입 금액 테스트", () => {
   beforeEach(() => {

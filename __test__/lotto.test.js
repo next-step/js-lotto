@@ -1,5 +1,5 @@
 import { LOTTO } from "../src/constants/lotto";
-import { Lotto } from "../src/js/domain/Lotto";
+import { Lotto } from "../src/domain/Lotto";
 
 describe("로또 테스트", () => {
   test(`로또 1장은 ${LOTTO.NUMBERS_COUNT}개의 숫자를 가진다.`, () => {
