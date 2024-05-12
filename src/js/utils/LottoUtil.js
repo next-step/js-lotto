@@ -1,5 +1,5 @@
-import { LOTTO } from '../constants';
 import { generateRandomNumber } from './index';
+import { LOTTO } from '../constants';
 
 export function generateLottoNumberArray() {
   const lottoNumbers = new Set();

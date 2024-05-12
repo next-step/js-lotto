@@ -1,6 +1,6 @@
-import { isValidLottoNumberArray } from '../utils/LottoUtil';
 import Product from './Product';
-import { LOTTO } from '../constants';
+import { isValidLottoNumberArray } from '../utils/LottoUtil';
+import { ERROR_MESSAGE, LOTTO } from '../constants';
 
 class LottoTicket extends Product {
   #lottoNumbers;
@@ -15,7 +15,7 @@ class LottoTicket extends Product {
 
   set lottoNumbers(lottoNumbers) {
     if (!isValidLottoNumberArray(lottoNumbers)) {
-      throw new TypeError('올바른 로또 형식이 아닙니다.');
+      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
     this.#lottoNumbers = lottoNumbers;
   }

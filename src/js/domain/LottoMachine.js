@@ -1,10 +1,10 @@
-import { LOTTO } from '../constants';
+import LottoTicket from './LottoTicket';
 import {
   generateLottoNumberArray,
   isValidLottoNumber,
   isValidLottoNumberArray,
 } from '../utils/LottoUtil';
-import LottoTicket from './LottoTicket';
+import { ERROR_MESSAGE, LOTTO } from '../constants';
 
 class LottoMachine {
   #winningNumbers;
@@ -14,13 +14,15 @@ class LottoMachine {
   static DEFAULT_WINNING_AMOUNT = [
     2_000_000_000, 30_000_000, 1_500_000, 50_000, 5_000, 0,
   ];
+  static NOT_ENOUGH_MONEY = '돈이 부족합니다.';
+  static DUPLICATE_LOTTO_NUMBERS = '중복된 로또 번호 입니다.';
 
   constructor(winningAmount = LottoMachine.DEFAULT_WINNING_AMOUNT) {
     if (!Array.isArray(winningAmount)) {
-      throw new TypeError('유효하지 않은 값 입니다.');
+      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
     if (winningAmount.length !== LOTTO.WINNING_NUMBER_LENGTH) {
-      throw new TypeError('당첨 금액 형식에 맞지않습니다.');
+      throw new TypeError(ERROR_MESSAGE.INVALID_LOTTO_FORMAT);
     }
     this.#winningNumbers = Array.from({
       length: LOTTO.WINNING_NUMBER_LENGTH,
@@ -35,7 +37,7 @@ class LottoMachine {
 
   set winningNumbers(winningNumbers) {
     if (!isValidLottoNumberArray(winningNumbers)) {
-      throw new TypeError('유효하지 않은 값 입니다.');
+      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
     this.#winningNumbers = winningNumbers;
   }
@@ -46,15 +48,13 @@ class LottoMachine {
 
   set bonusWinningNumber(bonusWinningNumber) {
     if (!isValidLottoNumberArray(this.#winningNumbers)) {
-      throw new TypeError('로또 번호가 먼저 생성되어야 합니다.');
+      throw new TypeError(ERROR_MESSAGE.REQUIRE_LOTTO_NUMBERS);
     }
     if (!isValidLottoNumber(bonusWinningNumber)) {
-      throw new TypeError('유효하지 않은 값 입니다.');
+      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
     if (this.#winningNumbers.includes(bonusWinningNumber)) {
-      throw new TypeError(
-        '로또 번호와 같은 번호는 보너스번호가 될 수 없습니다.'
-      );
+      throw new TypeError(LottoMachine.DUPLICATE_LOTTO_NUMBERS);
     }
     this.#bonusWinningNumber = bonusWinningNumber;
   }
@@ -76,8 +76,8 @@ class LottoMachine {
   }
 
   getWinningRank(lottoNumbers) {
-    const matchLottoNumber = this.#getMatchLottoNumberCount(lottoNumbers);
-    switch (matchLottoNumber) {
+    const matchCount = this.#getMatchLottoNumberCount(lottoNumbers);
+    switch (matchCount) {
       case 6:
         return 1;
       case 5:
@@ -92,8 +92,8 @@ class LottoMachine {
   }
 
   getAmount(lottoNumbers) {
-    const matchLottoNumber = this.#getMatchLottoNumberCount(lottoNumbers);
-    switch (matchLottoNumber) {
+    const matchCount = this.#getMatchLottoNumberCount(lottoNumbers);
+    switch (matchCount) {
       case 6:
         return 2_000_000_000;
       case 5:
@@ -109,12 +109,10 @@ class LottoMachine {
 
   sellAutoLottoTicket(cost) {
     if (cost > Number.MAX_SAFE_INTEGER || !Number.isInteger(cost)) {
-      throw new TypeError(
-        'buy로 전달된 매개변수는 표현가능한 숫자형이어야 합니다.'
-      );
+      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
     if (cost < LOTTO.PRICE) {
-      throw new Error('금액이 부족합니다.');
+      throw new Error(LottoMachine.NOT_ENOUGH_MONEY);
     }
 
     const sellCount = Math.floor(cost / LOTTO.PRICE);
@@ -128,11 +126,12 @@ class LottoMachine {
 
   getLottoResult(lottoTickets) {
     if (!Array.isArray(lottoTickets) || lottoTickets.length < 1) {
-      throw new TypeError('잘못된 형식 입니다.');
+      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
     if (!lottoTickets.every((lotto) => lotto instanceof LottoTicket)) {
-      throw new TypeError('LottoTicket 이 아닙니다.');
+      throw new TypeError(ERROR_MESSAGE.REQUIRE_LOTTO_INSTANCE);
     }
+
     const chart = new Map([
       ['1', { count: 0, price: this.#winningAmount[0] }],
       ['2', { count: 0, price: this.#winningAmount[1] }],

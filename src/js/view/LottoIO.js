@@ -1,13 +1,14 @@
 import LottoTicket from '../domain/LottoTicket';
 import { calcROI, comma } from '../utils';
 import { isValidLottoNumberArray } from '../utils/LottoUtil';
+import { ERROR_MESSAGE } from '../constants';
 
 export function readLottoNumbers(lottoTicketInstance) {
   if (!(lottoTicketInstance instanceof LottoTicket)) {
-    throw TypeError('로또가 아닙니다.');
+    throw TypeError(ERROR_MESSAGE.REQUIRE_LOTTO_INSTANCE);
   }
-  if (lottoTicketInstance.lottoNumbers.length === 0) {
-    throw TypeError('번호가 설정되지 않은 로또는 읽을 수 없습니다.');
+  if (!isValidLottoNumberArray(lottoTicketInstance.lottoNumbers)) {
+    throw TypeError(ERROR_MESSAGE.REQUIRE_LOTTO_NUMBERS);
   }
   return `[${lottoTicketInstance.lottoNumbers.toString().replace(/,/g, ', ')}]`;
 }
@@ -32,7 +33,7 @@ export function writeLottoNumbers(input) {
     .map((number) => Number(number));
 
   if (!isValidLottoNumberArray(lottoNumbers)) {
-    throw TypeError('올바른 로또 형식이 아닙니다.');
+    throw TypeError(ERROR_MESSAGE.INVALID_LOTTO_FORMAT);
   }
 
   return lottoNumbers;

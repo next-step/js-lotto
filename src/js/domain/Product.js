@@ -1,19 +1,21 @@
+import { ERROR_MESSAGE } from '../constants';
+
 class Product {
   #name;
   #price;
 
   constructor(name, price) {
     if (typeof name !== 'string') {
-      throw new TypeError('문자열이 아닙니다.');
+      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
     if (name.trim().length === 0) {
-      throw new TypeError('빈 문자열 입니다.');
+      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
     if (name.trim().length > 15) {
-      throw new TypeError('최대 길이를 초과하였습니다.');
+      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
     if (price > Number.MAX_SAFE_INTEGER || !Number.isInteger(price)) {
-      throw new TypeError('price는 표현가능한 숫자형이어야 합니다.');
+      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
     this.#name = name.trim();
     this.#price = price;
