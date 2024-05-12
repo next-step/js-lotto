@@ -1,5 +1,6 @@
 import LottoMachine from './domain/LottoMachine';
 import { readLineAsync } from './utils';
+import { LOTTO } from './constants';
 import {
   readLottoNumbers,
   readMatchLottoNumber,
@@ -28,7 +29,7 @@ async function ConsoleApp() {
   const { chart, netReturn } = lottoMachine.getLottoResult(lottoTickets);
 
   for (const [key, value] of chart.entries()) {
-    if (key !== '-1') {
+    if (key !== LOTTO.UNRANKED) {
       console.log(
         readMatchLottoNumber({
           matchNumber: key,

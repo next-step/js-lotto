@@ -5,6 +5,12 @@ export const LOTTO = {
   NAME_EN: 'lotto',
   NAME_KR: '로또',
   PRICE: 1_000,
+  RANK_1: 1,
+  RANK_2: 2,
+  RANK_3: 3,
+  RANK_4: 4,
+  RANK_5: 5,
+  UNRANKED: -1,
 };
 
 export const ERROR_MESSAGE = {

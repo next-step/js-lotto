@@ -79,15 +79,15 @@ class LottoMachine {
     const matchCount = this.#getMatchLottoNumberCount(lottoNumbers);
     switch (matchCount) {
       case 6:
-        return 1;
+        return LOTTO.RANK_1;
       case 5:
-        return this.#hasBonusNumber(lottoNumbers) ? 2 : 3;
+        return this.#hasBonusNumber(lottoNumbers) ? LOTTO.RANK_2 : LOTTO.RANK_3;
       case 4:
-        return 4;
+        return LOTTO.RANK_4;
       case 3:
-        return 5;
+        return LOTTO.RANK_5;
       default:
-        return -1;
+        return LOTTO.UNRANKED;
     }
   }
 
@@ -95,15 +95,17 @@ class LottoMachine {
     const matchCount = this.#getMatchLottoNumberCount(lottoNumbers);
     switch (matchCount) {
       case 6:
-        return 2_000_000_000;
+        return this.#winningAmount[0];
       case 5:
-        return this.#hasBonusNumber(lottoNumbers) ? 30_000_000 : 1_500_000;
+        return this.#hasBonusNumber(lottoNumbers)
+          ? this.#winningAmount[1]
+          : this.#winningAmount[2];
       case 4:
-        return 50_000;
+        return this.#winningAmount[3];
       case 3:
-        return 5_000;
+        return this.#winningAmount[4];
       default:
-        return 0;
+        return this.#winningAmount[5];
     }
   }
 
@@ -133,12 +135,12 @@ class LottoMachine {
     }
 
     const chart = new Map([
-      ['1', { count: 0, price: this.#winningAmount[0] }],
-      ['2', { count: 0, price: this.#winningAmount[1] }],
-      ['3', { count: 0, price: this.#winningAmount[2] }],
-      ['4', { count: 0, price: this.#winningAmount[3] }],
-      ['5', { count: 0, price: this.#winningAmount[4] }],
-      ['-1', { count: 0, price: this.#winningAmount[5] }],
+      [`${LOTTO.RANK_1}`, { count: 0, price: this.#winningAmount[0] }],
+      [`${LOTTO.RANK_2}`, { count: 0, price: this.#winningAmount[1] }],
+      [`${LOTTO.RANK_3}`, { count: 0, price: this.#winningAmount[2] }],
+      [`${LOTTO.RANK_4}`, { count: 0, price: this.#winningAmount[3] }],
+      [`${LOTTO.RANK_5}`, { count: 0, price: this.#winningAmount[4] }],
+      [`${LOTTO.UNRANKED}`, { count: 0, price: this.#winningAmount[5] }],
     ]);
     let netReturn = 0;
 
