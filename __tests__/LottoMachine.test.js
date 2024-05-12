@@ -174,7 +174,7 @@ describe('로또 머신 기능 테스트', () => {
     ]);
 
     // then
-    expect(chart).toEqual([
+    expect([...chart]).toEqual([
       ['1', { count: 1, price: lottoMachine.winningAmount[0] }],
       ['2', { count: 1, price: lottoMachine.winningAmount[1] }],
       ['3', { count: 1, price: lottoMachine.winningAmount[2] }],

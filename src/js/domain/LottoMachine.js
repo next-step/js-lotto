@@ -133,7 +133,7 @@ class LottoMachine {
     if (!lottoTickets.every((lotto) => lotto instanceof LottoTicket)) {
       throw new TypeError('LottoTicket 이 아닙니다.');
     }
-    const lottoChart = new Map([
+    const chart = new Map([
       ['1', { count: 0, price: this.#winningAmount[0] }],
       ['2', { count: 0, price: this.#winningAmount[1] }],
       ['3', { count: 0, price: this.#winningAmount[2] }],
@@ -146,14 +146,14 @@ class LottoMachine {
     lottoTickets.forEach(({ lottoNumbers }) => {
       const rank = this.getWinningRank(lottoNumbers).toString();
       netReturn = netReturn + this.getAmount(lottoNumbers);
-      const chartRow = lottoChart.get(rank);
+      const chartRow = chart.get(rank);
       if (chartRow) {
         chartRow.count = chartRow.count + 1;
       }
     });
 
     return {
-      chart: [...lottoChart],
+      chart,
       netReturn,
     };
   }
