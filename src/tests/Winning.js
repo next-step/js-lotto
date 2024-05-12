@@ -40,6 +40,13 @@ class Winning {
 		const bonusMatches = this.userInputWinningNumber.includes(this.createBonusNumber);
 		return { matches, bonusMatches };
 	}
+
+	calculateRate() {
+		if (this.lotto.purchaseAmount === 0) {
+			return 0;
+		}
+		return (this.calculatePrize() / this.lotto.purchaseAmount) * 100;
+	}
 }
 
 export default Winning;
