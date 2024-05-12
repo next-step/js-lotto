@@ -5,18 +5,14 @@ export const ErrorLottoPurchasedAmount = {
 };
 
 export const ErrorLottoNumbers = {
-  ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH: "로또 번호는 6개 입니다.",
+  ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH: "로또 번호는 총 6개 입니다.",
+  ERROR_LOTTO_NUMBERS_DUPLICATED: "중복된 로또 번호가 있습니다.",
 };
 
 export const ErrorLottoNumber = {
   ERROR_LOTTO_NUMBER_NOT_NUMBER: "로또 번호는 숫자여야 합니다.",
   ERROR_LOTTO_NUMBER_NOT_VALID_INTEGER:
     "로또 번호는 1이상 45이하의 정수여야 합니다.",
-};
-
-export const ErrorLottoWinningNumbers = {
-  ERROR_LOTTO_WINNING_NUMBERS_LENGTH: "로또 당첨 번호는 6개 입니다.",
-  ERROR_LOTTO_WINNING_NUMBERS_DUPLICATED: "중복된 로또 당첨 번호가 있습니다.",
 };
 
 export const ErrorLottoBonusNumber = {

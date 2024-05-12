@@ -20,7 +20,7 @@ const Input = {
     while (true) {
       const input = await readLineAsync("\n당첨 번호를 입력해 주세요.");
       try {
-        LottoResult.validateWinningNumbers(input);
+        Lotto.validateLottoNumbers(input);
         return input;
       } catch (e) {
         console.log(e.message);

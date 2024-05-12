@@ -1,13 +1,9 @@
-import {
-  LottoMatchingCountCondition,
-  LottoWinningPrice,
-  MAX_LOTTO_RANKING,
-} from "../../constants/lottoResult";
+import LottoResult from "../domain/LottoResult";
 
 const Output = {
   printLottoRankingStatistics(lottoRankingStatistics) {
     console.log("\n당첨 통계\n--------------------");
-    for (let i = MAX_LOTTO_RANKING; i > 0; i--) {
+    for (let i = LottoResult.LottoRanking.length - 1; i > 0; i--) {
       const template = this.generateLottoRankingCountsTemplate(
         i,
         lottoRankingStatistics
@@ -18,9 +14,9 @@ const Output = {
   },
 
   generateLottoRankingCountsTemplate(ranking, lottoRankingCounts) {
-    return `${LottoMatchingCountCondition[ranking]}개 일치${
+    return `${LottoResult.LottoMatchingCountCondition[ranking]}개 일치${
       ranking === 2 ? ", 보너스 볼 일치" : ""
-    } (${LottoWinningPrice[ranking].toLocaleString("ko-KR")}원) - ${
+    } (${LottoResult.LottoWinningPrice[ranking].toLocaleString("ko-KR")}원) - ${
       lottoRankingCounts[ranking]
     }개`;
   },

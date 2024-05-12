@@ -1,9 +1,8 @@
 import {
   ErrorLottoBonusNumber,
   ErrorLottoNumber,
+  ErrorLottoNumbers,
   ErrorLottoPurchasedAmount,
-  ErrorLottoWinningNumbers,
-  ErrorNumber,
 } from "../src/constants/error";
 import Lotto from "../src/js/domain/Lotto";
 import LottoResult from "../src/js/domain/LottoResult";
@@ -130,7 +129,7 @@ describe("입출력 기능 테스트", () => {
     // then
     expect(readLineAsyncSpy).toHaveBeenCalledTimes(2);
     expect(logSpy).toHaveBeenCalledWith(
-      ErrorLottoWinningNumbers.ERROR_LOTTO_WINNING_NUMBERS_DUPLICATED
+      ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_DUPLICATED
     );
     expect(winningNumbers).toBe("1,2,3,4,5,6");
   });

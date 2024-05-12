@@ -1,22 +1,20 @@
-import {
-  ErrorLottoBonusNumber,
-  ErrorLottoWinningNumbers,
-  ErrorNumber,
-} from "../../constants/error";
-import {
-  LottoMatchingCountCondition,
-  LottoWinningPrice,
-  MAX_LOTTO_RANKING,
-} from "../../constants/lottoResult";
+import { ErrorLottoBonusNumber } from "../../constants/error";
 import Lotto from "./Lotto";
 
 class LottoResult {
+  static LottoRanking = [-1, 1, 2, 3, 4, 5];
+  static LottoMatchingCountCondition = [0, 6, 5, 5, 4, 3];
+  static LottoWinningPrice = [
+    0, 2_000_000_000, 30_000_000, 1_500_000, 50_000, 5_000,
+  ];
+
   #winningNumbers;
   #bonusNumber;
 
   constructor(winningNumbers, bonusNumber) {
     try {
-      LottoResult.validateWinningNumbers(winningNumbers);
+      Lotto.validateLottoNumbers(winningNumbers);
+
       const winningNumbersArray =
         Lotto.convertLottoNumbersToArray(winningNumbers);
       this.#winningNumbers = winningNumbersArray;
@@ -29,35 +27,14 @@ class LottoResult {
   }
 
   static getLottoWinningPrice(lottoRanking) {
-    if (lottoRanking == -1) {
-      return 0;
+    if (lottoRanking == LottoResult.LottoRanking[0]) {
+      return LottoResult.LottoWinningPrice[0];
     }
-    return LottoWinningPrice[lottoRanking];
+    return LottoResult.LottoWinningPrice[lottoRanking];
   }
 
   static getTotalLottoProfitRate(totalLottoWinningPrice, lottoPurcasedAmount) {
     return (totalLottoWinningPrice / lottoPurcasedAmount) * 100;
-  }
-
-  static validateWinningNumbers(input) {
-    const winningNumbers = Lotto.convertLottoNumbersToArray(input);
-    const winningNumbersSet = new Set(winningNumbers);
-
-    if (winningNumbers.length !== Lotto.LENGTH_LOTTO_NUMBERS) {
-      throw new Error(
-        ErrorLottoWinningNumbers.ERROR_LOTTO_WINNING_NUMBERS_LENGTH
-      );
-    }
-
-    if (winningNumbers.length !== winningNumbersSet.size) {
-      throw new Error(
-        ErrorLottoWinningNumbers.ERROR_LOTTO_WINNING_NUMBERS_DUPLICATED
-      );
-    }
-
-    winningNumbersSet.forEach((winningNumber) => {
-      Lotto.validateLottoNumber(winningNumber);
-    });
   }
 
   static validateBonusNumber(input, winningNumbers) {
@@ -70,47 +47,35 @@ class LottoResult {
     }
   }
 
-  countMatchingWinningNumbers(lottoNumbers) {
-    const matchedWinningNumbers = this.#winningNumbers.filter((winningNumber) =>
-      lottoNumbers.includes(winningNumber)
-    );
-    return matchedWinningNumbers.length;
-  }
-
-  isBonusNumberMatching(lottoNumbers) {
-    return lottoNumbers.includes(this.#bonusNumber);
-  }
-
-  getLottoRanking(lottoNumbers) {
-    const matchingCount = this.countMatchingWinningNumbers(lottoNumbers);
-    const isBonusNumberMatching = this.isBonusNumberMatching(lottoNumbers);
+  getLottoRanking(lotto) {
+    const matchingCount = lotto.countMatchingLottoNumbers(this.#winningNumbers);
+    const isBonusNumberMatching = lotto.hasLottoNumber(this.#bonusNumber);
 
     switch (matchingCount) {
-      case LottoMatchingCountCondition[1]:
-        return 1;
-      case LottoMatchingCountCondition[2]:
-        return isBonusNumberMatching ? 2 : 3;
-      case LottoMatchingCountCondition[4]:
-        return 4;
-      case LottoMatchingCountCondition[5]:
-        return 5;
+      case LottoResult.LottoMatchingCountCondition[1]:
+        return LottoResult.LottoRanking[1];
+      case LottoResult.LottoMatchingCountCondition[2]:
+        return isBonusNumberMatching
+          ? LottoResult.LottoRanking[2]
+          : LottoResult.LottoRanking[3];
+      case LottoResult.LottoMatchingCountCondition[4]:
+        return LottoResult.LottoRanking[4];
+      case LottoResult.LottoMatchingCountCondition[5]:
+        return LottoResult.LottoRanking[5];
       default:
-        return -1;
+        return LottoResult.LottoRanking[0];
     }
   }
 
   getLottoRankings(lottos) {
-    const lottosNumbers = lottos.map((lotto) => lotto.numbers);
-    const lottoRankings = lottosNumbers.map((lottoNumbers) =>
-      this.getLottoRanking(lottoNumbers)
-    );
+    const lottoRankings = lottos.map((lotto) => this.getLottoRanking(lotto));
 
     return lottoRankings;
   }
 
   getLottoRankingStatistics(lottos) {
     const lottoRankings = this.getLottoRankings(lottos);
-    const lottoRankingCounts = Array(MAX_LOTTO_RANKING + 1).fill(0);
+    const lottoRankingCounts = Array(LottoResult.LottoRanking.length).fill(0);
 
     // 1 ~ 5등에 해당하지 않는 유효하지 않은 등수 제거
     const filteredRankings = lottoRankings.filter(
