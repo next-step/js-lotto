@@ -15,7 +15,7 @@ const Output = {
 
   generateLottoRankingCountsTemplate(ranking, lottoRankingCounts) {
     return `${LottoResult.LottoMatchingCountCondition[ranking]}개 일치${
-      ranking === 2 ? ", 보너스 볼 일치" : ""
+      ranking === LottoResult.LottoRanking[2] ? ", 보너스 볼 일치" : ""
     } (${LottoResult.LottoWinningPrice[ranking].toLocaleString("ko-KR")}원) - ${
       lottoRankingCounts[ranking]
     }개`;

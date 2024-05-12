@@ -1,4 +1,4 @@
-import { ErrorLottoBonusNumber } from "../../constants/error";
+import { ErrorLottoBonusNumber } from "../constants/error";
 import Lotto from "./Lotto";
 
 class LottoResult {

@@ -2,7 +2,7 @@ import {
   ErrorLottoNumber,
   ErrorLottoNumbers,
   ErrorLottoPurchasedAmount,
-} from "../../constants/error";
+} from "../constants/error";
 
 class Lotto {
   static LENGTH_LOTTO_NUMBERS = 6;
