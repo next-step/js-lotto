@@ -35,9 +35,7 @@ class Lotto {
 	}
 
 	createBonusNumber() {
-		const availableNumber = this.lottoNumbers.filter(
-			num => !this.winningResult.includes(num)
-		);
+		const availableNumber = this.lottoNumbers.filter(num => !this.winningResult.includes(num));
 
 		const randomIndex = Math.floor(Math.random() * availableNumber.length);
 
