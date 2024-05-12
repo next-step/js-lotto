@@ -59,6 +59,10 @@ class LottoMachine {
     this.#bonusWinningNumber = bonusWinningNumber;
   }
 
+  get winningAmount() {
+    return this.#winningAmount;
+  }
+
   #hasBonusNumber(lottoNumbers) {
     return lottoNumbers.includes(this.#bonusWinningNumber);
   }
@@ -120,6 +124,38 @@ class LottoMachine {
       lottoTicket.lottoNumbers = generateLottoNumberArray();
       return lottoTicket;
     });
+  }
+
+  getLottoResult(lottoTickets) {
+    if (!Array.isArray(lottoTickets) || lottoTickets.length < 1) {
+      throw new TypeError('잘못된 형식 입니다.');
+    }
+    if (!lottoTickets.every((lotto) => lotto instanceof LottoTicket)) {
+      throw new TypeError('LottoTicket 이 아닙니다.');
+    }
+    const lottoChart = new Map([
+      ['1', { count: 0, price: this.#winningAmount[0] }],
+      ['2', { count: 0, price: this.#winningAmount[1] }],
+      ['3', { count: 0, price: this.#winningAmount[2] }],
+      ['4', { count: 0, price: this.#winningAmount[3] }],
+      ['5', { count: 0, price: this.#winningAmount[4] }],
+      ['-1', { count: 0, price: this.#winningAmount[5] }],
+    ]);
+    let netReturn = 0;
+
+    lottoTickets.forEach(({ lottoNumbers }) => {
+      const rank = this.getWinningRank(lottoNumbers).toString();
+      netReturn = netReturn + this.getAmount(lottoNumbers);
+      const chartRow = lottoChart.get(rank);
+      if (chartRow) {
+        chartRow.count = chartRow.count + 1;
+      }
+    });
+
+    return {
+      chart: [...lottoChart],
+      netReturn,
+    };
   }
 }
 

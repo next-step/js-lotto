@@ -147,4 +147,41 @@ describe('로또 머신 기능 테스트', () => {
       }
     );
   });
+
+  it('n개의 로또의 결과를 반환한다.', () => {
+    // given
+    const lottoMachine = new LottoMachine();
+    lottoMachine.winningNumbers = [1, 2, 3, 4, 5, 6];
+    lottoMachine.bonusWinningNumber = 7;
+
+    const [lotto1st, lotto2st, lotto3st] = Array.from(
+      { length: 3 },
+      () => new LottoTicket()
+    );
+    lotto1st.lottoNumbers = [1, 2, 3, 4, 5, 6];
+    lotto2st.lottoNumbers = [1, 2, 3, 4, 5, 7];
+    lotto3st.lottoNumbers = [1, 2, 3, 4, 5, 11];
+
+    const expected = lottoMachine.winningAmount
+      .slice(0, 3)
+      .reduce((acc, cur) => acc + cur, 0);
+
+    // when
+    const { chart, netReturn } = lottoMachine.getLottoResult([
+      lotto1st,
+      lotto2st,
+      lotto3st,
+    ]);
+
+    // then
+    expect(chart).toEqual([
+      ['1', { count: 1, price: lottoMachine.winningAmount[0] }],
+      ['2', { count: 1, price: lottoMachine.winningAmount[1] }],
+      ['3', { count: 1, price: lottoMachine.winningAmount[2] }],
+      ['4', { count: 0, price: lottoMachine.winningAmount[3] }],
+      ['5', { count: 0, price: lottoMachine.winningAmount[4] }],
+      ['-1', { count: 0, price: lottoMachine.winningAmount[5] }],
+    ]);
+    expect(netReturn).toBe(expected);
+  });
 });
