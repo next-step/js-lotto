@@ -13,7 +13,7 @@ export class LottoGame {
     this.#winningNumberArray = winningNumberArray;
     this.#bonusNumber = bonusNumber;
     this.#result = initMap(LOTTO_GAME.MAX_RANK);
-    this.checkLottos();
+    this.#checkLottos();
   }
 
   #checkUnitLotto(lotto) {
@@ -37,13 +37,13 @@ export class LottoGame {
     }
   };
 
-  setResult(key, value) {
+  #setResult(key, value) {
     this.#result.set(key, value);
   }
 
-  checkLottos() {
+  #checkLottos() {
     this.#lottos.forEach((lotto) =>
-      this.setResult(this.#checkUnitLotto(lotto), this.#result.get(this.#checkUnitLotto(lotto)) + 1)
+      this.#setResult(this.#checkUnitLotto(lotto), this.#result.get(this.#checkUnitLotto(lotto)) + 1)
     );
   }
 

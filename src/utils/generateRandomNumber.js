@@ -1,2 +1,1 @@
-export const generateRandomNumber = (maxNumber) =>
-  Math.floor(Math.random() * maxNumber) + 1;
+export const generateRandomNumber = (maxNumber) => Math.floor(Math.random() * maxNumber) + 1;

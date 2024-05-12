@@ -10,7 +10,7 @@ export class Lotto {
     this.#purchaseLottos();
   }
 
-  generate() {
+  #generate() {
     const lottoNumbers = new Set();
 
     while (lottoNumbers.size < LOTTO.NUMBERS_COUNT) {
@@ -23,7 +23,7 @@ export class Lotto {
   #purchaseUnitLotto() {
     if (this.#purchasePrice >= LOTTO.UNIT_PRICE) {
       this.#purchasePrice -= LOTTO.UNIT_PRICE;
-      this.#lottos.push(this.generate());
+      this.#lottos.push(this.#generate());
     }
   }
 

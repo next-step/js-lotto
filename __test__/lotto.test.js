@@ -5,25 +5,25 @@ describe("로또 테스트", () => {
   test(`로또 1장은 ${LOTTO.NUMBERS_COUNT}개의 숫자를 가진다.`, () => {
     const lotto = new Lotto(LOTTO.UNIT_PRICE);
 
-    const lottoNumbers = lotto.generate();
+    const lottos = lotto.lottos;
 
-    expect(lottoNumbers.length).toEqual(LOTTO.NUMBERS_COUNT);
+    expect(lottos[0].length).toEqual(LOTTO.NUMBERS_COUNT);
   });
 
   test(`로또는 1에서 ${LOTTO.MAX_NUMBER}까지의 숫자를 가진다.`, () => {
     const lotto = new Lotto(LOTTO.UNIT_PRICE);
 
-    const lottoNumbers = lotto.generate();
+    const lottos = lotto.lottos;
 
-    expect(lottoNumbers.every((number) => 1 <= number && number <= LOTTO.MAX_NUMBER)).toEqual(true);
+    expect(lottos[0].every((number) => 1 <= number && number <= LOTTO.MAX_NUMBER)).toEqual(true);
   });
 
   test("로또 숫자는 오름차순 정렬되어 있다.", () => {
     const lotto = new Lotto(LOTTO.UNIT_PRICE);
 
-    const lottoNumbers = lotto.generate();
+    const lottos = lotto.lottos;
 
-    expect(lottoNumbers).toEqual(lottoNumbers.sort((a, b) => a - b));
+    expect(lottos[0]).toEqual(lottos[0].sort((a, b) => a - b));
   });
 
   test(`로또 1장의 가격은 ${LOTTO.UNIT_PRICE}이다.`, () => {
@@ -33,9 +33,7 @@ describe("로또 테스트", () => {
   });
 
   test("구입 금액에 해당하는 만큼 로또를 발행해야 한다.", () => {
-    const purchasePrice = LOTTO.UNIT_PRICE * 8;
-
-    const lotto = new Lotto(purchasePrice);
+    const lotto = new Lotto(LOTTO.UNIT_PRICE * 8);
 
     expect(lotto.lottos.length).toEqual(8);
   });
