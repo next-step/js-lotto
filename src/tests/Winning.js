@@ -2,11 +2,11 @@ import Lotto from './Lotto';
 import { WinningRank, WinningPrize } from './constant';
 
 class Winning {
-	constructor(userInputWinningNumber) {
+	constructor(lottoNumbers, userInputWinningNumber, createBonusNumber) {
 		this.lotto = new Lotto();
+		this.lottoNumbers = lottoNumbers;
 		this.userInputWinningNumber = userInputWinningNumber;
-		this.createLottoNumbers = this.lotto.createLottoNumbers();
-		this.createBonusNumber = this.lotto.createBonusNumber();
+		this.createBonusNumber = createBonusNumber;
 	}
 
 	checkWinning() {
@@ -32,13 +32,33 @@ class Winning {
 				return bonusMatches ? WinningPrize.SECOND_PRIZE : WinningPrize.THIRD_PRIZE;
 			case 6:
 				return WinningPrize.FIRST_PRIZE;
+			default:
+				return 0;
 		}
 	}
 
 	calculateMatches() {
-		const matches = this.userInputWinningNumber.filter(number => this.createLottoNumbers.includes(number)).length;
+		const matches = this.lottoNumbers.filter(number => this.userInputWinningNumber.includes(number)).length;
 		const bonusMatches = this.userInputWinningNumber.includes(this.createBonusNumber);
 		return { matches, bonusMatches };
+	}
+
+	calculateResults(lottoNumbers, userInputWinningNumber, createBonusNumber) {
+		const prizeCounts = { 3: 0, 4: 0, 5: 0, '5+1': 0, 6: 0 };
+		let totalPrize = 0;
+
+		lottoNumbers.forEach(numbers => {
+			const winning = new Winning(numbers, userInputWinningNumber, createBonusNumber);
+			const prize = winning.calculatePrize();
+			totalPrize += prize;
+
+			if (prize === WinningPrize.FIFTH_PRIZE) prizeCounts[3]++;
+			if (prize === WinningPrize.FOURTH_PRIZE) prizeCounts[4]++;
+			if (prize === WinningPrize.THIRD_PRIZE) prizeCounts[5]++;
+			if (prize === WinningPrize.SECOND_PRIZE) prizeCounts['5+1']++;
+			if (prize === WinningPrize.FIRST_PRIZE) prizeCounts[6]++;
+		});
+		return { prizeCounts, totalPrize };
 	}
 
 	calculateRate() {
