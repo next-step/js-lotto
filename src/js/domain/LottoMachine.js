@@ -79,6 +79,71 @@ class LottoMachine {
       return lottoTicket;
     });
   }
+
+  getStatistics(lottoTickets) {
+    const chartMap = new Map([
+      [
+        LOTTO.RANK_5,
+        {
+          lottoTickets: [],
+          winningAmount: this.#winningAmounts[4],
+          matchCount: 3,
+        },
+      ],
+      [
+        LOTTO.RANK_4,
+        {
+          lottoTickets: [],
+          winningAmount: this.#winningAmounts[3],
+          matchCount: 4,
+        },
+      ],
+      [
+        LOTTO.RANK_3,
+        {
+          lottoTickets: [],
+          winningAmount: this.#winningAmounts[2],
+          matchCount: 5,
+        },
+      ],
+      [
+        LOTTO.RANK_2,
+        {
+          lottoTickets: [],
+          winningAmount: this.#winningAmounts[1],
+          matchCount: 5,
+        },
+      ],
+      [
+        LOTTO.RANK_1,
+        {
+          lottoTickets: [],
+          winningAmount: this.#winningAmounts[0],
+          matchCount: 6,
+        },
+      ],
+    ]);
+    let netReturn = 0;
+
+    lottoTickets.forEach((lottoTicket) => {
+      const lottoResult = lottoTicket.getResult({
+        winningNumbers: this.#winningNumbers,
+        bonusWinningNumber: this.#bonusWinningNumber,
+        winningAmounts: this.#winningAmounts,
+      });
+
+      const winningRankRow = chartMap.get(lottoResult.winningRank);
+      if (winningRankRow) {
+        winningRankRow.lottoTickets.push(lottoTicket);
+        netReturn = netReturn + lottoResult.winningAmount;
+      }
+    });
+
+    return {
+      netReturn,
+      chart: [...chartMap],
+    };
+  }
 }
 
 export default LottoMachine;
