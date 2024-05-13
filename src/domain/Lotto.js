@@ -1,4 +1,4 @@
-export const ERROR_MESSAGE_LOTTO_LENGTH = '로또번호는 6개 입니다.';
+import { ERROR_MESSAGE_LOTTO_LENGTH } from '../constants';
 
 class Lotto {
   #numbers;
