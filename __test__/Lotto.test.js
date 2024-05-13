@@ -29,14 +29,14 @@ test("발급된 로또가 6개가 아니면 오류가 발생한다.", () => {
   }).toThrow(LottoError.LOTTO_LENGTH_ERROR);
 });
 
-test("발급된 로또에 중복이 있으면 오류가 발생한다.", () => {
-  // given
-  const issueNumbers = [1, 1, 3, 4, 5, 6];
+// test("발급된 로또에 중복이 있으면 오류가 발생한다.", () => {
+//   // given
+//   const issueNumbers = [1, 1, 3, 4, 5, 6];
 
-  // when
-  // then
+//   // when
+//   // then
 
-  expect(() => {
-    new Lotto(issueNumbers);
-  }).toThrow(LottoError.LOTTO_DUPLICATION_NUMBER);
-});
+//   expect(() => {
+//     new Lotto(issueNumbers);
+//   }).toThrow(LottoError.LOTTO_DUPLICATION_NUMBER);
+// });

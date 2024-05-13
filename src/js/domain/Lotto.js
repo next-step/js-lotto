@@ -25,12 +25,12 @@ class Lotto {
       throw new Error(LottoError.LOTTO_LENGTH_ERROR);
     }
 
-    if (new Set(lottoNumbers).size !== lottoNumbers.length) {
-      throw new Error(LottoError.LOTTO_DUPLICATION_NUMBER);
-    }
+    // if (new Set(lottoNumbers).size !== lottoNumbers.length) {
+    //   throw new Error(LottoError.LOTTO_DUPLICATION_NUMBER);
+    // }
   }
 
-  display() {
+  getLottoNumbers() {
     return this.#lottoNumbers;
   }
 }

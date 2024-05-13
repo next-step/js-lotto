@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "test": "jest --watch --no-cache",
     "build-step-console": "webpack --config step-console.config.js",
