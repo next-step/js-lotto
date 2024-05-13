@@ -5,34 +5,33 @@ class Lotto {
   static MAX_NUMBER = 45;
   static LOTTO_LENGTH = 6;
 
-  #numbers;
+  #lottoNumbers;
 
-  constructor(numbers) {
-    this.#validateNumbers(numbers);
-
-    this.#numbers = numbers;
+  constructor(lottoNumbers) {
+    this.#validateNumbers(lottoNumbers);
+    this.#lottoNumbers = lottoNumbers;
   }
 
-  #validateNumbers(numbers) {
+  #validateNumbers(lottoNumbers) {
     if (
-      numbers.some(
+      lottoNumbers.some(
         (number) => number > Lotto.MAX_NUMBER || number < Lotto.MIN_NUMBER
       )
     ) {
       throw new Error(LottoError.LOTTO_NUMBER_OUT_OF_RANGE);
     }
 
-    if (numbers.length != Lotto.LOTTO_LENGTH) {
+    if (lottoNumbers.length != Lotto.LOTTO_LENGTH) {
       throw new Error(LottoError.LOTTO_LENGTH_ERROR);
     }
 
-    if (new Set(numbers).size !== numbers.length) {
+    if (new Set(lottoNumbers).size !== lottoNumbers.length) {
       throw new Error(LottoError.LOTTO_DUPLICATION_NUMBER);
     }
   }
 
   display() {
-    return this.#numbers;
+    return this.#lottoNumbers;
   }
 }
 
