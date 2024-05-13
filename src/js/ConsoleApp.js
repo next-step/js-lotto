@@ -1,12 +1,6 @@
 import LottoMachine from './domain/LottoMachine';
-import { readLineAsync } from './utils';
-import { LOTTO } from './constants';
-import {
-  readLottoNumbers,
-  readMatchLottoNumber,
-  readROI,
-  writeLottoNumbers,
-} from './view/LottoIO';
+import { comma, readLineAsync } from './utils';
+import { readLottoNumbers, readROI, writeLottoNumbers } from './view/LottoIO';
 
 async function ConsoleApp() {
   const lottoMachine = new LottoMachine();
@@ -25,20 +19,16 @@ async function ConsoleApp() {
   const bonusNumber = await readLineAsync('보너스 번호를 입력해 주세요. : ');
   lottoMachine.bonusWinningNumber = Number(bonusNumber);
 
-  console.log('당첨 통계\n--------------------');
-  const { chart, netReturn } = lottoMachine.getLottoResult(lottoTickets);
+  const { netReturn, chart } = lottoMachine.getStatistics(lottoTickets);
 
-  for (const [key, value] of chart.entries()) {
-    if (key !== LOTTO.UNRANKED) {
-      console.log(
-        readMatchLottoNumber({
-          matchNumber: key,
-          price: value.price,
-          matchCount: value.count,
-        })
-      );
-    }
-  }
+  console.log('당첨 통계\n--------------------');
+  chart.forEach((row) => {
+    const [rank, data] = row;
+    const { matchCount, winningAmount, lottoTickets } = data;
+    console.log(
+      `${matchCount}개 일치 (${comma(winningAmount)}원) - ${lottoTickets.length}개`
+    );
+  });
   console.log(
     `총 수익률을 ${readROI(netReturn, Number(purchaseAmount))}입니다.`
   );
