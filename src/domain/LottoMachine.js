@@ -1,7 +1,4 @@
 import {
-  ERROR_MESSAGE_LACK_MONEY,
-  ERROR_MESSAGE_NOT_ENTER_BONUS_NUMBER,
-  ERROR_MESSAGE_NOT_ENTER_WINNING_NUMBERS,
   LOTTO_3RD_PRIZE_WINNER,
   LOTTO_4TH_PRIZE_WINNER,
   LOTTO_5TH_PRIZE_WINNER,
@@ -15,6 +12,7 @@ import {
 } from '../constants';
 import { generateRandomNumbers } from '../utils';
 import Lotto from './Lotto';
+import LottoValidator from './LottoValidator';
 
 class LottoMachine {
   #winnigNumbers;
@@ -23,6 +21,7 @@ class LottoMachine {
   constructor() {
     this.#winnigNumbers = [];
     this.#bonusNumber = 0;
+    this.validators = new LottoValidator();
   }
 
   get winnigNumbers() {
@@ -41,21 +40,8 @@ class LottoMachine {
     this.#bonusNumber = number;
   }
 
-  validCheckAmount(prices) {
-    if (prices < LOTTO_PRICE) throw new Error(ERROR_MESSAGE_LACK_MONEY);
-  }
-
-  validEnterWinningNumbers() {
-    if (this.#winnigNumbers.length !== LOTTO_TOTAL_COUNT)
-      throw new Error(ERROR_MESSAGE_NOT_ENTER_WINNING_NUMBERS);
-  }
-
-  validEnterBonusNumber() {
-    if (this.#bonusNumber === 0) throw new Error(ERROR_MESSAGE_NOT_ENTER_BONUS_NUMBER);
-  }
-
   createLottos(inputPrices) {
-    this.validCheckAmount(inputPrices);
+    this.validators.validCheckAmount(inputPrices);
     const numberLottoPurchases = Math.floor(inputPrices / LOTTO_PRICE);
 
     return [...Array(numberLottoPurchases)].map(
@@ -90,8 +76,8 @@ class LottoMachine {
   }
 
   checkLottoWinning(lottos) {
-    this.validEnterWinningNumbers();
-    this.validEnterBonusNumber();
+    this.validators.validEnterWinningNumbers(this.#winnigNumbers);
+    this.validators.validEnterBonusNumber(this.#bonusNumber);
 
     const result = lottos.map((lotto) => {
       lotto.result = this.resultsLottoWinning(lotto.numbers);
