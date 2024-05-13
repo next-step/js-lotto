@@ -75,23 +75,17 @@ class LottoTicket extends Product {
   }
 
   getResult({ winningNumbers, winningAmounts, bonusWinningNumber }) {
-    const matchCount = this.#getLottoNumberMatchCount(
-      winningNumbers,
-      this.#lottoNumbers
-    );
-    const winningRank = this.calcWinningRank(
-      winningNumbers,
-      bonusWinningNumber
-    );
-    const winningAmount = this.calcWinningAmount({
-      winningNumbers,
-      winningAmounts,
-      bonusWinningNumber,
-    });
     return {
-      matchCount,
-      winningRank,
-      winningAmount,
+      matchCount: this.#getLottoNumberMatchCount(
+        winningNumbers,
+        this.#lottoNumbers
+      ),
+      winningRank: this.calcWinningRank(winningNumbers, bonusWinningNumber),
+      winningAmount: this.calcWinningAmount({
+        winningNumbers,
+        winningAmounts,
+        bonusWinningNumber,
+      }),
     };
   }
 }
