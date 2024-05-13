@@ -57,7 +57,7 @@ describe('로또 티켓 기능 테스트', () => {
       lottoTicket.lottoNumbers = lottoNumbers;
 
       // when
-      const result = lottoTicket.getWinningAmount({
+      const result = lottoTicket.calcWinningAmount({
         winningNumbers,
         winningAmounts,
         bonusWinningNumber,
@@ -86,7 +86,7 @@ describe('로또 티켓 기능 테스트', () => {
       lottoTicket.lottoNumbers = lottoNumbers;
 
       // when
-      const result = lottoTicket.getWinningRank(
+      const result = lottoTicket.calcWinningRank(
         winningNumbers,
         bonusWinningNumber
       );

@@ -32,7 +32,7 @@ class LottoTicket extends Product {
     return lottoNumbers.includes(bonusNumber);
   }
 
-  getWinningAmount({ winningNumbers, winningAmounts, bonusWinningNumber }) {
+  calcWinningAmount({ winningNumbers, winningAmounts, bonusWinningNumber }) {
     const matchCount = this.#getLottoNumberMatchCount(
       winningNumbers,
       this.#lottoNumbers
@@ -53,7 +53,7 @@ class LottoTicket extends Product {
     }
   }
 
-  getWinningRank(winningNumbers, bonusWinningNumber) {
+  calcWinningRank(winningNumbers, bonusWinningNumber) {
     const matchCount = this.#getLottoNumberMatchCount(
       winningNumbers,
       this.#lottoNumbers
@@ -72,6 +72,27 @@ class LottoTicket extends Product {
       default:
         return LOTTO.UNRANKED;
     }
+  }
+
+  getResult({ winningNumbers, winningAmounts, bonusWinningNumber }) {
+    const matchCount = this.#getLottoNumberMatchCount(
+      winningNumbers,
+      this.#lottoNumbers
+    );
+    const winningRank = this.calcWinningRank(
+      winningNumbers,
+      bonusWinningNumber
+    );
+    const winningAmount = this.calcWinningAmount({
+      winningNumbers,
+      winningAmounts,
+      bonusWinningNumber,
+    });
+    return {
+      matchCount,
+      winningRank,
+      winningAmount,
+    };
   }
 }
 
