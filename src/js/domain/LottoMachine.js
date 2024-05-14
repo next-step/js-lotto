@@ -1,7 +1,7 @@
 import Lotto from "./Lotto.js";
 
 class LottoMachine {
-  static LOTTO_LENGTH = 6; // TODO 중복된 것 같은데...
+  static LOTTO_LENGTH = 6;
   static LOTTO_PRICE = 1000;
 
   constructor() {}

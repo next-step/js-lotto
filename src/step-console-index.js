@@ -33,7 +33,7 @@ async function play() {
     "\n> 당첨 번호를 입력해 주세요. "
   );
 
-  const bonusNumber = await readLineAsync("\n> 보너스 번호를 입력해 주세요.");
+  const bonusNumber = await readLineAsync("\n> 보너스 번호를 입력해 주세요. ");
 
   // when
   const winningLotto = new WinningLotto(winningLottoNumbers, bonusNumber);
