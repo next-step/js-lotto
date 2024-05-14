@@ -32,8 +32,25 @@ try {
   const lottoResult = new LottoResult(winningNumbers, bonusNumber);
 
   // 로또 당첨 결과 통계 출력
-  const lottoRankingStatistics = lottoResult.getLottoRankingStatistics(lottos);
-  Output.printLottoRankingStatistics(lottoRankingStatistics);
+  const lottoRankingsCounts = lottoResult.getLottoRankingsCounts(lottos);
+  const lottoRankingsStatistics = lottoRankingsCounts
+    .map((count, ranking) => {
+      if (ranking < LottoResult.LottoRanking[1].ranking) {
+        return null;
+      }
+
+      return {
+        count,
+        rankingWinningPrice: LottoResult.LottoRanking[ranking].winningPrice,
+        rankingCondition: LottoResult.LottoRanking[ranking].condition,
+        isShowExtraMent:
+          LottoResult.LottoRanking[ranking].ranking ===
+          LottoResult.LottoRanking[2].ranking,
+      };
+    })
+    .slice(1);
+
+  Output.printLottoRankingStatistics(lottoRankingsStatistics);
 
   // 로또 수익률 출력
   const totalLottoWinningPrice = lottoResult.getTotalLottoWinningPrice(lottos);

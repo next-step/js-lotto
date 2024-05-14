@@ -1,4 +1,5 @@
 import Lotto from "../src/js/domain/Lotto";
+import LottoResult from "../src/js/domain/LottoResult";
 import Input from "../src/js/view/Input";
 import Output from "../src/js/view/Output";
 import * as io from "../src/utils/readlineAsync";
@@ -80,7 +81,38 @@ describe("입출력 기능 테스트", () => {
 
   test("로또 당첨 결과를 출력한다.", () => {
     // given
-    const lottoRankingStatistics = [2, 1, 0, 0, 0, 1];
+    const lottoRankingStatistics = [
+      {
+        rankingWinningPrice: LottoResult.LottoRanking[5].winningPrice,
+        rankingCondition: LottoResult.LottoRanking[5].condition,
+        isShowExtramMent: false,
+        count: 1,
+      },
+      {
+        rankingWinningPrice: LottoResult.LottoRanking[4].winningPrice,
+        rankingCondition: LottoResult.LottoRanking[4].condition,
+        isShowExtraMent: false,
+        count: 0,
+      },
+      {
+        rankingWinningPrice: LottoResult.LottoRanking[3].winningPrice,
+        rankingCondition: LottoResult.LottoRanking[3].condition,
+        isShowExtraMent: false,
+        count: 0,
+      },
+      {
+        rankingWinningPrice: LottoResult.LottoRanking[2].winningPrice,
+        rankingCondition: LottoResult.LottoRanking[2].condition,
+        isShowExtraMent: true,
+        count: 1,
+      },
+      {
+        rankingWinningPrice: LottoResult.LottoRanking[1].winningPrice,
+        rankingCondition: LottoResult.LottoRanking[1].condition,
+        isShowExtraMent: false,
+        count: 1,
+      },
+    ];
 
     // when
     Output.printLottoRankingStatistics(lottoRankingStatistics);
@@ -91,7 +123,7 @@ describe("입출력 기능 테스트", () => {
     expect(logSpy).toHaveBeenCalledWith("4개 일치 (50,000원) - 0개");
     expect(logSpy).toHaveBeenCalledWith("5개 일치 (1,500,000원) - 0개");
     expect(logSpy).toHaveBeenCalledWith(
-      "5개 일치, 보너스 볼 일치 (30,000,000원) - 0개"
+      "5개 일치, 보너스 볼 일치 (30,000,000원) - 1개"
     );
     expect(logSpy).toHaveBeenCalledWith("6개 일치 (2,000,000,000원) - 1개");
   });

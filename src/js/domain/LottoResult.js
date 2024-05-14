@@ -2,37 +2,34 @@ import { ErrorLottoBonusNumber } from "../constants/error";
 import Lotto from "./Lotto";
 
 class LottoResult {
-  static LottoRanking = {
-    default: {
-      ranking: -1,
-      winningPrice: 0,
-    },
-    1: {
+  static LottoRanking = [
+    null,
+    {
       ranking: 1,
       winningPrice: 2_000_000_000,
       condition: 6,
     },
-    2: {
+    {
       ranking: 2,
       winningPrice: 30_000_000,
       condition: 5,
     },
-    3: {
+    {
       ranking: 3,
       winningPrice: 1_500_000,
       condition: 5,
     },
-    4: {
+    {
       ranking: 4,
       winningPrice: 50_000,
       condition: 4,
     },
-    5: {
+    {
       ranking: 5,
       winningPrice: 5_000,
       condition: 3,
     },
-  };
+  ];
 
   #winningNumbers;
   #bonusNumber;
@@ -49,9 +46,6 @@ class LottoResult {
   }
 
   static getLottoWinningPrice(lottoRanking) {
-    if (lottoRanking == LottoResult.LottoRanking.default.ranking) {
-      return LottoResult.LottoRanking.default.winningPrice;
-    }
     return LottoResult.LottoRanking[lottoRanking].winningPrice;
   }
 
@@ -85,29 +79,25 @@ class LottoResult {
       case LottoResult.LottoRanking[5].condition:
         return LottoResult.LottoRanking[5].ranking;
       default:
-        return LottoResult.LottoRanking.default.ranking;
+        return LottoResult.LottoRanking[0];
     }
   }
 
   getLottoRankings(lottos) {
-    const lottoRankings = lottos.map((lotto) => this.getLottoRanking(lotto));
+    const lottoRankings = lottos
+      .map((lotto) => this.getLottoRanking(lotto))
+      .filter((ranking) => ranking !== null);
 
     return lottoRankings;
   }
 
-  getLottoRankingStatistics(lottos) {
+  getLottoRankingsCounts(lottos) {
     const lottoRankings = this.getLottoRankings(lottos);
-    const lottoRankingCounts = Object.keys(LottoResult.LottoRanking).reduce(
-      (acc, key) => {
-        acc[key] = 0;
-        return acc;
-      },
-      {}
-    );
+    const lottoRankingCounts = Array(LottoResult.LottoRanking.length).fill(0);
 
     // 1 ~ 5등에 해당하지 않는 유효하지 않은 등수 제거
     const filteredRankings = lottoRankings.filter(
-      (lottoRanking) => lottoRanking > 0
+      (lottoRanking) => lottoRanking !== null
     );
 
     filteredRankings.forEach((ranking) => {

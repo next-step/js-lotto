@@ -1,28 +1,22 @@
-import LottoResult from "../domain/LottoResult";
-
 const Output = {
-  printLottoRankingStatistics(lottoRankingStatistics) {
+  printLottoRankingStatistics(lottoResultCounts) {
     console.log("\n당첨 통계\n--------------------");
-    for (let i = Object.keys(LottoResult.LottoRanking).length - 1; i > 0; i--) {
-      const template = this.generateLottoRankingCountsTemplate(
-        i,
-        lottoRankingStatistics
-      );
-
-      console.log(template);
-    }
+    lottoResultCounts.forEach((lottoResultCount) => {
+      this.printLottoRankingCount(lottoResultCount);
+    });
   },
 
-  generateLottoRankingCountsTemplate(ranking, lottoRankingCounts) {
-    if (ranking === LottoResult.LottoRanking.default.ranking) {
-      return "";
-    }
+  printLottoRankingCount({
+    rankingWinningPrice,
+    rankingCondition,
+    isShowExtraMent,
+    count,
+  }) {
+    const template = `${rankingCondition}개 일치${
+      isShowExtraMent ? ", 보너스 볼 일치" : ""
+    } (${rankingWinningPrice.toLocaleString("ko-KR")}원) - ${count}개`;
 
-    return `${LottoResult.LottoRanking[ranking].condition}개 일치${
-      ranking === LottoResult.LottoRanking[2].ranking ? ", 보너스 볼 일치" : ""
-    } (${LottoResult.LottoRanking[ranking].winningPrice.toLocaleString(
-      "ko-KR"
-    )}원) - ${lottoRankingCounts[ranking]}개`;
+    console.log(template);
   },
 
   printLottoProfitRate(lottoProfitRate) {
