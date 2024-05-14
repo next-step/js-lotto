@@ -7,9 +7,9 @@ class LottoSales {
   purchase(amount_paid) {
     validateAmountPaid(amount_paid);
 
-    const available_lotto_count = Math.floor(amount_paid / LOTTO_SALES.PRICE);
+    const availableLottoCount = Math.floor(amount_paid / LOTTO_SALES.PRICE);
 
-    return Array.from({ length: available_lotto_count }, () => new Lotto());
+    return Array.from({ length: availableLottoCount }, () => new Lotto());
   }
 }
 
