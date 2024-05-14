@@ -21,15 +21,6 @@ describe("로또 당첨 기능 테스트", () => {
         bonusNumber: 7,
       },
     ],
-    [
-      0,
-      -1,
-      {
-        lottoNumbers: [1, 2, 3, 12, 18, 23],
-        winningNumbers: [19, 25, 27, 28, 29, 31],
-        bonusNumber: 7,
-      },
-    ],
   ])(
     "로또 당첨 등수를 구하려고 할 때 로또 번호와 당첨 번호가 일치하는 갯수가 %s개 이면 %s등이다.",
     (_, expectedResult, testSet) => {
@@ -46,6 +37,40 @@ describe("로또 당첨 기능 테스트", () => {
       expect(lottoRanking).toBe(expectedResult);
     }
   );
+
+  test("로또 당첨 등수를 구하려고 할 때 등수에 들지 못한다면 null을 반환한다.", () => {
+    // given
+    const lottoNumbers = [1, 2, 3, 4, 5, 6];
+    const winningNumbers = [10, 11, 12, 13, 14, 15];
+    const bonusNumber = 8;
+    const lotto = new Lotto(lottoNumbers);
+    const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+
+    // when
+    const lottoRanking = lottoResult.getLottoRanking(lotto);
+
+    // then
+    expect(lottoRanking).toBeNull();
+  });
+
+  test("로또 당첨 결과를 구하려고 할 때 각 등수별로 총 몇 개의 로또가 당첨되었는지 반환한다.", () => {
+    // given
+    const lottoNumbers = [
+      [1, 2, 3, 4, 5, 6],
+      [7, 8, 9, 10, 11, 12],
+      [1, 2, 3, 4, 9, 10],
+    ];
+    const lottos = lottoNumbers.map((lottoNumbers) => new Lotto(lottoNumbers));
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const bonusNumber = 7;
+    const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+
+    // when
+    const lottoRankingCounts = lottoResult.getLottoRankingsCounts(lottos);
+
+    // then
+    expect(lottoRankingCounts).toEqual([0, 1, 0, 0, 1, 0]);
+  });
 
   test.each([
     [
