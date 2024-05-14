@@ -1,4 +1,4 @@
-import LOTTO from "./lotto.constant";
+import LOTTO from "./lotto.constant.js";
 
 export function validateNumbers(numbers) {
   if (!Array.isArray(numbers)) {
@@ -13,7 +13,7 @@ export function validateNumbers(numbers) {
     throw new RangeError("numbers는 중복되지 않아야 합니다.");
   }
 
-  if (numbers.some((number) => typeof number !== "number")) {
+  if (numbers.some((number) => typeof number !== "number" || isNaN(number))) {
     throw new TypeError("numbers의 원소는 number 타입이어야 합니다.");
   }
 
