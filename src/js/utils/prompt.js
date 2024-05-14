@@ -14,7 +14,6 @@ async function prompt({ message, validate, format }) {
       isValid = true;
     } catch (error) {
       console.error(error.message);
-      throw error;
     }
   }
 
