@@ -9,7 +9,8 @@ export const LOTTO_GAME_RANK = {
 
 export const LOTTO_GAME_MATCHED_COUNT = {
   FIRST: 6,
-  SECOND_AND_THIRD: 5,
+  SECOND: 5,
+  THIRD: 5,
   FOURTH: 4,
   FIFTH: 3,
 };
@@ -22,3 +23,10 @@ export const LOTTO_GAME_PRIZE = {
   [LOTTO_GAME_RANK.FIFTH]: 5_000,
   [LOTTO_GAME_RANK.NONE]: 0,
 };
+
+export const LOTTO_GAME_STATISTICS = Object.values(LOTTO_GAME_RANK).reduce(
+  (acc, rank) => {
+    return { ...acc, [rank]: { count: 0, prize: 0 } };
+  },
+  {},
+);
