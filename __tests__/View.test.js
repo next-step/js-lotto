@@ -1,0 +1,82 @@
+import LottoMachine from "../src/js/domain/LottoMachine";
+import View from "../src/js/domain/View";
+import { lottoMoneyRule } from "../src/js/rules";
+import { LOTTO_MONEY_ERR_MSG } from "../src/js/constants/error";
+import {
+  TEST_LOTTO_NUMBERS,
+  TEST_MONEY,
+  TEST_STRING_MONEY,
+  TEST_WHITESPACE_MONEY,
+} from "./constants";
+import Lotto from "../src/js/domain/Lotto";
+
+let logSpy;
+let lottoMachine;
+beforeEach(() => {
+  logSpy = jest.spyOn(console, "log");
+  lottoMachine = new LottoMachine();
+});
+
+describe("입출력 테스트", () => {
+  test("입금액이 공백일 경우, 에러 메시지를 반환한다.", async () => {
+    //given
+    const mockMoney = jest.fn().mockReturnValue(TEST_WHITESPACE_MONEY);
+    const input = await mockMoney();
+
+    //when
+    const validationCallback = () => lottoMoneyRule.validates(input);
+
+    //then
+    expect(validationCallback).toThrow(LOTTO_MONEY_ERR_MSG);
+  });
+
+  test("입금액이 문자열일 경우, 에러 메시지를 반환한다.", async () => {
+    //given
+    const mockMoney = jest.fn().mockReturnValue(TEST_STRING_MONEY);
+    const input = await mockMoney();
+
+    //when
+    const validationCallback = () => lottoMoneyRule.validates(input);
+
+    //then
+    expect(validationCallback).toThrow(LOTTO_MONEY_ERR_MSG);
+  });
+
+  test("입금액이 0 미만일 경우, 에러 메시지를 반환한다.", async () => {
+    //given
+    const mockMoney = jest.fn().mockReturnValue(TEST_STRING_MONEY);
+    const input = await mockMoney();
+
+    //when
+    const validationCallback = () => lottoMoneyRule.validates(input);
+
+    //then
+    expect(validationCallback).toThrow(LOTTO_MONEY_ERR_MSG);
+  });
+
+  test("구매 로또 개수를 출력한다.", async () => {
+    //given
+    const mockMoney = jest.fn().mockReturnValue(TEST_MONEY);
+    const input = await mockMoney();
+    const theNumberOfLottos = lottoMachine.getTheNumberOfLottos(input);
+
+    //when
+    lottoMachine.buy(input);
+
+    //then
+    expect(logSpy).toHaveBeenCalledWith(`${theNumberOfLottos}개를 구매했습니다.`);
+  });
+
+  test("구매 로또 번호를 출력한다.", async () => {
+    //given
+    const mockLottoNumbers = jest.fn().mockReturnValue(TEST_LOTTO_NUMBERS);
+    const mockLotto = new Lotto(mockLottoNumbers());
+    const ascLottoArr = TEST_LOTTO_NUMBERS.sort((a, b) => a - b);
+
+    //when
+    View.printLottoNumbers(mockLotto);
+
+    //then
+    expect(logSpy).toHaveBeenCalledWith(ascLottoArr);
+  });
+});
