@@ -1,5 +1,5 @@
 import { ErrorLottoPurchasedAmount } from "../src/js/constants/error";
-import LottoMachine from "../src/js/domain/LottoMachine";
+import LottoGame from "../src/js/domain/LottoGame";
 
 describe("로도 판매 기계 기능 테스트", () => {
   test.each([
@@ -13,7 +13,7 @@ describe("로도 판매 기계 기능 테스트", () => {
       // given
       // when
       const availableLottoCount =
-        LottoMachine.getPurchasableLottoCount(purchasedAmount);
+        LottoGame.getPurchasableLottoCount(purchasedAmount);
 
       // then
       expect(availableLottoCount).toBe(lottoCount);
@@ -31,7 +31,7 @@ describe("로도 판매 기계 기능 테스트", () => {
     (purchasedAmount, errorMessage) => {
       // when
       const validateAvailableLottoCount = () =>
-        LottoMachine.validateLottoPurchasedAmount(purchasedAmount);
+        LottoGame.validateLottoPurchasedAmount(purchasedAmount);
 
       // then
       expect(validateAvailableLottoCount).toThrow(errorMessage);

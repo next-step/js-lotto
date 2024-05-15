@@ -1,5 +1,5 @@
 import Lotto from "../src/js/domain/Lotto";
-import LottoMachine from "../src/js/domain/LottoMachine";
+import LottoGame from "../src/js/domain/LottoGame";
 import LottoResult from "../src/js/domain/LottoResult";
 
 describe("로또 당첨 기능 테스트", () => {
@@ -132,7 +132,7 @@ describe("로또 당첨 기능 테스트", () => {
     // given
     const purchasedAmount = 8000;
     const availableLottoCount =
-      LottoMachine.getPurchasableLottoCount(purchasedAmount);
+      LottoGame.getPurchasableLottoCount(purchasedAmount);
     const lottoNumbers = [
       [8, 21, 23, 41, 42, 43],
       [3, 5, 11, 16, 32, 38],

@@ -1,7 +1,10 @@
-import { ErrorLottoPurchasedAmount } from "../constants/error";
+import { ErrorLottoGame, ErrorLottoPurchasedAmount } from "../constants/error";
 import Lotto from "./Lotto";
 
-const LottoMachine = {
+const LottoGame = {
+  RESTART_GAME_TRUE: "y",
+  RESTART_GAME_FALSE: "n",
+
   validateLottoPurchasedAmount(purchasedAmount) {
     if (isNaN(purchasedAmount)) {
       throw new Error(
@@ -20,6 +23,12 @@ const LottoMachine = {
     this.validateLottoPurchasedAmount(purchasedAmount);
     return Math.floor(Number(purchasedAmount) / Lotto.LOTTO_PRICE);
   },
+
+  validateIsRestartLottoGame(input) {
+    if (![this.RESTART_GAME_FALSE, this.RESTART_GAME_TRUE].includes(input)) {
+      throw new Error(ErrorLottoGame.ERROR_LOTTO_GAME_RESTART_NOT_VALID);
+    }
+  },
 };
 
-export default LottoMachine;
+export default LottoGame;

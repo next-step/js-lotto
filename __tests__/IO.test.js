@@ -1,4 +1,6 @@
+import { ErrorLottoGame } from "../src/js/constants/error";
 import Lotto from "../src/js/domain/Lotto";
+import LottoGame from "../src/js/domain/LottoGame";
 import LottoNumber from "../src/js/domain/LottoNumber";
 import LottoResult from "../src/js/domain/LottoResult";
 import Input from "../src/js/view/Input";
@@ -145,5 +147,37 @@ describe("입출력 기능 테스트", () => {
 
     // then
     expect(logSpy).toHaveBeenCalledWith(`총 수익률은 62.5%입니다.`);
+  });
+
+  test("당첨 통계를 출력한 뒤에는 재시작/종료 여부를 y 또는 n으로 입력 받는다.", async () => {
+    // given
+    readLineAsyncSpy.mockImplementationOnce(() =>
+      Promise.resolve(LottoGame.RESTART_GAME_TRUE)
+    );
+
+    // when
+    const isRestartLottoGame = await Input.getIsRestartLottoGame();
+
+    // then
+    expect(isRestartLottoGame).toBe(true);
+  });
+
+  test("재시작/종료 여부가 y 또는 n이 아닐 경우 에러를 발생시킨 후 재입력을 요구한다.", async () => {
+    // given
+    readLineAsyncSpy
+      .mockImplementationOnce(() => Promise.resolve("1"))
+      .mockImplementationOnce(() =>
+        Promise.resolve(LottoGame.RESTART_GAME_FALSE)
+      );
+
+    // when
+    const isRestartLottoGame = await Input.getIsRestartLottoGame();
+
+    // then
+    expect(logSpy).toHaveBeenCalledWith(
+      ErrorLottoGame.ERROR_LOTTO_GAME_RESTART_NOT_VALID
+    );
+    expect(logSpy).toHaveBeenCalledTimes(1);
+    expect(isRestartLottoGame).toBe(false);
   });
 });
