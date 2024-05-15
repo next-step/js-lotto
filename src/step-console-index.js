@@ -22,8 +22,11 @@ try {
   // 로또를 발급한 개수 출력
   Output.printGeneratedLottosCount(lottos.length);
 
-  // 발급한 로또들의 각 로또 번호들을 출력
-  Output.printGeneratedLottosNumbers(lottos);
+  // 발급한 로또들의 각 로또 번호들을 오름차순으로 출력
+  const sortedLottosNumbers = lottos.map((lotto) =>
+    LottoNumber.sortLottoNumbersByAscendingOrder(lotto.numbers)
+  );
+  Output.printGeneratedLottosNumbers(sortedLottosNumbers);
 
   // 당첨 번호 입력
   const winningNumbers = await Input.getWinningNumbers();

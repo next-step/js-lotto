@@ -87,6 +87,10 @@ const LottoNumber = {
 
     return [];
   },
+
+  sortLottoNumbersByAscendingOrder(lottoNumbers) {
+    return [...lottoNumbers].sort((a, b) => a - b);
+  },
 };
 
 export default LottoNumber;

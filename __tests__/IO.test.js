@@ -1,4 +1,5 @@
 import Lotto from "../src/js/domain/Lotto";
+import LottoNumber from "../src/js/domain/LottoNumber";
 import LottoResult from "../src/js/domain/LottoResult";
 import Input from "../src/js/view/Input";
 import Output from "../src/js/view/Output";
@@ -35,24 +36,31 @@ describe("입출력 기능 테스트", () => {
     expect(logSpy).toHaveBeenCalledWith("10개를 구매했습니다.");
   });
 
-  test("발급된 로또들의 각 로또의 로또 번호들을 출력한다.", () => {
-    // given
-    const lottosCount = 10;
-    const lottos = [];
+  test.each([
+    {
+      unsortedLottoNumbers: [6, 5, 4, 3, 2, 1],
+      expectedAnswer: "[1, 2, 3, 4, 5, 6]",
+    },
+    {
+      unsortedLottoNumbers: [20, 12, 1, 3, 5, 2],
+      expectedAnswer: "[1, 2, 3, 5, 12, 20]",
+    },
+  ])(
+    "발급된 로또들의 각 로또의 로또 번호들을 오름차순으로 정렬하여 출력한다.",
+    (testSet) => {
+      // given
+      const lotto = new Lotto(testSet.unsortedLottoNumbers);
 
-    for (let i = 0; i < lottosCount; i++) {
-      const lottoNumbers = Lotto.generateRandomLottoNumbers();
-      lottos.push(new Lotto(lottoNumbers));
+      // when
+      const sortedLottoNumbers = LottoNumber.sortLottoNumbersByAscendingOrder(
+        lotto.numbers
+      );
+      Output.printGeneratedLottosNumbers([sortedLottoNumbers]);
+
+      // then
+      expect(logSpy).toHaveBeenCalledWith(testSet.expectedAnswer);
     }
-
-    // when
-    Output.printGeneratedLottosNumbers(lottos);
-
-    // then
-    const regex = /^\[(\d+,\s?)+\d+\]$/;
-    expect(logSpy).toHaveBeenCalledTimes(lottosCount);
-    expect(logSpy).toHaveBeenCalledWith(expect.stringMatching(regex));
-  });
+  );
 
   test("로또 당첨 번호를 입력 받을 때 서로 다른 1이상 45이하의 정수 6개를 입력하면 정상적으로 종료된다.", async () => {
     // given

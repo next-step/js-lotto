@@ -5,9 +5,10 @@ class Lotto {
 
   #numbers = [];
 
-  constructor(lottoNumbers) {
-    LottoNumber.validateLottoNumbers(lottoNumbers);
-    this.#numbers = LottoNumber.convertLottoNumbersToArray(lottoNumbers);
+  constructor(input) {
+    LottoNumber.validateLottoNumbers(input);
+    const lottoNumbers = LottoNumber.convertLottoNumbersToArray(input);
+    this.#numbers = lottoNumbers;
   }
 
   get numbers() {
