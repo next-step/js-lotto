@@ -1,16 +1,20 @@
 import Lotto from "../src/js/domain/Lotto";
 
 describe("로또 기능 테스트", () => {
-  test("로또 번호가 서로 다른 1이상 45이하의 정수 6개이면 로또가 정상적으로 생성된다.", () => {
-    // given
-    const lotto = new Lotto("1,2,3,4,5,6");
+  test.each(["1,2,3,4,5,6", [1, 2, 3, 4, 5, 6]])(
+    "로또 번호가 서로 다른 1이상 45이하의 정수 6개가 문자열 또는 배열 형태로 주어지면 로또가 정상적으로 생성된다.",
+    (testSet) => {
+      // given
+      const lotto = new Lotto(testSet);
 
-    // when
-    const lottoNumbers = lotto.numbers;
+      // when
+      const lottoNumbers = lotto.numbers;
 
-    // then
-    expect(lottoNumbers).toEqual([1, 2, 3, 4, 5, 6]);
-  });
+      // then
+      expect(lottoNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+    }
+  );
+
   test.each([
     [
       0,

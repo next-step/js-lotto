@@ -6,6 +6,26 @@ import {
 import LottoNumber from "../src/js/domain/LottoNumber";
 
 describe("로또 번호 기능 테스트", () => {
+  test("로또 번호가 문자열 또는 배열이 아니라면 에러가 발생한다", () => {
+    // given
+    const lottoNumbers = {
+      1: 1,
+      2: 2,
+      3: 3,
+      4: 4,
+      5: 5,
+      6: 6,
+    };
+
+    // when
+    const validateLottoNumbers = () =>
+      LottoNumber.validateLottoNumbers(lottoNumbers);
+
+    // then
+    expect(validateLottoNumbers).toThrow(
+      ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_TYPE
+    );
+  });
   test("로또 번호 중 중복되는 수가 있다면 에러가 발생한다", () => {
     // given
     const lottoNumbers = "1,1,2,3,4,5";

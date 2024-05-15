@@ -10,6 +10,10 @@ const LottoNumber = {
   MIN_LOTTO_NUMBER: 1,
 
   validateLottoNumbers(input) {
+    if (!Array.isArray(input) && typeof input !== "string") {
+      throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_TYPE);
+    }
+
     const lottoNumbers = this.convertLottoNumbersToArray(input);
     const lottoNumbersSet = new Set(lottoNumbers);
 
@@ -73,11 +77,15 @@ const LottoNumber = {
   },
 
   convertLottoNumbersToArray(lottoNumbers) {
-    if (typeof lottoNumbers !== "string") {
+    if (Array.isArray(lottoNumbers)) {
       return lottoNumbers;
     }
 
-    return lottoNumbers.split(",").map(Number);
+    if (typeof lottoNumbers === "string") {
+      return lottoNumbers.split(",").map(Number);
+    }
+
+    return [];
   },
 };
 

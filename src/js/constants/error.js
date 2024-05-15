@@ -5,6 +5,8 @@ export const ErrorLottoPurchasedAmount = {
 };
 
 export const ErrorLottoNumbers = {
+  ERROR_LOTTO_NUMBERS_NOT_VALID_TYPE:
+    "로또 번호는 문자열 또는 배열이어야 합니다.",
   ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH: "로또 번호는 총 6개 입니다.",
   ERROR_LOTTO_NUMBERS_DUPLICATED: "중복된 로또 번호가 있습니다.",
 };
