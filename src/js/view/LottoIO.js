@@ -27,7 +27,6 @@ export function readMatchLottoNumber({ matchNumber, price, matchCount }) {
 
 export function writeLottoNumbers(input) {
   const lottoNumbers = input
-    .trim()
     .replace(/\s/g, '')
     .split(',')
     .map((number) => Number(number));
