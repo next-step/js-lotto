@@ -59,13 +59,13 @@ describe("로또 당첨 번호를 테스트 하는 메서드", () => {
     expect(() => lotto.getWinningNumberByString("1,2,3,4,5 ")).toThrow();
   });
 
-  test("당첨 번호의 수가 6이 아니라면 에러가 throw ehlsek..", () => {
+  test("당첨 번호의 갯수가 잘못 됐다면 아니라면 에러가 throw 된다.", () => {
     const lotto = new Lotto();
 
     expect(() => lotto.getWinningNumberByString("1,2,3")).toThrow();
   });
 
-  test("당첨 번호의 수가 6이 아니라면 에러가 throw ehlsek..", () => {
+  test("당첨 번호의 갯수가 맞다면 테스트가 통과 한다.", () => {
     const lotto = new Lotto();
 
     expect(lotto.getWinningNumberByString("1,2,3,4,5,6")).toStrictEqual([
@@ -76,5 +76,44 @@ describe("로또 당첨 번호를 테스트 하는 메서드", () => {
       "5",
       "6",
     ]);
+  });
+});
+
+describe("로또 번호에 따라 몇개나 맞았는지 구하는 메서드 ", () => {
+  it("로또 번호와 당첨번호가 전부 같은 경우", () => {
+    const lotto = new Lotto();
+
+    lotto.setLottos([[1, 2, 3, 4, 5, 6]]);
+    lotto.setWinningNumber([1, 2, 3, 4, 5, 6]);
+    lotto.setBounsNumber(7);
+
+    expect(lotto.getHitNumberByLottoNumber([1, 2, 3, 4, 5, 6])).toStrictEqual({
+      hitNumberCount: 6,
+      isHitBonusNumber: false,
+    });
+  });
+});
+
+describe("당첨 된 로또에 대한 정보를 구하는 메서드", () => {
+  it("1등이 당첨된 경우", () => {
+    const lotto = new Lotto();
+
+    lotto.setLottos([[6, 5, 4, 3, 2, 1]]);
+    lotto.setWinningNumber([1, 2, 3, 4, 5, 6]);
+    lotto.setBounsNumber(7);
+    const rank = lotto.getRankCount();
+
+    expect(rank).toStrictEqual({ 1: 1, 2: 0, 3: 0, 4: 0, 5: 0 });
+  });
+
+  it("2등이 당첨된 경우", () => {
+    const lotto = new Lotto();
+
+    lotto.setLottos([[1, 2, 3, 4, 5, 7]]);
+    lotto.setWinningNumber([1, 2, 3, 4, 5, 8]);
+    lotto.setBounsNumber(7);
+    const rank = lotto.getRankCount();
+
+    expect(rank).toStrictEqual({ 1: 0, 2: 1, 3: 0, 4: 0, 5: 0 });
   });
 });
