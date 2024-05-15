@@ -16,5 +16,3 @@ export class App {
     }
   }
 }
-
-new App().play();
