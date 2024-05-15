@@ -1,4 +1,5 @@
 import readline from 'node:readline';
+import { ERROR_MESSAGE } from '../constants';
 
 export function generateRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -31,5 +32,12 @@ export function calcROI(netReturn, investmentCost) {
 }
 
 export function comma(money) {
+  if (
+    typeof money !== 'number' ||
+    !Number.isInteger(money) ||
+    money > Number.MAX_SAFE_INTEGER
+  ) {
+    throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
+  }
   return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
