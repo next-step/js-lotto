@@ -25,4 +25,21 @@ export class LottoResult {
         return 6;
     }
   }
+
+  getWinningAmount(rank) {
+    switch (rank) {
+      case 1:
+        return 2000000000;
+      case 2:
+        return 30000000;
+      case 3:
+        return 1500000;
+      case 4:
+        return 50000;
+      case 5:
+        return 5000;
+      default:
+        return 0;
+    }
+  }
 }

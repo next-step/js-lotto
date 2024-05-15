@@ -28,4 +28,24 @@ describe("로또결과 테스트", () => {
     expect(rank5).toBe(5);
     expect(rank6).toBe(6);
   });
+
+  test("당첨 순위에 따라 상금을 계산한다.", () => {
+    // given
+    const lottoResult = new LottoResult();
+    // when
+    const rank1 = lottoResult.getWinningAmount(1);
+    const rank2 = lottoResult.getWinningAmount(2);
+    const rank3 = lottoResult.getWinningAmount(3);
+    const rank4 = lottoResult.getWinningAmount(4);
+    const rank5 = lottoResult.getWinningAmount(5);
+    const rank6 = lottoResult.getWinningAmount(6);
+
+    // then
+    expect(rank1).toBe(2000000000);
+    expect(rank2).toBe(30000000);
+    expect(rank3).toBe(1500000);
+    expect(rank4).toBe(50000);
+    expect(rank5).toBe(5000);
+    expect(rank6).toBe(0);
+  });
 });
