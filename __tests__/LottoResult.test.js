@@ -1,4 +1,5 @@
 import Lotto from "../src/js/domain/Lotto";
+import LottoMachine from "../src/js/domain/LottoMachine";
 import LottoResult from "../src/js/domain/LottoResult";
 
 describe("로또 당첨 기능 테스트", () => {
@@ -130,7 +131,8 @@ describe("로또 당첨 기능 테스트", () => {
   test("로또 당첨 수익률을 계산할 때 결과 값은 총 상금 / 로또를 구입한 금액 이다.", () => {
     // given
     const purchasedAmount = 8000;
-    const availableLottoCount = Lotto.getAvailableLottoCount(purchasedAmount);
+    const lottoMachine = new LottoMachine(purchasedAmount);
+    const availableLottoCount = lottoMachine.getPurchasableLottoCount();
     const lottoNumbers = [
       [8, 21, 23, 41, 42, 43],
       [3, 5, 11, 16, 32, 38],

@@ -1,5 +1,4 @@
-import { ErrorLottoBonusNumber } from "../constants/error";
-import Lotto from "./Lotto";
+import LottoNumber from "./LottoNumber";
 
 class LottoResult {
   static LottoRanking = [
@@ -35,13 +34,13 @@ class LottoResult {
   #bonusNumber;
 
   constructor(winningNumbers, bonusNumber) {
-    Lotto.validateLottoNumbers(winningNumbers);
+    LottoNumber.validateLottoNumbers(winningNumbers);
 
     const winningNumbersArray =
-      Lotto.convertLottoNumbersToArray(winningNumbers);
+      LottoNumber.convertLottoNumbersToArray(winningNumbers);
     this.#winningNumbers = winningNumbersArray;
 
-    LottoResult.validateBonusNumber(bonusNumber, this.#winningNumbers);
+    LottoNumber.validateBonusNumber(bonusNumber, this.#winningNumbers);
     this.#bonusNumber = Number(bonusNumber);
   }
 
@@ -51,16 +50,6 @@ class LottoResult {
 
   static getTotalLottoProfitRate(totalLottoWinningPrice, lottoPurcasedAmount) {
     return (totalLottoWinningPrice / lottoPurcasedAmount) * 100;
-  }
-
-  static validateBonusNumber(input, winningNumbers) {
-    Lotto.validateLottoNumber(input);
-
-    if (winningNumbers.includes(Number(input))) {
-      throw new Error(
-        ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_DUPLICATED
-      );
-    }
   }
 
   getLottoRanking(lotto) {
