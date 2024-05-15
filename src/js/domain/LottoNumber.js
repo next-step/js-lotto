@@ -78,7 +78,7 @@ const LottoNumber = {
 
   convertLottoNumbersToArray(lottoNumbers) {
     if (Array.isArray(lottoNumbers)) {
-      return lottoNumbers;
+      return lottoNumbers.map(Number);
     }
 
     if (typeof lottoNumbers === "string") {

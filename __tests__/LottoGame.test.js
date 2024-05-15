@@ -1,4 +1,7 @@
-import { ErrorLottoPurchasedAmount } from "../src/js/constants/error";
+import {
+  ErrorLottoGame,
+  ErrorLottoPurchasedAmount,
+} from "../src/js/constants/error";
 import LottoGame from "../src/js/domain/LottoGame";
 
 describe("로도 판매 기계 기능 테스트", () => {
@@ -35,6 +38,23 @@ describe("로도 판매 기계 기능 테스트", () => {
 
       // then
       expect(validateAvailableLottoCount).toThrow(errorMessage);
+    }
+  );
+
+  test.each(["123", "N", -1])(
+    "로또 게임 재시작 여부가 y 또는 n이 아닌 경우 에러가 발생한다.",
+    (input) => {
+      // given
+
+      // when
+      const validate = () => {
+        LottoGame.validateIsRestartLottoGame(input);
+      };
+
+      // then
+      expect(validate).toThrow(
+        ErrorLottoGame.ERROR_LOTTO_GAME_RESTART_NOT_VALID
+      );
     }
   );
 });

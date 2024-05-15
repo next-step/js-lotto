@@ -1,17 +1,49 @@
 import { readLineAsync } from "../../utils/readlineAsync";
 import LottoGame from "../domain/LottoGame";
+import LottoNumber from "../domain/LottoNumber";
 
 const Input = {
   async getLottoPurchasedAmount() {
-    return await readLineAsync("구입금액을 입력해 주세요.");
+    while (true) {
+      try {
+        const purchasedAmount = await readLineAsync(
+          "구입금액을 입력해 주세요."
+        );
+        LottoGame.validateLottoPurchasedAmount(purchasedAmount);
+        return purchasedAmount;
+      } catch (e) {
+        console.log(e.message);
+      }
+    }
   },
 
   async getWinningNumbers() {
-    return await readLineAsync("\n당첨 번호를 입력해 주세요.");
+    while (true) {
+      try {
+        const winningNumbers = await readLineAsync(
+          "\n당첨 번호를 입력해 주세요."
+        );
+        LottoNumber.validateLottoNumbers(winningNumbers);
+
+        return LottoNumber.convertLottoNumbersToArray(winningNumbers);
+      } catch (e) {
+        console.log(e.message);
+      }
+    }
   },
 
-  async getBonusNumber() {
-    return await readLineAsync("\n보너스 번호를 입력해 주세요.");
+  async getBonusNumber(winningNumbers) {
+    while (true) {
+      try {
+        const bonusNumber = await readLineAsync(
+          "\n보너스 번호를 입력해 주세요."
+        );
+        LottoNumber.validateBonusNumber(bonusNumber, winningNumbers);
+        return bonusNumber;
+      } catch (e) {
+        console.log(e.message);
+      }
+    }
   },
 
   async getIsRestartLottoGame() {
