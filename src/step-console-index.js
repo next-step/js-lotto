@@ -1,4 +1,6 @@
 import Lotto from "./js/domain/Lotto";
+import LottoMachine from "./js/domain/LottoMachine";
+import LottoNumber from "./js/domain/LottoNumber";
 import LottoResult from "./js/domain/LottoResult";
 import Input from "./js/view/Input";
 import Output from "./js/view/Output";
@@ -8,11 +10,12 @@ try {
   const purchasedAmount = await Input.getLottoPurchasedAmount();
 
   // 로또를 구입한 금액만큼 최대 개수의 로또 발급
-  const availableLottoCount = Lotto.getAvailableLottoCount(purchasedAmount);
+  const availableLottoCount =
+    LottoMachine.getPurchasableLottoCount(purchasedAmount);
 
   const lottos = [];
   for (let i = 0; i < availableLottoCount; i++) {
-    const lottoNumbers = Lotto.generateRandomLottoNumbers();
+    const lottoNumbers = LottoNumber.generateRandomLottoNumbers();
     lottos.push(new Lotto(lottoNumbers));
   }
 
@@ -48,7 +51,8 @@ try {
           LottoResult.LottoRanking[2].ranking,
       };
     })
-    .slice(1);
+    .slice(LottoResult.LottoRanking[1].ranking)
+    .reverse();
 
   Output.printLottoRankingStatistics(lottoRankingsStatistics);
 

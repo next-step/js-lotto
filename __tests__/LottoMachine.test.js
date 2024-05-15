@@ -11,10 +11,9 @@ describe("로도 판매 기계 기능 테스트", () => {
     "로또를 구입한 금액이 0 이상인 경우 로또를 구매한 금액이 %s 이면, 발행하는 로또의 개수는 %s이다.",
     (purchasedAmount, lottoCount) => {
       // given
-      const lottoMachine = new LottoMachine(purchasedAmount);
-
       // when
-      const availableLottoCount = lottoMachine.getPurchasableLottoCount();
+      const availableLottoCount =
+        LottoMachine.getPurchasableLottoCount(purchasedAmount);
 
       // then
       expect(availableLottoCount).toBe(lottoCount);
