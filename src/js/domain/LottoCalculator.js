@@ -19,14 +19,18 @@ class LottoCalculator {
     bonusWinningNumber,
     winningAmounts = LottoCalculator.DEFAULT_WINNING_AMOUNT,
   }) {
-    if (!isValidLottoNumberArray(winningNumbers)) {
-      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
-    }
-    if (!isValidLottoNumber(bonusWinningNumber)) {
+    if (
+      !isValidLottoNumberArray(winningNumbers) ||
+      !isValidLottoNumber(bonusWinningNumber) ||
+      !Array.isArray(winningAmounts)
+    ) {
       throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
     if (winningNumbers.includes(bonusWinningNumber)) {
       throw new TypeError(LottoCalculator.DUPLICATE_LOTTO_NUMBERS);
+    }
+    if (winningAmounts.length !== LOTTO.WINNING_NUMBER_LENGTH) {
+      throw new TypeError(ERROR_MESSAGE.INVALID_LOTTO_FORMAT);
     }
     this.#winningNumbers = winningNumbers;
     this.#bonusWinningNumber = bonusWinningNumber;

@@ -4,6 +4,12 @@ import LottoTicket from '../src/js/domain/LottoTicket';
 const context = describe;
 const DUPLICATE_BONUS_NUMBERS = [[1], [2], [3], [4], [5], [6]];
 
+const INVALID_WINNING_AMOUNTS = [
+  [[]],
+  [[1, 2, 3, 4, 5]],
+  [[1, 2, 3, 4, 5, 6, 7]],
+];
+
 describe('LottoCalculator 생성자 테스트', () => {
   context('당첨번호:[1, 2, 3, 4, 5, 6], 보너스번호:8가 주어질 때', () => {
     it('winningNumbers(당첨번호), bonusWinningNumber(보너스번호)를 프로퍼티로 가진다.', () => {
@@ -40,6 +46,22 @@ describe('LottoCalculator 생성자 테스트', () => {
             new LottoCalculator({
               winningNumbers: [1, 2, 3, 4, 5, 6],
               bonusWinningNumber: bonusNumber,
+            })
+        ).toThrow();
+      });
+    }
+  );
+
+  context.each(INVALID_WINNING_AMOUNTS)(
+    '%s와 같이 유효하지 않은 당첨 금액이 주어질 때',
+    (winningAmounts) => {
+      it('TypeError를 Throw 한다.', () => {
+        expect(
+          () =>
+            new LottoCalculator({
+              winningNumbers: [1, 2, 3, 4, 5, 6],
+              bonusWinningNumber: 7,
+              winningAmounts,
             })
         ).toThrow();
       });
