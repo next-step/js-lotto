@@ -1,9 +1,9 @@
 import { LOTTO } from "../../src/constants/lotto";
 import { OUTPUT_MESSAGE } from "../../src/constants/message";
 import { readline } from "../../src/utils/readline";
-import { hasNumberValidator } from "../../src/validator/hasNumberValidator";
-import { isArrLengthValidator } from "../../src/validator/isArrLengthValidator";
-import { isDuplicateValidator } from "../../src/validator/isDuplicateValidator";
+import { validateArrNonNegativeInteger } from "../../src/validator/validateArrNonNegativeInteger";
+import { validateArrLength } from "../../src/validator/validateArrLength";
+import { validateArrDuplicate } from "../../src/validator/validateArrDuplicate";
 import { input } from "../../src/view/console/input";
 
 describe("당첨 번호 테스트", () => {
@@ -29,7 +29,7 @@ describe("당첨 번호 테스트", () => {
 
     const winningNumbers = await input.winningLotto();
 
-    expect(() => isArrLengthValidator(winningNumbers)).toThrow(OUTPUT_MESSAGE.WINNING_LOTTO_LENGTH_ERROR);
+    expect(() => validateArrLength(winningNumbers)).toThrow(OUTPUT_MESSAGE.WINNING_LOTTO_LENGTH_ERROR);
   });
 
   test("당첨번호는 숫자만을 입력해야한다. 그렇지 않으면 에러를 발생한다.", async () => {
@@ -39,7 +39,7 @@ describe("당첨 번호 테스트", () => {
 
     const winningNumbers = await input.winningLotto();
 
-    expect(() => hasNumberValidator(winningNumbers)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
+    expect(() => validateArrNonNegativeInteger(winningNumbers)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
   });
 
   test("당첨번호는 중복되게 입력할 수 없다. 그렇지 않으면 에러를 발생한다.", async () => {
@@ -49,6 +49,6 @@ describe("당첨 번호 테스트", () => {
 
     const winningNumbers = await input.winningLotto();
 
-    expect(() => isDuplicateValidator(winningNumbers)).toThrow(OUTPUT_MESSAGE.DUPLICATE_NUMBER_ERROR);
+    expect(() => validateArrDuplicate(winningNumbers)).toThrow(OUTPUT_MESSAGE.DUPLICATE_NUMBER_ERROR);
   });
 });

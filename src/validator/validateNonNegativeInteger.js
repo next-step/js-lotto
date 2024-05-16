@@ -1,6 +1,6 @@
 import { OUTPUT_MESSAGE } from "../constants/message";
 
-export const isNonNegativeIntegerValidator = (number) => {
+export const validateNonNegativeInteger = (number) => {
   if (isNaN(number)) {
     throw new Error(OUTPUT_MESSAGE.NAN_ERROR);
   }

@@ -2,11 +2,11 @@ import { input } from "./view/console/input";
 import { output } from "./view/console/output";
 import { LottoGame } from "./domain/LottoGame";
 import { Lotto } from "./domain/Lotto";
-import { isNonNegativeIntegerValidator } from "./validator/isNonNegativeIntegerValidator";
-import { isArrLengthValidator } from "./validator/isArrLengthValidator";
-import { hasNumberValidator } from "./validator/hasNumberValidator";
-import { isDuplicateValidator } from "./validator/isDuplicateValidator";
-import { isContainValidator } from "./validator/isContainValidator";
+import { validateNonNegativeInteger } from "./validator/validateNonNegativeInteger";
+import { validateArrLength } from "./validator/validateArrLength";
+import { validateArrNonNegativeInteger } from "./validator/validateArrNonNegativeInteger";
+import { validateArrDuplicate } from "./validator/validateArrDuplicate";
+import { validateArrContainNum } from "./validator/validateArrContainNum";
 
 const app = async () => {
   const getPurchasePrice = async () => {
@@ -52,18 +52,18 @@ const app = async () => {
   };
 
   const validatePurchasePrice = (purchasePrice) => {
-    isNonNegativeIntegerValidator(purchasePrice);
+    validateNonNegativeInteger(purchasePrice);
   };
 
   const validateWinningNumbers = (winningNumberArray) => {
-    isArrLengthValidator(winningNumberArray);
-    hasNumberValidator(winningNumberArray);
-    isDuplicateValidator(winningNumberArray);
+    validateArrLength(winningNumberArray);
+    validateArrNonNegativeInteger(winningNumberArray);
+    validateArrDuplicate(winningNumberArray);
   };
 
   const validateBonusNumber = (winningNumberArray, bonusNumber) => {
-    isNonNegativeIntegerValidator(bonusNumber);
-    isContainValidator(winningNumberArray, bonusNumber);
+    validateNonNegativeInteger(bonusNumber);
+    validateArrContainNum(winningNumberArray, bonusNumber);
   };
 
   const calculateRateOfReturn = (totalIncome, purchasePrice) => {

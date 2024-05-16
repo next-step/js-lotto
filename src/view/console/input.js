@@ -10,7 +10,7 @@ export const input = {
 
   async winningLotto() {
     const winningNumbers = await readline.question(INPUT_MESSAGE.INPUT_WINNING_NUMBER, () => readline.close());
-    const convertNumbersToArray = (numbers) => numbers.split(",").map((number) => parseInt(number.trim()));
+    const convertNumbersToArray = (numbers) => numbers.split(",").map((number) => Number(number.trim()));
 
     return convertNumbersToArray(winningNumbers);
   },
