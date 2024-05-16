@@ -46,16 +46,4 @@ describe("뽑기 테스트", () => {
     //then
     expect(whenTooManyAmount).toThrow();
   });
-
-  test("이미 중복이 있는 리스트라면 에러를 반환한다.", () => {
-    //given
-    const duplicatedList = [1, 1, 2];
-
-    //when
-    const whenDuplicatedList = () =>
-      drawUniqueItems(duplicatedList, duplicatedList.length);
-
-    //then
-    expect(whenDuplicatedList).toThrow();
-  });
 });

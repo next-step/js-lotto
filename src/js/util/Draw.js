@@ -11,10 +11,6 @@ export const drawItem = (list) => {
 };
 
 export const drawUniqueItems = (list, amount) => {
-  if (list.length !== new Set(list).size) {
-    throw new Error();
-  }
-
   const items = [];
 
   while (items.length < amount) {
