@@ -75,20 +75,55 @@ describe('LottoCalculator 로또 통계 테스트', () => {
       ].map((lottoNumbers) => new LottoTicket(lottoNumbers));
 
       // when
-      const { netReturn, chart } = lottoCalc.getStatistics([
+      const { profit, chart } = lottoCalc.getStatistics([
         lotto1st,
         lotto2st,
         lotto3st,
       ]);
 
       // then
-      expect(netReturn).toBe(1500000 + 30000000 + 2000000000);
+      expect(profit).toBe(1500000 + 30000000 + 2000000000);
       expect(chart).toEqual([
         [5, { lottoTickets: [], winningAmount: 5000, matchCount: 3 }],
         [4, { lottoTickets: [], winningAmount: 50000, matchCount: 4 }],
         [3, { lottoTickets: [{}], winningAmount: 1500000, matchCount: 5 }],
         [2, { lottoTickets: [{}], winningAmount: 30000000, matchCount: 5 }],
         [1, { lottoTickets: [{}], winningAmount: 2000000000, matchCount: 6 }],
+      ]);
+    });
+  });
+
+  context('길이가 다른 3개의 로또를 통계를 내렸을 때', () => {
+    it('수익률과 차트 배열을 반환한다.', () => {
+      // given
+      const winningNumbers = [1, 2, 3, 4];
+      const winningBonusNumber = 7;
+      const lottoCalc = new LottoCalculator({
+        winningNumbers,
+        winningBonusNumber,
+      });
+
+      const [lotto1st, lotto2st, lotto3st] = [
+        [1, 2, 3, 4],
+        [1, 2, 3, 7],
+        [1, 2, 3, 10],
+      ].map((lottoNumbers) => new LottoTicket(lottoNumbers));
+
+      // when
+      const { profit, chart } = lottoCalc.getStatistics([
+        lotto1st,
+        lotto2st,
+        lotto3st,
+      ]);
+
+      // then
+      expect(profit).toBe(1500000 + 30000000 + 2000000000);
+      expect(chart).toEqual([
+        [5, { lottoTickets: [], winningAmount: 5000, matchCount: 1 }],
+        [4, { lottoTickets: [], winningAmount: 50000, matchCount: 2 }],
+        [3, { lottoTickets: [{}], winningAmount: 1500000, matchCount: 3 }],
+        [2, { lottoTickets: [{}], winningAmount: 30000000, matchCount: 3 }],
+        [1, { lottoTickets: [{}], winningAmount: 2000000000, matchCount: 4 }],
       ]);
     });
   });
