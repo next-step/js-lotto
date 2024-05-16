@@ -1,8 +1,8 @@
-import { ERROR_MESSAGE, LOTTO } from '../constants';
 import {
   isValidLottoNumber,
   isValidLottoNumberArray,
 } from '../utils/LottoUtil';
+import { ERROR_MESSAGE, LOTTO } from '../constants';
 
 class LottoCalculator {
   #winningNumbers;
@@ -90,7 +90,7 @@ class LottoCalculator {
     }
   }
 
-  getResult(lottoNumbers) {
+  #getLottoResult(lottoNumbers) {
     return {
       matchCount: this.#getLottoNumberMatchCount(
         this.#winningNumbers,
@@ -149,7 +149,7 @@ class LottoCalculator {
     };
 
     lottoTickets.forEach((lottoTicket) => {
-      const lottoResult = this.getResult(lottoTicket.lottoNumbers);
+      const lottoResult = this.#getLottoResult(lottoTicket.lottoNumbers);
       const winningRankRow = statistics.chart.get(lottoResult.winningRank);
       if (winningRankRow) {
         winningRankRow.lottoTickets.push(lottoTicket);
