@@ -4,20 +4,17 @@ import { ERROR_MESSAGE, LOTTO } from '../constants';
 
 class LottoTicket extends Product {
   #lottoNumbers;
-  constructor(name = LOTTO.NAME_KR, price = LOTTO.PRICE) {
-    super(name, price);
-    this.#lottoNumbers = [];
-  }
+  constructor(lottoNumbers, price = LOTTO.PRICE) {
+    super(LOTTO.NAME_KR, price);
 
-  get lottoNumbers() {
-    return this.#lottoNumbers;
-  }
-
-  set lottoNumbers(lottoNumbers) {
     if (!isValidLottoNumberArray(lottoNumbers)) {
       throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
     this.#lottoNumbers = lottoNumbers;
+  }
+
+  get lottoNumbers() {
+    return this.#lottoNumbers;
   }
 
   #getLottoNumberMatchCount(winningNumbers, lottoNumbers) {

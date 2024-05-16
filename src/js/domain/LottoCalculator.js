@@ -3,6 +3,7 @@ import {
   isValidLottoNumber,
   isValidLottoNumberArray,
 } from '../utils/LottoUtil';
+import LottoTicket from './LottoTicket';
 
 class LottoCalculator {
   #winningNumbers;

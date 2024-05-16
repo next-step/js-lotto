@@ -14,18 +14,23 @@ export function generateLottoNumberArray() {
   return [...lottoNumbers];
 }
 
-export function isValidLottoNumber(number) {
-  return (
-    Number.isInteger(number) &&
-    number >= LOTTO.MIN_WINNING_NUMBER_RANGE &&
-    number <= LOTTO.MAX_WINNING_NUMBER_RANGE
-  );
+export function isValidLottoNumber(
+  number,
+  range = {
+    min: LOTTO.MIN_WINNING_NUMBER_RANGE,
+    max: LOTTO.MAX_WINNING_NUMBER_RANGE,
+  }
+) {
+  return Number.isInteger(number) && number >= range.min && number <= range.max;
 }
 
-export function isValidLottoNumberArray(numbers) {
+export function isValidLottoNumberArray(
+  numbers,
+  length = LOTTO.WINNING_NUMBER_LENGTH
+) {
   return (
     Array.isArray(numbers) &&
-    new Set(numbers).size === LOTTO.WINNING_NUMBER_LENGTH &&
+    new Set(numbers).size === length &&
     numbers.every((number) => isValidLottoNumber(number))
   );
 }

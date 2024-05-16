@@ -21,8 +21,7 @@ describe('입출력 (로또) 기능 테스트', () => {
   });
   it('로또 번호를 출력한다.', () => {
     // given
-    const lottoTicket = new LottoTicket();
-    lottoTicket.lottoNumbers = [1, 2, 3, 4, 5, 6];
+    const lottoTicket = new LottoTicket([1, 2, 3, 4, 5, 6]);
 
     // when
     const output = readLottoNumbers(lottoTicket);

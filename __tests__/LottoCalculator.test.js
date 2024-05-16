@@ -80,13 +80,11 @@ describe('LottoCalculator 로또 통계 테스트', () => {
         bonusWinningNumber,
       });
 
-      const [lotto1st, lotto2st, lotto3st] = Array.from(
-        { length: 3 },
-        () => new LottoTicket()
-      );
-      lotto1st.lottoNumbers = [1, 2, 3, 4, 5, 6];
-      lotto2st.lottoNumbers = [1, 2, 3, 4, 5, 7];
-      lotto3st.lottoNumbers = [1, 2, 3, 4, 5, 11];
+      const [lotto1st, lotto2st, lotto3st] = [
+        [1, 2, 3, 4, 5, 6],
+        [1, 2, 3, 4, 5, 7],
+        [1, 2, 3, 4, 5, 11],
+      ].map((lottoNumbers) => new LottoTicket(lottoNumbers));
 
       // when
       const { netReturn, chart } = lottoCalc.getStatistics([

@@ -13,11 +13,10 @@ const LottoMachine = {
 
     const sellCount = Math.floor(cost / LOTTO.PRICE);
 
-    return Array.from({ length: sellCount }, () => {
-      const lottoTicket = new LottoTicket();
-      lottoTicket.lottoNumbers = generateLottoNumberArray();
-      return lottoTicket;
-    });
+    return Array.from(
+      { length: sellCount },
+      () => new LottoTicket(generateLottoNumberArray())
+    );
   },
 };
 
