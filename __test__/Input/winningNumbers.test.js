@@ -1,11 +1,8 @@
 import { LOTTO } from "../../src/constants/lotto";
 import { OUTPUT_MESSAGE } from "../../src/constants/message";
 import { readline } from "../../src/utils/readline";
-import { validateArrNonNegativeInteger } from "../../src/validator/validateArrNonNegativeInteger";
-import { validateArrLength } from "../../src/validator/validateArrLength";
-import { validateArrDuplicate } from "../../src/validator/validateArrDuplicate";
+import { validateArray } from "../../src/validator/validateArray";
 import { input } from "../../src/view/console/input";
-import { validateArrLimitNum } from "../../src/validator/validateArrLimitNum";
 
 describe("당첨 번호 테스트", () => {
   afterEach(() => {
@@ -30,7 +27,7 @@ describe("당첨 번호 테스트", () => {
 
     const winningNumbers = await input.winningLotto();
 
-    expect(() => validateArrLength(winningNumbers)).toThrow(OUTPUT_MESSAGE.WINNING_LOTTO_LENGTH_ERROR);
+    expect(() => validateArray.length(winningNumbers)).toThrow(OUTPUT_MESSAGE.WINNING_LOTTO_LENGTH_ERROR);
   });
 
   test("당첨번호는 숫자만을 입력해야한다. 그렇지 않으면 에러를 발생한다.", async () => {
@@ -40,7 +37,7 @@ describe("당첨 번호 테스트", () => {
 
     const winningNumbers = await input.winningLotto();
 
-    expect(() => validateArrNonNegativeInteger(winningNumbers)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
+    expect(() => validateArray.inRange(winningNumbers)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
   });
 
   test("당첨번호는 중복되게 입력할 수 없다. 그렇지 않으면 에러를 발생한다.", async () => {
@@ -50,7 +47,7 @@ describe("당첨 번호 테스트", () => {
 
     const winningNumbers = await input.winningLotto();
 
-    expect(() => validateArrDuplicate(winningNumbers)).toThrow(OUTPUT_MESSAGE.DUPLICATE_NUMBER_ERROR);
+    expect(() => validateArray.duplicate(winningNumbers)).toThrow(OUTPUT_MESSAGE.DUPLICATE_NUMBER_ERROR);
   });
 
   test("당첨번호는 음수를 입력할 수 없다. 그렇지 않으면 에러를 발생한다.", async () => {
@@ -60,7 +57,7 @@ describe("당첨 번호 테스트", () => {
 
     const winningNumbers = await input.winningLotto();
 
-    expect(() => validateArrNonNegativeInteger(winningNumbers)).toThrow(OUTPUT_MESSAGE.NEGETIVE_NUM_ERROR);
+    expect(() => validateArray.inRange(winningNumbers)).toThrow(OUTPUT_MESSAGE.NEGETIVE_NUM_ERROR);
   });
 
   test("당첨번호는 소수를 입력할 수 없다. 그렇지 않으면 에러를 발생한다.", async () => {
@@ -70,7 +67,7 @@ describe("당첨 번호 테스트", () => {
 
     const winningNumbers = await input.winningLotto();
 
-    expect(() => validateArrNonNegativeInteger(winningNumbers)).toThrow(OUTPUT_MESSAGE.INTEGER_ERROR);
+    expect(() => validateArray.inRange(winningNumbers)).toThrow(OUTPUT_MESSAGE.INTEGER_ERROR);
   });
 
   test(`당첨번호는 1부터 ${LOTTO.MAX_NUMBER}이하의 숫자를 입력해야한다. 그렇지 않으면 에러를 발생한다.`, async () => {
@@ -80,6 +77,6 @@ describe("당첨 번호 테스트", () => {
 
     const winningNumbers = await input.winningLotto();
 
-    expect(() => validateArrLimitNum(winningNumbers)).toThrow(OUTPUT_MESSAGE.LIMIT_NUM_ERROR);
+    expect(() => validateArray.inRange(winningNumbers)).toThrow(OUTPUT_MESSAGE.LIMIT_NUM_ERROR);
   });
 });

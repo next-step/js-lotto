@@ -2,12 +2,8 @@ import { input } from "./view/console/input";
 import { output } from "./view/console/output";
 import { LottoGame } from "./domain/LottoGame";
 import { Lotto } from "./domain/Lotto";
-import { validateNonNegativeInteger } from "./validator/validateNonNegativeInteger";
-import { validateArrLength } from "./validator/validateArrLength";
-import { validateArrNonNegativeInteger } from "./validator/validateArrNonNegativeInteger";
-import { validateArrDuplicate } from "./validator/validateArrDuplicate";
-import { validateArrContainNum } from "./validator/validateArrContainNum";
-import { validateArrLimitNum } from "./validator/validateArrLimitNum";
+import { validateNumber } from "./validator/validateNumber";
+import { validateArray } from "./validator/validateArray";
 
 const app = async () => {
   const getPurchasePrice = async () => {
@@ -53,19 +49,19 @@ const app = async () => {
   };
 
   const validatePurchasePrice = (purchasePrice) => {
-    validateNonNegativeInteger(purchasePrice);
+    validateNumber.inRange(purchasePrice);
   };
 
   const validateWinningNumbers = (winningNumberArray) => {
-    validateArrLength(winningNumberArray);
-    validateArrNonNegativeInteger(winningNumberArray);
-    validateArrLimitNum(winningNumberArray);
-    validateArrDuplicate(winningNumberArray);
+    validateArray.length(winningNumberArray);
+    validateArray.inRange(winningNumberArray);
+    validateArray.inRange(winningNumberArray);
+    validateArray.duplicate(winningNumberArray);
   };
 
   const validateBonusNumber = (winningNumberArray, bonusNumber) => {
-    validateNonNegativeInteger(bonusNumber);
-    validateArrContainNum(winningNumberArray, bonusNumber);
+    validateNumber.inRange(bonusNumber);
+    validateArray.containNum(winningNumberArray, bonusNumber);
   };
 
   const calculateRateOfReturn = (totalIncome, purchasePrice) => {

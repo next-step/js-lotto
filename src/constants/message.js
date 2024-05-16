@@ -19,7 +19,7 @@ export const OUTPUT_MESSAGE = {
   INTEGER_ERROR: "소수가 아닌 1이상의 정수를 입력해주세요.",
   RESULT_TYPE_ERROR: "올바른 결과값이 아닙니다.",
   NEGETIVE_NUM_ERROR: "1이상의 정수를 입력해주세요.",
-  LIMIT_NUM_ERROR: `1부터 ${LOTTO.MAX_NUMBER}이하의 숫자를 입력해주세요.`,
+  LIMIT_NUM_ERROR: `${LOTTO.MAX_NUMBER}이하의 숫자를 입력해주세요.`,
 };
 
 export const PRIZE_MESSAGE = {
