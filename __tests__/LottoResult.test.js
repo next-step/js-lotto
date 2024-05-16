@@ -48,4 +48,23 @@ describe("로또결과 테스트", () => {
     expect(rank5).toBe(5000);
     expect(rank6).toBe(0);
   });
+
+  test("각 로또 티켓의 당첨 결과를 계산한다.", () => {
+    // given
+    const lotto1 = new Lotto([1, 2, 3, 4, 5, 6]);
+    const lotto2 = new Lotto([1, 2, 3, 4, 5, 7]);
+    const lotto3 = new Lotto([1, 2, 3, 4, 5, 8]);
+    const lottoResult = new LottoResult([1, 2, 3, 4, 5, 6], 7);
+
+    // when
+    const result = lottoResult.getWinningResult([lotto1, lotto2, lotto3]);
+
+    // then
+    expect(result[1]).toBe(1);
+    expect(result[2]).toBe(1);
+    expect(result[3]).toBe(1);
+    expect(result[4]).toBe(0);
+    expect(result[5]).toBe(0);
+    expect(result[6]).toBe(0);
+  });
 });

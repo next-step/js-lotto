@@ -1,3 +1,5 @@
+import { Lotto } from "./Lotto";
+
 export class LottoResult {
   #winningNumbers;
   #bonusNumber;
@@ -41,5 +43,15 @@ export class LottoResult {
       default:
         return 0;
     }
+  }
+
+  getWinningResult(lottoList) {
+    const result = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+
+    lottoList.forEach((lotto) => {
+      result[this.getRanking(lotto)] += 1;
+    });
+
+    return result;
   }
 }
