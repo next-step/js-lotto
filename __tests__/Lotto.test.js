@@ -21,7 +21,7 @@ describe("로또 정보 테스트", () => {
     // when
     const numbers = lotto.getNumbers();
 
-    // given
+    // then
     expect(
       numbers.every((number) => MINIMUM_LOTTO_NUMBER <= number && number <= MAXIMUM_LOTTO_NUMBER)
     ).toBe(true);
