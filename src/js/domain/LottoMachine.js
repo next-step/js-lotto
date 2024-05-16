@@ -1,5 +1,5 @@
 import { LOTTO_LENGTH, LOTTO_PRICE, MAXIMUM_LOTTO_NUMBER } from "../constants";
-import Lotto from "./Lotto";
+import { Lotto } from "./Lotto";
 import View from "./View";
 
 class LottoMachine {
@@ -19,8 +19,13 @@ class LottoMachine {
   }
 
   generateLotto() {
-    const randomNumbers = Array.from({ length: LOTTO_LENGTH }, () => this.generateRandomNumbers());
-    return new Lotto(randomNumbers);
+    const lottos = new Set();
+
+    while (lottos.size < LOTTO_LENGTH) {
+      const randomNumber = this.generateRandomNumbers();
+      lottos.add(randomNumber);
+    }
+    return new Lotto(Array.from(lottos));
   }
 
   generateRandomNumbers() {
