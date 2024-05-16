@@ -54,4 +54,17 @@ export class LottoResult {
 
     return result;
   }
+
+  getTotalProfit(lottoList) {
+    return lottoList.reduce(
+      (acc, lotto) => acc + this.getWinningAmount(this.getRanking(lotto)),
+      0
+    );
+  }
+
+  getProfitRate(amount, lottoList) {
+    const totalProfit = this.getTotalProfit(lottoList);
+    const profit = totalProfit - amount;
+    return (profit / amount) * 100;
+  }
 }

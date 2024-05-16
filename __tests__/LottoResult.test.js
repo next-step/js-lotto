@@ -67,4 +67,20 @@ describe("로또결과 테스트", () => {
     expect(result[5]).toBe(0);
     expect(result[6]).toBe(0);
   });
+
+  test("수익률을 계산한다.", () => {
+    // given
+    const lotto1 = new Lotto([1, 2, 3, 8, 9, 10]);
+    const lotto2 = new Lotto([1, 2, 3, 8, 9, 10]);
+    const lottoResult = new LottoResult([1, 2, 3, 4, 5, 6], 7);
+
+    // when
+    const profitRate = lottoResult.getProfitRate(2 * Lotto.PRICE, [
+      lotto1,
+      lotto2,
+    ]);
+
+    // then
+    expect(profitRate).toBe(400);
+  });
 });
