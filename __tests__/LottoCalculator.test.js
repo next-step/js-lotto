@@ -39,22 +39,6 @@ describe('LottoCalculator 생성자 테스트', () => {
       });
     }
   );
-
-  context.skip.each(INVALID_WINNING_AMOUNTS)(
-    '%s와 같이 유효하지 않은 당첨 금액이 주어질 때',
-    (winningAmounts) => {
-      it('TypeError를 Throw 한다.', () => {
-        expect(
-          () =>
-            new LottoCalculator({
-              winningNumbers: [1, 2, 3, 4, 5, 6],
-              winningBonusNumber: 7,
-              winningAmounts,
-            })
-        ).toThrow();
-      });
-    }
-  );
 });
 
 describe('LottoCalculator 로또 통계 테스트', () => {
