@@ -1,7 +1,12 @@
 import { ERROR_CODES } from "./constants/error";
 import { Lotto } from "./domain/Lotto";
+import { View } from "./views/view";
 
 export class App {
+  async play() {
+    const amount = await View.inputAmount();
+  }
+
   getLottoAmount(amount) {
     return Math.floor(amount / Lotto.PRICE);
   }
