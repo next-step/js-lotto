@@ -13,8 +13,15 @@ export function validateNumbers(numbers) {
     throw new RangeError("numbers는 중복되지 않아야 합니다.");
   }
 
-  if (numbers.some((number) => typeof number !== "number" || isNaN(number))) {
-    throw new TypeError("numbers의 원소는 number 타입이어야 합니다.");
+  if (
+    numbers.some(
+      (number) =>
+        typeof number !== "number" ||
+        isNaN(number) ||
+        !Number.isInteger(number),
+    )
+  ) {
+    throw new TypeError("numbers의 원소는 Integer 타입이어야 합니다.");
   }
 
   if (

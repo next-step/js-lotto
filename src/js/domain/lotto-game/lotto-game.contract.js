@@ -3,8 +3,12 @@ import LOTTO from "../lotto/lotto.constant.js";
 import { LOTTO_GAME_RANK } from "./lotto-game.constant.js";
 
 export function validateBonusNumber(bonusNumber, winningNumbers) {
-  if (typeof bonusNumber !== "number" || isNaN(bonusNumber)) {
-    throw new TypeError("보너스 번호는 number 타입이어야 합니다.");
+  if (
+    typeof bonusNumber !== "number" ||
+    isNaN(bonusNumber) ||
+    !Number.isInteger(bonusNumber)
+  ) {
+    throw new TypeError("보너스 번호는 Integer 타입이어야 합니다.");
   }
 
   if (bonusNumber < LOTTO.MIN_NUMBER || bonusNumber > LOTTO.MAX_NUMBER) {

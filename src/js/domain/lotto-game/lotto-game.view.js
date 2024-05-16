@@ -15,7 +15,7 @@ class LottoGameView {
       input
         .split(",")
         .map((number) => number.trim())
-        .map((number) => parseInt(number, 10));
+        .map((number) => Number(number));
 
     const validate = validateNumbers;
 
@@ -24,7 +24,7 @@ class LottoGameView {
 
   async inputBonusNumber() {
     const message = "> 보너스 번호를 입력해 주세요.\n";
-    const format = (input) => parseInt(input, 10);
+    const format = (input) => Number(input.trim());
     const validate = validateBonusNumber;
 
     return await prompt({ message, format, validate });

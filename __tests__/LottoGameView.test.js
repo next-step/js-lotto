@@ -14,7 +14,6 @@ describe("당첨 번호를 입력받는다.", () => {
     errorSpy.mockRestore();
   });
 
-  beforeEach;
   it("당첨 번호 6개를 입력받는다.", async () => {
     const mockInput = "1, 2, 3, 4, 5, 6";
     const lottoGameView = new LottoGameView();
@@ -77,6 +76,18 @@ describe("당첨 번호를 입력받는다.", () => {
 
     expect(errorSpy).toHaveBeenCalledTimes(1);
   });
+
+  it("당첨 번호가 정수가 아닐 경우 에러가 발생한다.", async () => {
+    const mockInput = ["1.1, 2, 3, 4, 5, 6", "1, 2, 3, 4, 5, 6"];
+    const lottoGameView = new LottoGameView();
+
+    mockInput.forEach((input) => {
+      readLineAsync.mockResolvedValueOnce(input);
+    });
+    await lottoGameView.inputWinningNumbers();
+
+    expect(errorSpy).toHaveBeenCalledTimes(1);
+  });
 });
 
 describe("보너스 번호를 입력받는다.", () => {
@@ -99,8 +110,8 @@ describe("보너스 번호를 입력받는다.", () => {
     expect(bonusNumber).toBe(8);
   });
 
-  it("보너스 번호가 숫자가 아닌 경우 에러가 발생한다.", async () => {
-    const mockInput = ["a", "8"];
+  it("보너스 번호가 정수가 아닌 경우 에러가 발생한다.", async () => {
+    const mockInput = ["a", "1.1", "8"];
     const lottoGameView = new LottoGameView();
 
     mockInput.forEach((input) => {
@@ -108,7 +119,7 @@ describe("보너스 번호를 입력받는다.", () => {
     });
     await lottoGameView.inputBonusNumber();
 
-    expect(errorSpy).toHaveBeenCalledTimes(1);
+    expect(errorSpy).toHaveBeenCalledTimes(2);
   });
 
   it("보너스 번호가 범위를 벗어난 경우 에러가 발생한다.", async () => {
