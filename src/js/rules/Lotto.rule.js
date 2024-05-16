@@ -50,6 +50,8 @@ export const bonusNumberRule = {
     if (!this.isNumberRangeValid(input)) throw new Error(LOTTO_NUMBER_RANGE_ERR_MSG);
     if (this.isNumberDuplicated(input, winningNumbers))
       throw new Error(LOTTO_NUMBER_DUPLICATED_ERR_MSG);
+
+    return true;
   },
 
   isNumberRangeValid(input) {

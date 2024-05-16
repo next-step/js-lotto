@@ -1,3 +1,4 @@
+import { LottoRank } from "./LottoRank.js";
 export class Lotto {
   #numbers;
 
@@ -11,6 +12,22 @@ export class Lotto {
   getNumbers() {
     return this.#numbers;
   }
+
+  getRank(winningLotto) {
+    const winningNumbers = winningLotto.winningNumbers.getNumbers();
+    const bonusNumber = winningLotto.bonusNumber;
+
+    console.log("winningNumbers:", winningNumbers);
+    console.log("bonusNumber:", bonusNumber);
+
+    const matchedCount = this.#numbers.filter((number) => winningNumbers.includes(number)).length;
+    const isBonusMatched = this.#numbers.includes(bonusNumber);
+
+    console.log("matchedCount:", matchedCount);
+    console.log("isBonusMatched:", isBonusMatched);
+
+    return LottoRank.getRank(matchedCount, isBonusMatched);
+  }
 }
 
 export class WinningLotto {
@@ -23,5 +40,13 @@ export class WinningLotto {
   constructor(winningLotto, bonusNumber) {
     this.#winningNumbers = winningLotto;
     this.#bonusNumber = bonusNumber;
+  }
+
+  get winningNumbers() {
+    return this.#winningNumbers;
+  }
+
+  get bonusNumber() {
+    return this.#bonusNumber;
   }
 }

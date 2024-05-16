@@ -14,6 +14,11 @@ class LottoMachine {
     return this.lottos;
   }
 
+  getLottoRanks(winningLotto) {
+    const lottoRanks = this.lottos.map((lotto) => lotto.getRank(winningLotto));
+    return lottoRanks;
+  }
+
   getTheNumberOfLottos(money) {
     return money / LOTTO_PRICE;
   }
