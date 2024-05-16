@@ -68,7 +68,13 @@ class LottoIO {
     }
   }
 
-  outputPurchasedLottos(lottoResult) {
+  outputPurchasedLottos(lottos) {
+    lottos.forEach((lotto) => {
+      console.log('lottos', lotto);
+    });
+  }
+
+  outputLottosResult(lottoResult) {
     console.log('당첨 통계');
     console.log('--------------------');
 

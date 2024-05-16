@@ -1,5 +1,5 @@
+import LottoConfirm from '../src/domain/LottoConfirm';
 import LottoMachine from '../src/domain/LottoMachine';
-import { generateRandomNumbers } from '../src/utils';
 import LottoIO, { ERROR_MESSAGE_INPUT_PURCHASE_PRICE } from '../src/view/\bLottoIO';
 
 describe('로또 입출력에 관한 테스트 케이스', () => {
@@ -32,46 +32,44 @@ describe('로또 입출력에 관한 테스트 케이스', () => {
     //given
     const lottoIO = new LottoIO();
     const machine = new LottoMachine();
-    const logSpy = jest.spyOn(global.console, 'log');
+    const GENERATED_LOTTO_NUMBERS = [1, 2, 3, 41, 13, 14];
+    const EXPECTED_LOTTOS = Array(7).fill(GENERATED_LOTTO_NUMBERS);
 
     //when
     lottoIO.readLineAsync = jest.fn().mockResolvedValue('7000');
     const prices = await lottoIO.inputPurchasePrice();
 
-    machine.generateLottoNumbers = jest.fn().mockReturnValue([1, 2, 3, 41, 13, 14]);
+    machine.generateLottoNumbers = jest.fn().mockReturnValue(GENERATED_LOTTO_NUMBERS);
     const lottos = machine.createLottos(prices);
 
-    machine.winnigNumbers = [1, 2, 3, 4, 5, 6];
-    machine.bonusNumber = 43;
+    console.log('lottos', lottos);
 
-    const checkedLottos = machine.checkLottoWinning(lottos);
-    lottoIO.outputPurchasedLottos(checkedLottos);
+    lottoIO.outputPurchasedLottos(lottos);
 
-    expect(logSpy).toHaveBeenCalledWith(
-      expect.stringContaining('3개 일치 (5,000원) - 7개')
-    );
+    expect(EXPECTED_LOTTOS).toEqual(lottos);
   });
 
   test('구매한 로또 금액 대비, 수익률을 알 수 있다.', async () => {
     //given
     const lottoIO = new LottoIO();
     const machine = new LottoMachine();
-    const logSpy = jest.spyOn(global.console, 'log');
+    const lottoConfirm = new LottoConfirm();
+    const GENERATED_LOTTO_NUMBERS = [1, 2, 3, 41, 13, 14];
 
     //when
     lottoIO.readLineAsync = jest.fn().mockResolvedValue('7000');
     const prices = await lottoIO.inputPurchasePrice();
 
-    machine.generateLottoNumbers = jest.fn().mockReturnValue([1, 2, 3, 41, 13, 14]);
+    machine.generateLottoNumbers = jest.fn().mockReturnValue(GENERATED_LOTTO_NUMBERS);
     const lottos = machine.createLottos(prices);
 
-    machine.winnigNumbers = [1, 2, 3, 4, 5, 6];
-    machine.bonusNumber = 43;
+    lottoConfirm.setWinningNumbers([1, 2, 3, 4, 5, 6]);
+    lottoConfirm.setBonusNumber(43);
 
-    const checkedLottos = machine.checkLottoWinning(lottos);
+    const checkedLottos = lottoConfirm.checkLottoWinning(lottos);
     lottoIO.outputPurchasedLottos(checkedLottos);
 
-    const percent = machine.returnsLottos(prices, checkedLottos);
+    const percent = lottoConfirm.returnsLottos(prices, checkedLottos);
 
     expect(percent).toBe(500);
   });
