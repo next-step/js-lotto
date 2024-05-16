@@ -22,16 +22,33 @@ describe("구입 금액 테스트", () => {
     expect(result).toEqual(2000);
   });
 
-  test("구입금액은 0이상의 정수이어야 한다. 그 외의 값은 에러가 발생한다.", async () => {
-    // jest.spyOn(readline, "question").mockImplementation(() => {
-    //   return Promise.resolve("안녕"); // Simulate user input
-    // });
-    const stringResult = "안녕";
-    const notIntegerResult = 2.5;
-    const negativeResult = -1;
+  test("구입금액은 숫자이어야 한다. 그렇지 않으면 에러가 발생한다.", async () => {
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve("안녕"); // Simulate user input
+    });
 
-    expect(() => validateNumber.nan(stringResult)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
-    expect(() => validateNumber.integer(notIntegerResult)).toThrow(OUTPUT_MESSAGE.INTEGER_ERROR);
-    expect(() => validateNumber.negative(negativeResult)).toThrow(OUTPUT_MESSAGE.NEGETIVE_NUM_ERROR);
+    const result = await input.purchasePrice();
+
+    expect(() => validateNumber.nan(result)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
+  });
+
+  test("구입금액은 0보다 커야 한다. 그렇지 않으면 에러가 발생한다.", async () => {
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve(-1); // Simulate user input
+    });
+
+    const result = await input.purchasePrice();
+
+    expect(() => validateNumber.negative(result)).toThrow(OUTPUT_MESSAGE.NEGETIVE_NUM_ERROR);
+  });
+
+  test("구입금액은 정수여야 한다. 그렇지 않으면 에러가 발생한다.", async () => {
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve(1.1); // Simulate user input
+    });
+
+    const result = await input.purchasePrice();
+
+    expect(() => validateNumber.integer(result)).toThrow(OUTPUT_MESSAGE.INTEGER_ERROR);
   });
 });
