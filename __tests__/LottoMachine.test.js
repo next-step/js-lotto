@@ -64,39 +64,3 @@ describe('로또 발권 테스트', () => {
     }
   );
 });
-
-describe.skip('로또 통계 테스트', () => {
-  context('1,2,3등인 3개의 로또를 통계를 내렸을 때', () => {
-    it('수익률과 차트 배열을 반환한다.', () => {
-      // given
-      const lottoMachine = new LottoMachine();
-      lottoMachine.winningNumbers = [1, 2, 3, 4, 5, 6];
-      lottoMachine.bonusWinningNumber = 7;
-
-      const [lotto1st, lotto2st, lotto3st] = Array.from(
-        { length: 3 },
-        () => new LottoTicket()
-      );
-      lotto1st.lottoNumbers = [1, 2, 3, 4, 5, 6];
-      lotto2st.lottoNumbers = [1, 2, 3, 4, 5, 7];
-      lotto3st.lottoNumbers = [1, 2, 3, 4, 5, 11];
-
-      // when
-      const { netReturn, chart } = lottoMachine.getStatistics([
-        lotto1st,
-        lotto2st,
-        lotto3st,
-      ]);
-
-      // then
-      expect(netReturn).toBe(1500000 + 30000000 + 2000000000);
-      expect(chart).toEqual([
-        [5, { lottoTickets: [], winningAmount: 5000, matchCount: 3 }],
-        [4, { lottoTickets: [], winningAmount: 50000, matchCount: 4 }],
-        [3, { lottoTickets: [{}], winningAmount: 1500000, matchCount: 5 }],
-        [2, { lottoTickets: [{}], winningAmount: 30000000, matchCount: 5 }],
-        [1, { lottoTickets: [{}], winningAmount: 2000000000, matchCount: 6 }],
-      ]);
-    });
-  });
-});
