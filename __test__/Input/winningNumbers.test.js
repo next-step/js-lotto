@@ -51,4 +51,24 @@ describe("당첨 번호 테스트", () => {
 
     expect(() => validateArrDuplicate(winningNumbers)).toThrow(OUTPUT_MESSAGE.DUPLICATE_NUMBER_ERROR);
   });
+
+  test("당첨번호는 음수를 입력할 수 없다. 그렇지 않으면 에러를 발생한다.", async () => {
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve("1, 2, 3, 4, -1, 5");
+    });
+
+    const winningNumbers = await input.winningLotto();
+
+    expect(() => validateArrNonNegativeInteger(winningNumbers)).toThrow(OUTPUT_MESSAGE.NEGETIVE_NUM_ERROR);
+  });
+
+  test("당첨번호는 소수를 입력할 수 없다. 그렇지 않으면 에러를 발생한다.", async () => {
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve("1, 2, 3, 4, 1.5, 5");
+    });
+
+    const winningNumbers = await input.winningLotto();
+
+    expect(() => validateArrNonNegativeInteger(winningNumbers)).toThrow(OUTPUT_MESSAGE.INTEGER_ERROR);
+  });
 });
