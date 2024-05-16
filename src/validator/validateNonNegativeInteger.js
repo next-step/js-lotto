@@ -5,7 +5,7 @@ export const validateNonNegativeInteger = (number) => {
     throw new Error(OUTPUT_MESSAGE.NAN_ERROR);
   }
 
-  if (number < 0) {
+  if (number < 1) {
     throw new Error(OUTPUT_MESSAGE.NEGETIVE_NUM_ERROR);
   }
 
