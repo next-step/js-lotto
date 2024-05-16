@@ -15,14 +15,15 @@ class LottoMachine {
     this.validators = new LottoValidator();
   }
 
-  createLottos(inputPrices) {
+  createLottos(inputPrices, order, sortArray) {
     this.validators.validCheckAmount(inputPrices);
     const numberLottoPurchases = Math.floor(inputPrices / LOTTO_PRICE);
 
     const newLottos = Array.from({ length: numberLottoPurchases }, () => {
       const lottoNumbers = this.generateLottoNumbers(this.validators);
-      this.#lottos.push(lottoNumbers);
-      return lottoNumbers;
+      const sortNumbers = sortArray(order, lottoNumbers);
+      this.#lottos.push(sortNumbers);
+      return sortNumbers;
     });
 
     return newLottos;
