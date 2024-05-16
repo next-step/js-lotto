@@ -1,7 +1,8 @@
+import { ERROR_MESSAGE_INPUT_PURCHASE_PRICE } from '../src/constants';
 import LottoConfirm from '../src/domain/LottoConfirm';
 import LottoMachine from '../src/domain/LottoMachine';
+import LottoIO from '../src/view/LottoIO';
 import { sortArray } from '../src/utils';
-import LottoIO, { ERROR_MESSAGE_INPUT_PURCHASE_PRICE } from '../src/view/\bLottoIO';
 
 describe('로또 입출력에 관한 테스트 케이스', () => {
   test('구매 금액을 입력받는다.', async () => {
@@ -10,7 +11,7 @@ describe('로또 입출력에 관한 테스트 케이스', () => {
 
     //when
     lottoIO.readLineAsync = jest.fn().mockResolvedValue('7000');
-    const purchasePrice = await lottoIO.inputPurchasePrice();
+    const purchasePrice = await lottoIO.inputPurchasePrice(1);
 
     //then
     expect(purchasePrice).toBe(7000);
@@ -19,14 +20,13 @@ describe('로또 입출력에 관한 테스트 케이스', () => {
   test('구매 금액을 잘못입력한 경우(숫자 이외 다른 문자), 에러를 발생시킨다.', async () => {
     //given
     const lottoIO = new LottoIO();
+    const logSpy = jest.spyOn(global.console, 'log');
 
     //when
     lottoIO.readLineAsync = jest.fn().mockResolvedValue('7000ㅁㅁㅁ');
-
+    await lottoIO.inputPurchasePrice(1);
     //then
-    await expect(lottoIO.inputPurchasePrice()).rejects.toThrow(
-      ERROR_MESSAGE_INPUT_PURCHASE_PRICE
-    );
+    expect(logSpy).toHaveBeenCalledWith(ERROR_MESSAGE_INPUT_PURCHASE_PRICE);
   });
 
   test('구매한 로또에 대한 번호를 출력한다.', async () => {
@@ -38,7 +38,7 @@ describe('로또 입출력에 관한 테스트 케이스', () => {
 
     //when
     lottoIO.readLineAsync = jest.fn().mockResolvedValue('7000');
-    const prices = await lottoIO.inputPurchasePrice();
+    const prices = await lottoIO.inputPurchasePrice(1);
 
     machine.generateLottoNumbers = jest.fn().mockReturnValue(GENERATED_LOTTO_NUMBERS);
     const lottos = machine.createLottos(prices, 'ASC', sortArray);
@@ -112,6 +112,7 @@ describe('로또 입출력에 관한 테스트 케이스', () => {
     const checkedLottos = lottoConfirm.checkLottoWinning(lottos);
     lottoIO.outputPurchasedLottos(checkedLottos);
     const percent = lottoConfirm.returnsLottos(prices, checkedLottos);
+    lottoIO.outputLottosResult(checkedLottos, percent);
 
     lottoIO.readLineAsync = jest.fn().mockResolvedValue('y');
     const restart = await lottoIO.inputRestartOrNot();

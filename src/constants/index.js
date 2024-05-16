@@ -28,3 +28,5 @@ export const LOTTO_MAX_NUMBER = 45;
 export const LOTTO_BONUS_COUNT = 5;
 
 export const BONUS_WINNING = 7;
+
+export const RETRY_INPUT_COUNT = 5;
