@@ -9,7 +9,7 @@ import {
   LOTTO_SECOND_PRIZE_WINNER,
   LOTTO_FIRST_PRIZE_WINNER,
 } from '../constants';
-import { numberOfDuplicateArrays } from '../utils';
+import { filterArray } from '../utils';
 import LottoValidator from '../domain/LottoValidator';
 
 class LottoIO {
@@ -72,11 +72,11 @@ class LottoIO {
     console.log('당첨 통계');
     console.log('--------------------');
 
-    const result_5th = numberOfDuplicateArrays(lottoResult, LOTTO_5TH_PRIZE_WINNER);
-    const result_4th = numberOfDuplicateArrays(lottoResult, LOTTO_4TH_PRIZE_WINNER);
-    const result_3rd = numberOfDuplicateArrays(lottoResult, LOTTO_3RD_PRIZE_WINNER);
-    const result_sec = numberOfDuplicateArrays(lottoResult, LOTTO_SECOND_PRIZE_WINNER);
-    const result_first = numberOfDuplicateArrays(lottoResult, LOTTO_FIRST_PRIZE_WINNER);
+    const result_5th = filterArray(lottoResult, LOTTO_5TH_PRIZE_WINNER);
+    const result_4th = filterArray(lottoResult, LOTTO_4TH_PRIZE_WINNER);
+    const result_3rd = filterArray(lottoResult, LOTTO_3RD_PRIZE_WINNER);
+    const result_sec = filterArray(lottoResult, LOTTO_SECOND_PRIZE_WINNER);
+    const result_first = filterArray(lottoResult, LOTTO_FIRST_PRIZE_WINNER);
 
     console.log(`3개 일치 (5,000원) - ${result_5th}개`);
     console.log(`4개 일치 (50,000원) - ${result_4th}개`);
