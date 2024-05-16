@@ -49,18 +49,21 @@ const app = async () => {
   };
 
   const validatePurchasePrice = (purchasePrice) => {
-    validateNumber.inRange(purchasePrice);
+    validateNumber.nan(purchasePrice);
+    validateNumber.negative(purchasePrice);
   };
 
   const validateWinningNumbers = (winningNumberArray) => {
     validateArray.length(winningNumberArray);
     validateArray.inRange(winningNumberArray);
-    validateArray.inRange(winningNumberArray);
     validateArray.duplicate(winningNumberArray);
   };
 
   const validateBonusNumber = (winningNumberArray, bonusNumber) => {
-    validateNumber.inRange(bonusNumber);
+    validateNumber.nan(bonusNumber);
+    validateNumber.negative(bonusNumber);
+    validateNumber.integer(bonusNumber);
+    validateNumber.max(bonusNumber);
     validateArray.containNum(winningNumberArray, bonusNumber);
   };
 

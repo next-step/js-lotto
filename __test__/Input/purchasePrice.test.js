@@ -30,8 +30,8 @@ describe("구입 금액 테스트", () => {
     const notIntegerResult = 2.5;
     const negativeResult = -1;
 
-    expect(() => validateNumber.inRange(stringResult)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
-    expect(() => validateNumber.inRange(notIntegerResult)).toThrow(OUTPUT_MESSAGE.INTEGER_ERROR);
-    expect(() => validateNumber.inRange(negativeResult)).toThrow(OUTPUT_MESSAGE.NEGETIVE_NUM_ERROR);
+    expect(() => validateNumber.nan(stringResult)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
+    expect(() => validateNumber.integer(notIntegerResult)).toThrow(OUTPUT_MESSAGE.INTEGER_ERROR);
+    expect(() => validateNumber.negative(negativeResult)).toThrow(OUTPUT_MESSAGE.NEGETIVE_NUM_ERROR);
   });
 });
