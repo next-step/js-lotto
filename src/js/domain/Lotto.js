@@ -1,4 +1,4 @@
-class Lotto {
+export class Lotto {
   #numbers;
 
   /**
@@ -13,4 +13,15 @@ class Lotto {
   }
 }
 
-export default Lotto;
+export class WinningLotto {
+  #winningNumbers;
+  #bonusNumber;
+  /**
+   * @param {Lotto} winningLotto
+   * @param {number} bonusNumber
+   */
+  constructor(winningLotto, bonusNumber) {
+    this.#winningNumbers = winningLotto;
+    this.#bonusNumber = bonusNumber;
+  }
+}

@@ -1,14 +1,16 @@
 import LottoMachine from "../src/js/domain/LottoMachine";
 import View from "../src/js/domain/View";
 import { lottoMoneyRule } from "../src/js/rules";
-import { LOTTO_MONEY_ERR_MSG } from "../src/js/constants/error";
+import { LOTTO_MONEY_ERR_MSG, LOTTO_NUMBER_DUPLICATED_ERR_MSG } from "../src/js/constants/error";
 import {
+  TEST_DUPLICATED_LOTTO_NUMBERS,
   TEST_LOTTO_NUMBERS,
   TEST_MONEY,
   TEST_STRING_MONEY,
   TEST_WHITESPACE_MONEY,
 } from "./constants";
-import Lotto from "../src/js/domain/Lotto";
+import { Lotto } from "../src/js/domain/Lotto";
+import { lottoRule } from "../src/js/rules/Lotto.rule";
 
 let logSpy;
 let lottoMachine;
@@ -78,5 +80,17 @@ describe("입출력 테스트", () => {
 
     //then
     expect(logSpy).toHaveBeenCalledWith(ascLottoArr);
+  });
+
+  test("당첨 번호가 중복되었다면, 에러메시지를 호출한다.", async () => {
+    //given
+    const mockWinningNumbers = jest.fn().mockReturnValue(TEST_DUPLICATED_LOTTO_NUMBERS);
+    const input = await mockWinningNumbers();
+
+    //when
+    const validationCallback = () => lottoRule.validates(input.join(","));
+
+    //then
+    expect(validationCallback).toThrow(LOTTO_NUMBER_DUPLICATED_ERR_MSG);
   });
 });

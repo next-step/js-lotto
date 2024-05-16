@@ -1,12 +1,23 @@
 import { lottoMoneyRule } from "../rules/LottoMoney.rule";
+import { lottoRule } from "../rules/Lotto.rule";
 import { readLineAsync } from "../utils/readLineSync";
-import Lotto from "./Lotto";
+import { Lotto } from "./Lotto";
 
 const View = {
   async getMoney() {
     try {
       const money = await readLineAsync(`> 구입금액을 입력해 주세요.\n`);
       if (lottoMoneyRule.validates(money)) return +money;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async getWinningNumbers() {
+    try {
+      const winningNumbers = await readLineAsync(`> 당첨 번호를 입력해 주세요.`);
+      if (lottoRule.validates(winningNumbers))
+        return winningNumbers.split(",").map((number) => +number);
     } catch (error) {
       console.error(error);
     }
