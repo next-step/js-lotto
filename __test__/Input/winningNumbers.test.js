@@ -5,6 +5,7 @@ import { validateArrNonNegativeInteger } from "../../src/validator/validateArrNo
 import { validateArrLength } from "../../src/validator/validateArrLength";
 import { validateArrDuplicate } from "../../src/validator/validateArrDuplicate";
 import { input } from "../../src/view/console/input";
+import { validateArrLimitNum } from "../../src/validator/validateArrLimitNum";
 
 describe("당첨 번호 테스트", () => {
   afterEach(() => {
@@ -70,5 +71,15 @@ describe("당첨 번호 테스트", () => {
     const winningNumbers = await input.winningLotto();
 
     expect(() => validateArrNonNegativeInteger(winningNumbers)).toThrow(OUTPUT_MESSAGE.INTEGER_ERROR);
+  });
+
+  test(`당첨번호는 1부터 ${LOTTO.MAX_NUMBER}이하의 숫자를 입력해야한다. 그렇지 않으면 에러를 발생한다.`, async () => {
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve("1, 2, 3, 4, 46, 5");
+    });
+
+    const winningNumbers = await input.winningLotto();
+
+    expect(() => validateArrLimitNum(winningNumbers)).toThrow(OUTPUT_MESSAGE.LIMIT_NUM_ERROR);
   });
 });

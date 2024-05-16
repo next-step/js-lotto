@@ -7,6 +7,7 @@ import { validateArrLength } from "./validator/validateArrLength";
 import { validateArrNonNegativeInteger } from "./validator/validateArrNonNegativeInteger";
 import { validateArrDuplicate } from "./validator/validateArrDuplicate";
 import { validateArrContainNum } from "./validator/validateArrContainNum";
+import { validateArrLimitNum } from "./validator/validateArrLimitNum";
 
 const app = async () => {
   const getPurchasePrice = async () => {
@@ -58,6 +59,7 @@ const app = async () => {
   const validateWinningNumbers = (winningNumberArray) => {
     validateArrLength(winningNumberArray);
     validateArrNonNegativeInteger(winningNumberArray);
+    validateArrLimitNum(winningNumberArray);
     validateArrDuplicate(winningNumberArray);
   };
 
