@@ -39,3 +39,24 @@ export const lottoRule = {
     );
   },
 };
+
+export const bonusNumberRule = {
+  /**
+   * @param {string} input
+   * @param {string[]} winningNumbers
+   */
+  validates(input, winningNumbers) {
+    if (!isInputNumber(input)) throw new Error(LOTTO_NUMBER_TYPE_ERR_MSG);
+    if (!this.isNumberRangeValid(input)) throw new Error(LOTTO_NUMBER_RANGE_ERR_MSG);
+    if (this.isNumberDuplicated(input, winningNumbers))
+      throw new Error(LOTTO_NUMBER_DUPLICATED_ERR_MSG);
+  },
+
+  isNumberRangeValid(input) {
+    return input >= MINIMUM_LOTTO_NUMBER && input <= MAXIMUM_LOTTO_NUMBER;
+  },
+
+  isNumberDuplicated(input, winningNumbers) {
+    return winningNumbers.includes(+input);
+  },
+};

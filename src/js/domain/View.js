@@ -1,5 +1,5 @@
 import { lottoMoneyRule } from "../rules/LottoMoney.rule";
-import { lottoRule } from "../rules/Lotto.rule";
+import { bonusNumberRule, lottoRule } from "../rules/Lotto.rule";
 import { readLineAsync } from "../utils/readLineSync";
 import { Lotto } from "./Lotto";
 
@@ -13,14 +13,26 @@ const View = {
     }
   },
 
-  async getWinningNumbers() {
+  async getLottoNumbers() {
     try {
-      const winningNumbers = await readLineAsync(`> 당첨 번호를 입력해 주세요.`);
-      if (lottoRule.validates(winningNumbers))
-        return winningNumbers.split(",").map((number) => +number);
+      const winningNumbers = await this.getWinningNumbers();
+      const bonusNumber = await this.getBonusNumber(winningNumbers);
+
+      return { winningNumbers, bonusNumber };
     } catch (error) {
       console.error(error);
     }
+  },
+
+  async getWinningNumbers() {
+    const winningNumbers = await readLineAsync(`> 당첨 번호를 입력해 주세요.`);
+    if (lottoRule.validates(winningNumbers))
+      return winningNumbers.split(",").map((number) => +number);
+  },
+
+  async getBonusNumber(winningNumbers) {
+    const bonusNumber = await readLineAsync(`> 보너스 번호를 입력해 주세요.`);
+    if (bonusNumberRule.validates(bonusNumber, winningNumbers)) return +bonusNumber;
   },
 
   /**

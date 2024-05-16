@@ -5,4 +5,4 @@ const money = await View.getMoney();
 const lottoMachine = new LottoMachine();
 const lottos = lottoMachine.buy(money);
 
-const winningNumbers = await View.getWinningNumbers();
+const { winningNumbers, bonusNumber } = await View.getLottoNumbers();
