@@ -1,4 +1,4 @@
-import { drawItem, drawNotDuplicatedItems } from "../src/js/util/Draw";
+import { drawItem, drawUniqueItems } from "../src/js/util/Draw";
 
 describe("뽑기 테스트", () => {
   test("리스트에서 아이템을 뽑아서 리턴한다.", () => {
@@ -28,7 +28,7 @@ describe("뽑기 테스트", () => {
     const list = [1, 2, 3];
 
     //when
-    const items = drawNotDuplicatedItems(list, list.length);
+    const items = drawUniqueItems(list, list.length);
 
     //then
     expect(items.sort()).toStrictEqual(list);
@@ -40,7 +40,7 @@ describe("뽑기 테스트", () => {
 
     //when
     const whenDuplicatedList = () =>
-      drawNotDuplicatedItems(duplicatedList, duplicatedList.length);
+      drawUniqueItems(duplicatedList, duplicatedList.length);
 
     //then
     expect(whenDuplicatedList).toThrow();

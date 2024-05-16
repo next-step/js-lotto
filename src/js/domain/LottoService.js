@@ -4,7 +4,7 @@ import {
   Lotto,
   LOTTO_DIGITS,
 } from "./Lotto";
-import { drawNotDuplicatedItems } from "../util/Draw";
+import { drawUniqueItems } from "../util/Draw";
 
 export const LOTTO_PRICE = 1_000;
 
@@ -37,7 +37,7 @@ const generateLottoNumbers = (count) => {
       .fill()
       .map((_, i) => i + LOTTO_MIN_NUMBER);
 
-    const numbers = drawNotDuplicatedItems(lottoNumbers, LOTTO_DIGITS);
+    const numbers = drawUniqueItems(lottoNumbers, LOTTO_DIGITS);
     const sortedNumbers = numbers.toSorted((a, b) => a - b);
     numbersList.push(sortedNumbers);
   }

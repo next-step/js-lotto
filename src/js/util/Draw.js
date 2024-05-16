@@ -10,7 +10,7 @@ export const drawItem = (list) => {
   return item;
 };
 
-export const drawNotDuplicatedItems = (list, amount) => {
+export const drawUniqueItems = (list, amount) => {
   if (list.length !== new Set(list).size) {
     throw new Error();
   }
