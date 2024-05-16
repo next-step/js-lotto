@@ -91,4 +91,32 @@ describe('로또 입출력에 관한 테스트 케이스', () => {
 
     expect(EXPECT_LOTTO_NUMBERS).toEqual(lottos[0]);
   });
+
+  test('당첨 통계를 출력한 뒤에는 재시작/종료 여부를 입력받는다.', async () => {
+    //given
+    const lottoIO = new LottoIO();
+    const machine = new LottoMachine();
+    const lottoConfirm = new LottoConfirm();
+    const GENERATED_LOTTO_NUMBERS = [1, 2, 3, 41, 13, 14];
+
+    //when
+    lottoIO.readLineAsync = jest.fn().mockResolvedValue('7000');
+    const prices = await lottoIO.inputPurchasePrice();
+
+    machine.generateLottoNumbers = jest.fn().mockReturnValue(GENERATED_LOTTO_NUMBERS);
+    const lottos = machine.createLottos(prices, 'ASC', sortArray);
+
+    lottoConfirm.setWinningNumbers([1, 2, 3, 4, 5, 6]);
+    lottoConfirm.setBonusNumber(43);
+
+    const checkedLottos = lottoConfirm.checkLottoWinning(lottos);
+    lottoIO.outputPurchasedLottos(checkedLottos);
+    const percent = lottoConfirm.returnsLottos(prices, checkedLottos);
+
+    lottoIO.readLineAsync = jest.fn().mockResolvedValue('y');
+    const restart = await lottoIO.inputRestartOrNot();
+
+    //then
+    expect(restart).toBe('y');
+  });
 });
