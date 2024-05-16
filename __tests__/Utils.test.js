@@ -15,11 +15,11 @@ describe('유틸 기능 테스트', () => {
     context('5_000 과 8_000을 받는다.', () => {
       it('62.5를 리턴한다.', () => {
         // given
-        const netReturn = 5_000;
+        const profit = 5_000;
         const investmentCost = 8_000;
 
         // when
-        const rateOfReturn = calcROI(netReturn, investmentCost);
+        const rateOfReturn = calcROI(profit, investmentCost);
 
         // then
         expect(rateOfReturn).toBe(62.5);

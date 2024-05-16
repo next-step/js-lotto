@@ -31,10 +31,10 @@ describe('입출력 (로또) 기능 테스트', () => {
   });
   it('수익률을 출력한다.', () => {
     // given
-    const netReturn = 5_000;
+    const profit = 5_000;
     const investmentCost = 8_000;
     // when
-    const rateOfReturn = readROI(netReturn, investmentCost);
+    const rateOfReturn = readROI(profit, investmentCost);
 
     // then
     expect(rateOfReturn).toBe('62.5%');

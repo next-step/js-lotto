@@ -27,8 +27,8 @@ export function readLineAsync(query) {
   });
 }
 
-export function calcROI(netReturn, investmentCost) {
-  return (netReturn / investmentCost) * 100;
+export function calcROI(profit, investmentCost) {
+  return (profit / investmentCost) * 100;
 }
 
 export function comma(money) {

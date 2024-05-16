@@ -17,8 +17,8 @@ export function readLottoNumbers(lottoTicketInstance) {
  * ROI란 투자 대비 수익률을 의미합니다.(Return On Investment)
  * ROI = 순이익 / 투자비용 * 100
  */
-export function readROI(netReturn, investmentCost) {
-  return `${calcROI(netReturn, investmentCost).toFixed(1)}%`;
+export function readROI(profit, investmentCost) {
+  return `${calcROI(profit, investmentCost).toFixed(1)}%`;
 }
 
 export function readMatchLottoNumber({ matchNumber, price, matchCount }) {
