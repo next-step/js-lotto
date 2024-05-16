@@ -23,11 +23,12 @@ export const OUTPUT_MESSAGE = {
 };
 
 export const PRIZE_MESSAGE = {
-  1: (count) => `${LOTTO.NUMBERS_COUNT}개 일치 (${numberFormater(WINNINGS.FIRST)}원) - ${count}개`,
-  2: (count) => `${LOTTO.NUMBERS_COUNT - 1}개 일치, 보너스 볼 일치 (${numberFormater(WINNINGS.SECOND)}원) - ${count}개`,
-  3: (count) => `${LOTTO.NUMBERS_COUNT - 1}개 일치 (${numberFormater(WINNINGS.THIRD)}원) - ${count}개`,
-  4: (count) => `${LOTTO.NUMBERS_COUNT - 2}개 일치 (${numberFormater(WINNINGS.FOURTH)}원) - ${count}개`,
-  5: (count) => `${LOTTO.NUMBERS_COUNT - 3}개 일치 (${numberFormater(WINNINGS.FIFTH)}원) - ${count}개`,
+  FIRST_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT}개 일치 (${numberFormater(WINNINGS.FIRST)}원) - ${count}개`,
+  SECOND_PRIZE: (count) =>
+    `${LOTTO.NUMBERS_COUNT - 1}개 일치, 보너스 볼 일치 (${numberFormater(WINNINGS.SECOND)}원) - ${count}개`,
+  THIRD_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT - 1}개 일치 (${numberFormater(WINNINGS.THIRD)}원) - ${count}개`,
+  FOURTH_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT - 2}개 일치 (${numberFormater(WINNINGS.FOURTH)}원) - ${count}개`,
+  FIFTH_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT - 3}개 일치 (${numberFormater(WINNINGS.FIFTH)}원) - ${count}개`,
 };
 
 export const WINNINGS = {

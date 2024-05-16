@@ -33,7 +33,7 @@ describe("출력 테스트", () => {
     const lottoGame = new LottoGame(lottos, winningNumbers, bonusNumber);
     output.result(lottoGame.result);
 
-    expect(console.log).toHaveBeenCalledWith(PRIZE_MESSAGE[5](1));
-    expect(console.log).toHaveBeenCalledWith(PRIZE_MESSAGE[1](1));
+    expect(console.log).toHaveBeenCalledWith(PRIZE_MESSAGE.FIRST_PRIZE(1));
+    expect(console.log).toHaveBeenCalledWith(PRIZE_MESSAGE.FIFTH_PRIZE(1));
   });
 });
