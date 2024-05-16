@@ -1,23 +1,20 @@
 import * as readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 
-export const readLine = async (query) => {
+export const readLine = async ({ query, validate, transform }) => {
   const rl = readline.createInterface({ input, output });
 
-  const answer = await rl.question(query);
+  const answer = await rl.question(query + "\n");
 
   rl.close();
 
-  return answer;
-};
-
-export const readInteger = async (query) => {
-  const input = await readLine(query);
-  const inputInt = parseInt(input);
-
-  if (Number.isNaN(inputInt)) {
-    throw new Error("This input must be integer");
+  if (validate && !validate(answer)) {
+    throw new Error();
   }
 
-  return inputInt;
+  if (transform) {
+    return transform(answer);
+  }
+
+  return answer;
 };

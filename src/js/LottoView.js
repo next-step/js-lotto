@@ -1,9 +1,12 @@
 import { LOTTO_PRICE } from "./domain/LottoService";
 import { LottoRank } from "./domain/enum/LottoRank";
-import { readLine, readInteger } from "./util/ReadLine";
+import { readLine } from "./util/ReadLine";
 
 export const askMoney = async () => {
-  const input = await readInteger("> 구입금액을 입력해 주세요.");
+  const query = "> 구입금액을 입력해 주세요.";
+  const transform = (x) => parseInt(x);
+
+  const input = await readLine({ query, transform });
   return input;
 };
 
@@ -14,13 +17,16 @@ export const printBuyingList = (numbersList) => {
 };
 
 export const askWinningNumbers = async () => {
-  const input = await readLine("> 당첨 번호를 입력해 주세요.\n");
-  const winningNumbers = input.split(",").map((e) => parseInt(e));
-  return winningNumbers;
+  const query = "> 당첨 번호를 입력해 주세요.";
+  const transform = (x) => x.split(",").map((e) => parseInt(e));
+  const input = await readLine({ query, transform });
+  return input;
 };
 
 export const askBonusNumber = async () => {
-  const input = await readInteger("> 보너스 번호를 입력해 주세요.\n");
+  const query = "> 보너스 번호를 입력해 주세요.";
+  const transform = (x) => parseInt(x);
+  const input = await readLine({ query, transform });
   return input;
 };
 
