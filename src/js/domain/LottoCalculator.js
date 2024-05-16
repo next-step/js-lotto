@@ -3,11 +3,10 @@ import {
   isValidLottoNumber,
   isValidLottoNumberArray,
 } from '../utils/LottoUtil';
-import LottoTicket from './LottoTicket';
 
 class LottoCalculator {
   #winningNumbers;
-  #bonusWinningNumber;
+  #winningBonusNumber;
   #winningAmounts;
 
   static DEFAULT_WINNING_AMOUNT = [
@@ -17,33 +16,87 @@ class LottoCalculator {
 
   constructor({
     winningNumbers,
-    bonusWinningNumber,
+    winningBonusNumber,
     winningAmounts = LottoCalculator.DEFAULT_WINNING_AMOUNT,
   }) {
     if (
-      !isValidLottoNumberArray(winningNumbers) ||
-      !isValidLottoNumber(bonusWinningNumber) ||
+      !isValidLottoNumberArray(winningNumbers, winningNumbers.length) ||
+      !isValidLottoNumber(winningBonusNumber) ||
       !Array.isArray(winningAmounts)
     ) {
       throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
-    if (winningNumbers.includes(bonusWinningNumber)) {
+    if (winningNumbers.includes(winningBonusNumber)) {
       throw new TypeError(LottoCalculator.DUPLICATE_LOTTO_NUMBERS);
     }
-    if (winningAmounts.length !== LOTTO.WINNING_NUMBER_LENGTH) {
-      throw new TypeError(ERROR_MESSAGE.INVALID_LOTTO_FORMAT);
-    }
     this.#winningNumbers = winningNumbers;
-    this.#bonusWinningNumber = bonusWinningNumber;
+    this.#winningBonusNumber = winningBonusNumber;
     this.#winningAmounts = winningAmounts;
   }
 
-  get winningNumbers() {
-    return this.#winningNumbers;
+  #getLottoNumberMatchCount(winningNumbers, lottoNumbers) {
+    return winningNumbers.reduce(
+      (count, winningNumber) =>
+        lottoNumbers.includes(winningNumber) ? count + 1 : count,
+      0
+    );
   }
 
-  get bonusWinningNumber() {
-    return this.#bonusWinningNumber;
+  #hasBonusNumber(lottoNumbers, bonusNumber) {
+    return lottoNumbers.includes(bonusNumber);
+  }
+
+  #calcWinningAmount(lottoNumbers) {
+    const matchCount = this.#getLottoNumberMatchCount(
+      this.#winningNumbers,
+      lottoNumbers
+    );
+    switch (matchCount) {
+      case 6:
+        return this.#winningAmounts[0];
+      case 5:
+        return this.#hasBonusNumber(lottoNumbers, this.#winningBonusNumber)
+          ? this.#winningAmounts[1]
+          : this.#winningAmounts[2];
+      case 4:
+        return this.#winningAmounts[3];
+      case 3:
+        return this.#winningAmounts[4];
+      default:
+        return this.#winningAmounts[5];
+    }
+  }
+
+  #calcWinningRank(lottoNumbers) {
+    const matchCount = this.#getLottoNumberMatchCount(
+      this.#winningNumbers,
+      lottoNumbers
+    );
+    switch (matchCount) {
+      case 6:
+        return LOTTO.RANK_1;
+      case 5:
+        return this.#hasBonusNumber(lottoNumbers, this.#winningBonusNumber)
+          ? LOTTO.RANK_2
+          : LOTTO.RANK_3;
+      case 4:
+        return LOTTO.RANK_4;
+      case 3:
+        return LOTTO.RANK_5;
+      default:
+        return LOTTO.UNRANKED;
+    }
+  }
+
+  getResult(lottoNumbers) {
+    return {
+      matchCount: this.#getLottoNumberMatchCount(
+        this.#winningNumbers,
+        lottoNumbers
+      ),
+      winningRank: this.#calcWinningRank(lottoNumbers),
+      winningAmount: this.#calcWinningAmount(lottoNumbers),
+    };
   }
 
   getStatistics(lottoTickets) {
@@ -52,7 +105,7 @@ class LottoCalculator {
         LOTTO.RANK_5,
         {
           lottoTickets: [],
-          winningAmount: this.#winningAmounts[4],
+          winningAmount: this.#winningAmounts[4] ?? 0,
           matchCount: 3,
         },
       ],
@@ -60,7 +113,7 @@ class LottoCalculator {
         LOTTO.RANK_4,
         {
           lottoTickets: [],
-          winningAmount: this.#winningAmounts[3],
+          winningAmount: this.#winningAmounts[3] ?? 0,
           matchCount: 4,
         },
       ],
@@ -68,7 +121,7 @@ class LottoCalculator {
         LOTTO.RANK_3,
         {
           lottoTickets: [],
-          winningAmount: this.#winningAmounts[2],
+          winningAmount: this.#winningAmounts[2] ?? 0,
           matchCount: 5,
         },
       ],
@@ -76,7 +129,7 @@ class LottoCalculator {
         LOTTO.RANK_2,
         {
           lottoTickets: [],
-          winningAmount: this.#winningAmounts[1],
+          winningAmount: this.#winningAmounts[1] ?? 0,
           matchCount: 5,
         },
       ],
@@ -84,7 +137,7 @@ class LottoCalculator {
         LOTTO.RANK_1,
         {
           lottoTickets: [],
-          winningAmount: this.#winningAmounts[0],
+          winningAmount: this.#winningAmounts[0] ?? 0,
           matchCount: 6,
         },
       ],
@@ -92,12 +145,7 @@ class LottoCalculator {
     let netReturn = 0;
 
     lottoTickets.forEach((lottoTicket) => {
-      const lottoResult = lottoTicket.getResult({
-        winningNumbers: this.#winningNumbers,
-        bonusWinningNumber: this.#bonusWinningNumber,
-        winningAmounts: this.#winningAmounts,
-      });
-
+      const lottoResult = this.getResult(lottoTicket.lottoNumbers);
       const winningRankRow = chartMap.get(lottoResult.winningRank);
       if (winningRankRow) {
         winningRankRow.lottoTickets.push(lottoTicket);

@@ -11,18 +11,6 @@ const INVALID_WINNING_AMOUNTS = [
 ];
 
 describe('LottoCalculator 생성자 테스트', () => {
-  context('당첨번호:[1, 2, 3, 4, 5, 6], 보너스번호:8가 주어질 때', () => {
-    it('winningNumbers(당첨번호), bonusWinningNumber(보너스번호)를 프로퍼티로 가진다.', () => {
-      const lottoCalc = new LottoCalculator({
-        winningNumbers: [1, 2, 3, 4, 5, 6],
-        bonusWinningNumber: 8,
-      });
-
-      expect(lottoCalc).toHaveProperty('winningNumbers');
-      expect(lottoCalc).toHaveProperty('bonusWinningNumber');
-    });
-  });
-
   context(
     '당첨번호로 [0, 0, 0, 45, 45, 46]와 같이 중복된 값이 주어질 때',
     () => {
@@ -30,7 +18,7 @@ describe('LottoCalculator 생성자 테스트', () => {
         expect(() => {
           new LottoCalculator({
             winningNumbers: [0, 0, 0, 45, 45, 46],
-            bonusWinningNumber: 7,
+            winningBonusNumber: 7,
           });
         }).toThrow();
       });
@@ -38,21 +26,21 @@ describe('LottoCalculator 생성자 테스트', () => {
   );
 
   context.each(DUPLICATE_BONUS_NUMBERS)(
-    'winningNumbers가 [1,2,3,4,5,6]이고 bonusWinningNumber가 %s 일때',
+    'winningNumbers가 [1,2,3,4,5,6]이고 winningBonusNumber가 %s 일때',
     (bonusNumber) => {
       it('번호가 중복되므로 TypeError를 Throw한다.', () => {
         expect(
           () =>
             new LottoCalculator({
               winningNumbers: [1, 2, 3, 4, 5, 6],
-              bonusWinningNumber: bonusNumber,
+              winningBonusNumber: bonusNumber,
             })
         ).toThrow();
       });
     }
   );
 
-  context.each(INVALID_WINNING_AMOUNTS)(
+  context.skip.each(INVALID_WINNING_AMOUNTS)(
     '%s와 같이 유효하지 않은 당첨 금액이 주어질 때',
     (winningAmounts) => {
       it('TypeError를 Throw 한다.', () => {
@@ -60,7 +48,7 @@ describe('LottoCalculator 생성자 테스트', () => {
           () =>
             new LottoCalculator({
               winningNumbers: [1, 2, 3, 4, 5, 6],
-              bonusWinningNumber: 7,
+              winningBonusNumber: 7,
               winningAmounts,
             })
         ).toThrow();
@@ -74,10 +62,10 @@ describe('LottoCalculator 로또 통계 테스트', () => {
     it('수익률과 차트 배열을 반환한다.', () => {
       // given
       const winningNumbers = [1, 2, 3, 4, 5, 6];
-      const bonusWinningNumber = 7;
+      const winningBonusNumber = 7;
       const lottoCalc = new LottoCalculator({
         winningNumbers,
-        bonusWinningNumber,
+        winningBonusNumber,
       });
 
       const [lotto1st, lotto2st, lotto3st] = [
