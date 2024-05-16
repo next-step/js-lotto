@@ -2,6 +2,7 @@ import {
   ERROR_MESSAGE_COMMA_SEPARTED,
   ERROR_MESSAGE_INPUT_PURCHASE_PRICE,
   ERROR_MESSAGE_LACK_MONEY,
+  ERROR_MESSAGE_LOTTO_LENGTH,
   ERROR_MESSAGE_NOT_ENTER_BONUS_NUMBER,
   ERROR_MESSAGE_NOT_ENTER_WINNING_NUMBERS,
   LOTTO_PRICE,
@@ -45,6 +46,10 @@ class LottoValidator {
 
   validEnterBonusNumber(bonusNumber) {
     if (bonusNumber === 0) throw new Error(ERROR_MESSAGE_NOT_ENTER_BONUS_NUMBER);
+  }
+
+  validLottoLength(numbers) {
+    if (numbers.length !== LOTTO_TOTAL_COUNT) throw new Error(ERROR_MESSAGE_LOTTO_LENGTH);
   }
 }
 
