@@ -17,6 +17,7 @@ export const OUTPUT_MESSAGE = {
   DUPLICATE_NUMBER_ERROR: "중복되게 입력할 수 없습니다.",
   CONTAIN_ERROR: "보너스 번호는 당첨 번호와 중복될 수 없습니다.",
   INTEGER_ERROR: "정수를 입력해주세요.",
+  RESULT_TYPE_ERROR: "올바른 결과값이 아닙니다.",
 };
 
 export const PRIZE_MESSAGE = {

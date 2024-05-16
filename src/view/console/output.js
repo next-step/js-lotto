@@ -6,19 +6,26 @@ export const output = {
   },
 
   lottos(lottos) {
-    lottos.map((lotto) => console.log(lotto));
+    lottos.map(console.log);
   },
 
   result(result) {
-    const resultArray = [...result.entries()].reverse();
-
-    console.log(OUTPUT_MESSAGE.WINNING_STATISTICS);
-    resultArray.forEach(([key, value]) => {
-      const message = PRIZE_MESSAGE[key];
-      if (message) {
-        console.log(message(value));
+    try {
+      if (!result instanceof Map) {
+        throw new Error(OUTPUT_MESSAGE.RESULT_TYPE_ERROR);
       }
-    });
+      const resultArray = [...result.entries()].reverse();
+
+      console.log(OUTPUT_MESSAGE.WINNING_STATISTICS);
+      resultArray.forEach(([key, value]) => {
+        const message = PRIZE_MESSAGE[key];
+        if (message) {
+          console.log(message(value));
+        }
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   },
 
   rateOfReturn(count) {
