@@ -1,4 +1,5 @@
 import {
+  convertLottoStringToLottoArray,
   isValidLottoNumber,
   isValidLottoNumberArray,
 } from '../src/js/utils/LottoUtil';
@@ -27,5 +28,29 @@ describe('로또 유틸 기능 테스트', () => {
         expect(isValidLottoNumberArray(lottoNumber)).toBeFalsy();
       });
     });
+  });
+
+  describe('로또 문자열을 로또 배열로 변환 테스트', () => {
+    context('로또 문자열 1,2, 3, 4,5,6를 받을 때', () => {
+      it('[1, 2, 3, 4, 5, 6]를 반환한다.', () => {
+        // given
+        const input = ' 1,2, 3, 4,5,6';
+
+        // when
+        const lottoNumbers = convertLottoStringToLottoArray(input);
+
+        // then
+        expect(lottoNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+      });
+    });
+
+    context.each([['a, b, d, 3, 24, 43'], ['0, 2, 45, 100, 22, 11']])(
+      '%s 와 같이 로또 형식에 맞지 않는 문자열을 받을 때',
+      (expected) => {
+        it('TypeError를 Throw 한다.', () => {
+          expect(() => convertLottoStringToLottoArray(expected)).toThrow();
+        });
+      }
+    );
   });
 });

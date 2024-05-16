@@ -24,16 +24,3 @@ export function readROI(profit, investmentCost) {
 export function readMatchLottoNumber({ matchNumber, price, matchCount }) {
   return `${matchNumber}개 일치 (${comma(price)}원) - ${matchCount}개`;
 }
-
-export function writeLottoNumbers(input) {
-  const lottoNumbers = input
-    .replace(/\s/g, '')
-    .split(',')
-    .map((number) => Number(number));
-
-  if (!isValidLottoNumberArray(lottoNumbers)) {
-    throw TypeError(ERROR_MESSAGE.INVALID_LOTTO_FORMAT);
-  }
-
-  return lottoNumbers;
-}

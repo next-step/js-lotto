@@ -1,5 +1,5 @@
 import { generateRandomNumber } from './index';
-import { LOTTO } from '../constants';
+import { ERROR_MESSAGE, LOTTO } from '../constants';
 
 export function generateLottoNumberArray() {
   const lottoNumbers = new Set();
@@ -33,4 +33,17 @@ export function isValidLottoNumberArray(
     new Set(numbers).size === length &&
     numbers.every((number) => isValidLottoNumber(number))
   );
+}
+
+export function convertLottoStringToLottoArray(input) {
+  const lottoNumbers = input
+    .replace(/\s/g, '')
+    .split(',')
+    .map((number) => Number(number));
+
+  if (!isValidLottoNumberArray(lottoNumbers)) {
+    throw TypeError(ERROR_MESSAGE.INVALID_LOTTO_FORMAT);
+  }
+
+  return lottoNumbers;
 }
