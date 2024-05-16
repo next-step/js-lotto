@@ -27,4 +27,15 @@ describe("로또 구입 테스트", () => {
     //then
     expect(whenNotValidMoney).toThrow();
   });
+
+  test("구입 금액이 로또 가격보다 적다면 에러를 반환한다.", () => {
+    //given
+    const notEnoughMoney = LOTTO_PRICE - 1;
+
+    //when
+    const whenNotEnoughMoney = () => buyLottos(notEnoughMoney);
+
+    //then
+    expect(whenNotEnoughMoney).toThrow();
+  });
 });

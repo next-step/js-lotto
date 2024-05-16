@@ -27,6 +27,10 @@ const checkMoney = (money) => {
   if (!Number.isInteger(money)) {
     throw new Error();
   }
+
+  if (money < LOTTO_PRICE) {
+    throw new Error();
+  }
 };
 
 const generateLottoNumbers = (count) => {
