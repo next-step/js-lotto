@@ -1,7 +1,31 @@
-/**
- * step 1의 시작점이 되는 파일입니다.
- * 브라우저 환경에서 사용하는 css 파일 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
- */
+import LottoGame from "./js/domain/lotto-game/lotto-game.model.js";
+import LottoGameView from "./js/domain/lotto-game/lotto-game.view.js";
+import LottoSales from "./js/domain/lotto-sales/lotto-sales.model.js";
+import LottoSalesView from "./js/domain/lotto-sales/lotto-sales.view.js";
 
+async function app() {
+  const lottoGameView = new LottoGameView();
+  const lottoSalesView = new LottoSalesView();
 
-console.log("Hello, World!");
+  const lottoSales = new LottoSales();
+
+  const purchaseAmount = await lottoSalesView.inputPurchaseAmount();
+  const lottos = lottoSales.purchase(purchaseAmount);
+
+  lottoSalesView.printPurchaseResult(lottos);
+
+  const winningNumbers = await lottoGameView.inputWinningNumbers();
+  const bonusNumber = await lottoGameView.inputBonusNumber();
+
+  const lottoGame = new LottoGame(winningNumbers, bonusNumber);
+
+  lottoGame.check(lottos);
+
+  const statistics = lottoGame.statistics;
+  const ratio = lottoGame.ratio();
+
+  lottoGameView.printStatistics(statistics);
+  lottoGameView.printRatio(ratio);
+}
+
+app();
