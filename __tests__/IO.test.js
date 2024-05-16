@@ -1,6 +1,5 @@
 import Lotto from "../src/js/domain/Lotto";
 import LottoGame from "../src/js/domain/LottoGame";
-import LottoNumber from "../src/js/domain/LottoNumber";
 import LottoResult from "../src/js/domain/LottoResult";
 import Input from "../src/js/view/Input";
 import Output from "../src/js/view/Output";
@@ -68,7 +67,7 @@ describe("입출력 기능 테스트", () => {
       const lotto = new Lotto(testSet.unsortedLottoNumbers);
 
       // when
-      const sortedLottoNumbers = LottoNumber.sortLottoNumbersByAscendingOrder(
+      const sortedLottoNumbers = Lotto.sortLottoNumbersByAscendingOrder(
         lotto.numbers
       );
       Output.printGeneratedLottosNumbers([sortedLottoNumbers]);

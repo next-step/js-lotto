@@ -1,3 +1,4 @@
+import Lotto from "./Lotto";
 import LottoNumber from "./LottoNumber";
 
 class LottoResult {
@@ -34,10 +35,10 @@ class LottoResult {
   #bonusNumber;
 
   constructor(winningNumbers, bonusNumber) {
-    LottoNumber.validateLottoNumbers(winningNumbers);
+    Lotto.validateLottoNumbers(winningNumbers);
 
     const winningNumbersArray =
-      LottoNumber.convertLottoNumbersToArray(winningNumbers);
+      Lotto.convertLottoNumbersToArray(winningNumbers);
     this.#winningNumbers = winningNumbersArray;
 
     LottoNumber.validateBonusNumber(bonusNumber, this.#winningNumbers);

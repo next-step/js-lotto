@@ -1,4 +1,5 @@
 import { readLineAsync } from "../../utils/readlineAsync";
+import Lotto from "../domain/Lotto";
 import LottoGame from "../domain/LottoGame";
 import LottoNumber from "../domain/LottoNumber";
 
@@ -23,9 +24,9 @@ const Input = {
         const winningNumbers = await readLineAsync(
           "\n당첨 번호를 입력해 주세요."
         );
-        LottoNumber.validateLottoNumbers(winningNumbers);
+        Lotto.validateLottoNumbers(winningNumbers);
 
-        return LottoNumber.convertLottoNumbersToArray(winningNumbers);
+        return Lotto.convertLottoNumbersToArray(winningNumbers);
       } catch (e) {
         console.log(e.message);
       }
