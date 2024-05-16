@@ -5,10 +5,12 @@ export const ERROR_MESSAGE_NOT_ENTER_WINNING_NUMBERS = '당첨번호가 입력�
 export const ERROR_MESSAGE_NOT_ENTER_BONUS_NUMBER = '보너스 넘버가 입력되지 않았습니다.';
 export const ERROR_MESSAGE_LOTTO_LENGTH = '로또번호는 6개 입니다.';
 export const ERROR_MESSAGE_ACGUMENTS_LENGTH = '입력 문제는 최소 1개 입니다.';
+export const ERROR_MESSAGE_RESTART = `잘못된 입력값입니다.`;
 
 export const MESSAGE_PURCHASE_PRICE = '> 구입금액을 입력해 주세요.';
 export const MESSAGE_WINNING_NUMBERS = '> 당첨 번호를 입력해 주세요.';
 export const MESSAGE_BONUS_NUMBER = '> 보너스 번호를 입력해 주세요.';
+export const MESSAGE_RESTART_OR_NOT = '다시 시작하시겠습니까? (y/n) ';
 
 export const MIN_INPUT_NUMBERS_LENGTH = 1;
 

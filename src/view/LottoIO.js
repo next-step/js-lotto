@@ -2,6 +2,7 @@ import readline from 'readline';
 import {
   MESSAGE_PURCHASE_PRICE,
   MESSAGE_WINNING_NUMBERS,
+  MESSAGE_RESTART_OR_NOT,
   RADIX_INTEGER,
   LOTTO_5TH_PRIZE_WINNER,
   LOTTO_4TH_PRIZE_WINNER,
@@ -63,6 +64,16 @@ class LottoIO {
       const number = await this.readLineAsync(MESSAGE_BONUS_NUMBER);
       this.validator.validInputNumber(number);
       return parseInt(number, RADIX_INTEGER);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  async inputRestartOrNot() {
+    try {
+      const restart = await this.readLineAsync(MESSAGE_RESTART_OR_NOT);
+      this.validator.validateLottoRestart(restart);
+      return restart;
     } catch (error) {
       console.log(error.message);
     }

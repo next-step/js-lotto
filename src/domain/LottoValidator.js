@@ -5,6 +5,7 @@ import {
   ERROR_MESSAGE_LOTTO_LENGTH,
   ERROR_MESSAGE_NOT_ENTER_BONUS_NUMBER,
   ERROR_MESSAGE_NOT_ENTER_WINNING_NUMBERS,
+  ERROR_MESSAGE_RESTART,
   LOTTO_PRICE,
   LOTTO_TOTAL_COUNT,
   MIN_INPUT_NUMBERS_LENGTH,
@@ -50,6 +51,17 @@ class LottoValidator {
 
   validLottoLength(numbers) {
     if (numbers.length !== LOTTO_TOTAL_COUNT) throw new Error(ERROR_MESSAGE_LOTTO_LENGTH);
+  }
+
+  validateLottoRestart(restart) {
+    const lowerCaseRestart = restart.toLowerCase();
+    if (
+      lowerCaseRestart !== 'y' &&
+      lowerCaseRestart !== 'yes' &&
+      lowerCaseRestart !== 'n' &&
+      lowerCaseRestart !== 'no'
+    )
+      throw new Error(ERROR_MESSAGE_RESTART);
   }
 }
 
