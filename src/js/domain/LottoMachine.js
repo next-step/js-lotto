@@ -1,14 +1,8 @@
 import LottoTicket from './LottoTicket';
-import {
-  generateLottoNumberArray,
-  isValidLottoNumber,
-  isValidLottoNumberArray,
-} from '../utils/LottoUtil';
+import { generateLottoNumberArray } from '../utils/LottoUtil';
 import { ERROR_MESSAGE, LOTTO } from '../constants';
 
 class LottoMachine {
-  #winningNumbers;
-  #bonusWinningNumber;
   #winningAmounts;
 
   static DEFAULT_WINNING_AMOUNT = [
@@ -24,43 +18,7 @@ class LottoMachine {
     if (winningAmounts.length !== LOTTO.WINNING_NUMBER_LENGTH) {
       throw new TypeError(ERROR_MESSAGE.INVALID_LOTTO_FORMAT);
     }
-    this.#winningNumbers = Array.from({
-      length: LOTTO.WINNING_NUMBER_LENGTH,
-    }).fill(null);
-    this.#bonusWinningNumber = null;
     this.#winningAmounts = winningAmounts;
-  }
-
-  get winningNumbers() {
-    return this.#winningNumbers;
-  }
-
-  set winningNumbers(winningNumbers) {
-    if (!isValidLottoNumberArray(winningNumbers)) {
-      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
-    }
-    this.#winningNumbers = winningNumbers;
-  }
-
-  get bonusWinningNumber() {
-    return this.#bonusWinningNumber;
-  }
-
-  set bonusWinningNumber(bonusWinningNumber) {
-    if (!isValidLottoNumberArray(this.#winningNumbers)) {
-      throw new TypeError(ERROR_MESSAGE.REQUIRE_LOTTO_NUMBERS);
-    }
-    if (!isValidLottoNumber(bonusWinningNumber)) {
-      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
-    }
-    if (this.#winningNumbers.includes(bonusWinningNumber)) {
-      throw new TypeError(LottoMachine.DUPLICATE_LOTTO_NUMBERS);
-    }
-    this.#bonusWinningNumber = bonusWinningNumber;
-  }
-
-  get winningAmounts() {
-    return this.#winningAmounts;
   }
 
   sellAutoLottoTicket(cost) {
@@ -127,8 +85,8 @@ class LottoMachine {
 
     lottoTickets.forEach((lottoTicket) => {
       const lottoResult = lottoTicket.getResult({
-        winningNumbers: this.#winningNumbers,
-        bonusWinningNumber: this.#bonusWinningNumber,
+        winningNumbers: [],
+        bonusWinningNumber: 0,
         winningAmounts: this.#winningAmounts,
       });
 
