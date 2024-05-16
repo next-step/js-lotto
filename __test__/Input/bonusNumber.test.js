@@ -1,7 +1,7 @@
 import { OUTPUT_MESSAGE } from "../../src/constants/message";
 import { readline } from "../../src/utils/readline";
 import { isContainValidator } from "../../src/validator/isContainValidator";
-import { isIntegerValidator } from "../../src/validator/isIntegerValidator";
+import { isNonNegativeIntegerValidator } from "../../src/validator/isNonNegativeIntegerValidator";
 import { input } from "../../src/view/console/input";
 
 describe("보너스 번호 테스트", () => {
@@ -37,6 +37,6 @@ describe("보너스 번호 테스트", () => {
 
     const bonusNumber = await input.bonusNumber();
 
-    expect(() => isIntegerValidator(bonusNumber)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
+    expect(() => isNonNegativeIntegerValidator(bonusNumber)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
   });
 });

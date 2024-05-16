@@ -2,7 +2,7 @@ import { input } from "./view/console/input";
 import { output } from "./view/console/output";
 import { LottoGame } from "./domain/LottoGame";
 import { Lotto } from "./domain/Lotto";
-import { isIntegerValidator } from "./validator/isIntegerValidator";
+import { isNonNegativeIntegerValidator } from "./validator/isNonNegativeIntegerValidator";
 import { isArrLengthValidator } from "./validator/isArrLengthValidator";
 import { hasNumberValidator } from "./validator/hasNumberValidator";
 import { isDuplicateValidator } from "./validator/isDuplicateValidator";
@@ -52,7 +52,7 @@ const app = async () => {
   };
 
   const validatePurchasePrice = (purchasePrice) => {
-    isIntegerValidator(purchasePrice);
+    isNonNegativeIntegerValidator(purchasePrice);
   };
 
   const validateWinningNumbers = (winningNumberArray) => {
@@ -62,7 +62,7 @@ const app = async () => {
   };
 
   const validateBonusNumber = (winningNumberArray, bonusNumber) => {
-    isIntegerValidator(bonusNumber);
+    isNonNegativeIntegerValidator(bonusNumber);
     isContainValidator(winningNumberArray, bonusNumber);
   };
 

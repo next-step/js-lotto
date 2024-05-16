@@ -16,8 +16,9 @@ export const OUTPUT_MESSAGE = {
   WINNING_LOTTO_LENGTH_ERROR: `당첨 번호는 ${LOTTO.NUMBERS_COUNT}개를 입력해야 합니다.`,
   DUPLICATE_NUMBER_ERROR: "중복되게 입력할 수 없습니다.",
   CONTAIN_ERROR: "보너스 번호는 당첨 번호와 중복될 수 없습니다.",
-  INTEGER_ERROR: "정수를 입력해주세요.",
+  INTEGER_ERROR: "소수가 아닌 0이상의 정수를 입력해주세요.",
   RESULT_TYPE_ERROR: "올바른 결과값이 아닙니다.",
+  NEGETIVE_NUM_ERROR: "0이상의 정수를 입력해주세요.",
 };
 
 export const PRIZE_MESSAGE = {

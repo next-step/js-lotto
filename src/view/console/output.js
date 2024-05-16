@@ -6,7 +6,7 @@ export const output = {
   },
 
   lottos(lottos) {
-    lottos.map(console.log);
+    lottos.map((lotto) => console.log(lotto));
   },
 
   result(result) {

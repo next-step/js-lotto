@@ -1,6 +1,6 @@
 import { OUTPUT_MESSAGE } from "../../src/constants/message";
 import { readline } from "../../src/utils/readline";
-import { isIntegerValidator } from "../../src/validator/isIntegerValidator";
+import { isNonNegativeIntegerValidator } from "../../src/validator/isNonNegativeIntegerValidator";
 import { input } from "../../src/view/console/input";
 
 describe("구입 금액 테스트", () => {
@@ -22,13 +22,16 @@ describe("구입 금액 테스트", () => {
     expect(result).toEqual(2000);
   });
 
-  test("구입금액은 숫자만을 입력해야 한다.", async () => {
-    jest.spyOn(readline, "question").mockImplementation(() => {
-      return Promise.resolve("안녕"); // Simulate user input
-    });
+  test("구입금액은 0이상의 정수이어야 한다. 그 외의 값은 에러가 발생한다.", async () => {
+    // jest.spyOn(readline, "question").mockImplementation(() => {
+    //   return Promise.resolve("안녕"); // Simulate user input
+    // });
+    const stringResult = "안녕";
+    const notIntegerResult = 2.5;
+    const negativeResult = -1;
 
-    const result = await input.purchasePrice();
-
-    expect(() => isIntegerValidator(result)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
+    expect(() => isNonNegativeIntegerValidator(stringResult)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
+    expect(() => isNonNegativeIntegerValidator(notIntegerResult)).toThrow(OUTPUT_MESSAGE.INTEGER_ERROR);
+    expect(() => isNonNegativeIntegerValidator(negativeResult)).toThrow(OUTPUT_MESSAGE.NEGETIVE_NUM_ERROR);
   });
 });
