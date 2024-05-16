@@ -1,10 +1,16 @@
 import { numberFormater } from "../utils/numberFormater";
 import { LOTTO } from "./lotto";
 
+export const CONTINUE = {
+  YES: "y",
+  NO: "n",
+};
+
 export const INPUT_MESSAGE = {
-  INPUT_PURCHASE_PRICE: "구입금액을 입력해 주세요.",
-  INPUT_WINNING_NUMBER: "\n당첨 번호를 입력해 주세요.",
-  INPUT_BONUS_NUMBER: "\n보너스 번호를 입력해 주세요.",
+  PURCHASE_PRICE: "구입금액을 입력해 주세요.",
+  WINNING_NUMBER: "\n당첨 번호를 입력해 주세요.",
+  BONUS_NUMBER: "\n보너스 번호를 입력해 주세요.",
+  CONTINUE: `\n다시 시작하시겠습니까? (${CONTINUE.YES}/${CONTINUE.NO})`,
 };
 
 export const OUTPUT_MESSAGE = {

@@ -4,6 +4,7 @@ import { LottoGame } from "./domain/LottoGame";
 import { Lotto } from "./domain/Lotto";
 import { validateNumber } from "./validator/validateNumber";
 import { validateArray } from "./validator/validateArray";
+import { CONTINUE } from "./constants/message";
 
 const app = async () => {
   const getPurchasePrice = async () => {
@@ -48,6 +49,16 @@ const app = async () => {
     }
   };
 
+  const continueStage = async () => {
+    const continueLetter = await input.continue();
+
+    if (continueLetter === CONTINUE.YES) {
+      await play();
+    }
+
+    process.exit();
+  };
+
   const validatePurchasePrice = (purchasePrice) => {
     validateNumber.nan(purchasePrice);
     validateNumber.negative(purchasePrice);
@@ -84,9 +95,10 @@ const app = async () => {
     const rateOfReturn = calculateRateOfReturn(totalIncome, purchasePrice);
     output.result(result);
     output.rateOfReturn(rateOfReturn);
+    await continueStage();
   };
 
-  play();
+  await play();
 };
 
 app();
