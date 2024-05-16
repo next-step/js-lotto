@@ -1,3 +1,4 @@
+import { LOTTO } from "../../src/constants/lotto";
 import { OUTPUT_MESSAGE } from "../../src/constants/message";
 import { readline } from "../../src/utils/readline";
 import { validateArray } from "../../src/validator/validateArray";
@@ -39,5 +40,25 @@ describe("보너스 번호 테스트", () => {
     const bonusNumber = await input.bonusNumber();
 
     expect(() => validateNumber.inRange(bonusNumber)).toThrow(OUTPUT_MESSAGE.NAN_ERROR);
+  });
+
+  test("보너스 번호는 음수를 입력할 수 없다. 그렇지 않으면 에러를 발생한다.", async () => {
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve(-1);
+    });
+
+    const bonusNumber = await input.bonusNumber();
+
+    expect(() => validateNumber.inRange(bonusNumber)).toThrow(OUTPUT_MESSAGE.NEGETIVE_NUM_ERROR);
+  });
+
+  test(`보너스 번호는 1 ~ ${LOTTO.MAX_NUMBER} 사이의 정수만 입력할 수 있다. 그렇지 않으면 에러를 발생한다.`, async () => {
+    jest.spyOn(readline, "question").mockImplementation(() => {
+      return Promise.resolve(46);
+    });
+
+    const bonusNumber = await input.bonusNumber();
+
+    expect(() => validateNumber.inRange(bonusNumber)).toThrow(OUTPUT_MESSAGE.LIMIT_NUM_ERROR);
   });
 });
