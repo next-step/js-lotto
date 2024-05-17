@@ -1,4 +1,4 @@
-import { LOTTO_PRICE } from "./domain/LottoService";
+import { LOTTO_PRICE, calculateProfitRate } from "./domain/LottoService";
 import { LottoRank } from "./domain/enum/LottoRank";
 import { readLine } from "./util/ReadLine";
 
@@ -31,18 +31,18 @@ export const askBonusNumber = async () => {
 };
 
 export const printStats = (stats) => {
+  const { rankCount, totalCount, totalReward } = stats;
+
   const statsView = `
   당첨 통계
   --------------------
-  3개 일치 (5,000원) - ${stats.rankCount.get(LottoRank.FIFTH.rank) ?? 0}개
-  4개 일치 (50,000원) - ${stats.rankCount.get(LottoRank.FOURTH.rank) ?? 0}개
-  5개 일치 (1,500,000원) - ${stats.rankCount.get(LottoRank.THIRD.rank) ?? 0}개
+  3개 일치 (5,000원) - ${rankCount.get(LottoRank.FIFTH.rank) ?? 0}개
+  4개 일치 (50,000원) - ${rankCount.get(LottoRank.FOURTH.rank) ?? 0}개
+  5개 일치 (1,500,000원) - ${rankCount.get(LottoRank.THIRD.rank) ?? 0}개
   5개 일치, 보너스 볼 일치 (30,000,000원) - ${
-    stats.rankCount.get(LottoRank.SECOND.rank) ?? 0
+    rankCount.get(LottoRank.SECOND.rank) ?? 0
   }개
-  6개 일치 (2,000,000,000원) - ${
-    stats.rankCount.get(LottoRank.FIRST.rank) ?? 0
-  }개
-  총 수익률은 ${stats.totalReward / (stats.totalCount * LOTTO_PRICE)}%입니다.`;
+  6개 일치 (2,000,000,000원) - ${rankCount.get(LottoRank.FIRST.rank) ?? 0}개
+  총 수익률은 ${calculateProfitRate(totalCount, totalReward)}%입니다.`;
   console.log(statsView);
 };

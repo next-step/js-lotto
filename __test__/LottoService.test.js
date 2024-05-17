@@ -1,5 +1,9 @@
 import { Lotto, LOTTO_DIGITS } from "../src/js/domain/Lotto";
-import { buyLottos, LOTTO_PRICE } from "../src/js/domain/LottoService";
+import {
+  buyLottos,
+  LOTTO_PRICE,
+  calculateProfitRate,
+} from "../src/js/domain/LottoService";
 
 describe("로또 구입 테스트", () => {
   test("구입 금액만큼 로또를 발행한다.", () => {
@@ -37,5 +41,19 @@ describe("로또 구입 테스트", () => {
 
     //then
     expect(whenNotEnoughMoney).toThrow();
+  });
+
+  test("로또 구매 갯수에 따른 로또 수익률을 반환한다.", () => {
+    //given
+    const lottoQuantity = 5;
+    const totalReward = 5000;
+
+    //when
+    const profitRate = calculateProfitRate(lottoQuantity, totalReward);
+
+    //then
+    expect(profitRate).toBe(
+      (totalReward / (lottoQuantity * LOTTO_PRICE)) * 100
+    );
   });
 });

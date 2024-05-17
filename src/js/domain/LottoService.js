@@ -23,6 +23,9 @@ export const getNumbersList = (lottos) => lottos.map((e) => e.numbers);
 export const getLottoRanks = (lottos, winningNumbers, bonusNumber) =>
   lottos.map((e) => e.compare(winningNumbers, bonusNumber));
 
+export const calculateProfitRate = (lottoQuantity, totalReward) =>
+  (totalReward / (lottoQuantity * LOTTO_PRICE)) * 100;
+
 const checkMoney = (money) => {
   if (!Number.isInteger(money)) {
     throw new Error();
