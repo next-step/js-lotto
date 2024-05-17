@@ -1,3 +1,4 @@
+import { isInputNumber } from "./common.rule";
 import { LOTTO_LENGTH, MAXIMUM_LOTTO_NUMBER, MINIMUM_LOTTO_NUMBER } from "../constants";
 import {
   LOTTO_NUMBER_TYPE_ERR_MSG,
@@ -5,7 +6,6 @@ import {
   LOTTO_NUMBER_RANGE_ERR_MSG,
   LOTTO_NUMBER_LENGTH_ERR_MSG,
 } from "../constants/error";
-import { isInputNumber } from "./common.rule";
 
 export const lottoRule = {
   /**

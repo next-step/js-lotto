@@ -1,9 +1,8 @@
+import { Lotto } from "./Lotto";
+import { LottoRank } from "./LottoRank";
+import { readLineAsync } from "../utils/readLineSync";
 import { lottoMoneyRule } from "../rules/LottoMoney.rule";
 import { bonusNumberRule, lottoRule } from "../rules/Lotto.rule";
-import { readLineAsync } from "../utils/readLineSync";
-import { Lotto } from "./Lotto";
-import { LOTTO_PRIZE } from "../constants";
-import { LottoRank } from "./LottoRank";
 
 const View = {
   async getMoney() {

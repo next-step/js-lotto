@@ -1,6 +1,6 @@
-import { LOTTO_LENGTH, LOTTO_PRICE, MAXIMUM_LOTTO_NUMBER } from "../constants";
-import { Lotto, WinningLotto } from "./Lotto";
 import View from "./View";
+import { Lotto, WinningLotto } from "./Lotto";
+import { LOTTO_LENGTH, LOTTO_PRICE, MAXIMUM_LOTTO_NUMBER } from "../constants";
 
 class LottoMachine {
   lottos = [];
@@ -15,7 +15,7 @@ class LottoMachine {
   }
 
   /**
-   * @param {WinningLotto} winningLotto 
+   * @param {WinningLotto} winningLotto
    * @returns {Map}
    */
   getLottoRanks(winningLotto) {
@@ -25,7 +25,7 @@ class LottoMachine {
   }
 
   /**
-   * @param {string[]} lottoRanks 
+   * @param {string[]} lottoRanks
    * @returns {Map}
    */
   countLottoRanks(lottoRanks) {
