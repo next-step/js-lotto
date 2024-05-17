@@ -139,32 +139,52 @@ describe("입출력 기능 테스트", () => {
     // given
     const lottoRankingStatistics = [
       {
-        rankingWinningPrice: LottoResult.LottoRanking[5].winningPrice,
-        rankingCondition: LottoResult.LottoRanking[5].condition,
+        rankingWinningPrice:
+          LottoResult.LottoRankingInfo[LottoResult.LottoRanking["FIFTH"]]
+            .winningPrice,
+        rankingCondition:
+          LottoResult.LottoRankingInfo[LottoResult.LottoRanking["FIFTH"]]
+            .condition,
         isShowExtramMent: false,
         count: 1,
       },
       {
-        rankingWinningPrice: LottoResult.LottoRanking[4].winningPrice,
-        rankingCondition: LottoResult.LottoRanking[4].condition,
+        rankingWinningPrice:
+          LottoResult.LottoRankingInfo[LottoResult.LottoRanking["FOURTH"]]
+            .winningPrice,
+        rankingCondition:
+          LottoResult.LottoRankingInfo[LottoResult.LottoRanking["FOURTH"]]
+            .condition,
         isShowExtraMent: false,
         count: 0,
       },
       {
-        rankingWinningPrice: LottoResult.LottoRanking[3].winningPrice,
-        rankingCondition: LottoResult.LottoRanking[3].condition,
+        rankingWinningPrice:
+          LottoResult.LottoRankingInfo[LottoResult.LottoRanking["THIRD"]]
+            .winningPrice,
+        rankingCondition:
+          LottoResult.LottoRankingInfo[LottoResult.LottoRanking["THIRD"]]
+            .condition,
         isShowExtraMent: false,
         count: 0,
       },
       {
-        rankingWinningPrice: LottoResult.LottoRanking[2].winningPrice,
-        rankingCondition: LottoResult.LottoRanking[2].condition,
+        rankingWinningPrice:
+          LottoResult.LottoRankingInfo[LottoResult.LottoRanking["SECOND"]]
+            .winningPrice,
+        rankingCondition:
+          LottoResult.LottoRankingInfo[LottoResult.LottoRanking["SECOND"]]
+            .condition,
         isShowExtraMent: true,
         count: 1,
       },
       {
-        rankingWinningPrice: LottoResult.LottoRanking[1].winningPrice,
-        rankingCondition: LottoResult.LottoRanking[1].condition,
+        rankingWinningPrice:
+          LottoResult.LottoRankingInfo[LottoResult.LottoRanking["FIRST"]]
+            .winningPrice,
+        rankingCondition:
+          LottoResult.LottoRankingInfo[LottoResult.LottoRanking["FIRST"]]
+            .condition,
         isShowExtraMent: false,
         count: 1,
       },

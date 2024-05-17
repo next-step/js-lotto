@@ -7,7 +7,7 @@ describe("로또 당첨 기능 테스트", () => {
   test.each([
     [
       6,
-      1,
+      LottoResult.LottoRanking["FIRST"],
       {
         lottoNumbers: [1, 2, 3, 4, 5, 6],
         winningNumbers: [1, 2, 3, 4, 5, 6],
@@ -16,7 +16,7 @@ describe("로또 당첨 기능 테스트", () => {
     ],
     [
       4,
-      4,
+      LottoResult.LottoRanking["FOURTH"],
       {
         lottoNumbers: [1, 2, 3, 4, 8, 10],
         winningNumbers: [1, 2, 3, 4, 5, 6],
@@ -36,7 +36,7 @@ describe("로또 당첨 기능 테스트", () => {
       const lottoRanking = lottoResult.getLottoRanking(lotto);
 
       // then
-      expect(lottoRanking).toBe(expectedResult);
+      expect(lottoRanking.ranking).toBe(expectedResult);
     }
   );
 
@@ -65,18 +65,27 @@ describe("로또 당첨 기능 테스트", () => {
     const winningLotto = new Lotto([1, 2, 3, 4, 5, 6]);
     const bonusNumber = new LottoNumber(7);
     const lottoResult = new LottoResult(winningLotto, bonusNumber);
+    const lottoRankings = [
+      LottoResult.LottoRanking["FIRST"],
+      LottoResult.LottoRanking["SECOND"],
+      LottoResult.LottoRanking["THIRD"],
+      LottoResult.LottoRanking["FOURTH"],
+      LottoResult.LottoRanking["FIFTH"],
+    ];
 
     // when
-    const lottoRankingCounts = lottoResult.getLottoRankingsCounts(lottos);
+    const lottoRankingCounts = lottoRankings.map((lottoRanking) =>
+      lottoResult.getLottoRankingCount(lottos, lottoRanking)
+    );
 
     // then
-    expect(lottoRankingCounts).toEqual([0, 1, 0, 0, 1, 0]);
+    expect(lottoRankingCounts).toEqual([1, 0, 0, 1, 0]);
   });
 
   test.each([
     [
       "일치하는 것이 있으",
-      2,
+      LottoResult.LottoRanking["SECOND"],
       {
         lottoNumbers: [1, 2, 3, 4, 5, 12],
         winningNumbers: [1, 2, 3, 4, 5, 9],
@@ -85,7 +94,7 @@ describe("로또 당첨 기능 테스트", () => {
     ],
     [
       "일치하는 것이 없으",
-      3,
+      LottoResult.LottoRanking["THIRD"],
       {
         lottoNumbers: [1, 2, 3, 4, 5, 12],
         winningNumbers: [1, 2, 3, 4, 5, 9],
@@ -105,26 +114,7 @@ describe("로또 당첨 기능 테스트", () => {
       const lottoRanking = lottoResult.getLottoRanking(lotto);
 
       // then
-      expect(lottoRanking).toBe(expectedResult);
-    }
-  );
-
-  test.each([
-    [1, 2000000000],
-    [2, 30000000],
-    [3, 1500000],
-    [4, 50000],
-    [5, 5000],
-  ])(
-    "로또 당첨 %s등일 때 상금은 %s원이다.",
-    (ranking, expectedWinningPrice) => {
-      // given
-
-      // when
-      const lottoWinningPrice = LottoResult.getLottoWinningPrice(ranking);
-
-      // then
-      expect(lottoWinningPrice).toBe(expectedWinningPrice);
+      expect(lottoRanking.ranking).toBe(expectedResult);
     }
   );
 

@@ -1,34 +1,41 @@
 import LottoNumber from "./LottoNumber";
 
 class LottoResult {
-  static LottoRanking = [
-    null,
-    {
-      ranking: 1,
+  static LottoRanking = {
+    FIRST: "FIRST",
+    SECOND: "SECOND",
+    THIRD: "THIRD",
+    FOURTH: "FOURTH",
+    FIFTH: "FIFTH",
+  };
+
+  static LottoRankingInfo = {
+    [LottoResult.LottoRanking.FIRST]: {
+      ranking: LottoResult.LottoRanking.FIRST,
       winningPrice: 2_000_000_000,
       condition: 6,
     },
-    {
-      ranking: 2,
+    [LottoResult.LottoRanking.SECOND]: {
+      ranking: LottoResult.LottoRanking.SECOND,
       winningPrice: 30_000_000,
       condition: 5,
     },
-    {
-      ranking: 3,
+    [LottoResult.LottoRanking.THIRD]: {
+      ranking: LottoResult.LottoRanking.THIRD,
       winningPrice: 1_500_000,
       condition: 5,
     },
-    {
-      ranking: 4,
+    [LottoResult.LottoRanking.FOURTH]: {
+      ranking: LottoResult.LottoRanking.FOURTH,
       winningPrice: 50_000,
       condition: 4,
     },
-    {
-      ranking: 5,
+    [LottoResult.LottoRanking.FIFTH]: {
+      ranking: LottoResult.LottoRanking.FIFTH,
       winningPrice: 5_000,
       condition: 3,
     },
-  ];
+  };
 
   #winningLotto;
   #bonusNumber;
@@ -43,10 +50,6 @@ class LottoResult {
     return this.#winningLotto.numbers;
   }
 
-  static getLottoWinningPrice(lottoRanking) {
-    return LottoResult.LottoRanking[lottoRanking].winningPrice;
-  }
-
   static getTotalLottoProfitRate(totalLottoWinningPrice, lottoPurcasedAmount) {
     return (totalLottoWinningPrice / lottoPurcasedAmount) * 100;
   }
@@ -56,18 +59,20 @@ class LottoResult {
     const isBonusNumberMatching = lotto.hasLottoNumber(this.#bonusNumber);
 
     switch (matchingCount) {
-      case LottoResult.LottoRanking[1].condition:
-        return LottoResult.LottoRanking[1].ranking;
-      case LottoResult.LottoRanking[2].condition:
+      case LottoResult.LottoRankingInfo[LottoResult.LottoRanking.FIRST]
+        .condition:
+        return LottoResult.LottoRankingInfo[LottoResult.LottoRanking.FIRST];
+      case LottoResult.LottoRankingInfo[LottoResult.LottoRanking.SECOND]
+        .condition:
         return isBonusNumberMatching
-          ? LottoResult.LottoRanking[2].ranking
-          : LottoResult.LottoRanking[3].ranking;
-      case LottoResult.LottoRanking[4].condition:
-        return LottoResult.LottoRanking[4].ranking;
-      case LottoResult.LottoRanking[5].condition:
-        return LottoResult.LottoRanking[5].ranking;
+          ? LottoResult.LottoRankingInfo[LottoResult.LottoRanking.SECOND]
+          : LottoResult.LottoRankingInfo[LottoResult.LottoRanking.THIRD];
+      case LottoResult.LottoRankingInfo.FOURTH.condition:
+        return LottoResult.LottoRankingInfo[LottoResult.LottoRanking.FOURTH];
+      case LottoResult.LottoRankingInfo.FIFTH.condition:
+        return LottoResult.LottoRankingInfo[LottoResult.LottoRanking.FIFTH];
       default:
-        return LottoResult.LottoRanking[0];
+        return null;
     }
   }
 
@@ -79,26 +84,19 @@ class LottoResult {
     return lottoRankings;
   }
 
-  getLottoRankingsCounts(lottos) {
+  getLottoRankingCount(lottos, ranking) {
     const lottoRankings = this.getLottoRankings(lottos);
-    const lottoRankingCounts = Array(LottoResult.LottoRanking.length).fill(0);
 
-    // 1 ~ 5등에 해당하지 않는 유효하지 않은 등수 제거
-    const filteredRankings = lottoRankings.filter(
-      (lottoRanking) => lottoRanking !== null
-    );
-
-    filteredRankings.forEach((ranking) => {
-      lottoRankingCounts[ranking] += 1;
-    });
-
-    return lottoRankingCounts;
+    return lottoRankings.filter(
+      (lottoRanking) =>
+        lottoRanking.ranking === LottoResult.LottoRanking[ranking]
+    ).length;
   }
 
   getTotalLottoWinningPrice(lottos) {
     const lottoRankings = this.getLottoRankings(lottos);
     const totalLottoWinningPrice = lottoRankings.reduce((acc, lottoRanking) => {
-      return LottoResult.getLottoWinningPrice(lottoRanking) + acc;
+      return acc + lottoRanking.winningPrice;
     }, 0);
 
     return totalLottoWinningPrice;
