@@ -2,6 +2,7 @@ import { lottoMoneyRule } from "../rules/LottoMoney.rule";
 import { bonusNumberRule, lottoRule } from "../rules/Lotto.rule";
 import { readLineAsync } from "../utils/readLineSync";
 import { Lotto } from "./Lotto";
+import { LOTTO_PRIZE } from "../constants";
 
 const View = {
   async getMoney() {
@@ -54,6 +55,32 @@ const View = {
    */
   printLottoNumbers(lotto) {
     console.log(lotto.getNumbers().sort((a, b) => a - b));
+  },
+
+  /**
+   * @param {Map} lottoRankCounts
+   */
+  printLottoStatistics(lottoRankCounts) {
+    console.log(`당첨 통계\n--------------------`);
+    this.printLottoResult(lottoRankCounts);
+    this.printLottoReturn(lottoRankCounts);
+  },
+
+  printLottoResult(lottoRankCounts) {
+    Object.values(LOTTO_PRIZE).forEach(({ text, prize, rank }) => {
+      const count = lottoRankCounts.get(rank) || 0;
+      if (text && prize) {
+        console.log(`${text} (${prize.toLocaleString()}원)- ${count}개`);
+      }
+    });
+  },
+
+  printLottoReturn(lottoRankCounts) {
+    const total = Array.from(lottoRankCounts.values()).reduce((acc, value) => acc + value, 0);
+    const failed = lottoRankCounts.get(LOTTO_PRIZE.FAIL.rank) || 0;
+    const lottoReturn = ((total - failed) / total) * 100;
+    
+    console.log(`총 수익률을 ${lottoReturn.toFixed(2)}% 입니다.`);
   },
 };
 

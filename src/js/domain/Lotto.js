@@ -17,14 +17,8 @@ export class Lotto {
     const winningNumbers = winningLotto.winningNumbers.getNumbers();
     const bonusNumber = winningLotto.bonusNumber;
 
-    console.log("winningNumbers:", winningNumbers);
-    console.log("bonusNumber:", bonusNumber);
-
     const matchedCount = this.#numbers.filter((number) => winningNumbers.includes(number)).length;
     const isBonusMatched = this.#numbers.includes(bonusNumber);
-
-    console.log("matchedCount:", matchedCount);
-    console.log("isBonusMatched:", isBonusMatched);
 
     return LottoRank.getRank(matchedCount, isBonusMatched);
   }

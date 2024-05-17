@@ -1,5 +1,5 @@
 import { LOTTO_LENGTH, LOTTO_PRICE, MAXIMUM_LOTTO_NUMBER } from "../constants";
-import { Lotto } from "./Lotto";
+import { Lotto, WinningLotto } from "./Lotto";
 import View from "./View";
 
 class LottoMachine {
@@ -14,9 +14,25 @@ class LottoMachine {
     return this.lottos;
   }
 
+  /**
+   * @param {WinningLotto} winningLotto 
+   * @returns {Map}
+   */
   getLottoRanks(winningLotto) {
     const lottoRanks = this.lottos.map((lotto) => lotto.getRank(winningLotto));
-    return lottoRanks;
+    const lottoRankCounts = this.countLottoRanks(lottoRanks);
+    return lottoRankCounts;
+  }
+
+  /**
+   * @param {string[]} lottoRanks 
+   * @returns {Map}
+   */
+  countLottoRanks(lottoRanks) {
+    return lottoRanks.reduce((acc, rank) => {
+      acc.set(rank, acc.get(rank) + 1 || 1);
+      return acc;
+    }, new Map());
   }
 
   getTheNumberOfLottos(money) {
