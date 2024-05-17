@@ -131,4 +131,20 @@ describe("입출력 테스트", () => {
       expect(logSpy).toHaveBeenCalledWith(result);
     });
   });
+
+  test("로또 수익률을 출력한다.", () => {
+    //given
+    const winningLotto = new WinningLotto(new Lotto([15, 23, 12, 1, 34, 26]), 7);
+    const testLottos = TEST_LOTTOS.map((lotto) => new Lotto(lotto));
+
+    const lottoRanks = testLottos.map((lotto) => lotto.getRank(winningLotto));
+    const lottoRankCounts = lottoMachine.countLottoRanks(lottoRanks);
+    const lottoReturn = LottoRank.getLottoReturn(lottoRankCounts);
+
+    //when
+    View.printLottoReturn(lottoRankCounts);
+
+    //then
+    expect(logSpy).toHaveBeenCalledWith(`총 수익률은 ${lottoReturn.toFixed(2)}% 입니다.`);
+  });
 });

@@ -69,7 +69,7 @@ const View = {
 
   printLottoResult(lottoRankCounts) {
     const lottoResult = LottoRank.getLottoResult(lottoRankCounts);
-    
+
     lottoResult.forEach(({ text, prize, count }) => {
       if (text && prize) {
         console.log(`${text} (${prize.toLocaleString()}원)- ${count}개`);
@@ -79,8 +79,8 @@ const View = {
 
   printLottoReturn(lottoRankCounts) {
     const lottoReturn = LottoRank.getLottoReturn(lottoRankCounts);
-    
-    console.log(`총 수익률을 ${lottoReturn.toFixed(2)}% 입니다.`);
+
+    console.log(`총 수익률은 ${lottoReturn.toFixed(2)}% 입니다.`);
   },
 };
 
