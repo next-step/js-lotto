@@ -217,7 +217,7 @@ describe("로또 테스트", () => {
     expect(whenExistsOutOfRange).toThrow();
   });
 
-  test("로또를 생성할때 번호가 오름차순으로 정렬된 상태가 아니라면 에러를 반환한다.", () => {
+  test("로또를 생성할때 번호를 오름차순으로 정렬한다.", () => {
     //given
     const notAscendingNumbers = [6, 5, 4, 3, 2, 1];
     const ascendingNumbers = notAscendingNumbers.toSorted((a, b) => a - b);
