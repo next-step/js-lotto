@@ -84,10 +84,10 @@ describe("입출력 기능 테스트", () => {
     );
 
     // when
-    const winningNumbers = await Input.getWinningNumbers();
+    const winningLotto = await Input.getWinningLotto();
 
     // then
-    expect(winningNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(winningLotto.numbers).toEqual([1, 2, 3, 4, 5, 6]);
   });
 
   test("로또 당첨 번호를 입력 받을 때 올바른 당첨 번호를 입력하지 않은 경우 재입력을 요구한다.", async () => {
@@ -99,28 +99,28 @@ describe("입출력 기능 테스트", () => {
       .mockImplementationOnce(() => Promise.resolve("1,2,3,4,5,6"));
 
     // when
-    const winningNumbers = await Input.getWinningNumbers();
+    const winningLotto = await Input.getWinningLotto();
 
     // then
     expect(logSpy).toHaveBeenCalledTimes(3);
-    expect(winningNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(winningLotto.numbers).toEqual([1, 2, 3, 4, 5, 6]);
   });
 
-  test("로또 보너스 번호를 입력 받을 때 1이상 45이하의 정수이면서 당첨번호로 선택한 수들과 다른 수를 입력 하면 정상적으로 종료된다.", async () => {
+  test("로또 보너스 번호를 입력 받을 때 1이상 45이하의 정수이면서 당첨번호로 선택한 수들과 다른 수를 입력하면 정상적으로 종료된다.", async () => {
     // given
     readLineAsyncSpy.mockImplementationOnce(() => Promise.resolve("7"));
-    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const winningLotto = new Lotto([1, 2, 3, 4, 5, 6]);
 
     // when
-    const bonusNumber = await Input.getBonusNumber(winningNumbers);
+    const bonusNumber = await Input.getBonusNumber(winningLotto);
 
     // then
-    expect(bonusNumber).toBe("7");
+    expect(bonusNumber.value).toBe(7);
   });
 
   test("로또 보너스 번호를 입력 받을 때 올바른 보너스 번호를 입력하지 않은 경우 재입력을 요구한다.", async () => {
     // given
-    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const winningLotto = new Lotto([1, 2, 3, 4, 5, 6]);
     readLineAsyncSpy
       .mockImplementationOnce(() => Promise.resolve("6"))
       .mockImplementationOnce(() => Promise.resolve("55"))
@@ -128,10 +128,10 @@ describe("입출력 기능 테스트", () => {
       .mockImplementationOnce(() => Promise.resolve("7"));
 
     // when
-    const bonusNumber = await Input.getBonusNumber(winningNumbers);
+    const bonusNumber = await Input.getBonusNumber(winningLotto);
 
     // then
-    expect(bonusNumber).toBe("7");
+    expect(bonusNumber.value).toBe(7);
     expect(logSpy).toHaveBeenCalledTimes(3);
   });
 

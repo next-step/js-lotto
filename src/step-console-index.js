@@ -1,6 +1,5 @@
 import Lotto from "./js/domain/Lotto";
 import LottoGame from "./js/domain/LottoGame";
-import LottoNumber from "./js/domain/LottoNumber";
 import LottoResult from "./js/domain/LottoResult";
 import Input from "./js/view/Input";
 import Output from "./js/view/Output";
@@ -15,7 +14,7 @@ while (true) {
 
   const lottos = [];
   for (let i = 0; i < availableLottoCount; i++) {
-    const lottoNumbers = LottoNumber.generateRandomLottoNumbers();
+    const lottoNumbers = Lotto.generateRandomLottoNumbers();
     lottos.push(new Lotto(lottoNumbers));
   }
 
@@ -24,18 +23,18 @@ while (true) {
 
   // 발급한 로또들의 각 로또 번호들을 오름차순으로 출력
   const sortedLottosNumbers = lottos.map((lotto) =>
-    LottoNumber.sortLottoNumbersByAscendingOrder(lotto.numbers)
+    Lotto.sortLottoNumbersByAscendingOrder(lotto.numbers)
   );
   Output.printGeneratedLottosNumbers(sortedLottosNumbers);
 
   // 당첨 번호 입력
-  const winningNumbers = await Input.getWinningNumbers();
+  const winningLotto = await Input.getWinningLotto();
 
   // 보너스 번호 입력
-  const bonusNumber = await Input.getBonusNumber(winningNumbers);
+  const bonusNumber = await Input.getBonusNumber(winningLotto);
 
   // 로또 당첨 결과 생성
-  const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+  const lottoResult = new LottoResult(winningLotto, bonusNumber);
 
   // 로또 당첨 결과 통계 출력
   const lottoRankingsCounts = lottoResult.getLottoRankingsCounts(lottos);

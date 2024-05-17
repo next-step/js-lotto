@@ -1,5 +1,6 @@
 import { ErrorLottoNumber, ErrorLottoNumbers } from "../src/js/constants/error";
 import Lotto from "../src/js/domain/Lotto";
+import LottoNumber from "../src/js/domain/LottoNumber";
 
 describe("로또 기능 테스트", () => {
   test.each(["1,2,3,4,5,6", [1, 2, 3, 4, 5, 6]])(
@@ -15,26 +16,6 @@ describe("로또 기능 테스트", () => {
       expect(lottoNumbers).toEqual([1, 2, 3, 4, 5, 6]);
     }
   );
-
-  test("로또 번호가 문자열 또는 배열이 아니라면 에러가 발생한다", () => {
-    // given
-    const lottoNumbers = {
-      1: 1,
-      2: 2,
-      3: 3,
-      4: 4,
-      5: 5,
-      6: 6,
-    };
-
-    // when
-    const validateLottoNumbers = () => Lotto.validateLottoNumbers(lottoNumbers);
-
-    // then
-    expect(validateLottoNumbers).toThrow(
-      ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_TYPE
-    );
-  });
 
   test("로또 번호 중 중복되는 수가 있다면 에러가 발생한다", () => {
     // given
@@ -108,11 +89,10 @@ describe("로또 기능 테스트", () => {
     (expectedResult, testSet) => {
       // given
       const lotto = new Lotto(testSet.lottoNumbers);
+      const winningLotto = new Lotto(testSet.winningNumbers);
 
       // when
-      const matchingCount = lotto.countMatchingLottoNumbers(
-        testSet.winningNumbers
-      );
+      const matchingCount = lotto.countMatchingLottoNumbers(winningLotto);
 
       // then
       expect(matchingCount).toBe(expectedResult);
@@ -143,7 +123,7 @@ describe("로또 기능 테스트", () => {
     (_, expectedResult, testSet) => {
       // given
       const lotto = new Lotto(testSet.lottoNumbers);
-      const bonusNumber = testSet.bonusNumber;
+      const bonusNumber = new LottoNumber(testSet.bonusNumber);
 
       // when
       const isBonusNumberMatching = lotto.hasLottoNumber(bonusNumber);

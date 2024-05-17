@@ -1,5 +1,6 @@
 import Lotto from "../src/js/domain/Lotto";
 import LottoGame from "../src/js/domain/LottoGame";
+import LottoNumber from "../src/js/domain/LottoNumber";
 import LottoResult from "../src/js/domain/LottoResult";
 
 describe("로또 당첨 기능 테스트", () => {
@@ -27,9 +28,9 @@ describe("로또 당첨 기능 테스트", () => {
     (_, expectedResult, testSet) => {
       // given
       const lotto = new Lotto(testSet.lottoNumbers);
-      const winningNumbers = testSet.winningNumbers;
-      const bonusNumber = testSet.bonusNumber;
-      const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+      const winningLotto = new Lotto(testSet.winningNumbers);
+      const bonusNumber = new LottoNumber(testSet.bonusNumber);
+      const lottoResult = new LottoResult(winningLotto, bonusNumber);
 
       // when
       const lottoRanking = lottoResult.getLottoRanking(lotto);
@@ -41,11 +42,10 @@ describe("로또 당첨 기능 테스트", () => {
 
   test("로또 당첨 등수를 구하려고 할 때 등수에 들지 못한다면 null을 반환한다.", () => {
     // given
-    const lottoNumbers = [1, 2, 3, 4, 5, 6];
-    const winningNumbers = [10, 11, 12, 13, 14, 15];
-    const bonusNumber = 8;
-    const lotto = new Lotto(lottoNumbers);
-    const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+    const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
+    const winningLotto = new Lotto([10, 11, 12, 13, 14, 15]);
+    const bonusNumber = new LottoNumber(8);
+    const lottoResult = new LottoResult(winningLotto, bonusNumber);
 
     // when
     const lottoRanking = lottoResult.getLottoRanking(lotto);
@@ -62,9 +62,9 @@ describe("로또 당첨 기능 테스트", () => {
       [1, 2, 3, 4, 9, 10],
     ];
     const lottos = lottoNumbers.map((lottoNumbers) => new Lotto(lottoNumbers));
-    const winningNumbers = [1, 2, 3, 4, 5, 6];
-    const bonusNumber = 7;
-    const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+    const winningLotto = new Lotto([1, 2, 3, 4, 5, 6]);
+    const bonusNumber = new LottoNumber(7);
+    const lottoResult = new LottoResult(winningLotto, bonusNumber);
 
     // when
     const lottoRankingCounts = lottoResult.getLottoRankingsCounts(lottos);
@@ -97,9 +97,9 @@ describe("로또 당첨 기능 테스트", () => {
     (_, expectedResult, testSet) => {
       // given
       const lotto = new Lotto(testSet.lottoNumbers);
-      const winningNumbers = testSet.winningNumbers;
-      const bonusNumber = testSet.bonusNumber;
-      const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+      const winningLotto = new Lotto(testSet.winningNumbers);
+      const bonusNumber = new LottoNumber(testSet.bonusNumber);
+      const lottoResult = new LottoResult(winningLotto, bonusNumber);
 
       // when
       const lottoRanking = lottoResult.getLottoRanking(lotto);
@@ -149,9 +149,9 @@ describe("로또 당첨 기능 테스트", () => {
       lottos.push(new Lotto(lottoNumbers[i]));
     }
 
-    const winningNumbers = [1, 2, 3, 4, 5, 6];
-    const bonusNumber = 7;
-    const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+    const winningLotto = new Lotto([1, 2, 3, 4, 5, 6]);
+    const bonusNumber = new LottoNumber(7);
+    const lottoResult = new LottoResult(winningLotto, bonusNumber);
     const totalLottoWinningPrice =
       lottoResult.getTotalLottoWinningPrice(lottos);
 

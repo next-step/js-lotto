@@ -2,20 +2,19 @@ import {
   ErrorLottoBonusNumber,
   ErrorLottoNumber,
 } from "../src/js/constants/error";
+import Lotto from "../src/js/domain/Lotto";
 import LottoNumber from "../src/js/domain/LottoNumber";
 
 describe("로또 번호 기능 테스트", () => {
   test("로또 번호는 1이상 45이하의 정수이다.", () => {
     // given
-    const lottoNumber = 1;
+    const lottoNumber = new LottoNumber(1);
 
     // when
-    const validate = () => {
-      LottoNumber.validateLottoNumber(lottoNumber);
-    };
+    const value = lottoNumber.value;
 
     // then
-    expect(validate()).toBeUndefined();
+    expect(value).toBe(1);
   });
 
   test.each([
@@ -37,23 +36,24 @@ describe("로또 번호 기능 테스트", () => {
       // given
 
       // when
-      const validate = () => {
-        LottoNumber.validateLottoNumber(testSet.lottoNumber);
+
+      const generateLottoNumber = () => {
+        const lottoNumber = new LottoNumber(testSet.lottoNumber);
       };
 
       // then
-      expect(validate).toThrow(testSet.errorMessage);
+      expect(generateLottoNumber).toThrow(testSet.errorMessage);
     }
   );
 
   test("보너스 번호는 1 이상 45 미만의 정수이며 당첨 번호와 겹치지 않는다.", () => {
     // given
-    const winningNumbers = [1, 2, 3, 4, 5, 6];
-    const bonusNumber = 7;
+    const winningLotto = new Lotto([1, 2, 3, 4, 5, 6]);
+    const bonusNumber = new LottoNumber(7);
 
     // when
     const validate = () => {
-      LottoNumber.validateBonusNumber(bonusNumber, winningNumbers);
+      LottoNumber.validateBonusNumber(bonusNumber, winningLotto);
     };
 
     // then
@@ -82,12 +82,12 @@ describe("로또 번호 기능 테스트", () => {
     "보너스 번호가 1 미만 45 초과의 정수이거나 당첨 번호와 겹치면 에러메시지를 출력한다.",
     (testSet) => {
       // given
+      const bonusNumber = new LottoNumber(testSet.bonusNumber);
+      const winningLotto = new Lotto(testSet.winningNumbers);
+
       // when
       const validate = () => {
-        LottoNumber.validateBonusNumber(
-          testSet.bonusNumber,
-          testSet.winningNumbers
-        );
+        LottoNumber.validateBonusNumber(bonusNumber, winningLotto);
       };
 
       // then

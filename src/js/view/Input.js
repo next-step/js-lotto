@@ -18,28 +18,29 @@ const Input = {
     }
   },
 
-  async getWinningNumbers() {
+  async getWinningLotto() {
     while (true) {
       try {
         const winningNumbers = await readLineAsync(
           "\n당첨 번호를 입력해 주세요."
         );
-        Lotto.validateLottoNumbers(winningNumbers);
 
-        return Lotto.convertLottoNumbersToArray(winningNumbers);
+        const winningLotto = new Lotto(winningNumbers);
+
+        return winningLotto;
       } catch (e) {
         console.log(e.message);
       }
     }
   },
 
-  async getBonusNumber(winningNumbers) {
+  async getBonusNumber(winningLotto) {
     while (true) {
       try {
-        const bonusNumber = await readLineAsync(
-          "\n보너스 번호를 입력해 주세요."
-        );
-        LottoNumber.validateBonusNumber(bonusNumber, winningNumbers);
+        const input = await readLineAsync("\n보너스 번호를 입력해 주세요.");
+
+        const bonusNumber = new LottoNumber(input);
+        LottoNumber.validateBonusNumber(bonusNumber, winningLotto);
         return bonusNumber;
       } catch (e) {
         console.log(e.message);

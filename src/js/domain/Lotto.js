@@ -2,28 +2,25 @@ import { ErrorLottoNumbers } from "../constants/error";
 import LottoNumber from "./LottoNumber";
 
 class Lotto {
-  static LOTTO_PRICE = 1000;
   static LENGTH_LOTTO_NUMBERS = 6;
 
-  #numbers = [];
+  #lottoNumbers = [];
 
   constructor(input) {
     Lotto.validateLottoNumbers(input);
-    const lottoNumbers = Lotto.convertLottoNumbersToArray(input);
-    this.#numbers = lottoNumbers;
+    const lottoNumbers = Lotto.convertLottoNumbersToLottoNumberArray(input);
+    this.#lottoNumbers = lottoNumbers;
   }
 
   get numbers() {
-    return [...this.#numbers];
+    return this.#lottoNumbers.map((lottoNumber) => lottoNumber.value);
   }
 
   static validateLottoNumbers(input) {
-    if (!Array.isArray(input) && typeof input !== "string") {
-      throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_TYPE);
-    }
-
-    const lottoNumbers = Lotto.convertLottoNumbersToArray(input);
-    const lottoNumbersSet = new Set(lottoNumbers);
+    const lottoNumbers = Lotto.convertLottoNumbersToLottoNumberArray(input);
+    const lottoNumbersSet = new Set(
+      lottoNumbers.map((lottoNumber) => lottoNumber.value)
+    );
 
     if (lottoNumbers.length !== this.LENGTH_LOTTO_NUMBERS) {
       throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH);
@@ -32,10 +29,6 @@ class Lotto {
     if (lottoNumbers.length !== lottoNumbersSet.size) {
       throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_DUPLICATED);
     }
-
-    lottoNumbers.forEach((lottoNumber) => {
-      LottoNumber.validateLottoNumber(lottoNumber);
-    });
   }
 
   static generateRandomLottoNumbers() {
@@ -57,13 +50,15 @@ class Lotto {
     return lottoNumbers;
   }
 
-  static convertLottoNumbersToArray(lottoNumbers) {
+  static convertLottoNumbersToLottoNumberArray(lottoNumbers) {
     if (Array.isArray(lottoNumbers)) {
-      return lottoNumbers.map(Number);
+      return lottoNumbers.map((lottoNumber) => new LottoNumber(lottoNumber));
     }
 
     if (typeof lottoNumbers === "string") {
-      return lottoNumbers.split(",").map(Number);
+      return lottoNumbers
+        .split(",")
+        .map((lottoNumber) => new LottoNumber(lottoNumber));
     }
 
     return [];
@@ -73,15 +68,15 @@ class Lotto {
     return [...lottoNumbers].sort((a, b) => a - b);
   }
 
-  countMatchingLottoNumbers(lottoNumbers) {
-    const matchedLottoNumbers = this.#numbers.filter((lottoNumber) =>
-      lottoNumbers.includes(lottoNumber)
+  countMatchingLottoNumbers(lotto) {
+    const matchedLottoNumbers = this.numbers.filter((lottoNumber) =>
+      lotto.numbers.includes(lottoNumber)
     );
     return matchedLottoNumbers.length;
   }
 
   hasLottoNumber(lottoNumber) {
-    return this.#numbers.includes(lottoNumber);
+    return this.numbers.includes(lottoNumber.value);
   }
 }
 

@@ -1,20 +1,37 @@
 import { ErrorLottoBonusNumber, ErrorLottoNumber } from "../constants/error";
 
-const LottoNumber = {
-  MAX_LOTTO_NUMBER: 45,
-  MIN_LOTTO_NUMBER: 1,
+class LottoNumber {
+  static MAX_LOTTO_NUMBER = 45;
+  static MIN_LOTTO_NUMBER = 1;
 
-  validateBonusNumber(input, winningNumbers) {
-    this.validateLottoNumber(input);
+  #value;
 
-    if (winningNumbers.includes(Number(input))) {
+  constructor(lottoNumber) {
+    if (lottoNumber instanceof LottoNumber) {
+      return lottoNumber;
+    }
+
+    LottoNumber.validateLottoNumber(lottoNumber);
+    this.#value = Number(lottoNumber);
+  }
+
+  get value() {
+    return this.#value;
+  }
+
+  static validateBonusNumber(bonusNumber, winningLotto) {
+    if (winningLotto.numbers.includes(bonusNumber.value)) {
       throw new Error(
         ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_DUPLICATED
       );
     }
-  },
+  }
 
-  validateLottoNumber(input) {
+  static validateLottoNumber(input) {
+    if (input instanceof LottoNumber) {
+      return;
+    }
+
     if (isNaN(input)) {
       throw new Error(ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_NUMBER);
     }
@@ -29,7 +46,7 @@ const LottoNumber = {
     ) {
       throw new Error(ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_VALID_INTEGER);
     }
-  },
-};
+  }
+}
 
 export default LottoNumber;

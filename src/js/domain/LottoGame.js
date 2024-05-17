@@ -1,7 +1,8 @@
 import { ErrorLottoGame, ErrorLottoPurchasedAmount } from "../constants/error";
-import Lotto from "./Lotto";
 
 const LottoGame = {
+  LOTTO_PRICE: 1000,
+
   RESTART_GAME_TRUE: "y",
   RESTART_GAME_FALSE: "n",
 
@@ -21,7 +22,7 @@ const LottoGame = {
 
   getPurchasableLottoCount(purchasedAmount) {
     this.validateLottoPurchasedAmount(purchasedAmount);
-    return Math.floor(Number(purchasedAmount) / Lotto.LOTTO_PRICE);
+    return Math.floor(Number(purchasedAmount) / LottoGame.LOTTO_PRICE);
   },
 
   validateIsRestartLottoGame(input) {
