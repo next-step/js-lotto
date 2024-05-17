@@ -6,6 +6,7 @@ import {
   TEST_DUPLICATED_BONUS_NUMBER,
   TEST_DUPLICATED_LOTTO_NUMBERS,
   TEST_LOTTOS,
+  TEST_LOTTOS_RESULT,
   TEST_LOTTO_NUMBERS,
   TEST_MONEY,
   TEST_STRING_MONEY,
@@ -118,16 +119,16 @@ describe("입출력 테스트", () => {
     //given
     const winningLotto = new WinningLotto(new Lotto([15, 23, 12, 1, 34, 26]), 7);
     const testLottos = TEST_LOTTOS.map((lotto) => new Lotto(lotto));
-    
+
     const lottoRanks = testLottos.map((lotto) => lotto.getRank(winningLotto));
     const lottoRankCounts = lottoMachine.countLottoRanks(lottoRanks);
-
-    const lottoResult = LottoRank.getLottoResult(lottoRankCounts);
 
     //when
     View.printLottoResult(lottoRankCounts);
 
     //then
-    expect(logSpy).toHaveBeenCalledWith(lottoResult);
+    TEST_LOTTOS_RESULT.forEach((result) => {
+      expect(logSpy).toHaveBeenCalledWith(result);
+    });
   });
 });
