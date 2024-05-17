@@ -2,6 +2,7 @@ import { ERROR_CODES } from "../constants/error";
 
 export class Lotto {
   static PRICE = 1000;
+  static LEN = 6;
   #numbers;
 
   constructor(numbers) {

@@ -6,11 +6,20 @@ export class View {
     try {
       const input = await readLineAsync("> 구입금액을 입력해 주세요.");
 
-      return input;
+      return Number(input);
     } catch (error) {
       console.log(error);
       View.printError(error);
     }
+  }
+
+  static outputBuyLog(count, lottoList) {
+    const logs = [];
+    logs.push(`${count}개를 구매했습니다.`);
+    lottoList.forEach((lotto) => {
+      logs.push(`[${lotto.numbers.join(", ")}]`);
+    });
+    console.log(logs.join("\n"));
   }
 
   static printError(error) {

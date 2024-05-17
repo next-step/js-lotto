@@ -8,7 +8,7 @@ describe("로또 게임 테스트", () => {
     const price = 8000;
 
     // when
-    const count = app.getLottoAmount(price);
+    const count = app.getLottoCount(price);
 
     // then
     expect(count).toBe(8);
