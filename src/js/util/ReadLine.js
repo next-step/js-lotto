@@ -8,8 +8,8 @@ export const readLine = async ({ query, validate, transform }) => {
 
   rl.close();
 
-  if (validate && !validate(answer)) {
-    throw new Error();
+  if (validate) {
+    validate(answer);
   }
 
   if (transform) {

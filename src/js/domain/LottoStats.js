@@ -15,7 +15,7 @@ export class LottoStats {
 
   #checkLottoRanks(lottoRanks) {
     if (lottoRanks.some((e) => !Object.values(LottoRank).includes(e))) {
-      throw new Error();
+      throw new Error("LottoRank enum에 정의되지 않은 값입니다.");
     }
   }
 
