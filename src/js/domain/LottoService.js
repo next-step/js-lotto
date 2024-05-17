@@ -45,8 +45,7 @@ const generateLottoNumbers = (count) => {
       .map((_, i) => i + LOTTO_MIN_NUMBER);
 
     const numbers = drawRandomItems(lottoNumbers, LOTTO_DIGITS);
-    const sortedNumbers = numbers.toSorted((a, b) => a - b);
-    numbersList.push(sortedNumbers);
+    numbersList.push(numbers);
   }
 
   return numbersList;

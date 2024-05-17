@@ -9,7 +9,7 @@ export class Lotto {
 
   constructor(numbers) {
     this.#checkNumbers(numbers);
-    this.#numbers = numbers;
+    this.#numbers = numbers.toSorted((a, b) => a - b);
   }
 
   compare(winningNumbers, bonusNumber) {
