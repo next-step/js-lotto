@@ -43,6 +43,16 @@ export const printStats = (stats) => {
     rankCount.get(LottoRank.SECOND.rank) ?? 0
   }개
   6개 일치 (2,000,000,000원) - ${rankCount.get(LottoRank.FIRST.rank) ?? 0}개
-  총 수익률은 ${calculateProfitRate(totalCount, totalReward)}%입니다.`;
+  총 수익률은 ${calculateProfitRate(totalCount, totalReward)}%입니다.\n`;
   console.log(statsView);
 };
+
+export const askRestart = async () => {
+  const query = "> 다시 시작하시겠습니까? (y/n)";
+  const transform = (x) => x === "y";
+  const input = await readLine({ query, transform });
+  return input;
+};
+
+export const printError = (err) =>
+  console.log(`${err.message} 다시 입력해주세요.`);
