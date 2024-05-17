@@ -1,4 +1,4 @@
-import { drawItem, drawUniqueItems } from "../src/js/util/Draw";
+import { drawItem, drawRandomItems } from "../src/js/util/Draw";
 
 describe("뽑기 테스트", () => {
   test("리스트에서 아이템을 뽑아서 리턴한다.", () => {
@@ -23,13 +23,13 @@ describe("뽑기 테스트", () => {
     expect(whenEmptyList).toThrow();
   });
 
-  test("리스트에서 중복되지 않는 아이템을 원하는 만큼 뽑는다.", () => {
+  test("리스트에서 랜덤 아이템을 원하는 만큼 뽑는다.", () => {
     //given
     const list = [1, 2, 3];
     const amount = 2;
 
     //when
-    const items = drawUniqueItems(list, amount);
+    const items = drawRandomItems(list, amount);
 
     //then
     items.forEach((e) => expect(list).toContain(e));
@@ -41,7 +41,7 @@ describe("뽑기 테스트", () => {
     const amount = 4;
 
     //when
-    const whenTooManyAmount = () => drawUniqueItems(list, amount);
+    const whenTooManyAmount = () => drawRandomItems(list, amount);
 
     //then
     expect(whenTooManyAmount).toThrow();

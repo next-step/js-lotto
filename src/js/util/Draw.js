@@ -10,7 +10,7 @@ export const drawItem = (list) => {
   return item;
 };
 
-export const drawUniqueItems = (list, amount) => {
+export const drawRandomItems = (list, amount) => {
   const items = [];
 
   while (items.length < amount) {
