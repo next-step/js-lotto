@@ -6,9 +6,28 @@ export class View {
     try {
       const input = await readLineAsync("> 구입금액을 입력해 주세요.");
 
-      return Number(input);
+      return input;
     } catch (error) {
-      console.log(error);
+      View.printError(error);
+    }
+  }
+
+  static async inputWinningNumbers() {
+    try {
+      const input = await readLineAsync("> 당첨 번호를 입력해 주세요.");
+
+      return input;
+    } catch (error) {
+      View.printError(error);
+    }
+  }
+
+  static async inputBonusNumber() {
+    try {
+      const input = await readLineAsync("> 보너스 번호를 입력해 주세요.");
+
+      return input;
+    } catch (error) {
       View.printError(error);
     }
   }

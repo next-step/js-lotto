@@ -1,5 +1,3 @@
-import { Lotto } from "./Lotto";
-
 export class LottoResult {
   #winningNumbers;
   #bonusNumber;

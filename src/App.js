@@ -1,14 +1,21 @@
 import { ERROR_CODES } from "./constants/error";
 import { Lotto } from "./domain/Lotto";
+import { LottoResult } from "./domain/LottoResult";
 import { View } from "./views/view";
 
 export class App {
   async play() {
     const amount = await View.inputAmount();
 
-    const count = this.getLottoCount(amount);
+    this.validateNumber(amount);
 
-    View.outputBuyLog(count, this.buyLotto(amount));
+    const count = this.getLottoCount(Number(amount));
+
+    View.outputBuyLog(count, this.buyLotto(Number(amount)));
+
+    const winningNumbers = await View.inputWinningNumbers();
+    const bonusNumber = await View.inputBonusNumber();
+    const lottoResult = new LottoResult(winningNumbers, bonusNumber);
   }
 
   getLottoCount(amount) {
@@ -29,6 +36,12 @@ export class App {
   validateAmount(amount) {
     if (amount < Lotto.PRICE) {
       throw new Error(ERROR_CODES.ERROR_AMOUNT_TOO_SMALL);
+    }
+  }
+
+  validateNumber(value) {
+    if (isNaN(value)) {
+      throw new Error(ERROR_CODES.ERROR_NOT_A_NUMBER);
     }
   }
 
