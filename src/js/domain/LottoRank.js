@@ -19,4 +19,27 @@ export const LottoRank = {
         return LOTTO_PRIZE.FAIL.rank;
     }
   },
+
+  /**
+   * @param {Map} lottoRankCounts
+   * @returns {Array<{text: string, prize: number, count: number}>}
+   */
+  getLottoResult(lottoRankCounts) {
+    return Object.values(LOTTO_PRIZE).map(({ text, prize, rank }) => {
+      const count = lottoRankCounts.get(rank) || 0;
+      return { text, prize, count };
+    });
+  },
+
+  /**
+   * @param {Map} lottoRankCounts
+   * @returns {number}
+   */
+  getLottoReturn(lottoRankCounts) {
+    const total = Array.from(lottoRankCounts.values()).reduce((acc, value) => acc + value, 0);
+    const failed = lottoRankCounts.get(LOTTO_PRIZE.FAIL.rank) || 0;
+    const lottoReturn = ((total - failed) / total) * 100;
+
+    return lottoReturn;
+  },
 };

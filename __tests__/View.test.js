@@ -5,18 +5,22 @@ import { LOTTO_MONEY_ERR_MSG, LOTTO_NUMBER_DUPLICATED_ERR_MSG } from "../src/js/
 import {
   TEST_DUPLICATED_BONUS_NUMBER,
   TEST_DUPLICATED_LOTTO_NUMBERS,
+  TEST_LOTTOS,
   TEST_LOTTO_NUMBERS,
   TEST_MONEY,
   TEST_STRING_MONEY,
   TEST_WHITESPACE_MONEY,
 } from "./constants";
-import { Lotto } from "../src/js/domain/Lotto";
+import { Lotto, WinningLotto } from "../src/js/domain/Lotto";
 import { bonusNumberRule, lottoRule } from "../src/js/rules/Lotto.rule";
+import { LottoRank } from "../src/js/domain/LottoRank";
 
 let logSpy;
+let lotto;
 let lottoMachine;
 beforeEach(() => {
   logSpy = jest.spyOn(console, "log");
+  lotto = new Lotto(TEST_LOTTO_NUMBERS);
   lottoMachine = new LottoMachine();
 });
 
@@ -108,5 +112,22 @@ describe("입출력 테스트", () => {
 
     //then
     expect(validationCallback).toThrow(LOTTO_NUMBER_DUPLICATED_ERR_MSG);
+  });
+
+  test("로또 당첨 통계를 출력한다.", () => {
+    //given
+    const winningLotto = new WinningLotto(new Lotto([15, 23, 12, 1, 34, 26]), 7);
+    const testLottos = TEST_LOTTOS.map((lotto) => new Lotto(lotto));
+    
+    const lottoRanks = testLottos.map((lotto) => lotto.getRank(winningLotto));
+    const lottoRankCounts = lottoMachine.countLottoRanks(lottoRanks);
+
+    const lottoResult = LottoRank.getLottoResult(lottoRankCounts);
+
+    //when
+    View.printLottoResult(lottoRankCounts);
+
+    //then
+    expect(logSpy).toHaveBeenCalledWith(lottoResult);
   });
 });

@@ -3,6 +3,7 @@ import { bonusNumberRule, lottoRule } from "../rules/Lotto.rule";
 import { readLineAsync } from "../utils/readLineSync";
 import { Lotto } from "./Lotto";
 import { LOTTO_PRIZE } from "../constants";
+import { LottoRank } from "./LottoRank";
 
 const View = {
   async getMoney() {
@@ -67,8 +68,9 @@ const View = {
   },
 
   printLottoResult(lottoRankCounts) {
-    Object.values(LOTTO_PRIZE).forEach(({ text, prize, rank }) => {
-      const count = lottoRankCounts.get(rank) || 0;
+    const lottoResult = LottoRank.getLottoResult(lottoRankCounts);
+    
+    lottoResult.forEach(({ text, prize, count }) => {
       if (text && prize) {
         console.log(`${text} (${prize.toLocaleString()}원)- ${count}개`);
       }
@@ -76,9 +78,7 @@ const View = {
   },
 
   printLottoReturn(lottoRankCounts) {
-    const total = Array.from(lottoRankCounts.values()).reduce((acc, value) => acc + value, 0);
-    const failed = lottoRankCounts.get(LOTTO_PRIZE.FAIL.rank) || 0;
-    const lottoReturn = ((total - failed) / total) * 100;
+    const lottoReturn = LottoRank.getLottoReturn(lottoRankCounts);
     
     console.log(`총 수익률을 ${lottoReturn.toFixed(2)}% 입니다.`);
   },

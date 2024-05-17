@@ -16,7 +16,7 @@ export class Lotto {
   getRank(winningLotto) {
     const winningNumbers = winningLotto.winningNumbers.getNumbers();
     const bonusNumber = winningLotto.bonusNumber;
-
+    
     const matchedCount = this.#numbers.filter((number) => winningNumbers.includes(number)).length;
     const isBonusMatched = this.#numbers.includes(bonusNumber);
 
