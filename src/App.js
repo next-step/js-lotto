@@ -20,7 +20,7 @@ export class App {
 
     View.outputWinningLog(
       lottoResult.getWinningResult(lottoList),
-      lottoResult.getProfitRate(amount, lottoList)
+      lottoResult.getProfitRate({ amount, lottoList })
     );
   }
 

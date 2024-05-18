@@ -1,4 +1,5 @@
 import { ERROR_CODES } from "../../constants/error";
+import { Lotto } from "../../domain/Lotto";
 
 export function validateNumbers(numbers) {
   if (isValidLen(numbers)) {
@@ -15,7 +16,7 @@ export function validateNumbers(numbers) {
 }
 
 function isValidLen(numbers) {
-  return numbers.length !== 6;
+  return numbers.length !== Lotto.LEN;
 }
 
 function isValidNum(numbers) {
@@ -23,5 +24,5 @@ function isValidNum(numbers) {
 }
 
 function isValidDuplicatedNum(numbers) {
-  return new Set(numbers).size !== 6;
+  return new Set(numbers).size !== Lotto.LEN;
 }

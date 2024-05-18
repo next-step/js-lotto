@@ -70,10 +70,10 @@ describe("로또결과 테스트", () => {
     const lottoResult = new LottoResult([1, 2, 3, 4, 5, 6], 7);
 
     // when
-    const profitRate = lottoResult.getProfitRate(2 * Lotto.PRICE, [
-      lotto1,
-      lotto2,
-    ]);
+    const profitRate = lottoResult.getProfitRate({
+      amount: 2 * Lotto.PRICE,
+      lottoList: [lotto1, lotto2],
+    });
 
     // then
     expect(profitRate).toBe(500);

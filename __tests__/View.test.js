@@ -40,7 +40,10 @@ describe("출력 테스트", () => {
     // when
     View.outputWinningLog(
       lottoResult.getWinningResult(lottoList),
-      lottoResult.getProfitRate(lottoList.length * Lotto.PRICE, lottoList)
+      lottoResult.getProfitRate({
+        amount: lottoList.length * Lotto.PRICE,
+        lottoList,
+      })
     );
 
     // then
