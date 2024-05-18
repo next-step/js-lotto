@@ -1,14 +1,16 @@
 import { ConstantNumbers } from './constant';
 
+const createLottoNumbersArray = () => {
+	return Array.from(
+		{ length: ConstantNumbers.MAX_NUMBER - ConstantNumbers.MIN_NUMBER + 1 },
+		(_, i) => i + ConstantNumbers.MIN_NUMBER
+	);
+};
 class Lotto {
 	price = ConstantNumbers.LOTTO_PRICE;
 	quantity;
 	purchaseAmount;
-
-	lottoNumbers = Array.from(
-		{ length: ConstantNumbers.MAX_NUMBER - ConstantNumbers.MIN_NUMBER + 1 },
-		(_, i) => i + ConstantNumbers.MIN_NUMBER
-	);
+	static lottoNumbers = createLottoNumbersArray();
 
 	constructor(quantity) {
 		this.quantity = quantity;
@@ -21,7 +23,7 @@ class Lotto {
 	}
 
 	createLottoNumbers() {
-		return [...this.lottoNumbers].sort(() => Math.random() - 0.5).slice(0, 6);
+		return [...Lotto.lottoNumbers].sort(() => Math.random() - 0.5).slice(0, 6);
 	}
 }
 
