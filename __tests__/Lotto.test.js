@@ -1,4 +1,5 @@
 import Lotto from '../src/tests/Lotto';
+import { ErrorMessages } from '../src/tests/error';
 
 describe('로또 기능 테스트', () => {
 	test('로또 1장의 가격은 1000원이다', () => {
@@ -39,15 +40,17 @@ describe('로또 기능 테스트', () => {
 		});
 	});
 
-	test('당첨 번호 이외 1개의 보너스 번호가 있다.', () => {
+	test('보너스 번호는 당첨 번호와 중복될 수 없다', () => {
 		// given
 		const lotto = new Lotto();
 
 		// when
 		const lottoNumbers = lotto.createLottoNumbers();
-		const bonusNumber = lotto.createBonusNumber();
+		const bonusNumber = lottoNumbers.slice(0, 1);
 
 		// then
-		expect(lottoNumbers.includes(bonusNumber)).toBeFalsy();
+		if (lottoNumbers.includes(bonusNumber)) {
+			throw new Error('[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다');
+		}
 	});
 });

@@ -10,8 +10,6 @@ class Lotto {
 		(_, i) => i + ConstantNumbers.MIN_NUMBER
 	);
 
-	winningResult = [];
-
 	constructor(quantity) {
 		this.quantity = quantity;
 	}
@@ -24,14 +22,6 @@ class Lotto {
 
 	createLottoNumbers() {
 		return [...this.lottoNumbers].sort(() => Math.random() - 0.5).slice(0, 6);
-	}
-
-	createBonusNumber() {
-		const availableNumber = this.lottoNumbers.filter(num => !this.winningResult.includes(num));
-
-		const randomIndex = Math.floor(Math.random() * availableNumber.length);
-
-		return availableNumber[randomIndex];
 	}
 }
 
