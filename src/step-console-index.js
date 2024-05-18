@@ -1,5 +1,6 @@
 import Lotto from './tests/Lotto';
 import Winning from './tests/Winning';
+import { WinningRank } from './tests/constant';
 
 const readline = require('readline');
 
@@ -48,11 +49,11 @@ async function play() {
 	console.log(`
 당첨 통계
 --------------------
-3개 일치 (5,000원) - ${prizeCounts[3]}개
-4개 일치 (50,000원) - ${prizeCounts[4]}개
-5개 일치 (1,500,000원) - ${prizeCounts[5]}개
-5개 일치, 보너스 볼 일치 (30,000,000원) - ${prizeCounts['5+1']}개
-6개 일치 (2,000,000,000원) - ${prizeCounts[6]}개
+3개 일치 (5,000원) - ${prizeCounts[WinningRank.FIFTH_PLACE]}개
+4개 일치 (50,000원) - ${prizeCounts[WinningRank.FOURTH_PLACE]}개
+5개 일치 (1,500,000원) - ${prizeCounts[WinningRank.THIRD_PLACE]}개
+5개 일치, 보너스 볼 일치 (30,000,000원) - ${prizeCounts[WinningRank.SECOND_PLACE]}개
+6개 일치 (2,000,000,000원) - ${prizeCounts[WinningRank.FIRST_PLACE]}개
 총 수익률은 ${winningRate.toFixed(1)}%입니다.
 `);
 }

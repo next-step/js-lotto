@@ -53,11 +53,11 @@ class Winning {
 
 	calculateResults(lottoNumbers, userInputWinningNumber, createBonusNumber) {
 		const prizeCounts = {
-			[WinningPrize.FIFTH_PRIZE]: 0,
-			[WinningPrize.FOURTH_PRIZE]: 0,
-			[WinningPrize.THIRD_PRIZE]: 0,
-			[WinningPrize.SECOND_PRIZE]: 0,
-			[WinningPrize.FIRST_PRIZE]: 0
+			[WinningRank.FIFTH_PLACE]: 0,
+			[WinningRank.FOURTH_PLACE]: 0,
+			[WinningRank.THIRD_PLACE]: 0,
+			[WinningRank.SECOND_PLACE]: 0,
+			[WinningRank.FIRST_PLACE]: 0
 		};
 		let totalPrize = 0;
 
@@ -66,11 +66,11 @@ class Winning {
 			const prize = winning.calculatePrize();
 			totalPrize += prize;
 
-			if (prize === WinningPrize.FIFTH_PRIZE) prizeCounts[3]++;
-			if (prize === WinningPrize.FOURTH_PRIZE) prizeCounts[4]++;
-			if (prize === WinningPrize.THIRD_PRIZE) prizeCounts[5]++;
-			if (prize === WinningPrize.SECOND_PRIZE) prizeCounts['5+1']++;
-			if (prize === WinningPrize.FIRST_PRIZE) prizeCounts[6]++;
+			if (prize === WinningPrize.FIFTH_PRIZE) prizeCounts[WinningRank.FIFTH_PLACE]++;
+			if (prize === WinningPrize.FOURTH_PRIZE) prizeCounts[WinningRank.FOURTH_PLACE]++;
+			if (prize === WinningPrize.THIRD_PRIZE) prizeCounts[WinningRank.THIRD_PLACE]++;
+			if (prize === WinningPrize.SECOND_PRIZE) prizeCounts[WinningRank.SECOND_PLACE]++;
+			if (prize === WinningPrize.FIRST_PRIZE) prizeCounts[WinningRank.FIRST_PLACE]++;
 		});
 		return { prizeCounts, totalPrize };
 	}
