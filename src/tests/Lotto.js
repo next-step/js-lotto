@@ -8,13 +8,7 @@ const createLottoNumbersArray = () => {
 };
 class Lotto {
 	price = ConstantNumbers.LOTTO_PRICE;
-	quantity;
-	purchaseAmount;
 	static lottoNumbers = createLottoNumbersArray();
-
-	constructor(quantity) {
-		this.quantity = quantity;
-	}
 
 	purchase(purchaseAmount) {
 		// 구매 금액을 로또 가격으로 나눈 몫이 quantity
