@@ -3,11 +3,14 @@ import LottoGame from "./js/domain/LottoGame";
 import LottoResult from "./js/domain/LottoResult";
 import Input from "./js/view/Input";
 import Output from "./js/view/Output";
+import repeatUntilNoError from "./utils/repeatUntilNoError";
 
 const play = async () => {
   while (true) {
     // 로또를 구입할 금액 입력
-    const purchasedAmount = await Input.getLottoPurchasedAmount();
+    const purchasedAmount = await repeatUntilNoError(
+      Input.getLottoPurchasedAmount
+    );
 
     // 로또를 구입한 금액만큼 최대 개수의 로또 발급
     const availableLottoCount =
@@ -29,10 +32,12 @@ const play = async () => {
     Output.printGeneratedLottosNumbers(sortedLottosNumbers);
 
     // 당첨 번호 입력
-    const winningLotto = await Input.getWinningLotto();
+    const winningLotto = await repeatUntilNoError(Input.getWinningLotto);
 
     // 보너스 번호 입력
-    const bonusNumber = await Input.getBonusNumber(winningLotto);
+    const bonusNumber = await repeatUntilNoError(
+      async () => await Input.getBonusNumber(winningLotto)
+    );
 
     // 로또 당첨 결과 생성
     const lottoResult = new LottoResult(winningLotto, bonusNumber);
@@ -73,7 +78,9 @@ const play = async () => {
     Output.printLottoProfitRate(totalLottoProfitRate);
 
     //  재시작/종료 여부를 입력받는다.
-    const isRestartLottoGame = await Input.getIsRestartLottoGame();
+    const isRestartLottoGame = await repeatUntilNoError(
+      Input.getIsRestartLottoGame
+    );
     if (!isRestartLottoGame) {
       break;
     }

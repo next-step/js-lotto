@@ -25,21 +25,6 @@ describe("입출력 기능 테스트", () => {
     expect(lottoPurchasedAmount).toBe("10000");
   });
 
-  test("로또를 구매할 금액을 입력받을 때 숫자가 아니거나 0 미만의 실수가 입력될 경우 재입력을 요구한다.", async () => {
-    // given
-    readLineAsyncSpy
-      .mockImplementationOnce(() => Promise.resolve("abc"))
-      .mockImplementationOnce(() => Promise.resolve("-1"))
-      .mockImplementationOnce(() => Promise.resolve("10000"));
-
-    // when
-    const lottoPurchasedAmount = await Input.getLottoPurchasedAmount();
-
-    // then
-    expect(logSpy).toHaveBeenCalledTimes(2);
-    expect(lottoPurchasedAmount).toBe("10000");
-  });
-
   test("로또 구매 금액으로 발급한 최대 개수의 로또의 수를 출력한다.", () => {
     // given
     const availableLottoCount = 10;
@@ -90,22 +75,6 @@ describe("입출력 기능 테스트", () => {
     expect(winningLotto.numbers).toEqual([1, 2, 3, 4, 5, 6]);
   });
 
-  test("로또 당첨 번호를 입력 받을 때 올바른 당첨 번호를 입력하지 않은 경우 재입력을 요구한다.", async () => {
-    // given
-    readLineAsyncSpy
-      .mockImplementationOnce(() => Promise.resolve("1,2,3,4,5,6,8"))
-      .mockImplementationOnce(() => Promise.resolve("1,2,3,4,5,56"))
-      .mockImplementationOnce(() => Promise.resolve("1,2,3,4,5,abc"))
-      .mockImplementationOnce(() => Promise.resolve("1,2,3,4,5,6"));
-
-    // when
-    const winningLotto = await Input.getWinningLotto();
-
-    // then
-    expect(logSpy).toHaveBeenCalledTimes(3);
-    expect(winningLotto.numbers).toEqual([1, 2, 3, 4, 5, 6]);
-  });
-
   test("로또 보너스 번호를 입력 받을 때 1이상 45이하의 정수이면서 당첨번호로 선택한 수들과 다른 수를 입력하면 정상적으로 종료된다.", async () => {
     // given
     readLineAsyncSpy.mockImplementationOnce(() => Promise.resolve("7"));
@@ -116,23 +85,6 @@ describe("입출력 기능 테스트", () => {
 
     // then
     expect(bonusNumber.value).toBe(7);
-  });
-
-  test("로또 보너스 번호를 입력 받을 때 올바른 보너스 번호를 입력하지 않은 경우 재입력을 요구한다.", async () => {
-    // given
-    const winningLotto = new Lotto([1, 2, 3, 4, 5, 6]);
-    readLineAsyncSpy
-      .mockImplementationOnce(() => Promise.resolve("6"))
-      .mockImplementationOnce(() => Promise.resolve("55"))
-      .mockImplementationOnce(() => Promise.resolve("abc"))
-      .mockImplementationOnce(() => Promise.resolve("7"));
-
-    // when
-    const bonusNumber = await Input.getBonusNumber(winningLotto);
-
-    // then
-    expect(bonusNumber.value).toBe(7);
-    expect(logSpy).toHaveBeenCalledTimes(3);
   });
 
   test("로또 당첨 결과를 출력한다.", () => {
@@ -226,22 +178,5 @@ describe("입출력 기능 테스트", () => {
 
     // then
     expect(isRestartLottoGame).toBe(true);
-  });
-
-  test("재시작/종료 여부가 y 또는 n이 아닐 경우 에러를 발생시킨 후 재입력을 요구한다.", async () => {
-    // given
-    readLineAsyncSpy
-      .mockImplementationOnce(() => Promise.resolve("1"))
-      .mockImplementationOnce(() => Promise.resolve("Y"))
-      .mockImplementationOnce(() =>
-        Promise.resolve(LottoGame.RESTART_GAME_FALSE)
-      );
-
-    // when
-    const isRestartLottoGame = await Input.getIsRestartLottoGame();
-
-    // then
-    expect(logSpy).toHaveBeenCalledTimes(2);
-    expect(isRestartLottoGame).toBe(false);
   });
 });
