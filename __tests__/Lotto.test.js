@@ -22,13 +22,14 @@ describe("로또 테스트", () => {
     expect(lotto3).toThrow(ERROR_CODES.ERROR_INVALID_LENGTH);
   });
 
-  test("로또의 번호는 1~45까지의 자연수이다.", () => {
-    [0, -1, "a"].forEach((input) => {
-      // give
+  test.each([0, -1, "a"])(
+    "로또의 번호는 1~45까지의 자연수이다. 입력: %s",
+    (input) => {
+      // given
       const lotto = () => new Lotto([1, 2, 3, 4, 5, input]);
 
       // when + then
       expect(lotto).toThrow(ERROR_CODES.ERROR_INVALID_NUMBER);
-    });
-  });
+    }
+  );
 });
