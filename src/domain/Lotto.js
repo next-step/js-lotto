@@ -4,6 +4,7 @@ import { generateRandomNumber } from "../utils/generateRandomNumber";
 export class Lotto {
   #lottos;
   #purchasePrice;
+
   constructor(purchasePrice) {
     this.#lottos = [];
     this.#purchasePrice = purchasePrice;

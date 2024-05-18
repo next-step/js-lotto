@@ -2,11 +2,9 @@ import { input } from "./view/console/input";
 import { output } from "./view/console/output";
 import { LottoGame } from "./domain/LottoGame";
 import { Lotto } from "./domain/Lotto";
-import { isIntegerValidator } from "./validator/isIntegerValidator";
-import { isArrLengthValidator } from "./validator/isArrLengthValidator";
-import { hasNumberValidator } from "./validator/hasNumberValidator";
-import { isDuplicateValidator } from "./validator/isDuplicateValidator";
-import { isContainValidator } from "./validator/isContainValidator";
+import { validateNumber } from "./validator/validateNumber";
+import { validateArray } from "./validator/validateArray";
+import { CONTINUE } from "./constants/message";
 
 const app = async () => {
   const getPurchasePrice = async () => {
@@ -51,19 +49,33 @@ const app = async () => {
     }
   };
 
+  const continueStage = async () => {
+    const continueLetter = await input.continue();
+
+    if (continueLetter === CONTINUE.YES) {
+      await play();
+    }
+
+    process.exit();
+  };
+
   const validatePurchasePrice = (purchasePrice) => {
-    isIntegerValidator(purchasePrice);
+    validateNumber.nan(purchasePrice);
+    validateNumber.negative(purchasePrice);
   };
 
   const validateWinningNumbers = (winningNumberArray) => {
-    isArrLengthValidator(winningNumberArray);
-    hasNumberValidator(winningNumberArray);
-    isDuplicateValidator(winningNumberArray);
+    validateArray.length(winningNumberArray);
+    validateArray.inRange(winningNumberArray);
+    validateArray.duplicate(winningNumberArray);
   };
 
   const validateBonusNumber = (winningNumberArray, bonusNumber) => {
-    isIntegerValidator(bonusNumber);
-    isContainValidator(winningNumberArray, bonusNumber);
+    validateNumber.nan(bonusNumber);
+    validateNumber.negative(bonusNumber);
+    validateNumber.integer(bonusNumber);
+    validateNumber.max(bonusNumber);
+    validateArray.containNum(winningNumberArray, bonusNumber);
   };
 
   const calculateRateOfReturn = (totalIncome, purchasePrice) => {
@@ -83,9 +95,10 @@ const app = async () => {
     const rateOfReturn = calculateRateOfReturn(totalIncome, purchasePrice);
     output.result(result);
     output.rateOfReturn(rateOfReturn);
+    await continueStage();
   };
 
-  play();
+  await play();
 };
 
 app();

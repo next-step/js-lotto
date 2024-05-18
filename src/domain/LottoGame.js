@@ -8,6 +8,7 @@ export class LottoGame {
   #winningNumberArray;
   #bonusNumber;
   #result;
+
   constructor(lottos, winningNumberArray, bonusNumber) {
     this.#lottos = lottos;
     this.#winningNumberArray = winningNumberArray;
