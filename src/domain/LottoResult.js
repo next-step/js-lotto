@@ -34,19 +34,12 @@ export class LottoResult {
     const count = lotto.getMatchCount(this.#winningNumbers);
     const isMatchingBonus = lotto.numbers.includes(this.#bonusNumber);
 
-    switch (count) {
-      case 6:
-        return 1;
-      case 5:
-        if (isMatchingBonus) return 2;
-        return 3;
-      case 4:
-        return 4;
-      case 3:
-        return 5;
-      default:
-        return 6;
-    }
+    if (count === 6) return 1;
+    if (count === 5 && isMatchingBonus) return 2;
+    if (count === 5) return 3;
+    if (count === 4) return 4;
+    if (count === 3) return 5;
+    return 6;
   }
 
   getWinningAmount(rank) {
