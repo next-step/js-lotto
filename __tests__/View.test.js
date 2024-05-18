@@ -44,15 +44,7 @@ describe("출력 테스트", () => {
     );
 
     // then
-    const logs = [];
-    logs.push("당첨 통계");
-    logs.push("--------------------");
-    logs.push(`3개 일치 (5,000원) - 1개`);
-    logs.push(`4개 일치 (50,000원) - 0개`);
-    logs.push(`5개 일치 (1,500,000원) - 0개`);
-    logs.push(`5개 일치, 보너스 볼 일치 (30,000,000원) - 0개`);
-    logs.push(`6개 일치 (2,000,000,000원) - 0개`);
-    logs.push(`총 수익률은 62.5%입니다.`);
-    expect(logSpy).toHaveBeenCalledWith(logs.join("\n"));
+    const logs = `당첨 통계\n--------------------\n3개 일치 (5,000원) - 1개\n4개 일치 (50,000원) - 0개\n5개 일치 (1,500,000원) - 0개\n5개 일치, 보너스 볼 일치 (30,000,000원) - 0개\n6개 일치 (2,000,000,000원) - 0개\n총 수익률은 62.5%입니다.`;
+    expect(logSpy).toHaveBeenCalledWith(logs);
   });
 });
