@@ -23,15 +23,7 @@ class Lotto {
 	}
 
 	createLottoNumbers() {
-		this.winningResult = [];
-
-		for (let i = 0; i < ConstantNumbers.COUNT; i++) {
-			const randomIndex = Math.floor(Math.random() * this.lottoNumbers.length);
-			this.winningResult.push(this.lottoNumbers[randomIndex]);
-			this.lottoNumbers.splice(randomIndex, 1);
-		}
-
-		return this.winningResult;
+		return [...this.lottoNumbers].sort(() => Math.random() - 0.5).slice(0, 6);
 	}
 
 	createBonusNumber() {
