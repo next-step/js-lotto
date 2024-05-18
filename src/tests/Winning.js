@@ -7,6 +7,8 @@ class Winning {
 		this.lottoNumbers = lottoNumbers;
 		this.userInputWinningNumber = userInputWinningNumber;
 		this.createBonusNumber = createBonusNumber;
+		this.matches = 0;
+		this.bonusMatches = false;
 	}
 
 	checkWinning() {
@@ -38,9 +40,9 @@ class Winning {
 	}
 
 	calculateMatches() {
-		const matches = this.lottoNumbers.filter(number => this.userInputWinningNumber.includes(number)).length;
-		const bonusMatches = this.userInputWinningNumber.includes(this.createBonusNumber);
-		return { matches, bonusMatches };
+		this.matches = this.lottoNumbers.filter(number => this.userInputWinningNumber.includes(number)).length;
+		this.bonusMatches = this.userInputWinningNumber.includes(this.createBonusNumber);
+		return { matches: this.matches, bonusMatches: this.bonusMatches };
 	}
 
 	calculateResults(lottoNumbers, userInputWinningNumber, createBonusNumber) {
