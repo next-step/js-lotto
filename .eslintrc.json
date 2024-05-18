@@ -1,0 +1,29 @@
+{
+    "root": true,
+    "env": {
+        "browser": true,
+        "node": true,
+        "es2022": true
+    },
+    "plugins": [
+        "prettier"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:prettier/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2022,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": false
+        }
+    },
+    "ignorePatterns": [
+        "node_modules/"
+    ],
+    "rules": {
+        "prettier/prettier": "error",
+        "no-undef": "off"
+    }
+}
