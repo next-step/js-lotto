@@ -1,4 +1,5 @@
-import { ERROR_CODES } from "../constants/error";
+import { validateNumber } from "../utils/validator/validateNumber";
+import { validateNumbers } from "../utils/validator/validateNumbers";
 
 export class LottoResult {
   #winningNumbers;
@@ -16,8 +17,8 @@ export class LottoResult {
     this.#winningNumbers = winningNumbers;
     this.#bonusNumber = bonusNumber;
 
-    this.validateNumbers(this.#winningNumbers);
-    this.validateNumber(this.#bonusNumber);
+    validateNumbers(this.#winningNumbers);
+    validateNumber(this.#bonusNumber);
   }
 
   #ofString(numbers) {
@@ -80,37 +81,5 @@ export class LottoResult {
   getProfitRate(amount, lottoList) {
     const totalProfit = this.getTotalProfit(lottoList);
     return parseFloat(((totalProfit / amount) * 100).toFixed(1));
-  }
-
-  validateNumbers(numbers) {
-    if (this.#isValidInvalidLen(numbers)) {
-      throw new Error(ERROR_CODES.ERROR_INVALID_LENGTH);
-    }
-
-    if (this.#isValidInvalidNum(numbers)) {
-      throw new Error(ERROR_CODES.ERROR_INVALID_NUMBER);
-    }
-
-    if (this.#isValidDuplicatedNum(numbers)) {
-      throw new Error(ERROR_CODES.ERROR_DUPLICATE_NUMBER);
-    }
-  }
-
-  validateNumber(number) {
-    if (isNaN(number)) {
-      throw new Error(ERROR_CODES.ERROR_NOT_A_NUMBER);
-    }
-  }
-
-  #isValidInvalidLen(numbers) {
-    return numbers.length !== 6;
-  }
-
-  #isValidInvalidNum(numbers) {
-    return numbers.some((num) => isNaN(num) || num < 1 || num > 45);
-  }
-
-  #isValidDuplicatedNum(numbers) {
-    return new Set(numbers).size !== 6;
   }
 }
