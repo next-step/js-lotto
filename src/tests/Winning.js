@@ -52,7 +52,6 @@ class Winning {
 	}
 
 	calculateResults(lottoNumbers, userInputWinningNumber, createBonusNumber) {
-		// const prizeCounts = { 3: 0, 4: 0, 5: 0, '5+1': 0, 6: 0 };
 		const prizeCounts = {
 			[WinningPrize.FIFTH_PRIZE]: 0,
 			[WinningPrize.FOURTH_PRIZE]: 0,
