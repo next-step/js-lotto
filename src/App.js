@@ -11,11 +11,17 @@ export class App {
 
     const count = this.getLottoCount(Number(amount));
 
-    View.outputBuyLog(count, this.buyLotto(Number(amount)));
+    const lottoList = this.buyLotto(Number(amount));
+    View.outputBuyLog(count, lottoList);
 
     const winningNumbers = await View.inputWinningNumbers();
     const bonusNumber = await View.inputBonusNumber();
     const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+
+    View.outputWinningLog(
+      lottoResult.getWinningResult(lottoList),
+      lottoResult.getProfitRate(amount, lottoList)
+    );
   }
 
   getLottoCount(amount) {

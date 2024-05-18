@@ -62,7 +62,6 @@ export class LottoResult {
 
   getProfitRate(amount, lottoList) {
     const totalProfit = this.getTotalProfit(lottoList);
-    const profit = totalProfit - amount;
-    return (profit / amount) * 100;
+    return parseFloat(((totalProfit / amount) * 100).toFixed(1));
   }
 }

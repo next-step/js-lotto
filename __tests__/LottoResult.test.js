@@ -81,6 +81,6 @@ describe("로또결과 테스트", () => {
     ]);
 
     // then
-    expect(profitRate).toBe(400);
+    expect(profitRate).toBe(500);
   });
 });
