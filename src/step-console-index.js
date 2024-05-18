@@ -41,9 +41,7 @@ async function play() {
 	const bonusNumberInput = await readLineAsync('보너스 번호를 입력해 주세요.');
 	const bonusNumber = Number(bonusNumberInput);
 
-	const winning = new Winning();
-
-	const { prizeCounts, totalPrize } = winning.calculateResults(lottoNumbers, winningNumbers, bonusNumber);
+	const { prizeCounts, totalPrize } = Winning.calculateResults(lottoNumbers, winningNumbers, bonusNumber);
 	const winningRate = (totalPrize / purchaseAmount) * 100;
 
 	console.log(`

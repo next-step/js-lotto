@@ -51,7 +51,7 @@ class Winning {
 		return { matches: this.matches, bonusMatches: this.bonusMatches };
 	}
 
-	calculateResults(lottoNumbers, userInputWinningNumber, createBonusNumber) {
+	static calculateResults(lottoNumbers, userInputWinningNumber, createBonusNumber) {
 		const prizeCounts = {
 			[WinningRank.FIFTH_PLACE]: 0,
 			[WinningRank.FOURTH_PLACE]: 0,
