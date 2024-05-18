@@ -11,13 +11,7 @@ export class Lotto {
   }
 
   getMatchCount(winningNumber) {
-    let cnt = 0;
-    this.#numbers.forEach((num) => {
-      if (winningNumber.includes(num)) {
-        cnt++;
-      }
-    });
-    return cnt;
+    return this.#numbers.filter((num) => winningNumber.includes(num)).length;
   }
 
   get numbers() {
