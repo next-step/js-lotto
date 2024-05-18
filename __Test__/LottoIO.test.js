@@ -1,3 +1,4 @@
+
 import { ERROR_MESSAGE_INPUT_PURCHASE_PRICE } from '../src/constants';
 import LottoConfirm from '../src/domain/LottoConfirm';
 import LottoMachine from '../src/domain/LottoMachine';
@@ -13,6 +14,7 @@ describe('로또 입출력에 관한 테스트 케이스', () => {
     lottoIO.readLineAsync = jest.fn().mockResolvedValue('7000');
     const purchasePrice = await lottoIO.inputPurchasePrice(1);
 
+
     //then
     expect(purchasePrice).toBe(7000);
   });
@@ -27,12 +29,14 @@ describe('로또 입출력에 관한 테스트 케이스', () => {
     await lottoIO.inputPurchasePrice(1);
     //then
     expect(logSpy).toHaveBeenCalledWith(ERROR_MESSAGE_INPUT_PURCHASE_PRICE);
+
   });
 
   test('구매한 로또에 대한 번호를 출력한다.', async () => {
     //given
     const lottoIO = new LottoIO();
     const machine = new LottoMachine();
+    
     const GENERATED_LOTTO_NUMBERS = [1, 2, 3, 41, 13, 14];
     const EXPECTED_LOTTOS = Array(7).fill(GENERATED_LOTTO_NUMBERS);
 
@@ -57,10 +61,12 @@ describe('로또 입출력에 관한 테스트 케이스', () => {
     const lottoConfirm = new LottoConfirm();
     const GENERATED_LOTTO_NUMBERS = [1, 2, 3, 41, 13, 14];
 
+
     //when
     lottoIO.readLineAsync = jest.fn().mockResolvedValue('7000');
     const prices = await lottoIO.inputPurchasePrice();
 
+    
     machine.generateLottoNumbers = jest.fn().mockReturnValue(GENERATED_LOTTO_NUMBERS);
     const lottos = machine.createLottos(prices, 'ASC', sortArray);
 
@@ -119,5 +125,6 @@ describe('로또 입출력에 관한 테스트 케이스', () => {
 
     //then
     expect(restart).toBe('y');
+
   });
 });

@@ -1,3 +1,4 @@
+
 import {
   LOTTO_MAX_NUMBER,
   LOTTO_PRICE,
@@ -30,6 +31,7 @@ class LottoMachine {
   }
 
   generateLottoNumbers(validator) {
+
     const lottoNumbers = [];
 
     while (lottoNumbers.length !== LOTTO_TOTAL_COUNT) {
@@ -41,6 +43,7 @@ class LottoMachine {
     validator.validLottoLength(lottoNumbers);
     return lottoNumbers;
   }
+
 }
 
 export default LottoMachine;

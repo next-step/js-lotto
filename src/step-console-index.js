@@ -1,8 +1,10 @@
+
 import { RETRY_INPUT_COUNT } from './constants';
 import LottoConfirm from './domain/LottoConfirm';
 import LottoMachine from './domain/LottoMachine';
 import { sortArray } from './utils';
 import LottoIO from './view/LottoIO';
+
 
 /**
  * step 1의 시작점이 되는 파일입니다.
@@ -11,6 +13,7 @@ import LottoIO from './view/LottoIO';
 console.log('Hello, World!');
 
 async function main() {
+
   try {
     const repeat = true;
     while (repeat === true) {
@@ -52,6 +55,7 @@ async function main() {
   } catch (error) {
     console.log(error.message);
   }
+
 }
 
 main();
