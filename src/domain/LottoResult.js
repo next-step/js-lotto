@@ -60,13 +60,14 @@ export class LottoResult {
   }
 
   getWinningResult(lottoList) {
-    const result = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
-
-    lottoList.forEach((lotto) => {
-      result[this.getRanking(lotto)] += 1;
-    });
-
-    return result;
+    return lottoList.reduce(
+      (acc, lotto) => {
+        const rank = this.getRanking(lotto);
+        acc[rank] += 1;
+        return acc;
+      },
+      { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }
+    );
   }
 
   getTotalProfit(lottoList) {
