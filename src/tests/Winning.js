@@ -14,12 +14,18 @@ class Winning {
 	checkWinning() {
 		const { matches, bonusMatches } = this.calculateMatches();
 
-		if (matches === 6) return WinningRank.FIRST_PLACE;
-		if (matches === 5 && bonusMatches) return WinningRank.SECOND_PLACE;
-		if (matches === 5) return WinningRank.THIRD_PLACE;
-		if (matches === 4) return WinningRank.FOURTH_PLACE;
-		if (matches === 3) return WinningRank.FIFTH_PLACE;
-		return 0;
+		switch (matches) {
+			case 3:
+				return WinningRank.FIFTH_PLACE;
+			case 4:
+				return WinningRank.FOURTH_PLACE;
+			case 5:
+				return bonusMatches ? WinningRank.SECOND_PLACE : WinningRank.THIRD_PLACE;
+			case 6:
+				return WinningRank.FIRST_PLACE;
+			default:
+				return 0;
+		}
 	}
 
 	calculatePrize() {
