@@ -31,7 +31,7 @@ describe("로또결과 테스트", () => {
 
   test("당첨 순위에 따라 상금을 계산한다.", () => {
     // given
-    const lottoResult = new LottoResult();
+    const lottoResult = new LottoResult([1, 2, 3, 4, 5, 6], 7);
     // when
     const rank1 = lottoResult.getWinningAmount(1);
     const rank2 = lottoResult.getWinningAmount(2);
