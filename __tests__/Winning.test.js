@@ -10,7 +10,8 @@ describe('로또 당첨 테스트', () => {
 		const lottoNumbers = [3, 4, 5, 6, 7, 8];
 
 		// when
-		const matches = userInputWinningNumber.filter(number => lottoNumbers.includes(number)).length;
+		const winning = new Winning(lottoNumbers, userInputWinningNumber, userInputBonusNumber);
+		const { matches } = winning.calculateMatches();
 
 		// then
 		expect(matches).toBe(4);
