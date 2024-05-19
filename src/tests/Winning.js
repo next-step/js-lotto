@@ -22,6 +22,10 @@ export const validateWinningNumbers = (winningNumbers, bonusNumber) => {
 	if (winningNumbers.includes(bonusNumber)) {
 		throw new Error(ErrorMessages.INVALID_BONUS_NUMBER);
 	}
+
+	if (bonusNumber < ConstantNumbers.MIN_NUMBER || bonusNumber > ConstantNumbers.MAX_NUMBER) {
+		throw new Error(ErrorMessages.INVALID_BONUS_NUMBER_RANGE);
+	}
 };
 
 class Winning {

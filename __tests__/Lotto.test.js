@@ -68,6 +68,18 @@ describe('로또 기능 테스트', () => {
 		}).toThrow(ErrorMessages.INVALID_BONUS_NUMBER);
 	});
 
+	test('보너스 번호로 유효하지 않은 수가 입력되었을 때 에러 발생', () => {
+		// given
+		const winningNumbers = [1, 2, 3, 4, 5, 6];
+		const bonusNumber = 90;
+
+		// when
+		// then
+		expect(() => {
+			validateWinningNumbers(winningNumbers, bonusNumber);
+		}).toThrow(ErrorMessages.INVALID_BONUS_NUMBER_RANGE);
+	});
+
 	test('당첨 번호로 유효하지 않은 수가 입력되었을 때 에러 발생', () => {
 		// given
 		const bonusNumber = 10;
