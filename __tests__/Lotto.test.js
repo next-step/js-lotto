@@ -11,7 +11,7 @@ beforeEach(() => {
 describe("로또 정보 테스트", () => {
   test("하나의 로또는 6개의 정수를 갖는다.", () => {
     // when
-    const lottoLength = lotto.getNumbers().length;
+    const lottoLength = lotto.numbers.length;
 
     // then
     expect(lottoLength).toBe(LOTTO_LENGTH);
@@ -19,7 +19,7 @@ describe("로또 정보 테스트", () => {
 
   test("로또의 숫자는 1부터 45까지의 정수이다.", () => {
     // when
-    const numbers = lotto.getNumbers();
+    const numbers = lotto.numbers;
 
     // then
     expect(

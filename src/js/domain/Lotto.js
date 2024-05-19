@@ -9,12 +9,12 @@ export class Lotto {
     this.#numbers = numbers;
   }
 
-  getNumbers() {
-    return this.#numbers;
+  get numbers() {
+    return [...this.#numbers];
   }
 
   getRank(winningLotto) {
-    const winningNumbers = winningLotto.winningNumbers.getNumbers();
+    const winningNumbers = winningLotto.winningNumbers.numbers;
     const bonusNumber = winningLotto.bonusNumber;
 
     const matchedCount = this.#numbers.filter((number) => winningNumbers.includes(number)).length;

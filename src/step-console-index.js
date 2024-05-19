@@ -1,6 +1,6 @@
 import View from "./js/view/view";
 import LottoMachine from "./js/domain/LottoMachine";
-import { Lotto, WinningLotto } from "./js/domain/Lotto";
+import { Lotto, WinningLotto } from "./js/domain/Lotto.js";
 
 const money = await View.getMoney();
 const lottoMachine = new LottoMachine();
