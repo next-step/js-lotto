@@ -1,10 +1,8 @@
-
 import { RETRY_INPUT_COUNT } from './constants';
 import LottoConfirm from './domain/LottoConfirm';
 import LottoMachine from './domain/LottoMachine';
 import { sortArray } from './utils';
 import LottoIO from './view/LottoIO';
-
 
 /**
  * step 1의 시작점이 되는 파일입니다.
@@ -13,10 +11,9 @@ import LottoIO from './view/LottoIO';
 console.log('Hello, World!');
 
 async function main() {
-
   try {
-    const repeat = true;
-    while (repeat === true) {
+    let isRepeat = true;
+    while (isRepeat === true) {
       const lottoIO = new LottoIO();
       const machine = new LottoMachine();
       const lottoConfirm = new LottoConfirm();
@@ -49,13 +46,12 @@ async function main() {
       const restart = await lottoIO.inputRestartOrNot(RETRY_INPUT_COUNT);
 
       if (restart === 'no' || restart === 'n') {
-        repeat = false;
+        isRepeat = false;
       }
     }
   } catch (error) {
     console.log(error.message);
   }
-
 }
 
 main();
