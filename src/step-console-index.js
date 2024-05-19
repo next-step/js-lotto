@@ -39,7 +39,7 @@ async function play() {
 	const bonusNumber = Number(bonusNumberInput);
 
 	const { prizeCounts, totalPrize } = Winning.calculateResults(lottoNumbers, winningNumbers, bonusNumber);
-	const winningRate = (totalPrize / purchaseAmount) * 100;
+	const winningRate = Winning.calculateRate(totalPrize, purchaseAmount);
 
 	console.log(`
 당첨 통계

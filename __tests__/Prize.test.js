@@ -11,14 +11,12 @@ describe('상금 테스트', () => {
 
 		const lotto = new Lotto();
 		lotto.purchase(purchaseAmount);
-		lotto.purchaseAmount = purchaseAmount;
 
 		const winning = new Winning(userInputWinningNumber, mockLottoNumbers, mockBonusNumber);
-		winning.lotto = lotto;
 
 		// when
 		const prize = winning.calculatePrize();
-		const rate = winning.calculateRate();
+		const rate = Winning.calculateRate(prize, purchaseAmount);
 
 		// then
 		expect(rate).toBe((prize / purchaseAmount) * 100);

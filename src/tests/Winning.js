@@ -75,11 +75,11 @@ class Winning {
 		return { prizeCounts, totalPrize };
 	}
 
-	calculateRate() {
-		if (this.lotto.purchaseAmount === 0) {
+	static calculateRate(totalPrize, purchaseAmount) {
+		if (purchaseAmount === 0) {
 			return 0;
 		}
-		return (this.calculatePrize() / this.lotto.purchaseAmount) * 100;
+		return (totalPrize / purchaseAmount) * 100;
 	}
 }
 
