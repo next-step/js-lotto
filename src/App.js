@@ -31,12 +31,10 @@ export class App {
   buyLotto(amount) {
     this.validateAmount(amount);
 
-    const lottoList = [];
-    for (let i = 0; i < this.getLottoCount(amount); i++) {
-      lottoList.push(new Lotto(this.getRandomNumbers(Lotto.LEN)));
-    }
-
-    return lottoList;
+    return Array.from(
+      { length: this.getLottoCount(amount) },
+      () => new Lotto(this.getRandomNumbers(Lotto.LEN))
+    );
   }
 
   validateAmount(amount) {
