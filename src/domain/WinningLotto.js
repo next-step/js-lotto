@@ -1,96 +1,71 @@
-import { Error } from "../constants/error";
+import { ErrorLotto } from "../constants/error";
 import {
-  MIN_NUMBER,
+  LOTTO_NUMBER_LENGTH,
   MAX_NUMBER,
-  FIRST_PRIZE,
-  SECOND_PRIZE,
-  THIRD_PRIZE,
-  FOURTH_PRIZE,
-  FIFTH_PRIZE,
+  MIN_NUMBER,
 } from "../constants/number";
 
+export const FIRST_PRIZE = 2000000000;
+export const SECOND_PRIZE = 30000000;
+export const THIRD_PRIZE = 1500000;
+export const FOURTH_PRIZE = 50000;
+export const FIFTH_PRIZE = 5000;
+
+export const PRIZE = {
+  FIRST: { rank: "FIRST", matchCount: 6, prize: FIRST_PRIZE, isBonus: false },
+  SECOND: { rank: "SECOND", matchCount: 5, prize: SECOND_PRIZE, isBonus: true },
+  THIRD: { rank: "THIRD", matchCount: 5, prize: THIRD_PRIZE, isBonus: false },
+  FOURTH: {
+    rank: "FOURTH",
+    matchCount: 4,
+    prize: FOURTH_PRIZE,
+    isBonus: false,
+  },
+  FIFTH: { rank: "FIFTH", matchCount: 3, prize: FIFTH_PRIZE, isBonus: false },
+  NONE: { rank: "NONE", matchCount: 0, prize: 0, isBonus: false },
+};
 class WinningLotto {
   number = [];
   bonusNumber = 0;
-  rank = {
-    first: 0,
-    second: 0,
-    third: 0,
-    fourth: 0,
-    fifth: 0,
-  };
+
+  #rank = [PRIZE.FIRST, PRIZE.SECOND, PRIZE.THIRD, PRIZE.FOURTH, PRIZE.FIFTH];
 
   constructor(arrayNumber, bonusNumber) {
     this.validationNumber(arrayNumber, bonusNumber);
-  }
-
-  validationNumber(arrayNumber, bonusNumber) {
-    if (
-      arrayNumber.some((number) => number > MAX_NUMBER || number < MIN_NUMBER)
-    ) {
-      throw new Error(Error.OVER_MIN_MAX_NUMBER);
-    }
-
-    if (arrayNumber.length !== 6) {
-      throw new Error(Error.LOTTO_NUMBER_LENGTH);
-    }
-
-    if (arrayNumber.length !== new Set(arrayNumber).size) {
-      throw new Error(Error.NUMBER_DUPLICATED);
-    }
-
-    if (arrayNumber.includes(bonusNumber)) {
-      throw new Error(Error.BONUS_NUMBER_DUPLICATED);
-    }
 
     this.number = arrayNumber;
     this.bonusNumber = bonusNumber;
   }
 
-  countLotto(stats) {
-    stats.forEach((winning) => {
-      if (winning.length === 3) {
-        this.this.rank = { ...this.rank, fifth: this.rank.fifth + 1 };
-      }
-      if (winning.length === 4) {
-        this.rank = { ...this.rank, fourth: this.rank.fourth + 1 };
-      }
-      if (winning.length === 5 && winning.includes(Number(this.bonusNumber))) {
-        this.rank = { ...this.rank, third: this.rank.third + 1 };
-      }
-      if (winning.length === 5) {
-        this.rank = { ...this.rank, second: this.rank.second + 1 };
-      }
-      if (winning.length === 6) {
-        this.rank = { ...this.rank, first: this.rank.first + 1 };
-      }
-    });
+  validationNumber(arrayNumber, bonusNumber) {
+    if (bonusNumber > MAX_NUMBER || bonusNumber < MIN_NUMBER) {
+      throw new Error(ErrorLotto.BONUS_NUMBER_OVER_MIN_MAX);
+    }
 
-    return this.rank;
+    if (arrayNumber.includes(bonusNumber)) {
+      throw new Error(ErrorLotto.BONUS_NUMBER_DUPLICATED);
+    }
   }
 
-  totalReturn(investment) {
-    //이익 나누기 투자금 곱하기 100
-    let total = 0;
-    Object.entries(this.rank).forEach(([key, value]) => {
-      if (key === "first") {
-        total += FIRST_PRIZE * value;
-      }
-      if (key === "second") {
-        total += SECOND_PRIZE * value;
-      }
-      if (key === "third") {
-        total += THIRD_PRIZE * value;
-      }
-      if (key === "fourth") {
-        total += FOURTH_PRIZE * value;
-      }
-      if (key === "fifth") {
-        total += FIFTH_PRIZE * value;
-      }
+  getResultPrize(lottoList) {
+    const prizeList = lottoList.map((lotto) => {
+      const matchCount = lotto.filter((x) => this.number.includes(x)).length;
+      const bonus = lotto.includes(Number(this.bonusNumber));
+
+      const result = this.#rank.find((rank) => {
+        if (matchCount === PRIZE.SECOND.matchCount) {
+          return rank.isBonus === bonus;
+        } else {
+          return rank.matchCount === matchCount;
+        }
+      });
+
+      if (result == undefined) return PRIZE.NONE;
+
+      return result;
     });
 
-    return (total / investment) * 100;
+    return prizeList;
   }
 }
 
