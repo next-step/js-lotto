@@ -45,7 +45,8 @@ class LottoGame {
       case LOTTO_GAME_MATCHED_COUNT.FIRST:
         return LOTTO_GAME_RANK.FIRST;
 
-      case LOTTO_GAME_MATCHED_COUNT.SECOND || LOTTO_GAME_MATCHED_COUNT.THIRD:
+      case LOTTO_GAME_MATCHED_COUNT.SECOND:
+      case LOTTO_GAME_MATCHED_COUNT.THIRD:
         return isBonusNumberMatched
           ? LOTTO_GAME_RANK.SECOND
           : LOTTO_GAME_RANK.THIRD;

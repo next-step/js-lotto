@@ -20,8 +20,6 @@ export function validateBonusNumber(bonusNumber, winningNumbers) {
   if (winningNumbers && winningNumbers.includes(bonusNumber)) {
     throw new RangeError("보너스 번호는 당첨 번호와 중복되면 안됩니다.");
   }
-
-  return true;
 }
 
 export function validateRank(rank) {
@@ -34,6 +32,4 @@ export function validateRank(rank) {
       `순위는 ${LOTTO_GAME_RANK.FIRST}과 ${LOTTO_GAME_RANK.NONE} 사이의 숫자여야 합니다.`,
     );
   }
-
-  return true;
 }

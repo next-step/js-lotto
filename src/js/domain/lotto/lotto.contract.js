@@ -33,6 +33,4 @@ export function validateNumbers(numbers) {
       `numbers의 원소는 ${LOTTO.MIN_NUMBER}과 ${LOTTO.MAX_NUMBER} 사이여야 합니다.`,
     );
   }
-
-  return true;
 }
