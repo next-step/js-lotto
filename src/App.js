@@ -6,18 +6,25 @@ import { View } from "./views/view";
 
 export class App {
   async play() {
-    const amount = await View.inputAmount();
-    const count = this.getLottoCount(amount);
-    const lottoList = this.buyLotto(amount);
-    View.outputBuyLog(count, lottoList);
+    let isReStart = true;
 
-    const winningNumbers = await View.inputWinningNumbers();
-    const bonusNumber = await View.inputBonusNumber();
-    const lottoResult = new LottoResult(winningNumbers, bonusNumber);
-    View.outputWinningLog(
-      lottoResult.getWinningResult(lottoList),
-      lottoResult.getProfitRate({ amount, lottoList })
-    );
+    while (isReStart) {
+      const amount = await View.inputAmount();
+      const count = this.getLottoCount(amount);
+      const lottoList = this.buyLotto(amount);
+      View.outputBuyLog(count, lottoList);
+
+      const winningNumbers = await View.inputWinningNumbers();
+      const bonusNumber = await View.inputBonusNumber();
+      const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+      View.outputWinningLog(
+        lottoResult.getWinningResult(lottoList),
+        lottoResult.getProfitRate({ amount, lottoList })
+      );
+
+      const restart = await View.inputReStart();
+      isReStart = restart === "y";
+    }
   }
 
   getLottoCount(amount) {

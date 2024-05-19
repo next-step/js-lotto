@@ -33,6 +33,16 @@ export class View {
     }
   }
 
+  static async inputReStart() {
+    try {
+      const input = await readLineAsync("> 다시 시작하시겠습니까? (y/n)");
+
+      return input;
+    } catch (error) {
+      View.printError(error);
+    }
+  }
+
   static outputBuyLog(count, lottoList) {
     const logs = [];
     logs.push(`${count}개를 구매했습니다.`);
