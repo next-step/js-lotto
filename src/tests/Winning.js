@@ -1,5 +1,5 @@
 import Lotto from './Lotto';
-import { WinningRank, WinningPrize, ConstantNumbers } from './constant';
+import { WinningRank, WinningPrize } from './constant';
 
 class Winning {
 	constructor(lottoNumbers, userInputWinningNumber, userInputBonusNumber) {
@@ -48,6 +48,11 @@ class Winning {
 	calculateMatches() {
 		this.matches = this.lottoNumbers.filter(number => this.userInputWinningNumber.includes(number)).length;
 		this.bonusMatches = this.userInputWinningNumber.includes(this.userInputBonusNumber);
+
+		if (this.matches === 5 && this.lottoNumbers.includes(this.userInputBonusNumber)) {
+			this.matches.length += 1;
+		}
+
 		return { matches: this.matches, bonusMatches: this.bonusMatches };
 	}
 

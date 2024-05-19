@@ -12,10 +12,6 @@ describe('로또 당첨 테스트', () => {
 		// when
 		const matches = userInputWinningNumber.filter(number => lottoNumbers.includes(number)).length;
 
-		if (matches.length === 5 && lottoNumbers.includes(userInputBonusNumber)) {
-			matches.length += 1;
-		}
-
 		// then
 		expect(matches).toBe(4);
 	});
