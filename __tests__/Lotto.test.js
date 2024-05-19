@@ -16,7 +16,6 @@ describe('로또 기능 테스트', () => {
 		const lotto = new Lotto();
 
 		// when
-		// const quantity = lotto.purchase(5000);
 		const purchaseAmount = 5000;
 		const lottoQuantity = lotto.generatePurchasedLottoNumbers(purchaseAmount);
 
