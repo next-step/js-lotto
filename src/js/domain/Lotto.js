@@ -65,7 +65,7 @@ class Lotto {
   }
 
   static sortLottoNumbersByAscendingOrder(lottoNumbers) {
-    return [...lottoNumbers].sort((a, b) => a - b);
+    return lottoNumbers.sort((a, b) => a - b);
   }
 
   countMatchingLottoNumbers(lotto) {

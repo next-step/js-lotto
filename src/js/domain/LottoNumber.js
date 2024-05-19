@@ -19,6 +19,10 @@ class LottoNumber {
     return this.#value;
   }
 
+  valueOf() {
+    return this.#value;
+  }
+
   static validateBonusNumber(bonusNumber, winningLotto) {
     if (winningLotto.numbers.includes(bonusNumber.value)) {
       throw new Error(
