@@ -1,5 +1,5 @@
-import { Lotto } from "./Lotto";
-import { LottoRank } from "./LottoRank";
+import { Lotto } from "../domain/Lotto";
+import { LottoRank } from "../domain/LottoRank";
 import { readLineAsync } from "../utils/readLineSync";
 import { lottoMoneyRule } from "../rules/LottoMoney.rule";
 import { bonusNumberRule, lottoRule } from "../rules/Lotto.rule";

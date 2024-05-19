@@ -1,4 +1,4 @@
-import View from "./js/domain/View";
+import View from "./js/view/view";
 import LottoMachine from "./js/domain/LottoMachine";
 import { Lotto, WinningLotto } from "./js/domain/Lotto";
 

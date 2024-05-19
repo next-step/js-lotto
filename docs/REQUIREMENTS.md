@@ -32,7 +32,7 @@
 
 # 1차 리뷰 240518
 
-- [ ] `View`위치 `domain`에서 분리
+- [x] `View`위치 `domain`에서 분리
 - [ ] `WinningLotto`객체 활용
   - [ ] 로또 랭킹 생성
 - [ ] private state을 가져올 때는 getter 사용 -> private state 값이 외부의 영향을 받을 가능성 존재

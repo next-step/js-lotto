@@ -1,4 +1,4 @@
-import View from "./View";
+import View from "../view/view";
 import { Lotto, WinningLotto } from "./Lotto";
 import { LOTTO_LENGTH, LOTTO_PRICE, MAXIMUM_LOTTO_NUMBER } from "../constants";
 

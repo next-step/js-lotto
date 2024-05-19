@@ -1,4 +1,4 @@
-import View from "../src/js/domain/View";
+import View from "../src/js/view/view";
 import { lottoMoneyRule } from "../src/js/rules";
 import { LottoRank } from "../src/js/domain/LottoRank";
 import LottoMachine from "../src/js/domain/LottoMachine";
