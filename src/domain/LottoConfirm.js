@@ -64,6 +64,14 @@ class LottoConfirm {
   }
 
   static switchResultToMoney(result) {
+    const RESULT_TO_MONEY = {
+      [LOTTO_5TH_PRIZE_WINNER]: 5_000,
+      [LOTTO_4TH_PRIZE_WINNER]: 50_000,
+      [LOTTO_3RD_PRIZE_WINNER]: 1_500_000,
+      [LOTTO_SECOND_PRIZE_WINNER]: 30_000_000,
+      [LOTTO_FIRST_PRIZE_WINNER]: 2_000_000_000,
+    };
+
     return RESULT_TO_MONEY[result];
   }
 }
