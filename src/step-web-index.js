@@ -13,7 +13,7 @@ const toggleShowNumber = document.querySelector('.lotto-numbers-toggle-button');
 const lottoNumbersDiv = document.querySelector('.lotto-numbers');
 
 const purchaseMessage = document.getElementById('purchase_message');
-
+const machine = new LottoMachine();
 let lottos = [];
 
 function handleGetPrice() {
@@ -21,7 +21,6 @@ function handleGetPrice() {
 }
 
 function handleClickConfirm() {
-  const machine = new LottoMachine();
   const { value } = inputPrice;
   lottos = machine.createLottos(value);
 
