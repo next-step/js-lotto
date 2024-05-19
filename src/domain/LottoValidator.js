@@ -55,12 +55,8 @@ class LottoValidator {
 
   validateLottoRestart(restart) {
     const lowerCaseRestart = restart.toLowerCase();
-    if (
-      lowerCaseRestart !== 'y' &&
-      lowerCaseRestart !== 'yes' &&
-      lowerCaseRestart !== 'n' &&
-      lowerCaseRestart !== 'no'
-    )
+    const allowChar = ['y', 'yes', 'n', 'no'];
+    if (!allowChar.includes(lowerCaseRestart))
       throw new Error(ERROR_MESSAGE_RESTART);
   }
 }
