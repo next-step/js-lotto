@@ -15,6 +15,10 @@ export const validateWinningNumbers = (winningNumbers, bonusNumber) => {
 		throw new Error(ErrorMessages.INVALID_WINNING_NUMBER_LENGTH);
 	}
 
+	if (new Set(winningNumbers).size != 6) {
+		throw new Error(ErrorMessages.DUPLICATED_WINNING_NUMBERS);
+	}
+
 	if (winningNumbers.includes(bonusNumber)) {
 		throw new Error(ErrorMessages.INVALID_BONUS_NUMBER);
 	}

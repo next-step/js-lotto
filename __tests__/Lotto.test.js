@@ -75,6 +75,7 @@ describe('로또 기능 테스트', () => {
 		// when
 		const invalidWinningNumber = [40, 41, 42, 43, 44, 90];
 		const invalidNumbersLength = [1, 2, 3, 4, 5, 6, 7];
+		const duplicatedWinningNumbers = [1, 1, 2, 3, 4, 5];
 
 		// then
 		expect(() => {
@@ -84,5 +85,9 @@ describe('로또 기능 테스트', () => {
 		expect(() => {
 			validateWinningNumbers(invalidNumbersLength, bonusNumber);
 		}).toThrow(ErrorMessages.INVALID_WINNING_NUMBER_LENGTH);
+
+		expect(() => {
+			validateWinningNumbers(duplicatedWinningNumbers, bonusNumber);
+		}).toThrow(ErrorMessages.DUPLICATED_WINNING_NUMBERS);
 	});
 });
