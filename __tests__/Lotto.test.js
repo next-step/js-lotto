@@ -1,21 +1,21 @@
-import {
-  ErrorLottoNumber,
-  ErrorLottoNumbers,
-  ErrorLottoPurchasedAmount,
-} from "../src/js/constants/error";
+import { ErrorLottoNumber, ErrorLottoNumbers } from "../src/js/constants/error";
 import Lotto from "../src/js/domain/Lotto";
+import LottoNumber from "../src/js/domain/LottoNumber";
 
 describe("로또 기능 테스트", () => {
-  test("로또 번호가 서로 다른 1이상 45이하의 정수 6개이면 로또가 정상적으로 생성된다.", () => {
-    // given
-    const lotto = new Lotto("1,2,3,4,5,6");
+  test.each(["1,2,3,4,5,6", [1, 2, 3, 4, 5, 6]])(
+    "로또 번호가 서로 다른 1이상 45이하의 정수 6개가 문자열 또는 배열 형태로 주어지면 로또가 정상적으로 생성된다.",
+    (testSet) => {
+      // given
+      const lotto = new Lotto(testSet);
 
-    // when
-    const lottoNumbers = lotto.numbers;
+      // when
+      const lottoNumbers = lotto.numbers;
 
-    // then
-    expect(lottoNumbers).toEqual([1, 2, 3, 4, 5, 6]);
-  });
+      // then
+      expect(lottoNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+    }
+  );
 
   test("로또 번호 중 중복되는 수가 있다면 에러가 발생한다", () => {
     // given
@@ -70,42 +70,6 @@ describe("로또 기능 테스트", () => {
   });
 
   test.each([
-    [0, 0],
-    [1_000, 1],
-    [1_001, 1],
-    [10_000.1, 10],
-  ])(
-    "로또를 구입한 금액이 0 이상인 경우 로또를 구매한 금액이 %s 이면, 발행하는 로또의 개수는 %s이다.",
-    (purchasedAmount, lottoCount) => {
-      // given
-
-      // when
-      const availableLottoCount = Lotto.getAvailableLottoCount(purchasedAmount);
-
-      // then
-      expect(availableLottoCount).toBe(lottoCount);
-    }
-  );
-
-  test.each([
-    [
-      "가나다",
-      ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_NUMBER,
-    ],
-    [-1, ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_POSITIVE],
-  ])(
-    "로또를 구입한 금액이 0 미만이거나 숫자가 아닐 경우 에러가 발생한다.",
-    (purchasedAmount, errorMessage) => {
-      // when
-      const validateAvailableLottoCount = () =>
-        Lotto.validateLottoPurchasedAmount(purchasedAmount);
-
-      // then
-      expect(validateAvailableLottoCount).toThrow(errorMessage);
-    }
-  );
-
-  test.each([
     [
       0,
       {
@@ -125,11 +89,10 @@ describe("로또 기능 테스트", () => {
     (expectedResult, testSet) => {
       // given
       const lotto = new Lotto(testSet.lottoNumbers);
+      const winningLotto = new Lotto(testSet.winningNumbers);
 
       // when
-      const matchingCount = lotto.countMatchingLottoNumbers(
-        testSet.winningNumbers
-      );
+      const matchingCount = lotto.countMatchingLottoNumbers(winningLotto);
 
       // then
       expect(matchingCount).toBe(expectedResult);
@@ -160,7 +123,7 @@ describe("로또 기능 테스트", () => {
     (_, expectedResult, testSet) => {
       // given
       const lotto = new Lotto(testSet.lottoNumbers);
-      const bonusNumber = testSet.bonusNumber;
+      const bonusNumber = new LottoNumber(testSet.bonusNumber);
 
       // when
       const isBonusNumberMatching = lotto.hasLottoNumber(bonusNumber);

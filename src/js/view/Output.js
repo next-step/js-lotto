@@ -1,24 +1,22 @@
-import LottoResult from "../domain/LottoResult";
-
 const Output = {
-  printLottoRankingStatistics(lottoRankingStatistics) {
+  printLottoRankingStatistics(lottoResultCounts) {
     console.log("\n당첨 통계\n--------------------");
-    for (let i = LottoResult.LottoRanking.length - 1; i > 0; i--) {
-      const template = this.generateLottoRankingCountsTemplate(
-        i,
-        lottoRankingStatistics
-      );
-
-      console.log(template);
-    }
+    lottoResultCounts.forEach((lottoResultCount) => {
+      this.printLottoRankingCount(lottoResultCount);
+    });
   },
 
-  generateLottoRankingCountsTemplate(ranking, lottoRankingCounts) {
-    return `${LottoResult.LottoMatchingCountCondition[ranking]}개 일치${
-      ranking === LottoResult.LottoRanking[2] ? ", 보너스 볼 일치" : ""
-    } (${LottoResult.LottoWinningPrice[ranking].toLocaleString("ko-KR")}원) - ${
-      lottoRankingCounts[ranking]
-    }개`;
+  printLottoRankingCount({
+    rankingWinningPrice,
+    rankingCondition,
+    isShowExtraMent,
+    count,
+  }) {
+    const template = `${rankingCondition}개 일치${
+      isShowExtraMent ? ", 보너스 볼 일치" : ""
+    } (${rankingWinningPrice.toLocaleString("ko-KR")}원) - ${count}개`;
+
+    console.log(template);
   },
 
   printLottoProfitRate(lottoProfitRate) {
@@ -29,9 +27,9 @@ const Output = {
     console.log(`${lottosCount}개를 구매했습니다.`);
   },
 
-  printGeneratedLottosNumbers(lottos) {
-    lottos.forEach((lotto) => {
-      const joinedLottoNumbers = lotto.numbers.join(", ");
+  printGeneratedLottosNumbers(lottosNumbers) {
+    lottosNumbers.forEach((lottoNumbers) => {
+      const joinedLottoNumbers = lottoNumbers.join(", ");
       console.log(`[${joinedLottoNumbers}]`);
     });
   },

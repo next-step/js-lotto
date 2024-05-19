@@ -1,57 +1,40 @@
-import {
-  ErrorLottoNumber,
-  ErrorLottoNumbers,
-  ErrorLottoPurchasedAmount,
-} from "../constants/error";
+import { ErrorLottoNumbers } from "../constants/error";
+import LottoNumber from "./LottoNumber";
 
 class Lotto {
   static LENGTH_LOTTO_NUMBERS = 6;
-  static LOTTO_PRICE = 1000;
-  static MAX_LOTTO_NUMBER = 45;
-  static MIN_LOTTO_NUMBER = 1;
 
-  #numbers = [];
+  #lottoNumbers = [];
 
-  constructor(lottoNumbers) {
-    Lotto.validateLottoNumbers(lottoNumbers);
-    this.#numbers = Lotto.convertLottoNumbersToArray(lottoNumbers);
+  constructor(input) {
+    Lotto.validateLottoNumbers(input);
+    const lottoNumbers = Lotto.convertLottoNumbersToLottoNumberArray(input);
+    this.#lottoNumbers = lottoNumbers;
   }
 
   get numbers() {
-    return [...this.#numbers];
+    return this.#lottoNumbers.map((lottoNumber) => lottoNumber.value);
   }
 
-  static convertLottoNumbersToArray(lottoNumbers) {
-    if (typeof lottoNumbers !== "string") {
-      return lottoNumbers;
+  static validateLottoNumbers(input) {
+    const lottoNumbers = Lotto.convertLottoNumbersToLottoNumberArray(input);
+    const lottoNumbersSet = new Set(
+      lottoNumbers.map((lottoNumber) => lottoNumber.value)
+    );
+
+    if (lottoNumbers.length !== this.LENGTH_LOTTO_NUMBERS) {
+      throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH);
     }
 
-    return lottoNumbers.split(",").map(Number);
-  }
-
-  static validateLottoPurchasedAmount(purchasedAmount) {
-    if (isNaN(purchasedAmount)) {
-      throw new Error(
-        ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_NUMBER
-      );
+    if (lottoNumbers.length !== lottoNumbersSet.size) {
+      throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_DUPLICATED);
     }
-
-    if (Number(purchasedAmount) < 0) {
-      throw new Error(
-        ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_POSITIVE
-      );
-    }
-  }
-
-  static getAvailableLottoCount(purchasedAmount) {
-    Lotto.validateLottoPurchasedAmount(purchasedAmount);
-    return Math.floor(Number(purchasedAmount) / Lotto.LOTTO_PRICE);
   }
 
   static generateRandomLottoNumbers() {
     const lottoNumbers = [];
     const candidateLottoNumbers = Array.from(
-      { length: Lotto.MAX_LOTTO_NUMBER },
+      { length: LottoNumber.MAX_LOTTO_NUMBER },
       (_, i) => i + 1
     );
 
@@ -67,46 +50,33 @@ class Lotto {
     return lottoNumbers;
   }
 
-  static validateLottoNumbers(input) {
-    const lottoNumbers = Lotto.convertLottoNumbersToArray(input);
-    const lottoNumbersSet = new Set(lottoNumbers);
-
-    if (lottoNumbers.length !== Lotto.LENGTH_LOTTO_NUMBERS) {
-      throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH);
+  static convertLottoNumbersToLottoNumberArray(lottoNumbers) {
+    if (Array.isArray(lottoNumbers)) {
+      return lottoNumbers.map((lottoNumber) => new LottoNumber(lottoNumber));
     }
 
-    if (lottoNumbers.length !== lottoNumbersSet.size) {
-      throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_DUPLICATED);
+    if (typeof lottoNumbers === "string") {
+      return lottoNumbers
+        .split(",")
+        .map((lottoNumber) => new LottoNumber(lottoNumber));
     }
 
-    lottoNumbers.forEach((lottoNumber) => {
-      this.validateLottoNumber(lottoNumber);
-    });
+    return [];
   }
 
-  static validateLottoNumber(input) {
-    if (isNaN(input)) {
-      throw new Error(ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_NUMBER);
-    }
-
-    if (!Number.isInteger(Number(input))) {
-      throw new Error(ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_VALID_INTEGER);
-    }
-
-    if (Number(input) < 1 || Number(input) > 45) {
-      throw new Error(ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_VALID_INTEGER);
-    }
+  static sortLottoNumbersByAscendingOrder(lottoNumbers) {
+    return [...lottoNumbers].sort((a, b) => a - b);
   }
 
-  countMatchingLottoNumbers(lottoNumbers) {
-    const matchedLottoNumbers = this.#numbers.filter((lottoNumber) =>
-      lottoNumbers.includes(lottoNumber)
+  countMatchingLottoNumbers(lotto) {
+    const matchedLottoNumbers = this.numbers.filter((lottoNumber) =>
+      lotto.numbers.includes(lottoNumber)
     );
     return matchedLottoNumbers.length;
   }
 
   hasLottoNumber(lottoNumber) {
-    return this.#numbers.includes(lottoNumber);
+    return this.numbers.includes(lottoNumber.value);
   }
 }
 
