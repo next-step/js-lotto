@@ -1,4 +1,4 @@
-export const ERROR_MESSAGE_INPUT_PURCHASE_PRICE = '입력 값은 숫자만 입력 가능합니다.';
+export const ERROR_MESSAGE_INPUT_NUMBER = '입력 값은 숫자만 입력 가능합니다.';
 export const ERROR_MESSAGE_COMMA_SEPARTED = '로또 당첨번호 구분은 쉼표(,)로 가능합니다.';
 export const ERROR_MESSAGE_LACK_MONEY = '로또 구매 하기에 금액이 부족합니다.';
 export const ERROR_MESSAGE_NOT_ENTER_WINNING_NUMBERS = '당첨번호가 입력되지 않았습니다.';
