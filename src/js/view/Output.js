@@ -27,9 +27,9 @@ const Output = {
     console.log(`${lottosCount}개를 구매했습니다.`);
   },
 
-  printGeneratedLottosNumbers(lottosNumbers) {
-    lottosNumbers.forEach((lottoNumbers) => {
-      const joinedLottoNumbers = lottoNumbers.join(", ");
+  printGeneratedLottosNumbers(lottos) {
+    lottos.forEach((lotto) => {
+      const joinedLottoNumbers = lotto.numbers.join(", ");
       console.log(`[${joinedLottoNumbers}]`);
     });
   },

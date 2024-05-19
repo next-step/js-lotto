@@ -132,4 +132,12 @@ describe("로또 기능 테스트", () => {
       expect(isBonusNumberMatching).toBe(expectedResult);
     }
   );
+
+  test("로또 번호는 정렬하여 저장한다", () => {
+    // given // when
+    const unsortedLotto = new Lotto([6, 5, 4, 3, 2, 1]);
+
+    // then
+    expect(unsortedLotto.numbers).toEqual([1, 2, 3, 4, 5, 6]);
+  });
 });

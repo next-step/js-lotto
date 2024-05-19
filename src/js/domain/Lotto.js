@@ -9,7 +9,13 @@ class Lotto {
   constructor(input) {
     Lotto.validateLottoNumbers(input);
     const lottoNumbers = Lotto.convertLottoNumbersToLottoNumberArray(input);
-    this.#lottoNumbers = lottoNumbers;
+    const sortedLottoNumbers =
+      Lotto.sortLottoNumbersByAscendingOrder(lottoNumbers);
+    this.#lottoNumbers = sortedLottoNumbers;
+  }
+
+  get lottoNumbers() {
+    return [...this.#lottoNumbers];
   }
 
   get numbers() {
@@ -63,7 +69,7 @@ class Lotto {
   }
 
   static sortLottoNumbersByAscendingOrder(lottoNumbers) {
-    return lottoNumbers.sort((a, b) => a - b);
+    return [...lottoNumbers].sort((a, b) => a - b);
   }
 
   countMatchingLottoNumbers(lotto) {
