@@ -1,12 +1,13 @@
 import { ERROR_MESSAGES } from "../constants/error";
 import { readLineAsync } from "../utils/readLineAsync";
+import { validateNumber } from "../utils/validator/validateNumber";
 
 export class View {
   static async inputAmount() {
     try {
       const input = await readLineAsync("> 구입금액을 입력해 주세요.");
-
-      return input;
+      validateNumber(input);
+      return Number(input);
     } catch (error) {
       View.printError(error);
     }
