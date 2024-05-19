@@ -1,5 +1,5 @@
 import { ErrorLottoBonusNumber, ErrorLottoNumber } from "../constants/error";
-
+const instances = [];
 class LottoNumber {
   static MAX_LOTTO_NUMBER = 45;
   static MIN_LOTTO_NUMBER = 1;
@@ -12,7 +12,16 @@ class LottoNumber {
     }
 
     LottoNumber.validateLottoNumber(lottoNumber);
-    this.#value = Number(lottoNumber);
+
+    const validatedLottoNumber = Number(lottoNumber);
+
+    if (instances[validatedLottoNumber]) {
+      return instances[validatedLottoNumber];
+    }
+
+    this.#value = validatedLottoNumber;
+
+    instances[validatedLottoNumber] = this;
   }
 
   get value() {

@@ -18,9 +18,7 @@ class Lotto {
 
   static validateLottoNumbers(input) {
     const lottoNumbers = Lotto.convertLottoNumbersToLottoNumberArray(input);
-    const lottoNumbersSet = new Set(
-      lottoNumbers.map((lottoNumber) => lottoNumber.value)
-    );
+    const lottoNumbersSet = new Set(lottoNumbers);
 
     if (lottoNumbers.length !== this.LENGTH_LOTTO_NUMBERS) {
       throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH);
@@ -69,14 +67,14 @@ class Lotto {
   }
 
   countMatchingLottoNumbers(lotto) {
-    const matchedLottoNumbers = this.numbers.filter((lottoNumber) =>
-      lotto.numbers.includes(lottoNumber)
+    const matchedLottoNumbers = this.#lottoNumbers.filter((lottoNumber) =>
+      lotto.lottoNumbers.includes(lottoNumber)
     );
     return matchedLottoNumbers.length;
   }
 
   hasLottoNumber(lottoNumber) {
-    return this.numbers.includes(lottoNumber.value);
+    return this.#lottoNumbers.includes(lottoNumber);
   }
 }
 
