@@ -6,6 +6,9 @@ export class LottoResult {
   #bonusNumber;
 
   constructor(winningNumbers, bonusNumber) {
+    this.#winningNumbers = winningNumbers;
+    this.#bonusNumber = bonusNumber;
+
     if (typeof winningNumbers === "string") {
       this.#ofString(winningNumbers);
     }
@@ -13,9 +16,6 @@ export class LottoResult {
     if (typeof bonusNumber === "string") {
       this.#ofNumber(bonusNumber);
     }
-
-    this.#winningNumbers = winningNumbers;
-    this.#bonusNumber = bonusNumber;
 
     validateNumbers(this.#winningNumbers);
     validateNumber(this.#bonusNumber);
