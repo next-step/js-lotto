@@ -1,36 +1,13 @@
+import { go } from "../../utils/fx.js";
+import validation from "../../utils/validation.js";
+
 import LOTTO from "./lotto.constant.js";
 
-export function validateNumbers(numbers) {
-  if (!Array.isArray(numbers)) {
-    throw new TypeError("numbers는 배열이어야 합니다.");
-  }
-
-  if (numbers.length !== LOTTO.COUNT_OF_NUMBERS) {
-    throw new RangeError(`numbers는 ${LOTTO.COUNT_OF_NUMBERS}개여야 합니다.`);
-  }
-
-  if (new Set(numbers).size !== LOTTO.COUNT_OF_NUMBERS) {
-    throw new RangeError("numbers는 중복되지 않아야 합니다.");
-  }
-
-  if (
-    numbers.some(
-      (number) =>
-        typeof number !== "number" ||
-        isNaN(number) ||
-        !Number.isInteger(number),
-    )
-  ) {
-    throw new TypeError("numbers의 원소는 Integer 타입이어야 합니다.");
-  }
-
-  if (
-    numbers.some(
-      (number) => number < LOTTO.MIN_NUMBER || number > LOTTO.MAX_NUMBER,
-    )
-  ) {
-    throw new RangeError(
-      `numbers의 원소는 ${LOTTO.MIN_NUMBER}과 ${LOTTO.MAX_NUMBER} 사이여야 합니다.`,
-    );
-  }
-}
+export const validateNumbers = (numbers) =>
+  go(
+    numbers,
+    validation.isArrayOfSize(LOTTO.COUNT_OF_NUMBERS),
+    validation.isArrayOfType(validation.isInteger),
+    validation.isUniqueArray,
+    validation.isInRange(LOTTO.MIN_NUMBER, LOTTO.MAX_NUMBER),
+  );

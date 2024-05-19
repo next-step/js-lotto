@@ -1,9 +1,5 @@
-export function validateAmountPaid(amountPaid) {
-  if (typeof amountPaid !== "number" || isNaN(amountPaid)) {
-    throw new TypeError("amountPaid는 number 타입이어야 합니다.");
-  }
+import { go } from "../../utils/fx.js";
+import validation from "../../utils/validation.js";
 
-  if (amountPaid < 0) {
-    throw new RangeError("amountPaid는 0보다 작을 수 없습니다.");
-  }
-}
+export const validateAmountPaid = (amountPaid) =>
+  go(amountPaid, validation.isInteger, validation.isInRange(0, Infinity));

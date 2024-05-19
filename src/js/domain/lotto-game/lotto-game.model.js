@@ -16,7 +16,7 @@ class LottoGame {
 
   constructor(winningNumbers, bonusNumber) {
     validateNumbers(winningNumbers);
-    validateBonusNumber(bonusNumber, winningNumbers);
+    validateBonusNumber(winningNumbers, bonusNumber);
 
     this.#winningNumbers = winningNumbers;
     this.#bonusNumber = bonusNumber;
@@ -88,7 +88,7 @@ class LottoGame {
     if (totalCount === 0) {
       return 0;
     }
-    return ((totalPrize / (totalCount * LOTTO_SALES.PRICE)) * 100).toFixed(1);
+    return (totalPrize / (totalCount * LOTTO_SALES.PRICE)) * 100;
   }
 
   get statistics() {
