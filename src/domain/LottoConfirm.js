@@ -64,21 +64,7 @@ class LottoConfirm {
   }
 
   static switchResultToMoney(result) {
-    switch (result) {
-      case LOTTO_5TH_PRIZE_WINNER:
-        return 5_000;
-      case LOTTO_4TH_PRIZE_WINNER:
-        return 50_000;
-      case LOTTO_3RD_PRIZE_WINNER:
-        return 1_500_000;
-      case LOTTO_SECOND_PRIZE_WINNER:
-        return 30_000_000;
-      case LOTTO_FIRST_PRIZE_WINNER:
-        return 2_000_000_000;
-
-      default:
-        return 0;
-    }
+    return RESULT_TO_MONEY[result];
   }
 }
 
