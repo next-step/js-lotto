@@ -1,4 +1,4 @@
-import { go } from "../../utils/fx.js";
+import { go, map } from "../../utils/fx.js";
 import validation from "../../utils/validation.js";
 
 import LOTTO from "./lotto.constant.js";
@@ -7,7 +7,7 @@ export const validateNumbers = (numbers) =>
   go(
     numbers,
     validation.isArrayOfSize(LOTTO.COUNT_OF_NUMBERS),
-    validation.isArrayOfType(validation.isInteger),
     validation.isUniqueArray,
-    validation.isInRange(LOTTO.MIN_NUMBER, LOTTO.MAX_NUMBER),
+    map(validation.isInteger),
+    map(validation.isInRange(LOTTO.MIN_NUMBER, LOTTO.MAX_NUMBER)),
   );
