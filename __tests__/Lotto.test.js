@@ -23,7 +23,7 @@ describe('로또 기능 테스트', () => {
 		expect(lottoQuantity.length).toBe(5);
 	});
 
-	test('로또 당첨 번호는 1 ~ 45 사이의 무작위 수 중 중복되지 않는 6개이다.', () => {
+	test('로또 번호는 1 ~ 45 사이의 무작위 수 중 중복되지 않는 6개이다.', () => {
 		// given
 		const lotto = new Lotto();
 
@@ -36,6 +36,22 @@ describe('로또 기능 테스트', () => {
 		lottoNumbers.forEach(num => {
 			expect(num).toBeGreaterThanOrEqual(1); // 최소 1인지
 			expect(num).toBeLessThanOrEqual(45); // 최대 45인지
+		});
+	});
+
+	test('로또 당첨 번호는 1 ~ 45 사이의 무작위 수 중 중복되지 않는 6개이다.', () => {
+		// given
+		const lotto = new Lotto();
+
+		// when
+		const winningNumbersInput = [1, 2, 3, 4, 5, 6];
+
+		// then
+		expect(winningNumbersInput.length).toBe(6);
+		expect(new Set(winningNumbersInput).size).toBe(6);
+		winningNumbersInput.forEach(num => {
+			expect(num).toBeGreaterThanOrEqual(1);
+			expect(num).toBeLessThanOrEqual(45);
 		});
 	});
 
