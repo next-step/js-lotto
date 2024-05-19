@@ -7,12 +7,12 @@ const createLottoNumbersArray = () => {
 	);
 };
 class Lotto {
-	price = ConstantNumbers.LOTTO_PRICE;
+	static price = ConstantNumbers.LOTTO_PRICE;
 	lottoNumbers = createLottoNumbersArray();
 
 	purchase(purchaseAmount) {
 		// 구매 금액을 로또 가격으로 나눈 몫이 quantity
-		return purchaseAmount / this.price;
+		return purchaseAmount / Lotto.price;
 	}
 
 	createLottoNumbers() {
