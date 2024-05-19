@@ -2,11 +2,11 @@ import Lotto from './Lotto';
 import { WinningRank, WinningPrize } from './constant';
 
 class Winning {
-	constructor(lottoNumbers, userInputWinningNumber, createBonusNumber) {
+	constructor(lottoNumbers, userInputWinningNumber, userInputBonusNumber) {
 		this.lotto = new Lotto();
 		this.lottoNumbers = lottoNumbers;
 		this.userInputWinningNumber = userInputWinningNumber;
-		this.createBonusNumber = createBonusNumber;
+		this.userInputBonusNumber = userInputBonusNumber;
 		this.matches = 0;
 		this.bonusMatches = false;
 	}
@@ -47,11 +47,11 @@ class Winning {
 
 	calculateMatches() {
 		this.matches = this.lottoNumbers.filter(number => this.userInputWinningNumber.includes(number)).length;
-		this.bonusMatches = this.userInputWinningNumber.includes(this.createBonusNumber);
+		this.bonusMatches = this.userInputWinningNumber.includes(this.userInputBonusNumber);
 		return { matches: this.matches, bonusMatches: this.bonusMatches };
 	}
 
-	static calculateResults(lottoNumbers, userInputWinningNumber, createBonusNumber) {
+	static calculateResults(lottoNumbers, userInputWinningNumber, userInputBonusNumber) {
 		const prizeCounts = {
 			[WinningRank.FIFTH_PLACE]: 0,
 			[WinningRank.FOURTH_PLACE]: 0,
@@ -62,7 +62,7 @@ class Winning {
 		let totalPrize = 0;
 
 		lottoNumbers.forEach(numbers => {
-			const winning = new Winning(numbers, userInputWinningNumber, createBonusNumber);
+			const winning = new Winning(numbers, userInputWinningNumber, userInputBonusNumber);
 			const prize = winning.calculatePrize();
 			totalPrize += prize;
 
