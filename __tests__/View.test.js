@@ -94,7 +94,7 @@ describe("입출력 테스트", () => {
     const input = await mockWinningNumbers();
 
     //when
-    const validationCallback = () => lottoRule.validates(input.join(","));
+    const validationCallback = () => lottoRule.validates(input);
 
     //then
     expect(validationCallback).toThrow(LOTTO_NUMBER_DUPLICATED_ERR_MSG);
@@ -104,12 +104,12 @@ describe("입출력 테스트", () => {
     //given
     const mockWinningNumbers = jest.fn().mockReturnValue(TEST_LOTTO_NUMBERS);
     const mockBonusNumber = jest.fn().mockReturnValue(TEST_DUPLICATED_BONUS_NUMBER);
-    const input_winningNumbers = await mockWinningNumbers();
+    const input_winningNumbers = new Lotto(await mockWinningNumbers());
     const input_bonusNumber = await mockBonusNumber();
 
     //when
     const validationCallback = () =>
-      bonusNumberRule.validates(String(input_bonusNumber), input_winningNumbers);
+      bonusNumberRule.validates(input_bonusNumber, input_winningNumbers);
 
     //then
     expect(validationCallback).toThrow(LOTTO_NUMBER_DUPLICATED_ERR_MSG);
@@ -120,7 +120,7 @@ describe("입출력 테스트", () => {
     const winningLotto = new WinningLotto(new Lotto([15, 23, 12, 1, 34, 26]), 7);
     const testLottos = TEST_LOTTOS.map((lotto) => new Lotto(lotto));
 
-    const lottoRanks = testLottos.map((lotto) => lotto.getRank(winningLotto));
+    const lottoRanks = testLottos.map((lotto) => winningLotto.getRank(lotto));
     const lottoRankCounts = lottoMachine.countLottoRanks(lottoRanks);
 
     //when
@@ -137,7 +137,7 @@ describe("입출력 테스트", () => {
     const winningLotto = new WinningLotto(new Lotto([15, 23, 12, 1, 34, 26]), 7);
     const testLottos = TEST_LOTTOS.map((lotto) => new Lotto(lotto));
 
-    const lottoRanks = testLottos.map((lotto) => lotto.getRank(winningLotto));
+    const lottoRanks = testLottos.map((lotto) => winningLotto.getRank(lotto));
     const lottoRankCounts = lottoMachine.countLottoRanks(lottoRanks);
     const lottoReturn = LottoRank.calculateLottoReturn(lottoRankCounts);
 

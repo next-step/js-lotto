@@ -27,7 +27,7 @@ describe("로또 기계 테스트", () => {
     const winningLotto = new WinningLotto(new Lotto([15, 23, 12, 1, 34, 26]), 7);
 
     //when
-    const lottoRanks = lotto.getRank(winningLotto);
+    const lottoRanks = winningLotto.getRank(lotto);
 
     //then
     expect(lottoRanks).toBe(LOTTO_PRIZE.FIRST.rank);
@@ -38,7 +38,7 @@ describe("로또 기계 테스트", () => {
     const winningLotto = new WinningLotto(new Lotto([7, 23, 12, 1, 34, 26]), 15);
 
     //when
-    const lottoRanks = lotto.getRank(winningLotto);
+    const lottoRanks = winningLotto.getRank(lotto);
 
     //then
     expect(lottoRanks).toBe(LOTTO_PRIZE.SECOND.rank);
@@ -49,7 +49,7 @@ describe("로또 기계 테스트", () => {
     const winningLotto = new WinningLotto(new Lotto([14, 23, 12, 1, 34, 26]), 7);
 
     //when
-    const lottoRanks = lotto.getRank(winningLotto);
+    const lottoRanks = winningLotto.getRank(lotto);
 
     //then
     expect(lottoRanks).toBe(LOTTO_PRIZE.THIRD.rank);
@@ -60,7 +60,7 @@ describe("로또 기계 테스트", () => {
     const winningLotto = new WinningLotto(new Lotto([14, 22, 12, 1, 34, 26]), 7);
 
     //when
-    const lottoRanks = lotto.getRank(winningLotto);
+    const lottoRanks = winningLotto.getRank(lotto);
 
     //then
     expect(lottoRanks).toBe(LOTTO_PRIZE.FOURTH.rank);
@@ -71,7 +71,7 @@ describe("로또 기계 테스트", () => {
     const winningLotto = new WinningLotto(new Lotto([14, 22, 11, 1, 34, 26]), 7);
 
     //when
-    const lottoRanks = lotto.getRank(winningLotto);
+    const lottoRanks = winningLotto.getRank(lotto);
 
     //then
     expect(lottoRanks).toBe(LOTTO_PRIZE.FIFTH.rank);
