@@ -7,8 +7,12 @@ export const validateWinningNumbers = (winningNumbers, bonusNumber) => {
 		number => number >= ConstantNumbers.MIN_NUMBER && number <= ConstantNumbers.MAX_NUMBER
 	);
 
-	if (!isValidNumbers || winningNumbers.length != 6) {
+	if (!isValidNumbers) {
 		throw new Error(ErrorMessages.INVALID_WINNING_NUMBER);
+	}
+
+	if (winningNumbers.length != 6) {
+		throw new Error(ErrorMessages.INVALID_WINNING_NUMBER_LENGTH);
 	}
 
 	if (winningNumbers.includes(bonusNumber)) {

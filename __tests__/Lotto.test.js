@@ -58,15 +58,31 @@ describe('로또 기능 테스트', () => {
 
 	test('보너스 번호는 당첨 번호와 중복될 수 없다', () => {
 		// given
-		const lotto = new Lotto();
-
-		// when
 		const winningNumbers = [1, 2, 3, 4, 5, 6];
 		const bonusNumber = 6;
 
+		// when
 		// then
 		expect(() => {
 			validateWinningNumbers(winningNumbers, bonusNumber);
 		}).toThrow(ErrorMessages.INVALID_BONUS_NUMBER);
+	});
+
+	test('당첨 번호로 유효하지 않은 수가 입력되었을 때 에러 발생', () => {
+		// given
+		const bonusNumber = 10;
+
+		// when
+		const invalidWinningNumber = [40, 41, 42, 43, 44, 90];
+		const invalidNumbersLength = [1, 2, 3, 4, 5, 6, 7];
+
+		// then
+		expect(() => {
+			validateWinningNumbers(invalidWinningNumber, bonusNumber);
+		}).toThrow(ErrorMessages.INVALID_WINNING_NUMBER);
+
+		expect(() => {
+			validateWinningNumbers(invalidNumbersLength, bonusNumber);
+		}).toThrow(ErrorMessages.INVALID_WINNING_NUMBER_LENGTH);
 	});
 });
