@@ -9,14 +9,9 @@ import {
 import LottoValidator from './LottoValidator';
 
 class LottoConfirm {
-  #winnigNumbers;
-  #bonusNumber;
-
-  constructor() {
-    this.#winnigNumbers = [];
-    this.#bonusNumber = 0;
-    this.validators = new LottoValidator();
-  }
+  #winnigNumbers = [];
+  #bonusNumber = 0;
+  validators = new LottoValidator();
 
   setWinningNumbers(number) {
     this.#winnigNumbers = number;
