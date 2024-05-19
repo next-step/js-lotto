@@ -1,4 +1,5 @@
 import Lotto from '../src/tests/Lotto';
+import { validateWinningNumbers } from '../src/tests/Winning';
 import { ErrorMessages } from '../src/tests/error';
 
 describe('로또 기능 테스트', () => {
@@ -60,12 +61,12 @@ describe('로또 기능 테스트', () => {
 		const lotto = new Lotto();
 
 		// when
-		const lottoNumbers = lotto.createLottoNumbers();
-		const bonusNumber = lottoNumbers.slice(0, 1);
+		const winningNumbers = [1, 2, 3, 4, 5, 6];
+		const bonusNumber = 6;
 
 		// then
-		if (lottoNumbers.includes(bonusNumber)) {
-			throw new Error('[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다');
-		}
+		expect(() => {
+			validateWinningNumbers(winningNumbers, bonusNumber);
+		}).toThrow(ErrorMessages.INVALID_BONUS_NUMBER);
 	});
 });

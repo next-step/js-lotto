@@ -1,5 +1,20 @@
 import Lotto from './Lotto';
-import { WinningRank, WinningPrize } from './constant';
+import { WinningRank, WinningPrize, ConstantNumbers } from './constant';
+import { ErrorMessages } from './error';
+
+export const validateWinningNumbers = (winningNumbers, bonusNumber) => {
+	const isValidNumbers = winningNumbers.every(
+		number => number >= ConstantNumbers.MIN_NUMBER && number <= ConstantNumbers.MAX_NUMBER
+	);
+
+	if (!isValidNumbers || winningNumbers.length != 6) {
+		throw new Error(ErrorMessages.INVALID_WINNING_NUMBER);
+	}
+
+	if (winningNumbers.includes(bonusNumber)) {
+		throw new Error(ErrorMessages.INVALID_BONUS_NUMBER);
+	}
+};
 
 class Winning {
 	constructor(lottoNumbers, userInputWinningNumber, userInputBonusNumber) {
