@@ -1,3 +1,4 @@
+import { Lotto } from "../src/js/domain/Lotto";
 import LottoMachine from "../src/js/domain/LottoMachine";
 import { LOTTO_LENGTH, MAXIMUM_LOTTO_NUMBER, MINIMUM_LOTTO_NUMBER } from "../src/js/constants";
 
@@ -5,7 +6,7 @@ let machine;
 let lotto;
 beforeEach(() => {
   machine = new LottoMachine();
-  lotto = machine.generateLotto();
+  lotto = new Lotto(machine.generateLottoNumbers());
 });
 
 describe("로또 정보 테스트", () => {

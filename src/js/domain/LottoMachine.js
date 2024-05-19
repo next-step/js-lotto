@@ -1,14 +1,23 @@
 import View from "../view/view";
 import { Lotto, WinningLotto } from "./Lotto";
-import { LOTTO_LENGTH, LOTTO_PRICE, MAXIMUM_LOTTO_NUMBER } from "../constants";
+import { LOTTO_LENGTH, MAXIMUM_LOTTO_NUMBER } from "../constants";
 
 class LottoMachine {
+  static LOTTO_PRICE = 1000;
+
   lottos = [];
   constructor() {}
 
   buy(money) {
+    const lottos = new Set();
     const theNumberOfLottos = this.countTheNumberOfLottos(money);
-    this.lottos = Array.from({ length: theNumberOfLottos }, () => this.generateLotto());
+
+    while (lottos.size < theNumberOfLottos) {
+      const lotto = this.generateLottoNumbers();
+      lottos.add(JSON.stringify(lotto));
+    }
+
+    this.lottos = Array.from(lottos).map((lotto) => new Lotto(JSON.parse(lotto)));
 
     View.printLottoInfo(this.lottos);
     return this.lottos;
@@ -36,17 +45,17 @@ class LottoMachine {
   }
 
   countTheNumberOfLottos(money) {
-    return money / LOTTO_PRICE;
+    return money / LottoMachine.LOTTO_PRICE;
   }
 
-  generateLotto() {
+  generateLottoNumbers() {
     const lottos = new Set();
 
     while (lottos.size < LOTTO_LENGTH) {
       const randomNumber = this.generateRandomNumbers();
       lottos.add(randomNumber);
     }
-    return new Lotto(Array.from(lottos));
+    return Array.from(lottos).sort((a, b) => a - b);
   }
 
   generateRandomNumbers() {

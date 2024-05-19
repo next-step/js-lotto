@@ -54,7 +54,7 @@ const View = {
    * @param {Lotto} lotto
    */
   printLottoNumbers(lotto) {
-    console.log(lotto.numbers.sort((a, b) => a - b));
+    console.log(lotto.numbers);
   },
 
   /**
