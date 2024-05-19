@@ -31,10 +31,11 @@ function toggleLottoNumbers() {
   if (lottoNumbersDiv.style.display === 'none') {
     lottoNumbersDiv.style.display = 'block'; // 요소 보이기
     displayLottoTickets();
-  } else {
-    lottoNumbersDiv.style.display = 'none'; // 요소 숨기기
-    lottoNumbersDiv.innerHTML = '';
+    return;
   }
+
+  lottoNumbersDiv.style.display = 'none'; // 요소 숨기기
+  lottoNumbersDiv.innerHTML = '';
 }
 
 function displayLottoTickets() {
