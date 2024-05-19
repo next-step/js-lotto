@@ -109,11 +109,21 @@ class LottoIO {
     console.log('당첨 통계');
     console.log('--------------------');
 
-    const result_5th = countArrayResults(lottoResult, LOTTO_5TH_PRIZE_WINNER);
-    const result_4th = countArrayResults(lottoResult, LOTTO_4TH_PRIZE_WINNER);
-    const result_3rd = countArrayResults(lottoResult, LOTTO_3RD_PRIZE_WINNER);
-    const result_sec = countArrayResults(lottoResult, LOTTO_SECOND_PRIZE_WINNER);
-    const result_first = countArrayResults(lottoResult, LOTTO_FIRST_PRIZE_WINNER);
+    function isConditon(targetValue) {
+      return (item) => item.result === targetValue;
+    }
+
+    const result_5th = countArrayResults(lottoResult, isConditon(LOTTO_5TH_PRIZE_WINNER));
+    const result_4th = countArrayResults(lottoResult, isConditon(LOTTO_4TH_PRIZE_WINNER));
+    const result_3rd = countArrayResults(lottoResult, isConditon(LOTTO_3RD_PRIZE_WINNER));
+    const result_sec = countArrayResults(
+      lottoResult,
+      isConditon(LOTTO_SECOND_PRIZE_WINNER)
+    );
+    const result_first = countArrayResults(
+      lottoResult,
+      isConditon(LOTTO_FIRST_PRIZE_WINNER)
+    );
 
     console.log(`3개 일치 (5,000원) - ${result_5th}개`);
     console.log(`4개 일치 (50,000원) - ${result_4th}개`);

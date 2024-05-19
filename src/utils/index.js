@@ -4,8 +4,8 @@ export function generateRandomNumbers(range, radix) {
   return parseInt(Math.random() * range, radix);
 }
 
-export function countArrayResults(array, targetValue) {
-  return array.filter((item) => item.result === targetValue).length;
+export function countArrayResults(array, condition) {
+  return array.filter(condition).length;
 }
 
 export function sortArray(order = 'ASC' | 'DESC', array) {
