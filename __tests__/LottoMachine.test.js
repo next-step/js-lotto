@@ -13,7 +13,7 @@ beforeEach(() => {
 describe("로또 기계 테스트", () => {
   test("입금액에 따라 로또를 발행한다.", () => {
     //given
-    const aNumberOfLottos = lottoMachine.getTheNumberOfLottos(TEST_MONEY);
+    const aNumberOfLottos = lottoMachine.countTheNumberOfLottos(TEST_MONEY);
 
     //when
     const lottos = lottoMachine.buy(TEST_MONEY);

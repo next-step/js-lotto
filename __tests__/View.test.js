@@ -66,7 +66,7 @@ describe("입출력 테스트", () => {
     //given
     const mockMoney = jest.fn().mockReturnValue(TEST_MONEY);
     const input = await mockMoney();
-    const theNumberOfLottos = lottoMachine.getTheNumberOfLottos(input);
+    const theNumberOfLottos = lottoMachine.countTheNumberOfLottos(input);
 
     //when
     lottoMachine.buy(input);
@@ -139,7 +139,7 @@ describe("입출력 테스트", () => {
 
     const lottoRanks = testLottos.map((lotto) => lotto.getRank(winningLotto));
     const lottoRankCounts = lottoMachine.countLottoRanks(lottoRanks);
-    const lottoReturn = LottoRank.getLottoReturn(lottoRankCounts);
+    const lottoReturn = LottoRank.calculateLottoReturn(lottoRankCounts);
 
     //when
     View.printLottoReturn(lottoRankCounts);

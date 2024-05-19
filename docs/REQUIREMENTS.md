@@ -38,10 +38,10 @@
 - [ ] private state을 가져올 때는 getter 사용 -> private state 값이 외부의 영향을 받을 가능성 존재
 - [ ] 각 객체의 책임을 부여하라
   - [ ] `View`에서 input을 받을 때 `Rule` 검증, domain에서 인스턴스가 생성될 때 `validation` 검증
-- [ ] 변수명은 혼동성의 여지를 주지 않게 부여하라
-  - [ ] `isBonustMatched`
-  - [ ] `getLottoReturn`
-  - [ ] `getTheNumberOfLottos`
+- [x] 변수명은 혼동의 여지를 주지 않게 부여하라
+  - [x] `isBonustMatched`
+  - [x] `getLottoReturn`
+  - [x] `getTheNumberOfLottos`
 - [ ] `View`에서 input, ouput을 동시에 해주고 있어 코드 양이 많아졌다.
 - [ ] `View`에서 domain에 대한 의존이 높다.
 - [ ] 로또 생성 시, 동일한 로또의 값이 나올 가능성 존재

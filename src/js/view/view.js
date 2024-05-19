@@ -77,7 +77,7 @@ const View = {
   },
 
   printLottoReturn(lottoRankCounts) {
-    const lottoReturn = LottoRank.getLottoReturn(lottoRankCounts);
+    const lottoReturn = LottoRank.calculateLottoReturn(lottoRankCounts);
 
     console.log(`총 수익률은 ${lottoReturn.toFixed(2)}% 입니다.`);
   },

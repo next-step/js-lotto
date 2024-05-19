@@ -7,7 +7,7 @@ class LottoMachine {
   constructor() {}
 
   buy(money) {
-    const theNumberOfLottos = this.getTheNumberOfLottos(money);
+    const theNumberOfLottos = this.countTheNumberOfLottos(money);
     this.lottos = Array.from({ length: theNumberOfLottos }, () => this.generateLotto());
 
     View.printLottoInfo(this.lottos);
@@ -35,7 +35,7 @@ class LottoMachine {
     }, new Map());
   }
 
-  getTheNumberOfLottos(money) {
+  countTheNumberOfLottos(money) {
     return money / LOTTO_PRICE;
   }
 
