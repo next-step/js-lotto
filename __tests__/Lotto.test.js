@@ -32,4 +32,14 @@ describe("로또 테스트", () => {
       expect(lotto).toThrow(ERROR_CODES.ERROR_INVALID_NUMBER);
     }
   );
+
+  test("로또 번호는 오름차순으로 정렬", () => {
+    // give
+    const numbers = [1, 2, 3, 6, 5, 4];
+    const sortedNumbers = [1, 2, 3, 4, 5, 6];
+    const lotto = new Lotto(numbers);
+
+    // when + then
+    expect(lotto.numbers).toEqual(sortedNumbers);
+  });
 });

@@ -15,6 +15,6 @@ export class Lotto {
   }
 
   get numbers() {
-    return this.#numbers;
+    return this.#numbers.sort((num1, num2) => num1 - num2);
   }
 }
