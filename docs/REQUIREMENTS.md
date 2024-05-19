@@ -33,8 +33,8 @@
 # 1차 리뷰 240518
 
 - [x] `View`위치 `domain`에서 분리
-- [ ] `WinningLotto`객체 활용
-  - [ ] 로또 랭킹 생성
+- [x] `WinningLotto`객체 활용
+  - [x] 로또 랭킹 생성
 - [x] private state을 가져올 때는 getter 사용 -> private state 값이 외부의 영향을 받을 가능성 존재
 - [ ] 각 객체의 책임을 부여하라
   - [ ] `View`에서 input을 받을 때 `Rule` 검증, domain에서 인스턴스가 생성될 때 `validation` 검증

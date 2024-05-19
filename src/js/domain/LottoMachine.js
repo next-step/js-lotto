@@ -28,7 +28,7 @@ class LottoMachine {
    * @returns {Map}
    */
   getLottoRanks(winningLotto) {
-    const lottoRanks = this.lottos.map((lotto) => lotto.getRank(winningLotto));
+    const lottoRanks = this.lottos.map((lotto) => winningLotto.getRank(lotto));
     const lottoRankCounts = this.countLottoRanks(lottoRanks);
     return lottoRankCounts;
   }

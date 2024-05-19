@@ -12,16 +12,6 @@ export class Lotto {
   get numbers() {
     return [...this.#numbers];
   }
-
-  getRank(winningLotto) {
-    const winningNumbers = winningLotto.winningNumbers.numbers;
-    const bonusNumber = winningLotto.bonusNumber;
-
-    const matchedCount = this.#numbers.filter((number) => winningNumbers.includes(number)).length;
-    const isBonusMatched = this.#numbers.includes(bonusNumber);
-
-    return LottoRank.getRank(matchedCount, isBonusMatched);
-  }
 }
 
 export class WinningLotto {
@@ -42,5 +32,15 @@ export class WinningLotto {
 
   get bonusNumber() {
     return this.#bonusNumber;
+  }
+
+  getRank(lotto) {
+    const matchedCount = lotto.numbers.filter((number) =>
+      this.#winningNumbers.numbers.includes(number)
+    ).length;
+
+    const isBonusMatched = lotto.numbers.includes(this.#bonusNumber);
+
+    return LottoRank.getRank(matchedCount, isBonusMatched);
   }
 }
