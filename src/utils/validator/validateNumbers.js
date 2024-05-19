@@ -16,7 +16,9 @@ export function validateNumbers(numbers) {
 }
 
 function isValidLen(numbers) {
-  return numbers.length !== Lotto.LEN;
+  return (
+    !numbers.length || numbers.length < Lotto.LEN || numbers.length > Lotto.LEN
+  );
 }
 
 function isValidNum(numbers) {
