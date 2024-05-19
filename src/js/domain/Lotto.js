@@ -1,3 +1,5 @@
+import { LOTTO_LENGTH } from "../constants/index.js";
+import { bonusNumberRule, lottoRule } from "../rules/Lotto.rule.js";
 import { LottoRank } from "./LottoRank.js";
 export class Lotto {
   #numbers;
@@ -6,7 +8,7 @@ export class Lotto {
    * @param {string[]} numbers
    */
   constructor(numbers) {
-    this.#numbers = numbers;
+    if (lottoRule.validates(numbers)) this.#numbers = numbers;
   }
 
   get numbers() {
@@ -22,8 +24,10 @@ export class WinningLotto {
    * @param {number} bonusNumber
    */
   constructor(winningLotto, bonusNumber) {
-    this.#winningNumbers = winningLotto;
-    this.#bonusNumber = bonusNumber;
+    if (bonusNumberRule.validates(bonusNumber, winningLotto)) {
+      this.#winningNumbers = winningLotto;
+      this.#bonusNumber = bonusNumber;
+    }
   }
 
   get winningNumbers() {

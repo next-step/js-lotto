@@ -1,39 +1,29 @@
-import { Lotto } from "../domain/Lotto";
 import { LottoRank } from "../domain/LottoRank";
+import { Lotto, WinningLotto } from "../domain/Lotto";
 import { readLineAsync } from "../utils/readLineSync";
 import { lottoMoneyRule } from "../rules/LottoMoney.rule";
-import { bonusNumberRule, lottoRule } from "../rules/Lotto.rule";
 
 const View = {
   async getMoney() {
-    try {
-      const money = await readLineAsync(`> 구입금액을 입력해 주세요.\n`);
-      if (lottoMoneyRule.validates(money)) return +money;
-    } catch (error) {
-      console.error(error);
-    }
+    const money = await readLineAsync(`> 구입금액을 입력해 주세요.\n`);
+    if (lottoMoneyRule.validates(money)) return +money;
   },
 
   async getLottoNumbers() {
-    try {
-      const winningNumbers = await this.getWinningNumbers();
-      const bonusNumber = await this.getBonusNumber(winningNumbers);
+    const winningNumbers = new Lotto(await this.getWinningNumbers());
+    const bonusNumber = await this.getBonusNumber();
 
-      return { winningNumbers, bonusNumber };
-    } catch (error) {
-      console.error(error);
-    }
+    return new WinningLotto(winningNumbers, bonusNumber);
   },
 
   async getWinningNumbers() {
     const winningNumbers = await readLineAsync(`> 당첨 번호를 입력해 주세요.`);
-    if (lottoRule.validates(winningNumbers))
-      return winningNumbers.split(",").map((number) => +number);
+    return winningNumbers.split(",").map((number) => +number);
   },
 
-  async getBonusNumber(winningNumbers) {
+  async getBonusNumber() {
     const bonusNumber = await readLineAsync(`> 보너스 번호를 입력해 주세요.`);
-    if (bonusNumberRule.validates(bonusNumber, winningNumbers)) return +bonusNumber;
+    return +bonusNumber;
   },
 
   /**

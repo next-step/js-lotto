@@ -6,7 +6,7 @@ const money = await View.getMoney();
 const lottoMachine = new LottoMachine();
 const lottos = lottoMachine.buy(money);
 
-const { winningNumbers, bonusNumber } = await View.getLottoNumbers();
-const winningLotto = new WinningLotto(new Lotto(winningNumbers), bonusNumber);
+const winningLotto = await View.getLottoNumbers();
+// const winningLotto = new WinningLotto(new Lotto(winningNumbers), bonusNumber);
 const lottoRankCounts = lottoMachine.getLottoRanks(winningLotto);
 View.printLottoStatistics(lottoRankCounts);

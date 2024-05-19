@@ -6,13 +6,13 @@ import {
   LOTTO_NUMBER_RANGE_ERR_MSG,
   LOTTO_NUMBER_LENGTH_ERR_MSG,
 } from "../constants/error";
+import { Lotto } from "../domain/Lotto";
 
 export const lottoRule = {
   /**
-   * @param {string[]} input
+   * @param {number[]} numbers
    */
-  validates(input) {
-    let numbers = input.split(",");
+  validates(numbers) {
     if (!this.isNumberValid(numbers)) throw new Error(LOTTO_NUMBER_TYPE_ERR_MSG);
     if (!this.isNumberDuplicated(numbers)) throw new Error(LOTTO_NUMBER_DUPLICATED_ERR_MSG);
     if (!this.isNumberLengthValid(numbers)) throw new Error(LOTTO_NUMBER_LENGTH_ERR_MSG);
@@ -22,7 +22,7 @@ export const lottoRule = {
   },
 
   isNumberValid(numbers) {
-    return numbers.every((number) => isInputNumber(number));
+    return numbers?.every((number) => typeof number === "number" && !isNaN(number));
   },
 
   isNumberDuplicated(numbers) {
@@ -42,23 +42,27 @@ export const lottoRule = {
 
 export const bonusNumberRule = {
   /**
-   * @param {string} input
-   * @param {string[]} winningNumbers
+   * @param {number} number
+   * @param {Lotto} winningNumbers
    */
-  validates(input, winningNumbers) {
-    if (!isInputNumber(input)) throw new Error(LOTTO_NUMBER_TYPE_ERR_MSG);
-    if (!this.isNumberRangeValid(input)) throw new Error(LOTTO_NUMBER_RANGE_ERR_MSG);
-    if (this.isNumberDuplicated(input, winningNumbers))
+  validates(number, winningNumbers) {
+    if (!this.isNumberValid(number)) throw new Error(LOTTO_NUMBER_TYPE_ERR_MSG);
+    if (!this.isNumberRangeValid(number)) throw new Error(LOTTO_NUMBER_RANGE_ERR_MSG);
+    if (this.isNumberDuplicated(number, winningNumbers))
       throw new Error(LOTTO_NUMBER_DUPLICATED_ERR_MSG);
 
     return true;
   },
 
-  isNumberRangeValid(input) {
-    return input >= MINIMUM_LOTTO_NUMBER && input <= MAXIMUM_LOTTO_NUMBER;
+  isNumberValid(number) {
+    return typeof number === "number" && !isNaN(number);
   },
 
-  isNumberDuplicated(input, winningNumbers) {
-    return winningNumbers.includes(+input);
+  isNumberRangeValid(number) {
+    return number >= MINIMUM_LOTTO_NUMBER && number <= MAXIMUM_LOTTO_NUMBER;
+  },
+
+  isNumberDuplicated(number, winningNumbers) {
+    return winningNumbers.numbers.includes(number);
   },
 };
