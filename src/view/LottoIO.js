@@ -85,7 +85,7 @@ class LottoIO {
     }
   }
 
-  async inputRestartOrNot(retry) {
+  async inputRestartOrNot(retry = 1) {
     const retryCount = retry;
     while (retryCount !== 0) {
       try {

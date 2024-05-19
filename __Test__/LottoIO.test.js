@@ -118,7 +118,7 @@ describe('로또 입출력에 관한 테스트 케이스', () => {
     lottoIO.outputLottosResult(checkedLottos, percent);
 
     lottoIO.readLineAsync = jest.fn().mockResolvedValue('y');
-    const restart = await lottoIO.inputRestartOrNot();
+    const restart = await lottoIO.inputRestartOrNot(1);
 
     //then
     expect(restart).toBe('y');
