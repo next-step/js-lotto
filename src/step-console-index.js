@@ -1,7 +1,16 @@
-/**
- * step 1의 시작점이 되는 파일입니다.
- * 브라우저 환경에서 사용하는 css 파일 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
- */
+import { Lotto } from "./js/domain/Lotto.js";
+import { Input, Output } from "./js/view/index.js";
+import LottoMachine from "./js/domain/LottoMachine";
 
+const money = await Input.getMoney();
+const lottoMachine = new LottoMachine();
+lottoMachine.buy(money);
 
-console.log("Hello, World!");
+const winningNumbers = new Lotto(await Input.getWinningNumbers());
+const bonusNumber = await Input.getBonusNumber();
+
+const winningLotto = lottoMachine.generateWinningLotto(winningNumbers, bonusNumber);
+const lottoRankCounts = lottoMachine.getLottoRanks(winningLotto);
+const lottoStatistics = lottoMachine.calculateLottoResult(lottoRankCounts);
+
+Output.printLottoStatistics(lottoStatistics);
