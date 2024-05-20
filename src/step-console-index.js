@@ -1,10 +1,10 @@
+import { Lotto } from "./js/domain/Lotto.js";
 import { Input, Output } from "./js/view/index.js";
 import LottoMachine from "./js/domain/LottoMachine";
-import { Lotto, WinningLotto } from "./js/domain/Lotto.js";
 
 const money = await Input.getMoney();
 const lottoMachine = new LottoMachine();
-const lottos = lottoMachine.buy(money);
+lottoMachine.buy(money);
 
 const winningNumbers = new Lotto(await Input.getWinningNumbers());
 const bonusNumber = await Input.getBonusNumber()

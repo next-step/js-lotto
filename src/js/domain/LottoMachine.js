@@ -1,7 +1,8 @@
 import View from "../view/view";
+import { LottoRank } from "./LottoRank";
+import { lottoMoneyRule } from "../rules";
 import { Lotto, WinningLotto } from "./Lotto";
 import { LOTTO_LENGTH, MAXIMUM_LOTTO_NUMBER } from "../constants";
-import { LottoRank } from "./LottoRank";
 
 class LottoMachine {
   static LOTTO_PRICE = 1000;
@@ -10,6 +11,8 @@ class LottoMachine {
   constructor() {}
 
   buy(money) {
+    if(!lottoMoneyRule.validates(money)) return;
+
     const lottos = new Set();
     const theNumberOfLottos = this.countTheNumberOfLottos(money);
 

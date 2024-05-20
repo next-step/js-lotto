@@ -9,6 +9,6 @@ export const lottoMoneyRule = {
   },
 
   isMoneyValid(money) {
-    return isInputNumber(money) && money > 0;
+    return typeof money === "number" && !isNaN(money) && money > 0;
   },
 };

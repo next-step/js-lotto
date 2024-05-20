@@ -1,12 +1,10 @@
-import { lottoMoneyRule } from "../rules";
 import { readLineAsync } from "../utils/readLineSync";
-import { Lotto, WinningLotto } from "../domain/Lotto";
 
 
 export const Input = {
   async getMoney() {
     const money = await readLineAsync(`> 구입금액을 입력해 주세요.\n`);
-    if (lottoMoneyRule.validates(money)) return +money;
+    return +money;
   },
 
   async getWinningNumbers() {
