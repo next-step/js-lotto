@@ -2,22 +2,22 @@ import readLineAsync from "./readLineAsync.js";
 
 async function prompt({ message, validate, format }) {
   let isValid = false;
-  let ret;
+  let validatedInput;
 
   while (!isValid) {
     try {
       const inputtedString = await readLineAsync(message);
       const formattedInput = format ? format(inputtedString) : inputtedString;
-      validate && validate(formattedInput);
 
-      ret = formattedInput;
+      validatedInput = validate ? validate(formattedInput) : formattedInput;
+
       isValid = true;
     } catch (error) {
       console.error(error.message);
     }
   }
 
-  return ret;
+  return validatedInput;
 }
 
 export default prompt;

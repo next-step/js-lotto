@@ -16,7 +16,7 @@ class LottoGame {
 
   constructor(winningNumbers, bonusNumber) {
     validateNumbers(winningNumbers);
-    validateBonusNumber(bonusNumber, winningNumbers);
+    validateBonusNumber(winningNumbers, bonusNumber);
 
     this.#winningNumbers = winningNumbers;
     this.#bonusNumber = bonusNumber;
@@ -45,7 +45,8 @@ class LottoGame {
       case LOTTO_GAME_MATCHED_COUNT.FIRST:
         return LOTTO_GAME_RANK.FIRST;
 
-      case LOTTO_GAME_MATCHED_COUNT.SECOND || LOTTO_GAME_MATCHED_COUNT.THIRD:
+      case LOTTO_GAME_MATCHED_COUNT.SECOND:
+      case LOTTO_GAME_MATCHED_COUNT.THIRD:
         return isBonusNumberMatched
           ? LOTTO_GAME_RANK.SECOND
           : LOTTO_GAME_RANK.THIRD;
@@ -87,7 +88,7 @@ class LottoGame {
     if (totalCount === 0) {
       return 0;
     }
-    return ((totalPrize / (totalCount * LOTTO_SALES.PRICE)) * 100).toFixed(1);
+    return (totalPrize / (totalCount * LOTTO_SALES.PRICE)) * 100;
   }
 
   get statistics() {
