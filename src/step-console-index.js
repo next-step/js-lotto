@@ -30,7 +30,7 @@ const play = async () => {
   Output.printGeneratedLottosCount(lottos.length);
 
   // 발급한 로또들의 각 로또 번호들을 오름차순으로 출력
-  Output.printGeneratedLottosNumbers(lottos);
+  Output.printGeneratedLottosNumbers(lottos.map((lotto) => lotto.numbers));
 
   // 당첨 번호 입력
   const lotto = await repeatUntilNoError(async () => {

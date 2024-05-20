@@ -1,4 +1,3 @@
-import Lotto from "../src/js/domain/Lotto";
 import LottoGame from "../src/js/domain/LottoGame";
 import LottoResult from "../src/js/domain/LottoResult";
 import Input from "../src/js/view/Input";
@@ -44,10 +43,9 @@ describe("입출력 기능 테스트", () => {
 
     // when
     const lottoNumbers = await Input.getWinningLottoNumbers();
-    const winningLotto = new Lotto(lottoNumbers);
 
     // then
-    expect(winningLotto.numbers).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(lottoNumbers).toBe("1,2,3,4,5,6");
   });
 
   test("로또 보너스 번호를 입력 받을 때 1이상 45이하의 정수이면서 당첨번호로 선택한 수들과 다른 수를 입력하면 정상적으로 종료된다.", async () => {
@@ -61,18 +59,18 @@ describe("입출력 기능 테스트", () => {
     expect(bonusNumber).toBe("7");
   });
 
-  test("발급한 로또들의 각 로또 번호들을 오름차순으로 출력한다.", () => {
+  test("발급한 로또들의 각 로또 번호들을 차례대로 출력한다.", () => {
     // given
-    const lotto1 = new Lotto([2, 3, 1, 4, 6, 5]);
-    const lotto2 = new Lotto([7, 6, 5, 4, 3, 2]);
-    const lottos = [lotto1, lotto2];
+    const lottoNumbers1 = [1, 2, 3, 4, 5, 6];
+    const lottoNumbers2 = [12, 13, 14, 15, 16, 17];
+    const lottosNumbers = [lottoNumbers1, lottoNumbers2];
 
     // when
-    Output.printGeneratedLottosNumbers(lottos);
+    Output.printGeneratedLottosNumbers(lottosNumbers);
 
     // then
     expect(logSpy).toHaveBeenCalledWith("[1, 2, 3, 4, 5, 6]");
-    expect(logSpy).toHaveBeenCalledWith("[2, 3, 4, 5, 6, 7]");
+    expect(logSpy).toHaveBeenCalledWith("[12, 13, 14, 15, 16, 17]");
   });
 
   test("로또 당첨 결과를 출력한다.", () => {
