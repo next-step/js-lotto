@@ -43,7 +43,8 @@ describe("입출력 기능 테스트", () => {
     );
 
     // when
-    const winningLotto = await Input.getWinningLotto();
+    const lottoNumbers = await Input.getWinningLottoNumbers();
+    const winningLotto = new Lotto(lottoNumbers);
 
     // then
     expect(winningLotto.numbers).toEqual([1, 2, 3, 4, 5, 6]);
@@ -52,13 +53,12 @@ describe("입출력 기능 테스트", () => {
   test("로또 보너스 번호를 입력 받을 때 1이상 45이하의 정수이면서 당첨번호로 선택한 수들과 다른 수를 입력하면 정상적으로 종료된다.", async () => {
     // given
     readLineAsyncSpy.mockImplementationOnce(() => Promise.resolve("7"));
-    const winningLotto = new Lotto([1, 2, 3, 4, 5, 6]);
 
     // when
-    const bonusNumber = await Input.getBonusNumber(winningLotto);
+    const bonusNumber = await Input.getBonusNumber();
 
     // then
-    expect(bonusNumber.value).toBe(7);
+    expect(bonusNumber).toBe("7");
   });
 
   test("발급한 로또들의 각 로또 번호들을 오름차순으로 출력한다.", () => {
@@ -165,6 +165,6 @@ describe("입출력 기능 테스트", () => {
     const isRestartLottoGame = await Input.getIsRestartLottoGame();
 
     // then
-    expect(isRestartLottoGame).toBe(true);
+    expect(isRestartLottoGame).toBe(LottoGame.RESTART_GAME_TRUE);
   });
 });

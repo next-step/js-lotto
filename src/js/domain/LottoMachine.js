@@ -18,7 +18,7 @@ const LottoMachine = {
       lottoNumbers.push(...deletedNumbers);
     }
 
-    new Lotto(lottoNumbers);
+    return new Lotto(lottoNumbers);
   },
 };
 
