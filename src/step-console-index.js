@@ -1,7 +1,56 @@
-/**
- * step 1의 시작점이 되는 파일입니다.
- * 브라우저 환경에서 사용하는 css 파일 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
- */
+import Lotto from './tests/Lotto';
+import Winning from './tests/Winning';
+import { WinningRank } from './tests/constant';
 
+const readline = require('readline');
 
-console.log("Hello, World!");
+function readLineAsync(query) {
+	return new Promise(resolve => {
+		const rl = readline.createInterface({
+			input: process.stdin,
+			output: process.stdout
+		});
+
+		rl.question(query, input => {
+			rl.close();
+			resolve(input);
+		});
+	});
+}
+
+async function play() {
+	const lotto = new Lotto();
+
+	const purchaseAmount = await readLineAsync('구입금액을 입력해 주세요. > ');
+	const lottoNumbers = lotto.generatePurchasedLottoNumbers(purchaseAmount);
+
+	const quantity = lottoNumbers.length;
+
+	console.log(`${quantity}개를 구매했습니다.`);
+
+	for (let i = 0; i < quantity; i++) {
+		console.log(`[${lottoNumbers[i].join(', ')}]`);
+	}
+
+	const winningNumbersInput = await readLineAsync('당첨 번호를 입력해 주세요.');
+	const winningNumbers = winningNumbersInput.split(',').map(Number);
+
+	const bonusNumberInput = await readLineAsync('보너스 번호를 입력해 주세요.');
+	const bonusNumber = Number(bonusNumberInput);
+
+	const { prizeCounts, totalPrize } = Winning.calculateResults(lottoNumbers, winningNumbers, bonusNumber);
+	const winningRate = Winning.calculateRate(totalPrize, purchaseAmount);
+
+	console.log(`
+당첨 통계
+--------------------
+3개 일치 (5,000원) - ${prizeCounts[WinningRank.FIFTH_PLACE]}개
+4개 일치 (50,000원) - ${prizeCounts[WinningRank.FOURTH_PLACE]}개
+5개 일치 (1,500,000원) - ${prizeCounts[WinningRank.THIRD_PLACE]}개
+5개 일치, 보너스 볼 일치 (30,000,000원) - ${prizeCounts[WinningRank.SECOND_PLACE]}개
+6개 일치 (2,000,000,000원) - ${prizeCounts[WinningRank.FIRST_PLACE]}개
+총 수익률은 ${winningRate.toFixed(1)}%입니다.
+`);
+}
+
+play();
