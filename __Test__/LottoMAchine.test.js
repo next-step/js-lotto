@@ -3,6 +3,7 @@ import LottoMachine, {
   ERROR_MESSAGE_NOT_ENTER_BONUS_NUMBER,
   ERROR_MESSAGE_NOT_ENTER_WINNING_NUMBERS,
 } from '../src/domain/LottoMachine';
+import { sortArray } from '../src/utils';
 
 describe('로또 머신에 대한 테스트 케이스', () => {
   test('금액에 해당하는 만큼 로또를 발행한다.', () => {
@@ -10,7 +11,7 @@ describe('로또 머신에 대한 테스트 케이스', () => {
     const machine = new LottoMachine();
 
     //when
-    const lottos = machine.createLottos(7000);
+    const lottos = machine.createLottos(7000, 'ASC', sortArray);
 
     //then
     expect(lottos.length).toBe(7);
@@ -44,7 +45,8 @@ describe('로또 머신에 대한 테스트 케이스', () => {
     const machine = new LottoMachine();
 
     //when
-    const lottos = machine.createLottos(7000);
+    const lottos = machine.createLottos(7000, 'ASC', sortArray);
+
     machine.bonusNumber = 7;
 
     //then
@@ -58,8 +60,7 @@ describe('로또 머신에 대한 테스트 케이스', () => {
     const machine = new LottoMachine();
 
     //when
-    const lottos = machine.createLottos(7000);
-    machine.winnigNumbers = [1, 2, 3, 4, 5, 6];
+    const lottos = machine.createLottos(7000, 'ASC', sortArray);
 
     //then
     expect(() => {
