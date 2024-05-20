@@ -7,13 +7,11 @@ class LottoMachine {
   constructor() {}
 
   generateLottoNumber() {
-    let lottoNumbers = [];
-    for (let i = 0; i < LottoMachine.LOTTO_LENGTH; i++) {
-      const randomNumber = this.#generateRandomNumbers();
-      lottoNumbers.push(randomNumber);
-    }
-
-    return new Lotto(lottoNumbers);
+    return new Lotto(
+      Array(LottoMachine.LOTTO_LENGTH)
+        .fill()
+        .map(() => this.#generateRandomNumbers())
+    );
   }
 
   calculateLottoCount(purchase) {
