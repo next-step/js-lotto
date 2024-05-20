@@ -35,25 +35,6 @@ class Lotto {
     }
   }
 
-  static generateRandomLottoNumbers() {
-    const lottoNumbers = [];
-    const candidateLottoNumbers = Array.from(
-      { length: LottoNumber.MAX_LOTTO_NUMBER },
-      (_, i) => i + 1
-    );
-
-    for (let i = 0; i < Lotto.LENGTH_LOTTO_NUMBERS; i++) {
-      const randomIndex = Math.floor(
-        Math.random() * candidateLottoNumbers.length
-      );
-
-      const deletedNumbers = candidateLottoNumbers.splice(randomIndex, 1);
-      lottoNumbers.push(...deletedNumbers);
-    }
-
-    return lottoNumbers;
-  }
-
   static convertLottoNumbersToLottoNumberArray(lottoNumbers) {
     if (Array.isArray(lottoNumbers)) {
       return lottoNumbers.map((lottoNumber) => new LottoNumber(lottoNumber));

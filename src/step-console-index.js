@@ -1,5 +1,5 @@
-import Lotto from "./js/domain/Lotto";
 import LottoGame from "./js/domain/LottoGame";
+import LottoMachine from "./js/domain/LottoMachine";
 import LottoResult from "./js/domain/LottoResult";
 import Input from "./js/view/Input";
 import Output from "./js/view/Output";
@@ -17,8 +17,8 @@ const play = async () => {
 
   const lottos = [];
   for (let i = 0; i < availableLottoCount; i++) {
-    const lottoNumbers = Lotto.generateRandomLottoNumbers();
-    lottos.push(new Lotto(lottoNumbers));
+    const lotto = LottoMachine.generateRandomLotto();
+    lottos.push(lotto);
   }
 
   // 로또를 발급한 개수 출력
