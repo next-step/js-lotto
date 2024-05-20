@@ -1,5 +1,3 @@
-import LottoNumber from "./LottoNumber";
-
 class LottoResult {
   static LottoRanking = {
     FIRST: "FIRST",
@@ -38,12 +36,9 @@ class LottoResult {
   };
 
   #winningLotto;
-  #bonusNumber;
 
-  constructor(winningLotto, bonusNumber) {
+  constructor(winningLotto) {
     this.#winningLotto = winningLotto;
-    LottoNumber.validateBonusNumber(bonusNumber, this.#winningLotto);
-    this.#bonusNumber = bonusNumber;
   }
 
   get winningNumbers() {
@@ -55,8 +50,12 @@ class LottoResult {
   }
 
   getLottoRanking(lotto) {
-    const matchingCount = lotto.countMatchingLottoNumbers(this.#winningLotto);
-    const isBonusNumberMatching = lotto.hasLottoNumber(this.#bonusNumber);
+    const matchingCount = lotto.countMatchingLottoNumbers(
+      this.#winningLotto.winningLotto
+    );
+    const isBonusNumberMatching = lotto.hasLottoNumber(
+      this.#winningLotto.bonusNumber
+    );
 
     switch (matchingCount) {
       case LottoResult.LottoRankingInfo[LottoResult.LottoRanking.FIRST]

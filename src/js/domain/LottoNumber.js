@@ -1,4 +1,4 @@
-import { ErrorLottoBonusNumber, ErrorLottoNumber } from "../constants/error";
+import { ErrorLottoNumber } from "../constants/error";
 const instances = [];
 class LottoNumber {
   static MAX_LOTTO_NUMBER = 45;
@@ -30,14 +30,6 @@ class LottoNumber {
 
   valueOf() {
     return this.#value;
-  }
-
-  static validateBonusNumber(bonusNumber, winningLotto) {
-    if (winningLotto.numbers.includes(bonusNumber.value)) {
-      throw new Error(
-        ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_DUPLICATED
-      );
-    }
   }
 
   static validateLottoNumber(input) {
