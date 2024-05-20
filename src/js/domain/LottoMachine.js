@@ -1,6 +1,7 @@
 import View from "../view/view";
 import { Lotto, WinningLotto } from "./Lotto";
 import { LOTTO_LENGTH, MAXIMUM_LOTTO_NUMBER } from "../constants";
+import { LottoRank } from "./LottoRank";
 
 class LottoMachine {
   static LOTTO_PRICE = 1000;
@@ -60,6 +61,24 @@ class LottoMachine {
 
   generateRandomNumbers() {
     return Math.floor(Math.random() * MAXIMUM_LOTTO_NUMBER) + 1;
+  }
+
+  /**
+   * @param {Lotto} winningNumbers
+   * @param {number} bonusNumber
+   */
+  generateWinningLotto(winningNumbers, bonusNumber) {
+    return new WinningLotto(winningNumbers, bonusNumber);
+  }
+
+  /**
+   * @param {Map} lottoRankCounts
+   */
+  calculateLottoResult(lottoRankCounts) {
+    const lottoResult = LottoRank.getLottoResult(lottoRankCounts);
+    const lottoReturn = LottoRank.calculateLottoReturn(lottoRankCounts);
+
+    return { lottoResult, lottoReturn };
   }
 }
 

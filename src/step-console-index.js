@@ -1,12 +1,16 @@
-import View from "./js/view/view";
+import { Input, Output } from "./js/view/index.js";
 import LottoMachine from "./js/domain/LottoMachine";
 import { Lotto, WinningLotto } from "./js/domain/Lotto.js";
 
-const money = await View.getMoney();
+const money = await Input.getMoney();
 const lottoMachine = new LottoMachine();
 const lottos = lottoMachine.buy(money);
 
-const winningLotto = await View.getLottoNumbers();
-// const winningLotto = new WinningLotto(new Lotto(winningNumbers), bonusNumber);
+const winningNumbers = new Lotto(await Input.getWinningNumbers());
+const bonusNumber = await Input.getBonusNumber()
+
+const winningLotto = lottoMachine.generateWinningLotto(winningNumbers, bonusNumber);
 const lottoRankCounts = lottoMachine.getLottoRanks(winningLotto);
-View.printLottoStatistics(lottoRankCounts);
+const lottoStatistics = lottoMachine.calculateLottoResult(lottoRankCounts);
+
+Output.printLottoStatistics(lottoStatistics);
