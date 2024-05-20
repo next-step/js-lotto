@@ -2,6 +2,7 @@ import { ErrorLottoGame, ErrorLottoPurchasedAmount } from "../constants/error";
 
 const LottoGame = {
   LOTTO_PRICE: 1000,
+  MIN_PURCHASED_AMOUNT: 0,
 
   RESTART_GAME_TRUE: "y",
   RESTART_GAME_FALSE: "n",
@@ -13,7 +14,7 @@ const LottoGame = {
       );
     }
 
-    if (Number(purchasedAmount) < 0) {
+    if (Number(purchasedAmount) < LottoGame.MIN_PURCHASED_AMOUNT) {
       throw new Error(
         ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_POSITIVE
       );
