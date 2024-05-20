@@ -1,6 +1,5 @@
 import Lotto from "../src/js/domain/Lotto";
 import LottoGame from "../src/js/domain/LottoGame";
-import LottoNumber from "../src/js/domain/LottoNumber";
 import LottoResult from "../src/js/domain/LottoResult";
 import WinningLotto from "../src/js/domain/WinningLotto";
 

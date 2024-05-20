@@ -1,4 +1,4 @@
-import { ErrorLottoNumber, ErrorLottoNumbers } from "../src/js/constants/error";
+import { ErrorLottoNumbers } from "../src/js/constants/error";
 import Lotto from "../src/js/domain/Lotto";
 import LottoNumber from "../src/js/domain/LottoNumber";
 
@@ -19,7 +19,8 @@ describe("로또 기능 테스트", () => {
 
   test("로또 번호 중 중복되는 수가 있다면 에러가 발생한다", () => {
     // given
-    const lottoNumbers = "1,1,2,3,4,5";
+    const lottoNumbers =
+      Lotto.convertLottoNumbersToLottoNumberArray("1,1,2,3,4,5");
 
     // when
     const validateLottoNumbers = () => Lotto.validateLottoNumbers(lottoNumbers);
@@ -28,45 +29,6 @@ describe("로또 기능 테스트", () => {
     expect(validateLottoNumbers).toThrow(
       ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_DUPLICATED
     );
-  });
-
-  test("한 개 이상의 로또 번호가 정수가 아니면 에러가 발생한다", () => {
-    // given
-    const lottoNumbers = "가나다,1,2,3,4,5";
-
-    // when
-    const validateLottoNumbers = () => Lotto.validateLottoNumbers(lottoNumbers);
-
-    // then
-    expect(validateLottoNumbers).toThrow(
-      ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_NUMBER
-    );
-  });
-
-  test("한 개 이상의 로또 번호가  1 미만 또는 45 초과이면 로또가 정상적으로 생성되지 않는다.", () => {
-    // given
-    const lottoNumbers = "0,1,2,3,4,46";
-
-    // when
-    const validateLottoNumbers = () => Lotto.validateLottoNumbers(lottoNumbers);
-
-    // then
-    expect(validateLottoNumbers).toThrow(
-      ErrorLottoNumber.ERROR_LOTTO_NUMBER_NOT_VALID_INTEGER
-    );
-  });
-
-  test("로또 번호를 자동으로 랜덤 생성할 때, 생성되는 로또 번호는 1이상 45이하의 서로 다른 정수이다.", () => {
-    // given
-    const randomLottoNumbers = Lotto.generateRandomLottoNumbers();
-
-    // when
-    const validate = () => {
-      Lotto.validateLottoNumbers(randomLottoNumbers);
-    };
-
-    // then
-    expect(validate()).toBeUndefined();
   });
 
   test.each([

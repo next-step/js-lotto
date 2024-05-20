@@ -7,8 +7,10 @@ class Lotto {
   #lottoNumbers = [];
 
   constructor(input) {
-    Lotto.validateLottoNumbers(input);
     const lottoNumbers = Lotto.convertLottoNumbersToLottoNumberArray(input);
+
+    Lotto.validateLottoNumbers(lottoNumbers);
+
     const sortedLottoNumbers =
       Lotto.sortLottoNumbersByAscendingOrder(lottoNumbers);
     this.#lottoNumbers = sortedLottoNumbers;
@@ -22,8 +24,7 @@ class Lotto {
     return this.#lottoNumbers.map((lottoNumber) => lottoNumber.value);
   }
 
-  static validateLottoNumbers(input) {
-    const lottoNumbers = Lotto.convertLottoNumbersToLottoNumberArray(input);
+  static validateLottoNumbers(lottoNumbers) {
     const lottoNumbersSet = new Set(lottoNumbers);
 
     if (lottoNumbers.length !== this.LENGTH_LOTTO_NUMBERS) {
@@ -33,6 +34,8 @@ class Lotto {
     if (lottoNumbers.length !== lottoNumbersSet.size) {
       throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_DUPLICATED);
     }
+
+    return lottoNumbers;
   }
 
   static convertLottoNumbersToLottoNumberArray(lottoNumbers) {
