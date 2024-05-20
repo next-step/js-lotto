@@ -45,3 +45,5 @@
 - [x] `View`에서 input, ouput을 동시에 해주고 있어 코드 양이 많아졌다.
 - [x] `View`에서 domain에 대한 의존이 높다.
 - [x] 로또 생성 시, 동일한 로또의 값이 나올 가능성 존재
+- [ ] `LottoRank`에서 반환하는 과정이 어색하다.
+  - [x] Object.values 정의

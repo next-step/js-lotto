@@ -20,12 +20,16 @@ export const LottoRank = {
     }
   },
 
+  getLottoPrizeValues(){
+    return Object.values(LOTTO_PRIZE);
+  },
+
   /**
    * @param {Map} lottoRankCounts
    * @returns {Array<{text: string, prize: number, count: number}>}
    */
   getLottoResult(lottoRankCounts) {
-    return Object.values(LOTTO_PRIZE).map(({ text, prize, rank }) => {
+    return this.getLottoPrizeValues().map(({ text, prize, rank }) => {
       const count = lottoRankCounts.get(rank) || 0;
       return { text, prize, count };
     });
