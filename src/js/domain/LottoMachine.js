@@ -11,7 +11,7 @@ class LottoMachine {
   constructor() {}
 
   buy(money) {
-    if(!lottoMoneyRule.validates(money)) return;
+    if (!lottoMoneyRule.validates(money)) return;
 
     const lottos = new Set();
     const theNumberOfLottos = this.countTheNumberOfLottos(money);

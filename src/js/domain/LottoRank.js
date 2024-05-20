@@ -20,7 +20,7 @@ export const LottoRank = {
     }
   },
 
-  getLottoPrizeValues(){
+  getLottoPrizeValues() {
     return Object.values(LOTTO_PRIZE);
   },
 

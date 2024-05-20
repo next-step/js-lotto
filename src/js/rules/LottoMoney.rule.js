@@ -1,4 +1,3 @@
-import { isInputNumber } from "./index";
 import { LOTTO_MONEY_ERR_MSG } from "../constants/error";
 
 export const lottoMoneyRule = {

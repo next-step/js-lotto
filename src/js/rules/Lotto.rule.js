@@ -1,4 +1,3 @@
-import { isInputNumber } from "./common.rule";
 import { LOTTO_LENGTH, MAXIMUM_LOTTO_NUMBER, MINIMUM_LOTTO_NUMBER } from "../constants";
 import {
   LOTTO_NUMBER_TYPE_ERR_MSG,

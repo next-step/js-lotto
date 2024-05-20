@@ -1,6 +1,5 @@
 import { readLineAsync } from "../utils/readLineSync";
 
-
 export const Input = {
   async getMoney() {
     const money = await readLineAsync(`> 구입금액을 입력해 주세요.\n`);

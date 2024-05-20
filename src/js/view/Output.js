@@ -1,5 +1,4 @@
 import { Lotto } from "../domain/Lotto";
-import { LottoRank } from "../domain/LottoRank";
 
 export const Output = {
   /**
@@ -19,7 +18,7 @@ export const Output = {
     this.printLottoResult(lottoResult);
     this.printLottoReturn(lottoReturn);
   },
-  
+
   printTheNumberOfLottos(value) {
     console.log(`${value}개를 구매했습니다.`);
   },

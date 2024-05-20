@@ -7,7 +7,7 @@ const lottoMachine = new LottoMachine();
 lottoMachine.buy(money);
 
 const winningNumbers = new Lotto(await Input.getWinningNumbers());
-const bonusNumber = await Input.getBonusNumber()
+const bonusNumber = await Input.getBonusNumber();
 
 const winningLotto = lottoMachine.generateWinningLotto(winningNumbers, bonusNumber);
 const lottoRankCounts = lottoMachine.getLottoRanks(winningLotto);

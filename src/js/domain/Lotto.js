@@ -1,4 +1,3 @@
-import { LOTTO_LENGTH } from "../constants/index.js";
 import { bonusNumberRule, lottoRule } from "../rules/Lotto.rule.js";
 import { LottoRank } from "./LottoRank.js";
 export class Lotto {
