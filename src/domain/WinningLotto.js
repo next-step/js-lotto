@@ -56,13 +56,13 @@ class WinningLotto {
 
       const result = this.#rank.find((rank) => {
         if (matchCount === PRIZE.SECOND.matchCount) {
-          return rank.isBonus === bonus;
+          return rank.isBonus === bonus && matchCount === rank.matchCount;
         } else {
           return rank.matchCount === matchCount;
         }
       });
 
-      if (result == undefined) return PRIZE.NONE;
+      if (result === undefined) return PRIZE.NONE;
 
       return result;
     });
