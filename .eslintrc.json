@@ -24,6 +24,8 @@
     ],
     "rules": {
         "prettier/prettier": "error",
-        "no-undef": "off"
+        "no-undef": "off",
+        "no-constant-condition": "off",
+        "no-unused-vars": "warn"
     }
 }
