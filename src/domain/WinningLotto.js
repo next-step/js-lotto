@@ -38,11 +38,13 @@ class WinningLotto {
   }
 
   validationNumber(arrayNumber, bonusNumber) {
+    const transNumberList = arrayNumber.toString().split(",").map(Number);
+
     if (bonusNumber > MAX_NUMBER || bonusNumber < MIN_NUMBER) {
       throw new Error(ErrorLotto.BONUS_NUMBER_OVER_MIN_MAX);
     }
 
-    if (arrayNumber.includes(bonusNumber)) {
+    if (transNumberList.includes(bonusNumber)) {
       throw new Error(ErrorLotto.BONUS_NUMBER_DUPLICATED);
     }
   }
