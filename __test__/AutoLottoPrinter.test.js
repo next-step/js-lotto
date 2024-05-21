@@ -35,9 +35,9 @@ describe("AutoLottoPrinter", () => {
     expect(buyLotto).toThrow(Error);
   });
 
-  test("로또를 발행하면 로또에 번호를 매긴다.", () => {
+  test("발행한 로또의 번호는 모두 1이상 45이하의 수이다.", () => {
     // when
-    const lottoList = autoLottoPrinter.buyLotto(1000);
+    const lottoList = autoLottoPrinter.buyLotto(10000);
 
     // then
     lottoList.forEach((lotto) => {
