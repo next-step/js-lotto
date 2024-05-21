@@ -1,27 +1,29 @@
-import { ERROR_CODES } from "./constants/error";
 import { Lotto } from "./domain/Lotto";
 import { LottoResult } from "./domain/LottoResult";
+import { validateAmount } from "./utils/validator/validateAmount";
 import { View } from "./views/view";
 
 export class App {
+  #isReStart = true;
+
   async play() {
-    const amount = await View.inputAmount();
+    while (this.#isReStart) {
+      const amount = await View.inputAmount();
+      const count = this.getLottoCount(amount);
+      const lottoList = this.buyLotto(amount);
+      View.outputBuyLog(count, lottoList);
 
-    this.validateNumber(amount);
+      const winningNumbers = await View.inputWinningNumbers();
+      const bonusNumber = await View.inputBonusNumber();
+      const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+      View.outputWinningLog(
+        lottoResult.getWinningResult(lottoList),
+        lottoResult.getProfitRate({ amount, lottoList })
+      );
 
-    const count = this.getLottoCount(Number(amount));
-
-    const lottoList = this.buyLotto(Number(amount));
-    View.outputBuyLog(count, lottoList);
-
-    const winningNumbers = await View.inputWinningNumbers();
-    const bonusNumber = await View.inputBonusNumber();
-    const lottoResult = new LottoResult(winningNumbers, bonusNumber);
-
-    View.outputWinningLog(
-      lottoResult.getWinningResult(lottoList),
-      lottoResult.getProfitRate(amount, lottoList)
-    );
+      const isRestart = await View.inputReStart();
+      this.#isReStart = isRestart;
+    }
   }
 
   getLottoCount(amount) {
@@ -29,26 +31,12 @@ export class App {
   }
 
   buyLotto(amount) {
-    this.validateAmount(amount);
+    validateAmount(amount);
 
-    const lottoList = [];
-    for (let i = 0; i < this.getLottoCount(amount); i++) {
-      lottoList.push(new Lotto(this.getRandomNumbers(Lotto.LEN)));
-    }
-
-    return lottoList;
-  }
-
-  validateAmount(amount) {
-    if (amount < Lotto.PRICE) {
-      throw new Error(ERROR_CODES.ERROR_AMOUNT_TOO_SMALL);
-    }
-  }
-
-  validateNumber(value) {
-    if (isNaN(value)) {
-      throw new Error(ERROR_CODES.ERROR_NOT_A_NUMBER);
-    }
+    return Array.from(
+      { length: this.getLottoCount(amount) },
+      () => new Lotto(this.getRandomNumbers(Lotto.LEN))
+    );
   }
 
   getRandomNumbers(length) {

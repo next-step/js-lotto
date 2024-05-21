@@ -40,19 +40,24 @@ describe("출력 테스트", () => {
     // when
     View.outputWinningLog(
       lottoResult.getWinningResult(lottoList),
-      lottoResult.getProfitRate(lottoList.length * Lotto.PRICE, lottoList)
+      lottoResult.getProfitRate({
+        amount: lottoList.length * Lotto.PRICE,
+        lottoList,
+      })
     );
 
     // then
-    const logs = [];
-    logs.push("당첨 통계");
-    logs.push("--------------------");
-    logs.push(`3개 일치 (5,000원) - 1개`);
-    logs.push(`4개 일치 (50,000원) - 0개`);
-    logs.push(`5개 일치 (1,500,000원) - 0개`);
-    logs.push(`5개 일치, 보너스 볼 일치 (30,000,000원) - 0개`);
-    logs.push(`6개 일치 (2,000,000,000원) - 0개`);
-    logs.push(`총 수익률은 62.5%입니다.`);
-    expect(logSpy).toHaveBeenCalledWith(logs.join("\n"));
+    const logs = [
+      "당첨 통계",
+      "--------------------",
+      "3개 일치 (5,000원) - 1개",
+      "4개 일치 (50,000원) - 0개",
+      "5개 일치 (1,500,000원) - 0개",
+      "5개 일치, 보너스 볼 일치 (30,000,000원) - 0개",
+      "6개 일치 (2,000,000,000원) - 0개",
+      "총 수익률은 62.5%입니다.",
+    ].join("\n");
+
+    expect(logSpy).toHaveBeenCalledWith(logs);
   });
 });

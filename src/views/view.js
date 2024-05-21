@@ -1,34 +1,51 @@
 import { ERROR_MESSAGES } from "../constants/error";
 import { readLineAsync } from "../utils/readLineAsync";
+import { validateNumber } from "../utils/validator/validateNumber";
+import { validateNumbers } from "../utils/validator/validateNumbers";
 
 export class View {
   static async inputAmount() {
     try {
       const input = await readLineAsync("> 구입금액을 입력해 주세요.");
-
-      return input;
+      validateNumber(input);
+      return Number(input);
     } catch (error) {
       View.printError(error);
+      return View.inputAmount();
     }
   }
 
   static async inputWinningNumbers() {
     try {
       const input = await readLineAsync("> 당첨 번호를 입력해 주세요.");
-
       return input;
     } catch (error) {
       View.printError(error);
+
+      return View.inputWinningNumbers();
     }
   }
 
   static async inputBonusNumber() {
     try {
       const input = await readLineAsync("> 보너스 번호를 입력해 주세요.");
-
       return input;
     } catch (error) {
       View.printError(error);
+
+      return View.inputBonusNumber();
+    }
+  }
+
+  static async inputReStart() {
+    try {
+      const input = await readLineAsync("> 다시 시작하시겠습니까? (y/n)");
+
+      return input === "y";
+    } catch (error) {
+      View.printError(error);
+
+      return View.inputReStart();
     }
   }
 

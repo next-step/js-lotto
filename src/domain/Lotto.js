@@ -1,4 +1,4 @@
-import { ERROR_CODES } from "../constants/error";
+import { validateNumbers } from "../utils/validator/validateNumbers";
 
 export class Lotto {
   static PRICE = 1000;
@@ -6,35 +6,15 @@ export class Lotto {
   #numbers;
 
   constructor(numbers) {
-    this.validateNumbers(numbers);
+    validateNumbers(numbers);
     this.#numbers = numbers;
   }
 
-  validateNumbers(numbers) {
-    if (numbers.length !== 6) {
-      throw new Error(ERROR_CODES.ERROR_INVALID_LENGTH);
-    }
-
-    if (numbers.some((num) => isNaN(num) || num < 1 || num > 45)) {
-      throw new Error(ERROR_CODES.ERROR_INVALID_NUMBER);
-    }
-
-    if (new Set(numbers).size !== 6) {
-      throw new Error(ERROR_CODES.ERROR_DUPLICATE_NUMBER);
-    }
-  }
-
   getMatchCount(winningNumber) {
-    let cnt = 0;
-    this.#numbers.forEach((num) => {
-      if (winningNumber.includes(num)) {
-        cnt++;
-      }
-    });
-    return cnt;
+    return this.#numbers.filter((num) => winningNumber.includes(num)).length;
   }
 
   get numbers() {
-    return this.#numbers;
+    return this.#numbers.sort((num1, num2) => num1 - num2);
   }
 }

@@ -1,10 +1,14 @@
-import { ERROR_CODES } from "../constants/error";
+import { validateNumber } from "../utils/validator/validateNumber";
+import { validateNumbers } from "../utils/validator/validateNumbers";
 
 export class LottoResult {
   #winningNumbers;
   #bonusNumber;
 
   constructor(winningNumbers, bonusNumber) {
+    this.#winningNumbers = winningNumbers;
+    this.#bonusNumber = bonusNumber;
+
     if (typeof winningNumbers === "string") {
       this.#ofString(winningNumbers);
     }
@@ -13,11 +17,8 @@ export class LottoResult {
       this.#ofNumber(bonusNumber);
     }
 
-    this.#winningNumbers = winningNumbers;
-    this.#bonusNumber = bonusNumber;
-
-    this.validateNumbers(this.#winningNumbers);
-    this.validateNumber(this.#bonusNumber);
+    validateNumbers(this.#winningNumbers);
+    validateNumber(this.#bonusNumber);
   }
 
   #ofString(numbers) {
@@ -34,19 +35,12 @@ export class LottoResult {
     const count = lotto.getMatchCount(this.#winningNumbers);
     const isMatchingBonus = lotto.numbers.includes(this.#bonusNumber);
 
-    switch (count) {
-      case 6:
-        return 1;
-      case 5:
-        if (isMatchingBonus) return 2;
-        return 3;
-      case 4:
-        return 4;
-      case 3:
-        return 5;
-      default:
-        return 6;
-    }
+    if (count === 6) return 1;
+    if (count === 5 && isMatchingBonus) return 2;
+    if (count === 5) return 3;
+    if (count === 4) return 4;
+    if (count === 3) return 5;
+    return 6;
   }
 
   getWinningAmount(rank) {
@@ -67,13 +61,14 @@ export class LottoResult {
   }
 
   getWinningResult(lottoList) {
-    const result = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
-
-    lottoList.forEach((lotto) => {
-      result[this.getRanking(lotto)] += 1;
-    });
-
-    return result;
+    return lottoList.reduce(
+      (acc, lotto) => {
+        const rank = this.getRanking(lotto);
+        acc[rank] += 1;
+        return acc;
+      },
+      { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }
+    );
   }
 
   getTotalProfit(lottoList) {
@@ -83,40 +78,8 @@ export class LottoResult {
     );
   }
 
-  getProfitRate(amount, lottoList) {
+  getProfitRate({ amount, lottoList }) {
     const totalProfit = this.getTotalProfit(lottoList);
     return parseFloat(((totalProfit / amount) * 100).toFixed(1));
-  }
-
-  validateNumbers(numbers) {
-    if (this.#isValidInvalidLen(numbers)) {
-      throw new Error(ERROR_CODES.ERROR_INVALID_LENGTH);
-    }
-
-    if (this.#isValidInvalidNum(numbers)) {
-      throw new Error(ERROR_CODES.ERROR_INVALID_NUMBER);
-    }
-
-    if (this.#isValidDuplicatedNum(numbers)) {
-      throw new Error(ERROR_CODES.ERROR_DUPLICATE_NUMBER);
-    }
-  }
-
-  validateNumber(number) {
-    if (isNaN(number)) {
-      throw new Error(ERROR_CODES.ERROR_NOT_A_NUMBER);
-    }
-  }
-
-  #isValidInvalidLen(numbers) {
-    return numbers.length !== 6;
-  }
-
-  #isValidInvalidNum(numbers) {
-    return numbers.some((num) => isNaN(num) || num < 1 || num > 45);
-  }
-
-  #isValidDuplicatedNum(numbers) {
-    return new Set(numbers).size !== 6;
   }
 }
