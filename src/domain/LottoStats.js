@@ -14,7 +14,6 @@ class LottoStats {
     prizeList.forEach((prize) => {
       const temp = this.#stats[`${prize.rank}`] + 1;
       this.#stats[`${prize.rank}`] = temp;
-      console.log(5, temp);
     });
   }
 
