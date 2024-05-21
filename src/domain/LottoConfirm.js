@@ -48,7 +48,7 @@ class LottoConfirm {
 
   static resultsLottoWinning(lotto, winningNumber, bonusNumber) {
     const result = countArrayResults(lotto, (number) => {
-      return winningNumber.includes(number.toString());
+      return winningNumber.includes(number);
     });
 
     if (result === LOTTO_BONUS_COUNT) {
