@@ -18,6 +18,8 @@ export default class LottoController {
   initPurchasePrice() {
     $("#purchase_price_button").addEventListener("click", (e) => {
       const purchasePrice = $("#purchase_price_input").value;
+      $("#purchase_price_input").disabled = true;
+      e.target.disabled = true;
       this.#lotto = new Lotto(purchasePrice);
       if ($("#lottos_toggle_button").checked === false) {
         $("#lotto_result_box").classList.add("d-none");
