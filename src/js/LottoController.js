@@ -16,10 +16,11 @@ export default class LottoController {
   }
 
   initPurchasePrice() {
-    $("#purchase_price_button").addEventListener("click", (e) => {
+    $("#purchase_price_form").addEventListener("submit", (e) => {
+      e.preventDefault();
       const purchasePrice = $("#purchase_price_input").value;
       $("#purchase_price_input").disabled = true;
-      e.target.disabled = true;
+      $("#purchase_price_button").disabled = true;
       this.#lotto = new Lotto(purchasePrice);
       if ($("#lottos_toggle_button").checked === false) {
         $("#lotto_result_box").classList.add("d-none");
@@ -30,7 +31,7 @@ export default class LottoController {
 
   initLottosToggle() {
     $("#lottos_toggle_button").addEventListener("click", (e) => {
-      console.log($("#lottos_toggle_button").checked);
+      console.log(e.target.checked);
       $("#lotto_result_box").classList.toggle("d-none");
     });
   }
