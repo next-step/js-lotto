@@ -26,18 +26,10 @@ const resultButton = document.querySelector(".open-result-modal-button");
 const machine = new LottoMachine();
 const lottoConfirm = new LottoConfirm();
 
-let lottos = [];
-let prices = 0;
-let lottoResult = [];
-
-function handleGetPrice() {
-  const { value } = inputPrice;
-}
-
 function handleClickConfirm() {
   const { value } = inputPrice;
-  lottos = machine.createLottos(value, "ASC", sortArray);
-  prices = value;
+  machine.createLottos(value, "ASC", sortArray);
+  const lottos = machine.getLottos();
   purchaseMessage.innerText = `${lottos.length}개 구매하였습니다.`;
 }
 
@@ -54,7 +46,7 @@ function toggleLottoNumbers() {
 
 function displayLottoTickets() {
   lottoNumbersDiv.innerHTML = ""; // 기존 티켓을 지우고 새로 시작
-  lottos.forEach((lotto) => {
+  machine.getLottos().forEach((lotto) => {
     const div = document.createElement("div");
     div.className = "mx-1 text-4xl";
     div.textContent = `🎟️ ${lotto}`;
@@ -63,67 +55,63 @@ function displayLottoTickets() {
 }
 
 function showResult() {
+  lottoConfirm.setWinningNumbers(handleGetWinningNumbers());
+  lottoConfirm.setBonusNumber(handleGetBonusNumber());
+
+  const lottoResult = lottoConfirm.checkLottoWinning(machine.getLottos());
+  const percent = lottoConfirm.returnsLottos(inputPrice.value, lottoResult);
+  const result = getLottoResults(lottoResult);
+
+  writeLottosResult(result);
+  writeLottoRateOfReturn(percent);
+}
+
+function handleGetWinningNumbers() {
   const winningNumbers = [];
   const inputs = document.querySelectorAll(".winningNumbersWrapper input");
+
+  inputs.forEach((input) => {
+    winningNumbers.push(Number(input.value));
+  });
+
+  return winningNumbers;
+}
+
+function handleGetBonusNumber() {
   const bonusInput = document.querySelector(".bonus-number");
+  return bonusInput.value;
+}
+
+function writeLottoRateOfReturn(percent) {
+  const rateOfReturn = document.querySelector(".rateOfReturn");
+  rateOfReturn.innerText = `당신의 총 수익률은 ${percent}%입니다.`;
+}
+
+function writeLottosResult(result) {
   const winningTags = document.querySelectorAll(
     ".result-table tbody tr .winning"
   );
-
-  const rateOfReturn = document.querySelector(".rateOfReturn");
-
-  inputs.forEach((input) => {
-    winningNumbers.push(input.value);
-  });
-
-  lottoConfirm.setWinningNumbers(winningNumbers);
-  lottoConfirm.setBonusNumber(bonusInput.value);
-
-  lottoResult = lottoConfirm.checkLottoWinning(lottos);
-  const percent = lottoConfirm.returnsLottos(prices, lottoResult);
-
-  console.log("checkedLottos", lottoResult);
-  console.log("percent", percent);
-
-  const result = [];
-
-  function isConditon(targetValue) {
-    return (item) => item.result === targetValue;
-  }
-
-  result.push(
-    countArrayResults(lottoResult, isConditon(LOTTO_5TH_PRIZE_WINNER))
-  );
-  result.push(
-    countArrayResults(lottoResult, isConditon(LOTTO_4TH_PRIZE_WINNER))
-  );
-  result.push(
-    countArrayResults(lottoResult, isConditon(LOTTO_4TH_PRIZE_WINNER))
-  );
-
-  result.push(
-    countArrayResults(lottoResult, isConditon(LOTTO_3RD_PRIZE_WINNER))
-  );
-
-  result.push(
-    countArrayResults(lottoResult, isConditon(LOTTO_SECOND_PRIZE_WINNER))
-  );
-
-  result.push(
-    countArrayResults(lottoResult, isConditon(LOTTO_FIRST_PRIZE_WINNER))
-  );
-
-  console.log("result", result);
 
   winningTags.forEach((td, index) => {
     td.innerText = result[index];
     index++;
   });
-
-  rateOfReturn.innerText = `당신의 총 수익률은 ${percent}%입니다.`;
 }
 
-inputPrice.addEventListener("input", handleGetPrice);
+const getLottoResults = (lottoResult) => {
+  const conditions = [
+    LOTTO_5TH_PRIZE_WINNER,
+    LOTTO_4TH_PRIZE_WINNER,
+    LOTTO_3RD_PRIZE_WINNER,
+    LOTTO_SECOND_PRIZE_WINNER,
+    LOTTO_FIRST_PRIZE_WINNER,
+  ];
+
+  return conditions.map((condition) =>
+    countArrayResults(lottoResult, (item) => item.result === condition)
+  );
+};
+
 confirmButton.addEventListener("click", handleClickConfirm);
 resultButton.addEventListener("click", showResult);
 toggleShowNumber.addEventListener("click", toggleLottoNumbers);
