@@ -4,7 +4,7 @@
  */
 
 import Lotto from "./domain/Lotto";
-import LottoMachine from "./domain/LottoMachine";
+import LottoMachine, { LOTTO_PRICE } from "./domain/LottoMachine";
 import LottoStats from "./domain/LottoStats";
 import WinningLotto, { PRIZE } from "./domain/WinningLotto";
 import { readLineAsync } from "./util/readLine";
@@ -12,27 +12,22 @@ import { readLineAsync } from "./util/readLine";
 async function play() {
   const pay = await readLineAsync("구입금액을 입력해 주세요. > ");
 
-  const lottoMachine = new LottoMachine(pay);
-  console.log(`${lottoMachine.amount}개를 구매했습니다.`);
-  console.log(lottoMachine.number);
+  const lottoMachine = new LottoMachine(LOTTO_PRICE);
+  const lottoList = lottoMachine.buyLottoList(pay);
+
+  console.log(`${lottoList.length}개를 구매했습니다.`);
+  console.log(lottoList);
 
   const winningLottoNumber = await readLineAsync(
     "당첨 번호를 입력해주세요. > "
   );
   const bonusLottoNum = await readLineAsync("보너스 번호를 입력해주세요. > ");
 
-  const winningLotto = new WinningLotto(
-    winningLottoNumber.split(",").map(Number),
-    bonusLottoNum
-  );
+  const winningLotto = new WinningLotto(winningLottoNumber, bonusLottoNum);
 
-  const prizeList = winningLotto.getResultPrize(lottoMachine.number);
-
-  console.log(prizeList);
+  const prizeList = winningLotto.getResultPrize(lottoList);
 
   const stats = new LottoStats(prizeList);
-
-  console.log(stats);
 
   console.log("당첨 통계");
   console.log("---------------");
