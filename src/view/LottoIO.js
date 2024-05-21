@@ -1,4 +1,4 @@
-import readline from 'readline';
+import readline from "readline";
 import {
   MESSAGE_PURCHASE_PRICE,
   MESSAGE_WINNING_NUMBERS,
@@ -10,10 +10,14 @@ import {
   LOTTO_SECOND_PRIZE_WINNER,
   LOTTO_FIRST_PRIZE_WINNER,
   MESSAGE_BONUS_NUMBER,
-} from '../constants';
-import { countArrayResults } from '../utils';
-import LottoValidator from '../domain/LottoValidator';
-import { validInputNumber, validateArguments, validateQuery } from '../utils/validator';
+} from "../constants";
+import { countArrayResults } from "../utils";
+import LottoValidator from "../domain/LottoValidator";
+import {
+  validInputNumber,
+  validateArguments,
+  validateQuery,
+} from "../utils/validator";
 
 class LottoIO {
   constructor() {
@@ -24,7 +28,7 @@ class LottoIO {
     return new Promise((resolve, reject) => {
       try {
         validateArguments(arguments);
-        validateQuery(query, 'string');
+        validateQuery(query, "string");
       } catch (error) {
         reject(error);
         return;
@@ -41,6 +45,7 @@ class LottoIO {
       });
     });
   }
+
   async inputPurchasePrice(retry) {
     while (retry !== 0) {
       try {
@@ -60,7 +65,7 @@ class LottoIO {
       try {
         const numbers = await this.readLineAsync(MESSAGE_WINNING_NUMBERS);
         this.validator.validWinningNumberSplitComma(numbers);
-        const splitNumbers = numbers.split(',').map((number) => {
+        const splitNumbers = numbers.split(",").map((number) => {
           validInputNumber(number);
           return parseInt(number, RADIX_INTEGER);
         });
@@ -101,21 +106,30 @@ class LottoIO {
 
   outputPurchasedLottos(lottos) {
     lottos.forEach((lotto) => {
-      console.log('lottos', lotto);
+      console.log("lottos", lotto);
     });
   }
 
   outputLottosResult(lottoResult, percent) {
-    console.log('당첨 통계');
-    console.log('--------------------');
+    console.log("당첨 통계");
+    console.log("--------------------");
 
     function isConditon(targetValue) {
       return (item) => item.result === targetValue;
     }
 
-    const result_5th = countArrayResults(lottoResult, isConditon(LOTTO_5TH_PRIZE_WINNER));
-    const result_4th = countArrayResults(lottoResult, isConditon(LOTTO_4TH_PRIZE_WINNER));
-    const result_3rd = countArrayResults(lottoResult, isConditon(LOTTO_3RD_PRIZE_WINNER));
+    const result_5th = countArrayResults(
+      lottoResult,
+      isConditon(LOTTO_5TH_PRIZE_WINNER)
+    );
+    const result_4th = countArrayResults(
+      lottoResult,
+      isConditon(LOTTO_4TH_PRIZE_WINNER)
+    );
+    const result_3rd = countArrayResults(
+      lottoResult,
+      isConditon(LOTTO_3RD_PRIZE_WINNER)
+    );
     const result_sec = countArrayResults(
       lottoResult,
       isConditon(LOTTO_SECOND_PRIZE_WINNER)
