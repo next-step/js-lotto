@@ -1,15 +1,14 @@
 import LottoTicket from './LottoTicket';
 import { generateLottoNumberArray } from '../utils/LottoUtil';
-import { ERROR_MESSAGE, LOTTO } from '../constants';
+import { LOTTO } from '../constants';
+import LottoThrowMessage from '../utils/LottoThrowMessage';
 
 const LottoMachine = {
   sellAutoLottoTicket(cost) {
-    if (cost > Number.MAX_SAFE_INTEGER || !Number.isInteger(cost)) {
-      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
-    }
-    if (cost < LOTTO.PRICE) {
-      throw new Error("'돈이 부족합니다.'");
-    }
+    new LottoThrowMessage(cost)
+      .maxSafeInteger()
+      .isInteger()
+      .checkCost(LOTTO.PRICE);
 
     const sellCount = Math.floor(cost / LOTTO.PRICE);
 

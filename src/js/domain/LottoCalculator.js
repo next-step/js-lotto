@@ -1,8 +1,5 @@
-import {
-  isValidLottoNumber,
-  isValidLottoNumberArray,
-} from '../utils/LottoUtil';
-import { ERROR_MESSAGE, LOTTO } from '../constants';
+import { LOTTO } from '../constants';
+import LottoThrowMessage from '../utils/LottoThrowMessage';
 
 class LottoCalculator {
   #winningNumbers;
@@ -20,16 +17,11 @@ class LottoCalculator {
     winningBonusNumber,
     winningAmounts = LottoCalculator.DEFAULT_WINNING_AMOUNT,
   }) {
-    if (
-      !isValidLottoNumberArray(winningNumbers, winningNumbers.length) ||
-      !isValidLottoNumber(winningBonusNumber) ||
-      !Array.isArray(winningAmounts)
-    ) {
-      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
-    }
-    if (winningNumbers.includes(winningBonusNumber)) {
-      throw new TypeError(LottoCalculator.DUPLICATE_LOTTO_NUMBERS);
-    }
+    new LottoThrowMessage(winningNumbers).isValidLottoNumberArray();
+    new LottoThrowMessage(winningBonusNumber)
+      .isValidLottoNumber()
+      .checkDuplicateLottoNumbers(winningNumbers);
+
     this.#winningNumbers = winningNumbers;
     this.#winningBonusNumber = winningBonusNumber;
     this.#winningAmounts = winningAmounts;
@@ -102,36 +94,6 @@ class LottoCalculator {
   }
 
   getStatistics(lottoTickets) {
-    // const temp = {
-    //   chart: {
-    //     5: {
-    //       lottoTickets: [],
-    //       winningAmount: this.#winningAmounts[4] ?? 0,
-    //       matchCount: this.#lottoLength - 3,
-    //     },
-    //     4: {
-    //       lottoTickets: [],
-    //       winningAmount: this.#winningAmounts[3] ?? 0,
-    //       matchCount: this.#lottoLength - 2,
-    //     },
-    //     3: {
-    //       lottoTickets: [],
-    //       winningAmount: this.#winningAmounts[2] ?? 0,
-    //       matchCount: this.#lottoLength - 1,
-    //     },
-    //     2: {
-    //       lottoTickets: [],
-    //       winningAmount: this.#winningAmounts[1] ?? 0,
-    //       matchCount: this.#lottoLength - 1,
-    //     },
-    //     1: {
-    //       lottoTickets: [],
-    //       winningAmount: this.#winningAmounts[0] ?? 0,
-    //       matchCount: this.#lottoLength,
-    //     },
-    //   },
-    //   profit: 0,
-    // };
     const statistics = {
       chart: new Map([
         [

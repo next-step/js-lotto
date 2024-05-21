@@ -1,22 +1,19 @@
 import { ERROR_MESSAGE } from '../constants';
+import ThrowMessage from '../utils/ThrowMessage';
 
 class Product {
   #name;
   #price;
 
   constructor(name, price) {
-    if (typeof name !== 'string') {
-      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
-    }
-    if (name.trim().length === 0) {
-      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
-    }
-    if (name.trim().length > 15) {
-      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
-    }
-    if (price > Number.MAX_SAFE_INTEGER || !Number.isInteger(price)) {
-      throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
-    }
+    new ThrowMessage(name).isString().callback((value) => {
+      if (value.trim().length === 0 || value.trim().length > 15) {
+        throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
+      }
+    });
+
+    new ThrowMessage(price).isInteger().maxSafeInteger();
+
     this.#name = name.trim();
     this.#price = price;
   }

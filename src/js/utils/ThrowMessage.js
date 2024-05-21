@@ -6,6 +6,10 @@ class ThrowMessage {
     this.#value = value;
   }
 
+  get value() {
+    return this.#value;
+  }
+
   isString() {
     if (!(typeof this.#value === 'string')) {
       throw new TypeError(ERROR_MESSAGE.IS_NOT_ARRAY);
@@ -66,12 +70,18 @@ class ThrowMessage {
     if (!Number.isInteger(this.#value)) {
       throw TypeError(ERROR_MESSAGE.IS_NOT_NUMBER);
     }
+    return this;
   }
 
   isTruthy() {
     if (!this.#value) {
       throw TypeError(ERROR_MESSAGE.IS_NOT_TRUTHY);
     }
+    return this;
+  }
+
+  callback(callback) {
+    callback(this.#value);
     return this;
   }
 }
