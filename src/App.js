@@ -1,14 +1,13 @@
 import { Lotto } from "./domain/Lotto";
 import { LottoResult } from "./domain/LottoResult";
-import { validateNumber } from "./utils/validator/validateNumber";
 import { validateAmount } from "./utils/validator/validateAmount";
 import { View } from "./views/view";
 
 export class App {
-  async play() {
-    let isReStart = true;
+  #isReStart = true;
 
-    while (isReStart) {
+  async play() {
+    while (this.#isReStart) {
       const amount = await View.inputAmount();
       const count = this.getLottoCount(amount);
       const lottoList = this.buyLotto(amount);
@@ -23,7 +22,7 @@ export class App {
       );
 
       const restart = await View.inputReStart();
-      isReStart = restart === "y";
+      this.#isReStart = restart === "y";
     }
   }
 
