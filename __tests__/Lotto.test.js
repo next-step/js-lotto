@@ -2,7 +2,7 @@ import { ErrorLotto } from "../src/constants/error";
 import Lotto from "../src/domain/Lotto";
 
 describe("로또 기능", () => {
-  test("로또 번호는 1-45사이의 정수이다", () => {
+  test("로또 번호는 1-45사이의 정수가 아니면 에러를 발생한다.", () => {
     expect(() => new Lotto([2, 9, 33, 34, 40, 55])).toThrow(
       ErrorLotto.OVER_MIN_MAX_NUMBER
     );
