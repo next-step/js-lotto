@@ -1,12 +1,11 @@
-import { MESSAGE } from "../constant";
 import { readLineAsync as prompt } from "../utils/readLineAsync";
 
 const askHowMuchToBuy = () => {
-  return prompt(MESSAGE.PROMPT.BUY_AMOUNT);
+  return prompt("> 구입금액을 입력해 주세요. ");
 };
 
 const viewHowManyLottoBought = (howManyBought) => {
-  console.log(MESSAGE.OUTPUT.HOW_MANY_BOUGHT(howManyBought));
+  console.log(`${howManyBought}개를 구입하셨습니다.`);
 };
 
 const viewPrintedLottoNumbers = (lotto) => {
@@ -14,27 +13,31 @@ const viewPrintedLottoNumbers = (lotto) => {
 };
 
 const askWinningNumbers = () => {
-  return prompt(MESSAGE.PROMPT.WINNING_NUMBERS);
+  return prompt("> 당첨 번호를 입력해 주세요. ");
 };
 
 const askBonusNumber = () => {
-  return prompt(MESSAGE.PROMPT.BONUS_NUMBER);
+  return prompt("> 보너스 번호를 입력해 주세요. ");
 };
 
 const viewResult = (prizeInfo, winningDataPerRank) => {
-  console.log(MESSAGE.OUTPUT.WINNING_STATICS);
+  console.log("당첨 통계");
   console.log("---------");
 
   prizeInfo.forEach((prize) => {
     const winningCount = winningDataPerRank[prize.rank]?.winningCount ?? 0;
 
-    console.log(MESSAGE.OUTPUT.RESULT_PER_RANK(prize, winningCount));
+    console.log(
+      `${prize.matchingNumberCount}개 일치${
+        prize.bonusAffectsWinning ? ", 보너스 볼 일치" : ""
+      } (${Number(prize.reward).toLocaleString()}원) - ${winningCount}개`
+    );
   });
 };
 
 const viewTotalRate = ({ lottoPrice, buyingAmount, totalRewards }) => {
   const totalRate = (totalRewards / (lottoPrice * buyingAmount)) * 100;
-  console.log(MESSAGE.OUTPUT.TOTAL_RATE(totalRate.toFixed(2)));
+  console.log(`총 수익률은 ${totalRate}%입니다.`);
 };
 
 export default {

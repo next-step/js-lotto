@@ -45,22 +45,6 @@ export const LOTTO = {
 };
 
 export const MESSAGE = {
-  PROMPT: {
-    BUY_AMOUNT: "> 구입금액을 입력해 주세요. ",
-    WINNING_NUMBERS: "> 당첨 번호를 입력해 주세요. ",
-    BONUS_NUMBER: "> 보너스 번호를 입력해 주세요. ",
-  },
-
-  OUTPUT: {
-    HOW_MANY_BOUGHT: (howManyBought) => `${howManyBought}개를 구입하셨습니다.`,
-    WINNING_STATICS: "당첨 통계",
-    RESULT_PER_RANK: (prize, winningCount) =>
-      `${prize.matchingNumberCount}개 일치${
-        prize.bonusAffectsWinning ? ", 보너스 볼 일치" : ""
-      } (${Number(prize.reward).toLocaleString()}원) - ${winningCount}개`,
-    TOTAL_RATE: (totalRate) => `총 수익률은 ${totalRate}%입니다.`,
-  },
-
   ERROR: {
     LOTTO_PRICE: "로또 구매 금액은 로또 한 장의 가격보다 적을 수 없습니다.",
     NUMBER_COUNT: `로또 번호는 ${LOTTO.NUMBER_COUNT}개여야 합니다.`,
