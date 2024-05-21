@@ -40,6 +40,10 @@ const viewTotalRate = ({ lottoPrice, buyingAmount, totalRewards }) => {
   console.log(`총 수익률은 ${totalRate}%입니다.`);
 };
 
+const viewError = (message) => {
+  console.error(message);
+};
+
 export default {
   askHowMuchToBuy,
   viewHowManyLottoBought,
@@ -48,4 +52,5 @@ export default {
   askBonusNumber,
   viewResult,
   viewTotalRate,
+  viewError,
 };
