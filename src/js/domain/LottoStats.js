@@ -1,4 +1,4 @@
-import { LottoRank } from "./enum/LottoRank";
+import { checkLottoRanks } from "./LottoValidate";
 
 export class LottoStats {
   #totalCount;
@@ -6,17 +6,11 @@ export class LottoStats {
   #rankCount = new Map();
 
   constructor(lottoRanks) {
-    this.#checkLottoRanks(lottoRanks);
+    checkLottoRanks(lottoRanks);
 
     this.#totalCount = lottoRanks.length;
     this.#totalReward = lottoRanks.reduce((a, { reward }) => a + reward, 0);
     this.#increaseRankCount(lottoRanks);
-  }
-
-  #checkLottoRanks(lottoRanks) {
-    if (lottoRanks.some((e) => !Object.values(LottoRank).includes(e))) {
-      throw new Error("LottoRank enum에 정의되지 않은 값입니다.");
-    }
   }
 
   #increaseRankCount(lottoRanks) {

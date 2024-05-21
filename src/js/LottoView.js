@@ -1,12 +1,16 @@
-import { LOTTO_PRICE, calculateProfitRate } from "./domain/LottoService";
+import {
+  checkBonusNumber,
+  checkMoney,
+  checkNumbers,
+} from "./domain/LottoValidate";
 import { LottoRank } from "./domain/enum/LottoRank";
 import { readLine } from "./util/ReadLine";
+import { calculateProfitRate } from "./domain/LottoService";
 
 export const askMoney = async () => {
   const query = "> 구입금액을 입력해 주세요.";
   const transform = (x) => parseInt(x);
-
-  const input = await readLine({ query, transform });
+  const input = await readLine({ query, transform, validate: checkMoney });
   return input;
 };
 
@@ -19,14 +23,18 @@ export const printBuyingList = (numbersList) => {
 export const askWinningNumbers = async () => {
   const query = "> 당첨 번호를 입력해 주세요.";
   const transform = (x) => x.split(",").map((e) => parseInt(e));
-  const input = await readLine({ query, transform });
+  const input = await readLine({ query, transform, validate: checkNumbers });
   return input;
 };
 
 export const askBonusNumber = async () => {
   const query = "> 보너스 번호를 입력해 주세요.";
   const transform = (x) => parseInt(x);
-  const input = await readLine({ query, transform });
+  const input = await readLine({
+    query,
+    transform,
+    validate: checkBonusNumber,
+  });
   return input;
 };
 

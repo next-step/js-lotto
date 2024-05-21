@@ -5,6 +5,7 @@ import {
   LOTTO_DIGITS,
 } from "./Lotto";
 import { drawRandomItems } from "../util/Draw";
+import { checkMoney } from "./LottoValidate";
 
 export const LOTTO_PRICE = 1_000;
 
@@ -25,16 +26,6 @@ export const getLottoRanks = (lottos, winningNumbers, bonusNumber) =>
 
 export const calculateProfitRate = (lottoQuantity, totalReward) =>
   (totalReward / (lottoQuantity * LOTTO_PRICE)) * 100;
-
-const checkMoney = (money) => {
-  if (!Number.isInteger(money)) {
-    throw new Error("정수를 입력해주세요.");
-  }
-
-  if (money < LOTTO_PRICE) {
-    throw new Error(`구입금액은 ${LOTTO_PRICE}원 이상이어야 합니다.`);
-  }
-};
 
 const generateLottoNumbers = (count) => {
   const numbersList = [];

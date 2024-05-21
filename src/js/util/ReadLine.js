@@ -4,16 +4,16 @@ import { stdin as input, stdout as output } from "node:process";
 export const readLine = async ({ query, validate, transform }) => {
   const rl = readline.createInterface({ input, output });
 
-  const answer = await rl.question(query + "\n");
+  let answer = await rl.question(query + "\n");
 
   rl.close();
 
-  if (validate) {
-    validate(answer);
+  if (transform) {
+    answer = transform(answer);
   }
 
-  if (transform) {
-    return transform(answer);
+  if (validate) {
+    validate(answer);
   }
 
   return answer;
