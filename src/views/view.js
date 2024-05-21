@@ -41,7 +41,7 @@ export class View {
     try {
       const input = await readLineAsync("> 다시 시작하시겠습니까? (y/n)");
 
-      return input;
+      return input === "y";
     } catch (error) {
       View.printError(error);
 

@@ -21,8 +21,8 @@ export class App {
         lottoResult.getProfitRate({ amount, lottoList })
       );
 
-      const restart = await View.inputReStart();
-      this.#isReStart = restart === "y";
+      const isRestart = await View.inputReStart();
+      this.#isReStart = isRestart;
     }
   }
 
