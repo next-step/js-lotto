@@ -5,7 +5,7 @@ describe("Lotto", () => {
     test.each([
       [5, [1, 2, 3, 4, 5]],
       [7, [1, 2, 3, 4, 5, 6, 7]],
-    ])("당첨 번호가 %s개이면 에러를 던진다.", (count, numbers) => {
+    ])("당첨 번호가 %s개이면 에러를 던진다.", (_, numbers) => {
       expect(() => new Lotto(numbers)).toThrow(Error);
     });
   });
