@@ -25,6 +25,7 @@ export default class LottoController {
       if ($("#lottos_toggle_button").checked === false) {
         $("#lotto_result_box").classList.add("d-none");
       }
+      output.lottosCount(this.#lotto.lottos.length);
       output.lottoResult(this.#lotto.lottos);
     });
   }
