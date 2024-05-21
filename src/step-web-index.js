@@ -31,6 +31,7 @@ function handleClickConfirm() {
   const { value } = inputPrice;
   machine.createLottos(value, "ASC", sortArray);
   const lottos = machine.getLottos();
+
   purchaseMessage.innerText = `${lottos.length}개 구매하였습니다.`;
 }
 
@@ -143,3 +144,4 @@ confirmButton.addEventListener("click", handleClickConfirm);
 resultButton.addEventListener("click", showResult);
 toggleShowNumber.addEventListener("click", toggleLottoNumbers);
 resetButton.addEventListener("click", resetLotto);
+

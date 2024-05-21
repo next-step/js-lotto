@@ -5,9 +5,11 @@ import {
   LOTTO_BONUS_COUNT,
   LOTTO_FIRST_PRIZE_WINNER,
   LOTTO_SECOND_PRIZE_WINNER,
+
 } from "../constants";
 import { countArrayResults } from "../utils";
 import LottoValidator from "./LottoValidator";
+
 
 class LottoConfirm {
   #winnigNumbers = [];
@@ -26,6 +28,7 @@ class LottoConfirm {
     this.#winnigNumbers = [];
     this.#bonusNumber = 0;
   }
+
 
   returnsLottos(prices, lottos) {
     const totalProfit = lottos.reduce((acc, lotto) => {
@@ -55,6 +58,7 @@ class LottoConfirm {
     const result = countArrayResults(lotto, (number) => {
       return winningNumber.includes(number);
     });
+
 
     if (result === LOTTO_BONUS_COUNT) {
       const bonus = lotto.filter((number) => number === bonusNumber);

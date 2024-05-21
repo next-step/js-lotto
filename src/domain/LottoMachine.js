@@ -1,11 +1,14 @@
+
 import {
   LOTTO_MAX_NUMBER,
   LOTTO_PRICE,
   LOTTO_TOTAL_COUNT,
   RADIX_INTEGER,
+
 } from "../constants";
 import { generateRandomNumbers } from "../utils";
 import LottoValidator from "./LottoValidator";
+
 
 class LottoMachine {
   #lottos;
@@ -37,6 +40,7 @@ class LottoMachine {
   }
 
   generateLottoNumbers(validator) {
+
     const lottoNumbers = [];
 
     while (lottoNumbers.length !== LOTTO_TOTAL_COUNT) {

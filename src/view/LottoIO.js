@@ -1,4 +1,6 @@
+
 import readline from "readline";
+
 import {
   MESSAGE_PURCHASE_PRICE,
   MESSAGE_WINNING_NUMBERS,
@@ -10,6 +12,7 @@ import {
   LOTTO_SECOND_PRIZE_WINNER,
   LOTTO_FIRST_PRIZE_WINNER,
   MESSAGE_BONUS_NUMBER,
+
 } from "../constants";
 import { countArrayResults } from "../utils";
 import LottoValidator from "../domain/LottoValidator";
@@ -18,6 +21,7 @@ import {
   validateArguments,
   validateQuery,
 } from "../utils/validator";
+
 
 class LottoIO {
   constructor() {
@@ -45,7 +49,6 @@ class LottoIO {
       });
     });
   }
-
   async inputPurchasePrice(retry) {
     while (retry !== 0) {
       try {
@@ -130,6 +133,7 @@ class LottoIO {
       lottoResult,
       isConditon(LOTTO_3RD_PRIZE_WINNER)
     );
+
     const result_sec = countArrayResults(
       lottoResult,
       isConditon(LOTTO_SECOND_PRIZE_WINNER)
