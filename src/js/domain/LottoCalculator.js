@@ -10,7 +10,6 @@ class LottoCalculator {
   static DEFAULT_WINNING_AMOUNT = [
     2_000_000_000, 30_000_000, 1_500_000, 50_000, 5_000,
   ];
-  static DUPLICATE_LOTTO_NUMBERS = '중복된 로또 번호 입니다.';
 
   constructor({
     winningNumbers,

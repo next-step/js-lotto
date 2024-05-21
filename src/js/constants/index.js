@@ -18,6 +18,7 @@ export const ERROR_MESSAGE = {
   INVALID_LOTTO_FORMAT: '유효하지 않는 로또 형식입니다.',
   REQUIRE_LOTTO_NUMBERS: '로또 번호가 설정되지 않았습니다.',
   REQUIRE_LOTTO_INSTANCE: '로또가 아닙니다.',
+  DUPLICATE_LOTTO_NUMBERS: '중복된 로또 번호 입니다.',
   NOT_ENOUGH_MONEY: '돈이 부족합니다.',
   MAX_LENGTH: '최대 길이를 초과하였습니다.',
   MIN_LENGTH: '최소 길이를 만족하지 않습니다',
