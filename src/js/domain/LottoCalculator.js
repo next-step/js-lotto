@@ -102,6 +102,36 @@ class LottoCalculator {
   }
 
   getStatistics(lottoTickets) {
+    // const temp = {
+    //   chart: {
+    //     5: {
+    //       lottoTickets: [],
+    //       winningAmount: this.#winningAmounts[4] ?? 0,
+    //       matchCount: this.#lottoLength - 3,
+    //     },
+    //     4: {
+    //       lottoTickets: [],
+    //       winningAmount: this.#winningAmounts[3] ?? 0,
+    //       matchCount: this.#lottoLength - 2,
+    //     },
+    //     3: {
+    //       lottoTickets: [],
+    //       winningAmount: this.#winningAmounts[2] ?? 0,
+    //       matchCount: this.#lottoLength - 1,
+    //     },
+    //     2: {
+    //       lottoTickets: [],
+    //       winningAmount: this.#winningAmounts[1] ?? 0,
+    //       matchCount: this.#lottoLength - 1,
+    //     },
+    //     1: {
+    //       lottoTickets: [],
+    //       winningAmount: this.#winningAmounts[0] ?? 0,
+    //       matchCount: this.#lottoLength,
+    //     },
+    //   },
+    //   profit: 0,
+    // };
     const statistics = {
       chart: new Map([
         [
