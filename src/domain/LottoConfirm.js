@@ -22,6 +22,11 @@ class LottoConfirm {
     this.#bonusNumber = number;
   }
 
+  resetLottoConfrim() {
+    this.#winnigNumbers = [];
+    this.#bonusNumber = 0;
+  }
+
   returnsLottos(prices, lottos) {
     const totalProfit = lottos.reduce((acc, lotto) => {
       return acc + LottoConfirm.switchResultToMoney(lotto.result);

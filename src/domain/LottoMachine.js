@@ -19,6 +19,10 @@ class LottoMachine {
     return this.#lottos;
   }
 
+  resetLottos() {
+    this.#lottos = [];
+  }
+
   createLottos(inputPrices, order, sortArray) {
     this.validators.validCheckAmount(inputPrices);
     const numberLottoPurchases = Math.floor(inputPrices / LOTTO_PRICE);

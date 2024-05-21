@@ -22,6 +22,7 @@ const toggleShowNumber = document.querySelector(".lotto-numbers-toggle-button");
 const lottoNumbersDiv = document.querySelector(".lotto-numbers");
 const purchaseMessage = document.getElementById("purchase_message");
 const resultButton = document.querySelector(".open-result-modal-button");
+const resetButton = document.getElementById("resetButton");
 
 const machine = new LottoMachine();
 const lottoConfirm = new LottoConfirm();
@@ -77,11 +78,22 @@ function handleGetWinningNumbers() {
   return winningNumbers;
 }
 
+function handleResetWinningNumbers() {
+  const inputs = document.querySelectorAll(".winningNumbersWrapper input");
+
+  inputs.forEach((input) => {
+    input.value = "";
+  });
+}
 function handleGetBonusNumber() {
   const bonusInput = document.querySelector(".bonus-number");
   return bonusInput.value;
 }
 
+function handleResetBonusNumber() {
+  const bonusInput = document.querySelector(".bonus-number");
+  bonusInput.value = "";
+}
 function writeLottoRateOfReturn(percent) {
   const rateOfReturn = document.querySelector(".rateOfReturn");
   rateOfReturn.innerText = `당신의 총 수익률은 ${percent}%입니다.`;
@@ -98,7 +110,7 @@ function writeLottosResult(result) {
   });
 }
 
-const getLottoResults = (lottoResult) => {
+function getLottoResults(lottoResult) {
   const conditions = [
     LOTTO_5TH_PRIZE_WINNER,
     LOTTO_4TH_PRIZE_WINNER,
@@ -110,8 +122,24 @@ const getLottoResults = (lottoResult) => {
   return conditions.map((condition) =>
     countArrayResults(lottoResult, (item) => item.result === condition)
   );
-};
+}
+
+function resetLotto() {
+  inputPrice.value = "";
+  purchaseMessage.innerText = "";
+  lottoNumbersDiv.style.display = "none";
+
+  toggleShowNumber.checked = false;
+
+  handleResetWinningNumbers();
+  handleResetBonusNumber();
+  machine.resetLottos();
+  lottoConfirm.resetLottoConfrim();
+
+
+}
 
 confirmButton.addEventListener("click", handleClickConfirm);
 resultButton.addEventListener("click", showResult);
 toggleShowNumber.addEventListener("click", toggleLottoNumbers);
+resetButton.addEventListener("click", resetLotto);
