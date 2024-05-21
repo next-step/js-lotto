@@ -64,7 +64,7 @@ describe("Lotto Checker", () => {
           expect(() => setLottoNumberInfo()).toThrow(Error);
         });
 
-        test("보너스 번호와 당첨 번호에가 중복이 있는 경우 에러를 던진다.", () => {
+        test("보너스 번호와 당첨 번호에 중복이 있는 경우 에러를 던진다.", () => {
           // when
           const setLottoNumberInfo = () =>
             lottoChecker.setLottoNumberInfo([1, 2, 3, 4, 5, 6], 5);
