@@ -20,42 +20,33 @@ import {
 } from "./js/domain/LottoService";
 import { LottoStats } from "./js/domain/LottoStats";
 
-const controlBuyingLotto = async () => {
-  try {
-    const money = await askMoney();
+const repeatAskWhenError = async (ask) => {
+  while (true) {
+    try {
+      return await ask();
+    } catch (err) {
+      printError(err);
+    }
+  }
+};
+
+const app = async () => {
+  do {
+    const money = await repeatAskWhenError(askMoney);
 
     const lottos = buyLottos(money);
     const numbersList = getNumbersList(lottos);
 
     printBuyingList(numbersList);
 
-    return lottos;
-  } catch (err) {
-    printError(err);
-    return await controlBuyingLotto();
-  }
-};
+    const winningNumbers = await repeatAskWhenError(askWinningNumbers);
+    const bonusNumber = await repeatAskWhenError(askBonusNumber);
 
-const controlCompareLottos = async (lottos) => {
-  try {
-    const winningNumbers = await askWinningNumbers();
-    const bonusNumber = await askBonusNumber();
     const lottoRanks = getLottoRanks(lottos, winningNumbers, bonusNumber);
     const stats = new LottoStats(lottoRanks);
 
     printStats(stats);
-  } catch (err) {
-    printError(err);
-    await controlCompareLottos(lottos);
-  }
-};
-
-const app = async () => {
-  const lottos = await controlBuyingLotto();
-  await controlCompareLottos(lottos);
-
-  const wantRestart = await askRestart();
-  if (wantRestart) app();
+  } while (await askRestart());
 };
 
 app();
