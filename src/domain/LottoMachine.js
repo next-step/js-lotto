@@ -1,22 +1,19 @@
 import { ErrorLotto } from "../constants/error";
 import { MAX_NUMBER, MIN_NUMBER } from "../constants/number";
 import { randomNumber, sortingNumber } from "../util/random";
+import Lotto from "./Lotto";
 
-const LOTTO_PRICE = 1000;
+export const LOTTO_PRICE = 1000;
 
 class LottoMachine {
   price = LOTTO_PRICE;
-  #amount = 0;
-  #number = [];
 
-  constructor(amountReceive) {
-    this.#amount = this.#validatePrice(amountReceive);
-
-    this.#generateLottoNumber();
+  constructor(price) {
+    this.price = price;
   }
 
   #validatePrice(amount) {
-    const buyLottoCount = Math.floor(amount / LOTTO_PRICE); //정수가 아닐경우,
+    const buyLottoCount = Math.floor(amount / this.price); //정수가 아닐경우,
 
     if (!buyLottoCount) throw new Error(ErrorLotto.CHECK_AMOUNT_RECEIVE);
     return buyLottoCount;
@@ -33,20 +30,16 @@ class LottoMachine {
     return sortingNumber(randomLotto);
   }
 
-  #generateLottoNumber() {
-    const randomLottoNumber = Array.from({ length: this.#amount }, () =>
+  #generateLottoList(amount) {
+    const randomLottoList = Array.from({ length: amount }, () =>
       this.#generateRandomNumber()
     );
-
-    this.#number = randomLottoNumber;
+    return randomLottoList.map((lotto) => new Lotto(lotto).number);
   }
 
-  get amount() {
-    return this.#amount;
-  }
-
-  get number() {
-    return this.#number;
+  buyLottoList(pay) {
+    const amount = this.#validatePrice(pay);
+    return this.#generateLottoList(amount);
   }
 }
 
