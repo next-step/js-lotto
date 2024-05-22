@@ -1,5 +1,4 @@
-import { Lotto } from "../src/js/domain/Lotto";
-import LottoMachine from "../src/js/domain/LottoMachine";
+import { Lotto, LottoMachine } from "../src/js/domain/index.js";
 import { LOTTO_LENGTH, MAXIMUM_LOTTO_NUMBER, MINIMUM_LOTTO_NUMBER } from "../src/js/constants";
 
 let machine;

@@ -1,9 +1,7 @@
 import View from "../src/js/view/view";
 import { lottoMoneyRule } from "../src/js/rules";
-import { LottoRank } from "../src/js/domain/LottoRank";
-import LottoMachine from "../src/js/domain/LottoMachine";
-import { Lotto, WinningLotto } from "../src/js/domain/Lotto";
 import { bonusNumberRule, lottoRule } from "../src/js/rules/Lotto.rule";
+import { Lotto, WinningLotto, LottoMachine, LottoRank } from "../src/js/domain/index"
 import { LOTTO_MONEY_ERR_MSG, LOTTO_NUMBER_DUPLICATED_ERR_MSG } from "../src/js/constants/error";
 import {
   TEST_DUPLICATED_BONUS_NUMBER,

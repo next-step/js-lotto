@@ -1,6 +1,5 @@
-import { Lotto } from "./js/domain/Lotto.js";
+import { Lotto, LottoMachine } from "./js/domain/index.js";
 import { Input, Output } from "./js/view/index.js";
-import LottoMachine from "./js/domain/LottoMachine";
 
 const money = await Input.getMoney();
 const lottoMachine = new LottoMachine();

@@ -1,7 +1,6 @@
 import { LOTTO_PRIZE } from "../src/js/constants";
-import LottoMachine from "../src/js/domain/LottoMachine";
+import { Lotto, WinningLotto, LottoMachine } from "../src/js/domain/index"
 import { TEST_LOTTO_NUMBERS, TEST_MONEY } from "./constants";
-import { Lotto, WinningLotto } from "../src/js/domain/Lotto";
 
 let lottoMachine;
 let lotto;
