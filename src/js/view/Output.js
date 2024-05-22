@@ -11,9 +11,9 @@ export const Output = {
   /**
    * @param {Map} lottoRankCounts
    */
-  printLottoStatistics({ lottoResult, lottoReturn }) {
+  printLottoStatistics({ lottoRankCounts, lottoReturn }) {
     console.log(`당첨 통계\n--------------------`);
-    this.printLottoResult(lottoResult);
+    this.printLottoResult(lottoRankCounts);
     this.printLottoReturn(lottoReturn);
   },
 

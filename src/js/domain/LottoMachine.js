@@ -1,7 +1,6 @@
 import { Output } from "../view";
 import { lottoMoneyRule } from "../rules";
-import { Lotto, WinningLotto, LottoRank, RandomGenerator} from "./index"
-
+import { Lotto, WinningLotto, RandomGenerator, LottoRank } from "./index";
 export class LottoMachine {
   static LOTTO_PRICE = 1000;
 
@@ -25,35 +24,21 @@ export class LottoMachine {
     return this.lottos;
   }
 
-  /**
-   * @param {WinningLotto} winningLotto
-   * @returns {Map}
-   */
-  getLottoRanks(winningLotto) {
-    const lottoRanks = this.lottos.map((lotto) => winningLotto.getRank(lotto));
-    const lottoRankCounts = this.countLottoRanks(lottoRanks);
-    return lottoRankCounts;
-  }
-
-  /**
-   * @param {string[]} lottoRanks
-   * @returns {Map}
-   */
-  countLottoRanks(lottoRanks) {
-    return lottoRanks.reduce((acc, rank) => {
-      acc.set(rank, acc.get(rank) + 1 || 1);
-      return acc;
-    }, new Map());
-  }
-
   countTheNumberOfLottos(money) {
     return money / LottoMachine.LOTTO_PRICE;
   }
 
   generateLottoNumbers() {
     const generator = new RandomGenerator();
-    
+
     return generator.generateRandomNumbers();
+  }
+
+  getLottoResult(winningLotto) {
+    const lottoRank = new LottoRank(this.lottos, winningLotto);
+    const lottoResult = lottoRank.getLottoResult();
+
+    return lottoResult;
   }
 
   /**
@@ -63,14 +48,4 @@ export class LottoMachine {
   generateWinningLotto(winningNumbers, bonusNumber) {
     return new WinningLotto(winningNumbers, bonusNumber);
   }
-
-  /**
-   * @param {Map} lottoRankCounts
-   */
-  calculateLottoResult(lottoRankCounts) {
-    const lottoResult = LottoRank.getLottoResult(lottoRankCounts);
-    const lottoReturn = LottoRank.calculateLottoReturn(lottoRankCounts);
-
-    return { lottoResult, lottoReturn };
-  }
-};
+}

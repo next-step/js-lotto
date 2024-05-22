@@ -9,7 +9,6 @@ const winningNumbers = new Lotto(await Input.getWinningNumbers());
 const bonusNumber = await Input.getBonusNumber();
 
 const winningLotto = lottoMachine.generateWinningLotto(winningNumbers, bonusNumber);
-const lottoRankCounts = lottoMachine.getLottoRanks(winningLotto);
-const lottoStatistics = lottoMachine.calculateLottoResult(lottoRankCounts);
+const lottoResult = lottoMachine.getLottoResult(winningLotto);
 
-Output.printLottoStatistics(lottoStatistics);
+Output.printLottoStatistics(lottoResult);
