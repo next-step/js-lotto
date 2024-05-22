@@ -7,31 +7,26 @@ import {
 import { randomNumber, sortingNumber } from "../util/random";
 
 class Lotto {
-  #number = [];
+  #numbers;
 
   constructor(lottoNumbers) {
-    this.validateLottoNumber(lottoNumbers);
+    this.validateLottoNumbers(lottoNumbers);
 
-    this.#number = lottoNumbers;
+    this.#numbers = lottoNumbers;
   }
 
-  validateLottoNumber(lottoNumbers) {
+  validateLottoNumbers(lottoNumbers) {
     if (lottoNumbers.length !== LOTTO_NUMBER_LENGTH) {
       throw new Error(ErrorLotto.NUMBER_LENGTH_SIX);
     }
 
-    if (
-      lottoNumbers.some((number) => number > MAX_NUMBER || number < MIN_NUMBER)
-    ) {
-      throw new Error(ErrorLotto.OVER_MIN_MAX_NUMBER);
-    }
     if (lottoNumbers.length !== new Set(lottoNumbers).size) {
       throw new Error(ErrorLotto.NUMBER_DUPLICATED);
     }
   }
 
-  get number() {
-    return this.#number;
+  get numbers() {
+    return this.#numbers;
   }
 }
 
