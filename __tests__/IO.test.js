@@ -1,7 +1,7 @@
 import LottoGame from "../src/js/domain/LottoGame";
 import LottoResult from "../src/js/domain/LottoResult";
-import Input from "../src/js/view/Input";
-import Output from "../src/js/view/Output";
+import Input from "../src/js/view/console/Input";
+import Output from "../src/js/view/console/Output";
 import * as io from "../src/utils/readlineAsync";
 
 const logSpy = jest.spyOn(console, "log");

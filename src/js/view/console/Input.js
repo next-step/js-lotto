@@ -1,4 +1,4 @@
-import { readLineAsync } from "../../utils/readlineAsync";
+import { readLineAsync } from "../../../utils/readlineAsync";
 
 const Input = {
   async getLottoPurchasedAmount() {

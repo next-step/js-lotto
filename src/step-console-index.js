@@ -4,8 +4,8 @@ import LottoMachine from "./js/domain/LottoMachine";
 import LottoNumber from "./js/domain/LottoNumber";
 import LottoResult from "./js/domain/LottoResult";
 import WinningLotto from "./js/domain/WinningLotto";
-import Input from "./js/view/Input";
-import Output from "./js/view/Output";
+import Input from "./js/view/console/Input.js";
+import Output from "./js/view/console/Output.js";
 import repeatUntilNoError from "./utils/repeatUntilNoError";
 
 const play = async () => {
