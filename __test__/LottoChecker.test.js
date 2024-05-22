@@ -96,52 +96,64 @@ describe("Lotto Checker", () => {
         lottoChecker.lottoNumberInfo = lottoNumberInfo;
       });
 
-      test("로또 번호가 6개가 일치하면 2000000000을 상금으로 받는다.", () => {
+      test(`로또 번호가 ${LOTTO.PRIZE_INFO[0].matchingNumberCount}개 일치하면 ${LOTTO.PRIZE_INFO[0].reward}원 상금을 받는다.`, () => {
         // when
         const lotto = new Lotto([1, 2, 3, 4, 5, 6]);
         const { matchedWinningNumberCount, isBonusNumberMatched, prize } =
           lottoChecker.checkLotto(lotto);
 
         // then
-        expect(matchedWinningNumberCount).toBe(6);
+        expect(matchedWinningNumberCount).toBe(
+          LOTTO.PRIZE_INFO[0].matchingNumberCount
+        );
         expect(isBonusNumberMatched).toBeFalsy();
-        expect(prize.rank).toBe("1st");
-        expect(prize.matchingNumberCount).toBe(6);
+        expect(prize.rank).toBe(LOTTO.PRIZE_INFO[0].rank);
+        expect(prize.matchingNumberCount).toBe(
+          LOTTO.PRIZE_INFO[0].matchingNumberCount
+        );
         expect(prize.bonusAffectsWinning).toBeFalsy();
-        expect(prize.reward).toBe(2000000000);
+        expect(prize.reward).toBe(LOTTO.PRIZE_INFO[0].reward);
       });
 
-      test("로또 번호가 5개 + 보너스 번호 1개가 일치하면 30,000,000원 상금을 받는다.", () => {
+      test(`로또 번호가 ${LOTTO.PRIZE_INFO[1].matchingNumberCount}개 + 보너스 번호가 일치하면 ${LOTTO.PRIZE_INFO[1].reward}원 상금을 받는다.`, () => {
         // when
         const lotto = new Lotto([1, 2, 3, 4, 5, 7]);
         const { matchedWinningNumberCount, isBonusNumberMatched, prize } =
           lottoChecker.checkLotto(lotto);
 
         // then
-        expect(matchedWinningNumberCount).toBe(5);
+        expect(matchedWinningNumberCount).toBe(
+          LOTTO.PRIZE_INFO[1].matchingNumberCount
+        );
         expect(isBonusNumberMatched).toBeTruthy();
-        expect(prize.rank).toBe("2nd");
-        expect(prize.matchingNumberCount).toBe(5);
+        expect(prize.rank).toBe(LOTTO.PRIZE_INFO[1].rank);
+        expect(prize.matchingNumberCount).toBe(
+          LOTTO.PRIZE_INFO[1].matchingNumberCount
+        );
         expect(prize.bonusAffectsWinning).toBeTruthy();
-        expect(prize.reward).toBe(30000000);
+        expect(prize.reward).toBe(LOTTO.PRIZE_INFO[1].reward);
       });
 
-      test("로또 번호 3개 + 보너스 번호 1개가 일치하면 5,000원 상금을 받는다.", () => {
+      test(`로또 번호 ${LOTTO.PRIZE_INFO[4].matchingNumberCount}개 + 보너스 번호가 일치하면 ${LOTTO.PRIZE_INFO[4].reward}원 상금을 받는다.`, () => {
         // when
         const lotto = new Lotto([1, 2, 3, 7, 8, 9]);
         const { matchedWinningNumberCount, isBonusNumberMatched, prize } =
           lottoChecker.checkLotto(lotto);
 
         // then
-        expect(matchedWinningNumberCount).toBe(3);
+        expect(matchedWinningNumberCount).toBe(
+          LOTTO.PRIZE_INFO[4].matchingNumberCount
+        );
         expect(isBonusNumberMatched).toBeTruthy();
-        expect(prize.rank).toBe("5th");
-        expect(prize.matchingNumberCount).toBe(3);
+        expect(prize.rank).toBe(LOTTO.PRIZE_INFO[4].rank);
+        expect(prize.matchingNumberCount).toBe(
+          LOTTO.PRIZE_INFO[4].matchingNumberCount
+        );
         expect(prize.bonusAffectsWinning).toBeFalsy();
-        expect(prize.reward).toBe(5000);
+        expect(prize.reward).toBe(LOTTO.PRIZE_INFO[4].reward);
       });
 
-      test("로또 번호가 2개 일치, 보너스 번호 1개 일치하는 경우에는 상금이 없다.", () => {
+      test("로또 번호가 2개 일치 + 보너스 번호가 일치하는 경우에는 상금이 없다.", () => {
         // when
         const lotto = new Lotto([45, 7, 43, 42, 2, 1]);
         const { matchedWinningNumberCount, isBonusNumberMatched, prize } =
