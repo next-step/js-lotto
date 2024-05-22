@@ -17,13 +17,18 @@ async function play() {
 
   console.log(`${lottoList.length}개를 구매했습니다.`);
   console.log(lottoList);
+  const lotto = lottoList.forEach((lotto) => {
+    lotto.numbers.forEach((lottoNumber) => {
+      console.log(lottoNumber.number);
+    });
+  });
 
-  const winningLottoNumber = await readLineAsync(
+  const winningLottoNumbers = await readLineAsync(
     "당첨 번호를 입력해주세요. > "
   );
   const bonusLottoNum = await readLineAsync("보너스 번호를 입력해주세요. > ");
 
-  const winningLotto = new WinningLotto(winningLottoNumber, bonusLottoNum);
+  const winningLotto = new WinningLotto(winningLottoNumbers, bonusLottoNum);
 
   const prizeList = winningLotto.getResultPrize(lottoList);
 
