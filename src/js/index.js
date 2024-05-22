@@ -1,18 +1,50 @@
+import Lotto from "./domain/Lotto.js";
 import LottoGame from "./domain/LottoGame.js";
 import LottoMachine from "./domain/LottoMachine.js";
+import LottoResult from "./domain/LottoResult.js";
+import WinningLotto from "./domain/WinningLotto.js";
 
-const $ = (selector) => {
-  if (typeof selector === "string") {
-    return document.querySelector(selector);
-  }
+const $ = (selector) => document.querySelector(selector);
+const $all = (selector) => document.querySelectorAll(selector);
 
-  return null;
-};
 const $showResultButton = document.querySelector(".open-result-modal-button");
 const $modalClose = document.querySelector(".modal-close");
 const $modal = document.querySelector(".modal");
 
-const onModalShow = () => {
+const onClickShowResult = (e) => {
+  const winningNumberInputs = $all(".winning-number");
+  const $bonusNumberInput = $(".bonus-number");
+
+  const isValidWinningNumbers = Array.from(winningNumberInputs).every(
+    (winningNumberInput) => {
+      return winningNumberInput.validity.valid;
+    }
+  );
+  const isValidBonusNumber = $bonusNumberInput.validity.valid;
+
+  if (!isValidWinningNumbers || !isValidBonusNumber) {
+    return;
+  }
+
+  // prevent form submit
+  e.preventDefault();
+
+  const winningNumbers = Array.from(winningNumberInputs).map(
+    (winningNumberInput) => winningNumberInput.value
+  );
+  const bonusNumber = $bonusNumberInput.value;
+
+  try {
+    const lotto = new Lotto(winningNumbers);
+    const winningLotto = new WinningLotto(lotto, bonusNumber);
+    const lottoResult = new LottoResult(winningLotto);
+    onModalShow(lottoResult);
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+const onModalShow = (lottoResult) => {
   $modal.classList.add("open");
 };
 
@@ -120,5 +152,5 @@ const generateLottos = (lottosCount) => {
 const $purchaseButton = $(".purchase-button");
 $purchaseButton.addEventListener("click", onPurchaseLotto);
 
-$showResultButton.addEventListener("click", onModalShow);
+$showResultButton.addEventListener("click", onClickShowResult);
 $modalClose.addEventListener("click", onModalClose);

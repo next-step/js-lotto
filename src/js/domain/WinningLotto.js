@@ -1,5 +1,5 @@
-import { ErrorLottoBonusNumber } from "../constants/error";
-import LottoNumber from "./LottoNumber";
+import { ErrorLottoBonusNumber } from "../constants/error.js";
+import LottoNumber from "./LottoNumber.js";
 
 class WinningLotto {
   #winningLotto;
