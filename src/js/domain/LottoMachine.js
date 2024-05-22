@@ -1,4 +1,4 @@
-import View from "../view/view";
+import { Output } from "../view";
 import { LottoRank } from "./LottoRank";
 import { lottoMoneyRule } from "../rules";
 import { Lotto, WinningLotto } from "./Lotto";
@@ -23,7 +23,7 @@ class LottoMachine {
 
     this.lottos = Array.from(lottos).map((lotto) => new Lotto(JSON.parse(lotto)));
 
-    View.printLottoInfo(this.lottos);
+    Output.printLottoInfo(this.lottos);
     return this.lottos;
   }
 
