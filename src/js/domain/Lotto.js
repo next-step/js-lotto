@@ -42,8 +42,8 @@ export class WinningLotto {
       this.#winningNumbers.numbers.includes(number)
     ).length;
 
-    const isBonusMatched = lotto.numbers.includes(this.#bonusNumber);
+    const bonusMatched = lotto.numbers.includes(this.#bonusNumber);
 
-    return LottoRank.getRank(matchedCount, isBonusMatched);
+    return LottoRank.getRank(matchedCount, bonusMatched);
   }
 }
