@@ -1,10 +1,8 @@
 import { Output } from "../view";
-import { LottoRank } from "./LottoRank";
 import { lottoMoneyRule } from "../rules";
-import { Lotto, WinningLotto } from "./Lotto";
-import { LOTTO_LENGTH, MAXIMUM_LOTTO_NUMBER } from "../constants";
+import { Lotto, WinningLotto, LottoRank, RandomGenerator} from "./index"
 
-class LottoMachine {
+export class LottoMachine {
   static LOTTO_PRICE = 1000;
 
   lottos = [];
@@ -53,17 +51,9 @@ class LottoMachine {
   }
 
   generateLottoNumbers() {
-    const lottos = new Set();
-
-    while (lottos.size < LOTTO_LENGTH) {
-      const randomNumber = this.generateRandomNumbers();
-      lottos.add(randomNumber);
-    }
-    return Array.from(lottos).sort((a, b) => a - b);
-  }
-
-  generateRandomNumbers() {
-    return Math.floor(Math.random() * MAXIMUM_LOTTO_NUMBER) + 1;
+    const generator = new RandomGenerator();
+    
+    return generator.generateRandomNumbers();
   }
 
   /**
@@ -83,6 +73,4 @@ class LottoMachine {
 
     return { lottoResult, lottoReturn };
   }
-}
-
-export default LottoMachine;
+};
