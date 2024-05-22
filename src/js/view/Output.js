@@ -1,5 +1,3 @@
-import { Lotto } from "../domain/Lotto";
-
 export const Output = {
   /**
    * 로또 구매 시, 로또 정보를 출력한다.
