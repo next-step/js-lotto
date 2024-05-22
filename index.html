@@ -29,8 +29,10 @@
           </form>
           <section class="purchased-lottos-section mt-9 d-none">
             <div class="d-flex">
-              <label class="purchased-lottos-count-label flex-auto my-0"
-                >총 5개를 구매하였습니다.</label
+              <label class="flex-auto my-0"
+                >총
+                <span class="purchased-lottos-count"> </span>
+                개를 구매하였습니다.</label
               >
               <div class="flex-auto d-flex justify-end pr-1">
                 <label class="switch">
@@ -138,34 +140,55 @@
                 <tr class="text-center">
                   <td class="p-3">3개</td>
                   <td class="p-3">5,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">
+                    <span class="winning-count"></span>
+                    개
+                  </td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">4개</td>
                   <td class="p-3">50,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">
+                    <span class="winning-count"></span>
+                    개
+                  </td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">5개</td>
                   <td class="p-3">1,500,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">
+                    <span class="winning-count"></span>
+                    개
+                  </td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">5개 + 보너스볼</td>
                   <td class="p-3">30,000,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">
+                    <span class="winning-count"></span>
+                    개
+                  </td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">6개</td>
                   <td class="p-3">2,000,000,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3">
+                    <span class="winning-count"></span>
+                    개
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+          <p class="text-center font-bold">
+            당신의 총 수익률은
+            <span id="profit-rate"></span>
+            %입니다.
+          </p>
           <div class="d-flex justify-center mt-5">
-            <button type="button" class="btn btn-cyan">다시 시작하기</button>
+            <button type="button" class="restart-game-button btn btn-cyan">
+              다시 시작하기
+            </button>
           </div>
         </div>
       </div>
