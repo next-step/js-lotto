@@ -11,47 +11,47 @@ import LottoIO from './view/LottoIO';
 console.log('Hello, World!');
 
 async function main() {
-  try {
-    let isRepeat = true;
-    while (isRepeat === true) {
-      const lottoIO = new LottoIO();
-      const machine = new LottoMachine();
-      const lottoConfirm = new LottoConfirm();
+    try {
+        let isRepeat = true;
+        while (isRepeat === true) {
+            const lottoIO = new LottoIO();
+            const machine = new LottoMachine();
+            const lottoConfirm = new LottoConfirm();
 
-      //when
-      const prices = await lottoIO.inputPurchasePrice(RETRY_INPUT_COUNT);
-      const lottos = machine.createLottos(prices, 'ASC', sortArray);
+            //when
+            const prices = await lottoIO.inputPurchasePrice(RETRY_INPUT_COUNT);
+            const lottos = machine.createLottos(prices, 'ASC', sortArray);
 
-      console.log(`${lottos.length}개 구매했습니다.`);
-      lottos.forEach((lotto) => {
-        console.log(lotto);
-      });
+            console.log(`${lottos.length}개 구매했습니다.`);
+            lottos.forEach((lotto) => {
+                console.log(lotto);
+            });
 
-      const winningNumbers = await lottoIO.inputWinningNumbers(RETRY_INPUT_COUNT);
-      const bonusNumber = await lottoIO.inputBonusNumber(RETRY_INPUT_COUNT);
+            const winningNumbers = await lottoIO.inputWinningNumbers(RETRY_INPUT_COUNT);
+            const bonusNumber = await lottoIO.inputBonusNumber(RETRY_INPUT_COUNT);
 
-      console.log('winningNumbers', winningNumbers);
-      console.log('bonusNumber', bonusNumber);
+            console.log('winningNumbers', winningNumbers);
+            console.log('bonusNumber', bonusNumber);
 
-      lottoConfirm.setWinningNumbers(winningNumbers);
-      lottoConfirm.setBonusNumber(winningNumbers);
+            lottoConfirm.setWinningNumbers(winningNumbers);
+            lottoConfirm.setBonusNumber(winningNumbers);
 
-      const checkedLottos = lottoConfirm.checkLottoWinning(lottos);
-      lottoIO.outputPurchasedLottos(checkedLottos);
+            const checkedLottos = lottoConfirm.checkLottoWinning(lottos);
+            lottoIO.outputPurchasedLottos(checkedLottos);
 
-      const percent = lottoConfirm.returnsLottos(prices, checkedLottos);
+            const percent = lottoConfirm.returnsLottos(prices, checkedLottos);
 
-      lottoIO.outputLottosResult(checkedLottos, percent);
+            lottoIO.outputLottosResult(checkedLottos, percent);
 
-      const restart = await lottoIO.inputRestartOrNot(RETRY_INPUT_COUNT);
+            const restart = await lottoIO.inputRestartOrNot(RETRY_INPUT_COUNT);
 
-      if (restart === 'no' || restart === 'n') {
-        isRepeat = false;
-      }
+            if (restart === 'no' || restart === 'n') {
+                isRepeat = false;
+            }
+        }
+    } catch (error) {
+        console.log(error.message);
     }
-  } catch (error) {
-    console.log(error.message);
-  }
 }
 
 main();
