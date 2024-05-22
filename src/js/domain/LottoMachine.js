@@ -1,5 +1,5 @@
-import Lotto from "./Lotto";
-import LottoNumber from "./LottoNumber";
+import Lotto from "./Lotto.js";
+import LottoNumber from "./LottoNumber.js";
 
 const LottoMachine = {
   generateRandomLotto() {

@@ -1,4 +1,4 @@
-import { ErrorLottoNumber } from "../constants/error";
+import { ErrorLottoNumber } from "../constants/error.js";
 const instances = [];
 class LottoNumber {
   static MAX_LOTTO_NUMBER = 45;

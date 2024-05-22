@@ -1,5 +1,5 @@
-import { ErrorLottoNumbers } from "../constants/error";
-import LottoNumber from "./LottoNumber";
+import { ErrorLottoNumbers } from "../constants/error.js";
+import LottoNumber from "./LottoNumber.js";
 
 class Lotto {
   static LENGTH_LOTTO_NUMBERS = 6;

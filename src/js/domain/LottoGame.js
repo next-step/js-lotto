@@ -1,4 +1,7 @@
-import { ErrorLottoGame, ErrorLottoPurchasedAmount } from "../constants/error";
+import {
+  ErrorLottoGame,
+  ErrorLottoPurchasedAmount,
+} from "../constants/error.js";
 
 const LottoGame = {
   LOTTO_PRICE: 1000,
