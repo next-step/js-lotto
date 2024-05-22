@@ -4,6 +4,7 @@ import {
   MAX_NUMBER,
   MIN_NUMBER,
 } from "../constants/number";
+import LottoNumber from "./LottoNumber";
 
 export const FIRST_PRIZE = 2000000000;
 export const SECOND_PRIZE = 30000000;
@@ -34,15 +35,11 @@ class WinningLotto {
     this.validationNumber(arrayNumber, bonusNumber);
 
     this.number = arrayNumber;
-    this.bonusNumber = bonusNumber;
+    this.bonusNumber = new LottoNumber(bonusNumber);
   }
 
   validationNumber(arrayNumber, bonusNumber) {
     const transNumberList = arrayNumber.toString().split(",").map(Number);
-
-    if (bonusNumber > MAX_NUMBER || bonusNumber < MIN_NUMBER) {
-      throw new Error(ErrorLotto.BONUS_NUMBER_OVER_MIN_MAX);
-    }
 
     if (transNumberList.includes(bonusNumber)) {
       throw new Error(ErrorLotto.BONUS_NUMBER_DUPLICATED);
