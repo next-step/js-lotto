@@ -10,7 +10,7 @@ export class Toggle {
     onClick(show) {
         if (this.#node.style.display === 'none') {
             this.#node.style.display = 'block';
-            show();
+            show && show();
             return;
         }
 
