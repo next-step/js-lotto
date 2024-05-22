@@ -18,3 +18,11 @@ export function sortArray(order = 'ASC' | 'DESC', array) {
         }
     });
 }
+
+export function checkEntityType(entity) {
+    if (entity.startsWith('.')) {
+        return document.querySelector(entity);
+    } else {
+        return document.getElementById(entity);
+    }
+}
