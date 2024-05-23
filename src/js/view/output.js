@@ -3,7 +3,7 @@ export function printCount(count) {
 }
 
 export function printLottoNumber(lottoNumbers) {
-  console.log(lottoNumbers);
+  console.log(lottoNumbers.sort((a, b) => a - b));
 }
 
 export function printStatisticsLotto(prizes) {

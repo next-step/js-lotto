@@ -6,6 +6,7 @@ const PRIZES = {
   FIFTH: { count: 0, amount: 5000, match: 3 }, // 5등 : 3개 번호 일치
 };
 
+// PRIZE_MAP 내부를 수정하지 않고 각 등수별 count를 얻는 방법이 없을까
 const PRIZE_MAP = [
   { when: ({ hit, bonus }) => hit === 6, match: PRIZES.FIRST },
   { when: ({ hit, bonus }) => hit === 5 && bonus, match: PRIZES.SECOND },
