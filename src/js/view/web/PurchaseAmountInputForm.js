@@ -5,11 +5,17 @@ class PurchaseAmountInputForm {
     this.#$purchaseAmountInput = $purchaseAmountInput;
     $purchaseAmountInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
-        onSubmit();
-        e.preventDefault();
+        if (!this.isValidInput) {
+          return;
+        }
+        onSubmit(e);
       }
     });
     $purchaseButton.addEventListener("click", onSubmit);
+  }
+
+  get isValidInput() {
+    return this.#$purchaseAmountInput.validity.valid;
   }
 
   get inputValue() {
