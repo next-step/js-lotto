@@ -13,7 +13,7 @@ export class LottoRank {
     switch (matchedCount) {
       case LOTTO_PRIZE.FIRST.if:
         return LOTTO_PRIZE.FIRST.rank;
-
+        
       case LOTTO_PRIZE.SECOND.if:
         return bonusMatched ? LOTTO_PRIZE.SECOND.rank : LOTTO_PRIZE.THIRD.rank;
 

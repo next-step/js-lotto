@@ -29,10 +29,11 @@
     - [ ] 로또 정렬
     - [ ] 로또 정수 검증
     - [ ] ...
-  - [ ] `LottoMachine`
-    - [ ] `test.each` 사용
+  - [x] `LottoMachine`
+    - [x] `test.each` 사용
     - [ ] `toBe()` 사용법
-    - [ ] 로또 랭크 검증
+  - [x] `LottoRank`
+    - [x] 로또 랭크 검증
   - [ ] `View`
     - [ ] 도메인 의존 제거
 
