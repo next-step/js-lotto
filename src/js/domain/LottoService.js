@@ -4,7 +4,8 @@ import {
   Lotto,
   LOTTO_DIGITS,
 } from "./Lotto";
-import { drawUniqueItems } from "../util/Draw";
+import { drawRandomItems } from "../util/Draw";
+import { checkMoney } from "./LottoValidate";
 
 export const LOTTO_PRICE = 1_000;
 
@@ -23,15 +24,8 @@ export const getNumbersList = (lottos) => lottos.map((e) => e.numbers);
 export const getLottoRanks = (lottos, winningNumbers, bonusNumber) =>
   lottos.map((e) => e.compare(winningNumbers, bonusNumber));
 
-const checkMoney = (money) => {
-  if (!Number.isInteger(money)) {
-    throw new Error();
-  }
-
-  if (money < LOTTO_PRICE) {
-    throw new Error();
-  }
-};
+export const calculateProfitRate = (lottoQuantity, totalReward) =>
+  (totalReward / (lottoQuantity * LOTTO_PRICE)) * 100;
 
 const generateLottoNumbers = (count) => {
   const numbersList = [];
@@ -41,9 +35,8 @@ const generateLottoNumbers = (count) => {
       .fill()
       .map((_, i) => i + LOTTO_MIN_NUMBER);
 
-    const numbers = drawUniqueItems(lottoNumbers, LOTTO_DIGITS);
-    const sortedNumbers = numbers.toSorted((a, b) => a - b);
-    numbersList.push(sortedNumbers);
+    const numbers = drawRandomItems(lottoNumbers, LOTTO_DIGITS);
+    numbersList.push(numbers);
   }
 
   return numbersList;

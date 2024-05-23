@@ -2,7 +2,7 @@ import { getRandomNumber } from "./Random";
 
 export const drawItem = (list) => {
   if (!list || list.length <= 0) {
-    throw new Error();
+    throw new Error("빈 리스트입니다.");
   }
 
   const index = getRandomNumber(0, list.length);
@@ -10,7 +10,7 @@ export const drawItem = (list) => {
   return item;
 };
 
-export const drawUniqueItems = (list, amount) => {
+export const drawRandomItems = (list, amount) => {
   const items = [];
 
   while (items.length < amount) {

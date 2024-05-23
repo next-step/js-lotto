@@ -9,6 +9,8 @@ import {
   askWinningNumbers,
   askBonusNumber,
   printStats,
+  askRestart,
+  printError,
 } from "./js/LottoView";
 
 import {
@@ -18,20 +20,33 @@ import {
 } from "./js/domain/LottoService";
 import { LottoStats } from "./js/domain/LottoStats";
 
+const repeatAskWhenError = async (ask) => {
+  while (true) {
+    try {
+      return await ask();
+    } catch (err) {
+      printError(err);
+    }
+  }
+};
+
 const app = async () => {
-  const money = await askMoney();
+  do {
+    const money = await repeatAskWhenError(askMoney);
 
-  const lottos = buyLottos(money);
-  const numbersList = getNumbersList(lottos);
+    const lottos = buyLottos(money);
+    const numbersList = getNumbersList(lottos);
 
-  printBuyingList(numbersList);
+    printBuyingList(numbersList);
 
-  const winningNumbers = await askWinningNumbers();
-  const bonusNumber = await askBonusNumber();
-  const lottoRanks = getLottoRanks(lottos, winningNumbers, bonusNumber);
-  const stats = new LottoStats(lottoRanks);
+    const winningNumbers = await repeatAskWhenError(askWinningNumbers);
+    const bonusNumber = await repeatAskWhenError(askBonusNumber);
 
-  printStats(stats);
+    const lottoRanks = getLottoRanks(lottos, winningNumbers, bonusNumber);
+    const stats = new LottoStats(lottoRanks);
+
+    printStats(stats);
+  } while (await askRestart());
 };
 
 app();
