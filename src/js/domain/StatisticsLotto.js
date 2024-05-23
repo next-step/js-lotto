@@ -6,13 +6,12 @@ const PRIZES = {
   FIFTH: { count: 0, amount: 5000, match: 3 }, // 5등 : 3개 번호 일치
 };
 
-// PRIZE_MAP 내부를 수정하지 않고 각 등수별 count를 얻는 방법이 없을까
 const PRIZE_MAP = [
-  { when: ({ hit, bonus }) => hit === 6, match: PRIZES.FIRST },
-  { when: ({ hit, bonus }) => hit === 5 && bonus, match: PRIZES.SECOND },
-  { when: ({ hit, bonus }) => hit === 5 && !bonus, match: PRIZES.THIRD },
-  { when: ({ hit, bonus }) => hit === 4, match: PRIZES.FOURTH },
-  { when: ({ hit, bonus }) => hit === 3, match: PRIZES.FIFTH },
+  { when: ({ hit, bonus }) => hit === 6, match: "FIRST" },
+  { when: ({ hit, bonus }) => hit === 5 && bonus, match: "SECOND" },
+  { when: ({ hit, bonus }) => hit === 5 && !bonus, match: "THIRD" },
+  { when: ({ hit, bonus }) => hit === 4, match: "FOURTH" },
+  { when: ({ hit, bonus }) => hit === 3, match: "FIFTH" },
 ];
 
 class StatisticsLotto {
@@ -27,12 +26,10 @@ class StatisticsLotto {
     const prize = PRIZE_MAP.find(({ when }) => when({ hit, bonus }));
 
     if (prize) {
-      prize.match.count++;
+      this.#prizes[prize.match].count++;
     }
 
     this.#calculateReceiveMoney(this.#prizes);
-
-    return prize;
   }
 
   #calculateReceiveMoney(prizes) {
@@ -50,6 +47,12 @@ class StatisticsLotto {
 
   getPrizes() {
     return this.#prizes;
+  }
+
+  resetCounts() {
+    Object.values(this.#prizes).forEach((prize) => {
+      prize.count = 0;
+    });
   }
 }
 

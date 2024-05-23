@@ -45,6 +45,21 @@ async function play() {
   // 총 수익률 출력
   const rateOfReturn = statisticsLotto.calculateRateOfReturn(purchase);
   printRateOfReturn(rateOfReturn);
+
+  await reply(statisticsLotto); // play 함수가 끝난 후 reply를 호출
+}
+
+async function reply(statisticsLotto) {
+  const replyAnswer = await readLineAsync("\n> 다시 시작하시겠습니까? (y/n)\n");
+
+  if (isReply(replyAnswer)) {
+    statisticsLotto.resetCounts();
+    await play();
+  }
+}
+
+function isReply(replyAnswer) {
+  return replyAnswer === "y";
 }
 
 play();
