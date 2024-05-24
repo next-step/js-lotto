@@ -24,10 +24,10 @@
   - [x] 중복되지 않는 로또 숫자 생성기 (Fisher-Yates Shuffle)
 - [ ] 객체애 대한 다형성
   - [ ] `Lotto`에 대한 다형성
-- [ ] 테스트케이스 보완
-  - [ ] `Lotto`
+- [x] 테스트케이스 보완
+  - [x] `Lotto`
     - [x] 로또 정렬
-    - [ ] 로또 검증 --> Output?
+    - [x] 로또 검증
   - [x] `LottoMachine`
     - [x] `test.each` 사용
     - [x] `toBe()` 사용법
@@ -36,8 +36,3 @@
   - [x] `View`
     - [x] 도메인 의존 제거
     - [x] input, output으로 변경
-
-+)
-
-- [ ] `Symbol iterator` 에 대한 공부
-- [ ] `Object.defineProperty` 에 대한 공부
