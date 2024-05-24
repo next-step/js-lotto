@@ -31,11 +31,12 @@
     - [ ] ...
   - [x] `LottoMachine`
     - [x] `test.each` 사용
-    - [ ] `toBe()` 사용법
+    - [x] `toBe()` 사용법
   - [x] `LottoRank`
     - [x] 로또 랭크 검증
-  - [ ] `View`
-    - [ ] 도메인 의존 제거
+  - [x] `View`
+    - [x] 도메인 의존 제거
+    - [x] input, output으로 변경
 
 +)
 

@@ -18,9 +18,20 @@ export const TEST_LOTTOS = [
 ];
 
 export const TEST_LOTTOS_RESULT = [
+  { text: null, if: null, rank: "FAIL", prize: null, count: 0 },
+  { text: "3개 일치", if: 3, rank: "FIFTH", prize: 5_000, count: 1 },
+  { text: "4개 일치", if: 4, rank: "FOURTH", prize: 50_000, count: 0 },
+  { text: "5개 일치", if: 5, rank: "THIRD", prize: 1_500_000, count: 0 },
+  { text: "5개 일치, 보너스 볼 일치", if: 5, rank: "SECOND", prize: 30_000_000, count: 0 },
+  { text: "6개 일치", if: 6, rank: "FIRST", prize: 2_000_000_000, count: 1 },
+];
+
+export const TEST_LOTTOS_RESULT_OUTPUT = [
   "3개 일치 (5,000원)- 1개",
   "4개 일치 (50,000원)- 0개",
   "5개 일치 (1,500,000원)- 0개",
   "5개 일치, 보너스 볼 일치 (30,000,000원)- 0개",
   "6개 일치 (2,000,000,000원)- 1개",
 ];
+
+export const TEST_LOTTOS_RETURN = 100;
