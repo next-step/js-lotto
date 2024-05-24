@@ -1,5 +1,5 @@
 import { OUTPUT_MESSAGE } from "../../constants/message";
-import $ from "../../utils/querySelector";
+import { $ } from "../../utils/querySelector";
 
 export const output = {
   lottoResult: (lottos) => {

@@ -1,5 +1,5 @@
 import { Lotto } from "../domain/Lotto";
-import $ from "../utils/querySelector";
+import { $ } from "../utils/querySelector";
 import { output } from "../view/web/output";
 
 export default class LottoController {
