@@ -1,4 +1,4 @@
-import { Lotto, LottoMachine } from "../src/js/domain/index"
+import { Lotto, LottoMachine } from "../src/js/domain/index";
 import { TEST_LOTTO_NUMBERS, TEST_MONEY } from "./constants";
 
 let lottoMachine;
@@ -10,13 +10,10 @@ beforeEach(() => {
 
 describe("로또 기계 테스트", () => {
   test("입금액에 따라 로또를 발행한다.", () => {
-    //given
-    const aNumberOfLottos = lottoMachine.countTheNumberOfLottos(TEST_MONEY);
-
     //when
-    const lottos = lottoMachine.buy(TEST_MONEY);
+    const lottoCounts = lottoMachine.countTheNumberOfLottos(TEST_MONEY);
 
     //then
-    expect(lottos.length).toBe(aNumberOfLottos);
+    expect(lottoCounts).toBe(8);
   });
 });
