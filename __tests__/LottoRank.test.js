@@ -1,14 +1,14 @@
 import { LOTTO_PRIZE } from "../src/js/constants";
 import { Lotto, LottoRank, WinningLotto } from "../src/js/domain";
-import { TEST_LOTTOS, TEST_LOTTO_NUMBERS, TEST_LOTTO_RETURN } from "./constants";
+import { TEST_LOTTO, TEST_LOTTOS } from "./constants";
 
 let lottoRank;
 let lottos;
 let winningLotto;
 beforeEach(() => {
-    lottos = TEST_LOTTOS.map((lotto) => new Lotto(lotto));
-    winningLotto = new WinningLotto(new Lotto(TEST_LOTTO_NUMBERS), 7);
-    lottoRank = new LottoRank(lottos, winningLotto);
+  lottos = TEST_LOTTOS.map((lotto) => new Lotto(lotto));
+  winningLotto = new WinningLotto(new Lotto(TEST_LOTTO), 7);
+  lottoRank = new LottoRank(lottos, winningLotto);
 });
 
 describe("로또 결과 테스트", () => {
@@ -48,7 +48,7 @@ describe("로또 결과 테스트", () => {
     const winningLotto = new WinningLotto(new Lotto(lottoNumbers), bonusNumber);
 
     //when
-    const lottoRanks = winningLotto.getRank(new Lotto(TEST_LOTTO_NUMBERS));
+    const lottoRanks = winningLotto.getRank(new Lotto(TEST_LOTTO));
 
     //then
     expect(lottoRanks).toBe(expected);
@@ -58,17 +58,19 @@ describe("로또 결과 테스트", () => {
     //given
 
     //when
-    const lottoRankCounts = lottoRank.getLottoRankCounts()
-    const countsOverZero = lottoRankCounts.filter((prize) => prize.count > 0).map((prize) => prize.rank);
-    
+    const lottoRankCounts = lottoRank.getLottoRankCounts();
+    const countsOverZero = lottoRankCounts
+      .filter((prize) => prize.count > 0)
+      .map((prize) => prize.rank);
+
     //then
     expect(countsOverZero).toContain(LOTTO_PRIZE.FIRST.rank);
     expect(countsOverZero).toContain(LOTTO_PRIZE.FIFTH.rank);
-});
+  });
 
-test("로또 수익률을 계산한다.", () => {
+  test("로또 수익률을 계산한다.", () => {
     //given
-    const lottoRankCounts = lottoRank.getLottoRankCounts()
+    const lottoRankCounts = lottoRank.getLottoRankCounts();
 
     //when
     const lottoReturn = lottoRank.calculateLottoReturn(lottoRankCounts);

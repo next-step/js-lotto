@@ -4,7 +4,7 @@ import {
   TEST_LOTTOS_RESULT,
   TEST_LOTTOS_RESULT_OUTPUT,
   TEST_LOTTOS_RETURN,
-  TEST_LOTTO_NUMBERS,
+  TEST_LOTTO,
   TEST_MONEY,
 } from "./constants";
 
@@ -28,7 +28,7 @@ describe("출력 테스트", () => {
 
   test("구매 로또 번호를 출력한다.", async () => {
     //given
-    const ascLottoArr = { numbers: TEST_LOTTO_NUMBERS.sort((a, b) => a - b) };
+    const ascLottoArr = { numbers: TEST_LOTTO.sort((a, b) => a - b) };
 
     //when
     Output.printLottoNumbers(ascLottoArr);

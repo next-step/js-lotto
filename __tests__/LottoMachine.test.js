@@ -1,11 +1,11 @@
 import { Lotto, LottoMachine } from "../src/js/domain/index";
-import { TEST_LOTTO_NUMBERS, TEST_MONEY } from "./constants";
+import { TEST_LOTTO, TEST_MONEY } from "./constants";
 
 let lottoMachine;
 let lotto;
 beforeEach(() => {
   lottoMachine = new LottoMachine();
-  lotto = new Lotto(TEST_LOTTO_NUMBERS);
+  lotto = new Lotto(TEST_LOTTO);
 });
 
 describe("로또 기계 테스트", () => {
