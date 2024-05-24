@@ -1,10 +1,15 @@
 import { Output } from "../view";
 import { lottoMoneyRule } from "../rules";
 import { Lotto, WinningLotto, RandomGenerator, LottoRank } from "./index";
+import { lottoMachineRule } from "../rules/LottoMachine.rule";
 export class LottoMachine {
+  static UNPLAYABLE = "n";
+  static PLAYABLE = "y";
   static LOTTO_PRICE = 1000;
 
   lottos = [];
+  #_playable = LottoMachine.PLAYABLE;
+
   constructor() {}
 
   buy(money) {
@@ -47,5 +52,15 @@ export class LottoMachine {
    */
   generateWinningLotto(winningNumbers, bonusNumber) {
     return new WinningLotto(winningNumbers, bonusNumber);
+  }
+
+  get playable() {
+    return this.#_playable === LottoMachine.PLAYABLE;
+  }
+
+  updatePlayableState(value) {
+    if (lottoMachineRule.validates(value)) {
+      this.#_playable = value;
+    }
   }
 }

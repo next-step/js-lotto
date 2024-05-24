@@ -15,4 +15,9 @@ export const Input = {
     const bonusNumber = await readLineAsync(`> 보너스 번호를 입력해 주세요.`);
     return +bonusNumber;
   },
+
+  async getPlayAgain() {
+    const playAgain = await readLineAsync(`> 다시 시작하시겠습니까? (y/n)\n`);
+    return playAgain;
+  },
 };

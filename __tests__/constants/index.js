@@ -41,3 +41,7 @@ export const TEST_LOTTOS_RESULT_OUTPUT = [
 ];
 
 export const TEST_LOTTOS_RETURN = 100;
+
+export const TEST_LOTTO_PLAYABLE_STATE = "y";
+
+export const TEST_INVALIDE_LOTTO_PLAYABLE_STATE = "Y";
