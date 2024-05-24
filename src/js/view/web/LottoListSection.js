@@ -35,7 +35,7 @@ class LottoListSection {
 
   show(lottos) {
     this.#$lottoListSection.classList.remove("d-none");
-
+    this.renderLottoCount(lottos);
     this.reset(lottos);
   }
 
@@ -43,9 +43,8 @@ class LottoListSection {
     this.#$lottoListSection.classList.add("d-none");
   }
 
-  renderLottoCount() {
-    const $lottoCount = $(".lotto-count");
-    $lottoCount.textContent = lottos.length;
+  renderLottoCount(lottos) {
+    this.#$lottoCount.textContent = lottos.length;
   }
 
   toggleLottoNumbers(lottos) {
