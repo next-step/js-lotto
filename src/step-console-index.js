@@ -10,26 +10,36 @@ import { WinningLotto } from "./js/domain/WinningLotto.js";
 import { StatisticsLotto } from "./js/domain/StatisticsLotto.js";
 
 async function play() {
-  const purchase = await readLineAsync("> 구입금액을 입력해 주세요. ");
+  let lottoMachine;
+  let count;
+  let purchase;
+  let lottos = [];
 
-  const lottoMachine = new LottoMachine();
-  const count = lottoMachine.calculateLottoCount(purchase);
-  printCount(count);
+  while (true) {
+    try {
+      purchase = await readLineAsync("> 구입금액을 입력해 주세요. ");
+      lottoMachine = new LottoMachine();
+      count = lottoMachine.calculateLottoCount(purchase);
+      printCount(count);
 
-  const lottos = Array.from({ length: count }, () => {
-    const lotto = lottoMachine.generateLottoNumber();
-    const lottoNumbers = lotto.getLottoNumbers();
-    printLottoNumber(lottoNumbers);
-    return lottoNumbers;
-  });
+      lottos = Array.from({ length: count }, () => {
+        const lotto = lottoMachine.generateLottoNumber();
+        const lottoNumbers = lotto.getLottoNumbers();
+        printLottoNumber(lottoNumbers);
+        return lottoNumbers;
+      });
 
+      break;
+    } catch (error) {
+      console.error("오류가 발생했습니다: ", error);
+    }
+  }
   const winningLottoNumbers = await readLineAsync(
     "\n> 당첨 번호를 입력해 주세요. "
   );
 
   const bonusNumber = await readLineAsync("\n> 보너스 번호를 입력해 주세요. ");
 
-  // when
   const winningLotto = new WinningLotto(winningLottoNumbers, bonusNumber);
 
   const statisticsLotto = new StatisticsLotto();
@@ -46,7 +56,7 @@ async function play() {
   const rateOfReturn = statisticsLotto.calculateRateOfReturn(purchase);
   printRateOfReturn(rateOfReturn);
 
-  await reply(statisticsLotto); // play 함수가 끝난 후 reply를 호출
+  await reply(statisticsLotto);
 }
 
 async function reply(statisticsLotto) {
