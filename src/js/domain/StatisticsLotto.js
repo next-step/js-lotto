@@ -7,11 +7,11 @@ const PRIZES = {
 };
 
 const PRIZE_MAP = [
-  { when: ({ hit, bonus }) => hit === 6, match: PRIZES.FIRST },
-  { when: ({ hit, bonus }) => hit === 5 && bonus, match: PRIZES.SECOND },
-  { when: ({ hit, bonus }) => hit === 5 && !bonus, match: PRIZES.THIRD },
-  { when: ({ hit, bonus }) => hit === 4, match: PRIZES.FOURTH },
-  { when: ({ hit, bonus }) => hit === 3, match: PRIZES.FIFTH },
+  { when: ({ hit, bonus }) => hit === 6, match: "FIRST" },
+  { when: ({ hit, bonus }) => hit === 5 && bonus, match: "SECOND" },
+  { when: ({ hit, bonus }) => hit === 5 && !bonus, match: "THIRD" },
+  { when: ({ hit, bonus }) => hit === 4, match: "FOURTH" },
+  { when: ({ hit, bonus }) => hit === 3, match: "FIFTH" },
 ];
 
 class StatisticsLotto {
@@ -26,12 +26,10 @@ class StatisticsLotto {
     const prize = PRIZE_MAP.find(({ when }) => when({ hit, bonus }));
 
     if (prize) {
-      prize.match.count++;
+      this.#prizes[prize.match].count++;
     }
 
     this.#calculateReceiveMoney(this.#prizes);
-
-    return prize;
   }
 
   #calculateReceiveMoney(prizes) {
@@ -49,6 +47,12 @@ class StatisticsLotto {
 
   getPrizes() {
     return this.#prizes;
+  }
+
+  resetCounts() {
+    Object.values(this.#prizes).forEach((prize) => {
+      prize.count = 0;
+    });
   }
 }
 

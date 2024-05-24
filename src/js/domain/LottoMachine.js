@@ -8,9 +8,7 @@ class LottoMachine {
 
   generateLottoNumber() {
     return new Lotto(
-      Array(LottoMachine.LOTTO_LENGTH)
-        .fill()
-        .map(() => this.#generateRandomNumbers())
+      Array(LottoMachine.LOTTO_LENGTH).fill().map(this.#generateRandomNumbers)
     );
   }
 
