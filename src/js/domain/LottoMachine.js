@@ -20,6 +20,16 @@ const LottoMachine = {
 
     return new Lotto(lottoNumbers);
   },
+
+  generateRandomLottos(lottosCount) {
+    const lottos = [];
+    for (let i = 0; i < lottosCount; i++) {
+      const lotto = this.generateRandomLotto();
+      lottos.push(lotto);
+    }
+
+    return lottos;
+  },
 };
 
 export default LottoMachine;
