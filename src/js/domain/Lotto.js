@@ -7,7 +7,7 @@ export class Lotto {
    * @param {string[]} numbers
    */
   constructor(numbers) {
-    if (lottoRule.validates(numbers)) this.#numbers = numbers;
+    if (lottoRule.validates(numbers)) this.#numbers = numbers.sort((a, b) => a - b);
   }
 
   get numbers() {

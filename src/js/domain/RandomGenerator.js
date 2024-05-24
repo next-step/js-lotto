@@ -16,6 +16,6 @@ export class RandomGenerator {
 
   generateRandomNumbers() {
     const randomNumbers = this.shuffleNumbers();
-    return randomNumbers.slice(0, LOTTO_LENGTH).sort((a, b) => a - b);
+    return randomNumbers.slice(0, LOTTO_LENGTH);
   }
 }
