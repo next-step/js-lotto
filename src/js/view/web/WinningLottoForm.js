@@ -1,12 +1,21 @@
+import { $, $all } from "../../../utils/dom.js";
+
+let instance;
 class WinningLottoForm {
   #$winningLottoForm;
   #winningLottoNumberInputs;
   #$bonusNumberInput;
 
-  constructor($winningLottoForm, winningLottoNumberInputs, $bonusNumberInput) {
-    this.#$winningLottoForm = $winningLottoForm;
-    this.#winningLottoNumberInputs = winningLottoNumberInputs;
-    this.#$bonusNumberInput = $bonusNumberInput;
+  constructor() {
+    if (instance) {
+      return instance;
+    }
+
+    this.#$winningLottoForm = $(".winning-lotto-form");
+    this.#winningLottoNumberInputs = $all(".winning-number");
+    this.#$bonusNumberInput = $(".bonus-number");
+
+    instance = this;
   }
 
   get isValidWinningNumbers() {
@@ -31,15 +40,16 @@ class WinningLottoForm {
     return this.#$bonusNumberInput.value;
   }
 
-  showWinningLottoForm() {
+  show() {
+    this.reset();
     this.#$winningLottoForm.classList.remove("d-none");
   }
 
-  hideWinningLottoForm() {
+  hide() {
     this.#$winningLottoForm.classList.add("d-none");
   }
 
-  resetWinningLottoForm() {
+  reset() {
     this.#winningLottoNumberInputs.forEach((winningNumberInput) => {
       winningNumberInput.value = "";
     });

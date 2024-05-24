@@ -4,9 +4,10 @@ import LottoResult from "../../domain/LottoResult.js";
 class LottoResultModal {
   #$modal;
 
-  constructor($modal, $closeButton) {
-    this.#$modal = $modal;
-    $closeButton.addEventListener("click", this.close.bind(this));
+  constructor() {
+    this.#$modal = $(".modal");
+    const closeButton = $(".modal-close");
+    closeButton.addEventListener("click", this.close.bind(this));
   }
 
   renderLottoResult(lottoGame, lottoResult) {

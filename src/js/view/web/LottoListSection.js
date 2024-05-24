@@ -1,21 +1,25 @@
+import { $ } from "../../../utils/dom.js";
+
+let instance;
 class LottoListSection {
   #$lottoListSection;
   #$lottoCount;
   #$lottoListToggleButton;
   #$lottoList;
 
-  constructor(
-    $lottoListSection,
-    $lottoCount,
-    $lottoListToggleButton,
-    $lottoList,
-    onToggle
-  ) {
-    this.#$lottoListSection = $lottoListSection;
-    this.#$lottoCount = $lottoCount;
-    this.#$lottoListToggleButton = $lottoListToggleButton;
-    this.#$lottoList = $lottoList;
+  constructor(onToggle) {
+    if (instance) {
+      return instance;
+    }
+
+    this.#$lottoListSection = $(".lotto-list-section");
+    this.#$lottoCount = $(".lotto-count");
+    this.#$lottoListToggleButton = $(".lotto-list-toggle-button");
+    this.#$lottoList = $(".lotto-list");
+
     this.#$lottoListToggleButton.addEventListener("click", onToggle);
+
+    instance = this;
   }
 
   generateLottoItemTemplate(lottoNumbers, hideLottoNumbers) {
@@ -29,18 +33,19 @@ class LottoListSection {
   </li>`;
   }
 
-  showLottoListSection(lottos) {
+  show(lottos) {
     this.#$lottoListSection.classList.remove("d-none");
 
-    // update purchased lotto count
-    const lottoCountLabelContent = lottos.length;
-    this.#$lottoCount.textContent = lottoCountLabelContent;
-
-    this.hideLottoNumbers(lottos);
+    this.reset(lottos);
   }
 
-  hidelottoListSection() {
+  hide() {
     this.#$lottoListSection.classList.add("d-none");
+  }
+
+  renderLottoCount() {
+    const $lottoCount = $(".lotto-count");
+    $lottoCount.textContent = lottos.length;
   }
 
   toggleLottoNumbers(lottos) {
@@ -71,8 +76,8 @@ class LottoListSection {
     this.#$lottoList.classList.remove("flex-col");
   }
 
-  reset() {
-    this.hideLottoNumbers();
+  reset(lottos) {
+    this.hideLottoNumbers(lottos);
     this.#$lottoListToggleButton.checked = false;
   }
 }

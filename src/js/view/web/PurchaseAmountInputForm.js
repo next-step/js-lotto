@@ -1,9 +1,18 @@
+import { $ } from "../../../utils/dom.js";
+
+let instance;
 class PurchaseAmountInputForm {
   #$purchaseAmountInput;
 
-  constructor($purchaseAmountInput, $purchaseButton, onSubmit) {
-    this.#$purchaseAmountInput = $purchaseAmountInput;
-    $purchaseAmountInput.addEventListener("keydown", (e) => {
+  constructor(onSubmit) {
+    if (instance) {
+      return instance;
+    }
+
+    this.#$purchaseAmountInput = $(".purchase-amount-input");
+    const $purchaseButton = $(".purchase-button");
+
+    this.#$purchaseAmountInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         if (!this.isValidInput) {
           return;
@@ -12,6 +21,8 @@ class PurchaseAmountInputForm {
       }
     });
     $purchaseButton.addEventListener("click", onSubmit);
+
+    instance = this;
   }
 
   get isValidInput() {
@@ -22,7 +33,7 @@ class PurchaseAmountInputForm {
     return this.#$purchaseAmountInput.value;
   }
 
-  clearInput() {
+  reset() {
     this.#$purchaseAmountInput.value = "";
   }
 }
