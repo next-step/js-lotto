@@ -3,22 +3,13 @@ import LottoNumber from "./LottoNumber.js";
 
 const LottoMachine = {
   generateRandomLotto() {
-    const lottoNumbers = [];
-    const candidateLottoNumbers = Array.from(
-      { length: LottoNumber.MAX_LOTTO_NUMBER },
-      (_, i) => i + 1
+    const shuffle = (arr) => [...arr].sort(() => Math.random());
+
+    const lotto = new Lotto(
+      shuffle(LottoNumber.LOTTO_NUMBERS).slice(0, Lotto.LENGTH_LOTTO_NUMBERS)
     );
 
-    for (let i = 0; i < Lotto.LENGTH_LOTTO_NUMBERS; i++) {
-      const randomIndex = Math.floor(
-        Math.random() * candidateLottoNumbers.length
-      );
-
-      const deletedNumbers = candidateLottoNumbers.splice(randomIndex, 1);
-      lottoNumbers.push(...deletedNumbers);
-    }
-
-    return new Lotto(lottoNumbers);
+    return lotto;
   },
 
   generateRandomLottos(lottosCount) {
