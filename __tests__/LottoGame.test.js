@@ -1,15 +1,10 @@
-import {
-  ErrorLottoGame,
-  ErrorLottoPurchasedAmount,
-} from "../src/js/constants/error";
+import { ErrorLottoPurchasedAmount } from "../src/js/constants/error";
 import LottoGame from "../src/js/domain/LottoGame";
 
 describe("로도 판매 기계 기능 테스트", () => {
   test.each([
     [0, 0],
     [1_000, 1],
-    [1_001, 1],
-    [10_000.1, 10],
   ])(
     "로또를 구입한 금액이 0 이상인 경우 로또를 구매한 금액이 %s 이면, 발행하는 로또의 개수는 %s이다.",
     (purchasedAmount, lottoCount) => {
@@ -40,4 +35,18 @@ describe("로도 판매 기계 기능 테스트", () => {
       expect(validateAvailableLottoCount).toThrow(errorMessage);
     }
   );
+
+  test("로또를 구입한 금액이 1000원 단위가 아닌 경우 에러가 발생한다.", () => {
+    // given
+    const purchasedAmount = 1_001;
+
+    // when
+    const validateAvailableLottoCount = () =>
+      LottoGame.validateLottoPurchasedAmount(purchasedAmount);
+
+    // then
+    expect(validateAvailableLottoCount).toThrow(
+      ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_DIVISIBLE
+    );
+  });
 });
