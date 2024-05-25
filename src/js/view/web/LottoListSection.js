@@ -11,7 +11,7 @@ const LottoListSection = {
   generateLottoItemTemplate(lottoNumbers, hideLottoNumbers) {
     const lottoNumbersTextContent = lottoNumbers.join(", ");
 
-    return /*HTML*/ `<li class="d-flex items-center">
+    return /*HTML*/ `<li class="lotto-item d-flex items-center">
   <span class="mx-1 text-4xl">🎟️ </span>
   <span class="lotto-numbers ${
     hideLottoNumbers ? "d-none" : ""
