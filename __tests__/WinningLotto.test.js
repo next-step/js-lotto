@@ -54,4 +54,76 @@ describe("당첨 로또 기능 테스트", () => {
       expect(generateWinningLotto).toThrow(testSet.erroMessage);
     }
   );
+
+  test.each([
+    [
+      0,
+      {
+        lottoNumbers: [7, 8, 19, 20, 21, 24],
+        winningNumbers: [1, 2, 3, 4, 5, 6],
+        bonusNumber: 7,
+      },
+    ],
+    [
+      6,
+      {
+        lottoNumbers: [1, 2, 3, 4, 5, 6],
+        winningNumbers: [1, 2, 3, 4, 5, 6],
+        bonusNumber: 7,
+      },
+    ],
+  ])(
+    "로또 번호와 당첨 번호가 일치하는 갯수는 %s개 이다.",
+    (expectedResult, testSet) => {
+      // given
+      const lotto = new Lotto(testSet.lottoNumbers);
+      const winningLotto = new WinningLotto(
+        new Lotto(testSet.winningNumbers),
+        testSet.bonusNumber
+      );
+
+      // when
+      const { count } = winningLotto.matchInfo(lotto);
+
+      // then
+      expect(count).toBe(expectedResult);
+    }
+  );
+
+  test.each([
+    [
+      "일치하지 않으",
+      false,
+      {
+        lottoNumbers: [1, 2, 3, 4, 5, 6],
+        winningNumbers: [1, 2, 3, 4, 5, 6],
+        bonusNumber: 7,
+      },
+    ],
+    [
+      "일치하",
+      true,
+      {
+        lottoNumbers: [7, 2, 3, 4, 5, 6],
+        winningNumbers: [1, 2, 3, 4, 5, 6],
+        bonusNumber: 7,
+      },
+    ],
+  ])(
+    "보너스 번호와 로또 번호가 %s면 %s 를 반환한다.",
+    (_, expectedResult, testSet) => {
+      // given
+      const lotto = new Lotto(testSet.lottoNumbers);
+      const winningLotto = new WinningLotto(
+        new Lotto(testSet.winningNumbers),
+        testSet.bonusNumber
+      );
+
+      // when
+      const { bonusNumberMatched } = winningLotto.matchInfo(lotto);
+
+      // then
+      expect(bonusNumberMatched).toBe(expectedResult);
+    }
+  );
 });

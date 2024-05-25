@@ -50,20 +50,15 @@ class LottoResult {
   }
 
   getLottoRanking(lotto) {
-    const matchingCount = lotto.countMatchingLottoNumbers(
-      this.#winningLotto.winningLotto
-    );
-    const isBonusNumberMatching = lotto.hasLottoNumber(
-      this.#winningLotto.bonusNumber
-    );
+    const { count, bonusNumberMatched } = this.#winningLotto.matchInfo(lotto);
 
-    switch (matchingCount) {
+    switch (count) {
       case LottoResult.LottoRankingInfo[LottoResult.LottoRanking.FIRST]
         .condition:
         return LottoResult.LottoRankingInfo[LottoResult.LottoRanking.FIRST];
       case LottoResult.LottoRankingInfo[LottoResult.LottoRanking.SECOND]
         .condition:
-        return isBonusNumberMatching
+        return bonusNumberMatched
           ? LottoResult.LottoRankingInfo[LottoResult.LottoRanking.SECOND]
           : LottoResult.LottoRankingInfo[LottoResult.LottoRanking.THIRD];
       case LottoResult.LottoRankingInfo.FOURTH.condition:

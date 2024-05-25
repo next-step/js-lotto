@@ -56,13 +56,6 @@ class Lotto {
     return [...lottoNumbers].sort((a, b) => a - b);
   }
 
-  countMatchingLottoNumbers(lotto) {
-    const matchedLottoNumbers = this.#lottoNumbers.filter((lottoNumber) =>
-      lotto.lottoNumbers.includes(lottoNumber)
-    );
-    return matchedLottoNumbers.length;
-  }
-
   hasLottoNumber(lottoNumber) {
     return this.#lottoNumbers.includes(lottoNumber);
   }

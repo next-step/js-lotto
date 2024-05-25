@@ -26,6 +26,18 @@ class WinningLotto {
       );
     }
   }
+
+  matchInfo(lotto) {
+    const count = this.#winningLotto.lottoNumbers.filter((lottoNumber) =>
+      lotto.hasLottoNumber(lottoNumber)
+    ).length;
+
+    const bonusNumberMatched = lotto.lottoNumbers.includes(this.#bonusNumber);
+    return {
+      count,
+      bonusNumberMatched,
+    };
+  }
 }
 
 export default WinningLotto;
