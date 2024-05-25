@@ -20,7 +20,7 @@ export const ErrorLottoBonusNumber = {
     "로또 보너스 번호는 당첨 번호와 달라야 합니다.",
 };
 
-export const ErrorLottoGame = {
+export const ErrorLottoGameRestart = {
   ERROR_LOTTO_GAME_RESTART_NOT_VALID:
     "게임 재시작 여부는 y 또는 n 이어야 합니다.",
 };

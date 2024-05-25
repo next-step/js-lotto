@@ -10,9 +10,6 @@ class LottoGame {
   static LOTTO_PRICE = 1000;
   static MIN_PURCHASED_AMOUNT = 0;
 
-  static RESTART_GAME_TRUE = "y";
-  static RESTART_GAME_FALSE = "n";
-
   set purchasedAmount(purchasedAmount) {
     LottoGame.validateLottoPurchasedAmount(purchasedAmount);
     this.#purchasedAmount = purchasedAmount;
@@ -47,12 +44,6 @@ class LottoGame {
   static getPurchasableLottoCount(purchasedAmount) {
     this.validateLottoPurchasedAmount(purchasedAmount);
     return Math.floor(Number(purchasedAmount) / LottoGame.LOTTO_PRICE);
-  }
-
-  static validateIsRestartLottoGame(input) {
-    if (![this.RESTART_GAME_FALSE, this.RESTART_GAME_TRUE].includes(input)) {
-      throw new Error(ErrorLottoGame.ERROR_LOTTO_GAME_RESTART_NOT_VALID);
-    }
   }
 }
 

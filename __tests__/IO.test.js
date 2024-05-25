@@ -1,4 +1,4 @@
-import LottoGame from "../src/js/domain/LottoGame";
+import { ErrorLottoGameRestart } from "../src/js/constants/error";
 import LottoResult from "../src/js/domain/LottoResult";
 import Input from "../src/js/view/console/Input";
 import Output from "../src/js/view/console/Output";
@@ -156,13 +156,30 @@ describe("입출력 기능 테스트", () => {
   test("당첨 통계를 출력한 뒤에는 재시작/종료 여부를 y 또는 n으로 입력 받는다.", async () => {
     // given
     readLineAsyncSpy.mockImplementationOnce(() =>
-      Promise.resolve(LottoGame.RESTART_GAME_TRUE)
+      Promise.resolve(Input.RESTART_GAME_TRUE)
     );
 
     // when
     const isRestartLottoGame = await Input.getIsRestartLottoGame();
 
     // then
-    expect(isRestartLottoGame).toBe(LottoGame.RESTART_GAME_TRUE);
+    expect(isRestartLottoGame).toBe(true);
   });
+
+  test.each(["123", "N", -1])(
+    "로또 게임 재시작 여부가 y 또는 n이 아닌 경우 에러가 발생한다.",
+    (input) => {
+      // given
+
+      // when
+      const validate = () => {
+        Input.validateIsRestartLottoGame(input);
+      };
+
+      // then
+      expect(validate).toThrow(
+        ErrorLottoGameRestart.ERROR_LOTTO_GAME_RESTART_NOT_VALID
+      );
+    }
+  );
 });
