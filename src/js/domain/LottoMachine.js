@@ -25,12 +25,11 @@ export class LottoMachine {
 
     this.lottos = Array.from(lottos).map((lotto) => new Lotto(JSON.parse(lotto)));
 
-    Output.printLottoInfo(this.lottos);
     return this.lottos;
   }
 
   countTheNumberOfLottos(money) {
-    return money / LottoMachine.LOTTO_PRICE;
+    return Math.floor(money / LottoMachine.LOTTO_PRICE);
   }
 
   generateLottoNumbers() {
