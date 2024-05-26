@@ -69,6 +69,8 @@ export default class LottoController {
     try {
       const winningNumber = [...$$(".winning-number")].map((input) => Number(input.value));
       const bonusNumber = Number($(".bonus-number").value);
+      this.validateWinningNumbers(winningNumber);
+      this.validateBonusNumber(winningNumber, bonusNumber);
       this.#lottoGame = new LottoGame(this.#lotto.lottos, winningNumber, bonusNumber);
       output.lottoGameResult(this.#lottoGame.result);
       const rateOfReturn = calculateRateOfReturn(this.#lottoGame.totalIncome, this.#purchasePrice);
@@ -81,5 +83,19 @@ export default class LottoController {
   validatePurchasePrice(purchasePrice) {
     validateNumber.nan(purchasePrice);
     validateNumber.negative(purchasePrice);
+  }
+
+  validateWinningNumbers(winningNumberArray) {
+    validateArray.length(winningNumberArray);
+    validateArray.inRange(winningNumberArray);
+    validateArray.duplicate(winningNumberArray);
+  }
+
+  validateBonusNumber(winningNumberArray, bonusNumber) {
+    validateNumber.nan(bonusNumber);
+    validateNumber.negative(bonusNumber);
+    validateNumber.integer(bonusNumber);
+    validateNumber.max(bonusNumber);
+    validateArray.containNum(winningNumberArray, bonusNumber);
   }
 }
