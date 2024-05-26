@@ -3,7 +3,7 @@ export const randomNumber = (min, max) => {
 };
 
 export const sortingNumber = (arrayNum) => {
-  return [...arrayNum].sort((a, b) => a - b);
+  return [...arrayNum].sort((a, b) => a.number - b.number);
 };
 
 export const shuffle = (array) => {
