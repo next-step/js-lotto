@@ -1,5 +1,4 @@
 import Lotto from "./js/domain/Lotto";
-import LottoGame from "./js/domain/LottoGame";
 import LottoMachine from "./js/domain/LottoMachine";
 import LottoNumber from "./js/domain/LottoNumber";
 import LottoPurchaseManager from "./js/domain/LottoPurchaseManager.js";
@@ -19,7 +18,7 @@ const play = async () => {
 
   // 로또를 구입한 금액만큼 최대 개수의 로또 발급
   const availableLottoCount =
-    LottoGame.getPurchasableLottoCount(purchasedAmount);
+    LottoPurchaseManager.getPurchasableLottoCount(purchasedAmount);
 
   const lottos = [];
   for (let i = 0; i < availableLottoCount; i++) {
@@ -55,26 +54,26 @@ const play = async () => {
   const lottoRanking = new LottoRanking(winningLotto);
 
   // 로또 당첨 결과 통계 출력
-  const lottoRankings = [
-    LottoRanking.LottoRanking["FIFTH"],
-    LottoRanking.LottoRanking["FOURTH"],
-    LottoRanking.LottoRanking["THIRD"],
-    LottoRanking.LottoRanking["SECOND"],
-    LottoRanking.LottoRanking["FIRST"],
+  const rankings = [
+    LottoRanking.Ranking["FIFTH"],
+    LottoRanking.Ranking["FOURTH"],
+    LottoRanking.Ranking["THIRD"],
+    LottoRanking.Ranking["SECOND"],
+    LottoRanking.Ranking["FIRST"],
   ];
 
-  const lottoRankingStatistics = lottoRankings.map((lottoRanking) => {
-    const lottoRankingInfo = LottoRanking.LottoRankingInfo[lottoRanking];
+  const lottoRankingStatistics = rankings.map((ranking) => {
+    const lottoRankingInfo = LottoRanking.LottoRankingInfo[ranking];
     const lottoRankingCount = lottoRanking.getLottoRankingCount(
       lottos,
-      lottoRanking
+      ranking
     );
 
     return {
       count: lottoRankingCount,
       rankingWinningPrice: lottoRankingInfo.winningPrice,
       rankingCondition: lottoRankingInfo.condition,
-      isShowExtraMent: lottoRanking === LottoRanking.LottoRanking["SECOND"],
+      isShowExtraMent: lottoRanking === LottoRanking.Ranking["SECOND"],
     };
   });
 
@@ -96,9 +95,7 @@ const main = async () => {
 
     //  재시작/종료 여부를 입력받는다.
     const isRestartLottoGame = await repeatUntilNoError(async () => {
-      const input = await Input.getIsRestartLottoGame();
-      LottoGame.validateIsRestartLottoGame(input);
-      return isRestartLottoGame === LottoGame.RESTART_GAME_TRUE;
+      return await Input.getIsRestartLottoGame();
     });
     if (!isRestartLottoGame) {
       break;
