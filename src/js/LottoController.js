@@ -5,6 +5,7 @@ import { $, $$ } from "../utils/querySelector";
 import { validateArray } from "../validator/validateArray";
 import { validateNumber } from "../validator/validateNumber";
 import { output } from "../view/web/output";
+import { onModalShow } from "./ModalController";
 
 export default class LottoController {
   #lotto;
@@ -21,6 +22,7 @@ export default class LottoController {
     this.initPurchasePrice();
     this.initLottosToggle();
     this.initLottoGameResult();
+    this.initResetButton();
   }
 
   initPurchasePrice() {
@@ -65,6 +67,12 @@ export default class LottoController {
     });
   }
 
+  initResetButton() {
+    $("#reset_button").addEventListener("click", () => {
+      location.reload();
+    });
+  }
+
   handleLottoGameResult() {
     try {
       const winningNumber = [...$$(".winning-number")].map((input) => Number(input.value));
@@ -75,6 +83,7 @@ export default class LottoController {
       output.lottoGameResult(this.#lottoGame.result);
       const rateOfReturn = calculateRateOfReturn(this.#lottoGame.totalIncome, this.#purchasePrice);
       output.rateOfReturn(rateOfReturn);
+      onModalShow();
     } catch (erorr) {
       alert(erorr.message);
     }
