@@ -20,7 +20,7 @@ class LottoNumber {
       return instances[lottoNumber];
     }
 
-    LottoNumber.#validateLottoNumber(lottoNumber);
+    LottoNumber.validateLottoNumber(lottoNumber);
 
     const validatedLottoNumber = Number(lottoNumber);
 
@@ -35,7 +35,7 @@ class LottoNumber {
     return this.#value;
   }
 
-  static #validateLottoNumber(input) {
+  static validateLottoNumber(input) {
     if (input instanceof LottoNumber) {
       return;
     }
