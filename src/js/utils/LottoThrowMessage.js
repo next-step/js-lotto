@@ -7,14 +7,14 @@ class LottoThrowMessage extends ThrowMessage {
     super(value);
   }
 
-  isValidLottoNumberArray() {
+  isLottoNumberArray() {
     if (!isValidLottoNumberArray(super.value, super.value.length)) {
       throw new TypeError(ERROR_MESSAGE.INVALID_LOTTO_FORMAT);
     }
     return this;
   }
 
-  isValidLottoNumber() {
+  isLottoNumber() {
     if (!isValidLottoNumber(super.value)) {
       throw new TypeError(ERROR_MESSAGE.INVALID_LOTTO_FORMAT);
     }

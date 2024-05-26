@@ -16,9 +16,9 @@ class LottoCalculator {
     winningBonusNumber,
     winningAmounts = LottoCalculator.DEFAULT_WINNING_AMOUNT,
   }) {
-    new LottoThrowMessage(winningNumbers).isValidLottoNumberArray();
+    new LottoThrowMessage(winningNumbers).isLottoNumberArray();
     new LottoThrowMessage(winningBonusNumber)
-      .isValidLottoNumber()
+      .isLottoNumber()
       .checkDuplicateLottoNumbers(winningNumbers);
 
     this.#winningNumbers = winningNumbers;

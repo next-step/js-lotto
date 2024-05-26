@@ -7,7 +7,7 @@ class LottoTicket extends Product {
   constructor(lottoNumbers, price = LOTTO.PRICE) {
     super(LOTTO.NAME_KR, price);
 
-    new LottoThrowMessage(lottoNumbers).isValidLottoNumberArray();
+    new LottoThrowMessage(lottoNumbers).isLottoNumberArray();
 
     this.#lottoNumbers = lottoNumbers;
   }

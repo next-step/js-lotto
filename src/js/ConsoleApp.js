@@ -75,12 +75,12 @@ function validatePurchaseAmount(cost) {
 }
 
 function validateWinningNumbers(lottoNumbers) {
-  new LottoThrowMessage(lottoNumbers).isValidLottoNumberArray();
+  new LottoThrowMessage(lottoNumbers).isLottoNumberArray();
 }
 
 function validateWinningBonusNumber(winningBonusNumber, winningNumbers) {
   new LottoThrowMessage(winningBonusNumber)
-    .isValidLottoNumber()
+    .isLottoNumber()
     .checkDuplicateLottoNumbers(winningNumbers);
 }
 
