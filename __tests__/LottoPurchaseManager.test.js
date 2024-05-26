@@ -1,17 +1,17 @@
 import { ErrorLottoPurchasedAmount } from "../src/js/constants/error";
-import LottoGame from "../src/js/domain/LottoGame";
+import LottoPurchaseManager from "../src/js/domain/LottoPurchaseManager";
 
-describe("로도 판매 기계 기능 테스트", () => {
+describe("로도 구매 기능 테스트", () => {
   test.each([
     [0, 0],
     [1_000, 1],
   ])(
-    "로또를 구입한 금액이 0 이상인 경우 로또를 구매한 금액이 %s 이면, 발행하는 로또의 개수는 %s이다.",
+    "로또를 구입한 금액이 0 이상인 경우 로또를 구매한 금액이 %s 이면, 구매한 로또의 개수는 %s이다.",
     (purchasedAmount, lottoCount) => {
       // given
       // when
       const availableLottoCount =
-        LottoGame.getPurchasableLottoCount(purchasedAmount);
+        LottoPurchaseManager.getPurchasableLottoCount(purchasedAmount);
 
       // then
       expect(availableLottoCount).toBe(lottoCount);
@@ -29,7 +29,7 @@ describe("로도 판매 기계 기능 테스트", () => {
     (purchasedAmount, errorMessage) => {
       // when
       const validateAvailableLottoCount = () =>
-        LottoGame.validateLottoPurchasedAmount(purchasedAmount);
+        LottoPurchaseManager.validateLottoPurchasedAmount(purchasedAmount);
 
       // then
       expect(validateAvailableLottoCount).toThrow(errorMessage);
@@ -42,7 +42,7 @@ describe("로도 판매 기계 기능 테스트", () => {
 
     // when
     const validateAvailableLottoCount = () =>
-      LottoGame.validateLottoPurchasedAmount(purchasedAmount);
+      LottoPurchaseManager.validateLottoPurchasedAmount(purchasedAmount);
 
     // then
     expect(validateAvailableLottoCount).toThrow(

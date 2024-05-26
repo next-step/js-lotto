@@ -1,5 +1,5 @@
 import { $all, $ } from "../../../utils/dom.js";
-import LottoResult from "../../domain/LottoResult.js";
+import LottoRanking from "../../domain/LottoRanking.js";
 
 class LottoResultModal {
   #$modal;
@@ -10,18 +10,18 @@ class LottoResultModal {
     closeButton.addEventListener("click", this.close.bind(this));
   }
 
-  renderLottoResult(lottoGame, lottoResult) {
+  renderLottoResult(lottoGame, lottoRanking) {
     this.renderTotalProfitRate(
       lottoGame.purchasedAmount,
       lottoGame.lottos,
-      lottoResult
+      lottoRanking
     );
-    this.renderLottoRankings(lottoGame.lottos, lottoResult);
+    this.renderLottoRankings(lottoGame.lottos, lottoRanking);
   }
 
-  renderTotalProfitRate(purchasedAmount, lottos, lottoResult) {
-    const totalWinningPrice = lottoResult.getTotalLottoWinningPrice(lottos);
-    const totalProfitRate = LottoResult.getTotalLottoProfitRate(
+  renderTotalProfitRate(purchasedAmount, lottos, lottoRanking) {
+    const totalWinningPrice = lottoRanking.getTotalLottoWinningPrice(lottos);
+    const totalProfitRate = LottoRanking.getTotalLottoProfitRate(
       totalWinningPrice,
       purchasedAmount
     );
@@ -30,19 +30,19 @@ class LottoResultModal {
     $profitRate.textContent = totalProfitRate.toFixed(2);
   }
 
-  renderLottoRankings(lottos, lottoResult) {
+  renderLottoRankings(lottos, lottoRanking) {
     const winningCountElements = $all(".winning-count");
     const lottoRankings = [
-      LottoResult.LottoRanking["FIFTH"],
-      LottoResult.LottoRanking["FOURTH"],
-      LottoResult.LottoRanking["THIRD"],
-      LottoResult.LottoRanking["SECOND"],
-      LottoResult.LottoRanking["FIRST"],
+      LottoRanking.LottoRanking["FIFTH"],
+      LottoRanking.LottoRanking["FOURTH"],
+      LottoRanking.LottoRanking["THIRD"],
+      LottoRanking.LottoRanking["SECOND"],
+      LottoRanking.LottoRanking["FIRST"],
     ];
 
     lottoRankings.forEach((lottoRanking, index) => {
       const winningCountElement = winningCountElements[index];
-      const winningCount = lottoResult.getLottoRankingCount(
+      const winningCount = lottoRanking.getLottoRankingCount(
         lottos,
         lottoRanking
       );

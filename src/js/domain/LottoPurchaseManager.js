@@ -1,14 +1,14 @@
 import { ErrorLottoPurchasedAmount } from "../constants/error.js";
 
-class LottoGame {
-  #lottos; // 발행된 로또들 저장
+class LottoPurchaseManager {
+  #lottos; // 구매한 로또들 저장
   #purchasedAmount;
 
   static LOTTO_PRICE = 1000;
   static MIN_PURCHASED_AMOUNT = 0;
 
   set purchasedAmount(purchasedAmount) {
-    LottoGame.validateLottoPurchasedAmount(purchasedAmount);
+    LottoPurchaseManager.validateLottoPurchasedAmount(purchasedAmount);
     this.#purchasedAmount = purchasedAmount;
   }
 
@@ -31,13 +31,13 @@ class LottoGame {
       );
     }
 
-    if (Number(purchasedAmount) < LottoGame.MIN_PURCHASED_AMOUNT) {
+    if (Number(purchasedAmount) < LottoPurchaseManager.MIN_PURCHASED_AMOUNT) {
       throw new Error(
         ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_POSITIVE
       );
     }
 
-    if (Number(purchasedAmount) % LottoGame.LOTTO_PRICE !== 0) {
+    if (Number(purchasedAmount) % LottoPurchaseManager.LOTTO_PRICE !== 0) {
       throw new Error(
         ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_DIVISIBLE
       );
@@ -46,8 +46,10 @@ class LottoGame {
 
   static getPurchasableLottoCount(purchasedAmount) {
     this.validateLottoPurchasedAmount(purchasedAmount);
-    return Math.floor(Number(purchasedAmount) / LottoGame.LOTTO_PRICE);
+    return Math.floor(
+      Number(purchasedAmount) / LottoPurchaseManager.LOTTO_PRICE
+    );
   }
 }
 
-export default LottoGame;
+export default LottoPurchaseManager;

@@ -1,7 +1,7 @@
 import Lotto from "./js/domain/Lotto.js";
 import LottoGame from "./js/domain/LottoGame.js";
 import LottoMachine from "./js/domain/LottoMachine.js";
-import LottoResult from "./js/domain/LottoResult.js";
+import LottoRanking from "./js/domain/LottoRanking.js";
 import WinningLotto from "./js/domain/WinningLotto.js";
 import LottoListSection from "./js/view/web/LottoListSection.js";
 import LottoResultModal from "./js/view/web/LottoResultModal.js";
@@ -72,10 +72,10 @@ const onClickShowResult = (e) => {
   try {
     const lotto = new Lotto(winningNumbers);
     const winningLotto = new WinningLotto(lotto, bonusNumber);
-    const lottoResult = new LottoResult(winningLotto);
+    const lottoRanking = new LottoRanking(winningLotto);
 
     lottoResultModal.open();
-    lottoResultModal.renderLottoResult(lottoGame, lottoResult);
+    lottoResultModal.renderLottoResult(lottoGame, lottoRanking);
   } catch (error) {
     alert(error.message);
   }

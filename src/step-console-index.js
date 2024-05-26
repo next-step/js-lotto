@@ -2,7 +2,8 @@ import Lotto from "./js/domain/Lotto";
 import LottoGame from "./js/domain/LottoGame";
 import LottoMachine from "./js/domain/LottoMachine";
 import LottoNumber from "./js/domain/LottoNumber";
-import LottoResult from "./js/domain/LottoResult";
+import LottoPurchaseManager from "./js/domain/LottoPurchaseManager.js";
+import LottoRanking from "./js/domain/LottoRanking";
 import WinningLotto from "./js/domain/WinningLotto";
 import Input from "./js/view/console/Input.js";
 import Output from "./js/view/console/Output.js";
@@ -12,7 +13,7 @@ const play = async () => {
   // 로또를 구입할 금액 입력
   const purchasedAmount = await repeatUntilNoError(async () => {
     const input = await Input.getLottoPurchasedAmount();
-    LottoGame.validateLottoPurchasedAmount(input);
+    LottoPurchaseManager.validateLottoPurchasedAmount(input);
     return input;
   });
 
@@ -51,20 +52,20 @@ const play = async () => {
   });
 
   // 로또 당첨 결과 생성
-  const lottoResult = new LottoResult(winningLotto);
+  const lottoRanking = new LottoRanking(winningLotto);
 
   // 로또 당첨 결과 통계 출력
   const lottoRankings = [
-    LottoResult.LottoRanking["FIFTH"],
-    LottoResult.LottoRanking["FOURTH"],
-    LottoResult.LottoRanking["THIRD"],
-    LottoResult.LottoRanking["SECOND"],
-    LottoResult.LottoRanking["FIRST"],
+    LottoRanking.LottoRanking["FIFTH"],
+    LottoRanking.LottoRanking["FOURTH"],
+    LottoRanking.LottoRanking["THIRD"],
+    LottoRanking.LottoRanking["SECOND"],
+    LottoRanking.LottoRanking["FIRST"],
   ];
 
   const lottoRankingStatistics = lottoRankings.map((lottoRanking) => {
-    const lottoRankingInfo = LottoResult.LottoRankingInfo[lottoRanking];
-    const lottoRankingCount = lottoResult.getLottoRankingCount(
+    const lottoRankingInfo = LottoRanking.LottoRankingInfo[lottoRanking];
+    const lottoRankingCount = lottoRanking.getLottoRankingCount(
       lottos,
       lottoRanking
     );
@@ -73,15 +74,15 @@ const play = async () => {
       count: lottoRankingCount,
       rankingWinningPrice: lottoRankingInfo.winningPrice,
       rankingCondition: lottoRankingInfo.condition,
-      isShowExtraMent: lottoRanking === LottoResult.LottoRanking["SECOND"],
+      isShowExtraMent: lottoRanking === LottoRanking.LottoRanking["SECOND"],
     };
   });
 
   Output.printLottoRankingStatistics(lottoRankingStatistics);
 
   // 로또 수익률 출력
-  const totalLottoWinningPrice = lottoResult.getTotalLottoWinningPrice(lottos);
-  const totalLottoProfitRate = LottoResult.getTotalLottoProfitRate(
+  const totalLottoWinningPrice = lottoRanking.getTotalLottoWinningPrice(lottos);
+  const totalLottoProfitRate = LottoRanking.getTotalLottoProfitRate(
     totalLottoWinningPrice,
     purchasedAmount
   );

@@ -1,5 +1,5 @@
-class LottoResult {
-  static LottoRanking = {
+class LottoRanking {
+  static Ranking = {
     FIRST: "FIRST",
     SECOND: "SECOND",
     THIRD: "THIRD",
@@ -8,28 +8,28 @@ class LottoResult {
   };
 
   static LottoRankingInfo = {
-    [LottoResult.LottoRanking.FIRST]: {
-      ranking: LottoResult.LottoRanking.FIRST,
+    [LottoRanking.Ranking.FIRST]: {
+      ranking: LottoRanking.Ranking.FIRST,
       winningPrice: 2_000_000_000,
       condition: 6,
     },
-    [LottoResult.LottoRanking.SECOND]: {
-      ranking: LottoResult.LottoRanking.SECOND,
+    [LottoRanking.Ranking.SECOND]: {
+      ranking: LottoRanking.Ranking.SECOND,
       winningPrice: 30_000_000,
       condition: 5,
     },
-    [LottoResult.LottoRanking.THIRD]: {
-      ranking: LottoResult.LottoRanking.THIRD,
+    [LottoRanking.Ranking.THIRD]: {
+      ranking: LottoRanking.Ranking.THIRD,
       winningPrice: 1_500_000,
       condition: 5,
     },
-    [LottoResult.LottoRanking.FOURTH]: {
-      ranking: LottoResult.LottoRanking.FOURTH,
+    [LottoRanking.Ranking.FOURTH]: {
+      ranking: LottoRanking.Ranking.FOURTH,
       winningPrice: 50_000,
       condition: 4,
     },
-    [LottoResult.LottoRanking.FIFTH]: {
-      ranking: LottoResult.LottoRanking.FIFTH,
+    [LottoRanking.Ranking.FIFTH]: {
+      ranking: LottoRanking.Ranking.FIFTH,
       winningPrice: 5_000,
       condition: 3,
     },
@@ -53,18 +53,16 @@ class LottoResult {
     const { count, bonusNumberMatched } = this.#winningLotto.matchInfo(lotto);
 
     switch (count) {
-      case LottoResult.LottoRankingInfo[LottoResult.LottoRanking.FIRST]
-        .condition:
-        return LottoResult.LottoRankingInfo[LottoResult.LottoRanking.FIRST];
-      case LottoResult.LottoRankingInfo[LottoResult.LottoRanking.SECOND]
-        .condition:
+      case LottoRanking.LottoRankingInfo[LottoRanking.Ranking.FIRST].condition:
+        return LottoRanking.LottoRankingInfo[LottoRanking.Ranking.FIRST];
+      case LottoRanking.LottoRankingInfo[LottoRanking.Ranking.SECOND].condition:
         return bonusNumberMatched
-          ? LottoResult.LottoRankingInfo[LottoResult.LottoRanking.SECOND]
-          : LottoResult.LottoRankingInfo[LottoResult.LottoRanking.THIRD];
-      case LottoResult.LottoRankingInfo.FOURTH.condition:
-        return LottoResult.LottoRankingInfo[LottoResult.LottoRanking.FOURTH];
-      case LottoResult.LottoRankingInfo.FIFTH.condition:
-        return LottoResult.LottoRankingInfo[LottoResult.LottoRanking.FIFTH];
+          ? LottoRanking.LottoRankingInfo[LottoRanking.Ranking.SECOND]
+          : LottoRanking.LottoRankingInfo[LottoRanking.Ranking.THIRD];
+      case LottoRanking.LottoRankingInfo.FOURTH.condition:
+        return LottoRanking.LottoRankingInfo[LottoRanking.Ranking.FOURTH];
+      case LottoRanking.LottoRankingInfo.FIFTH.condition:
+        return LottoRanking.LottoRankingInfo[LottoRanking.Ranking.FIFTH];
       default:
         return null;
     }
@@ -82,8 +80,7 @@ class LottoResult {
     const lottoRankings = this.getLottoRankings(lottos);
 
     return lottoRankings.filter(
-      (lottoRanking) =>
-        lottoRanking.ranking === LottoResult.LottoRanking[ranking]
+      (lottoRanking) => lottoRanking.ranking === LottoRanking.Ranking[ranking]
     ).length;
   }
 
@@ -97,4 +94,4 @@ class LottoResult {
   }
 }
 
-export default LottoResult;
+export default LottoRanking;
