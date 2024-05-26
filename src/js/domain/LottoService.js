@@ -5,7 +5,7 @@ import {
   LOTTO_DIGITS,
 } from "./Lotto";
 import { drawRandomItems } from "../util/Draw";
-import { checkMoney } from "./LottoValidate";
+import { checkMoney, checkLottos } from "./LottoValidate";
 
 export const LOTTO_PRICE = 1_000;
 
@@ -21,8 +21,11 @@ export const buyLottos = (money) => {
 
 export const getNumbersList = (lottos) => lottos.map((e) => e.numbers);
 
-export const getLottoRanks = (lottos, winningNumbers, bonusNumber) =>
-  lottos.map((e) => e.compare(winningNumbers, bonusNumber));
+export const getLottoRanks = (lottos, winningNumbers, bonusNumber) => {
+  checkLottos(lottos);
+
+  return lottos.map((e) => e.compare(winningNumbers, bonusNumber));
+};
 
 export const calculateProfitRate = (lottoQuantity, totalReward) =>
   (totalReward / (lottoQuantity * LOTTO_PRICE)) * 100;

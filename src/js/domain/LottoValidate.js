@@ -12,7 +12,19 @@ export const checkMoney = (money) => {
   }
 };
 
+export const checkLottos = (lottos) => {
+  if (!lottos) {
+    throw new Error("로또를 구입해주세요.");
+  }
+};
+
 export const checkNumbers = (numbers) => {
+  if (numbers.some((e) => !Number.isInteger(e))) {
+    throw new Error(
+      `로또(당첨) 번호는 ${LOTTO_MIN_NUMBER}~${LOTTO_MAX_NUMBER} 사이의 수입니다.`
+    );
+  }
+
   if (numbers.length !== LOTTO_DIGITS) {
     throw new Error(`로또(당첨) 번호의 자리수는 ${LOTTO_DIGITS}자리입니다.`);
   }
