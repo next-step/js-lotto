@@ -16,7 +16,7 @@ export const INPUT_MESSAGE = {
 export const OUTPUT_MESSAGE = {
   PURCHASE_RESULT_COUNT: (count) => `${count}개를 구매했습니다.`,
   WINNING_STATISTICS: "\n당첨 통계\n--------------------",
-  TOTAL_RATE_OF_RETURN: (count) => `총 수익률은 ${count}%입니다.`,
+  TOTAL_RATE_OF_RETURN: (rate) => `총 수익률은 ${rate}%입니다.`,
 
   NAN_ERROR: "숫자를 입력해주세요.",
   WINNING_LOTTO_LENGTH_ERROR: `당첨 번호는 ${LOTTO.NUMBERS_COUNT}개를 입력해야 합니다.`,

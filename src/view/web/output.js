@@ -44,4 +44,8 @@ export const output = {
       td.setAttribute("class", "p-3");
     });
   },
+
+  rateOfReturn(rate) {
+    $("#rate_of_return").textContent = OUTPUT_MESSAGE.TOTAL_RATE_OF_RETURN(rate);
+  },
 };

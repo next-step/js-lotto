@@ -1,15 +1,20 @@
 import { Lotto } from "../domain/Lotto";
 import { LottoGame } from "../domain/LottoGame";
+import calculateRateOfReturn from "../utils/calculateRateOfReturn";
 import { $, $$ } from "../utils/querySelector";
+import { validateArray } from "../validator/validateArray";
+import { validateNumber } from "../validator/validateNumber";
 import { output } from "../view/web/output";
 
 export default class LottoController {
   #lotto;
   #lottoGame;
+  #purchasePrice;
 
   constructor() {
     this.#lotto;
     this.#lottoGame;
+    this.#purchasePrice;
   }
 
   init() {
@@ -21,13 +26,19 @@ export default class LottoController {
   initPurchasePrice() {
     $("#purchase_price_form").addEventListener("submit", (e) => {
       e.preventDefault();
-      const purchasePrice = $("#purchase_price_input").value;
-      this.#lotto = new Lotto(purchasePrice);
-      this.disabledPurchasePrice();
-      if ($("#lottos_toggle_button").checked === false) {
-        $("#lotto_result_box").classList.add("d-none");
+      try {
+        this.validatePurchasePrice($("#purchase_price_input").value);
+        this.#purchasePrice = $("#purchase_price_input").value;
+        this.#lotto = new Lotto(this.#purchasePrice);
+        this.disabledPurchasePrice();
+        if ($("#lottos_toggle_button").checked === false) {
+          $("#lotto_result_box").classList.add("d-none");
+        }
+        this.outputLottoResult();
+        $("#result_button").disabled = false;
+      } catch (error) {
+        alert(error.message);
       }
-      this.outputLottoResult();
     });
   }
 
@@ -50,15 +61,25 @@ export default class LottoController {
   initLottoGameResult() {
     $("#result_form").addEventListener("submit", (e) => {
       e.preventDefault();
+      this.handleLottoGameResult();
+    });
+  }
+
+  handleLottoGameResult() {
+    try {
       const winningNumber = [...$$(".winning-number")].map((input) => Number(input.value));
       const bonusNumber = Number($(".bonus-number").value);
       this.#lottoGame = new LottoGame(this.#lotto.lottos, winningNumber, bonusNumber);
       output.lottoGameResult(this.#lottoGame.result);
-    });
-    // this.outputLottoGameResult();
+      const rateOfReturn = calculateRateOfReturn(this.#lottoGame.totalIncome, this.#purchasePrice);
+      output.rateOfReturn(rateOfReturn);
+    } catch (erorr) {
+      alert(erorr.message);
+    }
   }
 
-  get lottos() {
-    return this.#lotto.lottos;
+  validatePurchasePrice(purchasePrice) {
+    validateNumber.nan(purchasePrice);
+    validateNumber.negative(purchasePrice);
   }
 }
