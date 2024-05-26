@@ -4,7 +4,6 @@ import {
   MAX_NUMBER,
   MIN_NUMBER,
 } from "../constants/number";
-import { randomNumber, sortingNumber } from "../util/random";
 
 class LottoNumber {
   #number;

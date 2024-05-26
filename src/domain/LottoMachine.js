@@ -31,14 +31,6 @@ class LottoMachine {
   }
 
   #generateRandomLottoNumbers() {
-    // const set = new Set();
-    // while (set.size < 6) {
-    //   const num = randomNumber(MIN_NUMBER, MAX_NUMBER);
-    //   set.add(num);
-    // }
-
-    // const randomLotto = Array.from(set);
-    // return sortingNumber(randomLotto);
     return shuffle(this.#lottoNumberPool).slice(0, 6);
   }
 
@@ -51,7 +43,7 @@ class LottoMachine {
   }
 
   buyLottoList(pay) {
-    const amount = this.#validatePrice(pay);
+    const amount = this.#validatePrice(pay.money);
     return this.#generateLottoList(amount);
   }
 }

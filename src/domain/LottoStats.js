@@ -1,4 +1,4 @@
-import { PRIZE } from "./WinningLotto";
+import { PRIZE } from "./Prize";
 
 class LottoStats {
   #stats = {
