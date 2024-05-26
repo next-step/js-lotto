@@ -7,7 +7,7 @@ const LottoMachine = {
   sellAutoLottoTicket(cost) {
     new LottoThrowMessage(cost)
       .maxSafeInteger()
-      .isInteger()
+      .integer()
       .checkCost(LOTTO.PRICE);
 
     const sellCount = Math.floor(cost / LOTTO.PRICE);

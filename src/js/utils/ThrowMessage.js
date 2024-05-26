@@ -10,21 +10,21 @@ class ThrowMessage {
     return this.#value;
   }
 
-  isString() {
+  string() {
     if (!(typeof this.#value === 'string')) {
       throw new TypeError(ERROR_MESSAGE.IS_NOT_ARRAY);
     }
     return this;
   }
 
-  isArray() {
+  array() {
     if (!Array.isArray(this.#value)) {
       throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
     }
     return this;
   }
 
-  regex(regex, message = ERROR_MESSAGE.INVALID_REGEX_FORMAT) {
+  matchRegex(regex, message = ERROR_MESSAGE.INVALID_REGEX_FORMAT) {
     if (!new RegExp(regex, 'g').test(this.#value)) {
       throw new TypeError(message);
     }
@@ -66,14 +66,14 @@ class ThrowMessage {
     return this;
   }
 
-  isInteger() {
+  integer() {
     if (!Number.isInteger(this.#value)) {
       throw TypeError(ERROR_MESSAGE.IS_NOT_NUMBER);
     }
     return this;
   }
 
-  isTruthy() {
+  truthy() {
     if (!this.#value) {
       throw TypeError(ERROR_MESSAGE.IS_NOT_TRUTHY);
     }

@@ -5,9 +5,9 @@ class Product {
   #price;
 
   constructor(name, price) {
-    new ThrowMessage(name.trim()).isString().minLength(1).maxLength(15);
+    new ThrowMessage(name.trim()).string().minLength(1).maxLength(15);
 
-    new ThrowMessage(price).isInteger().maxSafeInteger();
+    new ThrowMessage(price).integer().maxSafeInteger();
 
     this.#name = name.trim();
     this.#price = price;

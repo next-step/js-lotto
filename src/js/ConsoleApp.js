@@ -66,7 +66,7 @@ async function ConsoleApp() {
 function validatePurchaseAmount(cost) {
   new ThrowMessage(cost)
     .maxSafeInteger()
-    .isInteger()
+    .integer()
     .callback((value) => {
       if (value < LOTTO.PRICE) {
         throw new Error("'돈이 부족합니다.'");
@@ -85,7 +85,7 @@ function validateWinningBonusNumber(winningBonusNumber, winningNumbers) {
 }
 
 function validateRetryCmd(input) {
-  new ThrowMessage(input).regex(
+  new ThrowMessage(input).matchRegex(
     /^[yYnN]$/,
     `\n- [y|Y] : 로또 게임 재시작\n- [n|N] : 로또 게임 종료\n`
   );
