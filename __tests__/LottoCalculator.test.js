@@ -41,6 +41,16 @@ describe('LottoCalculator 생성자 테스트', () => {
   );
 });
 
+describe('로또 당첨 금액 테스트', () => {
+  context('1등 금액 2_000_000_000원이 주어질 때', () => {
+    it('2등 금액은 1등 금액의 1.5% 이다.', () => {
+      // given
+      // when
+      // then
+    });
+  });
+});
+
 describe('LottoCalculator 로또 통계 테스트', () => {
   context('1,2,3등인 3개의 로또를 통계를 내렸을 때', () => {
     it('수익률과 차트 배열을 반환한다.', () => {
@@ -59,11 +69,8 @@ describe('LottoCalculator 로또 통계 테스트', () => {
       ].map((lottoNumbers) => new LottoTicket(lottoNumbers));
 
       // when
-      const { profit, chart } = lottoCalc.getStatistics([
-        lotto1st,
-        lotto2st,
-        lotto3st,
-      ]);
+      const profit = lottoCalc.getProfit([lotto1st, lotto2st, lotto3st]);
+      const chart = lottoCalc.getChart([lotto1st, lotto2st, lotto3st]);
 
       // then
       expect(profit).toBe(1500000 + 30000000 + 2000000000);
@@ -94,11 +101,8 @@ describe('LottoCalculator 로또 통계 테스트', () => {
       ].map((lottoNumbers) => new LottoTicket(lottoNumbers));
 
       // when
-      const { profit, chart } = lottoCalc.getStatistics([
-        lotto1st,
-        lotto2st,
-        lotto3st,
-      ]);
+      const profit = lottoCalc.getProfit([lotto1st, lotto2st, lotto3st]);
+      const chart = lottoCalc.getChart([lotto1st, lotto2st, lotto3st]);
 
       // then
       expect(profit).toBe(1500000 + 30000000 + 2000000000);

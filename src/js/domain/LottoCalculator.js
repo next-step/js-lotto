@@ -81,77 +81,65 @@ class LottoCalculator {
     }
   }
 
-  #getLottoResult(lottoNumbers) {
-    return {
-      matchCount: this.#getLottoNumberMatchCount(
-        this.#winningNumbers,
-        lottoNumbers
-      ),
-      winningRank: this.#calcWinningRank(lottoNumbers),
-      winningAmount: this.#calcWinningAmount(lottoNumbers),
-    };
+  getProfit(lottoTickets) {
+    return lottoTickets.reduce((acc, lottoTicket) => {
+      return acc + this.#calcWinningAmount(lottoTicket.lottoNumbers);
+    }, 0);
   }
 
-  getStatistics(lottoTickets) {
-    const statistics = {
-      chart: new Map([
-        [
-          LOTTO.RANK_5,
-          {
-            lottoTickets: [],
-            winningAmount: this.#winningAmounts[4] ?? 0,
-            matchCount: this.#lottoLength - 3,
-          },
-        ],
-        [
-          LOTTO.RANK_4,
-          {
-            lottoTickets: [],
-            winningAmount: this.#winningAmounts[3] ?? 0,
-            matchCount: this.#lottoLength - 2,
-          },
-        ],
-        [
-          LOTTO.RANK_3,
-          {
-            lottoTickets: [],
-            winningAmount: this.#winningAmounts[2] ?? 0,
-            matchCount: this.#lottoLength - 1,
-          },
-        ],
-        [
-          LOTTO.RANK_2,
-          {
-            lottoTickets: [],
-            winningAmount: this.#winningAmounts[1] ?? 0,
-            matchCount: this.#lottoLength - 1,
-          },
-        ],
-        [
-          LOTTO.RANK_1,
-          {
-            lottoTickets: [],
-            winningAmount: this.#winningAmounts[0] ?? 0,
-            matchCount: this.#lottoLength,
-          },
-        ],
-      ]),
-      profit: 0,
-    };
+  getChart(lottoTickets) {
+    const statistics = new Map([
+      [
+        LOTTO.RANK_5,
+        {
+          lottoTickets: [],
+          winningAmount: this.#winningAmounts[4] ?? 0,
+          matchCount: this.#lottoLength - 3,
+        },
+      ],
+      [
+        LOTTO.RANK_4,
+        {
+          lottoTickets: [],
+          winningAmount: this.#winningAmounts[3] ?? 0,
+          matchCount: this.#lottoLength - 2,
+        },
+      ],
+      [
+        LOTTO.RANK_3,
+        {
+          lottoTickets: [],
+          winningAmount: this.#winningAmounts[2] ?? 0,
+          matchCount: this.#lottoLength - 1,
+        },
+      ],
+      [
+        LOTTO.RANK_2,
+        {
+          lottoTickets: [],
+          winningAmount: this.#winningAmounts[1] ?? 0,
+          matchCount: this.#lottoLength - 1,
+        },
+      ],
+      [
+        LOTTO.RANK_1,
+        {
+          lottoTickets: [],
+          winningAmount: this.#winningAmounts[0] ?? 0,
+          matchCount: this.#lottoLength,
+        },
+      ],
+    ]);
 
     lottoTickets.forEach((lottoTicket) => {
-      const lottoResult = this.#getLottoResult(lottoTicket.lottoNumbers);
-      const winningRankRow = statistics.chart.get(lottoResult.winningRank);
+      const rank = this.#calcWinningRank(lottoTicket.lottoNumbers);
+      const winningRankRow = statistics.get(rank);
       if (winningRankRow) {
         winningRankRow.lottoTickets.push(lottoTicket);
-        statistics.profit = statistics.profit + lottoResult.winningAmount;
       }
     });
 
-    return {
-      profit: statistics.profit,
-      chart: [...statistics.chart],
-    };
+    return [...statistics];
   }
 }
 
