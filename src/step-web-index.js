@@ -106,6 +106,20 @@ LottoRankingModal.selector.CLOSE_BUTTON.addEventListener(
   LottoRankingModal.close.bind(LottoRankingModal)
 );
 
+LottoRankingModal.selector.MODAL.addEventListener("click", (e) => {
+  if (e.target === e.currentTarget) {
+    LottoRankingModal.close();
+  }
+});
+
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    if (LottoRankingModal.selector.MODAL.classList.contains("open")) {
+      LottoRankingModal.close();
+    }
+  }
+});
+
 // 게임 다시 시작하기
 const onRestartGame = () => {
   LottoRankingModal.close();
