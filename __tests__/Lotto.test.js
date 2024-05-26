@@ -22,11 +22,10 @@ describe("로또 기능 테스트", () => {
       Lotto.createLottoNumberInstances("1,1,2,3,4,5");
 
     // when
-    const validateLottoNumbers = () =>
-      Lotto.validateLottoNumbers(lottoNumberInstances);
+    const validateLotto = () => Lotto.validateLotto(lottoNumberInstances);
 
     // then
-    expect(validateLottoNumbers).toThrow(
+    expect(validateLotto).toThrow(
       ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_DUPLICATED
     );
   });
@@ -39,11 +38,10 @@ describe("로또 기능 테스트", () => {
     const lottoNumberInstances = Lotto.createLottoNumberInstances(testSet);
 
     // when
-    const validateLottoNumbers = () =>
-      Lotto.validateLottoNumbers(lottoNumberInstances);
+    const validateLotto = () => Lotto.validateLotto(lottoNumberInstances);
 
     // then
-    expect(validateLottoNumbers).toThrow(
+    expect(validateLotto).toThrow(
       ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH
     );
   });

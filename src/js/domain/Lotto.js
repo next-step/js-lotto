@@ -9,7 +9,7 @@ class Lotto {
   constructor(input) {
     const lottoNumberInstances = Lotto.createLottoNumberInstances(input);
 
-    Lotto.validateLottoNumbers(lottoNumberInstances);
+    Lotto.validateLotto(lottoNumberInstances);
 
     const sortedLottoNumberInstances =
       Lotto.sortLottoNumbersByAscendingOrder(lottoNumberInstances);
@@ -29,15 +29,17 @@ class Lotto {
   static validateLottoNumbers(lottoNumbers) {
     const lottoNumbersSet = new Set(lottoNumbers);
 
-    if (lottoNumbers.length !== this.LENGTH_LOTTO_NUMBERS) {
-      throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH);
-    }
-
     if (lottoNumbers.length !== lottoNumbersSet.size) {
       throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_DUPLICATED);
     }
+  }
 
-    return lottoNumbers;
+  static validateLotto(lottoNumbers) {
+    Lotto.validateLottoNumbers(lottoNumbers);
+
+    if (lottoNumbers.length !== this.LENGTH_LOTTO_NUMBERS) {
+      throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH);
+    }
   }
 
   static createLottoNumberInstances(lottoNumbers) {
