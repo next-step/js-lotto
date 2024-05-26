@@ -1,17 +1,21 @@
 import { Lotto } from "../domain/Lotto";
-import { $ } from "../utils/querySelector";
+import { LottoGame } from "../domain/LottoGame";
+import { $, $$ } from "../utils/querySelector";
 import { output } from "../view/web/output";
 
 export default class LottoController {
   #lotto;
+  #lottoGame;
 
   constructor() {
     this.#lotto;
+    this.#lottoGame;
   }
 
   init() {
     this.initPurchasePrice();
     this.initLottosToggle();
+    this.initLottoGameResult();
   }
 
   initPurchasePrice() {
@@ -41,6 +45,17 @@ export default class LottoController {
     $("#lottos_toggle_button").addEventListener("click", () => {
       $("#lotto_result_box").classList.toggle("d-none");
     });
+  }
+
+  initLottoGameResult() {
+    $("#result_form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const winningNumber = [...$$(".winning-number")].map((input) => Number(input.value));
+      const bonusNumber = Number($(".bonus-number").value);
+      this.#lottoGame = new LottoGame(this.#lotto.lottos, winningNumber, bonusNumber);
+      output.lottoGameResult(this.#lottoGame.result);
+    });
+    // this.outputLottoGameResult();
   }
 
   get lottos() {

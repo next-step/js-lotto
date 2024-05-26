@@ -1,4 +1,4 @@
-import { OUTPUT_MESSAGE, PRIZE_MESSAGE } from "../../constants/message";
+import { OUTPUT_MESSAGE } from "../../constants/message";
 import { createPrizeMessage } from "../../utils/createPrizeMessage";
 
 export const output = {
