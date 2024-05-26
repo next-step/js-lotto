@@ -7,9 +7,11 @@ class LottoPurchaseManager {
   static LOTTO_PRICE = 1000;
   static MIN_PURCHASED_AMOUNT = 0;
 
-  set purchasedAmount(purchasedAmount) {
+  constructor(purchasedAmount, lottos) {
     LottoPurchaseManager.validateLottoPurchasedAmount(purchasedAmount);
-    this.#purchasedAmount = purchasedAmount;
+    this.#purchasedAmount = Number(purchasedAmount);
+
+    this.#lottos = lottos;
   }
 
   get purchasedAmount() {
@@ -18,10 +20,6 @@ class LottoPurchaseManager {
 
   get lottos() {
     return [...this.#lottos];
-  }
-
-  set lottos(lottos) {
-    this.#lottos = lottos;
   }
 
   static validateLottoPurchasedAmount(purchasedAmount) {

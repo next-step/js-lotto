@@ -1,61 +1,50 @@
 import { $, $all } from "../../../utils/dom.js";
 
-let instance;
-class WinningLottoForm {
-  #$winningLottoForm;
-  #winningLottoNumberInputs;
-  #$bonusNumberInput;
+const WinningLottoForm = {
+  selector: {
+    WINNING_LOTTO_FORM: $(".winning-lotto-form"),
+    WINNING_NUMBER_INPUTS: $all(".winning-number"),
+    BONUS_NUMBER_INPUT: $(".bonus-number"),
+  },
 
-  constructor() {
-    if (instance) {
-      return instance;
-    }
-
-    this.#$winningLottoForm = $(".winning-lotto-form");
-    this.#winningLottoNumberInputs = $all(".winning-number");
-    this.#$bonusNumberInput = $(".bonus-number");
-
-    instance = this;
-  }
-
-  get isValidWinningNumbers() {
-    return Array.from(this.#winningLottoNumberInputs).every(
+  isValidWinningNumbers() {
+    return Array.from(this.selector.WINNING_NUMBER_INPUTS).every(
       (winningLottoNumberInput) => {
         return winningLottoNumberInput.validity.valid;
       }
     );
-  }
+  },
 
-  get isValidBonusNumber() {
-    return this.#$bonusNumberInput.validity.valid;
-  }
+  isValidBonusNumber() {
+    return this.selector.BONUS_NUMBER_INPUT.validity.valid;
+  },
 
-  get winningNumbers() {
-    return Array.from(this.#winningLottoNumberInputs).map(
+  winningNumbers() {
+    return Array.from(this.selector.WINNING_NUMBER_INPUTS).map(
       (winningNumberInput) => winningNumberInput.value
     );
-  }
+  },
 
-  get bonusNumber() {
-    return this.#$bonusNumberInput.value;
-  }
+  bonusNumber() {
+    return this.selector.BONUS_NUMBER_INPUT.value;
+  },
 
   show() {
     this.reset();
-    this.#$winningLottoForm.classList.remove("d-none");
-  }
+    this.selector.WINNING_LOTTO_FORM.classList.remove("d-none");
+  },
 
   hide() {
-    this.#$winningLottoForm.classList.add("d-none");
-  }
+    this.selector.WINNING_LOTTO_FORM.classList.add("d-none");
+  },
 
   reset() {
-    this.#winningLottoNumberInputs.forEach((winningNumberInput) => {
+    this.selector.WINNING_NUMBER_INPUTS.forEach((winningNumberInput) => {
       winningNumberInput.value = "";
     });
 
-    this.#$bonusNumberInput.value = "";
-  }
-}
+    this.selector.BONUS_NUMBER_INPUT.value = "";
+  },
+};
 
 export default WinningLottoForm;

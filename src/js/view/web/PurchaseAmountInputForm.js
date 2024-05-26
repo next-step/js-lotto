@@ -1,41 +1,22 @@
 import { $ } from "../../../utils/dom.js";
 
-let instance;
-class PurchaseAmountInputForm {
-  #$purchaseAmountInput;
+const PurchaseAmountInputForm = {
+  selector: {
+    PURCHASE_AMOUNT_INPUT: $(".purchase-amount-input"),
+    PURCHASE_BUTTON: $(".purchase-button"),
+  },
 
-  constructor(onSubmit) {
-    if (instance) {
-      return instance;
-    }
+  isValidInput() {
+    return this.selector.PURCHASE_AMOUNT_INPUT.validity.valid;
+  },
 
-    this.#$purchaseAmountInput = $(".purchase-amount-input");
-    const $purchaseButton = $(".purchase-button");
-
-    this.#$purchaseAmountInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        if (!this.isValidInput) {
-          return;
-        }
-        onSubmit(e);
-      }
-    });
-    $purchaseButton.addEventListener("click", onSubmit);
-
-    instance = this;
-  }
-
-  get isValidInput() {
-    return this.#$purchaseAmountInput.validity.valid;
-  }
-
-  get inputValue() {
-    return this.#$purchaseAmountInput.value;
-  }
+  inputValue() {
+    return this.selector.PURCHASE_AMOUNT_INPUT.value;
+  },
 
   reset() {
-    this.#$purchaseAmountInput.value = "";
-  }
-}
+    this.selector.PURCHASE_AMOUNT_INPUT.value = "";
+  },
+};
 
 export default PurchaseAmountInputForm;

@@ -1,26 +1,12 @@
 import { $ } from "../../../utils/dom.js";
 
-let instance;
-class LottoListSection {
-  #$lottoListSection;
-  #$lottoCount;
-  #$lottoListToggleButton;
-  #$lottoList;
-
-  constructor(onToggle) {
-    if (instance) {
-      return instance;
-    }
-
-    this.#$lottoListSection = $(".lotto-list-section");
-    this.#$lottoCount = $(".lotto-count");
-    this.#$lottoListToggleButton = $(".lotto-list-toggle-button");
-    this.#$lottoList = $(".lotto-list");
-
-    this.#$lottoListToggleButton.addEventListener("click", onToggle);
-
-    instance = this;
-  }
+const LottoListSection = {
+  selector: {
+    LOTTO_LIST_SECTION: $(".lotto-list-section"),
+    LOTTO_COUNT: $(".lotto-count"),
+    LOTTO_LIST_TOGGLE_BUTTON: $(".lotto-list-toggle-button"),
+    LOTTO_LIST: $(".lotto-list"),
+  },
 
   generateLottoItemTemplate(lottoNumbers, hideLottoNumbers) {
     const lottoNumbersTextContent = lottoNumbers.join(", ");
@@ -31,54 +17,54 @@ class LottoListSection {
     hideLottoNumbers ? "d-none" : ""
   }">${lottoNumbersTextContent}</span>
   </li>`;
-  }
+  },
 
   show(lottos) {
-    this.#$lottoListSection.classList.remove("d-none");
+    this.selector.LOTTO_LIST_SECTION.classList.remove("d-none");
     this.renderLottoCount(lottos);
     this.reset(lottos);
-  }
+  },
 
   hide() {
-    this.#$lottoListSection.classList.add("d-none");
-  }
+    this.selector.LOTTO_LIST_SECTION.classList.add("d-none");
+  },
 
   renderLottoCount(lottos) {
-    this.#$lottoCount.textContent = lottos.length;
-  }
+    this.selector.LOTTO_COUNT.textContent = lottos.length;
+  },
 
   toggleLottoNumbers(lottos) {
-    const checked = this.#$lottoListToggleButton.checked;
+    const checked = this.selector.LOTTO_LIST_TOGGLE_BUTTON.checked;
 
     if (checked) {
       this.showLottoNumbers(lottos);
     } else {
       this.hideLottoNumbers(lottos);
     }
-  }
+  },
 
   showLottoNumbers(lottos) {
     const lottoListTemplate = lottos.map((lotto) =>
       this.generateLottoItemTemplate(lotto.lottoNumbers, false)
     );
 
-    this.#$lottoList.innerHTML = lottoListTemplate.join("");
-    this.#$lottoList.classList.add("flex-col");
-  }
+    this.selector.LOTTO_LIST.innerHTML = lottoListTemplate.join("");
+    this.selector.LOTTO_LIST.classList.add("flex-col");
+  },
 
   hideLottoNumbers(lottos) {
     const lottoListTemplate = lottos.map((lotto) =>
       this.generateLottoItemTemplate(lotto.lottoNumbers, true)
     );
 
-    this.#$lottoList.innerHTML = lottoListTemplate.join("");
-    this.#$lottoList.classList.remove("flex-col");
-  }
+    this.selector.LOTTO_LIST.innerHTML = lottoListTemplate.join("");
+    this.selector.LOTTO_LIST.classList.remove("flex-col");
+  },
 
   reset(lottos) {
     this.hideLottoNumbers(lottos);
-    this.#$lottoListToggleButton.checked = false;
-  }
-}
+    this.selector.LOTTO_LIST_TOGGLE_BUTTON.checked = false;
+  },
+};
 
 export default LottoListSection;

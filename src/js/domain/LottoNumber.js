@@ -1,5 +1,6 @@
 import { ErrorLottoNumber } from "../constants/error.js";
 
+let instances;
 class LottoNumber {
   static MAX_LOTTO_NUMBER = 45;
   static MIN_LOTTO_NUMBER = 1;
@@ -56,7 +57,7 @@ class LottoNumber {
   }
 }
 
-const instances = LottoNumber.LOTTO_NUMBERS.reduce((acc, cur) => {
+instances = LottoNumber.LOTTO_NUMBERS.reduce((acc, cur) => {
   acc[cur] = new LottoNumber(cur);
   return acc;
 }, {});
