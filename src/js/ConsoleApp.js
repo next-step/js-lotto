@@ -59,7 +59,7 @@ async function ConsoleApp() {
       await ConsoleApp();
     }
   } catch (e) {
-    console.log(`${e.message}`);
+    console.log(`예기치 못한 오류로 인하여 종료되었습니다.`);
   }
 }
 
