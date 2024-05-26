@@ -1,6 +1,6 @@
 {
   "rules": {
-    "max-depth": ["error", 1],
+    "max-depth": ["error", 2],
     "indent": ["error", 2],
     "semi": ["error", "always"],
     "eqeqeq": "error",
