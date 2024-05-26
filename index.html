@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <title>🎱 행운의 로또</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="./src/css/index.css" />
   </head>
   <body>
     <div id="app" class="p-3">
@@ -17,30 +16,35 @@
             </label>
             <div class="d-flex">
               <input
+                id="moneyInput"
                 type="number"
                 class="w-100 mr-2 pl-2"
                 placeholder="구입 금액"
               />
-              <button type="button" class="btn btn-cyan">확인</button>
+              <button id="buyButton" type="button" class="btn btn-cyan">
+                확인
+              </button>
             </div>
           </form>
           <section class="mt-9">
             <div class="d-flex">
-              <label class="flex-auto my-0">총 5개를 구매하였습니다.</label>
+              <label id="totalCountLabel" class="flex-auto my-0"></label>
               <div class="flex-auto d-flex justify-end pr-1">
                 <label class="switch">
-                  <input type="checkbox" class="lotto-numbers-toggle-button" />
+                  <input
+                    id="numbersToggle"
+                    type="checkbox"
+                    class="lotto-numbers-toggle-button"
+                  />
                   <span class="text-base font-normal">번호보기</span>
                 </label>
               </div>
             </div>
-            <div class="d-flex flex-wrap">
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-            </div>
+            <div
+              id="lottosDiv"
+              class="d-flex flex-wrap"
+              style="display: none"
+            ></div>
           </section>
           <form class="mt-9">
             <label class="flex-auto d-inline-block mb-3"
@@ -84,6 +88,7 @@
               </div>
             </div>
             <button
+              id="resultButton"
               type="button"
               class="open-result-modal-button mt-5 btn btn-cyan w-100"
             >
@@ -115,38 +120,41 @@
                 <tr class="text-center">
                   <td class="p-3">3개</td>
                   <td class="p-3">5,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3"><span id="fifthRankCount"></span>개</td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">4개</td>
                   <td class="p-3">50,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3"><span id="fourthRankCount"></span>개</td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">5개</td>
                   <td class="p-3">1,500,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3"><span id="thirdRankCount"></span>개</td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">5개 + 보너스볼</td>
                   <td class="p-3">30,000,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3"><span id="secondRankCount"></span>개</td>
                 </tr>
                 <tr class="text-center">
                   <td class="p-3">6개</td>
                   <td class="p-3">2,000,000,000</td>
-                  <td class="p-3">n개</td>
+                  <td class="p-3"><span id="firstRankCount"></span>개</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p class="text-center font-bold">당신의 총 수익률은 %입니다.</p>
+          <p class="text-center font-bold">
+            당신의 총 수익률은 <span id="profitRate"></span>%입니다.
+          </p>
           <div class="d-flex justify-center mt-5">
-            <button type="button" class="btn btn-cyan">다시 시작하기</button>
+            <button id="restartButton" type="button" class="btn btn-cyan">
+              다시 시작하기
+            </button>
           </div>
         </div>
       </div>
     </div>
-    <script type="module" src="./src/js/index.js"></script>
   </body>
 </html>

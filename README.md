@@ -12,7 +12,7 @@
 </p>
 
 <p align="middle">
-  <a href="https://next-step.github.io/js-lotto">🖥️ 데모 링크</a>
+  <a href="https://hsju0202.github.io/js-lotto/dist/">🖥️ 데모 링크</a>
 </p>
 
 ## 🔥 Projects!
