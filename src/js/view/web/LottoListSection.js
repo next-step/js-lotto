@@ -59,7 +59,7 @@ class LottoListSection {
 
   showLottoNumbers(lottos) {
     const lottoListTemplate = lottos.map((lotto) =>
-      this.generateLottoItemTemplate(lotto.numbers, false)
+      this.generateLottoItemTemplate(lotto.lottoNumbers, false)
     );
 
     this.#$lottoList.innerHTML = lottoListTemplate.join("");
@@ -68,7 +68,7 @@ class LottoListSection {
 
   hideLottoNumbers(lottos) {
     const lottoListTemplate = lottos.map((lotto) =>
-      this.generateLottoItemTemplate(lotto.numbers, true)
+      this.generateLottoItemTemplate(lotto.lottoNumbers, true)
     );
 
     this.#$lottoList.innerHTML = lottoListTemplate.join("");

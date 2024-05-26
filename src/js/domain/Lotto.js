@@ -4,24 +4,26 @@ import LottoNumber from "./LottoNumber.js";
 class Lotto {
   static LENGTH_LOTTO_NUMBERS = 6;
 
-  #lottoNumbers = [];
+  #lottoNumberInstances = [];
 
   constructor(input) {
-    const lottoNumbers = Lotto.convertLottoNumbersToLottoNumberArray(input);
+    const lottoNumberInstances = Lotto.createLottoNumberInstances(input);
 
-    Lotto.validateLottoNumbers(lottoNumbers);
+    Lotto.validateLottoNumbers(lottoNumberInstances);
 
-    const sortedLottoNumbers =
-      Lotto.sortLottoNumbersByAscendingOrder(lottoNumbers);
-    this.#lottoNumbers = sortedLottoNumbers;
+    const sortedLottoNumberInstances =
+      Lotto.sortLottoNumbersByAscendingOrder(lottoNumberInstances);
+    this.#lottoNumberInstances = sortedLottoNumberInstances;
+  }
+
+  get lottoNumberInstances() {
+    return [...this.#lottoNumberInstances];
   }
 
   get lottoNumbers() {
-    return [...this.#lottoNumbers];
-  }
-
-  get numbers() {
-    return this.#lottoNumbers.map((lottoNumber) => lottoNumber.value);
+    return this.#lottoNumberInstances.map(
+      (lottoNumberInstance) => lottoNumberInstance.value
+    );
   }
 
   static validateLottoNumbers(lottoNumbers) {
@@ -38,7 +40,7 @@ class Lotto {
     return lottoNumbers;
   }
 
-  static convertLottoNumbersToLottoNumberArray(lottoNumbers) {
+  static createLottoNumberInstances(lottoNumbers) {
     if (Array.isArray(lottoNumbers)) {
       return lottoNumbers.map((lottoNumber) => new LottoNumber(lottoNumber));
     }
@@ -56,8 +58,8 @@ class Lotto {
     return [...lottoNumbers].sort((a, b) => a - b);
   }
 
-  hasLottoNumber(lottoNumber) {
-    return this.#lottoNumbers.includes(lottoNumber);
+  hasLottoNumberInstance(lottoNumberInstance) {
+    return this.#lottoNumberInstances.includes(lottoNumberInstance);
   }
 }
 

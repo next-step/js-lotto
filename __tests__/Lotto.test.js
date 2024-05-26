@@ -9,7 +9,7 @@ describe("로또 기능 테스트", () => {
       const lotto = new Lotto(testSet);
 
       // when
-      const lottoNumbers = lotto.numbers;
+      const lottoNumbers = lotto.lottoNumbers;
 
       // then
       expect(lottoNumbers).toEqual([1, 2, 3, 4, 5, 6]);
@@ -18,11 +18,12 @@ describe("로또 기능 테스트", () => {
 
   test("로또 번호 중 중복되는 수가 있다면 에러가 발생한다", () => {
     // given
-    const lottoNumbers =
-      Lotto.convertLottoNumbersToLottoNumberArray("1,1,2,3,4,5");
+    const lottoNumberInstances =
+      Lotto.createLottoNumberInstances("1,1,2,3,4,5");
 
     // when
-    const validateLottoNumbers = () => Lotto.validateLottoNumbers(lottoNumbers);
+    const validateLottoNumbers = () =>
+      Lotto.validateLottoNumbers(lottoNumberInstances);
 
     // then
     expect(validateLottoNumbers).toThrow(
@@ -35,6 +36,6 @@ describe("로또 기능 테스트", () => {
     const unsortedLotto = new Lotto([6, 5, 4, 3, 2, 1]);
 
     // then
-    expect(unsortedLotto.numbers).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(unsortedLotto.lottoNumbers).toEqual([1, 2, 3, 4, 5, 6]);
   });
 });

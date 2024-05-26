@@ -42,7 +42,7 @@ class LottoResult {
   }
 
   get winningNumbers() {
-    return this.#winningLotto.numbers;
+    return this.#winningLotto.lottoNumbers;
   }
 
   static getTotalLottoProfitRate(totalLottoWinningPrice, lottoPurcasedAmount) {
