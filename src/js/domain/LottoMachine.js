@@ -3,7 +3,7 @@ import LottoNumber from "./LottoNumber.js";
 
 const LottoMachine = {
   generateRandomLotto() {
-    const shuffle = (arr) => [...arr].sort(() => Math.random());
+    const shuffle = (arr) => [...arr].sort(() => 0.5 - Math.random());
 
     const lotto = new Lotto(
       shuffle(LottoNumber.LOTTO_NUMBERS).slice(0, Lotto.LENGTH_LOTTO_NUMBERS)
