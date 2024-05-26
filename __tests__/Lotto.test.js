@@ -31,6 +31,23 @@ describe("로또 기능 테스트", () => {
     );
   });
 
+  test.each([
+    [1, 2, 3, 4, 5],
+    [1, 2, 3, 4, 5, 6, 7],
+  ])("로또 번호가 6개가 아니라면 에러가 발생한다.", (testSet) => {
+    // given
+    const lottoNumberInstances = Lotto.createLottoNumberInstances(testSet);
+
+    // when
+    const validateLottoNumbers = () =>
+      Lotto.validateLottoNumbers(lottoNumberInstances);
+
+    // then
+    expect(validateLottoNumbers).toThrow(
+      ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH
+    );
+  });
+
   test("로또 번호는 정렬하여 저장한다", () => {
     // given // when
     const unsortedLotto = new Lotto([6, 5, 4, 3, 2, 1]);
