@@ -3,6 +3,7 @@ import { $ } from "../../utils/querySelector";
 
 export const output = {
   lottoResult: (lottos) => {
+    $("#lotto_result_box").innerHTML = "";
     lottos.forEach((lotto) => {
       const $span = document.createElement("span");
       $span.setAttribute("class", "mx-1 text-4xl");
