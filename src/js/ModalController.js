@@ -8,7 +8,7 @@ export const onModalShow = () => {
   $modal.classList.add("open");
 };
 
-export const onModalClose = () => {
+const onModalClose = () => {
   $modal.classList.remove("open");
   $tbody.innerHTML = "";
 };
