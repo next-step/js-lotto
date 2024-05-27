@@ -1,7 +1,7 @@
 import lottoHandler from "../handler/lotto";
 import lottoGameHandler from "../handler/lottoGame";
+import modalHandler from "../handler/modal";
 import { $, $$ } from "../utils/querySelector";
-import { onModalShow } from "./ModalController";
 
 export default class LottoController {
   #lottos;
@@ -19,6 +19,7 @@ export default class LottoController {
     this.initLottosToggle();
     this.initLottoGameResult();
     this.initResetButton();
+    this.initModal();
   }
 
   initLotto() {
@@ -70,7 +71,7 @@ export default class LottoController {
       );
       lottoGameHandler.outputLottoGameResult(result);
       lottoGameHandler.outputRateOfReturn(totalIncome, this.#purchasePrice);
-      onModalShow();
+      modalHandler.onModalShow();
     } catch (e) {
       alert(e.message);
     }
@@ -79,6 +80,15 @@ export default class LottoController {
   initResetButton() {
     $("#reset_button").addEventListener("click", () => {
       location.reload();
+    });
+  }
+
+  initModal() {
+    $(".modal-close").addEventListener("click", modalHandler.onModalClose);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        modalHandler.onModalClose;
+      }
     });
   }
 }

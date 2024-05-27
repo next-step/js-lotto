@@ -1,5 +1,4 @@
 import LottoController from "./js/LottoController";
-import "./js/ModalController";
 class App {
   #lottoController;
 
