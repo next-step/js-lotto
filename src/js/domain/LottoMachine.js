@@ -5,10 +5,7 @@ import LottoThrowMessage from '../utils/LottoThrowMessage';
 
 const LottoMachine = {
   sellAutoLottoTicket(cost) {
-    new LottoThrowMessage(cost)
-      .maxSafeInteger()
-      .integer()
-      .checkCost(LOTTO.PRICE);
+    new LottoThrowMessage(cost).maxSafeInteger().integer().cost(LOTTO.PRICE);
 
     const sellCount = Math.floor(cost / LOTTO.PRICE);
 

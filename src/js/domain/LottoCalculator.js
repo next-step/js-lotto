@@ -20,10 +20,10 @@ class LottoCalculator {
     winningBonusNumber,
     winningAmounts = LottoCalculator.DEFAULT_WINNING_AMOUNT,
   }) {
-    new LottoThrowMessage(winningNumbers).isLottoNumberArray();
+    new LottoThrowMessage(winningNumbers).lottoNumberArray();
     new LottoThrowMessage(winningBonusNumber)
-      .isLottoNumber()
-      .checkDuplicateLottoNumbers(winningNumbers);
+      .lottoNumber()
+      .duplicateLottoNumbers(winningNumbers);
 
     this.#winningNumbers = winningNumbers;
     this.#winningBonusNumber = winningBonusNumber;

@@ -74,13 +74,13 @@ function validatePurchaseAmount(cost) {
 }
 
 function validateWinningNumbers(lottoNumbers) {
-  new LottoThrowMessage(lottoNumbers).isLottoNumberArray();
+  new LottoThrowMessage(lottoNumbers).lottoNumberArray();
 }
 
 function validateWinningBonusNumber(winningBonusNumber, winningNumbers) {
   new LottoThrowMessage(winningBonusNumber)
-    .isLottoNumber()
-    .checkDuplicateLottoNumbers(winningNumbers);
+    .lottoNumber()
+    .duplicateLottoNumbers(winningNumbers);
 }
 
 function validateRetryCmd(input) {
