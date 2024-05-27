@@ -41,16 +41,6 @@ describe('LottoCalculator 생성자 테스트', () => {
   );
 });
 
-describe('로또 당첨 금액 테스트', () => {
-  context('1등 금액 2_000_000_000원이 주어질 때', () => {
-    it('2등 금액은 1등 금액의 1.5% 이다.', () => {
-      // given
-      // when
-      // then
-    });
-  });
-});
-
 describe('LottoCalculator 로또 통계 테스트', () => {
   context('1,2,3등인 3개의 로또를 통계를 내렸을 때', () => {
     it('수익률과 차트 배열을 반환한다.', () => {
@@ -75,11 +65,16 @@ describe('LottoCalculator 로또 통계 테스트', () => {
       // then
       expect(profit).toBe(1500000 + 30000000 + 2000000000);
       expect(chart).toEqual([
-        [5, { lottoTickets: [], winningAmount: 5000, matchCount: 3 }],
-        [4, { lottoTickets: [], winningAmount: 50000, matchCount: 4 }],
-        [3, { lottoTickets: [{}], winningAmount: 1500000, matchCount: 5 }],
-        [2, { lottoTickets: [{}], winningAmount: 30000000, matchCount: 5 }],
-        [1, { lottoTickets: [{}], winningAmount: 2000000000, matchCount: 6 }],
+        { rank: 5, lottoTickets: [], winningAmount: 5000, matchCount: 3 },
+        { rank: 4, lottoTickets: [], winningAmount: 50000, matchCount: 4 },
+        { rank: 3, lottoTickets: [{}], winningAmount: 1500000, matchCount: 5 },
+        { rank: 2, lottoTickets: [{}], winningAmount: 30000000, matchCount: 5 },
+        {
+          rank: 1,
+          lottoTickets: [{}],
+          winningAmount: 2000000000,
+          matchCount: 6,
+        },
       ]);
     });
   });
@@ -107,11 +102,16 @@ describe('LottoCalculator 로또 통계 테스트', () => {
       // then
       expect(profit).toBe(1500000 + 30000000 + 2000000000);
       expect(chart).toEqual([
-        [5, { lottoTickets: [], winningAmount: 5000, matchCount: 1 }],
-        [4, { lottoTickets: [], winningAmount: 50000, matchCount: 2 }],
-        [3, { lottoTickets: [{}], winningAmount: 1500000, matchCount: 3 }],
-        [2, { lottoTickets: [{}], winningAmount: 30000000, matchCount: 3 }],
-        [1, { lottoTickets: [{}], winningAmount: 2000000000, matchCount: 4 }],
+        { rank: 5, lottoTickets: [], winningAmount: 5000, matchCount: 1 },
+        { rank: 4, lottoTickets: [], winningAmount: 50000, matchCount: 2 },
+        { rank: 3, lottoTickets: [{}], winningAmount: 1500000, matchCount: 3 },
+        { rank: 2, lottoTickets: [{}], winningAmount: 30000000, matchCount: 3 },
+        {
+          rank: 1,
+          lottoTickets: [{}],
+          winningAmount: 2000000000,
+          matchCount: 4,
+        },
       ]);
     });
   });

@@ -7,9 +7,13 @@ class LottoCalculator {
   #winningAmounts;
   #lottoLength;
 
-  static DEFAULT_WINNING_AMOUNT = [
-    2_000_000_000, 30_000_000, 1_500_000, 50_000, 5_000,
-  ];
+  static DEFAULT_WINNING_AMOUNT = {
+    first: 2_000_000_000,
+    second: 30_000_000,
+    third: 1_500_000,
+    fourth: 50_000,
+    fifth: 5_000,
+  };
 
   constructor({
     winningNumbers,
@@ -46,17 +50,17 @@ class LottoCalculator {
     );
     switch (matchCount) {
       case this.#lottoLength:
-        return this.#winningAmounts[0];
+        return this.#winningAmounts.first;
       case this.#lottoLength - 1:
         return this.#hasBonusNumber(lottoNumbers, this.#winningBonusNumber)
-          ? this.#winningAmounts[1]
-          : this.#winningAmounts[2];
+          ? this.#winningAmounts.second
+          : this.#winningAmounts.third;
       case this.#lottoLength - 2:
-        return this.#winningAmounts[3];
+        return this.#winningAmounts.fourth;
       case this.#lottoLength - 3:
-        return this.#winningAmounts[4];
+        return this.#winningAmounts.fifth;
       default:
-        return this.#winningAmounts[5];
+        return 0;
     }
   }
 
@@ -88,58 +92,55 @@ class LottoCalculator {
   }
 
   getChart(lottoTickets) {
-    const statistics = new Map([
-      [
-        LOTTO.RANK_5,
-        {
-          lottoTickets: [],
-          winningAmount: this.#winningAmounts[4] ?? 0,
-          matchCount: this.#lottoLength - 3,
-        },
-      ],
-      [
-        LOTTO.RANK_4,
-        {
-          lottoTickets: [],
-          winningAmount: this.#winningAmounts[3] ?? 0,
-          matchCount: this.#lottoLength - 2,
-        },
-      ],
-      [
-        LOTTO.RANK_3,
-        {
-          lottoTickets: [],
-          winningAmount: this.#winningAmounts[2] ?? 0,
-          matchCount: this.#lottoLength - 1,
-        },
-      ],
-      [
-        LOTTO.RANK_2,
-        {
-          lottoTickets: [],
-          winningAmount: this.#winningAmounts[1] ?? 0,
-          matchCount: this.#lottoLength - 1,
-        },
-      ],
-      [
-        LOTTO.RANK_1,
-        {
-          lottoTickets: [],
-          winningAmount: this.#winningAmounts[0] ?? 0,
-          matchCount: this.#lottoLength,
-        },
-      ],
-    ]);
+    const statistics = [
+      {
+        rank: LOTTO.RANK_5,
+        lottoTickets: [],
+        winningAmount: this.#winningAmounts.fifth,
+        matchCount: this.#lottoLength - 3,
+      },
+      {
+        rank: LOTTO.RANK_4,
+        lottoTickets: [],
+        winningAmount: this.#winningAmounts.fourth,
+        matchCount: this.#lottoLength - 2,
+      },
+      {
+        rank: LOTTO.RANK_3,
+        lottoTickets: [],
+        winningAmount: this.#winningAmounts.third,
+        matchCount: this.#lottoLength - 1,
+      },
+      {
+        rank: LOTTO.RANK_2,
+        lottoTickets: [],
+        winningAmount: this.#winningAmounts.second,
+        matchCount: this.#lottoLength - 1,
+      },
+      {
+        rank: LOTTO.RANK_1,
+        lottoTickets: [],
+        winningAmount: this.#winningAmounts.first,
+        matchCount: this.#lottoLength,
+      },
+    ];
 
     lottoTickets.forEach((lottoTicket) => {
       const rank = this.#calcWinningRank(lottoTicket.lottoNumbers);
-      const winningRankRow = statistics.get(rank);
-      if (winningRankRow) {
-        winningRankRow.lottoTickets.push(lottoTicket);
+      const rankedLotto = statistics.find((row) => row.rank === rank);
+      if (rankedLotto) {
+        rankedLotto.lottoTickets.push(lottoTicket);
       }
     });
 
-    return [...statistics];
+    return statistics;
+  }
+
+  getStatistics(lottoTickets) {
+    return {
+      chart: this.getChart(lottoTickets),
+      profit: this.getProfit(lottoTickets),
+    };
   }
 }
 
