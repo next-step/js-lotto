@@ -14,3 +14,8 @@ export const onModalClose = () => {
 };
 
 $modalClose.addEventListener("click", onModalClose);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    onModalClose();
+  }
+});
