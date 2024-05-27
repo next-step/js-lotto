@@ -1,57 +1,47 @@
-import { Lotto } from "../domain/Lotto";
-import { LottoGame } from "../domain/LottoGame";
-import calculateRateOfReturn from "../utils/calculateRateOfReturn";
+import lottoHandler from "../handler/lotto";
+import lottoGameHandler from "../handler/lottoGame";
 import { $, $$ } from "../utils/querySelector";
-import { validateArray } from "../validator/validateArray";
-import { validateNumber } from "../validator/validateNumber";
-import { output } from "../view/web/output";
 import { onModalShow } from "./ModalController";
 
 export default class LottoController {
-  #lotto;
+  #lottos;
   #lottoGame;
   #purchasePrice;
 
   constructor() {
-    this.#lotto;
+    this.#lottos;
     this.#lottoGame;
     this.#purchasePrice;
   }
 
   init() {
-    this.initPurchasePrice();
+    this.initLotto();
     this.initLottosToggle();
     this.initLottoGameResult();
     this.initResetButton();
   }
 
-  initPurchasePrice() {
+  initLotto() {
     $("#purchase_price_form").addEventListener("submit", (e) => {
       e.preventDefault();
-      try {
-        this.validatePurchasePrice($("#purchase_price_input").value);
-        this.#purchasePrice = $("#purchase_price_input").value;
-        this.#lotto = new Lotto(this.#purchasePrice);
-        this.disabledPurchasePrice();
-        if ($("#lottos_toggle_button").checked === false) {
-          $("#lotto_result_box").classList.add("d-none");
-        }
-        this.outputLottoResult();
-        $("#result_button").disabled = false;
-      } catch (error) {
-        alert(error.message);
-      }
+      this.lottoHandler();
     });
   }
 
-  disabledPurchasePrice() {
-    $("#purchase_price_input").disabled = true;
-    $("#purchase_price_button").disabled = true;
-  }
+  lottoHandler() {
+    try {
+      lottoHandler.validatePurchasePrice($("#purchase_price_input").value);
+      this.#purchasePrice = $("#purchase_price_input").value;
+      this.#lottos = lottoHandler.generateLottos(this.#purchasePrice);
+      lottoHandler.outputLottosResult(this.#lottos);
 
-  outputLottoResult() {
-    output.lottosCount(this.#lotto.lottos.length);
-    output.lottoResult(this.#lotto.lottos);
+      if ($("#lottos_toggle_button").checked === false) {
+        $("#lotto_result_box").classList.add("d-none");
+      }
+      $("#result_button").disabled = false;
+    } catch (e) {
+      alert(e.message);
+    }
   }
 
   initLottosToggle() {
@@ -63,48 +53,32 @@ export default class LottoController {
   initLottoGameResult() {
     $("#result_form").addEventListener("submit", (e) => {
       e.preventDefault();
-      this.handleLottoGameResult();
+      this.lottoGameHandler();
     });
+  }
+
+  lottoGameHandler() {
+    try {
+      const winningNumberArray = [...$$(".winning-number")].map((input) => Number(input.value));
+      const bonusNumber = Number($(".bonus-number").value);
+      lottoGameHandler.validateWinningNumbers(winningNumberArray);
+      lottoGameHandler.validateBonusNumber(winningNumberArray, bonusNumber);
+      const { result, totalIncome } = lottoGameHandler.getLottoGameResult(
+        this.#lottos,
+        winningNumberArray,
+        bonusNumber,
+      );
+      lottoGameHandler.outputLottoGameResult(result);
+      lottoGameHandler.outputRateOfReturn(totalIncome, this.#purchasePrice);
+      onModalShow();
+    } catch (e) {
+      alert(e.message);
+    }
   }
 
   initResetButton() {
     $("#reset_button").addEventListener("click", () => {
       location.reload();
     });
-  }
-
-  handleLottoGameResult() {
-    try {
-      const winningNumber = [...$$(".winning-number")].map((input) => Number(input.value));
-      const bonusNumber = Number($(".bonus-number").value);
-      this.validateWinningNumbers(winningNumber);
-      this.validateBonusNumber(winningNumber, bonusNumber);
-      this.#lottoGame = new LottoGame(this.#lotto.lottos, winningNumber, bonusNumber);
-      output.lottoGameResult(this.#lottoGame.result);
-      const rateOfReturn = calculateRateOfReturn(this.#lottoGame.totalIncome, this.#purchasePrice);
-      output.rateOfReturn(rateOfReturn);
-      onModalShow();
-    } catch (erorr) {
-      alert(erorr.message);
-    }
-  }
-
-  validatePurchasePrice(purchasePrice) {
-    validateNumber.nan(purchasePrice);
-    validateNumber.negative(purchasePrice);
-  }
-
-  validateWinningNumbers(winningNumberArray) {
-    validateArray.length(winningNumberArray);
-    validateArray.inRange(winningNumberArray);
-    validateArray.duplicate(winningNumberArray);
-  }
-
-  validateBonusNumber(winningNumberArray, bonusNumber) {
-    validateNumber.nan(bonusNumber);
-    validateNumber.negative(bonusNumber);
-    validateNumber.integer(bonusNumber);
-    validateNumber.max(bonusNumber);
-    validateArray.containNum(winningNumberArray, bonusNumber);
   }
 }
