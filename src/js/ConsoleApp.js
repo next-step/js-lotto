@@ -42,8 +42,7 @@ async function ConsoleApp() {
 
     console.log('당첨 통계\n--------------------');
     chart.forEach((row) => {
-      const [rank, data] = row;
-      const { matchCount, winningAmount, lottoTickets } = data;
+      const { matchCount, winningAmount, lottoTickets } = row;
       console.log(
         `${matchCount}개 일치 (${comma(winningAmount)}원) - ${lottoTickets.length}개`
       );
