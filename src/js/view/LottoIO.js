@@ -10,7 +10,10 @@ export function readLottoNumbers(lottoTicketInstance) {
   if (!isValidLottoNumberArray(lottoTicketInstance.lottoNumbers)) {
     throw TypeError(ERROR_MESSAGE.REQUIRE_LOTTO_NUMBERS);
   }
-  return `[${lottoTicketInstance.lottoNumbers.toString().replace(/,/g, ', ')}]`;
+  return `[${lottoTicketInstance.lottoNumbers
+    .sort((a, b) => a - b)
+    .toString()
+    .replace(/,/g, ', ')}]`;
 }
 
 /**

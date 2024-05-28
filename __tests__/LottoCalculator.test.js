@@ -59,20 +59,22 @@ describe('LottoCalculator 로또 통계 테스트', () => {
       ].map((lottoNumbers) => new LottoTicket(lottoNumbers));
 
       // when
-      const { profit, chart } = lottoCalc.getStatistics([
-        lotto1st,
-        lotto2st,
-        lotto3st,
-      ]);
+      const profit = lottoCalc.getProfit([lotto1st, lotto2st, lotto3st]);
+      const chart = lottoCalc.getChart([lotto1st, lotto2st, lotto3st]);
 
       // then
       expect(profit).toBe(1500000 + 30000000 + 2000000000);
       expect(chart).toEqual([
-        [5, { lottoTickets: [], winningAmount: 5000, matchCount: 3 }],
-        [4, { lottoTickets: [], winningAmount: 50000, matchCount: 4 }],
-        [3, { lottoTickets: [{}], winningAmount: 1500000, matchCount: 5 }],
-        [2, { lottoTickets: [{}], winningAmount: 30000000, matchCount: 5 }],
-        [1, { lottoTickets: [{}], winningAmount: 2000000000, matchCount: 6 }],
+        { rank: 5, lottoTickets: [], winningAmount: 5000, matchCount: 3 },
+        { rank: 4, lottoTickets: [], winningAmount: 50000, matchCount: 4 },
+        { rank: 3, lottoTickets: [{}], winningAmount: 1500000, matchCount: 5 },
+        { rank: 2, lottoTickets: [{}], winningAmount: 30000000, matchCount: 5 },
+        {
+          rank: 1,
+          lottoTickets: [{}],
+          winningAmount: 2000000000,
+          matchCount: 6,
+        },
       ]);
     });
   });
@@ -94,20 +96,22 @@ describe('LottoCalculator 로또 통계 테스트', () => {
       ].map((lottoNumbers) => new LottoTicket(lottoNumbers));
 
       // when
-      const { profit, chart } = lottoCalc.getStatistics([
-        lotto1st,
-        lotto2st,
-        lotto3st,
-      ]);
+      const profit = lottoCalc.getProfit([lotto1st, lotto2st, lotto3st]);
+      const chart = lottoCalc.getChart([lotto1st, lotto2st, lotto3st]);
 
       // then
       expect(profit).toBe(1500000 + 30000000 + 2000000000);
       expect(chart).toEqual([
-        [5, { lottoTickets: [], winningAmount: 5000, matchCount: 1 }],
-        [4, { lottoTickets: [], winningAmount: 50000, matchCount: 2 }],
-        [3, { lottoTickets: [{}], winningAmount: 1500000, matchCount: 3 }],
-        [2, { lottoTickets: [{}], winningAmount: 30000000, matchCount: 3 }],
-        [1, { lottoTickets: [{}], winningAmount: 2000000000, matchCount: 4 }],
+        { rank: 5, lottoTickets: [], winningAmount: 5000, matchCount: 1 },
+        { rank: 4, lottoTickets: [], winningAmount: 50000, matchCount: 2 },
+        { rank: 3, lottoTickets: [{}], winningAmount: 1500000, matchCount: 3 },
+        { rank: 2, lottoTickets: [{}], winningAmount: 30000000, matchCount: 3 },
+        {
+          rank: 1,
+          lottoTickets: [{}],
+          winningAmount: 2000000000,
+          matchCount: 4,
+        },
       ]);
     });
   });

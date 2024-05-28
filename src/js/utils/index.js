@@ -5,6 +5,21 @@ export function generateRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+export function calcROI(profit, investmentCost) {
+  return (profit / investmentCost) * 100;
+}
+
+export function comma(money) {
+  if (
+    typeof money !== 'number' ||
+    !Number.isInteger(money) ||
+    money > Number.MAX_SAFE_INTEGER
+  ) {
+    throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
+  }
+  return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
 export function readLineAsync(query) {
   return new Promise((resolve, reject) => {
     if (arguments.length !== 1) {
@@ -27,17 +42,20 @@ export function readLineAsync(query) {
   });
 }
 
-export function calcROI(profit, investmentCost) {
-  return (profit / investmentCost) * 100;
-}
+export async function prompt({
+  query,
+  validate = (value) => true,
+  format = (value) => value,
+} = {}) {
+  while (true) {
+    try {
+      const input = await readLineAsync(query);
+      const value = format(input);
+      validate(value);
 
-export function comma(money) {
-  if (
-    typeof money !== 'number' ||
-    !Number.isInteger(money) ||
-    money > Number.MAX_SAFE_INTEGER
-  ) {
-    throw new TypeError(ERROR_MESSAGE.INVALID_PARAMETER);
+      return value;
+    } catch (e) {
+      console.log(e.message + '\n');
+    }
   }
-  return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
