@@ -9,7 +9,8 @@ import { LOTTO } from './constants';
 
 async function ConsoleApp() {
   try {
-    const purchaseAmount = await prompt('구입금액을 입력해 주세요. : ', {
+    const purchaseAmount = await prompt({
+      query: '구입금액을 입력해 주세요. : ',
       format: Number,
       validate: validatePurchaseAmount,
     });
@@ -23,12 +24,14 @@ async function ConsoleApp() {
       console.log(readLottoNumbers(lottoTicket));
     });
 
-    const winningNumbers = await prompt('당첨 번호를 입력해 주세요. : ', {
+    const winningNumbers = await prompt({
+      query: '당첨 번호를 입력해 주세요. : ',
       format: convertLottoStringToLottoArray,
       validate: validateWinningNumbers,
     });
 
-    const winningBonusNumber = await prompt('보너스 번호를 입력해 주세요. : ', {
+    const winningBonusNumber = await prompt({
+      query: '보너스 번호를 입력해 주세요. : ',
       format: Number,
       validate: (value) => validateWinningBonusNumber(value, winningNumbers),
     });
@@ -51,7 +54,8 @@ async function ConsoleApp() {
       `총 수익률을 ${readROI(profit, Number(purchaseAmount))}입니다.`
     );
 
-    const cmd = await prompt('다시 시작하시겠습니까? (y/n) : ', {
+    const cmd = await prompt({
+      query: '다시 시작하시겠습니까? (y/n) : ',
       validate: validateRetryCmd,
     });
     if (['y', 'Y'].includes(cmd)) {

@@ -42,10 +42,11 @@ export function readLineAsync(query) {
   });
 }
 
-export async function prompt(
+export async function prompt({
   query,
-  { validate = (value) => true, format = (value) => value } = {}
-) {
+  validate = (value) => true,
+  format = (value) => value,
+} = {}) {
   while (true) {
     try {
       const input = await readLineAsync(query);
