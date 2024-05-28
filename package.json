@@ -7,7 +7,8 @@
     "test": "jest --watch --no-cache",
     "build-step-console": "webpack --config step-console.config.js",
     "start-step-console": "npm run build-step-console && node dist/step-console-bundle.js",
-    "start-step-web": "webpack serve --open --config step-web.config.js"
+    "start-step-web": "webpack serve --open --config step-web.config.js",
+    "build-web": "webpack --mode production --config step-web.config.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

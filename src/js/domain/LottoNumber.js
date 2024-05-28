@@ -1,8 +1,13 @@
-import { ErrorLottoBonusNumber, ErrorLottoNumber } from "../constants/error";
+import { ErrorLottoNumber } from "../constants/error.js";
 
+let instances;
 class LottoNumber {
   static MAX_LOTTO_NUMBER = 45;
   static MIN_LOTTO_NUMBER = 1;
+  static LOTTO_NUMBERS = Array.from(
+    { length: LottoNumber.MAX_LOTTO_NUMBER },
+    (_, i) => i + 1
+  );
 
   #value;
 
@@ -11,20 +16,23 @@ class LottoNumber {
       return lottoNumber;
     }
 
+    if (instances && instances[lottoNumber]) {
+      return instances[lottoNumber];
+    }
+
     LottoNumber.validateLottoNumber(lottoNumber);
-    this.#value = Number(lottoNumber);
+
+    const validatedLottoNumber = Number(lottoNumber);
+
+    this.#value = validatedLottoNumber;
   }
 
   get value() {
     return this.#value;
   }
 
-  static validateBonusNumber(bonusNumber, winningLotto) {
-    if (winningLotto.numbers.includes(bonusNumber.value)) {
-      throw new Error(
-        ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_DUPLICATED
-      );
-    }
+  valueOf() {
+    return this.#value;
   }
 
   static validateLottoNumber(input) {
@@ -48,5 +56,10 @@ class LottoNumber {
     }
   }
 }
+
+instances = LottoNumber.LOTTO_NUMBERS.reduce((acc, cur) => {
+  acc[cur] = new LottoNumber(cur);
+  return acc;
+}, {});
 
 export default LottoNumber;

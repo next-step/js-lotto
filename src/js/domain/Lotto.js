@@ -1,56 +1,48 @@
-import { ErrorLottoNumbers } from "../constants/error";
-import LottoNumber from "./LottoNumber";
+import { ErrorLottoNumbers } from "../constants/error.js";
+import LottoNumber from "./LottoNumber.js";
 
 class Lotto {
   static LENGTH_LOTTO_NUMBERS = 6;
 
-  #lottoNumbers = [];
+  #lottoNumberInstances = [];
 
   constructor(input) {
-    Lotto.validateLottoNumbers(input);
-    const lottoNumbers = Lotto.convertLottoNumbersToLottoNumberArray(input);
-    this.#lottoNumbers = lottoNumbers;
+    const lottoNumberInstances = Lotto.createLottoNumberInstances(input);
+
+    Lotto.validateLotto(lottoNumberInstances);
+
+    const sortedLottoNumberInstances =
+      Lotto.sortLottoNumbersByAscendingOrder(lottoNumberInstances);
+    this.#lottoNumberInstances = sortedLottoNumberInstances;
   }
 
-  get numbers() {
-    return this.#lottoNumbers.map((lottoNumber) => lottoNumber.value);
+  get lottoNumberInstances() {
+    return [...this.#lottoNumberInstances];
   }
 
-  static validateLottoNumbers(input) {
-    const lottoNumbers = Lotto.convertLottoNumbersToLottoNumberArray(input);
-    const lottoNumbersSet = new Set(
-      lottoNumbers.map((lottoNumber) => lottoNumber.value)
+  get lottoNumbers() {
+    return this.#lottoNumberInstances.map(
+      (lottoNumberInstance) => lottoNumberInstance.value
     );
+  }
 
-    if (lottoNumbers.length !== this.LENGTH_LOTTO_NUMBERS) {
-      throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH);
-    }
+  static validateLottoNumbers(lottoNumbers) {
+    const lottoNumbersSet = new Set(lottoNumbers);
 
     if (lottoNumbers.length !== lottoNumbersSet.size) {
       throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_DUPLICATED);
     }
   }
 
-  static generateRandomLottoNumbers() {
-    const lottoNumbers = [];
-    const candidateLottoNumbers = Array.from(
-      { length: LottoNumber.MAX_LOTTO_NUMBER },
-      (_, i) => i + 1
-    );
+  static validateLotto(lottoNumbers) {
+    Lotto.validateLottoNumbers(lottoNumbers);
 
-    for (let i = 0; i < Lotto.LENGTH_LOTTO_NUMBERS; i++) {
-      const randomIndex = Math.floor(
-        Math.random() * candidateLottoNumbers.length
-      );
-
-      const deletedNumbers = candidateLottoNumbers.splice(randomIndex, 1);
-      lottoNumbers.push(...deletedNumbers);
+    if (lottoNumbers.length !== this.LENGTH_LOTTO_NUMBERS) {
+      throw new Error(ErrorLottoNumbers.ERROR_LOTTO_NUMBERS_NOT_VALID_LENGTH);
     }
-
-    return lottoNumbers;
   }
 
-  static convertLottoNumbersToLottoNumberArray(lottoNumbers) {
+  static createLottoNumberInstances(lottoNumbers) {
     if (Array.isArray(lottoNumbers)) {
       return lottoNumbers.map((lottoNumber) => new LottoNumber(lottoNumber));
     }
@@ -68,15 +60,8 @@ class Lotto {
     return [...lottoNumbers].sort((a, b) => a - b);
   }
 
-  countMatchingLottoNumbers(lotto) {
-    const matchedLottoNumbers = this.numbers.filter((lottoNumber) =>
-      lotto.numbers.includes(lottoNumber)
-    );
-    return matchedLottoNumbers.length;
-  }
-
-  hasLottoNumber(lottoNumber) {
-    return this.numbers.includes(lottoNumber.value);
+  hasLottoNumberInstance(lottoNumberInstance) {
+    return this.#lottoNumberInstances.includes(lottoNumberInstance);
   }
 }
 
