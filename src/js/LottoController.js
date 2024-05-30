@@ -25,11 +25,12 @@ export default class LottoController {
   initLotto() {
     $("#purchase_price_form").addEventListener("submit", (e) => {
       e.preventDefault();
-      this.lottoHandler();
+      this.handleLotto(e);
     });
   }
 
-  lottoHandler() {
+  handleLotto(e) {
+    e.preventDefault();
     try {
       lottoHandler.validatePurchasePrice($("#purchase_price_input").value);
       this.#purchasePrice = $("#purchase_price_input").value;
@@ -40,8 +41,8 @@ export default class LottoController {
         $("#lotto_result_box").classList.add("d-none");
       }
       $("#result_button").disabled = false;
-    } catch (e) {
-      alert(e.message);
+    } catch (error) {
+      alert(error.message);
     }
   }
 
