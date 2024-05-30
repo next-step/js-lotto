@@ -43,11 +43,11 @@ export default class LottoController {
   initLottoGameResult() {
     $("#result_form").addEventListener("submit", (e) => {
       e.preventDefault();
-      this.lottoGameHandler();
+      this.handleLottoGame();
     });
   }
 
-  lottoGameHandler() {
+  handleLottoGame() {
     try {
       const winningNumberArray = $$(".winning-number").map((input) => Number(input.value));
       const bonusNumber = Number($(".bonus-number").value);
