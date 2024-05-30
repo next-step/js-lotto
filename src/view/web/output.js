@@ -46,6 +46,13 @@ export const output = {
     });
   },
 
+  toggleLottoResult: () => {
+    if ($("#lottos_toggle_button").checked === false) {
+      $("#lotto_result_box").classList.add("d-none");
+    }
+    $("#result_button").disabled = false;
+  },
+
   rateOfReturn(rate) {
     $("#rate_of_return").textContent = OUTPUT_MESSAGE.TOTAL_RATE_OF_RETURN(rate);
   },

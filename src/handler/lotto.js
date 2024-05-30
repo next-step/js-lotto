@@ -9,6 +9,7 @@ const lottoHandler = {
   },
 
   outputLottosResult(lottos) {
+    output.toggleLottoResult();
     output.lottosCount(lottos.length);
     output.lottoResult(lottos);
   },
