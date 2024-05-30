@@ -5,14 +5,7 @@ import { $, $$ } from "../utils/querySelector";
 
 export default class LottoController {
   #lottos;
-  #lottoGame;
   #purchasePrice;
-
-  constructor() {
-    this.#lottos;
-    this.#lottoGame;
-    this.#purchasePrice;
-  }
 
   init() {
     this.initLotto();
@@ -36,11 +29,6 @@ export default class LottoController {
       this.#purchasePrice = $("#purchase_price_input").value;
       this.#lottos = lottoHandler.generateLottos(this.#purchasePrice);
       lottoHandler.outputLottosResult(this.#lottos);
-
-      if ($("#lottos_toggle_button").checked === false) {
-        $("#lotto_result_box").classList.add("d-none");
-      }
-      $("#result_button").disabled = false;
     } catch (error) {
       alert(error.message);
     }
@@ -61,7 +49,7 @@ export default class LottoController {
 
   lottoGameHandler() {
     try {
-      const winningNumberArray = [...$$(".winning-number")].map((input) => Number(input.value));
+      const winningNumberArray = $$(".winning-number").map((input) => Number(input.value));
       const bonusNumber = Number($(".bonus-number").value);
       lottoGameHandler.validateWinningNumbers(winningNumberArray);
       lottoGameHandler.validateBonusNumber(winningNumberArray, bonusNumber);
