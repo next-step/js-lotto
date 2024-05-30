@@ -20,8 +20,7 @@ const lottoGameHandler = {
   },
 
   getLottoGameResult(lottos, winningNumberArray, bonusNumber) {
-    const lottoGame = new LottoGame(lottos, winningNumberArray, bonusNumber);
-    const { result, totalIncome } = lottoGame;
+    const { result, totalIncome } = new LottoGame(lottos, winningNumberArray, bonusNumber);
 
     return { result, totalIncome };
   },

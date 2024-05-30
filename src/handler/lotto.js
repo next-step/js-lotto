@@ -14,8 +14,9 @@ const lottoHandler = {
   },
 
   generateLottos(purchasePrice) {
-    const lotto = new Lotto(purchasePrice);
-    return lotto.lottos;
+    const { lottos } = new Lotto(purchasePrice);
+
+    return lottos;
   },
 };
 
