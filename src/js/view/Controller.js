@@ -23,16 +23,15 @@ export class LottoController {
   }
 
   async buyLotto() {
-    while (true) {
-      try {
-        const money = await Input.getMoney();
-        const lottos = this.lottoMachine.buy(money);
-        Output.printLottoInfo(lottos);
+    try {
+      const money = await Input.getMoney();
+      const lottos = this.lottoMachine.buy(money);
+      Output.printLottoInfo(lottos);
 
-        return true;
-      } catch (error) {
-        console.error(error.message);
-      }
+      return true;
+    } catch (error) {
+      console.error(error.message);
+      await this.buyLotto();
     }
   }
 
