@@ -28,6 +28,11 @@ export const OUTPUT_MESSAGE = {
   LIMIT_NUM_ERROR: `${LOTTO.MAX_NUMBER}이하의 숫자를 입력해주세요.`,
 };
 
+export const ERROR_MESSAGE = {
+  TARGET_NOT_STRING: "target은 문자열이어야 합니다.",
+  ELEMENT_NOT_FOUND: (target) => `해당하는 요소가 없습니다: ${target}`,
+};
+
 export const WINNINGS = {
   FIRST: 2_000_000_000,
   SECOND: 30_000_000,
