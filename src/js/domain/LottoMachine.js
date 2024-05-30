@@ -1,18 +1,19 @@
 import { lottoMoneyRule } from "../rules";
 import { Lotto, WinningLotto, RandomNumbersGenerator, LottoRank } from "./index";
 import { lottoMachineRule } from "../rules/LottoMachine.rule";
+import { LOTTO_MONEY_ERR_MSG, LOTTO_PLAYABLE_STATE_ERR_MSG } from "../constants/error";
 export class LottoMachine {
-  static UNPLAYABLE = "n";
-  static PLAYABLE = "y";
+  UNPLAYABLE = "n";
+  PLAYABLE = "y";
   static LOTTO_PRICE = 1000;
 
   lottos = [];
-  #_playable = LottoMachine.PLAYABLE;
+  #_playable = this.PLAYABLE;
 
   constructor() {}
 
   buy(money) {
-    if (!lottoMoneyRule.validates(money)) return;
+    if (!this.validates(money)) return;
 
     const lottos = new Set();
     const theNumberOfLottos = this.countTheNumberOfLottos(money);
@@ -53,12 +54,26 @@ export class LottoMachine {
   }
 
   get playable() {
-    return this.#_playable === LottoMachine.PLAYABLE;
+    return this.#_playable === this.PLAYABLE;
   }
 
   updatePlayableState(value) {
-    if (lottoMachineRule.validates(value)) {
-      this.#_playable = value;
-    }
+    if (!this.isPlayableState) throw new Error(LOTTO_PLAYABLE_STATE_ERR_MSG);
+
+    this.#_playable = value;
+  }
+
+  validates(money) {
+    if (!this.isMoneyValid(money)) throw new Error(LOTTO_MONEY_ERR_MSG);
+
+    return true;
+  }
+
+  isMoneyValid(money) {
+    return typeof money === "number" && !isNaN(money) && money > 0;
+  }
+
+  isPlayableState(value) {
+    return Array.from([LottoMachine.PLAYABLE, LottoMachine.UNPLAYABLE]).includes(value);
   }
 }
