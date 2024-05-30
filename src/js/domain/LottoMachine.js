@@ -1,6 +1,6 @@
 import { Output } from "../view";
 import { lottoMoneyRule } from "../rules";
-import { Lotto, WinningLotto, RandomGenerator, LottoRank } from "./index";
+import { Lotto, WinningLotto, RandomNumbersGenerator, LottoRank } from "./index";
 import { lottoMachineRule } from "../rules/LottoMachine.rule";
 export class LottoMachine {
   static UNPLAYABLE = "n";
@@ -33,7 +33,7 @@ export class LottoMachine {
   }
 
   generateLottoNumbers() {
-    const generator = new RandomGenerator();
+    const generator = new RandomNumbersGenerator();
 
     return generator.generateRandomNumbers();
   }
