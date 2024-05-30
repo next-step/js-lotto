@@ -1,5 +1,4 @@
 import { Output } from "../src/js/view";
-import { LottoMachine } from "../src/js/domain";
 import {
   TEST_LOTTOS_RESULT,
   TEST_LOTTOS_RESULT_OUTPUT,
@@ -17,7 +16,7 @@ describe("출력 테스트", () => {
     //given
     const mockMoney = jest.fn().mockReturnValue(TEST_MONEY);
     const input = await mockMoney();
-    const theNumberOfLottos = input / LottoMachine.LOTTO_PRICE;
+    const theNumberOfLottos = input / 1_000;
 
     //when
     Output.printTheNumberOfLottos(theNumberOfLottos);

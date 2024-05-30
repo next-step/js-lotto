@@ -10,13 +10,13 @@
 
 ### 의존관계 관리
 
-- [ ] `Domain`과 `View` 순한의존 발생 -> `Controller`로 해결
+- [x] `Domain`과 `View` 순한의존 발생 -> 분리
 
 ### 기타
 
 - [x] `RandomGenerator` 이름 변경
 - [x] `RandomGenerator` 로직 리팩토링
-- [ ] 사용하지 않는 모듈 제거
-  - [ ] `LottoMachine`내 `Output`
+- [x] 사용하지 않는 모듈 제거
+  - [x] `LottoMachine`내 `Output`
 - [ ] `LottoMachine` 테스트 추가
 - [ ] `Lotto` 테스트 추가

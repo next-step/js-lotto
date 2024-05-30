@@ -1,4 +1,3 @@
-import { Output } from "../view";
 import { lottoMoneyRule } from "../rules";
 import { Lotto, WinningLotto, RandomNumbersGenerator, LottoRank } from "./index";
 import { lottoMachineRule } from "../rules/LottoMachine.rule";
