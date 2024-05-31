@@ -18,6 +18,6 @@
 - [x] `RandomGenerator` 로직 리팩토링
 - [x] 사용하지 않는 모듈 제거
   - [x] `LottoMachine`내 `Output`
-- [ ] `LottoMachine` 테스트 추가
+- [x] `LottoMachine` 테스트 추가
 - [x] `Lotto` 테스트 추가
 - [x] `LottoRank` 테스트 추가

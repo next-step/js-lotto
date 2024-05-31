@@ -68,10 +68,10 @@ export class LottoMachine {
   }
 
   isMoneyValid(money) {
-    return typeof money === "number" && !isNaN(money) && money > 0;
+    return typeof money === "number" && !isNaN(money) && money >= 0;
   }
 
   isPlayableState(value) {
-    return Array.from([LottoMachine.PLAYABLE, LottoMachine.UNPLAYABLE]).includes(value);
+    return Array.from([this.PLAYABLE, this.UNPLAYABLE]).includes(value);
   }
 }
