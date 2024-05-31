@@ -1,4 +1,3 @@
-// import { bonusNumberRule, lottoRule } from "../rules/Lotto.rule.js";
 import { LottoRank } from "./LottoRank.js";
 import { LottoValidator, WinningLottoValidator } from "./LottoValidator.js";
 export class Lotto {

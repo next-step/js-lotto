@@ -1,6 +1,4 @@
-import { lottoMoneyRule } from "../rules";
 import { Lotto, WinningLotto, RandomNumbersGenerator, LottoRank } from "./index";
-import { lottoMachineRule } from "../rules/LottoMachine.rule";
 import { LOTTO_MONEY_ERR_MSG, LOTTO_PLAYABLE_STATE_ERR_MSG } from "../constants/error";
 export class LottoMachine {
   UNPLAYABLE = "n";
@@ -58,7 +56,7 @@ export class LottoMachine {
   }
 
   updatePlayableState(value) {
-    if (!this.isPlayableState) throw new Error(LOTTO_PLAYABLE_STATE_ERR_MSG);
+    if (!this.isPlayableState(value)) throw new Error(LOTTO_PLAYABLE_STATE_ERR_MSG);
 
     this.#_playable = value;
   }

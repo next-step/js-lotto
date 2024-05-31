@@ -1,13 +1,10 @@
 import { LOTTO_PLAYABLE_STATE_ERR_MSG } from "../src/js/constants/error";
-import { Lotto, LottoMachine } from "../src/js/domain/index";
-import { lottoMachineRule } from "../src/js/rules/LottoMachine.rule";
-import { TEST_INVALIDE_LOTTO_PLAYABLE_STATE, TEST_LOTTO, TEST_MONEY } from "./constants";
+import { LottoMachine } from "../src/js/domain/index";
+import { TEST_INVALIDE_LOTTO_PLAYABLE_STATE, TEST_MONEY } from "./constants";
 
 let lottoMachine;
-let lotto;
 beforeEach(() => {
   lottoMachine = new LottoMachine();
-  lotto = new Lotto(TEST_LOTTO);
 });
 
 describe("로또 기계 테스트", () => {
@@ -25,9 +22,9 @@ describe("로또 기계 테스트", () => {
     const input = await mockPlayableStatus();
 
     //given
-    const validationCallback = () => lottoMachineRule.validates(input);
+    const updatePlayableState = () => lottoMachine.updatePlayableState(input);
 
     //then
-    expect(validationCallback).toThrow(LOTTO_PLAYABLE_STATE_ERR_MSG);
+    expect(updatePlayableState).toThrow(LOTTO_PLAYABLE_STATE_ERR_MSG);
   });
 });
