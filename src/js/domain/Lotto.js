@@ -1,13 +1,13 @@
-import { bonusNumberRule, lottoRule } from "../rules/Lotto.rule.js";
 import { LottoRank } from "./LottoRank.js";
+import { LottoValidator, WinningLottoValidator } from "./LottoValidator.js";
 export class Lotto {
   #numbers;
-
+  #lottoValidator = new LottoValidator();
   /**
    * @param {string[]} numbers
    */
   constructor(numbers) {
-    if (lottoRule.validates(numbers)) this.#numbers = numbers;
+    if (this.#lottoValidator.validates(numbers)) this.#numbers = numbers.sort((a, b) => a - b);
   }
 
   get numbers() {
@@ -18,12 +18,13 @@ export class Lotto {
 export class WinningLotto {
   #winningNumbers;
   #bonusNumber;
+  #winningLottoValidator = new WinningLottoValidator();
   /**
    * @param {Lotto} winningLotto
    * @param {number} bonusNumber
    */
   constructor(winningLotto, bonusNumber) {
-    if (bonusNumberRule.validates(bonusNumber, winningLotto)) {
+    if (this.#winningLottoValidator.validates(winningLotto, bonusNumber)) {
       this.#winningNumbers = winningLotto;
       this.#bonusNumber = bonusNumber;
     }
@@ -42,8 +43,8 @@ export class WinningLotto {
       this.#winningNumbers.numbers.includes(number)
     ).length;
 
-    const isBonusMatched = lotto.numbers.includes(this.#bonusNumber);
+    const bonusMatched = lotto.numbers.includes(this.#bonusNumber);
 
-    return LottoRank.getRank(matchedCount, isBonusMatched);
+    return LottoRank.getRank(matchedCount, bonusMatched);
   }
 }

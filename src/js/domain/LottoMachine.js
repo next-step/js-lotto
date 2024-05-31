@@ -1,17 +1,17 @@
-import View from "../view/view";
-import { LottoRank } from "./LottoRank";
-import { lottoMoneyRule } from "../rules";
-import { Lotto, WinningLotto } from "./Lotto";
-import { LOTTO_LENGTH, MAXIMUM_LOTTO_NUMBER } from "../constants";
-
-class LottoMachine {
+import { Lotto, WinningLotto, RandomNumbersGenerator, LottoRank } from "./index";
+import { LOTTO_MONEY_ERR_MSG, LOTTO_PLAYABLE_STATE_ERR_MSG } from "../constants/error";
+export class LottoMachine {
+  UNPLAYABLE = "n";
+  PLAYABLE = "y";
   static LOTTO_PRICE = 1000;
 
   lottos = [];
+  #_playable = this.PLAYABLE;
+
   constructor() {}
 
   buy(money) {
-    if (!lottoMoneyRule.validates(money)) return;
+    if (!this.validates(money)) return;
 
     const lottos = new Set();
     const theNumberOfLottos = this.countTheNumberOfLottos(money);
@@ -23,47 +23,24 @@ class LottoMachine {
 
     this.lottos = Array.from(lottos).map((lotto) => new Lotto(JSON.parse(lotto)));
 
-    View.printLottoInfo(this.lottos);
     return this.lottos;
   }
 
-  /**
-   * @param {WinningLotto} winningLotto
-   * @returns {Map}
-   */
-  getLottoRanks(winningLotto) {
-    const lottoRanks = this.lottos.map((lotto) => winningLotto.getRank(lotto));
-    const lottoRankCounts = this.countLottoRanks(lottoRanks);
-    return lottoRankCounts;
-  }
-
-  /**
-   * @param {string[]} lottoRanks
-   * @returns {Map}
-   */
-  countLottoRanks(lottoRanks) {
-    return lottoRanks.reduce((acc, rank) => {
-      acc.set(rank, acc.get(rank) + 1 || 1);
-      return acc;
-    }, new Map());
-  }
-
   countTheNumberOfLottos(money) {
-    return money / LottoMachine.LOTTO_PRICE;
+    return Math.floor(money / LottoMachine.LOTTO_PRICE);
   }
 
   generateLottoNumbers() {
-    const lottos = new Set();
+    const generator = new RandomNumbersGenerator();
 
-    while (lottos.size < LOTTO_LENGTH) {
-      const randomNumber = this.generateRandomNumbers();
-      lottos.add(randomNumber);
-    }
-    return Array.from(lottos).sort((a, b) => a - b);
+    return generator.generateRandomNumbers();
   }
 
-  generateRandomNumbers() {
-    return Math.floor(Math.random() * MAXIMUM_LOTTO_NUMBER) + 1;
+  getLottoResult(winningLotto) {
+    const lottoRank = new LottoRank(this.lottos, winningLotto);
+    const lottoResult = lottoRank.getLottoResult();
+
+    return lottoResult;
   }
 
   /**
@@ -74,15 +51,27 @@ class LottoMachine {
     return new WinningLotto(winningNumbers, bonusNumber);
   }
 
-  /**
-   * @param {Map} lottoRankCounts
-   */
-  calculateLottoResult(lottoRankCounts) {
-    const lottoResult = LottoRank.getLottoResult(lottoRankCounts);
-    const lottoReturn = LottoRank.calculateLottoReturn(lottoRankCounts);
+  get playable() {
+    return this.#_playable === this.PLAYABLE;
+  }
 
-    return { lottoResult, lottoReturn };
+  updatePlayableState(value) {
+    if (!this.isPlayableState(value)) throw new Error(LOTTO_PLAYABLE_STATE_ERR_MSG);
+
+    this.#_playable = value;
+  }
+
+  validates(money) {
+    if (!this.isMoneyValid(money)) throw new Error(LOTTO_MONEY_ERR_MSG);
+
+    return true;
+  }
+
+  isMoneyValid(money) {
+    return typeof money === "number" && !isNaN(money) && money >= 0;
+  }
+
+  isPlayableState(value) {
+    return Array.from([this.PLAYABLE, this.UNPLAYABLE]).includes(value);
   }
 }
-
-export default LottoMachine;

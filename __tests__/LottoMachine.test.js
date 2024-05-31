@@ -1,79 +1,84 @@
-import { LOTTO_PRIZE } from "../src/js/constants";
-import LottoMachine from "../src/js/domain/LottoMachine";
-import { TEST_LOTTO_NUMBERS, TEST_MONEY } from "./constants";
-import { Lotto, WinningLotto } from "../src/js/domain/Lotto";
+import { LOTTO_MONEY_ERR_MSG, LOTTO_PLAYABLE_STATE_ERR_MSG } from "../src/js/constants/error";
+import { Lotto, LottoMachine, RandomNumbersGenerator, WinningLotto } from "../src/js/domain/index";
+import { TEST_INVALIDE_LOTTO_PLAYABLE_STATE } from "./constants";
 
 let lottoMachine;
-let lotto;
 beforeEach(() => {
   lottoMachine = new LottoMachine();
-  lotto = new Lotto(TEST_LOTTO_NUMBERS);
 });
 
 describe("로또 기계 테스트", () => {
-  test("입금액에 따라 로또를 발행한다.", () => {
-    //given
-    const aNumberOfLottos = lottoMachine.countTheNumberOfLottos(TEST_MONEY);
-
+  test("입금액이 0이상의 숫자가 아니라면 에러 메시지를 호출한다.", () => {
     //when
-    const lottos = lottoMachine.buy(TEST_MONEY);
+    const validatesMoney = () => lottoMachine.validates("8000");
 
     //then
-    expect(lottos.length).toBe(aNumberOfLottos);
+    expect(validatesMoney).toThrow(LOTTO_MONEY_ERR_MSG);
   });
 
-  test("6개의 로또 번호가 일치하면 1등이다.", () => {
-    //given
-    const winningLotto = new WinningLotto(new Lotto([15, 23, 12, 1, 34, 26]), 7);
-
+  test.each([
+    { money: 0, count: 0 },
+    { money: 1_000, count: 1 },
+    { money: 3_500, count: 3 },
+    { money: 8_000, count: 8 },
+  ])("입금액에 따라 로또를 발행한다.", ({ money, count }) => {
     //when
-    const lottoRanks = winningLotto.getRank(lotto);
+    const lottos = lottoMachine.buy(money);
 
     //then
-    expect(lottoRanks).toBe(LOTTO_PRIZE.FIRST.rank);
+    expect(lottos.length).toBe(count);
   });
 
-  test("5개의 로또 번호와 보너스 번호가 일치하면 2등이다.", () => {
+  test("랜덤으로 생성한 로또는 1 ~ 45 사이의 중복되지 않는 6 가지 정수를 갖는다.", () => {
     //given
-    const winningLotto = new WinningLotto(new Lotto([7, 23, 12, 1, 34, 26]), 15);
+    const generator = new RandomNumbersGenerator();
 
     //when
-    const lottoRanks = winningLotto.getRank(lotto);
+    const numbers = generator.generateRandomNumbers();
 
     //then
-    expect(lottoRanks).toBe(LOTTO_PRIZE.SECOND.rank);
+    expect(numbers).toHaveLength(6);
+    expect(new Set(numbers).size).toBe(6);
+    numbers.forEach((number) => {
+      expect(number).toBeGreaterThanOrEqual(1);
+      expect(number).toBeLessThanOrEqual(45);
+    });
   });
 
-  test("5개의 로또 번호만 일치하면 3등이다.", () => {
+  test("당첨 번호를 생성한다.", () => {
     //given
-    const winningLotto = new WinningLotto(new Lotto([14, 23, 12, 1, 34, 26]), 7);
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const bonusNumber = 7;
 
     //when
-    const lottoRanks = winningLotto.getRank(lotto);
+    const winningLotto = lottoMachine.generateWinningLotto(new Lotto(winningNumbers), bonusNumber);
 
     //then
-    expect(lottoRanks).toBe(LOTTO_PRIZE.THIRD.rank);
+    expect(winningLotto).toBeInstanceOf(WinningLotto);
   });
 
-  test("4개의 로또 번호만 일치하면 4등이다.", () => {
+  test("재시작 여부를 변경한다.", () => {
     //given
-    const winningLotto = new WinningLotto(new Lotto([14, 22, 12, 1, 34, 26]), 7);
+    const playable = lottoMachine.playable;
 
     //when
-    const lottoRanks = winningLotto.getRank(lotto);
+    lottoMachine.updatePlayableState("n");
+    const updatedPlayable = lottoMachine.playable;
 
     //then
-    expect(lottoRanks).toBe(LOTTO_PRIZE.FOURTH.rank);
+    expect(playable).toBe(true);
+    expect(updatedPlayable).toBe(false);
   });
 
-  test("3개의 로또 번호만 일치하면 5등이다.", () => {
+  test("'y' 또는 'n' 을 제외한 다른 대답을 받을 경우, 에러메시지를 호출한다.", async () => {
     //given
-    const winningLotto = new WinningLotto(new Lotto([14, 22, 11, 1, 34, 26]), 7);
+    const mockPlayableStatus = jest.fn().mockReturnValue(TEST_INVALIDE_LOTTO_PLAYABLE_STATE);
+    const input = await mockPlayableStatus();
 
     //when
-    const lottoRanks = winningLotto.getRank(lotto);
+    const updatePlayableState = () => lottoMachine.updatePlayableState(input);
 
     //then
-    expect(lottoRanks).toBe(LOTTO_PRIZE.FIFTH.rank);
+    expect(updatePlayableState).toThrow(LOTTO_PLAYABLE_STATE_ERR_MSG);
   });
 });

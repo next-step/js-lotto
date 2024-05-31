@@ -1,5 +1,3 @@
-import { Lotto } from "../domain/Lotto";
-
 export const Output = {
   /**
    * 로또 구매 시, 로또 정보를 출력한다.
@@ -13,9 +11,9 @@ export const Output = {
   /**
    * @param {Map} lottoRankCounts
    */
-  printLottoStatistics({ lottoResult, lottoReturn }) {
+  printLottoStatistics({ lottoRankCounts, lottoReturn }) {
     console.log(`당첨 통계\n--------------------`);
-    this.printLottoResult(lottoResult);
+    this.printLottoResult(lottoRankCounts);
     this.printLottoReturn(lottoReturn);
   },
 
