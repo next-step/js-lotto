@@ -43,6 +43,24 @@ describe("로또 결과 테스트", () => {
       expected: LOTTO_PRIZE.FIFTH.rank,
       description: "3개의 로또 번호만 일치하면 5등이다.",
     },
+    {
+      lottoNumbers: [14, 22, 11, 2, 34, 26],
+      bonusNumber: 7,
+      expected: LOTTO_PRIZE.FAIL.rank,
+      description: "2개의 로또 번호만 일치하면 탈락이다.",
+    },
+    {
+      lottoNumbers: [14, 22, 11, 2, 35, 26],
+      bonusNumber: 7,
+      expected: LOTTO_PRIZE.FAIL.rank,
+      description: "1개의 로또 번호만 일치하면 탈락이다.",
+    },
+    {
+      lottoNumbers: [14, 22, 11, 2, 35, 27],
+      bonusNumber: 7,
+      expected: LOTTO_PRIZE.FAIL.rank,
+      description: "일치하는 로또 번호가 없으면 탈락이다.",
+    },
   ])(`$description`, ({ lottoNumbers, bonusNumber, expected }) => {
     //given
     const winningLotto = new WinningLotto(new Lotto(lottoNumbers), bonusNumber);
