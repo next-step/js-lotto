@@ -1,7 +1,7 @@
 import { $ } from "../../../utils/dom.js";
 
 const LottoListSection = {
-  selector: {
+  elements: {
     LOTTO_LIST_SECTION: $(".lotto-list-section"),
     LOTTO_COUNT: $(".lotto-count"),
     LOTTO_LIST_TOGGLE_BUTTON: $(".lotto-list-toggle-button"),
@@ -20,21 +20,21 @@ const LottoListSection = {
   },
 
   show(lottos) {
-    this.selector.LOTTO_LIST_SECTION.classList.remove("d-none");
+    this.elements.LOTTO_LIST_SECTION.classList.remove("d-none");
     this.renderLottoCount(lottos);
     this.reset(lottos);
   },
 
   hide() {
-    this.selector.LOTTO_LIST_SECTION.classList.add("d-none");
+    this.elements.LOTTO_LIST_SECTION.classList.add("d-none");
   },
 
   renderLottoCount(lottos) {
-    this.selector.LOTTO_COUNT.textContent = lottos.length;
+    this.elements.LOTTO_COUNT.textContent = lottos.length;
   },
 
   toggleLottoNumbers(lottos) {
-    const checked = this.selector.LOTTO_LIST_TOGGLE_BUTTON.checked;
+    const checked = this.elements.LOTTO_LIST_TOGGLE_BUTTON.checked;
 
     if (checked) {
       this.showLottoNumbers(lottos);
@@ -48,8 +48,8 @@ const LottoListSection = {
       this.generateLottoItemTemplate(lotto.lottoNumberValues, false)
     );
 
-    this.selector.LOTTO_LIST.innerHTML = lottoListTemplate.join("");
-    this.selector.LOTTO_LIST.classList.add("flex-col");
+    this.elements.LOTTO_LIST.innerHTML = lottoListTemplate.join("");
+    this.elements.LOTTO_LIST.classList.add("flex-col");
   },
 
   hideLottoNumbers(lottos) {
@@ -57,13 +57,13 @@ const LottoListSection = {
       this.generateLottoItemTemplate(lotto.lottoNumberValues, true)
     );
 
-    this.selector.LOTTO_LIST.innerHTML = lottoListTemplate.join("");
-    this.selector.LOTTO_LIST.classList.remove("flex-col");
+    this.elements.LOTTO_LIST.innerHTML = lottoListTemplate.join("");
+    this.elements.LOTTO_LIST.classList.remove("flex-col");
   },
 
   reset(lottos) {
     this.hideLottoNumbers(lottos);
-    this.selector.LOTTO_LIST_TOGGLE_BUTTON.checked = false;
+    this.elements.LOTTO_LIST_TOGGLE_BUTTON.checked = false;
   },
 };
 

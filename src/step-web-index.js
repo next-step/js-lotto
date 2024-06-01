@@ -45,7 +45,7 @@ const onSubmitPurchaseAmount = (e) => {
 
 let isEnterPressed = false;
 
-PurchaseAmountInputForm.selector.PURCHASE_AMOUNT_INPUT.addEventListener(
+PurchaseAmountInputForm.elements.PURCHASE_AMOUNT_INPUT.addEventListener(
   "keydown",
   (e) => {
     if (e.key === "Enter") {
@@ -58,12 +58,12 @@ PurchaseAmountInputForm.selector.PURCHASE_AMOUNT_INPUT.addEventListener(
   }
 );
 
-PurchaseAmountInputForm.selector.PURCHASE_BUTTON.addEventListener(
+PurchaseAmountInputForm.elements.PURCHASE_BUTTON.addEventListener(
   "click",
   onSubmitPurchaseAmount
 );
 
-PurchaseAmountInputForm.selector.PURCHASE_AMOUNT_INPUT.addEventListener(
+PurchaseAmountInputForm.elements.PURCHASE_AMOUNT_INPUT.addEventListener(
   "blur",
   () => {
     try {
@@ -87,7 +87,7 @@ const onToggleShowLottoNumbers = () => {
   LottoListSection.toggleLottoNumbers(lottos);
 };
 
-LottoListSection.selector.LOTTO_LIST_TOGGLE_BUTTON.addEventListener(
+LottoListSection.elements.LOTTO_LIST_TOGGLE_BUTTON.addEventListener(
   "click",
   onToggleShowLottoNumbers
 );
@@ -119,7 +119,7 @@ const onClickShowRanking = (e) => {
   }
 };
 
-WinningLottoForm.selector.WINNING_NUMBER_INPUTS.forEach((input, i) => {
+WinningLottoForm.elements.WINNING_NUMBER_INPUTS.forEach((input, i) => {
   input.addEventListener("input", (e) => {
     try {
       // LottoNumber.validateLottoNumber(e.target.value);
@@ -139,7 +139,7 @@ WinningLottoForm.selector.WINNING_NUMBER_INPUTS.forEach((input, i) => {
   });
 });
 
-WinningLottoForm.selector.WINNING_NUMBER_INPUTS.forEach((input, i) => {
+WinningLottoForm.elements.WINNING_NUMBER_INPUTS.forEach((input, i) => {
   input.addEventListener("change", (e) => {
     try {
       LottoNumber.validateLottoNumber(e.target.value);
@@ -154,7 +154,7 @@ WinningLottoForm.selector.WINNING_NUMBER_INPUTS.forEach((input, i) => {
   });
 });
 
-WinningLottoForm.selector.BONUS_NUMBER_INPUT.addEventListener("input", (e) => {
+WinningLottoForm.elements.BONUS_NUMBER_INPUT.addEventListener("input", (e) => {
   try {
     LottoNumber.validateLottoNumber(e.target.value);
 
@@ -163,19 +163,19 @@ WinningLottoForm.selector.BONUS_NUMBER_INPUT.addEventListener("input", (e) => {
     }
   } catch (e) {
     alert(e.message);
-    WinningLottoForm.selector.BONUS_NUMBER_INPUT.value = "";
+    WinningLottoForm.elements.BONUS_NUMBER_INPUT.value = "";
   }
 });
 
 const $showResultButton = $(".open-result-modal-button");
 $showResultButton.addEventListener("click", onClickShowRanking);
 
-LottoRankingModal.selector.CLOSE_BUTTON.addEventListener(
+LottoRankingModal.elements.CLOSE_BUTTON.addEventListener(
   "click",
   LottoRankingModal.close.bind(LottoRankingModal)
 );
 
-LottoRankingModal.selector.MODAL.addEventListener("click", (e) => {
+LottoRankingModal.elements.MODAL.addEventListener("click", (e) => {
   if (e.target === e.currentTarget) {
     LottoRankingModal.close();
   }
@@ -183,7 +183,7 @@ LottoRankingModal.selector.MODAL.addEventListener("click", (e) => {
 
 window.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
-    if (LottoRankingModal.selector.MODAL.classList.contains("open")) {
+    if (LottoRankingModal.elements.MODAL.classList.contains("open")) {
       LottoRankingModal.close();
     }
   }

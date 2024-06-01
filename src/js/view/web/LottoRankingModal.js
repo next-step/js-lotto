@@ -2,7 +2,7 @@ import { $all, $ } from "../../../utils/dom.js";
 import LottoRanking from "../../domain/LottoRanking.js";
 
 const LottoRankingModal = {
-  selector: {
+  elements: {
     MODAL: $(".modal"),
     CLOSE_BUTTON: $(".modal-close"),
     WINNING_COUNT: $all(".winning-count"),
@@ -26,7 +26,7 @@ const LottoRankingModal = {
   },
 
   renderLottoRanking(lottos, lottoRanking) {
-    const winningCountElements = this.selector.WINNING_COUNT;
+    const winningCountElements = this.elements.WINNING_COUNT;
     const rankings = [
       LottoRanking.Ranking["FIFTH"],
       LottoRanking.Ranking["FOURTH"],
@@ -43,11 +43,11 @@ const LottoRankingModal = {
   },
 
   open() {
-    this.selector.MODAL.classList.add("open");
+    this.elements.MODAL.classList.add("open");
   },
 
   close() {
-    this.selector.MODAL.classList.remove("open");
+    this.elements.MODAL.classList.remove("open");
   },
 };
 
