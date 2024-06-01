@@ -23,13 +23,13 @@ class Lotto {
 
   getMatchCount(anotherLotto) {
     const matchCount = this.#numbers.filter((lottoNumber) =>
-      anotherLotto.isIncludeLottoNumber(lottoNumber)
+      anotherLotto.containsLottoNumber(lottoNumber)
     ).length;
 
     return matchCount;
   }
 
-  isIncludeLottoNumber(lottoNumber) {
+  containsLottoNumber(lottoNumber) {
     const bonus = this.numbers.some(
       (number) => number.number === lottoNumber.number
     );
