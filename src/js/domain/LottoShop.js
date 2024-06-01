@@ -1,21 +1,10 @@
 import { ErrorLottoPurchasedAmount } from "../constants/error.js";
 
-class LottoShop {
-  #purchasedAmount;
+const LottoShop = {
+  LOTTO_PRICE: 1000,
+  MIN_PURCHASED_AMOUNT: 0,
 
-  static LOTTO_PRICE = 1000;
-  static MIN_PURCHASED_AMOUNT = 0;
-
-  constructor(purchasedAmount) {
-    LottoShop.validateLottoPurchasedAmount(purchasedAmount);
-    this.#purchasedAmount = Number(purchasedAmount);
-  }
-
-  get purchasedAmount() {
-    return this.#purchasedAmount;
-  }
-
-  static validateLottoPurchasedAmount(purchasedAmount) {
+  validateLottoPurchasedAmount(purchasedAmount) {
     if (isNaN(purchasedAmount)) {
       throw new Error(
         ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_NUMBER
@@ -33,12 +22,12 @@ class LottoShop {
         ErrorLottoPurchasedAmount.ERROR_LOTTO_PURCHASED_AMOUNT_NOT_DIVISIBLE
       );
     }
-  }
+  },
 
-  static getPurchasableLottoCount(purchasedAmount) {
+  getPurchasableLottoCount(purchasedAmount) {
     this.validateLottoPurchasedAmount(purchasedAmount);
     return Math.floor(Number(purchasedAmount) / LottoShop.LOTTO_PRICE);
-  }
-}
+  },
+};
 
 export default LottoShop;

@@ -9,13 +9,9 @@ const LottoRankingModal = {
     PROFIT_RATE: $("#profit-rate"),
   },
 
-  render(purchaseManager, lottoRanking) {
-    this.renderTotalProfitRate(
-      purchaseManager.purchasedAmount,
-      purchaseManager.lottos,
-      lottoRanking
-    );
-    this.renderLottoRanking(purchaseManager.lottos, lottoRanking);
+  render(purchasedAmount, lottos, lottoRanking) {
+    this.renderTotalProfitRate(purchasedAmount, lottos, lottoRanking);
+    this.renderLottoRanking(lottos, lottoRanking);
   },
 
   renderTotalProfitRate(purchasedAmount, lottos, lottoRanking) {

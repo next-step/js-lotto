@@ -10,18 +10,18 @@ import WinningLottoForm from "./js/view/web/WinningLottoForm.js";
 import { $ } from "./utils/dom.js";
 import LottoNumber from "./js/domain/LottoNumber.js";
 
+let purchasedAmount;
 const lottos = [];
 
 // 로또 게임 초기화
 const initializeLottoGame = () => {
-  const purchasedAmount = PurchaseAmountInputForm.inputValue();
+  purchasedAmount = PurchaseAmountInputForm.inputValue();
   const purchasableLottosCount =
     LottoShop.getPurchasableLottoCount(purchasedAmount);
   const purchasedLottos = LottoMachine.generateRandomLottos(
     purchasableLottosCount
   );
 
-  LottoShop = new LottoShop(purchasedAmount);
   lottos.push(...purchasedLottos);
 };
 
@@ -113,7 +113,7 @@ const onClickShowRanking = (e) => {
     const lottoRanking = new LottoRanking(winningLotto);
 
     LottoRankingModal.open();
-    LottoRankingModal.render(LottoShop, lottoRanking);
+    LottoRankingModal.render(purchasedAmount, lottos, lottoRanking);
   } catch (error) {
     alert(error.message);
   }
