@@ -36,10 +36,10 @@ describe("로또 당첨 순위 기능 테스트", () => {
       const lottoRanking = new LottoRanking(winningLotto);
 
       // when
-      const ranking = lottoRanking.getLottoRanking(lotto);
+      const lottoPrize = lottoRanking.getLottoPrize(lotto);
 
       // then
-      expect(ranking.ranking).toBe(expectedResult);
+      expect(lottoPrize.ranking).toBe(expectedResult);
     }
   );
 
@@ -53,10 +53,10 @@ describe("로또 당첨 순위 기능 테스트", () => {
     const lottoRanking = new LottoRanking(winningLotto);
 
     // when
-    const rank = lottoRanking.getLottoRanking(lotto);
+    const lottoPrize = lottoRanking.getLottoPrize(lotto);
 
     // then
-    expect(rank).toBeNull();
+    expect(lottoPrize).toBeNull();
   });
 
   test("로또 당첨 결과를 구하려고 할 때 각 등수별로 총 몇 개의 로또가 당첨되었는지 반환한다.", () => {
@@ -78,12 +78,12 @@ describe("로또 당첨 순위 기능 테스트", () => {
     ];
 
     // when
-    const lottoRankingCounts = rankings.map((ranking) =>
-      lottoRanking.getLottoRankingCount(lottos, ranking)
+    const lottoPrizeCounts = rankings.map((ranking) =>
+      lottoRanking.getLottoPrizeCount(lottos, ranking)
     );
 
     // then
-    expect(lottoRankingCounts).toEqual([1, 0, 0, 1, 0]);
+    expect(lottoPrizeCounts).toEqual([1, 0, 0, 1, 0]);
   });
 
   test.each([
@@ -117,10 +117,10 @@ describe("로또 당첨 순위 기능 테스트", () => {
       const lottoRanking = new LottoRanking(winningLotto);
 
       // when
-      const rank = lottoRanking.getLottoRanking(lotto);
+      const lottoPrize = lottoRanking.getLottoPrize(lotto);
 
       // then
-      expect(rank.ranking).toBe(expectedResult);
+      expect(lottoPrize.ranking).toBe(expectedResult);
     }
   );
 

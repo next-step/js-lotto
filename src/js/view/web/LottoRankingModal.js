@@ -37,7 +37,7 @@ const LottoRankingModal = {
 
     rankings.forEach((ranking, index) => {
       const winningCountElement = winningCountElements[index];
-      const winningCount = lottoRanking.getLottoRankingCount(lottos, ranking);
+      const winningCount = lottoRanking.getLottoPrizeCount(lottos, ranking);
       winningCountElement.textContent = winningCount;
     });
   },

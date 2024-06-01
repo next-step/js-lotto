@@ -65,16 +65,13 @@ const play = async () => {
   ];
 
   const lottoRankingStatistics = rankings.map((ranking) => {
-    const lottoRankingInfo = LottoRanking.LottoRankingInfo[ranking];
-    const lottoRankingCount = lottoRanking.getLottoRankingCount(
-      lottos,
-      ranking
-    );
+    const lottoPrize = LottoRanking.LottoPrize[ranking];
+    const lottoPrizeCount = lottoRanking.getLottoPrizeCount(lottos, ranking);
 
     return {
-      count: lottoRankingCount,
-      rankingWinningPrice: lottoRankingInfo.winningPrice,
-      rankingCondition: lottoRankingInfo.condition,
+      count: lottoPrizeCount,
+      rankingWinningPrice: lottoPrize.winningPrice,
+      rankingCondition: lottoPrize.condition,
       isShowExtraMent: lottoRanking === LottoRanking.Ranking["SECOND"],
     };
   });
