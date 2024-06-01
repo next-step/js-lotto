@@ -5,22 +5,37 @@ export const FOURTH_PRIZE = 50000;
 export const FIFTH_PRIZE = 5000;
 
 export const PRIZE = {
-  FIRST: { rank: "FIRST", matchCount: 6, prize: FIRST_PRIZE, isBonus: false },
+  FIRST: {
+    rank: "FIRST",
+    matchCount: 6,
+    prize: FIRST_PRIZE,
+    containBonus: false,
+  },
   SECOND: {
     rank: "SECOND",
     matchCount: 5,
     prize: SECOND_PRIZE,
-    isBonus: true,
+    containBonus: true,
   },
-  THIRD: { rank: "THIRD", matchCount: 5, prize: THIRD_PRIZE, isBonus: false },
+  THIRD: {
+    rank: "THIRD",
+    matchCount: 5,
+    prize: THIRD_PRIZE,
+    containBonus: false,
+  },
   FOURTH: {
     rank: "FOURTH",
     matchCount: 4,
     prize: FOURTH_PRIZE,
-    isBonus: false,
+    containBonus: false,
   },
-  FIFTH: { rank: "FIFTH", matchCount: 3, prize: FIFTH_PRIZE, isBonus: false },
-  NONE: { rank: "NONE", matchCount: 0, prize: 0, isBonus: false },
+  FIFTH: {
+    rank: "FIFTH",
+    matchCount: 3,
+    prize: FIFTH_PRIZE,
+    containBonus: false,
+  },
+  NONE: { rank: "NONE", matchCount: 0, prize: 0, containBonus: false },
 };
 
 class Prize {
@@ -28,10 +43,12 @@ class Prize {
 
   constructor() {}
 
-  findRank(matchCount, isBonus) {
+  findRank(matchCount, bonusNumber) {
     const result = this.#rank.find((rank) => {
       if (matchCount === PRIZE.SECOND.matchCount) {
-        return rank.isBonus === isBonus && matchCount === rank.matchCount;
+        return (
+          rank.containBonus === bonusNumber && matchCount === rank.matchCount
+        );
       } else {
         return rank.matchCount === matchCount;
       }
