@@ -27,8 +27,8 @@ const initializeLottoGame = () => {
 
 // 구매 금액 입력
 const onSubmitPurchaseAmount = (e) => {
-  const isValidInput = PurchaseAmountInputForm.isValidInput();
-  if (!isValidInput) {
+  const inputValidated = PurchaseAmountInputForm.isValidInput();
+  if (!inputValidated) {
     return;
   }
 
@@ -43,13 +43,13 @@ const onSubmitPurchaseAmount = (e) => {
   }
 };
 
-let isEnterPressed = false;
+let enterPressed = false;
 
 PurchaseAmountInputForm.elements.PURCHASE_AMOUNT_INPUT.addEventListener(
   "keydown",
   (e) => {
     if (e.key === "Enter") {
-      isEnterPressed = true;
+      enterPressed = true;
       if (!PurchaseAmountInputForm.isValidInput()) {
         return;
       }
@@ -68,8 +68,8 @@ PurchaseAmountInputForm.elements.PURCHASE_AMOUNT_INPUT.addEventListener(
   () => {
     try {
       // Enter 키로 인한 blur 이벤트 발생 시, 중복으로 validate 되는 것을 방지
-      if (isEnterPressed) {
-        isEnterPressed = false;
+      if (enterPressed) {
+        enterPressed = false;
         return;
       }
 
@@ -94,10 +94,10 @@ LottoListSection.elements.LOTTO_LIST_TOGGLE_BUTTON.addEventListener(
 
 // 결과 확인하기
 const onClickShowRanking = (e) => {
-  const isValidWinningNumbers = WinningLottoForm.isValidWinningNumbers();
-  const isValidBonusNumber = WinningLottoForm.isValidBonusNumber();
+  const winningNumbersValidated = WinningLottoForm.isValidWinningNumbers();
+  const bonusNumberValidated = WinningLottoForm.isValidBonusNumber();
 
-  if (!isValidWinningNumbers || !isValidBonusNumber) {
+  if (!winningNumbersValidated || !bonusNumberValidated) {
     return;
   }
 

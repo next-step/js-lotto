@@ -72,7 +72,7 @@ const play = async () => {
       count: lottoPrizeCount,
       rankingWinningPrice: lottoPrize.winningPrice,
       rankingCondition: lottoPrize.condition,
-      isShowExtraMent: lottoRanking === LottoRanking.Ranking["SECOND"],
+      extraMentShown: lottoRanking === LottoRanking.Ranking["SECOND"],
     };
   });
 
