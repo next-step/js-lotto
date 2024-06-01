@@ -5,59 +5,126 @@
 
 import Lotto from "./domain/Lotto";
 import LottoMachine, { LOTTO_PRICE } from "./domain/LottoMachine";
+import LottoNumber from "./domain/LottoNumber";
+import LottoPool from "./domain/LottoPool";
 import LottoStats from "./domain/LottoStats";
-import WinningLotto, { PRIZE } from "./domain/WinningLotto";
+import Money from "./domain/Money";
+import { PRIZE } from "./domain/Prize";
+import WinningLotto from "./domain/WinningLotto";
 import { readLineAsync } from "./util/readLine";
 
-async function play() {
-  const pay = await readLineAsync("구입금액을 입력해 주세요. > ");
+const RESTART_PLAY = "y";
+const RESTART_NOT_PLAY = "N";
 
+async function inputPrice() {
+  // 구매할 금액 입력
+  try {
+    const inputAmount = await readLineAsync("구입금액을 입력해 주세요. > ");
+    const lottoPayment = new Money(inputAmount);
+
+    return lottoPayment;
+  } catch (error) {
+    console.log(error.message);
+    return await inputPrice();
+  }
+}
+
+async function buyLotto(pay) {
+  // 금액에 대한 로또 발행
   const lottoMachine = new LottoMachine(LOTTO_PRICE);
+
   const lottoList = lottoMachine.buyLottoList(pay);
+  return lottoList;
+}
 
+async function printLottoList(lottoList) {
   console.log(`${lottoList.length}개를 구매했습니다.`);
-  console.log(lottoList);
 
-  const winningLottoNumber = await readLineAsync(
+  const lotto = lottoList.map((lotto) => {
+    return lotto.numbers.map((lottoNumber) => {
+      return lottoNumber.number;
+    });
+  });
+  console.log(lotto);
+}
+
+async function inputWinningLotto() {
+  // 당첨 번호 발행
+  const winningLottoNumbers = await readLineAsync(
     "당첨 번호를 입력해주세요. > "
   );
   const bonusLottoNum = await readLineAsync("보너스 번호를 입력해주세요. > ");
 
-  const winningLotto = new WinningLotto(winningLottoNumber, bonusLottoNum);
+  const winningNumberList = winningLottoNumbers
+    .toString()
+    .split(",")
+    .map((number) => LottoPool.generateLottoNumber(Number(number)));
 
+  try {
+    const winningLotto = new WinningLotto(
+      new Lotto(winningNumberList),
+      LottoPool.generateLottoNumber(bonusLottoNum)
+    );
+    return winningLotto;
+  } catch (error) {
+    console.log(error.message);
+    return await inputWinningLotto();
+  }
+}
+async function prize(winningLotto, lottoList) {
+  // 당첨 결과
   const prizeList = winningLotto.getResultPrize(lottoList);
 
   const stats = new LottoStats(prizeList);
 
+  return stats;
+}
+async function resultPrize(stats, pay) {
+  // 결과 그리기
   console.log("당첨 통계");
   console.log("---------------");
-  console.log(
-    `${PRIZE.FIFTH.matchCount}개 일치 (${PRIZE.FIFTH.prize}원) - ${
-      stats.stats[PRIZE.FIFTH.rank]
-    }개`
-  );
-  console.log(
-    `${PRIZE.FOURTH.matchCount}개 일치 (${PRIZE.FOURTH.prize}원) - ${
-      stats.stats[PRIZE.FOURTH.rank]
-    }개`
-  );
-  console.log(
-    `${PRIZE.THIRD.matchCount}개 일치 (${PRIZE.THIRD.prize}원) - ${
-      stats.stats[PRIZE.THIRD.rank]
-    }개`
-  );
-  console.log(
-    `${PRIZE.SECOND.matchCount}개 일치, 보너스 볼 일치 (${
-      PRIZE.SECOND.prize
-    }원) - ${stats.stats[PRIZE.SECOND.rank]}개`
-  );
-  console.log(
-    `${PRIZE.FIRST.matchCount}개 일치 (${PRIZE.FIRST.prize}원) - ${
-      stats.stats[PRIZE.FIRST.rank]
-    }개`
-  );
+  Object.entries(PRIZE)
+    .reverse()
+    .forEach(([key, value]) =>
+      console.log(
+        `${value.matchCount}개 일치 (${value.prize}원) - ${
+          stats.stats[value.rank]
+        }개`
+      )
+    );
 
   console.log(`총 수익률은${stats.totalReturn(pay)}`);
 }
 
-play();
+async function isRestart() {
+  // 재시작을 물어본다
+  const restartYesOrNo = await readLineAsync(
+    "다시 시작하시겠습니까? (y/n)  > "
+  );
+
+  return restartYesOrNo.toLowerCase() === RESTART_PLAY ? true : false;
+}
+
+async function play() {
+  // 1. 구매할 금액입력
+  // 2. 금액에 대한 로또 발행
+  // 3. 당청번호 발행
+  // 4. 당첨 결과
+  // 5. 결과 그리기
+  const price = await inputPrice();
+  const lottoList = await buyLotto(price);
+
+  printLottoList(lottoList);
+
+  const winningLottoNumber = await inputWinningLotto(lottoList);
+  const stats = await prize(winningLottoNumber, lottoList);
+  const result = await resultPrize(stats, price);
+}
+
+async function playLotto() {
+  do {
+    await play();
+  } while (await isRestart());
+}
+
+playLotto();

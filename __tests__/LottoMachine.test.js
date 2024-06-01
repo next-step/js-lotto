@@ -1,5 +1,6 @@
 import { ErrorLotto } from "../src/constants/error";
 import LottoMachine, { LOTTO_PRICE } from "../src/domain/LottoMachine";
+import Money from "../src/domain/Money";
 
 describe("로또 머신 기능", () => {
   test("로또 한장 1000원 미만의 금액을 입력시 에러를 발생한다.", () => {
@@ -10,8 +11,10 @@ describe("로또 머신 기능", () => {
   });
 
   test("입력받은 금액 만큼 로또를 발행한다", () => {
+    const receivedMoney = new Money(3000);
     const lottoMachine = new LottoMachine(LOTTO_PRICE);
-    const lottoCount = lottoMachine.buyLottoList(3000);
+    const lottoCount = lottoMachine.buyLottoList(receivedMoney);
+
     expect(lottoCount.length).toBe(3);
   });
 });
