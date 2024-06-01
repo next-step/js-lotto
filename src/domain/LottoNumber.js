@@ -1,9 +1,5 @@
 import { ErrorLotto } from "../constants/error";
-import {
-  LOTTO_NUMBER_LENGTH,
-  MAX_NUMBER,
-  MIN_NUMBER,
-} from "../constants/number";
+import { MAX_NUMBER, MIN_NUMBER } from "../constants/number";
 
 class LottoNumber {
   #number;

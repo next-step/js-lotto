@@ -1,26 +1,17 @@
 import { ErrorLotto } from "../constants/error";
-import {
-  LOTTO_NUMBER_LENGTH,
-  MAX_NUMBER,
-  MIN_NUMBER,
-} from "../constants/number";
-import { randomNumber, shuffle, sortingNumber } from "../util/random";
+
+import { shuffle } from "../util/random";
 import Lotto from "./Lotto";
-import LottoNumber from "./LottoNumber";
+import LottoPool from "./LottoPool";
 
 export const LOTTO_PRICE = 1000;
 
 class LottoMachine {
   price = LOTTO_PRICE;
-  #lottoNumberPool;
+  #lottoNumberPool = LottoPool.lottoNumberPool;
 
   constructor(price) {
     this.price = price; //빈값인지 숫자인지 에러를 만들
-
-    this.#lottoNumberPool = Array.from(
-      { length: MAX_NUMBER },
-      (v, i) => new LottoNumber(i + 1)
-    );
   }
 
   #validatePrice(amount) {
@@ -35,11 +26,10 @@ class LottoMachine {
   }
 
   #generateLottoList(amount) {
-    const randomLottoList = Array.from({ length: amount }, () => {
+    return Array.from({ length: amount }, () => {
       const randomLottoNumbers = this.#generateRandomLottoNumbers();
       return new Lotto(randomLottoNumbers);
     });
-    return randomLottoList;
   }
 
   buyLottoList(pay) {
