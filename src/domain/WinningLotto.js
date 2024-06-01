@@ -2,26 +2,26 @@ import { ErrorLotto } from "../constants/error";
 import Prize from "./Prize";
 
 class WinningLotto {
-  number = [];
+  winningLotto = [];
   bonusNumber;
 
   constructor(lotto, bonusNumber) {
     this.#validationNumber(lotto, bonusNumber);
 
-    this.number = lotto;
+    this.winningLotto = lotto;
     this.bonusNumber = bonusNumber;
   }
 
   #validationNumber(lotto, bonusNumber) {
-    if (lotto.isIncludeLottoNumber(bonusNumber)) {
+    if (lotto.containsLottoNumber(bonusNumber)) {
       throw new Error(ErrorLotto.BONUS_NUMBER_DUPLICATED);
     }
   }
 
   getResultPrize(lottoList) {
     const prizeList = lottoList.map((lotto) => {
-      const matchCount = lotto.getMatchCount(this.number);
-      const bonus = lotto.isIncludeLottoNumber(this.bonusNumber);
+      const matchCount = lotto.getMatchCount(this.winningLotto);
+      const bonus = lotto.containsLottoNumber(this.bonusNumber);
 
       const prize = new Prize().findRank(matchCount, bonus);
 
