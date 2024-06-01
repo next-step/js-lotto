@@ -6,6 +6,7 @@
 import Lotto from "./domain/Lotto";
 import LottoMachine, { LOTTO_PRICE } from "./domain/LottoMachine";
 import LottoNumber from "./domain/LottoNumber";
+import LottoPool from "./domain/LottoPool";
 import LottoStats from "./domain/LottoStats";
 import Money from "./domain/Money";
 import { PRIZE } from "./domain/Prize";
@@ -57,12 +58,12 @@ async function inputWinningLotto() {
   const winningNumberList = winningLottoNumbers
     .toString()
     .split(",")
-    .map((number) => new LottoNumber(Number(number)));
+    .map((number) => LottoPool.generateLottoNumber(Number(number)));
 
   try {
     const winningLotto = new WinningLotto(
       new Lotto(winningNumberList),
-      new LottoNumber(bonusLottoNum)
+      LottoPool.generateLottoNumber(bonusLottoNum)
     );
     return winningLotto;
   } catch (error) {
