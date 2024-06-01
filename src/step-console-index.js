@@ -5,6 +5,7 @@ import { Lotto } from "./domain/Lotto";
 import { validateNumber } from "./validator/validateNumber";
 import { validateArray } from "./validator/validateArray";
 import { CONTINUE } from "./constants/message";
+import calculateRateOfReturn from "./utils/calculateRateOfReturn";
 
 const app = async () => {
   const getPurchasePrice = async () => {
@@ -76,10 +77,6 @@ const app = async () => {
     validateNumber.integer(bonusNumber);
     validateNumber.max(bonusNumber);
     validateArray.containNum(winningNumberArray, bonusNumber);
-  };
-
-  const calculateRateOfReturn = (totalIncome, purchasePrice) => {
-    return (totalIncome / purchasePrice) * 100;
   };
 
   const play = async () => {

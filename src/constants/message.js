@@ -16,7 +16,7 @@ export const INPUT_MESSAGE = {
 export const OUTPUT_MESSAGE = {
   PURCHASE_RESULT_COUNT: (count) => `${count}개를 구매했습니다.`,
   WINNING_STATISTICS: "\n당첨 통계\n--------------------",
-  TOTAL_RATE_OF_RETURN: (count) => `총 수익률은 ${count}%입니다.`,
+  TOTAL_RATE_OF_RETURN: (rate) => `총 수익률은 ${rate}%입니다.`,
 
   NAN_ERROR: "숫자를 입력해주세요.",
   WINNING_LOTTO_LENGTH_ERROR: `당첨 번호는 ${LOTTO.NUMBERS_COUNT}개를 입력해야 합니다.`,
@@ -28,13 +28,9 @@ export const OUTPUT_MESSAGE = {
   LIMIT_NUM_ERROR: `${LOTTO.MAX_NUMBER}이하의 숫자를 입력해주세요.`,
 };
 
-export const PRIZE_MESSAGE = {
-  FIRST_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT}개 일치 (${numberFormater(WINNINGS.FIRST)}원) - ${count}개`,
-  SECOND_PRIZE: (count) =>
-    `${LOTTO.NUMBERS_COUNT - 1}개 일치, 보너스 볼 일치 (${numberFormater(WINNINGS.SECOND)}원) - ${count}개`,
-  THIRD_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT - 1}개 일치 (${numberFormater(WINNINGS.THIRD)}원) - ${count}개`,
-  FOURTH_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT - 2}개 일치 (${numberFormater(WINNINGS.FOURTH)}원) - ${count}개`,
-  FIFTH_PRIZE: (count) => `${LOTTO.NUMBERS_COUNT - 3}개 일치 (${numberFormater(WINNINGS.FIFTH)}원) - ${count}개`,
+export const ERROR_MESSAGE = {
+  TARGET_NOT_STRING: "target은 문자열이어야 합니다.",
+  ELEMENT_NOT_FOUND: (target) => `해당하는 요소가 없습니다: ${target}`,
 };
 
 export const WINNINGS = {
@@ -43,4 +39,35 @@ export const WINNINGS = {
   THIRD: 1_500_000,
   FOURTH: 50_000,
   FIFTH: 5_000,
+};
+
+export const PRIZE_STATISTICS = {
+  1: {
+    equalCount: LOTTO.NUMBERS_COUNT,
+    price: numberFormater(WINNINGS.FIRST),
+  },
+  2: {
+    equalCount: LOTTO.NUMBERS_COUNT - 1,
+    price: numberFormater(WINNINGS.SECOND),
+  },
+  3: {
+    equalCount: LOTTO.NUMBERS_COUNT - 1,
+    price: numberFormater(WINNINGS.THIRD),
+  },
+  4: {
+    equalCount: LOTTO.NUMBERS_COUNT - 2,
+    price: numberFormater(WINNINGS.FOURTH),
+  },
+  5: {
+    equalCount: LOTTO.NUMBERS_COUNT - 3,
+    price: numberFormater(WINNINGS.FIFTH),
+  },
+};
+
+export const PRIZE_MESSAGE = {
+  1: (count) => `${PRIZE_STATISTICS}개 일치 (${numberFormater(WINNINGS.FIRST)}원) - ${count}개`,
+  2: (count) => `${LOTTO.NUMBERS_COUNT - 1}개 일치, 보너스 볼 일치 (${numberFormater(WINNINGS.SECOND)}원) - ${count}개`,
+  3: (count) => `${LOTTO.NUMBERS_COUNT - 1}개 일치 (${numberFormater(WINNINGS.THIRD)}원) - ${count}개`,
+  4: (count) => `${LOTTO.NUMBERS_COUNT - 2}개 일치 (${numberFormater(WINNINGS.FOURTH)}원) - ${count}개`,
+  5: (count) => `${LOTTO.NUMBERS_COUNT - 3}개 일치 (${numberFormater(WINNINGS.FIFTH)}원) - ${count}개`,
 };
