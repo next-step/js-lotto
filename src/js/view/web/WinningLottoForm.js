@@ -1,4 +1,5 @@
 import { $, $all } from "../../../utils/dom.js";
+import Lotto from "../../domain/Lotto.js";
 
 const WinningLottoForm = {
   elements: {
@@ -17,6 +18,14 @@ const WinningLottoForm = {
 
   isValidBonusNumber() {
     return this.elements.BONUS_NUMBER_INPUT.validity.valid;
+  },
+
+  validateLottoNumberInputs() {
+    const lottoNumberCandidates = [
+      ...WinningLottoForm.winningNumbers(),
+      WinningLottoForm.bonusNumber(),
+    ].filter(Boolean);
+    Lotto.validateLottoNumbers(lottoNumberCandidates);
   },
 
   winningNumbers() {

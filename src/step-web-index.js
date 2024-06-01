@@ -122,8 +122,6 @@ const onClickShowRanking = (e) => {
 WinningLottoForm.elements.WINNING_NUMBER_INPUTS.forEach((input, i) => {
   input.addEventListener("input", (e) => {
     try {
-      // LottoNumber.validateLottoNumber(e.target.value);
-
       if (e.target.value.length >= 2) {
         if (e.target.nextElementSibling) {
           e.target.nextElementSibling.focus();
@@ -143,9 +141,7 @@ WinningLottoForm.elements.WINNING_NUMBER_INPUTS.forEach((input, i) => {
   input.addEventListener("change", (e) => {
     try {
       LottoNumber.validateLottoNumber(e.target.value);
-      Lotto.validateLottoNumbers(
-        WinningLottoForm.winningNumbers().filter(Boolean)
-      );
+      WinningLottoForm.validateLottoNumberInputs();
     } catch (e) {
       input.focus();
       input.value = "";
@@ -156,14 +152,23 @@ WinningLottoForm.elements.WINNING_NUMBER_INPUTS.forEach((input, i) => {
 
 WinningLottoForm.elements.BONUS_NUMBER_INPUT.addEventListener("input", (e) => {
   try {
-    LottoNumber.validateLottoNumber(e.target.value);
-
     if (e.target.value.length >= 2) {
       e.target.blur();
     }
   } catch (e) {
     alert(e.message);
     WinningLottoForm.elements.BONUS_NUMBER_INPUT.value = "";
+  }
+});
+
+WinningLottoForm.elements.BONUS_NUMBER_INPUT.addEventListener("change", (e) => {
+  try {
+    LottoNumber.validateLottoNumber(e.target.value);
+    WinningLottoForm.validateLottoNumberInputs();
+  } catch (e) {
+    WinningLottoForm.elements.BONUS_NUMBER_INPUT.focus();
+    WinningLottoForm.elements.BONUS_NUMBER_INPUT.value = "";
+    alert(e.message);
   }
 });
 
