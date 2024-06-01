@@ -1,5 +1,5 @@
 import { ErrorLottoPurchasedAmount } from "../src/js/constants/error";
-import LottoPurchaseManager from "../src/js/domain/LottoPurchaseManager";
+import LottoShop from "../src/js/domain/LottoShop";
 
 describe("로도 구매 기능 테스트", () => {
   test.each([
@@ -11,7 +11,7 @@ describe("로도 구매 기능 테스트", () => {
       // given
       // when
       const availableLottoCount =
-        LottoPurchaseManager.getPurchasableLottoCount(purchasedAmount);
+        LottoShop.getPurchasableLottoCount(purchasedAmount);
 
       // then
       expect(availableLottoCount).toBe(lottoCount);
@@ -29,7 +29,7 @@ describe("로도 구매 기능 테스트", () => {
     (purchasedAmount, errorMessage) => {
       // when
       const validateAvailableLottoCount = () =>
-        LottoPurchaseManager.validateLottoPurchasedAmount(purchasedAmount);
+        LottoShop.validateLottoPurchasedAmount(purchasedAmount);
 
       // then
       expect(validateAvailableLottoCount).toThrow(errorMessage);
@@ -42,7 +42,7 @@ describe("로도 구매 기능 테스트", () => {
 
     // when
     const validateAvailableLottoCount = () =>
-      LottoPurchaseManager.validateLottoPurchasedAmount(purchasedAmount);
+      LottoShop.validateLottoPurchasedAmount(purchasedAmount);
 
     // then
     expect(validateAvailableLottoCount).toThrow(

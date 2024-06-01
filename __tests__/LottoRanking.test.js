@@ -1,5 +1,5 @@
 import Lotto from "../src/js/domain/Lotto";
-import LottoPurchaseManager from "../src/js/domain/LottoPurchaseManager";
+import LottoShop from "../src/js/domain/LottoShop";
 import LottoRanking from "../src/js/domain/LottoRanking";
 import WinningLotto from "../src/js/domain/WinningLotto";
 
@@ -128,7 +128,7 @@ describe("로또 당첨 순위 기능 테스트", () => {
     // given
     const purchasedAmount = 8000;
     const availableLottoCount =
-      LottoPurchaseManager.getPurchasableLottoCount(purchasedAmount);
+      LottoShop.getPurchasableLottoCount(purchasedAmount);
     const lottoNumbers = [
       [8, 21, 23, 41, 42, 43],
       [3, 5, 11, 16, 32, 38],

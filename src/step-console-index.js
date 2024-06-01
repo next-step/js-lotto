@@ -1,7 +1,7 @@
 import Lotto from "./js/domain/Lotto";
 import LottoMachine from "./js/domain/LottoMachine";
 import LottoNumber from "./js/domain/LottoNumber";
-import LottoPurchaseManager from "./js/domain/LottoPurchaseManager.js";
+import LottoShop from "./js/domain/LottoShop.js";
 import LottoRanking from "./js/domain/LottoRanking";
 import WinningLotto from "./js/domain/WinningLotto";
 import Input from "./js/view/console/Input.js";
@@ -12,13 +12,13 @@ const play = async () => {
   // 로또를 구입할 금액 입력
   const purchasedAmount = await repeatUntilNoError(async () => {
     const input = await Input.getLottoPurchasedAmount();
-    LottoPurchaseManager.validateLottoPurchasedAmount(input);
+    LottoShop.validateLottoPurchasedAmount(input);
     return input;
   });
 
   // 로또를 구입한 금액만큼 최대 개수의 로또 발급
   const availableLottoCount =
-    LottoPurchaseManager.getPurchasableLottoCount(purchasedAmount);
+    LottoShop.getPurchasableLottoCount(purchasedAmount);
 
   const lottos = [];
   for (let i = 0; i < availableLottoCount; i++) {

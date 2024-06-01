@@ -1,5 +1,5 @@
 import Lotto from "./js/domain/Lotto.js";
-import LottoPurchaseManager from "./js/domain/LottoPurchaseManager.js";
+import LottoShop from "./js/domain/LottoShop.js";
 import LottoMachine from "./js/domain/LottoMachine.js";
 import LottoRanking from "./js/domain/LottoRanking.js";
 import WinningLotto from "./js/domain/WinningLotto.js";
@@ -10,21 +10,19 @@ import WinningLottoForm from "./js/view/web/WinningLottoForm.js";
 import { $ } from "./utils/dom.js";
 import LottoNumber from "./js/domain/LottoNumber.js";
 
-let lottoPurchaseManager;
+const lottos = [];
 
 // 로또 게임 초기화
 const initializeLottoGame = () => {
   const purchasedAmount = PurchaseAmountInputForm.inputValue();
   const purchasableLottosCount =
-    LottoPurchaseManager.getPurchasableLottoCount(purchasedAmount);
+    LottoShop.getPurchasableLottoCount(purchasedAmount);
   const purchasedLottos = LottoMachine.generateRandomLottos(
     purchasableLottosCount
   );
 
-  lottoPurchaseManager = new LottoPurchaseManager(
-    purchasedAmount,
-    purchasedLottos
-  );
+  LottoShop = new LottoShop(purchasedAmount);
+  lottos.push(...purchasedLottos);
 };
 
 // 구매 금액 입력
@@ -38,7 +36,7 @@ const onSubmitPurchaseAmount = (e) => {
 
   try {
     initializeLottoGame();
-    LottoListSection.show(lottoPurchaseManager.lottos);
+    LottoListSection.show(lottos);
     WinningLottoForm.show();
   } catch (error) {
     alert(error.message);
@@ -75,7 +73,7 @@ PurchaseAmountInputForm.selector.PURCHASE_AMOUNT_INPUT.addEventListener(
         return;
       }
 
-      LottoPurchaseManager.validateLottoPurchasedAmount(
+      LottoShop.validateLottoPurchasedAmount(
         PurchaseAmountInputForm.inputValue()
       );
     } catch (error) {
@@ -86,7 +84,7 @@ PurchaseAmountInputForm.selector.PURCHASE_AMOUNT_INPUT.addEventListener(
 
 // 구매한 로또 목록
 const onToggleShowLottoNumbers = () => {
-  LottoListSection.toggleLottoNumbers(lottoPurchaseManager.lottos);
+  LottoListSection.toggleLottoNumbers(lottos);
 };
 
 LottoListSection.selector.LOTTO_LIST_TOGGLE_BUTTON.addEventListener(
@@ -115,7 +113,7 @@ const onClickShowRanking = (e) => {
     const lottoRanking = new LottoRanking(winningLotto);
 
     LottoRankingModal.open();
-    LottoRankingModal.render(lottoPurchaseManager, lottoRanking);
+    LottoRankingModal.render(LottoShop, lottoRanking);
   } catch (error) {
     alert(error.message);
   }
@@ -196,7 +194,7 @@ const onRestartGame = () => {
   LottoRankingModal.close();
   PurchaseAmountInputForm.reset();
   LottoListSection.hide();
-  LottoListSection.reset(lottoPurchaseManager.lottos);
+  LottoListSection.reset(lottos);
   WinningLottoForm.hide();
   WinningLottoForm.reset();
 };
