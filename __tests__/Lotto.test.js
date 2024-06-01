@@ -17,7 +17,7 @@ describe("로또 기능", () => {
     const lottoOne = createLotto([1, 2, 3, 5, 6, 7]);
     const number = new LottoNumber(7);
 
-    const resultMatchCount = lottoOne.isIncludeLottoNumber(number);
+    const resultMatchCount = lottoOne.containsLottoNumber(number);
     expect(resultMatchCount).toEqual(true);
   });
 
