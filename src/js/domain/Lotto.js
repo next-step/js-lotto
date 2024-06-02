@@ -42,13 +42,11 @@ class Lotto {
 
   static createLottoNumbers(lottoNumbers) {
     if (Array.isArray(lottoNumbers)) {
-      return lottoNumbers.map((lottoNumber) => new LottoNumber(lottoNumber));
+      return lottoNumbers.map(LottoNumber.of);
     }
 
     if (typeof lottoNumbers === "string") {
-      return lottoNumbers
-        .split(",")
-        .map((lottoNumber) => new LottoNumber(lottoNumber));
+      return lottoNumbers.split(",").map(LottoNumber.of);
     }
 
     return [];

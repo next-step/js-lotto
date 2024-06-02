@@ -7,7 +7,7 @@ class WinningLotto {
 
   constructor(winningLotto, bonusNumber) {
     this.#winningLotto = winningLotto;
-    this.#bonusLottoNumber = new LottoNumber(bonusNumber);
+    this.#bonusLottoNumber = LottoNumber.of(bonusNumber);
     this.validateBonusNumber(this.#bonusLottoNumber);
   }
 

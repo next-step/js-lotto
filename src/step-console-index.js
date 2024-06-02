@@ -43,7 +43,7 @@ const play = async () => {
   // 보너스 번호 입력
   const bonusNumber = await repeatUntilNoError(async () => {
     const input = await Input.getBonusNumber();
-    return new LottoNumber(input);
+    return LottoNumber.of(input);
   });
 
   // 당첨 로또 생성

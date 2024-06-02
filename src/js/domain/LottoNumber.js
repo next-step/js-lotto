@@ -27,6 +27,11 @@ class LottoNumber {
     this.#value = validatedLottoNumber;
   }
 
+  static of(value) {
+    LottoNumber.validateLottoNumber(value);
+    return instances[Number(value)];
+  }
+
   get value() {
     return this.#value;
   }
