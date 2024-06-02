@@ -8,12 +8,14 @@ const WinningLottoForm = {
     BONUS_NUMBER_INPUT: $(".bonus-number"),
   },
 
+  get winningNumberInputs() {
+    return [...this.elements.WINNING_NUMBER_INPUTS];
+  },
+
   isValidWinningNumbers() {
-    return Array.from(this.elements.WINNING_NUMBER_INPUTS).every(
-      (winningLottoNumberInput) => {
-        return winningLottoNumberInput.validity.valid;
-      }
-    );
+    return this.winningNumberInputs.every((winningLottoNumberInput) => {
+      return winningLottoNumberInput.validity.valid;
+    });
   },
 
   isValidBonusNumber() {
@@ -29,7 +31,7 @@ const WinningLottoForm = {
   },
 
   winningNumbers() {
-    return Array.from(this.elements.WINNING_NUMBER_INPUTS).map(
+    return this.winningNumberInputs.map(
       (winningNumberInput) => winningNumberInput.value
     );
   },
