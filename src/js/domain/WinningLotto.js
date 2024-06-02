@@ -24,7 +24,7 @@ class WinningLotto {
   }
 
   validateBonusNumber(bonusLottoNumber) {
-    if (this.#winningLotto.hasLottoNumber(bonusLottoNumber)) {
+    if (this.#winningLotto.contains(bonusLottoNumber)) {
       throw new Error(
         ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_DUPLICATED
       );
@@ -33,7 +33,7 @@ class WinningLotto {
 
   matchInfo(lotto) {
     const count = this.#winningLotto.lottoNumbers.filter((lottoNumber) =>
-      lotto.hasLottoNumber(lottoNumber)
+      lotto.contains(lottoNumber)
     ).length;
 
     const bonusNumberMatched = lotto.lottoNumbers.includes(

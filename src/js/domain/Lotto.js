@@ -58,8 +58,12 @@ class Lotto {
     return [...lottoNumbers].sort((a, b) => a - b);
   }
 
-  hasLottoNumber(lottoNumber) {
-    return this.#lottoNumbers.includes(lottoNumber);
+  contains(lottoNumber) {
+    if (lottoNumber instanceof LottoNumber) {
+      return this.#lottoNumbers.includes(lottoNumber);
+    }
+
+    return this.lottoNumberValues.includes(lottoNumber);
   }
 }
 
