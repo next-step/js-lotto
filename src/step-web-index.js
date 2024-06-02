@@ -21,6 +21,8 @@ const initializeLottoGame = () => {
     purchasableLottosCount
   );
 
+  // delete all lottos
+  lottos.splice(0, lottos.length);
   lottos.push(...purchasedLottos);
 };
 
