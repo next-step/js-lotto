@@ -8,7 +8,6 @@ import LottoRankingModal from "./js/view/web/LottoRankingModal.js";
 import PurchaseAmountInputForm from "./js/view/web/PurchaseAmountInputForm.js";
 import WinningLottoForm from "./js/view/web/WinningLottoForm.js";
 import { $ } from "./utils/dom.js";
-import LottoNumber from "./js/domain/LottoNumber.js";
 
 let purchasedAmount;
 const lottos = [];
@@ -43,19 +42,11 @@ const onSubmitPurchaseAmount = (e) => {
   }
 };
 
-let enterPressed = false;
-
-PurchaseAmountInputForm.elements.PURCHASE_AMOUNT_INPUT.addEventListener(
+PurchaseAmountInputForm.addEventListener(
+  PurchaseAmountInputForm.elements.PURCHASE_AMOUNT_INPUT,
   "keydown",
-  (e) => {
-    if (e.key === "Enter") {
-      enterPressed = true;
-      if (!PurchaseAmountInputForm.isValidInput()) {
-        return;
-      }
-      onSubmitPurchaseAmount(e);
-    }
-  }
+  PurchaseAmountInputForm.handlePurchaseAmountInputFormEnterPressed,
+  onSubmitPurchaseAmount
 );
 
 PurchaseAmountInputForm.elements.PURCHASE_BUTTON.addEventListener(
@@ -63,23 +54,10 @@ PurchaseAmountInputForm.elements.PURCHASE_BUTTON.addEventListener(
   onSubmitPurchaseAmount
 );
 
-PurchaseAmountInputForm.elements.PURCHASE_AMOUNT_INPUT.addEventListener(
+PurchaseAmountInputForm.addEventListener(
+  PurchaseAmountInputForm.elements.PURCHASE_AMOUNT_INPUT,
   "blur",
-  () => {
-    try {
-      // Enter 키로 인한 blur 이벤트 발생 시, 중복으로 validate 되는 것을 방지
-      if (enterPressed) {
-        enterPressed = false;
-        return;
-      }
-
-      LottoShop.validateLottoPurchasedAmount(
-        PurchaseAmountInputForm.inputValue()
-      );
-    } catch (error) {
-      alert(error.message);
-    }
-  }
+  PurchaseAmountInputForm.handlePurchaseAmountInputFormBlur
 );
 
 // 구매한 로또 목록
@@ -119,58 +97,29 @@ const onClickShowRanking = (e) => {
   }
 };
 
-WinningLottoForm.elements.WINNING_NUMBER_INPUTS.forEach((input, i) => {
-  input.addEventListener("input", (e) => {
-    try {
-      if (e.target.value.length >= 2) {
-        if (e.target.nextElementSibling) {
-          e.target.nextElementSibling.focus();
-        } else {
-          // 마지막 입력칸일 경우 blur 이벤트 발생
-          e.target.blur();
-        }
-      }
-    } catch (e) {
-      alert(e.message);
-      input.value = "";
-    }
-  });
-});
+WinningLottoForm.addEventListeners(
+  WinningLottoForm.elements.WINNING_NUMBER_INPUTS,
+  "input",
+  WinningLottoForm.handleWinningNumberInput
+);
 
-WinningLottoForm.elements.WINNING_NUMBER_INPUTS.forEach((input, i) => {
-  input.addEventListener("change", (e) => {
-    try {
-      LottoNumber.validateLottoNumber(e.target.value);
-      WinningLottoForm.validateLottoNumberInputs();
-    } catch (e) {
-      input.focus();
-      input.value = "";
-      alert(e.message);
-    }
-  });
-});
+WinningLottoForm.addEventListeners(
+  WinningLottoForm.elements.WINNING_NUMBER_INPUTS,
+  "change",
+  WinningLottoForm.handleWinningNumberInputChange
+);
 
-WinningLottoForm.elements.BONUS_NUMBER_INPUT.addEventListener("input", (e) => {
-  try {
-    if (e.target.value.length >= 2) {
-      e.target.blur();
-    }
-  } catch (e) {
-    alert(e.message);
-    WinningLottoForm.elements.BONUS_NUMBER_INPUT.value = "";
-  }
-});
+WinningLottoForm.addEventListeners(
+  WinningLottoForm.elements.BONUS_NUMBER_INPUT,
+  "input",
+  WinningLottoForm.handleBonusNumberInput
+);
 
-WinningLottoForm.elements.BONUS_NUMBER_INPUT.addEventListener("change", (e) => {
-  try {
-    LottoNumber.validateLottoNumber(e.target.value);
-    WinningLottoForm.validateLottoNumberInputs();
-  } catch (e) {
-    WinningLottoForm.elements.BONUS_NUMBER_INPUT.focus();
-    WinningLottoForm.elements.BONUS_NUMBER_INPUT.value = "";
-    alert(e.message);
-  }
-});
+WinningLottoForm.addEventListeners(
+  WinningLottoForm.elements.BONUS_NUMBER_INPUT,
+  "change",
+  WinningLottoForm.handleBonusNumberInputChange
+);
 
 const $showResultButton = $(".open-result-modal-button");
 $showResultButton.addEventListener("click", onClickShowRanking);
