@@ -65,19 +65,19 @@ describe("로또 구매 금액 입력 폼 기능 테스트", () => {
     });
   });
 
-  it("Input에 0 미만의 금액을 입력하고 Enter 키를 누르면 HTML form validation이 보여진다.", () => {
+  it("Input에 1000 미만의 금액을 입력하고 Enter 키를 누르면 HTML form validation이 보여진다.", () => {
     //given // when
     cy.get(selectors.purchaseAmountInput).type("-1000{enter}");
 
     // then
     cy.get(selectors.purchaseAmountInput).should(($input) => {
       expect($input[0].validationMessage).to.eq(
-        "Value must be greater than or equal to 0."
+        "Value must be greater than or equal to 1000."
       );
     });
   });
 
-  it("Input에 0 미만의 금액을 입력하고 Button을 클릭하면 HTML form validation이 보여진다.", () => {
+  it("Input에 1000 미만의 금액을 입력하고 Button을 클릭하면 HTML form validation이 보여진다.", () => {
     // given
     cy.get(selectors.purchaseAmountInput).type("-1000");
 
@@ -87,7 +87,7 @@ describe("로또 구매 금액 입력 폼 기능 테스트", () => {
     // then
     cy.get(selectors.purchaseAmountInput).should(($input) => {
       expect($input[0].validationMessage).to.eq(
-        "Value must be greater than or equal to 0."
+        "Value must be greater than or equal to 1000."
       );
     });
   });
