@@ -9,7 +9,7 @@ describe("로또 기능 테스트", () => {
       const lotto = new Lotto(testSet);
 
       // when
-      const lottoNumbers = lotto.lottoNumbers;
+      const lottoNumbers = lotto.lottoNumberValues;
 
       // then
       expect(lottoNumbers).toEqual([1, 2, 3, 4, 5, 6]);
@@ -18,11 +18,10 @@ describe("로또 기능 테스트", () => {
 
   test("로또 번호 중 중복되는 수가 있다면 에러가 발생한다", () => {
     // given
-    const lottoNumberInstances =
-      Lotto.createLottoNumberInstances("1,1,2,3,4,5");
+    const lottoNumbers = Lotto.createLottoNumbers("1,1,2,3,4,5");
 
     // when
-    const validateLotto = () => Lotto.validateLotto(lottoNumberInstances);
+    const validateLotto = () => Lotto.validateLotto(lottoNumbers);
 
     // then
     expect(validateLotto).toThrow(
@@ -35,10 +34,10 @@ describe("로또 기능 테스트", () => {
     [1, 2, 3, 4, 5, 6, 7],
   ])("로또 번호가 6개가 아니라면 에러가 발생한다.", (testSet) => {
     // given
-    const lottoNumberInstances = Lotto.createLottoNumberInstances(testSet);
+    const lottoNumbers = Lotto.createLottoNumbers(testSet);
 
     // when
-    const validateLotto = () => Lotto.validateLotto(lottoNumberInstances);
+    const validateLotto = () => Lotto.validateLotto(lottoNumbers);
 
     // then
     expect(validateLotto).toThrow(
@@ -51,6 +50,6 @@ describe("로또 기능 테스트", () => {
     const unsortedLotto = new Lotto([6, 5, 4, 3, 2, 1]);
 
     // then
-    expect(unsortedLotto.lottoNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(unsortedLotto.lottoNumberValues).toEqual([1, 2, 3, 4, 5, 6]);
   });
 });

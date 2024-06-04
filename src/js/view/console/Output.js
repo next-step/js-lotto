@@ -9,11 +9,11 @@ const Output = {
   printLottoRankingCount({
     rankingWinningPrice,
     rankingCondition,
-    isShowExtraMent,
+    extraMentShown,
     count,
   }) {
     const template = `${rankingCondition}개 일치${
-      isShowExtraMent ? ", 보너스 볼 일치" : ""
+      extraMentShown ? ", 보너스 볼 일치" : ""
     } (${rankingWinningPrice.toLocaleString("ko-KR")}원) - ${count}개`;
 
     console.log(template);

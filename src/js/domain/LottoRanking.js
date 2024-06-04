@@ -7,7 +7,7 @@ class LottoRanking {
     FIFTH: "FIFTH",
   };
 
-  static LottoRankingInfo = {
+  static LottoPrize = {
     [LottoRanking.Ranking.FIRST]: {
       ranking: LottoRanking.Ranking.FIRST,
       winningPrice: 2_000_000_000,
@@ -49,45 +49,40 @@ class LottoRanking {
     return (totalLottoWinningPrice / lottoPurcasedAmount) * 100;
   }
 
-  getLottoRanking(lotto) {
+  getLottoPrize(lotto) {
     const { count, bonusNumberMatched } = this.#winningLotto.matchInfo(lotto);
 
-    switch (count) {
-      case LottoRanking.LottoRankingInfo[LottoRanking.Ranking.FIRST].condition:
-        return LottoRanking.LottoRankingInfo[LottoRanking.Ranking.FIRST];
-      case LottoRanking.LottoRankingInfo[LottoRanking.Ranking.SECOND].condition:
-        return bonusNumberMatched
-          ? LottoRanking.LottoRankingInfo[LottoRanking.Ranking.SECOND]
-          : LottoRanking.LottoRankingInfo[LottoRanking.Ranking.THIRD];
-      case LottoRanking.LottoRankingInfo.FOURTH.condition:
-        return LottoRanking.LottoRankingInfo[LottoRanking.Ranking.FOURTH];
-      case LottoRanking.LottoRankingInfo.FIFTH.condition:
-        return LottoRanking.LottoRankingInfo[LottoRanking.Ranking.FIFTH];
-      default:
-        return null;
+    const lottoPrizes = Object.values(LottoRanking.LottoPrize).filter(
+      (prize) => prize.condition === count
+    );
+
+    if (lottoPrizes.length > 1) {
+      return bonusNumberMatched ? lottoPrizes[0] : lottoPrizes[1];
     }
+
+    return lottoPrizes[0] || null;
   }
 
-  getLottoRankings(lottos) {
-    const lottoRankings = lottos
-      .map((lotto) => this.getLottoRanking(lotto))
+  getLottoPrizes(lottos) {
+    const lottoPrizes = lottos
+      .map((lotto) => this.getLottoPrize(lotto))
       .filter((ranking) => ranking !== null);
 
-    return lottoRankings;
+    return lottoPrizes;
   }
 
-  getLottoRankingCount(lottos, ranking) {
-    const lottoRankings = this.getLottoRankings(lottos);
+  getLottoPrizeCount(lottos, ranking) {
+    const lottoPrizes = this.getLottoPrizes(lottos);
 
-    return lottoRankings.filter(
-      (lottoRanking) => lottoRanking.ranking === LottoRanking.Ranking[ranking]
+    return lottoPrizes.filter(
+      (lottoPrize) => lottoPrize.ranking === LottoRanking.Ranking[ranking]
     ).length;
   }
 
   getTotalLottoWinningPrice(lottos) {
-    const lottoRankings = this.getLottoRankings(lottos);
-    const totalLottoWinningPrice = lottoRankings.reduce((acc, lottoRanking) => {
-      return acc + lottoRanking.winningPrice;
+    const lottoPrizes = this.getLottoPrizes(lottos);
+    const totalLottoWinningPrice = lottoPrizes.reduce((acc, lottoPrize) => {
+      return acc + lottoPrize.winningPrice;
     }, 0);
 
     return totalLottoWinningPrice;

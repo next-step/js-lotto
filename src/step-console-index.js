@@ -1,7 +1,7 @@
 import Lotto from "./js/domain/Lotto";
 import LottoMachine from "./js/domain/LottoMachine";
 import LottoNumber from "./js/domain/LottoNumber";
-import LottoPurchaseManager from "./js/domain/LottoPurchaseManager.js";
+import LottoShop from "./js/domain/LottoShop.js";
 import LottoRanking from "./js/domain/LottoRanking";
 import WinningLotto from "./js/domain/WinningLotto";
 import Input from "./js/view/console/Input.js";
@@ -12,13 +12,13 @@ const play = async () => {
   // 로또를 구입할 금액 입력
   const purchasedAmount = await repeatUntilNoError(async () => {
     const input = await Input.getLottoPurchasedAmount();
-    LottoPurchaseManager.validateLottoPurchasedAmount(input);
+    LottoShop.validateLottoPurchasedAmount(input);
     return input;
   });
 
   // 로또를 구입한 금액만큼 최대 개수의 로또 발급
   const availableLottoCount =
-    LottoPurchaseManager.getPurchasableLottoCount(purchasedAmount);
+    LottoShop.getPurchasableLottoCount(purchasedAmount);
 
   const lottos = [];
   for (let i = 0; i < availableLottoCount; i++) {
@@ -30,7 +30,9 @@ const play = async () => {
   Output.printGeneratedLottosCount(lottos.length);
 
   // 발급한 로또들의 각 로또 번호들을 오름차순으로 출력
-  Output.printGeneratedLottosNumbers(lottos.map((lotto) => lotto.lottoNumbers));
+  Output.printGeneratedLottosNumbers(
+    lottos.map((lotto) => lotto.lottoNumberValues)
+  );
 
   // 당첨 번호 입력
   const lotto = await repeatUntilNoError(async () => {
@@ -41,7 +43,7 @@ const play = async () => {
   // 보너스 번호 입력
   const bonusNumber = await repeatUntilNoError(async () => {
     const input = await Input.getBonusNumber();
-    return new LottoNumber(input);
+    return LottoNumber.of(input);
   });
 
   // 당첨 로또 생성
@@ -63,17 +65,14 @@ const play = async () => {
   ];
 
   const lottoRankingStatistics = rankings.map((ranking) => {
-    const lottoRankingInfo = LottoRanking.LottoRankingInfo[ranking];
-    const lottoRankingCount = lottoRanking.getLottoRankingCount(
-      lottos,
-      ranking
-    );
+    const lottoPrize = LottoRanking.LottoPrize[ranking];
+    const lottoPrizeCount = lottoRanking.getLottoPrizeCount(lottos, ranking);
 
     return {
-      count: lottoRankingCount,
-      rankingWinningPrice: lottoRankingInfo.winningPrice,
-      rankingCondition: lottoRankingInfo.condition,
-      isShowExtraMent: lottoRanking === LottoRanking.Ranking["SECOND"],
+      count: lottoPrizeCount,
+      rankingWinningPrice: lottoPrize.winningPrice,
+      rankingCondition: lottoPrize.condition,
+      extraMentShown: lottoRanking === LottoRanking.Ranking["SECOND"],
     };
   });
 

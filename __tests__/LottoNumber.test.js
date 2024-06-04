@@ -4,7 +4,7 @@ import LottoNumber from "../src/js/domain/LottoNumber";
 describe("로또 번호 기능 테스트", () => {
   test("로또 번호는 1이상 45이하의 정수이다.", () => {
     // given
-    const lottoNumber = new LottoNumber(1);
+    const lottoNumber = LottoNumber.of(1);
 
     // when
     const value = lottoNumber.value;
@@ -34,7 +34,7 @@ describe("로또 번호 기능 테스트", () => {
       // when
 
       const generateLottoNumber = () => {
-        const lottoNumber = new LottoNumber(testSet.lottoNumber);
+        const lottoNumber = LottoNumber.of(testSet.lottoNumber);
       };
 
       // then

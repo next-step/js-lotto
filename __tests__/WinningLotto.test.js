@@ -15,7 +15,9 @@ describe("당첨 로또 기능 테스트", () => {
     const winningLotto = new WinningLotto(lotto, bonusNumber);
 
     // then
-    expect(winningLotto.winningLotto.lottoNumbers).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(winningLotto.winningLotto.lottoNumberValues).toEqual([
+      1, 2, 3, 4, 5, 6,
+    ]);
     expect(winningLotto.bonusNumber).toEqual(7);
   });
 

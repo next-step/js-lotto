@@ -78,31 +78,31 @@ describe("입출력 기능 테스트", () => {
       {
         rankingWinningPrice: 5_000,
         rankingCondition: 3,
-        isShowExtramMent: false,
+        extraMentShown: false,
         count: 1,
       },
       {
         rankingWinningPrice: 50_000,
         rankingCondition: 4,
-        isShowExtraMent: false,
+        extraMentShown: false,
         count: 0,
       },
       {
         rankingWinningPrice: 1_500_000,
         rankingCondition: 5,
-        isShowExtraMent: false,
+        extraMentShown: false,
         count: 0,
       },
       {
         rankingWinningPrice: 30_000_000,
         rankingCondition: 5,
-        isShowExtraMent: true,
+        extraMentShown: true,
         count: 1,
       },
       {
         rankingWinningPrice: 2_000_000_000,
         rankingCondition: 6,
-        isShowExtraMent: false,
+        extraMentShown: false,
         count: 1,
       },
     ];

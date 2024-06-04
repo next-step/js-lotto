@@ -3,28 +3,28 @@ import LottoNumber from "./LottoNumber.js";
 
 class WinningLotto {
   #winningLotto;
-  #bonusNumberInstance;
+  #bonusLottoNumber;
 
   constructor(winningLotto, bonusNumber) {
     this.#winningLotto = winningLotto;
-    this.#bonusNumberInstance = new LottoNumber(bonusNumber);
-    this.validateBonusNumber(this.#bonusNumberInstance);
+    this.#bonusLottoNumber = LottoNumber.of(bonusNumber);
+    this.validateBonusNumber(this.#bonusLottoNumber);
   }
 
   get winningLotto() {
     return this.#winningLotto;
   }
 
-  get bonusNumberInstance() {
-    return this.#bonusNumberInstance;
+  get bonusLottoNumber() {
+    return this.#bonusLottoNumber;
   }
 
   get bonusNumber() {
-    return this.#bonusNumberInstance.value;
+    return this.#bonusLottoNumber.value;
   }
 
-  validateBonusNumber(bonusNumberInstance) {
-    if (this.#winningLotto.hasLottoNumberInstance(bonusNumberInstance)) {
+  validateBonusNumber(bonusLottoNumber) {
+    if (this.#winningLotto.contains(bonusLottoNumber)) {
       throw new Error(
         ErrorLottoBonusNumber.ERROR_LOTTO_BONUS_NUMBER_DUPLICATED
       );
@@ -32,12 +32,12 @@ class WinningLotto {
   }
 
   matchInfo(lotto) {
-    const count = this.#winningLotto.lottoNumberInstances.filter(
-      (lottoNumberInstance) => lotto.hasLottoNumberInstance(lottoNumberInstance)
+    const count = this.#winningLotto.lottoNumbers.filter((lottoNumber) =>
+      lotto.contains(lottoNumber)
     ).length;
 
-    const bonusNumberMatched = lotto.lottoNumberInstances.includes(
-      this.#bonusNumberInstance
+    const bonusNumberMatched = lotto.lottoNumbers.includes(
+      this.#bonusLottoNumber
     );
     return {
       count,

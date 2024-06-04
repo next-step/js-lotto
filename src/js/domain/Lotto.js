@@ -4,26 +4,24 @@ import LottoNumber from "./LottoNumber.js";
 class Lotto {
   static LENGTH_LOTTO_NUMBERS = 6;
 
-  #lottoNumberInstances = [];
+  #lottoNumbers = [];
 
   constructor(input) {
-    const lottoNumberInstances = Lotto.createLottoNumberInstances(input);
+    const lottoNumbers = Lotto.createLottoNumbers(input);
 
-    Lotto.validateLotto(lottoNumberInstances);
+    Lotto.validateLotto(lottoNumbers);
 
-    const sortedLottoNumberInstances =
-      Lotto.sortLottoNumbersByAscendingOrder(lottoNumberInstances);
-    this.#lottoNumberInstances = sortedLottoNumberInstances;
-  }
-
-  get lottoNumberInstances() {
-    return [...this.#lottoNumberInstances];
+    const sortedLottoNumbers =
+      Lotto.sortLottoNumbersByAscendingOrder(lottoNumbers);
+    this.#lottoNumbers = sortedLottoNumbers;
   }
 
   get lottoNumbers() {
-    return this.#lottoNumberInstances.map(
-      (lottoNumberInstance) => lottoNumberInstance.value
-    );
+    return [...this.#lottoNumbers];
+  }
+
+  get lottoNumberValues() {
+    return this.#lottoNumbers.map((lottoNumber) => lottoNumber.value);
   }
 
   static validateLottoNumbers(lottoNumbers) {
@@ -42,15 +40,13 @@ class Lotto {
     }
   }
 
-  static createLottoNumberInstances(lottoNumbers) {
+  static createLottoNumbers(lottoNumbers) {
     if (Array.isArray(lottoNumbers)) {
-      return lottoNumbers.map((lottoNumber) => new LottoNumber(lottoNumber));
+      return lottoNumbers.map(LottoNumber.of);
     }
 
     if (typeof lottoNumbers === "string") {
-      return lottoNumbers
-        .split(",")
-        .map((lottoNumber) => new LottoNumber(lottoNumber));
+      return lottoNumbers.split(",").map(LottoNumber.of);
     }
 
     return [];
@@ -60,8 +56,12 @@ class Lotto {
     return [...lottoNumbers].sort((a, b) => a - b);
   }
 
-  hasLottoNumberInstance(lottoNumberInstance) {
-    return this.#lottoNumberInstances.includes(lottoNumberInstance);
+  contains(lottoNumber) {
+    if (lottoNumber instanceof LottoNumber) {
+      return this.#lottoNumbers.includes(lottoNumber);
+    }
+
+    return this.lottoNumberValues.includes(lottoNumber);
   }
 }
 

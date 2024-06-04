@@ -1,5 +1,5 @@
 import Lotto from "./js/domain/Lotto.js";
-import LottoPurchaseManager from "./js/domain/LottoPurchaseManager.js";
+import LottoShop from "./js/domain/LottoShop.js";
 import LottoMachine from "./js/domain/LottoMachine.js";
 import LottoRanking from "./js/domain/LottoRanking.js";
 import WinningLotto from "./js/domain/WinningLotto.js";
@@ -8,29 +8,28 @@ import LottoRankingModal from "./js/view/web/LottoRankingModal.js";
 import PurchaseAmountInputForm from "./js/view/web/PurchaseAmountInputForm.js";
 import WinningLottoForm from "./js/view/web/WinningLottoForm.js";
 import { $ } from "./utils/dom.js";
-import LottoNumber from "./js/domain/LottoNumber.js";
 
-let lottoPurchaseManager;
+let purchasedAmount;
+const lottos = [];
 
 // 로또 게임 초기화
 const initializeLottoGame = () => {
-  const purchasedAmount = PurchaseAmountInputForm.inputValue();
+  purchasedAmount = PurchaseAmountInputForm.inputValue();
   const purchasableLottosCount =
-    LottoPurchaseManager.getPurchasableLottoCount(purchasedAmount);
+    LottoShop.getPurchasableLottoCount(purchasedAmount);
   const purchasedLottos = LottoMachine.generateRandomLottos(
     purchasableLottosCount
   );
 
-  lottoPurchaseManager = new LottoPurchaseManager(
-    purchasedAmount,
-    purchasedLottos
-  );
+  // delete all lottos
+  lottos.splice(0, lottos.length);
+  lottos.push(...purchasedLottos);
 };
 
 // 구매 금액 입력
 const onSubmitPurchaseAmount = (e) => {
-  const isValidInput = PurchaseAmountInputForm.isValidInput();
-  if (!isValidInput) {
+  const inputValidated = PurchaseAmountInputForm.isValidInput();
+  if (!inputValidated) {
     return;
   }
 
@@ -38,68 +37,47 @@ const onSubmitPurchaseAmount = (e) => {
 
   try {
     initializeLottoGame();
-    LottoListSection.show(lottoPurchaseManager.lottos);
+    LottoListSection.show(lottos);
     WinningLottoForm.show();
   } catch (error) {
     alert(error.message);
   }
 };
 
-let isEnterPressed = false;
-
-PurchaseAmountInputForm.selector.PURCHASE_AMOUNT_INPUT.addEventListener(
+PurchaseAmountInputForm.addEventListener(
+  PurchaseAmountInputForm.elements.PURCHASE_AMOUNT_INPUT,
   "keydown",
-  (e) => {
-    if (e.key === "Enter") {
-      isEnterPressed = true;
-      if (!PurchaseAmountInputForm.isValidInput()) {
-        return;
-      }
-      onSubmitPurchaseAmount(e);
-    }
-  }
+  PurchaseAmountInputForm.handlePurchaseAmountInputFormEnterPressed,
+  onSubmitPurchaseAmount
 );
 
-PurchaseAmountInputForm.selector.PURCHASE_BUTTON.addEventListener(
+PurchaseAmountInputForm.elements.PURCHASE_BUTTON.addEventListener(
   "click",
   onSubmitPurchaseAmount
 );
 
-PurchaseAmountInputForm.selector.PURCHASE_AMOUNT_INPUT.addEventListener(
+PurchaseAmountInputForm.addEventListener(
+  PurchaseAmountInputForm.elements.PURCHASE_AMOUNT_INPUT,
   "blur",
-  () => {
-    try {
-      // Enter 키로 인한 blur 이벤트 발생 시, 중복으로 validate 되는 것을 방지
-      if (isEnterPressed) {
-        isEnterPressed = false;
-        return;
-      }
-
-      LottoPurchaseManager.validateLottoPurchasedAmount(
-        PurchaseAmountInputForm.inputValue()
-      );
-    } catch (error) {
-      alert(error.message);
-    }
-  }
+  PurchaseAmountInputForm.handlePurchaseAmountInputFormBlur
 );
 
 // 구매한 로또 목록
 const onToggleShowLottoNumbers = () => {
-  LottoListSection.toggleLottoNumbers(lottoPurchaseManager.lottos);
+  LottoListSection.toggleLottoNumbers(lottos);
 };
 
-LottoListSection.selector.LOTTO_LIST_TOGGLE_BUTTON.addEventListener(
+LottoListSection.elements.LOTTO_LIST_TOGGLE_BUTTON.addEventListener(
   "click",
   onToggleShowLottoNumbers
 );
 
 // 결과 확인하기
 const onClickShowRanking = (e) => {
-  const isValidWinningNumbers = WinningLottoForm.isValidWinningNumbers();
-  const isValidBonusNumber = WinningLottoForm.isValidBonusNumber();
+  const winningNumbersValidated = WinningLottoForm.isValidWinningNumbers();
+  const bonusNumberValidated = WinningLottoForm.isValidBonusNumber();
 
-  if (!isValidWinningNumbers || !isValidBonusNumber) {
+  if (!winningNumbersValidated || !bonusNumberValidated) {
     return;
   }
 
@@ -115,69 +93,45 @@ const onClickShowRanking = (e) => {
     const lottoRanking = new LottoRanking(winningLotto);
 
     LottoRankingModal.open();
-    LottoRankingModal.render(lottoPurchaseManager, lottoRanking);
+    LottoRankingModal.render(purchasedAmount, lottos, lottoRanking);
   } catch (error) {
     alert(error.message);
   }
 };
 
-WinningLottoForm.selector.WINNING_NUMBER_INPUTS.forEach((input, i) => {
-  input.addEventListener("input", (e) => {
-    try {
-      // LottoNumber.validateLottoNumber(e.target.value);
+WinningLottoForm.addEventListeners(
+  WinningLottoForm.elements.WINNING_NUMBER_INPUTS,
+  "input",
+  WinningLottoForm.handleWinningNumberInput
+);
 
-      if (e.target.value.length >= 2) {
-        if (e.target.nextElementSibling) {
-          e.target.nextElementSibling.focus();
-        } else {
-          // 마지막 입력칸일 경우 blur 이벤트 발생
-          e.target.blur();
-        }
-      }
-    } catch (e) {
-      alert(e.message);
-      input.value = "";
-    }
-  });
-});
+WinningLottoForm.addEventListeners(
+  WinningLottoForm.elements.WINNING_NUMBER_INPUTS,
+  "change",
+  WinningLottoForm.handleWinningNumberInputChange
+);
 
-WinningLottoForm.selector.WINNING_NUMBER_INPUTS.forEach((input, i) => {
-  input.addEventListener("change", (e) => {
-    try {
-      LottoNumber.validateLottoNumber(e.target.value);
-      Lotto.validateLottoNumbers(
-        WinningLottoForm.winningNumbers().filter(Boolean)
-      );
-    } catch (e) {
-      input.focus();
-      input.value = "";
-      alert(e.message);
-    }
-  });
-});
+WinningLottoForm.addEventListeners(
+  WinningLottoForm.elements.BONUS_NUMBER_INPUT,
+  "input",
+  WinningLottoForm.handleBonusNumberInput
+);
 
-WinningLottoForm.selector.BONUS_NUMBER_INPUT.addEventListener("input", (e) => {
-  try {
-    LottoNumber.validateLottoNumber(e.target.value);
-
-    if (e.target.value.length >= 2) {
-      e.target.blur();
-    }
-  } catch (e) {
-    alert(e.message);
-    WinningLottoForm.selector.BONUS_NUMBER_INPUT.value = "";
-  }
-});
+WinningLottoForm.addEventListeners(
+  WinningLottoForm.elements.BONUS_NUMBER_INPUT,
+  "change",
+  WinningLottoForm.handleBonusNumberInputChange
+);
 
 const $showResultButton = $(".open-result-modal-button");
 $showResultButton.addEventListener("click", onClickShowRanking);
 
-LottoRankingModal.selector.CLOSE_BUTTON.addEventListener(
+LottoRankingModal.elements.CLOSE_BUTTON.addEventListener(
   "click",
   LottoRankingModal.close.bind(LottoRankingModal)
 );
 
-LottoRankingModal.selector.MODAL.addEventListener("click", (e) => {
+LottoRankingModal.elements.MODAL.addEventListener("click", (e) => {
   if (e.target === e.currentTarget) {
     LottoRankingModal.close();
   }
@@ -185,7 +139,7 @@ LottoRankingModal.selector.MODAL.addEventListener("click", (e) => {
 
 window.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
-    if (LottoRankingModal.selector.MODAL.classList.contains("open")) {
+    if (LottoRankingModal.elements.MODAL.classList.contains("open")) {
       LottoRankingModal.close();
     }
   }
@@ -196,7 +150,7 @@ const onRestartGame = () => {
   LottoRankingModal.close();
   PurchaseAmountInputForm.reset();
   LottoListSection.hide();
-  LottoListSection.reset(lottoPurchaseManager.lottos);
+  LottoListSection.reset(lottos);
   WinningLottoForm.hide();
   WinningLottoForm.reset();
 };
