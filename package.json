@@ -8,7 +8,8 @@
     "preview": "vite preview",
     "test": "jest --no-cache",
     "start-step1": "node src/step1-index.js",
-    "start-step2": "vite"
+    "start-step2": "vite",
+    "fix": "eslint --fix --ext .js ."
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",
@@ -17,7 +18,14 @@
     "@types/jest": "^29.5.14",
     "babel-jest": "^29.7.0",
     "jest": "^29.6.0",
-    "vite": "^6.0.5"
+    "vite": "^6.0.5",
+    "prettier": "3.4.2",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-prettier": "^5.2.3"
   },
   "jest": {
     "transform": {
