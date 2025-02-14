@@ -5,6 +5,7 @@
 
 import { buyLotto } from "./domain/buyLotto.js";
 import { createReadlineInterface, getPurchaseAmount } from "./view/input.js";
+import { printPurchasedLottos } from "./view/output.js";
 
 const main = async () => {
   const readline = createReadlineInterface();
@@ -12,7 +13,8 @@ const main = async () => {
   try {
     const purchaseAmount = await getPurchaseAmount(readline);
     const lottos = buyLotto(purchaseAmount);
-    // TODO: print lottos
+
+    printPurchasedLottos(lottos);
   } catch (e) {
     if (!(e instanceof Error)) return;
     console.log(e.message);
