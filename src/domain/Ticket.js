@@ -1,16 +1,11 @@
-import { RULES } from "../util/rule.js";
+import { RULES, TICKET_RULES } from "../util/rule.js";
 
 class Ticket {
   #numbers;
   #price;
 
   constructor({ numbers: numbers }) {
-    const isValidNumbers = this.#checkNumbers(numbers);
-    const isValidNumbersLength = this.#checkNumbersLength(numbers);
-    console.log(isValidNumbers, isValidNumbersLength, numbers);
-    if (isValidNumbers === false || isValidNumbersLength === false)
-      throw new Error("잘못된 입력입니다");
-    this.#setNumbers(numbers);
+    this.#setNumbers(numbers, TICKET_RULES.numbersRule, "잘못된 입력입니다");
     this.#setPrice();
   }
 
@@ -18,18 +13,10 @@ class Ticket {
     return this.#numbers;
   }
 
-  #checkNumbers(numbers) {
-    return numbers.every(
-      (number) =>
-        Number.isInteger(number) &&
-        number >= RULES.MIN_TICKET_NUMBER &&
-        number <= RULES.MAX_TICKET_NUMBER,
-    );
-  }
-  #checkNumbersLength(numbers) {
-    return numbers.length == RULES.TICKET_LENGTH;
-  }
-  #setNumbers(numbers) {
+  #setNumbers(numbers, predicate, errorMessage) {
+    if (predicate(numbers) === false) {
+      throw new Error(errorMessage);
+    }
     this.#numbers = numbers;
   }
   #setPrice() {
