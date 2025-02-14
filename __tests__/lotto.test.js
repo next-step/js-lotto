@@ -39,10 +39,20 @@ describe("로또를 사고 당첨 번호도 입력한 이후", () => {
     lotto = new Lotto(8000);
   });
 
-  test("상금이 누적된다.", () => {
+  test("각 등수에 당첨된 로또의 수가 반환된다.", () => {
+    const lottoExample = [
+      [1, 2, 3, 7, 4, 5],
+      [1, 4, 5, 6, 7, 8],
+      [8, 9, 10, 11, 12, 13],
+    ];
+    const userInput = [1, 2, 4, 5, 98, 99];
+    const bonus = 37;
+  });
+
+  test("등수별로 누적 상금이 상금이 인스턴스에 저장장된다.", () => {
     let initalAmount = lotto.amount;
     const first = getReward(1);
-    lotto.addAmountFromWinningPrize(first);
+    lotto.addAmountFromWinningPrize(first, 1);
 
     expect(lotto.amount).toBe(initalAmount + first);
   });

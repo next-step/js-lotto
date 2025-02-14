@@ -26,8 +26,8 @@ export default class Lotto {
     }
   }
 
-  addAmountFromWinningPrize(prize) {
-    this.amount += prize;
+  addAmountFromWinningPrize(prize, count) {
+    this.amount += prize * count;
   }
 
   //UI로직
@@ -39,3 +39,5 @@ export default class Lotto {
 export const getProfitRate = (amount, paymentAmount) => {
   return Math.round((amount / paymentAmount) * 1000) / 1000;
 };
+
+export const getLottoCountByRank = (rank, lottos, userInput, bonusNumber) => {};
