@@ -4,13 +4,14 @@
  */
 
 import { buyLottoTickets } from "./domain/buyLottoTickets.js";
+import { calculateStatistics } from "./domain/calculateStatistics.js";
 import {
   createReadlineInterface,
   getBonusNumber,
   getPurchaseAmount,
   getWinningNumbers,
 } from "./view/input.js";
-import { printLottoTickets } from "./view/output.js";
+import { printLottoTickets, printStatistics } from "./view/output.js";
 
 const main = async () => {
   const readline = createReadlineInterface();
@@ -23,6 +24,14 @@ const main = async () => {
 
     const winnigNumbers = await getWinningNumbers(readline);
     const bonusNumber = await getBonusNumber(readline);
+
+    const comparedResults = lottoTickets.map((lotto) =>
+      lotto.compareNumbers(winnigNumbers, bonusNumber)
+    );
+
+    const statistics = calculateStatistics(comparedResults);
+
+    printStatistics(statistics);
   } catch (e) {
     if (!(e instanceof Error)) return;
     console.log(e.message);
