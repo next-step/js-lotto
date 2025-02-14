@@ -1,4 +1,4 @@
-export const printPurchasedLottos = (lottos) => {
+export const printLottoTickets = (lottos) => {
   console.log(`${lottos.length}개를 구매했습니다.`);
   lottos.forEach((lotto) => printLottoNumbers(lotto.numbers));
   console.log("");

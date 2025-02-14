@@ -2,7 +2,7 @@ import { PRICE_PER_LOTTO } from "./constants.js";
 import { createLottoNumbers } from "./createLottoNumbers.js";
 import Lotto from "./Lotto.js";
 
-export const buyLotto = (purchaseAmount) => {
+export const buyLottoTickets = (purchaseAmount) => {
   if (!isValidPurchaseAmount(purchaseAmount)) {
     throw new InvalidPurchaseAmount();
   }
