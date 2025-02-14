@@ -9,6 +9,8 @@ export const getRank = (userInput, bonusNumber, lotto) => {
 
   if (matchingCount === 4) return 4;
   if (matchingCount === 3) return 5;
+
+  return 6;
 };
 
 export const checkMatchingNumberCount = (userInputNumber, lotto) => {
@@ -29,7 +31,9 @@ export const getReward = (rank) => {
       return 1500000;
     case 4:
       return 50000;
-    default:
+    case 5:
       return 5000;
+    default:
+      return 0;
   }
 };

@@ -1,7 +1,9 @@
 export default class Lotto {
   constructor(paymentAmount) {
+    this.paymentAmount = paymentAmount;
     this.count = Math.floor(paymentAmount / 1000);
     this.numbers = [];
+    this.amount;
   }
 
   //도메인 로직
@@ -24,8 +26,16 @@ export default class Lotto {
     }
   }
 
+  addAmountFromWinningPrize(prize) {
+    this.amount += prize;
+  }
+
   //UI로직
   showLottos(index) {
     console.log(this.numbers[index]);
   }
 }
+
+const getAmount = (amount, lotto) => {};
+
+const getProfitRate = (amount, paymentAmount) => {};
