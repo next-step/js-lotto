@@ -19,3 +19,7 @@ export const getRandomLottoNumber = (manualNumber) => {
 
   return targetNumber;
 };
+
+export const getLotto = () => {
+  return Array.from([1, 2, 3, 4, 5, 6], (value) => getRandomLottoNumber(value));
+};
