@@ -12,15 +12,15 @@ describe("사용자가 6개의 당첨 번호와 1개의 보너스 번호를 입�
     const lotto = [1, 2, 3, 4, 5, 7];
     expect(getRank(userInput, bonus, lotto)).toBe(2);
   });
-  test("5개의 번호가 일치하면 3등이다.", () => {
-    const lotto = [1, 2, 3, 4, 7, 8];
+  test("5개의 당첨 번호가 일치하면 3등이다.", () => {
+    const lotto = [1, 2, 3, 4, 5, 8];
     expect(getRank(userInput, bonus, lotto)).toBe(3);
   });
-  test("4개의 번호가 일치하면 4등이다.", () => {
+  test("4개의 당첨 번호가 일치하면 4등이다.", () => {
     const lotto = [1, 2, 3, 4, 8, 9];
     expect(getRank(userInput, bonus, lotto)).toBe(4);
   });
-  test("3개의 번호가 일치하면 5등이다.", () => {
+  test("3개의 당첨 번호가 일치하면 5등이다.", () => {
     const lotto = [1, 2, 3, 8, 9, 10];
     expect(getRank(userInput, bonus, lotto)).toBe(5);
   });
