@@ -1,3 +1,4 @@
+import { PRICE_PER_LOTTO } from "./constants.js";
 import { createLottoNumbers } from "./createLottoNumbers.js";
 
 export const buyLotto = (purchaseAmount) => {
@@ -5,14 +6,12 @@ export const buyLotto = (purchaseAmount) => {
     throw new InvalidPurchaseAmount();
   }
 
-  const PRICE_PER_LOTTO = 1000;
   const lottoCount = Math.trunc(purchaseAmount / PRICE_PER_LOTTO);
 
   return Array.from(Array(lottoCount), () => createLottoNumbers());
 };
 
 const isValidPurchaseAmount = (purchaseAmount) => {
-  if (typeof purchaseAmount !== "number") return false;
   if (!Number.isInteger(purchaseAmount)) return false;
   if (purchaseAmount < 1000) return false;
   return true;

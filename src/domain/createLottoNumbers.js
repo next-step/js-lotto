@@ -1,5 +1,8 @@
-const LOTTO_NUMBER_COUNT = 6;
-const MAX_LOTTO_NUMBER = 45;
+import {
+  LOTTO_NUMBER_COUNT,
+  MAX_LOTTO_NUMBER,
+  MIN_LOTTO_NUMBER,
+} from "./constants";
 
 export const createLottoNumbers = () => {
   const lottoNumbers = createUniqueNumbers().sort((a, b) => a - b);
@@ -15,5 +18,5 @@ const createUniqueNumbers = () => {
 };
 
 const getRandomLottoNumber = () => {
-  return Math.floor(Math.random() * MAX_LOTTO_NUMBER) + 1;
+  return Math.floor(Math.random() * MAX_LOTTO_NUMBER) + MIN_LOTTO_NUMBER;
 };
