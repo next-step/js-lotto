@@ -1,5 +1,6 @@
 import { PRICE_PER_LOTTO } from "./constants.js";
 import { createLottoNumbers } from "./createLottoNumbers.js";
+import Lotto from "./Lotto.js";
 
 export const buyLotto = (purchaseAmount) => {
   if (!isValidPurchaseAmount(purchaseAmount)) {
@@ -8,7 +9,7 @@ export const buyLotto = (purchaseAmount) => {
 
   const lottoCount = Math.trunc(purchaseAmount / PRICE_PER_LOTTO);
 
-  return Array.from(Array(lottoCount), () => createLottoNumbers());
+  return Array.from(Array(lottoCount), () => new Lotto(createLottoNumbers()));
 };
 
 const isValidPurchaseAmount = (purchaseAmount) => {

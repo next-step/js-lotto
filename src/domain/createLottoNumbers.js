@@ -2,7 +2,7 @@ import {
   LOTTO_NUMBER_COUNT,
   MAX_LOTTO_NUMBER,
   MIN_LOTTO_NUMBER,
-} from "./constants";
+} from "./constants.js";
 
 export const createLottoNumbers = () => {
   const lottoNumbers = createUniqueNumbers().sort((a, b) => a - b);

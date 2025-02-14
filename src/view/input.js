@@ -15,7 +15,7 @@ export const getPurchaseAmount = async (readline) => {
 export const getWinningNumbers = async (readline) => {
   const line = await readline.question("> 당첨 번호를 입력해 주세요. ");
 
-  const winningNumbers = line.split(",");
+  const winningNumbers = line.split(",").map(Number);
   return winningNumbers;
 };
 
