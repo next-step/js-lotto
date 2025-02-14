@@ -1,3 +1,5 @@
+import { LOTTO_JACKPOT_PRICES } from './constant';
+
 const isValidBounsNumber = (orderedNumbers, bounsNumber) =>
   orderedNumbers.includes(bounsNumber);
 
@@ -20,11 +22,11 @@ const getJackpotRank = (matchedNumbers, isBouns) => {
 
 export const getJackpotPrice = (rank) => {
   return (() => {
-    if (rank === 1) return 2_000_000_000;
-    if (rank === 2) return 30_000_000;
-    if (rank === 3) return 1_500_000;
-    if (rank === 4) return 50_000;
-    if (rank === 5) return 5000;
+    if (rank === 1) return LOTTO_JACKPOT_PRICES.FIRST;
+    if (rank === 2) return LOTTO_JACKPOT_PRICES.SECOND;
+    if (rank === 3) return LOTTO_JACKPOT_PRICES.THIRD;
+    if (rank === 4) return LOTTO_JACKPOT_PRICES.FOUTRH;
+    if (rank === 5) return LOTTO_JACKPOT_PRICES.FIFTH;
     return 0;
   })();
 };
