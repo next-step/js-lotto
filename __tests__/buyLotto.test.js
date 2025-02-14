@@ -1,0 +1,24 @@
+import { buyLotto, InvalidPurchaseAmount } from "../src/domain/buyLotto";
+
+describe("buyLotto 함수 테스트", () => {
+  it("구입 금액에 따라 올바른 개수의 로또 배열을 생성해야 한다.", () => {
+    const purchaseAmount = 5000;
+    const lottos = buyLotto(purchaseAmount);
+
+    expect(lottos).toHaveLength(5);
+  });
+
+  it.each([1500.5, "3000", null, undefined, false, 500])(
+    "구입 금액이 정수가 아니거나 1000원 미만이면 예외를 던져야 한다.",
+    (invalidValue) => {
+      expect(() => buyLotto(invalidValue)).toThrow(InvalidPurchaseAmount);
+    }
+  );
+
+  it("구입 금액이 1000원 단위가 아닐 경우, 나머지를 버리고 구매 가능한 개수만큼의 로또를 생성해야 한다.", () => {
+    const purchaseAmount = 5500;
+    const lottos = buyLotto(purchaseAmount);
+
+    expect(lottos).toHaveLength(5);
+  });
+});

@@ -7,5 +7,7 @@ export const createReadlineInterface = () => {
 
 export const getPurchaseAmount = async (readline) => {
   const line = await readline.question("> 구입금액을 입력해 주세요. ");
-  return line;
+
+  const purchaseAmount = Number(line.trim());
+  return purchaseAmount;
 };
