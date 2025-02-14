@@ -1,4 +1,4 @@
-import Lotto, { getAmount, getProfitRate } from "../src/lotto";
+import Lotto, { getProfitRate } from "../src/lotto";
 import { getReward } from "../src/getRank.js";
 
 describe("로또를 구매할때", () => {
@@ -42,14 +42,14 @@ describe("로또를 사고 당첨 번호도 입력한 이후", () => {
   test("상금이 누적된다.", () => {
     let initalAmount = lotto.amount;
     const first = getReward(1);
-    getAmount(first, lotto);
+    lotto.addAmountFromWinningPrize(first);
 
     expect(lotto.amount).toBe(initalAmount + first);
   });
 
   test("누적 상금과 구입 금액을 통해 수익률을 계산한다.", () => {
     const prize = getReward(5);
-    getAmount(prize, lotto);
+    lotto.addAmountFromWinningPrize(prize);
 
     expect(getProfitRate(lotto.amount, lotto.paymentAmount)).toBe(0.625);
   });

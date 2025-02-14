@@ -3,7 +3,7 @@ export default class Lotto {
     this.paymentAmount = paymentAmount;
     this.count = Math.floor(paymentAmount / 1000);
     this.numbers = [];
-    this.amount;
+    this.amount = 0;
   }
 
   //도메인 로직
@@ -36,6 +36,6 @@ export default class Lotto {
   }
 }
 
-const getAmount = (amount, lotto) => {};
-
-const getProfitRate = (amount, paymentAmount) => {};
+export const getProfitRate = (amount, paymentAmount) => {
+  return Math.round((amount / paymentAmount) * 1000) / 1000;
+};
