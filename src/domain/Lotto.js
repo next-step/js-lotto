@@ -1,4 +1,4 @@
-import { RULES, LOTTO_RULES } from "../util/rule.js";
+import { LOTTO_RULES, RULES } from "../util/rule.js";
 
 class Lotto {
   #purchasePrice;
@@ -6,6 +6,16 @@ class Lotto {
   #winningNumber;
 
   #bonusNumber;
+
+  #countOfTickets;
+
+  get getCountOfTickets() {
+    return this.#countOfTickets;
+  }
+
+  #setCountOfTickets() {
+    this.#countOfTickets = Math.floor(this.#purchasePrice / RULES.TICKET_PRICE);
+  }
 
   constructor({ purchasePrice, winningNumber, bonusNumber }) {
     this.#setpurchasePrice(
@@ -23,6 +33,7 @@ class Lotto {
       LOTTO_RULES.bonusNumberRule,
       "잘못된 보너스 번호 설정입니다.",
     );
+    this.#setCountOfTickets();
   }
 
   #setpurchasePrice(purchasePrice, predicate, errorMessage) {

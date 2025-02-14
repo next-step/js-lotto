@@ -42,4 +42,14 @@ describe("Lotto 클래스 - 로또 게임 1판 ", () => {
       });
     }).toThrow("잘못된 보너스 번호 설정입니다.");
   });
+
+  test("[2-2] 로또 Ticket 객체를 발행해야 한다 (구입 금액에 해당하는 만큼).", () => {
+    const lotto = new Lotto({
+      purchasePrice: 2000,
+      winningNumber: [0],
+      bonusNumber: 1,
+    });
+
+    expect(lotto.getCountOfTickets).toBe(2);
+  });
 });
