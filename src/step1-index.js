@@ -4,6 +4,7 @@ import {
   getWinningNumbers,
   getBounsNumber,
 } from "./getUserInput.js";
+import { showLottoResult } from "../src/drawRank.js";
 
 /**
  * step 1의 시작점이 되는 파일입니다.
@@ -26,6 +27,10 @@ const startLottoGame = async () => {
   await getBounsNumber("보너스 번호를 입력해 주세요. : ").then((number) => {
     bounsNumber = number;
   });
+
+  console.log("당첨 통계");
+  console.log("--------------------------");
+  showLottoResult(lotto.numbers, winngNumbers, bounsNumber);
 };
 
 startLottoGame();
