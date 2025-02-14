@@ -1,3 +1,5 @@
+import Ticket from "../domain/Ticket.js";
+
 export const RULES = {
   MIN_TICKET_NUMBER: 1,
   MAX_TICKET_NUMBER: 45,
@@ -26,4 +28,8 @@ export const LOTTO_RULES = {
     Number.isInteger(val) &&
     val >= RULES.MIN_TICKET_NUMBER &&
     val <= RULES.MAX_TICKET_NUMBER,
+};
+
+export const PURCHASE_HISTORY_RULES = {
+  ticketsRule: (tickets) => tickets.every((ticket) => ticket instanceof Ticket),
 };
