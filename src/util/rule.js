@@ -1,3 +1,6 @@
-export const MIN_TICKET_NUMBER = 1 
-export const MAX_TICKET_NUMBER = 45 
-export const TICKET_LENGTH = 6
+export const RULES = {
+  MIN_TICKET_NUMBER: 1,
+  MAX_TICKET_NUMBER: 45,
+  TICKET_PRICE: 1000,
+  TICKET_LENGTH: 6,
+};
