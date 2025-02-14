@@ -1,4 +1,6 @@
 import Lotto from "../src/domain/Lotto.js";
+import Ticket from "../src/domain/Ticket.js";
+
 describe("Lotto 클래스 - 로또 게임 1판 ", () => {
   test("[2-1] 구입금액, 당첨 번호, 보너스 번호를 내부 상태값으로 가진다.", () => {
     const lotto = new Lotto({
@@ -51,5 +53,20 @@ describe("Lotto 클래스 - 로또 게임 1판 ", () => {
     });
 
     expect(lotto.getCountOfTickets).toBe(2);
+  });
+
+  test("[2-3] 사용자가 구매한 로또 번호와 당첨 번호를 비교한다.", () => {
+    const lotto = new Lotto({
+      purchasePrice: 2000,
+      winningNumber: [1, 2, 3, 4, 5, 45],
+      bonusNumber: 1,
+    });
+
+    const ticket1 = new Ticket({
+      numbers: [1, 2, 3, 4, 5, 45],
+    });
+    const result = new Set([...lotto.getWinningNumber, ...ticket1.getNumbers]);
+
+    expect(result.size).toBe(6);
   });
 });
