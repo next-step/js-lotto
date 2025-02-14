@@ -15,8 +15,8 @@ export const getRank = (userInput, bonusNumber, lotto) => {
 
 export const checkMatchingNumberCount = (userInputNumber, lotto) => {
   let count = 0;
-  for (let i = 0; i < userInputNumber.length; i++) {
-    if (userInputNumber[i] === lotto[i]) count++;
+  for (let i = 0; i < lotto.length; i++) {
+    if (userInputNumber.includes(lotto[i])) count++;
   }
   return count;
 };

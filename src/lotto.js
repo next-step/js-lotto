@@ -1,3 +1,5 @@
+import { getRank } from "../src/getRank.js";
+
 export default class Lotto {
   constructor(paymentAmount) {
     this.paymentAmount = paymentAmount;
@@ -40,4 +42,11 @@ export const getProfitRate = (amount, paymentAmount) => {
   return Math.round((amount / paymentAmount) * 1000) / 1000;
 };
 
-export const getLottoCountByRank = (rank, lottos, userInput, bonusNumber) => {};
+export const getLottoCountByRank = (rank, lottos, userInput, bonusNumber) => {
+  let count = 0;
+  lottos.forEach((lotto) => {
+    if (getRank(userInput, bonusNumber, lotto) === rank) count += 1;
+  });
+
+  return count;
+};
