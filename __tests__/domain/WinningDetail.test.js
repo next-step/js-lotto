@@ -4,7 +4,7 @@ import WinningDetail from "../../src/domain/WinningDetail.js";
 import Lotto from "../../src/domain/Lotto.js";
 
 describe("Winning 클래스 - 당첨 내역을 의미", () => {
-  test("[4-1] 당첨은 1등부터 5등까지 등수를 판별한다.", () => {
+  test("당첨은 1등부터 5등까지 등수를 판별한다.", () => {
     // given
     const ticket1 = new Ticket({
       numbers: [1, 2, 3, 4, 5, 45], // 1등

@@ -1,7 +1,7 @@
 import Ticket from "../../src/domain/Ticket.js";
 
 describe("Ticket 클래스 - 로또 게임에서의 1장", () => {
-  test("[1-1] Ticket 1장은 자연수 중 1이상 45이하 6개로 이루어진 배열이다.", () => {
+  test("Ticket 1장은 자연수 중 1이상 45이하 6개로 이루어진 배열이다.", () => {
     // given
     const ticket = new Ticket({
       numbers: [1, 2, 3, 4, 5, 45],
@@ -14,7 +14,7 @@ describe("Ticket 클래스 - 로또 게임에서의 1장", () => {
     expect(actualTicket).toEqual(ticket.getNumbers);
   });
 
-  test("[1-1-a] 1이상 45 이하를 제외한 값이 들어오면, '잘못된 입력입니다' 에러를 출력한다.", () => {
+  test("1이상 45 이하를 제외한 값이 들어오면, '잘못된 입력입니다' 에러를 출력한다.", () => {
     // given
 
     // then
@@ -32,7 +32,7 @@ describe("Ticket 클래스 - 로또 게임에서의 1장", () => {
     }).toThrow("잘못된 입력입니다");
   });
 
-  test("[1-2] Ticket 1장의 가격은 1000원이다.", () => {
+  test("Ticket 1장의 가격은 1000원이다.", () => {
     const ticket = new Ticket({
       numbers: [1, 2, 3, 4, 5, 45],
     });

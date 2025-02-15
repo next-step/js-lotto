@@ -3,7 +3,7 @@ import Ticket from "../../src/domain/Ticket.js";
 import { LOTTO_RULES, getTicketAvailable } from "../../src/util/rule.js";
 
 describe("Lotto 클래스 - 로또 게임 1판 ", () => {
-  test("[2-1] 당첨 번호, 보너스 번호를 내부 상태값으로 가진다.", () => {
+  test("당첨 번호, 보너스 번호를 내부 상태값으로 가진다.", () => {
     const lotto = new Lotto({
       winningNumber: [1, 2, 3, 4, 5, 6],
       bonusNumber: 1,
@@ -38,13 +38,13 @@ describe("Lotto 클래스 - 로또 게임 1판 ", () => {
     }).toThrow("잘못된 보너스 번호 설정입니다.");
   });
 
-  test("[2-2] 로또 Ticket 객체를 발행해야 한다 (구입 금액에 해당하는 만큼).", () => {
+  test("로또 Ticket 객체를 발행해야 한다 (구입 금액에 해당하는 만큼).", () => {
     const result = getTicketAvailable(2000);
 
     expect(result).toBe(2);
   });
 
-  test("[2-3] 사용자가 구매한 로또 번호와 당첨 번호를 비교한다.", () => {
+  test("사용자가 구매한 로또 번호와 당첨 번호를 비교한다.", () => {
     const lotto = new Lotto({
       purchasePrice: 2000,
       winningNumber: [1, 2, 3, 4, 5, 45],

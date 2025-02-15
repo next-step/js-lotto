@@ -5,7 +5,7 @@ import PurchaseHistory from "../../src/domain/PurchaseHistory.js";
 import Lotto from "../../src/domain/Lotto.js";
 
 describe("RatesOfReturn 클래스 - 로또 게임에서의 수익률 계산", () => {
-  test("[5-1] 구입금액과 당첨 통계를 가지고, 수익률을 계산한다.", () => {
+  test("구입금액과 당첨 통계를 가지고, 수익률을 계산한다.", () => {
     // given
     const ticket6 = new Ticket({
       numbers: [1, 2, 3, 8, 9, 10], // other
