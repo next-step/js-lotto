@@ -35,6 +35,9 @@ export const PURCHASE_HISTORY_RULES = {
   ticketsRule: (tickets) => tickets.every((ticket) => ticket instanceof Ticket),
 };
 
+export const getTicketAvailable = (purchasePrice) =>
+  Math.floor(purchasePrice / RULES.TICKET_PRICE);
+
 export const WINNING_PRICE_RULE = {
   1: 2000000000,
   2: 30000000,
@@ -44,8 +47,8 @@ export const WINNING_PRICE_RULE = {
 };
 
 export const RATES_OF_RETURN_RULE = {
-    purchasePriceRule: (val) =>
-        val >= RULES.MIN_LOTTO_PURCHASE_PRICE &&
-        val <= RULES.MAX_LOTTO_PURCHASE_PRICE,
-    winningDetailRule: (winningDetail) => winningDetail instanceof WinningDetail
-}
+  purchasePriceRule: (val) =>
+    val >= RULES.MIN_LOTTO_PURCHASE_PRICE &&
+    val <= RULES.MAX_LOTTO_PURCHASE_PRICE,
+  winningDetailRule: (winningDetail) => winningDetail instanceof WinningDetail,
+};

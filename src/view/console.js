@@ -1,25 +1,20 @@
+import PurchaseHistory from "../../src/domain/PurchaseHistory.js";
+import RatesOfReturn from "../../src/domain/RatesOfReturn.js";
+import WinningDetail from "../../src/domain/WinningDetail.js";
 import Lotto from "../domain/Lotto.js";
 import Ticket from "../domain/Ticket.js";
-import { LOTTO_RULES, RULES } from "../util/rule.js";
 import { getRandomNumber } from "../util/random.js";
-import { stopProgram, read, startProgram } from "../util/readline.js";
-import PurchaseHistory from "../../src/domain/PurchaseHistory.js";
-import WinningDetail from "../../src/domain/WinningDetail.js";
-import RatesOfReturn from "../../src/domain/RatesOfReturn.js";
+import { read, startProgram, stopProgram } from "../util/readline.js";
+import { LOTTO_RULES, getTicketAvailable } from "../util/rule.js";
 import { printWinningDetailResult } from "./printResult.js";
 
 export const play = async () => {
   const rl = startProgram();
 
-  const answer = await read(rl, "> 구입 금액을 입력해주세요.");
-  console.log(answer);
+  const purchasePrice = await read(rl, "> 구입 금액을 입력해주세요.");
 
-  const lotto = new Lotto({
-    purchasePrice: answer,
-  });
-  lotto.setCountOfTickets();
+  const ticketLength = getTicketAvailable(purchasePrice);
 
-  const ticketLength = lotto.getCountOfTickets;
   console.log(`${ticketLength}개를 구매했습니다.`);
   const tickets = Array.from({ length: ticketLength }).map((val) => {
     const randomNumbers = getRandomNumber();
@@ -34,6 +29,7 @@ export const play = async () => {
 
   const winningNumber = await read(rl, "> 당첨 번호를 입력해 주세요.");
 
+  const lotto = new Lotto({});
   lotto.setWinningNumber(
     winningNumber.split(",").map((val) => parseInt(val)),
     LOTTO_RULES.winningNumberRule,
@@ -59,7 +55,7 @@ export const play = async () => {
   printWinningDetailResult(winningDetail.getWinner);
 
   const ratesOfReturn = new RatesOfReturn({
-    purchasePrice: lotto.getPurchasePrice,
+    purchasePrice: purchasePrice,
     winningDetail: winningDetail,
   });
 
