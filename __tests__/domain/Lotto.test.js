@@ -5,12 +5,12 @@ import { LOTTO_RULES, getTicketAvailable } from "../../src/util/rule.js";
 describe("Lotto 클래스 - 로또 게임 1판 ", () => {
   test("[2-1] 당첨 번호, 보너스 번호를 내부 상태값으로 가진다.", () => {
     const lotto = new Lotto({
-      winningNumber: [0],
+      winningNumber: [1, 2, 3, 4, 5, 6],
       bonusNumber: 1,
     });
 
     const actualLotto = {
-      winningNumber: [0],
+      winningNumber: [1, 2, 3, 4, 5, 6],
       bonusNumber: 1,
     };
 

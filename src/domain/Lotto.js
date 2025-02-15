@@ -6,11 +6,6 @@ class Lotto {
   #bonusNumber;
 
   constructor({ winningNumber, bonusNumber }) {
-    // this.#setpurchasePrice(
-    //   purchasePrice,
-    //   LOTTO_RULES.purChasePriceRule,
-    //   "잘못된 구입금액 설정입니다.",
-    // );
     winningNumber &&
       this.setWinningNumber(
         winningNumber,
