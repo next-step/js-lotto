@@ -11,20 +11,28 @@ export const RULES = {
 };
 
 export const TICKET_RULES = {
-  numbersRule: (val) =>
-    val.every(
-      (val) =>
-        Number.isInteger(val) &&
-        val >= RULES.MIN_TICKET_NUMBER &&
-        val <= RULES.MAX_TICKET_NUMBER,
+  numbersRule: (numbers) =>
+    numbers.every(
+      (number) =>
+        Number.isInteger(number) &&
+        number >= RULES.MIN_TICKET_NUMBER &&
+        number <= RULES.MAX_TICKET_NUMBER,
     ),
 };
 
 export const LOTTO_RULES = {
-  purChasePriceRule: (val) =>
-    val >= RULES.MIN_LOTTO_PURCHASE_PRICE &&
-    val <= RULES.MAX_LOTTO_PURCHASE_PRICE,
-  winningNumberRule: (val) => Array.isArray(val),
+  purChasePriceRule: (number) =>
+    number >= RULES.MIN_LOTTO_PURCHASE_PRICE &&
+    number <= RULES.MAX_LOTTO_PURCHASE_PRICE,
+  winningNumberRule: (numbers) =>
+    Array.isArray(numbers) &&
+    numbers.every((number) => {
+      return (
+        Number.isInteger(number) &&
+        number >= RULES.MIN_TICKET_NUMBER &&
+        number <= RULES.MAX_TICKET_NUMBER
+      );
+    }),
   bonusNumberRule: (val) =>
     Number.isInteger(val) &&
     val >= RULES.MIN_TICKET_NUMBER &&
@@ -47,8 +55,8 @@ export const WINNING_PRICE_RULE = {
 };
 
 export const RATES_OF_RETURN_RULE = {
-  purchasePriceRule: (val) =>
-    val >= RULES.MIN_LOTTO_PURCHASE_PRICE &&
-    val <= RULES.MAX_LOTTO_PURCHASE_PRICE,
+  purchasePriceRule: (number) =>
+    number >= RULES.MIN_LOTTO_PURCHASE_PRICE &&
+    number <= RULES.MAX_LOTTO_PURCHASE_PRICE,
   winningDetailRule: (winningDetail) => winningDetail instanceof WinningDetail,
 };
