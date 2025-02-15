@@ -9,17 +9,19 @@ export const renderJackpotStatisticsAnnouncement = () => {
   console.log('--------------------');
 };
 
-export const renderLottoStatisticInfo = (rank, count) => {
-  if (rank === 'SECOND') {
-    console.log(
-      `${LOTTO_JACKPOT_RANK_RULES[rank]}개 일치, 보너스 볼 일치 (${commaizeNumber(LOTTO_JACKPOT_PRICES[rank])}원) - ${count}개`,
-    );
-    return;
-  }
+export const renderLottoStatisticInfo = (statisticsResult) => {
+  return Object.entries(statisticsResult).forEach(([rank, { count }]) => {
+    if (rank === 'SECOND') {
+      console.log(
+        `${LOTTO_JACKPOT_RANK_RULES[rank]}개 일치, 보너스 볼 일치 (${commaizeNumber(LOTTO_JACKPOT_PRICES[rank])}원) - ${count}개`,
+      );
+      return;
+    }
 
-  console.log(
-    `${LOTTO_JACKPOT_RANK_RULES[rank]}개 일치 (${commaizeNumber(LOTTO_JACKPOT_PRICES[rank])}원) - ${count}개`,
-  );
+    console.log(
+      `${LOTTO_JACKPOT_RANK_RULES[rank]}개 일치 (${commaizeNumber(LOTTO_JACKPOT_PRICES[rank])}원) - ${count}개`,
+    );
+  });
 };
 
 export const renderProfitRate = (percent) => {

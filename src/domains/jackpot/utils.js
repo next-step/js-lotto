@@ -31,6 +31,16 @@ export const getJackpotPrice = (rank) => {
   })();
 };
 
+export const getJackpotTargetRankInfo = (targetRank, diffedLottoResult) => {
+  return diffedLottoResult.reduce(
+    (results, { rank, price }) =>
+      rank === targetRank
+        ? { count: results.count + 1, amount: results.amount + price }
+        : results,
+    { count: 0, amount: 0 },
+  );
+};
+
 export const getJackpotResult = (lotto, bonusNumber) => {
   const { ordered, jackpot } = lotto;
 
@@ -44,4 +54,11 @@ export const getJackpotResult = (lotto, bonusNumber) => {
     matchJackpotNumbers.length >= LOTTO_JACKPOT_RANK_RULES.FIFTH;
 
   return { isJackpot, rank, price, matchedCount };
+};
+
+export const getJackpotTotalPrice = (statisticsResult) => {
+  return Object.entries(statisticsResult).reduce(
+    (total, [_, { count, amount }]) => (total += amount * count),
+    0,
+  );
 };

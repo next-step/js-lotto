@@ -7,3 +7,7 @@ export const renderOrderAmountInput = async () => {
 export const renderOrderedLottoCount = (count) => {
   console.log(`${count}개를 구매했습니다.`);
 };
+
+export const renderOrderedLottos = (lottos) => {
+  lottos.forEach((lotto) => console.log(lotto));
+};

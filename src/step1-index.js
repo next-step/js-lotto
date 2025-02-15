@@ -1,7 +1,13 @@
 import { getLotto } from './domains/common/utils.js';
-import { getJackpotResult } from './domains/jackpot/utils.js';
+import {
+  getJackpotResult,
+  getJackpotTotalPrice,
+} from './domains/jackpot/utils.js';
 import { calculateLottoCount } from './domains/order/utils.js';
-import { getProfitRate } from './domains/statistics/utils.js';
+import {
+  getProfitRate,
+  getStatisticsResult,
+} from './domains/statistics/utils.js';
 import { renderLineBreak } from './views/common/index.js';
 import {
   renderBonusNumberInput,
@@ -10,6 +16,7 @@ import {
 import {
   renderOrderAmountInput,
   renderOrderedLottoCount,
+  renderOrderedLottos,
 } from './views/order/index.js';
 import {
   renderJackpotStatisticsAnnouncement,
@@ -27,12 +34,8 @@ const main = async () => {
 
   renderOrderedLottoCount(count);
 
-  const userLottos = Array.from({ length: count }, () => {
-    const lotto = getLotto();
-    console.log(lotto);
-
-    return lotto;
-  });
+  const orderedLottos = Array.from({ length: count }, () => getLotto());
+  renderOrderedLottos(orderedLottos);
   renderLineBreak();
 
   const inputJackpot = await renderJackpotNumbersInput();
@@ -44,7 +47,7 @@ const main = async () => {
   const jackpotNumbers = inputJackpot.split(',').map((value) => Number(value));
   const bonusNumber = Number(inputBonusNumber);
 
-  const lottoResults = userLottos.map((orderedLotto) =>
+  const lottoResults = orderedLottos.map((orderedLotto) =>
     getJackpotResult(
       { ordered: orderedLotto, jackpot: jackpotNumbers },
       bonusNumber,
@@ -53,25 +56,12 @@ const main = async () => {
 
   renderJackpotStatisticsAnnouncement();
 
-  const totalJackpotAmount = RANK_KEYS.reverse().reduce(
-    (totalAmount, key, index) => {
-      const currentRank = RANK_KEYS.length - index;
-      const { count, amount } = lottoResults.reduce(
-        (results, { rank, price }) =>
-          rank === currentRank
-            ? { count: results.count + 1, amount: results.amount + price }
-            : results,
-        { count: 0, amount: 0 },
-      );
+  const statisticsResult = getStatisticsResult(lottoResults);
+  renderLottoStatisticInfo(statisticsResult);
 
-      renderLottoStatisticInfo(key, count);
+  const totalJackpotPrice = getJackpotTotalPrice(statisticsResult);
 
-      return (totalAmount += count * amount);
-    },
-    0,
-  );
-
-  const profitPercent = getProfitRate(amount, totalJackpotAmount);
+  const profitPercent = getProfitRate(amount, totalJackpotPrice);
 
   renderProfitRate(profitPercent);
 };
