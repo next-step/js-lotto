@@ -1,6 +1,6 @@
 import { LOTTO_JACKPOT_PRICES, LOTTO_JACKPOT_RANK_RULES } from './constant.js';
 
-const isValidBonusNumber = (orderedNumbers, bonusNumber) =>
+const isIncludeBonusNumber = (orderedNumbers, bonusNumber) =>
   orderedNumbers.includes(bonusNumber);
 
 const matchJackpotNumbers = (orderedNumbers, jackpotNumbers) => {
@@ -31,8 +31,8 @@ export const getJackpotPrice = (rank) => {
   })();
 };
 
-export const getJackpotTargetRankInfo = (targetRank, diffedLottoResult) => {
-  return diffedLottoResult.reduce(
+export const getJackpotTargetRankInfo = (targetRank, lottoResult) => {
+  return lottoResult.reduce(
     (results, { rank, price }) =>
       rank === targetRank
         ? { count: results.count + 1, amount: results.amount + price }
@@ -41,10 +41,14 @@ export const getJackpotTargetRankInfo = (targetRank, diffedLottoResult) => {
   );
 };
 
+export const getJackpotTotalAmount = (lottoResult) => {
+  return lottoResult.reduce((total, { price }) => (total += price), 0);
+};
+
 export const getJackpotResult = (lotto, bonusNumber) => {
   const { ordered, jackpot } = lotto;
 
-  const hasBonusNumber = isValidBonusNumber(ordered, bonusNumber);
+  const hasBonusNumber = isIncludeBonusNumber(ordered, bonusNumber);
   const matchedNumbers = matchJackpotNumbers(ordered, jackpot);
 
   const matchedCount = matchedNumbers.length;
@@ -54,11 +58,4 @@ export const getJackpotResult = (lotto, bonusNumber) => {
     matchJackpotNumbers.length >= LOTTO_JACKPOT_RANK_RULES.FIFTH;
 
   return { isJackpot, rank, price, matchedCount };
-};
-
-export const getJackpotTotalPrice = (statisticsResult) => {
-  return Object.entries(statisticsResult).reduce(
-    (total, [_, { count, amount }]) => (total += amount * count),
-    0,
-  );
 };

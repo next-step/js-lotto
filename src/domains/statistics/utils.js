@@ -10,14 +10,13 @@ export const getProfitRate = (initialAmount, finalAmount) => {
     : Math.floor(profitPercent * 10) / 10;
 };
 
-export const getStatisticsResult = (diffedLottoResult) => {
+export const getStatisticsResult = (lottoResult) => {
   return RANK_KEYS.reverse().reduce((object, key, index) => {
     const targetRank = RANK_KEYS.length - index;
-    const { count, amount } = getJackpotTargetRankInfo(
-      targetRank,
-      diffedLottoResult,
-    );
 
-    return { ...object, [key]: { count, amount } };
+    return {
+      ...object,
+      [key]: getJackpotTargetRankInfo(targetRank, lottoResult),
+    };
   }, {});
 };

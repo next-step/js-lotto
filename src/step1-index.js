@@ -1,7 +1,7 @@
 import { getLotto } from './domains/common/utils.js';
 import {
   getJackpotResult,
-  getJackpotTotalPrice,
+  getJackpotTotalAmount,
 } from './domains/jackpot/utils.js';
 import { calculateLottoCount } from './domains/order/utils.js';
 import {
@@ -24,20 +24,20 @@ import {
   renderProfitRate,
 } from './views/statistics/index.js';
 
-const RANK_KEYS = ['FIRST', 'SECOND', 'THIRD', 'FOURTH', 'FIFTH'];
-
 const main = async () => {
-  const inputAmount = await renderOrderAmountInput();
+  // 구매
+  const inputOrderAmount = await renderOrderAmountInput();
 
-  const amount = Number(inputAmount);
-  const count = calculateLottoCount(amount);
+  const orderAmount = Number(inputOrderAmount);
+  const orderCount = calculateLottoCount(orderAmount);
 
-  renderOrderedLottoCount(count);
+  renderOrderedLottoCount(orderCount);
 
-  const orderedLottos = Array.from({ length: count }, () => getLotto());
+  const orderedLottos = Array.from({ length: orderCount }, () => getLotto());
   renderOrderedLottos(orderedLottos);
   renderLineBreak();
 
+  // 당첨
   const inputJackpot = await renderJackpotNumbersInput();
   renderLineBreak();
 
@@ -53,17 +53,17 @@ const main = async () => {
       bonusNumber,
     ),
   );
+  const totalJackpotAmount = getJackpotTotalAmount(lottoResults);
 
+  // 통계
   renderJackpotStatisticsAnnouncement();
 
   const statisticsResult = getStatisticsResult(lottoResults);
   renderLottoStatisticInfo(statisticsResult);
 
-  const totalJackpotPrice = getJackpotTotalPrice(statisticsResult);
+  const profitRate = getProfitRate(orderAmount, totalJackpotAmount);
 
-  const profitPercent = getProfitRate(amount, totalJackpotPrice);
-
-  renderProfitRate(profitPercent);
+  renderProfitRate(profitRate);
 };
 
 main();
