@@ -13,7 +13,7 @@ class Lotto {
     return this.#countOfTickets;
   }
 
-  #setCountOfTickets() {
+  setCountOfTickets() {
     this.#countOfTickets = Math.floor(this.#purchasePrice / RULES.TICKET_PRICE);
   }
 
@@ -23,17 +23,19 @@ class Lotto {
       LOTTO_RULES.purChasePriceRule,
       "잘못된 구입금액 설정입니다.",
     );
-    this.#setWinningNumber(
-      winningNumber,
-      LOTTO_RULES.winningNumberRule,
-      "잘못된 당첨번호 설정입니다.",
-    );
-    this.#setBonusNumber(
-      bonusNumber,
-      LOTTO_RULES.bonusNumberRule,
-      "잘못된 보너스 번호 설정입니다.",
-    );
-    this.#setCountOfTickets();
+    winningNumber &&
+      this.setWinningNumber(
+        winningNumber,
+        LOTTO_RULES.winningNumberRule,
+        "잘못된 당첨번호 설정입니다.",
+      );
+    bonusNumber &&
+      this.setBonusNumber(
+        bonusNumber,
+        LOTTO_RULES.bonusNumberRule,
+        "잘못된 보너스 번호 설정입니다.",
+      );
+    // this.#setCountOfTickets();
   }
 
   #setpurchasePrice(purchasePrice, predicate, errorMessage) {
@@ -47,7 +49,7 @@ class Lotto {
     return this.#purchasePrice;
   }
 
-  #setWinningNumber(winningNumber, predicate, errorMessage) {
+  setWinningNumber(winningNumber, predicate, errorMessage) {
     if (predicate(winningNumber) === false) {
       throw new Error(errorMessage);
     }
@@ -58,7 +60,7 @@ class Lotto {
     return this.#winningNumber;
   }
 
-  #setBonusNumber(bonusNumber, predicate, errorMessage) {
+  setBonusNumber(bonusNumber, predicate, errorMessage) {
     if (predicate(bonusNumber) === false) {
       throw new Error(errorMessage);
     }

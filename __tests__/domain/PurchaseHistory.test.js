@@ -1,5 +1,5 @@
-import Ticket from "../src/domain/Ticket.js";
-import PurchaseHistory from "../src/domain/PurchaseHistory.js";
+import Ticket from "../../src/domain/Ticket.js";
+import PurchaseHistory from "../../src/domain/PurchaseHistory.js";
 
 describe("PurchaseHistory 클래스 - 구입 내역을 의미", () => {
   test("[3-1] 구입 내역은 ticket의 집합이다.", () => {

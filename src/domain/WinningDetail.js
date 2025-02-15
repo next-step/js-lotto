@@ -19,6 +19,14 @@ class WinningDetail {
     const winningNumbers = lotto.getWinningNumber;
     const bonusNumber = lotto.getBonusNumber;
 
+    const initialResult = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    };
+
     const results = purchaseHistory.getTickets
       .map((ticket) => {
         const ticketResult = ticket.getNumbers.filter((tickerNumber) =>
@@ -27,15 +35,12 @@ class WinningDetail {
               tickerNumber === winningNumber || tickerNumber === bonusNumber,
           ),
         );
-
         switch (ticketResult.length) {
           case 6:
             if (ticketResult.includes(bonusNumber) === false) {
               return 1;
             }
-
             return 2;
-
           case 5:
             return 3;
           case 4:
@@ -50,15 +55,13 @@ class WinningDetail {
         if (curResult === -1) {
           return rankingObject;
         }
-
         if (curResult in rankingObject) {
           rankingObject[curResult] += 1;
         } else {
           rankingObject[curResult] = 1;
         }
-
         return rankingObject;
-      }, {});
+      }, initialResult);
     this.#winner = results;
   }
 

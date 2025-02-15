@@ -1,4 +1,5 @@
 import Ticket from "../domain/Ticket.js";
+import WinningDetail from "../domain/WinningDetail.js";
 
 export const RULES = {
   MIN_TICKET_NUMBER: 1,
@@ -41,3 +42,10 @@ export const WINNING_PRICE_RULE = {
   4: 50000,
   5: 5000,
 };
+
+export const RATES_OF_RETURN_RULE = {
+    purchasePriceRule: (val) =>
+        val >= RULES.MIN_LOTTO_PURCHASE_PRICE &&
+        val <= RULES.MAX_LOTTO_PURCHASE_PRICE,
+    winningDetailRule: (winningDetail) => winningDetail instanceof WinningDetail
+}
