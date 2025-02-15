@@ -1,5 +1,6 @@
 class Lotto {
   static LOTTO_NUMBER_SIZE = 6;
+  static LOTTO_PRICE = 1000;
   static INVALID_LOTTO_NUMBER_SIZE = "로또 번호는 6개여야 합니다.";
   static INVALID_LOTTO_NUMBER_DUPLICATE = "로또 번호에 중복이 있습니다.";
   #lottoNumbers;
