@@ -16,21 +16,45 @@ class WinningDetail {
   }
 
   #setWinner(purchaseHistory, lotto) {
-    const winningDetailNumber = lotto.getWinningNumber;
+    const winningNumbers = lotto.getWinningNumber;
+    const bonusNumber = lotto.getBonusNumber;
 
     const results = purchaseHistory.getTickets
       .map((ticket) => {
-        const ticketResult = new Set([
-          ...ticket.getNumbers,
-          ...winningDetailNumber,
-        ]);
-        return ticketResult.size;
+        const ticketResult = ticket.getNumbers.filter((tickerNumber) =>
+          winningNumbers.some(
+            (winningNumber) =>
+              tickerNumber === winningNumber || tickerNumber === bonusNumber,
+          ),
+        );
+
+        switch (ticketResult.length) {
+          case 6:
+            if (ticketResult.includes(bonusNumber) === false) {
+              return 1;
+            }
+
+            return 2;
+
+          case 5:
+            return 3;
+          case 4:
+            return 4;
+          case 3:
+            return 5;
+          default:
+            return -1;
+        }
       })
       .reduce((rankingObject, curResult) => {
+        if (curResult === -1) {
+          return rankingObject;
+        }
+
         if (curResult in rankingObject) {
-          rankingObject[curResult - 6] += 1;
+          rankingObject[curResult] += 1;
         } else {
-          rankingObject[curResult - 6] = 1;
+          rankingObject[curResult] = 1;
         }
 
         return rankingObject;
