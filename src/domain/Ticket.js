@@ -15,7 +15,7 @@ class Ticket {
   }
 
   get getNumbers() {
-    return this.#numbers;
+    return [...this.#numbers];
   }
 
   #setNumbers(numbers, predicate, errorMessage) {

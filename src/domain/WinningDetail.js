@@ -1,16 +1,21 @@
-import Lotto from "./Lotto.js";
+import Lotto from "./Lotto/index.js";
 import PurchaseHistory from "./PurchaseHistory.js";
-
+import {
+  WINNING_KEY,
+  WINNING_CONDITION_KEY,
+  RULES,
+} from "../../src/util/rule.js";
+import { ERROR_WINNING } from "../../src/util/error.js";
 class WinningDetail {
   #winner;
 
   // 객체를 주입받아서 사용한다.
   constructor({ purchaseHistory, lotto }) {
-    if ((!purchaseHistory) instanceof PurchaseHistory) {
-      throw new Error("당첨 내역을 출력할 수 없어요.");
+    if (purchaseHistory instanceof PurchaseHistory === false) {
+      throw new Error(ERROR_WINNING.NOT_PRINT_WINNING_DETAIL);
     }
-    if ((!lotto) instanceof Lotto) {
-      throw new Error("당첨 내역을 출력할 수 없어요.");
+    if (lotto instanceof Lotto === false) {
+      throw new Error(ERROR_WINNING.NOT_PRINT_WINNING_DETAIL);
     }
     this.#setWinner(purchaseHistory, lotto);
   }
@@ -19,12 +24,12 @@ class WinningDetail {
     const winningNumbers = lotto.getWinningNumber;
     const bonusNumber = lotto.getBonusNumber;
 
-    const initialResult = {
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
+    const initialWinnersResult = {
+      [WINNING_KEY.FIRST]: WINNING_KEY.INITIAL,
+      [WINNING_KEY.SECOND]: WINNING_KEY.INITIAL,
+      [WINNING_KEY.THIRD]: WINNING_KEY.INITIAL,
+      [WINNING_KEY.FOURTH]: WINNING_KEY.INITIAL,
+      [WINNING_KEY.FIFTH]: WINNING_KEY.INITIAL,
     };
 
     const results = purchaseHistory.getTickets
@@ -36,32 +41,32 @@ class WinningDetail {
           ),
         );
         switch (ticketResult.length) {
-          case 6:
+          case WINNING_CONDITION_KEY.FIRST_AND_SECOND:
             if (ticketResult.includes(bonusNumber) === false) {
-              return 1;
+              return WINNING_KEY.FIRST;
             }
-            return 2;
-          case 5:
-            return 3;
-          case 4:
-            return 4;
-          case 3:
-            return 5;
+            return WINNING_KEY.SECOND;
+          case WINNING_CONDITION_KEY.THIRD:
+            return WINNING_KEY.THIRD;
+          case WINNING_CONDITION_KEY.FOURTH:
+            return WINNING_KEY.FOURTH;
+          case WINNING_CONDITION_KEY.FIFTH:
+            return WINNING_KEY.FIFTH;
           default:
-            return -1;
+            return WINNING_KEY.OTHER;
         }
       })
       .reduce((rankingObject, curResult) => {
-        if (curResult === -1) {
+        if (curResult === WINNING_KEY.OTHER) {
           return rankingObject;
         }
         if (curResult in rankingObject) {
-          rankingObject[curResult] += 1;
+          rankingObject[curResult] += RULES.WINNING_PERSON_PLUS;
         } else {
-          rankingObject[curResult] = 1;
+          rankingObject[curResult] = RULES.WINNING_PERSON_INITIAL;
         }
         return rankingObject;
-      }, initialResult);
+      }, initialWinnersResult);
     this.#winner = results;
   }
 

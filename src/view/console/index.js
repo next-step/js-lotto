@@ -1,13 +1,13 @@
-import PurchaseHistory from "../../src/domain/PurchaseHistory.js";
-import RatesOfReturn from "../../src/domain/RatesOfReturn.js";
-import WinningDetail from "../../src/domain/WinningDetail.js";
-import Lotto from "../domain/Lotto.js";
-import Ticket from "../domain/Ticket.js";
-import { ERROR_LOTTO } from "../util/error.js";
-import { getRandomNumber } from "../util/random.js";
-import { read, startProgram, stopProgram } from "../util/readline.js";
-import { LOTTO_RULES, getTicketAvailable } from "../util/rule.js";
-import { printWinningDetailResult } from "./printResult.js";
+import PurchaseHistory from "../../domain/PurchaseHistory.js";
+import RatesOfReturn from "../../domain/RatesOfReturn.js";
+import WinningDetail from "../../domain/WinningDetail.js";
+import Lotto from "../../domain/Lotto/index.js";
+import Ticket from "../../domain/Ticket.js";
+import { ERROR_LOTTO } from "../../util/error.js";
+import { getRandomArrayWithTicketLength } from "../../domain/Lotto/random.js";
+import { read, startProgram, stopProgram } from "./readline.js";
+import { LOTTO_RULES, getTicketAvailable } from "../../util/rule.js";
+import { printWinningDetailResult } from "../printResult.js";
 
 export const play = async () => {
   const rl = startProgram();
@@ -18,7 +18,7 @@ export const play = async () => {
 
   console.log(`${ticketLength}개를 구매했습니다.`);
   const tickets = Array.from({ length: ticketLength }).map((val) => {
-    const randomNumbers = getRandomNumber();
+    const randomNumbers = getRandomArrayWithTicketLength();
     console.log(randomNumbers);
 
     const ticket = new Ticket({

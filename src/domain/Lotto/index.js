@@ -1,5 +1,5 @@
-import { LOTTO_RULES } from "../util/rule.js";
-import { ERROR_LOTTO } from "../util/error.js";
+import { LOTTO_RULES } from "../../util/rule.js";
+import { ERROR_LOTTO } from "../../util/error.js";
 
 class Lotto {
   #winningNumber;

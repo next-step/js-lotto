@@ -1,6 +1,6 @@
-import { RULES } from "./rule.js";
+import { RULES } from "../../util/rule.js";
 
-export const shuffleRandom = (arr) => {
+export const shuffleArrayToRandomly = (arr) => {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -9,14 +9,13 @@ export const shuffleRandom = (arr) => {
   return arr;
 };
 
-export const getRandomNumber = () => {
+export const getRandomArrayWithTicketLength = () => {
   const arr = Array.from(
     { length: RULES.MAX_TICKET_NUMBER },
     (_, index) => index + 1,
   );
 
-  const shuffleResults = shuffleRandom(arr);
-  //   console.log(arr);
+  const shuffleResults = shuffleArrayToRandomly(arr);
 
-  return shuffleResults.slice(0, 6);
+  return shuffleResults.slice(0, RULES.TICKET_LENGTH);
 };

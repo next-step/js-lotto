@@ -1,4 +1,4 @@
-import Lotto from "../../src/domain/Lotto.js";
+import Lotto from "../../src/domain/Lotto/index.js";
 import Ticket from "../../src/domain/Ticket.js";
 import { LOTTO_RULES, getTicketAvailable } from "../../src/util/rule.js";
 import { ERROR_LOTTO } from "../../src/util/error.js";
