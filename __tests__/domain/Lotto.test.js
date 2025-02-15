@@ -44,5 +44,57 @@ describe("Lotto 클래스는", () => {
         },
       );
     });
+    describe("=== 일치 여부 확인에 대한 테스트 ===", () => {
+      describe("> 로또 번호가 일치할 때", () => {
+        it("당첨 번호와 비교했을 때 일치하는 갯수를 반환해야 한다", () => {
+          const lotto = new Lotto([
+            new LottoNumber(1),
+            new LottoNumber(2),
+            new LottoNumber(3),
+            new LottoNumber(4),
+            new LottoNumber(5),
+            new LottoNumber(6),
+          ]);
+
+          const winningNumbers = [
+            new LottoNumber(1),
+            new LottoNumber(2),
+            new LottoNumber(3),
+            new LottoNumber(4),
+            new LottoNumber(5),
+            new LottoNumber(6),
+          ];
+
+          expect(lotto.countMatches(winningNumbers)).toBe(6);
+        });
+      });
+    });
+    it("일치하는 보너스 번호가 주어지면 true 를 반환해야 한다", () => {
+      const lotto = new Lotto([
+        new LottoNumber(1),
+        new LottoNumber(2),
+        new LottoNumber(3),
+        new LottoNumber(4),
+        new LottoNumber(5),
+        new LottoNumber(6),
+      ]);
+      const bonusNumber = new LottoNumber(6);
+
+      expect(lotto.contains(bonusNumber)).toBeTruthy();
+    });
+
+    it("일치하지 않는 보너스 번호가 주어지면 false 를 반환해야 한다", () => {
+      const lotto = new Lotto([
+        new LottoNumber(1),
+        new LottoNumber(2),
+        new LottoNumber(3),
+        new LottoNumber(4),
+        new LottoNumber(5),
+        new LottoNumber(6),
+      ]);
+      const bonusNumber = new LottoNumber(7);
+
+      expect(lotto.contains(bonusNumber)).toBeFalsy();
+    });
   });
 });
