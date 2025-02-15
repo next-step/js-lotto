@@ -1,5 +1,5 @@
-import { isNumber, isPositiveInteger } from '../../utils';
-import { LOTTO_PRICE } from './constants';
+import { isNumber, isPositiveInteger } from '../../utils/index.js';
+import { LOTTO_PRICE } from './constants.js';
 
 export const calculateLottoCount = (amount) => {
   if (!isNumber(amount) || !isPositiveInteger(amount)) {

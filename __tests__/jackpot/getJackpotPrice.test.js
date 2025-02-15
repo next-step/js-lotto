@@ -24,7 +24,7 @@ describe('getJackpotPrice 관련 함수', () => {
     test('4등은 "50,000"을 반환한다.', () => {
       const price = getJackpotPrice(4);
 
-      expect(price).toBe(LOTTO_JACKPOT_PRICES.FOUTRH);
+      expect(price).toBe(LOTTO_JACKPOT_PRICES.FOURTH);
     });
 
     test('5등은 "5,000"을 반환한다.', () => {

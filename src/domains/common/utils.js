@@ -1,17 +1,16 @@
-import { isNumber, isPositiveInteger } from '../../utils';
+import { isNumber, isPositiveInteger } from '../../utils/index.js';
 import {
   LOTTO_LENGTH,
   LOTTO_MAX_NUMBER,
   LOTTO_MIN_NUMBER,
   LOTTO_NUMBERS,
-} from './constants';
+} from './constants.js';
 
 const isLottoNumberRange = (value) =>
   value >= LOTTO_MIN_NUMBER && value <= LOTTO_MAX_NUMBER;
 
 export const getRandomLottoNumber = (availableNumbers) => {
   if (!Array.isArray(availableNumbers) || !availableNumbers.length > 0) {
-    console.log(availableNumbers);
     throw new Error('로또 번호를 생성하면서 문제가 생겼습니다.');
   }
 
@@ -30,7 +29,7 @@ export const getRandomLottoNumber = (availableNumbers) => {
 };
 
 export const getLotto = () => {
-  const lottoNumberStocks = LOTTO_NUMBERS;
+  const lottoNumberStocks = [...LOTTO_NUMBERS];
 
   const selectedNumbers = Array.from({ length: LOTTO_LENGTH }, () => {
     const selectedNumber = getRandomLottoNumber(lottoNumberStocks);
