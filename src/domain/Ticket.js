@@ -1,3 +1,4 @@
+import { ERROR_TICKET } from "../util/error.js";
 import { RULES, TICKET_RULES } from "../util/rule.js";
 
 class Ticket {
@@ -5,7 +6,11 @@ class Ticket {
   #price;
 
   constructor({ numbers: numbers }) {
-    this.#setNumbers(numbers, TICKET_RULES.numbersRule, "잘못된 입력입니다");
+    this.#setNumbers(
+      numbers,
+      TICKET_RULES.numbersRule,
+      ERROR_TICKET.WRONG_TICKET_INPUT,
+    );
     this.#setPrice();
   }
 

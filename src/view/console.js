@@ -3,6 +3,7 @@ import RatesOfReturn from "../../src/domain/RatesOfReturn.js";
 import WinningDetail from "../../src/domain/WinningDetail.js";
 import Lotto from "../domain/Lotto.js";
 import Ticket from "../domain/Ticket.js";
+import { ERROR_LOTTO } from "../util/error.js";
 import { getRandomNumber } from "../util/random.js";
 import { read, startProgram, stopProgram } from "../util/readline.js";
 import { LOTTO_RULES, getTicketAvailable } from "../util/rule.js";
@@ -33,14 +34,14 @@ export const play = async () => {
   lotto.setWinningNumber(
     winningNumber.split(",").map((val) => parseInt(val)),
     LOTTO_RULES.winningNumberRule,
-    "잘못된 당첨번호 설정입니다.",
+    ERROR_LOTTO.WRONG_WINNING_NUMBER_SETTING,
   );
 
   const bonusNumber = await read(rl, "> 보너스 번호를 입력해 주세요.");
   lotto.setBonusNumber(
     parseInt(bonusNumber),
     LOTTO_RULES.bonusNumberRule,
-    "잘못된 보너스 번호 설정입니다.",
+    ERROR_LOTTO.WRONG_BONUS_NUMBER_SETTING,
   );
 
   const purchaseHistory = new PurchaseHistory({

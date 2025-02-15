@@ -1,5 +1,5 @@
 import Ticket from "../../src/domain/Ticket.js";
-
+import { ERROR_TICKET } from "../../src/util/error.js";
 describe("Ticket 클래스 - 로또 게임에서의 1장", () => {
   test("Ticket 1장은 자연수 중 1이상 45이하 6개로 이루어진 배열이다.", () => {
     // given
@@ -22,14 +22,14 @@ describe("Ticket 클래스 - 로또 게임에서의 1장", () => {
       const ticket = new Ticket({
         numbers: [0, 1, 2, 3, 4, 55],
       });
-    }).toThrow("잘못된 입력입니다");
+    }).toThrow(ERROR_TICKET.WRONG_TICKET_INPUT);
 
     // then
     expect(() => {
       const ticket = new Ticket({
         numbers: [0, 5],
       });
-    }).toThrow("잘못된 입력입니다");
+    }).toThrow(ERROR_TICKET.WRONG_TICKET_INPUT);
   });
 
   test("Ticket 1장의 가격은 1000원이다.", () => {

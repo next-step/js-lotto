@@ -1,4 +1,5 @@
 import { LOTTO_RULES } from "../util/rule.js";
+import { ERROR_LOTTO } from "../util/error.js";
 
 class Lotto {
   #winningNumber;
@@ -10,13 +11,13 @@ class Lotto {
       this.setWinningNumber(
         winningNumber,
         LOTTO_RULES.winningNumberRule,
-        "잘못된 당첨번호 설정입니다.",
+        ERROR_LOTTO.WRONG_WINNING_NUMBER_SETTING,
       );
     bonusNumber &&
       this.setBonusNumber(
         bonusNumber,
         LOTTO_RULES.bonusNumberRule,
-        "잘못된 보너스 번호 설정입니다.",
+        ERROR_LOTTO.WRONG_BONUS_NUMBER_SETTING,
       );
   }
 

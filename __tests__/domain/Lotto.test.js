@@ -1,7 +1,7 @@
 import Lotto from "../../src/domain/Lotto.js";
 import Ticket from "../../src/domain/Ticket.js";
 import { LOTTO_RULES, getTicketAvailable } from "../../src/util/rule.js";
-
+import { ERROR_LOTTO } from "../../src/util/error.js";
 describe("Lotto 클래스 - 로또 게임 1판 ", () => {
   test("당첨 번호, 보너스 번호를 내부 상태값으로 가진다.", () => {
     const lotto = new Lotto({
@@ -25,17 +25,17 @@ describe("Lotto 클래스 - 로또 게임 1판 ", () => {
       lotto.setWinningNumber(
         -1,
         LOTTO_RULES.winningNumberRule,
-        "잘못된 당첨번호 설정입니다.",
+        ERROR_LOTTO.WRONG_WINNING_NUMBER_SETTING,
       );
-    }).toThrow("잘못된 당첨번호 설정입니다.");
+    }).toThrow(ERROR_LOTTO.WRONG_WINNING_NUMBER_SETTING);
 
     expect(() => {
       lotto.setBonusNumber(
         -1,
         LOTTO_RULES.bonusNumberRule,
-        "잘못된 보너스 번호 설정입니다.",
+        ERROR_LOTTO.WRONG_BONUS_NUMBER_SETTING,
       );
-    }).toThrow("잘못된 보너스 번호 설정입니다.");
+    }).toThrow(ERROR_LOTTO.WRONG_BONUS_NUMBER_SETTING);
   });
 
   test("로또 Ticket 객체를 발행해야 한다 (구입 금액에 해당하는 만큼).", () => {
