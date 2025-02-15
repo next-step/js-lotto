@@ -18,4 +18,10 @@ describe('getProfitRate 관련 함수', () => {
 
     expect(profitRate).toBe(-100);
   });
+
+  test('수익률에 소수점이 발생되면 첫째 자리까지만 내림 상태로 반환한다.', () => {
+    const profitRate = getProfitRate(1130, 1134);
+
+    expect(profitRate).toBe(0.3);
+  });
 });
