@@ -15,12 +15,10 @@ describe("Ticket 클래스 - 로또 게임에서의 1장", () => {
   });
 
   test("1이상 45 이하를 제외한 값이 들어오면, '잘못된 입력입니다' 에러를 출력한다.", () => {
-    // given
-
     // then
     expect(() => {
       const ticket = new Ticket({
-        numbers: [0, 1, 2, 3, 4, 55],
+        numbers: [1, 2, 3, 4, 55],
       });
     }).toThrow(ERROR_TICKET.WRONG_TICKET_INPUT);
 
@@ -32,7 +30,7 @@ describe("Ticket 클래스 - 로또 게임에서의 1장", () => {
     }).toThrow(ERROR_TICKET.WRONG_TICKET_INPUT);
   });
 
-  test("Ticket 1장의 가격은 1000원이다.", () => {
+  test("로또 게임을 한판 할 수 있는 1장의 가격은 1000원이다.", () => {
     const ticket = new Ticket({
       numbers: [1, 2, 3, 4, 5, 45],
     });

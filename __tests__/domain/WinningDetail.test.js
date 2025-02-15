@@ -2,8 +2,9 @@ import Ticket from "../../src/domain/Ticket.js";
 import PurchaseHistory from "../../src/domain/PurchaseHistory.js";
 import WinningDetail from "../../src/domain/WinningDetail.js";
 import Lotto from "../../src/domain/Lotto/index.js";
+import { WINNING_KEY } from "../../src/util/rule.js";
 describe("Winning 클래스 - 당첨 내역을 의미", () => {
-  test("당첨은 1등부터 5등까지 등수를 판별한다.", () => {
+  test("당첨은 1등부터 5등까지 등수를 판별합니다.", () => {
     // given
     const ticket1 = new Ticket({
       numbers: [1, 2, 3, 4, 5, 45], // 1등
@@ -41,11 +42,11 @@ describe("Winning 클래스 - 당첨 내역을 의미", () => {
 
     // when
     const actualTicket = {
-      1: 1,
-      2: 1,
-      3: 1,
-      4: 1,
-      5: 1,
+      [WINNING_KEY.FIRST]: 1,
+      [WINNING_KEY.SECOND]: 1,
+      [WINNING_KEY.THIRD]: 1,
+      [WINNING_KEY.FOURTH]: 1,
+      [WINNING_KEY.FIFTH]: 1,
     };
 
     // then
