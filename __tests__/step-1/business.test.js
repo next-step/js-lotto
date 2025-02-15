@@ -37,3 +37,35 @@ describe("로또 테스트.", () => {
     });
   });
 });
+
+describe("로또 당첨 결과 테스트", () => {
+  let money = LOTTO_MONEY;
+  let lotto;
+  const winningNumbers = [23, 33, 11, 22, 55];
+  const bonusNumber = 1;
+
+  const userChoiceNumber = [
+    [1, 2, 3, 4, 5, 6],
+    [7, 8, 9, 10, 11, 12],
+    [13, 14, 15, 16, 17, 18],
+  ];
+
+  let compareNumberResult = [
+    { ticket: [1, 2, 3, 4, 5, 6], matchedNumbers: [], hasBonus: true },
+    { ticket: [7, 8, 9, 10, 11, 12], matchedNumbers: [11], hasBonus: false },
+    { ticket: [13, 14, 15, 16, 17, 18], matchedNumbers: [], hasBonus: false },
+  ];
+
+  beforeEach(() => {
+    lotto = new Lotto(money, LottoTicket);
+  });
+  it("당첨 번호와 사용자의 번호를 비교한다.", () => {
+    const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+
+    jest.spyOn(lotto, "getLottoTicket").mockReturnValue(userChoiceNumber);
+
+    expect(lottoResult.compareNumber(lotto.getLottoTicket())).toEqual(
+      compareNumberResult
+    );
+  });
+});
