@@ -1,3 +1,5 @@
+import { LOTTO_LENGTH } from '../common/constants.js';
+import { isLottoNumberRange } from '../common/utils.js';
 import { LOTTO_JACKPOT_PRICES, LOTTO_JACKPOT_RANK_RULES } from './constant.js';
 
 const isIncludeBonusNumber = (orderedNumbers, bonusNumber) =>
@@ -18,6 +20,14 @@ const getJackpotRank = (matchedNumbers, isBonus) => {
     if (count === LOTTO_JACKPOT_RANK_RULES.FIFTH) return 5;
     return 0;
   })();
+};
+
+export const isValidJackpotNumbersInput = (numbers) => {
+  return (
+    Array.isArray(numbers) &&
+    numbers.length === LOTTO_LENGTH &&
+    numbers.every((value) => isLottoNumberRange(value))
+  );
 };
 
 export const getJackpotPrice = (rank) => {

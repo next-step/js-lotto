@@ -6,8 +6,17 @@ import {
   LOTTO_NUMBERS,
 } from './constants.js';
 
-const isLottoNumberRange = (value) =>
+export const isLottoNumberRange = (value) =>
   value >= LOTTO_MIN_NUMBER && value <= LOTTO_MAX_NUMBER;
+
+export const isValidBonusNumber = (bonusNumber, jackpotNumbers) => {
+  return (
+    isNumber(bonusNumber) &&
+    isPositiveInteger(bonusNumber) &&
+    isLottoNumberRange(bonusNumber) &&
+    !jackpotNumbers.includes(bonusNumber)
+  );
+};
 
 export const getRandomLottoNumber = (availableNumbers) => {
   if (!Array.isArray(availableNumbers) || !availableNumbers.length > 0) {

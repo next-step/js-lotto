@@ -1,7 +1,8 @@
-import { getLotto } from './domains/common/utils.js';
+import { getLotto, isValidBonusNumber } from './domains/common/utils.js';
 import {
   getJackpotResult,
   getJackpotTotalAmount,
+  isValidJackpotNumbersInput,
 } from './domains/jackpot/utils.js';
 import { calculateLottoCount } from './domains/order/utils.js';
 import {
@@ -46,6 +47,15 @@ const main = async () => {
 
   const jackpotNumbers = inputJackpot.split(',').map((value) => Number(value));
   const bonusNumber = Number(inputBonusNumber);
+
+  if (
+    !isValidJackpotNumbersInput(jackpotNumbers) ||
+    !isValidBonusNumber(bonusNumber, jackpotNumbers)
+  ) {
+    throw new Error(
+      '당첨 숫자 또는 보너스 번호를 처리하는 과정에서 문제가 생겼습니다.',
+    );
+  }
 
   const lottoResults = orderedLottos.map((orderedLotto) =>
     getJackpotResult(
