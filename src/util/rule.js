@@ -33,3 +33,11 @@ export const LOTTO_RULES = {
 export const PURCHASE_HISTORY_RULES = {
   ticketsRule: (tickets) => tickets.every((ticket) => ticket instanceof Ticket),
 };
+
+export const WINNING_PRICE_RULE = {
+  1: 2000000000,
+  2: 30000000,
+  3: 1500000,
+  4: 50000,
+  5: 5000,
+};
