@@ -1,48 +1,31 @@
-import generateRandomNumber from "../utils/generateRandomNumber.js";
-import isValueInArray from "../utils/isValueInArray.js";
-class Lotto {
-  #price;
+const ticketPrice = 1000;
 
+class Lotto {
+  #money;
   #ticket = [];
 
-  constructor(price) {
-    this.#price = price;
-    this.#ticket = this.makeLottoList(this.getTicketAmount());
+  constructor(money, lottoTicketClass) {
+    this.#money = money;
+    this.#ticket = this.makeLottoList(this.getTicketAmount(), lottoTicketClass);
   }
 
-  get price() {
-    return this.#price;
-  }
-
-  getTicketAmount() {
-    return this.#price / 1000;
+  get money() {
+    return this.#money;
   }
 
   getLottoTicket() {
     return this.#ticket;
   }
 
-  createLottoNumber(arr, number) {
-    if (isValueInArray(arr, number)) {
-      return this.createLottoNumber(arr, generateRandomNumber());
-    }
-    return number;
+  getTicketAmount() {
+    return this.#money / ticketPrice;
   }
 
-  makeLottoList(length) {
+  makeLottoList(length, lottoTicketClass) {
     return new Array(length)
       .fill()
-      .map(() => this.makeLotto())
+      .map(() => new lottoTicketClass())
       .sort((a, b) => a - b);
-  }
-
-  makeLotto() {
-    return new Array(6)
-      .fill(0)
-      .reduce(
-        (acc) => [...acc, this.createLottoNumber(acc, generateRandomNumber())],
-        []
-      );
   }
 }
 
