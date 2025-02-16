@@ -7,7 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "jest --no-cache",
-    "start-step1": "node src/step1-index.js",
+    "start-step-console": "node src/step1-index.js",
     "start-step2": "vite"
   },
   "devDependencies": {
