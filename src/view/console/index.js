@@ -21,10 +21,12 @@ export const playGame = async (rl) => {
   console.log(`${ticketLength}개를 구매했습니다.`);
   const tickets = Array.from({ length: ticketLength }).map((val) => {
     const randomNumbers = getRandomArrayWithTicketLength();
-    console.log(randomNumbers);
+    
+    const sortedRandomNumbers = randomNumbers.sort((a,b) => a-b);
+    console.log(sortedRandomNumbers);
 
     const ticket = new Ticket({
-      numbers: randomNumbers,
+      numbers: sortedRandomNumbers,
     });
 
     return ticket;
