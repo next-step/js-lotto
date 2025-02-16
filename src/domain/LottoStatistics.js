@@ -2,9 +2,9 @@ import {
   LOTTO_RANK_RULES,
   LOTTO_RANK_MONEY,
   TICKET_PRICE,
-} from "../utils/ENUM/lotto";
-import LOTTO_ERROR_MESSAGE from "../utils/errorMessage/lottoErrorMessage";
-import LOTTO_STATISTICS_ERROR_MESSAGE from "../utils/errorMessage/lottoStatisticsErrorMessage";
+} from "../utils/ENUM/lotto.js";
+import LOTTO_ERROR_MESSAGE from "../utils/errorMessage/lottoErrorMessage.js";
+import LOTTO_STATISTICS_ERROR_MESSAGE from "../utils/errorMessage/lottoStatisticsErrorMessage.js";
 
 class LottoStatistics {
   #money;
@@ -46,10 +46,6 @@ class LottoStatistics {
 
   setLottoRank(number) {
     this.#lottoRankList.push(number);
-  }
-
-  calculateProfit() {
-    this.lottoRankList.reduce((acc, cur) => acc + lottoCalculate(cur), 0);
   }
 
   setLottoResult() {
