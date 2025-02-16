@@ -1,9 +1,9 @@
-export const getRank = (userInput, bonusNumber, lotto) => {
-  const matchingCount = checkMatchingNumberCount(userInput, lotto);
+export const getRank = (winningNumbers, lotto) => {
+  const matchingCount = checkMatchingNumberCount(winningNumbers[0], lotto);
   if (matchingCount === 6) return 1;
 
   if (matchingCount === 5) {
-    if (lotto.includes(bonusNumber)) return 2;
+    if (lotto.includes(winningNumbers[1])) return 2;
     return 3;
   }
 
@@ -11,6 +11,10 @@ export const getRank = (userInput, bonusNumber, lotto) => {
   if (matchingCount === 3) return 5;
 
   return 6;
+};
+
+export const transformUserInput = (userInput, bonusNumber) => {
+  return [userInput.split(",").map((num) => Number(num)), Number(bonusNumber)];
 };
 
 export const checkMatchingNumberCount = (userInputNumber, lotto) => {

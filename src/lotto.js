@@ -1,4 +1,4 @@
-import { getReward } from "../src/getRank.js";
+import { getReward, getRank } from "../src/getRank.js";
 
 export default class Lotto {
   constructor(paymentAmount) {
@@ -37,6 +37,13 @@ export default class Lotto {
 
   saveLottoResults(rank) {
     this.result[rank] += 1;
+  }
+
+  checkResult(winningNumbers) {
+    const count = this.count;
+    for (let i = 0; i < count; i++) {
+      this.saveLottoResults(getRank(winningNumbers, this.numbers[i]));
+    }
   }
 
   computeTotalPrize() {
