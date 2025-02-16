@@ -25,7 +25,7 @@ describe("로또 테스트.", () => {
     });
 
     it("생성할 로또의 갯수를 입력하면 로또 티켓이 발급된다.", () => {
-      const createLotto = lotto.makeLottoList(3, LottoTicket.makeLotto);
+      const createLotto = lotto.generateTickets(3, LottoTicket.makeLotto);
 
       expect(createLotto).toHaveLength(3);
     });
