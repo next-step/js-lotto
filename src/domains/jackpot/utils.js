@@ -76,3 +76,16 @@ export const getJackpotResult = (lotto, bonusNumber) => {
 
   return { isJackpot, rank, price, matchedCount };
 };
+
+export const calculateLottoResults = (
+  orderedLottos,
+  jackpotNumbers,
+  bonusNumber,
+) => {
+  return orderedLottos.map((orderedLotto) =>
+    getJackpotResult(
+      { ordered: orderedLotto, jackpot: jackpotNumbers },
+      bonusNumber,
+    ),
+  );
+};

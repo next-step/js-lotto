@@ -1,6 +1,7 @@
 import { LOTTO } from './domains/common/constants.js';
 import { getLotto, validateBonusNumber } from './domains/common/utils.js';
 import {
+  calculateLottoResults,
   getJackpotResult,
   getJackpotTotalAmount,
   validateJackpot,
@@ -91,8 +92,10 @@ const main = async () => {
 
   const [jackpotNumbers, bonusNumber] = await processInputJackpotInfo();
 
-  const lottoResults = lottos.map((lotto) =>
-    getJackpotResult({ ordered: lotto, jackpot: jackpotNumbers }, bonusNumber),
+  const lottoResults = calculateLottoResults(
+    lottos,
+    jackpotNumbers,
+    bonusNumber,
   );
   const totalJackpotAmount = getJackpotTotalAmount(lottoResults);
 
