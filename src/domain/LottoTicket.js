@@ -15,7 +15,8 @@ class LottoTicket {
   static makeLotto() {
     return new Array(6)
       .fill(0)
-      .reduce((acc) => [...acc, LottoTicket.createLottoNumber(acc)], []);
+      .reduce((acc) => [...acc, LottoTicket.createLottoNumber(acc)], [])
+      .sort((a, b) => a - b);
   }
 }
 

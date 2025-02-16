@@ -39,9 +39,7 @@ class Lotto {
   }
 
   generateTickets(length, createLottoTicket) {
-    return new Array(length)
-      .fill()
-      .map(() => createLottoTicket().sort((a, b) => a - b));
+    return new Array(length).fill().map(() => createLottoTicket());
   }
 }
 
