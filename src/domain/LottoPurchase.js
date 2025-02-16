@@ -3,23 +3,22 @@ import Lotto from "./Lotto.js";
 import Validator from "./Validator.js";
 
 class LottoPurchase {
-  #lottos = [];
+  #lottoTickets = [];
 
   constructor(purchaseAmount) {
     const validator = new Validator();
-    const verifiedPurchaseAmount =
-      validator.validatePurchaseAmount(purchaseAmount);
-    this.#lottos = this.getLottoTickets(verifiedPurchaseAmount);
+    validator.validatePurchaseAmount(purchaseAmount);
+    this.#lottoTickets = this.getLottoTickets(purchaseAmount);
   }
 
   getLottoTickets(purchaseAmount) {
     const numberOfLottoTickets = purchaseAmount / lottoPrice;
-    
+
     return Array.from({ length: numberOfLottoTickets }, () => new Lotto());
   }
 
-  get lottos() {
-    return this.#lottos;
+  get lottoTickets() {
+    return this.#lottoTickets;
   }
 }
 
