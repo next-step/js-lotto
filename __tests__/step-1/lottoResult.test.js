@@ -93,7 +93,7 @@ describe("로또 .", () => {
       const errorNumbers = [0, -1, 45, 23, 1, 2];
 
       expect(() => new LottoResult(errorNumbers, bonusNumber)).toThrow(
-        LOTTO_RESULT_ERROR_MESSAGE.INVALID_WINNING_NUMBER
+        LOTTO_RESULT_ERROR_MESSAGE.INVALID_WINNING_NUMBER_RANGE
       );
     });
 
@@ -101,7 +101,29 @@ describe("로또 .", () => {
       const errorBonusNumber = 99;
 
       expect(() => new LottoResult(winningNumbers, errorBonusNumber)).toThrow(
-        LOTTO_RESULT_ERROR_MESSAGE.INVALID_BONUS_NUMBER
+        LOTTO_RESULT_ERROR_MESSAGE.INVALID_BONUS_NUMBER_RANGE
+      );
+    });
+
+    it("당첨 번호가 6자리가 아니면 에러를 뱉는다.", () => {
+      const errorNumbers = [1, 2, 3, 4, 5];
+
+      expect(() => new LottoResult(errorNumbers, bonusNumber)).toThrow(
+        LOTTO_RESULT_ERROR_MESSAGE.INVALID_WINNING_NUMBERS_LENGTH
+      );
+    });
+
+    it("보너스 번호가 없으면 에러를 뱉는다.", () => {
+      expect(() => new LottoResult(winningNumbers)).toThrow(
+        LOTTO_RESULT_ERROR_MESSAGE.BONUS_NUMBER_REQUIRED
+      );
+    });
+
+    it("당첨번호와 보너스숫자에 중복이 있으면 에러를 뱉는다.", () => {
+      const errorNumbers = [1, 2, 3, 4, 5, 5];
+
+      expect(() => new LottoResult(errorNumbers, bonusNumber)).toThrow(
+        LOTTO_RESULT_ERROR_MESSAGE.DUPLICATE_NUMBERS_NOT_ALLOWED
       );
     });
   });
