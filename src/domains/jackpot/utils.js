@@ -56,7 +56,11 @@ export const getJackpotTargetRankInfo = (targetRank, lottoResult) => {
 };
 
 export const getJackpotTotalAmount = (lottoResult) => {
-  return lottoResult.reduce((total, { price }) => total + price, 0);
+  if (!Array.isArray(lottoResult)) {
+    throw new Error('총 당첨 금액을 계산하는데 잘못된 입력값을 주셨습니다.');
+  }
+
+  return lottoResult.reduce((total, lotto) => total + (lotto.price ?? 0), 0);
 };
 
 export const getJackpotResult = (lotto, bonusNumber) => {

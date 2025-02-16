@@ -7,18 +7,20 @@ export const renderJackpotStatisticsAnnouncement = () => {
 };
 
 export const renderLottoStatisticInfo = (statisticsResult) => {
-  return Object.entries(statisticsResult).forEach(([rank, { count }]) => {
-    if (rank === JACKPOT.RANKS.SECOND.value) {
-      console.log(
-        `${JACKPOT.RULES[rank].match[0]}개 일치, 보너스 볼 일치 (${commaizeNumber(JACKPOT.RULES[rank].price)}원) - ${count}개`,
-      );
-      return;
-    }
+  return Object.entries(statisticsResult)
+    .reverse()
+    .forEach(([rank, { count }]) => {
+      if (rank === JACKPOT.RANKS.SECOND.value) {
+        console.log(
+          `${JACKPOT.RULES[rank].match[0]}개 일치, 보너스 볼 일치 (${commaizeNumber(JACKPOT.RULES[rank].price)}원) - ${count}개`,
+        );
+        return;
+      }
 
-    console.log(
-      `${JACKPOT.RULES[rank].match[0]}}개 일치 (${commaizeNumber(JACKPOT.RULES[rank].price)}원) - ${count}개`,
-    );
-  });
+      console.log(
+        `${JACKPOT.RULES[rank].match[0]}개 일치 (${commaizeNumber(JACKPOT.RULES[rank].price)}원) - ${count}개`,
+      );
+    });
 };
 
 export const renderProfitRate = (percent) => {

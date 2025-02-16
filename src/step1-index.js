@@ -1,3 +1,4 @@
+import { LOTTO } from './domains/common/constants.js';
 import { getLotto, validateBonusNumber } from './domains/common/utils.js';
 import {
   getJackpotResult,
@@ -80,7 +81,9 @@ const main = async () => {
   const orderCount = calculateLottoCount(orderAmount);
   renderOrderedLottoCount(orderCount);
 
-  const lottos = Array.from({ length: orderCount }, () => getLotto());
+  const lottos = Array.from({ length: orderCount }, () =>
+    getLotto([...LOTTO.NUMBERS]),
+  );
   renderOrderedLottos(lottos);
   renderLineBreak();
 

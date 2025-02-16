@@ -12,3 +12,6 @@ export const hasDuplicateNumber = (numbers) =>
   numbers.length !== new Set(numbers).size;
 
 export const commaizeNumber = (value) => value.toLocaleString();
+
+export const shuffle = (numbers) =>
+  [...numbers].sort(() => Math.random() - 0.5);
