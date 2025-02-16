@@ -1,13 +1,8 @@
 import { isNumber, isPositiveInteger } from '../../utils/index.js';
-import {
-  LOTTO_LENGTH,
-  LOTTO_MAX_NUMBER,
-  LOTTO_MIN_NUMBER,
-  LOTTO_NUMBERS,
-} from './constants.js';
+import { LOTTO } from './constants.js';
 
 export const isLottoNumberRange = (value) =>
-  value >= LOTTO_MIN_NUMBER && value <= LOTTO_MAX_NUMBER;
+  value >= LOTTO.RANGE.min && value <= LOTTO.RANGE.max;
 
 export const isValidBonusNumber = (bonusNumber, jackpotNumbers) => {
   return (
@@ -38,9 +33,9 @@ export const getRandomLottoNumber = (availableNumbers) => {
 };
 
 export const getLotto = () => {
-  const lottoNumberStocks = [...LOTTO_NUMBERS];
+  const lottoNumberStocks = [...LOTTO.NUMBERS];
 
-  const selectedNumbers = Array.from({ length: LOTTO_LENGTH }, () => {
+  const selectedNumbers = Array.from({ length: LOTTO.SIZE }, () => {
     const selectedNumber = getRandomLottoNumber(lottoNumberStocks);
     const removeIndex = lottoNumberStocks.indexOf(selectedNumber);
 

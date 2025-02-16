@@ -1,5 +1,5 @@
-import { LOTTO_PRICE } from './constants.js';
+import { LOTTO } from '../common/constants.js';
 
 export const calculateLottoCount = (amount) => {
-  return Math.floor(amount / LOTTO_PRICE);
+  return Math.floor(amount / LOTTO.PRICE);
 };

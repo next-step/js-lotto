@@ -1,6 +1,7 @@
-import { LOTTO_LENGTH } from '../common/constants.js';
+import { isArrayDifference } from '../../utils/index.js';
+import { LOTTO } from '../common/constants.js';
 import { isLottoNumberRange } from '../common/utils.js';
-import { LOTTO_JACKPOT_PRICES, LOTTO_JACKPOT_RANK_RULES } from './constant.js';
+import { JACKPOT, JACKPOT_RANKS } from './constant.js';
 
 const isIncludeBonusNumber = (orderedNumbers, bonusNumber) =>
   orderedNumbers.includes(bonusNumber);
@@ -10,14 +11,19 @@ const matchJackpotNumbers = (orderedNumbers, jackpotNumbers) => {
 };
 
 const getJackpotRank = (matchedNumbers, isBonus) => {
-  const count = matchedNumbers.length;
+  const match = [matchedNumbers.length, isBonus ? 1 : 0];
 
   return (() => {
-    if (count === LOTTO_JACKPOT_RANK_RULES.FIRST) return 1;
-    if (count === LOTTO_JACKPOT_RANK_RULES.SECOND && isBonus) return 2;
-    if (count === LOTTO_JACKPOT_RANK_RULES.THIRD && !isBonus) return 3;
-    if (count === LOTTO_JACKPOT_RANK_RULES.FOURTH) return 4;
-    if (count === LOTTO_JACKPOT_RANK_RULES.FIFTH) return 5;
+    if (isArrayDifference(match, JACKPOT.RULES.FIRST.match))
+      return JACKPOT_RANKS.FIRST.number;
+    if (isArrayDifference(match, JACKPOT.RULES.SECOND.match))
+      return JACKPOT_RANKS.SECOND.number;
+    if (isArrayDifference(match, JACKPOT.RULES.THIRD.match))
+      return JACKPOT_RANKS.THIRD.number;
+    if (isArrayDifference(match, JACKPOT.RULES.FOURTH.match))
+      return JACKPOT_RANKS.FOURTH.number;
+    if (isArrayDifference(match, JACKPOT.RULES.FIFTH.match))
+      return JACKPOT_RANKS.FIFTH.number;
     return 0;
   })();
 };
@@ -25,20 +31,21 @@ const getJackpotRank = (matchedNumbers, isBonus) => {
 export const isValidJackpotNumbersInput = (numbers) => {
   return (
     Array.isArray(numbers) &&
-    numbers.length === LOTTO_LENGTH &&
+    numbers.length === LOTTO.SIZE &&
     numbers.every((value) => isLottoNumberRange(value))
   );
 };
 
 export const getJackpotPrice = (rank) => {
-  return (() => {
-    if (rank === 1) return LOTTO_JACKPOT_PRICES.FIRST;
-    if (rank === 2) return LOTTO_JACKPOT_PRICES.SECOND;
-    if (rank === 3) return LOTTO_JACKPOT_PRICES.THIRD;
-    if (rank === 4) return LOTTO_JACKPOT_PRICES.FOURTH;
-    if (rank === 5) return LOTTO_JACKPOT_PRICES.FIFTH;
-    return 0;
-  })();
+  return (
+    {
+      [JACKPOT.RANKS.FIRST.number]: JACKPOT.RULES.FIRST.price,
+      [JACKPOT.RANKS.SECOND.number]: JACKPOT.RULES.SECOND.price,
+      [JACKPOT.RANKS.THIRD.number]: JACKPOT.RULES.THIRD.price,
+      [JACKPOT.RANKS.FOURTH.number]: JACKPOT.RULES.FOURTH.price,
+      [JACKPOT.RANKS.FIFTH.number]: JACKPOT.RULES.FIFTH.price,
+    }[rank] ?? 0
+  );
 };
 
 export const getJackpotTargetRankInfo = (targetRank, lottoResult) => {
@@ -64,8 +71,7 @@ export const getJackpotResult = (lotto, bonusNumber) => {
   const matchedCount = matchedNumbers.length;
   const rank = getJackpotRank(matchedNumbers, hasBonusNumber);
   const price = getJackpotPrice(rank);
-  const isJackpot =
-    matchJackpotNumbers.length >= LOTTO_JACKPOT_RANK_RULES.FIFTH;
+  const isJackpot = matchJackpotNumbers.length >= JACKPOT.MIN_MATCH;
 
   return { isJackpot, rank, price, matchedCount };
 };
