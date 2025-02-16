@@ -1,6 +1,5 @@
+import { JACKPOT } from '../jackpot/constant.js';
 import { getJackpotTargetRankInfo } from '../jackpot/utils.js';
-
-const RANK_KEYS = ['FIRST', 'SECOND', 'THIRD', 'FOURTH', 'FIFTH'];
 
 export const getProfitRate = (initialAmount, finalAmount) => {
   const profitPercent = ((finalAmount - initialAmount) / initialAmount) * 100;
@@ -11,12 +10,16 @@ export const getProfitRate = (initialAmount, finalAmount) => {
 };
 
 export const getStatisticsResult = (lottoResult) => {
-  return RANK_KEYS.reverse().reduce((object, key, index) => {
-    const targetRank = RANK_KEYS.length - index;
+  const rankNames = Object.keys(JACKPOT.RANKS);
 
-    return {
+  return rankNames.reduce(
+    (object, key) => ({
       ...object,
-      [key]: getJackpotTargetRankInfo(targetRank, lottoResult),
-    };
-  }, {});
+      [key]: getJackpotTargetRankInfo(
+        JACKPOT.RANKS[key]['number'],
+        lottoResult,
+      ),
+    }),
+    {},
+  );
 };

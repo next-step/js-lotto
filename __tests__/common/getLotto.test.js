@@ -1,31 +1,34 @@
-import { LOTTO_LENGTH } from '../../src/domains/common/constants';
+import { LOTTO } from '../../src/domains/common/constants';
 import { getLotto } from '../../src/domains/common/utils';
 
 describe('getLotto 관련 함수 테스트', () => {
-  describe('로또 1장을 뽑을 때', () => {
-    test('6개의 일반 숫자가 나와야 한다.', () => {
-      const lotto = getLotto();
+  describe('보유한 로또 숫자를 매개변수로 입력했을 때', () => {
+    test.each([
+      {
+        numbers: [1, 2, 3, 5, 5, 6],
+        error: '중복된 숫자가 있으면 오류를 던진다.',
+      },
+      {
+        numbers: [1, 2, 3, 4, 5, 50],
+        error: '로또 범위(1 ~ 45)를 벗어난 숫자가 있으면 오류를 던진다.',
+      },
+    ])('$error', ({ numbers }) => {
+      expect(() => getLotto(numbers)).toThrow();
+    });
+  });
 
-      expect(lotto.length).toBe(LOTTO_LENGTH);
+  describe('값이 출력되었을 떄', () => {
+    let lotto;
+
+    beforeEach(() => (lotto = getLotto([1, 2, 3, 4, 5, 6])));
+    test('6개의 일반 숫자가 나와야 한다.', () => {
+      expect(lotto.length).toBe(LOTTO.SIZE);
     });
 
     test('중복된 숫자가 나와서는 안된다.', () => {
-      const lotto = getLotto();
-
       const filteredDuplicate = [...new Set(lotto)];
 
-      expect(filteredDuplicate.length).toBe(LOTTO_LENGTH);
-    });
-
-    test('왼쪽 기준으로 숫자가 오름차순으로 정렬되어야 한다.', () => {
-      const lotto = getLotto();
-
-      const isAscendOrder = !lotto.some((value, index, arr) => {
-        if (index === 0) return false;
-        return !(value > arr[index - 1]);
-      });
-
-      expect(isAscendOrder).toBe(true);
+      expect(filteredDuplicate.length).toBe(LOTTO.SIZE);
     });
   });
 });

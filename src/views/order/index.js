@@ -9,5 +9,8 @@ export const renderOrderedLottoCount = (count) => {
 };
 
 export const renderOrderedLottos = (lottos) => {
-  lottos.forEach((lotto) => console.log(lotto));
+  const clonedLottos = [...lottos];
+  clonedLottos.forEach((lotto) => lotto.sort((a, b) => a - b));
+
+  console.log(clonedLottos.join('\n'));
 };

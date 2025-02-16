@@ -1,15 +1,22 @@
-import { getLotto, isValidBonusNumber } from './domains/common/utils.js';
+import { LOTTO } from './domains/common/constants.js';
+import { getLotto, validateBonusNumber } from './domains/common/utils.js';
 import {
+  calculateLottoResults,
   getJackpotResult,
   getJackpotTotalAmount,
-  isValidJackpotNumbersInput,
+  validateJackpot,
 } from './domains/jackpot/utils.js';
 import { calculateLottoCount } from './domains/order/utils.js';
 import {
   getProfitRate,
   getStatisticsResult,
 } from './domains/statistics/utils.js';
-import { renderLineBreak } from './views/common/index.js';
+import { isNumber, isPositiveInteger } from './utils/index.js';
+import {
+  renderErrorMessage,
+  renderLineBreak,
+  startMachine,
+} from './views/common/index.js';
 import {
   renderBonusNumberInput,
   renderJackpotNumbersInput,
@@ -25,20 +32,23 @@ import {
   renderProfitRate,
 } from './views/statistics/index.js';
 
-const main = async () => {
-  // 구매
+const processInputOrderAmount = async () => {
   const inputOrderAmount = await renderOrderAmountInput();
-
   const orderAmount = Number(inputOrderAmount);
-  const orderCount = calculateLottoCount(orderAmount);
 
-  renderOrderedLottoCount(orderCount);
+  try {
+    if (!isNumber(orderAmount) || !isPositiveInteger(orderAmount)) {
+      throw new Error('구입금액을 잘못 입력하셨습니다. 다시 시도해 주세요.');
+    }
+  } catch (error) {
+    renderErrorMessage(error.message);
+    await processInputOrderAmount();
+  }
 
-  const orderedLottos = Array.from({ length: orderCount }, () => getLotto());
-  renderOrderedLottos(orderedLottos);
-  renderLineBreak();
+  return orderAmount;
+};
 
-  // 당첨
+const processInputJackpotInfo = async () => {
   const inputJackpot = await renderJackpotNumbersInput();
   renderLineBreak();
 
@@ -48,20 +58,44 @@ const main = async () => {
   const jackpotNumbers = inputJackpot.split(',').map((value) => Number(value));
   const bonusNumber = Number(inputBonusNumber);
 
-  if (
-    !isValidJackpotNumbersInput(jackpotNumbers) ||
-    !isValidBonusNumber(bonusNumber, jackpotNumbers)
-  ) {
-    throw new Error(
-      '당첨 숫자 또는 보너스 번호를 처리하는 과정에서 문제가 생겼습니다.',
-    );
+  const isValidJackpot = validateJackpot(jackpotNumbers);
+  const isValidBonusNumber = validateBonusNumber(bonusNumber, jackpotNumbers);
+
+  try {
+    if (!isValidJackpot || !isValidBonusNumber) {
+      throw new Error(
+        '당첨 번호 또는 보너스 숫자를 잘못 입력하셨습니다. 다시 시도해 주세요.',
+      );
+    }
+  } catch (error) {
+    renderErrorMessage(error.message);
+    await processInputJackpotInfo();
   }
 
-  const lottoResults = orderedLottos.map((orderedLotto) =>
-    getJackpotResult(
-      { ordered: orderedLotto, jackpot: jackpotNumbers },
-      bonusNumber,
-    ),
+  return [jackpotNumbers, bonusNumber];
+};
+
+const main = async () => {
+  // 구매
+  const orderAmount = await processInputOrderAmount();
+
+  const orderCount = calculateLottoCount(orderAmount);
+  renderOrderedLottoCount(orderCount);
+
+  const lottos = Array.from({ length: orderCount }, () =>
+    getLotto([...LOTTO.NUMBERS]),
+  );
+  renderOrderedLottos(lottos);
+  renderLineBreak();
+
+  // 당첨
+
+  const [jackpotNumbers, bonusNumber] = await processInputJackpotInfo();
+
+  const lottoResults = calculateLottoResults(
+    lottos,
+    jackpotNumbers,
+    bonusNumber,
   );
   const totalJackpotAmount = getJackpotTotalAmount(lottoResults);
 
@@ -76,4 +110,4 @@ const main = async () => {
   renderProfitRate(profitRate);
 };
 
-main();
+startMachine(main);

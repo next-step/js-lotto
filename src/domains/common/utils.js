@@ -1,55 +1,37 @@
-import { isNumber, isPositiveInteger } from '../../utils/index.js';
 import {
-  LOTTO_LENGTH,
-  LOTTO_MAX_NUMBER,
-  LOTTO_MIN_NUMBER,
-  LOTTO_NUMBERS,
-} from './constants.js';
+  hasDuplicateNumber,
+  isNumber,
+  isPositiveInteger,
+  shuffle,
+} from '../../utils/index.js';
+import { LOTTO } from './constants.js';
 
-export const isLottoNumberRange = (value) =>
-  value >= LOTTO_MIN_NUMBER && value <= LOTTO_MAX_NUMBER;
+export const validateLottoNumberRange = (value) =>
+  isNumber(value) &&
+  isPositiveInteger(value) &&
+  value >= LOTTO.RANGE.min &&
+  value <= LOTTO.RANGE.max;
 
-export const isValidBonusNumber = (bonusNumber, jackpotNumbers) => {
+export const validateBonusNumber = (bonusNumber, jackpotNumbers) => {
+  const isLottoNumberRange = validateLottoNumberRange(bonusNumber);
+
   return (
     isNumber(bonusNumber) &&
     isPositiveInteger(bonusNumber) &&
-    isLottoNumberRange(bonusNumber) &&
+    isLottoNumberRange &&
     !jackpotNumbers.includes(bonusNumber)
   );
 };
 
-export const getRandomLottoNumber = (availableNumbers) => {
-  if (!Array.isArray(availableNumbers) || !availableNumbers.length > 0) {
-    throw new Error('로또 번호를 생성하면서 문제가 생겼습니다.');
-  }
-
-  const selectedIndex = Math.floor(Math.random() * availableNumbers.length);
-  const selectedNumber = availableNumbers[selectedIndex];
-
+export const getLotto = (stocks) => {
   if (
-    !isNumber(selectedNumber) ||
-    !isPositiveInteger(selectedNumber) ||
-    !isLottoNumberRange(selectedNumber)
+    !Array.isArray(stocks) ||
+    stocks.length < LOTTO.SIZE ||
+    hasDuplicateNumber(stocks) ||
+    !stocks.every(validateLottoNumberRange)
   ) {
-    throw new Error('로또 번호를 생성하면서 문제가 생겼습니다.');
+    throw new Error('보유한 로또 숫자들 중 허용되지 않는 숫자가 있습니다.');
   }
 
-  return selectedNumber;
-};
-
-export const getLotto = () => {
-  const lottoNumberStocks = [...LOTTO_NUMBERS];
-
-  const selectedNumbers = Array.from({ length: LOTTO_LENGTH }, () => {
-    const selectedNumber = getRandomLottoNumber(lottoNumberStocks);
-    const removeIndex = lottoNumberStocks.indexOf(selectedNumber);
-
-    lottoNumberStocks.splice(removeIndex, 1);
-
-    return selectedNumber;
-  });
-
-  selectedNumbers.sort((a, b) => a - b);
-
-  return selectedNumbers;
+  return shuffle(Array.from(stocks)).slice(0, LOTTO.SIZE);
 };

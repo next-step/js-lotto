@@ -1,44 +1,48 @@
-import { LOTTO_LENGTH } from '../common/constants.js';
-import { isLottoNumberRange } from '../common/utils.js';
-import { LOTTO_JACKPOT_PRICES, LOTTO_JACKPOT_RANK_RULES } from './constant.js';
-
-const isIncludeBonusNumber = (orderedNumbers, bonusNumber) =>
-  orderedNumbers.includes(bonusNumber);
+import { isArrayDifference } from '../../utils/index.js';
+import { LOTTO } from '../common/constants.js';
+import { validateLottoNumberRange } from '../common/utils.js';
+import { JACKPOT, JACKPOT_RANKS } from './constant.js';
 
 const matchJackpotNumbers = (orderedNumbers, jackpotNumbers) => {
   return orderedNumbers.filter((value) => jackpotNumbers.includes(value));
 };
 
-const getJackpotRank = (matchedNumbers, isBonus) => {
-  const count = matchedNumbers.length;
-
-  return (() => {
-    if (count === LOTTO_JACKPOT_RANK_RULES.FIRST) return 1;
-    if (count === LOTTO_JACKPOT_RANK_RULES.SECOND && isBonus) return 2;
-    if (count === LOTTO_JACKPOT_RANK_RULES.THIRD && !isBonus) return 3;
-    if (count === LOTTO_JACKPOT_RANK_RULES.FOURTH) return 4;
-    if (count === LOTTO_JACKPOT_RANK_RULES.FIFTH) return 5;
-    return 0;
-  })();
-};
-
-export const isValidJackpotNumbersInput = (numbers) => {
+export const validateJackpot = (numbers) => {
   return (
     Array.isArray(numbers) &&
-    numbers.length === LOTTO_LENGTH &&
-    numbers.every((value) => isLottoNumberRange(value))
+    numbers.length === LOTTO.SIZE &&
+    numbers.every(validateLottoNumberRange)
   );
 };
 
-export const getJackpotPrice = (rank) => {
+const getJackpotRank = (matchedNumbers, isBonus) => {
+  const match = [matchedNumbers.length, isBonus ? 1 : 0];
+
   return (() => {
-    if (rank === 1) return LOTTO_JACKPOT_PRICES.FIRST;
-    if (rank === 2) return LOTTO_JACKPOT_PRICES.SECOND;
-    if (rank === 3) return LOTTO_JACKPOT_PRICES.THIRD;
-    if (rank === 4) return LOTTO_JACKPOT_PRICES.FOURTH;
-    if (rank === 5) return LOTTO_JACKPOT_PRICES.FIFTH;
+    if (isArrayDifference(match, JACKPOT.RULES.FIRST.match))
+      return JACKPOT_RANKS.FIRST.number;
+    if (isArrayDifference(match, JACKPOT.RULES.SECOND.match))
+      return JACKPOT_RANKS.SECOND.number;
+    if (isArrayDifference(match, JACKPOT.RULES.THIRD.match))
+      return JACKPOT_RANKS.THIRD.number;
+    if (isArrayDifference(match, JACKPOT.RULES.FOURTH.match))
+      return JACKPOT_RANKS.FOURTH.number;
+    if (isArrayDifference(match, JACKPOT.RULES.FIFTH.match))
+      return JACKPOT_RANKS.FIFTH.number;
     return 0;
   })();
+};
+
+export const getJackpotPrice = (rank) => {
+  return (
+    {
+      [JACKPOT.RANKS.FIRST.number]: JACKPOT.RULES.FIRST.price,
+      [JACKPOT.RANKS.SECOND.number]: JACKPOT.RULES.SECOND.price,
+      [JACKPOT.RANKS.THIRD.number]: JACKPOT.RULES.THIRD.price,
+      [JACKPOT.RANKS.FOURTH.number]: JACKPOT.RULES.FOURTH.price,
+      [JACKPOT.RANKS.FIFTH.number]: JACKPOT.RULES.FIFTH.price,
+    }[rank] ?? 0
+  );
 };
 
 export const getJackpotTargetRankInfo = (targetRank, lottoResult) => {
@@ -52,20 +56,36 @@ export const getJackpotTargetRankInfo = (targetRank, lottoResult) => {
 };
 
 export const getJackpotTotalAmount = (lottoResult) => {
-  return lottoResult.reduce((total, { price }) => (total += price), 0);
+  if (!Array.isArray(lottoResult)) {
+    throw new Error('총 당첨 금액을 계산하는데 잘못된 입력값을 주셨습니다.');
+  }
+
+  return lottoResult.reduce((total, lotto) => total + (lotto.price ?? 0), 0);
 };
 
 export const getJackpotResult = (lotto, bonusNumber) => {
   const { ordered, jackpot } = lotto;
 
-  const hasBonusNumber = isIncludeBonusNumber(ordered, bonusNumber);
+  const hasBonusNumber = ordered.includes(bonusNumber);
   const matchedNumbers = matchJackpotNumbers(ordered, jackpot);
-
   const matchedCount = matchedNumbers.length;
+
   const rank = getJackpotRank(matchedNumbers, hasBonusNumber);
   const price = getJackpotPrice(rank);
-  const isJackpot =
-    matchJackpotNumbers.length >= LOTTO_JACKPOT_RANK_RULES.FIFTH;
+  const isJackpot = matchJackpotNumbers.length >= JACKPOT.MIN_MATCH;
 
   return { isJackpot, rank, price, matchedCount };
+};
+
+export const calculateLottoResults = (
+  orderedLottos,
+  jackpotNumbers,
+  bonusNumber,
+) => {
+  return orderedLottos.map((orderedLotto) =>
+    getJackpotResult(
+      { ordered: orderedLotto, jackpot: jackpotNumbers },
+      bonusNumber,
+    ),
+  );
 };
