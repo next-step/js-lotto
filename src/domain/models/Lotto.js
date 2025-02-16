@@ -3,7 +3,7 @@ import {
   LOTTO_MAX_NUMBER,
   LOTTO_NUMBERS_COUNT,
   LOTTO_PRICE,
-} from "../../constants";
+} from "../../constants.js";
 
 export class Lotto {
   totalAmount;

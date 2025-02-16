@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES, LOTTO_PRICE } from "../src/constants";
+import { ERROR_MESSAGES, LOTTO_PRICE } from "../src/constants.js";
 import { Lotto } from "../src/domain/models/Lotto";
 
 describe("Lotto Purchase Logic", () => {
@@ -50,7 +50,7 @@ describe("Lotto Number Generation", () => {
   test("should generate different tickets", () => {
     const lotto = new Lotto(LOTTO_PRICE * 2);
     const tickets = lotto.generateLottoTickets();
-    console.log(tickets);
+
     expect(tickets[0]).not.toEqual(tickets[1]);
   });
 });
