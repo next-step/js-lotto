@@ -15,7 +15,7 @@ export const printStatistics = ({ matchedCount, profitRate }) => {
   console.log("--------------------");
 
   for (const key of matchedCount.keys()) {
-    const prize = LOTTO_PRIZES[key] ?? 0;
+    const prize = LOTTO_PRIZES[key];
     const count = matchedCount.get(key);
 
     printMathcedResult({ resultKey: key, prize, count });
@@ -25,6 +25,8 @@ export const printStatistics = ({ matchedCount, profitRate }) => {
 };
 
 const printMathcedResult = ({ resultKey, prize, count }) => {
+  if (prize === undefined || count === undefined) return;
+
   const prizeText = `(${prize.toLocaleString()}원)`;
 
   switch (resultKey) {

@@ -7,6 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "jest --no-cache",
+    "test:coverage": "jest --no-cache --coverage",
     "start-step1": "node src/step1-index.js",
     "start-step2": "vite"
   },
