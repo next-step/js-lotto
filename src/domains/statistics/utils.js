@@ -15,10 +15,7 @@ export const getStatisticsResult = (lottoResult) => {
   return rankNames.reduce(
     (object, key) => ({
       ...object,
-      [key]: getJackpotTargetRankInfo(
-        JACKPOT.RANKS[key]['number'],
-        lottoResult,
-      ),
+      [key]: getJackpotTargetRankInfo(JACKPOT.RANKS[key].number, lottoResult),
     }),
     {},
   );

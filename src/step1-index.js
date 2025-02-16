@@ -1,10 +1,14 @@
 import { LOTTO } from './domains/common/constants.js';
-import { getLotto, validateBonusNumber } from './domains/common/utils.js';
+import {
+  getLotto,
+  isValidBonusNumber,
+  isValidBonusNumber,
+} from './domains/common/utils.js';
 import {
   calculateLottoResults,
   getJackpotResult,
   getJackpotTotalAmount,
-  validateJackpot,
+  isValidJackpot,
 } from './domains/jackpot/utils.js';
 import { calculateLottoCount } from './domains/order/utils.js';
 import {
@@ -58,11 +62,11 @@ const processInputJackpotInfo = async () => {
   const jackpotNumbers = inputJackpot.split(',').map((value) => Number(value));
   const bonusNumber = Number(inputBonusNumber);
 
-  const isValidJackpot = validateJackpot(jackpotNumbers);
-  const isValidBonusNumber = validateBonusNumber(bonusNumber, jackpotNumbers);
+  const validJackpot = isValidJackpot(jackpotNumbers);
+  const validBonusNumber = isValidBonusNumber(bonusNumber, jackpotNumbers);
 
   try {
-    if (!isValidJackpot || !isValidBonusNumber) {
+    if (!validJackpot || !validBonusNumber) {
       throw new Error(
         '당첨 번호 또는 보너스 숫자를 잘못 입력하셨습니다. 다시 시도해 주세요.',
       );
