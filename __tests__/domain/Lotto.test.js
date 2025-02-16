@@ -18,19 +18,48 @@ describe("Lotto 클래스 - 로또 게임 1판 ", () => {
     expect(actualLotto.bonusNumber).toEqual(lotto.getBonusNumber);
   });
 
-  test("당첨번호는 자연수 중 1이상 45이하 6개로 이루어진 배열입니다.", () => {
+  test("당첨번호는 자연수 중 1이상 45이하 6개로 이루어진 배열이 들어오면, 로또의 당첨값이 됩니다.", () => {
+    const lotto = new Lotto({});
+    const expectedResult = [1, 2, 3, 4, 5, 6];
+    lotto.setWinningNumber(
+      expectedResult,
+      LOTTO_RULES.winningNumberRule,
+      ERROR_LOTTO.WRONG_WINNING_NUMBER_SETTING,
+    );
+
+    expect(lotto.getWinningNumber).toEqual(expectedResult);
+  });
+
+  test("당첨번호는 자연수 중 1이상 45이하 6개로 이루어진 배열이 들어오지 않으면, error를 보여줍니다.", () => {
     const lotto = new Lotto({});
 
     expect(() => {
       lotto.setWinningNumber(
-        -1,
+        [0], // 경계값 - 1
+        LOTTO_RULES.winningNumberRule,
+        ERROR_LOTTO.WRONG_WINNING_NUMBER_SETTING,
+      );
+    }).toThrow(ERROR_LOTTO.WRONG_WINNING_NUMBER_SETTING);
+    expect(() => {
+      lotto.setWinningNumber(
+        [46], // 경계값 + 1
         LOTTO_RULES.winningNumberRule,
         ERROR_LOTTO.WRONG_WINNING_NUMBER_SETTING,
       );
     }).toThrow(ERROR_LOTTO.WRONG_WINNING_NUMBER_SETTING);
   });
 
-  test("보너스 번호는 자연수 중 1이상 45이하인 수입니다.", () => {
+  test("보너스 번호는 자연수 중 1이상 45이하인 수가 들어오면, 보너스 번호로 설정됩니다.", () => {
+    const lotto = new Lotto({});
+    const expectedResult = 1;
+    lotto.setBonusNumber(
+      expectedResult,
+      LOTTO_RULES.bonusNumberRule,
+      ERROR_LOTTO.WRONG_BONUS_NUMBER_SETTING,
+    );
+    expect(lotto.getBonusNumber).toBe(expectedResult);
+  });
+  test("보너스 번호는 자연수 중 1이상 45이하인 수가 들어오지 않으면, error를 출력합니다.", () => {
     const lotto = new Lotto({});
 
     expect(() => {
