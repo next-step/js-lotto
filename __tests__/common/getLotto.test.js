@@ -2,17 +2,18 @@ import { LOTTO } from '../../src/domains/common/constants';
 import { getLotto } from '../../src/domains/common/utils';
 
 describe('getLotto 관련 함수 테스트', () => {
-  describe('보유한 로또 숫자를 매개 변수를 통해서 입력했을 때', () => {
-    test('중복된 숫자가 있으면 오류를 던진다.', () => {
-      expect(() => {
-        getLotto([1, 2, 3, 5, 5, 6]);
-      }).toThrow();
-    });
-
-    test('모든 숫자들 중 로또 범위(1 ~ 45)에 포함 안되어 있으면 오류를 던진다.', () => {
-      expect(() => {
-        getLotto([1, 2, 3, 4, 5, 51]);
-      }).toThrow();
+  describe('보유한 로또 숫자를 매개변수로 입력했을 때', () => {
+    test.each([
+      {
+        numbers: [1, 2, 3, 5, 5, 6],
+        error: '중복된 숫자가 있으면 오류를 던진다.',
+      },
+      {
+        numbers: [1, 2, 3, 4, 5, 51],
+        error: '로또 범위(1 ~ 45)를 벗어난 숫자가 있으면 오류를 던진다.',
+      },
+    ])('$error', ({ numbers }) => {
+      expect(() => getLotto(numbers)).toThrow();
     });
   });
 
