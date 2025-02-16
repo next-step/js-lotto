@@ -10,6 +10,11 @@ export const renderLineBreak = (count = 1) => {
   });
 };
 
+export const renderErrorMessage = (error) => {
+  console.log(error);
+  renderLineBreak();
+};
+
 export const startMachine = async (onStart, onEnd) => {
   while (1) {
     await onStart();
