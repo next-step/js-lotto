@@ -2,24 +2,20 @@ import generateRandomNumber from "../utils/generateRandomNumber.js";
 import isValueInArray from "../utils/isValueInArray.js";
 
 class LottoTicket {
-  constructor() {
-    return this.makeLotto();
-  }
+  constructor() {}
 
-  createLottoNumber(arr, number) {
+  static createLottoNumber(arr) {
+    const number = generateRandomNumber();
     if (isValueInArray(arr, number)) {
-      return this.createLottoNumber(arr, generateRandomNumber());
+      return LottoTicket.createLottoNumber(arr);
     }
     return number;
   }
 
-  makeLotto() {
+  static makeLotto() {
     return new Array(6)
       .fill(0)
-      .reduce(
-        (acc) => [...acc, this.createLottoNumber(acc, generateRandomNumber())],
-        []
-      );
+      .reduce((acc) => [...acc, LottoTicket.createLottoNumber(acc)], []);
   }
 }
 

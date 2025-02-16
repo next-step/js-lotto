@@ -6,24 +6,27 @@ class Lotto {
   #money;
   #ticket = [];
 
-  constructor(money, lottoTicketClass) {
-    Lotto.validateLotto(money, lottoTicketClass);
+  constructor(money, createLottoTicket) {
+    Lotto.validateLotto(money, createLottoTicket);
     this.#money = money;
-    this.#ticket = this.makeLottoList(this.getTicketAmount(), lottoTicketClass);
+    this.#ticket = this.makeLottoList(
+      this.getTicketAmount(),
+      createLottoTicket
+    );
   }
 
   get money() {
     return this.#money;
   }
 
-  static validateLotto(money, lottoTicketClass) {
+  static validateLotto(money, createLottoTicket) {
     if (money < ticketPrice) {
       throw new Error(LOTTO_ERROR_MESSAGE.INVALID_ORDER_AMOUNT_UNIT);
     }
     if (money % ticketPrice !== 0) {
       throw new Error(LOTTO_ERROR_MESSAGE.INVALID_ORDER_AMOUNT_UNIT);
     }
-    if (!lottoTicketClass) {
+    if (!createLottoTicket) {
       throw new Error(LOTTO_ERROR_MESSAGE.LOTTO_ISSUANCE_ERROR);
     }
   }
@@ -36,11 +39,10 @@ class Lotto {
     return this.#money / ticketPrice;
   }
 
-  makeLottoList(length, lottoTicketClass) {
+  makeLottoList(length, createLottoTicket) {
     return new Array(length)
       .fill()
-      .map(() => new lottoTicketClass())
-      .sort((a, b) => a - b);
+      .map(() => createLottoTicket().sort((a, b) => a - b));
   }
 }
 

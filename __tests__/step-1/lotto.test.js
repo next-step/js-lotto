@@ -12,7 +12,7 @@ describe("로또 테스트.", () => {
   describe("로또 발급이 정상적으로 이루어 졌을 때", () => {
     beforeEach(() => {
       money = LOTTO_MONEY;
-      lotto = new Lotto(money, LottoTicket);
+      lotto = new Lotto(money, LottoTicket.makeLotto);
     });
 
     it("로또 구입금액을 입력할 수 있다", () => {
@@ -24,7 +24,7 @@ describe("로또 테스트.", () => {
     });
 
     it("생성할 로또의 갯수를 입력하면 로또 티켓이 발급된다.", () => {
-      const createLotto = lotto.makeLottoList(3, LottoTicket);
+      const createLotto = lotto.makeLottoList(3, LottoTicket.makeLotto);
 
       expect(createLotto).toHaveLength(3);
     });
@@ -32,15 +32,15 @@ describe("로또 테스트.", () => {
 
   describe("로또 발급이 비 정상적으로 이루어 졌을 때", () => {
     it("로또 구입 금액이 1000원 단위 미만 (3500) 이면 에러를 발생 시킨다.", () => {
-      expect(() => new Lotto(LOTTO_MONEY_ERROR, LottoTicket)).toThrow(
+      expect(() => new Lotto(LOTTO_MONEY_ERROR, LottoTicket.makeLotto)).toThrow(
         LOTTO_ERROR_MESSAGE.INVALID_ORDER_AMOUNT_UNIT
       );
     });
 
     it("로또 구입 금액이 최소금액보다 낮으면 에러를 발생 시킨다.", () => {
-      expect(() => new Lotto(LOTTO_MONEY_MIN_ERROR, LottoTicket)).toThrow(
-        LOTTO_ERROR_MESSAGE.MIN_ORDER_AMOUNT
-      );
+      expect(
+        () => new Lotto(LOTTO_MONEY_MIN_ERROR, LottoTicket.makeLotto)
+      ).toThrow(LOTTO_ERROR_MESSAGE.MIN_ORDER_AMOUNT);
     });
 
     it("로또 발급을 담당하는 클래스를 넘겨주지 않으면 에러를 발생 시킨다.", () => {
