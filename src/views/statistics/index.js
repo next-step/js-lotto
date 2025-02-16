@@ -1,7 +1,4 @@
-import {
-  LOTTO_JACKPOT_PRICES,
-  LOTTO_JACKPOT_RANK_RULES,
-} from '../../domains/jackpot/constant.js';
+import { JACKPOT } from '../../domains/jackpot/constant.js';
 import { commaizeNumber } from '../../utils/index.js';
 
 export const renderJackpotStatisticsAnnouncement = () => {
@@ -11,15 +8,15 @@ export const renderJackpotStatisticsAnnouncement = () => {
 
 export const renderLottoStatisticInfo = (statisticsResult) => {
   return Object.entries(statisticsResult).forEach(([rank, { count }]) => {
-    if (rank === 'SECOND') {
+    if (rank === JACKPOT.RANKS.SECOND.value) {
       console.log(
-        `${LOTTO_JACKPOT_RANK_RULES[rank]}개 일치, 보너스 볼 일치 (${commaizeNumber(LOTTO_JACKPOT_PRICES[rank])}원) - ${count}개`,
+        `${JACKPOT.RULES[rank].match[0]}개 일치, 보너스 볼 일치 (${commaizeNumber(JACKPOT.RULES[rank].price)}원) - ${count}개`,
       );
       return;
     }
 
     console.log(
-      `${LOTTO_JACKPOT_RANK_RULES[rank]}개 일치 (${commaizeNumber(LOTTO_JACKPOT_PRICES[rank])}원) - ${count}개`,
+      `${JACKPOT.RULES[rank].match[0]}}개 일치 (${commaizeNumber(JACKPOT.RULES[rank].price)}원) - ${count}개`,
     );
   });
 };

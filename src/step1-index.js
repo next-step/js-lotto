@@ -1,8 +1,8 @@
-import { getLotto, isValidBonusNumber } from './domains/common/utils.js';
+import { getLotto, validateBonusNumber } from './domains/common/utils.js';
 import {
   getJackpotResult,
   getJackpotTotalAmount,
-  isValidJackpotNumbersInput,
+  validateJackpot,
 } from './domains/jackpot/utils.js';
 import { calculateLottoCount } from './domains/order/utils.js';
 import {
@@ -56,11 +56,11 @@ const processInputJackpotInfo = async () => {
   const jackpotNumbers = inputJackpot.split(',').map((value) => Number(value));
   const bonusNumber = Number(inputBonusNumber);
 
+  const isValidJackpot = validateJackpot(jackpotNumbers);
+  const isValidBonusNumber = validateBonusNumber(bonusNumber, jackpotNumbers);
+
   try {
-    if (
-      !isValidJackpotNumbersInput(jackpotNumbers) ||
-      !isValidBonusNumber(bonusNumber, jackpotNumbers)
-    ) {
+    if (!isValidJackpot || !isValidBonusNumber) {
       throw new Error(
         '당첨 번호 또는 보너스 숫자를 잘못 입력하셨습니다. 다시 시도해 주세요.',
       );
@@ -80,19 +80,16 @@ const main = async () => {
   const orderCount = calculateLottoCount(orderAmount);
   renderOrderedLottoCount(orderCount);
 
-  const orderedLottos = Array.from({ length: orderCount }, () => getLotto());
-  renderOrderedLottos(orderedLottos);
+  const lottos = Array.from({ length: orderCount }, () => getLotto());
+  renderOrderedLottos(lottos);
   renderLineBreak();
 
   // 당첨
 
   const [jackpotNumbers, bonusNumber] = await processInputJackpotInfo();
 
-  const lottoResults = orderedLottos.map((orderedLotto) =>
-    getJackpotResult(
-      { ordered: orderedLotto, jackpot: jackpotNumbers },
-      bonusNumber,
-    ),
+  const lottoResults = lottos.map((lotto) =>
+    getJackpotResult({ ordered: lotto, jackpot: jackpotNumbers }, bonusNumber),
   );
   const totalJackpotAmount = getJackpotTotalAmount(lottoResults);
 

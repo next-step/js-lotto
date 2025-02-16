@@ -1,14 +1,23 @@
-import { isNumber, isPositiveInteger } from '../../utils/index.js';
+import {
+  hasDuplicateNumber,
+  isNumber,
+  isPositiveInteger,
+} from '../../utils/index.js';
 import { LOTTO } from './constants.js';
 
-export const isLottoNumberRange = (value) =>
-  value >= LOTTO.RANGE.min && value <= LOTTO.RANGE.max;
+export const validateLottoNumberRange = (value) =>
+  isNumber(value) &&
+  isPositiveInteger(value) &&
+  value >= LOTTO.RANGE.min &&
+  value <= LOTTO.RANGE.max;
 
-export const isValidBonusNumber = (bonusNumber, jackpotNumbers) => {
+export const validateBonusNumber = (bonusNumber, jackpotNumbers) => {
+  const isLottoNumberRange = validateLottoNumberRange(bonusNumber);
+
   return (
     isNumber(bonusNumber) &&
     isPositiveInteger(bonusNumber) &&
-    isLottoNumberRange(bonusNumber) &&
+    isLottoNumberRange &&
     !jackpotNumbers.includes(bonusNumber)
   );
 };
@@ -20,11 +29,12 @@ export const getRandomLottoNumber = (availableNumbers) => {
 
   const selectedIndex = Math.floor(Math.random() * availableNumbers.length);
   const selectedNumber = availableNumbers[selectedIndex];
+  const isLottoNumberRange = validateLottoNumberRange(selectedNumber);
 
   if (
     !isNumber(selectedNumber) ||
     !isPositiveInteger(selectedNumber) ||
-    !isLottoNumberRange(selectedNumber)
+    !isLottoNumberRange
   ) {
     throw new Error('로또 번호를 생성하면서 문제가 생겼습니다.');
   }
@@ -32,19 +42,17 @@ export const getRandomLottoNumber = (availableNumbers) => {
   return selectedNumber;
 };
 
-export const getLotto = () => {
-  const lottoNumberStocks = [...LOTTO.NUMBERS];
+export const getLotto = (stocks) => {
+  if (
+    !Array.isArray(stocks) ||
+    stocks.length < LOTTO.SIZE ||
+    hasDuplicateNumber(stocks) ||
+    !stocks.every(validateLottoNumberRange)
+  ) {
+    throw new Error('보유한 로또 숫자들 중 허용되지 않는 숫자가 있습니다.');
+  }
 
-  const selectedNumbers = Array.from({ length: LOTTO.SIZE }, () => {
-    const selectedNumber = getRandomLottoNumber(lottoNumberStocks);
-    const removeIndex = lottoNumberStocks.indexOf(selectedNumber);
-
-    lottoNumberStocks.splice(removeIndex, 1);
-
-    return selectedNumber;
-  });
-
-  selectedNumbers.sort((a, b) => a - b);
-
-  return selectedNumbers;
+  return Array.from(stocks)
+    .sort(() => Math.random() - 1)
+    .slice(0, LOTTO.SIZE);
 };
