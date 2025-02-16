@@ -1,5 +1,6 @@
 import { Lotto } from "../models/Lotto.js";
 import { LottoResult } from "../models/LottoResult.js";
+import { LottoStatistics } from "../models/LottoStatistics.js";
 
 export class LottoService {
   constructor(totalAmount) {
@@ -41,5 +42,13 @@ export class LottoService {
     });
 
     return rankCount;
+  }
+
+  getLottoStatistics() {
+    const rankCount = this.countWinningRanks();
+    const totalAmount = this.lotto.totalAmount;
+    const statistics = new LottoStatistics(rankCount, totalAmount);
+
+    return statistics.calculateProfitRate();
   }
 }

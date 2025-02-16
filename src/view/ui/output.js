@@ -19,3 +19,7 @@ export function printLottoResults(rankCount) {
     console.log(`${match}개 일치 (${prize}) - ${rankCount[rank] || 0}개`);
   });
 }
+
+export function printProfitRate(profitRate) {
+  console.log(`총 수익률은 ${profitRate}%입니다.`);
+}

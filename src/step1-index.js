@@ -9,7 +9,11 @@ import {
   getPurchaseAmount,
   getWinningNumbers,
 } from "./view/ui/input.js";
-import { printLottoResults, printLottoTickets } from "./view/ui/output.js";
+import {
+  printLottoResults,
+  printLottoTickets,
+  printProfitRate,
+} from "./view/ui/output.js";
 
 async function main() {
   try {
@@ -26,6 +30,9 @@ async function main() {
 
     const rankCount = lottoService.countWinningRanks();
     printLottoResults(rankCount);
+
+    const profitRate = lottoService.getLottoStatistics();
+    printProfitRate(profitRate);
   } catch (error) {
     console.error(error.message);
   }
