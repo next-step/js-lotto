@@ -45,7 +45,7 @@ describe("로또 테스트.", () => {
 
     it("로또 발급을 담당하는 클래스를 넘겨주지 않으면 에러를 발생 시킨다.", () => {
       expect(() => new Lotto(LOTTO_MONEY)).toThrow(
-        LOTTO_ERROR_MESSAGE.MIN_ORDER_AMOUNT
+        LOTTO_ERROR_MESSAGE.LOTTO_ISSUANCE_ERROR
       );
     });
   });

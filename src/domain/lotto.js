@@ -21,7 +21,7 @@ class Lotto {
 
   static validateLotto(money, createLottoTicket) {
     if (money < ticketPrice) {
-      throw new Error(LOTTO_ERROR_MESSAGE.INVALID_ORDER_AMOUNT_UNIT);
+      throw new Error(LOTTO_ERROR_MESSAGE.MIN_ORDER_AMOUNT);
     }
     if (money % ticketPrice !== 0) {
       throw new Error(LOTTO_ERROR_MESSAGE.INVALID_ORDER_AMOUNT_UNIT);
