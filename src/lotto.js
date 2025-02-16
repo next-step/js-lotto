@@ -1,11 +1,18 @@
-import { getRank } from "../src/getRank.js";
+import { getReward } from "../src/getRank.js";
 
 export default class Lotto {
   constructor(paymentAmount) {
     this.paymentAmount = paymentAmount;
     this.count = Math.floor(paymentAmount / 1000);
     this.numbers = [];
-    this.amount = 0;
+    this.result = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    };
+    this.prizeAmount = 0;
   }
 
   //도메인 로직
@@ -28,8 +35,14 @@ export default class Lotto {
     }
   }
 
-  addAmountFromWinningPrize(prize, count) {
-    this.amount += prize * count;
+  saveLottoResults(rank) {
+    this.result[rank] += 1;
+  }
+
+  computeTotalPrize() {
+    for (let i = 1; i < 6; i++) {
+      this.prizeAmount += getReward(i) * this.result[i];
+    }
   }
 
   //UI로직
@@ -38,15 +51,6 @@ export default class Lotto {
   }
 }
 
-export const getProfitRate = (amount, paymentAmount) => {
-  return Math.round((amount / paymentAmount) * 1000) / 1000;
-};
-
-export const getLottoCountByRank = (rank, lottos, userInput, bonusNumber) => {
-  let count = 0;
-  lottos.forEach((lotto) => {
-    if (getRank(userInput, bonusNumber, lotto) === rank) count += 1;
-  });
-
-  return count;
+export const calculateLottoProfitRatio = (totalWinnings, totalSpent) => {
+  return ((totalWinnings - totalSpent) / totalSpent) * 100;
 };

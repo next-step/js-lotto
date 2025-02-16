@@ -1,5 +1,4 @@
-import Lotto, { getProfitRate, getLottoCountByRank } from "../src/lotto";
-import { getReward } from "../src/getRank.js";
+import Lotto, { calculateLottoProfitRatio } from "../src/lotto";
 
 describe("로또를 구매할때", () => {
   let lotto;
@@ -39,30 +38,29 @@ describe("로또를 사고 당첨 번호도 입력한 이후", () => {
     lotto = new Lotto(8000);
   });
 
-  test("각 등수에 당첨된 로또의 수가 반환된다.", () => {
-    const lottosExample = [
-      [1, 2, 3, 7, 4, 5],
-      [1, 4, 5, 2, 7, 8],
-      [8, 9, 10, 11, 12, 13],
-    ];
-    const userInput = [1, 2, 4, 5, 98, 99];
-    const bonus = 37;
+  test("인스턴스에 당첨 횟수와 랭크가 저장된다.", () => {
+    lotto.saveLottoResults(1);
 
-    expect(getLottoCountByRank(4, lottosExample, userInput, bonus)).toBe(2);
+    expect(lotto.result).toEqual({
+      1: 1,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    });
   });
 
-  test("등수별로 누적 상금이 상금이 인스턴스에 저장된다.", () => {
-    let initalAmount = lotto.amount;
-    const first = getReward(1);
-    lotto.addAmountFromWinningPrize(first, 1);
+  test("누적 상금을 계산한다.", () => {
+    lotto.saveLottoResults(1);
+    lotto.saveLottoResults(5);
+    lotto.computeTotalPrize();
 
-    expect(lotto.amount).toBe(Number(initalAmount) + first);
+    expect(lotto.prizeAmount).toBe(2000005000);
   });
 
-  test("누적 상금과 구입 금액을 통해 수익률을 계산한다.", () => {
-    const prize = getReward(5);
-    lotto.addAmountFromWinningPrize(prize, 1);
+  test("수익률을 계산한다.", () => {
+    const ratio = calculateLottoProfitRatio(8000, 5000);
 
-    expect(getProfitRate(lotto.amount, lotto.paymentAmount)).toBe(0.625);
+    expect(ratio).toBe(60);
   });
 });
