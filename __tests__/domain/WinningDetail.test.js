@@ -1,10 +1,11 @@
-import Ticket from "../../src/domain/Ticket.js";
-import PurchaseHistory from "../../src/domain/PurchaseHistory.js";
-import WinningDetail from "../../src/domain/WinningDetail.js";
+import Ticket from "../../src/domain/Ticket/index.js";
+import PurchaseHistory from "../../src/domain/PurchaseHistory/index.js";
+import WinningDetail from "../../src/domain/WinningDetail/index.js";
 import Lotto from "../../src/domain/Lotto/index.js";
-import { WINNING_KEY } from "../../src/util/rule.js";
-describe("Winning 클래스 - 당첨 내역을 의미", () => {
-  test("당첨은 1등부터 5등까지 등수를 판별합니다.", () => {
+import { WINNING_KEY } from "../../src/domain/WinningDetail/rule.js";
+
+describe("WinningDetail 클래스 - 당첨 내역을 의미", () => {
+  test("getWinner 함수는는 1등부터 5등까지 등수를 판별한다.", () => {
     // given
     const ticket1 = new Ticket({
       numbers: [1, 2, 3, 4, 5, 45], // 1등
@@ -36,8 +37,8 @@ describe("Winning 클래스 - 당첨 내역을 의미", () => {
     });
 
     const winningDetail = new WinningDetail({
-      purchaseHistory: purchaseHistory,
-      lotto: lotto,
+      purchaseHistory,
+      lotto,
     });
 
     // when

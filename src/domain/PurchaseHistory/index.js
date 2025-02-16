@@ -1,4 +1,5 @@
-import { PURCHASE_HISTORY_RULES } from "../util/rule.js";
+import { PURCHASE_HISTORY_RULES } from "./rule.js";
+import { PURCHASE_HISTORY_ERRORS } from "./error.js";
 
 class PurchaseHistory {
   #tickets;
@@ -9,7 +10,7 @@ class PurchaseHistory {
 
   #setTickets(tickets, predicate) {
     if (predicate(tickets) === false) {
-      throw new Error("티켓이 올바르지 않아요.");
+      throw new Error(PURCHASE_HISTORY_ERRORS.NOT_CORRECT_TICKET);
     }
     this.#tickets = tickets;
   }

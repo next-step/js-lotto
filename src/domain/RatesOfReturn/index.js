@@ -1,13 +1,19 @@
-import { WINNING_PRICE_RULE, RATES_OF_RETURN_RULE } from "../util/rule.js";
+import RATES_OF_RETURN_RULE from "./rule.js";
+import { WINNING_PRICE_RULE } from "../WinningDetail/rule.js";
+import RATES_OF_RETURN_ERRORS from "./error.js";
 
 class RatesOfReturn {
   #value;
 
   constructor({ purchasePrice, winningDetail }) {
-    this.#setValue(purchasePrice, winningDetail, "수익률을 계산할 수 없어요.");
+    this.#setValue({
+      purchasePrice,
+      winningDetail,
+      errorMessage: RATES_OF_RETURN_ERRORS.NOT_CALCULATED_MESSAGE,
+    });
   }
 
-  #setValue(purchasePrice, winningDetail, errorMessage) {
+  #setValue({ purchasePrice, winningDetail, errorMessage }) {
     if (RATES_OF_RETURN_RULE.purchasePriceRule(purchasePrice) === false) {
       throw new Error(errorMessage);
     }
@@ -18,6 +24,7 @@ class RatesOfReturn {
     const sumWinningAmount = Object.entries(winningDetail.getWinner).reduce(
       (acr, cur) => {
         const [key, value] = cur;
+        // eslint-disable-next-line no-param-reassign
         acr += WINNING_PRICE_RULE[key] * value;
         return acr;
       },

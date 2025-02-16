@@ -1,7 +1,7 @@
-import RatesOfReturn from "../../src/domain/RatesOfReturn.js";
-import WinningDetail from "../../src/domain/WinningDetail.js";
-import Ticket from "../../src/domain/Ticket.js";
-import PurchaseHistory from "../../src/domain/PurchaseHistory.js";
+import RatesOfReturn from "../../src/domain/RatesOfReturn/index.js";
+import WinningDetail from "../../src/domain/WinningDetail/index.js";
+import Ticket from "../../src/domain/Ticket/index.js";
+import PurchaseHistory from "../../src/domain/PurchaseHistory/index.js";
 import Lotto from "../../src/domain/Lotto/index.js";
 
 describe("RatesOfReturn 클래스 - 로또 게임에서의 수익률 계산", () => {
@@ -22,13 +22,13 @@ describe("RatesOfReturn 클래스 - 로또 게임에서의 수익률 계산", ()
     });
 
     const winningDetail = new WinningDetail({
-      purchaseHistory: purchaseHistory,
-      lotto: lotto,
+      purchaseHistory,
+      lotto,
     });
 
     const ratesOfReturn = new RatesOfReturn({
       purchasePrice: 8000,
-      winningDetail: winningDetail,
+      winningDetail,
     });
 
     const expectedResult = "62.5%";
