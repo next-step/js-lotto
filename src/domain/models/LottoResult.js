@@ -22,21 +22,21 @@ export class LottoResult {
     const matchCount = this.countMatchingNumber(ticket);
 
     if (matchCount === 6) {
-      return { rank: 1, prize: "20억 원" };
+      return { rank: 1 };
     }
     if (matchCount === 5 && ticket.includes(this.bonusNumber)) {
-      return { rank: 2, prize: "3천만 원" };
+      return { rank: 2 };
     }
     if (matchCount === 5) {
-      return { rank: 3, prize: "150만 원" };
+      return { rank: 3 };
     }
     if (matchCount === 4) {
-      return { rank: 4, prize: "5만 원" };
+      return { rank: 4 };
     }
     if (matchCount === 3) {
-      return { rank: 5, prize: "5천 원" };
+      return { rank: 5 };
     }
-    return { rank: 0, prize: "꽝" };
+    return { rank: 0 };
   }
 
   validateNumbers(winningNumbers, bonusNumber) {

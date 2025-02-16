@@ -70,7 +70,6 @@ describe("LottoResult", () => {
       const ticket = [1, 2, 3, 4, 5, 6];
       expect(lottoResult.calculateRank(ticket)).toEqual({
         rank: 1,
-        prize: "20억 원",
       });
     });
 
@@ -78,7 +77,6 @@ describe("LottoResult", () => {
       const ticket = [1, 2, 3, 4, 5, 7];
       expect(lottoResult.calculateRank(ticket)).toEqual({
         rank: 2,
-        prize: "3천만 원",
       });
     });
 
@@ -86,7 +84,6 @@ describe("LottoResult", () => {
       const ticket = [1, 2, 3, 4, 5, 8];
       expect(lottoResult.calculateRank(ticket)).toEqual({
         rank: 3,
-        prize: "150만 원",
       });
     });
 
@@ -94,7 +91,6 @@ describe("LottoResult", () => {
       const ticket = [1, 2, 3, 4, 8, 9];
       expect(lottoResult.calculateRank(ticket)).toEqual({
         rank: 4,
-        prize: "5만 원",
       });
     });
 
@@ -102,7 +98,6 @@ describe("LottoResult", () => {
       const ticket = [1, 2, 3, 8, 9, 10];
       expect(lottoResult.calculateRank(ticket)).toEqual({
         rank: 5,
-        prize: "5천 원",
       });
     });
 
@@ -110,7 +105,6 @@ describe("LottoResult", () => {
       const ticket = [1, 2, 7, 8, 9, 10];
       expect(lottoResult.calculateRank(ticket)).toEqual({
         rank: 0,
-        prize: "꽝",
       });
     });
   });
