@@ -5,15 +5,17 @@ import Lotto from "../../domain/Lotto/index.js";
 import Ticket from "../../domain/Ticket.js";
 import { ERROR_LOTTO } from "../../util/error.js";
 import { getRandomArrayWithTicketLength } from "../../domain/Lotto/random.js";
-import { read, startProgram, stopProgram } from "./readline.js";
+import { read, startProgram, stopProgram,
+  PLEASE_INPUT_WINNING_NUMBER,
+  PLEASE_INPUT_BONUS_NUMBER
+ } from "./readline.js";
 import { LOTTO_RULES, getTicketAvailable } from "../../util/rule.js";
-import { printWinningDetailResult } from "../printResult.js";
+import { printWinningDetailResult, printRatesOfReturn } from "../printResult.js";
+import { RESTART_OPTION, restart } from "./restart.js";
 
-export const play = async () => {
-  const rl = startProgram();
-
+export const playGame = async (rl) => {
   const purchasePrice = await read(rl, "> 구입 금액을 입력해주세요.");
-
+    
   const ticketLength = getTicketAvailable(purchasePrice);
 
   console.log(`${ticketLength}개를 구매했습니다.`);
@@ -28,7 +30,7 @@ export const play = async () => {
     return ticket;
   });
 
-  const winningNumber = await read(rl, "> 당첨 번호를 입력해 주세요.");
+  const winningNumber = await read(rl, `\n${PLEASE_INPUT_WINNING_NUMBER} `);
 
   const lotto = new Lotto({});
   lotto.setWinningNumber(
@@ -37,7 +39,7 @@ export const play = async () => {
     ERROR_LOTTO.WRONG_WINNING_NUMBER_SETTING,
   );
 
-  const bonusNumber = await read(rl, "> 보너스 번호를 입력해 주세요.");
+  const bonusNumber = await read(rl, `\n${PLEASE_INPUT_BONUS_NUMBER} `);
   lotto.setBonusNumber(
     parseInt(bonusNumber),
     LOTTO_RULES.bonusNumberRule,
@@ -60,7 +62,21 @@ export const play = async () => {
     winningDetail: winningDetail,
   });
 
-  console.log(`총 수익률은 ${ratesOfReturn.getValue}입니다.`);
+  printRatesOfReturn(ratesOfReturn.getValue)
+ 
+}
 
+export const play = async () => {
+
+  const state = { isRestart: RESTART_OPTION.NO };
+
+  const rl = startProgram();
+
+  do {
+    await playGame(rl);
+    state.isRestart = await restart(rl);
+  } while (state.isRestart === RESTART_OPTION.YES)
+    
   stopProgram(rl);
+ 
 };

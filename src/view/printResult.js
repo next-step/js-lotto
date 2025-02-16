@@ -7,7 +7,12 @@ const PRINT_LOGIC = {
 };
 
 export const printWinningDetailResult = (winningDetailResult) => {
+  console.log("")
   const results = Object.entries(winningDetailResult).map(([key, value]) => {
     console.log(`${PRINT_LOGIC[key]} - ${value}`);
   });
 };
+
+export const printRatesOfReturn = (ratesOfReturnValue) => {
+  console.log(`\n총 수익률은 ${ratesOfReturnValue}입니다.`)
+}
