@@ -9,7 +9,7 @@ import {
   getProfitRate,
   getStatisticsResult,
 } from './domains/statistics/utils.js';
-import { renderLineBreak } from './views/common/index.js';
+import { renderLineBreak, startMachine } from './views/common/index.js';
 import {
   renderBonusNumberInput,
   renderJackpotNumbersInput,
@@ -76,4 +76,4 @@ const main = async () => {
   renderProfitRate(profitRate);
 };
 
-main();
+startMachine(main);
