@@ -1,10 +1,11 @@
 import Lotto from "../../src/domain/Lotto";
 import LottoTicket from "../../src/domain/LottoTicket";
 import LOTTO_ERROR_MESSAGE from "../../src/utils/errorMessage/lottoErrorMessage";
-
-const LOTTO_MONEY = 3000;
-const LOTTO_MONEY_ERROR = 3500;
-const LOTTO_MONEY_MIN_ERROR = 900;
+import {
+  LOTTO_MONEY,
+  LOTTO_MONEY_ERROR,
+  LOTTO_MONEY_MIN_ERROR,
+} from "../../src/utils/ENUM/lotto";
 
 describe("로또 테스트.", () => {
   let lotto;
@@ -20,7 +21,7 @@ describe("로또 테스트.", () => {
     });
 
     it("로또를 구입하면 구입 금액만큼 로또가 발행된다.", () => {
-      expect(lotto.getLottoTicket()).toHaveLength(3);
+      expect(lotto.getLottoTicket()).toHaveLength(4);
     });
 
     it("생성할 로또의 갯수를 입력하면 로또 티켓이 발급된다.", () => {

@@ -1,14 +1,24 @@
-const LOTTO_RANK_RULES = {
-  FIRST: 6,
-  SECOND: 5,
-  THIRD: 5,
-  FOURTH: 4,
-  FIFTH: 3,
-};
+import {
+  LOTTO_RANK_RULES,
+  LOTTO_RANK_MONEY,
+  TICKET_PRICE,
+} from "../utils/ENUM/lotto";
+import LOTTO_ERROR_MESSAGE from "../utils/errorMessage/lottoErrorMessage";
+import LOTTO_STATISTICS_ERROR_MESSAGE from "../utils/errorMessage/lottoStatisticsErrorMessage";
 
 class LottoStatistics {
-  constructor(result) {
-    this.result = result;
+  #money;
+  #lottoRankList = [];
+  #result = {
+    FIRST: 0,
+    SECOND: 0,
+    THIRD: 0,
+    FOURTH: 0,
+    FIFTH: 0,
+  };
+  constructor(money) {
+    LottoStatistics.validateLottoStatistics(money);
+    this.#money = money;
   }
 
   getLottoRank(matchedNumbers, isBonus) {
@@ -22,69 +32,96 @@ class LottoStatistics {
     return 0;
   }
 
+  get lottoRankList() {
+    return this.#lottoRankList;
+  }
+
+  get money() {
+    return this.#money;
+  }
+
+  get result() {
+    return this.#result;
+  }
+
+  setLottoRank(number) {
+    this.#lottoRankList.push(number);
+  }
+
   calculateProfit() {
-    console.log(this.result);
-    const lottoRank = this.result.map((x) =>
-      this.getLottoRank(x.matchedNumbers, x.hasBonus)
-    );
-    console.log(lottoRank);
+    this.lottoRankList.reduce((acc, cur) => acc + lottoCalculate(cur), 0);
+  }
 
-    // 계산 되어야 함
-
-    lottoRank.reduce((acc, cur) => {
-      if (cur === 1) {
-        return [...acc, {}];
+  setLottoResult() {
+    this.#lottoRankList.forEach((rank) => {
+      switch (rank) {
+        case 1:
+          this.#result.FIRST += 1;
+          break;
+        case 2:
+          this.#result.SECOND += 1;
+          break;
+        case 3:
+          this.#result.THIRD += 1;
+          break;
+        case 4:
+          this.#result.FOURTH += 1;
+          break;
+        case 5:
+          this.#result.FIFTH += 1;
+          break;
+        default:
+          break;
       }
-    }, []);
+    });
+    return this.#result;
+  }
 
-    // return (
-    //   {
-    //     1: LOTTO_JACKPOT_PRICES.FIRST,
-    //     2: LOTTO_JACKPOT_PRICES.SECOND,
-    //     3: LOTTO_JACKPOT_PRICES.THIRD,
-    //     4: LOTTO_JACKPOT_PRICES.FOURTH,
-    //     5: LOTTO_JACKPOT_PRICES.FIFTH,
-    //   }[rank] ?? 0
-    // );
+  static calculateLottoPrize(rank) {
+    switch (rank) {
+      case 1:
+        return LOTTO_RANK_MONEY.FIRST;
+      case 2:
+        return LOTTO_RANK_MONEY.SECOND;
+      case 3:
+        return LOTTO_RANK_MONEY.THIRD;
+      case 4:
+        return LOTTO_RANK_MONEY.FOURTH;
+      case 5:
+        return LOTTO_RANK_MONEY.FIFTH;
+      default:
+        throw new Error(LOTTO_STATISTICS_ERROR_MESSAGE.INVALID_LOTTO_LANK);
+    }
+  }
 
-    return [
-      {
-        matched: 3,
-        count: 0,
-        price: 5000,
-      },
-      {
-        matched: 4,
-        count: 1,
-        price: 50000,
-      },
-      {
-        matched: 5,
-        count: 0,
-        price: 1500000,
-      },
-      {
-        matched: 5,
-        count: 1,
-        price: 30000000,
-        bonus: true,
-      },
-      {
-        matched: 6,
-        count: 1,
-        price: 2000000000,
-      },
-    ];
+  static totalWinning(winningCounts) {
+    return (
+      (winningCounts.FIRST || 0) * LOTTO_RANK_MONEY.FIRST +
+      (winningCounts.SECOND || 0) * LOTTO_RANK_MONEY.SECOND +
+      (winningCounts.THIRD || 0) * LOTTO_RANK_MONEY.THIRD +
+      (winningCounts.FOURTH || 0) * LOTTO_RANK_MONEY.FOURTH +
+      (winningCounts.FIFTH || 0) * LOTTO_RANK_MONEY.FIFTH
+    );
+  }
+
+  calculateROI = (totalReturn) => {
+    if (this.money === 0) {
+      throw new Error("Investment cannot be zero");
+    }
+
+    const roi = (totalReturn / this.money) * 100;
+
+    return roi;
+  };
+
+  static validateLottoStatistics(money) {
+    if (money < TICKET_PRICE) {
+      throw new Error(LOTTO_ERROR_MESSAGE.MIN_ORDER_AMOUNT);
+    }
+    if (money % TICKET_PRICE !== 0) {
+      throw new Error(LOTTO_ERROR_MESSAGE.INVALID_ORDER_AMOUNT_UNIT);
+    }
   }
 }
-
-// 당첨 통계
-// --------------------
-// 3개 일치 (5,000원) - 1개
-// 4개 일치 (50,000원) - 0개
-// 5개 일치 (1,500,000원) - 0개
-// 5개 일치, 보너스 볼 일치 (30,000,000원) - 0개
-// 6개 일치 (2,000,000,000원) - 0개
-// 총 수익률은 62.5%입니다.
 
 export default LottoStatistics;

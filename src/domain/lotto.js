@@ -1,6 +1,5 @@
 import LOTTO_ERROR_MESSAGE from "../utils/errorMessage/lottoErrorMessage";
-
-const ticketPrice = 1000;
+import { TICKET_PRICE } from "../utils/ENUM/lotto";
 
 class Lotto {
   #money;
@@ -20,10 +19,10 @@ class Lotto {
   }
 
   static validateLotto(money, createLottoTicket) {
-    if (money < ticketPrice) {
+    if (money < TICKET_PRICE) {
       throw new Error(LOTTO_ERROR_MESSAGE.MIN_ORDER_AMOUNT);
     }
-    if (money % ticketPrice !== 0) {
+    if (money % TICKET_PRICE !== 0) {
       throw new Error(LOTTO_ERROR_MESSAGE.INVALID_ORDER_AMOUNT_UNIT);
     }
     if (!createLottoTicket) {
@@ -36,7 +35,7 @@ class Lotto {
   }
 
   getTicketAmount() {
-    return this.#money / ticketPrice;
+    return this.#money / TICKET_PRICE;
   }
 
   makeLottoList(length, createLottoTicket) {
