@@ -1,20 +1,24 @@
 import readline from "readline";
 
-const checkInputTypeIsNumber = (input) => {
+export const checkInputTypeIsNumber = (input) => {
   return !Number.isNaN(Number(input));
 };
 
-const checkAllInputsTypeisNumber = (input) => {
+export const checkCanBuyLotto = (input) => {
+  return Number(input) >= 1000;
+};
+
+export const checkAllInputsTypeisNumber = (input) => {
   const inputArr = input.split(",");
 
   return inputArr.every((item) => checkInputTypeIsNumber(item));
 };
-const checkInputsLengthValid = (input) => {
+export const checkInputsLengthValid = (input) => {
   const inputArr = input.split(",");
 
   return inputArr.length === 6;
 };
-const checkBounsValid = (input) => {
+export const checkBounsValid = (input) => {
   return input > 0 && input < 100;
 };
 
@@ -29,6 +33,9 @@ export function readLineAsync(query) {
       rl.close();
       if (!checkInputTypeIsNumber(input)) {
         reject(new Error("숫자만 입력해주세요."));
+        if (!checkCanBuyLotto(input)) {
+          reject(new Error("1000 이상의 금액을 넣어주세요요."));
+        }
         return;
       }
       resolve(input);
