@@ -2,6 +2,7 @@ import {
   LOTTO_RANK_RULES,
   LOTTO_RANK_MONEY,
   TICKET_PRICE,
+  LOTTO_RANK,
 } from "./constant.js";
 import LOTTO_ERROR_MESSAGE from "../Lotto/lottoErrorMessage.js";
 import LOTTO_STATISTICS_ERROR_MESSAGE from "./lottoStatisticsErrorMessage.js";
@@ -24,11 +25,11 @@ class LottoStatistics {
   getLottoRank(matchedNumbers, isBonus) {
     const count = matchedNumbers.length;
 
-    if (count === LOTTO_RANK_RULES.FIRST) return 1;
-    if (count === LOTTO_RANK_RULES.SECOND && isBonus) return 2;
-    if (count === LOTTO_RANK_RULES.THIRD && !isBonus) return 3;
-    if (count === LOTTO_RANK_RULES.FOURTH) return 4;
-    if (count === LOTTO_RANK_RULES.FIFTH) return 5;
+    if (count === LOTTO_RANK_RULES.FIRST) return LOTTO_RANK.FIRST;
+    if (count === LOTTO_RANK_RULES.SECOND && isBonus) return LOTTO_RANK.SECOND;
+    if (count === LOTTO_RANK_RULES.THIRD && !isBonus) return LOTTO_RANK.THIRD;
+    if (count === LOTTO_RANK_RULES.FOURTH) return LOTTO_RANK.FOURTH;
+    if (count === LOTTO_RANK_RULES.FIFTH) return LOTTO_RANK.FIFTH;
     return 0;
   }
 
@@ -75,15 +76,15 @@ class LottoStatistics {
 
   static calculateLottoPrize(rank) {
     switch (rank) {
-      case 1:
+      case LOTTO_RANK.FIRST:
         return LOTTO_RANK_MONEY.FIRST;
-      case 2:
+      case LOTTO_RANK.SECOND:
         return LOTTO_RANK_MONEY.SECOND;
-      case 3:
+      case LOTTO_RANK.THIRD:
         return LOTTO_RANK_MONEY.THIRD;
-      case 4:
+      case LOTTO_RANK.FOURTH:
         return LOTTO_RANK_MONEY.FOURTH;
-      case 5:
+      case LOTTO_RANK.FIFTH:
         return LOTTO_RANK_MONEY.FIFTH;
       default:
         throw new Error(LOTTO_STATISTICS_ERROR_MESSAGE.INVALID_LOTTO_LANK);

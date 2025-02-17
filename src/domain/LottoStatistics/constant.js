@@ -15,3 +15,11 @@ export const LOTTO_RANK_MONEY = {
 };
 
 export const TICKET_PRICE = 1000;
+
+export const LOTTO_RANK = {
+  FIRST: 1,
+  SECOND: 2,
+  THIRD: 3,
+  FOURTH: 4,
+  FIFTH: 5,
+};
