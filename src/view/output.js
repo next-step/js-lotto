@@ -29,6 +29,4 @@ class Output {
   }
 }
 
-const asdf = {};
-
 export default Output;
