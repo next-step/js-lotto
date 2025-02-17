@@ -3,8 +3,14 @@ import { LottoResult } from "../src/domain/models/LottoResult";
 
 describe("LottoResult", () => {
   describe("Number validation", () => {
-    it("should throw an error if winning numbers contain non-positive integers", () => {
-      expect(() => new LottoResult([1, 2, 3, -4, 5, 6], 7)).toThrow(
+    it("should throw an error if winning numbers contain numbers outside the range 1-45", () => {
+      expect(() => new LottoResult([-1, 2, 3, 4, 5, 6], 7)).toThrow(
+        ERROR_MESSAGES.WINNING_NUMBERS_INVALID,
+      );
+      expect(() => new LottoResult([1, 2, 3, 4, 5, 46], 7)).toThrow(
+        ERROR_MESSAGES.WINNING_NUMBERS_INVALID,
+      );
+      expect(() => new LottoResult([0, 2, 3, 4, 5, 6], 7)).toThrow(
         ERROR_MESSAGES.WINNING_NUMBERS_INVALID,
       );
     });
@@ -21,8 +27,11 @@ describe("LottoResult", () => {
       );
     });
 
-    it("should throw an error if bonus number is not a positive integer", () => {
-      expect(() => new LottoResult([1, 2, 3, 4, 5, 6], -1)).toThrow(
+    it("should throw an error if the bonus number is outside the range 1-45", () => {
+      expect(() => new LottoResult([1, 2, 3, 4, 5, 6], 0)).toThrow(
+        ERROR_MESSAGES.BONUS_NUMBER_INVALID,
+      );
+      expect(() => new LottoResult([1, 2, 3, 4, 5, 6], 46)).toThrow(
         ERROR_MESSAGES.BONUS_NUMBER_INVALID,
       );
     });

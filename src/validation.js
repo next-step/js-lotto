@@ -1,11 +1,9 @@
-export function isPositiveIntegerArray(arr) {
-  return (
-    Array.isArray(arr) && arr.every((num) => Number.isInteger(num) && num > 0)
-  );
+export function isValidLottoNumber(num) {
+  return Number.isInteger(num) && num >= 1 && num <= 45;
 }
 
-export function isPositiveInteger(num) {
-  return Number.isInteger(num) && num > 0;
+export function isValidLottoNumbersArray(arr) {
+  return Array.isArray(arr) && arr.every(isValidLottoNumber);
 }
 
 export function isDuplicateNumbersInArray(winningNumbers, bonusNumber) {
