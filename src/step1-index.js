@@ -1,4 +1,28 @@
-/**
- * step 1의 시작점이 되는 파일입니다.
- * 브라우저 환경에서 사용하는 css 파일 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
- */
+import * as io from "./view/inputoutput.js"
+import LottoMachine from "./domain/lottoMachine.js";
+import LottoConfirmation from "./domain/lottoConfirmation.js";
+import Lotto from "./domain/lotto.js";
+
+const main = async () => {
+    const readline = io.createInterface();
+    const price = await io.receivedPrice(readline);
+
+    const lottoMachine = new LottoMachine(price);
+
+    io.printLottos(lottoMachine.lottos);
+
+    const prizeNum = await io.receivedPrizeLottoNum(readline);
+    const bonusNum = await io.receivedBonusLottoNum(readline);
+
+    const lottoConfirmation = new LottoConfirmation(lottoMachine.lottos, prizeNum, bonusNum);
+
+    io.lottoResult(lottoConfirmation.getLottoResult);
+
+    console.log(price)
+    
+    io.printRateOfReturn(lottoConfirmation.calculateRateOfReturn(price));
+
+    readline.close();
+}
+
+main();
