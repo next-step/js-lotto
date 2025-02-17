@@ -79,11 +79,7 @@ describe("Lotto Result Class Test .", () => {
 
   describe("로또 당첨 비교 테스트", () => {
     it("티켓이 모든 당첨 번호와 일치하는 경우 ticket 과 match 는 같은 값을 갖고있는 배열을 hasBonus는 false 인 객체가 return 된다.", () => {
-      const result = LottoResult.compareSingleTicket(
-        ticket,
-        winningNumbers,
-        bonusNumber
-      );
+      const result = lottoResult.compareSingleTicket(ticket);
       expect(result).toEqual({
         ticket,
         matchedNumbers: [1, 2, 3, 4, 5, 6],
@@ -93,11 +89,7 @@ describe("Lotto Result Class Test .", () => {
 
     it("티켓이 보너스 번호만 일치하는 경우 ticket은 그대로 반환되고 match는 빈배열 hasBonus는 true 인 객체가 return 된다.", () => {
       const ticket = [7, 8, 9, 10, 11, 12];
-      const result = LottoResult.compareSingleTicket(
-        ticket,
-        winningNumbers,
-        bonusNumber
-      );
+      const result = lottoResult.compareSingleTicket(ticket);
       expect(result).toEqual({
         ticket,
         matchedNumbers: [],
@@ -107,11 +99,7 @@ describe("Lotto Result Class Test .", () => {
 
     it("티켓과 당첨번호가 1개만 일치하고 bonus번호가 일치한다면 match는 1개의 값만 들어있고, hasBonus true인 객체가 return 된다.", () => {
       const ticket = [1, 7, 8, 9, 10, 11];
-      const result = LottoResult.compareSingleTicket(
-        ticket,
-        winningNumbers,
-        bonusNumber
-      );
+      const result = lottoResult.compareSingleTicket(ticket);
       expect(result).toEqual({
         ticket,
         matchedNumbers: [1],

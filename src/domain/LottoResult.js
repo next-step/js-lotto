@@ -36,21 +36,17 @@ class LottoResult {
     }
   }
 
-  static compareSingleTicket(ticket, winningNumbers, bonusNumber) {
+  compareSingleTicket(ticket) {
     const matchedNumbers = ticket.filter((item) =>
-      winningNumbers.includes(item)
+      this.winningNumbers.includes(item)
     );
-    const hasBonus = ticket.includes(bonusNumber);
+    const hasBonus = ticket.includes(this.bonusNumber);
     return { ticket, matchedNumbers, hasBonus };
   }
 
   compareNumber(tickets) {
     return tickets.map((ticket) =>
-      LottoResult.compareSingleTicket(
-        ticket,
-        this.winningNumbers,
-        this.bonusNumber
-      )
+      this.compareSingleTicket(ticket, this.winningNumbers, this.bonusNumber)
     );
   }
 
