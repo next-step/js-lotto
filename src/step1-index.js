@@ -36,7 +36,7 @@ const startLottoGame = async () => {
   lotto.computeTotalPrize();
   const profit = calculateLottoProfitRatio(
     lotto.prizeAmount,
-    lotto.paymentAmount
+    lotto.budget
   );
   console.log(`총 수익률은 ${profit}%입니다.`);
 };

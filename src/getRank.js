@@ -1,9 +1,9 @@
-export const getRank = (winningNumbers, lotto) => {
-  const matchingCount = checkMatchingNumberCount(winningNumbers[0], lotto);
+export const getRank = (winningNumbers, lottoNumber) => {
+  const matchingCount = checkMatchingNumberCount(winningNumbers[0], lottoNumber);
   if (matchingCount === 6) return 1;
 
   if (matchingCount === 5) {
-    if (lotto.includes(winningNumbers[1])) return 2;
+    if (lottoNumber.includes(winningNumbers[1])) return 2;
     return 3;
   }
 
@@ -17,10 +17,11 @@ export const transformUserInput = (userInput, bonusNumber) => {
   return [userInput.split(",").map((num) => Number(num)).sort((a,b) => a-b), Number(bonusNumber)];
 };
 
-export const checkMatchingNumberCount = (userInputNumber, lotto) => {
+export const checkMatchingNumberCount = (userInputNumber, lottoNumber) => {
   let count = 0;
-  for (let i = 0; i < lotto.length; i++) {
-    if (userInputNumber.includes(lotto[i])) count++;
+  const NUMBERS_LENGTH = lottoNumber.length
+  for (let i = 0; i < NUMBERS_LENGTH; i++) {
+    if (userInputNumber.includes(lottoNumber[i])) count++;
   }
   return count;
 };
@@ -28,15 +29,15 @@ export const checkMatchingNumberCount = (userInputNumber, lotto) => {
 export const getReward = (rank) => {
   switch (rank) {
     case 1:
-      return 2000000000;
+      return 2_000_000_000;
     case 2:
-      return 30000000;
+      return 30_000_000;
     case 3:
-      return 1500000;
+      return 1_500_000;
     case 4:
-      return 50000;
+      return 50_000;
     case 5:
-      return 5000;
+      return 5_000;
     default:
       return 0;
   }

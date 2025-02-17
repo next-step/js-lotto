@@ -1,18 +1,10 @@
 import { getReward, getRank } from "../src/getRank.js";
 
 export default class Lotto {
-  constructor(paymentAmount) {
-    this.paymentAmount = paymentAmount;
-    this.count = Math.floor(paymentAmount / 1000);
+  constructor(budget) {
+    //로또 객체에서 있어야만 하는값 > 구매 금액, 로또 번호
+    this.budget = budget;
     this.numbers = [];
-    this.result = {
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
-    };
-    this.prizeAmount = 0;
   }
 
   //도메인 로직
@@ -29,29 +21,6 @@ export default class Lotto {
     this.numbers.push(this.makeNumbers());
   }
 
-  makeLottoByPayment() {
-    for (let i = 0; i < this.count; i++) {
-      this.makeLotto();
-    }
-  }
-
-  saveLottoResults(rank) {
-    this.result[rank] += 1;
-  }
-
-  checkResult(winningNumbers) {
-    const count = this.count;
-    for (let i = 0; i < count; i++) {
-      this.saveLottoResults(getRank(winningNumbers, this.numbers[i]));
-    }
-  }
-
-  computeTotalPrize() {
-    for (let i = 1; i < 6; i++) {
-      this.prizeAmount += getReward(i) * this.result[i];
-    }
-  }
-
   //UI로직
   showLottos(index) {
     console.log(this.numbers[index]);
@@ -61,3 +30,28 @@ export default class Lotto {
 export const calculateLottoProfitRatio = (totalWinnings, totalSpent) => {
   return ((totalWinnings - totalSpent) / totalSpent) * 100;
 };
+
+export const calculateLottoTicketLimit = (budget) => {
+  return Math.floor(budget / 1000)
+}
+
+export const buyLottos = (count, lotto) => {
+  for(let i = 0 ; i <count ; i++){
+    lotto.makeLotto()
+  }
+}
+
+export const checkResult = (winningNumbers, lotto) => {
+  const count = calculateLottoTicketLimit(lotto.budget)
+  const result = [0,0,0,0,0,0];
+  for(let i = 0; i < count; i++){
+    const winningRank = getRank(winningNumbers, lotto.numbers[i])
+    result[winningRank - 1] += 1
+  }
+
+  return result
+}
+
+export const computeTotalPrize = (winningArr) => {
+  return winningArr.reduce((prev, current, index, arr) => prev + getReward(index + 1) * arr[index], 0)
+}

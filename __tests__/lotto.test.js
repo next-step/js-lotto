@@ -1,4 +1,4 @@
-import Lotto, { calculateLottoProfitRatio } from "../src/lotto";
+import Lotto, { calculateLottoProfitRatio,calculateLottoTicketLimit,computeTotalPrize,buyLottos,checkResult } from "../src/lotto";
 
 describe("로또를 구매할때", () => {
   let lotto;
@@ -6,26 +6,27 @@ describe("로또를 구매할때", () => {
   beforeEach(() => {
     lotto = new Lotto(12700);
   });
-
-  test("로또는 전달받은 금액을 1000원으로 나눈 값의 몫만큼 발행된다.", () => {
-    expect(lotto.count).toBe(12);
+  test("로또는 입력 받은 값을 예산으로 가진다", () => {
+    expect(lotto.budget).toBe(12700);
   });
-
-  test("로또는 전달받은 금액을 1000원으로 나눈 값의 몫만큼 발행된다.", () => {
-    const prevLottoNumbersCount = lotto.numbers.length;
+  test("로또는 예산 1000원당 1장씩 살 수 있다.", () => {
+    expect(calculateLottoTicketLimit(lotto.budget)).toBe(12);
+  });
+  test("로또는 예산 1000원당 1장씩 살 수 있다.", () => {
+    const 구입_가능한_횟수 = calculateLottoTicketLimit(lotto.budget)
+    buyLottos(구입_가능한_횟수, lotto)
+    expect(lotto.numbers.length).toBe(12);
+  });
+  test("로또는 한배열에 6개의 숫자를 가진다.", () => {
     lotto.makeLotto();
 
-    expect(lotto.numbers.length).toBe(prevLottoNumbersCount + 1);
-  });
-
-  test("로또는 한배열에 6개의 정수를 가진다.", () => {
-    lotto.makeLotto();
     expect(lotto.numbers[0].length).toBe(6);
+    expect(lotto.numbers[0].every(num => typeof num === 'number')).toBe(true);
   });
 
-  test("발행된 로또의 값들은 1 - 99까지의 값을 가진다.", () => {
+  test("발행된 로또의 값들은 1 - 45까지의 값을 가진다.", () => {
     lotto.makeLotto();
-    expect(lotto.numbers[0].every((value) => value >= 1 && value < 100)).toBe(
+    expect(lotto.numbers[0].every((value) => value >= 1 && value < 45)).toBe(
       true
     );
   });
@@ -35,27 +36,18 @@ describe("로또를 사고 당첨 번호도 입력한 이후", () => {
   let lotto;
 
   beforeEach(() => {
-    lotto = new Lotto(8000);
+    lotto = new Lotto(3000);
   });
 
-  test("인스턴스에 당첨 횟수와 랭크가 저장된다.", () => {
-    lotto.saveLottoResults(1);
+  test("배열의 인덱스에 각 순위에 당첨된 만큼 숫자가 1씩 증가한다.", () => {
+    const 당첨_번호 = [[1,2,3,4,5,6], 7]
+    lotto.numbers = [[1,2,3,4,5,6], [1,2,3,4,5,16], [1,2,3,4,15,16]]
 
-    expect(lotto.result).toEqual({
-      1: 1,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
-    });
+    expect(checkResult(당첨_번호, lotto)).toEqual([1,0,1,1,0,0])
   });
 
-  test("누적 상금을 계산한다.", () => {
-    lotto.saveLottoResults(1);
-    lotto.saveLottoResults(5);
-    lotto.computeTotalPrize();
-
-    expect(lotto.prizeAmount).toBe(2000005000);
+  test("당첨 등수를 통해 누적 상금을 계산한다.", () => {
+    expect(computeTotalPrize([1, 0, 1, 1, 0,0])).toBe(2_001_550_000);
   });
 
   test("구입 금액과 총 상금을 이용해 수익률을 계산한다.", () => {
