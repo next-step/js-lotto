@@ -48,8 +48,6 @@ async function main() {
 
   const roi = lottoStatistics.calculateROI(totalWinning);
   console.log(output.resultRoi(roi));
-
-  LottoResult.lottoResultValidate(winningNumbers, bonusNumber);
 }
 
 export default main;
