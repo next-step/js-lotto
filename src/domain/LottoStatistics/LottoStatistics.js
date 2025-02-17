@@ -3,6 +3,9 @@ import {
   LOTTO_RANK_MONEY,
   TICKET_PRICE,
   LOTTO_RANK,
+  LOTTO_RANK_KEY_REVERSE,
+  PRISE_LOOKUP_TABLE,
+  RANK_MAPPING_LOOKUP_TABLE,
 } from "./constant.js";
 import LOTTO_ERROR_MESSAGE from "../Lotto/lottoErrorMessage.js";
 import LOTTO_STATISTICS_ERROR_MESSAGE from "./lottoStatisticsErrorMessage.js";
@@ -24,13 +27,16 @@ class LottoStatistics {
 
   getLottoRank(matchedNumbers, isBonus) {
     const count = matchedNumbers.length;
+    const rankMapping = RANK_MAPPING_LOOKUP_TABLE[count];
 
-    if (count === LOTTO_RANK_RULES.FIRST) return LOTTO_RANK.FIRST;
-    if (count === LOTTO_RANK_RULES.SECOND && isBonus) return LOTTO_RANK.SECOND;
-    if (count === LOTTO_RANK_RULES.THIRD && !isBonus) return LOTTO_RANK.THIRD;
-    if (count === LOTTO_RANK_RULES.FOURTH) return LOTTO_RANK.FOURTH;
-    if (count === LOTTO_RANK_RULES.FIFTH) return LOTTO_RANK.FIFTH;
-    return 0;
+    if (rankMapping === undefined) {
+      return 0;
+    }
+
+    if (typeof rankMapping === "object") {
+      return rankMapping[isBonus];
+    }
+    return rankMapping;
   }
 
   get lottoRankList() {
@@ -51,44 +57,17 @@ class LottoStatistics {
 
   setLottoResult() {
     this.#lottoRankList.forEach((rank) => {
-      switch (rank) {
-        case 1:
-          this.#result.FIRST += 1;
-          break;
-        case 2:
-          this.#result.SECOND += 1;
-          break;
-        case 3:
-          this.#result.THIRD += 1;
-          break;
-        case 4:
-          this.#result.FOURTH += 1;
-          break;
-        case 5:
-          this.#result.FIFTH += 1;
-          break;
-        default:
-          break;
-      }
+      this.#result[LOTTO_RANK_KEY_REVERSE[rank]] += 1;
     });
     return this.#result;
   }
 
   static calculateLottoPrize(rank) {
-    switch (rank) {
-      case LOTTO_RANK.FIRST:
-        return LOTTO_RANK_MONEY.FIRST;
-      case LOTTO_RANK.SECOND:
-        return LOTTO_RANK_MONEY.SECOND;
-      case LOTTO_RANK.THIRD:
-        return LOTTO_RANK_MONEY.THIRD;
-      case LOTTO_RANK.FOURTH:
-        return LOTTO_RANK_MONEY.FOURTH;
-      case LOTTO_RANK.FIFTH:
-        return LOTTO_RANK_MONEY.FIFTH;
-      default:
-        throw new Error(LOTTO_STATISTICS_ERROR_MESSAGE.INVALID_LOTTO_LANK);
+    if (!(rank in PRISE_LOOKUP_TABLE)) {
+      throw new Error(LOTTO_STATISTICS_ERROR_MESSAGE.INVALID_LOTTO_LANK);
     }
+
+    return PRISE_LOOKUP_TABLE[rank];
   }
 
   static totalWinning(winningCounts) {
