@@ -2,8 +2,8 @@ import {
   LOTTO_RANK_RULES,
   LOTTO_RANK_MONEY,
   TICKET_PRICE,
-} from "../../utils/ENUM/lotto.js";
-import LOTTO_ERROR_MESSAGE from "../Looto/lottoErrorMessage.js";
+} from "./constant.js";
+import LOTTO_ERROR_MESSAGE from "../Lotto/lottoErrorMessage.js";
 import LOTTO_STATISTICS_ERROR_MESSAGE from "./lottoStatisticsErrorMessage.js";
 
 class LottoStatistics {

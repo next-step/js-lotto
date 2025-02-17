@@ -1,11 +1,11 @@
-import Lotto from "../../src/domain/Looto/Lotto";
+import Lotto from "../../src/domain/Lotto/Lotto";
 import LottoTicket from "../../src/domain/LottoTicket/LottoTicket";
-import LOTTO_ERROR_MESSAGE from "../../src/domain/Looto/lottoErrorMessage";
+import LOTTO_ERROR_MESSAGE from "../../src/domain/Lotto/lottoErrorMessage";
 import {
   LOTTO_MONEY,
   LOTTO_MONEY_ERROR,
   LOTTO_MONEY_MIN_ERROR,
-} from "../../src/utils/ENUM/lotto";
+} from "../../src/domain/Lotto/constant";
 
 describe("로또를 구매할 때.", () => {
   it("구입 금액이 1,000원 단위이면서 최소금액 이상인 경우 (입력된금액 / 로또 한장 금액) 만큼의 로또가 발행 된다.", () => {

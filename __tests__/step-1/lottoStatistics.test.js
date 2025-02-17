@@ -1,12 +1,12 @@
-import LOTTO_ERROR_MESSAGE from "../../src/domain/Looto/lottoErrorMessage";
+import LOTTO_ERROR_MESSAGE from "../../src/domain/Lotto/lottoErrorMessage";
 import LOTTO_STATISTICS_ERROR_MESSAGE from "../../src/domain/LottoStatistics/lottoStatisticsErrorMessage";
 import LottoStatistics from "../../src/domain/LottoStatistics/LottoStatistics";
+import { LOTTO_RANK_MONEY } from "../../src/domain/LottoStatistics/constant";
 import {
   LOTTO_MONEY,
   LOTTO_MONEY_ERROR,
   LOTTO_MONEY_MIN_ERROR,
-  LOTTO_RANK_MONEY,
-} from "../../src/utils/ENUM/lotto";
+} from "../../src/domain/Lotto/constant";
 
 describe("로또 당첨 결과 테스트", () => {
   it("등수를 입력 받아 저장할 수 있다.", () => {
