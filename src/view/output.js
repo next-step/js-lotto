@@ -4,10 +4,6 @@ class Output {
     return ticket;
   }
 
-  printJoinWinner(winners) {
-    return winners.join(", ");
-  }
-
   printResult() {
     return "당첨 통계 \n";
   }

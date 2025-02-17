@@ -2,7 +2,7 @@ import LottoResult from "../../src/domain/LottoResult/LottoResult";
 import LOTTO_RESULT_ERROR_MESSAGE from "../../src/domain/LottoResult/lottoResultErrorMessage";
 
 describe("Lotto Result Class Test .", () => {
-  const winningNumbers = [1, 2, 3, 4, 5, 6];
+  const winningNumbers = "1,2,3,4,5,6";
   const bonusNumber = 7;
   const ticket = [1, 2, 3, 4, 5, 6];
   let lottoResult;
@@ -40,7 +40,7 @@ describe("Lotto Result Class Test .", () => {
   });
 
   it("당첨 번호가 1미만, 45초과된다면 INVALID_WINNING_NUMBER_RANGE 에러를 throw 한다.", () => {
-    const errorNumbers = [0, -1, 45, 23, 1, 2];
+    const errorNumbers = "0, -1, 45, 23, 1, 2";
 
     expect(() => new LottoResult(errorNumbers, bonusNumber)).toThrow(
       LOTTO_RESULT_ERROR_MESSAGE.INVALID_WINNING_NUMBER_RANGE
@@ -56,7 +56,7 @@ describe("Lotto Result Class Test .", () => {
   });
 
   it("당첨 번호가 6자리 미만 이거나, 초과 된다면 INVALID_WINNING_NUMBERS_LENGTH를 throw 한다.", () => {
-    const errorNumbers = [1, 2, 3, 4, 5];
+    const errorNumbers = "1, 2, 3, 4, 5";
 
     expect(() => new LottoResult(errorNumbers, bonusNumber)).toThrow(
       LOTTO_RESULT_ERROR_MESSAGE.INVALID_WINNING_NUMBERS_LENGTH
@@ -70,7 +70,7 @@ describe("Lotto Result Class Test .", () => {
   });
 
   it("당첨번호와 보너스숫자에 중복이 있으면 DUPLICATE_NUMBERS_NOT_ALLOWED를 throw 한다.", () => {
-    const errorNumbers = [1, 2, 3, 4, 5, 5];
+    const errorNumbers = "1, 2, 3, 4, 5, 5";
 
     expect(() => new LottoResult(errorNumbers, bonusNumber)).toThrow(
       LOTTO_RESULT_ERROR_MESSAGE.DUPLICATE_NUMBERS_NOT_ALLOWED

@@ -8,9 +8,10 @@ import {
 } from "./constant.js";
 class LottoResult {
   constructor(winningNumbers, bonusNumber) {
-    LottoResult.lottoResultValidate(winningNumbers, bonusNumber);
+    const splitWinningNUmbers = winningNumbers.split(",").map(Number);
+    LottoResult.lottoResultValidate(splitWinningNUmbers, bonusNumber);
 
-    this.winningNumbers = winningNumbers;
+    this.winningNumbers = splitWinningNUmbers;
     this.bonusNumber = bonusNumber;
   }
 

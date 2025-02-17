@@ -15,7 +15,7 @@ class ReadLineInput {
       "당첨 번호를 입력해 주세요."
     );
 
-    return winningNumbers.split(",").map(Number);
+    return winningNumbers;
   }
 
   async askBonusNumbers() {
