@@ -8,10 +8,7 @@ class Lotto {
   constructor(money, createLottoTicket) {
     Lotto.validateLotto(money, createLottoTicket);
     this.#money = money;
-    this.#ticket = this.generateTickets(
-      this.getTicketAmount(),
-      createLottoTicket
-    );
+    this.#ticket = this.generateTickets(createLottoTicket);
   }
 
   get money() {
@@ -38,8 +35,10 @@ class Lotto {
     return this.#money / TICKET_PRICE;
   }
 
-  generateTickets(length, createLottoTicket) {
-    return new Array(length).fill().map(() => createLottoTicket());
+  generateTickets(createLottoTicket) {
+    return new Array(this.getTicketAmount())
+      .fill()
+      .map(() => createLottoTicket());
   }
 }
 
