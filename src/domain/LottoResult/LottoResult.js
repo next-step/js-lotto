@@ -1,7 +1,11 @@
 import LOTTO_RESULT_ERROR_MESSAGE from "./lottoResultErrorMessage.js";
 import hasDuplicate from "../../utils/hasDuplicate.js";
 import isWithinRange from "../../utils/isWithinRange.js";
-import { LOTTO_RANGE_MAX, LOTTO_RANGE_MIN } from "./constant.js";
+import {
+  LOTTO_RANGE_MAX,
+  LOTTO_RANGE_MIN,
+  LOTTO_DEFAULT_LENGTH,
+} from "./constant.js";
 class LottoResult {
   constructor(winningNumbers, bonusNumber) {
     LottoResult.lottoResultValidate(winningNumbers, bonusNumber);
@@ -11,7 +15,7 @@ class LottoResult {
   }
 
   static lottoResultValidate(winningNumbers, bonusNumber) {
-    if (winningNumbers.length !== 6) {
+    if (winningNumbers.length !== LOTTO_DEFAULT_LENGTH) {
       throw new Error(
         LOTTO_RESULT_ERROR_MESSAGE.INVALID_WINNING_NUMBERS_LENGTH
       );
