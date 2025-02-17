@@ -6,7 +6,7 @@
   "scripts": {
     "build": "vite build",
     "preview": "vite preview",
-    "test": "jest --no-cache",
+    "test": "jest --no-cache --verbose",
     "start-step-console": "node src/step1-index.js",
     "start-step2": "vite"
   },

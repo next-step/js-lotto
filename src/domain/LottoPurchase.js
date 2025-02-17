@@ -1,6 +1,7 @@
-import { lottoPrice } from "../utils/constants.js";
 import Lotto from "./Lotto.js";
 import Validator from "./Validator.js";
+import generateLottoNumber from "../utils/generateRandomNumber.js";
+import { lottoPrice } from "../utils/constants.js";
 
 class LottoPurchase {
   #lottoTickets = [];
@@ -14,7 +15,21 @@ class LottoPurchase {
   getLottoTickets(purchaseAmount) {
     const numberOfLottoTickets = purchaseAmount / lottoPrice;
 
-    return Array.from({ length: numberOfLottoTickets }, () => new Lotto());
+    return Array.from(
+      { length: numberOfLottoTickets },
+      () => new Lotto(this.generateLottoNumbers())
+    );
+  }
+
+  generateLottoNumbers() {
+    const numbersSet = new Set();
+
+    while (numbersSet.size < 6) {
+      const number = generateLottoNumber();
+      numbersSet.add(number);
+    }
+
+    return [...numbersSet].sort((a, b) => a - b);
   }
 
   get lottoTickets() {

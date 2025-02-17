@@ -23,7 +23,7 @@ class LottoDraw {
   }
 
   start() {
-    const ticketsCounts = this.getMatchedTicketCounts();
+    const ticketsCounts = this.getMatchedTicketStatus();
     this.calculateCount(ticketsCounts);
     this.calculateRateOfReturn();
 
@@ -51,26 +51,26 @@ class LottoDraw {
     return totalPrize;
   }
 
-  calculateCount(tickets) {
-    tickets.forEach((ticket) => this.incrementCount(ticket));
+  calculateCount(ticketsStatus) {
+    ticketsStatus.forEach((ticket) => this.incrementCount(ticket));
   }
 
-  incrementCount(ticket) {
+  incrementCount(ticketStatus) {
     const { counts } = this.#result;
     const matchConditions = {
       3: () => counts[3]++,
       4: () => counts[4]++,
-      5: () => (ticket.hasBonus ? counts["5Bonus"]++ : counts[5]++),
+      5: () => (ticketStatus.hasBonus ? counts["5Bonus"]++ : counts[5]++),
       6: () => counts[6]++,
     };
 
-    const incrementFunction = matchConditions[ticket.matchedCount];
+    const incrementFunction = matchConditions[ticketStatus.matchedCount];
     if (incrementFunction) {
       incrementFunction();
     }
   }
 
-  getMatchedTicketCounts() {
+  getMatchedTicketStatus() {
     return this.#lottoTickets.map((ticket) => {
       const matchedCount = this.countMatchedNumbers(ticket);
       const hasBonus = this.checkBonus(ticket);
@@ -105,6 +105,10 @@ class LottoDraw {
 
   get lottoTickets() {
     return this.#lottoTickets;
+  }
+
+  get result() {
+    return this.#result;
   }
 }
 
