@@ -76,7 +76,7 @@ export class InvalidLottoNumberError extends Error {
 
 export class InvalidLottoCountError extends Error {
   constructor() {
-    super("로또 번호는 6개여야 합니다.");
+    super(`로또 번호는 ${LOTTO_NUMBER_COUNT}개여야 합니다.`);
   }
 }
 

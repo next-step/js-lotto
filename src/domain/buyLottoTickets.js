@@ -14,12 +14,12 @@ export const buyLottoTickets = (purchaseAmount) => {
 
 const isValidPurchaseAmount = (purchaseAmount) => {
   if (!Number.isInteger(purchaseAmount)) return false;
-  if (purchaseAmount < 1000) return false;
+  if (purchaseAmount < PRICE_PER_LOTTO) return false;
   return true;
 };
 
 export class InvalidPurchaseAmount extends Error {
   constructor() {
-    super("구입 금액은 1000원 이상의 정수여야 합니다.");
+    super(`구입 금액은 ${PRICE_PER_LOTTO}원 이상의 정수여야 합니다.`);
   }
 }
