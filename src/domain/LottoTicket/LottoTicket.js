@@ -1,15 +1,11 @@
 import generateRandomNumber from "../../utils/generateRandomNumber.js";
-import isValueInArray from "../../utils/isValueInArray.js";
 
 class LottoTicket {
   constructor() {}
 
   static createLottoNumber(arr) {
     const number = generateRandomNumber();
-    if (isValueInArray(arr, number)) {
-      return LottoTicket.createLottoNumber(arr);
-    }
-    return number;
+    if (arr.includes(number)) return number;
   }
 
   static makeLotto() {
