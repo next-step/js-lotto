@@ -14,7 +14,7 @@ export const getRank = (winningNumbers, lotto) => {
 };
 
 export const transformUserInput = (userInput, bonusNumber) => {
-  return [userInput.split(",").map((num) => Number(num)), Number(bonusNumber)];
+  return [userInput.split(",").map((num) => Number(num)).sort((a,b) => a-b), Number(bonusNumber)];
 };
 
 export const checkMatchingNumberCount = (userInputNumber, lotto) => {
