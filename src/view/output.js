@@ -16,7 +16,7 @@ class Output {
     return "--------------------";
   }
 
-  print(finalResult) {
+  lottoStatisticsPrint(finalResult) {
     return `3개 일치 (5,000원) - ${finalResult.FIFTH}개 \n
 4개 일치 (50,000원) - ${finalResult.FOURTH}개 \n
 5개 일치 (1,500,000원) - ${finalResult.THIRD}개 \n

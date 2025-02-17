@@ -42,7 +42,7 @@ async function main() {
   });
 
   const finalResult = lottoStatistics.setLottoResult();
-  console.log(output.print(finalResult));
+  console.log(output.lottoStatisticsPrint(finalResult));
 
   const totalWinning = LottoStatistics.totalWinning(finalResult);
 
