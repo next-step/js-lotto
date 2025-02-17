@@ -7,9 +7,17 @@ export const startProgram = () => {
   return rl;
 };
 
-export const read = async (rl, message) => {
-  const answer = await rl.question(message);
-  return answer;
+export const read = async (rl, readPayload) => {
+  const { message, errorMessage, checkPolicy } = readPayload;
+
+  while (true) {
+    // eslint-disable-next-line no-await-in-loop
+    const answer = await rl.question(message);
+    if (checkPolicy(answer)) {
+      return answer;
+    }
+    console.log(errorMessage);
+  }
 };
 
 export const stopProgram = (rl) => {

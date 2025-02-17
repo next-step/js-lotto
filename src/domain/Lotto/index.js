@@ -1,5 +1,5 @@
-import { LOTTO_RULES } from "../../util/rule.js";
-import { ERROR_LOTTO } from "../../util/error.js";
+import LOTTO_RULES from "./rule.js";
+import ERROR_LOTTO from "./error.js";
 
 class Lotto {
   #winningNumber;
@@ -7,24 +7,18 @@ class Lotto {
   #bonusNumber;
 
   constructor({ winningNumber, bonusNumber }) {
-    winningNumber &&
-      this.setWinningNumber(
-        winningNumber,
-        LOTTO_RULES.winningNumberRule,
-        ERROR_LOTTO.WRONG_WINNING_NUMBER_SETTING,
-      );
-    bonusNumber &&
-      this.setBonusNumber(
-        bonusNumber,
-        LOTTO_RULES.bonusNumberRule,
-        ERROR_LOTTO.WRONG_BONUS_NUMBER_SETTING,
-      );
+    if (LOTTO_RULES.winningNumberRule(winningNumber) === false) {
+      throw new Error(ERROR_LOTTO.WRONG_WINNING_NUMBER_SETTING);
+    }
+    this.setWinningNumber(winningNumber);
+
+    if (LOTTO_RULES.bonusNumberRule(bonusNumber) === false) {
+      throw new Error(ERROR_LOTTO.WRONG_BONUS_NUMBER_SETTING);
+    }
+    this.setBonusNumber(bonusNumber);
   }
 
-  setWinningNumber(winningNumber, predicate, errorMessage) {
-    if (predicate(winningNumber) === false) {
-      throw new Error(errorMessage);
-    }
+  setWinningNumber(winningNumber) {
     this.#winningNumber = winningNumber;
   }
 
@@ -32,10 +26,7 @@ class Lotto {
     return this.#winningNumber;
   }
 
-  setBonusNumber(bonusNumber, predicate, errorMessage) {
-    if (predicate(bonusNumber) === false) {
-      throw new Error(errorMessage);
-    }
+  setBonusNumber(bonusNumber) {
     this.#bonusNumber = bonusNumber;
   }
 

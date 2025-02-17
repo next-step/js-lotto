@@ -1,11 +1,13 @@
-import Lotto from "./Lotto/index.js";
-import PurchaseHistory from "./PurchaseHistory.js";
+import Lotto from "../Lotto/index.js";
+import PurchaseHistory from "../PurchaseHistory/index.js";
 import {
   WINNING_KEY,
   WINNING_CONDITION_KEY,
-  RULES,
-} from "../../src/util/rule.js";
-import { ERROR_WINNING } from "../../src/util/error.js";
+} from "./rule.js";
+import {
+  RULES } from '../../util/rule.js';
+import { ERROR_WINNING } from "./error.js";
+
 class WinningDetail {
   #winner;
 

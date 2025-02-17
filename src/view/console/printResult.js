@@ -7,7 +7,16 @@ const PRINT_LOGIC = {
 };
 
 export const printWinningDetailResult = (winningDetailResult) => {
-  const results = Object.entries(winningDetailResult).map(([key, value]) => {
+  console.log("");
+  Object.entries(winningDetailResult).forEach(([key, value]) => {
     console.log(`${PRINT_LOGIC[key]} - ${value}`);
   });
+};
+
+export const printRatesOfReturn = (ratesOfReturnValue) => {
+  console.log(`\n총 수익률은 ${ratesOfReturnValue}입니다.`);
+};
+
+export const printTicketLength = (ticketLength) => {
+  console.log(`${ticketLength}개를 구매했습니다.`);
 };

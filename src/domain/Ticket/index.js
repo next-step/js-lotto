@@ -1,16 +1,18 @@
-import { ERROR_TICKET } from "../util/error.js";
-import { RULES, TICKET_RULES } from "../util/rule.js";
+import { ERROR_TICKET } from "./error.js";
+import { TICKET_RULES } from "./rule.js";
+import { RULES } from "../../util/rule.js";
 
 class Ticket {
   #numbers;
+
   #price;
 
-  constructor({ numbers: numbers }) {
-    this.#setNumbers(
+  constructor({ numbers }) {
+    this.#setNumbers({
       numbers,
-      TICKET_RULES.numbersRule,
-      ERROR_TICKET.WRONG_TICKET_INPUT,
-    );
+      predicate: TICKET_RULES.numbersRule,
+      errorMessage: ERROR_TICKET.WRONG_TICKET_INPUT,
+    });
     this.#setPrice();
   }
 
@@ -18,12 +20,13 @@ class Ticket {
     return [...this.#numbers];
   }
 
-  #setNumbers(numbers, predicate, errorMessage) {
+  #setNumbers({ predicate, errorMessage, numbers }) {
     if (predicate(numbers) === false) {
       throw new Error(errorMessage);
     }
     this.#numbers = numbers;
   }
+
   #setPrice() {
     this.#price = RULES.TICKET_PRICE;
   }
