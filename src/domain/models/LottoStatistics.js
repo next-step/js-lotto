@@ -19,6 +19,8 @@ export class LottoStatistics {
 
   calculateProfitRate() {
     const totalPrize = this.calculateTotalPrize();
-    return ((totalPrize / this.totalAmount) * 100).toFixed(1);
+    return ((totalPrize - this.totalAmount / this.totalAmount) * 100).toFixed(
+      1,
+    );
   }
 }
