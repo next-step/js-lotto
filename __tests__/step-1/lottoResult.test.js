@@ -1,5 +1,5 @@
-import LottoResult from "../../src/domain/LottoResult";
-import LOTTO_RESULT_ERROR_MESSAGE from "../../src/utils/errorMessage/lottoResultErrorMessage";
+import LottoResult from "../../src/domain/LottoResult/LottoResult";
+import LOTTO_RESULT_ERROR_MESSAGE from "../../src/domain/LottoResult/lottoResultErrorMessage";
 
 describe("Lotto Result Class Test .", () => {
   const winningNumbers = [1, 2, 3, 4, 5, 6];

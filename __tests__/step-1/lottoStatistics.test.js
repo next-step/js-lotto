@@ -1,6 +1,6 @@
-import LOTTO_ERROR_MESSAGE from "../../src/utils/errorMessage/lottoErrorMessage";
-import LOTTO_STATISTICS_ERROR_MESSAGE from "../../src/utils/errorMessage/lottoStatisticsErrorMessage";
-import LottoStatistics from "../../src/domain/LottoStatistics";
+import LOTTO_ERROR_MESSAGE from "../../src/domain/Looto/lottoErrorMessage";
+import LOTTO_STATISTICS_ERROR_MESSAGE from "../../src/domain/LottoStatistics/lottoStatisticsErrorMessage";
+import LottoStatistics from "../../src/domain/LottoStatistics/LottoStatistics";
 import {
   LOTTO_MONEY,
   LOTTO_MONEY_ERROR,

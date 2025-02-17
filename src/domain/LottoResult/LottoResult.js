@@ -1,6 +1,6 @@
-import LOTTO_RESULT_ERROR_MESSAGE from "../utils/errorMessage/lottoResultErrorMessage.js";
-import hasDuplicate from "../utils/hasDuplicate.js";
-import isWithinRange from "../utils/isWithinRange.js";
+import LOTTO_RESULT_ERROR_MESSAGE from "./lottoResultErrorMessage.js";
+import hasDuplicate from "../../utils/hasDuplicate.js";
+import isWithinRange from "../../utils/isWithinRange.js";
 
 const max = 45;
 const min = 1;

@@ -1,6 +1,6 @@
-import Lotto from "../../src/domain/Lotto";
-import LottoTicket from "../../src/domain/LottoTicket";
-import LOTTO_ERROR_MESSAGE from "../../src/utils/errorMessage/lottoErrorMessage";
+import Lotto from "../../src/domain/Looto/Lotto";
+import LottoTicket from "../../src/domain/LottoTicket/LottoTicket";
+import LOTTO_ERROR_MESSAGE from "../../src/domain/Looto/lottoErrorMessage";
 import {
   LOTTO_MONEY,
   LOTTO_MONEY_ERROR,

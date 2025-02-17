@@ -1,5 +1,5 @@
-import generateRandomNumber from "../utils/generateRandomNumber.js";
-import isValueInArray from "../utils/isValueInArray.js";
+import generateRandomNumber from "../../utils/generateRandomNumber.js";
+import isValueInArray from "../../utils/isValueInArray.js";
 
 class LottoTicket {
   constructor() {}

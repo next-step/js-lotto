@@ -1,9 +1,9 @@
 import ReadLineInput from "./readLineInput.js";
 import Output from "./output.js";
-import Lotto from "../domain/Lotto.js";
-import LottoTicket from "../domain/LottoTicket.js";
-import LottoResult from "../domain/LottoResult.js";
-import LottoStatistics from "../domain/LottoStatistics.js";
+import Lotto from "../domain/Looto/Lotto.js";
+import LottoTicket from "../domain/LottoTicket/LottoTicket.js";
+import LottoResult from "../domain/LottoResult/LottoResult.js";
+import LottoStatistics from "../domain/LottoStatistics/LottoStatistics.js";
 
 async function main() {
   const readLineInput = new ReadLineInput();

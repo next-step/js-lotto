@@ -1,5 +1,5 @@
-import LOTTO_ERROR_MESSAGE from "../utils/errorMessage/lottoErrorMessage.js";
-import { TICKET_PRICE } from "../utils/ENUM/lotto.js";
+import LOTTO_ERROR_MESSAGE from "./lottoErrorMessage.js";
+import { TICKET_PRICE } from "../../utils/ENUM/lotto.js";
 
 class Lotto {
   #money;
