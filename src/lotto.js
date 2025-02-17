@@ -10,20 +10,20 @@ export default class Lotto {
   //도메인 로직
   makeNumbers() {
     const LOTTO_NUMBER_COUNT = 6;
-    let numbers = [];
-    for (let i = 0; i < LOTTO_NUMBER_COUNT; i++) {
-      numbers.push(Math.floor(Math.random() * 99) + 1);
+    const numbers = new Array(45).fill().map((_, index) => index + 1);
+
+    for (let i = 0; i < 45; i++) {
+      const randomIndex = Math.floor(Math.random() * 45);
+      const tmp = numbers[i];
+      numbers[i] = numbers[randomIndex];
+      numbers[randomIndex] = tmp;
     }
-    return numbers;
+
+    return numbers.slice(0, LOTTO_NUMBER_COUNT);
   }
 
   makeLotto() {
     this.numbers.push(this.makeNumbers());
-  }
-
-  //UI로직
-  showLottos(index) {
-    console.log(this.numbers[index]);
   }
 }
 
@@ -32,26 +32,29 @@ export const calculateLottoProfitRatio = (totalWinnings, totalSpent) => {
 };
 
 export const calculateLottoTicketLimit = (budget) => {
-  return Math.floor(budget / 1000)
-}
+  return Math.floor(budget / 1000);
+};
 
 export const buyLottos = (count, lotto) => {
-  for(let i = 0 ; i <count ; i++){
-    lotto.makeLotto()
+  for (let i = 0; i < count; i++) {
+    lotto.makeLotto();
   }
-}
+};
 
 export const checkResult = (winningNumbers, lotto) => {
-  const count = calculateLottoTicketLimit(lotto.budget)
-  const result = [0,0,0,0,0,0];
-  for(let i = 0; i < count; i++){
-    const winningRank = getRank(winningNumbers, lotto.numbers[i])
-    result[winningRank - 1] += 1
+  const count = calculateLottoTicketLimit(lotto.budget);
+  const result = [0, 0, 0, 0, 0, 0];
+  for (let i = 0; i < count; i++) {
+    const winningRank = getRank(winningNumbers, lotto.numbers[i]);
+    result[winningRank - 1] += 1;
   }
 
-  return result
-}
+  return result;
+};
 
 export const computeTotalPrize = (winningArr) => {
-  return winningArr.reduce((prev, current, index, arr) => prev + getReward(index + 1) * arr[index], 0)
-}
+  return winningArr.reduce(
+    (prev, current, index, arr) => prev + getReward(index + 1) * arr[index],
+    0
+  );
+};

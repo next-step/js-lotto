@@ -1,11 +1,17 @@
-import Lotto, { calculateLottoProfitRatio } from "./lotto.js";
+import Lotto, {
+  calculateLottoProfitRatio,
+  buyLottos,
+  calculateLottoTicketLimit,
+  checkResult,
+  computeTotalPrize,
+} from "./lotto.js";
 import {
   readLineAsync,
   getWinningNumbers,
   getBounsNumber,
 } from "./getUserInput.js";
 import { showLottoResult } from "../src/drawResult.js";
-import { getRank, transformUserInput } from "../src/getRank.js";
+import { transformUserInput } from "../src/getRank.js";
 
 /**
  * step 1의 시작점이 되는 파일입니다.
@@ -16,9 +22,10 @@ const startLottoGame = async () => {
   let winngNumbers = [];
   await readLineAsync("구입금액을 입력해 주세요 : ").then((amount) => {
     lotto = new Lotto(amount);
-    lotto.makeLottoByPayment();
-    for (let i = 0; i < lotto.count; i++) {
-      lotto.showLottos(i);
+    const ticketCount = calculateLottoTicketLimit(amount);
+    buyLottos(ticketCount, lotto);
+    for (let i = 0; i < ticketCount; i++) {
+      console.log(lotto.numbers[i]);
     }
   });
   const userInputs = await getWinningNumbers("당첨 번호를 입력해 주세요. : ");
@@ -27,17 +34,14 @@ const startLottoGame = async () => {
 
   winngNumbers = transformUserInput(userInputs, bounsNumber);
 
-  lotto.checkResult(winngNumbers);
+  const result = checkResult(winngNumbers, lotto);
 
   console.log("당첨 통계");
   console.log("--------------------------");
-  showLottoResult(lotto);
+  showLottoResult(result);
 
-  lotto.computeTotalPrize();
-  const profit = calculateLottoProfitRatio(
-    lotto.prizeAmount,
-    lotto.budget
-  );
+  const prizeAmount = computeTotalPrize(result);
+  const profit = calculateLottoProfitRatio(prizeAmount, lotto.budget);
   console.log(`총 수익률은 ${profit}%입니다.`);
 };
 
