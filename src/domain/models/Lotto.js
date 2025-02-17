@@ -40,12 +40,16 @@ export class Lotto {
   }
 
   generateRandomUniqueNumbers() {
-    let numbers = new Set();
+    const numberPool = Array.from(
+      { length: LOTTO_MAX_NUMBER },
+      (_, i) => i + 1,
+    );
 
-    while (numbers.size < LOTTO_NUMBERS_COUNT) {
-      numbers.add(Math.floor(Math.random() * LOTTO_MAX_NUMBER) + 1);
+    for (let i = numberPool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [numberPool[i], numberPool[j]] = [numberPool[j], numberPool[i]];
     }
 
-    return [...numbers].sort((a, b) => a - b);
+    return numberPool.slice(0, LOTTO_NUMBERS_COUNT).sort((a, b) => a - b);
   }
 }
