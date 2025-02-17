@@ -3,7 +3,7 @@ import { LOTTO_PRIZES } from "../domain/constants.js";
 export const printLottoTickets = (lottos) => {
   console.log(`${lottos.length}개를 구매했습니다.`);
   lottos.forEach((lotto) => printLottoNumbers(lotto.numbers));
-  console.log("");
+  printNewLine();
 };
 
 const printLottoNumbers = (lottoNumbers) => {
@@ -11,7 +11,8 @@ const printLottoNumbers = (lottoNumbers) => {
 };
 
 export const printStatistics = ({ matchedCount, profitRate }) => {
-  console.log("\n당첨 통계");
+  printNewLine();
+  console.log("당첨 통계");
   console.log("--------------------");
 
   for (const key of matchedCount.keys()) {
@@ -42,4 +43,8 @@ const printMathcedResult = ({ resultKey, prize, count }) => {
     default:
       break;
   }
+};
+
+const printNewLine = () => {
+  console.log("");
 };
