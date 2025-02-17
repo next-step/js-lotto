@@ -1,9 +1,7 @@
 import LOTTO_RESULT_ERROR_MESSAGE from "./lottoResultErrorMessage.js";
 import hasDuplicate from "../../utils/hasDuplicate.js";
 import isWithinRange from "../../utils/isWithinRange.js";
-
-const max = 45;
-const min = 1;
+import { LOTTO_RANGE_MAX, LOTTO_RANGE_MIN } from "./constant.js";
 class LottoResult {
   constructor(winningNumbers, bonusNumber) {
     LottoResult.lottoResultValidate(winningNumbers, bonusNumber);
@@ -25,8 +23,16 @@ class LottoResult {
     if (hasDuplicate(winningNumbers, bonusNumber)) {
       throw new Error(LOTTO_RESULT_ERROR_MESSAGE.DUPLICATE_NUMBERS_NOT_ALLOWED);
     }
-    const isWithinRangeWinningNumber = isWithinRange(winningNumbers, max, min);
-    const isWithinRangeBonusNumber = isWithinRange(bonusNumber, max, min);
+    const isWithinRangeWinningNumber = isWithinRange(
+      winningNumbers,
+      LOTTO_RANGE_MAX,
+      LOTTO_RANGE_MIN
+    );
+    const isWithinRangeBonusNumber = isWithinRange(
+      bonusNumber,
+      LOTTO_RANGE_MAX,
+      LOTTO_RANGE_MIN
+    );
 
     if (!isWithinRangeWinningNumber) {
       throw new Error(LOTTO_RESULT_ERROR_MESSAGE.INVALID_WINNING_NUMBER_RANGE);
