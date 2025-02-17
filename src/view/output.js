@@ -30,19 +30,17 @@ const printMathcedResult = ({ resultKey, prize, count }) => {
 
   const prizeText = `(${prize.toLocaleString()}원)`;
 
-  switch (resultKey) {
-    case "3":
-    case "4":
-    case "5":
-    case "6":
-      console.log(`${resultKey}개 일치 ${prizeText} - ${count}개`);
-      break;
-    case "5bonus":
-      console.log(`5개 일치, 보너스 볼 일치 ${prizeText} - ${count}개`);
-      break;
-    default:
-      break;
-  }
+  const resultText = {
+    3: `3개 일치 ${prizeText} - ${count}개`,
+    4: `4개 일치 ${prizeText} - ${count}개`,
+    5: `5개 일치 ${prizeText} - ${count}개`,
+    6: `6개 일치 ${prizeText} - ${count}개`,
+    "5bonus": `5개 일치, 보너스 볼 일치 ${prizeText} - ${count}개`,
+  };
+
+  if (!resultText[resultKey]) return;
+
+  console.log(resultText[resultKey]);
 };
 
 const printNewLine = () => {
