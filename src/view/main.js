@@ -30,7 +30,7 @@ async function main() {
 
   output.printDriven();
 
-  const lottoResult = new LottoResult(winningNumbers, bonusNumber);
+  const lottoResult = new LottoResult({ winningNumbers, bonusNumber });
 
   const compareResult = lottoResult.compareNumber(tickets);
 

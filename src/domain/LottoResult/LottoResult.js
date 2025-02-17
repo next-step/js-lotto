@@ -7,14 +7,19 @@ import {
   LOTTO_DEFAULT_LENGTH,
 } from "./constant.js";
 class LottoResult {
-  constructor(winningNumbers, bonusNumber) {
+  winningNumbers;
+  bonusNumber;
+  tickets;
+  constructor({ winningNumbers, bonusNumber, tickets }) {
     const splitWinningNUmbers = winningNumbers.split(",").map(Number);
     LottoResult.lottoResultValidate(splitWinningNUmbers, bonusNumber);
 
     this.winningNumbers = splitWinningNUmbers;
     this.bonusNumber = bonusNumber;
+    this.tickets = tickets;
   }
 
+  // 2개를 왜 받는지 모르겠음
   static lottoResultValidate(winningNumbers, bonusNumber) {
     if (winningNumbers.length !== LOTTO_DEFAULT_LENGTH) {
       throw new Error(
@@ -55,10 +60,8 @@ class LottoResult {
     return { ticket, matchedNumbers, hasBonus };
   }
 
-  compareNumber(tickets) {
-    return tickets.map((ticket) =>
-      this.compareSingleTicket(ticket, this.winningNumbers, this.bonusNumber)
-    );
+  compareNumber() {
+    return this.tickets.map((ticket) => this.compareSingleTicket(ticket));
   }
 
   getWinnersNumber() {
