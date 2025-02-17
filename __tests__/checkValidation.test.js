@@ -44,12 +44,12 @@ describe("사용자가 로또 번호를 입력했을때", () => {
 
   test.each([
     ['33', true],
-    ['99', true],
+    ['99', false],
     ['100', false],
     ['101', false],
     ['1', true],
     ['0', false],
-  ])("입력된 보너스 번호가 100 이상 0 이하이면 false다.", (bouns, expected) => {
+  ])("입력된 보너스 번호가 45 이상 0 이하이면 false다.", (bouns, expected) => {
     expect(checkBounsValid(bouns)).toBe(expected);
   });
 });

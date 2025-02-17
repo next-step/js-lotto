@@ -19,7 +19,7 @@ export const checkInputsLengthValid = (input) => {
   return inputArr.length === 6;
 };
 export const checkBounsValid = (input) => {
-  return input > 0 && input < 100;
+  return input > 0 && input < 45;
 };
 
 export function readLineAsync(query) {
@@ -78,7 +78,7 @@ export function getBounsNumber(query) {
         return;
       }
       if (!checkBounsValid(input)) {
-        reject(new Error("1 - 99까지의 숫자만 입력해주세요."));
+        reject(new Error("1 - 45 까지의 숫자만 입력해주세요."));
         return;
       }
       resolve(input);
