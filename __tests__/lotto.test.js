@@ -58,8 +58,10 @@ describe("로또를 사고 당첨 번호도 입력한 이후", () => {
     expect(lotto.prizeAmount).toBe(2000005000);
   });
 
-  test("수익률을 계산한다.", () => {
-    const ratio = calculateLottoProfitRatio(8000, 5000);
+  test("구입 금액과 총 상금을 이용해 수익률을 계산한다.", () => {
+    const 구입_금액 = 8000
+    const 총_상금 = 5000
+    const ratio = calculateLottoProfitRatio(구입_금액, 총_상금);
 
     expect(ratio).toBe(60);
   });
