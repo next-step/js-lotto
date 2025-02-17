@@ -1,8 +1,6 @@
 import { ERROR_MESSAGES, LOTTO_NUMBERS_COUNT } from "../../constants.js";
 import {
   isDuplicateNumbersInArray,
-  isPositiveInteger,
-  isPositiveIntegerArray,
   isValidLottoNumber,
   isValidLottoNumbersArray,
 } from "../../validation.js";
