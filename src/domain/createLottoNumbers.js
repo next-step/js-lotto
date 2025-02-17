@@ -5,18 +5,17 @@ import {
 } from "./constants.js";
 
 export const createLottoNumbers = () => {
-  const lottoNumbers = createUniqueNumbers().sort((a, b) => a - b);
-  return lottoNumbers;
+  return createUniqueNumbers().sort((a, b) => a - b);
 };
 
 const createUniqueNumbers = () => {
   const numbers = new Set();
   while (numbers.size < LOTTO_NUMBER_COUNT) {
-    numbers.add(getRandomLottoNumber());
+    numbers.add(getRandomNumber(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER));
   }
   return [...numbers];
 };
 
-const getRandomLottoNumber = () => {
-  return Math.floor(Math.random() * MAX_LOTTO_NUMBER) + MIN_LOTTO_NUMBER;
+const getRandomNumber = (min, max) => {
+  return Math.floor(Math.random() * max) + min;
 };
