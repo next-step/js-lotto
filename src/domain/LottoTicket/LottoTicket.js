@@ -5,7 +5,10 @@ class LottoTicket {
 
   static createLottoNumber(arr) {
     const number = generateRandomNumber();
-    if (arr.includes(number)) return number;
+    if (arr.includes(number)) {
+      return LottoTicket.createLottoNumber(arr);
+    }
+    return number;
   }
 
   static makeLotto() {
