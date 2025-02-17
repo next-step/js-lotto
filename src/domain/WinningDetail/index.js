@@ -1,11 +1,7 @@
 import Lotto from "../Lotto/index.js";
 import PurchaseHistory from "../PurchaseHistory/index.js";
-import {
-  WINNING_KEY,
-  WINNING_CONDITION_KEY,
-} from "./rule.js";
-import {
-  RULES } from '../../util/rule.js';
+import { WINNING_KEY, WINNING_CONDITION_KEY } from "./rule.js";
+import { RULES } from "../../util/rule.js";
 import { ERROR_WINNING } from "./error.js";
 
 class WinningDetail {

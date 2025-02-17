@@ -8,4 +8,3 @@ export const RULES = {
   WINNING_PERSON_INITIAL: 1,
   WINNING_PERSON_PLUS: 1,
 };
-

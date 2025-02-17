@@ -1,4 +1,4 @@
-import { ERROR_TICKET } from "./error.js";
+import ERROR_TICKET from "./error.js";
 import { TICKET_RULES } from "./rule.js";
 import { RULES } from "../../util/rule.js";
 
