@@ -1,11 +1,13 @@
 import {
-  validateLottoNumbers,
-  validateBonusNumber,
   DuplicateBonusNumberError,
   DuplicateLottoNumberError,
   InvalidLottoCountError,
   InvalidLottoNumberError,
-} from "../src/domain/lottoValidations";
+} from "../src/domain/validators/errors";
+import {
+  validateLottoNumbers,
+  validateBonusNumber,
+} from "../src/domain/validators/lottoValidator";
 
 describe("로또 유효성 검사 테스트", () => {
   it("로또 번호가 6개가 아니면 InvalidLottoCountError를 던져야 한다.", () => {

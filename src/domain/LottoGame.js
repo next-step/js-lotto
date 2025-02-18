@@ -1,7 +1,7 @@
 import {
   validateBonusNumber,
   validateLottoNumbers,
-} from "./lottoValidations.js";
+} from "./validators/lottoValidator.js";
 
 class LottoGame {
   #winningNumbers;
