@@ -1,16 +1,71 @@
-<!DOCTYPE html>
-<html lang="ko">
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>🎱 행운의 로또</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link href="./src/view/web/index.css" rel="stylesheet"></link>
+    <script type="module" src="./src/view/web/index.js" defer></script>
   </head>
-
   <body>
-    <div id="app">
-      <h1>🎱 행운의 로또</h1>
-    </div>
-    <script type="module" src="./src/step2-index.js"></script>
+    <app-root>
+        <game-text>
+            <h1 slot="game-text">
+              내 번호 당첨 확인
+            </h1>
+        </game-text>
+
+        <money-input>
+            <label slot="input-label">
+                구입할 금액을 입력해주세요.
+            </label>
+            <input slot="input-box">
+            </input>
+            <button slot="input-button">
+                구입
+            </button>
+        </money-input>
+
+        <purchase-history>
+        </purchase-history>
+
+        <game-text>
+          <span slot="game-text">
+            지난 주 당첨번호 6개와 보너스 번호 1개를 입력해주세요.
+          </span>      
+        </game-text>
+        <game-text>
+          <div slot="game-text" id="winning">
+          
+              <div>
+                당첨 번호
+              </div>
+              <div>
+                보너스 번호
+              </div>
+          
+          </div>      
+        </game-text>
+
+        <number-box>
+          
+        </number-box>
+        
+        <custom-button>
+          <button slot="custom-button" id="submit-button">결과 확인하기</button>
+        </custom-button>
+
+        <winning-detail>
+
+        </winning-detail>
+
+        <rates-of-return>
+        </rates-of-return>
+
+        <custom-button>
+          <button slot="custom-button" id="restart-button">다시 시작하기</button>
+        </custom-button>
+      
+    </app-root>
   </body>
 </html>
