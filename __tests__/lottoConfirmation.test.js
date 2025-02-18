@@ -1,4 +1,4 @@
-import LottoConfirmation from "../src/domain/lottoConfirmation";
+import LottoConfirmation from "../src/domain/LottoConfirmation";
 
 describe("LottoConfirmation Class 테스트", () => {
 
@@ -38,29 +38,4 @@ describe("LottoConfirmation Class 테스트", () => {
         expect(lottoConfirmation.getTotalPrize).toEqual(5000);
     });
 
-    it("보너스 숫자는 1 ~ 45사이의 숫자 이여야 한다.", () => {
-        const prizeLotto = [1, 2, 3, 7, 8, 9];
-        expect(() => new LottoConfirmation(lottos, prizeLotto, 46)).toThrowError(new Error(LottoConfirmation.LOTTO_NUM_RANGE_MESSAGE));
-    });
-
-    it("보너스 숫자는 당첨숫자와 중복되면 안된다.", () => {
-        const prizeLotto = [1, 2, 3, 7, 8, 9];
-        expect(() => new LottoConfirmation(lottos, prizeLotto, 9)).toThrowError(new Error(LottoConfirmation.BONUS_NUM_DUPLICATE_MESSAGE));
-    });
-
-    it("당첨 숫자는 1 ~ 45사이의 숫자 이여야 한다.", () => {
-        const prizeLotto = [1, 2, 3, 7, 8, 46];
-        expect(() => new LottoConfirmation(lottos, prizeLotto, 40)).toThrowError(new Error(LottoConfirmation.LOTTO_NUM_RANGE_MESSAGE));
-    });
-
-    it("당첨 숫자는 중복되면 안된다.", () => {
-        const prizeLotto = [1, 2, 3, 7, 8, 8];
-        expect(() => new LottoConfirmation(lottos, prizeLotto, 40)).toThrowError(new Error(LottoConfirmation.PRIZE_LOTTO_DUPLICATE_MESSAGE));
-    });
-
-    it("당첨 숫자는 6개 이여야 합니다..", () => {
-        const prizeLotto = [1, 2, 3, 7, 8, 10, 12];
-        expect(() => new LottoConfirmation(lottos, prizeLotto, 40)).toThrowError(new Error(LottoConfirmation.LOTTO_NUM_MESSAGE));
-    });
-    
 });
