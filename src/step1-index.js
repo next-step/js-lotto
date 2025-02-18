@@ -7,7 +7,6 @@ import { buyLottoTickets } from "./domain/buyLottoTickets.js";
 import { calculateStatistics } from "./domain/calculateStatistics.js";
 import LottoGame from "./domain/LottoGame.js";
 import {
-  createReadlineInterface,
   getBonusNumber,
   getPurchaseAmount,
   getWinningNumbers,
@@ -15,32 +14,23 @@ import {
 import { printLottoTickets, printStatistics } from "./view/output.js";
 
 const main = async () => {
-  const readline = createReadlineInterface();
+  const purchaseAmount = await getPurchaseAmount();
+  const lottoTickets = buyLottoTickets(purchaseAmount);
 
-  try {
-    const purchaseAmount = await getPurchaseAmount(readline);
-    const lottoTickets = buyLottoTickets(purchaseAmount);
+  printLottoTickets(lottoTickets);
 
-    printLottoTickets(lottoTickets);
+  const winnigNumbers = await getWinningNumbers();
+  const bonusNumber = await getBonusNumber(winnigNumbers);
 
-    const winnigNumbers = await getWinningNumbers(readline);
-    const bonusNumber = await getBonusNumber(readline);
+  const lottoGame = new LottoGame(winnigNumbers, bonusNumber);
 
-    const lottoGame = new LottoGame(winnigNumbers, bonusNumber);
+  const comparedResults = lottoTickets.map((lotto) =>
+    lottoGame.compareNumbers(lotto.numbers)
+  );
 
-    const comparedResults = lottoTickets.map((lotto) =>
-      lottoGame.compareNumbers(lotto.numbers)
-    );
+  const statistics = calculateStatistics(comparedResults);
 
-    const statistics = calculateStatistics(comparedResults);
-
-    printStatistics(statistics);
-  } catch (e) {
-    if (!(e instanceof Error)) return;
-    console.log(e.message);
-  } finally {
-    readline.close();
-  }
+  printStatistics(statistics);
 };
 
 main();
