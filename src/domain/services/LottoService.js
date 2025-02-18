@@ -14,6 +14,9 @@ export class LottoService {
   }
 
   setWinningNumbers(winningNumbers, bonusNumber) {
+    if (this.lottoResult) {
+      throw new Error("당첨 번호는 한 번만 설정할 수 있습니다.");
+    }
     this.lottoResult = new LottoResult(winningNumbers, bonusNumber);
   }
 
