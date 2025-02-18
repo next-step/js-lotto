@@ -59,6 +59,15 @@ async function main() {
   const totalWinning = LottoStatistics.totalWinning(finalResult);
   const roi = lottoStatistics.calculateROI(totalWinning);
   output.resultRoi(roi);
+
+  try {
+    const isRetry = await readLineInput.askRetry();
+    if (isRetry) {
+      main();
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export default main;
