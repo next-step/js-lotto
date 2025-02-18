@@ -23,6 +23,7 @@ export const printStatistics = ({ matchedCount, profitRate }) => {
   }
 
   console.log(`총 수익률은 ${profitRate.toFixed(1)}%입니다.`);
+  printNewLine();
 };
 
 const printMathcedResult = ({ resultKey, prize, count }) => {

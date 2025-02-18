@@ -5,6 +5,7 @@ import {
   validateBonusNumber,
   validateLottoNumbers,
 } from "../domain/validators/lottoValidator.js";
+import { validateRestartInput } from "../domain/validators/restartValidator.js";
 
 const withErrorBoundary = async (questionFn) => {
   const rl = readline.createInterface({ input, output });
@@ -54,5 +55,15 @@ export const getBonusNumber = (winningNumbers) => {
     validateBonusNumber(winningNumbers, bonusNumber);
 
     return bonusNumber;
+  });
+};
+
+export const askToRestartOrExit = async () => {
+  return withErrorBoundary(async (readline) => {
+    const input = await readline.question("> 다시 시작하시겠습니까? (y/n) ");
+
+    validateRestartInput(input);
+
+    return input;
   });
 };
