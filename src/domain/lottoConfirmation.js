@@ -12,12 +12,12 @@ class LottoConfirmation {
     #totalPrize;
     #lottoResult;
 
-    constructor(lottos, prizeLotto, bonusNum) {
+    constructor(lottos, prizeLotto) {
         this.#lottos = lottos;
         this.#totalPrize = 0;
         this.#lottoResult = new LottoResult();
 
-        this.#checkMatches(prizeLotto, bonusNum);
+        this.#checkMatches(prizeLotto.getPrizeLotto, prizeLotto.getBonusNum);
         this.#calculateTotalPrice();
     }
 
