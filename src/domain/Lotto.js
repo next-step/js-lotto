@@ -2,6 +2,7 @@ class Lotto {
   static LOTTO_MIN_NUMBER = 1;
   static LOTTO_MAX_NUMBER = 45;
   static LOTTO_LENGTH = 6;
+  static LOTTO_PRICE = 1000;
 
   #numbers = [];
 

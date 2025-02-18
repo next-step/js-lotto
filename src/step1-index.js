@@ -1,22 +1,21 @@
-import { generateLottoNumbers } from "./domain/generateLottoNumbers.js";
-import Lotto from "./domain/Lotto.js";
-import LottoResult from "./domain/LottoResult.js";
+import LottoWinning from "./domain/LottoWinning.js";
 import { buyLotto, makeLottoResult, rl } from "./ui/Input.js";
+import { printLottoWinningResult } from "./ui/Output.js";
 
 const main = async () => {
   const readlineInput = rl;
 
   try {
-    const lottoList = await buyLotto(readlineInput);
+    const lottoNumberList = await buyLotto(readlineInput);
     const lottoResult = await makeLottoResult(readlineInput);
-    const lottoWinningResult = lottoList.map((lotto) => {
-      return {
-        matchedNumber: lottoResult.matchResultNumbers(lotto),
-        isMatchedBonusNumber: lottoResult.matchBonusNumber(lotto),
-      };
+    const lottoWinningList = lottoNumberList.map((lottoNumber) => {
+      return new LottoWinning(
+        lottoNumber,
+        lottoResult.resultNumbers,
+        lottoResult.bonusNumber
+      );
     });
-    console.log("lottoWinningResult: ", lottoWinningResult);
-    // TODO: 로또 등수 확인
+    printLottoWinningResult(lottoWinningList);
   } catch (error) {
     console.log(error);
   } finally {
