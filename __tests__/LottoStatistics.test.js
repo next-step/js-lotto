@@ -21,10 +21,8 @@ describe("LottoStatistics", () => {
     const profitRate = statistics.calculateProfitRate();
 
     const expectedProfitRate = (
-      (0 * 2000000000 +
-        1 * 30000000 +
-        1 * 1500000 -
-        totalAmount / totalAmount) *
+      ((0 * 2000000000 + 1 * 30000000 + 1 * 1500000 - totalAmount) /
+        totalAmount) *
       100
     ).toFixed(1);
 
