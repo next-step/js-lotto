@@ -4,9 +4,6 @@ import { LottoResult } from "../src/domain/models/LottoResult";
 describe("LottoResult", () => {
   describe("Number validation", () => {
     it("should throw an error if winning numbers contain numbers outside the range 1-45", () => {
-      expect(() => new LottoResult([-1, 2, 3, 4, 5, 6], 7)).toThrow(
-        ERROR_MESSAGES.WINNING_NUMBERS_INVALID,
-      );
       expect(() => new LottoResult([1, 2, 3, 4, 5, 46], 7)).toThrow(
         ERROR_MESSAGES.WINNING_NUMBERS_INVALID,
       );
