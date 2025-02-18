@@ -19,19 +19,11 @@ export const isValidJackpot = (numbers) => {
 const getJackpotRank = (matchedNumbers, isBonus) => {
   const match = [matchedNumbers.length, isBonus ? 1 : 0];
 
-  return (() => {
-    if (equalArray(match, JACKPOT.RULES.FIRST.match))
-      return JACKPOT_RANKS.FIRST.number;
-    if (equalArray(match, JACKPOT.RULES.SECOND.match))
-      return JACKPOT_RANKS.SECOND.number;
-    if (equalArray(match, JACKPOT.RULES.THIRD.match))
-      return JACKPOT_RANKS.THIRD.number;
-    if (equalArray(match, JACKPOT.RULES.FOURTH.match))
-      return JACKPOT_RANKS.FOURTH.number;
-    if (equalArray(match, JACKPOT.RULES.FIFTH.match))
-      return JACKPOT_RANKS.FIFTH.number;
-    return 0;
-  })();
+  const rank = Object.entries(JACKPOT.RULES).find(([_, rank]) =>
+    equalArray(match, rank.match),
+  );
+
+  return rank ? JACKPOT.RANKS[rank[0]].number : 0;
 };
 
 export const getJackpotPrice = (rank) => {
