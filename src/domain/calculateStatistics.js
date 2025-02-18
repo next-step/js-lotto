@@ -1,12 +1,19 @@
 import { PRICE_PER_LOTTO, LOTTO_PRIZES } from "./constants.js";
 
 export const calculateStatistics = (comparedResults) => {
-  const matchedCount = new Map(
-    Object.keys(LOTTO_PRIZES).map((key) => [key, 0])
-  );
+  const matchedCount = new Map([
+    ["3", 0],
+    ["4", 0],
+    ["5", 0],
+    ["5bonus", 0],
+    ["6", 0],
+  ]);
 
   for (const result of comparedResults) {
-    updateMatchedCount(matchedCount, result);
+    updateMatchedCount(matchedCount, {
+      count: result.matchedNumbers.length,
+      isBonusMatched: result.isBonusMatched,
+    });
   }
 
   const totalPrize = [...matchedCount.keys()].reduce(
@@ -23,23 +30,23 @@ export const calculateStatistics = (comparedResults) => {
   };
 };
 
-const updateMatchedCount = (
-  matchedCount,
-  { matchedNumbers, isBonusMatched }
-) => {
-  const count = matchedNumbers.length;
-
-  let key = "";
-
-  if (count === 3 || count === 4 || count === 6) {
-    key = String(count);
-  } else if (count === 5 && isBonusMatched) {
-    key = "5bonus";
-  } else if (count === 5) {
-    key = String(count);
-  }
+const updateMatchedCount = (matchedCount, { count, isBonusMatched }) => {
+  const key = getMatchedKey(count, isBonusMatched);
 
   if (!matchedCount.has(key)) return;
 
   matchedCount.set(key, matchedCount.get(key) + 1);
+};
+
+const getMatchedKey = (count, isBonusMatched) => {
+  if (count === 3 || count === 4 || count === 6) {
+    return String(count);
+  }
+  if (count === 5 && isBonusMatched) {
+    return "5bonus";
+  }
+  if (count === 5) {
+    return String(count);
+  }
+  return undefined;
 };
