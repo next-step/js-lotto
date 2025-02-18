@@ -1,5 +1,7 @@
 import { getReward } from "../src/getRank.js";
 import Lotto, { buyLottos, calculateLottoTicketLimit } from "./lotto.js";
+
+import { computeTotalPrize, calculateLottoProfitRatio } from "./result.js";
 export const showLottoResult = (resultArr) => {
   for (let i = 3; i < 6; i++) {
     console.log(`${i}개 일치 (${getReward(8 - i)}원)- ${resultArr[7 - i]}개`);
@@ -9,10 +11,19 @@ export const showLottoResult = (resultArr) => {
 };
 
 export const showLottoNumbers = (lotto, amount) => {
-  lotto = new Lotto(amount);
   const ticketCount = calculateLottoTicketLimit(amount);
   buyLottos(ticketCount, lotto);
   for (let i = 0; i < ticketCount; i++) {
     console.log(lotto.numbers[i]);
   }
+};
+
+export const showLottoEarnings = (result, lotto) => {
+  console.log("당첨 통계");
+  console.log("--------------------------");
+  showLottoResult(result);
+
+  const prizeAmount = computeTotalPrize(result);
+  const profit = calculateLottoProfitRatio(prizeAmount, lotto.budget);
+  console.log(`총 수익률은 ${profit}%입니다.`);
 };

@@ -4,8 +4,6 @@ export default class Lotto {
     this.budget = budget;
     this.numbers = [];
   }
-
-  //도메인 로직
   makeNumbers() {
     const LOTTO_NUMBER_COUNT = 6;
     const numbers = new Array(45).fill().map((_, index) => index + 1);
