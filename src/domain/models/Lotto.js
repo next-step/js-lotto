@@ -27,16 +27,18 @@ export class Lotto {
   }
 
   generateLottoTickets() {
-    const tickets = new Set();
+    const tickets = new Map();
 
     while (tickets.size < this.numberOfTickets) {
       const newTicket = this.generateRandomUniqueNumbers();
+      const key = newTicket.join(",");
 
-      tickets.add(JSON.stringify(newTicket));
+      if (!tickets.has(key)) {
+        tickets.set(key, newTicket);
+      }
     }
 
-    // Set -> Array 변환
-    return Array.from(tickets).map((ticket) => JSON.parse(ticket));
+    return Array.from(tickets.values());
   }
 
   generateRandomUniqueNumbers() {
