@@ -1,4 +1,4 @@
-import Lotto from "../src/domain/lotto.js";
+import Lotto from "../src/domain/Lotto.js";
 
 describe("Lotto Class 테스트", () => {
     it("생성한 로또번호를 가져온다.", () => {

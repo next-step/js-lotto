@@ -1,4 +1,4 @@
-import Lotto from "./lotto.js";
+import Lotto from "./Lotto.js";
 
 class LottoMachine {
     static MINIMUM_PRICE_MESSAGE = "금액은 1000원 이상이여야 합니다.";
@@ -20,7 +20,7 @@ class LottoMachine {
     }
 
     #calculateLottoNum(price) {
-        return price / LottoMachine.LOTTO_PRICE;
+        return price / LottoMachine.LOTTO_PRICE
     }
 
     #outputAutoLotto() {

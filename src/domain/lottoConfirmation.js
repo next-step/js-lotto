@@ -1,4 +1,4 @@
-import LottoResult from "./lottoResult.js";
+import LottoResult from "./LottoResult.js";
 
 class LottoConfirmation {
 

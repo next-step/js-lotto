@@ -1,4 +1,4 @@
-import LottoResult from "../src/domain/lottoResult";
+import LottoResult from "../src/domain/LottoResult";
 
 describe("LottoResult Class 테스트", () => {
     
