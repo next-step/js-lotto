@@ -2,7 +2,7 @@ import {
   buyLottoTickets,
   InvalidPurchaseAmount,
 } from "../src/domain/buyLottoTickets";
-import Lotto from "../src/domain/Lotto";
+import LottoTicket from "../src/domain/LottoTicket";
 
 describe("buyLottoTickets 함수 테스트", () => {
   it("구입 금액에 따라 올바른 개수의 Lotto 객체 배열을 생성해야 한다.", () => {
@@ -11,7 +11,7 @@ describe("buyLottoTickets 함수 테스트", () => {
 
     expect(lottos).toHaveLength(5);
     lottos.forEach((lotto) => {
-      expect(lotto).toBeInstanceOf(Lotto);
+      expect(lotto).toBeInstanceOf(LottoTicket);
     });
   });
 
