@@ -36,7 +36,7 @@ export class LottoService {
   }
 
   getLottoStatistics() {
-    const rankCount = this.countWinningRanks();
+    const rankCount = this.lottoResult.getWinningRanks(this.tickets);
     const totalAmount = this.lotto.totalAmount;
     const statistics = new LottoStatistics(rankCount, totalAmount);
 
