@@ -4,9 +4,15 @@ class LottoMachine {
     static MINIMUM_PRICE_MESSAGE = "금액은 1000원 이상이여야 합니다.";
     static LOTTO_PRICE = 1000;
 
+    #lottos;
+
     constructor(price) {
         this.#confirmMinimumPrice(price);
-        this.lottos = this.#createLotto(this.#calculateLottoNum(price));
+        this.#lottos = this.#createLotto(this.#calculateLottoNum(price));
+    }
+
+    get getLottos() {
+        return this.#lottos;
     }
 
     #createLotto(lottoNum) {

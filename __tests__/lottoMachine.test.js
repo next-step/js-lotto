@@ -7,6 +7,6 @@ describe("LottoMachine Class 테스트", () => {
     
     it("2000원 입력 시 로또는 2장 생성된다.", () => {
         const lottoMachine = new LottoMachine(2000);
-        expect(lottoMachine.lottos.length).toEqual(2);
+        expect(lottoMachine.getLottos.length).toEqual(2);
     });
 });
