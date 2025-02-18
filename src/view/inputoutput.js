@@ -9,6 +9,8 @@ class InputOutput {
     INPUT_LOTTO: "로또 번호를 입력해 주세요.",
     INPUT_PRIZE_LOTTO: "당첨 번호를 입력해 주세요.",
     INPUT_BONUS_LOTTO: "보너스 번호를 입력해 주세요.",
+    INPUT_AUTO_MANUAL_EXCEPTION_MESSAGE: "자동(a), 수동(b)중 입력하십시오",
+    INPUT_YES_NO_EXCEPTION_MESSAGE: "(y/n) 중 입력하십시오",
     RESULT: "당첨통계",
     NEW_LINE: "\n",
     LINE: "--------------------",
@@ -37,15 +39,23 @@ class InputOutput {
   }
 
   async buyAutoOrManual(lottoMachine) {
-    const answer = await this.readline.question(this.messages.AUTO_MANUAL + this.messages.NEW_LINE);
-
-    if (answer.toLowerCase() === this.messages.AUTO) {
-      lottoMachine.buyAuto();
-      return;
-    } else if (answer.toLowerCase() === this.messages.MANUAL) {
-      const lottos = await Promise.all(Array.from({ length: lottoMachine.getLottoNum }, () => this.receivedLottoNum())).map(num => new Lotto(num));
-      lottoMachine.buyManual(lottos);
+    while (true) {
+      const answer = await this.readline.question(this.messages.AUTO_MANUAL + this.messages.NEW_LINE);
+      try {
+        return this.checkAutoOrManual(answer);
+      } catch (error) {
+        console.error(error.message);
+      }
     }
+  }
+
+  checkAutoOrManual(answer) {
+    if (answer.toLowerCase() === this.messages.AUTO) {
+      return true;
+    } else if (answer.toLowerCase() === this.messages.MANUAL) {
+      return false;
+    }
+    throw new Error(this.messages.INPUT_AUTO_MANUAL_EXCEPTION_MESSAGE)
   }
 
   async receivedLottoNum() {
@@ -107,8 +117,23 @@ class InputOutput {
   }
 
   async restart() {
-    const answer = await this.readline.question(this.messages.RESTART + this.messages.NEW_LINE);
-    return answer.toLowerCase() === this.messages.YES;
+    while (true) {
+      const answer = await this.readline.question(this.messages.RESTART + this.messages.NEW_LINE);
+      try {
+        return this.checkYesOrNo(answer);
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+  }
+
+  checkYesOrNo(answer) {
+    if (answer.toLowerCase() === this.messages.YES) {
+      return true;
+    } else if (answer.toLowerCase() === this.messages.NO) {
+      return false;
+    }
+    throw new Error(this.messages.INPUT_YES_NO_EXCEPTION_MESSAGE)
   }
 
   closeInterface() {

@@ -1,5 +1,5 @@
 import InputOutput from "./view/inputoutput.js";
-import LottoMachine from "./domain/LottoMachine.js";
+import LottoMachine from "./domain/lottoMachine.js";
 import LottoConfirmation from "./domain/lottoConfirmation.js";
 import PrizeLotto from "./domain/PrizeLotto.js";
 import Lotto from "./domain/Lotto.js";
@@ -13,7 +13,15 @@ const main = async () => {
 
         const lottoMachine = new LottoMachine(price);
 
-        await io.buyAutoOrManual(lottoMachine);
+        if (await io.b()) {
+            lottoMachine.buyAuto();
+        } else {
+            const lottos = [];
+            for (let i = 0; i < lottoMachine.getLottoNum; i++) {
+                lottos.push(new Lotto(await io.receivedLottoNum()));
+            }
+            lottoMachine.buyManual(lottos);
+        }
 
         io.printLottos(lottoMachine.getLottos);
 
