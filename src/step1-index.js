@@ -1,12 +1,7 @@
 import { LOTTO } from './domains/common/constants.js';
-import {
-  getLotto,
-  isValidBonusNumber,
-  isValidBonusNumber,
-} from './domains/common/utils.js';
+import { getLotto, isValidBonusNumber } from './domains/common/utils.js';
 import {
   calculateLottoResults,
-  getJackpotResult,
   getJackpotTotalAmount,
   isValidJackpot,
 } from './domains/jackpot/utils.js';

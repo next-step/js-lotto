@@ -11,7 +11,8 @@ export const isValidJackpot = (numbers) => {
   return (
     Array.isArray(numbers) &&
     numbers.length === LOTTO.SIZE &&
-    numbers.every(isValidLottoNumberRange)
+    numbers.every(isValidLottoNumberRange) &&
+    [...new Set(numbers)].length === LOTTO.SIZE
   );
 };
 
