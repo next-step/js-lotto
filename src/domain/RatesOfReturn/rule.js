@@ -1,4 +1,4 @@
-import { RULES } from "../../util/rule.js";
+import RULES from "../../util/rule.js";
 import WinningDetail from "../WinningDetail/index.js";
 
 const RATES_OF_RETURN_RULE = {

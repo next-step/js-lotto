@@ -1,4 +1,4 @@
-export const RULES = {
+const RULES = {
   MIN_TICKET_NUMBER: 1,
   MAX_TICKET_NUMBER: 45,
   MIN_LOTTO_PURCHASE_PRICE: 1000,
@@ -8,3 +8,5 @@ export const RULES = {
   WINNING_PERSON_INITIAL: 1,
   WINNING_PERSON_PLUS: 1,
 };
+
+export default RULES;

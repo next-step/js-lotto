@@ -21,6 +21,7 @@ describe("Ticket 클래스 - 로또 게임에서의 1장", () => {
       const ticket = new Ticket({
         numbers: [1, 2, 3, 4, 55],
       });
+      ticket.getNumbers();
     }).toThrow(ERROR_TICKET.WRONG_TICKET_INPUT);
 
     // then
@@ -28,6 +29,7 @@ describe("Ticket 클래스 - 로또 게임에서의 1장", () => {
       const ticket = new Ticket({
         numbers: [0, 5],
       });
+      ticket.getNumbers();
     }).toThrow(ERROR_TICKET.WRONG_TICKET_INPUT);
   });
 

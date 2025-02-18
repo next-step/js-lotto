@@ -1,8 +1,8 @@
 import Lotto from "../Lotto/index.js";
 import PurchaseHistory from "../PurchaseHistory/index.js";
 import { WINNING_KEY, WINNING_CONDITION_KEY } from "./rule.js";
-import { RULES } from "../../util/rule.js";
-import { ERROR_WINNING } from "./error.js";
+import RULES from "../../util/rule.js";
+import ERROR_WINNING from "./error.js";
 
 class WinningDetail {
   #winner;
@@ -59,8 +59,10 @@ class WinningDetail {
           return rankingObject;
         }
         if (curResult in rankingObject) {
+          // eslint-disable-next-line no-param-reassign
           rankingObject[curResult] += RULES.WINNING_PERSON_PLUS;
         } else {
+          // eslint-disable-next-line no-param-reassign
           rankingObject[curResult] = RULES.WINNING_PERSON_INITIAL;
         }
         return rankingObject;
