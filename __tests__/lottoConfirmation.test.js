@@ -9,34 +9,17 @@ describe("LottoConfirmation Class 테스트", () => {
         lottos = [{ lottoNumbers: [1, 2, 3, 4, 5, 6] }];
     });
 
-    it("로또와 당첨숫자를 입력받고, 1등 일시 2000000000원을 지급받는다.", () => {
-        const prizeLotto = new PrizeLotto([1, 2, 3, 4, 5, 6], 30);
-        const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto);
-        expect(lottoConfirmation.getTotalPrize).toEqual(2000000000);
-    });
-
-    it("로또와 당첨숫자를 입력받고, 2등 일시 30000000원을 지급받는다.", () => {
-        const prizeLotto = new PrizeLotto([1, 2, 3, 4, 5, 7], 6);
-        const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto);
-        expect(lottoConfirmation.getTotalPrize).toEqual(30000000);
-    });
-
-    it("로또와 당첨숫자를 입력받고, 3등 일시 1500000원을 지급받는다.", () => {
-        const prizeLotto = new PrizeLotto([1, 2, 3, 4, 5, 7], 30);
-        const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto);
-        expect(lottoConfirmation.getTotalPrize).toEqual(1500000);
-    });
-
-    it("로또와 당첨숫자를 입력받고, 4등 일시 50000원을 지급받는다.", () => {
-        const prizeLotto = new PrizeLotto([1, 2, 3, 5, 8, 9], 30);
-        const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto, 30);
-        expect(lottoConfirmation.getTotalPrize).toEqual(50000);
-    });
-
-    it("로또와 당첨숫자를 입력받고, 5등 일시 50000원을 지급받는다.", () => {
-        const prizeLotto = new PrizeLotto([1, 2, 3, 7, 8, 9], 30);
-        const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto, 30);
-        expect(lottoConfirmation.getTotalPrize).toEqual(5000);
-    });
+    test.each([
+        [[1, 2, 3, 4, 5, 6], 30, 2000000000],
+        [[1, 2, 3, 4, 5, 7], 6, 30000000],
+        [[1, 2, 3, 4, 5, 7], 30, 1500000],
+        [[1, 2, 3, 5, 8, 9], 30, 50000],
+        [[1, 2, 3, 7, 8, 9], 30, 5000],
+    ])("로또와 당첨숫자를 입력받고, %i 개수로 %i 원을 지급받는다.",
+        (prizeLottoNumbers, winningCount, expectedPrize) => {
+            const prizeLotto = new PrizeLotto(prizeLottoNumbers, winningCount);
+            const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto);
+            expect(lottoConfirmation.getTotalPrize).toEqual(expectedPrize);
+        });
 
 });
