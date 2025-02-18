@@ -1,4 +1,4 @@
-import LottoNumber from "./LottoNumber";
+import LottoNumber from "./LottoNumber.js";
 class Lotto { 
 
     static LOTTO_SIZE = 6;

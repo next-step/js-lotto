@@ -1,4 +1,4 @@
-import LottoNumber from "./LottoNumber";
+import LottoNumber from "./LottoNumber.js";
 class PrizeLotto {
 
     static MINIMUM_LOTTO_NUM = 1;
