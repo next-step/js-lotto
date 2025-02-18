@@ -10,7 +10,7 @@ export class LottoService {
   }
 
   getLottoTickets() {
-    return this.tickets;
+    return [...this.tickets];
   }
 
   setWinningNumbers(winningNumbers, bonusNumber) {
