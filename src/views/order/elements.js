@@ -1,5 +1,6 @@
 import { calculateLottoCount } from '../../domains/order/utils.js';
 import { isNumber, isPositiveInteger } from '../../utils/index.js';
+import ticketUrl from '../../assets/ticket.png';
 
 export const renderOrderAmountInput = (props) => {
   const { onClick } = props;
@@ -55,7 +56,7 @@ export const renderOrderLotto = (props) => {
   itemElement.style.gap = '8px';
 
   const imageElement = document.createElement('img');
-  imageElement.src = '/ticket.png';
+  imageElement.src = ticketUrl;
   imageElement.style.width = '32px';
   imageElement.style.height = '32px';
 
