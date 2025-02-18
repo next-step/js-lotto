@@ -20,7 +20,10 @@ const COUNT_KOREAN = "개";
 const RATE_OF_RETURN_MESSAGE = "총 수익률은";
 const RATE_OF_RETURN_END_MESSAGE = "%입니다.";
 
+const RESTART_MESSAGE = "다시 시작하시겠습니까? (y/n) ";
+
 const COMMA = ",";
+const YES = "y";
 
 export const createInterface = () => {
   return readline.createInterface({ input, output })
@@ -81,4 +84,9 @@ const printStatics = (lottoResult) => {
 
 export const printRateOfReturn = (rateOfReturn) => {
   console.log(RATE_OF_RETURN_MESSAGE + rateOfReturn + RATE_OF_RETURN_END_MESSAGE);
+}
+
+export const restart = async (readline) => {
+  const answer = await readline.question(RESTART_MESSAGE + NEW_LINE);
+  return answer.toLowerCase() === YES;
 }

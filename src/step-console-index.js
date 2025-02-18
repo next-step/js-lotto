@@ -1,7 +1,6 @@
 import * as io from "./view/inputoutput.js"
 import LottoMachine from "./domain/lottoMachine.js";
 import LottoConfirmation from "./domain/lottoConfirmation.js";
-import Lotto from "./domain/lotto.js";
 import PrizeLotto from "./domain/PrizeLotto.js";
 
 const main = async () => {
