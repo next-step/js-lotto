@@ -11,7 +11,7 @@ class LottoResult {
         this.#resultMap = new Map(); 
     }
     
-    getResults() {
+    get getResults() {
         return this.#resultMap;
     }
 

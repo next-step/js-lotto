@@ -25,16 +25,20 @@ class LottoConfirmation {
         return this.#totalPrize;
     }
 
+    get getLottoResults() {
+        return this.#lottoResult;
+    }
+
     #checkMatches(prizeLotto, bonusNum) {
         this.#lottos.forEach(lotto => {
-            const matchedCount = lotto.lottoNumbers.filter(number => prizeLotto.includes(number)).length;
-            const hasBonus = lotto.lottoNumbers.some(number => number === bonusNum);
+            const matchedCount = lotto.getLottoNumbers.filter(number => prizeLotto.includes(number)).length;
+            const hasBonus = lotto.getLottoNumbers.some(number => number === bonusNum);
             this.#lottoResult.addResult(matchedCount, hasBonus);
         });
     }
 
     #calculateTotalPrice() {
-        this.#lottoResult.getResults().forEach((count, matchedCount) => {
+        this.#lottoResult.getResults.forEach((count, matchedCount) => {
             switch (matchedCount) {
                 case 3:
                     this.#totalPrize += LottoConfirmation.THREE_MATCH_PRICE * count;

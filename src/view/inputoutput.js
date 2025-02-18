@@ -45,7 +45,7 @@ export const splitComma = (str, separator) => {
 
 export const printLottos = (lottos) => {
   for (const lotto of lottos) {
-    console.log(lotto.lottoNumbers);
+    console.log(lotto.getLottoNumbers);
   }
 }
 
@@ -56,7 +56,7 @@ export const lottoResult = (lottoResult) => {
 }
 
 const printStatics = (lottoResult) => {
-  lottoResult.resultMap.forEach((count, matchedCount) => {
+  lottoResult.getResults.forEach((count, matchedCount) => {
     switch (matchedCount) {
       case 3:
         console.log(THREE_MESSAGE + count + COUNT_KOREAN + NEW_LINE);
