@@ -19,14 +19,6 @@ class LottoResult {
     return this.#bonusNumber;
   }
 
-  matchResultNumbers(lottoNumber) {
-    return lottoNumber.filter((number) => this.#resultNumbers.includes(number));
-  }
-
-  matchBonusNumber(lottoNumber) {
-    return lottoNumber.includes(this.#bonusNumber);
-  }
-
   #validateLottoResult(lotto, bonusNumber) {
     if (!(lotto instanceof Lotto)) {
       throw new Error("lotto는 Lotto클래스의 인스턴스가 아닙니다.");
