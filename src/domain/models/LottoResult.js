@@ -1,4 +1,8 @@
-import { ERROR_MESSAGES, LOTTO_NUMBERS_COUNT } from "../../constants.js";
+import {
+  ERROR_MESSAGES,
+  LOTTO_NUMBERS_COUNT,
+  LOTTO_NUMBER_RANGE,
+} from "../../constants.js";
 import {
   isDuplicateNumbersInArray,
   isValidLottoNumber,
@@ -63,7 +67,7 @@ export class LottoResult {
   }
 
   validateNumbers(winningNumbers, bonusNumber) {
-    if (!isValidLottoNumbersArray(winningNumbers)) {
+    if (!isValidLottoNumbersArray(winningNumbers, LOTTO_NUMBER_RANGE)) {
       throw new Error(ERROR_MESSAGES.WINNING_NUMBERS_INVALID);
     }
     if (winningNumbers.length !== LOTTO_NUMBERS_COUNT) {
@@ -75,7 +79,7 @@ export class LottoResult {
     if (isDuplicateNumbersInArray(winningNumbers, bonusNumber)) {
       throw new Error(ERROR_MESSAGES.BONUS_NUMBER_DUPLICATE);
     }
-    if (!isValidLottoNumber(bonusNumber)) {
+    if (!isValidLottoNumber(bonusNumber, LOTTO_NUMBER_RANGE)) {
       throw new Error(ERROR_MESSAGES.BONUS_NUMBER_INVALID);
     }
   }

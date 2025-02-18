@@ -1,9 +1,11 @@
-export function isValidLottoNumber(num) {
-  return Number.isInteger(num) && num >= 1 && num <= 45;
+export function isValidLottoNumber(num, range) {
+  return Number.isInteger(num) && num >= range.min && num <= range.max;
 }
 
-export function isValidLottoNumbersArray(arr) {
-  return Array.isArray(arr) && arr.every(isValidLottoNumber);
+export function isValidLottoNumbersArray(arr, range) {
+  return (
+    Array.isArray(arr) && arr.every((num) => isValidLottoNumber(num, range))
+  );
 }
 
 export function isDuplicateNumbersInArray(winningNumbers, bonusNumber) {

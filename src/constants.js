@@ -1,6 +1,6 @@
 export const LOTTO_PRICE = 1000;
 export const LOTTO_NUMBERS_COUNT = 6;
-export const LOTTO_MAX_NUMBER = 45;
+export const LOTTO_NUMBER_RANGE = { min: 1, max: 45 };
 
 export const ERROR_MESSAGES = {
   PURCHASE_INVALID_AMOUNT: "Amount must be greater than 0.",

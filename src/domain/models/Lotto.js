@@ -1,6 +1,6 @@
 import {
   ERROR_MESSAGES,
-  LOTTO_MAX_NUMBER,
+  LOTTO_NUMBER_RANGE,
   LOTTO_NUMBERS_COUNT,
   LOTTO_PRICE,
 } from "../../constants.js";
@@ -43,7 +43,7 @@ export class Lotto {
 
   generateRandomUniqueNumbers() {
     const numberPool = Array.from(
-      { length: LOTTO_MAX_NUMBER },
+      { length: LOTTO_NUMBER_RANGE.max },
       (_, i) => i + 1,
     );
 
