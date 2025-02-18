@@ -1,26 +1,13 @@
 import readline from "readline";
-
-export const checkInputTypeIsNumber = (input) => {
-  return !Number.isNaN(Number(input));
-};
-
-export const checkCanBuyLotto = (input) => {
-  return Number(input) >= 1000;
-};
-
-export const checkAllInputsTypeisNumber = (input) => {
-  const inputArr = input.split(",");
-
-  return inputArr.every((item) => checkInputTypeIsNumber(item));
-};
-export const checkInputsLengthValid = (input) => {
-  const inputArr = input.split(",");
-
-  return inputArr.length === 6;
-};
-export const checkBounsValid = (input) => {
-  return input > 0 && input < 45;
-};
+import {
+  checkInputTypeIsNumber,
+  checkCanBuyLotto,
+  checkAllInputsTypeisNumber,
+  checkInputsLengthValid,
+  checkBonusValid,
+  checkUserAnswerValid,
+  checkUserAnswer,
+} from "./checkValidation.js";
 
 export function readLineAsync(query) {
   return new Promise((resolve, reject) => {
@@ -32,12 +19,12 @@ export function readLineAsync(query) {
     rl.question(query, (input) => {
       rl.close();
       if (!checkInputTypeIsNumber(input)) {
-        reject(new Error("숫자만 입력해주세요."));
-        if (!checkCanBuyLotto(input)) {
-          reject(new Error("1000 이상의 금액을 넣어주세요요."));
-        }
-        return;
+        return reject(new Error("숫자만 입력해주세요."));
       }
+      if (!checkCanBuyLotto(input)) {
+        return reject(new Error("1000 이상의 금액을 넣어주세요."));
+      }
+
       resolve(input);
     });
   });
@@ -52,19 +39,17 @@ export function getWinningNumbers(query) {
     rl.question(query, (input) => {
       rl.close();
       if (!checkInputsLengthValid(input)) {
-        reject(new Error("숫자를 쉼표(,)로 구분해서 6개 입력해주세요"));
-        return;
+        return reject(new Error("숫자를 쉼표(,)로 구분해서 6개 입력해주세요"));
       }
       if (!checkAllInputsTypeisNumber(input)) {
-        reject(new Error("숫자만 입력해주세요."));
-        return;
+        return reject(new Error("숫자만 입력해주세요."));
       }
       resolve(input);
     });
   });
 }
 
-export function getBounsNumber(query) {
+export function getBonusNumber(query) {
   return new Promise((resolve, reject) => {
     const rl = readline.createInterface({
       input: process.stdin,
@@ -74,12 +59,29 @@ export function getBounsNumber(query) {
     rl.question(query, (input) => {
       rl.close();
       if (!checkAllInputsTypeisNumber(input)) {
-        reject(new Error("숫자만 입력해주세요."));
-        return;
+        return reject(new Error("숫자만 입력해주세요."));
       }
-      if (!checkBounsValid(input)) {
-        reject(new Error("1 - 45 까지의 숫자만 입력해주세요."));
-        return;
+      if (!checkBonusValid(input)) {
+        return reject(new Error("1 - 45 까지의 숫자만 입력해주세요."));
+      }
+      resolve(input);
+    });
+  });
+}
+export function IsUserRetry() {
+  return new Promise((resolve, reject) => {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+
+    rl.question("다시 시작하시겠습니까? (y/n) ", (input) => {
+      rl.close();
+      if (!checkUserAnswerValid(input)) {
+        return reject(new Error("y와 n 중 하나의 값을 입력하세요."));
+      }
+      if (!checkBonusValid(input)) {
+        return reject(new Error("1 - 45 까지의 숫자만 입력해주세요."));
       }
       resolve(input);
     });
