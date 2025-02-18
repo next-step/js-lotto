@@ -28,8 +28,8 @@ async function main() {
   output.printEnter();
 
   const lottoResult = await executeWithRetry(
-    (winningData) =>
-      new LottoResult(winningData.winningNumbers, winningData.bonusNumber),
+    ({ winningNumbers, bonusNumber }) =>
+      new LottoResult({ winningNumbers, bonusNumber, tickets }),
     {
       askFunc: async () => {
         const winningNumbers = await readLineInput.askWinningNumbers();
