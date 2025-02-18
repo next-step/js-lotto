@@ -6,8 +6,14 @@ class LottoPurchaseError extends Error {
 
 export default class Lotto {
   static PRICE_PER_LOTTO = 1000;
+  static NUMBERS_PER_LOTTO = 6;
 
-  purchasedLottos;
+  static NUMBER_MIN_RANGE = 1;
+  static NUMBER_MAX_RANGE = 45;
+
+  purchasedLottos = [];
+
+  constructor() {}
 
   static validatePurchaseAmount(purchaseAmount) {
     if (
@@ -18,19 +24,23 @@ export default class Lotto {
     }
   }
 
-  issueLotto() {
-    return [1, 2, 3, 4, 5];
+  issue() {
+    return Array.from({ length: Lotto.NUMBERS_PER_LOTTO }, () =>
+      Math.floor(
+        Math.random() * (Lotto.NUMBER_MAX_RANGE - Lotto.NUMBER_MIN_RANGE + 1) +
+          Lotto.NUMBER_MIN_RANGE
+      )
+    );
   }
 
   purchase(purchaseAmount) {
     Lotto.validatePurchaseAmount(purchaseAmount);
 
     const quantity = purchaseAmount / Lotto.PRICE_PER_LOTTO;
+    const newLottos = Array.from({ length: quantity }, () => this.issue());
 
-    this.purchasedLottos = Array.from({ length: quantity }, () =>
-      this.issueLotto()
-    );
+    this.purchasedLottos = this.purchasedLottos.concat(newLottos);
 
-    return this.purchasedLottos.map((lotto) => [...lotto]);
+    return newLottos.map((lotto) => [...lotto]);
   }
 }
