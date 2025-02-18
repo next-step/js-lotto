@@ -34,8 +34,8 @@ const handleReset = () => {
 
   root.appendChild(renderMainTitle());
   root.appendChild(renderOrderAmountInput({ onClick: handleClickLottoCount }));
-  root.appendChild(renderOrderedLottos({ lottos }));
-  root.appendChild(renderJackpotForm({ onClick: handleClickJackpotResult }));
+  // root.appendChild(renderOrderedLottos({ lottos }));
+  // root.appendChild(renderJackpotForm({ onClick: handleClickJackpotResult }));
 };
 
 const handleClickLottoCount = (amount, orderCount) => {
@@ -45,9 +45,11 @@ const handleClickLottoCount = (amount, orderCount) => {
     getLotto([...LOTTO.NUMBERS]),
   );
 
-  document
-    .querySelector('.lottos__container')
-    .replaceWith(renderOrderedLottos({ lottos }));
+  root.appendChild(renderOrderedLottos({ lottos }));
+  root.appendChild(renderJackpotForm({ onClick: handleClickJackpotResult }));
+  // document
+  //   .querySelector('.lottos__container')
+  //   .replaceWith(renderOrderedLottos({ lottos }));
 };
 
 const handleClickJackpotResult = (jackpotNumbers, bonusNumber) => {
@@ -72,5 +74,3 @@ const handleClickJackpotResult = (jackpotNumbers, bonusNumber) => {
 };
 
 root.appendChild(renderOrderAmountInput({ onClick: handleClickLottoCount }));
-root.appendChild(renderOrderedLottos({ lottos }));
-root.appendChild(renderJackpotForm({ onClick: handleClickJackpotResult }));
