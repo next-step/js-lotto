@@ -7,18 +7,28 @@ import {
 } from "../domain/validators/lottoValidator.js";
 import { validateRestartInput } from "../domain/validators/restartValidator.js";
 
+const handleError = (e) => {
+  if (!(e instanceof Error)) return;
+  console.log(e.message);
+};
+
+const askQuestion = async (questionFn, rl) => {
+  try {
+    const userInput = await questionFn(rl);
+    return userInput;
+  } catch (e) {
+    handleError(e);
+  }
+};
+
 const withErrorBoundary = async (questionFn) => {
   const rl = readline.createInterface({ input, output });
 
   while (true) {
-    try {
-      const userInput = await questionFn(rl);
-      rl.close();
-      return userInput;
-    } catch (e) {
-      if (!(e instanceof Error)) return;
-      console.log(e.message);
-    }
+    const userInput = await askQuestion(questionFn, rl);
+    if (userInput === undefined) continue;
+    rl.close();
+    return userInput;
   }
 };
 
