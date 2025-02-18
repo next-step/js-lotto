@@ -1,92 +1,119 @@
+import * as readline from 'node:readline/promises';
+import { stdin as input, stdout as output } from 'node:process';
+import Lotto from '../domain/Lotto.js';
 
-import * as readline from 'node:readline/promises'
-import { stdin as input, stdout as output } from 'node:process'
+class InputOutput {
+  messages = {
+    INPUT_MONEY: "구입금액을 입력해 주세요.",
+    AUTO_MANUAL: "자동(a), 수동(b)",
+    INPUT_LOTTO: "로또 번호를 입력해 주세요.",
+    INPUT_PRIZE_LOTTO: "당첨 번호를 입력해 주세요.",
+    INPUT_BONUS_LOTTO: "보너스 번호를 입력해 주세요.",
+    RESULT: "당첨통계",
+    NEW_LINE: "\n",
+    LINE: "--------------------",
+    THREE: "3개 일치 (5,000원) - ",
+    FOUR: "4개 일치 (50,000원) - ",
+    FIVE: "5개 일치 (1,500,000원) - ",
+    FIVE_BONUS: "5개 일치, 보너스 볼 일치 (30,000,000원) - ",
+    SIX: "6개 일치 (2,000,000,000원) - ",
+    COUNT_KOREAN: "개",
+    RATE_OF_RETURN: "총 수익률은",
+    RATE_OF_RETURN_END: "%입니다.",
+    RESTART: "다시 시작하시겠습니까? (y/n)",
+    COMMA: ",",
+    YES: "y",
+    NO: "n",
+    AUTO: "a",
+    MANUAL: "b"
+  };
 
-const INPUT_MONEY_MESSAGE = "구입금액을 입력해 주세요.";
-const INPUT_PRICE_LOTTO_MESSAGE = "당첨 번호를 입력해 주세요.";
-const INPUT_BONUS_LOTTO_MESSAGE = "보너스 번호를 입력해 주세요.";
-const RESULT_MESSAGE = "당첨통계"
-const NEW_LINE = "\n";
-const LINE = "--------------------"
+  constructor() {
+    this.readline = readline.createInterface({ input, output });
+  }
 
-const THREE_MESSAGE = "3개 일치 (5,000원) - ";
-const FOUR_MESSAGE = "4개 일치 (50,000원) - ";
-const FIVE_MESSAGE = "5개 일치 (1,500,000원) - ";
-const FIVE_BONUS_MESSAGE = "5개 일치, 보너스 볼 일치 (30,000,000원) - ";
-const SIX_MESSAGE = "6개 일치 (2,000,000,000원) - ";
+  async receivedPrice() {
+    return await this.readline.question(this.messages.INPUT_MONEY + this.messages.NEW_LINE);
+  }
 
-const COUNT_KOREAN = "개";
+  async buyAutoOrManual(lottoMachine) {
+    const answer = await this.readline.question(this.messages.AUTO_MANUAL + this.messages.NEW_LINE);
 
-const RATE_OF_RETURN_MESSAGE = "총 수익률은";
-const RATE_OF_RETURN_END_MESSAGE = "%입니다.";
+    if (answer.toLowerCase() === this.messages.AUTO) {
+      lottoMachine.buyAuto();
+      return;
+    } else if (answer.toLowerCase() === this.messages.MANUAL) {
+      const lottos = await Promise.all(Array.from({ length: lottoMachine.getLottoNum }, () => this.receivedLottoNum())).map(num => new Lotto(num));
+      lottoMachine.buyManual(lottos);
+    }
+  }
 
-const RESTART_MESSAGE = "다시 시작하시겠습니까? (y/n) ";
+  async receivedLottoNum() {
+    const input = await this.readline.question(this.messages.INPUT_LOTTO + this.messages.NEW_LINE);
+    return this.splitComma(input, this.messages.COMMA);
+  }
 
-const COMMA = ",";
-const YES = "y";
+  async receivedPrizeLottoNum() {
+    const input = await this.readline.question(this.messages.INPUT_PRIZE_LOTTO + this.messages.NEW_LINE);
+    return this.splitComma(input, this.messages.COMMA);
+  }
 
-export const createInterface = () => {
-  return readline.createInterface({ input, output })
-}
+  async receivedBonusLottoNum() {
+    return await this.readline.question(this.messages.INPUT_BONUS_LOTTO + this.messages.NEW_LINE);
+  }
 
-export const receivedPrice = async (readline) => {
-  return await readline.question(INPUT_MONEY_MESSAGE + NEW_LINE)
-}
+  splitComma(str, separator) {
+    return str.split(separator).map(numStr => Number(numStr.trim()));
+  }
 
-export const receivedPrizeLottoNum = async (readline) => {
-  const input = await readline.question(INPUT_PRICE_LOTTO_MESSAGE + NEW_LINE);
-  return splitComma(input, COMMA);
-}
+  printLottos(lottos) {
+    for (const lotto of lottos) {
+      console.log(lotto.getLottoNumbers);
+    }
+  }
 
-export const receivedBonusLottoNum = async (readline) => {
-  return await readline.question(INPUT_BONUS_LOTTO_MESSAGE + NEW_LINE);
-}
+  lottoResult(lottoResult) {
+    console.log(this.messages.NEW_LINE + this.messages.RESULT + this.messages.NEW_LINE);
+    console.log(this.messages.LINE + this.messages.NEW_LINE);
+    this.printStatics(lottoResult);
+  }
 
-export const splitComma = (str, separator) => {
-  return str.split(separator).map(numStr => Number(numStr.trim()));
-}
+  printStatics(lottoResult) {
+    lottoResult.getResultMap.forEach((count, matchedCount) => {
+      switch (matchedCount) {
+        case 3:
+          console.log(this.messages.THREE + count + this.messages.COUNT_KOREAN + this.messages.NEW_LINE);
+          break;
+        case 4:
+          console.log(this.messages.FOUR + count + this.messages.COUNT_KOREAN + this.messages.NEW_LINE);
+          break;
+        case 5:
+          console.log(this.messages.FIVE + count + this.messages.COUNT_KOREAN + this.messages.NEW_LINE);
+          break;
+        case 6:
+          console.log(this.messages.FIVE_BONUS + count + this.messages.COUNT_KOREAN + this.messages.NEW_LINE);
+          break;
+        case 7:
+          console.log(this.messages.SIX + count + this.messages.COUNT_KOREAN + this.messages.NEW_LINE);
+          break;
+        default:
+          break;
+      }
+    });
+  }
 
-export const printLottos = (lottos) => {
-  for (const lotto of lottos) {
-    console.log(lotto.getLottoNumbers);
+  printRateOfReturn(rateOfReturn) {
+    console.log(this.messages.RATE_OF_RETURN + rateOfReturn + this.messages.RATE_OF_RETURN_END);
+  }
+
+  async restart() {
+    const answer = await this.readline.question(this.messages.RESTART + this.messages.NEW_LINE);
+    return answer.toLowerCase() === this.messages.YES;
+  }
+
+  closeInterface() {
+    return this.readline.close();
   }
 }
 
-export const lottoResult = (lottoResult) => {
-  console.log(NEW_LINE + RESULT_MESSAGE + NEW_LINE);
-  console.log(LINE + NEW_LINE);
-  printStatics(lottoResult);
-}
-
-const printStatics = (lottoResult) => {
-  lottoResult.getResults.forEach((count, matchedCount) => {
-    switch (matchedCount) {
-      case 3:
-        console.log(THREE_MESSAGE + count + COUNT_KOREAN + NEW_LINE);
-        break;
-      case 4:
-        console.log(FOUR_MESSAGE + count + COUNT_KOREAN + NEW_LINE);
-        break;
-      case 5:
-        console.log(FIVE_MESSAGE + count + COUNT_KOREAN + NEW_LINE);
-        break;
-      case 6:
-        console.log(FIVE_BONUS_MESSAGE + count + COUNT_KOREAN + NEW_LINE);
-        break;
-      case 7:
-        console.log(SIX_MESSAGE + count + COUNT_KOREAN + NEW_LINE);
-        break;
-      default:
-        break;
-    }
-  });
-}
-
-export const printRateOfReturn = (rateOfReturn) => {
-  console.log(RATE_OF_RETURN_MESSAGE + rateOfReturn + RATE_OF_RETURN_END_MESSAGE);
-}
-
-export const restart = async (readline) => {
-  const answer = await readline.question(RESTART_MESSAGE + NEW_LINE);
-  return answer.toLowerCase() === YES;
-}
+export default InputOutput;
