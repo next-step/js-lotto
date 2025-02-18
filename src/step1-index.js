@@ -5,6 +5,7 @@
 
 import { buyLottoTickets } from "./domain/buyLottoTickets.js";
 import { calculateStatistics } from "./domain/calculateStatistics.js";
+import LottoGame from "./domain/LottoGame.js";
 import {
   createReadlineInterface,
   getBonusNumber,
@@ -25,8 +26,10 @@ const main = async () => {
     const winnigNumbers = await getWinningNumbers(readline);
     const bonusNumber = await getBonusNumber(readline);
 
+    const lottoGame = new LottoGame(winnigNumbers, bonusNumber);
+
     const comparedResults = lottoTickets.map((lotto) =>
-      lotto.compareNumbers(winnigNumbers, bonusNumber)
+      lottoGame.compareNumbers(lotto.numbers)
     );
 
     const statistics = calculateStatistics(comparedResults);
