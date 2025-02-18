@@ -13,22 +13,22 @@ async function main() {
   const lotto = new Lotto(price, LottoTicket.makeLotto);
   const tickets = lotto.getLottoTicket();
 
-  console.log(readLineInput.sayPurchase(lotto.getTicketAmount()));
+  readLineInput.sayPurchase(lotto.getTicketAmount());
 
   tickets.forEach((ticket) => {
-    console.log(output.printGetLottoTicket(ticket));
+    output.printGetLottoTicket(ticket);
   });
 
-  console.log("\n");
+  output.printEnter();
 
   const winningNumbers = await readLineInput.askWinningNumbers();
-  console.log("\n");
+  output.printEnter();
   const bonusNumber = await readLineInput.askBonusNumbers();
-  console.log("\n");
+  output.printEnter();
 
-  console.log(output.printResult());
+  output.printResult();
 
-  console.log(output.printDriven());
+  output.printDriven();
 
   const lottoResult = new LottoResult(winningNumbers, bonusNumber);
 
@@ -42,12 +42,12 @@ async function main() {
   });
 
   const finalResult = lottoStatistics.setLottoResult();
-  console.log(output.lottoStatisticsPrint(finalResult));
+  output.lottoStatisticsPrint(finalResult);
 
   const totalWinning = LottoStatistics.totalWinning(finalResult);
 
   const roi = lottoStatistics.calculateROI(totalWinning);
-  console.log(output.resultRoi(roi));
+  output.resultRoi(roi);
 }
 
 export default main;

@@ -7,6 +7,7 @@ class ReadLineInput {
   }
 
   sayPurchase(number) {
+    console.log(`${number}개를 구매했습니다.`);
     return `${number}개를 구매했습니다.`;
   }
 
@@ -14,7 +15,7 @@ class ReadLineInput {
     const winningNumbers = await this.readLineAsync(
       "당첨 번호를 입력해 주세요."
     );
-
+    console.log(winningNumbers);
     return winningNumbers;
   }
 
@@ -22,7 +23,7 @@ class ReadLineInput {
     const bonusNumbers = await this.readLineAsync(
       "보너스 번호를 입력해 주세요."
     );
-
+    console.log(Number(bonusNumbers));
     return Number(bonusNumbers);
   }
 
