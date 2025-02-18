@@ -5,8 +5,11 @@ import { LottoStatistics } from "../models/LottoStatistics.js";
 export class LottoService {
   constructor(totalAmount) {
     this.lotto = new Lotto(totalAmount);
-    this.tickets = this.lotto.generateLottoTickets();
     this.lottoResult = null;
+  }
+
+  generateTickets() {
+    this.tickets = this.lotto.generateLottoTickets();
   }
 
   getLottoTickets() {

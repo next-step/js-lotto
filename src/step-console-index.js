@@ -20,6 +20,8 @@ async function main() {
     const amount = await getPurchaseAmount();
     const lottoService = new LottoService(amount);
 
+    lottoService.generateTickets();
+
     const tickets = lottoService.getLottoTickets();
     printLottoTickets(tickets);
 
