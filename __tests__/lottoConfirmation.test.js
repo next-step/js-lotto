@@ -1,12 +1,13 @@
 import LottoConfirmation from "../src/domain/LottoConfirmation";
 import PrizeLotto from "../src/domain/PrizeLotto";
+import Lotto from "../src/domain/Lotto";
 
 describe("LottoConfirmation Class 테스트", () => {
 
     let lottos;
 
     beforeEach(() => {
-        lottos = [{ lottoNumbers: [1, 2, 3, 4, 5, 6] }];
+        lottos = [new Lotto([1, 2, 3, 4, 5, 6])];
     });
 
     it.each(
@@ -31,6 +32,13 @@ describe("LottoConfirmation Class 테스트", () => {
         const prizeLotto = new PrizeLotto([1, 2, 3, 4, 5, 6], 30);
         const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto);
         expect(lottoConfirmation.calculateRateOfReturn(5000)).toEqual(40000000);
+    });
+
+    it("로또 1장 구입 후 1등 당첨시에 로또 결과를 검증한다.", () => {
+        const prizeLotto = new PrizeLotto([1, 2, 3, 4, 5, 6], 30);
+        const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto);
+
+        expect(lottoConfirmation.getLottoResults.getResultMap.get(7)).toEqual(1);
     });
 
 });

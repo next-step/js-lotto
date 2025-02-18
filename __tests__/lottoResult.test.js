@@ -9,7 +9,7 @@ describe("LottoResult Class 테스트", () => {
 
         console.log(lottoResult);
 
-        expect(lottoResult.getResults().get(1)).toEqual(2);
+        expect(lottoResult.getResultMap.get(1)).toEqual(2);
     });
     
 });
