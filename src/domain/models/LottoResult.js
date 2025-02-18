@@ -39,6 +39,29 @@ export class LottoResult {
     return { rank: 0 };
   }
 
+  calculateAllRanks(tickets) {
+    return tickets.map((ticket) => this.calculateRank(ticket));
+  }
+
+  getWinningRanks(tickets) {
+    const results = this.calculateAllRanks(tickets);
+    const rankCount = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    };
+
+    results.forEach(({ rank }) => {
+      if (rank > 0) {
+        rankCount[rank] += 1;
+      }
+    });
+
+    return rankCount;
+  }
+
   validateNumbers(winningNumbers, bonusNumber) {
     if (!isValidLottoNumbersArray(winningNumbers)) {
       throw new Error(ERROR_MESSAGES.WINNING_NUMBERS_INVALID);

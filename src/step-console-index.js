@@ -28,8 +28,8 @@ async function main() {
 
     lottoService.setWinningNumbers(winningNumbers, bonusNumber);
 
-    const rankCount = lottoService.countWinningRanks();
-    printLottoResults(rankCount);
+    const winningRanks = lottoService.getWinningRanks();
+    printLottoResults(winningRanks);
 
     const profitRate = lottoService.getLottoStatistics();
     printProfitRate(profitRate);
