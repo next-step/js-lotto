@@ -25,10 +25,6 @@ class LottoConfirmation {
         return this.#totalPrize;
     }
 
-    get getLottoResult() {
-        return this.#lottoResult;
-    }
-
     #checkMatches(prizeLotto, bonusNum) {
         this.#lottos.forEach(lotto => {
             const matchedCount = lotto.lottoNumbers.filter(number => prizeLotto.includes(number)).length;
