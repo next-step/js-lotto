@@ -7,11 +7,8 @@ export const renderJackpotStatisticDialog = (props) => {
   dialogElement.open = true;
 
   const closeElement = document.createElement('span');
+  closeElement.className = 'close__icon';
   closeElement.textContent = 'X';
-  closeElement.style.display = 'block';
-  closeElement.style.textAlign = 'right';
-  closeElement.style.fontSize = '24px';
-  closeElement.style.fontWeight = 'bold';
   closeElement.onclick = () => {
     dialogElement.close();
     dialogElement.remove();
@@ -19,6 +16,7 @@ export const renderJackpotStatisticDialog = (props) => {
 
   const titleElement = document.createElement('h2');
   titleElement.textContent = '🏆 당첨 통계 🏆';
+  titleElement.style.textAlign = 'center';
 
   const tableElement = document.createElement('table');
 
@@ -47,8 +45,12 @@ export const renderJackpotStatisticDialog = (props) => {
 
   const profitElement = document.createElement('p');
   profitElement.textContent = `당신의 총 수익률은 ${profitRate}%입니다.`;
+  profitElement.style.textAlign = 'center';
+  profitElement.style.padding = '12px 0';
+  profitElement.style.fontWeight = 'bold';
 
   const buttonElement = document.createElement('button');
+  buttonElement.style.width = '100%';
   buttonElement.textContent = '다시 시작하기';
   buttonElement.onclick = () => {
     onClick();

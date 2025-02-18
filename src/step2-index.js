@@ -16,6 +16,8 @@ import {
 } from './views/order/elements.js';
 import { renderJackpotStatisticDialog } from './views/statistics/elements.js';
 
+import '../styles/index.css';
+
 let orderAmount = 0;
 let lottos = [];
 

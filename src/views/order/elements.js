@@ -47,17 +47,23 @@ export const renderOrderAmountInput = (props) => {
   return containerElement;
 };
 
-export const renderOrderLotto = (lotto, index) => {
+export const renderOrderLotto = (props) => {
+  const { lotto } = props;
   const itemElement = document.createElement('li');
+  itemElement.style.display = 'flex';
+  itemElement.style.alignItems = 'center';
+  itemElement.style.gap = '8px';
 
-  const imageElement = document.createElement('span');
-  imageElement.textContent = `${index + 1}: `;
+  const imageElement = document.createElement('img');
+  imageElement.src = '/ticket.png';
+  imageElement.style.width = '32px';
+  imageElement.style.height = '32px';
 
   const textElement = document.createElement('span');
   textElement.textContent = lotto.join(', ');
 
   itemElement.appendChild(imageElement);
-  imageElement.appendChild(textElement);
+  itemElement.appendChild(textElement);
 
   return itemElement;
 };
@@ -78,8 +84,8 @@ export const renderOrderedLottos = (props) => {
   listElement.style.height = '200px';
   listElement.style.overflowY = 'auto';
 
-  clonedLottos.forEach((lotto, index) => {
-    listElement.appendChild(renderOrderLotto(lotto, index));
+  clonedLottos.forEach((lotto) => {
+    listElement.appendChild(renderOrderLotto({ lotto }));
   });
 
   containerElement.appendChild(labelElement);

@@ -1,0 +1,49 @@
+body {
+  padding: 12px;
+  font-size: 1.2rem;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  margin-bottom: 4px;
+}
+
+table {
+  text-align: center;
+}
+
+th,
+td {
+  padding: 8px;
+  border-top: 1px solid lightgray;
+}
+
+input {
+  padding-left: 4px;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+button {
+  padding: 12px 10px;
+  border: 0;
+  border-radius: 4px;
+  font-size: 16px;
+  color: white;
+  background-color: #5866af;
+}
+
+dialog {
+  border: 2px solid lightgray;
+}
+
+.close__icon {
+  display: block;
+  text-align: right;
+  font-size: 24px;
+  font-weight: bold;
+}
