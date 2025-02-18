@@ -1,4 +1,26 @@
-/**
- * step 1의 시작점이 되는 파일입니다.
- * 브라우저 환경에서 사용하는 css 파일 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
- */
+import LottoWinning from "./domain/LottoWinning.js";
+import { buyLotto, makeLottoResult, rl } from "./ui/Input.js";
+import { printLottoWinningResult } from "./ui/Output.js";
+
+const main = async () => {
+  const readlineInput = rl;
+
+  try {
+    const lottoNumberList = await buyLotto(readlineInput);
+    const lottoResult = await makeLottoResult(readlineInput);
+    const lottoWinningList = lottoNumberList.map((lottoNumber) => {
+      return new LottoWinning(
+        lottoNumber,
+        lottoResult.resultNumbers,
+        lottoResult.bonusNumber
+      );
+    });
+    printLottoWinningResult(lottoWinningList);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    readlineInput.close();
+  }
+};
+
+main();
