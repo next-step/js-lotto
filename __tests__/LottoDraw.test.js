@@ -193,7 +193,7 @@ describe("로또 추첨 테스트", () => {
         const totalPrize = lottoDraw.calculateWinningAmount();
         const ticketsPrice = lottoDraw.lottoTickets.length * lottoPrice;
         const expectedRateOfReturn =
-          Math.round((totalPrize / ticketsPrice) * 10) / 10;
+          ((totalPrize - ticketsPrice) / ticketsPrice) * 100;
 
         expect(lottoDraw.result.rateOfReturn).toBe(expectedRateOfReturn);
       });

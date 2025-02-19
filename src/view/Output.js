@@ -1,6 +1,10 @@
 import { RESULT_TEXT } from "../utils/constants.js";
 
 class Output {
+  printLottoTicketsNumber(ticketsNumber) {
+    ticketsNumber.forEach((numbers) => console.log(numbers));
+  }
+
   printDrawResult(result) {
     console.log("당첨 통계");
     console.log("--------------------");

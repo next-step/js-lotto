@@ -32,7 +32,7 @@ class LottoDraw {
   calculateRateOfReturn() {
     const totalPrize = this.calculateWinningAmount();
     const ticketsPrice = this.#lottoTickets.length * lottoPrice;
-    const rateOfReturn = totalPrize / ticketsPrice;
+    const rateOfReturn = (totalPrize - ticketsPrice) / ticketsPrice * 100;
 
     this.#result.rateOfReturn = Math.round(rateOfReturn * 10) / 10;
   }
@@ -64,7 +64,7 @@ class LottoDraw {
     };
 
     const incrementFunction = matchConditions[ticketStatus.matchedCount];
-    
+
     incrementFunction?.();
   }
 

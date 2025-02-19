@@ -14,6 +14,7 @@ const output = new Output();
 try {
   const purchasePrice = await input.getPurchasePrice();
   const lottoPurchase = new LottoPurchase(purchasePrice);
+  output.printLottoTicketsNumber(lottoPurchase.lottoTickets.map(ticket => ticket.numbers));
 
   const lottoWinningNumbersInput = await input.getLottoWinningNumbers();
   const lottoWinningNumbers = lottoWinningNumbersInput
