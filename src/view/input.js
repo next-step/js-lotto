@@ -21,7 +21,7 @@ const askQuestion = async (questionFn, rl) => {
   }
 };
 
-const withErrorBoundary = async (questionFn) => {
+const withRetryOnError = async (questionFn) => {
   const rl = readline.createInterface({ input, output });
 
   while (true) {
@@ -33,7 +33,7 @@ const withErrorBoundary = async (questionFn) => {
 };
 
 export const getPurchaseAmount = () => {
-  return withErrorBoundary(async (readline) => {
+  return withRetryOnError(async (readline) => {
     const line = await readline.question("> 구입금액을 입력해 주세요. ");
 
     const purchaseAmount = Number(line.trim());
@@ -45,7 +45,7 @@ export const getPurchaseAmount = () => {
 };
 
 export const getWinningNumbers = () => {
-  return withErrorBoundary(async (readline) => {
+  return withRetryOnError(async (readline) => {
     const line = await readline.question("> 당첨 번호를 입력해 주세요. ");
 
     const winningNumbers = line.split(",").map(Number);
@@ -57,7 +57,7 @@ export const getWinningNumbers = () => {
 };
 
 export const getBonusNumber = (winningNumbers) => {
-  return withErrorBoundary(async (readline) => {
+  return withRetryOnError(async (readline) => {
     const line = await readline.question("\n> 보너스 번호를 입력해 주세요. ");
 
     const bonusNumber = Number(line.trim());
@@ -69,7 +69,7 @@ export const getBonusNumber = (winningNumbers) => {
 };
 
 export const askToRestartOrExit = async () => {
-  return withErrorBoundary(async (readline) => {
+  return withRetryOnError(async (readline) => {
     const input = await readline.question("> 다시 시작하시겠습니까? (y/n) ");
 
     validateRestartInput(input);
