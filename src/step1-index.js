@@ -5,6 +5,7 @@
 
 import { buyLottoTickets } from "./domain/buyLottoTickets.js";
 import { calculateStatistics } from "./domain/calculateStatistics.js";
+import { RESPONSE_YES } from "./domain/constants.js";
 import LottoGame from "./domain/LottoGame.js";
 import {
   askToRestartOrExit,
@@ -20,7 +21,7 @@ const withRestartOrExit = async (gameRoundFn) => {
   while (isGameRunning) {
     await gameRoundFn();
     const response = await askToRestartOrExit();
-    isGameRunning = response === "y";
+    isGameRunning = response === RESPONSE_YES;
   }
 };
 
