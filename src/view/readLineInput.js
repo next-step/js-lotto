@@ -27,6 +27,20 @@ class ReadLineInput {
     return Number(bonusNumbers);
   }
 
+  async askRetry() {
+    const retryInput = await this.readLineAsync(
+      "> 다시 시작하시겠습니까? (y/n)"
+    );
+    switch (retryInput) {
+      case "y":
+        return true;
+      case "n":
+        return false;
+      default:
+        throw "y또는 n만 입력이 가능합니다.";
+    }
+  }
+
   // eslint-disable-next-line class-methods-use-this
   async readLineAsync(query) {
     return new Promise((resolve, reject) => {
