@@ -1,5 +1,6 @@
 import Ticket from "../../src/domain/Ticket/index.js";
-import { ERROR_TICKET } from "../../src/domain/Ticket/error.js";
+import ERROR_TICKET from "../../src/domain/Ticket/error.js";
+
 describe("Ticket 클래스 - 로또 게임에서의 1장", () => {
   test("Ticket 1장은 자연수 중 1이상 45이하 6개로 이루어진 배열이다.", () => {
     // given
@@ -20,6 +21,7 @@ describe("Ticket 클래스 - 로또 게임에서의 1장", () => {
       const ticket = new Ticket({
         numbers: [1, 2, 3, 4, 55],
       });
+      ticket.getNumbers();
     }).toThrow(ERROR_TICKET.WRONG_TICKET_INPUT);
 
     // then
@@ -27,6 +29,7 @@ describe("Ticket 클래스 - 로또 게임에서의 1장", () => {
       const ticket = new Ticket({
         numbers: [0, 5],
       });
+      ticket.getNumbers();
     }).toThrow(ERROR_TICKET.WRONG_TICKET_INPUT);
   });
 

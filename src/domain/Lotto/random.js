@@ -1,4 +1,4 @@
-import { RULES } from "../../util/rule.js";
+import RULES from "../../util/rule.js";
 
 export const shuffleArrayToRandomly = (arr) => {
   for (let i = arr.length - 1; i > 0; i -= 1) {

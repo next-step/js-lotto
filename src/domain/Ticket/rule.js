@@ -1,4 +1,4 @@
-import { RULES } from "../../util/rule.js";
+import RULES from "../../util/rule.js";
 
 export const TICKET_RULES = {
   numbersRule: (numbers) =>

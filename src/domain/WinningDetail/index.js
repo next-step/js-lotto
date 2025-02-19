@@ -1,12 +1,9 @@
 import Lotto from "../Lotto/index.js";
 import PurchaseHistory from "../PurchaseHistory/index.js";
-import {
-  WINNING_KEY,
-  WINNING_CONDITION_KEY,
-} from "./rule.js";
-import {
-  RULES } from '../../util/rule.js';
-import { ERROR_WINNING } from "./error.js";
+import { WINNING_KEY } from "./rule.js";
+import RULES from "../../util/rule.js";
+import ERROR_WINNING from "./error.js";
+import LOOKUP_WINNERS from "./constant.js";
 
 class WinningDetail {
   #winner;
@@ -36,35 +33,24 @@ class WinningDetail {
 
     const results = purchaseHistory.getTickets
       .map((ticket) => {
-        const ticketResult = ticket.getNumbers.filter((tickerNumber) =>
+        const ticketResult = ticket.getNumbers.filter((ticketNumber) =>
           winningNumbers.some(
             (winningNumber) =>
-              tickerNumber === winningNumber || tickerNumber === bonusNumber,
+              ticketNumber === winningNumber || ticketNumber === bonusNumber,
           ),
         );
-        switch (ticketResult.length) {
-          case WINNING_CONDITION_KEY.FIRST_AND_SECOND:
-            if (ticketResult.includes(bonusNumber) === false) {
-              return WINNING_KEY.FIRST;
-            }
-            return WINNING_KEY.SECOND;
-          case WINNING_CONDITION_KEY.THIRD:
-            return WINNING_KEY.THIRD;
-          case WINNING_CONDITION_KEY.FOURTH:
-            return WINNING_KEY.FOURTH;
-          case WINNING_CONDITION_KEY.FIFTH:
-            return WINNING_KEY.FIFTH;
-          default:
-            return WINNING_KEY.OTHER;
-        }
+
+        return LOOKUP_WINNERS(ticketResult, bonusNumber);
       })
       .reduce((rankingObject, curResult) => {
         if (curResult === WINNING_KEY.OTHER) {
           return rankingObject;
         }
         if (curResult in rankingObject) {
+          // eslint-disable-next-line no-param-reassign
           rankingObject[curResult] += RULES.WINNING_PERSON_PLUS;
         } else {
+          // eslint-disable-next-line no-param-reassign
           rankingObject[curResult] = RULES.WINNING_PERSON_INITIAL;
         }
         return rankingObject;

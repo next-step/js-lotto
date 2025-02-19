@@ -1,5 +1,5 @@
-import { PURCHASE_HISTORY_RULES } from "./rule.js";
-import { PURCHASE_HISTORY_ERRORS } from "./error.js";
+import PURCHASE_HISTORY_RULES from "./rule.js";
+import PURCHASE_HISTORY_ERRORS from "./error.js";
 
 class PurchaseHistory {
   #tickets;

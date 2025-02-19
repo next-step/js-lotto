@@ -1,1 +1,3 @@
-export const ERRORS = {}
+const ERRORS = {};
+
+export default ERRORS;
