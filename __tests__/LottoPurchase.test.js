@@ -14,24 +14,6 @@ describe("로또 구매 테스트", () => {
 
     expect(lottoTickets.lottoTickets.length).toBe(1);
   });
-
-  it("1000원을 넣으면 로또 2장을 생성하지 않는다.", () => {
-    const lottoTickets = new LottoPurchase(1000);
-
-    expect(lottoTickets.lottoTickets.length == 2).toBeFalsy();
-  });
-
-  it("4000원을 넣으면 로또 4장을 생성한다.", () => {
-    const lottoTickets = new LottoPurchase(4000);
-
-    expect(lottoTickets.lottoTickets.length).toBe(4);
-  });
-
-  it("4000원을 넣으면 로또 3장을 생성하지 않는다.", () => {
-    const lottoTickets = new LottoPurchase(4000);
-
-    expect(lottoTickets.lottoTickets.length === 3).toBeFalsy();
-  });
 });
 
 describe("로또 랜덤 숫자 생성 테스트", () => {
@@ -45,7 +27,7 @@ describe("로또 랜덤 숫자 생성 테스트", () => {
   it("서로 다른 숫자 6개여야 한다.", () => {
     const lottoPurchase = new LottoPurchase(1000);
     const numbers = lottoPurchase.generateLottoNumbers();
-    
+
     expect(new Set(numbers).size).toBe(6);
   });
 

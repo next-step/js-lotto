@@ -8,11 +8,6 @@ import LottoPurchase from "./domain/LottoPurchase.js";
 import Input from "./view/Input.js";
 import Output from "./view/output.js";
 
-// 당첨 번호를 받는다.
-// 보너스 번호를 받는다.
-
-// 당첨 통계 보여주기
-
 const input = new Input();
 const output = new Output();
 

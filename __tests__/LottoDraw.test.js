@@ -1,6 +1,7 @@
 import Lotto from "../src/domain/Lotto";
 import LottoDraw from "../src/domain/LottoDraw.js";
-import { lottoPrice } from "../src/utils/constants.js";
+import { ERROR_MESSAGES, lottoPrice } from "../src/utils/constants.js";
+import { LOTTO_TICKET_CASES, LOTTO_WINNING_NUMBERS } from "./constants.js";
 
 describe("로또 추첨 테스트", () => {
   it("기본적으로 로또 당첨 숫자와 로또 티켓을 가진다.", () => {
@@ -16,20 +17,22 @@ describe("로또 추첨 테스트", () => {
     expect(lottoDraw.lottoTickets).toEqual(lottoTickets);
   });
 
-  describe("일치한 번호 개수 카운트 함수 테스트", () => {
+  it("로또 당첨 번호가 없으면 에러를 반환한다.", () => {
     const lottoNumbers = {
-      lottoWinningNumbers: [1, 2, 3, 4, 5, 6],
-      lottoBonusNumber: 7,
+      lottoWinningNumbers: [],
+      lottoBonusNumber: [],
     };
-    const lottoTickets = [
-      new Lotto([1, 2, 3, 4, 5, 6]), // 6개 일치
-      new Lotto([1, 2, 3, 4, 5, 16]), // 5개 일치
-      new Lotto([1, 2, 3, 4, 15, 16]), // 4개 일치
-      new Lotto([1, 2, 3, 14, 15, 16]), // 3개 일치
-      new Lotto([1, 2, 13, 14, 15, 16]), // 2개 일치
-      new Lotto([1, 12, 13, 14, 15, 16]), // 1개 일치
-      new Lotto([11, 12, 13, 14, 15, 16]), // 0개 일치
-    ];
+
+    const lottoTickets = [new Lotto()];
+
+    expect(() => new LottoDraw(lottoNumbers, lottoTickets)).toThrow(
+      ERROR_MESSAGES.MUST_BE_SEVEN_DIGITS
+    );
+  });
+
+  describe("일치한 번호 개수 카운트 함수 테스트", () => {
+    const lottoNumbers = LOTTO_WINNING_NUMBERS;
+    const lottoTickets = LOTTO_TICKET_CASES.map((num) => new Lotto(num));
 
     let lottoDraw;
     beforeEach(() => {
@@ -47,40 +50,37 @@ describe("로또 추첨 테스트", () => {
     });
 
     it("4개 번호가 일치하면 4를 반환한다.", () => {
-      const count = lottoDraw.countMatchedNumbers(lottoTickets[2]);
+      const count = lottoDraw.countMatchedNumbers(lottoTickets[3]);
       expect(count).toBe(4);
     });
 
     it("3개 번호가 일치하면 3을 반환한다.", () => {
-      const count = lottoDraw.countMatchedNumbers(lottoTickets[3]);
+      const count = lottoDraw.countMatchedNumbers(lottoTickets[4]);
       expect(count).toBe(3);
     });
 
     it("2개 번호가 일치하면 2를 반환한다.", () => {
-      const count = lottoDraw.countMatchedNumbers(lottoTickets[4]);
+      const count = lottoDraw.countMatchedNumbers(lottoTickets[5]);
       expect(count).toBe(2);
     });
 
     it("1개 번호가 일치하면 1을 반환한다.", () => {
-      const count = lottoDraw.countMatchedNumbers(lottoTickets[5]);
+      const count = lottoDraw.countMatchedNumbers(lottoTickets[6]);
       expect(count).toBe(1);
     });
 
     it("모든 번호가 일치하지 않으면 0을 반환한다.", () => {
-      const count = lottoDraw.countMatchedNumbers(lottoTickets[6]);
+      const count = lottoDraw.countMatchedNumbers(lottoTickets[7]);
       expect(count).toBe(0);
     });
   });
 
   describe("보너스 번호 체크 함수 테스트", () => {
-    const lottoNumbers = {
-      lottoWinningNumbers: [1, 2, 3, 4, 5, 6],
-      lottoBonusNumber: 7,
-    };
+    const lottoNumbers = LOTTO_WINNING_NUMBERS;
 
     const lottoTickets = [
-      new Lotto([1, 2, 3, 4, 5, 7]),
-      new Lotto([11, 12, 13, 14, 15, 17]),
+      new Lotto([1, 2, 3, 4, 5, 7]), // 보너스 번호 o
+      new Lotto([11, 12, 13, 14, 15, 17]), // 보너스 번호 x
     ];
 
     let lottoDraw;
@@ -98,15 +98,12 @@ describe("로또 추첨 테스트", () => {
   });
 
   describe("숫자 카운트와 보너스 여부 반환 메서드 테스트", () => {
-    const lottoNumbers = {
-      lottoWinningNumbers: [1, 2, 3, 4, 5, 6],
-      lottoBonusNumber: 7,
-    };
+    const lottoNumbers = LOTTO_WINNING_NUMBERS;
 
     const lottoTickets = [
-      new Lotto([1, 2, 3, 4, 5, 6]),
-      new Lotto([1, 8, 9, 10, 11, 12]),
-      new Lotto([7, 8, 9, 10, 11, 12]),
+      new Lotto([1, 2, 3, 4, 5, 6]), // 6개 일치
+      new Lotto([1, 8, 9, 10, 11, 12]), // 1개 일치
+      new Lotto([7, 8, 9, 10, 11, 12]), // 0개 일치
     ];
 
     let lottoDraw;
@@ -126,18 +123,8 @@ describe("로또 추첨 테스트", () => {
   });
 
   describe("당첨 금액 관련 테스트", () => {
-    const lottoNumbers = {
-      lottoWinningNumbers: [1, 2, 3, 4, 5, 6], // 당첨 번호
-      lottoBonusNumber: 7,
-    };
-
-    const lottoTickets = [
-      new Lotto([1, 2, 3, 4, 5, 6]), // 6개 일치
-      new Lotto([1, 2, 3, 4, 5, 7]), // 5개 일치, 보너스 있음
-      new Lotto([1, 2, 3, 4, 8, 9]), // 4개 일치
-      new Lotto([1, 2, 3, 7, 8, 9]), // 3개 일치
-      new Lotto([8, 9, 10, 11, 12, 13]), // 0개 일치
-    ];
+    const lottoNumbers = LOTTO_WINNING_NUMBERS;
+    const lottoTickets = LOTTO_TICKET_CASES;
 
     const lottoTicketsStatus = [
       { matchedCount: 6, hasBonus: false },

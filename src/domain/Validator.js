@@ -16,8 +16,6 @@ class Validator {
     if (!this.isAboveMinimum(purchaseAmount)) {
       throw new Error(ERROR_MESSAGES.MUST_BE_ABOVE_MINIMUM);
     }
-
-    return true;
   }
 
   validateWinningNumbers(winningNumbers) {
@@ -42,8 +40,6 @@ class Validator {
     if (this.isDuplicate(winningNumbers)) {
       throw new Error(ERROR_MESSAGES.MUST_BE_NOT_DUPLICATE);
     }
-
-    return true;
   }
 
   splitBy(string, separate) {
