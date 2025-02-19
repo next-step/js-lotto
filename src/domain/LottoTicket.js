@@ -3,7 +3,7 @@ import {
   MAX_LOTTO_NUMBER,
   MIN_LOTTO_NUMBER,
 } from "./constants.js";
-import { getRandomNumber } from "./utils.js";
+import { createUniqueNumbers, getRandomNumber } from "./utils.js";
 
 class LottoTicket {
   #numbers = [];
@@ -17,11 +17,9 @@ class LottoTicket {
   }
 
   #createUniqueNumbers() {
-    const numbers = new Set();
-    while (numbers.size < LOTTO_NUMBER_COUNT) {
-      numbers.add(getRandomNumber(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER));
-    }
-    return [...numbers];
+    return createUniqueNumbers(LOTTO_NUMBER_COUNT, () =>
+      getRandomNumber(MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER)
+    );
   }
 }
 
