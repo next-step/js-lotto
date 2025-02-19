@@ -62,7 +62,7 @@ describe("calculateStatistics 함수 테스트", () => {
       LOTTO_PRIZES["5bonus"] +
       LOTTO_PRIZES["6"];
 
-    const expectedTotalSpending = 8 * PRICE_PER_LOTTO;
+    const expectedTotalSpending = comparedResults.length * PRICE_PER_LOTTO;
 
     expect(statistics.profitRate).toBe(
       (expectedTotalPrizes / expectedTotalSpending) * 100
