@@ -14,10 +14,18 @@ import {
 } from "./view/input.js";
 import { printLottoTickets, printStatistics } from "./view/output.js";
 
-const main = async () => {
+const withRestartOrExit = async (gameRoundFn) => {
   let isGameRunning = true;
 
   while (isGameRunning) {
+    await gameRoundFn();
+    const response = await askToRestartOrExit();
+    isGameRunning = response === "y";
+  }
+};
+
+const main = () => {
+  return withRestartOrExit(async () => {
     const purchaseAmount = await getPurchaseAmount();
     const lottoTickets = buyLottoTickets(purchaseAmount);
 
@@ -35,10 +43,7 @@ const main = async () => {
     const statistics = calculateStatistics(comparedResults);
 
     printStatistics(statistics);
-
-    const response = await askToRestartOrExit();
-    isGameRunning = response === "y";
-  }
+  });
 };
 
 main();
