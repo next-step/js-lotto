@@ -1,8 +1,9 @@
 import Lotto from "../Lotto/index.js";
 import PurchaseHistory from "../PurchaseHistory/index.js";
-import { WINNING_KEY, WINNING_CONDITION_KEY } from "./rule.js";
+import { WINNING_KEY } from "./rule.js";
 import RULES from "../../util/rule.js";
 import ERROR_WINNING from "./error.js";
+import LOOKUP_WINNERS from "./constant.js";
 
 class WinningDetail {
   #winner;
@@ -38,21 +39,8 @@ class WinningDetail {
               tickerNumber === winningNumber || tickerNumber === bonusNumber,
           ),
         );
-        switch (ticketResult.length) {
-          case WINNING_CONDITION_KEY.FIRST_AND_SECOND:
-            if (ticketResult.includes(bonusNumber) === false) {
-              return WINNING_KEY.FIRST;
-            }
-            return WINNING_KEY.SECOND;
-          case WINNING_CONDITION_KEY.THIRD:
-            return WINNING_KEY.THIRD;
-          case WINNING_CONDITION_KEY.FOURTH:
-            return WINNING_KEY.FOURTH;
-          case WINNING_CONDITION_KEY.FIFTH:
-            return WINNING_KEY.FIFTH;
-          default:
-            return WINNING_KEY.OTHER;
-        }
+
+        return LOOKUP_WINNERS(ticketResult, bonusNumber);
       })
       .reduce((rankingObject, curResult) => {
         if (curResult === WINNING_KEY.OTHER) {
