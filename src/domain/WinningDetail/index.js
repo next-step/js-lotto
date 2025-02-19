@@ -3,7 +3,7 @@ import PurchaseHistory from "../PurchaseHistory/index.js";
 import { WINNING_KEY } from "./rule.js";
 import RULES from "../../util/rule.js";
 import ERROR_WINNING from "./error.js";
-import LOOKUP_WINNERS from "./constant.js";
+import lookupWinners from "./constant.js";
 
 class WinningDetail {
   #winner;
@@ -40,7 +40,7 @@ class WinningDetail {
           ),
         );
 
-        return LOOKUP_WINNERS(ticketResult, bonusNumber);
+        return lookupWinners(ticketResult, bonusNumber);
       })
       .reduce((rankingObject, curResult) => {
         if (curResult === WINNING_KEY.OTHER) {

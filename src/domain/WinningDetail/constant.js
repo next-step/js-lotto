@@ -1,6 +1,6 @@
 import { WINNING_KEY, WINNING_CONDITION_KEY } from "./rule.js";
 
-const LOOKUP_WINNERS = (ticketResult, bonusNumber) => {
+const lookupWinners = (ticketResult, bonusNumber) => {
   const ticketLength = ticketResult.length;
   const hasBonusNumber = ticketResult.includes(bonusNumber);
   const WINNERS_TYPE = {
@@ -16,4 +16,4 @@ const LOOKUP_WINNERS = (ticketResult, bonusNumber) => {
   return WINNERS_TYPE[ticketLength] || WINNING_KEY.OTHER;
 };
 
-export default LOOKUP_WINNERS;
+export default lookupWinners;
