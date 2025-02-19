@@ -33,10 +33,10 @@ class WinningDetail {
 
     const results = purchaseHistory.getTickets
       .map((ticket) => {
-        const ticketResult = ticket.getNumbers.filter((tickerNumber) =>
+        const ticketResult = ticket.getNumbers.filter((ticketNumber) =>
           winningNumbers.some(
             (winningNumber) =>
-              tickerNumber === winningNumber || tickerNumber === bonusNumber,
+              ticketNumber === winningNumber || ticketNumber === bonusNumber,
           ),
         );
 

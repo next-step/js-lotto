@@ -1,40 +1,17 @@
-const moneyInputTemplate = document.createElement("template");
-moneyInputTemplate.innerHTML = `
-<style>
-    #money-input {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    div .box {
-      display: flex;
-      gap: 3px;
-    } 
-</style>
-<div id="money-input">
-    <slot name="input-label"></slot>
-    <div class="box">
-      <slot id="money-input-box" name="input-box"></slot>
-      <slot id="money-button" name="input-button"></slot>
-    </div>
-</div>
-`;
+import BaseElement from "../common/base-element.js";
+import html from "../common/html.js";
 
-class MoneyInput extends HTMLElement {
-  // eslint-disable-next-line no-useless-constructor
-  constructor() {
-    super();
-    this.state = { money: 0 };
-  }
-
+class MoneyInput extends BaseElement {
   connectedCallback() {
-    const shadow = this.attachShadow({ mode: "open" });
+    this.state = {
+      money: "",
+    };
+    this.shadowRoot.innerHTML = this.createTemplate();
 
-    shadow.appendChild(moneyInputTemplate.content.cloneNode(true));
     const button = this.shadowRoot.querySelector("#money-button");
     button.addEventListener("click", this.handleClick.bind(this));
 
-    this.shadowRoot.addEventListener("submit-restart-event", () => {
+    this.shadowRoot.addEventListener("restart-event", () => {
       const slot = this.shadowRoot.querySelector("slot[name='input-box']");
       const assignedNodes = slot.assignedNodes();
 
@@ -108,6 +85,30 @@ class MoneyInput extends HTMLElement {
     );
 
     ratesOfReturnElement.shadowRoot.dispatchEvent(winningDetailEvent);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  createTemplate() {
+    return html`
+      <style>
+        #money-input {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+        }
+        div .box {
+          display: flex;
+          gap: 3px;
+        }
+      </style>
+      <div id="money-input">
+        <slot name="input-label"></slot>
+        <div class="box">
+          <slot id="money-input-box" name="input-box"></slot>
+          <slot id="money-button" name="input-button"></slot>
+        </div>
+      </div>
+    `;
   }
 }
 customElements.define("money-input", MoneyInput);

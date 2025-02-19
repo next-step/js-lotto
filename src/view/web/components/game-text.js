@@ -1,34 +1,30 @@
-const titleTemplate = document.createElement("template");
-titleTemplate.innerHTML = `
-<style>
+import BaseElement from "../common/base-element.js";
+import html from "../common/html.js";
 
-    ::slotted(h1) {
-        color: black;
-        font-size: 20px;
-        font-weight: bold;
-        background-color: #666;
-    }
-
-    ::slotted(#winning) {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-</style>
-<slot name="game-text"></slot>
-`;
-
-class GameText extends HTMLElement {
-  // 반드시 있어야 함
-  // eslint-disable-next-line no-useless-constructor
-  constructor() {
-    super();
+class GameText extends BaseElement {
+  connectedCallback() {
+    this.shadowRoot.innerHTML = this.createTemplate();
   }
 
-  connectedCallback() {
-    const shadow = this.attachShadow({ mode: "open" });
+  // eslint-disable-next-line class-methods-use-this
+  createTemplate() {
+    return html`
+      <style>
+        ::slotted(h1) {
+          color: black;
+          font-size: 20px;
+          font-weight: bold;
+          background-color: #666;
+        }
 
-    shadow.appendChild(titleTemplate.content.cloneNode(true));
+        ::slotted(#winning) {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      </style>
+      <slot name="game-text"></slot>
+    `;
   }
 }
 customElements.define("game-text", GameText);

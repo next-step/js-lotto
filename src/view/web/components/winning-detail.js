@@ -1,50 +1,15 @@
 import WinningDetail from "../../../domain/WinningDetail/index.js";
+import BaseElement from "../common/base-element.js";
+import html from "../common/html.js";
 
-const titleTemplate = document.createElement("template");
-titleTemplate.innerHTML = `
-<style>
-  .label {
-    margin: 10px 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .box {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);  
-    gap: 10px;
-  }
-  .box-element {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-</style>
-<div>
-  <h3 class="label">
-    당첨 통계
-  </h3>
-  <div id="winning-detail">
-  </div>
-</div>
-`;
-
-class WinningDetailComponent extends HTMLElement {
-  // 반드시 있어야 함
-  // eslint-disable-next-line no-useless-constructor
-  constructor() {
-    super();
+class WinningDetailComponent extends BaseElement {
+  connectedCallback() {
     this.state = {
       purchaseHistory: null,
       lotto: null,
     };
-  }
 
-  connectedCallback() {
-    const shadow = this.attachShadow({ mode: "open" });
-
-    shadow.appendChild(titleTemplate.content.cloneNode(true));
+    this.shadowRoot.innerHTML = this.createTemplate();
 
     const datas = [
       ["일치 개수", "당첨금", "당첨 갯수"],
@@ -62,7 +27,7 @@ class WinningDetailComponent extends HTMLElement {
       ${datas.map((data) => `<div class="box">${data.map((line) => `<div class="box-element">${line}</div>`).join("")}</div>`)}
     `;
 
-    this.shadowRoot.addEventListener("submit-restart-event", () => {
+    this.shadowRoot.addEventListener("restart-event", () => {
       this.state = {
         purchaseHistory: null,
         lotto: null,
@@ -105,6 +70,35 @@ class WinningDetailComponent extends HTMLElement {
         ratesOfReturnElement.shadowRoot.dispatchEvent(winningDetailEvent);
       }
     });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  createTemplate() {
+    return html`
+      <style>
+        .label {
+          margin: 10px 0;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .box {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 10px;
+        }
+        .box-element {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      </style>
+      <div>
+        <h3 class="label">당첨 통계</h3>
+        <div id="winning-detail"></div>
+      </div>
+    `;
   }
 }
 customElements.define("winning-detail", WinningDetailComponent);

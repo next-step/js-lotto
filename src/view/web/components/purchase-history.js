@@ -3,23 +3,10 @@ import PurchaseHistory from "../../../domain/PurchaseHistory/index.js";
 import Ticket from "../../../domain/Ticket/index.js";
 import { getTicketAvailable } from "../../../domain/Ticket/rule.js";
 import { printTicketLength } from "../printResult.js";
+import BaseElement from "../common/base-element.js";
+import html from "../common/html.js";
 
-const purchaseHistoryTemplate = document.createElement("template");
-purchaseHistoryTemplate.innerHTML = `
-<style>
-    #purchase-history {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-</style>
-<div>
-    <div id="ticket-length"></div>
-    <div id="purchase-history"></div>
-</div>
-`;
-
-class PurchaseHistoryUI extends HTMLElement {
+class PurchaseHistoryUI extends BaseElement {
   // eslint-disable-next-line no-useless-constructor
   constructor() {
     super();
@@ -27,10 +14,7 @@ class PurchaseHistoryUI extends HTMLElement {
   }
 
   connectedCallback() {
-    const shadow = this.attachShadow({ mode: "open" });
-
-    shadow.appendChild(purchaseHistoryTemplate.content.cloneNode(true));
-    // const span = this.shadowRoot.querySelector("span#input-label");
+    this.shadowRoot.innerHTML = this.createTemplate();
     this.shadowRoot.addEventListener("money-changed", (e) => {
       const { money } = e.detail;
 
@@ -62,8 +46,7 @@ class PurchaseHistoryUI extends HTMLElement {
       this.render();
     });
 
-    this.shadowRoot.addEventListener("submit-input-event", () => {
-      // console.log(e.detail, this.state.purchaseHistory);
+    this.shadowRoot.addEventListener("submit-event", () => {
       const purchaseHistoryEvent = new CustomEvent("submit-output-event", {
         detail: {
           purchaseHistory: this.state.purchaseHistory,
@@ -85,11 +68,27 @@ class PurchaseHistoryUI extends HTMLElement {
       (acr, cur) => {
         // eslint-disable-next-line no-param-reassign
         acr += cur ? `<div>${cur.getNumbers}</div>` : "";
-        // acr += cur.getNumbers;
         return acr;
       },
       "",
     )}`;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  createTemplate() {
+    return html`
+      <style>
+        #purchase-history {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+        }
+      </style>
+      <div>
+        <div id="ticket-length"></div>
+        <div id="purchase-history"></div>
+      </div>
+    `;
   }
 }
 customElements.define("purchase-history", PurchaseHistoryUI);

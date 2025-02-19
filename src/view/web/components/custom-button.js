@@ -1,25 +1,16 @@
-const titleTemplate = document.createElement("template");
-titleTemplate.innerHTML = `
-<style>
-    ::slotted(button) {
-      width: 100px;
-    }
-    ::slotted(#submit)
-</style>
-<slot name="custom-button"></slot>
-`;
+import BaseElement from "../common/base-element.js";
+import {
+  eventEmit,
+  resetEventReceivedComponents,
+  RESTART_EVENT,
+  SUBMIT_EVENT,
+  submitEventReceivedComponents,
+} from "../common/event-emit.js";
+import html from "../common/html.js";
 
-class CustomButton extends HTMLElement {
-  // 반드시 있어야 함
-  // eslint-disable-next-line no-useless-constructor
-  constructor() {
-    super();
-  }
-
+class CustomButton extends BaseElement {
   connectedCallback() {
-    const shadow = this.attachShadow({ mode: "open" });
-
-    shadow.appendChild(titleTemplate.content.cloneNode(true));
+    this.shadowRoot.innerHTML = this.createTemplate();
 
     const slot = this.shadowRoot.querySelector("slot");
     const assignedNodes = slot.assignedNodes();
@@ -41,36 +32,25 @@ class CustomButton extends HTMLElement {
 
   // eslint-disable-next-line class-methods-use-this
   handleSubmitClick() {
-    const submitEvent = new CustomEvent("submit-input-event", {
-      composed: true,
-    });
-
-    // const winningDetailElement = document.querySelector("winning-detail");
-    // const ratesOfReturnElement = document.querySelector("rates-of-return");
-    // winningDetailElement.shadowRoot.dispatchEvent(submitEvent);
-    // ratesOfReturnElement.shadowRoot.dispatchEvent(submitEvent);
-    // console.log(winningDetailElement);
-    const numberBoxElement = document.querySelector("number-box");
-    const purchaseHistoryElement = document.querySelector("purchase-history");
-    const moneyInputElement = document.querySelector("money-input");
-    numberBoxElement.shadowRoot.dispatchEvent(submitEvent);
-    purchaseHistoryElement.shadowRoot.dispatchEvent(submitEvent);
-    moneyInputElement.shadowRoot.dispatchEvent(submitEvent);
+    eventEmit(SUBMIT_EVENT, submitEventReceivedComponents);
   }
 
   // eslint-disable-next-line class-methods-use-this
   handleResetClick() {
-    const restartEvent = new CustomEvent("submit-restart-event", {
-      composed: true,
-    });
-    const numberBoxElement = document.querySelector("number-box");
-    const purchaseHistoryElement = document.querySelector("purchase-history");
-    const moneyInputElement = document.querySelector("money-input");
-    const winningDetailElement = document.querySelector("winning-detail");
-    numberBoxElement.shadowRoot.dispatchEvent(restartEvent);
-    purchaseHistoryElement.shadowRoot.dispatchEvent(restartEvent);
-    moneyInputElement.shadowRoot.dispatchEvent(restartEvent);
-    winningDetailElement.shadowRoot.dispatchEvent(restartEvent);
+    eventEmit(RESTART_EVENT, resetEventReceivedComponents);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  createTemplate() {
+    return html`
+      <style>
+        ::slotted(button) {
+          width: 100px;
+        }
+        ::slotted(#submit);
+      </style>
+      <slot name="custom-button"></slot>
+    `;
   }
 }
 customElements.define("custom-button", CustomButton);
