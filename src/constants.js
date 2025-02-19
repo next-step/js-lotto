@@ -1,10 +1,10 @@
-export const LOTTO_PRICE = 1000;
+export const TICKET_UNIT = 1000;
 export const LOTTO_NUMBERS_COUNT = 6;
 export const LOTTO_NUMBER_RANGE = { min: 1, max: 45 };
 
 export const ERROR_MESSAGES = {
-  PURCHASE_INVALID_AMOUNT: "Amount must be greater than 0.",
-  PURCHASE_INVALID_MULTIPLE: "You can only buy lotto in multiples of 1,000.",
+  PURCHASE_INVALID_AMOUNT:
+    "Amount must be greater than 0 and multiples of 1,000.",
   WINNING_NUMBERS_INVALID:
     "Winning numbers should be integers between 1 and 45",
   WINNING_NUMBERS_LENGTH: "There should be exactly 6 winning numbers",

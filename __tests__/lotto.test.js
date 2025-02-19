@@ -1,15 +1,15 @@
-import { ERROR_MESSAGES, LOTTO_PRICE } from "../src/constants.js";
+import { ERROR_MESSAGES, TICKET_UNIT } from "../src/constants.js";
 import { Lotto } from "../src/domain/models/Lotto";
 
 describe("Lotto Purchase Logic", () => {
   test("should return the correct number of lotto tickets based on the purchase amount", () => {
-    const lotto = new Lotto(LOTTO_PRICE * 2);
+    const lotto = new Lotto(TICKET_UNIT * 2);
     expect(lotto.getNumberOfTickets()).toBe(2);
   });
 
   test("should throw an error if the purchase amount is not a multiple of 1000", () => {
-    expect(() => new Lotto(LOTTO_PRICE * 2.5)).toThrow(
-      ERROR_MESSAGES.PURCHASE_INVALID_MULTIPLE,
+    expect(() => new Lotto(TICKET_UNIT * 2.5)).toThrow(
+      ERROR_MESSAGES.PURCHASE_INVALID_AMOUNT,
     );
   });
 
@@ -21,7 +21,7 @@ describe("Lotto Purchase Logic", () => {
   });
 
   test("should generate the correct number of tickets", () => {
-    const lotto = new Lotto(LOTTO_PRICE * 10);
+    const lotto = new Lotto(TICKET_UNIT * 10);
     const tickets = lotto.generateLottoTickets();
     expect(tickets.length).toBe(10);
   });
@@ -29,7 +29,7 @@ describe("Lotto Purchase Logic", () => {
 
 describe("Lotto Number Generation", () => {
   test("should generate lotto numbers between 1 and 45", () => {
-    const lotto = new Lotto(LOTTO_PRICE * 1);
+    const lotto = new Lotto(TICKET_UNIT * 1);
     const tickets = lotto.generateLottoTickets();
 
     tickets[0].forEach((number) => {
@@ -39,7 +39,7 @@ describe("Lotto Number Generation", () => {
   });
 
   test("should generate 6 unique numbers for each lotto ticket", () => {
-    const lotto = new Lotto(LOTTO_PRICE * 1);
+    const lotto = new Lotto(TICKET_UNIT * 1);
     const tickets = lotto.generateLottoTickets();
     expect(tickets[0].length).toBe(6);
 
@@ -48,7 +48,7 @@ describe("Lotto Number Generation", () => {
   });
 
   test("should generate different tickets", () => {
-    const lotto = new Lotto(LOTTO_PRICE * 2);
+    const lotto = new Lotto(TICKET_UNIT * 2);
     const tickets = lotto.generateLottoTickets();
     expect(tickets[0]).not.toEqual(tickets[1]);
   });

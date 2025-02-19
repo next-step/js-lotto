@@ -1,36 +1,61 @@
-import { promptUser } from "./common/input.js";
+import {
+  ERROR_MESSAGES,
+  LOTTO_NUMBER_RANGE,
+  TICKET_UNIT,
+} from "../../constants.js";
+import {
+  isValidNumberArray,
+  isValidNumberInRange,
+  isValidPurchaseAmount,
+} from "../../validation.js";
+import { promptWithValidation } from "./common/input.js";
 
 export async function getPurchaseAmount() {
-  const input = await promptUser("구입금액을 입력해 주세요: ");
-  return parseInt(input, 10);
+  const amount = await promptWithValidation({
+    query: "Enter purchase amount: ",
+    transformFn: (input) => parseInt(input, 10),
+    validationFn: (amount) =>
+      !isNaN(amount) && isValidPurchaseAmount(amount, TICKET_UNIT),
+    errorMessage: ERROR_MESSAGES.PURCHASE_INVALID_AMOUNT,
+  });
+
+  return amount;
 }
 
 export async function getWinningNumbers() {
-  const input = await promptUser("당첨 번호를 입력해 주세요 (쉼표로 구분): ");
-  return input.split(",").map((num) => parseInt(num.trim(), 10));
+  const numbers = await promptWithValidation({
+    query: "Enter winning numbers (comma-separated, 1-45): ",
+    transformFn: (input) =>
+      input.split(",").map((num) => parseInt(num.trim(), 10)),
+    validationFn: (numbers) =>
+      Array.isArray(numbers) &&
+      numbers.length === 6 &&
+      isValidNumberArray(numbers, LOTTO_NUMBER_RANGE),
+    errorMessage: ERROR_MESSAGES.WINNING_NUMBERS_INVALID,
+  });
+
+  return numbers;
 }
 
 export async function getBonusNumber() {
-  const input = await promptUser("보너스 번호를 입력해 주세요: ");
-  return parseInt(input, 10);
+  const bonusNumber = await promptWithValidation({
+    query: "Enter bonus number (1-45): ",
+    transformFn: (input) => parseInt(input.trim(), 10),
+    validationFn: (num) => isValidNumberInRange(num, LOTTO_NUMBER_RANGE),
+    errorMessage: ERROR_MESSAGES.BONUS_NUMBER_INVALID,
+  });
+
+  return bonusNumber;
 }
 
 export async function getRestartChoice() {
-  while (true) {
-    try {
-      const input = await promptUser(
-        "Game over. Press 'Y' to restart or 'N' to exit. (Press Enter to restart by default)",
-      );
-      const choice = input.trim().toUpperCase();
+  const choice = await promptWithValidation({
+    query: "Play again? (Y/N, Enter = Yes): ",
+    transformFn: (input) => input.trim().toUpperCase(),
+    validationFn: (choice) => ["Y", "N", ""].includes(choice),
+    errorMessage:
+      "Invalid choice. Press 'Y' to restart, 'N' to exit, or Enter for default.",
+  });
 
-      if (choice === "N") return false;
-      if (choice === "" || choice === "Y") return true;
-
-      throw new Error(
-        "Invalid input. Press Enter to restart or type 'N' to exit.",
-      );
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
+  return choice === "Y" || choice === "";
 }

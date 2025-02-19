@@ -11,3 +11,7 @@ export function isValidNumberArray(arr, range) {
 export function isDuplicateNumbersInArray(winningNumbers, bonusNumber) {
   return winningNumbers.includes(bonusNumber);
 }
+
+export function isValidPurchaseAmount(amount, unit) {
+  return Number.isInteger(amount) && amount > 0 && amount % unit === 0;
+}
