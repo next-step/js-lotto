@@ -7,6 +7,7 @@ import { LottoService } from "./domain/services/LottoService.js";
 import {
   getBonusNumber,
   getPurchaseAmount,
+  getRestartChoice,
   getWinningNumbers,
 } from "./view/ui/input.js";
 import {
@@ -16,28 +17,33 @@ import {
 } from "./view/ui/output.js";
 
 async function main() {
-  try {
-    const amount = await getPurchaseAmount();
-    const lottoService = new LottoService(amount);
+  let restart = false;
+  do {
+    try {
+      const amount = await getPurchaseAmount();
+      const lottoService = new LottoService(amount);
 
-    lottoService.generateTickets();
+      lottoService.generateTickets();
 
-    const tickets = lottoService.getLottoTickets();
-    printLottoTickets(tickets);
+      const tickets = lottoService.getLottoTickets();
+      printLottoTickets(tickets);
 
-    const winningNumbers = await getWinningNumbers();
-    const bonusNumber = await getBonusNumber();
+      const winningNumbers = await getWinningNumbers();
+      const bonusNumber = await getBonusNumber();
 
-    lottoService.setWinningNumbers(winningNumbers, bonusNumber);
+      lottoService.setWinningNumbers(winningNumbers, bonusNumber);
 
-    const winningRanks = lottoService.getWinningRanks();
-    printLottoResults(winningRanks);
+      const winningRanks = lottoService.getWinningRanks();
+      printLottoResults(winningRanks);
 
-    const profitRate = lottoService.getLottoStatistics();
-    printProfitRate(profitRate);
-  } catch (error) {
-    console.error(error.message);
-  }
+      const profitRate = lottoService.getLottoStatistics();
+      printProfitRate(profitRate);
+
+      restart = await getRestartChoice();
+    } catch (error) {
+      console.error(error.message);
+    }
+  } while (restart);
 }
 
 main();
