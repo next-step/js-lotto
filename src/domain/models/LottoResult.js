@@ -4,7 +4,7 @@ import {
   LOTTO_NUMBER_RANGE,
 } from "../../constants.js";
 import {
-  isDuplicateNumbersInArray,
+  isValueInArray,
   isValidNumberInRange,
   isValidNumberArray,
 } from "../../validation.js";
@@ -76,8 +76,8 @@ export class LottoResult {
     if (new Set(winningNumbers).size !== winningNumbers.length) {
       throw new Error(ERROR_MESSAGES.WINNING_NUMBERS_DUPLICATE);
     }
-    if (isDuplicateNumbersInArray(winningNumbers, bonusNumber)) {
-      throw new Error(ERROR_MESSAGES.BONUS_NUMBER_DUPLICATE);
+    if (isValueInArray(winningNumbers, bonusNumber)) {
+      throw new Error(ERROR_MESSAGES.BONUS_NUMBER_INVALID);
     }
     if (!isValidNumberInRange(bonusNumber, LOTTO_NUMBER_RANGE)) {
       throw new Error(ERROR_MESSAGES.BONUS_NUMBER_INVALID);

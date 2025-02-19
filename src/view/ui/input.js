@@ -4,9 +4,11 @@ import {
   TICKET_UNIT,
 } from "../../constants.js";
 import {
+  isValueInArray,
   isValidNumberArray,
   isValidNumberInRange,
   isValidPurchaseAmount,
+  isDuplicateNumbersInArray,
 } from "../../validation.js";
 import { promptWithValidation } from "./common/input.js";
 
@@ -30,18 +32,21 @@ export async function getWinningNumbers() {
     validationFn: (numbers) =>
       Array.isArray(numbers) &&
       numbers.length === 6 &&
-      isValidNumberArray(numbers, LOTTO_NUMBER_RANGE),
+      isValidNumberArray(numbers, LOTTO_NUMBER_RANGE) &&
+      !isDuplicateNumbersInArray(numbers),
     errorMessage: ERROR_MESSAGES.WINNING_NUMBERS_INVALID,
   });
 
   return numbers;
 }
 
-export async function getBonusNumber() {
+export async function getBonusNumber(winningNumbers) {
   const bonusNumber = await promptWithValidation({
     query: "Enter bonus number (1-45): ",
     transformFn: (input) => parseInt(input.trim(), 10),
-    validationFn: (num) => isValidNumberInRange(num, LOTTO_NUMBER_RANGE),
+    validationFn: (num) =>
+      isValidNumberInRange(num, LOTTO_NUMBER_RANGE) &&
+      !isValueInArray(winningNumbers, num),
     errorMessage: ERROR_MESSAGES.BONUS_NUMBER_INVALID,
   });
 

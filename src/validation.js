@@ -8,8 +8,13 @@ export function isValidNumberArray(arr, range) {
   );
 }
 
-export function isDuplicateNumbersInArray(winningNumbers, bonusNumber) {
-  return winningNumbers.includes(bonusNumber);
+export function isValueInArray(arr, value) {
+  return arr.includes(value);
+}
+
+export function isDuplicateNumbersInArray(numbers) {
+  const uniqueNumbers = new Set(numbers);
+  return uniqueNumbers.size !== numbers.length;
 }
 
 export function isValidPurchaseAmount(amount, unit) {

@@ -29,7 +29,7 @@ async function main() {
       printLottoTickets(tickets);
 
       const winningNumbers = await getWinningNumbers();
-      const bonusNumber = await getBonusNumber();
+      const bonusNumber = await getBonusNumber(winningNumbers);
 
       lottoService.setWinningNumbers(winningNumbers, bonusNumber);
 

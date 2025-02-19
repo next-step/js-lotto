@@ -35,7 +35,7 @@ describe("LottoResult", () => {
 
     it("should throw an error if bonus number is duplicated in winning numbers", () => {
       expect(() => new LottoResult([1, 2, 3, 4, 5, 6], 1)).toThrow(
-        ERROR_MESSAGES.BONUS_NUMBER_DUPLICATE,
+        ERROR_MESSAGES.BONUS_NUMBER_INVALID,
       );
     });
 

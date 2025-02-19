@@ -1,7 +1,7 @@
 import {
   isValidNumberInRange,
   isValidNumberArray,
-  isDuplicateNumbersInArray,
+  isValueInArray,
   isValidPurchaseAmount,
 } from "../src/validation.js";
 
@@ -48,13 +48,13 @@ describe("Validation Functions", () => {
     });
   });
 
-  describe("isDuplicateNumbersInArray", () => {
+  describe("isValueInArray", () => {
     test("should return true if the bonus number is in the winning numbers", () => {
-      expect(isDuplicateNumbersInArray([1, 2, 3, 4, 5], 3)).toBe(true);
+      expect(isValueInArray([1, 2, 3, 4, 5], 3)).toBe(true);
     });
 
     test("should return false if the bonus number is not in the winning numbers", () => {
-      expect(isDuplicateNumbersInArray([1, 2, 3, 4, 5], 6)).toBe(false);
+      expect(isValueInArray([1, 2, 3, 4, 5], 6)).toBe(false);
     });
   });
 
