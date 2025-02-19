@@ -1,3 +1,8 @@
+import {
+  LOTTO_NUMBER_COUNT,
+  MAX_LOTTO_NUMBER,
+  MIN_LOTTO_NUMBER,
+} from "../src/domain/constants";
 import LottoTicket from "../src/domain/LottoTicket";
 
 describe("LottoTicket 클래스 테스트", () => {
@@ -5,8 +10,8 @@ describe("LottoTicket 클래스 테스트", () => {
     const lottoTicket = new LottoTicket();
     const numbers = lottoTicket.numbers;
 
-    expect(numbers).toHaveLength(6);
-    expect(new Set(numbers).size).toBe(6);
+    expect(numbers).toHaveLength(LOTTO_NUMBER_COUNT);
+    expect(new Set(numbers).size).toBe(LOTTO_NUMBER_COUNT);
   });
 
   it("로또 숫자들은 1부터 45 사이의 자연수여야 한다.", () => {
@@ -14,8 +19,8 @@ describe("LottoTicket 클래스 테스트", () => {
     const numbers = lottoTicket.numbers;
 
     numbers.forEach((num) => {
-      expect(num).toBeGreaterThanOrEqual(1);
-      expect(num).toBeLessThanOrEqual(45);
+      expect(num).toBeGreaterThanOrEqual(MIN_LOTTO_NUMBER);
+      expect(num).toBeLessThanOrEqual(MAX_LOTTO_NUMBER);
       expect(Number.isInteger(num)).toBe(true);
     });
   });
