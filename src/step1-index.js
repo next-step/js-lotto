@@ -5,39 +5,46 @@
 
 import { buyLottoTickets } from "./domain/buyLottoTickets.js";
 import { calculateStatistics } from "./domain/calculateStatistics.js";
+import { RESPONSE_YES } from "./domain/constants.js";
+import LottoGame from "./domain/LottoGame.js";
 import {
-  createReadlineInterface,
+  askToRestartOrExit,
   getBonusNumber,
   getPurchaseAmount,
   getWinningNumbers,
 } from "./view/input.js";
 import { printLottoTickets, printStatistics } from "./view/output.js";
 
-const main = async () => {
-  const readline = createReadlineInterface();
+const withRestartOrExit = async (gameRoundFn) => {
+  let isGameRunning = true;
 
-  try {
-    const purchaseAmount = await getPurchaseAmount(readline);
+  while (isGameRunning) {
+    await gameRoundFn();
+    const response = await askToRestartOrExit();
+    isGameRunning = response === RESPONSE_YES;
+  }
+};
+
+const main = () => {
+  return withRestartOrExit(async () => {
+    const purchaseAmount = await getPurchaseAmount();
     const lottoTickets = buyLottoTickets(purchaseAmount);
 
     printLottoTickets(lottoTickets);
 
-    const winnigNumbers = await getWinningNumbers(readline);
-    const bonusNumber = await getBonusNumber(readline);
+    const winnigNumbers = await getWinningNumbers();
+    const bonusNumber = await getBonusNumber(winnigNumbers);
+
+    const lottoGame = new LottoGame(winnigNumbers, bonusNumber);
 
     const comparedResults = lottoTickets.map((lotto) =>
-      lotto.compareNumbers(winnigNumbers, bonusNumber)
+      lottoGame.compareNumbers(lotto.numbers)
     );
 
     const statistics = calculateStatistics(comparedResults);
 
     printStatistics(statistics);
-  } catch (e) {
-    if (!(e instanceof Error)) return;
-    console.log(e.message);
-  } finally {
-    readline.close();
-  }
+  });
 };
 
 main();

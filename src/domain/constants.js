@@ -9,3 +9,5 @@ export const LOTTO_PRIZES = {
   4: 50000,
   3: 5000,
 };
+export const RESPONSE_YES = "y";
+export const RESPONSE_NO = "n";

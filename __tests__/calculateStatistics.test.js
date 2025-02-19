@@ -43,6 +43,9 @@ describe("calculateStatistics 함수 테스트", () => {
 
   it("수익률을 올바르게 계산해야 한다.", () => {
     const comparedResults = [
+      { matchedNumbers: [], isBonusMatched: false }, // 0개 일치
+      { matchedNumbers: [1], isBonusMatched: true }, // 1개 일치
+      { matchedNumbers: [1, 2], isBonusMatched: true }, // 1개 일치
       { matchedNumbers: [1, 2, 3], isBonusMatched: false }, // 3개 일치 (5,000원)
       { matchedNumbers: [4, 5, 6, 7], isBonusMatched: false }, // 4개 일치 (50,000원)
       { matchedNumbers: [8, 9, 10, 11, 12], isBonusMatched: false }, // 5개 일치 (1,500,000원)
@@ -59,7 +62,7 @@ describe("calculateStatistics 함수 테스트", () => {
       LOTTO_PRIZES["5bonus"] +
       LOTTO_PRIZES["6"];
 
-    const expectedTotalSpending = 5 * PRICE_PER_LOTTO;
+    const expectedTotalSpending = comparedResults.length * PRICE_PER_LOTTO;
 
     expect(statistics.profitRate).toBe(
       (expectedTotalPrizes / expectedTotalSpending) * 100
