@@ -1,10 +1,10 @@
-export function isValidLottoNumber(num, range) {
+export function isValidNumberInRange(num, range) {
   return Number.isInteger(num) && num >= range.min && num <= range.max;
 }
 
-export function isValidLottoNumbersArray(arr, range) {
+export function isValidNumberArray(arr, range) {
   return (
-    Array.isArray(arr) && arr.every((num) => isValidLottoNumber(num, range))
+    Array.isArray(arr) && arr.every((num) => isValidNumberInRange(num, range))
   );
 }
 
