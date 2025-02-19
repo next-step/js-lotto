@@ -1,8 +1,6 @@
 import { RESULT_TEXT } from "../utils/constants.js";
 
 class Output {
-  constructor() {}
-
   printDrawResult(result) {
     console.log("당첨 통계");
     console.log("--------------------");

@@ -17,11 +17,11 @@ export const LOTTO_NUMBER_RANGE = {
 export const WINNING_PLUS_BONUS = 7;
 
 export const WINNING_PRIZES = {
-  3: 5000,
-  4: 50000,
-  5: 1500000,
-  "5Bonus": 30000000,
-  6: 2000000000,
+  3: 5_000,
+  4: 50_000,
+  5: 1_500_000,
+  "5Bonus": 30_000_000,
+  6: 2_000_000_000,
 };
 
 export const RESULT_TEXT = {
