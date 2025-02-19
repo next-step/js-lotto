@@ -1,66 +1,44 @@
-import LottoConfirmation from "../src/domain/lottoConfirmation";
+import LottoConfirmation from "../src/domain/LottoConfirmation";
+import PrizeLotto from "../src/domain/PrizeLotto";
+import Lotto from "../src/domain/Lotto";
 
 describe("LottoConfirmation Class 테스트", () => {
 
     let lottos;
 
     beforeEach(() => {
-        lottos = [{ lottoNumbers: [1, 2, 3, 4, 5, 6] }];
+        lottos = [new Lotto([1, 2, 3, 4, 5, 6])];
     });
 
-    it("로또와 당첨숫자를 입력받고, 1등 일시 2000000000원을 지급받는다.", () => {
-        const prizeLotto = [1, 2, 3, 4, 5, 6];
-        const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto, 30);
-        expect(lottoConfirmation.getTotalPrize).toEqual(2000000000);
+    it.each(
+        [
+            {rank: 1, prizeLotto: [1, 2, 3, 4, 5, 6], bonusNum: 30, totalPrize: 2000000000},
+            {rank: 2, prizeLotto: [1, 2, 3, 4, 5, 7], bonusNum: 6, totalPrize: 30000000},
+            {rank: 3, prizeLotto: [1, 2, 3, 4, 5, 7], bonusNum: 30, totalPrize: 1500000},
+            {rank: 4, prizeLotto: [1, 2, 3, 5, 8, 9], bonusNum: 30, totalPrize: 50000},
+            {rank: 5, prizeLotto: [1, 2, 3, 7, 8, 9], bonusNum: 30, totalPrize: 5000},
+            {rank: 6, prizeLotto: [7, 8, 9, 10, 11, 12], bonusNum: 30, totalPrize: 0}
+        ]
+    )
+    ("로또와 당첨숫자와 보너스 숫자를 입력받고 $rank등 일시 $totalPrize 원을 지급받는다.",
+        ({prizeLotto, bonusNum, totalPrize}) => {
+            const prizeLottos = new PrizeLotto(prizeLotto, bonusNum);
+            const lottoConfirmation = new LottoConfirmation(lottos, prizeLottos);
+            expect(lottoConfirmation.getTotalPrize).toEqual(totalPrize);
+        }
+    );
+
+    it("로또 1장 구입 후 1등 당첨시에 수익률은 40000000이다", () => {
+        const prizeLotto = new PrizeLotto([1, 2, 3, 4, 5, 6], 30);
+        const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto);
+        expect(lottoConfirmation.calculateRateOfReturn(5000)).toEqual(40000000);
     });
 
-    it("로또와 당첨숫자를 입력받고, 2등 일시 30000000원을 지급받는다.", () => {
-        const prizeLotto = [1, 2, 3, 4, 5, 7];
-        const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto, 6);
-        expect(lottoConfirmation.getTotalPrize).toEqual(30000000);
+    it("로또 1장 구입 후 1등 당첨시에 로또 결과를 검증한다.", () => {
+        const prizeLotto = new PrizeLotto([1, 2, 3, 4, 5, 6], 30);
+        const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto);
+
+        expect(lottoConfirmation.getLottoResults.getResultMap.get(7)).toEqual(1);
     });
 
-    it("로또와 당첨숫자를 입력받고, 3등 일시 1500000원을 지급받는다.", () => {
-        const prizeLotto = [1, 2, 3, 4, 5, 7];
-        const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto, 30);
-        expect(lottoConfirmation.getTotalPrize).toEqual(1500000);
-    });
-
-    it("로또와 당첨숫자를 입력받고, 4등 일시 50000원을 지급받는다.", () => {
-        const prizeLotto = [1, 2, 3, 4, 8, 9];
-        const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto, 30);
-        expect(lottoConfirmation.getTotalPrize).toEqual(50000);
-    });
-
-    it("로또와 당첨숫자를 입력받고, 5등 일시 50000원을 지급받는다.", () => {
-        const prizeLotto = [1, 2, 3, 7, 8, 9];
-        const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto, 30);
-        expect(lottoConfirmation.getTotalPrize).toEqual(5000);
-    });
-
-    it("보너스 숫자는 1 ~ 45사이의 숫자 이여야 한다.", () => {
-        const prizeLotto = [1, 2, 3, 7, 8, 9];
-        expect(() => new LottoConfirmation(lottos, prizeLotto, 46)).toThrowError(new Error(LottoConfirmation.LOTTO_NUM_RANGE_MESSAGE));
-    });
-
-    it("보너스 숫자는 당첨숫자와 중복되면 안된다.", () => {
-        const prizeLotto = [1, 2, 3, 7, 8, 9];
-        expect(() => new LottoConfirmation(lottos, prizeLotto, 9)).toThrowError(new Error(LottoConfirmation.BONUS_NUM_DUPLICATE_MESSAGE));
-    });
-
-    it("당첨 숫자는 1 ~ 45사이의 숫자 이여야 한다.", () => {
-        const prizeLotto = [1, 2, 3, 7, 8, 46];
-        expect(() => new LottoConfirmation(lottos, prizeLotto, 40)).toThrowError(new Error(LottoConfirmation.LOTTO_NUM_RANGE_MESSAGE));
-    });
-
-    it("당첨 숫자는 중복되면 안된다.", () => {
-        const prizeLotto = [1, 2, 3, 7, 8, 8];
-        expect(() => new LottoConfirmation(lottos, prizeLotto, 40)).toThrowError(new Error(LottoConfirmation.PRIZE_LOTTO_DUPLICATE_MESSAGE));
-    });
-
-    it("당첨 숫자는 6개 이여야 합니다..", () => {
-        const prizeLotto = [1, 2, 3, 7, 8, 10, 12];
-        expect(() => new LottoConfirmation(lottos, prizeLotto, 40)).toThrowError(new Error(LottoConfirmation.LOTTO_NUM_MESSAGE));
-    });
-    
 });
