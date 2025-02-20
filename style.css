@@ -1,4 +1,5 @@
 body {
+    font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     margin: 0;
     padding: 0;
@@ -13,7 +14,7 @@ body {
     border-radius: 8px;
 }
 
-h1 {
+h1, h2 {
     text-align: center;
 }
 
@@ -23,6 +24,13 @@ h1 {
     flex-direction: column;
 }
 
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
 button {
     padding: 10px;
@@ -49,4 +57,54 @@ button:hover {
 .lotto-numbers li {
     padding: 10px;
     margin: 5px 0;
+}
+
+
+.winning-numbers-container input {
+    width: 30px;
+    margin: 5px;
+}
+
+.bonus-number-container input {
+    width: 20px;
+    margin: 5px;
+}
+
+.modal {
+    display: none;
+    /* 기본적으로 숨김 */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 반투명 배경 */
+}
+
+.modal-content {
+    background-color: #f9f9f9;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    text-align: center;
+}
+
+td {
+    width: 30%;
+    text-align: center;
+}
+
+table {
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
