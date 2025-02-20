@@ -1,6 +1,6 @@
-import InputOutput from "./view/inputoutput.js";
-import LottoMachine from "./domain/lottoMachine.js";
-import LottoConfirmation from "./domain/lottoConfirmation.js";
+import InputOutput from "./view/Inputoutput.js";
+import LottoMachine from "./domain/LottoMachine.js";
+import LottoConfirmation from "./domain/LottoConfirmation.js";
 import PrizeLotto from "./domain/PrizeLotto.js";
 import Lotto from "./domain/Lotto.js";
 

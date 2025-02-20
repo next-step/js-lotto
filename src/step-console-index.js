@@ -1,6 +1,6 @@
 import InputOutput from "./view/inputoutput.js";
 import LottoMachine from "./domain/LottoMachine.js";
-import LottoConfirmation from "./domain/lottoConfirmation.js";
+import LottoConfirmation from "./domain/LottoConfirmation.js";
 import PrizeLotto from "./domain/PrizeLotto.js";
 
 const main = async () => {

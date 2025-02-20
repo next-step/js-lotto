@@ -1,5 +1,5 @@
 import LottoMachine from "../domain/LottoMachine.js";
-import LottoConfirmation from "../domain/lottoConfirmation.js";
+import LottoConfirmation from "../domain/LottoConfirmation.js";
 import PrizeLotto from "../domain/PrizeLotto.js";
 import RenderPage from "./RenderPage.js";
 import  * as elements from "./Elements.js";
