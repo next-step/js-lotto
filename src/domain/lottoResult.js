@@ -6,7 +6,7 @@ class LottoResult {
         this.#resultMap = new Map(); 
     }
     
-    get getResultMap() {
+    get resultMap() {
         return this.#resultMap;
     }
 
