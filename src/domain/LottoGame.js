@@ -60,7 +60,7 @@ export default class LottoGame {
   constructor() {
     this.#prizes = LottoGame.PRIZE_CONDITIONS.map(
       ({ requiredMatchCount, bonusMatched, prizeMoney }) =>
-        new LottoPrize(requiredMatchCount, bonusMatched, prizeMoney)
+        new LottoPrize({ requiredMatchCount, bonusMatched, prizeMoney })
     );
   }
 

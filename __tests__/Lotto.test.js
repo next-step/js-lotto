@@ -51,9 +51,18 @@ describe("로또 게임", () => {
       new Lotto(1, 45, 6, new FakeNumberGenerator([1, 2, 3, 40, 44, 45])),
       new Lotto(1, 45, 6, new FakeNumberGenerator([1, 2, 3, 4, 5, 7])),
     ];
+
     const prizes = [
-      new LottoPrize(3, false, 5_000),
-      new LottoPrize(5, true, 20_000),
+      new LottoPrize({
+        requiredMatchCount: 3,
+        bonusMatched: false,
+        prizeMoney: 5_000,
+      }),
+      new LottoPrize({
+        requiredMatchCount: 5,
+        bonusMatched: true,
+        prizeMoney: 20_000,
+      }),
     ];
 
     const result = lottoGame.draw([1, 2, 3, 4, 5, 6], 7, lottos, prizes);

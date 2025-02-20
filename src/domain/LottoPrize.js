@@ -4,7 +4,7 @@ export default class LottoPrize {
   prizeMoney;
   matchCount = 0;
 
-  constructor(requiredMatchCount, bonusMatched, prizeMoney) {
+  constructor({ requiredMatchCount, bonusMatched, prizeMoney }) {
     this.requiredMatchCount = requiredMatchCount;
     this.bonusMatched = bonusMatched;
     this.prizeMoney = prizeMoney;
