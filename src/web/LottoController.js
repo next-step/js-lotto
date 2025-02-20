@@ -2,7 +2,7 @@ import LottoMachine from "../domain/LottoMachine.js";
 import LottoConfirmation from "../domain/lottoConfirmation.js";
 import PrizeLotto from "../domain/PrizeLotto.js";
 import RenderPage from "./RenderPage.js";
-import  * as elements from "./Elements";
+import  * as elements from "./Elements.js";
 
 class LottoController {
 
@@ -48,7 +48,7 @@ class LottoController {
         const bonusNum = elements.getBonusNumElements().value;
 
         const prizeLotto = new PrizeLotto(prizeNum, bonusNum);
-        return new LottoConfirmation(this.#lottoMachine.getLottos, prizeLotto);
+        return new LottoConfirmation(this.#lottoMachine.lottos, prizeLotto);
     }
 
     buyLottoByLottoMachine() {
