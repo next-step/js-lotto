@@ -14,7 +14,6 @@ class RatesOfReturnComponent extends BaseElement {
     this.shadowRoot.addEventListener(
       "submit-output-rates-of-return-event",
       (e) => {
-        console.log(e.detail);
         this.state = { ...this.state, ...e.detail };
         if (
           this.state.purchasePrice !== null &&

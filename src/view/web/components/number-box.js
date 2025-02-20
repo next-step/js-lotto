@@ -56,54 +56,77 @@ class NumberBox extends BaseElement {
           display: flex;
           justify-content: space-between;
         }
+        input {
+          border: 3px solid blue;
+          padding: 2px 10px;
+          text-align: center;
+          font-weight: bold;
+        }
+
+        input:placeholder-shown {
+          border: 3px solid red;
+        }
       </style>
       <div id="number-box">
         <div>
           <input
             class="winning-number"
-            size="1"
+            size="10"
+            placeholder="첫 번째 숫자"
             maxlength="2"
             min="1"
             max="45"
           />
           <input
             class="winning-number"
-            size="1"
+            size="10"
+            placeholder="두 번째 숫자"
             maxlength="2"
             min="1"
             max="45"
           />
           <input
             class="winning-number"
-            size="1"
+            size="10"
+            placeholder="세 번째 숫자"
             maxlength="2"
             min="1"
             max="45"
           />
           <input
             class="winning-number"
-            size="1"
+            size="10"
+            placeholder="네 번째 숫자"
             maxlength="2"
             min="1"
             max="45"
           />
           <input
             class="winning-number"
-            size="1"
+            size="10"
+            placeholder="다섯 번째 숫자"
             maxlength="2"
             min="1"
             max="45"
           />
           <input
             class="winning-number"
-            size="1"
+            size="10"
+            placeholder="여섯 번째 숫자"
             maxlength="2"
             min="1"
             max="45"
           />
         </div>
         <div>
-          <input class="bonus-number" size="1" maxlength="2" min="1" max="45" />
+          <input
+            class="bonus-number"
+            size="10"
+            placeholder="보너스 숫자"
+            maxlength="2"
+            min="1"
+            max="45"
+          />
         </div>
       </div>
     `;

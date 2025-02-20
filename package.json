@@ -12,7 +12,8 @@
     "test:coverage": "jest --coverage",
     "fix": "eslint --fix --ext .js .",
     "format:check": "prettier **/*.js --check",
-    "format:write": "prettier **/*.js --write"
+    "format:write": "prettier **/*.js --write",
+    "cy:open": "cypress open"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",
@@ -20,6 +21,7 @@
     "@babel/preset-env": "^7.26.7",
     "@types/jest": "^29.5.14",
     "babel-jest": "^29.7.0",
+    "cypress": "^14.0.3",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.0.1",

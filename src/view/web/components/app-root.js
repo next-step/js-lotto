@@ -8,6 +8,11 @@ class AppRoot extends BaseElement {
     const slot = this.shadowRoot.querySelector("slot");
 
     slot.addEventListener("slotchange", this.slotChanged.bind(this));
+
+    window.onerror = function (message, source, lineno, colno, error) {
+      console.error(error);
+      alert(error);
+    };
   }
 
   slotChanged() {
