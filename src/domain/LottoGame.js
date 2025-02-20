@@ -30,27 +30,27 @@ export default class LottoGame {
     {
       requiredMatchCount: 3,
       bonusMatched: false,
-      prizeMoney: 5000,
+      prizeMoney: 5_000,
     },
     {
       requiredMatchCount: 4,
       bonusMatched: false,
-      prizeMoney: 50000,
+      prizeMoney: 50_000,
     },
     {
       requiredMatchCount: 5,
       bonusMatched: false,
-      prizeMoney: 1500000,
+      prizeMoney: 1_500_000,
     },
     {
       requiredMatchCount: 5,
       bonusMatched: true,
-      prizeMoney: 30000000,
+      prizeMoney: 30_000_000,
     },
     {
       requiredMatchCount: 6,
       bonusMatched: false,
-      prizeMoney: 2000000000,
+      prizeMoney: 2_000_000_000,
     },
   ];
 
