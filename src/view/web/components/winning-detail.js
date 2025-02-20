@@ -24,7 +24,7 @@ class WinningDetailComponent extends BaseElement {
       this.shadowRoot.querySelector("#winning-detail");
 
     winningDetailElement.innerHTML = `
-      ${datas.map((data) => `<div class="box">${data.map((line) => `<div class="box-element">${line}</div>`).join("")}</div>`)}
+      ${datas.map((data) => `<div class="box">${data.map((line) => `<div class="box-element">${line}</div>`).join("")}</div>`).join("<br />")}
     `;
 
     this.shadowRoot.addEventListener("restart-event", () => {
@@ -43,16 +43,18 @@ class WinningDetailComponent extends BaseElement {
         });
         console.log(this.state, newWinningDetail);
 
+        const lineHtml = (line, index, data, rowIndex) =>
+          `<div class="box-element">${rowIndex >= 1 && index === data.length - 1 ? newWinningDetail.getWinner[6 - rowIndex] : line}</div>`;
+
         winningDetailElement.innerHTML = `
-      ${datas.map(
-        (data, rowIndex) =>
-          `<div class="box">${data
-            .map(
-              (line, index) =>
-                `<div class="box-element">${rowIndex >= 1 && index === data.length - 1 ? newWinningDetail.getWinner[6 - rowIndex] : line}</div>`,
-            )
-            .join("")}</div>`,
-      )}
+      ${datas
+        .map(
+          (data, rowIndex) =>
+            `<div class="box">${data
+              .map((line, index) => lineHtml(line, index, data, rowIndex))
+              .join("")}</div>`,
+        )
+        .join("<br />")}
     `;
 
         const ratesOfReturnElement = document.querySelector("rates-of-return");
@@ -77,8 +79,8 @@ class WinningDetailComponent extends BaseElement {
     return html`
       <style>
         .label {
-          margin: 10px 0;
-
+          margin: 20px 0;
+          padding: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -89,9 +91,28 @@ class WinningDetailComponent extends BaseElement {
           gap: 10px;
         }
         .box-element {
+          padding: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
+          font-weight: bold;
+          border-radius: 10px;
+        }
+        .box-element:nth-child(1) {
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          background: lightblue;
+        }
+        .box-element:nth-child(3) {
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          background: yellow;
         }
       </style>
       <div>

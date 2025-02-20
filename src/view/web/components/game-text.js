@@ -11,10 +11,12 @@ class GameText extends BaseElement {
     return html`
       <style>
         ::slotted(h1) {
+          display: flex;
+          align-items: center;
+          justify-content: center;
           color: black;
-          font-size: 20px;
+          font-size: 30px;
           font-weight: bold;
-          background-color: #666;
         }
 
         ::slotted(#winning) {

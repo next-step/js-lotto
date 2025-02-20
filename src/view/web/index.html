@@ -11,7 +11,7 @@
     <app-root>
         <game-text>
             <h1 slot="game-text">
-              내 번호 당첨 확인
+              🎲 내 번호 당첨 확인 🎲
             </h1>
         </game-text>
 
@@ -19,10 +19,17 @@
             <label slot="input-label">
                 구입할 금액을 입력해주세요.
             </label>
-            <input slot="input-box">
+            <input slot="input-box" placeholder="한 번 눌러봐">
             </input>
-            <button slot="input-button">
+            <!-- <button >
                 구입
+            </button> -->
+            <button slot="input-button" class="button-scaffolding" role="button">
+              <span class="button-shadow"></span>
+              <span class="button-edge"></span>
+              <span class="button-front text">
+                구입
+              </span>
             </button>
         </money-input>
 

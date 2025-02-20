@@ -1,5 +1,6 @@
 import BaseElement from "../common/base-element.js";
 import html from "../common/html.js";
+import isIntegerString from "../common/isNumericString.js";
 
 class MoneyInput extends BaseElement {
   connectedCallback() {
@@ -33,20 +34,6 @@ class MoneyInput extends BaseElement {
       });
 
       purchaseHistoryElement.shadowRoot.dispatchEvent(event);
-
-      const ratesOfReturnElement = document.querySelector("rates-of-return");
-
-      const winningDetailEvent = new CustomEvent(
-        "submit-output-rates-of-return-event",
-        {
-          detail: {
-            purchasePrice: this.state.money,
-          },
-          composed: true,
-        },
-      );
-
-      ratesOfReturnElement.shadowRoot.dispatchEvent(winningDetailEvent);
     });
   }
 
@@ -59,6 +46,9 @@ class MoneyInput extends BaseElement {
     this.state.money = inputBox.value;
 
     console.log("OK!", this.state.money);
+    if (!isIntegerString(this.state.money)) {
+      throw new Error("정수인 숫자만 입력가능합니다!");
+    }
 
     const purchaseHistoryElement = document.querySelector("purchase-history");
 
@@ -96,9 +86,21 @@ class MoneyInput extends BaseElement {
           flex-direction: column;
           gap: 3px;
         }
+
         div .box {
           display: flex;
           gap: 3px;
+        }
+
+        ::slotted(input) {
+          border: 3px solid blue;
+          padding: 2px 10px;
+          text-align: center;
+          font-weight: bold;
+        }
+
+        ::slotted(input:placeholder-shown) {
+          border: 3px solid red;
         }
       </style>
       <div id="money-input">
