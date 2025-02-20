@@ -34,4 +34,12 @@ export class LottoService {
 
     return statistics.calculateProfitRate();
   }
+
+  getLottoStatistics() {
+    const rankCount = this.lottoResult.getWinningRanks(this.tickets);
+    const totalAmount = this.lotto.totalAmount;
+    const statistics = new LottoStatistics(rankCount, totalAmount);
+
+    return statistics.calculateProfitRate();
+  }
 }

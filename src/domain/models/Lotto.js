@@ -2,24 +2,21 @@ import {
   ERROR_MESSAGES,
   LOTTO_NUMBER_RANGE,
   LOTTO_NUMBERS_COUNT,
-  LOTTO_PRICE,
+  TICKET_UNIT,
 } from "../../constants.js";
+import { isValidPurchaseAmount } from "../../validation.js";
 
 export class Lotto {
   totalAmount;
   numberOfTickets;
 
   constructor(totalAmount) {
-    if (totalAmount <= 0) {
+    if (!isValidPurchaseAmount(totalAmount, TICKET_UNIT)) {
       throw new Error(ERROR_MESSAGES.PURCHASE_INVALID_AMOUNT);
     }
 
-    if (totalAmount % LOTTO_PRICE !== 0) {
-      throw new Error(ERROR_MESSAGES.PURCHASE_INVALID_MULTIPLE);
-    }
-
     this.totalAmount = totalAmount;
-    this.numberOfTickets = totalAmount / LOTTO_PRICE;
+    this.numberOfTickets = totalAmount / TICKET_UNIT;
   }
 
   getNumberOfTickets() {

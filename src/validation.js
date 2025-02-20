@@ -1,13 +1,22 @@
-export function isValidLottoNumber(num, range) {
+export function isValidNumberInRange(num, range) {
   return Number.isInteger(num) && num >= range.min && num <= range.max;
 }
 
-export function isValidLottoNumbersArray(arr, range) {
+export function isValidNumberArray(arr, range) {
   return (
-    Array.isArray(arr) && arr.every((num) => isValidLottoNumber(num, range))
+    Array.isArray(arr) && arr.every((num) => isValidNumberInRange(num, range))
   );
 }
 
-export function isDuplicateNumbersInArray(winningNumbers, bonusNumber) {
-  return winningNumbers.includes(bonusNumber);
+export function isValueInArray(arr, value) {
+  return arr.includes(value);
+}
+
+export function isDuplicateNumbersInArray(numbers) {
+  const uniqueNumbers = new Set(numbers);
+  return uniqueNumbers.size !== numbers.length;
+}
+
+export function isValidPurchaseAmount(amount, unit) {
+  return Number.isInteger(amount) && amount > 0 && amount % unit === 0;
 }
