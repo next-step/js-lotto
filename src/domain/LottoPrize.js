@@ -16,7 +16,7 @@ export default class LottoPrize {
         this.requiredMatchCount === matchCount &&
         (this.bonusMatched ? this.bonusMatched === bonusMatched : true);
 
-      if (matched) this.matchCount = +1;
+      if (matched) this.matchCount += 1;
     });
   }
 }
