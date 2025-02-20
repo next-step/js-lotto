@@ -9,22 +9,27 @@ describe("로또 게임", () => {
     lottoGame = new LottoGame();
   });
 
-  it("로또는 1000원 당 1장을 구매할 수 있다.", () => {
+  it("로또는 1000원 단위로 구매할 수 있다. 구매 금액 1000원 당 로또 1장을 받을 수 있다.", () => {
     const purchaseAmount = 10000;
     const purchasedLottos = lottoGame.purchase(purchaseAmount);
 
-    expect(purchasedLottos.length).toBe(10);
+    const quantity = purchasedLottos.length;
+    expect(quantity).toBe(10);
   });
 
-  it("로또는 1000원 단위로만 구매할 수 있다.", () => {
-    const purchaseErrorMessage = "구입 금액은 1000원 단위로 입력해야 합니다.";
-
+  it("로또 구입 시에는 1000으로 나누어 떨어지는 양수를 입력해야 한다.", () => {
     expect(() => {
       lottoGame.purchase(4500);
-    }).toThrow(purchaseErrorMessage);
+    }).toThrow("구입 금액은 1000원 단위로 입력해야 합니다.");
+    expect(() => {
+      lottoGame.purchase(-4000);
+    }).toThrow("구입 금액은 1000원 단위로 입력해야 합니다.");
+  });
+
+  it("로또 구입 시 Number 타입만 입력이 가능하다.", () => {
     expect(() => {
       lottoGame.purchase("1000");
-    }).toThrow(purchaseErrorMessage);
+    }).toThrow("구입 금액은 1000원 단위로 입력해야 합니다.");
   });
 
   it("당첨 번호는 1부터 45까지의 숫자 6개를 입력해야 한다", () => {
@@ -47,8 +52,8 @@ describe("로또 게임", () => {
       new Lotto(1, 45, 6, new FakeNumberGenerator([1, 2, 3, 4, 5, 7])),
     ];
     const prizes = [
-      new LottoPrize(3, false, 5000),
-      new LottoPrize(5, true, 20000),
+      new LottoPrize(3, false, 5_000),
+      new LottoPrize(5, true, 20_000),
     ];
 
     const result = lottoGame.draw([1, 2, 3, 4, 5, 6], 7, lottos, prizes);

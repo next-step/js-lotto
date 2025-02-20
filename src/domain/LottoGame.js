@@ -67,6 +67,7 @@ export default class LottoGame {
   static validatePurchaseAmount(purchaseAmount) {
     if (
       typeof purchaseAmount !== "number" ||
+      purchaseAmount < 0 ||
       purchaseAmount % LottoGame.PRICE_PER_LOTTO !== 0
     ) {
       throw new LottoPurchaseError(LottoGame.PRICE_PER_LOTTO);
