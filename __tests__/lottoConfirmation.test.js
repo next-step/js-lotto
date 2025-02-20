@@ -7,7 +7,7 @@ describe("LottoConfirmation Class 테스트", () => {
     let lottos;
 
     beforeEach(() => {
-        lottos = [new Lotto([1, 2, 3, 4, 5, 6])];
+        lottos = [[1, 2, 3, 4, 5, 6]];
     });
 
     it.each(
@@ -24,7 +24,7 @@ describe("LottoConfirmation Class 테스트", () => {
         ({prizeLotto, bonusNum, totalPrize}) => {
             const prizeLottos = new PrizeLotto(prizeLotto, bonusNum);
             const lottoConfirmation = new LottoConfirmation(lottos, prizeLottos);
-            expect(lottoConfirmation.getTotalPrize).toEqual(totalPrize);
+            expect(lottoConfirmation.totalPrize).toEqual(totalPrize);
         }
     );
 
@@ -38,7 +38,7 @@ describe("LottoConfirmation Class 테스트", () => {
         const prizeLotto = new PrizeLotto([1, 2, 3, 4, 5, 6], 30);
         const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto);
 
-        expect(lottoConfirmation.getLottoResults.getResultMap.get(7)).toEqual(1);
+        expect(lottoConfirmation.lottoResults.get(7)).toEqual(1);
     });
 
 });

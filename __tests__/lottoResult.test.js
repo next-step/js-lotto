@@ -7,9 +7,7 @@ describe("LottoResult Class 테스트", () => {
         lottoResult.addResult(1, false);
         lottoResult.addResult(1, false);
 
-        console.log(lottoResult);
-
-        expect(lottoResult.getResultMap.get(1)).toEqual(2);
+        expect(lottoResult.resultMap.get(1)).toEqual(2);
     });
     
 });
