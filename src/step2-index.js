@@ -1,4 +1,76 @@
-/**
- * step 2의 시작점이 되는 파일입니다.
- * 노드 환경에서 사용하는 readline 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
- */
+import { LOTTO } from './domains/common/constants.js';
+import { getLotto } from './domains/common/utils.js';
+import {
+  calculateLottoResults,
+  getJackpotTotalAmount,
+} from './domains/jackpot/utils.js';
+import {
+  getProfitRate,
+  getStatisticsResult,
+} from './domains/statistics/utils.js';
+import { renderMainTitle } from './views/common/elements.js';
+import { renderJackpotForm } from './views/jackpot/elements.js';
+import {
+  renderOrderAmountInput,
+  renderOrderedLottos,
+} from './views/order/elements.js';
+import { renderJackpotStatisticDialog } from './views/statistics/elements.js';
+
+import '../styles/index.css';
+
+let orderAmount = 0;
+let lottos = [];
+
+const root = document.querySelector('#app');
+root.style.display = 'flex';
+root.style.flexDirection = 'column';
+root.style.gap = '16px';
+
+const handleReset = () => {
+  orderAmount = 0;
+  lottos = [];
+
+  root.innerHTML = '';
+
+  root.appendChild(renderMainTitle());
+  root.appendChild(renderOrderAmountInput({ onClick: handleClickLottoCount }));
+  // root.appendChild(renderOrderedLottos({ lottos }));
+  // root.appendChild(renderJackpotForm({ onClick: handleClickJackpotResult }));
+};
+
+const handleClickLottoCount = (amount, orderCount) => {
+  orderAmount = amount;
+
+  lottos = Array.from({ length: orderCount }, () =>
+    getLotto([...LOTTO.NUMBERS]),
+  );
+
+  root.appendChild(renderOrderedLottos({ lottos }));
+  root.appendChild(renderJackpotForm({ onClick: handleClickJackpotResult }));
+  // document
+  //   .querySelector('.lottos__container')
+  //   .replaceWith(renderOrderedLottos({ lottos }));
+};
+
+const handleClickJackpotResult = (jackpotNumbers, bonusNumber) => {
+  const lottoResults = calculateLottoResults(
+    lottos,
+    jackpotNumbers,
+    bonusNumber,
+  );
+
+  const totalJackpotAmount = getJackpotTotalAmount(lottoResults);
+  const statisticsResult = getStatisticsResult(lottoResults);
+
+  const profitRate = getProfitRate(orderAmount, totalJackpotAmount);
+
+  root.appendChild(
+    renderJackpotStatisticDialog({
+      statisticsResult,
+      profitRate,
+      onClick: handleReset,
+    }),
+  );
+};
+
+root.appendChild(renderOrderAmountInput({ onClick: handleClickLottoCount }));

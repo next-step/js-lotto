@@ -12,14 +12,19 @@ export const getProfitRate = (initialAmount, finalAmount) => {
 export const getStatisticsResult = (lottoResult) => {
   const rankNames = Object.keys(JACKPOT.RANKS);
 
-  return rankNames.reduce(
-    (object, key) => ({
-      ...object,
-      [key]: getJackpotTargetRankInfo(
-        JACKPOT.RANKS[key]['number'],
-        lottoResult,
-      ),
-    }),
-    {},
-  );
+  return rankNames.map((key) => {
+    const rankInfo = getJackpotTargetRankInfo(
+      JACKPOT.RANKS[key].number,
+      lottoResult,
+    );
+    const { match, price } = JACKPOT.RULES[key];
+
+    return {
+      rank: key,
+      matchCount: match[0],
+      hasBonus: key === 'SECOND',
+      price,
+      count: rankInfo.count,
+    };
+  });
 };

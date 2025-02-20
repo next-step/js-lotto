@@ -1,9 +1,12 @@
-const LOTTO_NUMBERS = Array.from({ length: 45 }).map((_, index) => index + 1);
-
 const LOTTO_RANGE = {
-  min: LOTTO_NUMBERS[0],
-  max: LOTTO_NUMBERS[LOTTO_NUMBERS.length - 1],
+  min: 1,
+  max: 45,
 };
+
+const LOTTO_NUMBERS = Array.from(
+  { length: LOTTO_RANGE.max - LOTTO_RANGE.min + 1 },
+  (_, index) => LOTTO_RANGE.min + index,
+);
 
 export const LOTTO = {
   SIZE: 6,

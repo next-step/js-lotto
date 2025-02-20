@@ -1,4 +1,3 @@
-import { JACKPOT } from '../../domains/jackpot/constant.js';
 import { commaizeNumber } from '../../utils/index.js';
 
 export const renderJackpotStatisticsAnnouncement = () => {
@@ -7,18 +6,12 @@ export const renderJackpotStatisticsAnnouncement = () => {
 };
 
 export const renderLottoStatisticInfo = (statisticsResult) => {
-  return Object.entries(statisticsResult)
+  return statisticsResult
     .reverse()
-    .forEach(([rank, { count }]) => {
-      if (rank === JACKPOT.RANKS.SECOND.value) {
-        console.log(
-          `${JACKPOT.RULES[rank].match[0]}개 일치, 보너스 볼 일치 (${commaizeNumber(JACKPOT.RULES[rank].price)}원) - ${count}개`,
-        );
-        return;
-      }
-
+    .forEach(({ matchCount, hasBonus, price, count }) => {
+      const bonusText = hasBonus ? ', 보너스 볼 일치' : '';
       console.log(
-        `${JACKPOT.RULES[rank].match[0]}개 일치 (${commaizeNumber(JACKPOT.RULES[rank].price)}원) - ${count}개`,
+        `${matchCount}개 일치${bonusText} (${commaizeNumber(price)}원) - ${count}개`,
       );
     });
 };

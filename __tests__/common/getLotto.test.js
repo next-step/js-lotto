@@ -17,18 +17,26 @@ describe('getLotto 관련 함수 테스트', () => {
     });
   });
 
-  describe('값이 출력되었을 떄', () => {
-    let lotto;
+  describe('값이 출력되었을 때', () => {
+    test.each([
+      {
+        description: '6개의 일반 숫자가 나와야 한다.',
+        numbers: [1, 2, 3, 4, 5, 6],
+      },
+      {
+        description: '6개의 랜덤 숫자가 나와야 한다.',
+        numbers: [10, 15, 23, 31, 40, 42],
+      },
+      {
+        description: '6개의 서로 다른 숫자가 나와야 한다.',
+        numbers: [5, 12, 18, 22, 34, 45],
+      },
+    ])('$description', ({ numbers }) => {
+      const lotto = getLotto(numbers);
 
-    beforeEach(() => (lotto = getLotto([1, 2, 3, 4, 5, 6])));
-    test('6개의 일반 숫자가 나와야 한다.', () => {
       expect(lotto.length).toBe(LOTTO.SIZE);
-    });
-
-    test('중복된 숫자가 나와서는 안된다.', () => {
-      const filteredDuplicate = [...new Set(lotto)];
-
-      expect(filteredDuplicate.length).toBe(LOTTO.SIZE);
+      expect(new Set(lotto).size).toBe(LOTTO.SIZE);
+      expect(lotto.every((num) => num >= 1 && num <= 45)).toBe(true);
     });
   });
 });

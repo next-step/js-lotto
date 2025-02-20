@@ -1,36 +1,29 @@
-import { isArrayDifference } from '../../utils/index.js';
+import { equalArray } from '../../utils/index.js';
 import { LOTTO } from '../common/constants.js';
-import { validateLottoNumberRange } from '../common/utils.js';
+import { isValidLottoNumberRange } from '../common/utils.js';
 import { JACKPOT, JACKPOT_RANKS } from './constant.js';
 
 const matchJackpotNumbers = (orderedNumbers, jackpotNumbers) => {
   return orderedNumbers.filter((value) => jackpotNumbers.includes(value));
 };
 
-export const validateJackpot = (numbers) => {
+export const isValidJackpot = (numbers) => {
   return (
     Array.isArray(numbers) &&
     numbers.length === LOTTO.SIZE &&
-    numbers.every(validateLottoNumberRange)
+    numbers.every(isValidLottoNumberRange) &&
+    [...new Set(numbers)].length === LOTTO.SIZE
   );
 };
 
 const getJackpotRank = (matchedNumbers, isBonus) => {
   const match = [matchedNumbers.length, isBonus ? 1 : 0];
 
-  return (() => {
-    if (isArrayDifference(match, JACKPOT.RULES.FIRST.match))
-      return JACKPOT_RANKS.FIRST.number;
-    if (isArrayDifference(match, JACKPOT.RULES.SECOND.match))
-      return JACKPOT_RANKS.SECOND.number;
-    if (isArrayDifference(match, JACKPOT.RULES.THIRD.match))
-      return JACKPOT_RANKS.THIRD.number;
-    if (isArrayDifference(match, JACKPOT.RULES.FOURTH.match))
-      return JACKPOT_RANKS.FOURTH.number;
-    if (isArrayDifference(match, JACKPOT.RULES.FIFTH.match))
-      return JACKPOT_RANKS.FIFTH.number;
-    return 0;
-  })();
+  const rank = Object.entries(JACKPOT.RULES).find(([_, rank]) =>
+    equalArray(match, rank.match),
+  );
+
+  return rank ? JACKPOT.RANKS[rank[0]].number : 0;
 };
 
 export const getJackpotPrice = (rank) => {
