@@ -1,4 +1,4 @@
-import LottoNumber from "../src/domain/LottoNumber";
+import LottoNumber from "../src/domain/LottoNumber.js";
 
 describe("LottoNumber Class 테스트", () => {
     

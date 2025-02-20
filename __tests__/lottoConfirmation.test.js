@@ -1,6 +1,6 @@
-import LottoConfirmation from "../src/domain/LottoConfirmation";
-import PrizeLotto from "../src/domain/PrizeLotto";
-import Lotto from "../src/domain/Lotto";
+import LottoConfirmation from "../src/domain/LottoConfirmation.js";
+import PrizeLotto from "../src/domain/PrizeLotto.js";
+import Lotto from "../src/domain/Lotto.js";
 
 describe("LottoConfirmation Class 테스트", () => {
 
