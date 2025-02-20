@@ -2,7 +2,16 @@ import { WINNING_PRIZES, lottoPrice } from "../utils/constants.js";
 import Validator from "./Validator.js";
 
 class LottoDraw {
-  #result = {};
+  #result = {
+    counts: {
+      3: 0,
+      4: 0,
+      5: 0,
+      "5Bonus": 0,
+      6: 0,
+    },
+    rateOfReturn: 0,
+  };
   #lottoNumbers = {};
   #lottoTickets = [];
 
@@ -10,16 +19,6 @@ class LottoDraw {
     this.validateLottoNumbers(lottoNumbers);
     this.#lottoNumbers = lottoNumbers;
     this.#lottoTickets = lottoTickets;
-    this.#result = {
-      counts: {
-        3: 0,
-        4: 0,
-        5: 0,
-        "5Bonus": 0,
-        6: 0,
-      },
-      rateOfReturn: 0,
-    };
   }
 
   start() {
@@ -33,7 +32,7 @@ class LottoDraw {
   calculateRateOfReturn() {
     const totalPrize = this.calculateWinningAmount();
     const ticketsPrice = this.#lottoTickets.length * lottoPrice;
-    const rateOfReturn = totalPrize / ticketsPrice;
+    const rateOfReturn = (totalPrize - ticketsPrice) / ticketsPrice * 100;
 
     this.#result.rateOfReturn = Math.round(rateOfReturn * 10) / 10;
   }
@@ -65,9 +64,8 @@ class LottoDraw {
     };
 
     const incrementFunction = matchConditions[ticketStatus.matchedCount];
-    if (incrementFunction) {
-      incrementFunction();
-    }
+
+    incrementFunction?.();
   }
 
   getMatchedTicketStatus() {

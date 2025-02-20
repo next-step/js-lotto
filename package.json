@@ -22,7 +22,11 @@
   "jest": {
     "transform": {
       "^.+\\.js$": "babel-jest"
-    }
+    },
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/__tests__/constants.js"
+    ]
   },
   "babel": {
     "presets": [

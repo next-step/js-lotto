@@ -8,33 +8,60 @@ import LottoPurchase from "./domain/LottoPurchase.js";
 import Input from "./view/Input.js";
 import Output from "./view/output.js";
 
-// 당첨 번호를 받는다.
-// 보너스 번호를 받는다.
-
-// 당첨 통계 보여주기
-
 const input = new Input();
 const output = new Output();
 
-try {
-  const purchasePrice = await input.getPurchasePrice();
-  const lottoPurchase = new LottoPurchase(purchasePrice);
+const executeLottoPurchase = async () => {
+  try {
+    const purchasePrice = await input.getPurchasePrice();
+    return new LottoPurchase(purchasePrice);
+  } catch (error) {
+    output.printErrorMessage(error);
+    return await executeLottoPurchase();
+  }
+};
 
-  const lottoWinningNumbersInput = await input.getLottoWinningNumbers();
-  const lottoWinningNumbers = lottoWinningNumbersInput
-    .split(",")
-    .map((num) => Number(num));
+const executeLottoDraw = async (lottoPurchase) => {
+  try {
+    const lottoWinningNumbersInput = await input.getLottoWinningNumbers();
+    const lottoWinningNumbers = lottoWinningNumbersInput
+      .split(",")
+      .map((num) => Number(num));
 
-  const lottoBonusNumber = await input.getLottoBonusNumber();
-  const lottoNumbers = {
-    lottoWinningNumbers,
-    lottoBonusNumber: Number(lottoBonusNumber),
-  };
+    const lottoBonusNumber = await input.getLottoBonusNumber();
+    const lottoNumbers = {
+      lottoWinningNumbers,
+      lottoBonusNumber: Number(lottoBonusNumber),
+    };
 
-  const lottoDraw = new LottoDraw(lottoNumbers, lottoPurchase.lottoTickets);
-  const lottoDrawResult = lottoDraw.start();
-  output.printDrawResult(lottoDrawResult);
-  
-} catch (error) {
-  output.printErrorMessage(error);
-}
+    return new LottoDraw(lottoNumbers, lottoPurchase.lottoTickets);
+  } catch (error) {
+    output.printErrorMessage(error);
+    return await executeLottoDraw(lottoPurchase);
+  }
+};
+
+const main = async () => {
+  try {
+    let restart = true;
+
+    while (restart) {
+      const lottoPurchase = await executeLottoPurchase();
+      output.printLottoTicketCount(lottoPurchase.lottoTickets.length);
+      output.printLottoTicketsNumber(
+        lottoPurchase.lottoTickets.map((ticket) => ticket.numbers)
+      );
+
+      const lottoDraw = await executeLottoDraw(lottoPurchase);
+      const lottoDrawResult = lottoDraw.start();
+      output.printDrawResult(lottoDrawResult);
+
+      restart = await input.getRestart();
+      restart = restart.toLowerCase() === "y";
+    }
+  } catch (error) {
+    output.printErrorMessage(error);
+  }
+};
+
+main();

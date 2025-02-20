@@ -1,7 +1,12 @@
 import { RESULT_TEXT } from "../utils/constants.js";
 
 class Output {
-  constructor() {}
+  printLottoTicketCount(count){
+    console.log(`${count}개를 구매했습니다.`)
+  }
+  printLottoTicketsNumber(ticketsNumber) {
+    ticketsNumber.forEach((numbers) => console.log(numbers));
+  }
 
   printDrawResult(result) {
     console.log("당첨 통계");

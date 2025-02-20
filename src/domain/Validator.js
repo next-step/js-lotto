@@ -6,8 +6,6 @@ import {
 } from "../utils/constants.js";
 
 class Validator {
-  constructor() {}
-
   validatePurchaseAmount(purchaseAmount) {
     if (!this.isValidNumber(purchaseAmount)) {
       throw new Error(ERROR_MESSAGES.MUST_BE_INTEGER);
@@ -16,8 +14,6 @@ class Validator {
     if (!this.isAboveMinimum(purchaseAmount)) {
       throw new Error(ERROR_MESSAGES.MUST_BE_ABOVE_MINIMUM);
     }
-
-    return true;
   }
 
   validateWinningNumbers(winningNumbers) {
@@ -42,12 +38,6 @@ class Validator {
     if (this.isDuplicate(winningNumbers)) {
       throw new Error(ERROR_MESSAGES.MUST_BE_NOT_DUPLICATE);
     }
-
-    return true;
-  }
-
-  splitBy(string, separate) {
-    return string.split(separate);
   }
 
   isInRange(numbers) {
@@ -66,7 +56,7 @@ class Validator {
 
   isValidNumber(value) {
     const number = Number(value);
-    return !isNaN(Number(number)) && Number.isInteger(number);
+    return !isNaN(number) && Number.isInteger(number);
   }
 
   isAboveMinimum(number) {
