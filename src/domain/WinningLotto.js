@@ -4,6 +4,8 @@ class WinningLotto {
   static INVALID_LOTTO_NUMBER_TYPE =
     "모든 로또 번호는 LottoNumber 클래스여야 합니다.";
   static INVALID_BONUS_NUMBER = "보너스 번호는 당첨 번호에 포함될 수 없습니다.";
+  static INVALID_WINNING_LOTTO_SIZE = "당첨 번호는 6개여야 합니다.";
+  static WINNING_LOTTO_SIZE = 6;
 
   #winningNumbers;
   #bonusNumber;
@@ -19,6 +21,12 @@ class WinningLotto {
   validateLottoNumbers(winningNumbers, bonusNumber) {
     if (!(bonusNumber instanceof LottoNumber)) {
       throw new Error(WinningLotto.INVALID_LOTTO_NUMBER_TYPE);
+    }
+    if (
+      !Array.isArray(winningNumbers) ||
+      winningNumbers.length !== WinningLotto.WINNING_LOTTO_SIZE
+    ) {
+      throw new Error(WinningLotto.INVALID_WINNING_LOTTO_SIZE);
     }
     winningNumbers.forEach((winningNumber) => {
       if (!(winningNumber instanceof LottoNumber)) {
