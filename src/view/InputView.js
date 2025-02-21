@@ -3,7 +3,7 @@ import Budget from "../domain/Budget.js";
 import LottoNumber from "../domain/LottoNumber.js";
 
 class InputView {
-  async askPurchaseAmount() {
+  async askBudget() {
     return this.readLineAsync("구입금액을 입력해 주세요.\n").then((input) => {
       return new Budget(Number(input));
     });
