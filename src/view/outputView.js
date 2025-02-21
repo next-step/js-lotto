@@ -1,7 +1,6 @@
 import { getPrizeLabel } from "./prizeLabel.js";
 
 class OutputView {
-
   static printLottoCount(lottoCount) {
     console.log(`${lottoCount}개를 구매했습니다.`);
   }
