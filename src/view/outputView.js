@@ -1,4 +1,7 @@
+import { getPrizeLabel } from "./prizeLabel.js";
+
 class OutputView {
+
   static printLottoCount(lottoCount) {
     console.log(`${lottoCount}개를 구매했습니다.`);
   }
@@ -14,6 +17,16 @@ class OutputView {
 
   printError(errorMessage) {
     console.log(errorMessage);
+  }
+
+  printWinningStatistics(winningStatistics, budget) {
+    console.log("당첨 통계");
+    console.log("--------------------");
+    for (const [prize, count] of winningStatistics.entries()) {
+      const label = getPrizeLabel(prize);
+      console.log(`${label} - ${count}개`);
+    }
+    console.log(`총 수익률은 ${budget.getProfit()}%입니다.`);
   }
 }
 
