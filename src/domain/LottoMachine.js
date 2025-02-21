@@ -22,12 +22,12 @@ class LottoMachine {
         this.#lottos = lottos;
     }
 
-    get getLottoNum() {
+    get lottoNum() {
         return this.#lottoNum;
     }
 
-    get getLottos() {
-        return this.#lottos;
+    get lottos() {
+        return this.#lottos.map(lotto => lotto.lottoNumbers);
     }
 
     #createAutoLotto() {

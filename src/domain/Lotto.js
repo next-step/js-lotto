@@ -10,8 +10,8 @@ class Lotto {
         this.#lottoNumbers = this.#createLottoNumbers(lottoNumbers);
     }
 
-    get getLottoNumbers() {
-        return this.#lottoNumbers.map(lottoNumber => lottoNumber.getLottoNumber);
+    get lottoNumbers() {
+        return this.#lottoNumbers.map(lottoNumber => lottoNumber.lottoNumber);
     }
 
     #createLottoNumbers(lottoNumbers) {

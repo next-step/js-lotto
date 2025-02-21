@@ -12,7 +12,7 @@ class LottoNumber {
         this.#lottoNumber = lottoNumber;
     }
 
-    get getLottoNumber() {
+    get lottoNumber() {
         return this.#lottoNumber;
     }
 

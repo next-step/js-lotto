@@ -1,16 +1,65 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>🎱 행운의 로또</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
 
-  <body>
-    <div id="app">
-      <h1>🎱 행운의 로또</h1>
+<head>
+  <meta charset="UTF-8" />
+  <title>🎱 행운의 로또</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+  <div id="app">
+    <h1>🎱 행운의 로또</h1>
+    <div class="input-container">
+      <label for="money">구입할 금액을 입력하세요:</label>
+      <input type="number" id="money" placeholder="금액" />
+      <button id="buyButton">구입</button>
     </div>
-    <script type="module" src="./src/step2-index.js"></script>
-  </body>
+    <div class="lotto-container">
+      <h2 id="lottoCount"></h2>
+      <ul id="lottos"></ul>
+    </div>
+    <div class="prize-input-container">
+      <label for="bonus-number-container">당첨번호</label>
+      <div class="winning-numbers-container">
+        <input type="number" />
+        <input type="number" />
+        <input type="number" />
+        <input type="number" />
+        <input type="number" />
+        <input type="number" />
+      </div>
+      <label for="bonus-number-container">보너스 번호</label>
+      <div class="bonus-number-container">
+        <input type="number" id="bonusNum" />
+      </div>
+    </div>
+    <div class="input-container">
+      <button id="confirmButton">결과 확인하기</button>
+    </div>
+  </div>
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" id="closeButton">&times;</span>
+      <h2>🏆 당첨 통계 🏆</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>일치 개수</th>
+            <th>당첨금</th>
+            <th>당첨 개수</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <p id="rateOfReturn"></p>
+      <button id="restartButton">다시 시작하기</button>
+    </div>
+  </div>
+</body>
+<script type="module" src="./src/step-web-index.js"></script>
+
 </html>
