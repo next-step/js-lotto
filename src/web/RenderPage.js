@@ -3,14 +3,14 @@ class RenderPage {
     renderLottoList(lottoMachine) {
         const lottos = document.getElementById('lottos');
 
-        lottoMachine.lottos.forEach(lotto => {
+        document.getElementById('lottoCount').textContent = "총" + lottoMachine.lottoNum + "개을 구입하였습니다.";
+
+        lottoMachine.lottosValue.forEach(lotto => {
             const li = document.createElement('li');
             li.style.listStyleType = 'none';
             li.textContent = lotto.join(', ');
             lottos.appendChild(li);
         });
-
-        document.getElementById('lottoCount').textContent = "총" + lottoMachine.lottoNum + "개을 구입하였습니다.";
     }
 
     openModal(lottoConfirmation) {
@@ -49,12 +49,12 @@ class RenderPage {
     }
 
     clearInput() {
-        document.getElementById('lottos').reset();
-        document.getElementById('lottoCount').reset();
+        document.getElementById('lottos').innerHTML = '';
+        document.getElementById('lottoCount').innerHTML = '';
         document.querySelectorAll(".winning-numbers-container input[type='number']").forEach(input => {
-            input.reset();
+            input.value = '';
         });
-        document.getElementById('bonusNum').reset();
+        document.getElementById('bonusNum').value = '';
     }
 }
 

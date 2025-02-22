@@ -7,7 +7,7 @@ describe("LottoConfirmation Class 테스트", () => {
     let lottos;
 
     beforeEach(() => {
-        lottos = [[1, 2, 3, 4, 5, 6]];
+        lottos = [[1, 2, 3, 4, 5, 6]].map(lotto => new Lotto(lotto))
     });
 
     it.each(

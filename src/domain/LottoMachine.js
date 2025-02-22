@@ -29,11 +29,15 @@ class LottoMachine {
     }
 
     get lottos() {
-        return this.#lottos.map(lotto => lotto.value);
+        return this.#lottos;
     }
 
+    get lottosValue() {
+        return this.#lottos.map(lotto => lotto.value);
+    }
+f
     #createAutoLotto() {
-        return Array.from({ length: this.#lottoNum }, () => new Lotto());
+        return Array.from({ length: this.#lottoNum }, () => new Lotto(this.#outputAutoLotto()));
     }
 
     #validateMinimumPrice(price) {
@@ -50,6 +54,18 @@ class LottoMachine {
 
     #calculateLottoNum(price) {
         return price / LottoMachine.LOTTO_PRICE
+    }
+
+    #outputAutoLotto() {
+        this.#shuffleArray(this.#numberRange);
+        return this.#numberRange.slice(0, Lotto.LOTTO_SIZE).sort((a, b) => a - b);
+    }
+
+    #shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
     }
 }
 

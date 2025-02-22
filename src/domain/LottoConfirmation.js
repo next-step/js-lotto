@@ -31,9 +31,10 @@ class LottoConfirmation {
 
     #checkMatches(prizeLotto) {
         this.#lottos.forEach(lotto => {
-            const matchedCount = lotto.filter(number => prizeLotto.value.includes(number)).length;
-            const hasBonus = lotto.some(number => number === prizeLotto.bonusNum);
-            this.#lottoResult.addResult(matchedCount, hasBonus);
+            this.#lottoResult.addResult(
+                lotto.checkMatches(prizeLotto),
+                lotto.checkBonus(prizeLotto)
+            );
         });
     }
 
