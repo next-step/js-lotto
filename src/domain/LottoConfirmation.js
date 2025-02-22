@@ -17,7 +17,7 @@ class LottoConfirmation {
         this.#totalPrize = 0;
         this.#lottoResult = new LottoResult();
 
-        this.#checkMatches(prizeLotto.value, prizeLotto.bonusNum);
+        this.#checkMatches(prizeLotto);
         this.#calculateTotalPrice();
     }
 
@@ -29,10 +29,10 @@ class LottoConfirmation {
         return this.#lottoResult.resultMap;
     }
 
-    #checkMatches(prizeLotto, bonusNum) {
+    #checkMatches(prizeLotto) {
         this.#lottos.forEach(lotto => {
-            const matchedCount = lotto.filter(number => prizeLotto.includes(number)).length;
-            const hasBonus = lotto.some(number => number === bonusNum);
+            const matchedCount = lotto.filter(number => prizeLotto.value.includes(number)).length;
+            const hasBonus = lotto.some(number => number === prizeLotto.bonusNum);
             this.#lottoResult.addResult(matchedCount, hasBonus);
         });
     }
