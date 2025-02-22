@@ -13,39 +13,39 @@ class PrizeLotto {
     #bonusNum;
 
     constructor(prizeLotto, bonusNum) {
-        this.#confirmPrizeNum(prizeLotto);
+        this.#validatePrizeNum(prizeLotto);
         this.#prizeLotto = this.#createLottoNumbers(prizeLotto);
-        this.#confirmBonusNumDuplicate(bonusNum);
+        this.#validateBonusNumDuplicate(bonusNum);
         this.#bonusNum = new LottoNumber(bonusNum);
     }
 
-    get prizeLotto() {
+    get value() {
         return this.#prizeLotto.map(lottoNumber => lottoNumber.value);
     }
 
     get bonusNum() {
-        return this.#bonusNum.lottoNumber;
+        return this.#bonusNum.value;
     }
 
-    #confirmPrizeNum(prizeLotto) {
-        this.#confirmPrizeNumLength(prizeLotto);
-        this.#confirmPrizeNumDuplicate(prizeLotto);
+    #validatePrizeNum(prizeLotto) {
+        this.#validatePrizeNumLength(prizeLotto);
+        this.#validatePrizeNumDuplicate(prizeLotto);
     }
 
-    #confirmPrizeNumDuplicate(prizeLotto) {
+    #validatePrizeNumDuplicate(prizeLotto) {
         const uniquePrizes = new Set(prizeLotto);
         if (uniquePrizes.size !== prizeLotto.length) {
             throw new Error(PrizeLotto.PRIZE_LOTTO_DUPLICATE_MESSAGE);
         }
     }
 
-    #confirmPrizeNumLength(prizeLotto) {
+    #validatePrizeNumLength(prizeLotto) {
         if (prizeLotto.length !== PrizeLotto.LOTTO_LENGTH) {
             throw new Error(PrizeLotto.LOTTO_NUM_MESSAGE);
         }
     }
 
-    #confirmBonusNumDuplicate(number) {
+    #validateBonusNumDuplicate(number) {
         const prizeNumbers = this.#prizeLotto.map(lottoNumber => lottoNumber.value);
         
         if (prizeNumbers.includes(number)) {

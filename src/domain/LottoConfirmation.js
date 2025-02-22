@@ -17,7 +17,7 @@ class LottoConfirmation {
         this.#totalPrize = 0;
         this.#lottoResult = new LottoResult();
 
-        this.#checkMatches(prizeLotto.prizeLotto, prizeLotto.bonusNum);
+        this.#checkMatches(prizeLotto.value, prizeLotto.bonusNum);
         this.#calculateTotalPrice();
     }
 
@@ -39,7 +39,6 @@ class LottoConfirmation {
 
     #calculateTotalPrice() {
         this.#lottoResult.resultMap.forEach((count, matchedCount) => {
-            console.log(matchedCount)
             switch (matchedCount) {
                 case 3:
                     this.#totalPrize += LottoConfirmation.THREE_MATCH_PRICE * count;

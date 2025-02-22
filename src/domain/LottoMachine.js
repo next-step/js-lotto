@@ -9,7 +9,7 @@ class LottoMachine {
     #lottoNum;
 
     constructor(price) {
-        this.#confirmMinimumPrice(price);
+        this.#validateMinimumPrice(price);
         this.#lottoNum = this.#calculateLottoNum(price);
     }
 
@@ -18,7 +18,7 @@ class LottoMachine {
     }
 
     buyManual(lottos) {
-        this.#confirmManualLottoLength(lottos);
+        this.#validateManualLottoLength(lottos);
         this.#lottos = lottos;
     }
 
@@ -34,13 +34,13 @@ class LottoMachine {
         return Array.from({ length: this.#lottoNum }, () => new Lotto(this.#outputAutoLotto()));
     }
 
-    #confirmMinimumPrice(price) {
+    #validateMinimumPrice(price) {
         if (price < LottoMachine.LOTTO_PRICE) {
             throw new Error(LottoMachine.MINIMUM_PRICE_MESSAGE);
         }
     }
 
-    #confirmManualLottoLength(lottos) {
+    #validateManualLottoLength(lottos) {
         if (lottos.length !== this.#lottoNum) {
             throw new Error(this.#lottoNum + LottoMachine.MANUAL_LOTTO_SIZE_MESSAGE);
         }
@@ -61,7 +61,7 @@ class LottoMachine {
     #shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            [array[i], array[j]] = [array[j], array[i]];
         }
     }
 }
