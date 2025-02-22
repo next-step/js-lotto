@@ -20,7 +20,7 @@ class PrizeLotto {
     }
 
     get prizeLotto() {
-        return this.#prizeLotto.map(lottoNumber => lottoNumber.lottoNumber);
+        return this.#prizeLotto.map(lottoNumber => lottoNumber.value);
     }
 
     get bonusNum() {
@@ -46,7 +46,7 @@ class PrizeLotto {
     }
 
     #confirmBonusNumDuplicate(number) {
-        const prizeNumbers = this.#prizeLotto.map(lottoNumber => lottoNumber.lottoNumber);
+        const prizeNumbers = this.#prizeLotto.map(lottoNumber => lottoNumber.value);
         
         if (prizeNumbers.includes(number)) {
             throw new Error(PrizeLotto.BONUS_NUM_DUPLICATE_MESSAGE);

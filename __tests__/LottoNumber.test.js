@@ -8,7 +8,7 @@ describe("LottoNumber Class 테스트", () => {
 
     it("생성한 로또 번호를 가져온다.", () => {
         const lottoNumber = new LottoNumber(1);
-        expect(lottoNumber.lottoNumber).toEqual(1);
+        expect(lottoNumber.value).toEqual(1);
     });
     
 });

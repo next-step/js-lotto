@@ -78,7 +78,7 @@ class InputOutput {
 
   printLottos(lottos) {
     for (const lotto of lottos) {
-      console.log(lotto.getLottoNumbers);
+      console.log(lotto.value);
     }
   }
 

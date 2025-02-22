@@ -27,7 +27,7 @@ class LottoMachine {
     }
 
     get lottos() {
-        return this.#lottos.map(lotto => lotto.lottoNumbers);
+        return this.#lottos.map(lotto => lotto.value);
     }
 
     #createAutoLotto() {
