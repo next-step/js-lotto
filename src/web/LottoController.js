@@ -5,7 +5,6 @@ import RenderPage from "./RenderPage.js";
 
 class LottoController {
     #lottoMachine;
-    #money;
 
     inputMoney(money) {
         this.#buyLottoByLottoMachine(money)
