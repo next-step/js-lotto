@@ -1,5 +1,5 @@
-import Lotto from "./Lotto.js";
 
+import Lotto from "./Lotto.js";
 class LottoMachine {
     static MINIMUM_PRICE_MESSAGE = "금액은 1000원 이상이여야 합니다.";
     static MANUAL_LOTTO_SIZE_MESSAGE = "장 구매하실 수 있습니다.";
@@ -33,7 +33,7 @@ class LottoMachine {
     }
 
     #createAutoLotto() {
-        return Array.from({ length: this.#lottoNum }, () => new Lotto(this.#outputAutoLotto()));
+        return Array.from({ length: this.#lottoNum }, () => new Lotto());
     }
 
     #validateMinimumPrice(price) {
@@ -50,18 +50,6 @@ class LottoMachine {
 
     #calculateLottoNum(price) {
         return price / LottoMachine.LOTTO_PRICE
-    }
-
-    #outputAutoLotto() {
-        this.#shuffleArray(this.#numberRange);
-        return this.#numberRange.slice(0, Lotto.LOTTO_SIZE).sort((a, b) => a - b);
-    }
-
-    #shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
     }
 }
 
