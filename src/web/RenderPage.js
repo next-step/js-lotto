@@ -1,9 +1,7 @@
-import  * as elements from "./Elements.js";
-
 class RenderPage {
 
     renderLottoList(lottoMachine) {
-        const lottos = elements.getLottosElements();
+        const lottos = document.getElementById('lottos');
 
         lottoMachine.lottos.forEach(lotto => {
             const li = document.createElement('li');
@@ -12,11 +10,11 @@ class RenderPage {
             lottos.appendChild(li);
         });
 
-        elements.getLottoCount().textContent = "총" + lottoMachine.lottoNum + "개을 구입하였습니다.";
+        document.getElementById('lottoCount').textContent = "총" + lottoMachine.lottoNum + "개을 구입하였습니다.";
     }
 
     openModal(lottoConfirmation) {
-        const modal = elements.getModalElements();
+        const modal = document.getElementById("modal");
 
         const tbody = modal.querySelector("table tbody");
 
@@ -40,23 +38,23 @@ class RenderPage {
             tbody.appendChild(tr);
         });
 
-        elements.getRateOfReturnElements().textContent = "당신의 총 수익률은 " + lottoConfirmation.totalPrize + "% 입니다.";
+        document.getElementById("rateOfReturn").textContent = "당신의 총 수익률은 " + lottoConfirmation.totalPrize + "% 입니다.";
 
         modal.style.display = "block";
     }
 
     closeModal() {
-        const modal = elements.getModalElements();
+        const modal = document.getElementById("modal");
         modal.style.display = "none";
     }
 
     clearInput() {
-        elements.getLottosElements().innerHTML = '';
-        elements.getLottoCount().innerHTML = '';
-        elements.getWinningNumber().forEach(input => {
-            input.value = '';
+        document.getElementById('lottos').reset();
+        document.getElementById('lottoCount').reset();
+        document.querySelectorAll(".winning-numbers-container input[type='number']").forEach(input => {
+            input.reset();
         });
-        elements.getBonusNumElements().value = '';
+        document.getElementById('bonusNum').reset();
     }
 }
 
