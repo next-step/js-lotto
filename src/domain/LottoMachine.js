@@ -5,12 +5,14 @@ class LottoMachine {
     static MANUAL_LOTTO_SIZE_MESSAGE = "장 구매하실 수 있습니다.";
     static LOTTO_PRICE = 1000;
 
+    #numberRange
     #lottos;
     #lottoNum;
 
     constructor(price) {
         this.#validateMinimumPrice(price);
         this.#lottoNum = this.#calculateLottoNum(price);
+        this.#numberRange = [...Array(Lotto.LOTTO_NUMBER_RANGE).keys()].map(i => i + 1);
     }
 
     buyAuto() {
@@ -51,11 +53,8 @@ class LottoMachine {
     }
 
     #outputAutoLotto() {
-        const numberRange = [...Array(Lotto.LOTTO_NUMBER_RANGE).keys()].map(i => i + 1);
-        
-        this.#shuffleArray(numberRange);
-        
-        return numberRange.slice(0, Lotto.LOTTO_SIZE).sort((a, b) => a - b);
+        this.#shuffleArray(this.#numberRange);
+        return this.#numberRange.slice(0, Lotto.LOTTO_SIZE).sort((a, b) => a - b);
     }
 
     #shuffleArray(array) {
