@@ -1,4 +1,5 @@
 import LottoNumber from "./LottoNumber.js";
+import Lotto from "./Lotto.js";
 class PrizeLotto {
 
     static MINIMUM_LOTTO_NUM = 1;
@@ -20,7 +21,7 @@ class PrizeLotto {
     }
 
     get value() {
-        return this.#prizeLotto.map(lottoNumber => lottoNumber.value);
+        return this.#prizeLotto.value;
     }
 
     get bonusNum() {
@@ -46,15 +47,13 @@ class PrizeLotto {
     }
 
     #validateBonusNumDuplicate(number) {
-        const prizeNumbers = this.#prizeLotto.map(lottoNumber => lottoNumber.value);
-        
-        if (prizeNumbers.includes(number)) {
+        if (this.#prizeLotto.value.includes(number)) {
             throw new Error(PrizeLotto.BONUS_NUM_DUPLICATE_MESSAGE);
         }
     }
 
     #createLottoNumbers(lottoNumbers) {
-        return lottoNumbers.map(number => new LottoNumber(number));
+        return new Lotto(lottoNumbers);
     }
 }
 
