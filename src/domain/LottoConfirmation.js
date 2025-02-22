@@ -1,4 +1,5 @@
 import LottoResult from "./LottoResult.js";
+import LottoMachine from "./LottoMachine.js";
 
 class LottoConfirmation {
 
@@ -64,7 +65,8 @@ class LottoConfirmation {
         return this.#totalPrize;
     }
 
-    calculateRateOfReturn(price) {
+    calculateRateOfReturn() {
+        const price = this.#lottos.length * LottoMachine.LOTTO_PRICE;
         return (this.#totalPrize / price) * 100;
     }
 }

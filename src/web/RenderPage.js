@@ -13,7 +13,7 @@ class RenderPage {
         });
     }
 
-    openModal(lottoConfirmation) {
+    openModal(lottoConfirmation, money) {
         const modal = document.getElementById("modal");
 
         const tbody = modal.querySelector("table tbody");
@@ -38,7 +38,7 @@ class RenderPage {
             tbody.appendChild(tr);
         });
 
-        document.getElementById("rateOfReturn").textContent = "당신의 총 수익률은 " + lottoConfirmation.totalPrize + "% 입니다.";
+        document.getElementById("rateOfReturn").textContent = "당신의 총 수익률은 " + lottoConfirmation.calculateRateOfReturn(money) + "% 입니다.";
 
         modal.style.display = "block";
     }

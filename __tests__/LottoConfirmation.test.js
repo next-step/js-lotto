@@ -28,10 +28,10 @@ describe("LottoConfirmation Class 테스트", () => {
         }
     );
 
-    it("로또 1장 구입 후 1등 당첨시에 수익률은 40000000이다", () => {
+    it("로또 1장 구입 후 1등 당첨시에 수익률은 200000000이다", () => {
         const prizeLotto = new PrizeLotto([1, 2, 3, 4, 5, 6], 30);
         const lottoConfirmation = new LottoConfirmation(lottos, prizeLotto);
-        expect(lottoConfirmation.calculateRateOfReturn(5000)).toEqual(40000000);
+        expect(lottoConfirmation.calculateRateOfReturn()).toEqual(200000000);
     });
 
     it("로또 1장 구입 후 1등 당첨시에 로또 결과를 검증한다.", () => {

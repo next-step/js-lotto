@@ -2,7 +2,7 @@ import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import Lotto from '../domain/Lotto.js';
 
-class InputOutput {
+class ConsoleView {
   messages = {
     INPUT_MONEY: "구입금액을 입력해 주세요.",
     AUTO_MANUAL: "자동(a), 수동(b)",
@@ -78,7 +78,7 @@ class InputOutput {
 
   printLottos(lottos) {
     for (const lotto of lottos) {
-      console.log(lotto.value);
+      console.log(lotto);
     }
   }
 
@@ -89,7 +89,7 @@ class InputOutput {
   }
 
   printStatics(lottoResult) {
-    lottoResult.getResultMap.forEach((count, matchedCount) => {
+    lottoResult.forEach((count, matchedCount) => {
       switch (matchedCount) {
         case 3:
           console.log(this.messages.THREE + count + this.messages.COUNT_KOREAN + this.messages.NEW_LINE);
@@ -141,4 +141,4 @@ class InputOutput {
   }
 }
 
-export default InputOutput;
+export default ConsoleView;
