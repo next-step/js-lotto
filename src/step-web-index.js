@@ -25,7 +25,7 @@ class App {
 
   #initContrimPrize() {
     document.getElementById("confirmButton").addEventListener('click', () => {
-      const lottoConfirmation = this.#lottoController.confirmPrize(this.#getPrizeNum(), this.#getBonusNum());
+      const lottoConfirmation = this.#lottoController.confirmPrize(this.#getPrizeNumber(), this.#getBonusNum());
       this.#renderPage.openModal(lottoConfirmation);
     });
   }
@@ -47,12 +47,12 @@ class App {
     return document.getElementById('money').value;
   }
 
-  #getPrizeNum() {
+  #getPrizeNumber() {
     return Array.from(document.querySelectorAll(".winning-numbers-container input[type='number']")).map(num => Number(num.value));
   }
 
   #getBonusNum() {
-    return document.getElementById('bonusNum').value;
+    return document.getElementById('bonusNumer').value;
   }
 
 }

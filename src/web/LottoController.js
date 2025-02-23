@@ -11,12 +11,12 @@ class LottoController {
         return this.#lottoMachine;
     }
 
-    confirmPrize(prizeNum, bonusNum) {
-        return this.#confirmLottoPrize(prizeNum, bonusNum);
+    confirmPrize(prizeNumber, bonusNumber) {
+        return this.#confirmLottoPrize(prizeNumber, bonusNumber);
     }
 
-    #confirmLottoPrize(prizeNum, bonusNum) {
-        const prizeLotto = new PrizeLotto(prizeNum, bonusNum);
+    #confirmLottoPrize(prizeNumber, bonusNumber) {
+        const prizeLotto = new PrizeLotto(prizeNumber, bonusNumber);
         return new LottoConfirmation(this.#lottoMachine.lottos, prizeLotto);
     }
 

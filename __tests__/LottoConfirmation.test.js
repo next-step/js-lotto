@@ -12,17 +12,17 @@ describe("LottoConfirmation Class 테스트", () => {
 
     it.each(
         [
-            {rank: 1, prizeLotto: [1, 2, 3, 4, 5, 6], bonusNum: 30, totalPrize: 2000000000},
-            {rank: 2, prizeLotto: [1, 2, 3, 4, 5, 7], bonusNum: 6, totalPrize: 30000000},
-            {rank: 3, prizeLotto: [1, 2, 3, 4, 5, 7], bonusNum: 30, totalPrize: 1500000},
-            {rank: 4, prizeLotto: [1, 2, 3, 5, 8, 9], bonusNum: 30, totalPrize: 50000},
-            {rank: 5, prizeLotto: [1, 2, 3, 7, 8, 9], bonusNum: 30, totalPrize: 5000},
-            {rank: 6, prizeLotto: [7, 8, 9, 10, 11, 12], bonusNum: 30, totalPrize: 0}
+            {rank: 1, prizeLotto: [1, 2, 3, 4, 5, 6], bonusNumer: 30, totalPrize: 2000000000},
+            {rank: 2, prizeLotto: [1, 2, 3, 4, 5, 7], bonusNumer: 6, totalPrize: 30000000},
+            {rank: 3, prizeLotto: [1, 2, 3, 4, 5, 7], bonusNumer: 30, totalPrize: 1500000},
+            {rank: 4, prizeLotto: [1, 2, 3, 5, 8, 9], bonusNumer: 30, totalPrize: 50000},
+            {rank: 5, prizeLotto: [1, 2, 3, 7, 8, 9], bonusNumer: 30, totalPrize: 5000},
+            {rank: 6, prizeLotto: [7, 8, 9, 10, 11, 12], bonusNumer: 30, totalPrize: 0}
         ]
     )
     ("로또와 당첨숫자와 보너스 숫자를 입력받고 $rank등 일시 $totalPrize 원을 지급받는다.",
-        ({prizeLotto, bonusNum, totalPrize}) => {
-            const prizeLottos = new PrizeLotto(prizeLotto, bonusNum);
+        ({prizeLotto, bonusNumer, totalPrize}) => {
+            const prizeLottos = new PrizeLotto(prizeLotto, bonusNumer);
             const lottoConfirmation = new LottoConfirmation(lottos, prizeLottos);
             expect(lottoConfirmation.totalPrize).toEqual(totalPrize);
         }

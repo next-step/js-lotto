@@ -54,7 +54,7 @@ class RenderPage {
         document.querySelectorAll(".winning-numbers-container input[type='number']").forEach(input => {
             input.value = '';
         });
-        document.getElementById('bonusNum').value = '';
+        document.getElementById('bonusNumber').value = '';
     }
 }
 

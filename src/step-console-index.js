@@ -11,10 +11,10 @@ const main = async () => {
     lottoMachine.buyAuto();
     console.printLottos(lottoMachine.lottosValue);
 
-    const prizeNum = await console.receivedPrizeLottoNum(); 
-    const bonusNum = await console.receivedBonusLottoNum();
+    const prizeNumber = await console.receivedPrizeLottoNumber(); 
+    const bonusNumber = await console.receivedBonusLottoNumber();
 
-    const prizeLotto = new PrizeLotto(prizeNum, bonusNum);
+    const prizeLotto = new PrizeLotto(prizeNumber, bonusNumber);
     const lottoConfirmation = new LottoConfirmation(lottoMachine.lottos, prizeLotto);
 
     console.lottoResult(lottoConfirmation.lottoResults);

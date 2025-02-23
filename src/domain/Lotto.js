@@ -19,7 +19,7 @@ class Lotto {
     }
 
     checkBonus(prizeLotto) {
-        return this.#lottoNumbers.some(number => number.value === prizeLotto.bonusNum);
+        return this.#lottoNumbers.some(number => number.value === prizeLotto.bonusNumer);
     }
 
     #createLottoNumbers(lottoNumbers) {

@@ -7,11 +7,11 @@ class LottoMachine {
 
     #numberRange
     #lottos;
-    #lottoNum;
+    #lottoNumber;
 
     constructor(price) {
         this.#validateMinimumPrice(price);
-        this.#lottoNum = this.#calculateLottoNum(price);
+        this.#lottoNumber = this.#calculateLottoNumber(price);
         this.#numberRange = [...Array(Lotto.LOTTO_NUMBER_RANGE).keys()].map(i => i + 1);
     }
 
@@ -24,8 +24,8 @@ class LottoMachine {
         this.#lottos = lottos;
     }
 
-    get lottoNum() {
-        return this.#lottoNum;
+    get lottoNumber() {
+        return this.#lottoNumber;
     }
 
     get lottos() {
@@ -37,7 +37,7 @@ class LottoMachine {
     }
 f
     #createAutoLotto() {
-        return Array.from({ length: this.#lottoNum }, () => new Lotto(this.#outputAutoLotto()));
+        return Array.from({ length: this.#lottoNumber }, () => new Lotto(this.#outputAutoLotto()));
     }
 
     #validateMinimumPrice(price) {
@@ -47,12 +47,12 @@ f
     }
 
     #validateManualLottoLength(lottos) {
-        if (lottos.length !== this.#lottoNum) {
-            throw new Error(this.#lottoNum + LottoMachine.MANUAL_LOTTO_SIZE_MESSAGE);
+        if (lottos.length !== this.#lottoNumber) {
+            throw new Error(this.#lottoNumber + LottoMachine.MANUAL_LOTTO_SIZE_MESSAGE);
         }
     }
 
-    #calculateLottoNum(price) {
+    #calculateLottoNumber(price) {
         return price / LottoMachine.LOTTO_PRICE
     }
 

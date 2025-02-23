@@ -11,42 +11,42 @@ class PrizeLotto {
     static BONUS_NUM_DUPLICATE_MESSAGE = "보너스 숫자는 당첨번호와 중복되면 안됩니다."
 
     #prizeLotto;
-    #bonusNum;
+    #bonusNumer;
 
-    constructor(prizeLotto, bonusNum) {
-        this.#validatePrizeNum(prizeLotto);
+    constructor(prizeLotto, bonusNumber) {
+        this.#validatePrizeNumber(prizeLotto);
         this.#prizeLotto = this.#createLottoNumbers(prizeLotto);
-        this.#validateBonusNumDuplicate(bonusNum);
-        this.#bonusNum = new LottoNumber(bonusNum);
+        this.#validateBonusNumberDuplicate(bonusNumber);
+        this.#bonusNumer = new LottoNumber(bonusNumber);
     }
 
     get value() {
         return this.#prizeLotto.value;
     }
 
-    get bonusNum() {
-        return this.#bonusNum.value;
+    get bonusNumer() {
+        return this.#bonusNumer.value;
     }
 
-    #validatePrizeNum(prizeLotto) {
-        this.#validatePrizeNumLength(prizeLotto);
-        this.#validatePrizeNumDuplicate(prizeLotto);
+    #validatePrizeNumber(prizeLotto) {
+        this.#validatePrizeNumberDuplicate(prizeLotto);
+        this.#validatePrizeNumerLength(prizeLotto);
     }
 
-    #validatePrizeNumDuplicate(prizeLotto) {
+    #validatePrizeNumberDuplicate(prizeLotto) {
         const uniquePrizes = new Set(prizeLotto);
         if (uniquePrizes.size !== prizeLotto.length) {
             throw new Error(PrizeLotto.PRIZE_LOTTO_DUPLICATE_MESSAGE);
         }
     }
 
-    #validatePrizeNumLength(prizeLotto) {
+    #validatePrizeNumerLength(prizeLotto) {
         if (prizeLotto.length !== PrizeLotto.LOTTO_LENGTH) {
             throw new Error(PrizeLotto.LOTTO_NUM_MESSAGE);
         }
     }
 
-    #validateBonusNumDuplicate(number) {
+    #validateBonusNumberDuplicate(number) {
         if (this.#prizeLotto.value.includes(number)) {
             throw new Error(PrizeLotto.BONUS_NUM_DUPLICATE_MESSAGE);
         }

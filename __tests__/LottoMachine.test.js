@@ -32,6 +32,6 @@ describe("LottoMachine Class 테스트", () => {
                 new Lotto([1,2,3,4,5,6]),
                 new Lotto([1,2,3,4,5,6])
             ]
-        )).toThrowError(new Error(lottoMachine.lottoNum + LottoMachine.MANUAL_LOTTO_SIZE_MESSAGE));
+        )).toThrowError(new Error(lottoMachine.lottoNumber + LottoMachine.MANUAL_LOTTO_SIZE_MESSAGE));
     });
 });

@@ -58,17 +58,17 @@ class ConsoleView {
     throw new Error(this.messages.INPUT_AUTO_MANUAL_EXCEPTION_MESSAGE)
   }
 
-  async receivedLottoNum() {
+  async receivedLottoNumber() {
     const input = await this.readline.question(this.messages.INPUT_LOTTO + this.messages.NEW_LINE);
     return this.splitComma(input, this.messages.COMMA);
   }
 
-  async receivedPrizeLottoNum() {
+  async receivedPrizeLottoNumber() {
     const input = await this.readline.question(this.messages.INPUT_PRIZE_LOTTO + this.messages.NEW_LINE);
     return this.splitComma(input, this.messages.COMMA);
   }
 
-  async receivedBonusLottoNum() {
+  async receivedBonusLottoNumber() {
     return await this.readline.question(this.messages.INPUT_BONUS_LOTTO + this.messages.NEW_LINE);
   }
 

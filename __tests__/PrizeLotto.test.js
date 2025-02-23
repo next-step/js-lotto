@@ -6,7 +6,7 @@ describe("LottoConfirmation Class 테스트", () => {
     it("PrizeLotto를 생성한다.", () => {
         const prizeLotto = new PrizeLotto([1, 2, 3, 7, 8, 9], 45);
         expect(prizeLotto.value).toEqual([1, 2, 3, 7, 8, 9]);
-        expect(prizeLotto.bonusNum).toEqual(45);
+        expect(prizeLotto.bonusNumer).toEqual(45);
     });
 
     it("보너스 숫자가 1 ~ 45사이의 숫자가 아니면 예외가 발생한다.", () => {
