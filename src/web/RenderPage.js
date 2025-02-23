@@ -6,11 +6,12 @@ class RenderPage {
     static TABLE_BODY = "table tbody";
     static RATE_OF_RETURN_CONTENT_ID = "rateOfReturn";
     static BONUS_NUMBER_CONTENT_ID = "bonusNumber";
+    static MONEY_INPUT_ID = "money";
 
     renderLottoList(lottoMachine) {
         const lottos = document.getElementById(RenderPage.LOTTO_CONTENT_ID);
 
-        document.getElementById(RenderPage.LOTTO_COUNT_CONTENT_ID).textContent = "총" + lottoMachine.lottoNumber + "개을 구입하였습니다.";
+        document.getElementById(RenderPage.LOTTO_COUNT_CONTENT_ID).textContent = "총 " + lottoMachine.lottoNumber + "개를 구입하였습니다.";
 
         lottoMachine.lottosValue.forEach(lotto => {
             const li = document.createElement('li');
@@ -52,7 +53,9 @@ class RenderPage {
         document.querySelectorAll(".winning-numbers-container input[type='number']").forEach(input => {
             input.value = '';
         });
-        document.getElementById(RenderPage.BONUS_NUMBER_CONTENT_ID).value = '';
+        document.getElementById(RenderPage.BONUS_NUMBER_CONTENT_ID).value = "";
+        document.getElementById(RenderPage.MONEY_INPUT_ID).value = "";
+        
     }
 }
 
