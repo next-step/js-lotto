@@ -1,4 +1,4 @@
-import Lotto from "./Lotto.js";
+import Lottos from "./Lottos.js";
 import LottoPrizes from "./LottoPrizes.js";
 
 class LottoPurchaseError extends Error {
@@ -7,105 +7,59 @@ class LottoPurchaseError extends Error {
   }
 }
 
-class InvalidWinningNumberLength extends Error {
-  constructor(selectionCount) {
-    super(
-      `당첨 번호는 ${selectionCount}개, 보너스 번호는 1개를 입력해야 합니다.`
-    );
-  }
-}
-
-class InvalidLottoDrawNumber extends Error {
-  constructor(min, max) {
-    super(`당첨 번호는 ${min} 이상 ${max} 이하 숫자여야 합니다.`);
-  }
-}
-
 export default class LottoGame {
   static PRICE_PER_LOTTO = 1000;
-  static LOTTO_SELECTION_COUNT = 6;
-  static NUMBER_MIN_RANGE = 1;
-  static NUMBER_MAX_RANGE = 45;
 
-  #purchasedLottos = [];
+  #lottos;
   #prizes;
 
-  constructor(prizes) {
-    this.#prizes = prizes;
+  constructor(lottos, prizes) {
+    this.#lottos = lottos;
+    this.#prizes = prizes ?? new LottoPrizes();
   }
 
-  static validatePurchaseAmount(purchaseAmount) {
+  static validatePurchaseAmount(purchaseAmount, price) {
     if (
-      typeof purchaseAmount !== "number" ||
+      !Number.isInteger(purchaseAmount) ||
       purchaseAmount < 0 ||
-      purchaseAmount % LottoGame.PRICE_PER_LOTTO !== 0
+      purchaseAmount % price !== 0
     ) {
-      throw new LottoPurchaseError(LottoGame.PRICE_PER_LOTTO);
+      throw new LottoPurchaseError(price);
     }
-  }
-
-  static validateDrawNumbers(winningNumber, bonusNumber) {
-    if (winningNumber.length !== LottoGame.LOTTO_SELECTION_COUNT) {
-      throw new InvalidWinningNumberLength(LottoGame.LOTTO_SELECTION_COUNT);
-    }
-
-    const numbers = winningNumber.concat(bonusNumber);
-    const min = LottoGame.NUMBER_MIN_RANGE;
-    const max = LottoGame.NUMBER_MAX_RANGE;
-    numbers.forEach((number) => {
-      if (typeof number !== "number" || number < min || number > max) {
-        throw new InvalidLottoDrawNumber(min, max);
-      }
-    });
-  }
-
-  static validWinningNumberLength(numbers) {
-    if (numbers.length !== LottoGame.LOTTO_SELECTION_COUNT)
-      throw new InvalidLottoWinningLength(LottoGame.LOTTO_SELECTION_COUNT);
   }
 
   purchase(purchaseAmount) {
-    LottoGame.validatePurchaseAmount(purchaseAmount);
+    LottoGame.validatePurchaseAmount(purchaseAmount, LottoGame.PRICE_PER_LOTTO);
 
     const quantity = purchaseAmount / LottoGame.PRICE_PER_LOTTO;
-    this.#purchasedLottos = Array.from(
-      { length: quantity },
-      () =>
-        new Lotto(
-          LottoGame.NUMBER_MIN_RANGE,
-          LottoGame.NUMBER_MAX_RANGE,
-          LottoGame.LOTTO_SELECTION_COUNT
-        )
-    );
+    this.#lottos = Array.from({ length: quantity }, () => new Lottos());
 
-    return this.#purchasedLottos.map((lotto) => lotto.numbers);
+    return this.#lottos.map((lotto) => lotto.values);
   }
 
-  getReturnRate(quantity) {
+  getReturnRate() {
     const prizeMoney = this.#prizes.getPrizeMoney();
 
     const returnRate =
-      (prizeMoney / (quantity * LottoGame.PRICE_PER_LOTTO)) * 100;
+      (prizeMoney / (this.#lottos.length * LottoGame.PRICE_PER_LOTTO)) * 100;
 
     return Math.floor(returnRate);
   }
 
-  getMatchedResults(winningNumbers, bonusNumber, lottos) {
-    LottoGame.validateDrawNumbers(winningNumbers, bonusNumber);
-
-    return lottos.map((lotto) => {
-      const matchCount = lotto.getMatchCount(winningNumbers);
-      const bonusMatched = !!lotto.getMatchCount([bonusNumber]);
-
+  getMatchedResults(winningNumbers, bonusNumber) {
+    return this.#lottos.map((lottos) => {
+      const matchCount = lottos.getMatchCount(winningNumbers);
+      const bonusMatched = !!lottos.getMatchCount([bonusNumber]);
       return { matchCount, bonusMatched };
     });
   }
 
-  draw(winningNumbers, bonusNumber, lottos = this.#purchasedLottos) {
+  draw(drawNumbers) {
+    const { winningNumbers, bonusNumber } = drawNumbers.values;
+
     const lottoMatchedResults = this.getMatchedResults(
       winningNumbers,
-      bonusNumber,
-      lottos
+      bonusNumber
     );
 
     this.#prizes.checkPrizeMatch(lottoMatchedResults);
