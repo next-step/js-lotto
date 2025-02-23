@@ -1,5 +1,5 @@
 import Lotto from "./Lotto.js";
-import LottoPrize from "./LottoPrize.js";
+import LottoPrizes from "./LottoPrizes.js";
 
 class LottoPurchaseError extends Error {
   constructor(purchaseUnit) {
@@ -26,42 +26,12 @@ export default class LottoGame {
   static LOTTO_SELECTION_COUNT = 6;
   static NUMBER_MIN_RANGE = 1;
   static NUMBER_MAX_RANGE = 45;
-  static PRIZE_CONDITIONS = [
-    {
-      requiredMatchCount: 3,
-      bonusMatched: false,
-      prizeMoney: 5_000,
-    },
-    {
-      requiredMatchCount: 4,
-      bonusMatched: false,
-      prizeMoney: 50_000,
-    },
-    {
-      requiredMatchCount: 5,
-      bonusMatched: false,
-      prizeMoney: 1_500_000,
-    },
-    {
-      requiredMatchCount: 5,
-      bonusMatched: true,
-      prizeMoney: 30_000_000,
-    },
-    {
-      requiredMatchCount: 6,
-      bonusMatched: false,
-      prizeMoney: 2_000_000_000,
-    },
-  ];
 
   #purchasedLottos = [];
-  #prizes = [];
+  #prizes;
 
-  constructor() {
-    this.#prizes = LottoGame.PRIZE_CONDITIONS.map(
-      ({ requiredMatchCount, bonusMatched, prizeMoney }) =>
-        new LottoPrize({ requiredMatchCount, bonusMatched, prizeMoney })
-    );
+  constructor(prizes) {
+    this.#prizes = prizes;
   }
 
   static validatePurchaseAmount(purchaseAmount) {
@@ -111,16 +81,8 @@ export default class LottoGame {
     return this.#purchasedLottos.map((lotto) => lotto.numbers);
   }
 
-  getReturnRate(
-    quantity = this.#purchasedLottos.length,
-    prizes = this.#prizes
-  ) {
-    const prizeMoney = prizes.reduce((acc, prize) => {
-      if (prize.matchCount > 0) {
-        return acc + prize.prizeMoney * prize.matchCount;
-      }
-      return acc;
-    }, 0);
+  getReturnRate(quantity) {
+    const prizeMoney = this.#prizes.getPrizeMoney();
 
     const returnRate =
       (prizeMoney / (quantity * LottoGame.PRICE_PER_LOTTO)) * 100;
@@ -128,36 +90,26 @@ export default class LottoGame {
     return Math.floor(returnRate);
   }
 
-  draw(
-    winningNumber,
-    bonusNumber,
-    lottos = this.#purchasedLottos,
-    prizes = this.#prizes
-  ) {
-    LottoGame.validateDrawNumbers(winningNumber, bonusNumber);
+  getMatchedResults(winningNumbers, bonusNumber, lottos) {
+    LottoGame.validateDrawNumbers(winningNumbers, bonusNumber);
 
-    const lottoMatchedResults = lottos.map((lotto) => {
-      const matchCount = lotto.getMatchCount(winningNumber);
+    return lottos.map((lotto) => {
+      const matchCount = lotto.getMatchCount(winningNumbers);
       const bonusMatched = !!lotto.getMatchCount([bonusNumber]);
 
       return { matchCount, bonusMatched };
     });
+  }
 
-    prizes.forEach((prize) => {
-      prize.checkPrizeMatch(lottoMatchedResults);
-    });
-
-    const results = prizes.map(
-      ({ requiredMatchCount, bonusMatched, prizeMoney, matchCount }) => {
-        return {
-          requiredMatchCount,
-          bonusMatched,
-          prizeMoney,
-          matchCount,
-        };
-      }
+  draw(winningNumbers, bonusNumber, lottos = this.#purchasedLottos) {
+    const lottoMatchedResults = this.getMatchedResults(
+      winningNumbers,
+      bonusNumber,
+      lottos
     );
 
-    return results;
+    this.#prizes.checkPrizeMatch(lottoMatchedResults);
+
+    return this.#prizes.status;
   }
 }

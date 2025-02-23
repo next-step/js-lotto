@@ -1,4 +1,5 @@
 import LottoGame from "./domain/LottoGame.js";
+import LottoPrizes from "./domain/LottoPrizes.js";
 
 import {
   inputPurchaseAmount,
@@ -25,17 +26,17 @@ async function getBonusNumber() {
 async function run() {
   const purchaseAmount = await getPurchaseAmount();
 
-  const lottoGame = new LottoGame();
+  const lottoGame = new LottoGame(new LottoPrizes());
   const purchasedLottos = lottoGame.purchase(purchaseAmount);
-
   const quantity = purchasedLottos.length;
+
   printPurchaseResult(quantity, purchasedLottos);
 
   const winningNumbers = await getWinningNumbers();
   const bonusNumber = await getBonusNumber();
 
   const results = lottoGame.draw(winningNumbers, bonusNumber);
-  const returnRate = lottoGame.getReturnRate();
+  const returnRate = lottoGame.getReturnRate(quantity);
 
   printLottoResult(results, returnRate);
 }

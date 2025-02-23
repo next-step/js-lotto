@@ -1,12 +1,12 @@
 import Lotto, { FakeNumberGenerator } from "../src/domain/Lotto.js";
-import LottoPrize from "../src/domain/LottoPrize.js";
+import LottoPrizes from "../src/domain/LottoPrizes.js";
 import LottoGame from "../src/domain/LottoGame.js";
 
 describe("로또 게임", () => {
   let lottoGame;
 
   beforeEach(() => {
-    lottoGame = new LottoGame();
+    lottoGame = new LottoGame(new LottoPrizes());
   });
 
   it("로또는 1000원 단위로 구매할 수 있다. 구매 금액 1000원 당 로또 1장을 받을 수 있다.", () => {
@@ -52,21 +52,25 @@ describe("로또 게임", () => {
       new Lotto(1, 45, 6, new FakeNumberGenerator([1, 2, 3, 4, 5, 7])),
     ];
 
-    const prizes = [
-      new LottoPrize({
+    const prizes = new LottoPrizes([
+      {
         requiredMatchCount: 3,
         bonusMatched: false,
         prizeMoney: 5_000,
-      }),
-      new LottoPrize({
+      },
+      {
         requiredMatchCount: 5,
         bonusMatched: true,
         prizeMoney: 20_000,
-      }),
-    ];
+      },
+    ]);
+    lottoGame = new LottoGame(prizes);
 
-    const result = lottoGame.draw([1, 2, 3, 4, 5, 6], 7, lottos, prizes);
-    const returnRate = lottoGame.getReturnRate(lottos.length, prizes);
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const bonusNumber = 7;
+
+    const result = lottoGame.draw(winningNumbers, bonusNumber, lottos);
+    const returnRate = lottoGame.getReturnRate(lottos.length);
 
     expect(result).toEqual([
       {
