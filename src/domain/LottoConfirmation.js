@@ -33,8 +33,8 @@ class LottoConfirmation {
     #checkMatches(prizeLotto) {
         this.#lottos.forEach(lotto => {
             this.#lottoResult.addResult(
-                lotto.checkMatches(prizeLotto),
-                lotto.checkBonus(prizeLotto)
+                lotto.checkMatches(prizeLotto.value),
+                lotto.checkBonus(prizeLotto.bonusNumber)
             );
         });
     }
