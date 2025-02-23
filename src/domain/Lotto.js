@@ -16,7 +16,7 @@ class Lotto {
   }
 
   getLottoNumbers() {
-    return this.#lottoNumbers;
+    return [...this.#lottoNumbers];
   }
 
   countMatches(winningNumbers) {

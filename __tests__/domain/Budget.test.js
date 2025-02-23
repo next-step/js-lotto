@@ -8,6 +8,20 @@ describe("Budget 클래스는", () => {
       const lottoPrice = 1000;
       expect(budget.getLottoCount(lottoPrice)).toBe(10);
     });
+
+    it("예산이 로또 가격보다 작을 때 로또 갯수는 0이어야 한다", () => {
+      const givenBudget = 500;
+      const budget = new Budget(givenBudget);
+      const lottoPrice = 1000;
+      expect(budget.getLottoCount(lottoPrice)).toBe(0);
+    });
+
+    it("예산이 로또 가격의 배수가 아닐 때 로또 갯수는 예산을 로또 가격으로 나눈 몫이어야 한다", () => {
+      const givenBudget = 5001;
+      const budget = new Budget(givenBudget);
+      const lottoPrice = 1000;
+      expect(budget.getLottoCount(lottoPrice)).toBe(5);
+    });
   });
 
   describe("=== 당첨금 누적 및 수익률 계산 테스트 ===", () => {
@@ -20,14 +34,13 @@ describe("Budget 클래스는", () => {
     });
 
     it.each([
-      [0, "0.0"],
-      [4000, "50.0"],
-      [8000, "100.0"],
-      [2000, "25.0"],
+      [8000, 0, "0.0"],
+      [8000, 4000, "50.0"],
+      [8000, 8000, "100.0"],
+      [8000, 2000, "25.0"],
     ])(
-      "총 당첨금액이 %i원일 때, 수익률은 %s%%여야 한다",
-      (winningAmount, expectedProfit) => {
-        const givenBudget = 8000;
+      "투입 금액이 %i원일 때, 총 당첨금액이 %i원이면 수익률은 %s%%여야 한다",
+      (givenBudget, winningAmount, expectedProfit) => {
         const budget = new Budget(givenBudget);
 
         budget.addTotalWinningAmount(winningAmount);

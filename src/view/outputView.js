@@ -18,14 +18,14 @@ class OutputView {
     console.log(errorMessage);
   }
 
-  printWinningStatistics(winningStatistics, budget) {
+  printWinningStatistics(winningStatistics, lottoGame) {
     console.log("당첨 통계");
     console.log("--------------------");
     for (const [prize, count] of winningStatistics.entries()) {
       const label = getPrizeLabel(prize);
       console.log(`${label} - ${count}개`);
     }
-    console.log(`총 수익률은 ${budget.getProfit()}%입니다.`);
+    console.log(`총 수익률은 ${lottoGame.getProfit()}%입니다.`);
   }
 }
 

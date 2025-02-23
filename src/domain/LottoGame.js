@@ -1,59 +1,73 @@
-import LottoGenerator from "./LottoGenerator.js";
-import FirstPrize from "./prize/FirstPrize.js";
-import SecondPrize from "./prize/SecondPrize.js";
-import ThirdPrize from "./prize/ThirdPrize.js";
-import FifthPrize from "./prize/FifthPrize.js";
-import FourthPrize from "./prize/FourthPrize.js";
+import Prize from "./prize/Prize.js";
+import {
+  bonusMatchingStrategy,
+  defaultMatchingStrategy,
+  nonBonusMatchingStrategy,
+} from "./prize/matchingStrategies.js";
+import { generateLottos } from "./lottoGenerator.js";
 
 class LottoGame {
   static LOTTO_PRICE = 1000;
+  static PRIZES = [
+    new Prize(2_000_000_000, defaultMatchingStrategy(6)),
+    new Prize(30_000_000, bonusMatchingStrategy(5)),
+    new Prize(1_500_000, nonBonusMatchingStrategy(5)),
+    new Prize(50_000, defaultMatchingStrategy(4)),
+    new Prize(5000, defaultMatchingStrategy(3)),
+  ];
+
   #lottos;
-  #prizes;
+  #budget;
 
-  constructor(lottos = []) {
+  constructor(budget, lottos = []) {
+    this.#budget = budget;
     this.#lottos = lottos;
-    this.#prizes = [
-      new FirstPrize(),
-      new SecondPrize(),
-      new ThirdPrize(),
-      new FourthPrize(),
-      new FifthPrize(),
-    ];
   }
 
-  buyLottos(budget) {
-    const lottoCount = budget.getLottoCount(LottoGame.LOTTO_PRICE);
-    this.#lottos = LottoGenerator.generateLottos(lottoCount);
+  buyLottos() {
+    const lottoCount = this.#budget.getLottoCount(LottoGame.LOTTO_PRICE);
+    this.#lottos = generateLottos(lottoCount);
   }
 
-  calculateTotalWinningAmount(budget, winningLotto) {
+  getLottoCount() {
+    return this.#lottos.length;
+  }
+
+  calculateTotalWinningAmount(winningLotto) {
     const totalAmount = this.#lottos
       .flatMap((lotto) =>
-        this.#prizes
-          .filter((prize) => prize.matched(lotto, winningLotto))
-          .map((prize) => prize.prizeAmount),
+        LottoGame.PRIZES.filter((prize) =>
+          prize.matched(lotto, winningLotto),
+        ).map((prize) => prize.prizeAmount),
       )
       .reduce((total, amount) => total + amount, 0);
-    budget.addTotalWinningAmount(totalAmount);
+    this.#budget.addTotalWinningAmount(totalAmount);
+  }
+
+  getProfit() {
+    return this.#budget.getProfit();
   }
 
   getLottos() {
-    return this.#lottos;
+    return [...this.#lottos];
   }
 
-  getWinningStatistics = (winningLotto) => {
-    const initialStats = new Map(this.#prizes.map((prize) => [prize, 0]));
+  getWinningStatistics(winningLotto) {
+    return this.#lottos.reduce(
+      (stats, lotto) => {
+        const matchedPrize = this.#findMatchedPrize(lotto, winningLotto);
+        if (matchedPrize) {
+          stats.set(matchedPrize, stats.get(matchedPrize) + 1);
+        }
+        return stats;
+      },
+      new Map(LottoGame.PRIZES.map((prize) => [prize, 0])),
+    );
+  }
 
-    return this.#lottos.reduce((stats, ticket) => {
-      const matchedPrize = this.#prizes.find((prize) =>
-        prize.matched(ticket, winningLotto),
-      );
-      if (matchedPrize) {
-        stats.set(matchedPrize, stats.get(matchedPrize) + 1);
-      }
-      return stats;
-    }, initialStats);
-  };
+  #findMatchedPrize(lotto, winningLotto) {
+    return LottoGame.PRIZES.find((prize) => prize.matched(lotto, winningLotto));
+  }
 }
 
 export default LottoGame;

@@ -19,6 +19,7 @@ class LottoNumber {
     }
     this.#value = value;
   }
+
   equals(other) {
     return other instanceof LottoNumber && this.#value === other.#value;
   }
@@ -28,14 +29,25 @@ class LottoNumber {
   }
 
   static valueOf(value) {
+    if (!value) {
+      throw new Error(LottoNumber.INVALID_LOTTO_NUMBER);
+    }
+    const lottoNumber = Number(value);
     if (
-      !Number.isInteger(value) ||
-      value < LottoNumber.MIN_LOTTO_NUMBER ||
-      value > LottoNumber.MAX_LOTTO_NUMBER
+      !Number.isInteger(lottoNumber) ||
+      lottoNumber < LottoNumber.MIN_LOTTO_NUMBER ||
+      lottoNumber > LottoNumber.MAX_LOTTO_NUMBER
     ) {
       throw new Error(LottoNumber.INVALID_LOTTO_NUMBER);
     }
     return LottoNumber.CACHE[value - LottoNumber.MIN_LOTTO_NUMBER];
+  }
+
+  static createLottoNumbers(numbers) {
+    if (!numbers) {
+      throw new Error(LottoNumber.INVALID_LOTTO_NUMBER);
+    }
+    return numbers.split(",").map((number) => LottoNumber.valueOf(number));
   }
 }
 

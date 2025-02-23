@@ -8,8 +8,8 @@ describe("LottoGame 클래스는", () => {
   describe("> 로또 구매", () => {
     it("예산에 맞게 로또 티켓들을 구매해야 한다", () => {
       const budget = new Budget(10000);
-      const lottoGame = new LottoGame();
-      lottoGame.buyLottos(budget);
+      const lottoGame = new LottoGame(budget);
+      lottoGame.buyLottos();
       expect(lottoGame.getLottos()).toHaveLength(10);
     });
   });
@@ -25,7 +25,8 @@ describe("LottoGame 클래스는", () => {
         new LottoNumber(5),
         new LottoNumber(6),
       ]);
-      const lottoGame = new LottoGame([lotto]);
+      const lottoGame = new LottoGame(budget, [lotto]);
+
       const winningNumbers = [
         new LottoNumber(1),
         new LottoNumber(2),
@@ -37,10 +38,10 @@ describe("LottoGame 클래스는", () => {
       const bonusNumber = new LottoNumber(7);
       const winningLotto = new WinningLotto(winningNumbers, bonusNumber);
 
-      lottoGame.calculateTotalWinningAmount(budget, winningLotto);
+      lottoGame.calculateTotalWinningAmount(winningLotto);
 
-      const expectedTotal = 2_000_000_000;
-      expect(budget.totalWinningAmount).toBe(expectedTotal);
+      const expectedTotalAmount = 2_000_000_000;
+      expect(budget.totalWinningAmount).toBe(expectedTotalAmount);
     });
   });
 });

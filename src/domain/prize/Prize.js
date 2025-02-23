@@ -1,11 +1,11 @@
 class Prize {
-  constructor(lottoNumberMatchCount, prizeAmount) {
-    this.lottoNumberMatchCount = lottoNumberMatchCount;
+  constructor(prizeAmount, matchingStrategy) {
     this.prizeAmount = prizeAmount;
+    this.matchingStrategy = matchingStrategy;
   }
 
   matched(lotto, winningLotto) {
-    return winningLotto.countMatchNumbers(lotto) === this.lottoNumberMatchCount;
+    return this.matchingStrategy(lotto, winningLotto);
   }
 }
 

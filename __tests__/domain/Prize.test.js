@@ -1,13 +1,14 @@
 import WinningLotto from "../../src/domain/WinningLotto.js";
 import LottoNumber from "../../src/domain/LottoNumber.js";
 import Lotto from "../../src/domain/Lotto.js";
-import FirstPrize from "../../src/domain/prize/FirstPrize.js";
-import SecondPrize from "../../src/domain/prize/SecondPrize.js";
-import ThirdPrize from "../../src/domain/prize/ThirdPrize.js";
-import FifthPrize from "../../src/domain/prize/FifthPrize.js";
-import FourthPrize from "../../src/domain/prize/FourthPrize.js";
+import Prize from "../../src/domain/prize/Prize.js";
+import {
+  bonusMatchingStrategy,
+  defaultMatchingStrategy,
+  nonBonusMatchingStrategy,
+} from "../../src/domain/prize/matchingStrategies.js";
 
-describe("당첨 클래스", () => {
+describe("Prize 클래스는", () => {
   let winningLotto;
   beforeEach(() => {
     const winningNumbers = [
@@ -31,7 +32,7 @@ describe("당첨 클래스", () => {
         new LottoNumber(5),
         new LottoNumber(6),
       ]);
-      const prize = new FirstPrize();
+      const prize = new Prize(2000000000, defaultMatchingStrategy(6));
       expect(prize.matched(lotto, winningLotto)).toBe(true);
     });
     it("로또와 당첨로또가 다르면 false를 반환해야한다", () => {
@@ -43,11 +44,13 @@ describe("당첨 클래스", () => {
         new LottoNumber(5),
         new LottoNumber(7),
       ]);
-      const prize = new FirstPrize();
+      const prize = new Prize(2000000000, defaultMatchingStrategy(6));
       expect(prize.matched(lotto, winningLotto)).toBe(false);
     });
     it("1등 당첨금을 반환해야한다", () => {
-      expect(new FirstPrize().prizeAmount).toBe(2000_000_000);
+      expect(
+        new Prize(2000000000, defaultMatchingStrategy(6)).prizeAmount,
+      ).toBe(2000000000);
     });
   });
 
@@ -61,7 +64,7 @@ describe("당첨 클래스", () => {
         new LottoNumber(5),
         new LottoNumber(7),
       ]);
-      const prize = new SecondPrize();
+      const prize = new Prize(30000000, bonusMatchingStrategy(5));
       expect(prize.matched(lotto, winningLotto)).toBeTruthy();
     });
     it("로또와 당첨로또가 다르면 false를 반환해야한다", () => {
@@ -73,16 +76,18 @@ describe("당첨 클래스", () => {
         new LottoNumber(5),
         new LottoNumber(8),
       ]);
-      const prize = new SecondPrize();
+      const prize = new Prize(30000000, bonusMatchingStrategy(5));
       expect(prize.matched(lotto, winningLotto)).toBeFalsy();
     });
     it("2등 당첨금을 반환해야한다", () => {
-      expect(new SecondPrize().prizeAmount).toBe(30_000_000);
+      expect(new Prize(30000000, bonusMatchingStrategy(5)).prizeAmount).toBe(
+        30000000,
+      );
     });
   });
 
   describe("> ThirdPrize (3등)은 ", () => {
-    it("로또와 당첨로또를 비교하여 5개 일치하고 보너스가 다를시 true를 반환해야한다", () => {
+    it("로또와 당첨로또를 비교하여 5개 일치하고 보너스가 다를 시 true를 반환해야한다", () => {
       const lotto = new Lotto([
         new LottoNumber(1),
         new LottoNumber(2),
@@ -91,8 +96,13 @@ describe("당첨 클래스", () => {
         new LottoNumber(5),
         new LottoNumber(8),
       ]);
-      const prize = new ThirdPrize();
+      const prize = new Prize(1500000, nonBonusMatchingStrategy(5));
       expect(prize.matched(lotto, winningLotto)).toBeTruthy();
+    });
+    it("3등 당첨금을 반환해야한다", () => {
+      expect(new Prize(1500000, nonBonusMatchingStrategy(5)).prizeAmount).toBe(
+        1500000,
+      );
     });
   });
 
@@ -106,7 +116,7 @@ describe("당첨 클래스", () => {
         new LottoNumber(10),
         new LottoNumber(11),
       ]);
-      const prize = new FourthPrize();
+      const prize = new Prize(50000, defaultMatchingStrategy(4));
       expect(prize.matched(lotto, winningLotto)).toBe(true);
     });
     it("로또와 당첨로또가 4개 미만 또는 초과로 일치하면 false를 반환해야 한다", () => {
@@ -118,11 +128,13 @@ describe("당첨 클래스", () => {
         new LottoNumber(11),
         new LottoNumber(12),
       ]);
-      const prize = new FourthPrize();
+      const prize = new Prize(50000, defaultMatchingStrategy(4));
       expect(prize.matched(lotto, winningLotto)).toBe(false);
     });
     it("4등 당첨금을 반환해야 한다", () => {
-      expect(new FourthPrize().prizeAmount).toBe(50_000);
+      expect(new Prize(50000, defaultMatchingStrategy(4)).prizeAmount).toBe(
+        50000,
+      );
     });
   });
 
@@ -136,7 +148,7 @@ describe("당첨 클래스", () => {
         new LottoNumber(11),
         new LottoNumber(12),
       ]);
-      const prize = new FifthPrize();
+      const prize = new Prize(5000, defaultMatchingStrategy(3));
       expect(prize.matched(lotto, winningLotto)).toBe(true);
     });
     it("로또와 당첨로또가 3개 미만이면 false를 반환해야 한다", () => {
@@ -148,11 +160,13 @@ describe("당첨 클래스", () => {
         new LottoNumber(12),
         new LottoNumber(13),
       ]);
-      const prize = new FifthPrize();
+      const prize = new Prize(5000, defaultMatchingStrategy(3));
       expect(prize.matched(lotto, winningLotto)).toBe(false);
     });
     it("5등 당첨금을 반환해야 한다", () => {
-      expect(new FifthPrize().prizeAmount).toBe(5_000);
+      expect(new Prize(5000, defaultMatchingStrategy(3)).prizeAmount).toBe(
+        5000,
+      );
     });
   });
 });
