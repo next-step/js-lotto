@@ -1,9 +1,16 @@
 class RenderPage {
 
-    renderLottoList(lottoMachine) {
-        const lottos = document.getElementById('lottos');
+    static LOTTO_CONTENT_ID = "lottos";
+    static LOTTO_COUNT_CONTENT_ID =  "lottoCount";
+    static MODAL_PAGE_ID = "modal";
+    static TABLE_BODY = "table tbody";
+    static RATE_OF_RETURN_CONTENT_ID = "rateOfReturn";
+    static BONUS_NUMBER_CONTENT_ID = "bonusNumber";
 
-        document.getElementById('lottoCount').textContent = "총" + lottoMachine.lottoNum + "개을 구입하였습니다.";
+    renderLottoList(lottoMachine) {
+        const lottos = document.getElementById(RenderPage.LOTTO_CONTENT_ID);
+
+        document.getElementById(RenderPage.LOTTO_COUNT_CONTENT_ID).textContent = "총" + lottoMachine.lottoNum + "개을 구입하였습니다.";
 
         lottoMachine.lottosValue.forEach(lotto => {
             const li = document.createElement('li');
@@ -14,9 +21,9 @@ class RenderPage {
     }
 
     openModal(lottoConfirmation, money) {
-        const modal = document.getElementById("modal");
+        const modal = document.getElementById(RenderPage.MODAL_PAGE_ID);
 
-        const tbody = modal.querySelector("table tbody");
+        const tbody = modal.querySelector(RenderPage.TABLE_BODY);
 
         tbody.innerHTML = '';
 
@@ -38,23 +45,23 @@ class RenderPage {
             tbody.appendChild(tr);
         });
 
-        document.getElementById("rateOfReturn").textContent = "당신의 총 수익률은 " + lottoConfirmation.calculateRateOfReturn(money) + "% 입니다.";
+        document.getElementById(RenderPage.RATE_OF_RETURN_CONTENT_ID).textContent = "당신의 총 수익률은 " + lottoConfirmation.calculateRateOfReturn(money) + "% 입니다.";
 
         modal.style.display = "block";
     }
 
     closeModal() {
-        const modal = document.getElementById("modal");
+        const modal = document.getElementById(RenderPage.MODAL_PAGE_ID);
         modal.style.display = "none";
     }
 
     clearInput() {
-        document.getElementById('lottos').innerHTML = '';
-        document.getElementById('lottoCount').innerHTML = '';
+        document.getElementById(RenderPage.LOTTO_CONTENT_ID).innerHTML = '';
+        document.getElementById(RenderPage.LOTTO_COUNT_CONTENT_ID).innerHTML = '';
         document.querySelectorAll(".winning-numbers-container input[type='number']").forEach(input => {
             input.value = '';
         });
-        document.getElementById('bonusNumber').value = '';
+        document.getElementById(RenderPage.BONUS_NUMBER_CONTENT_ID).value = '';
     }
 }
 
