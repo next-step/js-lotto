@@ -1,17 +1,37 @@
 import LottoMachine from "../domain/LottoMachine.js";
 import LottoConfirmation from "../domain/LottoConfirmation.js";
 import PrizeLotto from "../domain/PrizeLotto.js";
+import RenderPage from "./RenderPage.js";
+import LottoResultItem from "./LottoResultItem.js"
 
 class LottoController {
+
     #lottoMachine;
+    #renderPage;
+
+    constructor() {
+        this.#renderPage = new RenderPage();
+    }
 
     inputMoney(money) {
-        this.#buyLottoByLottoMachine(money)
-        return this.#lottoMachine;
+        this.#renderPage.clearInput();
+        this.#buyLottoByLottoMachine(money);
+        this.#renderPage.renderLottoList(this.#lottoMachine);
     }
 
     confirmPrize(prizeNumber, bonusNumber) {
-        return this.#confirmLottoPrize(prizeNumber, bonusNumber);
+        const lottoConfirmation = this.#confirmLottoPrize(prizeNumber, bonusNumber);
+        const lottoResultItems = new LottoResultItem(lottoConfirmation);
+        this.#renderPage.openModal(lottoResultItems);
+    }
+
+    restart() {
+        this.#renderPage.closeModal();
+        this.#renderPage.clearInput();
+    }
+
+    close() {
+        this.#renderPage.closeModal();
     }
 
     #confirmLottoPrize(prizeNumber, bonusNumber) {

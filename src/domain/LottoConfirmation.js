@@ -30,6 +30,11 @@ class LottoConfirmation {
         return this.#lottoResult.resultMap;
     }
 
+    calculateRateOfReturn() {
+        const price = this.#lottos.length * LottoMachine.LOTTO_PRICE;
+        return (this.#totalPrize / price) * 100;
+    }
+
     #checkMatches(prizeLotto) {
         this.#lottos.forEach(lotto => {
             this.#lottoResult.addResult(
@@ -63,11 +68,6 @@ class LottoConfirmation {
         });
 
         return this.#totalPrize;
-    }
-
-    calculateRateOfReturn() {
-        const price = this.#lottos.length * LottoMachine.LOTTO_PRICE;
-        return (this.#totalPrize / price) * 100;
     }
 }
 

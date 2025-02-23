@@ -14,9 +14,9 @@ describe("LottoConfirmation Class 테스트", () => {
         [
             {rank: 1, prizeLotto: [1, 2, 3, 4, 5, 6], bonusNumber: 30, totalPrize: 2_000_000_000},
             {rank: 2, prizeLotto: [1, 2, 3, 4, 5, 7], bonusNumber: 6, totalPrize: 30_000_000},
-            {rank: 3, prizeLotto: [1, 2, 3, 4, 5, 7], bonusNumber: 30, totalPrize: 1500_000},
+            {rank: 3, prizeLotto: [1, 2, 3, 4, 5, 7], bonusNumber: 30, totalPrize: 1_500_000},
             {rank: 4, prizeLotto: [1, 2, 3, 5, 8, 9], bonusNumber: 30, totalPrize: 50_000},
-            {rank: 5, prizeLotto: [1, 2, 3, 7, 8, 9], bonusNumber: 30, totalPrize: 5000},
+            {rank: 5, prizeLotto: [1, 2, 3, 7, 8, 9], bonusNumber: 30, totalPrize: 5_000},
             {rank: 6, prizeLotto: [7, 8, 9, 10, 11, 12], bonusNumber: 30, totalPrize: 0}
         ]
     )

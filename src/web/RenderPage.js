@@ -10,7 +10,7 @@ class RenderPage {
     renderLottoList(lottoMachine) {
         const lottos = document.getElementById(RenderPage.LOTTO_CONTENT_ID);
 
-        document.getElementById(RenderPage.LOTTO_COUNT_CONTENT_ID).textContent = "총" + lottoMachine.lottoNum + "개을 구입하였습니다.";
+        document.getElementById(RenderPage.LOTTO_COUNT_CONTENT_ID).textContent = "총" + lottoMachine.lottoNumber + "개을 구입하였습니다.";
 
         lottoMachine.lottosValue.forEach(lotto => {
             const li = document.createElement('li');
@@ -20,32 +20,23 @@ class RenderPage {
         });
     }
 
-    openModal(lottoConfirmation, money) {
+    openModal(lottoResultItem) {
         const modal = document.getElementById(RenderPage.MODAL_PAGE_ID);
-
         const tbody = modal.querySelector(RenderPage.TABLE_BODY);
 
         tbody.innerHTML = '';
 
-        const rows = [
-            { count: 3, prize: 5000, value: lottoConfirmation.lottoResults.get(3) || 0 },
-            { count: 4, prize: 50000, value: lottoConfirmation.lottoResults.get(4) || 0 },
-            { count: 5, prize: 1500000, value: lottoConfirmation.lottoResults.get(5) || 0 },
-            { count: "5+보너스볼", prize: 30000000, value: lottoConfirmation.lottoResults.get(6) || 0 },
-            { count: 6, prize: 3000000000, value: lottoConfirmation.lottoResults.get(7) || 0 }
-        ];
-
-        rows.forEach(row => {
+        lottoResultItem.items.forEach(item => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-            <td>${row.count}개</td>
-            <td>${row.prize.toLocaleString()}</td>
-            <td>${row.value}개</td>
+            <td>${item.count}개</td>
+            <td>${item.prize.toLocaleString()}</td>
+            <td>${item.value}개</td>
             `;
             tbody.appendChild(tr);
         });
 
-        document.getElementById(RenderPage.RATE_OF_RETURN_CONTENT_ID).textContent = "당신의 총 수익률은 " + lottoConfirmation.calculateRateOfReturn(money) + "% 입니다.";
+        document.getElementById(RenderPage.RATE_OF_RETURN_CONTENT_ID).textContent = "당신의 총 수익률은 " + lottoResultItem.rateOfReturn + "% 입니다.";
 
         modal.style.display = "block";
     }

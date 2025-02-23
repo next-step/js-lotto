@@ -1,5 +1,4 @@
 import LottoController from "./web/LottoController.js";
-import RenderPage from "./web/RenderPage.js";
 class App {
 
   #lottoController;
@@ -11,35 +10,29 @@ class App {
     this.#initRestart();
     this.#initClose();
     this.#lottoController = new LottoController();
-    this.#renderPage = new RenderPage();
   }
 
   #initInputMoney() {
     document.getElementById("buyButton").addEventListener('click', () => {
-      this.#renderPage.clearInput();
-      const lottoMachine = this.#lottoController.inputMoney(this.#getMoney());
-      console.log(lottoMachine)
-      this.#renderPage.renderLottoList(lottoMachine);
+      this.#lottoController.inputMoney(this.#getMoney());
     });
   }
 
   #initContrimPrize() {
     document.getElementById("confirmButton").addEventListener('click', () => {
-      const lottoConfirmation = this.#lottoController.confirmPrize(this.#getPrizeNumber(), this.#getBonusNum());
-      this.#renderPage.openModal(lottoConfirmation);
+      this.#lottoController.confirmPrize(this.#getPrizeNumber(), this.#getBonusNum());
     });
   }
 
   #initRestart() {
     document.getElementById("restartButton").addEventListener('click', () => {
-      this.#renderPage.closeModal();
-      this.#renderPage.clearInput();
+      this.#lottoController.restart();
     });
   }
 
   #initClose() {
     document.getElementById("closeButton").addEventListener('click', () => {
-      this.#renderPage.closeModal();
+      this.#lottoController.close();
     });
   }
 
@@ -52,7 +45,7 @@ class App {
   }
 
   #getBonusNum() {
-    return document.getElementById('bonusNumer').value;
+    return document.getElementById('bonusNumber').value;
   }
 
 }
