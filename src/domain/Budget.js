@@ -1,7 +1,7 @@
 class Budget {
   static INVALID_AMOUNT = "올바른 금액을 입력해주세요.";
   constructor(amount) {
-    if (!amount || !Number.isNaN(amount) || amount < 0) {
+    if (!amount || amount < 0) {
       throw new Error(Budget.INVALID_AMOUNT);
     }
     this.amount = amount;

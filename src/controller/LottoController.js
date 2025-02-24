@@ -17,8 +17,7 @@ class LottoController {
       const budget = Budget.createBudget(await this.inputView.askBudget());
       const lottoGame = new LottoGame(budget);
       this.buyLottos(lottoGame);
-      const { winningNumbers, bonusNumber } = await this.askWinningLottos();
-      const winningLotto = new WinningLotto(winningNumbers, bonusNumber);
+      const winningLotto = await this.askWinningLottos();
 
       lottoGame.calculateTotalWinningAmount(winningLotto);
       const winningStatistics = lottoGame.getWinningStatistics(winningLotto);
@@ -35,13 +34,19 @@ class LottoController {
   }
 
   async askWinningLottos() {
-    const winningNumbers = LottoNumber.createLottoNumbers(
-      await this.inputView.askWinningNumbers(),
-    );
-    const bonusNumber = LottoNumber.valueOf(
-      await this.inputView.askBonusNumber(),
-    );
-    return { winningNumbers, bonusNumber };
+    while (true) {
+      try {
+        const winningNumbers = LottoNumber.createLottoNumbers(
+          await this.inputView.askWinningNumbers(),
+        );
+        const bonusNumber = LottoNumber.valueOf(
+          await this.inputView.askBonusNumber(),
+        );
+        return new WinningLotto(winningNumbers, bonusNumber);
+      } catch (error) {
+        this.outputView.printError(error.message);
+      }
+    }
   }
 }
 
