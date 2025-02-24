@@ -8,15 +8,15 @@ class LottoNumber {
     #lottoNumber;
 
     constructor(lottoNumber) {
-        this.#confirmLottoNumRange(lottoNumber);
+        this.#validateLottoNumRange(lottoNumber);
         this.#lottoNumber = lottoNumber;
     }
 
-    get lottoNumber() {
+    get value() {
         return this.#lottoNumber;
     }
 
-    #confirmLottoNumRange(number) {
+    #validateLottoNumRange(number) {
         if (LottoNumber.MINIMUM_LOTTO_NUM > number || LottoNumber.MAXIMUM_LOTTO_NUM < number) {
             throw new Error(LottoNumber.LOTTO_NUM_RANGE_MESSAGE);
         }

@@ -2,62 +2,47 @@ import LottoMachine from "../domain/LottoMachine.js";
 import LottoConfirmation from "../domain/LottoConfirmation.js";
 import PrizeLotto from "../domain/PrizeLotto.js";
 import RenderPage from "./RenderPage.js";
-import  * as elements from "./Elements.js";
+import LottoResultItem from "./LottoResultItem.js"
 
 class LottoController {
 
     #lottoMachine;
     #renderPage;
 
-    init() {
-        this.initInputMoney();
-        this.initContrimPrize();
-        this.initRestart();
-        this.initClose();
+    constructor() {
         this.#renderPage = new RenderPage();
     }
 
-    initInputMoney() {
-        elements.getBuyButtonElements().addEventListener('click', () => {
-            this.buyLottoByLottoMachine();
-            this.#renderPage.renderLottoList(this.#lottoMachine);
-        });
+    inputMoney(money) {
+        this.#renderPage.clearInput();
+        this.#buyLottoByLottoMachine(money);
+        this.#renderPage.renderLottoList(this.#lottoMachine);
     }
 
-    initContrimPrize() {
-        elements.getConfirmButtonElements().addEventListener('click', () => {
-            this.#renderPage.openModal(this.confirmLottoPrize());
-        });
+    confirmPrize(prizeNumber, bonusNumber) {
+        const lottoConfirmation = this.#confirmLottoPrize(prizeNumber, bonusNumber);
+        const lottoResultItems = new LottoResultItem(lottoConfirmation);
+        this.#renderPage.openModal(lottoResultItems);
     }
 
-    initRestart() {
-        elements.getRestartButtonElements().addEventListener('click', () => {
-            this.#renderPage.closeModal();
-            this.#renderPage.clearInput();
-        });
+    restart() {
+        this.#renderPage.closeModal();
+        this.#renderPage.clearInput();
     }
 
-    initClose() {
-        elements.getRestartButtonElements().addEventListener('click', () => {
-            this.#renderPage.closeModal();
-        });
+    close() {
+        this.#renderPage.closeModal();
     }
 
-    confirmLottoPrize() {
-        const prizeNum = Array.from(elements.getWinningNumber()).map(num => Number(num.value));
-        const bonusNum = elements.getBonusNumElements().value;
-
-        const prizeLotto = new PrizeLotto(prizeNum, bonusNum);
+    #confirmLottoPrize(prizeNumber, bonusNumber) {
+        const prizeLotto = new PrizeLotto(prizeNumber, bonusNumber);
         return new LottoConfirmation(this.#lottoMachine.lottos, prizeLotto);
     }
 
-    buyLottoByLottoMachine() {
-        const money = elements.getMoneyElements().value;
-        this.#renderPage.clearInput();
-
+    #buyLottoByLottoMachine(money) {
         this.#lottoMachine = new LottoMachine(money);
         this.#lottoMachine.buyAuto();
-    };
-};
+    }
+}
 
 export default LottoController;

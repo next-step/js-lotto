@@ -1,27 +1,27 @@
-import InputOutput from "./view/inputoutput.js";
+import ConsoleView from "./view/ConsoleView.js";
 import LottoMachine from "./domain/LottoMachine.js";
 import LottoConfirmation from "./domain/LottoConfirmation.js";
 import PrizeLotto from "./domain/PrizeLotto.js";
 
 const main = async () => {
-    const io = new InputOutput();
-    const price = await io.receivedPrice();
+    const console = new ConsoleView();
+    const price = await console.receivedPrice();
 
     const lottoMachine = new LottoMachine(price);
-    io.printLottos(lottoMachine.getLottos);
+    lottoMachine.buyAuto();
+    console.printLottos(lottoMachine.lottosValue);
 
-    const prizeNum = await io.receivedPrizeLottoNum(); 
-    const bonusNum = await io.receivedBonusLottoNum();
+    const prizeNumber = await console.receivedPrizeLottoNumber(); 
+    const bonusNumber = await console.receivedBonusLottoNumber();
 
-    const prizeLotto = new PrizeLotto(prizeNum, bonusNum);
-    const lottoConfirmation = new LottoConfirmation(lottoMachine.getLottos, prizeLotto);
+    const prizeLotto = new PrizeLotto(prizeNumber, bonusNumber);
+    const lottoConfirmation = new LottoConfirmation(lottoMachine.lottos, prizeLotto);
 
-    io.lottoResult(lottoConfirmation.getLottoResults);
-    console.log(price);
+    console.lottoResult(lottoConfirmation.lottoResults);
     
-    io.printRateOfReturn(lottoConfirmation.calculateRateOfReturn(price));
+    console.printRateOfReturn(lottoConfirmation.calculateRateOfReturn());
 
-    io.closeInterface(); 
+    console.closeInterface(); 
 }
 
 main();

@@ -2,7 +2,7 @@ import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import Lotto from '../domain/Lotto.js';
 
-class InputOutput {
+class ConsoleView {
   messages = {
     INPUT_MONEY: "구입금액을 입력해 주세요.",
     AUTO_MANUAL: "자동(a), 수동(b)",
@@ -58,17 +58,17 @@ class InputOutput {
     throw new Error(this.messages.INPUT_AUTO_MANUAL_EXCEPTION_MESSAGE)
   }
 
-  async receivedLottoNum() {
+  async receivedLottoNumber() {
     const input = await this.readline.question(this.messages.INPUT_LOTTO + this.messages.NEW_LINE);
     return this.splitComma(input, this.messages.COMMA);
   }
 
-  async receivedPrizeLottoNum() {
+  async receivedPrizeLottoNumber() {
     const input = await this.readline.question(this.messages.INPUT_PRIZE_LOTTO + this.messages.NEW_LINE);
     return this.splitComma(input, this.messages.COMMA);
   }
 
-  async receivedBonusLottoNum() {
+  async receivedBonusLottoNumber() {
     return await this.readline.question(this.messages.INPUT_BONUS_LOTTO + this.messages.NEW_LINE);
   }
 
@@ -78,7 +78,7 @@ class InputOutput {
 
   printLottos(lottos) {
     for (const lotto of lottos) {
-      console.log(lotto.getLottoNumbers);
+      console.log(lotto);
     }
   }
 
@@ -89,7 +89,7 @@ class InputOutput {
   }
 
   printStatics(lottoResult) {
-    lottoResult.getResultMap.forEach((count, matchedCount) => {
+    lottoResult.forEach((count, matchedCount) => {
       switch (matchedCount) {
         case 3:
           console.log(this.messages.THREE + count + this.messages.COUNT_KOREAN + this.messages.NEW_LINE);
@@ -141,4 +141,4 @@ class InputOutput {
   }
 }
 
-export default InputOutput;
+export default ConsoleView;

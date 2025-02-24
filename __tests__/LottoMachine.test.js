@@ -20,7 +20,7 @@ describe("LottoMachine Class 테스트", () => {
                 new Lotto([1,2,3,4,5,6]),
             ]
         );
-        expect(lottoMachine.lottos.length).toEqual(2);
+        expect(lottoMachine.lottosValue).toEqual([[1,2,3,4,5,6], [1,2,3,4,5,6]]);
     });
 
     it("2000원 입력 후 입력받은 로또가 2장이 아니면 예외가 발생한다.", () => {
@@ -32,6 +32,6 @@ describe("LottoMachine Class 테스트", () => {
                 new Lotto([1,2,3,4,5,6]),
                 new Lotto([1,2,3,4,5,6])
             ]
-        )).toThrowError(new Error(lottoMachine.lottoNum + LottoMachine.MANUAL_LOTTO_SIZE_MESSAGE));
+        )).toThrowError(new Error(lottoMachine.lottoNumber + LottoMachine.MANUAL_LOTTO_SIZE_MESSAGE));
     });
 });

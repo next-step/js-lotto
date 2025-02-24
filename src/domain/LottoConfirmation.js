@@ -1,12 +1,13 @@
 import LottoResult from "./LottoResult.js";
+import LottoMachine from "./LottoMachine.js";
 
 class LottoConfirmation {
 
-    static THREE_MATCH_PRICE = 5000;
-    static FOUR_MATCH_PRICE = 50000;
-    static FIVE_MATCH_PRICE = 1500000;
-    static FIVE_BONUS_MATCH_PRICE = 30000000;
-    static SIX_MATCH_PRICE = 2000000000;
+    static THREE_MATCH_PRICE = 5_000;
+    static FOUR_MATCH_PRICE = 50_000;
+    static FIVE_MATCH_PRICE = 1_500_000;
+    static FIVE_BONUS_MATCH_PRICE = 30_000_000;
+    static SIX_MATCH_PRICE = 2_000_000_000;
 
     #lottos;
     #totalPrize;
@@ -17,7 +18,7 @@ class LottoConfirmation {
         this.#totalPrize = 0;
         this.#lottoResult = new LottoResult();
 
-        this.#checkMatches(prizeLotto.prizeLotto, prizeLotto.bonusNum);
+        this.#checkMatches(prizeLotto);
         this.#calculateTotalPrice();
     }
 
@@ -29,11 +30,17 @@ class LottoConfirmation {
         return this.#lottoResult.resultMap;
     }
 
-    #checkMatches(prizeLotto, bonusNum) {
+    calculateRateOfReturn() {
+        const price = this.#lottos.length * LottoMachine.LOTTO_PRICE;
+        return (this.#totalPrize / price) * 100;
+    }
+
+    #checkMatches(prizeLotto) {
         this.#lottos.forEach(lotto => {
-            const matchedCount = lotto.filter(number => prizeLotto.includes(number)).length;
-            const hasBonus = lotto.some(number => number === bonusNum);
-            this.#lottoResult.addResult(matchedCount, hasBonus);
+            this.#lottoResult.addResult(
+                lotto.checkMatches(prizeLotto.value),
+                lotto.checkBonus(prizeLotto.bonusNumber)
+            );
         });
     }
 
@@ -61,10 +68,6 @@ class LottoConfirmation {
         });
 
         return this.#totalPrize;
-    }
-
-    calculateRateOfReturn(price) {
-        return (this.#totalPrize / price) * 100;
     }
 }
 
