@@ -18,7 +18,7 @@ class LottoInputService {
         const budget = await this.inputView.askBudget();
         return new Budget(budget);
       } catch (error) {
-        console.log(error.message);
+        console.log(LottoInputService.INVALID_INPUT);
       }
     }
   }
@@ -35,7 +35,7 @@ class LottoInputService {
         }
         return input === LottoInputService.RESTART_COMMAND;
       } catch (error) {
-        console.error(error.message);
+        console.log(LottoInputService.INVALID_INPUT);
       }
     }
   }
@@ -50,7 +50,7 @@ class LottoInputService {
         const lottoBonusNumber = LottoNumber.valueOf(bonusNumber);
         return new WinningLotto(lottoWinningNumbers, lottoBonusNumber);
       } catch (error) {
-        console.log(error.message);
+        console.log(LottoInputService.INVALID_INPUT);
       }
     }
   }
