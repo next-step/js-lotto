@@ -16,9 +16,9 @@ class LottoInputService {
     while (true) {
       try {
         const budget = await this.inputView.askBudget();
-        return Budget.createBudget(budget);
+        return new Budget(budget);
       } catch (error) {
-        console.log(LottoInputService.INVALID_INPUT);
+        console.log(error.message);
       }
     }
   }
@@ -44,11 +44,13 @@ class LottoInputService {
     while (true) {
       try {
         const winningNumbers = await this.inputView.askWinningNumbers();
-        const lottoNumbers = LottoNumber.createLottoNumbers(winningNumbers);
-        const bonusNumbers = await this.inputView.askBonusNumber();
-        return new WinningLotto(lottoNumbers, bonusNumbers);
+        const lottoWinningNumbers =
+          LottoNumber.createLottoNumbers(winningNumbers);
+        const bonusNumber = await this.inputView.askBonusNumber();
+        const lottoBonusNumber = LottoNumber.valueOf(bonusNumber);
+        return new WinningLotto(lottoWinningNumbers, lottoBonusNumber);
       } catch (error) {
-        console.log(LottoInputService.INVALID_INPUT);
+        console.log(error.message);
       }
     }
   }

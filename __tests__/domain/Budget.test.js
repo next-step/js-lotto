@@ -6,11 +6,10 @@ describe("Budget 클래스는", () => {
       const givenBudget = -1000;
       expect(() => new Budget(givenBudget)).toThrow();
     });
-    it.each([undefined, "1000", null])(
-      "예산으로 입력된 값이 숫자가 아닐때 예외를 던져야한다.",
+    it.each([undefined, null])(
+      "예산으로 입력된 값이 %s일때 예외를 던져야한다.",
       () => {
-        const givenBudget = "1000";
-        expect(() => new Budget(givenBudget)).toThrow();
+        expect((givenBudget) => new Budget(givenBudget)).toThrow();
       },
     );
   });
