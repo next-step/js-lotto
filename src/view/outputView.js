@@ -1,11 +1,11 @@
 import { getPrizeLabel } from "./prizeLabel.js";
 
 class OutputView {
-  static printLottoCount(lottoCount) {
+  printLottoCount(lottoCount) {
     console.log(`${lottoCount}개를 구매했습니다.`);
   }
 
-  static printLottos(lottos) {
+  printLottos(lottos) {
     for (const lotto of lottos) {
       const lottoNumbers = lotto
         .getLottoNumbers()
