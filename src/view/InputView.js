@@ -12,6 +12,12 @@ class InputView {
   async askBonusNumber() {
     return readLineAsync("보너스 볼을 입력해 주세요.\n");
   }
+
+  async askRestart() {
+    return (await readLineAsync("다시 시작하시겠습니까? (y/n)\n"))
+      .trim()
+      .toLowerCase();
+  }
 }
 
 export default InputView;

@@ -1,47 +1,35 @@
 import LottoGame from "../domain/LottoGame.js";
-import outputView from "../view/outputView.js";
-import OutputView from "../view/outputView.js";
-import WinningLotto from "../domain/WinningLotto.js";
-import InputView from "../view/InputView.js";
-import Budget from "../domain/Budget.js";
-import LottoNumber from "../domain/LottoNumber.js";
+import LottoInputService from "../service/InputService.js";
+import LottoOutputService from "../service/OutputService.js";
 
 class LottoController {
   constructor() {
-    this.inputView = new InputView();
-    this.outputView = new OutputView();
+    this.inputService = new LottoInputService();
+    this.outputService = new LottoOutputService();
   }
 
   async run() {
-    try {
-      const budget = Budget.createBudget(await this.inputView.askBudget());
-      const lottoGame = new LottoGame(budget);
-      this.buyLottos(lottoGame);
-      const { winningNumbers, bonusNumber } = await this.askWinningLottos();
-      const winningLotto = new WinningLotto(winningNumbers, bonusNumber);
+    while (true) {
+      try {
+        const budget = await this.inputService.askBudget();
+        const lottoGame = new LottoGame(budget);
 
-      lottoGame.calculateTotalWinningAmount(winningLotto);
-      const winningStatistics = lottoGame.getWinningStatistics(winningLotto);
-      this.outputView.printWinningStatistics(winningStatistics, lottoGame);
-    } catch (error) {
-      this.outputView.printError(error);
+        lottoGame.buyLottos();
+        this.outputService.printLottoPurchase(lottoGame);
+
+        const winningLotto = await this.inputService.askWinningLotto();
+
+        lottoGame.calculateTotalWinningAmount(winningLotto);
+        const statistics = lottoGame.getWinningStatistics(winningLotto);
+        this.outputService.printWinningStatistics(statistics, lottoGame);
+
+        if (!(await this.inputService.askRestart())) {
+          break;
+        }
+      } catch (error) {
+        this.outputService.printError(error);
+      }
     }
-  }
-
-  buyLottos(lottoGame) {
-    lottoGame.buyLottos();
-    outputView.printLottoCount(lottoGame.getLottoCount());
-    outputView.printLottos(lottoGame.getLottos());
-  }
-
-  async askWinningLottos() {
-    const winningNumbers = LottoNumber.createLottoNumbers(
-      await this.inputView.askWinningNumbers(),
-    );
-    const bonusNumber = LottoNumber.valueOf(
-      await this.inputView.askBonusNumber(),
-    );
-    return { winningNumbers, bonusNumber };
   }
 }
 
