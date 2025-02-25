@@ -1,33 +1,33 @@
-import LottoGame from "../domain/LottoGame.js";
-import LottoInputService from "../service/InputService.js";
-import LottoOutputService from "../service/OutputService.js";
+import LottoService from "../service/LottoService.js";
+import IoService from "../service/IoService.js";
+
 
 class LottoController {
   constructor() {
-    this.inputService = new LottoInputService();
-    this.outputService = new LottoOutputService();
+    this.lottoService = new LottoService();
+    this.ioService = new IoService();
   }
 
   async run() {
     while (true) {
       try {
-        const budget = await this.inputService.askBudget();
-        const lottoGame = new LottoGame(budget);
+        const budget = await this.ioService.askBudget();
+        const lottoGame = this.lottoService.createLottoGame(budget);
+        this.lottoService.buyLottos(lottoGame);
+        this.ioService.printLottoPurchase(lottoGame);
 
-        lottoGame.buyLottos();
-        this.outputService.printLottoPurchase(lottoGame);
+        const winningLotto = await this.ioService.askWinningLotto();
+        const statistics = this.lottoService.calculateResults(
+          lottoGame,
+          winningLotto,
+        );
 
-        const winningLotto = await this.inputService.askWinningLotto();
-
-        lottoGame.calculateTotalWinningAmount(winningLotto);
-        const statistics = lottoGame.getWinningStatistics(winningLotto);
-        this.outputService.printWinningStatistics(statistics, lottoGame);
-
-        if (!(await this.inputService.askRestart())) {
+        this.ioService.printWinningStatistics(statistics, lottoGame);
+        if (!(await this.ioService.askRestart())) {
           break;
         }
       } catch (error) {
-        this.outputService.printError(error);
+        this.ioService.printError(error);
       }
     }
   }
