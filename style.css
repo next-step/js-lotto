@@ -1,0 +1,172 @@
+#app {
+    max-width: 400px;
+    margin: auto;
+}
+
+#app h1 {
+    text-align: center;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.input-label {
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 5px;
+    text-align: left;
+    font-weight: normal;
+}
+
+.input-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #3b5998;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 90px;
+}
+
+button:hover {
+    background-color: #2d4373;
+}
+
+.lotto-ticket {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    padding: 5px 0px;
+    gap: 15px;
+}
+
+.ticket-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    border-radius: 5px;
+    font-weight: bold;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+}
+
+#lottoTickets h3 {
+    text-align: left;
+    margin-left: 10px;
+}
+
+.input-label {
+    font-size: 16px;
+    margin-bottom: 12px;
+    text-align: left;
+    font-weight: normal;
+    color: #333;
+}
+
+.lotto-count {
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: left;
+    font-weight: normal;
+}
+
+.lotto-ticket {
+    font-size: 18px;
+}
+
+.winning-section {
+    max-width: 500px;
+    margin: 20px auto;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.winning-label {
+    font-size: 14px;
+    font-weight: normal;
+    text-align: left;
+    color: #333;
+    max-width: 500px;
+    margin: 0 auto 15px;
+}
+
+.winning-inputs {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.winning-numbers {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-start;
+}
+
+.winning-label-small {
+    font-size: 10px;
+    text-align: center;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.winning-number, .bonus-number {
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.bonus-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    margin-left: auto;
+    align-self: flex-end;
+}
+
+#checkResultsButton {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #3b5998;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#checkResultsButton:hover {
+    background-color: #2d4373;
+}
