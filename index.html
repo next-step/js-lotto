@@ -8,22 +8,24 @@
   </head>
 
   <body>
-    <div id="app">
-      <h1>🎱 행운의 로또</h1>
-      <div class="input-group">
-        <label class="input-label" for="amountInput">구입할 금액을 입력해 주세요.</label>
-        <div class="input-container">
+  <header>
+    <h1>🎱 행운의 로또</h1>
+  </header>
+  <main>
+    <section class="input-group">
+      <p class="input-label">구입할 금액을 입력해 주세요.</p>
+      <article class="input-container">
           <input id="amountInput" placeholder="금액" />
           <button id="buyButton">구입</button>
-        </div>
-      </div>
-      <div id="lottoTickets"></div>
-      <div class="winning-section">
+      </article>
+    </section>
+    <article id="lottoTickets"></article>
+    <section class="winning-section">
         <p class="winning-label">지난 주 당첨번호 6개와 보너스 번호 1개를 입력해 주세요.</p>
 
-        <div class="winning-inputs">
+      <section class="winning-inputs">
           <!-- 당첨 번호 입력 그룹 -->
-          <div class="numbers-group">
+        <article class="numbers-group">
             <label class="winning-label-small">당첨 번호</label>
             <div class="winning-numbers">
               <label>
@@ -45,20 +47,18 @@
                 <input class="winning-number">
               </label>
             </div>
-          </div>
+        </article>
 
           <!-- 보너스 번호 입력 그룹 -->
-          <div class="bonus-group">
+        <article class="bonus-group">
             <label class="winning-label-small">보너스 번호</label>
             <input class="bonus-number">
-          </div>
-        </div>
+        </article>
+      </section>
 
         <button id="checkResultsButton">결과 확인하기</button>
-      </div>
-
-
-    </div>
+    </section>
+  </main>
     <script type="module" src="./src/step2-index.js"></script>
     <link href="style.css" rel="stylesheet">
   </body>
