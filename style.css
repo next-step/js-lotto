@@ -1,5 +1,5 @@
 main {
-    max-width: 400px;
+    max-width: 500px;
     margin: auto;
 }
 
@@ -21,7 +21,7 @@ input {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
     margin: 0 auto;
 }
 
@@ -169,4 +169,66 @@ button:hover {
 
 #checkResultsButton:hover {
     background-color: #2d4373;
+}
+
+
+dialog {
+    position: fixed;
+    width: 500px;
+    padding: 20px;
+    background-color: white;
+    border: none;
+    text-align: center;
+}
+
+dialog[open] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content {
+    width: 100%;
+}
+
+.close-button {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #333;
+}
+
+#restartButton:hover {
+    background-color: #2d4373;
+}
+
+.modal-statistics {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background: #f8f8f8;
+    border-radius: 5px;
+}
+
+#restartButton {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+}
+
+#profit-rate {
+    font-weight: bold;
 }

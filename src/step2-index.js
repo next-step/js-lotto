@@ -6,20 +6,23 @@ import LottoController from "./controller/LottoController.js";
 import Budget from "./domain/Budget.js";
 import LottoNumber from "./domain/LottoNumber.js";
 import WinningLotto from "./domain/WinningLotto.js";
-import lottoGame from "./domain/LottoGame.js";
 
 document.addEventListener("DOMContentLoaded", function() {
   const buyButton = document.getElementById("buyButton");
   const amountInput = document.getElementById("amountInput");
   const lottoTicketsDiv = document.getElementById("lottoTickets");
   const checkResultsButton = document.getElementById("checkResultsButton");
+  const modal = document.getElementById("resultModal");
+  const closeButton = document.querySelector(".close-button");
+  const restartButton = document.getElementById("restartButton");
 
   const controller = new LottoController();
+  let lottoGame;
 
   buyButton.addEventListener("click", async () => {
     try {
       const budget = new Budget(amountInput.value);
-      const lottoGame = controller.lottoService.createLottoGame(budget);
+      lottoGame = controller.lottoService.createLottoGame(budget);
       controller.lottoService.buyLottos(lottoGame);
 
       lottoTicketsDiv.innerHTML = "";
@@ -66,8 +69,34 @@ document.addEventListener("DOMContentLoaded", function() {
         lottoGame,
         winningLotto,
       );
+
+      const prizeMapping = new Map([
+        [5000, "match-3"],
+        [50000, "match-4"],
+        [1500000, "match-5"],
+        [30000000, "match-5b"],
+        [2000000000, "match-6"],
+      ]);
+
+      for (const [prize, count] of statistics.entries()) {
+        const elementId = prizeMapping.get(prize.prizeAmount);
+        document.getElementById(elementId).textContent = `${count}개`;
+      }
+
+      document.getElementById("profit-rate").textContent =
+        `당신의 총 수익률은 ${lottoGame.getProfit()}%입니다.`;
+
+      modal.showModal(); // 모달 표시
     } catch (error) {
       alert(error.message);
     }
+  });
+
+  closeButton.addEventListener("click", () => {
+    modal.close();
+  });
+
+  restartButton.addEventListener("click", () => {
+    window.location.reload();
   });
 });
