@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById("profit-rate").textContent =
         `당신의 총 수익률은 ${lottoGame.getProfit()}%입니다.`;
 
-      modal.showModal(); // 모달 표시
+      modal.showModal();
     } catch (error) {
       alert(error.message);
     }
