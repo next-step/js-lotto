@@ -2,7 +2,11 @@ import LottoGame from "./domain/LottoGame.js";
 import LottoPrizes from "./domain/LottoPrizes.js";
 import DrawNumbers from "./domain/DrawNumbers.js";
 
-import { getPurchaseAmount, getDrawNumbers } from "./view/input-controller.js";
+import {
+  getPurchaseAmount,
+  getDrawNumbers,
+  getRestart,
+} from "./view/input-controller.js";
 import {
   handlePrintPurchaseResult,
   handlePrintLottoResult,
@@ -27,4 +31,13 @@ async function run() {
   handlePrintLottoResult(results, returnRate);
 }
 
-run();
+async function startGame() {
+  await run();
+  const continueGame = await getRestart();
+
+  if (continueGame) {
+    startGame();
+  }
+}
+
+startGame();

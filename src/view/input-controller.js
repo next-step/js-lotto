@@ -2,6 +2,7 @@ import {
   inputPurchaseAmount,
   inputWinningNumber,
   inputBonusNumber,
+  inputRestart,
 } from "./input.js";
 
 export async function getPurchaseAmount() {
@@ -24,4 +25,9 @@ export async function getDrawNumbers() {
   const bonusNumber = await getBonusNumber();
 
   return { winningNumbers, bonusNumber };
+}
+
+export async function getRestart() {
+  const restartInput = await inputRestart();
+  return restartInput.toLowerCase() === "y";
 }

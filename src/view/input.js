@@ -11,3 +11,7 @@ export async function inputWinningNumber() {
 export async function inputBonusNumber() {
   return readLineAsync("\n> 보너스 번호를 입력해 주세요. ");
 }
+
+export async function inputRestart() {
+  return await readLineAsync("\n> 다시 시작하시겠습니까? (y/n)");
+}
