@@ -1,6 +1,8 @@
 import Lottos from "../src/domain/Lottos.js";
 import LottoPrizes from "../src/domain/LottoPrizes.js";
 import LottoGame from "../src/domain/LottoGame.js";
+import WinningNumbers from "../src/domain/WinningNumbers.js";
+import BonusNumbers from "../src/domain/BonusNumbers.js";
 import DrawNumbers from "../src/domain/DrawNumbers.js";
 
 describe("로또 게임", () => {
@@ -54,22 +56,22 @@ describe("로또 게임", () => {
   it("당첨 번호는 1부터 45까지의 숫자 6개와 보너스 번호 1개로 구성되어 있다.", () => {
     expect(() => {
       new DrawNumbers({
-        winningNumbers: [1, 2, 3, 4],
-        bonusNumber: 7,
+        winningNumbers: new WinningNumbers({ numbers: [1, 2, 3, 4] }),
+        bonusNumber: new BonusNumbers({ numbers: [7] }),
       });
     }).toThrow("로또 번호는 6개를 입력해 주세요.");
 
     expect(() => {
       new DrawNumbers({
-        winningNumbers: [1, 2, 3, 4, 5, 46],
-        bonusNumber: 7,
+        winningNumbers: new WinningNumbers({ numbers: [1, 2, 3, 4, 5, 46] }),
+        bonusNumber: new BonusNumbers({ numbers: [7] }),
       });
     }).toThrow("1 이상 45 이하 숫자를 입력해 주세요.");
 
     expect(() => {
       new DrawNumbers({
-        winningNumbers: [1, 2, 3, 4, 5, 6],
-        bonusNumber: 7,
+        winningNumbers: new WinningNumbers({ numbers: [1, 2, 3, 4, 5, 6] }),
+        bonusNumbers: new BonusNumbers({ numbers: [7] }),
       });
     }).not.toThrow();
   });
@@ -77,8 +79,8 @@ describe("로또 게임", () => {
   it("당첨 번호와 보너스 번호는 중복될 수 없다.", () => {
     expect(() => {
       new DrawNumbers({
-        winningNumbers: [1, 2, 3, 4, 5, 6],
-        bonusNumber: 6,
+        winningNumbers: new WinningNumbers({ numbers: [1, 2, 3, 4, 5, 6] }),
+        bonusNumbers: new BonusNumbers({ numbers: [6] }),
       });
     }).toThrow("로또 번호는 중복될 수 없습니다.");
   });
@@ -88,8 +90,8 @@ describe("로또 게임", () => {
     lottoGame = new LottoGame(lottos);
 
     const drawNumbers = new DrawNumbers({
-      winningNumbers: [1, 2, 3, 4, 5, 6],
-      bonusNumber: 7,
+      winningNumbers: new WinningNumbers({ numbers: [1, 2, 3, 4, 5, 6] }),
+      bonusNumbers: new BonusNumbers({ numbers: [7] }),
     });
     const result = lottoGame.draw(drawNumbers);
     const returnRate = lottoGame.getReturnRate();

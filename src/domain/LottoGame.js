@@ -46,20 +46,20 @@ export default class LottoGame {
     return Math.floor(returnRate);
   }
 
-  getMatchedResults(winningNumbers, bonusNumber) {
+  getMatchedResults(winningNumbers, bonusNumbers) {
     return this.#lottos.map((lottos) => {
       const matchCount = lottos.getMatchCount(winningNumbers);
-      const bonusMatched = !!lottos.getMatchCount([bonusNumber]);
+      const bonusMatched = !!lottos.getMatchCount([bonusNumbers]);
       return { matchCount, bonusMatched };
     });
   }
 
   draw(drawNumbers) {
-    const { winningNumbers, bonusNumber } = drawNumbers.values;
+    const { winningNumbers, bonusNumbers } = drawNumbers.values;
 
     const lottoMatchedResults = this.getMatchedResults(
       winningNumbers,
-      bonusNumber
+      bonusNumbers
     );
 
     this.#prizes.checkPrizeMatch(lottoMatchedResults);

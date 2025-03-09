@@ -10,21 +10,14 @@ export async function getPurchaseAmount() {
   return Number(purchaseAmountInput);
 }
 
-async function getWinningNumbers() {
+export async function getWinningNumbers() {
   const winningNumberInput = await inputWinningNumber();
   return winningNumberInput.split(",").map((number) => Number(number.trim()));
 }
 
-async function getBonusNumber() {
+export async function getBonusNumber() {
   const bonusNumberInput = await inputBonusNumber();
-  return Number(bonusNumberInput);
-}
-
-export async function getDrawNumbers() {
-  const winningNumbers = await getWinningNumbers();
-  const bonusNumber = await getBonusNumber();
-
-  return { winningNumbers, bonusNumber };
+  return bonusNumberInput.split(",").map((number) => Number(number.trim()));
 }
 
 export async function getRestart() {
