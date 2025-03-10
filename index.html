@@ -8,9 +8,104 @@
   </head>
 
   <body>
-    <div id="app">
-      <h1>🎱 행운의 로또</h1>
-    </div>
+  <header>
+    <h1>🎱 행운의 로또</h1>
+  </header>
+  <main>
+    <section class="input-group">
+      <p class="input-label">구입할 금액을 입력해 주세요.</p>
+      <article class="input-container">
+          <input id="amountInput" placeholder="금액" />
+          <button id="buyButton">구입</button>
+      </article>
+    </section>
+    <article id="lottoTickets"></article>
+    <section class="winning-section">
+        <p class="winning-label">지난 주 당첨번호 6개와 보너스 번호 1개를 입력해 주세요.</p>
+
+      <section class="winning-inputs">
+          <!-- 당첨 번호 입력 그룹 -->
+        <article class="numbers-group">
+            <label class="winning-label-small">당첨 번호</label>
+            <div class="winning-numbers">
+              <label>
+                <input class="winning-number">
+              </label>
+              <label>
+                <input class="winning-number">
+              </label>
+              <label>
+                <input class="winning-number">
+              </label>
+              <label>
+                <input class="winning-number">
+              </label>
+              <label>
+                <input class="winning-number">
+              </label>
+              <label>
+                <input class="winning-number">
+              </label>
+            </div>
+        </article>
+
+          <!-- 보너스 번호 입력 그룹 -->
+        <article class="bonus-group">
+            <label class="winning-label-small">보너스 번호</label>
+            <input class="bonus-number">
+        </article>
+      </section>
+
+        <button id="checkResultsButton">결과 확인하기</button>
+    </section>
+    <dialog id="resultModal">
+      <div class="modal-content">
+        <header class="modal-header">
+          <button class="close-button" id="closeModal">&times;</button>
+          <h2>🏆 당첨 통계 🏆</h2>
+        </header>
+
+        <section class="modal-body">
+          <div class="modal-statistics">
+            <div class="stat-item">
+              <span>3개 일치</span>
+              <span>5,000</span>
+              <span class="match-count" id="match-3">n개</span>
+            </div>
+            <div class="stat-item">
+              <span>4개 일치</span>
+              <span>50,000</span>
+              <span class="match-count" id="match-4">n개</span>
+            </div>
+            <div class="stat-item">
+              <span>5개 일치</span>
+              <span>1,500,000</span>
+              <span class="match-count" id="match-5">n개</span>
+            </div>
+            <div class="stat-item">
+              <span>5개 + 보너스볼</span>
+              <span>30,000,000</span>
+              <span class="match-count" id="match-5b">n개</span>
+            </div>
+            <div class="stat-item">
+              <span>6개 일치</span>
+              <span>2,000,000,000</span>
+              <span class="match-count" id="match-6">n개</span>
+            </div>
+          </div>
+
+          <p class="modal-profit">
+            <span id="profit-rate">%</span>
+          </p>
+
+          <button id="restartButton">다시 시작하기</button>
+        </section>
+      </div>
+    </dialog>
+
+
+  </main>
     <script type="module" src="./src/step2-index.js"></script>
+    <link href="style.css" rel="stylesheet">
   </body>
 </html>
