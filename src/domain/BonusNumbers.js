@@ -1,25 +1,14 @@
-import LottoNumbers from "./LottoNumbers.js";
+import AbstractLottoNumbers from "./AbstractLottoNumbers.js";
 
-export default class BonusNumbers {
+export default class BonusNumbers extends AbstractLottoNumbers {
   static BONUS_NUMBER_COUNT = 1;
 
-  #numbers;
-
-  constructor({
-    numbers,
-    min = LottoNumbers.NUMBER_MIN_RANGE,
-    max = LottoNumbers.NUMBER_MAX_RANGE,
-    count = BonusNumbers.BONUS_NUMBER_COUNT,
-  }) {
-    this.#numbers = new LottoNumbers({
+  constructor({ numbers, min, max, count = BonusNumbers.BONUS_NUMBER_COUNT }) {
+    super({
       numbers,
       min,
       max,
       count,
     });
-  }
-
-  get values() {
-    return [...this.#numbers.values];
   }
 }
