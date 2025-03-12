@@ -1,51 +1,71 @@
 import LottoGame from "./domain/LottoGame.js";
 import LottoPrizes from "./domain/LottoPrizes.js";
 import DrawNumbers from "./domain/DrawNumbers.js";
+import WinningNumbers from "./domain/WinningNumbers.js";
+import BonusNumbers from "./domain/BonusNumbers.js";
 
 import {
-  inputPurchaseAmount,
-  inputWinningNumber,
-  inputBonusNumber,
-} from "./view/input.js";
-import { printPurchaseResult, printLottoResult } from "./view/output.js";
+  getPurchaseAmount,
+  getWinningNumbers,
+  getBonusNumber,
+  getRestart,
+} from "./view/input-controller.js";
+import {
+  handlePrintPurchaseResult,
+  handlePrintLottoResult,
+} from "./view/output-controller.js";
 
-async function getPurchaseAmount() {
-  const purchaseAmountInput = await inputPurchaseAmount();
-  return Number(purchaseAmountInput);
-}
+import { retryOnError } from "./utils/retryHandler.js";
 
-async function getWinningNumbers() {
-  const winningNumberInput = await inputWinningNumber();
-  return winningNumberInput.split(",").map((number) => Number(number.trim()));
-}
-
-async function getBonusNumber() {
-  const bonusNumberInput = await inputBonusNumber();
-  return Number(bonusNumberInput);
+async function purchaseLottos(lottoGame) {
+  return await retryOnError(async () => {
+    const purchaseAmount = await getPurchaseAmount();
+    return lottoGame.purchase(purchaseAmount);
+  });
 }
 
 async function getDrawNumbers() {
-  const winningNumbers = await getWinningNumbers();
-  const bonusNumber = await getBonusNumber();
+  const winningNumbers = await retryOnError(async () => {
+    return new WinningNumbers({
+      numbers: await getWinningNumbers(),
+    });
+  });
 
-  return new DrawNumbers({ winningNumbers, bonusNumber });
+  const bonusNumbers = await retryOnError(async () => {
+    return new BonusNumbers({
+      numbers: await getBonusNumber(),
+    });
+  });
+
+  return new DrawNumbers({
+    winningNumbers,
+    bonusNumbers,
+  });
 }
 
 async function run() {
-  const purchaseAmount = await getPurchaseAmount();
-
   const lottoGame = new LottoGame(new LottoPrizes());
-  const purchasedLottos = lottoGame.purchase(purchaseAmount);
+
+  const purchasedLottos = await purchaseLottos(lottoGame);
   const quantity = purchasedLottos.length;
 
-  printPurchaseResult(quantity, purchasedLottos);
+  handlePrintPurchaseResult(quantity, purchasedLottos);
 
   const drawNumbers = await getDrawNumbers();
 
   const results = lottoGame.draw(drawNumbers);
   const returnRate = lottoGame.getReturnRate();
 
-  printLottoResult(results, returnRate);
+  handlePrintLottoResult(results, returnRate);
 }
 
-run();
+async function startGame() {
+  await run();
+  const continueGame = await getRestart();
+
+  if (continueGame) {
+    startGame();
+  }
+}
+
+startGame();
