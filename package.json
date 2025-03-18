@@ -9,7 +9,8 @@
     "test": "jest --no-cache",
     "start-step1": "node src/step1-index.js",
     "start-step2": "vite",
-    "fix": "eslint --fix --ext .js ."
+    "fix": "eslint --fix --ext .js .",
+    "test-cypress": "cypress open"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",
@@ -25,7 +26,8 @@
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest": "^28.11.0",
-    "eslint-plugin-prettier": "^5.2.3"
+    "eslint-plugin-prettier": "^5.2.3",
+    "cypress": "^12.6.0"
   },
   "jest": {
     "transform": {
