@@ -3,7 +3,6 @@
  * 노드 환경에서 사용하는 readline 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
  */
 import LottoController from "./controller/LottoController.js";
-import Budget from "./domain/Budget.js";
 import LottoNumber from "./domain/LottoNumber.js";
 import WinningLotto from "./domain/WinningLotto.js";
 
@@ -21,9 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   buyButton.addEventListener("click", async () => {
     try {
-      const budget = new Budget(amountInput.value);
-      lottoGame = controller.lottoService.createLottoGame(budget);
-      controller.lottoService.buyLottos(lottoGame);
+      lottoGame = controller.buyLottos(amountInput.value);
 
       lottoTicketsDiv.innerHTML = "";
       const countMessage = document.createElement("p");
@@ -65,10 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
         lottoWinningNumbers,
         LottoNumber.valueOf(bonusNumber),
       );
-      const statistics = controller.lottoService.calculateResults(
-        lottoGame,
-        winningLotto,
-      );
+      const statistics = controller.calculateResults(lottoGame, winningLotto);
 
       const prizeMapping = new Map([
         [5000, "match-3"],
