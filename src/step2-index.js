@@ -1,4 +1,38 @@
-/**
- * step 2의 시작점이 되는 파일입니다.
- * 노드 환경에서 사용하는 readline 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
- */
+import LottoGame from "./domain/LottoGame.js";
+import LottoPrizes from "./domain/LottoPrizes.js";
+import DrawNumbers from "./domain/DrawNumbers.js";
+import WinningNumbers from "./domain/WinningNumbers.js";
+import BonusNumbers from "./domain/BonusNumbers.js";
+
+import {
+  getPurchaseAmount,
+  getDrawNumbers,
+  showResult,
+  resetPurchase,
+} from "./view/web/view-controller.js";
+
+window.addEventListener("load", async () => {
+  const lottoGame = new LottoGame(new LottoPrizes());
+
+  getPurchaseAmount((purchaseAmount) => {
+    const purchasedLottos = lottoGame.purchase(purchaseAmount);
+    return purchasedLottos;
+  });
+
+  getDrawNumbers((winningNumbers, bonusNumbers) => {
+    const drawNumbers = new DrawNumbers({
+      winningNumbers: new WinningNumbers({ numbers: winningNumbers }),
+      bonusNumbers: new BonusNumbers({ numbers: bonusNumbers }),
+    });
+
+    const results = lottoGame.draw(drawNumbers);
+
+    showResult({
+      rate: lottoGame.getReturnRate(),
+      result: results,
+      onClick: () => {
+        resetPurchase();
+      },
+    });
+  });
+});
