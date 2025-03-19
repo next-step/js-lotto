@@ -1,0 +1,48 @@
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+#app main {
+  min-width: 300px;
+}
+
+button {
+  height: 50px;
+}
+
+.purchase-section form {
+  display: flex;
+  gap: 8px;
+  height: 50px;
+}
+
+.purchase-section form input {
+  flex: 1;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.purchase-result-step {
+  visibility: hidden;
+}
+
+.purchase-result-step form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.purchase-result-step input {
+  width: 50px;
+}
+
+.purchase-result-step button {
+  width: 100%;
+}
