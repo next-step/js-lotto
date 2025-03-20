@@ -20,6 +20,10 @@ class LottoController {
     return this.lottoService.calculateResults(lottoGame, winningLotto);
   }
 
+  createWinningLotto(winningNumbers, bonusNumber) {
+    return this.lottoService.createWinningLotto(winningNumbers, bonusNumber);
+  }
+
   async run() {
     while (true) {
       try {

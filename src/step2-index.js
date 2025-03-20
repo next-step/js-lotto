@@ -2,95 +2,50 @@
  * step 2의 시작점이 되는 파일입니다.
  * 노드 환경에서 사용하는 readline 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
  */
+import LottoPurchase from "./components/LottoPurchase.js";
+
 import LottoController from "./controller/LottoController.js";
-import LottoNumber from "./domain/LottoNumber.js";
-import WinningLotto from "./domain/WinningLotto.js";
+import LottoList from "./components/LottoList.js";
+import LottoResult from "./components/LottoResult.js";
 
-document.addEventListener("DOMContentLoaded", function() {
-  const buyButton = document.getElementById("buyButton");
-  const amountInput = document.getElementById("amountInput");
-  const lottoTicketsDiv = document.getElementById("lottoTickets");
-  const checkResultsButton = document.getElementById("checkResultsButton");
-  const modal = document.getElementById("resultModal");
-  const closeButton = document.querySelector(".close-button");
-  const restartButton = document.getElementById("restartButton");
+class LottoApp {
+  constructor() {
+    this.lottoController = new LottoController();
+    this.lottoGame = null;
+    new LottoPurchase(this.buyLotto);
+    document.getElementById("checkResultsButton").addEventListener("click", this.checkResults);
+    document.getElementById("restartButton").addEventListener("click", () => window.location.reload());
+  }
 
-  const controller = new LottoController();
-  let lottoGame;
-
-  buyButton.addEventListener("click", async () => {
+  buyLotto = (amount) => {
     try {
-      lottoGame = controller.buyLottos(amountInput.value);
-
-      lottoTicketsDiv.innerHTML = "";
-      const countMessage = document.createElement("p");
-      countMessage.textContent = `총 ${lottoGame.getLottoCount()}개를 구매하였습니다.`;
-      countMessage.classList.add("lotto-count");
-      lottoTicketsDiv.appendChild(countMessage);
-
-      lottoGame.getLottos().forEach((lotto) => {
-        const ticketElement = document.createElement("div");
-        ticketElement.classList.add("lotto-ticket");
-
-        const lottoIcon = document.createElement("span");
-        lottoIcon.textContent = "🎟";
-
-        const lottoNumbers = document.createElement("span");
-        lottoNumbers.textContent = lotto
-          .getLottoNumbers()
-          .map((lottoNumber) => lottoNumber.getValue())
-          .join(", ");
-
-        ticketElement.appendChild(lottoIcon);
-        ticketElement.appendChild(lottoNumbers);
-        lottoTicketsDiv.appendChild(ticketElement);
-      });
+      this.lottoGame = this.lottoController.buyLottos(amount);
+      new LottoList().render(this.lottoGame);
     } catch (error) {
       alert(error.message);
     }
-  });
+  };
 
-  checkResultsButton.addEventListener("click", async () => {
+  checkResults = () => {
     try {
-      const winningNumbers = [...document.querySelectorAll(".winning-number")]
-        .map((input) => input.value)
-        .join(",");
+      const winningNumbers = [...document.querySelectorAll(".winning-number")].map((input) => input.value);
       const bonusNumber = document.querySelector(".bonus-number").value;
-      const lottoWinningNumbers =
-        LottoNumber.createLottoNumbers(winningNumbers);
-      const winningLotto = new WinningLotto(
-        lottoWinningNumbers,
-        LottoNumber.valueOf(bonusNumber),
+      const winningLotto = this.lottoController.createWinningLotto(
+        winningNumbers,
+        bonusNumber,
       );
-      const statistics = controller.calculateResults(lottoGame, winningLotto);
 
-      const prizeMapping = new Map([
-        [5000, "match-3"],
-        [50000, "match-4"],
-        [1500000, "match-5"],
-        [30000000, "match-5b"],
-        [2000000000, "match-6"],
-      ]);
-
-      for (const [prize, count] of statistics.entries()) {
-        const elementId = prizeMapping.get(prize.prizeAmount);
-        document.getElementById(elementId).textContent = `${count}개`;
-      }
-
-      document.getElementById("profit-rate").textContent =
-        `당신의 총 수익률은 ${lottoGame.getProfit()}%입니다.`;
-
-      modal.showModal();
+      const statistics = this.lottoController.calculateResults(
+        this.lottoGame,
+        winningLotto,
+      );
+      new LottoResult().render(statistics, this.lottoGame);
     } catch (error) {
       alert(error.message);
     }
-  });
+  };
+}
 
-  closeButton.addEventListener("click", () => {
-    modal.close();
-  });
-
-  restartButton.addEventListener("click", () => {
-    window.location.reload();
-  });
-});
+document.readyState === "loading"
+  ? document.addEventListener("DOMContentLoaded", () => new LottoApp())
+  : new LottoApp();
