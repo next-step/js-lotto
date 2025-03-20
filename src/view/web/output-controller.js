@@ -7,6 +7,7 @@ import {
 } from "./output";
 
 export function updatePurchasedResultView(quantity, purchasedLottos) {
+  removePurchaseResult();
   showPurchaseResultStep();
   printPurchaseResult(quantity, purchasedLottos);
 }
