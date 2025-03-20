@@ -49,7 +49,7 @@ export default class LottoGame {
   getMatchedResults(winningNumbers, bonusNumbers) {
     return this.#lottos.map((lottos) => {
       const matchCount = lottos.getMatchCount(winningNumbers);
-      const bonusMatched = !!lottos.getMatchCount([bonusNumbers]);
+      const bonusMatched = !!lottos.getMatchCount(bonusNumbers);
       return { matchCount, bonusMatched };
     });
   }
