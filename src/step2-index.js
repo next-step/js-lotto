@@ -1,3 +1,5 @@
+import { handleError } from "./utils/handleError.js";
+
 import LottoGame from "./domain/LottoGame.js";
 import LottoPrizes from "./domain/LottoPrizes.js";
 import DrawNumbers from "./domain/DrawNumbers.js";
@@ -49,16 +51,17 @@ function initializeGame() {
   let lottoGame = new LottoGame(new LottoPrizes());
 
   handlePurchaseFormSubmit({
-    onSubmit: (purchaseAmount) => () =>
-      purchaseLottos(lottoGame, purchaseAmount),
+    onSubmit: (purchaseAmount) =>
+      handleError(() => purchaseLottos(lottoGame, purchaseAmount)),
   });
 
   handleDrawNumbersFormSubmit({
-    onSubmit: (winningNumbers, bonusNumbers) => () => {
-      const results = drawLottos(lottoGame, winningNumbers, bonusNumbers);
-      const rate = lottoGame.getReturnRate();
-      showResults(rate, results);
-    },
+    onSubmit: (winningNumbers, bonusNumbers) =>
+      handleError(() => {
+        const results = drawLottos(lottoGame, winningNumbers, bonusNumbers);
+        const rate = lottoGame.getReturnRate();
+        showResults(rate, results);
+      }),
   });
 }
 
