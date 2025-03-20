@@ -20,7 +20,9 @@ export function updateDrawResultView(rate, results) {
 export function openResultModal({ rate, results, onClick }) {
   const convertedResults = results.map((result) => {
     return [
-      `${result.matchCount}개 일치${result.bonusMatched ? " + 보너스볼" : ""}`,
+      `${result.requiredMatchCount}개 일치${
+        result.bonusMatched ? " + 보너스볼" : ""
+      }`,
       result.prizeMoney.toLocaleString(),
       result.matchCount,
     ];
