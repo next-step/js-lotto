@@ -39,11 +39,11 @@ function resetGame() {
   return newGame;
 }
 
-function showResults(rate, results) {
+function showResults(rate, results, callback) {
   openResultModal({
     rate,
     results,
-    onClick: resetGame,
+    onClick: callback,
   });
 }
 
@@ -60,7 +60,9 @@ function initializeGame() {
       handleError(() => {
         const results = drawLottos(lottoGame, winningNumbers, bonusNumbers);
         const rate = lottoGame.getReturnRate();
-        showResults(rate, results);
+        showResults(rate, results, () => {
+          lottoGame = resetGame();
+        });
       }),
   });
 }
