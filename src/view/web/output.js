@@ -10,19 +10,18 @@ export function hidePurchaseResultStep() {
   section.style.visibility = "hidden";
 }
 
-export function resetPurchaseResultStep() {
+export function removePurchaseResult() {
   const resultSection = document.querySelector(".result-section");
   resultSection.replaceChildren();
 }
 
-export function printPurchaseResult(quantity, purchasedLottos) {
-  const resultSection = document.querySelector(".result-section");
-
-  const resultWrapper = document.createElement("div");
-
+function createResultText(quantity) {
   const resultText = document.createElement("p");
   resultText.textContent = `총 ${quantity}개를 구매하였습니다.`;
+  return resultText;
+}
 
+function createResultLottoList(purchasedLottos) {
   const resultLottoList = document.createElement("ul");
   const resultLottos = purchasedLottos.map((lotto) => {
     const lottoText = document.createElement("li");
@@ -31,17 +30,24 @@ export function printPurchaseResult(quantity, purchasedLottos) {
   });
 
   resultLottoList.append(...resultLottos);
-  resultWrapper.append(resultText, resultLottoList);
-  resultSection.appendChild(resultWrapper);
+  return resultLottoList;
 }
 
-export function showResultModal({ text, onClick, columns, rows }) {
+export function printPurchaseResult(quantity, purchasedLottos) {
+  const resultSection = document.querySelector(".result-section");
+  const resultText = createResultText(quantity);
+  const resultLottoList = createResultLottoList(purchasedLottos);
+
+  resultSection.append(resultText, resultLottoList);
+}
+
+export function showResultModal({ text, onClick, rows }) {
   const modal = createModal({
     title: "🏆 당첨 통계 🏆",
     text,
     buttonText: "다시 시작하기",
     onClick,
-    columns,
+    columns: ["일치 갯수", "당첨금", "당첨 갯수"],
     rows,
   });
 
