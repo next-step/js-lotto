@@ -13,14 +13,14 @@ class LottoResult {
     this.closeButton.addEventListener("click", () => this.closeModal());
   }
 
-  render(statistics, lottoGame) {
+  render(statistics, profit) {
     for (const [prize, count] of statistics.entries()) {
       const matchedElement = LottoResult.prizeMapping.get(prize.prizeAmount);
       this.showMatchedCount(matchedElement, count);
     }
 
     document.getElementById("profit-rate").textContent =
-      `당신의 총 수익률은 ${lottoGame.getProfit()}%입니다.`;
+      `당신의 총 수익률은 ${profit}%입니다.`;
 
     this.modal.showModal();
   }

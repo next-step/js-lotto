@@ -1,28 +1,50 @@
 import LottoGame from "../domain/LottoGame.js";
 import WinningLotto from "../domain/WinningLotto.js";
 import LottoNumber from "../domain/LottoNumber.js";
+import Budget from "../domain/Budget.js";
 
 class LottoService {
-  createLottoGame(budget) {
-    return new LottoGame(budget);
+  static LOTTO_GAME_NOT_CREATED;
+
+  constructor() {
+    this.lottoGame = null;
   }
 
-  buyLottos(lottoGame) {
-    lottoGame.buyLottos();
+  startLottoGame(amount) {
+    const budget = new Budget(amount);
+    this.lottoGame = new LottoGame(budget);
   }
 
-  calculateResults(lottoGame, winningLotto) {
-    lottoGame.calculateTotalWinningAmount(winningLotto);
-    return lottoGame.getWinningStatistics(winningLotto);
+  buyLottos() {
+    this.lottoGame.buyLottos();
   }
 
-  createWinningLotto(winningNumbers, bonusNumber) {
-    console.log(winningNumbers, bonusNumber);
-    const lottoWinningNumbers = winningNumbers.map((number) =>
-      LottoNumber.valueOf(number),
+  calculateResults(winningNumbers, bonusNumber) {
+    if (!this.lottoGame) {
+      throw new Error(LottoService.LOTTO_GAME_NOT_CREATED);
+    }
+
+    const winningLotto = new WinningLotto(
+      winningNumbers.map((number) => LottoNumber.valueOf(number)),
+      LottoNumber.valueOf(bonusNumber),
     );
-    const lottoBonusNumber = LottoNumber.valueOf(bonusNumber);
-    return new WinningLotto(lottoWinningNumbers, lottoBonusNumber);
+
+    this.lottoGame.calculateTotalWinningAmount(winningLotto);
+    return this.lottoGame.getWinningStatistics(winningLotto);
+  }
+
+  getProfit() {
+    if (!this.lottoGame) {
+      throw new Error(LottoService.LOTTO_GAME_NOT_CREATED);
+    }
+    return this.lottoGame.getProfit();
+  }
+
+  getLottos() {
+    if (!this.lottoGame) {
+      throw new Error(LottoService.LOTTO_GAME_NOT_CREATED);
+    }
+    return this.lottoGame.getLottos();
   }
 }
 

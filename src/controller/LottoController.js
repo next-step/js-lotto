@@ -1,7 +1,5 @@
 import LottoService from "../service/LottoService.js";
 import IoService from "../service/IoService.js";
-import Budget from "../domain/Budget.js";
-
 
 class LottoController {
   constructor() {
@@ -10,18 +8,20 @@ class LottoController {
   }
 
   buyLottos(amount) {
-    const budget = new Budget(amount);
-    const lottoGame = this.lottoService.createLottoGame(budget);
-    this.lottoService.buyLottos(lottoGame);
-    return lottoGame;
+    this.lottoService.startLottoGame(amount);
+    this.lottoService.buyLottos();
   }
 
   calculateResults(lottoGame, winningLotto) {
     return this.lottoService.calculateResults(lottoGame, winningLotto);
   }
 
-  createWinningLotto(winningNumbers, bonusNumber) {
-    return this.lottoService.createWinningLotto(winningNumbers, bonusNumber);
+  getProfit() {
+    return this.lottoService.getProfit();
+  }
+
+  getLottos() {
+    return this.lottoService.getLottos();
   }
 
   async run() {

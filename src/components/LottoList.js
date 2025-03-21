@@ -3,15 +3,15 @@ class LottoList {
     this.lottoList = document.getElementById("lottos");
   }
 
-  render(lottoGame) {
+  render(lottos) {
     this.lottoList.innerHTML = "";
 
     const $countMessage = document.createElement("p");
-    $countMessage.textContent = `총 ${lottoGame.getLottoCount()}개를 구매하였습니다.`;
+    $countMessage.textContent = `총 ${lottos.length}개를 구매하였습니다.`;
     $countMessage.classList.add("lotto-count");
     this.lottoList.appendChild($countMessage);
 
-    lottoGame.getLottos().forEach((lotto) => {
+    lottos.forEach((lotto) => {
       const $lottoTicket = document.createElement("div");
       $lottoTicket.classList.add("lotto-ticket");
 
