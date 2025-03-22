@@ -46,13 +46,12 @@ export default class LottoPrizes {
       const matchedLotto = matchedResults.filter((result) => {
         const isMatchCountEqual =
           result.matchCount === prize.requiredMatchCount;
-        const isBonusMatchValid =
-          !prize.bonusMatched || result.bonusMatched === prize.bonusMatched;
+        const isBonusMatchValid = prize.bonusMatched === result.bonusMatched;
 
         return isMatchCountEqual && isBonusMatchValid;
       });
 
-      prize.matchCount += matchedLotto.length;
+      prize.matchCount = matchedLotto.length;
     });
   }
 

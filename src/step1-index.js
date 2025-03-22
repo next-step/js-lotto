@@ -9,11 +9,11 @@ import {
   getWinningNumbers,
   getBonusNumber,
   getRestart,
-} from "./view/input-controller.js";
+} from "./view/console/input-controller.js";
 import {
   handlePrintPurchaseResult,
   handlePrintLottoResult,
-} from "./view/output-controller.js";
+} from "./view/console/output-controller.js";
 
 import { retryOnError } from "./utils/retryHandler.js";
 
