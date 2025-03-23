@@ -7,6 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "jest --no-cache",
+    "test-e2e": "cypress open",
     "start-step1": "node src/step1-index.js",
     "start-step2": "vite",
     "deploy": "vite build --base=/js-lotto/ --minify=false && npx gh-pages -d dist"
@@ -17,6 +18,7 @@
     "@babel/preset-env": "^7.26.7",
     "@types/jest": "^29.5.14",
     "babel-jest": "^29.7.0",
+    "cypress": "^14.2.0",
     "jest": "^29.6.0",
     "vite": "^6.0.5"
   },
