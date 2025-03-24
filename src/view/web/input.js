@@ -1,4 +1,4 @@
-import { validateNumericInput } from "../../utils/validateInput.js";
+import { sanitizeNumericInput } from "../../utils/validateInput.js";
 
 function setForm(form, onSubmit) {
   form.addEventListener("submit", (event) => {
@@ -17,7 +17,7 @@ export function setupPurchaseForm(onSubmit) {
   });
 
   const input = form.querySelector("input");
-  input.addEventListener("input", () => validateNumericInput(input, 6));
+  input.addEventListener("input", () => sanitizeNumericInput(input, 6));
 }
 
 export function setupDrawNumbersForm(onSubmit) {
@@ -30,7 +30,7 @@ export function setupDrawNumbersForm(onSubmit) {
 
   const inputs = form.querySelectorAll("input");
   inputs.forEach((input) => {
-    input.addEventListener("input", () => validateNumericInput(input, 2));
+    input.addEventListener("input", () => sanitizeNumericInput(input, 2));
   });
 }
 
