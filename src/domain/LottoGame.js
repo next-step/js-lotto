@@ -21,7 +21,7 @@ export default class LottoGame {
   static validatePurchaseAmount(purchaseAmount, price) {
     if (
       !Number.isInteger(purchaseAmount) ||
-      purchaseAmount < 0 ||
+      purchaseAmount <= 0 ||
       purchaseAmount % price !== 0
     ) {
       throw new LottoPurchaseError(price);
