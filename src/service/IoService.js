@@ -1,8 +1,8 @@
-import InputView from "../view/InputView.js";
-import OutputView from "../view/OutputView.js";
 import Budget from "../domain/Budget.js";
 import LottoNumber from "../domain/LottoNumber.js";
 import WinningLotto from "../domain/WinningLotto.js";
+import InputView from "../views/console/InputView.js";
+import OutputView from "../views/console/outputView.js";
 
 class IoService {
   static INVALID_INPUT = "잘못된 사용자 입력입니다.";
