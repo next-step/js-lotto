@@ -7,6 +7,7 @@ describe(Lotto.name, () => {
 
     const lottoNumbersSet = new Set(lottoNumbers);
 
+    expect(isValidLottoNumber).toBe(true);
     expect(lottoNumbersSet.size).toBe(Lotto.LOTTO_NUMBER_COUNT_MAX);
   });
 });
