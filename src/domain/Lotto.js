@@ -6,9 +6,11 @@ export class Lotto {
   static LOTTO_NUMBER_COUNT_MAX = 6;
 
   static validateLottoNumber(lottoNumber) {
-    if (lottoNumber.length !== Lotto.LOTTO_NUMBER_COUNT_MAX) {
+    const lottoNumberSet = new Set(lottoNumber);
+
+    if (lottoNumberSet.size !== Lotto.LOTTO_NUMBER_COUNT_MAX) {
       throw new Error(
-        `로또 번호는 ${Lotto.LOTTO_NUMBER_COUNT_MAX}개가 입력되어야 합니다.`
+        `로또 번호는 같은 숫자의 중복없이 ${Lotto.LOTTO_NUMBER_COUNT_MAX}개가 입력되어야 합니다.`
       );
     }
 
@@ -27,21 +29,23 @@ export class Lotto {
   }
 
   static issue() {
-    const lottoNumbers = [];
+    const lottoNumber = [];
 
-    while (lottoNumbers.length < Lotto.LOTTO_NUMBER_COUNT_MAX) {
+    while (lottoNumber.length < Lotto.LOTTO_NUMBER_COUNT_MAX) {
       const randomNumber = generateRandomNumber(
         Lotto.LOTTO_NUMBER_MIN,
         Lotto.LOTTO_NUMBER_MAX
       );
 
-      if (lottoNumbers.includes(randomNumber)) {
+      if (lottoNumber.includes(randomNumber)) {
         continue;
       }
 
-      lottoNumbers.push(randomNumber);
+      lottoNumber.push(randomNumber);
     }
 
-    return lottoNumbers.toSorted((a, b) => a - b);
+    Lotto.validateLottoNumber(lottoNumber);
+
+    return lottoNumber.toSorted((a, b) => a - b);
   }
 }
