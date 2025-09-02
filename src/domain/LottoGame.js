@@ -6,12 +6,11 @@ export class LottoGame {
 
   buy(price) {
     const lottoCountToBuy = price / LottoGame.LOTTO_PRICE;
-    const lotto = new Lotto();
 
     const lottos = [];
 
     for (let i = 0; i < lottoCountToBuy; i += 1) {
-      lottos.push(lotto.issue());
+      lottos.push(Lotto.issue());
     }
 
     return lottos;
