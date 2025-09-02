@@ -40,7 +40,10 @@ async function main() {
       lottoResult,
     });
 
-    LottoView.printLottoResult({ lottoResult });
+    LottoView.printLottoResult({
+      lottoResult,
+      lottoRank: LottoGame.LOTTO_RANK,
+    });
 
     View.log(`총 수익률은 ${getPercentage(rateOfReturn)}%입니다.`);
   } catch (error) {

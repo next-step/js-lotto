@@ -1,8 +1,34 @@
-import { LOTTO_WINNING_PRICE } from "../constants/lotto.js";
 import { Lotto } from "./Lotto.js";
 
 export class LottoGame {
   static LOTTO_PRICE = 1_000;
+  static LOTTO_RANK = {
+    FIRST: {
+      NAME: "first",
+      PRIZE: 2_000_000_000,
+      COUNT: 6,
+    },
+    SECOND: {
+      NAME: "second",
+      PRIZE: 30_000_000,
+      COUNT: 5,
+    },
+    THIRD: {
+      NAME: "third",
+      PRIZE: 1_500_000,
+      COUNT: 5,
+    },
+    FOURTH: {
+      NAME: "fourth",
+      PRIZE: 50_000,
+      COUNT: 4,
+    },
+    FIFTH: {
+      NAME: "fifth",
+      PRIZE: 5_000,
+      COUNT: 3,
+    },
+  };
 
   buy(price) {
     const lottoCountToBuy = price / LottoGame.LOTTO_PRICE;
@@ -12,11 +38,11 @@ export class LottoGame {
 
   checkResult({ lottoNumbers, winningNumbers, bonusNumber }) {
     const result = {
-      first: 0,
-      second: 0,
-      third: 0,
-      fourth: 0,
-      fifth: 0,
+      [LottoGame.LOTTO_RANK.FIRST.NAME]: 0,
+      [LottoGame.LOTTO_RANK.SECOND.NAME]: 0,
+      [LottoGame.LOTTO_RANK.THIRD.NAME]: 0,
+      [LottoGame.LOTTO_RANK.FOURTH.NAME]: 0,
+      [LottoGame.LOTTO_RANK.FIFTH.NAME]: 0,
     };
 
     for (let i = 0; i < lottoNumbers.length; i += 1) {
@@ -31,33 +57,43 @@ export class LottoGame {
         }
       }
 
-      if (matchCount < 3) {
-        continue;
-      }
+      const rank = this.#getResultByMatchCounts({
+        lottoNumber,
+        matchCount,
+        bonusNumber,
+      });
 
-      if (matchCount === 3) {
-        result.fifth += 1;
-      }
-
-      if (matchCount === 4) {
-        result.fourth += 1;
-      }
-
-      if (matchCount === 5) {
-        if (lottoNumber.includes(bonusNumber)) {
-          result.second += 1;
-          return;
-        }
-
-        result.third += 1;
-      }
-
-      if (matchCount === 6) {
-        result.first += 1;
+      if (rank !== null) {
+        result[rank] += 1;
       }
     }
 
     return result;
+  }
+
+  #getResultByMatchCounts({ lottoNumber, bonusNumber, matchCount }) {
+    if (matchCount < LottoGame.LOTTO_RANK.FIFTH.COUNT) {
+      return null;
+    }
+
+    if (matchCount === LottoGame.LOTTO_RANK.FIFTH.COUNT) {
+      return LottoGame.LOTTO_RANK.FIFTH.NAME;
+    }
+
+    if (matchCount === LottoGame.LOTTO_RANK.FOURTH.COUNT) {
+      return LottoGame.LOTTO_RANK.FOURTH.NAME;
+    }
+
+    if (matchCount === LottoGame.LOTTO_RANK.SECOND.COUNT) {
+      if (lottoNumber.includes(bonusNumber)) {
+        return LottoGame.LOTTO_RANK.SECOND.NAME;
+      }
+      return LottoGame.LOTTO_RANK.THIRD.NAME;
+    }
+
+    if (matchCount === LottoGame.LOTTO_RANK.FIRST.COUNT) {
+      return LottoGame.LOTTO_RANK.FIRST.NAME;
+    }
   }
 
   /**
@@ -73,7 +109,7 @@ export class LottoGame {
     let result = 0;
 
     Object.entries(lottoResult).forEach(([rank, count]) => {
-      result += LOTTO_WINNING_PRICE[rank] * count;
+      result += LottoGame.LOTTO_RANK[rank.toUpperCase()].PRIZE * count;
     });
 
     return result;
