@@ -7,6 +7,6 @@ describe(Lotto.name, () => {
 
     const lottoNumbersSet = new Set(lottoNumbers);
 
-    expect(lottoNumbersSet.size).toBe(6);
+    expect(lottoNumbersSet.size).toBe(Lotto.LOTTO_NUMBER_COUNT_MAX);
   });
 });
