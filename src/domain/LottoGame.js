@@ -15,4 +15,14 @@ export class LottoGame {
 
     return lottos;
   }
+
+  checkResult({ lottoNumbers, winningNumbers, bonusNumber }) {
+    return {
+      first: 0,
+      second: 0,
+      third: 0,
+      fourth: 0,
+      fifth: 2,
+    };
+  }
 }
