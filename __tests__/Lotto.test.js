@@ -6,6 +6,9 @@ describe(Lotto.name, () => {
     const lottoNumbers = lotto.issue();
 
     const lottoNumbersSet = new Set(lottoNumbers);
+    const isValidLottoNumber = lottoNumbers.every(
+      (lottoNumber) => lottoNumber >= 1 && lottoNumber <= 45
+    );
 
     expect(isValidLottoNumber).toBe(true);
     expect(lottoNumbersSet.size).toBe(Lotto.LOTTO_NUMBER_COUNT_MAX);
