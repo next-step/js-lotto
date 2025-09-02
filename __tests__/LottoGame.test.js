@@ -21,12 +21,12 @@ describe(LottoGame.name, () => {
       [1, 2, 3, 4, 5, 6],
       [7, 8, 9, 10, 11, 12],
     ];
-    const winningNumbers = [1, 2, 3, 7, 8, 9];
+    const winningNumber = [1, 2, 3, 7, 8, 9];
     const bonusNumber = 5;
 
     const lottoResult = lottoGame.checkResult({
       lottoNumbers,
-      winningNumbers,
+      winningNumber,
       bonusNumber,
     });
 

@@ -36,7 +36,7 @@ export class LottoGame {
     return Array.from({ length: lottoCountToBuy }, () => Lotto.issue());
   }
 
-  checkResult({ lottoNumbers, winningNumbers, bonusNumber }) {
+  checkResult({ lottoNumbers, winningNumber, bonusNumber }) {
     const result = {
       [LottoGame.LOTTO_RANK.FIRST.NAME]: 0,
       [LottoGame.LOTTO_RANK.SECOND.NAME]: 0,
@@ -52,7 +52,7 @@ export class LottoGame {
       for (let j = 0; j < lottoNumber.length; j += 1) {
         const number = lottoNumber[j];
 
-        if (winningNumbers.includes(number)) {
+        if (winningNumber.includes(number)) {
           matchCount += 1;
         }
       }

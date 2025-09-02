@@ -21,18 +21,18 @@ async function main() {
     }
 
     const winningNumbersInput = await View.read("\n당첨 번호를 입력해 주세요.");
-    const winningNumbers = winningNumbersInput.split(",").map(Number);
+    const winningNumber = winningNumbersInput.split(",").map(Number);
 
     const bonusNumberInput = await View.read("보너스 번호를 입력해 주세요.");
     const bonusNumber = Number(bonusNumberInput);
     assert(
-      !winningNumbers.includes(bonusNumber),
+      !winningNumber.includes(bonusNumber),
       "보너스 번호는 당첨번호에 속하지 않는 번호를 입력해주세요."
     );
 
     const lottoResult = lottoGame.checkResult({
       lottoNumbers,
-      winningNumbers,
+      winningNumber,
       bonusNumber,
     });
     const rateOfReturn = lottoGame.getRateOfReturn({
