@@ -1,7 +1,10 @@
 import { LottoGame } from "../src/domain/LottoGame.js";
+import { commarize } from "../src/utils/commarize.js";
 
 describe(LottoGame.name, () => {
-  it("구입 금액에 해당하는 만큼 로또를 발행한다.", () => {
+  it(`로또 구입 금액인 ${commarize(
+    LottoGame.LOTTO_PRICE
+  )}원에 해당하는 만큼 로또를 발행한다.`, () => {
     const PURCHASE_PRICE = 8_000;
     const lottoCountToBuy = PURCHASE_PRICE / LottoGame.LOTTO_PRICE;
     const lottoGame = new LottoGame();
