@@ -1,3 +1,4 @@
+import { LOTTO_WINNING_PRICE } from "../constants/lotto.js";
 import { Lotto } from "./Lotto.js";
 
 export class LottoGame {
@@ -62,6 +63,25 @@ export class LottoGame {
         result.first += 1;
       }
     }
+
+    return result;
+  }
+
+  /**
+   * 0%는 0, 100%는 1로 반환하고 있어서 사용하는 곳에서 필요에 따라 포맷팅이 필요합니다.
+   */
+  getRateOfReturn({ purchasePrice, lottoResult }) {
+    const totalPrice = this.#getLottoResultTotalPrice(lottoResult);
+
+    return totalPrice / purchasePrice;
+  }
+
+  #getLottoResultTotalPrice(lottoResult) {
+    let result = 0;
+
+    Object.entries(lottoResult).forEach(([rank, count]) => {
+      result += LOTTO_WINNING_PRICE[rank] * count;
+    });
 
     return result;
   }
