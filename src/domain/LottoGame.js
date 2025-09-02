@@ -7,13 +7,7 @@ export class LottoGame {
   buy(price) {
     const lottoCountToBuy = price / LottoGame.LOTTO_PRICE;
 
-    const lottos = [];
-
-    for (let i = 0; i < lottoCountToBuy; i += 1) {
-      lottos.push(Lotto.issue());
-    }
-
-    return lottos;
+    return Array.from({ length: lottoCountToBuy }, () => Lotto.issue());
   }
 
   checkResult({ lottoNumbers, winningNumbers, bonusNumber }) {
