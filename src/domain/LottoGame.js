@@ -57,25 +57,23 @@ export class LottoGame {
         }
       }
 
-      const rank = this.#getResultByMatchCounts({
+      if (matchCount < LottoGame.LOTTO_RANK.FIFTH.COUNT) {
+        continue;
+      }
+
+      const rank = this.#getRankByMatchCount({
         lottoNumber,
         matchCount,
         bonusNumber,
       });
 
-      if (rank !== null) {
-        result[rank] += 1;
-      }
+      result[rank] += 1;
     }
 
     return result;
   }
 
-  #getResultByMatchCounts({ lottoNumber, bonusNumber, matchCount }) {
-    if (matchCount < LottoGame.LOTTO_RANK.FIFTH.COUNT) {
-      return null;
-    }
-
+  #getRankByMatchCount({ lottoNumber, bonusNumber, matchCount }) {
     if (matchCount === LottoGame.LOTTO_RANK.FIFTH.COUNT) {
       return LottoGame.LOTTO_RANK.FIFTH.NAME;
     }
