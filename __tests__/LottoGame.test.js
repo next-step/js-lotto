@@ -10,4 +10,27 @@ describe(LottoGame.name, () => {
 
     expect(lottos.length).toBe(lottoCountToBuy);
   });
+
+  it("사용자가 구매한 로또 번호와 당첨 번호를 비교해서 당첨된 등수를 반환한다.", () => {
+    const lottoGame = new LottoGame();
+
+    const lottoNumbers = [
+      [1, 2, 3, 4, 5, 6],
+      [7, 8, 9, 10, 11, 12],
+    ];
+    const winningNumbers = [1, 2, 3, 7, 8, 9];
+    const bonusNumber = 5;
+
+    const lottoResult = lottoGame.checkResult({
+      lottoNumbers,
+      winningNumbers,
+      bonusNumber,
+    });
+
+    expect(lottoResult.first).toBe(0);
+    expect(lottoResult.second).toBe(0);
+    expect(lottoResult.third).toBe(0);
+    expect(lottoResult.fourth).toBe(0);
+    expect(lottoResult.fifth).toBe(2);
+  });
 });
