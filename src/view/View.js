@@ -22,4 +22,8 @@ export class View {
       });
     });
   }
+
+  static log(text) {
+    console.log(text);
+  }
 }
