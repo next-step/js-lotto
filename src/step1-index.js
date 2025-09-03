@@ -1,3 +1,5 @@
+import readline from "readline";
+
 const LOTTO_PRICE = 1000;
 const LOTTO_COUNT = 6;
 const LOTTO_NUMBERS = Array.from({ length: 45 }, (_, i) => i + 1);
@@ -58,7 +60,7 @@ class LottoPurchase {
 
   // 로또 구매
   buyLotto(money) {
-    const isLottoBuyable = amountUnitCheck(money);
+    const isLottoBuyable = this.amountUnitCheck(money);
 
     if (!isLottoBuyable) {
       return;
@@ -81,3 +83,37 @@ class WinningNumbers {
     this.#bonusWinningNumber = "";
   }
 }
+
+function buyLottoAsync(query) {
+  return new Promise((resolve, reject) => {
+    if (arguments.length !== 1) {
+      reject(new Error("arguments must be 1"));
+    }
+
+    if (typeof query !== "string") {
+      reject(new Error("query must be string"));
+    }
+
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+
+    rl.question(query, (input) => {
+      rl.close();
+      resolve(input);
+    });
+  });
+}
+
+const buyLottoHandler = async () => {
+  const lottoPurchaseAmount = await buyLottoAsync(
+    "> 구입금액을 입력해 주세요. "
+  );
+
+  const lottoPurchase = new LottoPurchase();
+
+  lottoPurchase.buyLotto(lottoPurchaseAmount);
+};
+
+buyLottoHandler();
