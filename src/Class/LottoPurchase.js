@@ -46,7 +46,7 @@ class LottoPurchase {
   // 로또 생성
   createLotto(lotto) {
     if (lotto.length === LOTTO_COUNT) {
-      return;
+      return lotto;
     }
 
     const randomNumber = this.getRandomNumber(lotto);

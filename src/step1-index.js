@@ -1,6 +1,6 @@
-import buyLottoAsync from "./Asynchronous/LottoPurchase.js";
-import LottoPurchase from "./Class/LottoPurchase.js";
-import WinningNumbers from "./Class/WinningNumbers.js";
+import buyLottoAsync from "./asynchronous/lottoPurchase.js";
+import LottoPurchase from "./class/lottoPurchase.js";
+import WinningNumbers from "./class/winningNumbers.js";
 
 const buyLottoHandler = async () => {
   const lottoPurchaseAmount = await buyLottoAsync(

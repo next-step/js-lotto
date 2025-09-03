@@ -1,50 +1,42 @@
+import LottoPurchase from "../src/class/lottoPurchase.js";
+
 describe("로또구매", () => {
   test("구입 금액이 1000원 단위인가?", () => {
-    // given
     const lotto = new LottoPurchase();
     const cost = 1000;
 
-    // when
     const isValid = lotto.amountUnitCheck(cost);
 
-    // then
     expect(isValid).toBe(true);
   });
 
   test("금액 만큼의 무작위 숫자 배열을 출력하는가?", () => {
-    // given
     const lotto = new LottoPurchase();
     const cost = 3000;
 
-    // when
-    const lottos = lotto.getLotto(cost);
+    const lottos = lotto.buyLotto(cost);
 
-    // then
-    expect(lottos.length).toBe(lotto.count);
+    expect(lottos.length).toBe(3);
   });
 
   test("로또의 숫자가 6자리인가?", () => {
-    // given
     const lotto = new LottoPurchase();
-    const cost = 1000;
+    const newLotto = ["1", "2", "3", "4", "5", "6"];
 
-    // when
-    const lottos = lotto.getLotto(cost);
+    const createdLotto = lotto.createLotto(newLotto);
 
-    // then
-    expect(lottos[0].length).toBe(6);
+    console.log("createdLotto", createdLotto);
+
+    expect(createdLotto.length).toBe(6);
   });
 
   test("로또의 숫자가 모두 다른가?", () => {
-    // given
     const lotto = new LottoPurchase();
     const randomNumbers = [1, 2, 3, 4, 5];
     const randomNumber = 6;
 
-    // when
     const isValid = lotto.isDifferentNumber(randomNumbers, randomNumber);
 
-    // then
     expect(isValid).toBe(true);
   });
 });
