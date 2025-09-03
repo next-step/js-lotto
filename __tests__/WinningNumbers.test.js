@@ -4,7 +4,7 @@ describe("당첨번호", () => {
   test("당첨번호 및 보너스 번호가 1~45번 사이의 번호인가?", () => {
     // given
     const winningNumbers = new WinningNumbers();
-    const numberEntered = "1,2,3,4,5,6";
+    const numberEntered = [1, 2, 3, 4, 5, 6];
 
     // when
     const isValid = winningNumbers.isValidRangeNumber(numberEntered);
@@ -16,7 +16,7 @@ describe("당첨번호", () => {
   test("당첨번호가 6개인가?", () => {
     // given
     const winningNumbers = new WinningNumbers();
-    const numberEntered = "1,2,3,4,5,6";
+    const numberEntered = [1, 2, 3, 4, 5, 6];
 
     // when
     const isValid = winningNumbers.isDigitCount(numberEntered);
