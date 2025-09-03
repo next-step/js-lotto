@@ -18,6 +18,27 @@ class LottoPurchase {
 
     return false;
   }
+
+  isDifferentNumber(randomNumbers, randomNumber) {
+    if (randomNumbers.include(randomNumber)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  getRandomNumber() {
+    const randomNumber = Math.floor(Math.random() * 45) + 1;
+
+    const lastLotto = this.#lottos.slice(-1);
+    const isValidDifferentNumber = isDifferentNumber(lastLotto, randomNumber);
+
+    if (isValidDifferentNumber) {
+      return randomNumber;
+    }
+
+    return this.getRandomNumber();
+  }
 }
 
 class WinningNumbers {
