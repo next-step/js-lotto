@@ -1,13 +1,25 @@
 import WinningNumbers from "../src/class/winningNumbers.js";
 
 describe("당첨번호", () => {
-  test("당첨번호 및 보너스 번호가 1~45번 사이의 번호인가?", () => {
+  test("당첨번호가 1~45번 사이의 번호인가?", () => {
     // given
     const winningNumbers = new WinningNumbers();
     const numberEntered = [1, 2, 3, 4, 5, 6];
 
     // when
     const isValid = winningNumbers.isValidRangeNumber(numberEntered);
+
+    // then
+    expect(isValid).toBe(true);
+  });
+
+  test("보너스 번호가 1~45번 사이의 번호인가?", () => {
+    // given
+    const winningNumbers = new WinningNumbers();
+    const bonusNumberEntered = 1;
+
+    // when
+    const isValid = winningNumbers.isValidRangeNumber(bonusNumberEntered);
 
     // then
     expect(isValid).toBe(true);

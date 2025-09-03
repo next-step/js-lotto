@@ -16,7 +16,7 @@ describe("로또구매", () => {
 
     const lottos = lotto.buyLotto(cost);
 
-    expect(lottos.length).toBe(3);
+    expect(lottos).toHaveLength(3);
   });
 
   test("로또의 숫자가 6자리인가?", () => {
@@ -27,7 +27,7 @@ describe("로또구매", () => {
 
     console.log("createdLotto", createdLotto);
 
-    expect(createdLotto.length).toBe(6);
+    expect(createdLotto).toHaveLength(6);
   });
 
   test("로또의 숫자가 모두 다른가?", () => {
