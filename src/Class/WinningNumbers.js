@@ -29,6 +29,15 @@ class WinningNumbers {
 
     return isValid;
   }
+
+  // 당첨번호가 6개인지 확인하는 함수
+  isDigitCount(winningNumber) {
+    if (winningNumber.length === LOTTO_COUNT) {
+      return true;
+    }
+
+    return false;
+  }
 }
 
 export default WinningNumbers;
