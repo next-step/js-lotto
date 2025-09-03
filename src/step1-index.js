@@ -6,8 +6,8 @@ class LottoPurchase {
   #purchaseAmount;
   #lottos;
 
-  constructor(money) {
-    this.#purchaseAmount = money;
+  constructor() {
+    this.#purchaseAmount = 0;
     this.#lottos = [];
   }
 
@@ -54,6 +54,21 @@ class LottoPurchase {
 
     const randomNumber = this.getRandomNumber();
     lotto.push(randomNumber);
+  }
+
+  // 로또 구매
+  buyLotto(money) {
+    const isLottoBuyable = amountUnitCheck(money);
+
+    if (!isLottoBuyable) {
+      return;
+    }
+
+    const lottoCount = money / LOTTO_PRICE;
+
+    for (let i = 0; i < lottoCount; i++) {
+      this.createLotto();
+    }
   }
 }
 
