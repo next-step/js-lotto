@@ -22,4 +22,8 @@ export class Lotto {
     }
     this.#value = numbers.map((number) => new LottoNumber(number));
   }
+
+  text() {
+    return this.#value.map((lottoNumber) => lottoNumber.value);
+  }
 }

@@ -1,4 +1,8 @@
-/**
- * step 1의 시작점이 되는 파일입니다.
- * 브라우저 환경에서 사용하는 css 파일 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
- */
+import { LottoStore } from "./domain/lotto-store.js";
+import { readLineAsync } from "./view/input.js";
+import { printLotto } from "./view/output.js";
+
+const lottoPrice = await readLineAsync("구매금액을 입력해 주세요.");
+const lottoStore = new LottoStore(lottoPrice);
+const lottoList = lottoStore.sell();
+printLotto(lottoList);
