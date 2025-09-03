@@ -1,6 +1,6 @@
 export class LottoNumber {
   static #MIN_NUMBER = 1;
-  static #MAX_NUMBER = 45;
+  static MAX_NUMBER = 45;
 
   #value;
   get value() {
@@ -11,10 +11,10 @@ export class LottoNumber {
     if (typeof value !== "number") {
       throw new Error("value는 number 타입이어야 합니다.");
     }
-    if (value < LottoNumber.#MIN_NUMBER || LottoNumber.#MAX_NUMBER < value) {
+    if (value < LottoNumber.#MIN_NUMBER || LottoNumber.MAX_NUMBER < value) {
       throw new Error(
         `value는 ${LottoNumber.#MIN_NUMBER} ~ ${
-          LottoNumber.#MAX_NUMBER
+          LottoNumber.MAX_NUMBER
         } 사이이어야 합니다.`
       );
     }
