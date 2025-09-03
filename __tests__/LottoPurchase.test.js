@@ -34,4 +34,17 @@ describe("로또구매", () => {
     // then
     expect(lottos[0].length).toBe(6);
   });
+
+  test("로또의 숫자가 모두 다른가?", () => {
+    // given
+    const lotto = new LottoPurchase();
+    const randomNumbers = [1, 2, 3, 4, 5];
+    const randomNumber = 6;
+
+    // when
+    const isValid = lotto.isDifferentNumber(randomNumbers, randomNumber);
+
+    // then
+    expect(isValid).toBe(true);
+  });
 });
