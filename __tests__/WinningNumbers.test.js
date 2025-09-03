@@ -40,7 +40,7 @@ describe("당첨번호", () => {
   test("보너스 번호가 1개인가?", () => {
     // given
     const winningNumbers = new WinningNumbers();
-    const bonusNumberEntered = "1";
+    const bonusNumberEntered = 1;
 
     // when
     const isValid = winningNumbers.isSingleBonusNumber(bonusNumberEntered);
@@ -52,7 +52,7 @@ describe("당첨번호", () => {
   test("당첨번호에 보너스 번호가 포함되지 않는가?", () => {
     // given
     const winningNumbers = new WinningNumbers();
-    const numberEntered = "1,2,3,4,5,6";
+    const numberEntered = [1, 2, 3, 4, 5, 6];
     const bonusNumberEntered = "7";
 
     // when

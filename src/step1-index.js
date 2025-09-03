@@ -9,8 +9,6 @@ const buyLottoHandler = async () => {
 
   const lottoPurchase = new LottoPurchase();
 
-  console.log(lottoPurchaseAmount);
-
   const lottos = lottoPurchase.buyLotto(lottoPurchaseAmount);
 };
 

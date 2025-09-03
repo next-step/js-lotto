@@ -2,7 +2,7 @@ import {
   LOTTO_COUNT,
   LOTTO_MAX_NUMBER,
   LOTTO_MIN_NUMBER,
-} from "../constants/lotto";
+} from "../constants/lotto.js";
 
 class WinningNumbers {
   #winningNumber;
@@ -37,6 +37,15 @@ class WinningNumbers {
     }
 
     return false;
+  }
+
+  // 당첨번호에 보너스 번호가 포함되는지 체크
+  isBonusNumberNotInWinningNumbers(winningNumber, bonusWinningNumber) {
+    if (winningNumber.filter((num) => num === bonusWinningNumber).length > 0) {
+      return false;
+    }
+
+    return true;
   }
 }
 
