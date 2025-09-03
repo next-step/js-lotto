@@ -15,7 +15,7 @@ class LottoPurchase {
 
   // 로또가 1000원 단위인지 확인
   amountUnitCheck(money) {
-    if (money / LOTTO_PRICE === 0) {
+    if (money % LOTTO_PRICE === 0) {
       return true;
     }
 
@@ -24,7 +24,7 @@ class LottoPurchase {
 
   // 새로 생성된 번호가 생성중인 로또 배열안에 포함되 있는지 확인
   isDifferentNumber(randomNumbers, randomNumber) {
-    if (randomNumbers.include(randomNumber)) {
+    if (randomNumbers.filter((el) => el === randomNumber).length > 0) {
       return false;
     }
 
@@ -32,30 +32,32 @@ class LottoPurchase {
   }
 
   // 랜덤 숫자 생성
-  getRandomNumber() {
+  getRandomNumber(lastLotto) {
     const randomNumber = Math.floor(Math.random() * 45) + 1;
 
-    const lastLotto = this.#lottos.slice(-1);
-    const isValidDifferentNumber = isDifferentNumber(lastLotto, randomNumber);
+    const isValidDifferentNumber = this.isDifferentNumber(
+      lastLotto,
+      randomNumber
+    );
 
     if (isValidDifferentNumber) {
       return randomNumber;
     }
 
-    return this.getRandomNumber();
+    return this.getRandomNumber(lastLotto);
   }
 
   // 로또 생성
-  createLotto() {
-    const lotto = [];
-
+  createLotto(lotto) {
     if (lotto.length === LOTTO_COUNT) {
-      this.#lottos.push(lotto);
+      console.log(lotto);
       return;
     }
 
-    const randomNumber = this.getRandomNumber();
+    const randomNumber = this.getRandomNumber(lotto);
+
     lotto.push(randomNumber);
+    this.createLotto(lotto);
   }
 
   // 로또 구매
@@ -66,11 +68,19 @@ class LottoPurchase {
       return;
     }
 
-    const lottoCount = money / LOTTO_PRICE;
+    this.#purchaseAmount = money;
+
+    const lottoCount = this.#purchaseAmount / LOTTO_PRICE;
+    console.log(`${lottoCount}개를 구입했습니다.`);
 
     for (let i = 0; i < lottoCount; i++) {
-      this.createLotto();
+      const lotto = [];
+      this.createLotto(lotto);
+      this.#lottos.push(lotto);
+      console.log(lotto);
     }
+
+    return this.#lottos;
   }
 }
 
@@ -113,7 +123,9 @@ const buyLottoHandler = async () => {
 
   const lottoPurchase = new LottoPurchase();
 
-  lottoPurchase.buyLotto(lottoPurchaseAmount);
+  console.log(lottoPurchaseAmount);
+
+  const lottos = lottoPurchase.buyLotto(lottoPurchaseAmount);
 };
 
 buyLottoHandler();
