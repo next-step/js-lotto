@@ -1,4 +1,5 @@
 import { LottoNumber } from "./lotto-number.js";
+import { findLottoRank, LottoRank } from "./lotto-rank.js";
 
 export class Lotto {
   static PRICE = 1_000;
@@ -25,5 +26,21 @@ export class Lotto {
 
   text() {
     return this.#value.map((lottoNumber) => lottoNumber.value);
+  }
+
+  /**
+   *
+   * @param {number[]} winningNumbers
+   * @param {number} bonusNumber
+   */
+  prize(winningNumbers, bonusNumber) {
+    const match = this.#value.filter((lottoNumber) =>
+      winningNumbers.includes(lottoNumber.value)
+    ).length;
+    const hasBonus =
+      this.#value.filter((lottoNumber) => lottoNumber.value === bonusNumber)
+        .length === 1;
+
+    return findLottoRank(match, hasBonus);
   }
 }

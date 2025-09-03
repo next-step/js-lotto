@@ -1,4 +1,5 @@
 import { LottoNumber } from "./lotto-number.js";
+import { LottoRank } from "./lotto-rank.js";
 import { Lotto } from "./lotto.js";
 
 export class LottoStore {
@@ -15,6 +16,18 @@ export class LottoStore {
       lottoList.push(new Lotto(this.#generate()));
     }
     return lottoList;
+  }
+
+  /**
+   *
+   * @param {LottoRank[]} rankList
+   */
+  rateOfReturn(rankList) {
+    const totalPrize = rankList
+      .map((rank) => rank.prize)
+      .reduce((acc, prize) => acc + prize);
+
+    return Math.floor((totalPrize / this.#price) * 100.0) / 100.0;
   }
 
   #generate() {
