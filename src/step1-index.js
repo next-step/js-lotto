@@ -10,6 +10,14 @@ class LottoPurchase {
     this.#purchaseAmount = money;
     this.#lottos = [];
   }
+
+  amountUnitCheck(money) {
+    if (money / LOTTO_PRICE === 0) {
+      return true;
+    }
+
+    return false;
+  }
 }
 
 class WinningNumbers {
