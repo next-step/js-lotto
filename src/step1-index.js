@@ -11,6 +11,7 @@ class LottoPurchase {
     this.#lottos = [];
   }
 
+  // 로또가 1000원 단위인지 확인
   amountUnitCheck(money) {
     if (money / LOTTO_PRICE === 0) {
       return true;
@@ -19,6 +20,7 @@ class LottoPurchase {
     return false;
   }
 
+  // 새로 생성된 번호가 생성중인 로또 배열안에 포함되 있는지 확인
   isDifferentNumber(randomNumbers, randomNumber) {
     if (randomNumbers.include(randomNumber)) {
       return false;
@@ -27,6 +29,7 @@ class LottoPurchase {
     return true;
   }
 
+  // 랜덤 숫자 생성
   getRandomNumber() {
     const randomNumber = Math.floor(Math.random() * 45) + 1;
 
@@ -38,6 +41,19 @@ class LottoPurchase {
     }
 
     return this.getRandomNumber();
+  }
+
+  // 로또 생성
+  createLotto() {
+    const lotto = [];
+
+    if (lotto.length === LOTTO_COUNT) {
+      this.#lottos.push(lotto);
+      return;
+    }
+
+    const randomNumber = this.getRandomNumber();
+    lotto.push(randomNumber);
   }
 }
 
