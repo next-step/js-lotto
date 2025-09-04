@@ -6,33 +6,40 @@ import {
 
 class WinningNumbers {
   #winningNumber;
-  #bonusWinningNumber;
+  #bonusNumber;
 
-  construnctor() {
-    this.#winningNumber = [];
-    this.#bonusWinningNumber = 0;
+  constructor(winningNumber, bonusNumber) {
+    this.#winningNumber = winningNumber; // 숫자 배열
+    this.#bonusNumber = bonusNumber; // 숫자
   }
 
-  // 당첨번호 및 보너스 번화가 1~45번 사이의 번호인지 체크
-  isValidRangeNumber(winningNumber) {
+  // 당첨번호가 1~45번 사이의 번호인지 체크
+  isValidRangeWinningNumber() {
     let isValid = false;
 
-    if (typeof winningNumber === "number") {
-      isValid = LOTTO_MIN_NUMBER && winningNumber <= LOTTO_MAX_NUMBER;
-    } else {
-      const filterLottoNumbers = winningNumber.filter(
-        (num) => num >= LOTTO_MIN_NUMBER && num <= LOTTO_MAX_NUMBER
-      );
+    const filterLottoNumbers = this.#winningNumber.filter(
+      (num) => num >= LOTTO_MIN_NUMBER && num <= LOTTO_MAX_NUMBER
+    );
 
-      isValid = filterLottoNumbers.length === LOTTO_COUNT;
+    isValid = filterLottoNumbers.length === LOTTO_COUNT;
+
+    return isValid;
+  }
+
+  // 보너스 번호가 1~45번 사이의 번호인지 체크
+  isValidRangeBonusNumber() {
+    let isValid = false;
+
+    if (typeof this.#bonusNumber === "number") {
+      isValid = LOTTO_MIN_NUMBER && this.#bonusNumber <= LOTTO_MAX_NUMBER;
     }
 
     return isValid;
   }
 
   // 당첨번호가 6개인지 확인하는 함수
-  isDigitCount(winningNumber) {
-    if (winningNumber.length === LOTTO_COUNT) {
+  isDigitCount() {
+    if (this.#winningNumber.length === LOTTO_COUNT) {
       return true;
     }
 
@@ -40,8 +47,10 @@ class WinningNumbers {
   }
 
   // 당첨번호에 보너스 번호가 포함되는지 체크
-  isBonusNumberNotInWinningNumbers(winningNumber, bonusWinningNumber) {
-    if (winningNumber.filter((num) => num === bonusWinningNumber).length > 0) {
+  isBonusNumberNotInWinningNumbers() {
+    if (
+      this.#winningNumber.filter((num) => num === this.#bonusNumber).length > 0
+    ) {
       return false;
     }
 

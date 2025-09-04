@@ -1,5 +1,5 @@
 import {
-  LOTTO_BONUS_WINNER_NUMBER_TYPE,
+  LOTTO_BONUS_NUMBER_TYPE,
   LOTTO_PRICE_TYPE,
   LOTTO_WINNER_NUMBERS_TYPE,
 } from "../constants/lotto.js";
@@ -24,7 +24,7 @@ const isNumber = (input) => {
 
 export const checkByType = (type, input) => {
   if (
-    (type === LOTTO_PRICE_TYPE || type === LOTTO_BONUS_WINNER_NUMBER_TYPE) &&
+    (type === LOTTO_PRICE_TYPE || type === LOTTO_BONUS_NUMBER_TYPE) &&
     !isComma(input)
   ) {
     return isNumber(input);
