@@ -4,8 +4,6 @@ import {
   LOTTO_MIN_NUMBER,
   MATCH_FIVE_BONUS,
   MATCH_FIVE,
-  MATCH_FIVE_PLUS_BONUS,
-  MATCHED_PRICE,
   RESULTS_ORDER,
 } from "../constants/lotto.js";
 
@@ -46,6 +44,7 @@ class WinningNumbers {
     return this.#winningNumber.includes(this.#bonusNumber);
   }
 
+  // 일치하는 로또 숫자 갯수에 맞춰 키 return
   matchLottoPriceKey(sameNumberCount, sameBonusNumberCount) {
     if (sameNumberCount < MATCH_THREE) return;
 
@@ -55,6 +54,7 @@ class WinningNumbers {
     return sameNumberCount;
   }
 
+  // 당첨된 로또 갯수 체크
   updatePriceCheck(lotto, priceCheck) {
     const sameBonusNumberCount = lotto.includes(this.#bonusNumber);
     const sameNumberCount = lotto.filter((num) =>
@@ -68,6 +68,7 @@ class WinningNumbers {
     priceCheck[key] = (priceCheck[key] || 0) + 1;
   }
 
+  // 당첨 통계 내기
   checkWinningStatistics(lottoTickets) {
     console.log("당첨 통계");
     console.log("--------------------");
@@ -77,9 +78,11 @@ class WinningNumbers {
     lottoTickets.forEach((lotto) => this.updatePriceCheck(lotto, priceCheck));
 
     this.resultsOrder(priceCheck);
-    this.rateOfReturn(priceCheck);
+
+    return priceCheck;
   }
 
+  // 통계 보여주는 console
   printStatistics(priceCheck) {
     RESULTS_ORDER.forEach(({ key, label, price }) => {
       const count = priceCheck[key] || 0;
@@ -87,8 +90,16 @@ class WinningNumbers {
     });
   }
 
-  rateOfReturn(priceCheck) {
-    //
+  // 수익률
+  rateOfReturn(priceCheck, purchaseAmount) {
+    const amountPrice = RESULTS_ORDER.reduce(
+      (a, b) => a.price * priceCheck[a.key] + b.price * priceCheck[b.key],
+      0
+    );
+
+    const rateOfReturn = (amountPrice / purchaseAmount) * 100;
+
+    console.log(`총 수익률은 ${rateOfReturn}%입니다.`);
   }
 }
 
