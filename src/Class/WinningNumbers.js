@@ -93,10 +93,11 @@ class WinningNumbers {
 
   // 수익률
   rateOfReturn(priceCheck, purchaseAmount) {
-    const amountPrice = RESULTS_ORDER.reduce(
-      (a, b) => a.price * priceCheck[a.key] + b.price * priceCheck[b.key],
-      0
+    const convertPrice = RESULTS_ORDER.map((el) =>
+      priceCheck[el.key] ? el.price * priceCheck[el.key] : 0
     );
+
+    const amountPrice = convertPrice.reduce((a, b) => a + b, 0);
 
     const rateOfReturn = (amountPrice / purchaseAmount) * 100;
 

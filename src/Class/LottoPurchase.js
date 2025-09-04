@@ -4,8 +4,8 @@ class LottoPurchase {
   #purchaseAmount;
   #lottos;
 
-  constructor() {
-    this.#purchaseAmount = 0;
+  constructor(purchaseAmount) {
+    this.#purchaseAmount = purchaseAmount;
     this.#lottos = [];
   }
 

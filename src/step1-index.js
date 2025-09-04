@@ -56,7 +56,7 @@ const buyLottoHandler = async () => {
     return;
   }
 
-  const classLottoPurchase = new LottoPurchase();
+  const classLottoPurchase = new LottoPurchase(Number(lottoPurchaseAmount));
 
   const lottos = classLottoPurchase.buyLotto(Number(lottoPurchaseAmount));
   inputNumber(lottos, lottoPurchaseAmount);
