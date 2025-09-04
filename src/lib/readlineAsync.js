@@ -1,6 +1,6 @@
 import readline from "readline";
 
-export default function buyLottoAsync(query) {
+export default function readlineAsync(query) {
   return new Promise((resolve, reject) => {
     if (arguments.length !== 1) {
       reject(new Error("arguments must be 1"));
