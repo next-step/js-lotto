@@ -1,4 +1,54 @@
-/**
- * step 1의 시작점이 되는 파일입니다.
- * 브라우저 환경에서 사용하는 css 파일 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
- */
+import { LottoGame } from "./domain/LottoGame.js";
+import { LottoGameValidator } from "./domain/LottoGameValidator.js";
+import { View } from "./view/View.js";
+import { LottoView } from "./view/LottoView.js";
+import { getPercentage } from "./utils/getPercentage.js";
+import { assert } from "./utils/assert.js";
+
+async function main() {
+  try {
+    const purchasePriceInput = await View.read("구입금액을 입력해 주세요.");
+    const purchasePrice = Number(purchasePriceInput);
+    LottoGameValidator.validateLottoPurchasePrice(purchasePrice);
+
+    const lottoGame = new LottoGame();
+    const lottoNumbers = lottoGame.buy(purchasePrice);
+
+    View.log(`${purchasePrice / LottoGame.LOTTO_PRICE}개를 구매했습니다.`);
+
+    for (let i = 0; i < lottoNumbers.length; i += 1) {
+      View.log(lottoNumbers[i]);
+    }
+
+    const winningNumbersInput = await View.read("\n당첨 번호를 입력해 주세요.");
+    const winningNumber = winningNumbersInput.split(",").map(Number);
+
+    const bonusNumberInput = await View.read("보너스 번호를 입력해 주세요.");
+    const bonusNumber = Number(bonusNumberInput);
+    assert(
+      !winningNumber.includes(bonusNumber),
+      "보너스 번호는 당첨번호에 속하지 않는 번호를 입력해주세요."
+    );
+
+    const lottoResult = lottoGame.checkResult({
+      lottoNumbers,
+      winningNumber,
+      bonusNumber,
+    });
+    const rateOfReturn = lottoGame.getRateOfReturn({
+      purchasePrice,
+      lottoResult,
+    });
+
+    LottoView.printLottoResult({
+      lottoResult,
+      lottoRank: LottoGame.LOTTO_RANK,
+    });
+
+    View.log(`총 수익률은 ${getPercentage(rateOfReturn)}%입니다.`);
+  } catch (error) {
+    View.log(error.message);
+  }
+}
+
+main();
