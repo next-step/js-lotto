@@ -1,5 +1,5 @@
 import {
-  LOTTO_BONUS_WINNER_NUMBER_TYPE,
+  LOTTO_BONUS_NUMBER_TYPE,
   LOTTO_PRICE_TYPE,
   LOTTO_WINNER_NUMBERS_TYPE,
 } from "../src/constants/lotto.js";
@@ -13,7 +13,7 @@ describe("공통 사용", () => {
       "1,2,3,4,5,6"
     );
     const lottoBonusWinnerNumberTypeCheck = checkByType(
-      LOTTO_BONUS_WINNER_NUMBER_TYPE,
+      LOTTO_BONUS_NUMBER_TYPE,
       "7"
     );
 
