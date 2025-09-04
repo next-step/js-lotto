@@ -31,7 +31,7 @@ export const checkByType = (type, input) => {
   }
 
   if (type === LOTTO_WINNER_NUMBERS_TYPE && isComma(input)) {
-    const arrayNumber = input.split(",");
+    const arrayNumber = input.replace(/ /g, "").split(",");
     const filterIsNumber = arrayNumber.filter((el) => isNumber(el)).length;
 
     return arrayNumber.length === filterIsNumber;

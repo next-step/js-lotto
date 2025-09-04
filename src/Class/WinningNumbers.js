@@ -5,6 +5,7 @@ import {
   MATCH_FIVE_BONUS,
   MATCH_FIVE,
   RESULTS_ORDER,
+  MATCH_THREE,
 } from "../constants/lotto.js";
 
 class WinningNumbers {
@@ -41,7 +42,7 @@ class WinningNumbers {
 
   // 당첨번호에 보너스 번호가 포함되는지 체크
   isBonusNumberNotInWinningNumbers() {
-    return this.#winningNumber.includes(this.#bonusNumber);
+    return !this.#winningNumber.includes(this.#bonusNumber);
   }
 
   // 일치하는 로또 숫자 갯수에 맞춰 키 return
@@ -77,7 +78,7 @@ class WinningNumbers {
 
     lottoTickets.forEach((lotto) => this.updatePriceCheck(lotto, priceCheck));
 
-    this.resultsOrder(priceCheck);
+    this.printStatistics(priceCheck);
 
     return priceCheck;
   }
