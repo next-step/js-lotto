@@ -102,6 +102,7 @@ class WinningNumbers {
     const rateOfReturn = (amountPrice / purchaseAmount) * 100;
 
     console.log(`총 수익률은 ${rateOfReturn}%입니다.`);
+    return rateOfReturn;
   }
 }
 

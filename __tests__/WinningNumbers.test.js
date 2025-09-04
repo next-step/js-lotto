@@ -90,12 +90,13 @@ describe("당첨번호", () => {
       numberEntered,
       bonusNumberEntered
     );
-    const prizeMoney = 5000;
+    const priceCheck = { 3: 1 };
+    const purchaseAmount = 8000;
 
     // when
-    const output = winningNumbers.calculateProfitRate(prizeMoney);
+    const output = winningNumbers.rateOfReturn(priceCheck, purchaseAmount);
 
     // then
-    expect(output).toBeDefined();
+    expect(output).toBe(62.5);
   });
 });
