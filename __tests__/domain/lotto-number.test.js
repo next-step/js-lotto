@@ -12,7 +12,7 @@ describe("LottoNumber", () => {
   });
   it("45를 초과하는 숫자는 에러가 발생합니다.", () => {
     // given
-    const lottoNumber = 0;
+    const lottoNumber = 46;
 
     // when
 
