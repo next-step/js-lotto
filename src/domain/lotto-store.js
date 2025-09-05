@@ -1,5 +1,5 @@
 import { LottoNumber } from "./lotto-number.js";
-import { LottoRank } from "./lotto-rank.js";
+import { LOTTO_RANK } from "./lotto-rank.js";
 import { Lotto } from "./lotto.js";
 
 export class LottoStore {
@@ -20,7 +20,7 @@ export class LottoStore {
 
   /**
    *
-   * @param {LottoRank[]} rankList
+   * @param {LOTTO_RANK[]} rankList
    */
   rateOfReturn(rankList) {
     const totalPrize = rankList

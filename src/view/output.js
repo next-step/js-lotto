@@ -1,4 +1,4 @@
-import { LottoRank } from "../domain/lotto-rank.js";
+import { LOTTO_RANK } from "../domain/lotto-rank.js";
 import { Lotto } from "../domain/lotto.js";
 
 /**
@@ -14,37 +14,37 @@ export function printLotto(lottoList) {
 
 /**
  *
- * @param {LottoRank[]} rankList
+ * @param {LOTTO_RANK[]} rankList
  */
 export function printWinningStatistics(rankList) {
   console.log("당첨 통계");
   console.log("--------------------");
   console.log(
-    `${LottoRank.FIFTH.match}개 일치 (${LottoRank.FIFTH.prize}원) - ${countRank(
+    `${LOTTO_RANK.FIFTH.match}개 일치 (${LOTTO_RANK.FIFTH.prize}원) - ${countRank(
       rankList,
-      LottoRank.FIFTH
+      LOTTO_RANK.FIFTH
     )}개`
   );
   console.log(
-    `${LottoRank.FOURTH.match}개 일치 (${
-      LottoRank.FOURTH.prize
-    }원) - ${countRank(rankList, LottoRank.FOURTH)}개`
+    `${LOTTO_RANK.FOURTH.match}개 일치 (${
+      LOTTO_RANK.FOURTH.prize
+    }원) - ${countRank(rankList, LOTTO_RANK.FOURTH)}개`
   );
   console.log(
-    `${LottoRank.THIRD.match}개 일치 (${LottoRank.THIRD.prize}원) - ${countRank(
+    `${LOTTO_RANK.THIRD.match}개 일치 (${LOTTO_RANK.THIRD.prize}원) - ${countRank(
       rankList,
-      LottoRank.THIRD
+      LOTTO_RANK.THIRD
     )}개`
   );
   console.log(
-    `${LottoRank.SECOND.match}개 일치, 보너스 볼 일치 (${
-      LottoRank.SECOND.prize
-    }원) - ${countRank(rankList, LottoRank.SECOND)}개`
+    `${LOTTO_RANK.SECOND.match}개 일치, 보너스 볼 일치 (${
+      LOTTO_RANK.SECOND.prize
+    }원) - ${countRank(rankList, LOTTO_RANK.SECOND)}개`
   );
   console.log(
-    `${LottoRank.FIRST.match}개 일치 (${LottoRank.FIRST.prize}원) - ${countRank(
+    `${LOTTO_RANK.FIRST.match}개 일치 (${LOTTO_RANK.FIRST.prize}원) - ${countRank(
       rankList,
-      LottoRank.FIRST
+      LOTTO_RANK.FIRST
     )}개`
   );
 }

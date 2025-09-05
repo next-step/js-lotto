@@ -1,5 +1,5 @@
 import { LottoNumber } from "./lotto-number.js";
-import { findLottoRank, LottoRank } from "./lotto-rank.js";
+import { findLottoRank } from "./lotto-rank.js";
 
 export class Lotto {
   static PRICE = 1_000;
