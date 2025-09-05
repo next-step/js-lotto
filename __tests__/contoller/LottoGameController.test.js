@@ -22,4 +22,9 @@ describe("ConsoleView에서 Lotto 사용자 입력에 대한 테스트", () => {
       lottoController.amount = "팔천원";
     }).toThrow(ERROR_MESSAGE.ONLY_NUMBER);
   });
+  test("로또 최소 구매 가격은 1,000원이다.", () => {
+    expect(() => {
+      lottoController.amount = 700;
+    }).toThrow(ERROR_MESSAGE.MIN_PRICE);
+  });
 });
