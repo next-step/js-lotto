@@ -8,7 +8,7 @@ import {
 import { checkByType } from "./lib/lottoLib.js";
 import readlineAsync from "./lib/readlineAsync.js";
 
-const inputBonusWinningNumber = async () => {
+async function inputBonusWinningNumber() {
   try {
     console.log();
     const bonusNumber = await readlineAsync("> 보너스 번호를 입력해 주세요. ");
@@ -23,9 +23,9 @@ const inputBonusWinningNumber = async () => {
     console.error(e);
     return inputBonusWinningNumber();
   }
-};
+}
 
-const inputWinningNumber = async (lottos, purchaseAmount) => {
+async function inputWinningNumber(lottos, purchaseAmount) {
   try {
     console.log();
     const winningNumber = await readlineAsync(" > 당첨 번호를 입력해 주세요.");
@@ -57,13 +57,15 @@ const inputWinningNumber = async (lottos, purchaseAmount) => {
 
     const priceCheck = classWinningNumber.checkWinningStatistics(lottos);
     classWinningNumber.rateOfReturn(priceCheck, purchaseAmount);
+
+    restartBuyLotto();
   } catch (e) {
     console.error(e);
     inputWinningNumber(lottos, purchaseAmount);
   }
-};
+}
 
-const buyLottoHandler = async () => {
+async function buyLottoHandler() {
   try {
     const lottoPurchaseAmount = await readlineAsync(
       "> 구입금액을 입력해 주세요. "
@@ -81,6 +83,27 @@ const buyLottoHandler = async () => {
     console.error(e);
     buyLottoHandler();
   }
-};
+}
+
+async function restartBuyLotto() {
+  try {
+    console.log();
+    const restart = await readlineAsync("> 다시 시작하시겠습니까? (y/n) ");
+    console.log();
+
+    if (restart.toUpperCase() !== "Y" && restart.toUpperCase() !== "N") {
+      throw new Error("잘못된 입력 방식입니다.");
+    }
+
+    if (restart.toUpperCase() === "Y") {
+      buyLottoHandler();
+    }
+
+    return;
+  } catch (e) {
+    console.error(e);
+    restartBuyLotto();
+  }
+}
 
 buyLottoHandler();
