@@ -6,6 +6,11 @@ export class LottoStore {
   #price;
 
   constructor(price = Lotto.PRICE) {
+    if (price % Lotto.PRICE !== 0) {
+      throw new RangeError(
+        `구매 금액은 ${Lotto.PRICE}원 단위로 입력해야 합니다.`
+      );
+    }
     this.#price = price;
   }
 

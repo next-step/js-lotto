@@ -3,6 +3,15 @@ import { LottoStore } from "../../src/domain/lotto-store.js";
 import { Lotto } from "../../src/domain/lotto.js";
 
 describe("LottoStore", () => {
+  it("구입금액이 천원 단위가 아니면 오류가 발생합니다.", () => {
+    // given
+    const price = 2300;
+
+    // when
+
+    // then
+    expect(() => new LottoStore(price)).toThrow(RangeError);
+  });
   it("구입금액에 따라 로또를 판매할 수 있습니다.", () => {
     // given
     const price = 8000;
