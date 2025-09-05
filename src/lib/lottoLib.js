@@ -13,13 +13,7 @@ const isComma = (input) => {
 };
 
 const isNumber = (input) => {
-  const convertNumber = Number(input);
-
-  if (typeof convertNumber === "number") {
-    return true;
-  }
-
-  return false;
+  return /^-?\d+(\.\d+)?$/.test(input);
 };
 
 export const checkByType = (type, input) => {
