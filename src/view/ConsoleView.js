@@ -15,9 +15,15 @@ class ConsoleView {
   }
 
   printPurchaseAmountResult(count) {
-    console.log(`${count}를 구매했습니다.`);
+    console.log(`${count}개를 구매했습니다.`);
   }
 
+  printGeneratedLottoNumbers(lottos) {
+    lottos.forEach((lotto) => console.log(lotto.lottoNumbers));
+  }
+  printDivider() {
+    console.log("\n");
+  }
   printWinners() {
     console.log("당첨 통계");
     console.log("--------------------");
