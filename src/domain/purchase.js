@@ -1,3 +1,9 @@
+import {
+  LINE_MINIMUM_NUMBER,
+  LINE_MAXIMUM_NUMBER,
+  LINE_SIZE,
+} from "../constants/lottoNumbers.js";
+
 export const buyLotto = (amountPaid) => {
   const LOTTO_ITEM_PRICE = 1000;
 
@@ -13,15 +19,14 @@ export const buyLotto = (amountPaid) => {
 };
 
 const generateLottoLine = () => {
-  const MINIMUM_NUMBER = 1;
-  const MAXIMUM_NUMBER = 45;
-  const NUMBER_COUNT = 6;
-
   const lottoLine = [];
 
-  const numberRange = Array.from({ length: MAXIMUM_NUMBER }, (v, i) => i + 1);
+  const numberRange = Array.from(
+    { length: LINE_MAXIMUM_NUMBER },
+    (v, i) => i + 1
+  );
 
-  for (let i = 0; i < NUMBER_COUNT; i++) {
+  for (let i = 0; i < LINE_SIZE; i++) {
     const randomIndex = Math.floor(Math.random() * numberRange.length);
 
     lottoLine.push(...numberRange.splice(randomIndex, 1));
@@ -32,7 +37,7 @@ const generateLottoLine = () => {
 };
 
 export const generateLottoBundle = (purchasedLottoCount) => {
-  if (purchasedLottoCount <= 0) {
+  if (purchasedLottoCount < LINE_MINIMUM_NUMBER) {
     throw new Error("구매한 로또가 존재하지 않습니다.");
   }
 
