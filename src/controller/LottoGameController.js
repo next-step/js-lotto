@@ -5,7 +5,8 @@ import LottoService from "./LottoService.js";
 class LottoGameController {
   #view;
   #amount;
-  #lottos;
+  #winningNumbers;
+  #bonusNumber;
   #inputValidator = new InputValidator();
 
   constructor(view) {
@@ -22,6 +23,26 @@ class LottoGameController {
     return this.#amount;
   }
 
+  set winningNumbers(winningNumbers) {
+    if (this.#inputValidator.isValidWinningNumbers(winningNumbers)) {
+      this.#winningNumbers = winningNumbers;
+    }
+  }
+
+  get winningNumbers() {
+    return this.#winningNumbers;
+  }
+
+  set bonusNumber(bonusNumber) {
+    if (this.#inputValidator.isValidateBonusNumber(bonusNumber)) {
+      this.#bonusNumber = Number(bonusNumber);
+    }
+  }
+
+  get bonusNumber() {
+    return this.#winningNumbers;
+  }
+
   async startLotto() {
     const amount = await this.#view.readPurchaseAmount();
 
@@ -36,14 +57,26 @@ class LottoGameController {
     this.#view.printGeneratedLottoNumbers(lottos);
     this.#view.printDivider();
 
-    const { winningNumbers, bonusNumber } = this.#inputWinningNumbers();
+    const winningNumbers = await this.#inputWinningNumbers();
+    const bonusNumber = await this.#inputBonusNumber();
+    if (!winningNumbers || !bonusNumber) return;
+
     this.#checkWinningResult({ winningNumbers, bonusNumber });
   }
 
   async #inputWinningNumbers() {
     const winningNumbers = await this.#view.readWinningNumbers();
+    if (!this.#inputValidator.isValidWinningNumbers(winningNumbers)) {
+      return;
+    }
+    return winningNumbers;
+  }
+  async #inputBonusNumber() {
     const bonusNumber = await this.#view.readBonusNumber();
-    return { winningNumbers, bonusNumber };
+    if (!this.#inputValidator.isValidateBonusNumber(bonusNumber)) {
+      return;
+    }
+    return bonusNumber;
   }
 
   #checkWinningResult({ winningNumbers, bonusNumber }) {}

@@ -6,7 +6,6 @@ class Lotto {
   }
 
   get lottoNumbers() {
-    console.log(this.#lottoNumbers);
     return this.#lottoNumbers;
   }
 }
