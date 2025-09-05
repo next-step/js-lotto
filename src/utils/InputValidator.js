@@ -3,8 +3,7 @@ import { ERROR_MESSAGE } from "../constants/message.js";
 class InputValidator {
   #validateAmount(amount) {
     if (/^\d+$/.test(amount)) {
-      console.log(amount);
-      return;
+      return true;
     }
     throw new Error(ERROR_MESSAGE.ONLY_NUMBER);
   }
