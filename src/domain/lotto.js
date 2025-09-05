@@ -30,17 +30,31 @@ export class Lotto {
 
   /**
    *
-   * @param {number[]} winningNumbers
+   * @param {Lotto} winningLotto
    * @param {number} bonusNumber
    */
-  prize(winningNumbers, bonusNumber) {
+  prize(winningLotto, bonusNumber) {
     const match = this.#value.filter((lottoNumber) =>
-      winningNumbers.includes(lottoNumber.value)
+      winningLotto.text().includes(lottoNumber.value)
     ).length;
     const hasBonus =
       this.#value.filter((lottoNumber) => lottoNumber.value === bonusNumber)
         .length === 1;
 
     return findLottoRank(match, hasBonus);
+  }
+
+  static from(input) {
+    if (typeof input !== "string") {
+      throw new TypeError("input은 문자열이 아닙니다.");
+    }
+
+    const numbers = input
+      .split(",")
+      .map((number) => number.trim())
+      .filter((number) => number !== "")
+      .map((number) => Number(number));
+
+    return new Lotto(numbers);
   }
 }

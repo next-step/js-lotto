@@ -28,4 +28,13 @@ describe("LottoNumber", () => {
     // then
     expect(() => new LottoNumber(lottoNumber)).toThrow(RangeError);
   });
+    it("소수점이 있는 숫자를 입력하면 에러가 발생합니다.", () => {
+    // given
+    const lottoNumber = 4.5
+
+    // when
+
+    // then
+    expect(() => new LottoNumber(lottoNumber)).toThrow(RangeError)
+  })
 });

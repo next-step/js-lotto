@@ -11,6 +11,9 @@ export class LottoNumber {
     if (typeof value !== "number") {
       throw new TypeError("value는 number 타입이어야 합니다.");
     }
+    if (!Number.isInteger(value)) {
+      throw new RangeError("value는 정수이어야 합니다.");
+    }
     if (value < LottoNumber.#MIN_NUMBER || LottoNumber.MAX_NUMBER < value) {
       throw new RangeError(
         `value는 ${LottoNumber.#MIN_NUMBER} ~ ${
