@@ -5,11 +5,12 @@ describe("LottoStore", () => {
     // given
     const price = 8000;
     const lottoStore = new LottoStore(price);
+    const expected = 8
 
     // when
     const actual = lottoStore.sell();
 
     // then
-    expect(actual.length).toEqual(8);
+    expect(actual.length).toEqual(expected);
   });
 });
