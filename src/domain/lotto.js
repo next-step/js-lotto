@@ -31,15 +31,16 @@ export class Lotto {
   /**
    *
    * @param {Lotto} winningLotto
-   * @param {number} bonusNumber
+   * @param {LottoNumber} bonusNumber
    */
   prize(winningLotto, bonusNumber) {
     const match = this.#value.filter((lottoNumber) =>
       winningLotto.text().includes(lottoNumber.value)
     ).length;
     const hasBonus =
-      this.#value.filter((lottoNumber) => lottoNumber.value === bonusNumber)
-        .length === 1;
+      this.#value.filter(
+        (lottoNumber) => lottoNumber.value === bonusNumber.value
+      ).length === 1;
 
     return findLottoRank(match, hasBonus);
   }

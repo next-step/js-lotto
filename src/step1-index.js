@@ -1,3 +1,4 @@
+import { LottoNumber } from "./domain/lotto-number.js";
 import { LottoStore } from "./domain/lotto-store.js";
 import { Lotto } from "./domain/lotto.js";
 import { readLineAsync } from "./view/input.js";
@@ -15,7 +16,8 @@ printLotto(lottoList);
 const winningNumbersInput = await readLineAsync("당첨 번호를 입력해 주세요.");
 const winningLotto = Lotto.from(winningNumbersInput);
 const bonusNumberInput = await readLineAsync("보너스 번호를 입력해 주세요.");
-const bonusNumber = Number(bonusNumberInput.trim());
+const bonusNumber = LottoNumber.from(bonusNumberInput);
+lottoStore.validateBonusNumber(winningLotto, bonusNumber);
 const rankList = lottoList.map((lotto) =>
   lotto.prize(winningLotto, bonusNumber)
 );

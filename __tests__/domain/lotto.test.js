@@ -64,4 +64,22 @@ describe("Lotto", () => {
       expect(() => Lotto.from(number)).toThrow();
     });
   });
+    it("보너스번호가 당첨번호에 포함되면 오류가 발생합니다.", () => {
+    // given
+    const numbers = [
+      "",
+      ",,,,,,",
+      "1,,,,2,",
+      "1,2,3,Infinity,5,6",
+      "1,2,3,4.5,5,6",
+      "1,2,3,-4,5,6",
+      "1,2,3,1e2,5,6",
+    ];
+    // when
+
+    // then
+    numbers.forEach((number) => {
+      expect(() => Lotto.from(number)).toThrow();
+    });
+  });
 });

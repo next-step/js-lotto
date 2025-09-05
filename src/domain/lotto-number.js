@@ -23,4 +23,12 @@ export class LottoNumber {
     }
     this.#value = value;
   }
+
+  static from(input) {
+    if (typeof input !== "string") {
+      throw new TypeError("input은 문자열이 아닙니다.");
+    }
+
+    return new LottoNumber(Number(input.trim()));
+  }
 }

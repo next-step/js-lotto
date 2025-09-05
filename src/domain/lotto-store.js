@@ -26,6 +26,17 @@ export class LottoStore {
     return Math.floor((totalPrize / this.#price) * 100.0) / 100.0;
   }
 
+  /**
+   *
+   * @param {Lotto} winningLotto
+   * @param {LottoNumber} bonusNumber
+   */
+  validateBonusNumber(winningLotto, bonusNumber) {
+    if (winningLotto.text().includes(bonusNumber.value)) {
+      throw new RangeError("보너스 번호는 당첨 번호에 포함될 수 없습니다.");
+    }
+  }
+
   #generate() {
     const numbers = Array.from(
       { length: LottoNumber.MAX_NUMBER },
