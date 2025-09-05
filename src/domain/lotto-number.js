@@ -9,10 +9,10 @@ export class LottoNumber {
 
   constructor(value) {
     if (typeof value !== "number") {
-      throw new Error("value는 number 타입이어야 합니다.");
+      throw new TypeError("value는 number 타입이어야 합니다.");
     }
     if (value < LottoNumber.#MIN_NUMBER || LottoNumber.MAX_NUMBER < value) {
-      throw new Error(
+      throw new RangeError(
         `value는 ${LottoNumber.#MIN_NUMBER} ~ ${
           LottoNumber.MAX_NUMBER
         } 사이이어야 합니다.`

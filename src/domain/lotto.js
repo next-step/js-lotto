@@ -16,10 +16,10 @@ export class Lotto {
       !Array.isArray(numbers) ||
       numbers.every((value) => typeof value !== "number")
     ) {
-      throw new Error("numbers는 숫자 형식의 배열이어야 합니다.");
+      throw new TypeError("numbers는 숫자 형식의 배열이어야 합니다.");
     }
     if (numbers.length !== Lotto.NUMBER_COUNT) {
-      throw new Error("Lotto는 6개의 숫자로 구성되어야 합니다");
+      throw new RangeError("Lotto는 6개의 숫자로 구성되어야 합니다");
     }
     this.#value = numbers.map((number) => new LottoNumber(number));
   }
