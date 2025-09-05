@@ -27,13 +27,19 @@ export class LottoStore {
   }
 
   #generate() {
-    const numbers = new Set();
+    const numbers = Array.from(
+      { length: LottoNumber.MAX_NUMBER },
+      (_, number) => number + 1
+    );
+    this.#shuffle(numbers);
+    return numbers.slice(0, Lotto.NUMBER_COUNT).sort((a, b) => a - b);
+  }
 
-    while (numbers.size < Lotto.NUMBER_COUNT) {
-      const number = Math.floor(Math.random() * LottoNumber.MAX_NUMBER) + 1;
-      numbers.add(number);
+  #shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
-
-    return [...numbers].sort((a, b) => a - b);
+    return array;
   }
 }
