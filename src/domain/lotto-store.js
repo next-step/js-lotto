@@ -11,11 +11,7 @@ export class LottoStore {
 
   sell() {
     const count = this.#price / Lotto.PRICE;
-    const lottoList = [];
-    for (let i = 0; i < count; i++) {
-      lottoList.push(new Lotto(this.#generate()));
-    }
-    return lottoList;
+    return Array.from({ length: count }, () => new Lotto(this.#generate()));
   }
 
   /**
