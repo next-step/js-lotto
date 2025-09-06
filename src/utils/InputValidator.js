@@ -7,6 +7,9 @@ class InputValidator {
       if (amount < LOTTO.PRICE) {
         throw new Error(ERROR_MESSAGE.MIN_PRICE);
       }
+      if (amount % 1000 !== 0) {
+        throw new Error(ERROR_MESSAGE.AMOUNT_UNIT);
+      }
       return true;
     }
     throw new Error(ERROR_MESSAGE.ONLY_NUMBER);
@@ -20,7 +23,7 @@ class InputValidator {
     const trimmed = numbersStr.trim();
 
     if (!/^\d+(,\s*\d+)*$/.test(trimmed)) {
-      throw new Error(ERROR_MESSAGE.INVALID_FORMAT);
+      throw new Error(ERROR_MESSAGE.LOTTO_INVALID_FORMAT);
     }
 
     if (trimmed < LOTTO.MIN_RANGE || trimmed > LOTTO.MAX_RANGE) {
@@ -30,8 +33,13 @@ class InputValidator {
     const splitNumbers = trimmed
       .split(",")
       .map((number) => Number(number.trim()));
+
     if (splitNumbers.length > LOTTO.SIZE || splitNumbers.length < LOTTO.SIZE) {
       throw new Error(ERROR_MESSAGE.LOTTO_SIZE);
+    }
+    const numberSet = new Set(splitNumbers);
+    if (numberSet.size !== LOTTO.SIZE) {
+      throw new Error(ERROR_MESSAGE.LOTTO_DUPLICATE);
     }
 
     for (const number of splitNumbers) {

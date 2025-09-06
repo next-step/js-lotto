@@ -1,3 +1,4 @@
+import { LOTTO } from "../../src/constants/lottos.js";
 import { ERROR_MESSAGE } from "../../src/constants/message.js";
 import LottoGameController from "../../src/controller/LottoGameController.js";
 import LottoService from "../../src/controller/LottoService.js";
@@ -32,6 +33,11 @@ describe("ConsoleView에서 Lotto 사용자 입력에 대한 테스트", () => {
       lottoController.amount = 700;
     }).toThrow(ERROR_MESSAGE.MIN_PRICE);
   });
+  test("로또 가격은 1000원 단위로 입력해야 한다.", () => {
+    expect(() => {
+      lottoController.amount = 1700;
+    }).toThrow(ERROR_MESSAGE.AMOUNT_UNIT);
+  });
 });
 
 describe("ConsoleView에서 당첨 번호와 보너스 번호 입력에 대한 테스트", () => {
@@ -42,12 +48,18 @@ describe("ConsoleView에서 당첨 번호와 보너스 번호 입력에 대한 �
     view = new ConsoleView();
     lottoController = new LottoGameController(view);
   });
+  test("당첨 번호는 숫자와 , 만 입력 가능하다.", () => {
+    expect(() => {
+      lottoController.winningNumbers = "1&가/";
+    }).toThrow(ERROR_MESSAGE.LOTTO_INVALID_FORMAT);
+  });
 
   test("당첨 번호는 6개 이상 입력할 수 없다.", () => {
     expect(() => {
       lottoController.winningNumbers = "1, 4, 10, 22, 34, 43, 44";
     }).toThrow(ERROR_MESSAGE.LOTTO_SIZE);
   });
+
   test("당첨 번호는 6개 미만 입력할 수 없다", () => {
     expect(() => {
       lottoController.winningNumbers = "1, 4, 10, 22, 34";
@@ -64,6 +76,12 @@ describe("ConsoleView에서 당첨 번호와 보너스 번호 입력에 대한 �
     expect(() => {
       lottoController.winningNumbers = "0, 4, 10, 22, 34, 50";
     }).toThrow(ERROR_MESSAGE.LOTTO_RANGE);
+  });
+
+  test("6개의 당첨 번호는 중복될 수 없다.", () => {
+    expect(() => {
+      lottoController.winningNumbers = "1, 4, 10, 22, 34, 34";
+    }).toThrow(ERROR_MESSAGE.LOTTO_DUPLICATE);
   });
 
   test("보너스 번호는 하나의 숫자를 입력해야 한다.", () => {
