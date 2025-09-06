@@ -4,8 +4,7 @@ import WinningRankCalculator from "../utils/WinningRankCalculator.js";
 
 class LottoService {
   static generateLottos(count) {
-    const lottoGenerator = new LottoGenerator();
-    return lottoGenerator.issueLottoTicket(count);
+    return LottoGenerator.issueLottoTicket(count);
   }
 
   static calculateSingleLottoRank({ winningLotto, lotto }) {

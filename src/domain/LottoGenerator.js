@@ -2,7 +2,7 @@ import { LOTTO } from "../constants/lottos.js";
 import Lotto from "./Lotto.js";
 
 class LottoGenerator {
-  #generateRandomNumbers() {
+  static #generateRandomNumbers() {
     const numbers = new Set();
 
     while (numbers.size < LOTTO.SIZE) {
@@ -12,7 +12,7 @@ class LottoGenerator {
     return Array.from(numbers).sort((a, b) => a - b);
   }
 
-  issueLottoTicket(count) {
+  static issueLottoTicket(count) {
     const lottos = [];
 
     for (let i = 0; i < count; i++) {
