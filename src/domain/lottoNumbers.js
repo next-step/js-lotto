@@ -27,8 +27,6 @@ export const isValidWinningNumbers = (winningNumbers) => {
     (number) => number !== '',
   );
 
-  winningNumbers = numbersWithoutEmpty;
-
   if (numbersWithoutEmpty.length !== LINE_SIZE) {
     throw new Error('숫자를 6개 입력해주세요.');
   }

@@ -1,9 +1,8 @@
-import { buyNumbers } from '../src/domain/purchase.js';
-import { PurchasedNumbers } from '../src/views/PurchasedNumbers.js';
+import { buyNumbers } from '../src/domain/amountPaid.js';
 import {
   isValidWinningNumbers,
   isValidBonusNumber,
-} from '../src/domain/winnings.js';
+} from '../src/domain/lottoNumbers.js';
 
 describe('로또 구입', () => {
   test('로또 구입 금액 5000원을 입력하면, 로또 5개를 살 수 있다.', async () => {
@@ -23,7 +22,7 @@ describe('로또 구입', () => {
   });
 });
 
-describe('번호 입력', () => {
+describe('로또 번호 입력', () => {
   test('당첨 번호 1,2,3,4,5 를 입력하면, 번호 개수 에러가 뜬다.', async () => {
     const WINNING_NUMBERS = '1,2,3,4,5';
 

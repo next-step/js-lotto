@@ -1,4 +1,5 @@
-import { buyNumbers, generateLottoLine } from '../domain/purchase.js';
+import { buyNumbers } from '../domain/amountPaid.js';
+import { generateLottoLine } from '../domain/purchasedNumbers.js';
 
 const PurchasedNumbers = (amountPaid) => {
   let purchasedNumbers = [];

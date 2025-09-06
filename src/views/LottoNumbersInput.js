@@ -1,7 +1,7 @@
 import {
   isValidWinningNumbers,
   isValidBonusNumber,
-} from '../domain/winnings.js';
+} from '../domain/lottoNumbers.js';
 
 import readLineAsync from '../utils/readLineAsync.js';
 
