@@ -89,6 +89,13 @@ describe("ConsoleView에서 당첨 번호와 보너스 번호 입력에 대한 �
       lottoController.bonusNumber = 50;
     }).toThrow(ERROR_MESSAGE.LOTTO_RANGE);
   });
+
+  test("보너스 번호는 당첨 번호와 중복될 수 없다.", () => {
+    expect(() => {
+      lottoController.winningNumbers = "1, 4, 10, 22, 34, 43";
+      lottoController.bonusNumber = 1;
+    }).toThrow(ERROR_MESSAGE.BONUS_DUPLICATE);
+  });
 });
 
 describe("로또 번호와 당첨 번호 & 보너스 번호 비효 테스트", () => {

@@ -26,7 +26,10 @@ class LottoGameController {
   }
 
   set bonusNumber(bonusNumber) {
-    this.#bonusNumber = this.#inputValidator.validateBonusNumber(bonusNumber);
+    this.#bonusNumber = this.#inputValidator.validateBonusNumber(
+      bonusNumber,
+      this.#winningNumbers
+    );
   }
 
   async startLotto() {
@@ -44,7 +47,7 @@ class LottoGameController {
     this.#view.printDivider();
 
     const winningNumbers = await this.#inputWinningNumbers();
-    const bonusNumber = await this.#inputBonusNumber();
+    const bonusNumber = await this.#inputBonusNumber(winningNumbers);
     if (!winningNumbers || !bonusNumber) return;
 
     const winningLotto = new WinningNumbers(winningNumbers, bonusNumber);
@@ -62,10 +65,12 @@ class LottoGameController {
     return winningNumbers;
   }
 
-  async #inputBonusNumber() {
+  async #inputBonusNumber(winningNumbers) {
     const bonusNumberStr = await this.#view.readBonusNumber();
-    const bonusNumber =
-      this.#inputValidator.validateBonusNumber(bonusNumberStr);
+    const bonusNumber = this.#inputValidator.validateBonusNumber(
+      bonusNumberStr,
+      winningNumbers
+    );
     return bonusNumber;
   }
 

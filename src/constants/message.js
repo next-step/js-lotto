@@ -4,4 +4,5 @@ export const ERROR_MESSAGE = {
   LOTTO_RANGE: "번호는 1 ~ 45까지 입력해야 합니다.",
   LOTTO_SIZE: "당첨 번호는 6개를 입력해야합니다.(쉼표로 구분)",
   EMPTY_INPUT: "아무것도 입력하지 않았습니다.",
+  BONUS_DUPLICATE: "보너스 번호가 당첨 번호와 중복됩니다.",
 };

@@ -43,7 +43,7 @@ class InputValidator {
     return splitNumbers;
   }
 
-  validateBonusNumber(numberStr) {
+  validateBonusNumber(numberStr, winningNumbers) {
     if (!numberStr) {
       throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
     }
@@ -55,6 +55,10 @@ class InputValidator {
     const bonusNumber = Number(numberStr);
     if (bonusNumber < LOTTO.MIN_RANGE || bonusNumber > LOTTO.MAX_RANGE) {
       throw new Error(ERROR_MESSAGE.LOTTO_RANGE);
+    }
+
+    if (winningNumbers.includes(bonusNumber)) {
+      throw new Error(ERROR_MESSAGE.BONUS_DUPLICATE);
     }
     return true;
   }
