@@ -12,7 +12,7 @@ class ConsoleView {
   }
 
   async readBonusNumber() {
-    return await readLineAsync("> 보너스 번호를 입력해 주세요.");
+    return await readLineAsync("> 보너스 번호를 입력해 주세요: ");
   }
 
   printPurchaseAmountResult(count) {
