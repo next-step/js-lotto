@@ -1,5 +1,9 @@
 import { ERROR_MESSAGE } from "../../src/constants/message.js";
 import LottoGameController from "../../src/controller/LottoGameController.js";
+import LottoService from "../../src/controller/LottoService.js";
+import Lotto from "../../src/domain/Lotto.js";
+import WinningNumbers from "../../src/domain/WinningNumbers.js";
+import WinningRankCalculator from "../../src/utils/WinningRankCalculator.js";
 import ConsoleView from "../../src/view/ConsoleView.js";
 
 describe("ConsoleView에서 Lotto 사용자 입력에 대한 테스트", () => {
@@ -84,5 +88,45 @@ describe("ConsoleView에서 당첨 번호와 보너스 번호 입력에 대한 �
     expect(() => {
       lottoController.bonusNumber = 50;
     }).toThrow(ERROR_MESSAGE.LOTTO_RANGE);
+  });
+});
+
+describe("로또 번호와 당첨 번호 & 보너스 번호 비효 테스트", () => {
+  let view;
+  let lottoController;
+
+  beforeEach(() => {
+    view = new ConsoleView();
+    lottoController = new LottoGameController(view);
+  });
+
+  test("로또 번호가 당첨 번호 6개와 모두 일치하면 1등이다.", () => {
+    const winningNumbers = "1, 4, 10, 22, 34, 43";
+    const bonusNumber = "13";
+    const lotto = new Lotto([1, 4, 10, 22, 34, 43]);
+    const winningLotto = new WinningNumbers(winningNumbers, bonusNumber);
+    const rank = LottoService.calculateSingleLottoRank({ winningLotto, lotto });
+
+    expect(rank).toBe(1);
+  });
+
+  test("로또 번호와 당첨 번호가 5개 일치하고 보너스 번호도 일치하면 2등이다.", () => {
+    const winningNumbers = "1, 4, 10, 22, 34, 43";
+    const bonusNumber = "13";
+    const lotto = new Lotto([1, 4, 10, 22, 34, 13]);
+    const winningLotto = new WinningNumbers(winningNumbers, bonusNumber);
+    const rank = LottoService.calculateSingleLottoRank({ winningLotto, lotto });
+
+    expect(rank).toBe(2);
+  });
+
+  test("로또 번호와 당첨 번호가 5개 일치하고 보너스 번호도 일치하지 않으면 3등이다.", () => {
+    const winningNumbers = "1, 4, 10, 22, 34, 43";
+    const bonusNumber = "13";
+    const lotto = new Lotto([1, 4, 10, 22, 34, 45]);
+    const winningLotto = new WinningNumbers(winningNumbers, bonusNumber);
+    const rank = LottoService.calculateSingleLottoRank({ winningLotto, lotto });
+
+    expect(rank).toBe(3);
   });
 });

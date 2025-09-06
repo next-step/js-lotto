@@ -8,6 +8,12 @@ class LottoService {
     return lottoGenerator.issueLottoTicket(count);
   }
 
+  static calculateSingleLottoRank({ winningLotto, lotto }) {
+    const matchedCount = lotto.countMatches(winningLotto.winningNumbers);
+    const hasBonus = lotto.contains(winningLotto.bonusNumber);
+    return WinningRankCalculator.calculate(matchedCount, hasBonus);
+  }
+
   static checkWinningResult({ winningLotto, lottos }) {
     const winningResult = new Map([
       [1, 0], //[rank, 당첨된 수]
@@ -18,10 +24,7 @@ class LottoService {
     ]);
 
     lottos.forEach((lotto) => {
-      const matchedCount = lotto.countMatches(winningLotto.winningNumbers);
-      const hasBonus = lotto.contains(winningLotto.bonusNumber);
-      const rank = WinningRankCalculator.calculate(matchedCount, hasBonus);
-
+      const rank = this.calculateSingleLottoRank({ winningLotto, lotto });
       if (rank) {
         const currentCount = winningResult.get(rank);
         winningResult.set(rank, currentCount + 1);
@@ -44,7 +47,6 @@ class LottoService {
     winningResult.forEach((count, rank) => {
       totalPrize += count * PRIZE_INFO[rank].prize;
     });
-    console.log("totalPrize: " + totalPrize);
     return totalPrize;
   }
 }
