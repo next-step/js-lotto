@@ -16,52 +16,47 @@ class InputValidator {
     return this.#validateAmount(amount);
   }
 
-  #validateLottoNumbers(numbers) {
-    if (/^\d+(,\s*\d+)*$/.test(numbers)) {
-      if (numbers < LOTTO.MIN_RANGE || numbers > LOTTO.MAX_RANGE) {
-        throw new Error(ERROR_MESSAGE.MIN_PRICE);
-      }
-      const splitNumbers = numbers
-        .split(",")
-        .map((number) => Number(number.trim()));
+  validateLottoNumbers(numbersStr) {
+    const trimmed = numbersStr.trim();
 
-      if (
-        splitNumbers.length > LOTTO.SIZE ||
-        splitNumbers.length < LOTTO.SIZE
-      ) {
-        throw new Error(ERROR_MESSAGE.LOTTO_SIZE);
-      }
-
-      for (const number of splitNumbers) {
-        if (number < LOTTO.MIN_RANGE || number > LOTTO.MAX_RANGE) {
-          throw new Error(ERROR_MESSAGE.LOTTO_RANGE);
-        }
-      }
-
-      return true;
+    if (!/^\d+(,\s*\d+)*$/.test(trimmed)) {
+      throw new Error(ERROR_MESSAGE.INVALID_FORMAT);
     }
+
+    if (trimmed < LOTTO.MIN_RANGE || trimmed > LOTTO.MAX_RANGE) {
+      throw new Error(ERROR_MESSAGE.MIN_PRICE);
+    }
+
+    const splitNumbers = trimmed
+      .split(",")
+      .map((number) => Number(number.trim()));
+    if (splitNumbers.length > LOTTO.SIZE || splitNumbers.length < LOTTO.SIZE) {
+      throw new Error(ERROR_MESSAGE.LOTTO_SIZE);
+    }
+
+    for (const number of splitNumbers) {
+      if (number < LOTTO.MIN_RANGE || number > LOTTO.MAX_RANGE) {
+        throw new Error(ERROR_MESSAGE.LOTTO_RANGE);
+      }
+    }
+
+    return splitNumbers;
   }
 
-  isValidWinningNumbers(number) {
-    return this.#validateLottoNumbers(number);
-  }
-
-  #validateBonusNumber(number) {
-    if (!number) {
+  validateBonusNumber(numberStr) {
+    if (!numberStr) {
       throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
     }
-    if (!/^\d+$/.test(number)) {
+
+    if (!/^\d+$/.test(numberStr)) {
       throw new Error(ERROR_MESSAGE.ONLY_NUMBER);
     }
-    const bonusNumber = Number(number);
+
+    const bonusNumber = Number(numberStr);
     if (bonusNumber < LOTTO.MIN_RANGE || bonusNumber > LOTTO.MAX_RANGE) {
       throw new Error(ERROR_MESSAGE.LOTTO_RANGE);
     }
     return true;
-  }
-
-  isValidateBonusNumber(number) {
-    return this.#validateBonusNumber(number);
   }
 }
 export default InputValidator;

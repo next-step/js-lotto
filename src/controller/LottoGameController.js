@@ -1,4 +1,5 @@
 import { LOTTO } from "../constants/lottos.js";
+import WinningNumbers from "../domain/WinningNumbers.js";
 import InputValidator from "../utils/InputValidator.js";
 import LottoService from "./LottoService.js";
 
@@ -19,28 +20,13 @@ class LottoGameController {
     }
   }
 
-  get amount() {
-    return this.#amount;
-  }
-
   set winningNumbers(winningNumbers) {
-    if (this.#inputValidator.isValidWinningNumbers(winningNumbers)) {
-      this.#winningNumbers = winningNumbers;
-    }
-  }
-
-  get winningNumbers() {
-    return this.#winningNumbers;
+    this.#winningNumbers =
+      this.#inputValidator.validateLottoNumbers(winningNumbers);
   }
 
   set bonusNumber(bonusNumber) {
-    if (this.#inputValidator.isValidateBonusNumber(bonusNumber)) {
-      this.#bonusNumber = Number(bonusNumber);
-    }
-  }
-
-  get bonusNumber() {
-    return this.#winningNumbers;
+    this.#bonusNumber = this.#inputValidator.validateBonusNumber(bonusNumber);
   }
 
   async startLotto() {
@@ -49,8 +35,8 @@ class LottoGameController {
     if (!this.#inputValidator.isValidateAmount(amount)) {
       return;
     }
-    this.#amount = amount;
-    const count = this.#amount / LOTTO.PRICE;
+
+    const count = amount / LOTTO.PRICE;
     this.#view.printPurchaseAmountResult(count);
 
     const lottos = LottoService.generateLottos(count);
@@ -61,24 +47,43 @@ class LottoGameController {
     const bonusNumber = await this.#inputBonusNumber();
     if (!winningNumbers || !bonusNumber) return;
 
-    this.#checkWinningResult({ winningNumbers, bonusNumber });
+    const winningLotto = new WinningNumbers(winningNumbers, bonusNumber);
+    const winningResult = this.#getWinningResult({ winningLotto, lottos });
+    this.#view.printWinners(winningResult);
+
+    const profitRate = this.#getProfitRate({ winningResult, amount });
+    this.#view.printProfitRate(profitRate);
   }
 
   async #inputWinningNumbers() {
-    const winningNumbers = await this.#view.readWinningNumbers();
-    if (!this.#inputValidator.isValidWinningNumbers(winningNumbers)) {
-      return;
-    }
+    const winningNumbersStr = await this.#view.readWinningNumbers();
+    const winningNumbers =
+      this.#inputValidator.validateLottoNumbers(winningNumbersStr);
     return winningNumbers;
   }
+
   async #inputBonusNumber() {
-    const bonusNumber = await this.#view.readBonusNumber();
-    if (!this.#inputValidator.isValidateBonusNumber(bonusNumber)) {
-      return;
-    }
+    const bonusNumberStr = await this.#view.readBonusNumber();
+    const bonusNumber =
+      this.#inputValidator.validateBonusNumber(bonusNumberStr);
     return bonusNumber;
   }
 
-  #checkWinningResult({ winningNumbers, bonusNumber }) {}
+  #getWinningResult({ winningLotto, lottos }) {
+    const winningResult = LottoService.checkWinningResult({
+      winningLotto,
+      lottos,
+    });
+
+    return winningResult;
+  }
+
+  #getProfitRate({ winningResult, amount }) {
+    const profitRate = LottoService.calculateProfitRate({
+      winningResult,
+      amount,
+    });
+    return profitRate;
+  }
 }
 export default LottoGameController;
