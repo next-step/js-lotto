@@ -1,3 +1,5 @@
+import { LottoNumber } from "./LottoNumber";
+
 export class Lotto {
   #lottoNumbers;
 
@@ -15,7 +17,13 @@ export class Lotto {
   }
 
   static of(lottoNumbers) {
-    return new Lotto(lottoNumbers);
+    if (
+      lottoNumbers.every((lottoNumber) => lottoNumber instanceof LottoNumber)
+    ) {
+      return new Lotto(lottoNumbers);
+    }
+
+    return new Lotto(lottoNumbers.map(LottoNumber.of));
   }
 
   get value() {

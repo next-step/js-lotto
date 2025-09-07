@@ -12,16 +12,16 @@ export class LottoGame {
   };
 
   static validateLottoPurchasePrice(purchasePrice) {
+    if (typeof purchasePrice !== "number" || Number.isNaN(purchasePrice)) {
+      throw new Error("로또 구입 금액은 숫자값을 입력해주세요.");
+    }
+
     if (purchasePrice % LottoGame.LOTTO_PRICE !== 0) {
       throw new Error(
         `로또 구입 금액은 ${commarize(
           LottoGame.LOTTO_PRICE
         )}원 단위로 입력해주세요.`
       );
-    }
-
-    if (typeof purchasePrice !== "number" || Number.isNaN(purchasePrice)) {
-      throw new Error("로또 구입 금액은 숫자값을 입력해주세요.");
     }
   }
 
@@ -56,15 +56,16 @@ export class LottoGame {
   }
 
   static getRankByMatchCount({ lottoNumber, bonusNumber, matchCount }) {
-    if (matchCount === LottoGame.LOTTO_RANK.SECOND.value.COUNT) {
-      return lottoNumber.includes(bonusNumber)
-        ? LottoGame.LOTTO_RANK.SECOND.value.NAME
-        : LottoGame.LOTTO_RANK.THIRD.value.NAME;
+    if (matchCount === LottoGame.LOTTO_RANK.SECOND.value.matchCount) {
+      return lottoNumber.find((it) => it.equals(bonusNumber))
+        ? LottoGame.LOTTO_RANK.SECOND.value.rankName
+        : LottoGame.LOTTO_RANK.THIRD.value.rankName;
     }
 
     const lottoRank = Object.values(LottoGame.LOTTO_RANK).find(
       (lottoRank) => lottoRank.value.matchCount === matchCount
     );
+
     return lottoRank.value.rankName;
   }
 
