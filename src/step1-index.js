@@ -1,23 +1,23 @@
 import { LottoGame } from "./domain/LottoGame.js";
-import { LottoGameValidator } from "./domain/LottoGameValidator.js";
 import { View } from "./view/View.js";
 import { LottoView } from "./view/LottoView.js";
 import { getPercentage } from "./utils/getPercentage.js";
 import { assert } from "./utils/assert.js";
+import { LottoShop } from "./domain/LottoShop.js";
+import { WinningLotto } from "./domain/WinningLotto.js";
 
 async function main() {
   try {
     const purchasePriceInput = await View.read("구입금액을 입력해 주세요.");
     const purchasePrice = Number(purchasePriceInput);
-    LottoGameValidator.validateLottoPurchasePrice(purchasePrice);
+    LottoGame.validateLottoPurchasePrice(purchasePrice);
 
-    const lottoGame = new LottoGame();
-    const lottoNumbers = lottoGame.buy(purchasePrice);
+    const lottos = LottoShop.buy(purchasePrice);
 
-    View.log(`${purchasePrice / LottoGame.LOTTO_PRICE}개를 구매했습니다.`);
+    View.log(`${purchasePrice / LottoShop.LOTTO_PRICE}개를 구매했습니다.`);
 
-    for (let i = 0; i < lottoNumbers.length; i += 1) {
-      View.log(lottoNumbers[i]);
+    for (let i = 0; i < lottos.length; i += 1) {
+      View.log(lottos[i].value.map((lottoNumber) => lottoNumber.value));
     }
 
     const winningNumbersInput = await View.read("\n당첨 번호를 입력해 주세요.");
@@ -30,11 +30,18 @@ async function main() {
       "보너스 번호는 당첨번호에 속하지 않는 번호를 입력해주세요."
     );
 
-    const lottoResult = lottoGame.checkResult({
-      lottoNumbers,
+    const winningLotto = WinningLotto.of({
       winningNumber,
       bonusNumber,
     });
+
+    const lottoGame = new LottoGame();
+
+    const lottoResult = lottoGame.checkResult({
+      lottos,
+      winningLotto,
+    });
+
     const rateOfReturn = lottoGame.getRateOfReturn({
       purchasePrice,
       lottoResult,
