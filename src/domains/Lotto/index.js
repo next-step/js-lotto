@@ -31,4 +31,13 @@ export class Lotto {
   get numbers() {
     return this.#numbers;
   }
+
+  evaluateLotto(winningNumbers, bonusNumber) {
+    return {
+      matchingCount: this.#numbers.filter((number) =>
+        winningNumbers.includes(number)
+      ).length,
+      isBonusNumberMatched: this.#numbers.includes(bonusNumber),
+    };
+  }
 }
