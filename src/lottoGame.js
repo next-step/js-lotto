@@ -1,4 +1,4 @@
-export const LOTTO_RANK_TABLE = [
+const LOTTO_RANK_TABLE = [
   { rank: 1, matchCount: 6, prize: 2_000_000_000 },
   { rank: 2, matchCount: 5, prize: 30_000_000, bonus: true },
   { rank: 3, matchCount: 5, prize: 1_500_000 },
@@ -23,4 +23,25 @@ export function calculateProfitRate(purchaseAmount, totalWinnings) {
   const rate = (totalWinnings / purchaseAmount) * 100
 
   return Math.round(rate * 100) / 100
+}
+
+export function getRankStatistics(results) {
+  let totalWinnings = 0
+  const stats = LOTTO_RANK_TABLE.map(rank => ({
+    ...rank,
+    count: 0,
+  }))
+
+  results.forEach(result => {
+    totalWinnings += result.prize
+    const rankIndex = stats.findIndex(rank =>
+      rank.matchCount === result.matchCount && rank.bonus === result.bonus
+    )
+
+    if (rankIndex !== -1) {
+      stats[rankIndex].count += 1
+    }
+  })
+
+  return { stats: stats.reverse(), totalWinnings }
 }
