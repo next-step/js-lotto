@@ -1,3 +1,4 @@
+import { commarize } from "../utils/commarize.js";
 import { LottoRank } from "./LottoRank.js";
 
 export class LottoGame {
@@ -24,7 +25,7 @@ export class LottoGame {
     }
   }
 
-  checkResult({ lottos, winningLotto }) {
+  static checkResult({ lottos, winningLotto }) {
     const result = {
       [LottoGame.LOTTO_RANK.FIRST.value.rankName]: 0,
       [LottoGame.LOTTO_RANK.SECOND.value.rankName]: 0,
@@ -42,7 +43,7 @@ export class LottoGame {
         continue;
       }
 
-      const rank = this.#getRankByMatchCount({
+      const rank = LottoGame.getRankByMatchCount({
         lottoNumber: lotto.value,
         bonusNumber: winningLotto.value.bonusNumber,
         matchCount,
@@ -54,7 +55,7 @@ export class LottoGame {
     return result;
   }
 
-  #getRankByMatchCount({ lottoNumber, bonusNumber, matchCount }) {
+  static getRankByMatchCount({ lottoNumber, bonusNumber, matchCount }) {
     if (matchCount === LottoGame.LOTTO_RANK.SECOND.value.COUNT) {
       return lottoNumber.includes(bonusNumber)
         ? LottoGame.LOTTO_RANK.SECOND.value.NAME
@@ -70,13 +71,13 @@ export class LottoGame {
   /**
    * 0%는 0, 100%는 1로 반환하고 있어서 사용하는 곳에서 필요에 따라 포맷팅이 필요합니다.
    */
-  getRateOfReturn({ purchasePrice, lottoResult }) {
-    const totalPrice = this.#getLottoResultTotalPrice(lottoResult);
+  static getRateOfReturn({ purchasePrice, lottoResult }) {
+    const totalPrice = LottoGame.getLottoResultTotalPrice(lottoResult);
 
     return totalPrice / purchasePrice;
   }
 
-  #getLottoResultTotalPrice(lottoResult) {
+  static getLottoResultTotalPrice(lottoResult) {
     let result = 0;
 
     Object.entries(lottoResult).forEach(([rank, count]) => {
