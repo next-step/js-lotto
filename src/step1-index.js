@@ -36,7 +36,7 @@ const play = async () => {
   const bonusNumber = await readLineAsync("보너스 번호를 입력해 주세요.");
   console.log();
 
-  const lottoResult = getLottoResult(lottos, winningNumbers, bonusNumber);
+  const lottoResult = getLottoResult(lottos, { winningNumbers, bonusNumber });
 
   printStatistics(lottoResult, purchasePrice);
 };
@@ -53,8 +53,9 @@ function printLottos(lottos) {
   });
 }
 
-function getLottoResult(lottos, winningNumbers, bonusNumber) {
+function getLottoResult(lottos, { winningNumbers, bonusNumber }) {
   const lottoResult = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
   for (const lotto of lottos) {
     const lottoResult = lotto.evaluateLotto(winningNumbers, bonusNumber);
     switch (lottoResult.matchingCount) {
