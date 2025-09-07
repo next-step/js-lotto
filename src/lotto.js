@@ -8,7 +8,8 @@ export function getTicket(money) {
     throw LottoError.TicketPriceTooLow()
   }
 
-  return Math.floor(money / LOTTO_PRICE)
+  const ticketCount = Math.floor(money / LOTTO_PRICE)
+  return Array.from({ length: ticketCount }, () => generateLottoNumber())
 }
 
 export function generateLottoNumber() {

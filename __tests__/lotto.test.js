@@ -5,13 +5,13 @@ describe('getTicket 함수 테스트', () => {
   it('1,000원을 입력하면 1장을 발급한다', () => {
     const money = 1000
 
-    expect(getTicket(money)).toBe(1)
+    expect(getTicket(money)).toHaveLength(1)
   })
 
   it('1,000원 단위로 티켓을 발급하며, 2,500원을 입력하면 2장을 발급한다', () => {
     const money = 2500
 
-    expect(getTicket(money)).toBe(2)
+    expect(getTicket(money)).toHaveLength(2)
   })
 
   it('1,000원 미만은 에러를 발생시킨다', () => {
