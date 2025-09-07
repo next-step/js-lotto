@@ -7,6 +7,7 @@ import {
   matchWithLottoNumbers,
   createRankCountsMap,
 } from '../src/domain/winningsStatistics.js';
+import { calculateWinningsRate } from '../src/domain/winningsRate.js';
 
 describe('로또 구입', () => {
   test('로또 구입 금액 5000원을 입력하면, 로또 5개를 살 수 있다.', () => {
@@ -76,7 +77,7 @@ describe('로또 번호 입력', () => {
   });
 });
 
-describe('로또 개당 일치 개수', () => {
+describe('로또 라인별 등수', () => {
   test('당첨 번호 1,2,3,4,5,6이고 보너스 번호 7일때, 구매번호가 1,2,3,7,8,9 이면 fifth 등수가 된다.', () => {
     const WINNING_NUMBERS = '1,2,3,4,5,6';
     const BONUS_NUMBERS = 7;
@@ -149,5 +150,22 @@ describe('당첨 통계', () => {
     const result = rankCountsMap['fifth'];
 
     expect(result).toBe(2);
+  });
+});
+
+describe('수익률', () => {
+  test('구입금액이 8000원이고 5등에 1개 당첨됐을 때, 수익률은 62.5%이다.', () => {
+    const AMOUNT_PAID = 8000;
+    const RANK_COUNTS_MAP = {
+      fifth: 1,
+      fourth: 0,
+      third: 0,
+      second: 0,
+      first: 0,
+    };
+
+    const result = calculateWinningsRate(AMOUNT_PAID, RANK_COUNTS_MAP);
+
+    expect(result).toBe(62.5);
   });
 });
