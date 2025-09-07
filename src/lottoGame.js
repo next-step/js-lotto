@@ -7,7 +7,7 @@ const LOTTO_RANK_TABLE = [
 ]
 
 export function getRank(ticketNumbers, winningNumbers, winningBonusNumber) {
-  const matchCount = ticketNumbers.filter(num => winningNumbers.includes(num)).length;
+  const matchCount = ticketNumbers.filter(num => winningNumbers.includes(num)).length
   const hasBonusNumber = ticketNumbers.includes(winningBonusNumber)
 
   return LOTTO_RANK_TABLE.find(rank => {
@@ -17,4 +17,10 @@ export function getRank(ticketNumbers, winningNumbers, winningBonusNumber) {
 
     return rank.matchCount === matchCount
   })
+}
+
+export function calculateProfitRate(purchaseAmount, totalWinnings) {
+  const rate = (totalWinnings / purchaseAmount) * 100
+
+  return Math.round(rate * 100) / 100
 }
