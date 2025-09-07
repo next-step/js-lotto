@@ -18,7 +18,7 @@ export class Lotto {
     ) {
       throw new TypeError("numbers는 숫자 형식의 배열이어야 합니다.");
     }
-    if (numbers.length !== Lotto.NUMBER_COUNT) {
+    if (new Set(numbers).size !== Lotto.NUMBER_COUNT) {
       throw new RangeError("Lotto는 6개의 숫자로 구성되어야 합니다");
     }
     this.#value = numbers.map((number) => new LottoNumber(number));

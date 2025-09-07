@@ -46,6 +46,15 @@ describe("Lotto", () => {
     // then
     expect(() => Lotto.from(numbers)).toThrow(RangeError);
   });
+  it("중복되는 숫자들로 구성되면 오류가 발생합니다.", () => {
+    // given
+    const numbers = [1, 1, 1, 1, 1, 1];
+
+    // when
+
+    // then
+    expect(() => new Lotto(numbers)).toThrow(RangeError);
+  });
   it("유효하지 않은 형식으로 구성된 문자열로 로또를 생성하면 오류가 발생합니다.", () => {
     // given
     const numbers = [
@@ -64,7 +73,7 @@ describe("Lotto", () => {
       expect(() => Lotto.from(number)).toThrow();
     });
   });
-    it("보너스번호가 당첨번호에 포함되면 오류가 발생합니다.", () => {
+  it("보너스번호가 당첨번호에 포함되면 오류가 발생합니다.", () => {
     // given
     const numbers = [
       "",
