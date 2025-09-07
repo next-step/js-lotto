@@ -1,6 +1,6 @@
 import { LottoError } from './errors/lottoError.js'
 
-const LOTTO_PRICE = 1000
+export const LOTTO_PRICE = 1000
 const LOTTO_NUMBERS_LENGTH = 6
 
 export function getTicket(money) {
