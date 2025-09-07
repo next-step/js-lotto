@@ -17,7 +17,10 @@ const isInNumberRange = (numbers) => {
 };
 
 const isInWinningNumbers = (bonusNumber, winningNumbers) => {
-  return winningNumbers.includes(bonusNumber);
+  const winningNumbersArray = winningNumbers
+    .split(',')
+    .map((number) => Number(number));
+  return winningNumbersArray.includes(bonusNumber);
 };
 
 export const isValidWinningNumbers = (winningNumbers) => {

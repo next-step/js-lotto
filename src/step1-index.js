@@ -10,7 +10,7 @@ const LottoGame = async () => {
 
   const lottoNumbers = await LottoNumbersInput();
 
-  WinningsStatistics();
+  WinningsStatistics(purchasedNumbers, lottoNumbers);
 };
 
 LottoGame();

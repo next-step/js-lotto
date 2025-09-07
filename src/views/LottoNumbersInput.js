@@ -17,6 +17,8 @@ const LottoNumbersInput = async () => {
   if (!isValidBonusNumber(bonusNumber, winningNumbers)) {
     return;
   }
+
+  return { winningNumbers, bonusNumber };
 };
 
 export default LottoNumbersInput;
