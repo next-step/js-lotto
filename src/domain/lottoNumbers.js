@@ -11,11 +11,9 @@ const hasDuplicatedNumbers = (winningNumbersArray) => {
 };
 
 const isInNumberRange = (numbers) => {
-  const outOfRangeNumbers = numbers.filter(
-    (number) => number < LINE_MINIMUM_NUMBER || number > LINE_MAXIMUM_NUMBER,
-  );
-
-  return outOfRangeNumbers.length > 0;
+  return numbers.every((number) => {
+    return number >= LINE_MINIMUM_NUMBER && number <= LINE_MAXIMUM_NUMBER;
+  });
 };
 
 const isInWinningNumbers = (bonusNumber, winningNumbers) => {
