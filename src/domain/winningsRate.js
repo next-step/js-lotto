@@ -13,8 +13,6 @@ const calculateTotalWinnings = (rankCountsMap) => {
     totalWinnings += calculateRankWinnings(rankCount, info.money);
   });
 
-  console.log(totalWinnings);
-
   return totalWinnings;
 };
 
