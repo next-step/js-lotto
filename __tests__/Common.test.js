@@ -1,8 +1,10 @@
+
 import { InputType } from "../src/constants/lotto.js";
 import { checkByType } from "../src/lib/lottoLib.js";
 
 describe("공통 사용", () => {
   test("type별 input값이 숫자인가?", () => {
+
     const lottoPriceTypeCheck = checkByType(InputType.PRICE, "5000");
     const lottoWinnerNumbersTypeCheck = checkByType(
       InputType.WINNER_NUMBER,

@@ -35,6 +35,7 @@ describe("로또구매", () => {
     const randomNumbers = [1, 2, 3, 4, 5, 6];
     const randomNumber = 7;
 
+
     const isValid = lotto.isDifferentNumber(randomNumbers, randomNumber);
 
     expect(isValid).toBe(true);
@@ -49,4 +50,5 @@ describe("로또구매", () => {
 
     expect(isValid).toEqual([1, 2, 3, 4, 5, 6]);
   });
+
 });
