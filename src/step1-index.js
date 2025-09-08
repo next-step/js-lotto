@@ -1,10 +1,6 @@
 import LottoPurchase from "./class/lottoPurchase.js";
 import WinningNumbers from "./class/winningNumbers.js";
-import {
-  LOTTO_BONUS_NUMBER_TYPE,
-  LOTTO_PRICE_TYPE,
-  LOTTO_WINNER_NUMBERS_TYPE,
-} from "./constants/lotto.js";
+import { InputType } from "./constants/lotto.js";
 import { checkByType } from "./lib/lottoLib.js";
 import readlineAsync from "./lib/readlineAsync.js";
 
@@ -14,7 +10,7 @@ async function inputBonusWinningNumber() {
     const bonusNumber = await readlineAsync("> 보너스 번호를 입력해 주세요. ");
     console.log();
 
-    if (!checkByType(LOTTO_BONUS_NUMBER_TYPE, bonusNumber)) {
+    if (checkByType(InputType.BONUS_NUMBER, bonusNumber)) {
       throw new Error("잘못된 입력 방식입니다.");
     }
 
@@ -30,7 +26,7 @@ async function inputWinningNumber(lottos, purchaseAmount) {
     console.log();
     const winningNumber = await readlineAsync(" > 당첨 번호를 입력해 주세요.");
 
-    if (!checkByType(LOTTO_WINNER_NUMBERS_TYPE, winningNumber)) {
+    if (checkByType(InputType.WINNER_NUMBER, winningNumber)) {
       throw new Error("잘못된 입력 방식입니다.");
     }
 
@@ -45,15 +41,6 @@ async function inputWinningNumber(lottos, purchaseAmount) {
       changeStringToNumberArr,
       Number(bonusNumber)
     );
-
-    if (
-      !classWinningNumber.isValidRangeWinningNumber() ||
-      !classWinningNumber.isValidRangeBonusNumber() ||
-      !classWinningNumber.isDigitCount() ||
-      !classWinningNumber.isBonusNumberNotInWinningNumbers()
-    ) {
-      return;
-    }
 
     const priceCheck = classWinningNumber.checkWinningStatistics(lottos);
     classWinningNumber.rateOfReturn(priceCheck, purchaseAmount);
@@ -71,7 +58,7 @@ async function buyLottoHandler() {
       "> 구입금액을 입력해 주세요. "
     );
 
-    if (!checkByType(LOTTO_PRICE_TYPE, lottoPurchaseAmount)) {
+    if (checkByType(InputType.PRICE, lottoPurchaseAmount)) {
       throw new Error("숫자만 입력 가능하며, 1000원 단위로 입력해주세요.");
     }
 
