@@ -20,15 +20,14 @@ const isInWinningNumbers = (bonusNumber, winningNumbers) => {
   const winningNumbersArray = winningNumbers
     .split(',')
     .map((number) => Number(number));
+
   return winningNumbersArray.includes(bonusNumber);
 };
 
 export const isValidWinningNumbers = (winningNumbers) => {
-  const winningNumbersArray = winningNumbers.split(',');
-
-  const numbersWithoutEmpty = winningNumbersArray.filter(
-    (number) => number !== '',
-  );
+  const numbersWithoutEmpty = winningNumbers
+    .split(',')
+    .filter((number) => number !== '');
 
   if (numbersWithoutEmpty.length !== LINE_SIZE) {
     throw new Error('숫자를 6개 입력해주세요.');
