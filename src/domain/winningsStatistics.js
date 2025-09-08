@@ -1,10 +1,11 @@
 import { RANK_INFO } from '../constants/winnings.js';
+import { DELIMITER } from '../constants/common.js';
 
 export const matchWithLottoNumbers = (purchasedLine, lottoNumbers) => {
   let duplicatedNumbers = [];
 
   const winningNumbersArray = lottoNumbers.winningNumbers
-    .split(',')
+    .split(DELIMITER)
     .map((number) => Number(number));
 
   const convertBonusNumber = Number(lottoNumbers.bonusNumber);

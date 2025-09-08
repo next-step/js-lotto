@@ -1,8 +1,8 @@
-import { LINE_PRICE } from '../constants/purchase.js';
+import { LINE_PRICE, PURCHASE_ERROR_MESSAGE } from '../constants/purchase.js';
 
 const isValidAmountPaid = (amountPaid) => {
   if (amountPaid < LINE_PRICE) {
-    throw new Error('로또는 1,000원 이상부터 구매 가능합니다.');
+    throw new Error(PURCHASE_ERROR_MESSAGE.MINIMUM_AMOUNT_PAID);
   }
 
   return !!amountPaid;
