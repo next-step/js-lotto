@@ -46,25 +46,16 @@ describe("Lotto", () => {
     // then
     expect(() => Lotto.from(numbers)).toThrow(RangeError);
   });
-  it("유효하지 않은 형식으로 구성된 문자열로 로또를 생성하면 오류가 발생합니다.", () => {
+  it("중복되는 숫자들로 구성되면 오류가 발생합니다.", () => {
     // given
-    const numbers = [
-      "",
-      ",,,,,,",
-      "1,,,,2,",
-      "1,2,3,Infinity,5,6",
-      "1,2,3,4.5,5,6",
-      "1,2,3,-4,5,6",
-      "1,2,3,1e2,5,6",
-    ];
+    const numbers = [1, 1, 1, 1, 1, 1];
+
     // when
 
     // then
-    numbers.forEach((number) => {
-      expect(() => Lotto.from(number)).toThrow();
-    });
+    expect(() => new Lotto(numbers)).toThrow(RangeError);
   });
-    it("보너스번호가 당첨번호에 포함되면 오류가 발생합니다.", () => {
+  it("유효하지 않은 형식으로 구성된 문자열로 로또를 생성하면 오류가 발생합니다.", () => {
     // given
     const numbers = [
       "",
