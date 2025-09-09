@@ -1,51 +1,48 @@
-import { generateRandomNumber } from "../utils/generateRandomNumber.js";
+import { LottoNumber } from "./LottoNumber";
 
 export class Lotto {
-  static LOTTO_NUMBER_MIN = 1;
-  static LOTTO_NUMBER_MAX = 45;
-  static LOTTO_NUMBER_COUNT_MAX = 6;
+  #lottoNumbers;
 
-  static validateLottoNumber(lottoNumber) {
-    const lottoNumberSet = new Set(lottoNumber);
-
-    if (lottoNumberSet.size !== Lotto.LOTTO_NUMBER_COUNT_MAX) {
-      throw new Error(
-        `로또 번호는 같은 숫자의 중복없이 ${Lotto.LOTTO_NUMBER_COUNT_MAX}개가 입력되어야 합니다.`
-      );
+  constructor(lottoNumbers) {
+    if (!Array.isArray(lottoNumbers)) {
+      throw new Error("배열만 값으로 받을 수 있습니다.");
     }
 
-    if (!Lotto.isValidLottoNumber(lottoNumber)) {
-      throw new Error(
-        `로또 번호는 ${Lotto.LOTTO_NUMBER_MIN}~${Lotto.LOTTO_NUMBER_MAX}사이의 숫자만 입력할 수 있어요.`
-      );
+    const numbersSet = new Set(lottoNumbers);
+    if (numbersSet.size !== 6) {
+      throw new Error("로또 번호는 총 6개여야 합니다.");
     }
+
+    this.#lottoNumbers = lottoNumbers;
   }
 
-  static isValidLottoNumber(lottoNumber) {
-    return lottoNumber.every(
-      (number) =>
-        number >= Lotto.LOTTO_NUMBER_MIN && number <= Lotto.LOTTO_NUMBER_MAX
-    );
+  static of(lottoNumbers) {
+    if (
+      lottoNumbers.every((lottoNumber) => lottoNumber instanceof LottoNumber)
+    ) {
+      return new Lotto(lottoNumbers);
+    }
+
+    return new Lotto(lottoNumbers.map(LottoNumber.of));
   }
 
-  static issue() {
-    const lottoNumber = [];
+  get value() {
+    return this.#lottoNumbers;
+  }
 
-    while (lottoNumber.length < Lotto.LOTTO_NUMBER_COUNT_MAX) {
-      const randomNumber = generateRandomNumber(
-        Lotto.LOTTO_NUMBER_MIN,
-        Lotto.LOTTO_NUMBER_MAX
-      );
+  compare(lotto) {
+    let matchCount = 0;
 
-      if (lottoNumber.includes(randomNumber)) {
-        continue;
+    this.#lottoNumbers.forEach((lottoNumber) => {
+      if (lotto.contains(lottoNumber)) {
+        matchCount += 1;
       }
+    });
 
-      lottoNumber.push(randomNumber);
-    }
+    return matchCount;
+  }
 
-    Lotto.validateLottoNumber(lottoNumber);
-
-    return lottoNumber.toSorted((a, b) => a - b);
+  contains(lottoNumber) {
+    return this.#lottoNumbers.find((it) => it.equals(lottoNumber));
   }
 }

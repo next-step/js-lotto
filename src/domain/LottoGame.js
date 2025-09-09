@@ -1,70 +1,52 @@
-import { Lotto } from "./Lotto.js";
+import { commarize } from "../utils/commarize.js";
+import { LottoRank } from "./LottoRank.js";
 
 export class LottoGame {
   static LOTTO_PRICE = 1_000;
   static LOTTO_RANK = {
-    FIRST: {
-      NAME: "first",
-      PRIZE: 2_000_000_000,
-      COUNT: 6,
-    },
-    SECOND: {
-      NAME: "second",
-      PRIZE: 30_000_000,
-      COUNT: 5,
-    },
-    THIRD: {
-      NAME: "third",
-      PRIZE: 1_500_000,
-      COUNT: 5,
-    },
-    FOURTH: {
-      NAME: "fourth",
-      PRIZE: 50_000,
-      COUNT: 4,
-    },
-    FIFTH: {
-      NAME: "fifth",
-      PRIZE: 5_000,
-      COUNT: 3,
-    },
+    FIRST: LottoRank.of("first", 2_000_000_000, 6),
+    SECOND: LottoRank.of("second", 30_000_000, 5),
+    THIRD: LottoRank.of("third", 1_500_000, 5),
+    FOURTH: LottoRank.of("fourth", 50_000, 4),
+    FIFTH: LottoRank.of("fifth", 5_000, 3),
   };
 
-  buy(price) {
-    const lottoCountToBuy = price / LottoGame.LOTTO_PRICE;
+  static validateLottoPurchasePrice(purchasePrice) {
+    if (typeof purchasePrice !== "number" || Number.isNaN(purchasePrice)) {
+      throw new Error("로또 구입 금액은 숫자값을 입력해주세요.");
+    }
 
-    return Array.from({ length: lottoCountToBuy }, () => Lotto.issue());
+    if (purchasePrice % LottoGame.LOTTO_PRICE !== 0) {
+      throw new Error(
+        `로또 구입 금액은 ${commarize(
+          LottoGame.LOTTO_PRICE
+        )}원 단위로 입력해주세요.`
+      );
+    }
   }
 
-  checkResult({ lottoNumbers, winningNumber, bonusNumber }) {
+  static checkResult({ lottos, winningLotto }) {
     const result = {
-      [LottoGame.LOTTO_RANK.FIRST.NAME]: 0,
-      [LottoGame.LOTTO_RANK.SECOND.NAME]: 0,
-      [LottoGame.LOTTO_RANK.THIRD.NAME]: 0,
-      [LottoGame.LOTTO_RANK.FOURTH.NAME]: 0,
-      [LottoGame.LOTTO_RANK.FIFTH.NAME]: 0,
+      [LottoGame.LOTTO_RANK.FIRST.value.rankName]: 0,
+      [LottoGame.LOTTO_RANK.SECOND.value.rankName]: 0,
+      [LottoGame.LOTTO_RANK.THIRD.value.rankName]: 0,
+      [LottoGame.LOTTO_RANK.FOURTH.value.rankName]: 0,
+      [LottoGame.LOTTO_RANK.FIFTH.value.rankName]: 0,
     };
 
-    for (let i = 0; i < lottoNumbers.length; i += 1) {
-      const lottoNumber = lottoNumbers[i];
-      let matchCount = 0;
+    for (let i = 0; i < lottos.length; i += 1) {
+      const lotto = lottos[i];
 
-      for (let j = 0; j < lottoNumber.length; j += 1) {
-        const number = lottoNumber[j];
+      const matchCount = lotto.compare(winningLotto.value.lotto);
 
-        if (winningNumber.includes(number)) {
-          matchCount += 1;
-        }
-      }
-
-      if (matchCount < LottoGame.LOTTO_RANK.FIFTH.COUNT) {
+      if (matchCount < LottoGame.LOTTO_RANK.FIFTH.value.matchCount) {
         continue;
       }
 
-      const rank = this.#getRankByMatchCount({
-        lottoNumber,
+      const rank = LottoGame.getRankByMatchCount({
+        lottoNumber: lotto.value,
+        bonusNumber: winningLotto.value.bonusNumber,
         matchCount,
-        bonusNumber,
       });
 
       result[rank] += 1;
@@ -73,41 +55,34 @@ export class LottoGame {
     return result;
   }
 
-  #getRankByMatchCount({ lottoNumber, bonusNumber, matchCount }) {
-    if (matchCount === LottoGame.LOTTO_RANK.FIFTH.COUNT) {
-      return LottoGame.LOTTO_RANK.FIFTH.NAME;
+  static getRankByMatchCount({ lottoNumber, bonusNumber, matchCount }) {
+    if (matchCount === LottoGame.LOTTO_RANK.SECOND.value.matchCount) {
+      return lottoNumber.find((it) => it.equals(bonusNumber))
+        ? LottoGame.LOTTO_RANK.SECOND.value.rankName
+        : LottoGame.LOTTO_RANK.THIRD.value.rankName;
     }
 
-    if (matchCount === LottoGame.LOTTO_RANK.FOURTH.COUNT) {
-      return LottoGame.LOTTO_RANK.FOURTH.NAME;
-    }
+    const lottoRank = Object.values(LottoGame.LOTTO_RANK).find(
+      (lottoRank) => lottoRank.value.matchCount === matchCount
+    );
 
-    if (matchCount === LottoGame.LOTTO_RANK.SECOND.COUNT) {
-      if (lottoNumber.includes(bonusNumber)) {
-        return LottoGame.LOTTO_RANK.SECOND.NAME;
-      }
-      return LottoGame.LOTTO_RANK.THIRD.NAME;
-    }
-
-    if (matchCount === LottoGame.LOTTO_RANK.FIRST.COUNT) {
-      return LottoGame.LOTTO_RANK.FIRST.NAME;
-    }
+    return lottoRank.value.rankName;
   }
 
   /**
    * 0%는 0, 100%는 1로 반환하고 있어서 사용하는 곳에서 필요에 따라 포맷팅이 필요합니다.
    */
-  getRateOfReturn({ purchasePrice, lottoResult }) {
-    const totalPrice = this.#getLottoResultTotalPrice(lottoResult);
+  static getRateOfReturn({ purchasePrice, lottoResult }) {
+    const totalPrice = LottoGame.getLottoResultTotalPrice(lottoResult);
 
     return totalPrice / purchasePrice;
   }
 
-  #getLottoResultTotalPrice(lottoResult) {
+  static getLottoResultTotalPrice(lottoResult) {
     let result = 0;
 
     Object.entries(lottoResult).forEach(([rank, count]) => {
-      result += LottoGame.LOTTO_RANK[rank.toUpperCase()].PRIZE * count;
+      result += LottoGame.LOTTO_RANK[rank.toUpperCase()].value.prize * count;
     });
 
     return result;
