@@ -17,3 +17,14 @@ export const generateLottoLine = () => {
   lottoLine.sort((a, b) => a - b);
   return lottoLine;
 };
+
+export const generatePurchasedNumbers = (lineCount) => {
+  const purchasedNumbers = [];
+
+  for (let i = 0; i < lineCount; i++) {
+    const lottoLine = generateLottoLine();
+    purchasedNumbers.push(lottoLine);
+  }
+
+  return purchasedNumbers;
+};

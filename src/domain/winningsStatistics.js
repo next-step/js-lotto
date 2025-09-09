@@ -1,24 +1,15 @@
 import { RANK_INFO } from '../constants/winnings.js';
 import { DELIMITER } from '../constants/common.js';
+import findDuplication from '../utils/findDuplication.js';
 
-export const matchWithLottoNumbers = (purchasedLine, lottoNumbers) => {
-  let duplicatedNumbers = [];
-
+export const matchRankNameWithLine = (purchasedLine, lottoNumbers) => {
   const winningNumbersArray = lottoNumbers.winningNumbers
     .split(DELIMITER)
     .map((number) => Number(number));
 
   const convertBonusNumber = Number(lottoNumbers.bonusNumber);
 
-  purchasedLine.forEach((purchasedNumber) => {
-    const findSameNumber = winningNumbersArray.find((winningNumber) => {
-      return winningNumber === purchasedNumber;
-    });
-
-    if (findSameNumber) {
-      duplicatedNumbers = [...duplicatedNumbers, findSameNumber];
-    }
-  });
+  const duplicatedNumbers = findDuplication(purchasedLine, winningNumbersArray);
 
   if (duplicatedNumbers.length === 5) {
     const isMatchedWithBonusNumber = purchasedLine.includes(convertBonusNumber);
@@ -42,12 +33,12 @@ export const matchWithLottoNumbers = (purchasedLine, lottoNumbers) => {
 export const createRankCountsMap = (purchasedNumbers, lottoNumbers) => {
   const rankCountsMap = {};
 
-  const matchedRankNameByLotto = purchasedNumbers.map((purchasedLine) => {
-    return matchWithLottoNumbers(purchasedLine, lottoNumbers);
+  const matchedRankNameWithLine = purchasedNumbers.map((purchasedLine) => {
+    return matchRankNameWithLine(purchasedLine, lottoNumbers);
   });
 
   RANK_INFO.forEach((info) => {
-    const count = matchedRankNameByLotto.filter((count) => {
+    const count = matchedRankNameWithLine.filter((count) => {
       return count === info.name;
     });
 

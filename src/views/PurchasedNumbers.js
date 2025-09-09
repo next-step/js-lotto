@@ -1,18 +1,14 @@
 import { buyNumbers } from '../domain/amountPaid.js';
-import { generateLottoLine } from '../domain/purchasedNumbers.js';
+import { generatePurchasedNumbers } from '../domain/purchasedNumbers.js';
 
 const PurchasedNumbers = (amountPaid) => {
-  let purchasedNumbers = [];
+  const purchasedLineCount = buyNumbers(amountPaid);
 
-  const purchasedLottoCount = buyNumbers(amountPaid);
+  const purchasedNumbers = generatePurchasedNumbers(purchasedLineCount);
 
-  for (let i = 0; i < purchasedLottoCount; i++) {
-    const lottoLine = generateLottoLine();
-
+  purchasedNumbers.forEach((lottoLine) => {
     console.log(lottoLine);
-
-    purchasedNumbers = [...purchasedNumbers, lottoLine];
-  }
+  });
 
   return purchasedNumbers;
 };

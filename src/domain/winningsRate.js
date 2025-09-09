@@ -5,15 +5,10 @@ const calculateRankWinnings = (rankCount, rankMoney) => {
 };
 
 const calculateTotalWinnings = (rankCountsMap) => {
-  let totalWinnings = 0;
-
-  RANK_INFO.forEach((info) => {
+  return RANK_INFO.reduce((totalWinnings, info) => {
     const rankCount = rankCountsMap[info.name];
-
-    totalWinnings += calculateRankWinnings(rankCount, info.money);
-  });
-
-  return totalWinnings;
+    return totalWinnings + calculateRankWinnings(rankCount, info.money);
+  }, 0);
 };
 
 export const calculateWinningsRate = (amountPaid, rankCountsMap) => {
