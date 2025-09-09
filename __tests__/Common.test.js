@@ -1,19 +1,17 @@
-import {
-  LOTTO_BONUS_NUMBER_TYPE,
-  LOTTO_PRICE_TYPE,
-  LOTTO_WINNER_NUMBERS_TYPE,
-} from "../src/constants/lotto.js";
+
+import { InputType } from "../src/constants/lotto.js";
 import { checkByType } from "../src/lib/lottoLib.js";
 
 describe("공통 사용", () => {
   test("type별 input값이 숫자인가?", () => {
-    const lottoPriceTypeCheck = checkByType(LOTTO_PRICE_TYPE, "5000");
+
+    const lottoPriceTypeCheck = checkByType(InputType.PRICE, "5000");
     const lottoWinnerNumbersTypeCheck = checkByType(
-      LOTTO_WINNER_NUMBERS_TYPE,
+      InputType.WINNER_NUMBER,
       "1,2,3,4,5,6"
     );
     const lottoBonusWinnerNumberTypeCheck = checkByType(
-      LOTTO_BONUS_NUMBER_TYPE,
+      InputType.BONUS_NUMBER,
       "7"
     );
 

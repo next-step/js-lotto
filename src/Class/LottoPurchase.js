@@ -71,11 +71,19 @@ class LottoPurchase {
     for (let i = 0; i < lottoCount; i++) {
       const lotto = [];
       this.createLotto(lotto);
-      this.#lottos.push(lotto);
-      console.log(lotto);
+
+      this.#lottos.push(this.ascLotto(lotto));
+      console.log(this.ascLotto(lotto));
     }
 
     return this.#lottos;
+  }
+
+  // 로또 오름차순 정렬
+  ascLotto(lotto) {
+    const ascLotto = lotto.sort((a, b) => a - b);
+
+    return ascLotto;
   }
 }
 

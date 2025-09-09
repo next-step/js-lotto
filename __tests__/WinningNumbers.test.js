@@ -11,7 +11,8 @@ describe("당첨번호", () => {
     );
 
     // when
-    const isValid = winningNumbers.isValidRangeWinningNumber();
+    const isValid = winningNumbers.isValidRangeWinningNumber(numberEntered);
+
 
     // then
     expect(isValid).toBe(true);
