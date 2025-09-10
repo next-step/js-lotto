@@ -2,3 +2,20 @@
   list-style: none;
   padding: 0;
 }
+
+.numbers-row {
+  display: flex;
+  gap: 10px;
+}
+
+.numbers-row input {
+  width: 30px;
+  height: 30px;
+}
+
+.winning-lotto form button {
+  display: flex;
+  margin-top: 20px;
+  width: 50%;
+  justify-content: center;
+}

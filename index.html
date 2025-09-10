@@ -23,6 +23,26 @@
           <p class="lotto-count"></p>
           <ul class="lotto-list"></ul>
         </div>
+        <div class="winning-lotto" style="display: none">
+          <p>지난 주 당첨번호 6개와 보너스 번호 1개를 입력해주세요.</p>
+
+          <form>
+            <div class="numbers-row">
+              <label for="winning-number">당첨 번호</label>
+              <input name="winning-number" type="number" />
+              <input name="winning-number" type="number" />
+              <input name="winning-number" type="number" />
+              <input name="winning-number" type="number" />
+              <input name="winning-number" type="number" />
+              <input name="winning-number" type="number" />
+
+              <label for="bonus-number">보너스 번호</label>
+              <input name="bonus-number" type="number" />
+            </div>
+
+            <button type="submit">결과 확인하기</button>
+          </form>
+        </div>
       </main>
     </div>
     <script type="module" src="./src/step2-index.js"></script>
