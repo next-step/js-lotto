@@ -1,3 +1,5 @@
+import { Lotto } from "../../Lotto/index.js";
+
 export const generateLottoNumbers = () => {
   return Array.from({ length: Lotto.SIZE }, (_, index) => index + 1)
     .sort(() => Math.random() - 0.5)
