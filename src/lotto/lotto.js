@@ -112,6 +112,14 @@ class LottoWinningRule {
       LottoWinningRule.getPrize(winningLotto, lotto)
     );
   }
+
+  static getWinningRate(winningResult, purchaseAmount) {
+    return (
+      (winningResult.reduce((acc, prize) => acc + prize.prize, 0) /
+        purchaseAmount) *
+      100
+    );
+  }
 }
 
 const createLotto = (purchaseAmount) => {

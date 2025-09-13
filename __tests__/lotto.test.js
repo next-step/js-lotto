@@ -76,4 +76,25 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
       lotto.LottoWinningRule.THIRD_PRIZE,
     ]);
   });
+
+  it("사용자의 당첨내역의 수익률을 계산한다.", () => {
+    //given
+    const purchaseAmount = 10000;
+    const winningResult = [
+      lotto.LottoWinningRule.FIRST_PRIZE,
+      lotto.LottoWinningRule.SECOND_PRIZE,
+      lotto.LottoWinningRule.THIRD_PRIZE,
+    ];
+    //when
+    const winningRate = lotto.LottoWinningRule.getWinningRate(
+      winningResult,
+      purchaseAmount
+    );
+    //then
+    const expectedWinningRate =
+      (winningResult.reduce((acc, prize) => acc + prize.prize, 0) /
+        purchaseAmount) *
+      100;
+    expect(winningRate).toBe(expectedWinningRate);
+  });
 });
