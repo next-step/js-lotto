@@ -2,7 +2,7 @@ import { LottoNumber } from "../domain/lotto-number.js";
 import { LottoStore } from "../domain/lotto-store.js";
 import { Lotto } from "../domain/lotto.js";
 
-export function lottoPriceForm() {
+export function submitLottoPrice() {
   return new Promise((resolve) => {
     const form = document.querySelector(".lotto-price form");
     form.addEventListener(
@@ -21,7 +21,7 @@ export function lottoPriceForm() {
   });
 }
 
-export function winningLottoForm(lottoStore, lottoList) {
+export function submitWinningLotto(lottoStore, lottoList) {
   return new Promise((resolve) => {
     const container = document.querySelector(".winning-lotto");
     container.style.display = "block";
