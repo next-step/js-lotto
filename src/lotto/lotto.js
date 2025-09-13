@@ -1,5 +1,5 @@
 const LOTTO_PRICE = 1000;
-const LOTTT_NUMER_RANGE = [
+const LOTTO_NUMER_RANGE = [
   ...new Array(45).fill(0).map((_, index) => index + 1),
 ];
 
@@ -10,7 +10,7 @@ class Lotto {
     if (lottoNumbers) {
       this.#numbers = lottoNumbers;
     } else {
-      this.#numbers = [...LOTTT_NUMER_RANGE]
+      this.#numbers = [...LOTTO_NUMER_RANGE]
         .sort(() => Math.random() - 0.5)
         .splice(0, Lotto.LOTTO_NUMBER_COUNT);
     }
@@ -24,7 +24,7 @@ class Lotto {
   _validateLottoNumbers(lottoNumbers) {
     return (
       Array.isArray(lottoNumbers) &&
-      lottoNumbers.every((number) => LOTTT_NUMER_RANGE.includes(number)) &&
+      lottoNumbers.every((number) => LOTTO_NUMER_RANGE.includes(number)) &&
       new Set(lottoNumbers).size === Lotto.LOTTO_NUMBER_COUNT
     );
   }
@@ -50,7 +50,7 @@ class WinningLotto {
 
   _validateWinningLotto(lotto, bonusNumber) {
     return (
-      LOTTT_NUMER_RANGE.includes(bonusNumber) &&
+      LOTTO_NUMER_RANGE.includes(bonusNumber) &&
       new Set([...lotto.getNumbers(), bonusNumber]).size ===
         WinningLotto.WINNING_NUMBER_COUNT
     );
@@ -108,9 +108,9 @@ class LottoWinningRule {
   }
 
   static getWinningResult(winningLotto, lottos) {
-    return lottos.map((lotto) =>
-      LottoWinningRule.getPrize(winningLotto, lotto)
-    );
+    return lottos
+      .map((lotto) => LottoWinningRule.getPrize(winningLotto, lotto))
+      .filter((prize) => prize ?? false);
   }
 
   static getWinningRate(winningResult, purchaseAmount) {
@@ -119,6 +119,20 @@ class LottoWinningRule {
         purchaseAmount) *
       100
     );
+  }
+
+  static getWinningReport(winningResult = [], purchaseAmount) {
+    const matched = new Map();
+    winningResult.forEach((prize) => {
+      matched.set(prize, matched.get(prize) ? matched.get(prize) + 1 : 1);
+    });
+    return {
+      matched,
+      winningRate: LottoWinningRule.getWinningRate(
+        winningResult,
+        purchaseAmount
+      ),
+    };
   }
 }
 
@@ -132,6 +146,6 @@ export default {
   WinningLotto,
   LottoWinningRule,
   LOTTO_PRICE,
-  LOTTT_NUMER_RANGE,
+  LOTTT_NUMER_RANGE: LOTTO_NUMER_RANGE,
   createLotto,
 };

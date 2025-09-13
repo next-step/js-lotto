@@ -1,4 +1,4 @@
-import lotto from "../src/lotto/lotto";
+import lotto from "../src/lotto/lotto.js";
 
 describe("로또 객체 비즈니스 로직 테스트", () => {
   it("로또 구입 금액에 해당하는 만큼 로또를 발행한다.", () => {
@@ -96,5 +96,35 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
         purchaseAmount) *
       100;
     expect(winningRate).toBe(expectedWinningRate);
+  });
+
+  it("당첨 내역과 수익률을 출력할 수 있게 한다.", () => {
+    //given
+    const purchaseAmount = 10000;
+    const winningResult = [
+      lotto.LottoWinningRule.FIRST_PRIZE,
+      lotto.LottoWinningRule.FIRST_PRIZE,
+      lotto.LottoWinningRule.SECOND_PRIZE,
+      lotto.LottoWinningRule.THIRD_PRIZE,
+    ];
+    const expectedWinningRate = lotto.LottoWinningRule.getWinningRate(
+      winningResult,
+      purchaseAmount
+    );
+    //when
+    const winningReport = lotto.LottoWinningRule.getWinningReport(
+      winningResult,
+      purchaseAmount
+    );
+    //then
+    const expectedWinningReport = new Map();
+    expectedWinningReport.set(lotto.LottoWinningRule.FIRST_PRIZE, 2);
+    expectedWinningReport.set(lotto.LottoWinningRule.SECOND_PRIZE, 1);
+    expectedWinningReport.set(lotto.LottoWinningRule.THIRD_PRIZE, 1);
+
+    expect(winningReport).toEqual({
+      matched: expectedWinningReport,
+      winningRate: expectedWinningRate,
+    });
   });
 });
