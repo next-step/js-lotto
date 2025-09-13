@@ -89,13 +89,22 @@ export function showWinningStatistics(rankList, rateOfReturn) {
   modal.appendChild(container);
   document.body.appendChild(modal);
 
-  closeButton.addEventListener("click", () => {
+  function restart() {
     modal.remove();
     window.location.reload();
+  }
+
+  closeButton.addEventListener("click", () => {
+    restart();
   });
 
   resetButton.addEventListener("click", () => {
-    modal.remove();
-    window.location.reload();
+    restart();
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      restart();
+    }
   });
 }
