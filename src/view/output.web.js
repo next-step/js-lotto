@@ -24,49 +24,19 @@ export function printLottoWeb(lottoList) {
 export function showWinningStatistics(rankList, rateOfReturn) {
   const modal = document.createElement("div");
   modal.className = "modal";
-  Object.assign(modal.style, {
-    display: "flex",
-    position: "fixed",
-    zIndex: "1",
-    left: "0",
-    top: "0",
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-    justifyContent: "center",
-    alignItems: "center",
-  });
 
   const container = document.createElement("div");
-  Object.assign(container.style, {
-    backgroundColor: "#fff",
-    padding: "20px",
-    borderRadius: "8px",
-    width: "400px",
-    textAlign: "center",
-    position: "relative",
-  });
+  container.className = "modal-container";
 
   const closeButton = document.createElement("span");
+  closeButton.className = "modal-close-button";
   closeButton.innerHTML = "&times;";
-  Object.assign(closeButton.style, {
-    position: "absolute",
-    top: "10px",
-    right: "20px",
-    fontSize: "24px",
-    cursor: "pointer",
-  });
 
   const title = document.createElement("h2");
   title.textContent = "🏆 당첨 통계 🏆";
 
   const statisticsContainer = document.createElement("table");
-  Object.assign(statisticsContainer.style, {
-    width: "100%",
-    borderCollapse: "collapse",
-    marginTop: "20px",
-    marginBottom: "20px",
-  });
+  statisticsContainer.className = "modal-statistics-table";
   const thead = document.createElement("thead");
   const theaderRow = document.createElement("tr");
   ["일치 개수", "당첨 금액", "당첨 개수"].forEach((text) => {
@@ -104,11 +74,6 @@ export function showWinningStatistics(rankList, rateOfReturn) {
     const tdCount = document.createElement("td");
     tdCount.textContent = `${count}개`;
     tdCount.style.textAlign = "center";
-
-    [tdMatch, tdPrize, tdCount].forEach((td) => {
-      td.style.padding = "8px";
-      td.style.borderBottom = "1px solid #ddd";
-    });
 
     tr.append(tdMatch, tdPrize, tdCount);
     tbody.appendChild(tr);

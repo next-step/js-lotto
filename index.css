@@ -35,3 +35,47 @@
 .lotto-list.show {
   display: block;
 }
+
+.modal {
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  text-align: center;
+  position: relative;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-statistics-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.modal-statistics-table th,
+.modal-statistics-table td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
