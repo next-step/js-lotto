@@ -1,27 +1,10 @@
+import { readLineAsync } from "./ui/utils/readLineAsync.js";
 import { LottoMachine } from "./domains/LottoMachine/index.js";
 import { LottoNumber } from "./domains/LottoNumber/index.js";
 import { Lotto } from "./domains/Lotto/index.js";
 import { WinningLotto } from "./domains/WinningLotto/index.js";
-import { readLineAsync } from "./ui/utils/readLineAsync.js";
 import { LottoShop } from "./domains/LottoShop/index.js";
-
-const RANKS = [1, 2, 3, 4, 5];
-
-const RANK_WINNING_PRICE_MAP = {
-  1: 2_000_000_000,
-  2: 30_000_000,
-  3: 1_500_000,
-  4: 50_000,
-  5: 5_000,
-};
-
-const RANK_MATCHING_COUNT_MAP = {
-  1: 6,
-  2: 5,
-  3: 5,
-  4: 4,
-  5: 3,
-};
+import { RANKS, LottoChecker } from "./domains/LottoChecker/index.js";
 
 const play = async () => {
   const lottoShop = new LottoShop({
@@ -48,9 +31,16 @@ const play = async () => {
     new LottoNumber(Number(bonusNumber))
   );
 
-  const lottoResult = getLottoResult(winningLotto, lottos);
+  const { rankResult, totalPrice } = LottoChecker.checkLotto(
+    winningLotto,
+    lottos
+  );
 
-  printStatistics(lottoResult, purchasePrice);
+  print("당첨 통계");
+  print("--------------------");
+  printRankResult(rankResult);
+  console.log();
+  printTotalRateOfReturn(totalPrice, purchasePrice);
 };
 
 play();
@@ -65,56 +55,19 @@ function printLottos(lottos) {
   });
 }
 
-function getLottoResult(winningLotto, lottos) {
-  const lottoResult = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-
-  for (const lotto of lottos) {
-    const result = winningLotto.evaluateLotto(lotto);
-    switch (result.matchingCount) {
-      case 3:
-        lottoResult[5] += 1;
-        break;
-      case 4:
-        lottoResult[4] += 1;
-        break;
-      case 5:
-        if (result.isBonusNumberMatched) {
-          lottoResult[2] += 1;
-        } else {
-          lottoResult[3] += 1;
-        }
-        break;
-      case 6:
-        lottoResult[1] += 1;
-        break;
-      default:
-        break;
-    }
-  }
-
-  return lottoResult;
-}
-
-function printStatistics(lottoResult, purchasePrice) {
-  console.log("당첨 통계");
-  console.log("--------------------");
-
+function printRankResult(lottoResult) {
   RANKS.reverse().forEach((rank) => {
     console.log(
-      `${RANK_MATCHING_COUNT_MAP[rank]}개 일치${
+      `${LottoChecker.RANK_INFO[rank].matchingCount}개 일치${
         rank === 2 ? ", 보너스 볼 일치" : ""
-      } (${RANK_WINNING_PRICE_MAP[rank].toLocaleString()}원) - ${
+      } (${LottoChecker.RANK_INFO[rank].price.toLocaleString()}원) - ${
         lottoResult[rank]
       }개`
     );
   });
+}
 
-  console.log();
-
-  const totalPrice = RANKS.reduce((totalAmount, rank) => {
-    return totalAmount + RANK_WINNING_PRICE_MAP[rank] * lottoResult[rank];
-  }, 0);
-
+function printTotalRateOfReturn(totalPrice, purchasePrice) {
   console.log(
     `총 수익률은 ${((totalPrice * 100) / purchasePrice).toFixed(1)}%입니다.`
   );
