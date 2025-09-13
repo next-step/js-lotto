@@ -1,4 +1,7 @@
 import { LottoMachine } from "./domains/LottoMachine/index.js";
+import { LottoNumber } from "./domains/LottoNumber/index.js";
+import { Lotto } from "./domains/Lotto/index.js";
+import { WinningLotto } from "./domains/WinningLotto/index.js";
 import { readLineAsync } from "./ui/utils/readLineAsync.js";
 
 const RANKS = [1, 2, 3, 4, 5];
@@ -35,7 +38,12 @@ const play = async () => {
   const bonusNumber = await readLineAsync("보너스 번호를 입력해 주세요.");
   console.log();
 
-  const lottoResult = getLottoResult(lottos, { winningNumbers, bonusNumber });
+  const winningLotto = new WinningLotto(
+    new Lotto(winningNumbers.split(",").map((num) => Number(num))),
+    new LottoNumber(Number(bonusNumber))
+  );
+
+  const lottoResult = getLottoResult(winningLotto, lottos);
 
   printStatistics(lottoResult, purchasePrice);
 };
@@ -52,12 +60,12 @@ function printLottos(lottos) {
   });
 }
 
-function getLottoResult(lottos, { winningNumbers, bonusNumber }) {
+function getLottoResult(winningLotto, lottos) {
   const lottoResult = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
   for (const lotto of lottos) {
-    const lottoResult = lotto.evaluateLotto(winningNumbers, bonusNumber);
-    switch (lottoResult.matchingCount) {
+    const result = winningLotto.evaluateLotto(lotto);
+    switch (result.matchingCount) {
       case 3:
         lottoResult[5] += 1;
         break;
@@ -65,7 +73,7 @@ function getLottoResult(lottos, { winningNumbers, bonusNumber }) {
         lottoResult[4] += 1;
         break;
       case 5:
-        if (lottoResult.isBonusNumberMatched) {
+        if (result.isBonusNumberMatched) {
           lottoResult[2] += 1;
         } else {
           lottoResult[3] += 1;

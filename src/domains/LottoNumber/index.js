@@ -14,6 +14,10 @@ export class LottoNumber {
     this.#number = number;
   }
 
+  get value() {
+    return this.#number;
+  }
+
   isMatched(lottoNumber) {
     return this.#number === lottoNumber.#number;
   }

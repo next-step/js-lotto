@@ -19,19 +19,20 @@ export class Lotto {
   }
 
   get numbers() {
-    return this.#lottoNumbers;
+    return Array.from(this.#lottoNumbers)
+      .map((lottoNumber) => lottoNumber.value)
+      .sort((a, b) => a - b);
   }
 
-  evaluateLotto(winningNumbers, bonusNumber) {
-    return {
-      matchingCount: this.#lottoNumbers.filter((lottoNumber) =>
-        winningNumbers.some((winningLottoNumber) =>
-          winningLottoNumber.isMatched(lottoNumber)
-        )
-      ).length,
-      isBonusNumberMatched: this.#lottoNumbers.some((lottoNumber) =>
-        lottoNumber.isMatched(bonusNumber)
-      ),
-    };
+  countMatchingLottoNumber(lotto) {
+    return [...this.#lottoNumbers].filter((lottoNumber) =>
+      lotto.hasLottoNumber(lottoNumber)
+    ).length;
+  }
+
+  hasLottoNumber(lottoNumber) {
+    return [...this.#lottoNumbers].some((lottoNumberInLotto) =>
+      lottoNumberInLotto.isMatched(lottoNumber)
+    );
   }
 }
