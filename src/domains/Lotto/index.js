@@ -1,28 +1,29 @@
-import {
-  MAX_LOTTO_NUMBER_COUNT,
-  MAX_LOTTO_NUMBER,
-  MIN_LOTTO_NUMBER,
-  ERROR_MESSAGES,
-} from "./constants/index.js";
-
 export class Lotto {
+  static SIZE = 6;
+  static Range = { MIN: 1, MAX: 45 };
+  static ErrorMessages = {
+    INVALID_COUNT: `로또는 ${Lotto.SIZE}개의 숫자를 가진다`,
+    DUPLICATE_NUMBERS: `로또는 ${Lotto.SIZE}개의 중복 없는 숫자를 가진다`,
+    OUT_OF_RANGE: `로또는 ${Lotto.Range.MIN}~${Lotto.Range.MAX} 사이의 숫자를 가진다`,
+  };
+
   #numbers;
 
   constructor(numbers) {
-    if (numbers.length !== MAX_LOTTO_NUMBER_COUNT) {
-      throw new Error(ERROR_MESSAGES.INVALID_COUNT);
+    if (numbers.length !== Lotto.SIZE) {
+      throw new Error(Lotto.ErrorMessages.INVALID_COUNT);
     }
 
-    if (new Set(numbers).size !== MAX_LOTTO_NUMBER_COUNT) {
-      throw new Error(ERROR_MESSAGES.DUPLICATE_NUMBERS);
+    if (new Set(numbers).size !== Lotto.SIZE) {
+      throw new Error(Lotto.ErrorMessages.DUPLICATE_NUMBERS);
     }
 
     if (
       numbers.some(
-        (number) => number < MIN_LOTTO_NUMBER || number > MAX_LOTTO_NUMBER
+        (number) => number < Lotto.Range.MIN || number > Lotto.Range.MAX
       )
     ) {
-      throw new Error(ERROR_MESSAGES.OUT_OF_RANGE);
+      throw new Error(Lotto.ErrorMessages.OUT_OF_RANGE);
     }
 
     this.#numbers = numbers;
