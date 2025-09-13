@@ -1,5 +1,5 @@
 const LOTTO_PRICE = 1000;
-const LOTTO_NUMER_RANGE = [
+const LOTTO_NUMBER_RANGE = [
   ...new Array(45).fill(0).map((_, index) => index + 1),
 ];
 
@@ -10,7 +10,7 @@ class Lotto {
     if (lottoNumbers) {
       this.#numbers = lottoNumbers;
     } else {
-      this.#numbers = [...LOTTO_NUMER_RANGE]
+      this.#numbers = [...LOTTO_NUMBER_RANGE]
         .sort(() => Math.random() - 0.5)
         .splice(0, Lotto.LOTTO_NUMBER_COUNT);
     }
@@ -24,7 +24,7 @@ class Lotto {
   _validateLottoNumbers(lottoNumbers) {
     return (
       Array.isArray(lottoNumbers) &&
-      lottoNumbers.every((number) => LOTTO_NUMER_RANGE.includes(number)) &&
+      lottoNumbers.every((number) => LOTTO_NUMBER_RANGE.includes(number)) &&
       new Set(lottoNumbers).size === Lotto.LOTTO_NUMBER_COUNT
     );
   }
@@ -50,7 +50,7 @@ class WinningLotto {
 
   _validateWinningLotto(lotto, bonusNumber) {
     return (
-      LOTTO_NUMER_RANGE.includes(bonusNumber) &&
+      LOTTO_NUMBER_RANGE.includes(bonusNumber) &&
       new Set([...lotto.getNumbers(), bonusNumber]).size ===
         WinningLotto.WINNING_NUMBER_COUNT
     );
@@ -146,6 +146,6 @@ export default {
   WinningLotto,
   LottoWinningRule,
   LOTTO_PRICE,
-  LOTTT_NUMER_RANGE: LOTTO_NUMER_RANGE,
+  LOTTO_NUMBER_RANGE,
   createLotto,
 };
