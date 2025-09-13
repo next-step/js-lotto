@@ -1,4 +1,3 @@
-import { BASE_LOTTO_PRICE } from "./domains/LottoMachine/constants/index.js";
 import { LottoMachine } from "./domains/LottoMachine/index.js";
 import { readLineAsync } from "./ui/utils/readLineAsync.js";
 
@@ -23,7 +22,7 @@ const RANK_MATCHING_COUNT_MAP = {
 const play = async () => {
   const purchasePrice = await readLineAsync("구입금액을 입력해 주세요.");
 
-  const lottoMachine = new LottoMachine(BASE_LOTTO_PRICE);
+  const lottoMachine = new LottoMachine(LottoMachine.BASE_LOTTO_PRICE);
   const lottos = lottoMachine.issueLottos(purchasePrice);
 
   print(`${lottos.length}개를 구매했습니다.`);

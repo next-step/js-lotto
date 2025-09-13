@@ -2,20 +2,20 @@ import { Lotto } from "../Lotto/index.js";
 import { generateLottoNumbers } from "./utils/generateLottoNumbers.js";
 
 export class LottoMachine {
-  #baseLottoPrice;
+  static BASE_LOTTO_PRICE = 1_000;
+
+  #lottoPrice;
 
   constructor(lottoPrice) {
-    this.#baseLottoPrice = lottoPrice;
+    this.#lottoPrice = lottoPrice;
   }
 
   issueLottos(price) {
-    const lottoCount = Math.floor(price / this.#baseLottoPrice);
+    const lottoCount = Math.floor(price / this.#lottoPrice);
 
-    const lottos = [];
-    for (let i = 0; i < lottoCount; i++) {
-      lottos.push(new Lotto(generateLottoNumbers()));
-    }
-
-    return lottos;
+    return Array.from(
+      { length: lottoCount },
+      () => new Lotto(generateLottoNumbers())
+    );
   }
 }
