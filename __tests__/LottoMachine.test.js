@@ -1,21 +1,15 @@
 import { LottoMachine } from "../src/domains/LottoMachine/index.js";
 
 describe("로또머신은", () => {
-  it("구매 금액에 따라 발행할 수 있는 만큼의 로또를 발행한다", () => {
-    const lottoMachine = new LottoMachine(LottoMachine.BASE_LOTTO_PRICE);
+  it("필요한 개수만큼의 로또를 발행한다", () => {
+    const lottoMachine = new LottoMachine();
 
-    const lottos2000 = lottoMachine.issueLottos(
-      LottoMachine.BASE_LOTTO_PRICE * 2
-    );
-    const lottos3000 = lottoMachine.issueLottos(
-      LottoMachine.BASE_LOTTO_PRICE * 3
-    );
-    const lottos4500 = lottoMachine.issueLottos(
-      LottoMachine.BASE_LOTTO_PRICE * 4.5
-    );
+    const lottos2 = lottoMachine.issueLottos(2);
+    const lottos3 = lottoMachine.issueLottos(3);
+    const lottos4 = lottoMachine.issueLottos(4);
 
-    expect(lottos2000.length).toBe(2);
-    expect(lottos3000.length).toBe(3);
-    expect(lottos4500.length).toBe(4);
+    expect(lottos2.length).toBe(2);
+    expect(lottos3.length).toBe(3);
+    expect(lottos4.length).toBe(4);
   });
 });

@@ -3,6 +3,7 @@ import { LottoNumber } from "./domains/LottoNumber/index.js";
 import { Lotto } from "./domains/Lotto/index.js";
 import { WinningLotto } from "./domains/WinningLotto/index.js";
 import { readLineAsync } from "./ui/utils/readLineAsync.js";
+import { LottoShop } from "./domains/LottoShop/index.js";
 
 const RANKS = [1, 2, 3, 4, 5];
 
@@ -23,10 +24,14 @@ const RANK_MATCHING_COUNT_MAP = {
 };
 
 const play = async () => {
+  const lottoShop = new LottoShop({
+    lottoMachine: new LottoMachine(),
+    lottoPrice: LottoShop.BASE_LOTTO_PRICE,
+  });
+
   const purchasePrice = await readLineAsync("구입금액을 입력해 주세요.");
 
-  const lottoMachine = new LottoMachine(LottoMachine.BASE_LOTTO_PRICE);
-  const lottos = lottoMachine.issueLottos(purchasePrice);
+  const lottos = lottoShop.buyLottos(purchasePrice);
 
   print(`${lottos.length}개를 구매했습니다.`);
   printLottos(lottos);
