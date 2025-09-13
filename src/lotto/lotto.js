@@ -11,8 +11,8 @@ class Lotto {
       this.#numbers = lottoNumbers;
     } else {
       this.#numbers = [...LOTTT_NUMER_RANGE]
-        .splice(0, Lotto.LOTTO_NUMBER_COUNT)
-        .sort(() => Math.random() * 5);
+        .sort(() => Math.random() - 0.5)
+        .splice(0, Lotto.LOTTO_NUMBER_COUNT);
     }
     if (!this._validateLottoNumbers(this.getNumbers())) {
       throw new Error("유효하지 않은 로또 번호입니다.");
