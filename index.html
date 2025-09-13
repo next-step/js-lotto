@@ -15,7 +15,7 @@
         <div class="lotto-price">
           <p>구입할 금액을 입력해주세요.</p>
           <form>
-            <input type="number" placeholder="금액" />
+            <input type="number" placeholder="금액" min="1000"/>
             <button type="submit">구입</button>
           </form>
         </div>
@@ -29,15 +29,15 @@
           <form>
             <div class="numbers-row">
               <label for="winning-number">당첨 번호</label>
-              <input name="winning-number" type="number" />
-              <input name="winning-number" type="number" />
-              <input name="winning-number" type="number" />
-              <input name="winning-number" type="number" />
-              <input name="winning-number" type="number" />
-              <input name="winning-number" type="number" />
+              <input name="winning-number" type="number" min="1" max="45"/>
+              <input name="winning-number" type="number" min="1" max="45"/>
+              <input name="winning-number" type="number" min="1" max="45"/>
+              <input name="winning-number" type="number" min="1" max="45"/>
+              <input name="winning-number" type="number" min="1" max="45"/>
+              <input name="winning-number" type="number" min="1" max="45"/>
 
               <label for="bonus-number">보너스 번호</label>
-              <input name="bonus-number" type="number" />
+              <input name="bonus-number" type="number" min="1" max="45" />
             </div>
 
             <button type="submit">결과 확인하기</button>
