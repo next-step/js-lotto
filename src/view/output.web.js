@@ -1,4 +1,4 @@
-import { LOTTO_RANK } from "../domain/lotto-rank.js";
+import { findLottoRankCount, LOTTO_RANK } from "../domain/lotto-rank.js";
 
 export function printLottoWeb(lottoList) {
   const container = document.querySelector(".lotto-result");
@@ -68,9 +68,7 @@ export function showWinningStatistics(rankList, rateOfReturn) {
     tdPrize.textContent = `${rank.prize.toLocaleString()}원`;
     tdPrize.style.textAlign = "center";
 
-    const count = rankList.filter(
-      (r) => r.match === rank.match && r.hasBonus === rank.hasBonus
-    ).length;
+    const count = findLottoRankCount(rankList, rank);
     const tdCount = document.createElement("td");
     tdCount.textContent = `${count}개`;
     tdCount.style.textAlign = "center";

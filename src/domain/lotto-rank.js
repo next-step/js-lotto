@@ -24,3 +24,14 @@ export function findLottoRank(match, hasBonus) {
     ) || LOTTO_RANK.LAST
   );
 }
+
+/**
+ * @param {LOTTO_RANK[]} rankList
+ * @param {LOTTO_RANK} target
+ * @returns {number}
+ */
+export function findLottoRankCount(rankList, target) {
+  return rankList.filter(
+    (rank) => rank.match === target.match && rank.hasBonus === target.hasBonus
+  ).length;
+}
