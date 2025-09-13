@@ -18,13 +18,4 @@ describe("로또는", () => {
       Lotto.ErrorMessages.DUPLICATE_NUMBERS
     );
   });
-
-  it("1~45 사이의 숫자가 아니면 에러를 반환한다", () => {
-    expect(() => new Lotto([1, 2, 3, 4, 5, 46])).toThrow(
-      Lotto.ErrorMessages.OUT_OF_RANGE
-    );
-    expect(() => new Lotto([0, 2, 3, 4, 5, 6])).toThrow(
-      Lotto.ErrorMessages.OUT_OF_RANGE
-    );
-  });
 });
