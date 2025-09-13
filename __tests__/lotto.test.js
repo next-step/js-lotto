@@ -23,4 +23,16 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
     expect(lottoUniqueNumbersCount).toBe(6);
     expect(isValidRangeLottoNumbers).toBe(true);
   });
+
+  it("당첨 번호와 보너스 번호를 저장한다.", () => {
+    //given
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const bonusNumber = 7;
+    //when
+    const myLotto = new lotto.Lotto(winningNumbers);
+    const winningLotto = new lotto.WinningLotto(myLotto, bonusNumber);
+    //then
+    expect(winningLotto.getNumbers()).toBe(winningNumbers);
+    expect(winningLotto.getBonusNumber()).toBe(bonusNumber);
+  });
 });
