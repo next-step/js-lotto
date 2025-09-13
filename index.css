@@ -13,9 +13,25 @@
   height: 30px;
 }
 
+.winning-lotto {
+  display: none;
+}
+
+.winning-lotto.show {
+  display: block;
+}
+
 .winning-lotto form button {
   display: flex;
   margin-top: 20px;
   width: 50%;
   justify-content: center;
+}
+
+.lotto-list {
+  display: none;
+}
+
+.lotto-list.show {
+  display: block;
 }

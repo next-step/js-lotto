@@ -11,7 +11,7 @@ export function submitLottoPrice() {
 export function submitWinningLotto() {
   return new Promise((resolve) => {
     const container = document.querySelector(".winning-lotto");
-    container.style.display = "block";
+    container.classList.toggle("show");
     const form = document.querySelector(".winning-lotto form");
     form.addEventListener("submit", (event) => {
       event.preventDefault();

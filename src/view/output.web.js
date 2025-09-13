@@ -13,7 +13,7 @@ export function printLottoWeb(lottoList) {
     list.appendChild(item);
   });
 
-  container.style.display = "block";
+  list.classList.toggle("show");
 }
 
 /**
