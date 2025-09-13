@@ -57,6 +57,63 @@ class WinningLotto {
   }
 }
 
+class LottoWinningRule {
+  static FIRST_PRIZE = {
+    matchedNumberCount: 6,
+    matchedBonusNumberCount: 0,
+    prize: 2000000000,
+  };
+  static SECOND_PRIZE = {
+    matchedNumberCount: 5,
+    matchedBonusNumberCount: 1,
+    prize: 30000000,
+  };
+  static THIRD_PRIZE = {
+    matchedNumberCount: 5,
+    matchedBonusNumberCount: 0,
+    prize: 1500000,
+  };
+  static FOURTH_PRIZE = {
+    matchedNumberCount: 4,
+    matchedBonusNumberCount: 0,
+    prize: 50000,
+  };
+  static FIFTH_PRIZE = {
+    matchedNumberCount: 3,
+    matchedBonusNumberCount: 0,
+    prize: 5000,
+  };
+
+  static PRIZE_MAP = {
+    "6:0": LottoWinningRule.FIRST_PRIZE,
+    "5:1": LottoWinningRule.SECOND_PRIZE,
+    "5:0": LottoWinningRule.THIRD_PRIZE,
+    "4:0": LottoWinningRule.FOURTH_PRIZE,
+    "3:0": LottoWinningRule.FIFTH_PRIZE,
+  };
+
+  static getPrize(winningLotto, lotto) {
+    const matchedNumberCount = winningLotto
+      .getNumbers()
+      .filter((number) => lotto.getNumbers().includes(number)).length;
+    const matchedBonusNumberCount = lotto
+      .getNumbers()
+      .includes(winningLotto.getBonusNumber())
+      ? 1
+      : 0;
+
+    return LottoWinningRule.PRIZE_MAP[
+      `${matchedNumberCount}:${matchedBonusNumberCount}`
+    ];
+  }
+
+  static getWinningResult(winningLotto, lottos) {
+    return lottos.map((lotto) =>
+      LottoWinningRule.getPrize(winningLotto, lotto)
+    );
+  }
+}
+
 const createLotto = (purchaseAmount) => {
   const lottoCount = Math.floor(parseInt(purchaseAmount) / LOTTO_PRICE);
   return new Array(lottoCount).fill(null).map(() => new Lotto());
@@ -65,6 +122,7 @@ const createLotto = (purchaseAmount) => {
 export default {
   Lotto,
   WinningLotto,
+  LottoWinningRule,
   LOTTO_PRICE,
   LOTTT_NUMER_RANGE,
   createLotto,

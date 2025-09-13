@@ -35,4 +35,45 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
     expect(winningLotto.getNumbers()).toBe(winningNumbers);
     expect(winningLotto.getBonusNumber()).toBe(bonusNumber);
   });
+
+  it("사용자가 구매한 로또 번호와 당첨 번호를 비교하여 당첨 내역을 게산한다.", () => {
+    //given
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const bonusNumber = 7;
+    const myLotto = new lotto.Lotto(winningNumbers);
+
+    const winningLotto = new lotto.WinningLotto(myLotto, bonusNumber);
+    //when
+    const prize = lotto.LottoWinningRule.getPrize(winningLotto, myLotto);
+    //then
+    expect(prize).toBe(lotto.LottoWinningRule.FIRST_PRIZE);
+  });
+
+  it("사용자가 구매한 모든 로또 번호와 당첨 번호를 비교하여 당첨 내역을 게산한다.", () => {
+    //given
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const bonusNumber = 7;
+
+    const myLottos = [
+      new lotto.Lotto([1, 2, 3, 4, 5, 6]), //1등
+      new lotto.Lotto([1, 2, 3, 4, 5, 7]), //2등
+      new lotto.Lotto([1, 2, 3, 4, 5, 8]), //3등
+    ];
+    const winningLotto = new lotto.WinningLotto(
+      new lotto.Lotto(winningNumbers),
+      bonusNumber
+    );
+
+    //when
+    const prizes = lotto.LottoWinningRule.getWinningResult(
+      winningLotto,
+      myLottos
+    );
+    //then
+    expect(prizes).toEqual([
+      lotto.LottoWinningRule.FIRST_PRIZE,
+      lotto.LottoWinningRule.SECOND_PRIZE,
+      lotto.LottoWinningRule.THIRD_PRIZE,
+    ]);
+  });
 });
