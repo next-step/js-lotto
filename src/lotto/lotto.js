@@ -91,12 +91,12 @@ class LottoWinningRule {
   static FIRST_PRIZE = {
     matchedNumberCount: 6,
     matchedBonusNumberCount: 0,
-    prize: 2000000000,
+    prize: 2_000_000_000,
   };
   static SECOND_PRIZE = {
     matchedNumberCount: 5,
     matchedBonusNumberCount: 1,
-    prize: 30000000,
+    prize: 30_000_000,
   };
   static THIRD_PRIZE = {
     matchedNumberCount: 5,
@@ -106,12 +106,12 @@ class LottoWinningRule {
   static FOURTH_PRIZE = {
     matchedNumberCount: 4,
     matchedBonusNumberCount: 0,
-    prize: 50000,
+    prize: 50_000,
   };
   static FIFTH_PRIZE = {
     matchedNumberCount: 3,
     matchedBonusNumberCount: 0,
-    prize: 5000,
+    prize: 5_000,
   };
 
   static PRIZE_MAP = {
