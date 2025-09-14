@@ -6,7 +6,7 @@ const LOTTO_NUMBER_RANGE = [
 class CommonLotto {
   #numbers = [];
   constructor(lottoNumbers = this.generateLottoNumbers()) {
-    if (!this._validateLottoNumbers(lottoNumbers)) {
+    if (!this.#validateLottoNumbers(lottoNumbers)) {
       throw new Error("유효하지 않은 로또 번호입니다.");
     }
     this.#numbers = lottoNumbers;
@@ -15,7 +15,7 @@ class CommonLotto {
     return this.#numbers;
   }
 
-  _validateLottoNumbers(lottoNumbers) {
+  #validateLottoNumbers(lottoNumbers) {
     return (
       Array.isArray(lottoNumbers) &&
       this.validateNumbers(lottoNumbers) &&
@@ -70,7 +70,7 @@ class WinningLotto {
   constructor(lotto, bonusNumber) {
     this.#lotto = lotto;
     this.#bonusNumber = bonusNumber;
-    if (!this._validateWinningLotto(lotto, bonusNumber)) {
+    if (!this.#validateWinningLotto(lotto, bonusNumber)) {
       throw new Error("유효하지 않은 당첨 번호입니다.");
     }
   }
@@ -81,7 +81,7 @@ class WinningLotto {
     return this.#bonusNumber.getNumbers();
   }
 
-  _validateWinningLotto(lotto, bonusNumber) {
+  #validateWinningLotto(lotto, bonusNumber) {
     const lottoNumbers = [...lotto.getNumbers(), ...bonusNumber.getNumbers()];
     return new Set(lottoNumbers).size === lottoNumbers.length;
   }
