@@ -25,38 +25,46 @@ const printLottoReport = (winningReport) => {
 };
 
 const main = async () => {
-  const purchaseAmountString = await rl.question(
-    "> 구입금액을 입력해 주세요. "
-  );
-  console.log(`구입 금액: ${purchaseAmountString}원`);
-  const lottos = lotto.createLotto(purchaseAmountString);
-  console.log(`${lottos.length}개를 구매했습니다.`);
+  try {
+    const purchaseAmountString = await rl.question(
+      "> 구입금액을 입력해 주세요. "
+    );
+    console.log(`구입 금액: ${purchaseAmountString}원`);
+    const lottos = lotto.createLotto(purchaseAmountString);
+    console.log(`${lottos.length}개를 구매했습니다.`);
 
-  console.log("");
-  const lottoNumberString = await rl.question("> 당첨 번호를 입력해 주세요. ");
+    console.log("");
+    const lottoNumberString = await rl.question(
+      "> 당첨 번호를 입력해 주세요. "
+    );
 
-  console.log("");
-  const bonusNumberString = await rl.question(
-    "> 보너스 번호를 입력해 주세요. "
-  );
+    console.log("");
+    const bonusNumberString = await rl.question(
+      "> 보너스 번호를 입력해 주세요. "
+    );
 
-  const winningLotto = new lotto.WinningLotto(
-    new lotto.Lotto(lottoNumberString.split(",").map(Number)),
-    new lotto.BonusLotto(bonusNumberString.split(",").map(Number))
-  );
-  const winningResult = lotto.LottoWinningRule.getWinningResult(
-    winningLotto,
-    lottos
-  );
+    const winningLotto = new lotto.WinningLotto(
+      new lotto.Lotto(lottoNumberString.split(",").map(Number)),
+      new lotto.BonusLotto(bonusNumberString.split(",").map(Number))
+    );
+    const winningResult = lotto.LottoWinningRule.getWinningResult(
+      winningLotto,
+      lottos
+    );
 
-  console.log("");
-  const winningReport = lotto.LottoWinningRule.getWinningReport(
-    winningResult,
-    purchaseAmountString
-  );
-  printLottoReport(winningReport);
+    console.log("");
+    const winningReport = lotto.LottoWinningRule.getWinningReport(
+      winningResult,
+      purchaseAmountString
+    );
+    printLottoReport(winningReport);
 
-  rl.close();
+    rl.close();
+  } catch (error) {
+    console.error(error.message);
+    rl.close();
+    process.exit(1);
+  }
 };
 
 main();

@@ -39,10 +39,6 @@ class CommonLotto {
   validateNumber(number) {
     return LOTTO_NUMBER_RANGE.includes(number);
   }
-
-  isUniqueNumbers(numbers) {
-    return new Set(numbers).size === numbers.length;
-  }
 }
 
 class Lotto extends CommonLotto {
@@ -168,8 +164,12 @@ class LottoWinningRule {
   }
 }
 
-const createLotto = (purchaseAmount) => {
-  const lottoCount = Math.floor(parseInt(purchaseAmount) / LOTTO_PRICE);
+const createLotto = (purchaseAmountString) => {
+  const purchaseAmount = parseInt(purchaseAmountString);
+  if (isNaN(purchaseAmount) || purchaseAmount <= 0) {
+    throw new Error("유효하지 않은 구입 금액입니다.");
+  }
+  const lottoCount = Math.floor(purchaseAmount / LOTTO_PRICE);
   return new Array(lottoCount).fill(null).map(() => new Lotto());
 };
 
