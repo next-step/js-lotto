@@ -16,7 +16,7 @@ import {
 const InputValidator = {
   validatePurchasePrice: (value) => {
     const price = Number(value);
-    if (isNaN(price) || price <= 0 || price % 1000 !== 0) {
+    if (isNaN(price) || price <= 0 || price % 1_000 !== 0) {
       return {
         isValid: false,
         errorMessage: "구입금액은 1000원 단위의 금액이어야 합니다.",
@@ -47,52 +47,72 @@ const InputValidator = {
 
     return { isValid: true, errorMessage: null };
   },
+  validatePlayAgain: (value) => {
+    if (value !== "y" && value !== "n") {
+      return {
+        isValid: false,
+        errorMessage: "다시 입력해주세요 (y/n)",
+      };
+    }
+
+    return { isValid: true, errorMessage: null };
+  },
 };
 
 const play = async () => {
-  const lottoShop = new LottoShop({
-    lottoMachine: new LottoMachine(),
-    lottoPrice: LottoShop.BASE_LOTTO_PRICE,
-  });
+  let playAgain = false;
 
-  const purchasePrice = await ask(
-    "구입금액을 입력해 주세요. ",
-    InputValidator.validatePurchasePrice
-  );
+  do {
+    const lottoShop = new LottoShop({
+      lottoMachine: new LottoMachine(),
+      lottoPrice: LottoShop.BASE_LOTTO_PRICE,
+    });
 
-  const lottos = lottoShop.buyLottos(purchasePrice);
+    const purchasePrice = await ask(
+      "구입금액을 입력해 주세요. ",
+      InputValidator.validatePurchasePrice
+    );
 
-  print(`${lottos.length}개를 구매했습니다.`);
-  printLottos(lottos);
-  linebreak();
+    const lottos = lottoShop.buyLottos(purchasePrice);
 
-  const winningNumbers = await ask(
-    "당첨 번호를 입력해 주세요. ",
-    InputValidator.validateWinningNumbers
-  );
-  linebreak();
+    print(`${lottos.length}개를 구매했습니다.`);
+    printLottos(lottos);
+    linebreak();
 
-  const bonusNumber = await ask(
-    "보너스 번호를 입력해 주세요. ",
-    InputValidator.validateBonusNumber
-  );
-  linebreak();
+    const winningNumbers = await ask(
+      "당첨 번호를 입력해 주세요. ",
+      InputValidator.validateWinningNumbers
+    );
+    linebreak();
 
-  const winningLotto = new WinningLotto(
-    new Lotto(winningNumbers.split(",").map((num) => Number(num))),
-    new LottoNumber(Number(bonusNumber))
-  );
+    const bonusNumber = await ask(
+      "보너스 번호를 입력해 주세요. ",
+      InputValidator.validateBonusNumber
+    );
+    linebreak();
 
-  const { rankResult, totalPrice } = LottoChecker.checkLotto(
-    winningLotto,
-    lottos
-  );
+    const winningLotto = new WinningLotto(
+      new Lotto(winningNumbers.split(",").map((num) => Number(num))),
+      new LottoNumber(Number(bonusNumber))
+    );
 
-  print("당첨 통계");
-  print("--------------------");
-  printRankResult(rankResult);
-  linebreak();
-  printTotalRateOfReturn(totalPrice, purchasePrice);
+    const { rankResult, totalPrice } = LottoChecker.checkLotto(
+      winningLotto,
+      lottos
+    );
+
+    print("당첨 통계");
+    print("--------------------");
+    printRankResult(rankResult);
+    linebreak();
+    printTotalRateOfReturn(totalPrice, purchasePrice);
+
+    linebreak();
+    playAgain = await ask(
+      "다시 시작하시겠습니까? (y/n) ",
+      InputValidator.validatePlayAgain
+    );
+  } while (playAgain === "y");
 };
 
 play();
