@@ -27,22 +27,24 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
   it("당첨 번호와 보너스 번호를 저장한다.", () => {
     //given
     const winningNumbers = [1, 2, 3, 4, 5, 6];
-    const bonusNumber = 7;
+    const bonusNumber = [7];
     //when
     const myLotto = new lotto.Lotto(winningNumbers);
-    const winningLotto = new lotto.WinningLotto(myLotto, bonusNumber);
+    const bonusLotto = new lotto.BonusLotto(bonusNumber);
+    const winningLotto = new lotto.WinningLotto(myLotto, bonusLotto);
     //then
     expect(winningLotto.getNumbers()).toBe(winningNumbers);
     expect(winningLotto.getBonusNumber()).toBe(bonusNumber);
   });
 
-  it("사용자가 구매한 로또 번호와 당첨 번호를 비교하여 당첨 내역을 게산한다.", () => {
+  it("사용자가 구매한 로또 번호와 당첨 번호를 비교하여 당첨 내역을 계산한다.", () => {
     //given
     const winningNumbers = [1, 2, 3, 4, 5, 6];
-    const bonusNumber = 7;
+    const bonusNumber = [7];
     const myLotto = new lotto.Lotto(winningNumbers);
+    const bonusLotto = new lotto.BonusLotto(bonusNumber);
 
-    const winningLotto = new lotto.WinningLotto(myLotto, bonusNumber);
+    const winningLotto = new lotto.WinningLotto(myLotto, bonusLotto);
     //when
     const prize = lotto.LottoWinningRule.getPrize(winningLotto, myLotto);
     //then
@@ -52,7 +54,7 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
   it("사용자가 구매한 모든 로또 번호와 당첨 번호를 비교하여 당첨 내역을 게산한다.", () => {
     //given
     const winningNumbers = [1, 2, 3, 4, 5, 6];
-    const bonusNumber = 7;
+    const bonusNumber = [7];
 
     const myLottos = [
       new lotto.Lotto([1, 2, 3, 4, 5, 6]), //1등
@@ -61,7 +63,7 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
     ];
     const winningLotto = new lotto.WinningLotto(
       new lotto.Lotto(winningNumbers),
-      bonusNumber
+      new lotto.BonusLotto(bonusNumber)
     );
 
     //when

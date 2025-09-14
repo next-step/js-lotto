@@ -42,7 +42,7 @@ const main = async () => {
 
   const winningLotto = new lotto.WinningLotto(
     new lotto.Lotto(lottoNumberString.split(",").map(Number)),
-    Number(bonusNumberString)
+    new lotto.BonusLotto(bonusNumberString.split(",").map(Number))
   );
   const winningResult = lotto.LottoWinningRule.getWinningResult(
     winningLotto,

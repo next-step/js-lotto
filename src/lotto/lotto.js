@@ -3,30 +3,67 @@ const LOTTO_NUMBER_RANGE = [
   ...new Array(45).fill(0).map((_, index) => index + 1),
 ];
 
-class Lotto {
-  static LOTTO_NUMBER_COUNT = 6;
+class CommonLotto {
   #numbers = [];
-  constructor(lottoNumbers) {
-    if (lottoNumbers) {
-      this.#numbers = lottoNumbers;
-    } else {
-      this.#numbers = [...LOTTO_NUMBER_RANGE]
-        .sort(() => Math.random() - 0.5)
-        .splice(0, Lotto.LOTTO_NUMBER_COUNT);
-    }
-    if (!this._validateLottoNumbers(this.getNumbers())) {
+  constructor(lottoNumbers = this.generateLottoNumbers()) {
+    if (!this._validateLottoNumbers(lottoNumbers)) {
       throw new Error("유효하지 않은 로또 번호입니다.");
     }
+    this.#numbers = lottoNumbers;
   }
   getNumbers() {
     return this.#numbers;
   }
+
   _validateLottoNumbers(lottoNumbers) {
     return (
       Array.isArray(lottoNumbers) &&
-      lottoNumbers.every((number) => LOTTO_NUMBER_RANGE.includes(number)) &&
-      new Set(lottoNumbers).size === Lotto.LOTTO_NUMBER_COUNT
+      this.validateNumbers(lottoNumbers) &&
+      this.isUniqueNumbers(lottoNumbers)
     );
+  }
+  isUniqueNumbers(numbers) {
+    return new Set(numbers).size === numbers.length;
+  }
+
+  generateLottoNumbers(numberCount) {
+    return [...LOTTO_NUMBER_RANGE]
+      .sort(() => Math.random() - 0.5)
+      .splice(0, numberCount);
+  }
+
+  validateNumbers(lottoNumbers) {
+    return lottoNumbers.every((number) => this.validateNumber(number));
+  }
+
+  validateNumber(number) {
+    return LOTTO_NUMBER_RANGE.includes(number);
+  }
+
+  isUniqueNumbers(numbers) {
+    return new Set(numbers).size === numbers.length;
+  }
+}
+
+class Lotto extends CommonLotto {
+  static #LOTTO_NUMBER_COUNT = 6;
+  constructor(lottoNumbers) {
+    super(lottoNumbers);
+  }
+
+  generateLottoNumbers() {
+    return super.generateLottoNumbers(Lotto.#LOTTO_NUMBER_COUNT);
+  }
+}
+
+class BonusLotto extends CommonLotto {
+  static #LOTTO_NUMBER_COUNT = 1;
+
+  constructor(lottoNumbers) {
+    super(lottoNumbers);
+  }
+  generateLottoNumbers() {
+    return super.generateLottoNumbers(BonusLotto.#LOTTO_NUMBER_COUNT);
   }
 }
 
@@ -45,15 +82,12 @@ class WinningLotto {
     return this.#lotto.getNumbers();
   }
   getBonusNumber() {
-    return this.#bonusNumber;
+    return this.#bonusNumber.getNumbers();
   }
 
   _validateWinningLotto(lotto, bonusNumber) {
-    return (
-      LOTTO_NUMBER_RANGE.includes(bonusNumber) &&
-      new Set([...lotto.getNumbers(), bonusNumber]).size ===
-        WinningLotto.WINNING_NUMBER_COUNT
-    );
+    const lottoNumbers = [...lotto.getNumbers(), ...bonusNumber.getNumbers()];
+    return new Set(lottoNumbers).size === lottoNumbers.length;
   }
 }
 
@@ -96,11 +130,9 @@ class LottoWinningRule {
     const matchedNumberCount = winningLotto
       .getNumbers()
       .filter((number) => lotto.getNumbers().includes(number)).length;
-    const matchedBonusNumberCount = lotto
-      .getNumbers()
-      .includes(winningLotto.getBonusNumber())
-      ? 1
-      : 0;
+    const matchedBonusNumberCount = winningLotto
+      .getBonusNumber()
+      .filter((number) => lotto.getNumbers().includes(number)).length;
 
     return LottoWinningRule.PRIZE_MAP[
       `${matchedNumberCount}:${matchedBonusNumberCount}`
@@ -143,6 +175,7 @@ const createLotto = (purchaseAmount) => {
 
 export default {
   Lotto,
+  BonusLotto,
   WinningLotto,
   LottoWinningRule,
   LOTTO_PRICE,
