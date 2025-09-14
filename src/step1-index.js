@@ -1,10 +1,10 @@
-import { readLineAsync } from "./ui/utils/readLineAsync.js";
 import { LottoMachine } from "./domains/LottoMachine/index.js";
 import { LottoNumber } from "./domains/LottoNumber/index.js";
 import { Lotto } from "./domains/Lotto/index.js";
 import { WinningLotto } from "./domains/WinningLotto/index.js";
 import { LottoShop } from "./domains/LottoShop/index.js";
 import { RANKS, LottoChecker } from "./domains/LottoChecker/index.js";
+import { ask } from "./ui/utils/ask.js";
 
 const play = async () => {
   const lottoShop = new LottoShop({
@@ -12,7 +12,10 @@ const play = async () => {
     lottoPrice: LottoShop.BASE_LOTTO_PRICE,
   });
 
-  const purchasePrice = await readLineAsync("구입금액을 입력해 주세요.");
+  const purchasePrice = await ask(
+    "구입금액을 입력해 주세요. ",
+    InputValidator.validatePurchasePrice
+  );
 
   const lottos = lottoShop.buyLottos(purchasePrice);
 
@@ -20,10 +23,16 @@ const play = async () => {
   printLottos(lottos);
   console.log();
 
-  const winningNumbers = await readLineAsync("당첨 번호를 입력해 주세요.");
+  const winningNumbers = await ask(
+    "당첨 번호를 입력해 주세요. ",
+    InputValidator.validateWinningNumbers
+  );
   console.log();
 
-  const bonusNumber = await readLineAsync("보너스 번호를 입력해 주세요.");
+  const bonusNumber = await ask(
+    "보너스 번호를 입력해 주세요. ",
+    InputValidator.validateBonusNumber
+  );
   console.log();
 
   const winningLotto = new WinningLotto(
@@ -44,6 +53,42 @@ const play = async () => {
 };
 
 play();
+
+const InputValidator = {
+  validatePurchasePrice: (value) => {
+    const price = Number(value);
+    if (isNaN(price) || price <= 0 || price % 1000 !== 0) {
+      return {
+        isValid: false,
+        errorMessage: "구입금액은 1000원 단위의 금액이어야 합니다.",
+      };
+    }
+
+    return { isValid: true, errorMessage: null };
+  },
+  validateWinningNumbers: (value) => {
+    const numbers = value.split(",").map((num) => Number(num));
+    if (numbers.length !== 6) {
+      return {
+        isValid: false,
+        errorMessage: "당첨 번호는 6개의 숫자로 구성되어야 합니다.",
+      };
+    }
+
+    return { isValid: true, errorMessage: null };
+  },
+  validateBonusNumber: (value) => {
+    const number = Number(value);
+    if (isNaN(number) || number < 0 || number > 45) {
+      return {
+        isValid: false,
+        errorMessage: "보너스 번호는 1~45 사이의 숫자여야 합니다.",
+      };
+    }
+
+    return { isValid: true, errorMessage: null };
+  },
+};
 
 function print(text) {
   console.log(text);
