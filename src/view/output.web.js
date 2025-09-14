@@ -1,5 +1,13 @@
 import { findLottoRankCount, LOTTO_RANK } from "../domain/lotto-rank.js";
 
+function restart() {
+  const modal = document.querySelector(".modal");
+  if (modal) {
+    modal.remove();
+  }
+  window.location.reload();
+}
+
 export function printLottoWeb(lottoList) {
   const container = document.querySelector(".lotto-result");
   const count = container.querySelector(".lotto-count");
@@ -14,6 +22,9 @@ export function printLottoWeb(lottoList) {
   });
 
   list.classList.toggle("show");
+
+  const winningLottoContainer = document.querySelector(".winning-lotto");
+  winningLottoContainer.classList.toggle("show");
 }
 
 /**
@@ -89,21 +100,11 @@ export function showWinningStatistics(rankList, rateOfReturn) {
   modal.appendChild(container);
   document.body.appendChild(modal);
 
-  function restart() {
-    modal.remove();
-    window.location.reload();
-  }
-
-  closeButton.addEventListener("click", () => {
-    restart();
-  });
-
-  resetButton.addEventListener("click", () => {
-    restart();
-  });
-
+  closeButton.addEventListener("click", restart);
+  resetButton.addEventListener("click", restart);
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
+      event.preventDefault();
       restart();
     }
   });
