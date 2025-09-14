@@ -2,7 +2,7 @@ import { WinningLotto } from "../src/domains/WinningLotto/index.js";
 import { Lotto } from "../src/domains/Lotto/index.js";
 import { LottoNumber } from "../src/domains/LottoNumber/index.js";
 
-describe("당첨 복권은", () => {
+describe("당첨 로또는", () => {
   const WINNING_NUMBERS = [1, 2, 3, 4, 5, 6];
   const BONUS_NUMBER = 7;
 
