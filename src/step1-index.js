@@ -1,109 +1,118 @@
-import { BASE_LOTTO_PRICE } from "./domains/LottoMachine/constants/index.js";
 import { LottoMachine } from "./domains/LottoMachine/index.js";
-import { readLineAsync } from "./ui/utils/readLineAsync.js";
+import { LottoNumber } from "./domains/LottoNumber/index.js";
+import { Lotto } from "./domains/Lotto/index.js";
+import { WinningLotto } from "./domains/WinningLotto/index.js";
+import { LottoShop } from "./domains/LottoShop/index.js";
+import { LottoChecker } from "./domains/LottoChecker/index.js";
+import { ask } from "./ui/utils/ask.js";
+import { print } from "./ui/utils/print.js";
+import { linebreak } from "./ui/utils/linebreak.js";
+import {
+  printLottos,
+  printRankResult,
+  printTotalRateOfReturn,
+} from "./ui/index.js";
 
-const RANKS = [1, 2, 3, 4, 5];
+const InputValidator = {
+  validatePurchasePrice: (value) => {
+    const price = Number(value);
+    if (isNaN(price) || price <= 0 || price % 1_000 !== 0) {
+      return {
+        isValid: false,
+        errorMessage: "구입금액은 1000원 단위의 금액이어야 합니다.",
+      };
+    }
 
-const RANK_WINNING_PRICE_MAP = {
-  1: 2_000_000_000,
-  2: 30_000_000,
-  3: 1_500_000,
-  4: 50_000,
-  5: 5_000,
-};
+    return { isValid: true, errorMessage: null };
+  },
+  validateWinningNumbers: (value) => {
+    const numbers = value.split(",").map((num) => Number(num));
+    if (numbers.length !== 6) {
+      return {
+        isValid: false,
+        errorMessage: "당첨 번호는 6개의 숫자로 구성되어야 합니다.",
+      };
+    }
 
-const RANK_MATCHING_COUNT_MAP = {
-  1: 6,
-  2: 5,
-  3: 5,
-  4: 4,
-  5: 3,
+    return { isValid: true, errorMessage: null };
+  },
+  validateBonusNumber: (value) => {
+    const number = Number(value);
+    if (isNaN(number) || number < 0 || number > 45) {
+      return {
+        isValid: false,
+        errorMessage: "보너스 번호는 1~45 사이의 숫자여야 합니다.",
+      };
+    }
+
+    return { isValid: true, errorMessage: null };
+  },
+  validatePlayAgain: (value) => {
+    if (value !== "y" && value !== "n") {
+      return {
+        isValid: false,
+        errorMessage: "다시 입력해주세요 (y/n)",
+      };
+    }
+
+    return { isValid: true, errorMessage: null };
+  },
 };
 
 const play = async () => {
-  const purchasePrice = await readLineAsync("구입금액을 입력해 주세요.");
+  let playAgain = false;
 
-  const lottoMachine = new LottoMachine(BASE_LOTTO_PRICE);
-  const lottos = lottoMachine.issueLottos(purchasePrice);
+  do {
+    const lottoShop = new LottoShop({
+      lottoMachine: new LottoMachine(),
+      lottoPrice: LottoShop.BASE_LOTTO_PRICE,
+    });
 
-  print(`${lottos.length}개를 구매했습니다.`);
-  printLottos(lottos);
-  console.log();
+    const purchasePrice = await ask(
+      "구입금액을 입력해 주세요. ",
+      InputValidator.validatePurchasePrice
+    );
 
-  const winningNumbers = await readLineAsync("당첨 번호를 입력해 주세요.");
-  console.log();
+    const lottos = lottoShop.buyLottos(purchasePrice);
 
-  const bonusNumber = await readLineAsync("보너스 번호를 입력해 주세요.");
-  console.log();
+    print(`${lottos.length}개를 구매했습니다.`);
+    printLottos(lottos);
+    linebreak();
 
-  const lottoResult = getLottoResult(lottos, { winningNumbers, bonusNumber });
+    const winningNumbers = await ask(
+      "당첨 번호를 입력해 주세요. ",
+      InputValidator.validateWinningNumbers
+    );
+    linebreak();
 
-  printStatistics(lottoResult, purchasePrice);
+    const bonusNumber = await ask(
+      "보너스 번호를 입력해 주세요. ",
+      InputValidator.validateBonusNumber
+    );
+    linebreak();
+
+    const winningLotto = new WinningLotto(
+      new Lotto(winningNumbers.split(",").map((num) => Number(num))),
+      new LottoNumber(Number(bonusNumber))
+    );
+
+    const { rankResult, totalPrice } = LottoChecker.checkLotto(
+      winningLotto,
+      lottos
+    );
+
+    print("당첨 통계");
+    print("--------------------");
+    printRankResult(rankResult);
+    linebreak();
+    printTotalRateOfReturn(totalPrice, purchasePrice);
+
+    linebreak();
+    playAgain = await ask(
+      "다시 시작하시겠습니까? (y/n) ",
+      InputValidator.validatePlayAgain
+    );
+  } while (playAgain === "y");
 };
 
 play();
-
-function print(text) {
-  console.log(text);
-}
-
-function printLottos(lottos) {
-  lottos.forEach((lotto) => {
-    console.log(lotto.numbers);
-  });
-}
-
-function getLottoResult(lottos, { winningNumbers, bonusNumber }) {
-  const lottoResult = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-
-  for (const lotto of lottos) {
-    const lottoResult = lotto.evaluateLotto(winningNumbers, bonusNumber);
-    switch (lottoResult.matchingCount) {
-      case 3:
-        lottoResult[5] += 1;
-        break;
-      case 4:
-        lottoResult[4] += 1;
-        break;
-      case 5:
-        if (lottoResult.isBonusNumberMatched) {
-          lottoResult[2] += 1;
-        } else {
-          lottoResult[3] += 1;
-        }
-        break;
-      case 6:
-        lottoResult[1] += 1;
-        break;
-      default:
-        break;
-    }
-  }
-
-  return lottoResult;
-}
-
-function printStatistics(lottoResult, purchasePrice) {
-  console.log("당첨 통계");
-  console.log("--------------------");
-
-  RANKS.reverse().forEach((rank) => {
-    console.log(
-      `${RANK_MATCHING_COUNT_MAP[rank]}개 일치${
-        rank === 2 ? ", 보너스 볼 일치" : ""
-      } (${RANK_WINNING_PRICE_MAP[rank].toLocaleString()}원) - ${
-        lottoResult[rank]
-      }개`
-    );
-  });
-
-  console.log();
-
-  const totalPrice = RANKS.reduce((totalAmount, rank) => {
-    return totalAmount + RANK_WINNING_PRICE_MAP[rank] * lottoResult[rank];
-  }, 0);
-
-  console.log(
-    `총 수익률은 ${((totalPrice * 100) / purchasePrice).toFixed(1)}%입니다.`
-  );
-}

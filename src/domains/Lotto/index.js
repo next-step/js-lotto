@@ -1,43 +1,38 @@
-import {
-  MAX_LOTTO_NUMBER_COUNT,
-  MAX_LOTTO_NUMBER,
-  MIN_LOTTO_NUMBER,
-  ERROR_MESSAGES,
-} from "./constants/index.js";
+import { LottoNumber } from "../LottoNumber/index.js";
 
 export class Lotto {
-  #numbers;
+  static SIZE = 6;
+  static ErrorMessages = {
+    INVALID_LOTTO_NUMBERS: `로또는 ${Lotto.SIZE}개의 중복없는 숫자를 가진다`,
+  };
+
+  #lottoNumbers;
 
   constructor(numbers) {
-    if (numbers.length !== MAX_LOTTO_NUMBER_COUNT) {
-      throw new Error(ERROR_MESSAGES.INVALID_COUNT);
+    if (new Set(numbers).size !== Lotto.SIZE) {
+      throw new Error(Lotto.ErrorMessages.INVALID_LOTTO_NUMBERS);
     }
 
-    if (new Set(numbers).size !== MAX_LOTTO_NUMBER_COUNT) {
-      throw new Error(ERROR_MESSAGES.DUPLICATE_NUMBERS);
-    }
-
-    if (
-      numbers.some(
-        (number) => number < MIN_LOTTO_NUMBER || number > MAX_LOTTO_NUMBER
-      )
-    ) {
-      throw new Error(ERROR_MESSAGES.OUT_OF_RANGE);
-    }
-
-    this.#numbers = numbers;
+    this.#lottoNumbers = new Set(
+      numbers.map((number) => new LottoNumber(number))
+    );
   }
 
   get numbers() {
-    return this.#numbers;
+    return Array.from(this.#lottoNumbers)
+      .map((lottoNumber) => lottoNumber.value)
+      .sort((a, b) => a - b);
   }
 
-  evaluateLotto(winningNumbers, bonusNumber) {
-    return {
-      matchingCount: this.#numbers.filter((number) =>
-        winningNumbers.includes(number)
-      ).length,
-      isBonusNumberMatched: this.#numbers.includes(bonusNumber),
-    };
+  countMatchingLottoNumber(lotto) {
+    return [...this.#lottoNumbers].filter((lottoNumber) =>
+      lotto.hasLottoNumber(lottoNumber)
+    ).length;
+  }
+
+  hasLottoNumber(lottoNumber) {
+    return [...this.#lottoNumbers].some((lottoNumberInLotto) =>
+      lottoNumberInLotto.isMatched(lottoNumber)
+    );
   }
 }
