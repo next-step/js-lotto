@@ -24,13 +24,37 @@ const printLottoReport = (winningReport) => {
   console.log(`총 수익률은 ${winningReport.winningRate.toFixed(1)}%입니다.`);
 };
 
+const startLottoGame = async (
+  purchaseAmountString,
+  lottos,
+  lottoNumberString,
+  bonusNumberString
+) => {
+  const winningLotto = new lotto.WinningLotto(
+    new lotto.Lotto(lottoNumberString.split(",").map(Number)),
+    new lotto.BonusLotto(bonusNumberString.split(",").map(Number))
+  );
+  const winningResult = lotto.LottoWinningRule.getWinningResult(
+    winningLotto,
+    lottos
+  );
+
+  const winningReport = lotto.LottoWinningRule.getWinningReport(
+    winningResult,
+    purchaseAmountString
+  );
+
+  return winningReport;
+};
+
 const main = async () => {
   try {
     const purchaseAmountString = await rl.question(
       "> 구입금액을 입력해 주세요. "
     );
     console.log(`구입 금액: ${purchaseAmountString}원`);
-    const lottos = lotto.createLotto(purchaseAmountString);
+    const purchaseAmount = parseInt(purchaseAmountString);
+    const lottos = lotto.createLotto(purchaseAmount);
     console.log(`${lottos.length}개를 구매했습니다.`);
 
     console.log("");
@@ -43,20 +67,14 @@ const main = async () => {
       "> 보너스 번호를 입력해 주세요. "
     );
 
-    const winningLotto = new lotto.WinningLotto(
-      new lotto.Lotto(lottoNumberString.split(",").map(Number)),
-      new lotto.BonusLotto(bonusNumberString.split(",").map(Number))
-    );
-    const winningResult = lotto.LottoWinningRule.getWinningResult(
-      winningLotto,
-      lottos
+    const winningReport = await startLottoGame(
+      purchaseAmountString,
+      lottos,
+      lottoNumberString,
+      bonusNumberString
     );
 
     console.log("");
-    const winningReport = lotto.LottoWinningRule.getWinningReport(
-      winningResult,
-      purchaseAmountString
-    );
     printLottoReport(winningReport);
 
     rl.close();

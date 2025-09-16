@@ -1,9 +1,9 @@
 const LOTTO_PRICE = 1000;
-const LOTTO_NUMBER_RANGE = [
-  ...new Array(45).fill(0).map((_, index) => index + 1),
-];
 
 class CommonLotto {
+  static LOTTO_NUMBER_RANGE = [
+    ...new Array(45).fill(0).map((_, index) => index + 1),
+  ];
   #numbers = [];
   constructor(lottoNumbers = this.generateLottoNumbers()) {
     if (!this.#validateLottoNumbers(lottoNumbers)) {
@@ -27,7 +27,7 @@ class CommonLotto {
   }
 
   generateLottoNumbers(numberCount) {
-    return [...LOTTO_NUMBER_RANGE]
+    return [...CommonLotto.LOTTO_NUMBER_RANGE]
       .sort(() => Math.random() - 0.5)
       .splice(0, numberCount);
   }
@@ -37,7 +37,7 @@ class CommonLotto {
   }
 
   validateNumber(number) {
-    return LOTTO_NUMBER_RANGE.includes(number);
+    return CommonLotto.LOTTO_NUMBER_RANGE.includes(number);
   }
 }
 
@@ -164,8 +164,7 @@ class LottoWinningRule {
   }
 }
 
-const createLotto = (purchaseAmountString) => {
-  const purchaseAmount = parseInt(purchaseAmountString);
+const createLotto = (purchaseAmount) => {
   if (isNaN(purchaseAmount) || purchaseAmount <= 0) {
     throw new Error("유효하지 않은 구입 금액입니다.");
   }
@@ -179,6 +178,5 @@ export default {
   WinningLotto,
   LottoWinningRule,
   LOTTO_PRICE,
-  LOTTO_NUMBER_RANGE,
   createLotto,
 };
