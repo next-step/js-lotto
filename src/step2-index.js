@@ -9,15 +9,32 @@ window.addEventListener("load", () => {
   let lottoList = [];
 
   onSubmitLottoPrice((lottoPrice) => {
-    lottoStore = new LottoStore(lottoPrice);
+    try {
+      lottoStore = new LottoStore(lottoPrice);
+    } catch (error) {
+      alert(error.message);
+      return;
+    }
+
     lottoList = lottoStore.sell();
     printLottoWeb(lottoList);
   });
 
   onSubmitWinningLotto(({ winningNumbers, bonusNumber }) => {
-    const winningLotto = new Lotto(winningNumbers);
-    const bonusLottoNumber = new LottoNumber(bonusNumber);
-    lottoStore.validateBonusNumber(winningLotto, bonusLottoNumber);
+    if (!lottoStore || lottoList.length === 0) {
+      alert("로또를 구매해주세요.");
+      return;
+    }
+    let winningLotto;
+    let bonusLottoNumber;
+    try {
+      winningLotto = new Lotto(winningNumbers);
+      bonusLottoNumber = new LottoNumber(bonusNumber);
+      lottoStore.validateBonusNumber(winningLotto, bonusLottoNumber);
+    } catch (error) {
+      alert(error.message);
+      return;
+    }
 
     const rankList = lottoList.map((lotto) =>
       lotto.prize(winningLotto, bonusLottoNumber)
