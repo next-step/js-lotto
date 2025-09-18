@@ -1,4 +1,8 @@
-import { findLottoRankCount, LOTTO_RANK } from "../domain/lotto-rank.js";
+import {
+  findLottoRankCount,
+  LOTTO_RANK,
+  summarizeRank,
+} from "../domain/lotto-rank.js";
 
 function restart() {
   const modal = document.querySelector(".modal");
@@ -59,15 +63,8 @@ export function showWinningStatistics(rankList, rateOfReturn) {
 
   const tbody = document.createElement("tbody");
 
-  const rankListForPrint = [
-    LOTTO_RANK.FIFTH,
-    LOTTO_RANK.FOURTH,
-    LOTTO_RANK.THIRD,
-    LOTTO_RANK.SECOND,
-    LOTTO_RANK.FIRST,
-  ];
-
-  rankListForPrint.forEach((rank) => {
+  const rankSummary = summarizeRank(rankList);
+  rankSummary.forEach(({ rank, count }) => {
     const tr = document.createElement("tr");
     const tdMatch = document.createElement("td");
     tdMatch.textContent = `${rank.match}개${
@@ -79,7 +76,6 @@ export function showWinningStatistics(rankList, rateOfReturn) {
     tdPrize.textContent = `${rank.prize.toLocaleString()}원`;
     tdPrize.style.textAlign = "center";
 
-    const count = findLottoRankCount(rankList, rank);
     const tdCount = document.createElement("td");
     tdCount.textContent = `${count}개`;
     tdCount.style.textAlign = "center";
