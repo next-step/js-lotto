@@ -12,6 +12,14 @@ export const LOTTO_RANK = Object.freeze({
   LAST: { match: 0, hasBonus: false, prize: 0 },
 });
 
+const RANK_ORDER = Object.freeze([
+  LOTTO_RANK.FIFTH,
+  LOTTO_RANK.FOURTH,
+  LOTTO_RANK.THIRD,
+  LOTTO_RANK.SECOND,
+  LOTTO_RANK.FIRST,
+]);
+
 /**
  *
  * @param {number} match
@@ -23,4 +31,27 @@ export function findLottoRank(match, hasBonus) {
       (rank) => rank.match === match && rank.hasBonus === hasBonus
     ) || LOTTO_RANK.LAST
   );
+}
+
+/**
+ * @param {LOTTO_RANK[]} rankList
+ * @param {LOTTO_RANK} target
+ * @returns {number}
+ */
+export function findLottoRankCount(rankList, target) {
+  return rankList.filter(
+    (rank) => rank.match === target.match && rank.hasBonus === target.hasBonus
+  ).length;
+}
+
+/**
+ *
+ * @param {LOTTO_RANK[]} rankList
+ * @returns {{rank: LOTTO_RANK, count: number}[]}
+ */
+export function summarizeRank(rankList) {
+  return RANK_ORDER.map((rank) => ({
+    rank,
+    count: findLottoRankCount(rankList, rank),
+  }));
 }

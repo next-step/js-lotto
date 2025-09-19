@@ -1,4 +1,46 @@
-/**
- * step 2의 시작점이 되는 파일입니다.
- * 노드 환경에서 사용하는 readline 등을 불러올 경우 정상적으로 빌드할 수 없습니다.
- */
+import { LottoNumber } from "./domain/lotto-number.js";
+import { LottoStore } from "./domain/lotto-store.js";
+import { Lotto } from "./domain/lotto.js";
+import { onSubmitLottoPrice, onSubmitWinningLotto } from "./view/input.web.js";
+import { printLottoWeb, showWinningStatistics } from "./view/output.web.js";
+
+window.addEventListener("load", () => {
+  let lottoStore;
+  let lottoList = [];
+
+  onSubmitLottoPrice((lottoPrice) => {
+    try {
+      lottoStore = new LottoStore(lottoPrice);
+    } catch (error) {
+      alert(error.message);
+      return;
+    }
+
+    lottoList = lottoStore.sell();
+    printLottoWeb(lottoList);
+  });
+
+  onSubmitWinningLotto(({ winningNumbers, bonusNumber }) => {
+    if (!lottoStore || lottoList.length === 0) {
+      alert("로또를 구매해주세요.");
+      return;
+    }
+    let winningLotto;
+    let bonusLottoNumber;
+    try {
+      winningLotto = new Lotto(winningNumbers);
+      bonusLottoNumber = new LottoNumber(bonusNumber);
+      lottoStore.validateBonusNumber(winningLotto, bonusLottoNumber);
+    } catch (error) {
+      alert(error.message);
+      return;
+    }
+
+    const rankList = lottoList.map((lotto) =>
+      lotto.prize(winningLotto, bonusLottoNumber)
+    );
+    const rateOfReturn = lottoStore.rateOfReturn(rankList);
+
+    showWinningStatistics(rankList, rateOfReturn);
+  });
+});
