@@ -1,5 +1,4 @@
-import { LottoType } from "./lotto-type";
-import { LottoOperator } from "./lotto-operator";
+import { LottoType } from "./lotto-type.js";
 
 export class LottoSeller {
 

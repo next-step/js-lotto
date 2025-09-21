@@ -1,10 +1,8 @@
-import { Lotto } from "./lotto";
-import { Factory } from "../factory/factory";
+import { Factory } from "../factory/factory.js";
 
 // 로또 사업자
 export class LottoOperator {
     #publishedLottos = new Array();
-    #winnerLotto;
 
     constructor() {
     }

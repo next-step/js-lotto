@@ -1,5 +1,5 @@
-import { Lotto } from "../domain/lotto";
-import { LottoType } from "../domain/lotto-type";
+import { Lotto } from "../domain/lotto.js";
+import { LottoType } from "../domain/lotto-type.js";
 
 export class Factory {
 
