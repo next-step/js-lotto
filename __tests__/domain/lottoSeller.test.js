@@ -1,6 +1,5 @@
 import { LottoOperator } from '../../src/domain/lotto-operator';
 import { LottoSeller } from '../../src/domain/lotto-seller'
-import { LottoType } from '../../src/domain/lotto-type';
 
 describe('로또 판매자는', () => {
     describe('판매 시', () => {
@@ -11,7 +10,7 @@ describe('로또 판매자는', () => {
 
             // when
             const money = 3000;
-            const lottos = lottoSeller.Sell(LottoType.SIMPLE, money);
+            const lottos = lottoSeller.Sell(money);
 
             // then
             expect(lottos.length).toEqual(3);

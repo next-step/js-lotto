@@ -1,21 +1,12 @@
-import { LottoType } from "./lotto-type.js";
-
 export class LottoSeller {
 
     constructor(lottoOperator) {
         this.lottoOperator = lottoOperator;
     }
 
-    Sell(lottoType, money) {
-        let lottoPrice;
-        if (lottoType === LottoType.SIMPLE) {
-            lottoPrice = 1000;
-        } else {
-            throw new Error('존재하지 않는 복권입니다.');
-        }
-
+    Sell(money) {
+        const lottoPrice = 1000;
         const toBuyCount = money / lottoPrice;
-
-        return this.lottoOperator.Publish(lottoType, toBuyCount);
+        return this.lottoOperator.Publish(toBuyCount);
     }
 }
