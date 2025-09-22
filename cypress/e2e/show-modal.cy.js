@@ -1,12 +1,6 @@
 describe("당첨 통계 모달 시나리오", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173", {
-      onbeforeunload(win) {
-        win.addEventListener("load", () => {
-          pageLoaded = true;
-        });
-      },
-    });
+    cy.visit("http://localhost:5173");
     cy.get(".lotto-price form input").type("5000");
     cy.get(".lotto-price form button").click();
     cy.get('.numbers-row input[name="winning-number"]').each(
