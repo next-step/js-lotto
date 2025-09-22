@@ -2,7 +2,7 @@ describe("로또 구매 시나리오", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173");
   });
-  it("구입 금액은 숫자만 입력이 가능합니다.", () => {
+  it("사용자가 구입 금액 입력란에 숫자가 아닌 값을 입력하면 입력이 되지 않습니다.", () => {
     cy.get(".lotto-price form input").type("천원");
     cy.get(".lotto-price form input").should("have.value", "");
   });
