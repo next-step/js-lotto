@@ -14,7 +14,7 @@ describe("로또 구매 시나리오", () => {
       expect(text).to.equal("구매 금액은 1000원 단위로 입력해야 합니다.");
     });
   });
-  it("로또는 천원 단위로 구매하면 구매한 로또 정보를 볼 수 있습니다.", () => {
+  it("사용자가 구입 금액을 입력하여 로또를 구입하면 입력한 금액에 비례하는 개수의 로또 번호를 볼 수 있습니다.", () => {
     cy.get(".lotto-price form input").type("10000");
     cy.get(".lotto-price form button").click();
 
