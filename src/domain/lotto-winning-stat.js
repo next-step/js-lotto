@@ -3,10 +3,7 @@ export class LottoWinningStat {
   #matchedCountInfo = new Map();
   #matchedFiveAndBonusCount = 0;
 
-  constructor() {
-  }
-
-  Add(matchedCount, bonusNumberMatched) {
+  add(matchedCount, bonusNumberMatched) {
     if (matchedCount === 5 && bonusNumberMatched) {
       this.#matchedFiveAndBonusCount += 1;
       return;

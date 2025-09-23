@@ -5,7 +5,7 @@ export class LottoWinnerNumber {
     this.bonusNumber = bonusNumber;
   }
 
-  MatchedCount(lotto) {
+  matchedCount(lotto) {
     let winnerNumber = this.numbers.slice();
     let result = 0;
     for (let expectedNumber of lotto.expectedNumbers) {

@@ -11,7 +11,7 @@ describe('로또 사업자', () => {
 
     // when
     const requestedCount = 2;
-    const lottos = lottoOperator.Publish(requestedCount);
+    const lottos = lottoOperator.publish(requestedCount);
 
     // then
     expect(lottos.length).toEqual(requestedCount);
@@ -53,7 +53,7 @@ describe('로또 사업자', () => {
 
     // when
 
-    const lottoWinningStat = lottoOperator.CalculateLottoWinningStat(lottos, lottoWinnerNumber);
+    const lottoWinningStat = lottoOperator.calculateLottoWinningStat(lottos, lottoWinnerNumber);
 
     // then
     expect(lottoWinningStat instanceof LottoWinningStat).toBeTruthy();

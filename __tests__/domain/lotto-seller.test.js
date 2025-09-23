@@ -10,7 +10,7 @@ describe('로또 판매자는', () => {
 
             // when
             const money = 3000;
-            const lottos = lottoSeller.Sell(money);
+            const lottos = lottoSeller.sell(money);
 
             // then
             expect(lottos.length).toEqual(3);

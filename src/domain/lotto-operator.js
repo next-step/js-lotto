@@ -7,10 +7,10 @@ import { LottoWinningStat } from './lotto-winning-stat.js';
 export class LottoOperator {
     #publishedLottos = new Array();
 
-    Publish(count) {
+    publish(count) {
         const results = Array();
         for (let i = 0; i < count; i++) {
-            const lotto = Factory.Create();
+            const lotto = Factory.create();
 
             this.#publishedLottos.push(lotto);
 
@@ -19,19 +19,19 @@ export class LottoOperator {
         return results;
     }
 
-    async DrawWinningNumbers(readline) {
+    async drawWinningNumbers(readline) {
         const expectedWinningNumbers = (await readline.question('> 당첨 번호를 입력해 주세요. ')).split(',').map(s => Number(s));
         const bonusNumber = Number(await readline.question('> 보너스 번호를 입력해 주세요. '));
 
         return new LottoWinnerNumber(expectedWinningNumbers, bonusNumber);
     }
 
-    CalculateLottoWinningStat(lottos, lottoWinnerNumber) {
+    calculateLottoWinningStat(lottos, lottoWinnerNumber) {
         const lottoWinningStat = new LottoWinningStat();
         for (const lotto of lottos) {
-            const matchedCount = lottoWinnerNumber.MatchedCount(lotto);
-            const bonusNumberMatched = lotto.Contains(lottoWinnerNumber.bonusNumber);
-            lottoWinningStat.Add(matchedCount, bonusNumberMatched);
+            const matchedCount = lottoWinnerNumber.matchedCount(lotto);
+            const bonusNumberMatched = lotto.contains(lottoWinnerNumber.bonusNumber);
+            lottoWinningStat.add(matchedCount, bonusNumberMatched);
         }
 
         return lottoWinningStat;

@@ -4,9 +4,9 @@ export class LottoSeller {
         this.lottoOperator = lottoOperator;
     }
 
-    Sell(money) {
+    sell(money) {
         const lottoPrice = 1000;
         const toBuyCount = money / lottoPrice;
-        return this.lottoOperator.Publish(toBuyCount);
+        return this.lottoOperator.publish(toBuyCount);
     }
 }

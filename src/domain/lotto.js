@@ -14,11 +14,11 @@ export class Lotto {
         this._expectedNumbers = numbers;
     }
 
-    Contains(number) {
+    contains(number) {
         return this._expectedNumbers.includes(number);
     }
 
-    Print() {
+    print() {
         console.log(this.expectedNumbers)
     }
 }

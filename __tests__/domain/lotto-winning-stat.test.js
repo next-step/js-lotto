@@ -13,7 +13,7 @@ describe('로또 당첨 통계', () => {
     const lottoOperator = new LottoOperator();
 
     // when
-    const lottoWinningStat = lottoOperator.CalculateLottoWinningStat(lottos, lottoWinnerNumber);
+    const lottoWinningStat = lottoOperator.calculateLottoWinningStat(lottos, lottoWinnerNumber);
 
     // then
     expect(lottoWinningStat.MatchedCount(matchedCountTarget)).toEqual(1);
@@ -26,7 +26,7 @@ describe('로또 당첨 통계', () => {
     const lottoWinnerNumber = new LottoWinnerNumber([1, 2, 3, 4, 5, 11], 6)
 
     // when
-    const lottoWinningStat = lottoOperator.CalculateLottoWinningStat(lottos, lottoWinnerNumber);
+    const lottoWinningStat = lottoOperator.calculateLottoWinningStat(lottos, lottoWinnerNumber);
 
     // then
     expect(lottoWinningStat.matchedFiveAndBonusCount).toEqual(1);

@@ -2,7 +2,7 @@ import { Lotto } from "../domain/lotto.js";
 
 export class Factory {
 
-    static Create() {
+    static create() {
         const min = 1;
         const max = 99;
         const numbers = this.generateRandomLottoNumber(6, min, max);
