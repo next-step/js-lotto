@@ -1,23 +1,19 @@
 export class LottoWinnerNumber {
 
+  #numbers;
+  #bonusNumber;
+
   constructor(numbers, bonusNumber) {
-    this.numbers = numbers;
-    this.bonusNumber = bonusNumber;
+    numbers.sort();
+    this.#numbers = numbers;
+    this.#bonusNumber = bonusNumber;
   }
 
-  matchedCount(lotto) {
-    let winnerNumber = this.numbers.slice();
-    let result = 0;
-    for (let expectedNumber of lotto.expectedNumbers) {
-      const idx = winnerNumber.findIndex(n => n === expectedNumber);
-      if (idx === -1) {
-        continue;
-      }
+  get numbers() {
+    return this.#numbers;
+  }
 
-      winnerNumber.splice(idx, 1);
-      result += 1;
-    }
-
-    return result;
+  get bonusNumber() {
+    return this.#bonusNumber;
   }
 }

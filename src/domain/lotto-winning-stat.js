@@ -13,7 +13,7 @@ export class LottoWinningStat {
     this.#matchedCountInfo.set(matchedCount, matchedCountValue + 1);
   }
 
-  MatchedCount(count) {
+  matchedCount(count) {
     return this.#matchedCountInfo.get(count) || 0;
   }
 
@@ -21,7 +21,7 @@ export class LottoWinningStat {
     return this.#matchedFiveAndBonusCount;
   }
 
-  Print() {
+  print() {
     console.log('당첨 통계')
     console.log("--------------------")
     this.printMatchedInfo(3);

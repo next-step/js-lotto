@@ -57,10 +57,10 @@ describe('로또 사업자', () => {
 
     // then
     expect(lottoWinningStat instanceof LottoWinningStat).toBeTruthy();
-    expect(lottoWinningStat.MatchedCount(3)).toEqual(1);
-    expect(lottoWinningStat.MatchedCount(4)).toEqual(0);
-    expect(lottoWinningStat.MatchedCount(5)).toEqual(0);
+    expect(lottoWinningStat.matchedCount(3)).toEqual(1);
+    expect(lottoWinningStat.matchedCount(4)).toEqual(0);
+    expect(lottoWinningStat.matchedCount(5)).toEqual(0);
     expect(lottoWinningStat.matchedFiveAndBonusCount).toEqual(0);
-    expect(lottoWinningStat.MatchedCount(6)).toEqual(0);
+    expect(lottoWinningStat.matchedCount(6)).toEqual(0);
   })
 })
