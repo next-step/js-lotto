@@ -49,7 +49,7 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
     const myLotto = new lotto.Lotto([1, 2, 3, 4, 5, 7]);
     const expectedMatchResult = new lotto.LottoMatchResult(5, 1);
     //when
-    const matchResult = lotto.LottoWinningRule.getMatchResult(
+    const matchResult = lotto.LottoResultEvaluator.getMatchResult(
       winningLotto,
       myLotto
     );
@@ -60,9 +60,9 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
   it("당첨 개수, 보너스 번호 당첨 여부를 기준으로 당첨 등수를 반환한다.", () => {
     //given
     const lottoMatchResult = new lotto.LottoMatchResult(5, 1);
-    const expectedPrize = lotto.LottoWinningRule.SECOND_PRIZE;
+    const expectedPrize = lotto.LottoResultEvaluator.SECOND_PRIZE;
     //when
-    const prize = lotto.LottoWinningRule.getLottoPrize(lottoMatchResult);
+    const prize = lotto.LottoResultEvaluator.getLottoPrize(lottoMatchResult);
     //then
     expect(prize).toEqual(expectedPrize);
   });
@@ -76,9 +76,9 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
 
     const winningLotto = new lotto.WinningLotto(myLotto, bonusLotto);
     //when
-    const prize = lotto.LottoWinningRule.getPrize(winningLotto, myLotto);
+    const prize = lotto.LottoResultEvaluator.getPrize(winningLotto, myLotto);
     //then
-    expect(prize).toBe(lotto.LottoWinningRule.FIRST_PRIZE);
+    expect(prize).toBe(lotto.LottoResultEvaluator.FIRST_PRIZE);
   });
 
   it("사용자가 구매한 모든 로또 번호와 당첨 번호를 비교하여 당첨 내역을 게산한다.", () => {
@@ -97,15 +97,15 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
     );
 
     //when
-    const prizes = lotto.LottoWinningRule.getWinningResult(
+    const prizes = lotto.LottoResultEvaluator.getWinningResult(
       winningLotto,
       myLottos
     );
     //then
     expect(prizes).toEqual([
-      lotto.LottoWinningRule.FIRST_PRIZE,
-      lotto.LottoWinningRule.SECOND_PRIZE,
-      lotto.LottoWinningRule.THIRD_PRIZE,
+      lotto.LottoResultEvaluator.FIRST_PRIZE,
+      lotto.LottoResultEvaluator.SECOND_PRIZE,
+      lotto.LottoResultEvaluator.THIRD_PRIZE,
     ]);
   });
 
@@ -113,12 +113,12 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
     //given
     const purchaseAmount = 10000;
     const winningResult = [
-      lotto.LottoWinningRule.FIRST_PRIZE,
-      lotto.LottoWinningRule.SECOND_PRIZE,
-      lotto.LottoWinningRule.THIRD_PRIZE,
+      lotto.LottoResultEvaluator.FIRST_PRIZE,
+      lotto.LottoResultEvaluator.SECOND_PRIZE,
+      lotto.LottoResultEvaluator.THIRD_PRIZE,
     ];
     //when
-    const winningRate = lotto.LottoWinningRule.getWinningRate(
+    const winningRate = lotto.LottoResultEvaluator.getWinningRate(
       winningResult,
       purchaseAmount
     );
@@ -134,25 +134,25 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
     //given
     const purchaseAmount = 10000;
     const winningResult = [
-      lotto.LottoWinningRule.FIRST_PRIZE,
-      lotto.LottoWinningRule.FIRST_PRIZE,
-      lotto.LottoWinningRule.SECOND_PRIZE,
-      lotto.LottoWinningRule.THIRD_PRIZE,
+      lotto.LottoResultEvaluator.FIRST_PRIZE,
+      lotto.LottoResultEvaluator.FIRST_PRIZE,
+      lotto.LottoResultEvaluator.SECOND_PRIZE,
+      lotto.LottoResultEvaluator.THIRD_PRIZE,
     ];
-    const expectedWinningRate = lotto.LottoWinningRule.getWinningRate(
+    const expectedWinningRate = lotto.LottoResultEvaluator.getWinningRate(
       winningResult,
       purchaseAmount
     );
     //when
-    const winningReport = lotto.LottoWinningRule.getWinningReport(
+    const winningReport = lotto.LottoResultEvaluator.getWinningReport(
       winningResult,
       purchaseAmount
     );
     //then
     const expectedWinningReport = new Map();
-    expectedWinningReport.set(lotto.LottoWinningRule.FIRST_PRIZE, 2);
-    expectedWinningReport.set(lotto.LottoWinningRule.SECOND_PRIZE, 1);
-    expectedWinningReport.set(lotto.LottoWinningRule.THIRD_PRIZE, 1);
+    expectedWinningReport.set(lotto.LottoResultEvaluator.FIRST_PRIZE, 2);
+    expectedWinningReport.set(lotto.LottoResultEvaluator.SECOND_PRIZE, 1);
+    expectedWinningReport.set(lotto.LottoResultEvaluator.THIRD_PRIZE, 1);
 
     expect(winningReport).toEqual({
       matched: expectedWinningReport,

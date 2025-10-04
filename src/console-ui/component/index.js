@@ -32,7 +32,7 @@ const bonusNumberComponent = async (store) => {
 
 const winningReportComponent = async (store) => {
   const reportInfo = store.get("winningReport");
-  const prizeList = lotto.LottoWinningRule.PRIZE_LIST;
+  const prizeList = store.get("prizeList");
 
   console.log("당첨 통계");
   console.log("--------------------");

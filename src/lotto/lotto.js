@@ -104,7 +104,7 @@ class LottoMatchResult {
   }
 }
 
-class LottoWinningRule {
+class LottoResultEvaluator {
   static FIRST_PRIZE = {
     matchedNumberCount: 6,
     matchedBonusNumberCount: 0,
@@ -132,19 +132,19 @@ class LottoWinningRule {
   };
 
   static PRIZE_LIST = [
-    LottoWinningRule.FIRST_PRIZE,
-    LottoWinningRule.SECOND_PRIZE,
-    LottoWinningRule.THIRD_PRIZE,
-    LottoWinningRule.FOURTH_PRIZE,
-    LottoWinningRule.FIFTH_PRIZE,
+    LottoResultEvaluator.FIRST_PRIZE,
+    LottoResultEvaluator.SECOND_PRIZE,
+    LottoResultEvaluator.THIRD_PRIZE,
+    LottoResultEvaluator.FOURTH_PRIZE,
+    LottoResultEvaluator.FIFTH_PRIZE,
   ];
 
   static PRIZE_MAP = {
-    "6:0": LottoWinningRule.FIRST_PRIZE,
-    "5:1": LottoWinningRule.SECOND_PRIZE,
-    "5:0": LottoWinningRule.THIRD_PRIZE,
-    "4:0": LottoWinningRule.FOURTH_PRIZE,
-    "3:0": LottoWinningRule.FIFTH_PRIZE,
+    "6:0": LottoResultEvaluator.FIRST_PRIZE,
+    "5:1": LottoResultEvaluator.SECOND_PRIZE,
+    "5:0": LottoResultEvaluator.THIRD_PRIZE,
+    "4:0": LottoResultEvaluator.FOURTH_PRIZE,
+    "3:0": LottoResultEvaluator.FIFTH_PRIZE,
   };
 
   static getMatchResult(winningLotto, lotto) {
@@ -159,7 +159,7 @@ class LottoWinningRule {
   }
 
   static getLottoPrize(lottoMatchResult) {
-    return LottoWinningRule.PRIZE_MAP[
+    return LottoResultEvaluator.PRIZE_MAP[
       `${lottoMatchResult.getMatchedNumberCount()}:${lottoMatchResult.getMatchedBonusNumberCount()}`
     ];
   }
@@ -172,14 +172,14 @@ class LottoWinningRule {
       .getBonusNumber()
       .filter((number) => lotto.getNumbers().includes(number)).length;
 
-    return LottoWinningRule.PRIZE_MAP[
+    return LottoResultEvaluator.PRIZE_MAP[
       `${matchedNumberCount}:${matchedBonusNumberCount}`
     ];
   }
 
   static getWinningResult(winningLotto, lottos) {
     return lottos
-      .map((lotto) => LottoWinningRule.getPrize(winningLotto, lotto))
+      .map((lotto) => LottoResultEvaluator.getPrize(winningLotto, lotto))
       .filter((prize) => prize ?? false);
   }
 
@@ -198,7 +198,7 @@ class LottoWinningRule {
     });
     return {
       matched,
-      winningRate: LottoWinningRule.getWinningRate(
+      winningRate: LottoResultEvaluator.getWinningRate(
         winningResult,
         purchaseAmount
       ),
@@ -235,7 +235,7 @@ export default {
   Lotto,
   BonusLotto,
   WinningLotto,
-  LottoWinningRule,
+  LottoResultEvaluator,
   LOTTO_PRICE,
   LottoStore,
   LottoMatchResult,
