@@ -6,7 +6,9 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
     const purchaseAmount = 10000;
     const lottoPrice = lotto.LOTTO_PRICE;
     //when
-    const lottos = lotto.createLotto(purchaseAmount);
+    const lottos = new lotto.LottoStore(lottoPrice, lotto.Lotto).buyLottos(
+      purchaseAmount
+    );
     //then
     expect(lottos.length).toBe(purchaseAmount / lottoPrice);
   });
@@ -35,6 +37,34 @@ describe("로또 객체 비즈니스 로직 테스트", () => {
     //then
     expect(winningLotto.getNumbers()).toBe(winningNumbers);
     expect(winningLotto.getBonusNumber()).toBe(bonusNumber);
+  });
+
+  it("사용자가 구매한 로또 번호와 당첨 번호를 비교하여 당첨 개수, 보너스 번호 당첨 여부를 반환한다.", () => {
+    //given
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const bonusNumber = [7];
+    const winningTargetLotto = new lotto.Lotto(winningNumbers);
+    const bonusLotto = new lotto.BonusLotto(bonusNumber);
+    const winningLotto = new lotto.WinningLotto(winningTargetLotto, bonusLotto);
+    const myLotto = new lotto.Lotto([1, 2, 3, 4, 5, 7]);
+    const expectedMatchResult = new lotto.LottoMatchResult(5, 1);
+    //when
+    const matchResult = lotto.LottoWinningRule.getMatchResult(
+      winningLotto,
+      myLotto
+    );
+    //then
+    expect(matchResult).toEqual(expectedMatchResult);
+  });
+
+  it("당첨 개수, 보너스 번호 당첨 여부를 기준으로 당첨 등수를 반환한다.", () => {
+    //given
+    const lottoMatchResult = new lotto.LottoMatchResult(5, 1);
+    const expectedPrize = lotto.LottoWinningRule.SECOND_PRIZE;
+    //when
+    const prize = lotto.LottoWinningRule.getLottoPrize(lottoMatchResult);
+    //then
+    expect(prize).toEqual(expectedPrize);
   });
 
   it("사용자가 구매한 로또 번호와 당첨 번호를 비교하여 당첨 내역을 계산한다.", () => {

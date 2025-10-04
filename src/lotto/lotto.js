@@ -87,6 +87,23 @@ class WinningLotto {
   }
 }
 
+class LottoMatchResult {
+  #matchedNumberCount = 0;
+  #matchedBonusNumberCount = 0;
+  constructor(matchedNumberCount, matchedBonusNumberCount) {
+    this.#matchedNumberCount = matchedNumberCount;
+    this.#matchedBonusNumberCount = matchedBonusNumberCount;
+
+    Object.freeze(this);
+  }
+  getMatchedNumberCount() {
+    return this.#matchedNumberCount;
+  }
+  getMatchedBonusNumberCount() {
+    return this.#matchedBonusNumberCount;
+  }
+}
+
 class LottoWinningRule {
   static FIRST_PRIZE = {
     matchedNumberCount: 6,
@@ -114,6 +131,14 @@ class LottoWinningRule {
     prize: 5_000,
   };
 
+  static PRIZE_LIST = [
+    LottoWinningRule.FIRST_PRIZE,
+    LottoWinningRule.SECOND_PRIZE,
+    LottoWinningRule.THIRD_PRIZE,
+    LottoWinningRule.FOURTH_PRIZE,
+    LottoWinningRule.FIFTH_PRIZE,
+  ];
+
   static PRIZE_MAP = {
     "6:0": LottoWinningRule.FIRST_PRIZE,
     "5:1": LottoWinningRule.SECOND_PRIZE,
@@ -121,6 +146,23 @@ class LottoWinningRule {
     "4:0": LottoWinningRule.FOURTH_PRIZE,
     "3:0": LottoWinningRule.FIFTH_PRIZE,
   };
+
+  static getMatchResult(winningLotto, lotto) {
+    const matchedNumberCount = winningLotto
+      .getNumbers()
+      .filter((number) => lotto.getNumbers().includes(number)).length;
+    const matchedBonusNumberCount = winningLotto
+      .getBonusNumber()
+      .filter((number) => lotto.getNumbers().includes(number)).length;
+
+    return new LottoMatchResult(matchedNumberCount, matchedBonusNumberCount);
+  }
+
+  static getLottoPrize(lottoMatchResult) {
+    return LottoWinningRule.PRIZE_MAP[
+      `${lottoMatchResult.getMatchedNumberCount()}:${lottoMatchResult.getMatchedBonusNumberCount()}`
+    ];
+  }
 
   static getPrize(winningLotto, lotto) {
     const matchedNumberCount = winningLotto
@@ -164,13 +206,30 @@ class LottoWinningRule {
   }
 }
 
-const createLotto = (purchaseAmount) => {
-  if (isNaN(purchaseAmount) || purchaseAmount <= 0) {
-    throw new Error("유효하지 않은 구입 금액입니다.");
+class LottoStore {
+  #lottoPrice = 0;
+  #lottoType;
+  constructor(lottoPrice, lottoType) {
+    this.#lottoPrice = lottoPrice;
+    this.#lottoType = lottoType;
   }
-  const lottoCount = Math.floor(purchaseAmount / LOTTO_PRICE);
-  return new Array(lottoCount).fill(null).map(() => new Lotto());
-};
+
+  buyLottos(purchaseAmount) {
+    if (isNaN(purchaseAmount) || purchaseAmount <= 0) {
+      throw new Error("유효하지 않은 구입 금액입니다.");
+    }
+    const lottoCount = this.#calculateLottoCount(purchaseAmount);
+    return this.#createLottos(lottoCount);
+  }
+
+  #calculateLottoCount(purchaseAmount) {
+    return Math.floor(purchaseAmount / this.#lottoPrice);
+  }
+
+  #createLottos(lottoCount) {
+    return new Array(lottoCount).fill(null).map(() => new this.#lottoType());
+  }
+}
 
 export default {
   Lotto,
@@ -178,5 +237,6 @@ export default {
   WinningLotto,
   LottoWinningRule,
   LOTTO_PRICE,
-  createLotto,
+  LottoStore,
+  LottoMatchResult,
 };

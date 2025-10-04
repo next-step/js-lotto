@@ -2,6 +2,7 @@ import {
   purchaseAmountValidator,
   lottoNumberValidator,
 } from "../validator/index.js";
+import lotto from "../../lotto/lotto.js";
 import { inputStringWithPlaceholder } from "../input/index.js";
 
 const purchaseAmountComponent = async (store) => {
@@ -30,30 +31,21 @@ const bonusNumberComponent = async (store) => {
 };
 
 const winningReportComponent = async (store) => {
-  //   {
-  //     matched: Map(2) {
-  //     { matchedNumberCount: 4, matchedBonusNumberCount: 0, prize: 50000 } => 1,
-  //     { matchedNumberCount: 3, matchedBonusNumberCount: 0, prize: 5000 } => 2
-  //   },
-  //   winningRate: 60
-  // }
-
   const reportInfo = store.get("winningReport");
+  const prizeList = lotto.LottoWinningRule.PRIZE_LIST;
 
   console.log("당첨 통계");
   console.log("--------------------");
 
-  reportInfo.matched
-    .entries()
-    .forEach(
-      ([{ matchedNumberCount, matchedBonusNumberCount, prize }, count]) => {
-        console.log(
-          `${matchedNumberCount}개 일치${
-            matchedBonusNumberCount > 0 ? ", 보너스 볼 일치" : ""
-          } (${prize}원) - ${count}개`
-        );
-      }
+  prizeList.forEach((prizeTarget) => {
+    const { matchedNumberCount, matchedBonusNumberCount, prize } = prizeTarget;
+    console.log(
+      `${matchedNumberCount}개 일치${
+        matchedBonusNumberCount > 0 ? ", 보너스 볼 일치" : ""
+      } (${prize}원) - ${reportInfo.matched.get(prizeTarget) || 0}개`
     );
+  });
+
   console.log(`총 수익률은 ${reportInfo.winningRate}%입니다.`);
 };
 
